@@ -30,7 +30,7 @@ public interface ModelFactory extends EFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	ModelFactory eINSTANCE = org.eclipse.mylyn.reviews.frame.core.model.impl.ModelFactoryImpl.init();
+	ModelFactory	eINSTANCE	= org.eclipse.mylyn.reviews.frame.core.model.impl.ModelFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Review</em>'.

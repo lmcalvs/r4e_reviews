@@ -16,7 +16,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//ReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="user" lowerBound="1" eType="#//User"
         transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//CommentType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//CommentType"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Item" eSuperTypes="#//ReviewComponent">

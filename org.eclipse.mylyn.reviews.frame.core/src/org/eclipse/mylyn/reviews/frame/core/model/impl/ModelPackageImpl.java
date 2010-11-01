@@ -453,7 +453,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * @generated
 	 */
 	public ModelFactory getModelFactory() {
-		return (ModelFactory)getEFactoryInstance();
+		return (ModelFactory) getEFactoryInstance();
 	}
 
 	/**
