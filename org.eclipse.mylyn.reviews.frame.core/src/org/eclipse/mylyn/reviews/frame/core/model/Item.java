@@ -42,7 +42,7 @@ public interface Item extends ReviewComponent {
 	 * @return the value of the '<em>Added By</em>' reference.
 	 * @see #setAddedBy(User)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getItem_AddedBy()
-	 * @model required="true" transient="true" derived="true"
+	 * @model required="true"
 	 * @generated
 	 */
 	User getAddedBy();
@@ -59,7 +59,6 @@ public interface Item extends ReviewComponent {
 
 	/**
 	 * Returns the value of the '<em><b>Review</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.mylyn.reviews.frame.core.model.Review#getReview_items <em>Review items</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Review</em>' reference isn't clear,
@@ -69,8 +68,7 @@ public interface Item extends ReviewComponent {
 	 * @return the value of the '<em>Review</em>' reference.
 	 * @see #setReview(Review)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getItem_Review()
-	 * @see org.eclipse.mylyn.reviews.frame.core.model.Review#getReview_items
-	 * @model opposite="review_items" required="true" transient="true" derived="true"
+	 * @model required="true"
 	 * @generated
 	 */
 	Review getReview();

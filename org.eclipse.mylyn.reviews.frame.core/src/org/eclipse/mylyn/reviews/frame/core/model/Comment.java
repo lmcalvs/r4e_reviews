@@ -44,7 +44,7 @@ public interface Comment extends ReviewComponent {
 	 * @return the value of the '<em>User</em>' reference.
 	 * @see #setUser(User)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getComment_User()
-	 * @model required="true" transient="true" derived="true"
+	 * @model resolveProxies="false" required="true"
 	 * @generated
 	 */
 	User getUser();
@@ -60,26 +60,26 @@ public interface Comment extends ReviewComponent {
 	void setUser(User value);
 
 	/**
-	 * Returns the value of the '<em><b>Type</b></em>' reference.
+	 * Returns the value of the '<em><b>Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Type</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Type</em>' reference.
+	 * @return the value of the '<em>Type</em>' containment reference.
 	 * @see #setType(CommentType)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getComment_Type()
-	 * @model required="true"
+	 * @model containment="true" resolveProxies="true" required="true"
 	 * @generated
 	 */
 	CommentType getType();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.frame.core.model.Comment#getType <em>Type</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.frame.core.model.Comment#getType <em>Type</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type</em>' reference.
+	 * @param value the new value of the '<em>Type</em>' containment reference.
 	 * @see #getType()
 	 * @generated
 	 */

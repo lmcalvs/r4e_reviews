@@ -44,7 +44,7 @@ public interface ReviewGroup extends ReviewComponent {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Reviews</em>' containment reference list.
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getReviewGroup_Reviews()
-	 * @model containment="true" resolveProxies="true"
+	 * @model containment="true" resolveProxies="true" transient="true" derived="true"
 	 * @generated
 	 */
 	EList<Review> getReviews();

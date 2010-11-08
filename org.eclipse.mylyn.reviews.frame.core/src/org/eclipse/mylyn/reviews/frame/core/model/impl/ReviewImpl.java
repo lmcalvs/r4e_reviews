@@ -21,8 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
 import org.eclipse.mylyn.reviews.frame.core.model.Review;
@@ -113,7 +112,7 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	 */
 	public EList<Topic> getTopics() {
 		if (topics == null) {
-			topics = new EObjectWithInverseResolvingEList<Topic>(Topic.class, this, ModelPackage.REVIEW__TOPICS, ModelPackage.TOPIC__REVIEW);
+			topics = new EObjectResolvingEList<Topic>(Topic.class, this, ModelPackage.REVIEW__TOPICS);
 		}
 		return topics;
 	}
@@ -125,7 +124,7 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	 */
 	public EList<Item> getReview_items() {
 		if (review_items == null) {
-			review_items = new EObjectWithInverseResolvingEList<Item>(Item.class, this, ModelPackage.REVIEW__REVIEW_ITEMS, ModelPackage.ITEM__REVIEW);
+			review_items = new EObjectResolvingEList<Item>(Item.class, this, ModelPackage.REVIEW__REVIEW_ITEMS);
 		}
 		return review_items;
 	}
@@ -267,30 +266,9 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ModelPackage.REVIEW__TOPICS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getTopics()).basicAdd(otherEnd, msgs);
-			case ModelPackage.REVIEW__REVIEW_ITEMS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getReview_items()).basicAdd(otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ModelPackage.REVIEW__TOPICS:
-				return ((InternalEList<?>)getTopics()).basicRemove(otherEnd, msgs);
-			case ModelPackage.REVIEW__REVIEW_ITEMS:
-				return ((InternalEList<?>)getReview_items()).basicRemove(otherEnd, msgs);
 			case ModelPackage.REVIEW__REVIEW_TASK:
 				return basicSetReviewTask(null, msgs);
 			case ModelPackage.REVIEW__STATE:

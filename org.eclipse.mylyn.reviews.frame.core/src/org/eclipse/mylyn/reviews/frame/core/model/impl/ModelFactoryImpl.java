@@ -44,8 +44,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 */
 	public static ModelFactory init() {
 		try {
-			ModelFactory theModelFactory = (ModelFactory) EPackage.Registry.INSTANCE
-					.getEFactory("http://org.eclipse.mylyn.reviews.frame.core.model/1.0");
+			ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory("http://org.eclipse.mylyn.reviews.frame.core.model/1.0"); 
 			if (theModelFactory != null) {
 				return theModelFactory;
 			}

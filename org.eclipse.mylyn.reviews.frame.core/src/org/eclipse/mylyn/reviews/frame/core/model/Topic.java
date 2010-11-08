@@ -95,7 +95,6 @@ public interface Topic extends Comment {
 
 	/**
 	 * Returns the value of the '<em><b>Review</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.mylyn.reviews.frame.core.model.Review#getTopics <em>Topics</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Review</em>' reference isn't clear,
@@ -105,8 +104,7 @@ public interface Topic extends Comment {
 	 * @return the value of the '<em>Review</em>' reference.
 	 * @see #setReview(Review)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getTopic_Review()
-	 * @see org.eclipse.mylyn.reviews.frame.core.model.Review#getTopics
-	 * @model opposite="topics" required="true" transient="true" derived="true"
+	 * @model required="true"
 	 * @generated
 	 */
 	Review getReview();

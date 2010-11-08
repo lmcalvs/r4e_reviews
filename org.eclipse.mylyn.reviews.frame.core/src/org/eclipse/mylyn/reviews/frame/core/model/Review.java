@@ -38,7 +38,6 @@ public interface Review extends ReviewComponent {
 	/**
 	 * Returns the value of the '<em><b>Topics</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.frame.core.model.Topic}.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.mylyn.reviews.frame.core.model.Topic#getReview <em>Review</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Topics</em>' containment reference list isn't clear,
@@ -47,8 +46,7 @@ public interface Review extends ReviewComponent {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Topics</em>' reference list.
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getReview_Topics()
-	 * @see org.eclipse.mylyn.reviews.frame.core.model.Topic#getReview
-	 * @model opposite="review" transient="true" derived="true"
+	 * @model transient="true" derived="true"
 	 * @generated
 	 */
 	EList<Topic> getTopics();
@@ -56,7 +54,6 @@ public interface Review extends ReviewComponent {
 	/**
 	 * Returns the value of the '<em><b>Review items</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.frame.core.model.Item}.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.mylyn.reviews.frame.core.model.Item#getReview <em>Review</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Review items</em>' containment reference list isn't clear,
@@ -65,8 +62,7 @@ public interface Review extends ReviewComponent {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Review items</em>' reference list.
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getReview_Review_items()
-	 * @see org.eclipse.mylyn.reviews.frame.core.model.Item#getReview
-	 * @model opposite="review" transient="true" derived="true"
+	 * @model transient="true" derived="true"
 	 * @generated
 	 */
 	EList<Item> getReview_items();

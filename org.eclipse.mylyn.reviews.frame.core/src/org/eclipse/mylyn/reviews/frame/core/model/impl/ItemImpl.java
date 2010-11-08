@@ -14,7 +14,6 @@
 package org.eclipse.mylyn.reviews.frame.core.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -144,63 +143,11 @@ public class ItemImpl extends ReviewComponentImpl implements Item {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetReview(Review newReview, NotificationChain msgs) {
+	public void setReview(Review newReview) {
 		Review oldReview = review;
 		review = newReview;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.ITEM__REVIEW, oldReview, newReview);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setReview(Review newReview) {
-		if (newReview != review) {
-			NotificationChain msgs = null;
-			if (review != null)
-				msgs = ((InternalEObject)review).eInverseRemove(this, ModelPackage.REVIEW__REVIEW_ITEMS, Review.class, msgs);
-			if (newReview != null)
-				msgs = ((InternalEObject)newReview).eInverseAdd(this, ModelPackage.REVIEW__REVIEW_ITEMS, Review.class, msgs);
-			msgs = basicSetReview(newReview, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.ITEM__REVIEW, newReview, newReview));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ModelPackage.ITEM__REVIEW:
-				if (review != null)
-					msgs = ((InternalEObject)review).eInverseRemove(this, ModelPackage.REVIEW__REVIEW_ITEMS, Review.class, msgs);
-				return basicSetReview((Review)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ModelPackage.ITEM__REVIEW:
-				return basicSetReview(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.ITEM__REVIEW, oldReview, review));
 	}
 
 	/**

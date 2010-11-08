@@ -5,9 +5,9 @@
     nsURI="http://org.eclipse.mylyn.reviews.frame.core.model/1.0" nsPrefix="org.eclipse.mylyn.reviews.frame.core">
   <eClassifiers xsi:type="ecore:EClass" name="Review" eSuperTypes="#//ReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="topics" upperBound="-1"
-        eType="#//Topic" transient="true" derived="true" eOpposite="#//Topic/review"/>
+        eType="#//Topic" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="review_items" upperBound="-1"
-        eType="#//Item" transient="true" derived="true" eOpposite="#//Item/review"/>
+        eType="#//Item" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reviewTask" eType="#//TaskReference"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="state" lowerBound="1" eType="#//ReviewState"
@@ -15,16 +15,16 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//ReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="user" lowerBound="1" eType="#//User"
-        transient="true" derived="true"/>
+        resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//CommentType"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Item" eSuperTypes="#//ReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="addedBy" lowerBound="1"
-        eType="#//User" transient="true" derived="true"/>
+        eType="#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="review" lowerBound="1"
-        eType="#//Review" transient="true" derived="true" eOpposite="#//Review/review_items"/>
+        eType="#//Review"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Location" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="User">
@@ -37,7 +37,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ReviewState" abstract="true" eSuperTypes="#//ReviewComponent"/>
   <eClassifiers xsi:type="ecore:EClass" name="ReviewGroup" eSuperTypes="#//ReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="reviews" upperBound="-1"
-        eType="#//Review" containment="true"/>
+        eType="#//Review" transient="true" derived="true" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reviewGroupTask" eType="#//TaskReference"
         containment="true"/>
   </eClassifiers>
@@ -50,7 +50,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="comments" upperBound="-1"
         eType="#//Comment" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="review" lowerBound="1"
-        eType="#//Review" transient="true" derived="true" eOpposite="#//Review/topics"/>
+        eType="#//Review"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="enabled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
