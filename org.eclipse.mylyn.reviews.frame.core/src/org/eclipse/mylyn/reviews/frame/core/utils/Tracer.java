@@ -141,18 +141,30 @@ public class Tracer {
 		}
 	}
 	
+	/**
+	 * @param newValue
+	 * @return
+	 */
 	public static boolean setError(boolean newValue) {
 		boolean oldValue = ERROR;
 		ERROR = newValue;
 		return oldValue;
 	}
 	
+	/**
+	 * @param newValue
+	 * @return
+	 */
 	public static boolean setDebug(boolean newValue) {
 		boolean oldValue = DEBUG;
 		DEBUG = newValue;
 		return oldValue;
 	}
 
+	/**
+	 * @param newValue
+	 * @return
+	 */
 	public static boolean setInfo(boolean newValue) {
 		boolean oldValue = INFO;
 		INFO = newValue;
@@ -160,6 +172,10 @@ public class Tracer {
 	}
 
 
+	/**
+	 * @param newValue
+	 * @return
+	 */
 	public static boolean setWarning(boolean newValue) {
 		boolean oldValue = WARNING;
 		WARNING = newValue;
