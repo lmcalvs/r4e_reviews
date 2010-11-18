@@ -24,6 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.eclipse.core.runtime.Platform;
 
 
@@ -189,7 +190,7 @@ public class Tracer {
 	 */
 	public void traceError(String aMsg) {
 		if (ERROR) {
-			
+			fTraceMessage.setLength(0);
 			//Timestamp
 			writeTimestamp(fTraceMessage);
 			fTraceMessage.append(" E");
@@ -208,7 +209,7 @@ public class Tracer {
 	 */
 	public void traceWarning(String aMsg) {
 		if (WARNING) {
-			
+			fTraceMessage.setLength(0);
 			//Timestamp
 			writeTimestamp(fTraceMessage);
 			fTraceMessage.append(" W");
@@ -227,7 +228,7 @@ public class Tracer {
 	 */
 	public void traceInfo(String aMsg) {
 		if (INFO) {
-			
+			fTraceMessage.setLength(0);
 			//Timestamp
 			writeTimestamp(fTraceMessage);
 			fTraceMessage.append(" I");
@@ -246,7 +247,7 @@ public class Tracer {
 	 */
 	public void traceDebug(String aMsg) {
 		if (DEBUG) {
-			
+			fTraceMessage.setLength(0);
 			//Timestamp
 			writeTimestamp(fTraceMessage);
 			fTraceMessage.append(" D");
