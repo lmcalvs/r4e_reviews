@@ -200,7 +200,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getReview_Review_items() {
+	public EReference getReview_ReviewItems() {
 		return (EReference)reviewEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -254,7 +254,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getComment_Text() {
+	public EAttribute getComment_Description() {
 		return (EAttribute)commentEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -380,6 +380,15 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getReviewGroup_Description() {
+		return (EAttribute)reviewGroupEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCommentType() {
 		return commentTypeEClass;
 	}
@@ -427,6 +436,15 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 */
 	public EReference getTopic_Review() {
 		return (EReference)topicEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTopic_Title() {
+		return (EAttribute)topicEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -484,7 +502,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		commentEClass = createEClass(COMMENT);
 		createEReference(commentEClass, COMMENT__USER);
 		createEReference(commentEClass, COMMENT__TYPE);
-		createEAttribute(commentEClass, COMMENT__TEXT);
+		createEAttribute(commentEClass, COMMENT__DESCRIPTION);
 
 		itemEClass = createEClass(ITEM);
 		createEReference(itemEClass, ITEM__ADDED_BY);
@@ -504,6 +522,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		reviewGroupEClass = createEClass(REVIEW_GROUP);
 		createEReference(reviewGroupEClass, REVIEW_GROUP__REVIEWS);
 		createEReference(reviewGroupEClass, REVIEW_GROUP__REVIEW_GROUP_TASK);
+		createEAttribute(reviewGroupEClass, REVIEW_GROUP__DESCRIPTION);
 
 		commentTypeEClass = createEClass(COMMENT_TYPE);
 
@@ -512,6 +531,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		createEReference(topicEClass, TOPIC__LOCATION);
 		createEReference(topicEClass, TOPIC__COMMENTS);
 		createEReference(topicEClass, TOPIC__REVIEW);
+		createEAttribute(topicEClass, TOPIC__TITLE);
 
 		reviewComponentEClass = createEClass(REVIEW_COMPONENT);
 		createEAttribute(reviewComponentEClass, REVIEW_COMPONENT__ENABLED);
@@ -556,14 +576,14 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		// Initialize classes and features; add operations and parameters
 		initEClass(reviewEClass, Review.class, "Review", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getReview_Topics(), this.getTopic(), null, "topics", null, 0, -1, Review.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getReview_Review_items(), this.getItem(), null, "review_items", null, 0, -1, Review.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getReview_ReviewItems(), this.getItem(), null, "reviewItems", null, 0, -1, Review.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getReview_ReviewTask(), this.getTaskReference(), null, "reviewTask", null, 0, 1, Review.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getReview_State(), this.getReviewState(), null, "state", null, 1, 1, Review.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(commentEClass, Comment.class, "Comment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComment_User(), this.getUser(), null, "user", null, 1, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComment_Type(), this.getCommentType(), null, "type", null, 1, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getComment_Text(), ecorePackage.getEString(), "text", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComment_Description(), ecorePackage.getEString(), "description", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(itemEClass, Item.class, "Item", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getItem_AddedBy(), this.getUser(), null, "addedBy", null, 1, 1, Item.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -583,6 +603,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEClass(reviewGroupEClass, ReviewGroup.class, "ReviewGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getReviewGroup_Reviews(), this.getReview(), null, "reviews", null, 0, -1, ReviewGroup.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getReviewGroup_ReviewGroupTask(), this.getTaskReference(), null, "reviewGroupTask", null, 0, 1, ReviewGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getReviewGroup_Description(), ecorePackage.getEString(), "description", null, 0, 1, ReviewGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(commentTypeEClass, CommentType.class, "CommentType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -591,6 +612,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEReference(getTopic_Location(), this.getLocation(), null, "location", null, 0, -1, Topic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTopic_Comments(), this.getComment(), null, "comments", null, 0, -1, Topic.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getTopic_Review(), this.getReview(), null, "review", null, 1, 1, Topic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTopic_Title(), ecorePackage.getEString(), "title", null, 0, 1, Topic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(reviewComponentEClass, ReviewComponent.class, "ReviewComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getReviewComponent_Enabled(), ecorePackage.getEBoolean(), "enabled", null, 0, 1, ReviewComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

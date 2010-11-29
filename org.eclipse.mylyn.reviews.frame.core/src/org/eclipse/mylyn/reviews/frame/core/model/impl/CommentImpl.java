@@ -32,7 +32,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.User;
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.CommentImpl#getUser <em>User</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.CommentImpl#getType <em>Type</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.CommentImpl#getText <em>Text</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.CommentImpl#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  *
@@ -60,24 +60,24 @@ public class CommentImpl extends ReviewComponentImpl implements Comment {
 	protected CommentType type;
 
 	/**
-	 * The default value of the '{@link #getText() <em>Text</em>}' attribute.
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getText()
+	 * @see #getDescription()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String TEXT_EDEFAULT = null;
+	protected static final String DESCRIPTION_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getText() <em>Text</em>}' attribute.
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getText()
+	 * @see #getDescription()
 	 * @generated
 	 * @ordered
 	 */
-	protected String text = TEXT_EDEFAULT;
+	protected String description = DESCRIPTION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -190,8 +190,8 @@ public class CommentImpl extends ReviewComponentImpl implements Comment {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getText() {
-		return text;
+	public String getDescription() {
+		return description;
 	}
 
 	/**
@@ -199,11 +199,11 @@ public class CommentImpl extends ReviewComponentImpl implements Comment {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setText(String newText) {
-		String oldText = text;
-		text = newText;
+	public void setDescription(String newDescription) {
+		String oldDescription = description;
+		description = newDescription;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.COMMENT__TEXT, oldText, text));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.COMMENT__DESCRIPTION, oldDescription, description));
 	}
 
 	/**
@@ -233,8 +233,8 @@ public class CommentImpl extends ReviewComponentImpl implements Comment {
 			case ModelPackage.COMMENT__TYPE:
 				if (resolve) return getType();
 				return basicGetType();
-			case ModelPackage.COMMENT__TEXT:
-				return getText();
+			case ModelPackage.COMMENT__DESCRIPTION:
+				return getDescription();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -253,8 +253,8 @@ public class CommentImpl extends ReviewComponentImpl implements Comment {
 			case ModelPackage.COMMENT__TYPE:
 				setType((CommentType)newValue);
 				return;
-			case ModelPackage.COMMENT__TEXT:
-				setText((String)newValue);
+			case ModelPackage.COMMENT__DESCRIPTION:
+				setDescription((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -274,8 +274,8 @@ public class CommentImpl extends ReviewComponentImpl implements Comment {
 			case ModelPackage.COMMENT__TYPE:
 				setType((CommentType)null);
 				return;
-			case ModelPackage.COMMENT__TEXT:
-				setText(TEXT_EDEFAULT);
+			case ModelPackage.COMMENT__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -293,8 +293,8 @@ public class CommentImpl extends ReviewComponentImpl implements Comment {
 				return user != null;
 			case ModelPackage.COMMENT__TYPE:
 				return type != null;
-			case ModelPackage.COMMENT__TEXT:
-				return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
+			case ModelPackage.COMMENT__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -309,8 +309,8 @@ public class CommentImpl extends ReviewComponentImpl implements Comment {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (text: ");
-		result.append(text);
+		result.append(" (description: ");
+		result.append(description);
 		result.append(')');
 		return result.toString();
 	}

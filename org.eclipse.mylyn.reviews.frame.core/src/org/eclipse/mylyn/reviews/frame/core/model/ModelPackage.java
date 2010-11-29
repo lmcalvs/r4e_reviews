@@ -123,7 +123,7 @@ public interface ModelPackage extends EPackage {
 	int REVIEW__TOPICS = REVIEW_COMPONENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Review items</b></em>' reference list.
+	 * The feature id for the '<em><b>Review Items</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -196,13 +196,13 @@ public interface ModelPackage extends EPackage {
 	int COMMENT__TYPE = REVIEW_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Text</b></em>' attribute.
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMMENT__TEXT = REVIEW_COMPONENT_FEATURE_COUNT + 2;
+	int COMMENT__DESCRIPTION = REVIEW_COMPONENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Comment</em>' class.
@@ -418,13 +418,22 @@ public interface ModelPackage extends EPackage {
 	int REVIEW_GROUP__REVIEW_GROUP_TASK = REVIEW_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_GROUP__DESCRIPTION = REVIEW_COMPONENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Review Group</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_GROUP_FEATURE_COUNT = REVIEW_COMPONENT_FEATURE_COUNT + 2;
+	int REVIEW_GROUP_FEATURE_COUNT = REVIEW_COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.frame.core.model.impl.CommentTypeImpl <em>Comment Type</em>}' class.
@@ -483,13 +492,13 @@ public interface ModelPackage extends EPackage {
 	int TOPIC__TYPE = COMMENT__TYPE;
 
 	/**
-	 * The feature id for the '<em><b>Text</b></em>' attribute.
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOPIC__TEXT = COMMENT__TEXT;
+	int TOPIC__DESCRIPTION = COMMENT__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Task</b></em>' containment reference.
@@ -528,13 +537,22 @@ public interface ModelPackage extends EPackage {
 	int TOPIC__REVIEW = COMMENT_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Title</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOPIC__TITLE = COMMENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Topic</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOPIC_FEATURE_COUNT = COMMENT_FEATURE_COUNT + 4;
+	int TOPIC_FEATURE_COUNT = COMMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.frame.core.model.Review <em>Review</em>}'.
@@ -558,15 +576,15 @@ public interface ModelPackage extends EPackage {
 	EReference getReview_Topics();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.mylyn.reviews.frame.core.model.Review#getReview_items <em>Review items</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.mylyn.reviews.frame.core.model.Review#getReviewItems <em>Review Items</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Review items</em>'.
-	 * @see org.eclipse.mylyn.reviews.frame.core.model.Review#getReview_items()
+	 * @return the meta object for the reference list '<em>Review Items</em>'.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.Review#getReviewItems()
 	 * @see #getReview()
 	 * @generated
 	 */
-	EReference getReview_Review_items();
+	EReference getReview_ReviewItems();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.frame.core.model.Review#getReviewTask <em>Review Task</em>}'.
@@ -623,15 +641,15 @@ public interface ModelPackage extends EPackage {
 	EReference getComment_Type();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.frame.core.model.Comment#getText <em>Text</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.frame.core.model.Comment#getDescription <em>Description</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Text</em>'.
-	 * @see org.eclipse.mylyn.reviews.frame.core.model.Comment#getText()
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.Comment#getDescription()
 	 * @see #getComment()
 	 * @generated
 	 */
-	EAttribute getComment_Text();
+	EAttribute getComment_Description();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.frame.core.model.Item <em>Item</em>}'.
@@ -771,6 +789,17 @@ public interface ModelPackage extends EPackage {
 	EReference getReviewGroup_ReviewGroupTask();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup#getDescription()
+	 * @see #getReviewGroup()
+	 * @generated
+	 */
+	EAttribute getReviewGroup_Description();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.frame.core.model.CommentType <em>Comment Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -835,6 +864,17 @@ public interface ModelPackage extends EPackage {
 	EReference getTopic_Review();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.frame.core.model.Topic#getTitle <em>Title</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Title</em>'.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.Topic#getTitle()
+	 * @see #getTopic()
+	 * @generated
+	 */
+	EAttribute getTopic_Title();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent <em>Review Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -896,12 +936,12 @@ public interface ModelPackage extends EPackage {
 		EReference REVIEW__TOPICS = eINSTANCE.getReview_Topics();
 
 		/**
-		 * The meta object literal for the '<em><b>Review items</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Review Items</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference REVIEW__REVIEW_ITEMS = eINSTANCE.getReview_Review_items();
+		EReference REVIEW__REVIEW_ITEMS = eINSTANCE.getReview_ReviewItems();
 
 		/**
 		 * The meta object literal for the '<em><b>Review Task</b></em>' containment reference feature.
@@ -946,12 +986,12 @@ public interface ModelPackage extends EPackage {
 		EReference COMMENT__TYPE = eINSTANCE.getComment_Type();
 
 		/**
-		 * The meta object literal for the '<em><b>Text</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute COMMENT__TEXT = eINSTANCE.getComment_Text();
+		EAttribute COMMENT__DESCRIPTION = eINSTANCE.getComment_Description();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ItemImpl <em>Item</em>}' class.
@@ -1070,6 +1110,14 @@ public interface ModelPackage extends EPackage {
 		EReference REVIEW_GROUP__REVIEW_GROUP_TASK = eINSTANCE.getReviewGroup_ReviewGroupTask();
 
 		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REVIEW_GROUP__DESCRIPTION = eINSTANCE.getReviewGroup_Description();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.frame.core.model.impl.CommentTypeImpl <em>Comment Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1120,6 +1168,14 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TOPIC__REVIEW = eINSTANCE.getTopic_Review();
+
+		/**
+		 * The meta object literal for the '<em><b>Title</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TOPIC__TITLE = eINSTANCE.getTopic_Title();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewComponentImpl <em>Review Component</em>}' class.

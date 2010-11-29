@@ -37,7 +37,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.Topic;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getTopics <em>Topics</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getReview_items <em>Review items</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getReviewItems <em>Review Items</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getReviewTask <em>Review Task</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getState <em>State</em>}</li>
  * </ul>
@@ -57,14 +57,14 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	protected EList<Topic> topics;
 
 	/**
-	 * The cached value of the '{@link #getReview_items() <em>Review items</em>}' reference list.
+	 * The cached value of the '{@link #getReviewItems() <em>Review Items</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReview_items()
+	 * @see #getReviewItems()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Item> review_items;
+	protected EList<Item> reviewItems;
 
 	/**
 	 * The cached value of the '{@link #getReviewTask() <em>Review Task</em>}' containment reference.
@@ -122,11 +122,11 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Item> getReview_items() {
-		if (review_items == null) {
-			review_items = new EObjectResolvingEList<Item>(Item.class, this, ModelPackage.REVIEW__REVIEW_ITEMS);
+	public EList<Item> getReviewItems() {
+		if (reviewItems == null) {
+			reviewItems = new EObjectResolvingEList<Item>(Item.class, this, ModelPackage.REVIEW__REVIEW_ITEMS);
 		}
-		return review_items;
+		return reviewItems;
 	}
 
 	/**
@@ -288,7 +288,7 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 			case ModelPackage.REVIEW__TOPICS:
 				return getTopics();
 			case ModelPackage.REVIEW__REVIEW_ITEMS:
-				return getReview_items();
+				return getReviewItems();
 			case ModelPackage.REVIEW__REVIEW_TASK:
 				if (resolve) return getReviewTask();
 				return basicGetReviewTask();
@@ -313,8 +313,8 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 				getTopics().addAll((Collection<? extends Topic>)newValue);
 				return;
 			case ModelPackage.REVIEW__REVIEW_ITEMS:
-				getReview_items().clear();
-				getReview_items().addAll((Collection<? extends Item>)newValue);
+				getReviewItems().clear();
+				getReviewItems().addAll((Collection<? extends Item>)newValue);
 				return;
 			case ModelPackage.REVIEW__REVIEW_TASK:
 				setReviewTask((TaskReference)newValue);
@@ -338,7 +338,7 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 				getTopics().clear();
 				return;
 			case ModelPackage.REVIEW__REVIEW_ITEMS:
-				getReview_items().clear();
+				getReviewItems().clear();
 				return;
 			case ModelPackage.REVIEW__REVIEW_TASK:
 				setReviewTask((TaskReference)null);
@@ -361,7 +361,7 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 			case ModelPackage.REVIEW__TOPICS:
 				return topics != null && !topics.isEmpty();
 			case ModelPackage.REVIEW__REVIEW_ITEMS:
-				return review_items != null && !review_items.isEmpty();
+				return reviewItems != null && !reviewItems.isEmpty();
 			case ModelPackage.REVIEW__REVIEW_TASK:
 				return reviewTask != null;
 			case ModelPackage.REVIEW__STATE:

@@ -24,7 +24,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Review#getTopics <em>Topics</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Review#getReview_items <em>Review items</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Review#getReviewItems <em>Review Items</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Review#getReviewTask <em>Review Task</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Review#getState <em>State</em>}</li>
  * </ul>
@@ -52,20 +52,20 @@ public interface Review extends ReviewComponent {
 	EList<Topic> getTopics();
 
 	/**
-	 * Returns the value of the '<em><b>Review items</b></em>' reference list.
+	 * Returns the value of the '<em><b>Review Items</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.frame.core.model.Item}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Review items</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Review Items</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Review items</em>' reference list.
-	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getReview_Review_items()
+	 * @return the value of the '<em>Review Items</em>' reference list.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getReview_ReviewItems()
 	 * @model transient="true" derived="true"
 	 * @generated
 	 */
-	EList<Item> getReview_items();
+	EList<Item> getReviewItems();
 
 	/**
 	 * Returns the value of the '<em><b>Review Task</b></em>' containment reference.

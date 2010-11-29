@@ -20,7 +20,7 @@
     <children xmi:type="notation:Node" xmi:id="_ooErYLddEd-lI8UEEXo2gw" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_ooErYbddEd-lI8UEEXo2gw" type="5001">
       <children xmi:type="notation:Node" xmi:id="_ooHusLddEd-lI8UEEXo2gw" type="2001">
-        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.frame.core.model.ecore#//Comment/text"/>
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.frame.core.model.ecore#//Comment/description"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_ooHusbddEd-lI8UEEXo2gw"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_ooErYrddEd-lI8UEEXo2gw"/>
@@ -131,6 +131,10 @@
   <children xmi:type="notation:Node" xmi:id="_ooPqgLddEd-lI8UEEXo2gw" type="1001">
     <children xmi:type="notation:Node" xmi:id="_ooPqg7ddEd-lI8UEEXo2gw" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_ooPqhLddEd-lI8UEEXo2gw" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_3I3JwfwFEd-N35nkMkr2Sg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewGroup/description"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_3I3JwvwFEd-N35nkMkr2Sg"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_ooPqhbddEd-lI8UEEXo2gw"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_ooPqhrddEd-lI8UEEXo2gw"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_ooPqh7ddEd-lI8UEEXo2gw"/>
@@ -175,6 +179,10 @@
   <children xmi:type="notation:Node" xmi:id="_-I-0EcV_Ed-OHt4UvkWdIw" type="1001">
     <children xmi:type="notation:Node" xmi:id="_-JDFgMV_Ed-OHt4UvkWdIw" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_-JEToMV_Ed-OHt4UvkWdIw" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_HXHhEPwGEd-N35nkMkr2Sg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.frame.core.model.ecore#//Topic/title"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_HXHhEfwGEd-N35nkMkr2Sg"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_-JETocV_Ed-OHt4UvkWdIw"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_-JETosV_Ed-OHt4UvkWdIw"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_-JETo8V_Ed-OHt4UvkWdIw"/>
@@ -244,7 +252,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_oob3w7ddEd-lI8UEEXo2gw" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_oob3xLddEd-lI8UEEXo2gw" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="org.eclipse.mylyn.reviews.frame.core.model.ecore#//Review/review_items"/>
+    <element xmi:type="ecore:EReference" href="org.eclipse.mylyn.reviews.frame.core.model.ecore#//Review/reviewItems"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_oob3xbddEd-lI8UEEXo2gw" points="[7, 6, -286, -257]$[286, 256, -7, -7]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_mW2zcNfaEd-8btOkTKx9Xg" id="(0.5588235294117647,0.8604651162790697)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_mW2zcdfaEd-8btOkTKx9Xg" id="(0.0784313725490196,0.5581395348837209)"/>

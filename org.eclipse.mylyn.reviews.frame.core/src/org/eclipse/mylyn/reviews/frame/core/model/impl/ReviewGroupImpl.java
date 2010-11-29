@@ -37,6 +37,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.TaskReference;
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewGroupImpl#getReviews <em>Reviews</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewGroupImpl#getReviewGroupTask <em>Review Group Task</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewGroupImpl#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,6 +63,26 @@ public class ReviewGroupImpl extends ReviewComponentImpl implements ReviewGroup 
 	 * @ordered
 	 */
 	protected TaskReference reviewGroupTask;
+
+	/**
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DESCRIPTION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected String description = DESCRIPTION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -165,6 +186,27 @@ public class ReviewGroupImpl extends ReviewComponentImpl implements ReviewGroup 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDescription(String newDescription) {
+		String oldDescription = description;
+		description = newDescription;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.REVIEW_GROUP__DESCRIPTION, oldDescription, description));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -189,6 +231,8 @@ public class ReviewGroupImpl extends ReviewComponentImpl implements ReviewGroup 
 			case ModelPackage.REVIEW_GROUP__REVIEW_GROUP_TASK:
 				if (resolve) return getReviewGroupTask();
 				return basicGetReviewGroupTask();
+			case ModelPackage.REVIEW_GROUP__DESCRIPTION:
+				return getDescription();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -209,6 +253,9 @@ public class ReviewGroupImpl extends ReviewComponentImpl implements ReviewGroup 
 			case ModelPackage.REVIEW_GROUP__REVIEW_GROUP_TASK:
 				setReviewGroupTask((TaskReference)newValue);
 				return;
+			case ModelPackage.REVIEW_GROUP__DESCRIPTION:
+				setDescription((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -227,6 +274,9 @@ public class ReviewGroupImpl extends ReviewComponentImpl implements ReviewGroup 
 			case ModelPackage.REVIEW_GROUP__REVIEW_GROUP_TASK:
 				setReviewGroupTask((TaskReference)null);
 				return;
+			case ModelPackage.REVIEW_GROUP__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -243,8 +293,26 @@ public class ReviewGroupImpl extends ReviewComponentImpl implements ReviewGroup 
 				return reviews != null && !reviews.isEmpty();
 			case ModelPackage.REVIEW_GROUP__REVIEW_GROUP_TASK:
 				return reviewGroupTask != null;
+			case ModelPackage.REVIEW_GROUP__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (description: ");
+		result.append(description);
+		result.append(')');
+		return result.toString();
 	}
 
 } //ReviewGroupImpl

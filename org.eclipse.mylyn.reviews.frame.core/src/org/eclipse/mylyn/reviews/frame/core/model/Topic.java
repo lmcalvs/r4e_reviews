@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Topic#getLocation <em>Location</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Topic#getComments <em>Comments</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Topic#getReview <em>Review</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Topic#getTitle <em>Title</em>}</li>
  * </ul>
  * </p>
  *
@@ -118,5 +119,31 @@ public interface Topic extends Comment {
 	 * @generated
 	 */
 	void setReview(Review value);
+
+	/**
+	 * Returns the value of the '<em><b>Title</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Title</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Title</em>' attribute.
+	 * @see #setTitle(String)
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getTopic_Title()
+	 * @model
+	 * @generated
+	 */
+	String getTitle();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.frame.core.model.Topic#getTitle <em>Title</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Title</em>' attribute.
+	 * @see #getTitle()
+	 * @generated
+	 */
+	void setTitle(String value);
 
 } // Topic

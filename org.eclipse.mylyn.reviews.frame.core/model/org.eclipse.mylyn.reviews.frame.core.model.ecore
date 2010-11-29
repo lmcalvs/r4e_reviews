@@ -6,7 +6,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Review" eSuperTypes="#//ReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="topics" upperBound="-1"
         eType="#//Topic" transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="review_items" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reviewItems" upperBound="-1"
         eType="#//Item" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reviewTask" eType="#//TaskReference"
         containment="true"/>
@@ -18,7 +18,7 @@
         resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//CommentType"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Item" eSuperTypes="#//ReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="addedBy" lowerBound="1"
@@ -40,6 +40,7 @@
         eType="#//Review" transient="true" derived="true" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reviewGroupTask" eType="#//TaskReference"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CommentType" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Topic" eSuperTypes="#//Comment">
@@ -51,6 +52,7 @@
         eType="#//Comment" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="review" lowerBound="1"
         eType="#//Review"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="enabled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>

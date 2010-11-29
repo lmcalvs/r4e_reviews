@@ -24,7 +24,7 @@ package org.eclipse.mylyn.reviews.frame.core.model;
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Comment#getUser <em>User</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Comment#getType <em>Type</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Comment#getText <em>Text</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.Comment#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  *
@@ -86,29 +86,29 @@ public interface Comment extends ReviewComponent {
 	void setType(CommentType value);
 
 	/**
-	 * Returns the value of the '<em><b>Text</b></em>' attribute.
+	 * Returns the value of the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Text</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Text</em>' attribute.
-	 * @see #setText(String)
-	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getComment_Text()
+	 * @return the value of the '<em>Description</em>' attribute.
+	 * @see #setDescription(String)
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getComment_Description()
 	 * @model
 	 * @generated
 	 */
-	String getText();
+	String getDescription();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.frame.core.model.Comment#getText <em>Text</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.frame.core.model.Comment#getDescription <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Text</em>' attribute.
-	 * @see #getText()
+	 * @param value the new value of the '<em>Description</em>' attribute.
+	 * @see #getDescription()
 	 * @generated
 	 */
-	void setText(String value);
+	void setDescription(String value);
 
 } // Comment
