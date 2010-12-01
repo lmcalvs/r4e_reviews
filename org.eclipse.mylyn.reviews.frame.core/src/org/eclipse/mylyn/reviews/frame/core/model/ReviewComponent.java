@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface ReviewComponent extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Enabled</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Enabled</em>' attribute isn't clear,
@@ -43,7 +44,8 @@ public interface ReviewComponent extends EObject {
 	 * @return the value of the '<em>Enabled</em>' attribute.
 	 * @see #setEnabled(boolean)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getReviewComponent_Enabled()
-	 * @model
+	 * @model default="true" id="true"
+	 *        extendedMetaData="namespace='' wildcards='' name=''"
 	 * @generated
 	 */
 	boolean isEnabled();
