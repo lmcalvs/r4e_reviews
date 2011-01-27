@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<toc topic="help/Reviews/R4E/User_Guide/User-Guide.html" label="R4E Documentation">
+	<topic href="help/Reviews/R4E/User_Guide/User-Guide.html" label="R4E User Guide">
+		<topic href="help/Reviews/R4E/User_Guide/User-Guide.html" label="Getting Started">
+			<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Overview" label="Overview"></topic>
+			<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Dependencies" label="Dependencies"></topic>
+			<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#R4E_Configuration" label="R4E Configuration">
+				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Creating_a_Review_Group" label="Creating a Review Group"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Opening_an_Existing_Review_Group" label="Opening an Existing Review Group"></topic>
+			</topic>
+			<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Eclipse_Project_Configuration" label="Eclipse Project Configuration"></topic>
+		</topic>
+		<topic href="help/Reviews/R4E/User_Guide/Concepts.html" label="Concepts">
+			<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Review_Group" label="Review Group"></topic>
+			<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Review" label="Review"></topic>
+			<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Review_Item" label="Review Item">
+				<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Commit" label="Commit"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Resource" label="Resource"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Patch" label="Patch"></topic>
+			</topic>
+			<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Review_Anomaly" label="Review Anomaly"></topic>
+		</topic>
+		<topic href="help/Reviews/R4E/User_Guide/Tasks.html" label="Tasks">
+			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Review" label="Creating a Review"></topic>
+			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Review_Item" label="Creating a Review Item">
+				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Resource_Review_Item" label="Creating a Resource Review Item"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Commit_Review_Item" label="Creating a Commit Review Item"></topic>
+			</topic>
+			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Creating_an_Anomaly" label="Creating an Anomaly"></topic>
+			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Global_Anomaly" label="Creating a Global Anomaly"></topic>
+			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Adding_Comments_to_an_existing_Anomaly" label="Adding Comments to an existing Anomaly"></topic>
+			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Updating_Review_Elements" label="Updating Review Elements"></topic>
+			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Using_Filters_in_the_Navigator_View" label="Using Filters in the Navigator View"></topic>
+		</topic>
+		<topic href="help/Reviews/R4E/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
+	</topic>
+</toc>
