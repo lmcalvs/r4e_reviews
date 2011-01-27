@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/">
+  <r4ecore:R4EItem xmi:id="_GqC_AwbjEeCKt5KhWKsZZw" description="Jerry20-Item to review 11" addedById="Jerry20" repositoryRef="repository ref..0">
+    <id xmi:id="_GqC_BAbjEeCKt5KhWKsZZw" sequenceID="4" userID="Jerry20"/>
+    <addedBy href="Jerry20_comments.xrer#_GkYb4QbjEeCKt5KhWKsZZw"/>
+    <review href="ReviewSampl_review.xrer#_GjV6EAbjEeCKt5KhWKsZZw"/>
+    <fileContextList href="#_GqV58AbjEeCKt5KhWKsZZw"/>
+    <ProjectURIs>platform:resource/projX0</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EFileContext xmi:id="_GqV58AbjEeCKt5KhWKsZZw">
+    <deltas href="#_GqfD4gbjEeCKt5KhWKsZZw"/>
+    <base href="#_GqV58QbjEeCKt5KhWKsZZw"/>
+    <target href="#_GqfD4AbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EFileVersion xmi:id="_GqV58QbjEeCKt5KhWKsZZw" platformURI="platform:/resource/proj/src/dir3/dir4/file.xxx" versionID="1004019327" repositoryPath="root/folder_0" name="file_0"/>
+  <r4ecore:R4EFileVersion xmi:id="_GqfD4AbjEeCKt5KhWKsZZw" platformURI="platform:/resource/proj/src/dir6/dir7/file.yyy" versionID="1004019328" repositoryPath="root/folder_0" name="file_0"/>
+  <r4ecore:R4EDelta xmi:id="_GqfD4gbjEeCKt5KhWKsZZw">
+    <id xmi:id="_GqfD4wbjEeCKt5KhWKsZZw" sequenceID="5" userID="Jerry20"/>
+    <base xsi:type="r4ecore:R4ETextContent" href="#_GqfD5AbjEeCKt5KhWKsZZw"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_GqfD5gbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_GqfD5AbjEeCKt5KhWKsZZw" info="information for base content" content="base content">
+    <location href="#_GqfD5QbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_GqfD5QbjEeCKt5KhWKsZZw" startPosition="200" length="50" startLine="10" endLine="20"/>
+  <r4ecore:R4ETextContent xmi:id="_GqfD5gbjEeCKt5KhWKsZZw" info="information for target content" content="target content">
+    <location href="#_Gqo04AbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_Gqo04AbjEeCKt5KhWKsZZw" startPosition="300" length="100" startLine="30" endLine="40"/>
+  <r4ecore:R4EItem xmi:id="_Gqo04gbjEeCKt5KhWKsZZw" description="Jerry20-Item to review 12" addedById="Jerry20" repositoryRef="repository ref..1">
+    <id xmi:id="_Gqo04wbjEeCKt5KhWKsZZw" sequenceID="6" userID="Jerry20"/>
+    <addedBy href="Jerry20_comments.xrer#_GkYb4QbjEeCKt5KhWKsZZw"/>
+    <review href="ReviewSampl_review.xrer#_GjV6EAbjEeCKt5KhWKsZZw"/>
+    <fileContextList href="#_Gqo05AbjEeCKt5KhWKsZZw"/>
+    <ProjectURIs>platform:resource/projX1</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EFileContext xmi:id="_Gqo05AbjEeCKt5KhWKsZZw">
+    <deltas href="#_Gqyl4wbjEeCKt5KhWKsZZw"/>
+    <base href="#_Gqyl4AbjEeCKt5KhWKsZZw"/>
+    <target href="#_Gqyl4QbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EFileVersion xmi:id="_Gqyl4AbjEeCKt5KhWKsZZw" platformURI="platform:/resource/proj/src/dir3/dir4/file.xxx" versionID="1004019328" repositoryPath="root/folder_1" name="file_1"/>
+  <r4ecore:R4EFileVersion xmi:id="_Gqyl4QbjEeCKt5KhWKsZZw" platformURI="platform:/resource/proj/src/dir6/dir7/file.yyy" versionID="1004019329" repositoryPath="root/folder_1" name="file_1"/>
+  <r4ecore:R4EDelta xmi:id="_Gqyl4wbjEeCKt5KhWKsZZw">
+    <id xmi:id="_Gqyl5AbjEeCKt5KhWKsZZw" sequenceID="7" userID="Jerry20"/>
+    <base xsi:type="r4ecore:R4ETextContent" href="#_Gqyl5QbjEeCKt5KhWKsZZw"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_Gq7v0QbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_Gqyl5QbjEeCKt5KhWKsZZw" info="information for base content" content="base content">
+    <location href="#_Gq7v0AbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_Gq7v0AbjEeCKt5KhWKsZZw" startPosition="200" length="50" startLine="10" endLine="20"/>
+  <r4ecore:R4ETextContent xmi:id="_Gq7v0QbjEeCKt5KhWKsZZw" info="information for target content" content="target content">
+    <location href="#_Gq7v0gbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_Gq7v0gbjEeCKt5KhWKsZZw" startPosition="300" length="100" startLine="30" endLine="40"/>
+  <r4ecore:R4EItem xmi:id="_Gq7v1AbjEeCKt5KhWKsZZw" description="Jerry20-Item to review 21" addedById="Jerry20" repositoryRef="repository ref..2">
+    <id xmi:id="_Gq7v1QbjEeCKt5KhWKsZZw" sequenceID="8" userID="Jerry20"/>
+    <addedBy href="Jerry20_comments.xrer#_GkYb4QbjEeCKt5KhWKsZZw"/>
+    <review href="ReviewSampl_review.xrer#_GjV6EAbjEeCKt5KhWKsZZw"/>
+    <fileContextList href="#_GrFg0AbjEeCKt5KhWKsZZw"/>
+    <ProjectURIs>platform:resource/projX2</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EFileContext xmi:id="_GrFg0AbjEeCKt5KhWKsZZw">
+    <deltas href="#_GrFg1AbjEeCKt5KhWKsZZw"/>
+    <base href="#_GrFg0QbjEeCKt5KhWKsZZw"/>
+    <target href="#_GrFg0gbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EFileVersion xmi:id="_GrFg0QbjEeCKt5KhWKsZZw" platformURI="platform:/resource/proj/src/dir3/dir4/file.xxx" versionID="1004019358" repositoryPath="root/folder_2" name="file_2"/>
+  <r4ecore:R4EFileVersion xmi:id="_GrFg0gbjEeCKt5KhWKsZZw" platformURI="platform:/resource/proj/src/dir6/dir7/file.yyy" versionID="1004019359" repositoryPath="root/folder_2" name="file_2"/>
+  <r4ecore:R4EDelta xmi:id="_GrFg1AbjEeCKt5KhWKsZZw">
+    <id xmi:id="_GrFg1QbjEeCKt5KhWKsZZw" sequenceID="9" userID="Jerry20"/>
+    <base xsi:type="r4ecore:R4ETextContent" href="#_GrOqwAbjEeCKt5KhWKsZZw"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_GrOqwgbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_GrOqwAbjEeCKt5KhWKsZZw" info="information for base content" content="base content">
+    <location href="#_GrOqwQbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_GrOqwQbjEeCKt5KhWKsZZw" startPosition="200" length="50" startLine="10" endLine="20"/>
+  <r4ecore:R4ETextContent xmi:id="_GrOqwgbjEeCKt5KhWKsZZw" info="information for target content" content="target content">
+    <location href="#_GrYbwAbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_GrYbwAbjEeCKt5KhWKsZZw" startPosition="300" length="100" startLine="30" endLine="40"/>
+  <r4ecore:R4EItem xmi:id="_GrYbwgbjEeCKt5KhWKsZZw" description="Jerry20-Item to review 22" addedById="Jerry20" repositoryRef="repository ref..3">
+    <id xmi:id="_GrYbwwbjEeCKt5KhWKsZZw" sequenceID="10" userID="Jerry20"/>
+    <addedBy href="Jerry20_comments.xrer#_GkYb4QbjEeCKt5KhWKsZZw"/>
+    <review href="ReviewSampl_review.xrer#_GjV6EAbjEeCKt5KhWKsZZw"/>
+    <fileContextList href="#_GriMwAbjEeCKt5KhWKsZZw"/>
+    <ProjectURIs>platform:resource/projX3</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EFileContext xmi:id="_GriMwAbjEeCKt5KhWKsZZw">
+    <deltas href="#_GrrWswbjEeCKt5KhWKsZZw"/>
+    <base href="#_GrrWsAbjEeCKt5KhWKsZZw"/>
+    <target href="#_GrrWsQbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EFileVersion xmi:id="_GrrWsAbjEeCKt5KhWKsZZw" platformURI="platform:/resource/proj/src/dir3/dir4/file.xxx" versionID="1004019359" repositoryPath="root/folder_3" name="file_3"/>
+  <r4ecore:R4EFileVersion xmi:id="_GrrWsQbjEeCKt5KhWKsZZw" platformURI="platform:/resource/proj/src/dir6/dir7/file.yyy" versionID="1004019360" repositoryPath="root/folder_3" name="file_3"/>
+  <r4ecore:R4EDelta xmi:id="_GrrWswbjEeCKt5KhWKsZZw">
+    <id xmi:id="_GrrWtAbjEeCKt5KhWKsZZw" sequenceID="11" userID="Jerry20"/>
+    <base xsi:type="r4ecore:R4ETextContent" href="#_Gr1HsAbjEeCKt5KhWKsZZw"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_Gr-RoQbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_Gr1HsAbjEeCKt5KhWKsZZw" info="information for base content" content="base content">
+    <location href="#_Gr-RoAbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_Gr-RoAbjEeCKt5KhWKsZZw" startPosition="200" length="50" startLine="10" endLine="20"/>
+  <r4ecore:R4ETextContent xmi:id="_Gr-RoQbjEeCKt5KhWKsZZw" info="information for target content" content="target content">
+    <location href="#_Gr-RogbjEeCKt5KhWKsZZw"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_Gr-RogbjEeCKt5KhWKsZZw" startPosition="300" length="100" startLine="30" endLine="40"/>
+</xmi:XMI>

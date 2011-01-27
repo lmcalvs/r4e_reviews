@@ -1,0 +1,6 @@
+org.eclipse.mylyn.reviews.r4e.core/error=true
+org.eclipse.mylyn.reviews.r4e.core/warning=true
+org.eclipse.mylyn.reviews.r4e.core/info=true
+org.eclipse.mylyn.reviews.r4e.core/debug=true
+org.eclipse.mylyn.reviews.r4e.core/consoleLog=true
+org.eclipse.mylyn.reviews.r4e.core/logfile=test.log

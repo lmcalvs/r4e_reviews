@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>R4E User Guide</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">R4E User Guide</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Concepts.html" title="Concepts">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Concepts</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Getting_Started">Getting Started</h1>
+		<h2 id="Overview">Overview</h2>
+		<p>Review for Eclipse (R4E) is a tool to facilitate reviews of text files associated to an Eclipse Project and a version control system. The main focus of R4E is the review of Source Code and eventually the review of Data models based on EMF.</p>
+		<p>R4E aims to support multiple version control systems (via Eclipse Team Providers). Egit is the one supported in the initial version.   </p>
+		<h2 id="Dependencies">Dependencies</h2>
+		<ul>
+			<li>R4E installation requires the following plug-in
+				<ul>
+					<li>Git Team Provider 0.9.1 (or later)</li>
+				</ul>
+			</li>
+		</ul>
+		<h2 id="R4E_Configuration">R4E Configuration</h2>
+		<p>R4E associates reviews via Review Groups, there can be as many review groups as needed. Once a group is defined, other users can work with the related reviews or add new ones by specifying its location under the workspace preferences.</p>
+		<h3 id="Creating_a_Review_Group">Creating a Review Group</h3>
+		<p>You will first need to create a Review Group to associate your reviews. </p>
+		<ul>
+			<li>Open the R4E Navigator View 
+				<b>Window &gt; Show View &gt; R4E &gt; Review Navigator</b> 
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/ReviewNavigatorEmpty.jpg"/>
+		</p>
+		<ul>
+			<li>Click the icon "Add a new Review Group"</li>
+			<li>Select a shared folder location where team members have access and write permissions (i.e. Review Group shared folder)</li>
+		</ul>
+		<p>
+			<img border="0" src="images/NewGroupDialog.jpg"/>
+		</p>
+		<h3 id="Opening_an_Existing_Review_Group">Opening an Existing Review Group</h3>
+		<ul>
+			<li>If a Review Group is already created, you need to define its shared location in your workspace preferences.  
+				<b>Preferences &gt; R4E</b> 
+			</li>
+			<li>Select the Review file ending with "_group_root.xrer"</li>
+		</ul>
+		<p>
+			<img border="0" src="images/r4e_preferences.jpg"/>
+		</p>
+		<h2 id="Eclipse_Project_Configuration">Eclipse Project Configuration</h2>
+		<ul>
+			<li>R4E can only operate with projects associated with Egit as team provider, The 
+				<a href="http://wiki.eclipse.org/EGit/User_Guide" target="egit_external">"EGit/User Guide"</a> is the best place to find the information on how to create new git repositories, work with existing git repositories and importing Eclipse projects under and existing git repository into the Eclipse workspace.  
+			</li>
+		</ul>
+		<p>
+			<a href="http://wiki.eclipse.org/EGit/User_Guide" target="egit_external">"EGit/User Guide"</a>
+		</p>
+		<ul>
+			<li>Once the project is associated/connected to the Egit team provider the project will display the project name and associated branch between brackets.</li>
+		</ul>
+		<p>
+			<img border="0" src="images/projectWithTeamProvider.jpg"/>
+		</p><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Concepts.html" title="Concepts">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Concepts</td>
+			</tr>
+		</table>
+	</body>
+</html>
