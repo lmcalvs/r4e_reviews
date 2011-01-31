@@ -22,24 +22,34 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.AddChildNodeAction;
+import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.FileVersionInfo;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
+import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.R4EAnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
-import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 
 
 /**
@@ -62,13 +72,13 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * Field ADD_ELEMENT_ACTION_NAME.
 	 * (value is ""Add Anomaly"")
 	 */
-	private static final String ADD_ELEMENT_ACTION_NAME = "Add Anomaly";
+	private static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Anomaly";
 	
     /**
      * Field ADD_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Add a new global anomaly to the current review item"")
      */
-    private static final String ADD_ELEMENT_ACTION_TOOLTIP = "Add a new global anomaly to the current review item";
+    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a new global anomaly to the current review item";
 
 	/**
 	 * Field ADD_ANOMALY_DIALOG_TITLE.
@@ -97,11 +107,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * Field fAnomalies.
 	 */
 	private final List<R4EUIAnomaly> fAnomalies;
-	
-	/**
-	 * Field fContextAddChildNodeAction.
-	 */
-	private static AddChildNodeAction FContextAddChildNodeAction = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -197,7 +202,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * Method loadModelData.
 	 * 		Load the serialization model data into UI model
 	 */
-	@Override
 	public void loadModelData() {
 
 		R4EUIAnomaly uiAnomaly = null;
@@ -219,12 +223,12 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 						for (int j = 0; j < locationsSize; j++) {
 							position = new R4EUITextPosition(
 									((R4EContent)anomalies.get(i).getLocation().get(j)).getLocation());  // $codepro.audit.disable methodChainLength
-							uiAnomaly = new R4EUIAnomaly(this, anomalies.get(i), position, anomalies.get(i).getTitle());
+							uiAnomaly = new R4EUIAnomaly(this, anomalies.get(i), position);
 							addChildren(uiAnomaly);
 							uiAnomaly.loadModelData();
 						}
 					} else {
-						uiAnomaly = new R4EUIAnomaly(this, anomalies.get(i), null, anomalies.get(i).getTitle());
+						uiAnomaly = new R4EUIAnomaly(this, anomalies.get(i), null);
 						addChildren(uiAnomaly);
 						uiAnomaly.loadModelData();
 					}
@@ -240,7 +244,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				for (int i = 0; i < anomaliesSize; i++) {
 					R4EAnomaly anomaly = (R4EAnomaly) anomalies.get(i); // $codepro.audit.disable variableDeclaredInLoop
 					if (0 == anomaly.getLocation().size()) {
-						uiAnomaly = new R4EUIAnomaly(this, anomaly, null, anomaly.getTitle());
+						uiAnomaly = new R4EUIAnomaly(this, anomaly, null);
 						addChildren(uiAnomaly);
 						uiAnomaly.loadModelData();
 					}
@@ -275,11 +279,89 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	public IR4EUIModelElement createChildren(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		final String user = R4EUIModelController.getReviewer();
 		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(((R4EUIReview)getParent()).getParticipant(user, true));
-		final R4EUIAnomaly addedChild = new R4EUIAnomaly(this, anomaly, null, ((R4EAnomaly)aModelComponent).getTitle());
+		final R4EUIAnomaly addedChild = new R4EUIAnomaly(this, anomaly, null);
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
 		return addedChild;
 	}
+	
+	/**
+	 * Method createAnomaly
+	 * @param aUiPosition - the position of the anomaly to create
+	 * @return R4EUIAnomaly
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException 
+	 */
+	public R4EUIAnomaly createAnomaly(R4EUITextPosition aUiPosition) throws ResourceHandlingException, OutOfSyncException {
+		
+		R4EUIAnomaly uiAnomaly = null;
+		
+		//Get anomaliy details from user
+		R4EUIModelController.setDialogOpen(true);
+		final R4EAnomalyInputDialog dialog = new R4EAnomalyInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+				getSite().getWorkbenchWindow().getShell(), ADD_ANOMALY_DIALOG_TITLE, ADD_ANOMALY_DIALOG_VALUE, 
+				ADD_DESCRIPTION_DIALOG_VALUE);
+    	final int result = dialog.open();
+    	
+    	if (result == Window.OK) {
+    		
+    		//Create anomaly model element
+    		final R4EUIReview uiReview = R4EUIModelController.getActiveReview();
+    		final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(), true);
+    		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
+    		
+    		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, R4EUIModelController.getReviewer());
+    		anomaly.setTitle(dialog.getAnomalyValue());
+    		anomaly.setDescription(dialog.getCommentValue());
+        	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+    		
+    		//Set data in the anomaly created
+    		final R4EAnomalyTextPosition position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(
+    				R4EUIModelController.FModelExt.createR4ETextContent(anomaly));
+    		final R4EFileVersion anomalyFile = R4EUIModelController.FModelExt.createR4EFileVersion(position);
+    		
+    		bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomalyFile, R4EUIModelController.getReviewer());
+    		final IFile targetFile = ((R4EUIFileContext)getParent()).getTargetFile();
+    		anomalyFile.setResource(targetFile);
+    		anomalyFile.setPlatformURI(ResourceUtils.toPlatformURI(targetFile).toString());
+    		
+    		try {
+        		final IProject project = targetFile.getProject();
+    			final ReviewsVersionsIF versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(project);
+    			
+    			//File is in a Git repository
+    			final FileVersionInfo versionInfo = versionsIf.getFileVersionInfo(targetFile);
+	    		anomalyFile.setName(versionInfo.getName());
+	    		anomalyFile.setRepositoryPath(versionInfo.getRepositoryPath());
+	    		anomalyFile.setVersionID(versionInfo.getId());
+    		} catch (ReviewVersionsException e) {
+    			Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+    			Activator.getDefault().logInfo("Exception: " + e.toString(), e);
+    			final ErrorDialog warningDialog = new ErrorDialog(null, "Info", 
+						"Take note that the anomaly you are trying to add is on a review item that not in source control.",
+        				new Status(IStatus.INFO, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.INFO);
+    			warningDialog.open();
+    			
+    			//File is not version-controlled
+    			anomalyFile.setName(targetFile.getName());
+    			anomalyFile.setRepositoryPath(targetFile.getFullPath().toOSString());
+    			anomalyFile.setVersionID(R4EUIConstants.FILE_NOT_IN_VERSION_CONTROL_MSG);	
+    		}
+    		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+    		
+    		//Create and set UI model element
+    		uiAnomaly = new R4EUIAnomaly(this, anomaly, aUiPosition);	
+    		aUiPosition.setPositionInModel(position);
+    		uiAnomaly.setToolTip(R4EUIAnomaly.buildAnomalyToolTip(anomaly));   //Also set UI tooltip immediately
+    		addChildren(uiAnomaly);
+    		
+    	}
+    	// else Window.CANCEL
+		R4EUIModelController.setDialogOpen(false);
+		return uiAnomaly;
+	}
+	
+	
 	
 	/**
 	 * Method removeChildren.
@@ -330,34 +412,35 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	}
 	
 	
-	//Actions
+	//Commands
 	
 	/**
-	 * Method createActions.
-	 * @param aView ReviewNavigatorView
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createActions(ReviewNavigatorView)
+	 * Method isAddChildElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isAddChildElementCmd()
 	 */
 	@Override
-	public void createActions(ReviewNavigatorView aView) {
-		FContextAddChildNodeAction = new AddChildNodeAction(aView, ADD_ELEMENT_ACTION_NAME, ADD_ELEMENT_ACTION_TOOLTIP,
-				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD), false);
+	public boolean isAddChildElementCmd() {
+		return true;
 	}
 	
 	/**
-	 * Method getActions.
-	 * @param aView ReviewNavigatorView
-	 * @return List<Action>
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getActions(ReviewNavigatorView)
+	 * Method getAddChildElementCmdName.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdName()
 	 */
 	@Override
-	public List<IAction> getActions(ReviewNavigatorView aView) {
-		final List<IAction> actions = new ArrayList<IAction>();
-		
-		//Only provide add action if this container is for global anomalies
-		if (!(R4EUIModelController.isDialogOpen()) && getParent() instanceof R4EUIReview) {
-			if (null == FContextAddChildNodeAction) createActions(aView);
-			actions.add(FContextAddChildNodeAction);
-		}
-		return actions;
+	public String getAddChildElementCmdName() {
+		return ADD_CHILD_ELEMENT_COMMAND_NAME;
+	}
+	
+	/**
+	 * Method getAddChildElementCmdTooltip.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
+	 */
+	@Override
+	public String getAddChildElementCmdTooltip() {
+		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP; 
 	}
 }

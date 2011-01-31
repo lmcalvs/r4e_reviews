@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -57,7 +58,7 @@ public class ReviewTabPropertySection extends AbstractPropertySection implements
 	/**
 	 * Field fReview.
 	 */
-	private R4EUIReview fReview;
+	private ReviewProperties fReviewProps;
 	
 	/**
 	 * Field FNameText.
@@ -119,12 +120,11 @@ public class ReviewTabPropertySection extends AbstractPropertySection implements
 	    FNameText.setLayoutData(data);
 		FNameText.addModifyListener(new ModifyListener() {			 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 			@SuppressWarnings("synthetic-access")
-			@Override
 			public void modifyText(ModifyEvent e) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EReview modelReview = fReview.getReview();
+						final R4EReview modelReview = ((R4EUIReview)fReviewProps.getElement()).getReview();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
 						modelReview.setName(FNameText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -147,12 +147,13 @@ public class ReviewTabPropertySection extends AbstractPropertySection implements
 	    //Review Creation Date (read-only)
 	    FCreationDateText = widgetFactory.createText(composite, "");
 	    FCreationDateText.setEditable(false);
+	    FCreationDateText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(FNameText, ITabbedPropertyConstants.VSPACE);
 	    FCreationDateText.setLayoutData(data);
-	
+
 	    final CLabel creationDateLabel = widgetFactory.createCLabel(composite, R4EUIConstants.CREATION_DATE_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
@@ -170,12 +171,11 @@ public class ReviewTabPropertySection extends AbstractPropertySection implements
 	    FDescriptionText.setLayoutData(data);
 	    FDescriptionText.addModifyListener(new ModifyListener() {			 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 	    	@SuppressWarnings("synthetic-access")
-	    	@Override
 	    	public void modifyText(ModifyEvent e) {
 	    		if (!fRefreshInProgress) {
 	    			try {
 	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EReview modelReview = fReview.getReview();
+						final R4EReview modelReview = ((R4EUIReview)fReviewProps.getElement()).getReview();
 	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
 	    				modelReview.setExtraNotes(FDescriptionText.getText());
 	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -210,7 +210,7 @@ public class ReviewTabPropertySection extends AbstractPropertySection implements
 		//Get model element selected
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((StructuredSelection)aSelection).getFirstElement();
 		if (null != element && element instanceof R4EUIReview) {
-			fReview = (R4EUIReview)element;
+			fReviewProps = (ReviewProperties) ((R4EUIReview)element).getAdapter(IPropertySource.class);
 			refresh();
 		}
 	}
@@ -222,7 +222,7 @@ public class ReviewTabPropertySection extends AbstractPropertySection implements
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EReview modelReview = fReview.getReview();
+		final R4EReview modelReview = ((R4EUIReview)fReviewProps.getElement()).getReview();
 		FNameText.setText(modelReview.getName());
 		FCreationDateText.setText(modelReview.getCreationDate().toString());
 		if (null != modelReview.getExtraNotes()) FDescriptionText.setText(modelReview.getExtraNotes());
@@ -246,7 +246,6 @@ public class ReviewTabPropertySection extends AbstractPropertySection implements
 	 * @param propId int
 	 * @see org.eclipse.ui.IPropertyListener#propertyChanged(Object, int)
 	 */
-	@Override
 	public void propertyChanged(Object source, int propId) {
 		setEnabledFields();
 	}
@@ -255,7 +254,7 @@ public class ReviewTabPropertySection extends AbstractPropertySection implements
 	 * Method setEnabledFields.
 	 */
 	private void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen() || (!fReview.isOpen())) {
+		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReview)fReviewProps.getElement()).isOpen())) {
 			FNameText.setEnabled(false);
 			FDescriptionText.setEnabled(false);
 		} else {

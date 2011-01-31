@@ -40,9 +40,9 @@ public class UserPermission {
 
 		try {
 			file.createNewFile();
-			Activator.Tracer.traceInfo("Create a file is allowed: " + fileSt);
+			Activator.fTracer.traceInfo("Create a file is allowed: " + fileSt);
 		} catch (IOException e) {
-			Activator.Tracer.traceInfo("UserPermission.canWrite() Create a  file is NOT allow: "
+			Activator.fTracer.traceInfo("UserPermission.canWrite() Create a  file is NOT allow: "
 							+ e.getMessage());
 			ok = false;
 		}
@@ -51,7 +51,7 @@ public class UserPermission {
 		if (file.exists()) {
 			Boolean del;
 			del = file.delete();
-			Activator.Tracer.traceInfo("UserPermission Temp file " + file.getAbsolutePath()
+			Activator.fTracer.traceInfo("UserPermission Temp file " + file.getAbsolutePath()
 					+ " deleted: " + del);
 		}
 		return ok;

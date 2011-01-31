@@ -24,6 +24,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 
@@ -128,7 +131,6 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 	/**
 	 * Method loadModelData.
 	 */
-	@Override
 	public void loadModelData() {
 		final EList<R4EDelta> deltas = ((R4EUIFileContext)getParent()).getFileContext().getDeltas();
 		if (null != deltas) {
@@ -156,6 +158,27 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 		fireAdd(aChildToAdd);
 	}
 
+	/**
+	 * Method createSelection
+	 * @param aUiPosition - the position of the anomaly to create
+	 * @return R4EUISelection
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException 
+	 */
+	public R4EUISelection createSelection(R4EUITextPosition aUiPosition) throws ResourceHandlingException, OutOfSyncException {
+		
+		//Create and set selection model element
+		final R4EDelta selection = R4EUIModelController.FModelExt.createR4EDelta(((R4EUIFileContext)getParent()).getFileContext());
+		final R4ETextPosition position = R4EUIModelController.FModelExt.createR4ETextPosition(
+				R4EUIModelController.FModelExt.createR4ETargetTextContent(selection));
+		aUiPosition.setPositionInModel(position);
+
+		//Create and set UI model element
+		final R4EUISelection uiSelection = new R4EUISelection(this, selection, aUiPosition);
+		addChildren(uiSelection);
+		return uiSelection;
+	}
+	
 	/**
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement

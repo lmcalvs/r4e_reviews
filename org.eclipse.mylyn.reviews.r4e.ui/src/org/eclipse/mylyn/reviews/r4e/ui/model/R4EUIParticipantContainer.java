@@ -127,7 +127,6 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	/**
 	 * Method loadModelData.
 	 */
-	@Override
 	public void loadModelData() {
 		final List<R4EParticipant> participants = ((R4EUIReview)getParent()).getParticipants();
 		if (null != participants) {

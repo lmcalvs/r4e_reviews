@@ -130,7 +130,7 @@ public class ShellCommandManager {
 				Thread.sleep(msSleep);
 			}
 
-			Activator.Tracer.traceInfo("\nWaited " + iwaitCnt
+			Activator.fTracer.traceInfo("\nWaited " + iwaitCnt
 					* msSleep + " ms to read the errorStream");
 
 			iwaitCnt = 0;
@@ -140,17 +140,17 @@ public class ShellCommandManager {
 				Thread.sleep(msSleep);
 			}
 
-			Activator.Tracer.traceInfo("\nWaited " + iwaitCnt * msSleep + " ms to read the outputStream");
-			Activator.Tracer.traceInfo("Returning with exitValue " + processExitValue + "  \"waitfor\"=" + waitfor
+			Activator.fTracer.traceInfo("\nWaited " + iwaitCnt * msSleep + " ms to read the outputStream");
+			Activator.fTracer.traceInfo("Returning with exitValue " + processExitValue + "  \"waitfor\"=" + waitfor
 					+ "\npath:" + cmdPath + "\n" + command.toString());
 			if (receivedCancellation) {
-				Activator.Tracer.traceInfo("\nShellCommandManager.execute : Cancellation Order Received");
+				Activator.fTracer.traceInfo("\nShellCommandManager.execute : Cancellation Order Received");
 			}
 
 			executedCount++;
 		} catch (InterruptedException e) {
 			// waitFor()
-			Activator.Tracer.traceInfo("ShellCommandManager.execute() InterruptedException:"
+			Activator.fTracer.traceInfo("ShellCommandManager.execute() InterruptedException:"
 					+ e.getMessage());
 			e.printStackTrace();
 		}
@@ -167,7 +167,7 @@ public class ShellCommandManager {
 		if (process != null) {
 			process.destroy();
 		}
-		Activator.Tracer.traceInfo("Cancelling execution for : "
+		Activator.fTracer.traceInfo("Cancelling execution for : "
 				+ command.toString() + " at " + cmdPath);
 	}
 
@@ -183,29 +183,29 @@ public class ShellCommandManager {
 		}
 
 		if (outputStream == null) {
-			Activator.Tracer.traceInfo("ShellCommandManager.getResults() outputStream is NULL");
+			Activator.fTracer.traceInfo("ShellCommandManager.getResults() outputStream is NULL");
 			return null;
 		}
 
 		if (errorStream == null) {
-			Activator.Tracer.traceInfo("ShellCommandManager.getResults() errorStream is NULL");
+			Activator.fTracer.traceInfo("ShellCommandManager.getResults() errorStream is NULL");
 			return null;
 		}
 
 		if (!(outputStream.isAlive() || errorStream.isAlive())) {
 			String str = "ShellCommandManager.getResults() outputStream  + errorStream CLOSED properly, Java Process exit value: ";
-			Activator.Tracer.traceInfo(str + processExitValue);
+			Activator.fTracer.traceInfo(str + processExitValue);
 		} else {
 			// so this should not happen unless the waiting period have elapsed,
 			// or the command is cancelled
 			if (outputStream.isAlive()) {
-				Activator.Tracer
+				Activator.fTracer
 						.traceInfo("ShellCommandManager.getResults() outputStream is alive: Java Process exit value: "
 								+ processExitValue);
 			}
 
 			if (errorStream.isAlive()) {
-				Activator.Tracer
+				Activator.fTracer
 						.traceInfo("ShellCommandManager.getResults() errorStream is alive: Java Process exit value: "
 								+ processExitValue);
 			}
@@ -214,9 +214,9 @@ public class ShellCommandManager {
 		if (notifyIfError) {
 			List<String> lines = errorStream.getLines();
 			if (lines == null) {
-				Activator.Tracer.traceInfo("ShellCommandManager.getResults() error stream lines size: NULL");
+				Activator.fTracer.traceInfo("ShellCommandManager.getResults() error stream lines size: NULL");
 			} else {
-				Activator.Tracer.traceInfo("ShellCommandManager.getResults() error stream lines size: "
+				Activator.fTracer.traceInfo("ShellCommandManager.getResults() error stream lines size: "
 								+ lines.size());
 			}
 			if (lines != null && lines.size() > 0) {
@@ -224,7 +224,7 @@ public class ShellCommandManager {
 				for (String s : lines) {
 					sb = sb.append(s + "\n");
 				}
-				Activator.Tracer.traceInfo("ShellCommandManager.getResults() " + sb);
+				Activator.fTracer.traceInfo("ShellCommandManager.getResults() " + sb);
 				throw new IOException(
 						"R4E reporting error when attempting to execute command. Operation could not be completed. "
 										+ command.toString() + "\n" + sb);
@@ -283,20 +283,20 @@ public class ShellCommandManager {
 			e.printStackTrace();
 		}
 		elapsedTime = System.currentTimeMillis() - startTime;
-		Activator.Tracer.traceInfo("exec() status " + status + ", elapsed time "
+		Activator.fTracer.traceInfo("exec() status " + status + ", elapsed time "
 						+ elapsedTime);
 
 		startTime = System.currentTimeMillis();
 		outputLines = outputStream.getLines();
 		elapsedTime = System.currentTimeMillis() - startTime;
-		Activator.Tracer.traceInfo("exec() result time " + elapsedTime);
+		Activator.fTracer.traceInfo("exec() result time " + elapsedTime);
 
 		if (outputStream.isAlive() || outputStream.isAlive()) {
 			System.err.println("exec() outputStream alive ");
 		}
 
 		for (String s : outputLines) {
-			Activator.Tracer.traceInfo(">" + s);
+			Activator.fTracer.traceInfo(">" + s);
 		}
 
 		// Command 4
@@ -316,20 +316,20 @@ public class ShellCommandManager {
 			e.printStackTrace();
 		}
 		elapsedTime = System.currentTimeMillis() - startTime;
-		Activator.Tracer.traceInfo("exec() status " + status + ", elapsed time "
+		Activator.fTracer.traceInfo("exec() status " + status + ", elapsed time "
 						+ elapsedTime);
 
 		startTime = System.currentTimeMillis();
 		outputLines = outputStream.getLines();
 		elapsedTime = System.currentTimeMillis() - startTime;
-		Activator.Tracer.traceInfo("exec() result time " + elapsedTime);
+		Activator.fTracer.traceInfo("exec() result time " + elapsedTime);
 
 		if (outputStream.isAlive() || outputStream.isAlive()) {
 			System.err.println("exec() outputStream alive ");
 		}
 
 		for (String s : outputLines) {
-			Activator.Tracer.traceInfo(">" + s);
+			Activator.fTracer.traceInfo(">" + s);
 		}
 
 		// Command 2
@@ -340,7 +340,7 @@ public class ShellCommandManager {
 		// cannot be resized by list.add or list.remove
 		// command = Arrays.asList(cmd2);
 		try {
-			Activator.Tracer.traceInfo("exec() status " + manager.execute(outputStream2, errorStream2, true));
+			Activator.fTracer.traceInfo("exec() status " + manager.execute(outputStream2, errorStream2, true));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -350,7 +350,7 @@ public class ShellCommandManager {
 		}
 		outputLines = outputStream2.getLines();
 		for (String s : outputLines) {
-			Activator.Tracer.traceInfo(">" + s);
+			Activator.fTracer.traceInfo(">" + s);
 		}
 
 	}

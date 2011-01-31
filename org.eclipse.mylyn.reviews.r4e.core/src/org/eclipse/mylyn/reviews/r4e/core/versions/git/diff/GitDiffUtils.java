@@ -54,7 +54,7 @@ import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
-public class GitDiffUtils extends CompareUtils {
+public class GitDiffUtils {
 
 	/**
 	 * A copy of the non-accessible preference constant IPreferenceIds.REUSE_OPEN_COMPARE_EDITOR from the team ui plug
@@ -242,7 +242,6 @@ public class GitDiffUtils extends CompareUtils {
 	 * 
 	 * @param d
 	 */
-	@SuppressWarnings("restriction")
 	public static void showTwoWayFileDiff(final DiffContext d, Repository db) {
 		final GitCompareFileRevisionEditorInput in;
 

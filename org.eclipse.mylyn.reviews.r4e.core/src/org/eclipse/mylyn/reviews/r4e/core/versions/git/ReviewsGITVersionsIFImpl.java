@@ -208,7 +208,7 @@ public class ReviewsGITVersionsIFImpl implements ReviewsVersionsIF {
 	public void openCompareEditor(String aSession, R4EFileContext aContext) throws ReviewVersionsException {
 		// validate
 		if (aSession == null || aContext == null) {
-			Activator.Tracer.traceError("Invalid null argument(s) received");
+			Activator.fTracer.traceError("Invalid null argument(s) received");
 			return;
 		}
 
@@ -379,7 +379,7 @@ public class ReviewsGITVersionsIFImpl implements ReviewsVersionsIF {
 			IFile ifile = ResourceUtils.getWorkSpaceFile(absPath, project);
 			if (ifile == null) {
 				unresolvedFiles.add(absPath.toString());
-				Activator.Tracer.traceDebug("Unable to resolve file to the workspace: " + absPath);
+				Activator.fTracer.traceDebug("Unable to resolve file to the workspace: " + absPath);
 				continue;
 			}
 
@@ -467,7 +467,7 @@ public class ReviewsGITVersionsIFImpl implements ReviewsVersionsIF {
 				diffIndex.put(objects[1].getName(), diffContext);
 			} else {
 				// Unexpected
-				Activator.Tracer.traceError("Diff contains a blob with unexpected size: " + objects.length + ", for: "
+				Activator.fTracer.traceError("Diff contains a blob with unexpected size: " + objects.length + ", for: "
 						+ diffContext.getPath());
 			}
 		}
@@ -517,11 +517,6 @@ public class ReviewsGITVersionsIFImpl implements ReviewsVersionsIF {
 	}
 
 	/**
-	 * Get the directory from a path e.g. remove a file segment if present
-	 * 
-	 * @param directory
-	 * @return
-	 */
 	// private File getRepoDirectory(File directory) {
 	// File convertedDir = directory;
 	// if (!directory.isDirectory()) {
@@ -532,8 +527,6 @@ public class ReviewsGITVersionsIFImpl implements ReviewsVersionsIF {
 	// }
 	// return convertedDir;
 	// }
-
-	/**
 	 * @param project
 	 * @return
 	 */
@@ -711,7 +704,7 @@ public class ReviewsGITVersionsIFImpl implements ReviewsVersionsIF {
 				} catch (IOException e1) {
 					// proceed.
 				}
-				Activator.Tracer.traceError(sb.toString());
+				Activator.fTracer.traceError(sb.toString());
 				e.printStackTrace();
 			}
 

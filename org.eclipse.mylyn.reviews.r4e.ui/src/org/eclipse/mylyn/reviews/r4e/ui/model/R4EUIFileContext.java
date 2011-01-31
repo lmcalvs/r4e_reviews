@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -32,14 +30,11 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.ChangeReviewedStateAction;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.OpenEditorAction;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
-import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.FileContextProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
-import org.eclipse.ui.views.properties.IPropertyDescriptor;
-import org.eclipse.ui.views.properties.PropertyDescriptor;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 
 /**
@@ -57,70 +52,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * (value is ""icons/file.gif"")
 	 */
 	private static final String FILE_CONTEXT_ICON_FILE = "icons/file.gif";
-	
-    /**
-     * Field CHANGE_REVIEW_STATE_ACTION_NAME.
-     * (value is ""Mark/Unmark as completed"")
-     */
-    private static final String CHANGE_REVIEW_STATE_ACTION_NAME = "Mark/Unmark as completed";
-    
-    /**
-     * Field CHANGE_REVIEW_STATE_ACTION_TOOLTIP.
-     * (value is ""Mark/Unmark this file as reviewed"")
-     */
-    private static final String CHANGE_REVIEW_STATE_ACTION_TOOLTIP = "Mark/Unmark this file as reviewed";
-	
-	/**
-	 * Field CHANGE_REVIEW_STATE_ACTION_ICON_FILE.
-	 * (value is ""icons/done.gif"")
-	 */
-	private static final String CHANGE_REVIEW_STATE_ACTION_ICON_FILE = "icons/done.gif";
-	
-    /**
-     * Field OPEN_EDITOR_ACTION_NAME.
-     * (value is ""Open file in editor"")
-     */
-    private static final String OPEN_EDITOR_ACTION_NAME = "Open file in editor";
-    
-    /**
-     * Field OPEN_EDITOR_ACTION_TOOLTIP.
-     * (value is ""Open the current file with the matching editor"")
-     */
-    private static final String OPEN_EDITOR_ACTION_TOOLTIP = "Open the current file with the matching editor";
-    
-	/**
-	 * Field OPEN_EDITOR_ACTION_ICON_FILE.
-	 * (value is ""icons/done.gif"")
-	 */
-	private static final String OPEN_EDITOR_ACTION_ICON_FILE = "icons/open_file.gif";
-	
-	/**
-	 * Field FILE_BASE_VERSION_ID. (value is ""fileContextElement.baseVersion"")
-	 */
-	private static final String FILE_BASE_VERSION_ID = "fileContextElement.baseVersion";
-
-	/**
-	 * Field FILE_BASE_VERSION_PROPERTY_DESCRIPTOR.
-	 */
-	private static final PropertyDescriptor FILE_BASE_VERSION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			FILE_BASE_VERSION_ID, "Base file");
-	
-	/**
-	 * Field FILE_TARGET_VERSION_ID. (value is ""fileContextElement.targetVersion"")
-	 */
-	private static final String FILE_TARGET_VERSION_ID = "fileContextElement.targetVersion";
-
-	/**
-	 * Field FILE_TARGET_VERSION_PROPERTY_DESCRIPTOR.
-	 */
-	private static final PropertyDescriptor FILE_TARGET_VERSION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			FILE_TARGET_VERSION_ID, "Target file");
-	
-	/**
-	 * Field DESCRIPTORS.
-	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { FILE_BASE_VERSION_PROPERTY_DESCRIPTOR, 
-		FILE_TARGET_VERSION_PROPERTY_DESCRIPTOR};
 	
 	
 	// ------------------------------------------------------------------------
@@ -143,20 +74,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	private R4EUIAnomalyContainer fAnomalyContainer = null;
 	
 	/**
-	 * Field fChangeReviewedStateAction.
-	 */
-	private static ChangeReviewedStateAction FChangeReviewedStateAction = null;
-	
-	/**
-	 * Field FContextOpenEditorAction.
-	 */
-	private static OpenEditorAction FContextOpenEditorAction = null;
-	
-	//Use to cache anomalies for this file context (used at startup)
-	/**
 	 * Field fAnomalies.
 	 */
-	private List<R4EAnomaly> fAnomalies = null;
+	private List<R4EAnomaly> fAnomalies = null;  //Used to cache anomalies for this file context (used at startup)
 	
 	
 	// ------------------------------------------------------------------------
@@ -179,6 +99,19 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+	
+	/**
+	 * Method getAdapter.
+	 * @param adapter Class
+	 * @return Object
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
+	 */
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
+		if (IR4EUIModelElement.class.equals(adapter)) return this;
+		if (IPropertySource.class.equals(adapter)) return new FileContextProperties(this);
+		return null;
+	}
 	
 	//Attributes
 	
@@ -251,7 +184,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
      * Method getNavigatorTooltip.
      * @param aTarget R4EFileVersion
      * @param aBase R4EFileVersion
-     * @return String
+	 * @return String
 	 */
     public static String getNavigatorTooltip(R4EFileVersion aTarget, R4EFileVersion aBase) {
 		
@@ -304,40 +237,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			getParent().checkToSetReviewed();
 			fireReviewStateChanged(this);
 		}
-	}
-	
-	
-	// Properties
-	
-	/**
-	 * Method getPropertyDescriptors.
-	 * @return IPropertyDescriptor[]
-	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
-	 */
-	@Override
-	public IPropertyDescriptor[] getPropertyDescriptors() {
-		return DESCRIPTORS;
-	}
-	
-	/**
-	 * Method getPropertyValue.
-	 * 
-	 * @param aId
-	 *            Object
-	 * @return Object
-	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
-	 */
-	@Override
-	public Object getPropertyValue(Object aId) {
-		if (FILE_TARGET_VERSION_ID.equals(aId)) {
-			return new R4EUIFileVersionSource(fFile.getTarget());
-		} else if (FILE_BASE_VERSION_ID.equals(aId)) {
-			if (null != fFile.getBase()) {
-				return new R4EUIFileVersionSource(fFile.getBase());
-			}
-			return R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE;
-		}
-		return null;
 	}
 	
 	
@@ -402,7 +301,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	/**
 	 * Method loadModelData.
 	 */
-	@Override
 	public void loadModelData() {
 		
 		//Restore resource data in serialization model
@@ -412,7 +310,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				final IFile baseFile = ResourceUtils.toIFile(baseFileVersion.getPlatformURI());
 				baseFileVersion.setResource(baseFile);
 			} catch (FileNotFoundException e) {
-				Activator.Tracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logInfo("Exception: " + e.toString(), e);
 				baseFileVersion.setResource(null);
 			}
@@ -424,7 +322,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				final IFile targetFile = ResourceUtils.toIFile(targetFileVersion.getPlatformURI());
 				targetFileVersion.setResource(targetFile);
 			} catch (FileNotFoundException e) {
-				Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
 				targetFileVersion.setResource(null);
 			}
@@ -505,37 +403,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	}
 	
 	
-	//Actions
-	
-	/**
-	 * Method createActions.
-	 * @param aView ReviewNavigatorView
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createActions(ReviewNavigatorView)
-	 */
-	@Override
-	public void createActions(ReviewNavigatorView aView) {
-		FChangeReviewedStateAction = new ChangeReviewedStateAction(aView, CHANGE_REVIEW_STATE_ACTION_NAME, CHANGE_REVIEW_STATE_ACTION_TOOLTIP, 
-				ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(CHANGE_REVIEW_STATE_ACTION_ICON_FILE)));
-		FContextOpenEditorAction = new OpenEditorAction(aView, OPEN_EDITOR_ACTION_NAME, OPEN_EDITOR_ACTION_TOOLTIP, 
-				ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(OPEN_EDITOR_ACTION_ICON_FILE)));
-	}
-
-	/**
-	 * Method getActions.
-	 * @param aView ReviewNavigatorView
-	 * @return List<Action>
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getActions(ReviewNavigatorView)
-	 */
-	@Override
-	public List<IAction> getActions(ReviewNavigatorView aView) {
-		if (null == FChangeReviewedStateAction) createActions(aView);
-		final List<IAction> actions = new ArrayList<IAction>();
-		if (!(R4EUIModelController.isDialogOpen()) && isOpen()) {
-			actions.add(FChangeReviewedStateAction);
-			if (null != getTargetFile()) actions.add(FContextOpenEditorAction);		
-		}
-		return actions;
-	}
+	//Commands
 
 	/**
 	 * Return true if the associated target file version can be compared with the associated base version
@@ -546,5 +414,25 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Method isOpenEditorCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isOpenEditorCmd()
+	 */
+	@Override
+	public boolean isOpenEditorCmd() {
+		return true;
+	}
+	
+	/**
+	 * Method isChangeReviewStateCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeReviewStateCmd()
+	 */
+	@Override
+	public boolean isChangeReviewStateCmd() {
+		return true;
 	}
 }

@@ -162,58 +162,62 @@ public class R4EReviewGroupInputDialog extends Dialog {
      * @param buttonId int
      * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
      */
-    @Override
+	@Override
 	protected void buttonPressed(int buttonId) {
-        if (buttonId == IDialogConstants.OK_ID) {
-        	
-        	//Validate Name
-        	String validateResult = validateEmptyInput(fGroupNameInputTextField);
-        	if (null != validateResult) {
-        		//Validate of input failed
-    			final ErrorDialog dialog = new ErrorDialog(null, "Error", "No input given for Group Name",
-        				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
-    			dialog.open();
-        		return;
-        	}
-            
-        	//Validate Folder
-        	validateResult = validateInput(fGroupFolderInputTextField);
-        	if (null != validateResult) {
-        		//Validate of input failed
-    			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Invalid input folder",
-        				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
-    			dialog.open();
-        		return;
-        	}
-        	validateResult = validateGroupExists(fGroupFolderInputTextField);
-        	if (null != validateResult) {
-        		//Validate of input failed
-    			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Invalid input folder",
-        				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
-    			dialog.open();
-        		return;
-        	}
-            
-            //Validate Description
-        	validateResult = validateEmptyInput(fGroupDescriptionInputTextField);
-        	if (null != validateResult) {
-        		//Validate of input failed
-    			final ErrorDialog dialog = new ErrorDialog(null, "Warning", "No input given for Group Description",
-        				new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.WARNING);
-    			dialog.open();
-        	}
-        	fGroupNameValue = fGroupNameInputTextField.getText();
-            fGroupFolderValue = fGroupFolderInputTextField.getText();
-        	fGroupDescriptionValue = fGroupDescriptionInputTextField.getText();
-        	
-        } else {
-        	fGroupNameValue = null;
-        	fGroupFolderValue = null;
-        	fGroupDescriptionValue = null;
-        }
-        super.buttonPressed(buttonId);
-    }
-    
+		if (buttonId == IDialogConstants.OK_ID) {
+			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+			//Validate Name
+			String validateResult = validateEmptyInput(fGroupNameInputTextField);
+			if (null != validateResult) {
+				//Validate of input failed
+				final ErrorDialog dialog = new ErrorDialog(null, "Error", "No input given for Group Name",
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+				dialog.open();
+				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+				return;
+			} 
+
+			//Validate Folder
+			validateResult = validateInput(fGroupFolderInputTextField);
+			if (null != validateResult) {
+				//Validate of input failed
+				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Invalid input folder",
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+				dialog.open();
+				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+				return;
+			}
+
+			validateResult = validateGroupExists(fGroupFolderInputTextField);
+			if (null != validateResult) {
+				//Validate of input failed
+				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Invalid input folder",
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+				dialog.open();
+				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+				return;
+			} 
+
+			//Validate Description
+			validateResult = validateEmptyInput(fGroupDescriptionInputTextField);
+			if (null != validateResult) {
+				//Validate of input failed
+				final ErrorDialog dialog = new ErrorDialog(null, "Warning", "No input given for Group Description",
+						new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.WARNING);
+				dialog.open();
+			}
+			fGroupNameValue = fGroupNameInputTextField.getText();
+			fGroupFolderValue = fGroupFolderInputTextField.getText();
+			fGroupDescriptionValue = fGroupDescriptionInputTextField.getText();
+		} else {
+			fGroupNameValue = null;
+			fGroupFolderValue = null;
+			fGroupDescriptionValue = null;
+		}
+		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+		super.buttonPressed(buttonId);
+	}
+
     /**
      * Method configureShell.
      * @param shell Shell
@@ -294,7 +298,7 @@ public class R4EReviewGroupInputDialog extends Dialog {
         }
         
         //create Group Description input text field
-        fGroupDescriptionInputTextField = new Text(composite, getInputTextStyle());
+        fGroupDescriptionInputTextField = new Text(composite, getInputTextStyle() | SWT.V_SCROLL);
         fGroupDescriptionInputTextField.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         composite.getShell().setMinimumSize(convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH), 
         		convertHorizontalDLUsToPixels(MINIMUM_DIALOG_AREA_HEIGHT));

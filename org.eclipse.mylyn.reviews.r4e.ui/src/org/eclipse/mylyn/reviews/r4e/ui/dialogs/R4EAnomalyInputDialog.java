@@ -26,7 +26,6 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -120,6 +119,7 @@ public class R4EAnomalyInputDialog extends Dialog {
 		fValidator = new EmptyInputValidator();
 	}
 	
+	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -132,15 +132,16 @@ public class R4EAnomalyInputDialog extends Dialog {
     @Override
 	protected void buttonPressed(int buttonId) {
         if (buttonId == IDialogConstants.OK_ID) {
-        	
+	    	this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+
         	//Validate Anomaly Title
         	String validateResult = validateEmptyInput(fAnomalyInputTextField);
         	if (null != validateResult) {
-        		//Validate of input failed
-    			final ErrorDialog dialog = new ErrorDialog(R4EUIModelController.getNavigatorView().getSite().getWorkbenchWindow().getShell(),  // $codepro.audit.disable methodChainLength
-    					"Error", "No input given for Anomaly Title", 
+        		//Validation of input failed
+    			final ErrorDialog dialog = new ErrorDialog(null, "Error", "No input given for Anomaly Title", 
     					new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
     			dialog.open();
+    			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
         		return;
         	}
         	fAnomalyValue = fAnomalyInputTextField.getText();
@@ -148,10 +149,11 @@ public class R4EAnomalyInputDialog extends Dialog {
         	//Validate Anomaly Comment
         	validateResult = validateEmptyInput(fCommentInputTextField);
         	if (null != validateResult) {
-        		//Validate of input failed
+        		//Validation of input failed
     			final ErrorDialog dialog = new ErrorDialog(null, "Error", "No input given for Anomaly Comment",
         				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
     			dialog.open();
+    			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
         		return;
         	}
         	fCommentValue = fCommentInputTextField.getText();
@@ -160,6 +162,7 @@ public class R4EAnomalyInputDialog extends Dialog {
         	fAnomalyValue = null;
         	fCommentValue = null;
         }
+		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
         super.buttonPressed(buttonId);
     }
     
@@ -213,7 +216,7 @@ public class R4EAnomalyInputDialog extends Dialog {
         }
         
         //create Comment input text field
-        fCommentInputTextField = new Text(composite, getInputTextStyle());
+        fCommentInputTextField = new Text(composite, getInputTextStyle() | SWT.V_SCROLL);
         fCommentInputTextField.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         composite.getShell().setMinimumSize(convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH), 
         		convertHorizontalDLUsToPixels(MINIMUM_DIALOG_AREA_HEIGHT));

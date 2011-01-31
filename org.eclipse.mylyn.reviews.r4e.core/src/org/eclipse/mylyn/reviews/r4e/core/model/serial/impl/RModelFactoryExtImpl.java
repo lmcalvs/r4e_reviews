@@ -533,7 +533,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			R4EItem firstItem = aParticipant.getAddedItems().get(0);
 			itemResource = firstItem.eResource();
 			if (itemResource == null) {
-				Activator.Tracer.traceError("Item found not associated to a Resource, addedBy: "
+				Activator.fTracer.traceError("Item found not associated to a Resource, addedBy: "
 						+ firstItem.getAddedById() + ", Description: " + firstItem.getDescription());
 			}
 		}

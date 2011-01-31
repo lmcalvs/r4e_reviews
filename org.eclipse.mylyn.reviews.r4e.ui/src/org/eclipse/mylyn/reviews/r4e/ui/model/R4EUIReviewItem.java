@@ -22,25 +22,29 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.CommitDescriptor;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.FileVersionInfo;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.ChangeReviewedStateAction;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.RemoveNodeAction;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
-import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewItemProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.views.properties.IPropertyDescriptor;
-import org.eclipse.ui.views.properties.PropertyDescriptor;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
  * @author lmcdubo
@@ -62,70 +66,13 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
 	 * (value is ""Delete Review Item"")
 	 */
-	private static final String REMOVE_ELEMENT_ACTION_NAME = "Delete Review Item";
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Delete Review Item";
 	
     /**
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this review item from its parent review"")
      */
-    private static final String REMOVE_ELEMENT_ACTION_TOOLTIP = "Remove this review item from its parent review";
-    
-    /**
-     * Field CHANGE_REVIEW_STATE_ACTION_NAME.
-     * (value is ""Mark/Unmark as completed"")
-     */
-    private static final String CHANGE_REVIEW_STATE_ACTION_NAME = "Mark/Unmark as completed";
-    
-    /**
-     * Field CHANGE_REVIEW_STATE_ACTION_TOOLTIP.
-     * (value is ""Mark/Unmark this review item as reviewed"")
-     */
-    private static final String CHANGE_REVIEW_STATE_ACTION_TOOLTIP = "Mark/Unmark this review item as reviewed";
-    
-	/**
-	 * Field CHANGE_REVIEW_STATE_ACTION_ICON_FILE.
-	 * (value is ""icons/done.gif"")
-	 */
-	private static final String CHANGE_REVIEW_STATE_ACTION_ICON_FILE = "icons/done.gif";
-	
-	/**
-	 * Field REVIEW_ITEM_AUTHOR_ID. (value is ""reviewItemElement.author"")
-	 */
-	private static final String REVIEW_ITEM_AUTHOR_ID = "reviewItemElement.author";
-
-	/**
-	 * Field REVIEW_ITEM_AUTHOR_PROPERTY_DESCRIPTOR.
-	 */
-	private static final PropertyDescriptor REVIEW_ITEM_AUTHOR_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			REVIEW_ITEM_AUTHOR_ID, R4EUIConstants.AUTHOR_LABEL);
-	
-	/**
-	 * Field REVIEW_ITEM_PROJECT_ID. (value is ""reviewItemElement.project"")
-	 */
-	private static final String REVIEW_ITEM_PROJECT_ID = "reviewItemElement.project";
-
-	/**
-	 * Field REVIEW_ITEM_PROJECT_PROPERTY_DESCRIPTOR.
-	 */
-	private static final PropertyDescriptor REVIEW_ITEM_PROJECT_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			REVIEW_ITEM_PROJECT_ID, R4EUIConstants.PROJECT_ID_LABEL);
-	
-	/**
-	 * Field REVIEW_ITEM_DESCRIPTION_ID. (value is ""reviewItemElement.description"")
-	 */
-	private static final String REVIEW_ITEM_DESCRIPTION_ID = "reviewItemElement.description";
-
-	/**
-	 * Field REVIEW_ITEM_DESCRIPTION_PROPERTY_DESCRIPTOR.
-	 */
-	private static final PropertyDescriptor REVIEW_ITEM_DESCRIPTION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			REVIEW_ITEM_DESCRIPTION_ID, R4EUIConstants.DESCRIPTION_LABEL);
-	
-	/**
-	 * Field DESCRIPTORS.
-	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { REVIEW_ITEM_AUTHOR_PROPERTY_DESCRIPTOR,
-		REVIEW_ITEM_PROJECT_PROPERTY_DESCRIPTOR, REVIEW_ITEM_DESCRIPTION_PROPERTY_DESCRIPTOR };
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this review item from its parent review";
 	
 	
 	// ------------------------------------------------------------------------
@@ -147,16 +94,6 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 */
 	private final List<R4EUIFileContext> fFileContexts;
 	
-	/**
-	 * Field fContextRemoveNodeAction.
-	 */
-	private static RemoveNodeAction FContextRemoveNodeAction = null;
-	
-	/**
-	 * Field fChangeReviewedStateAction.
-	 */
-	private static ChangeReviewedStateAction FChangeReviewedStateAction = null;
-	
 	
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -168,9 +105,11 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 * @param aItem R4EItem
 	 * @param aType int
 	 * @param aItemInfo Object
+	 * @param aFilename String
+
 	 */
-	public R4EUIReviewItem(IR4EUIModelElement aParent, R4EItem aItem, int aType, Object aItemInfo) {
-		super(aParent, getItemDisplayName(aType, aItemInfo), getItemDisplayTooltip(aType, aItemInfo));
+	public R4EUIReviewItem(IR4EUIModelElement aParent, R4EItem aItem, int aType, Object aItemInfo, String aFilename) {
+		super(aParent, getItemDisplayName(aType, aItemInfo, aFilename), getItemDisplayTooltip(aType, aItemInfo));
 		fItem = aItem;
 		fType = aType;
 		fFileContexts = new ArrayList<R4EUIFileContext>();
@@ -181,6 +120,19 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+	
+	/**
+	 * Method getAdapter.
+	 * @param adapter Class
+	 * @return Object
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
+	 */
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
+		if (IR4EUIModelElement.class.equals(adapter)) return this;
+		if (IPropertySource.class.equals(adapter)) return new ReviewItemProperties(this);
+		return null;
+	}
 	
 	//Attributes
 	
@@ -196,13 +148,14 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 * Method getItemDisplayName.
 	 * @param aType int
 	 * @param aItemInfo Object
+	 * @param aFilename String
 	 * @return String
 	 */
-	private static String getItemDisplayName(int aType, Object aItemInfo) {
+	private static String getItemDisplayName(int aType, Object aItemInfo, String aFilename) {
 		switch (aType) {
 			case R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE:
 			{
-				return "Resource: " + ((R4EItem)aItemInfo).getFileContextList().get(0).getTarget().getName();
+				return "Resource: " + aFilename;
 			}
 			
 			case R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT:
@@ -284,35 +237,6 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		return fItem;
 		
 	}
-	// Properties
-	
-	/**
-	 * Method getPropertyDescriptors.
-	 * @return IPropertyDescriptor[]
-	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
-	 */
-	@Override
-	public IPropertyDescriptor[] getPropertyDescriptors() {
-		return DESCRIPTORS;
-	}
-	
-	/**
-	 * Method getPropertyValue.
-	 * @param aId Object
-	 * @return Object
-	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
-	 */
-	@Override
-	public Object getPropertyValue(Object aId) {
-		if (REVIEW_ITEM_AUTHOR_ID.equals(aId)) { 
-			return fItem.getAddedById();
-		} else if (REVIEW_ITEM_PROJECT_ID.equals(aId)) {
-			return fItem.getProjectURIs();
-		} else if (REVIEW_ITEM_DESCRIPTION_ID.equals(aId)) {
-			return fItem.getDescription();
-		}
-		return null;
-	}
 	
 	
 	//Hierarchy
@@ -329,7 +253,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	
 	/**
 	 * Method hasChildren.
-	 * @return boolean 
+	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#hasChildren()
 	 */
 	@Override
@@ -360,7 +284,6 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	/**
 	 * Method loadModelData.
 	 */
-	@Override
 	public void loadModelData() {
 		final EList<R4EFileContext> files = fItem.getFileContextList();
 		if (null != files) {	
@@ -387,6 +310,78 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		fireAdd(aChildToAdd);
 	}
 
+	/**
+	 * Method createReviewItem
+	 * @param aBaseFile - the base file used for this review item (if any)
+	 * @param aTargetFile - the target file used for this review item
+	 * @return R4EUIFileContext
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException 
+	 */
+	public R4EUIFileContext createFileContext(IFile aBaseFile, IFile aTargetFile) throws ResourceHandlingException, OutOfSyncException  {
+		
+		final R4EFileContext fileContext = R4EUIModelController.FModelExt.createR4EFileContext(fItem);			
+		
+		//Create and set review item model element
+		final IProject project = aTargetFile.getProject();
+		ReviewsVersionsIF versionsIf = null;
+		
+		//  TODO: for now comparisons using the compare editor from the UI are not supported.  The compare input comes
+		// from the eGIT code in the R4E core plugin
+		if (null != aBaseFile) {
+			final R4EFileVersion baseVersion = R4EUIModelController.FModelExt.createR4EBaseFileVersion(fileContext);
+			
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(baseVersion, R4EUIModelController.getReviewer());
+			try {
+				versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(project);
+				final FileVersionInfo baseVersionInfo = versionsIf.getFileVersionInfo(aBaseFile);
+				baseVersion.setName(baseVersionInfo.getName());
+				baseVersion.setRepositoryPath(baseVersionInfo.getRepositoryPath());
+				baseVersion.setVersionID(baseVersionInfo.getId());
+			} catch (ReviewVersionsException e) {
+				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Version error detected while adding anomaly. " +
+						" Assuming no base version is present.",
+						new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
+				dialog.open();
+			} finally {
+				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+			}	
+		}
+		
+		final R4EFileVersion targetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(targetVersion, R4EUIModelController.getReviewer());
+		targetVersion.setResource(aTargetFile);
+		targetVersion.setPlatformURI(ResourceUtils.toPlatformURI(aTargetFile).toString());
+	
+		//File is in a Git repository
+		try {
+			versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(project);
+			final FileVersionInfo versionInfo = versionsIf.getFileVersionInfo(aTargetFile);
+			targetVersion.setName(versionInfo.getName());
+			targetVersion.setRepositoryPath(versionInfo.getRepositoryPath());
+			targetVersion.setVersionID(versionInfo.getId());
+		} catch (ReviewVersionsException e) {
+			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Version error detected while adding anomaly. " +
+					" Assuming no version control is present",
+    				new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
+			dialog.open();
+			
+			//File is not version-controlled
+			targetVersion.setName(aTargetFile.getName());
+			targetVersion.setRepositoryPath(aTargetFile.getFullPath().toOSString());
+			targetVersion.setVersionID(R4EUIConstants.FILE_NOT_IN_VERSION_CONTROL_MSG);
+		}
+		
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+		final R4EUIFileContext uiFile = new R4EUIFileContext(this, fileContext);
+		addChildren(uiFile);
+		return uiFile;
+	}
 	
 	/**
 	 * Method removeChildren.
@@ -437,36 +432,45 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	}
 	
 	
-	//Actions
+	//Commands
 	
 	/**
-	 * Method createActions.
-	 * @param aView ReviewNavigatorView
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createActions(ReviewNavigatorView)
+	 * Method isChangeReviewStateCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeReviewStateCmd()
 	 */
 	@Override
-	public void createActions(ReviewNavigatorView aView) {
-		FContextRemoveNodeAction = new RemoveNodeAction(aView, REMOVE_ELEMENT_ACTION_NAME, REMOVE_ELEMENT_ACTION_TOOLTIP,
-				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
-		FChangeReviewedStateAction = new ChangeReviewedStateAction(aView, CHANGE_REVIEW_STATE_ACTION_NAME, CHANGE_REVIEW_STATE_ACTION_TOOLTIP, 
-				ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(CHANGE_REVIEW_STATE_ACTION_ICON_FILE)));
+	public boolean isChangeReviewStateCmd() {
+		return true;
 	}
-
-
+	
 	/**
-	 * Method getActions.
-	 * @param aView ReviewNavigatorView
-	 * @return List<Action>
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getActions(ReviewNavigatorView)
+	 * Method isRemoveElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isRemoveElementCmd()
 	 */
 	@Override
-	public List<IAction> getActions(ReviewNavigatorView aView) {
-		if (null == FContextRemoveNodeAction) createActions(aView);
-		final List<IAction> actions = new ArrayList<IAction>();
-		if (!(R4EUIModelController.isDialogOpen()) && isOpen()) {
-			actions.add(FContextRemoveNodeAction);
-			actions.add(FChangeReviewedStateAction);
-		}
-		return actions;
+	public boolean isRemoveElementCmd() {
+		return true;
+	}
+	
+	/**
+	 * Method getRemoveElementCmdName.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdName()
+	 */
+	@Override
+	public String getRemoveElementCmdName() {
+		return REMOVE_ELEMENT_COMMAND_NAME;
+	}
+	
+	/**
+	 * Method getRemoveElementCmdTooltip.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdTooltip()
+	 */
+	@Override
+	public String getRemoveElementCmdTooltip() {
+		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
 	}
 }

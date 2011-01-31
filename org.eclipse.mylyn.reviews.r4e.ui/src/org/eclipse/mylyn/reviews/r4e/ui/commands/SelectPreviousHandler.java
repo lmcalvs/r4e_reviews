@@ -42,6 +42,10 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class SelectPreviousHandler extends AbstractHandler {
 
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Method execute.
 	 * @param event ExecutionEvent
@@ -49,7 +53,6 @@ public class SelectPreviousHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	@Override
 	public Object execute(ExecutionEvent event) {
 
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
@@ -61,7 +64,7 @@ public class SelectPreviousHandler extends AbstractHandler {
 			
 			//If there is one, select it
 			if (null != previousElement) {
-			    Activator.Tracer.traceInfo("Select previous element " + previousElement.getName());
+			    Activator.Ftracer.traceInfo("Select previous element " + previousElement.getName());
 				final ISelection previousSelection = new StructuredSelection(previousElement);
 				view.getTreeViewer().setSelection(previousSelection);
 				

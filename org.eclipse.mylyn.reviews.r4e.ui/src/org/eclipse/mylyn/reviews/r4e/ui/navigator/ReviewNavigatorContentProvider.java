@@ -39,6 +39,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
  */
 public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4EUIModelListener {
 
+	// ------------------------------------------------------------------------
+	// Member variables
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Field fViewer.
 	 */
@@ -53,7 +57,6 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * Method dispose.
 	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
 	 */
-	@Override
 	public void dispose() { // $codepro.audit.disable emptyMethod
 	}
 	
@@ -63,7 +66,6 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @return Object[]
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(Object)
 	 */
-	@Override
 	public Object[] getChildren(Object aParentElement) {
 		final IR4EUIModelElement element = (IR4EUIModelElement)aParentElement;
 		final IR4EUIModelElement[] elements = element.getChildren();
@@ -76,7 +78,6 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @return Object
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(Object)
 	 */
-	@Override
 	public Object getParent(Object aElement) {
 		return ((IR4EUIModelElement)aElement).getParent();
 	}
@@ -87,7 +88,6 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @return boolean
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(Object)
 	 */
-	@Override
 	public boolean hasChildren(Object aElement) {
 		if (null != aElement) {
 			return ((IR4EUIModelElement)aElement).hasChildren();
@@ -101,7 +101,6 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @return Object[]
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getElements(Object)
 	 */
-	@Override
 	public Object[] getElements(Object aInputElement) {
 		return getChildren(aInputElement);
 	}
@@ -113,9 +112,8 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @param aNewInput Object
 	 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(Viewer, Object, Object)
 	 */
-	@Override
 	public void inputChanged(Viewer aViewer, Object aOldInput, Object aNewInput) {
-	    Activator.Tracer.traceInfo("Input changed");
+	    Activator.Ftracer.traceInfo("Input changed");
 		fViewer = (TreeViewer)aViewer;
 		if(null != aOldInput) {
 			removeListenerFrom((IR4EUIModelElement)aOldInput);
@@ -130,9 +128,8 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @param aEvent ReviewModelEvent
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelListener#addEvent(R4EUIModelEvent)
 	 */
-	@Override
 	public void addEvent(R4EUIModelEvent aEvent) {
-	    Activator.Tracer.traceInfo("Add event received for element " + 
+	    Activator.Ftracer.traceInfo("Add event received for element " + 
 	    		((IR4EUIModelElement)aEvent.receiver()).getName());
 		fViewer.refresh(((IR4EUIModelElement)aEvent.receiver()).getParent(), false);
 	}
@@ -142,9 +139,8 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @param aEvent ReviewModelEvent
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelListener#removeEvent(R4EUIModelEvent)
 	 */
-	@Override
 	public void removeEvent(R4EUIModelEvent aEvent) {
-	    Activator.Tracer.traceInfo("Remove event received for element " + 
+	    Activator.Ftracer.traceInfo("Remove event received for element " + 
 	    		((IR4EUIModelElement)aEvent.receiver()).getName());
 		fViewer.refresh(((IR4EUIModelElement)aEvent.receiver()).getParent(), false);
 	}
@@ -154,10 +150,9 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @param aEvent ReviewModelEvent
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelListener#changedEvent(R4EUIModelEvent)
 	 */
-	@Override
 	public void changedEvent(R4EUIModelEvent aEvent) {
 		final IR4EUIModelElement affectedObject = (IR4EUIModelElement)aEvent.receiver();
-	    Activator.Tracer.traceInfo("Changed event received for element " + affectedObject.getName());
+	    Activator.Ftracer.traceInfo("Changed event received for element " + affectedObject.getName());
 		if (affectedObject instanceof R4EUIReviewGroup || affectedObject instanceof R4EUIReview) {
 			
 			//Open or Close review or review group

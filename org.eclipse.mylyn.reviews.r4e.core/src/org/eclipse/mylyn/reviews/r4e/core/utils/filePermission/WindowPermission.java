@@ -51,7 +51,7 @@ public class WindowPermission extends BaseSupportCommand implements
 		String ret = executeWithStringReturned(null, command, true /* wait */,
 				true /* ignore error */);
 		// Activator.Tracer.traceInfo("changePermission() ret: " + ret);
-		Activator.Tracer.traceInfo("Return msg from changePermission: " + ret);
+		Activator.fTracer.traceInfo("Return msg from changePermission: " + ret);
 		if (ret.length() > 0 && ret.contains(SUCCESS_MSG)) {
 			b = true;
 		}

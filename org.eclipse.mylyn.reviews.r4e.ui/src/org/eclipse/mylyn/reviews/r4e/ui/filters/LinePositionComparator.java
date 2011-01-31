@@ -33,6 +33,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
  */
 public class LinePositionComparator extends ViewerComparator {
 
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Method compare.
 	 * @param viewer Viewer

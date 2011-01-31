@@ -150,14 +150,16 @@ public class EditorProxy {
 	}
 
 	/**
+	 * Method traceException.
 	 * @param e
 	 */
 	private static void traceException(Exception e) {
-		Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		Activator.getDefault().logError("Exception: " + e.toString(), e);
 	}
 
 	/**
+	 * Method openCompareEditor.
 	 * @param context
 	 * @throws FileNotFoundException
 	 * @throws ReviewVersionsException
@@ -193,7 +195,7 @@ public class EditorProxy {
 		//Check if file exists in workspace
 		if (null != aFile) {
 				//Open the editor on the target file
-				Activator.Tracer.traceInfo("Open workspace file " + aFile.getName() + " with single-mode editor");
+				Activator.Ftracer.traceInfo("Open workspace file " + aFile.getName() + " with single-mode editor");
 				editor = IDE.openEditor(aPage, aFile);
 		/*} 
 		 TODO:  This is not supported for now
@@ -227,7 +229,7 @@ public class EditorProxy {
 	 * @param aTargetFile IFile
 	 */
 	@SuppressWarnings("unused")
-	private static void openCompareEditor(IWorkbenchPage aPage, URI aBaseFileURI, IFile aTargetFile, 
+	private static void openCompareEditor(IWorkbenchPage aPage, URI aBaseFileURI, IFile aTargetFile,  // $codepro.audit.disable unusedMethod
 			boolean aTargetFileEditable, int selectionIndex) {
 		
 		//Reuse editor if it is already open on the same input
@@ -250,7 +252,7 @@ public class EditorProxy {
 		    input = new R4ECompareEditorInput(config, ancestor, left, right);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE);   // Adjust the compare title
 
-			Activator.Tracer.traceInfo("Open compare editor on files " + left.getName() + " (Target) and "
+			Activator.Ftracer.traceInfo("Open compare editor on files " + left.getName() + " (Target) and "
 					+ right.getName() + " (Base)");
 			CompareUI.openCompareEditor(input, true);
 		}

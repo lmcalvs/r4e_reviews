@@ -19,8 +19,11 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.properties;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipant;
@@ -30,8 +33,10 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -50,13 +55,23 @@ public class ParticipantTabPropertySection extends AbstractPropertySection {
 	/**
 	 * Field fParticipant.
 	 */
-	private R4EUIParticipant fParticipant;
+	private ParticipantProperties fParticipantProps;
 	
 	//Properties
 	/**
 	 * Field FIdText.
 	 */
 	protected static Text FIdText = null;
+	
+	/**
+	 * Field FNumItemsText.
+	 */
+	protected static Text FNumItemsText = null;
+	
+	/**
+	 * Field FNumAnomaliesText.
+	 */
+	protected static Text FNumAnomaliesText = null;
 	
 	/**
 	 * Field FNumCommentsText.
@@ -85,12 +100,14 @@ public class ParticipantTabPropertySection extends AbstractPropertySection {
 	   
 	    //Author (read-only)
 	    FIdText = widgetFactory.createText(composite, "");
+	    FIdText.setEditable(false);
+	    FIdText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
 	    FIdText.setLayoutData(data);
-	    FIdText.setEditable(false);
+
 
 	    final CLabel idLabel = widgetFactory.createCLabel(composite, R4EUIConstants.ID_LABEL);
 	    data = new FormData();
@@ -99,13 +116,49 @@ public class ParticipantTabPropertySection extends AbstractPropertySection {
 	    data.top = new FormAttachment(FIdText, 0, SWT.CENTER);
 	    idLabel.setLayoutData(data);
 	    
-	    //Number of Comments (read-only)
-	    FNumCommentsText = widgetFactory.createText(composite, "");
-	    FNumCommentsText.setEditable(false);
+	    //Number of Review Items added (read-only)
+	    FNumItemsText = widgetFactory.createText(composite, "");
+	    FNumItemsText.setEditable(false);
+	    FNumItemsText.setEnabled(false);
+	    FNumItemsText.setBackground(Display.getDefault().getSystemColor( SWT.COLOR_WIDGET_LIGHT_SHADOW));
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(FIdText, ITabbedPropertyConstants.VSPACE);
+	    FNumItemsText.setLayoutData(data);
+	
+	    final CLabel numItemsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.NUM_ITEMS_LABEL);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, 0);
+	    data.right = new FormAttachment(FNumItemsText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(FNumItemsText, 0, SWT.CENTER);
+	    numItemsLabel.setLayoutData(data);
+	    
+	    //Number of Anomalies added (read-only)
+	    FNumAnomaliesText = widgetFactory.createText(composite, "");
+	    FNumAnomaliesText.setEditable(false);
+	    FNumAnomaliesText.setEnabled(false);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+	    data.top = new FormAttachment(FNumItemsText, ITabbedPropertyConstants.VSPACE);
+	    FNumAnomaliesText.setLayoutData(data);
+	
+	    final CLabel numAnomaliesLabel = widgetFactory.createCLabel(composite, R4EUIConstants.NUM_ANOMALIES_LABEL);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, 0);
+	    data.right = new FormAttachment(FNumAnomaliesText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(FNumAnomaliesText, 0, SWT.CENTER);
+	    numAnomaliesLabel.setLayoutData(data);
+	    
+	    //Number of Comments added (read-only)
+	    FNumCommentsText = widgetFactory.createText(composite, "");
+	    FNumCommentsText.setEditable(false);
+	    FNumCommentsText.setEnabled(false);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+	    data.top = new FormAttachment(FNumAnomaliesText, ITabbedPropertyConstants.VSPACE);
 	    FNumCommentsText.setLayoutData(data);
 	
 	    final CLabel numCommentsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.NUM_COMMENTS_LABEL);
@@ -130,7 +183,7 @@ public class ParticipantTabPropertySection extends AbstractPropertySection {
 		//Get model element selected
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((StructuredSelection)aSelection).getFirstElement();
 		if (null != element && element instanceof R4EUIParticipant) {
-			fParticipant = (R4EUIParticipant)element;
+			fParticipantProps = (ParticipantProperties) ((R4EUIParticipant)element).getAdapter(IPropertySource.class);
 			refresh();
 		}
 	}
@@ -141,8 +194,22 @@ public class ParticipantTabPropertySection extends AbstractPropertySection {
 	 */
 	@Override
 	public void refresh() {
-		final R4EParticipant modelUser = fParticipant.getParticipant();
+		final R4EParticipant modelUser = ((R4EUIParticipant)fParticipantProps.getElement()).getParticipant();
 		FIdText.setText(modelUser.getId());
-		FNumCommentsText.setText(Integer.valueOf(modelUser.getAddedComments().size()).toString());
+		FNumItemsText.setText(String.valueOf(modelUser.getAddedItems().size()));
+
+		int numAnomalies = 0;
+		int numComments = 0;
+		final EList<R4EComment> comments = modelUser.getAddedComments();
+		final int commentsSize = comments.size();
+		for (int i = 0; i < commentsSize; i++) {
+			if (comments.get(i) instanceof R4EAnomaly) {
+				++numAnomalies;
+			} else {
+				++numComments;
+			}
+		}
+		FNumAnomaliesText.setText(String.valueOf(numAnomalies));
+		FNumCommentsText.setText(String.valueOf(numComments));
 	}
 }

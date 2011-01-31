@@ -46,12 +46,21 @@ import org.eclipse.swt.widgets.Text;
  */
 public class R4ECommentInputDialog extends Dialog {
 
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Field MINIMUM_DIALOG_AREA_HEIGHT.
 	 * (value is 150)
 	 */
 	private static final int MINIMUM_DIALOG_AREA_HEIGHT = 150;
 
+	
+	// ------------------------------------------------------------------------
+	// Member variables
+	// ------------------------------------------------------------------------
+	
     /**
      * The title of the dialog.
      */
@@ -101,6 +110,7 @@ public class R4ECommentInputDialog extends Dialog {
 		fValidator = new EmptyInputValidator();
 	}
 	
+	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -113,20 +123,22 @@ public class R4ECommentInputDialog extends Dialog {
     @Override
 	protected void buttonPressed(int buttonId) {
         if (buttonId == IDialogConstants.OK_ID) {
-        	
+	    	this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
         	//Validate Name
         	final String validateResult = validateEmptyInput(fInputTextField);
         	if (null != validateResult) {
-        		//Validate of input failed
+        		//Validation of input failed
     			final ErrorDialog dialog = new ErrorDialog(null, "Error", "No input given for Comment",
         				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
     			dialog.open();
-        		return;
+    			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+    			return;
         	}
         	fCommentValue = fInputTextField.getText();
         } else {
         	fCommentValue = null;
         }
+		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
         super.buttonPressed(buttonId);
     }
     
@@ -165,7 +177,7 @@ public class R4ECommentInputDialog extends Dialog {
         }
         
         //create Comment input text field
-        fInputTextField = new Text(composite, getInputTextStyle());
+        fInputTextField = new Text(composite, getInputTextStyle() | SWT.V_SCROLL);
         fInputTextField.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         composite.getShell().setMinimumSize(convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH), 
         		convertHorizontalDLUsToPixels(MINIMUM_DIALOG_AREA_HEIGHT));

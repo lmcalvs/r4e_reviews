@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -56,7 +57,7 @@ public class CommentTabPropertySection extends AbstractPropertySection implement
 	/**
 	 * Field fComment.
 	 */
-	private R4EUIComment fComment;
+	private CommentProperties fCommentProps;
 	
 	/**
 	 * Field FAuthorText.
@@ -112,6 +113,7 @@ public class CommentTabPropertySection extends AbstractPropertySection implement
 	    //Author (read-only)
 	    FAuthorText = widgetFactory.createText(composite, "");
 	    FAuthorText.setEditable(false);
+	    FAuthorText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -128,6 +130,7 @@ public class CommentTabPropertySection extends AbstractPropertySection implement
 	    //Creation Date (read-only)
 	    FCreationDateText = widgetFactory.createText(composite, "");
 	    FCreationDateText.setEditable(false);
+	    FCreationDateText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -151,12 +154,11 @@ public class CommentTabPropertySection extends AbstractPropertySection implement
 	    FDescriptionText.setLayoutData(data);
 	    FDescriptionText.addModifyListener(new ModifyListener() {			 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 			@SuppressWarnings("synthetic-access")
-			@Override
 			public void modifyText(ModifyEvent e) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EComment modelComment = fComment.getComment();
+						final R4EComment modelComment = ((R4EUIComment)fCommentProps.getElement()).getComment();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelComment, currentUser);
 						modelComment.setDescription(FDescriptionText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -191,7 +193,7 @@ public class CommentTabPropertySection extends AbstractPropertySection implement
 		//Get model element selected
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((StructuredSelection)aSelection).getFirstElement();
 		if (null != element && element instanceof R4EUIComment) {
-			fComment = (R4EUIComment)element;
+			fCommentProps = (CommentProperties) ((R4EUIComment)element).getAdapter(IPropertySource.class);
 			refresh();
 		}
 	}
@@ -203,7 +205,7 @@ public class CommentTabPropertySection extends AbstractPropertySection implement
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EComment modelComment = fComment.getComment();
+		final R4EComment modelComment = ((R4EUIComment)fCommentProps.getElement()).getComment();
 		FAuthorText.setText(modelComment.getUser().getId());
 		FCreationDateText.setText(modelComment.getCreatedOn().toString());
 		FDescriptionText.setText(modelComment.getDescription());
@@ -227,7 +229,6 @@ public class CommentTabPropertySection extends AbstractPropertySection implement
 	 * @param propId int
 	 * @see org.eclipse.ui.IPropertyListener#propertyChanged(Object, int)
 	 */
-	@Override
 	public void propertyChanged(Object source, int propId) {
 		setEnabledFields();
 	}

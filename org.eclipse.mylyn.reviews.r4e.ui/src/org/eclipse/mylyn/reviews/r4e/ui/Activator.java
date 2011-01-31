@@ -51,13 +51,13 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * Field Plugin.
 	 */
-	private static Activator Plugin; 	// The shared instance
+	private static Activator Fplugin; 	// The shared instance
 	
 	
 	/**
 	 * Field Tracer.
 	 */
-	public static Tracer Tracer;
+	public static Tracer Ftracer;
 	
 	
 	// ------------------------------------------------------------------------
@@ -76,32 +76,31 @@ public class Activator extends AbstractUIPlugin {
 	// Methods
 	// ------------------------------------------------------------------------
 	
-
 	/**
 	 * Method start.
-	 * @param context BundleContext
+	 * @param aContext BundleContext
 	 * @throws Exception
 	 * @see org.osgi.framework.BundleActivator#start(BundleContext)
 	 */
 	@Override
-	public void start(BundleContext context) throws Exception { // $codepro.audit.disable declaredExceptions, unnecessaryExceptions
-		super.start(context);
-		Plugin = this;
-		Tracer = new Tracer();
-		Tracer.traceDebug("plugin started");
+	public void start(BundleContext aContext) throws Exception { // $codepro.audit.disable declaredExceptions, unnecessaryExceptions
+		super.start(aContext);
+		Fplugin = this;
+		Ftracer = new Tracer();
+		Ftracer.traceDebug("plugin started");
 	}
 
 	/**
 	 * Method stop.
-	 * @param context BundleContext
+	 * @param aContext BundleContext
 	 * @throws Exception
 	 * @see org.osgi.framework.BundleActivator#stop(BundleContext)
 	 */
 	@Override
-	public void stop(BundleContext context) throws Exception { // $codepro.audit.disable declaredExceptions
-		Plugin = null;
-		super.stop(context);
-		Tracer.traceDebug("plugin stopped");
+	public void stop(BundleContext aContext) throws Exception { // $codepro.audit.disable declaredExceptions
+		Fplugin = null;
+		super.stop(aContext);
+		Ftracer.traceDebug("plugin stopped");
 	}
 
 	/**
@@ -109,34 +108,34 @@ public class Activator extends AbstractUIPlugin {
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
-		return Plugin;
+		return Fplugin;
 	}
 
 	/**
 	 * Method logError.
-	 * @param msg String
-	 * @param e Exception
+	 * @param aMsg String
+	 * @param ae Exception
 	 */
-	public void logError(String msg, Exception e) {
-		getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK, msg, e));
+	public void logError(String aMsg, Exception ae) {
+		getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK, aMsg, ae));
 	}
 	
 	/**
 	 * Method logWarning.
-	 * @param msg String
-	 * @param e Exception
+	 * @param aMsg String
+	 * @param ae Exception
 	 */
-	public void logWarning(String msg, Exception e) {
-		getLog().log(new Status(IStatus.WARNING, PLUGIN_ID, IStatus.OK, msg, e));
+	public void logWarning(String aMsg, Exception ae) {
+		getLog().log(new Status(IStatus.WARNING, PLUGIN_ID, IStatus.OK, aMsg, ae));
 	}
 	
 	/**
 	 * Method logInfo.
-	 * @param msg String
-	 * @param e Exception
+	 * @param aMsg String
+	 * @param ae Exception
 	 */
-	public void logInfo(String msg, Exception e) {
-		getLog().log(new Status(IStatus.INFO, PLUGIN_ID, IStatus.OK, msg, e));
+	public void logInfo(String aMsg, Exception ae) {
+		getLog().log(new Status(IStatus.INFO, PLUGIN_ID, IStatus.OK, aMsg, ae));
 	}
 	
 }

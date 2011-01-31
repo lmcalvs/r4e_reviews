@@ -30,6 +30,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.utils.WildcardFileFilter;
  */
 public class FolderInputValidator implements IInputValidator {
 
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Field FOLDER_VALIDATION_ERROR_MESSAGE.
 	 * (value is ""Folder does not exist"")
@@ -55,13 +59,16 @@ public class FolderInputValidator implements IInputValidator {
 	private static final String FOLDER_GROUP_EXISTS_VALIDATION_ERROR_MESSAGE = "Folder already contains a group file";
 	
 	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Method isValid.
 	 * @param newText String
 	 * @return String
 	 * @see org.eclipse.jface.dialogs.IInputValidator#isValid(String)
 	 */
-	@Override
 	public String isValid(String newText) {
 		if (null == newText || 0 == newText.length()) return FOLDER_VALIDATION_ERROR_MESSAGE;
 		final File folder = new File (newText);
@@ -74,7 +81,7 @@ public class FolderInputValidator implements IInputValidator {
 	 * @param newText String
 	 * @return String
 	 */
-	public String isGroupExists(String newText) {
+	public String isGroupExists(String newText) { // $codepro.audit.disable booleanMethodNamingConvention
 		final File dir = new File(newText);
 		final File[] files = dir.listFiles(new WildcardFileFilter(GROUP_WILDCARD_NAME));
 		 

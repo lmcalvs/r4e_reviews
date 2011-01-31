@@ -18,7 +18,11 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.utils;
 
+import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -34,6 +38,10 @@ import org.eclipse.swt.graphics.Image;
  * @version $Revision: 1.0 $
  */
 public class UIUtils {
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
 	
     /**
      * Load the current image and add it to the image registry
@@ -57,7 +65,7 @@ public class UIUtils {
      * @param e ResourceHandlingException
      */
     public static void displayResourceErrorDialog(ResourceHandlingException e) {
-		Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		Activator.getDefault().logError("Exception: " + e.toString(), e);
 		final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while changing element value",
 				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
@@ -69,11 +77,38 @@ public class UIUtils {
      * @param e OutOfSyncException
      */
     public static void displaySyncErrorDialog(OutOfSyncException e) {
-		Activator.Tracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		final ErrorDialog dialog = new ErrorDialog(null, "Error", "Synchronization error detected while changing element value.  " +
 				"Please refresh the review navigator view and try the command again",
 				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 		dialog.open();
 		// TODO later we will want to do this automatically
     }
+    
+    /**
+     * Method isFilterPreferenceSet.
+     * @param aFilterSet Object
+     * @return boolean
+     */
+    public static boolean isFilterPreferenceSet(Object aFilterSet) {
+    	if (null != aFilterSet && aFilterSet.toString().equals(R4EUIConstants.VALUE_TRUE_STR)) return true;
+    	return false;
+    }
+    
+    /**
+     * Method parseStringList.
+     * @param aStringList String
+     * @return List<String>
+     */
+    public static List<String> parseStringList(String aStringList) {
+        final List<String> stringArray = new ArrayList<String>();
+        if (null != aStringList) {
+        	final StringTokenizer st = new StringTokenizer(aStringList, File.pathSeparator + 
+        			System.getProperty("line.separator"));
+        	while (st.hasMoreElements()) {
+        		stringArray.add((String)st.nextElement());
+        	}
+        }
+        return stringArray;
+	}
 }

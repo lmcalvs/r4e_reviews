@@ -25,10 +25,19 @@ package org.eclipse.mylyn.reviews.r4e.ui.model;
  */
 public class R4EUIModelEvent {
 
+	// ------------------------------------------------------------------------
+	// Member variables
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Field fActedUpon.
 	 */
 	private final Object fActedUpon;
+	
+	
+	// ------------------------------------------------------------------------
+	// Constructors
+	// ------------------------------------------------------------------------
 	
 	/**
 	 * Constructor for ReviewModelEvent.
@@ -37,6 +46,11 @@ public class R4EUIModelEvent {
 	public R4EUIModelEvent(Object aReceiver) {
 		fActedUpon = aReceiver;
 	}
+	
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
 	
 	/**
 	 * Method receiver.

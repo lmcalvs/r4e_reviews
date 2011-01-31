@@ -28,6 +28,11 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
  */
 public class DialogPropertyTester extends PropertyTester {
 
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
+	
 	/**
 	 * Method test.
 	 * @param receiver Object
@@ -37,9 +42,7 @@ public class DialogPropertyTester extends PropertyTester {
 	 * @return boolean
 	 * @see org.eclipse.core.expressions.IPropertyTester#test(Object, String, Object[], Object)
 	 */
-	@Override
-	public boolean test(Object receiver, String property, Object[] args,
-			Object expectedValue) {
+	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 		return !(R4EUIModelController.isDialogOpen());
 	}
 }

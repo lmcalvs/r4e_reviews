@@ -32,6 +32,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment;
  */
 public class NavigatorElementComparator extends ViewerComparator {
 
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
     /**
      * Method compare.
      * @param viewer Viewer

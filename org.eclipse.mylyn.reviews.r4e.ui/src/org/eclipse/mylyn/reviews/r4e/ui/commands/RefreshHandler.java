@@ -42,14 +42,17 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class RefreshHandler extends AbstractHandler  {
 
-	/** // $codepro.audit.disable blockDepth
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
+	/**
 	 * Method execute.
 	 * @param event ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	@Override
 	public Object execute(ExecutionEvent event) {
 
 		try {
@@ -78,7 +81,7 @@ public class RefreshHandler extends AbstractHandler  {
 				R4EUIModelController.setActiveReview(null);
 			}
 		} catch (ResourceHandlingException e) {
-			Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while refreshing view ",
     				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
@@ -104,19 +107,19 @@ public class RefreshHandler extends AbstractHandler  {
 				refreshElement.open();
 			}
 		} catch (ResourceHandlingException e) {
-			Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while refreshing ",
     				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 			dialog.open();
 		} catch (ReviewVersionsException e) {
-			Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Version error detected while refreshing review item ",
     				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 			dialog.open();
 		} catch (FileNotFoundException e) {
-			Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 			final ErrorDialog dialog = new ErrorDialog(null, "Error", "File not found error detected while refreshing review item ",
     				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);

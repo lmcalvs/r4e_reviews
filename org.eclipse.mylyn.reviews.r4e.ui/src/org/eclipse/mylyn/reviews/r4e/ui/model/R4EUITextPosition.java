@@ -130,7 +130,6 @@ public class R4EUITextPosition implements IR4EUIPosition {
 	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition#setPositionInModel(R4EPosition)
 	 */
-	@Override
 	public void setPositionInModel(R4EPosition aModelPosition) throws ResourceHandlingException, OutOfSyncException {
 		fPosition = (R4ETextPosition)aModelPosition;
 		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fPosition, 
@@ -177,7 +176,7 @@ public class R4EUITextPosition implements IR4EUIPosition {
 				return;
 			} 
 		} catch (BadLocationException e) {
-			Activator.Tracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ").  " +
+			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ").  " +
 					"Setting text position to default values");
 			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 			fEndLine = fStartLine;
@@ -255,7 +254,6 @@ public class R4EUITextPosition implements IR4EUIPosition {
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition#isSameAs(IR4EUIPosition)
 	 */
-	@Override
 	public boolean isSameAs(IR4EUIPosition aPosition) {
 		if (fOffset == ((R4EUITextPosition)aPosition).getOffset() && 
 				fLength == ((R4EUITextPosition)aPosition).getLength()) return true;

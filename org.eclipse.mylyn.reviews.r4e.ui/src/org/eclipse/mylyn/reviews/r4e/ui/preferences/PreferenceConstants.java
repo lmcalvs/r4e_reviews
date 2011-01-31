@@ -25,6 +25,10 @@ package org.eclipse.mylyn.reviews.r4e.ui.preferences;
  */
 public class PreferenceConstants { // $codepro.audit.disable convertClassToInterface
 
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * The preferences description text
 	 */
@@ -55,4 +59,39 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	 */
 	public static final String P_REVIEW_GROUP_FILE_EXT = "*.xrer";
 	
+	/**
+	 * Field P_REVIEWS_ONLY_FILTER.
+	 * (value is ""reviewsOnlyFilter"")
+	 */
+	public static final String P_REVIEWS_ONLY_FILTER = "reviewsOnlyFilter";
+	
+	/**
+	 * Field P_REVIEWS_CURRENT_FILTER.
+	 * (value is ""reviewsCurrentFilter"")
+	 */
+	public static final String P_REVIEWS_CURRENT_FILTER = "reviewsCurrentFilter";
+	
+	/**
+	 * Field P_REVIEWS_MY_FILTER.
+	 * (value is ""reviewsMyFilter"")
+	 */
+	public static final String P_REVIEWS_MY_FILTER = "reviewsMyFilter";
+	
+	/**
+	 * Field P_PARTICIPANT_FILTER.
+	 * (value is ""participantFilter"")
+	 */
+	public static final String P_PARTICIPANT_FILTER = "participantFilter";
+	
+	/**
+	 * Field P_ANOMALIES_FILTER.
+	 * (value is ""anomaliesFilter"")
+	 */
+	public static final String P_ANOMALIES_FILTER = "anomaliesFilter";
+	
+	/**
+	 * Field P_REVIEWED_ITEMS_FILTER.
+	 * (value is ""reviewItemsFilter"")
+	 */
+	public static final String P_REVIEWED_ITEMS_FILTER = "reviewItemsFilter";
 }

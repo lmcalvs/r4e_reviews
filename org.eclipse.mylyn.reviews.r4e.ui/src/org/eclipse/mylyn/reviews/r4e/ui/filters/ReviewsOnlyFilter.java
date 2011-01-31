@@ -10,7 +10,7 @@
  * Description:
  * 
  * This class implements the Navigator View filter used to display the tree 
- * elements up to the review level
+ * elements down to the review level
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -29,6 +29,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
  * @version $Revision: 1.0 $
  */
 public class ReviewsOnlyFilter extends ViewerFilter  {
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
 	
 	/**
 	 * Method select.

@@ -25,11 +25,8 @@ import java.util.List;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -37,10 +34,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.AddChildNodeAction;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.R4EReviewGroupInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
-import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 
@@ -54,18 +49,6 @@ public class R4EUIElement extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
-	/**
-	 * Field ADD_ELEMENT_ACTION_NAME.
-	 * (value is ""Add Review Group"")
-	 */
-	private static final String ADD_ELEMENT_ACTION_NAME = "Add Review Group";
-	
-    /**
-     * Field ADD_ELEMENT_ACTION_TOOLTIP.
-     * (value is ""Add a new Review Group"")
-     */
-    private static final String ADD_ELEMENT_ACTION_TOOLTIP = "Add a new Review Group";
     
 	/**
 	 * Field ADD_REVIEW_GROUP_DIALOG_TITLE.
@@ -101,11 +84,6 @@ public class R4EUIElement extends R4EUIModelElement {
 	 */
 	private final List<R4EUIReviewGroup> fReviewGroups;
 	
-	/**
-	 * Field fMenuAddChildNodeAction.
-	 */
-	private static AddChildNodeAction FMenuAddChildNodeAction = null;
-	
 	
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -133,7 +111,7 @@ public class R4EUIElement extends R4EUIModelElement {
 	 * @throws ResourceHandlingException 
 	 */
 	@Override
-	public R4EReviewComponent createChildModelDataElement() throws ResourceHandlingException {
+	public R4EReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EReviewGroup tempReviewGroup = null;
 		R4EUIModelController.setDialogOpen(true);
@@ -201,7 +179,7 @@ public class R4EUIElement extends R4EUIModelElement {
 	 * @param aGroup R4EReviewGroup
 	 * @throws ResourceHandlingException 
 	 */
-	public void loadReviewGroup(R4EReviewGroup aGroup) throws ResourceHandlingException {
+	public void loadReviewGroup(R4EReviewGroup aGroup) {
 		final R4EUIReviewGroup addedChild = new R4EUIReviewGroup(this, aGroup, false);
 		addChildren(addedChild);
 	}
@@ -236,21 +214,10 @@ public class R4EUIElement extends R4EUIModelElement {
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
 
-		//Ask if we should add the reference to this review group in the preferences
-		final MessageDialog dialog = new MessageDialog(
-				null, "New Review Group", null,  groupName + " is a new review group.  Do you want to add it " +
-						"to the Preferences?",
-				MessageDialog.WARNING,
-				new String[] {"Yes", "No"},
-				R4EUIConstants.DIALOG_YES); // Yes is the default
-		final int result = dialog.open();
-
-		if (result == R4EUIConstants.DIALOG_YES) {
-			final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-    		preferenceStore.setValue(PreferenceConstants.P_FILE_PATH, 
-    				preferenceStore.getString(PreferenceConstants.P_FILE_PATH) +
-    				System.getProperty("line.separator") + reviewGroup.eResource().getURI().toFileString());
-		}  
+		final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+    	preferenceStore.setValue(PreferenceConstants.P_FILE_PATH, 
+    			preferenceStore.getString(PreferenceConstants.P_FILE_PATH) +
+    			System.getProperty("line.separator") + reviewGroup.eResource().getURI().toFileString());
 		return addedChild;
 	}
 	
@@ -316,32 +283,35 @@ public class R4EUIElement extends R4EUIModelElement {
 	}
 	
 	
-	//Actions
+	//Commands
 	
 	/**
-	 * Method createActions.
-	 * @param aView ReviewNavigatorView
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createActions(ReviewNavigatorView)
+	 * Method isAddChildElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isAddChildElementCmd()
 	 */
 	@Override
-	public void createActions(ReviewNavigatorView aView) {
-		FMenuAddChildNodeAction = new AddChildNodeAction(aView, ADD_ELEMENT_ACTION_NAME, ADD_ELEMENT_ACTION_TOOLTIP,
-				ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(R4EUIConstants.REVIEW_GROUP_ICON_FILE)), true);
+	public boolean isAddChildElementCmd() {
+		return true;
 	}
-
+	
 	/**
-	 * Method getActions.
-	 * @param aView ReviewNavigatorView
-	 * @return List<Action>
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getActions(ReviewNavigatorView)
+	 * Method getAddChildElementCmdName.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdName()
 	 */
 	@Override
-	public List<IAction> getActions(ReviewNavigatorView aView) {
-		if (null == FMenuAddChildNodeAction) createActions(aView);
-		final List<IAction> actions = new ArrayList<IAction>();
-		if (!(R4EUIModelController.isDialogOpen())) {
-			actions.add(FMenuAddChildNodeAction);
-		}
-		return actions;
+	public String getAddChildElementCmdName() {
+		return R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_NAME;
+	}
+	
+	/**
+	 * Method getAddChildElementCmdTooltip.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
+	 */
+	@Override
+	public String getAddChildElementCmdTooltip() {
+		return R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_TOOLTIP; 
 	}
 }

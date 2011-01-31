@@ -28,6 +28,10 @@ import org.eclipse.swt.widgets.TreeItem;
  */
 public class ReviewNavigatorTreeViewer extends TreeViewer {
 
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Constructor for ReviewNavigatorTreeViewer.
 	 * @param parent Composite

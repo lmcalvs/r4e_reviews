@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -54,7 +55,7 @@ public class FileContextTabPropertySection extends AbstractPropertySection {
 	/**
 	 * Field fFile.
 	 */
-	private R4EUIFileContext fFile;
+	private FileContextProperties fFileProps;
 	
 	/**
 	 * Field FBaseFileNameText.
@@ -141,6 +142,7 @@ public class FileContextTabPropertySection extends AbstractPropertySection {
 	    //File Name (read-only)
 	    FBaseFileNameText = aWidgetFactory.createText(aParent, "");
 	    FBaseFileNameText.setEditable(false);
+	    FBaseFileNameText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -156,6 +158,8 @@ public class FileContextTabPropertySection extends AbstractPropertySection {
 	
 	    //File Path (read-only)
 	    FBaseFilePathText = aWidgetFactory.createText(aParent, "");
+	    FBaseFilePathText.setEditable(false);
+	    FBaseFilePathText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -171,6 +175,8 @@ public class FileContextTabPropertySection extends AbstractPropertySection {
 	    
 	    //File Version (read-only)
 	    FBaseFileVersionText = aWidgetFactory.createText(aParent, "");
+	    FBaseFileVersionText.setEditable(false);
+	    FBaseFileVersionText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -196,6 +202,7 @@ public class FileContextTabPropertySection extends AbstractPropertySection {
 	    //File Name (read-only)
 	    FTargetFileNameText = aWidgetFactory.createText(aParent, "");
 	    FTargetFileNameText.setEditable(false);
+	    FTargetFileNameText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -212,6 +219,7 @@ public class FileContextTabPropertySection extends AbstractPropertySection {
 	    //File Path (read-only)
 	    FTargetFilePathText = aWidgetFactory.createText(aParent, "");
 	    FTargetFilePathText.setEditable(false);
+	    FTargetFilePathText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -228,6 +236,7 @@ public class FileContextTabPropertySection extends AbstractPropertySection {
 	    //File Version (read-only)
 	    FTargetFileVersionText = aWidgetFactory.createText(aParent, "");
 	    FTargetFileVersionText.setEditable(false);
+	    FTargetFileVersionText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -256,7 +265,7 @@ public class FileContextTabPropertySection extends AbstractPropertySection {
 		//Get model element selected
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((StructuredSelection)aSelection).getFirstElement();
 		if (null != element && element instanceof R4EUIFileContext) {
-			fFile = (R4EUIFileContext)element;
+			fFileProps = (FileContextProperties) ((R4EUIFileContext)element).getAdapter(IPropertySource.class);
 			refresh();
 		}
 	}
@@ -267,7 +276,7 @@ public class FileContextTabPropertySection extends AbstractPropertySection {
 	 */
 	@Override
 	public void refresh() {
-		final R4EFileContext modelFile = fFile.getFileContext();
+		final R4EFileContext modelFile = ((R4EUIFileContext)fFileProps.getElement()).getFileContext();
 		final R4EFileVersion baseVersion = modelFile.getBase();
 		if (null != modelFile.getBase()) {
 			FBaseFileNameText.setText(baseVersion.getName());

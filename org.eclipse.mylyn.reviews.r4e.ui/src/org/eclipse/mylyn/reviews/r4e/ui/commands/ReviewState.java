@@ -33,12 +33,20 @@ import org.eclipse.ui.ISources;
  */
 public class ReviewState extends AbstractSourceProvider {
 
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Field MY_STATE.
 	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.editors.commands.open"")
 	 */
 	public static final String MY_REVIEW_STATE = "org.eclipse.mylyn.reviews.r4e.ui.commands.review";
 	
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
 	
 	/**
 	 * Constructor for ReviewState.
@@ -51,7 +59,6 @@ public class ReviewState extends AbstractSourceProvider {
 	 * Method dispose.
 	 * @see org.eclipse.ui.ISourceProvider#dispose()
 	 */
-	@Override
 	public void dispose() { // $codepro.audit.disable emptyMethod
 	}
 
@@ -60,7 +67,6 @@ public class ReviewState extends AbstractSourceProvider {
 	 * @return Map<String,ReviewElement> 
 	 * @see org.eclipse.ui.ISourceProvider#getCurrentState()
 	 */
-	@Override
 	public Map<String, R4EUIReview> getCurrentState() {
 		final Map<String, R4EUIReview> map = new HashMap<String, R4EUIReview>(1, 1);
 		map.put(MY_REVIEW_STATE, R4EUIModelController.getActiveReview());
@@ -72,7 +78,6 @@ public class ReviewState extends AbstractSourceProvider {
 	 * @return String[] 
 	 * @see org.eclipse.ui.ISourceProvider#getProvidedSourceNames()
 	 */
-	@Override
 	public String[] getProvidedSourceNames() {
 		return new String[] { MY_REVIEW_STATE };
 	}

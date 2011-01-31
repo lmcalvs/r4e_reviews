@@ -19,15 +19,12 @@
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 
-import org.eclipse.jface.action.IAction;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
-import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -60,6 +57,12 @@ public interface IR4EUIModelElement {
 	 * @return String
 	 */
 	String getToolTip();
+	
+	/**
+	 * Method setToolTip.
+	 * @param aToolTip String
+	 */
+	void setToolTip(String aToolTip);
 	
 	/**
 	 * Get the element image
@@ -217,18 +220,71 @@ public interface IR4EUIModelElement {
 	void fireReviewStateChanged(Object aChanged);
 	
 	
-	//Actions
+	 //Commands
 	
 	/**
-	 * Method createActions.
-	 * @param aView ReviewNavigatorView
+	 * Method isAddLinkedAnomalyCmd.
+	 * @return boolean
 	 */
-     void createActions(ReviewNavigatorView aView);
-     
+	 boolean isAddLinkedAnomalyCmd();
+	 
 	/**
-	 * Method getActions.
-	 * @param aView ReviewNavigatorView
-	 * @return List<Action>
+	 * Method isOpenEditorCmd.
+	 * @return boolean
 	 */
-	 List<IAction> getActions(ReviewNavigatorView aView);
+	 boolean isOpenEditorCmd();
+	 
+	/**
+	 * Method isChangeReviewStateCmd.
+	 * @return boolean
+	 */	 
+	 boolean isChangeReviewStateCmd();
+	 
+	 /**
+	  * Method isOpenElementCmd.
+	  * @return boolean
+	  */
+	 boolean isOpenElementCmd();
+	 
+	/**
+	 * Method isCloseElementCmd.
+	 * @return boolean
+	 */
+	 boolean isCloseElementCmd();
+	 
+	/**
+	 * Method isAddChildElementCmd.
+	 * @return boolean
+	 */
+	 boolean isAddChildElementCmd();
+	 
+	/**
+	 * Method getAddChildElementCmdName.
+	 * @return String
+	 */
+	 String getAddChildElementCmdName();
+	 
+	/**
+	 * Method getAddChildElementCmdTooltip.
+	 * @return String
+	 */
+	 String getAddChildElementCmdTooltip();
+	 
+	/**
+	 * Method isRemoveElementCmd.
+	 * @return boolean
+	 */
+	 boolean isRemoveElementCmd();
+	 
+	/**
+	 * Method getRemoveElementCmdName.
+	 * @return String
+	 */
+	 String getRemoveElementCmdName();
+	 
+	/**
+	 * Method getRemoveElementCmdTooltip.
+	 * @return String
+	 */
+	 String getRemoveElementCmdTooltip();
 }

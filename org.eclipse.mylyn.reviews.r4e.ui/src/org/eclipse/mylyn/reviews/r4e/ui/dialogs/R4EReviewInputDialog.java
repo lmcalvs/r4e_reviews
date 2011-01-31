@@ -51,6 +51,11 @@ public class R4EReviewInputDialog extends Dialog {
 	 */
 	private static final int MINIMUM_DIALOG_AREA_HEIGHT = 150;
 
+	
+	// ------------------------------------------------------------------------
+	// Member variables
+	// ------------------------------------------------------------------------
+	
 	 /**
      * The title of the dialog.
      */
@@ -131,32 +136,34 @@ public class R4EReviewInputDialog extends Dialog {
     @Override
 	protected void buttonPressed(int buttonId) {
         if (buttonId == IDialogConstants.OK_ID) {
-        	
+	    	this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+
         	//Validate Review Name
         	String validateResult = validateEmptyInput(fReviewNameInputTextField);
         	if (null != validateResult) {
-        		//Validate of input failed
+        		//Validation of input failed
     			final ErrorDialog dialog = new ErrorDialog(null, "Error", "No input given for Review Name",
         				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
     			dialog.open();
-        		return;
+    			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+    			return;
         	}
         	fReviewNameValue = fReviewNameInputTextField.getText();
         	
         	//Validate Review Description
         	validateResult = validateEmptyInput(fReviewNameInputTextField);
         	if (null != validateResult) {
-        		//Validate of input failed
-    			final ErrorDialog dialog = new ErrorDialog(null, "Warning", "No input given for Review Description",
-        				new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.WARNING);
-    			dialog.open();
+        		//Validation of input failed
+        		final ErrorDialog dialog = new ErrorDialog(null, "Warning", "No input given for Review Description",
+        			new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.WARNING);
+        		dialog.open();
         	}
         	fReviewDescriptionValue = fReviewDescriptionInputTextField.getText();
-        	
         } else {
         	fReviewNameValue = null;
         	fReviewDescriptionValue = null;
         }
+		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
         super.buttonPressed(buttonId);
     }
     
@@ -210,7 +217,7 @@ public class R4EReviewInputDialog extends Dialog {
         }
         
         //create Review Description input text field
-        fReviewDescriptionInputTextField = new Text(composite, getInputTextStyle());
+        fReviewDescriptionInputTextField = new Text(composite, getInputTextStyle() | SWT.V_SCROLL);
         fReviewDescriptionInputTextField.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         composite.getShell().setMinimumSize(convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH), 
         		convertHorizontalDLUsToPixels(MINIMUM_DIALOG_AREA_HEIGHT));
