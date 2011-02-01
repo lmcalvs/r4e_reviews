@@ -117,6 +117,24 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final int DEFAULT_LINE_TAG_LENGTH = 28;
 	
+	/**
+	 * Field DIALOG_TITLE_ERROR.
+	 * (value is ""R4E Error"")
+	 */
+	public static final String DIALOG_TITLE_ERROR = "R4E Error";
+	
+	/**
+	 * Field DIALOG_TITLE_WARNING.
+	 * (value is ""R4E Warning"")
+	 */
+	public static final String DIALOG_TITLE_WARNING = "R4E Warning";
+	
+	/**
+	 * Field DIALOG_TITLE_INFO.
+	 * (value is ""R4E Info"")
+	 */
+	public static final String DIALOG_TITLE_INFO = "R4E Info";
+	
 	
 	//Tooltips
 	

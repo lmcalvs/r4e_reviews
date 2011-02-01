@@ -233,18 +233,11 @@ public class R4EUISelection extends R4EUIModelElement {
 				}			
 			}
 		} catch (ResourceHandlingException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while setting element as reviewed",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
+			UIUtils.displayResourceErrorDialog(e);
+
 		} catch (OutOfSyncException e) {
-			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Synchronization error detected setting element as reviewed" +
-					"Please close the reviewe and re-open to sync in content",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
-			// TODO later we will want to do this automatically
+			UIUtils.displaySyncErrorDialog(e);
+
 		}
 	}
 	

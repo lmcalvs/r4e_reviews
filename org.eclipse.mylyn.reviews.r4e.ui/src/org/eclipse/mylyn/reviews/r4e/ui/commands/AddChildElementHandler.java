@@ -21,9 +21,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -34,6 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
@@ -80,22 +78,13 @@ public class AddChildElementHandler extends AbstractHandler {
 				}
 			}
 		} catch (ResourceHandlingException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while creating element ",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
+			UIUtils.displayResourceErrorDialog(e);
 			
 			//Remove object if partially created
 			if (null != element && null != newElement) element.removeChildren(newElement);
 			
 		} catch (OutOfSyncException e) {
-			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Synchronization error detected while adding element.  " +
-					"Please refresh the review navigator view and try the command again",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
-			// TODO later we will want to do this automatically
+			UIUtils.displaySyncErrorDialog(e);
 
 			//Remove object if partially created
 			if (null != element && null != newElement) element.removeChildren(newElement);		

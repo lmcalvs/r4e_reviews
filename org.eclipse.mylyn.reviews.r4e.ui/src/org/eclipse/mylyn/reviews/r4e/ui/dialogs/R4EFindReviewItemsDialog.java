@@ -46,6 +46,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -166,7 +167,7 @@ public class R4EFindReviewItemsDialog extends Dialog {
 					//No files are found
 					Activator.Ftracer.traceWarning("No files found for this review item");
 					Activator.getDefault().logWarning("No files found for this review item", null);
-					final ErrorDialog dialog = new ErrorDialog(null, "Warning", "No files found for this review item.",
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING, "No files found for this review item.",
 							new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, null, null), IStatus.WARNING);
 					dialog.open();	
 				} else {
@@ -176,7 +177,7 @@ public class R4EFindReviewItemsDialog extends Dialog {
 						//No files are found
 						Activator.Ftracer.traceWarning("No files found for this review item");
 						Activator.getDefault().logWarning("No files found for this review item", null);
-						final ErrorDialog dialog = new ErrorDialog(null, "Warning", "No files found for this review item.",
+						final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING, "No files found for this review item.",
 								new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, null, null), IStatus.WARNING);
 						dialog.open();
 					} else {
@@ -241,24 +242,14 @@ public class R4EFindReviewItemsDialog extends Dialog {
 					}
 				}
 			} catch (ReviewVersionsException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logError("Exception: " + e.toString(), e);
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Version error detected while adding review item ",
-	    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-				dialog.open();
+				UIUtils.displayVersionErrorDialog(e);
+
 			} catch (ResourceHandlingException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logError("Exception: " + e.toString(), e);
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Resource error detected while adding review item ",
-	    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-				dialog.open();
+				UIUtils.displayResourceErrorDialog(e);
+
 			} catch (OutOfSyncException e) {
-				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Synchronization error detected while adding review item.  " +
-						"Please refresh the review navigator view and try the command again",
-	    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-				dialog.open();
-				// TODO later we will want to do this automatically
+				UIUtils.displaySyncErrorDialog(e);
+
 			} finally {
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				this.getButton(IDialogConstants.OK_ID).setEnabled(true);
@@ -305,11 +296,8 @@ public class R4EFindReviewItemsDialog extends Dialog {
     		applyDialogFont(composite);
 
     	} catch (ReviewVersionsException e) {
-    		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-    		Activator.getDefault().logError("Exception: " + e.toString(), e);
-    		final ErrorDialog dialog = new ErrorDialog(null, "Error", "Version error detected while getting review item ",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-    		dialog.open();
+			UIUtils.displayVersionErrorDialog(e);
+
     	}
     	return composite;
     }

@@ -30,6 +30,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.swt.graphics.Image;
 
@@ -67,7 +68,7 @@ public class UIUtils {
     public static void displayResourceErrorDialog(ResourceHandlingException e) {
 		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		Activator.getDefault().logError("Exception: " + e.toString(), e);
-		final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while changing element value",
+		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Resource error detected",
 				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 		dialog.open();
     }
@@ -78,11 +79,23 @@ public class UIUtils {
      */
     public static void displaySyncErrorDialog(OutOfSyncException e) {
 		Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		final ErrorDialog dialog = new ErrorDialog(null, "Error", "Synchronization error detected while changing element value.  " +
+		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Synchronization error detected" +
 				"Please refresh the review navigator view and try the command again",
 				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 		dialog.open();
 		// TODO later we will want to do this automatically
+    }
+    
+    /**
+     * Method displayVersionErrorDialog.
+     * @param e ReviewVersionsException
+     */
+    public static void displayVersionErrorDialog(ReviewVersionsException e) {
+    	Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+    	Activator.getDefault().logError("Exception: " + e.toString(), e);
+    	final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Version error detected",
+    			new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+    	dialog.open();
     }
     
     /**

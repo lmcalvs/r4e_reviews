@@ -23,14 +23,12 @@ import java.util.Iterator;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -61,18 +59,11 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 					Activator.Ftracer.traceInfo("Changing review state for element " + element.getName());
 					element.setReviewed(!(element.isReviewed()));
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					Activator.getDefault().logError("Exception: " + e.toString(), e);
-					final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while creating element ", // $codepro.audit.disable variableDeclaredInLoop
-		    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-					dialog.open();			
+					UIUtils.displayResourceErrorDialog(e);
+		
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					final ErrorDialog dialog = new ErrorDialog(null, "Error", "Synchronization error detected while adding element.  " + // $codepro.audit.disable variableDeclaredInLoop
-							"Please refresh the review navigator view and try the command again",
-		    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-					dialog.open();
-					// TODO later we will want to do this automatically 
+					UIUtils.displaySyncErrorDialog(e);
+
 				}
 			}
 		}

@@ -26,6 +26,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -170,7 +171,7 @@ public class R4EReviewGroupInputDialog extends Dialog {
 			String validateResult = validateEmptyInput(fGroupNameInputTextField);
 			if (null != validateResult) {
 				//Validate of input failed
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "No input given for Group Name",
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "No input given for Group Name",
 						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -181,7 +182,7 @@ public class R4EReviewGroupInputDialog extends Dialog {
 			validateResult = validateInput(fGroupFolderInputTextField);
 			if (null != validateResult) {
 				//Validate of input failed
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Invalid input folder",
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Invalid input folder",
 						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -191,7 +192,7 @@ public class R4EReviewGroupInputDialog extends Dialog {
 			validateResult = validateGroupExists(fGroupFolderInputTextField);
 			if (null != validateResult) {
 				//Validate of input failed
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Invalid input folder",
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Invalid input folder",
 						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -202,7 +203,7 @@ public class R4EReviewGroupInputDialog extends Dialog {
 			validateResult = validateEmptyInput(fGroupDescriptionInputTextField);
 			if (null != validateResult) {
 				//Validate of input failed
-				final ErrorDialog dialog = new ErrorDialog(null, "Warning", "No input given for Group Description",
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING, "No input given for Group Description",
 						new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.WARNING);
 				dialog.open();
 			}

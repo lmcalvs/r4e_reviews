@@ -318,7 +318,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		//Check if group already exists.  If so it cannot be recreated
 		for (R4EUIReview review : fReviews) {
 			if (review.getReview().getName().equals(reviewName)) {
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while creating new review ",
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Error while creating new review ",
 	    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "Review " +
 	    						reviewName + " already exists", null), IStatus.ERROR);
 				dialog.open();

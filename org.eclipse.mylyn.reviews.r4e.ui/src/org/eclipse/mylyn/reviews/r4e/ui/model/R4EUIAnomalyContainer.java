@@ -337,7 +337,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     		} catch (ReviewVersionsException e) {
     			Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
     			Activator.getDefault().logInfo("Exception: " + e.toString(), e);
-    			final ErrorDialog warningDialog = new ErrorDialog(null, "Info", 
+    			final ErrorDialog warningDialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_INFO, 
 						"Take note that the anomaly you are trying to add is on a review item that not in source control.",
         				new Status(IStatus.INFO, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.INFO);
     			warningDialog.open();

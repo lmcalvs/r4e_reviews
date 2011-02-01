@@ -31,11 +31,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -55,6 +52,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -239,19 +237,10 @@ public class AddAnomalyHandler extends AbstractHandler {
 					+ aUIPosition.toString());
 			
 		} catch (ResourceHandlingException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while adding anomaly ",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,  e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
+			UIUtils.displayResourceErrorDialog(e);
 			
 		} catch (OutOfSyncException e) {
-			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Synchronization error detected while adding anomaly.  " +
-					"Please refresh the review navigator view and try the command again",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
-			// TODO later we will want to do this automatically
+			UIUtils.displaySyncErrorDialog(e);
 		}
 	}
 	

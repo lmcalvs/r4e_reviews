@@ -21,9 +21,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -39,6 +36,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 
 /**
  * @author lmcdubo
@@ -69,18 +67,11 @@ public class AddLinkedAnomalyHandler extends AbstractHandler {
 					addLinkedAnomaly((R4EUISelection)element);
 					
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					Activator.getDefault().logError("Exception: " + e.toString(), e);
-					final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while adding linked anomaly ",
-		    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-					dialog.open();
+					UIUtils.displayResourceErrorDialog(e);
+
 				} catch (OutOfSyncException e) {				
-					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					final ErrorDialog dialog = new ErrorDialog(null, "Error", "Synchronization error detected while adding linked anomaly.  " +
-							"Please refresh the review navigator view and try the command again",
-		    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-					dialog.open();
-					// TODO later we will want to do this automatically
+					UIUtils.displaySyncErrorDialog(e);
+
 				}
 			}
 		}

@@ -341,7 +341,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			} catch (ReviewVersionsException e) {
 				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Version error detected while adding anomaly. " +
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Version error detected while adding anomaly. " +
 						" Assuming no base version is present.",
 						new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
 				dialog.open();
@@ -365,7 +365,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		} catch (ReviewVersionsException e) {
 			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Version error detected while adding anomaly. " +
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Version error detected while adding anomaly. " +
 					" Assuming no version control is present",
     				new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
 			dialog.open();

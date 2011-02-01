@@ -51,6 +51,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -91,21 +93,15 @@ public class OpenElementHandler extends AbstractHandler {
 				final StructuredSelection newSelection = new StructuredSelection(selection.getFirstElement());
 				R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
 			} catch (ResourceHandlingException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logError("Exception: " + e.toString(), e);
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while opening element",
-						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-				dialog.open();
+				UIUtils.displayResourceErrorDialog(e);
+
 			} catch (ReviewVersionsException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logError("Exception: " + e.toString(), e);
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Version error detected while opening element",
-						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-				dialog.open();
+				UIUtils.displayVersionErrorDialog(e);
+
 			} catch (FileNotFoundException e) {
 				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "File not found error detected while opening element",
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "File not found error detected while opening element",
 						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 				dialog.open();
 			}
