@@ -18,15 +18,11 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.SelectionProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -137,26 +133,23 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
-		if (aReviewed) {
-			if (fReviewed != aReviewed) {   //Reviewed state is changed
+		if (fReviewed != aReviewed) {   //Reviewed state is changed
+			fReviewed = aReviewed;
+			if (fReviewed) {
 				//Add delta to the reviewedContent for this user
 				addContentReviewed();
-				fReviewed = aReviewed;
-
+				
 				//Check to see if we should mark the parent reviewed as well
 				getParent().getParent().checkToSetReviewed();
-			}
-		} else {
-			if (fReviewed != aReviewed) {   //Reviewed state is changed
+			} else {
 				//Remove delta from the reviewedContent for this user
 				removeContentReviewed();
-				fReviewed = aReviewed;
-
+				
 				//Remove check on parent, since at least one children is not set anymore
-				getParent().getParent().setReviewed(aReviewed);
+				getParent().getParent().setReviewed(fReviewed);
 			}
+			fireReviewStateChanged(this);
 		}
-		fireReviewStateChanged(this);
 	}
 	
 	/**
@@ -168,19 +161,18 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public void setChildReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
-		if (aReviewed) {
-			if (fReviewed != aReviewed) {   //Reviewed state is changed
+		if (fReviewed != aReviewed) {   //Reviewed state is changed
+			fReviewed = aReviewed;
+			if (aReviewed) {
 				//Add delta to the reviewedContent for this user
 				addContentReviewed();
-			}
-		} else {
-			if (fReviewed != aReviewed) {   //Reviewed state is changed
+			} else {
 				//Remove delta from the reviewedContent for this user
 				removeContentReviewed();
 			}
+			fReviewed = aReviewed;
+			fireReviewStateChanged(this);
 		}
-		fReviewed = aReviewed;
-		fireReviewStateChanged(this);
 	}
 	
 	

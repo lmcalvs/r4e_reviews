@@ -249,9 +249,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method checkToSetReviewed.
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#checkToSetReviewed()
 	 */
-	public void checkToSetReviewed() { // $codepro.audit.disable emptyMethod
+	public void checkToSetReviewed() throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
 		// default implementation
 	}
 

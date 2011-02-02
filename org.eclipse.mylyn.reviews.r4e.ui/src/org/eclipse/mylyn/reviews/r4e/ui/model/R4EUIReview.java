@@ -238,6 +238,26 @@ public class R4EUIReview extends R4EUIModelElement {
 	}
 	
 	/**
+	 * Method setReviewed.
+	 * @param aReviewed boolean
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 */
+	@Override
+	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+		if (aReviewed) {
+			
+			//fReview.setState(ReviewState.COMPLETED); TODO uncomment after model is updated
+		} else {
+			//fReview.setState(ReviewState.IN_PROGRESS); TODO uncomment after model is updated
+		}
+		fReviewed = aReviewed;
+		//TODO maybe we want to set the element as disabled as well?
+		fireReviewStateChanged(this);
+	}
+	
+	/**
 	 * Close the model element (i.e. disable it)
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#close()
 	 */
@@ -456,6 +476,16 @@ public class R4EUIReview extends R4EUIModelElement {
 	
 	
 	//Commands
+	
+	/**
+	 * Method isChangeReviewStateCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeReviewStateCmd()
+	 */
+	@Override
+	public boolean isChangeReviewStateCmd() {
+		return true;
+	}
 	
 	/**
 	 * Method isOpenElementCmd.

@@ -100,8 +100,10 @@ public interface IR4EUIModelElement {
 	
 	/**
 	 * Checks if all the children of this parent are set as reviewed
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 */
-	void checkToSetReviewed();
+	void checkToSetReviewed() throws ResourceHandlingException, OutOfSyncException;
 	
 	/**
 	 * Open the model element (i.e. enable it)

@@ -162,22 +162,31 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
-		fReviewed = aReviewed;
-		if (fReviewed) {
-			//Also set the children
-			if (null != fSelectionContainer) {
-				final int length = fSelectionContainer.getChildren().length;
-				for (int i = 0; i < length; i++) {
-					fSelectionContainer.getChildren()[i].setChildReviewed(aReviewed);
+		if (fReviewed != aReviewed) {   //Reviewed state is changed
+			fReviewed = aReviewed;
+			if (fReviewed) {
+				//Add delta to the reviewedContent for this user
+				addContentReviewed();
+				
+				//Also set the children
+				if (null != fSelectionContainer) {
+					final int length = fSelectionContainer.getChildren().length;
+					for (int i = 0; i < length; i++) {
+						fSelectionContainer.getChildren()[i].setChildReviewed(aReviewed);
+					}
 				}
+				
+				//Check to see if we should mark the parent reviewed as well
+				getParent().checkToSetReviewed();
+			} else {
+				//Remove delta from the reviewedContent for this user
+				removeContentReviewed();
+				
+				//Remove check on parent, since at least one children is not set anymore
+				getParent().setReviewed(fReviewed);
 			}
-			getParent().checkToSetReviewed();
-		} else {
-			//Remove check on parent, since at least one children is not set anymore
-			getParent().setReviewed(aReviewed);
+			fireReviewStateChanged(this);
 		}
-
-		fireReviewStateChanged(this);
 	}
 	
     /**
@@ -208,22 +217,36 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public void setChildReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
-		if (null != fSelectionContainer) {
-			final int length = fSelectionContainer.getChildren().length;
-			for (int i = 0; i < length; i++) {
-				fSelectionContainer.getChildren()[i].setChildReviewed(aReviewed);
+		if (fReviewed != aReviewed) {   //Reviewed state is changed
+			fReviewed = aReviewed;
+			if (aReviewed) {
+				//Add delta to the reviewedContent for this user
+				addContentReviewed();
+				
+				//Also set the children
+				if (null != fSelectionContainer) {
+					final int length = fSelectionContainer.getChildren().length;
+					for (int i = 0; i < length; i++) {
+						fSelectionContainer.getChildren()[i].setChildReviewed(aReviewed);
+					}
+				}
+			} else {
+				//Remove delta from the reviewedContent for this user
+				removeContentReviewed();
 			}
+			fReviewed = aReviewed;
+			fireReviewStateChanged(this);
 		}
-		fReviewed = aReviewed;
-		fireReviewStateChanged(this);
 	}
 	
 	/**
 	 * Method checkToSetReviewed.
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#checkToSetReviewed()
 	 */
 	@Override
-	public void checkToSetReviewed() {
+	public void checkToSetReviewed() throws ResourceHandlingException, OutOfSyncException {
 		boolean allChildrenReviewed = true;
 		if (null != fSelectionContainer) {
 			final int length = fSelectionContainer.getChildren().length;
@@ -234,9 +257,49 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		//If all children are reviewed, mark the parent as reviewed as well
 		if (allChildrenReviewed) {
 			fReviewed = true;
+			addContentReviewed();
 			getParent().checkToSetReviewed();
 			fireReviewStateChanged(this);
 		}
+	}
+	
+	/**
+	 * Method addContentReviewed.
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 */
+	private void addContentReviewed() throws ResourceHandlingException, OutOfSyncException {
+		/* TODO uncomment after model is updated
+		//First get the current user
+		final R4EUIReview review = (R4EUIReview) getParent().getParent();
+		final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), true);
+		
+		//Add this selection to the reviewed content for this user
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(user, user.getId());
+		user.getReviewedContent().add(fFile.getId());
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		*/
+	}
+	
+	/**
+	 * Method removeContentReviewed.
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 */
+	private void removeContentReviewed() throws ResourceHandlingException, OutOfSyncException {
+		/* TODO uncomment after model is updated
+
+		//First get the current user
+		final R4EUIReview review = (R4EUIReview) getParent().getParent();
+		final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
+		
+		if (null != user) {
+			//Remove this selection from the reviewed content for this user
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(user, user.getId());
+			user.getReviewedContent().remove(fFile.getId());
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		}
+		*/
 	}
 	
 	
