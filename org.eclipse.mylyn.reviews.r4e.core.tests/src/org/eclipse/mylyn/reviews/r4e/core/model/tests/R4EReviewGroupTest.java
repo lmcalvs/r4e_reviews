@@ -397,7 +397,7 @@ public class R4EReviewGroupTest extends TestCase {
 		}
 
 		assertNotNull(review);
-		assertEquals(22, review.getIdsMap().size()); // 22 expected ids
+		assertEquals(30, review.getIdsMap().size()); // 30 expected ids
 
 		// Verify Anomaly, at least one expected
 		R4EAnomaly anomaly = (R4EAnomaly) review.getTopics().get(0);

@@ -1870,7 +1870,16 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_FILE_CONTEXT__ENABLED = R4E_REVIEW_COMPONENT__ENABLED;
+	int R4E_FILE_CONTEXT__ENABLED = R4EID_COMPONENT__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FILE_CONTEXT__ID = R4EID_COMPONENT__ID;
 
 	/**
 	 * The feature id for the '<em><b>Deltas</b></em>' containment reference list.
@@ -1879,7 +1888,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_FILE_CONTEXT__DELTAS = R4E_REVIEW_COMPONENT_FEATURE_COUNT + 0;
+	int R4E_FILE_CONTEXT__DELTAS = R4EID_COMPONENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Base</b></em>' containment reference.
@@ -1888,7 +1897,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_FILE_CONTEXT__BASE = R4E_REVIEW_COMPONENT_FEATURE_COUNT + 1;
+	int R4E_FILE_CONTEXT__BASE = R4EID_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' containment reference.
@@ -1897,7 +1906,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_FILE_CONTEXT__TARGET = R4E_REVIEW_COMPONENT_FEATURE_COUNT + 2;
+	int R4E_FILE_CONTEXT__TARGET = R4EID_COMPONENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>R4E File Context</em>' class.
@@ -1906,7 +1915,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_FILE_CONTEXT_FEATURE_COUNT = R4E_REVIEW_COMPONENT_FEATURE_COUNT + 3;
+	int R4E_FILE_CONTEXT_FEATURE_COUNT = R4EID_COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EDeltaImpl <em>R4E Delta</em>}' class.

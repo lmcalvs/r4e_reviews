@@ -34,7 +34,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface R4EFileContext extends R4EReviewComponent {
+public interface R4EFileContext extends R4EIDComponent {
 
 	/**
 	 * Returns the value of the '<em><b>Deltas</b></em>' containment reference list.
