@@ -195,7 +195,7 @@
         eType="#//R4EAnomaly"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EReviewComponent" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewComponent"/>
-  <eClassifiers xsi:type="ecore:EClass" name="R4EFileContext" eSuperTypes="#//R4EReviewComponent">
+  <eClassifiers xsi:type="ecore:EClass" name="R4EFileContext" eSuperTypes="#//R4EIDComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="deltas" upperBound="-1"
         eType="#//R4EDelta" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="base" eType="#//R4EFileVersion"

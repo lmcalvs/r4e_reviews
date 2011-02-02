@@ -45,7 +45,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *
  * @generated
  */
-public class R4EFileContextImpl extends R4EReviewComponentImpl implements R4EFileContext {
+public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileContext {
 	/**
 	 * The cached value of the '{@link #getDeltas() <em>Deltas</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
