@@ -22,7 +22,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.properties;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
@@ -30,8 +29,10 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -50,7 +51,7 @@ public class SelectionTabPropertySection extends AbstractPropertySection {
     /**
      * Field fPosition.
      */
-    private IR4EUIPosition fPosition;
+    private SelectionProperties fSelectionProps;
 	
 	/**
 	 * Field FPositionText.
@@ -80,12 +81,13 @@ public class SelectionTabPropertySection extends AbstractPropertySection {
 	    //Position (read-only)
 	    FPositionText = widgetFactory.createText(composite, "");
 	    FPositionText.setEditable(false);
+	    FPositionText.setEnabled(false);
+	    FPositionText.setBackground(Display.getDefault().getSystemColor( SWT.COLOR_WIDGET_LIGHT_SHADOW));
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
 	    FPositionText.setLayoutData(data);
-	    FPositionText.setEditable(false);
 
 	    final CLabel positionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.POSITION_LABEL);
 	    data = new FormData();
@@ -109,7 +111,7 @@ public class SelectionTabPropertySection extends AbstractPropertySection {
 		//Get model element selected
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((StructuredSelection)aSelection).getFirstElement();
 		if (null != element && element instanceof R4EUISelection) {
-			fPosition = ((R4EUISelection)element).getPosition();
+			fSelectionProps = (SelectionProperties) ((R4EUISelection)element).getAdapter(IPropertySource.class);
 			refresh();
 		}
 	}
@@ -120,8 +122,8 @@ public class SelectionTabPropertySection extends AbstractPropertySection {
 	 */
 	@Override
 	public void refresh() {
-		if (null != fPosition) {
-			FPositionText.setText(fPosition.toString());
+		if (null != ((R4EUISelection)fSelectionProps.getElement()).getPosition()) {
+			FPositionText.setText(((R4EUISelection)fSelectionProps.getElement()).getPosition().toString());
 		}
 	}
 }

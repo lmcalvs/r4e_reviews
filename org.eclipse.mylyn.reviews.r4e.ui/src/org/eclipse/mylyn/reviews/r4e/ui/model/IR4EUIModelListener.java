@@ -24,6 +24,10 @@ package org.eclipse.mylyn.reviews.r4e.ui.model;
 
 public interface IR4EUIModelListener {
 	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Method addEvent.
 	 * @param aEvent ReviewModelEvent

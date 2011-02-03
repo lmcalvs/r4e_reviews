@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -51,7 +52,7 @@ public class ReviewItemTabPropertySection extends AbstractPropertySection {
 	/**
 	 * Field fItem.
 	 */
-	private R4EUIReviewItem fItem;
+	private ReviewItemProperties fItemProps;
 	
 	/**
 	 * Field FAuthorText.
@@ -90,12 +91,14 @@ public class ReviewItemTabPropertySection extends AbstractPropertySection {
 	   
 	    //Author (read-only)
 	    FAuthorText = widgetFactory.createText(composite, "");
+	    FAuthorText.setEditable(false);
+	    FAuthorText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
 	    FAuthorText.setLayoutData(data);
-	    FAuthorText.setEditable(false);
+
 
 	    final CLabel authorLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AUTHOR_LABEL);
 	    data = new FormData();
@@ -106,11 +109,13 @@ public class ReviewItemTabPropertySection extends AbstractPropertySection {
 	    
 	    //ProjectId (read-only)
 	    FProjectIdList = widgetFactory.createList(composite, SWT.NONE);
+	    FProjectIdList.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(FAuthorText, ITabbedPropertyConstants.VSPACE);
 	    FProjectIdList.setLayoutData(data);
+
 
 	    final CLabel projectIdLabel = widgetFactory.createCLabel(composite, R4EUIConstants.PROJECT_ID_LABEL);
 	    data = new FormData();
@@ -118,15 +123,16 @@ public class ReviewItemTabPropertySection extends AbstractPropertySection {
 	    data.right = new FormAttachment(FProjectIdList, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(FProjectIdList, 0, SWT.CENTER);
 	    projectIdLabel.setLayoutData(data);
-	    
+
 	    //Description (read-only)
 	    FDescriptionText = widgetFactory.createText(composite, "");
+	    FDescriptionText.setEditable(false);
+	    FDescriptionText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(FProjectIdList, ITabbedPropertyConstants.VSPACE);
 	    FDescriptionText.setLayoutData(data);
-	    FDescriptionText.setEditable(false);
 
 	    final CLabel descriptionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DESCRIPTION_LABEL);
 	    data = new FormData();
@@ -150,7 +156,7 @@ public class ReviewItemTabPropertySection extends AbstractPropertySection {
 		//Get model element selected
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((StructuredSelection)aSelection).getFirstElement();
 		if (null != element && element instanceof R4EUIReviewItem) {
-			fItem = (R4EUIReviewItem)element;
+			fItemProps = (ReviewItemProperties) ((R4EUIReviewItem)element).getAdapter(IPropertySource.class);
 			refresh();
 		}
 	}
@@ -161,7 +167,7 @@ public class ReviewItemTabPropertySection extends AbstractPropertySection {
 	 */
 	@Override
 	public void refresh() {
-			final R4EItem modelItem = fItem.getItem();
+			final R4EItem modelItem = ((R4EUIReviewItem)fItemProps.getElement()).getItem();
 			FAuthorText.setText(modelItem.getAddedById());
 			FProjectIdList.setItems((String[]) modelItem.getProjectURIs().toArray());
 			FDescriptionText.setText(modelItem.getDescription());

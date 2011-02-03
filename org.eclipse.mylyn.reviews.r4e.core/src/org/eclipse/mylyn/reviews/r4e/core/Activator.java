@@ -40,7 +40,7 @@ public class Activator extends Plugin {
 	/**
 	 * Field Tracer.
 	 */
-	public static Tracer		Tracer		= new Tracer();
+	public static Tracer		fTracer		= new Tracer();
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -68,8 +68,8 @@ public class Activator extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		// super.start(context);
 		Plugin = this;
-		Tracer = new Tracer();
-		Tracer.traceDebug("plugin started: " + PLUGIN_ID);
+		fTracer = new Tracer();
+		fTracer.traceDebug("plugin started: " + PLUGIN_ID);
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class Activator extends Plugin {
 	public void stop(BundleContext context) throws Exception {
 		Plugin = null;
 		// super.stop(context);
-		Tracer.traceDebug("plugin stopped");
+		fTracer.traceDebug("plugin stopped");
 	}
 
 	/**

@@ -113,7 +113,7 @@ public class Common {
 					}
 				});
 		
-		Activator.Tracer.traceDebug("new Resourceset created: " + resourceSet);
+		Activator.fTracer.traceDebug("new Resourceset created: " + resourceSet);
 		return resourceSet;
 	}
 

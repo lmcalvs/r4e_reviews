@@ -37,12 +37,15 @@ import org.eclipse.swt.graphics.Image;
  */
 public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator {
 
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Method addListener.
 	 * @param listener ILabelProviderListener
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(ILabelProviderListener)
 	 */
-	@Override
 	public void addListener(ILabelProviderListener listener) { // $codepro.audit.disable emptyMethod
 	}
 
@@ -50,7 +53,6 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * Method dispose.
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
 	 */
-	@Override
 	public void dispose() { // $codepro.audit.disable emptyMethod
 	}
 
@@ -61,7 +63,6 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * @return boolean
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(Object, String)
 	 */
-	@Override
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
@@ -71,7 +72,6 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * @param listener ILabelProviderListener
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(ILabelProviderListener)
 	 */
-	@Override
 	public void removeListener(ILabelProviderListener listener) { // $codepro.audit.disable emptyMethod
 	}
 
@@ -82,7 +82,6 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * @return Image
 	 * @see org.eclipse.jface.viewers.ILabelDecorator#decorateImage(Image, Object)
 	 */
-	@Override
 	public Image decorateImage(Image aBaseImage, Object element) { // $codepro.audit.disable
 			 
 		if (((IR4EUIModelElement)element).isReviewed()) {
@@ -99,7 +98,6 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * @return String
 	 * @see org.eclipse.jface.viewers.ILabelDecorator#decorateText(String, Object)
 	 */
-	@Override
 	public String decorateText(String aText, Object aElement) {
 		if (isMyReview((IR4EUIModelElement)aElement) && aElement instanceof R4EUIReview) {
 			return "> " + aText;
@@ -113,7 +111,6 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * @return Font
 	 * @see org.eclipse.jface.viewers.IFontDecorator#decorateFont(Object)
 	 */
-	@Override
 	public Font decorateFont(Object aElement) { // $codepro.audit.disable
 		if (isMyReview((IR4EUIModelElement)aElement)) {
 		   return JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT);

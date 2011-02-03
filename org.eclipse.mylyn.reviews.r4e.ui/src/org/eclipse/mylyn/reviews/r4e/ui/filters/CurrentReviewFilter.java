@@ -9,8 +9,8 @@
  * 
  * Description:
  * 
- * This class implements the Navigator View filter used to display the tree 
- * elements up to the review level
+ * This class implements the Navigator View filter used to display only
+ * the currently open review and its descendants
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -31,6 +31,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
  */
 public class CurrentReviewFilter extends ViewerFilter  {
 	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Method select.
 	 * @param viewer Viewer
@@ -40,10 +44,30 @@ public class CurrentReviewFilter extends ViewerFilter  {
 	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (element instanceof R4EUIReview && element.equals(R4EUIModelController.getActiveReview())) {
-			return true;
-		} 
-		return isParentCurrentReview((IR4EUIModelElement)element);
+		
+		//When there is no active review, display all elements.  The filter will be re-applied 
+		//when a review becomes active
+		if (null != R4EUIModelController.getActiveReview()) {
+			if (isParentCurrentReview((IR4EUIModelElement)element)) return true;
+			return isChildrenCurrentReview((IR4EUIModelElement)element);
+		}
+		return true;
+	}
+	
+	/**
+	 * Checks if the children element contains the current participant
+	 * @param aCurrentElement - the element to filter on
+	 * @return true/false
+	 */
+	private boolean isChildrenCurrentReview(IR4EUIModelElement aCurrentElement) {
+		final int length = aCurrentElement.getChildren().length;
+		IR4EUIModelElement element = null;
+		for (int i = 0; i < length; i++) {
+			element = aCurrentElement.getChildren()[i];
+			if (!(element instanceof R4EUIReview)) return false;
+			if (((R4EUIReview)element).equals(R4EUIModelController.getActiveReview())) return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -61,9 +85,7 @@ public class CurrentReviewFilter extends ViewerFilter  {
 		}
 	
 		//Check if we are a participant for this review
-		if (((R4EUIReview)reviewParentElement).equals(R4EUIModelController.getActiveReview())) {
-			return true;
-		}
+		if (((R4EUIReview)reviewParentElement).equals(R4EUIModelController.getActiveReview())) return true;
 		return false;
 	}
 }

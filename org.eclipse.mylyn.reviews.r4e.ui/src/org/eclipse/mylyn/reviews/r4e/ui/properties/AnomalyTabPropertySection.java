@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -57,7 +58,7 @@ public class AnomalyTabPropertySection extends AbstractPropertySection implement
 	/**
 	 * Field fAnomaly.
 	 */
-	protected R4EUIAnomaly fAnomaly;
+	protected AnomalyProperties fAnomalyProps;
 	
 	/**
 	 * Field fPosition.
@@ -134,12 +135,11 @@ public class AnomalyTabPropertySection extends AbstractPropertySection implement
 	    FTitleText.setLayoutData(data);
 	    FTitleText.addModifyListener(new ModifyListener() {			 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 			@SuppressWarnings("synthetic-access")
-			@Override
 			public void modifyText(ModifyEvent e) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EAnomaly modelAnomaly = fAnomaly.getAnomaly();
+						final R4EAnomaly modelAnomaly = ((R4EUIAnomaly)fAnomalyProps.getElement()).getAnomaly();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 						modelAnomaly.setTitle(FTitleText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -162,6 +162,7 @@ public class AnomalyTabPropertySection extends AbstractPropertySection implement
 	    //Anomaly Author (read-only)
 	    FAuthorText = widgetFactory.createText(composite, "");
 	    FAuthorText.setEditable(false);
+	    FAuthorText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -178,6 +179,7 @@ public class AnomalyTabPropertySection extends AbstractPropertySection implement
 	    //Anomaly Creation Date (read-only)
 	    FCreationDateText = widgetFactory.createText(composite, "");
 	    FCreationDateText.setEditable(false);
+	    FCreationDateText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -194,6 +196,7 @@ public class AnomalyTabPropertySection extends AbstractPropertySection implement
 	    //Anomaly position (read-only)
 	    FPositionText = widgetFactory.createText(composite, "");
 	    FPositionText.setEditable(false);
+	    FPositionText.setEnabled(false);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -217,12 +220,11 @@ public class AnomalyTabPropertySection extends AbstractPropertySection implement
 	    FDescriptionText.setLayoutData(data);
 	    FDescriptionText.addModifyListener(new ModifyListener() {			 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 	    	@SuppressWarnings("synthetic-access")
-			@Override
-	    	public void modifyText(ModifyEvent e) {
+			public void modifyText(ModifyEvent e) {
 	    		if (!fRefreshInProgress) {
 	    			try {
 	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EAnomaly modelAnomaly = fAnomaly.getAnomaly();
+						final R4EAnomaly modelAnomaly = ((R4EUIAnomaly)fAnomalyProps.getElement()).getAnomaly();
 	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 	    				modelAnomaly.setDescription(FDescriptionText.getText());
 	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -257,7 +259,7 @@ public class AnomalyTabPropertySection extends AbstractPropertySection implement
 		//Get model element selected
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((StructuredSelection)aSelection).getFirstElement();
 		if (null != element && element instanceof R4EUIAnomaly) {
-			fAnomaly = (R4EUIAnomaly)element;
+			fAnomalyProps = (AnomalyProperties) ((R4EUIAnomaly)element).getAdapter(IPropertySource.class);
 			refresh();
 		}
 	}
@@ -269,11 +271,11 @@ public class AnomalyTabPropertySection extends AbstractPropertySection implement
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EAnomaly modelAnomaly = fAnomaly.getAnomaly();
+		final R4EAnomaly modelAnomaly = ((R4EUIAnomaly)fAnomalyProps.getElement()).getAnomaly();
 		FTitleText.setText(modelAnomaly.getTitle());
 		FAuthorText.setText(modelAnomaly.getUser().getId());
 		FCreationDateText.setText(modelAnomaly.getCreatedOn().toString());
-		fPosition = fAnomaly.getPosition();
+		fPosition = ((R4EUIAnomaly)fAnomalyProps.getElement()).getPosition();
 		if (null == fPosition) {
 			FPositionText.setText(R4EUIConstants.GLOBAL_ANOMALY_PROPERTY_VALUE);
 		} else {
@@ -300,7 +302,6 @@ public class AnomalyTabPropertySection extends AbstractPropertySection implement
 	 * @param propId int
 	 * @see org.eclipse.ui.IPropertyListener#propertyChanged(Object, int)
 	 */
-	@Override
 	public void propertyChanged(Object source, int propId) {
 		setEnabledFields();
 	}

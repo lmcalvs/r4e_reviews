@@ -363,15 +363,18 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			// associate item to resource set
 			associateToResourceSet(review, anItem);
 
+			// Get: Items
 			for (R4EItem item : items) {
 				EMap<R4EID, R4EIDComponent> idsMap = review.getIdsMap();
 				idsMap.put(item.getId(), item);
 				review.getReviewItems().add(item);
 
-				// Get deltas:
+				// Get: file contexts
 				EList<R4EFileContext> fileCtxt = item.getFileContextList();
 				for (Iterator<R4EFileContext> iterator = fileCtxt.iterator(); iterator.hasNext();) {
 					R4EFileContext r4eFileContext = iterator.next();
+					idsMap.put(r4eFileContext.getId(), r4eFileContext);
+					// Get: Deltas
 					EList<R4EDelta> deltas = r4eFileContext.getDeltas();
 					for (Iterator<R4EDelta> iterator2 = deltas.iterator(); iterator2.hasNext();) {
 						R4EDelta delta = iterator2.next();
@@ -533,7 +536,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			R4EItem firstItem = aParticipant.getAddedItems().get(0);
 			itemResource = firstItem.eResource();
 			if (itemResource == null) {
-				Activator.Tracer.traceError("Item found not associated to a Resource, addedBy: "
+				Activator.fTracer.traceError("Item found not associated to a Resource, addedBy: "
 						+ firstItem.getAddedById() + ", Description: " + firstItem.getDescription());
 			}
 		}
@@ -625,6 +628,17 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		item.getFileContextList().add(fileContext);
 		Resource resource = item.eResource();
 		resource.getContents().add(fileContext);
+
+		R4EUser user = (R4EUser) item.eContainer();
+		// Create an R4EID for the context
+		R4EID contextID = RModelFactoryExt.eINSTANCE.createR4EID();
+		contextID.setSequenceID(user.getSequenceIDCounterNext());
+		contextID.setUserID(user.getId());
+
+		// Associate new fileContext with ID
+		fileContext.setId(contextID);
+		// Register ID to idMap at the review level
+		user.getReviewInstance().getIdsMap().put(contextID, fileContext);
 
 		fWriter.saveResource(resource);
 

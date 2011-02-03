@@ -30,6 +30,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Method initializeDefaultPreferences.
 	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()

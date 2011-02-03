@@ -24,15 +24,23 @@
 package org.eclipse.mylyn.reviews.r4e.ui.preferences;
 
 import org.eclipse.jface.preference.*;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.FilePathEditor;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -44,7 +52,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 public class R4EPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 	// ------------------------------------------------------------------------
-	// Contants
+	// Constants
 	// ------------------------------------------------------------------------
 	
 	/**
@@ -85,6 +93,56 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	
 	
 	// ------------------------------------------------------------------------
+	// Member Variables
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Field fGroupNameText.
+	 */
+	private Text fGroupNameText = null;
+	
+	/**
+	 * Field fGroupDescriptionText.
+	 */
+	private Text fGroupDescriptionText = null;
+	
+	/**
+	 * Field fReviewsOnlyFilterButton.
+	 */
+	private Button fReviewsOnlyFilterButton = null;
+	
+	/**
+	 * Field fReviewCurrentFilterButton.
+	 */
+	private Button fReviewCurrentFilterButton = null;
+	
+	/**
+	 * Field fReviewMyFilterButton.
+	 */
+	//private Button fReviewMyFilterButton = null;
+	
+	/**
+	 * Field fParticipantFilterButton.
+	 */
+	//private Button fParticipantFilterButton = null;
+	
+	/**
+	 * Field fAnomaliesFilterButton.
+	 */
+	private Button fAnomaliesFilterButton = null;
+	
+	/**
+	 * Field fReviewedItemsFilterButton.
+	 */
+	private Button fReviewedItemsFilterButton = null;
+	
+	/**
+	 * Field fParticipantIdText.
+	 */
+	//private Text fParticipantIdText = null;
+	
+	
+	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
 	
@@ -112,8 +170,9 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	@Override
 	public void createFieldEditors() {
 
-		Activator.Tracer.traceInfo("Build R4E Preference page");
-
+		Activator.Ftracer.traceInfo("Build R4E Preference page");
+		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		
 		//The Main preferences composite
 		final Composite prefsContainer = new Composite(getFieldEditorParent(),SWT.NONE);
 		final GridData prefsContainerData = new GridData(GridData.FILL, GridData.FILL, true, false);
@@ -157,7 +216,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4EGroupPrefsGroup.setLayout(new GridLayout(R4E_GROUP_PREFS_CONTAINER_DATA_NUM_COLUMNS, false));
 
 		//dummy spacer label
-		final Label r4EGroupPrefsSpacer = new Label(r4EGroupPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
+		Label r4EGroupPrefsSpacer = new Label(r4EGroupPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
+		final GridData r4EGroupPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		r4EGroupPrefsSpacerData.horizontalSpan = R4E_PREFS_CONTAINER_DATA_SPAN;
+		r4EGroupPrefsSpacer.setLayoutData(r4EGroupPrefsSpacerData);
 		
 		// File Path Editor
         final String[] extensions = { PreferenceConstants.P_REVIEW_GROUP_FILE_EXT };
@@ -169,6 +231,124 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		} else { 
 			groupFilesEditor.setEnabled(true, r4EGroupPrefsGroup);
 		}
+		final List filesList = groupFilesEditor.getListControl(r4EGroupPrefsGroup);
+		filesList.addSelectionListener(new SelectionListener() {
+
+			@SuppressWarnings("synthetic-access")
+			public void widgetSelected(SelectionEvent aEvent) {
+				final String selectedGroupFile = groupFilesEditor.getSelection();
+				try {
+					final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
+					fGroupNameText.setText(group.getName());
+					fGroupDescriptionText.setText(group.getDescription());
+					
+				} catch (ResourceHandlingException e) {
+	    			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+	    			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+				}
+			}
+			
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
+				//No implementation
+			}
+		});
+		
+		//dummy spacer label
+		r4EGroupPrefsSpacer = new Label(r4EGroupPrefsGroup, SWT.FILL);
+		r4EGroupPrefsSpacer.setLayoutData(r4EGroupPrefsSpacerData);
+		
+		//Group details
+		final Composite groupDetailsContainer = new Composite(r4EGroupPrefsGroup,SWT.NONE);
+		final GridData groupDetailsLayoutData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		groupDetailsContainer.setLayoutData(groupDetailsLayoutData);
+		groupDetailsContainer.setLayout(new GridLayout(R4E_GROUP_PREFS_CONTAINER_DATA_NUM_COLUMNS, false));
+		
+		final Label groupNameLabel = new Label(groupDetailsContainer, SWT.FILL);
+		final GridData groupNameLabelData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		groupNameLabel.setText(R4EUIConstants.NAME_LABEL);
+		groupNameLabel.setLayoutData(groupNameLabelData);
+
+		fGroupNameText = new Text(groupDetailsContainer, SWT.FILL);
+		final GridData groupNameTextData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		fGroupNameText.setEnabled(true);	
+		fGroupNameText.setEditable(false);
+		fGroupNameText.setLayoutData(groupNameTextData);
+		
+		final Label groupDescriptionLabel = new Label(groupDetailsContainer, SWT.NONE);
+		final GridData groupDescriptionLabelData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		groupDescriptionLabel.setText(R4EUIConstants.DESCRIPTION_LABEL);
+		groupDescriptionLabel.setLayoutData(groupDescriptionLabelData);
+
+		fGroupDescriptionText = new Text(groupDetailsContainer, SWT.NONE);
+		final GridData groupDescriptionTextData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		fGroupDescriptionText.setEnabled(true);	
+		fGroupDescriptionText.setEditable(false);
+		fGroupDescriptionText.setLayoutData(groupDescriptionTextData);
+		
+		//dummy spacer label
+		new Label(prefsContainer, SWT.FILL);
+		
+		// Create a Group to hold R4E Navigator view default filters
+		final Group r4EFilterPrefsGroup = new Group(prefsContainer, SWT.BORDER_SOLID);
+		final GridData r4EFilterPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		r4EFilterPrefsGroupData.horizontalSpan = R4E_GROUP_PREFS_CONTAINER_DATA_SPAN;
+		r4EFilterPrefsGroup.setText("Default Filters");
+		r4EFilterPrefsGroup.setLayoutData(r4EGroupPrefsGroupData);
+		r4EFilterPrefsGroup.setLayout(new GridLayout(R4E_GROUP_PREFS_CONTAINER_DATA_NUM_COLUMNS, false));
+
+		//dummy spacer label
+		r4EGroupPrefsSpacer = new Label(r4EFilterPrefsGroup, SWT.FILL);
+		r4EGroupPrefsSpacer.setLayoutData(r4EGroupPrefsSpacerData);
+		
+		//Filers checkboxes
+		fReviewCurrentFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fReviewCurrentFilterButton.setText(R4EUIConstants.CURRENT_REVIEW_FILTER_NAME);
+		fReviewCurrentFilterButton.setLayoutData(r4EFilterPrefsGroupData);
+		fReviewCurrentFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_REVIEWS_CURRENT_FILTER));
+		
+		fReviewsOnlyFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fReviewsOnlyFilterButton.setText(R4EUIConstants.REVIEWS_ONLY_FILTER_NAME);
+		fReviewsOnlyFilterButton.setLayoutData(r4EFilterPrefsGroupData);
+		fReviewsOnlyFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_REVIEWS_ONLY_FILTER));
+		/* TODO the model needs to be changed so that we can query for the info needed for these filters.  This will be added later
+
+		fReviewMyFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fReviewMyFilterButton.setText(R4EUIConstants.REVIEWS_MY_FILTER_NAME);
+		fReviewMyFilterButton.setLayoutData(r4EFilterPrefsGroupData);
+		fReviewMyFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_REVIEWS_MY_FILTER));
+		
+		fParticipantFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fParticipantFilterButton.setText(R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_NAME);
+		fParticipantIdText = new Text(r4EFilterPrefsGroup, SWT.NONE);
+		fParticipantIdText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		if (store.getString(PreferenceConstants.P_PARTICIPANT_FILTER).equals("")) {
+			fParticipantFilterButton.setSelection(false);
+			fParticipantFilterButton.setEnabled(false);
+			fParticipantIdText.setText("");
+		} else {
+			fParticipantFilterButton.setSelection(true);				
+			fParticipantIdText.setText(store.getString(PreferenceConstants.P_PARTICIPANT_FILTER));
+		}
+		fParticipantIdText.addModifyListener(new ModifyListener() {		
+			@SuppressWarnings("synthetic-access")
+			public void modifyText(ModifyEvent e) {
+				if (fParticipantIdText.getCharCount() > 0) {
+					fParticipantFilterButton.setEnabled(true);
+				} else {
+					fParticipantFilterButton.setEnabled(false);
+				}
+			}
+		});
+		*/
+		fAnomaliesFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fAnomaliesFilterButton.setText(R4EUIConstants.ANOMALIES_FILTER_NAME);
+		fAnomaliesFilterButton.setLayoutData(r4EFilterPrefsGroupData);
+		fAnomaliesFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_ANOMALIES_FILTER));
+		
+		fReviewedItemsFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fReviewedItemsFilterButton.setText(R4EUIConstants.REVIEWED_ELEMS_FILTER_NAME);
+		fReviewedItemsFilterButton.setLayoutData(r4EFilterPrefsGroupData);
+		fReviewedItemsFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));
 	}
 
 	/**
@@ -176,8 +356,42 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * @param workbench IWorkbench
 	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(IWorkbench)
 	 */
-	@Override
 	public void init(IWorkbench workbench) { // $codepro.audit.disable emptyMethod
 	}
 	
+    /**
+     * Method performOk.
+     * @return boolean
+     * @see org.eclipse.jface.preference.IPreferencePage#performOk()
+     */
+    @Override
+	public boolean performOk() {
+		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+
+        //Set preferences for default filters and apply them
+    	store.setValue(PreferenceConstants.P_REVIEWS_ONLY_FILTER, fReviewsOnlyFilterButton.getSelection());
+    	store.setValue(PreferenceConstants.P_REVIEWS_CURRENT_FILTER, fReviewCurrentFilterButton.getSelection());
+    	/* TODO uncomment when model is fixed
+    	store.setValue(PreferenceConstants.P_REVIEWS_MY_FILTER, fReviewMyFilterButton.getSelection());
+    	if (fParticipantFilterButton.getSelection()) {
+        	final String filterUserId = fParticipantIdText.getText();
+        	if (filterUserId.equals(store.getString(PreferenceConstants.P_USER_ID))) {
+        		//Set my filter instead
+        		store.setValue(PreferenceConstants.P_REVIEWS_MY_FILTER, true);
+        	} else {
+        		store.setValue(PreferenceConstants.P_PARTICIPANT_FILTER, filterUserId);
+        	}
+    	} else {
+        	store.setValue(PreferenceConstants.P_PARTICIPANT_FILTER, "");
+			fParticipantIdText.setText("");
+    	}
+    	*/
+    	store.setValue(PreferenceConstants.P_ANOMALIES_FILTER, fAnomaliesFilterButton.getSelection());
+    	store.setValue(PreferenceConstants.P_REVIEWED_ITEMS_FILTER, fReviewedItemsFilterButton.getSelection());
+    	
+    	R4EUIModelController.getNavigatorView().applyDefaultFilters();
+    	
+        //For field editors
+    	return super.performOk();
+    }
 }

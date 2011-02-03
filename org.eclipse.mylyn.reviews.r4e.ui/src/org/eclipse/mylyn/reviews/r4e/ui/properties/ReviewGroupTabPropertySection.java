@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -57,7 +58,7 @@ public class ReviewGroupTabPropertySection extends AbstractPropertySection imple
 	/**
 	 * Field fGroup.
 	 */
-	private R4EUIReviewGroup fGroup;
+	private ReviewGroupProperties fGroupProps;
 	
 	/**
 	 * Field fNameText.
@@ -118,14 +119,13 @@ public class ReviewGroupTabPropertySection extends AbstractPropertySection imple
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
 		fNameText.setLayoutData(data);
-		fNameText.addModifyListener(new ModifyListener() {			 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
+		fNameText.addModifyListener(new ModifyListener() {
 			@SuppressWarnings("synthetic-access")
-			@Override
 			public void modifyText(ModifyEvent e) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EReviewGroup modelGroup = fGroup.getReviewGroup();
+						final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fGroupProps.getElement()).getReviewGroup();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
 						modelGroup.setName(fNameText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -146,7 +146,8 @@ public class ReviewGroupTabPropertySection extends AbstractPropertySection imple
 
 		//Group Folder (read-only)
 		fFolderText = widgetFactory.createText(composite, "");
-		fFolderText.setEditable(false);
+	    fFolderText.setEditable(false);
+	    fFolderText.setEnabled(false);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -170,12 +171,11 @@ public class ReviewGroupTabPropertySection extends AbstractPropertySection imple
 		fDescriptionText.setLayoutData(data);
 		fDescriptionText.addModifyListener(new ModifyListener() {			 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 			@SuppressWarnings("synthetic-access")
-			@Override
 			public void modifyText(ModifyEvent e) {
 				if (!fRefreshInProgress) {
 				try {
 					final String currentUser = R4EUIModelController.getReviewer();
-					final R4EReviewGroup modelGroup = fGroup.getReviewGroup();
+					final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fGroupProps.getElement()).getReviewGroup();
 					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
 					modelGroup.setDescription(fDescriptionText.getText());
 					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -209,7 +209,7 @@ public class ReviewGroupTabPropertySection extends AbstractPropertySection imple
 		//Get model element selected
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((StructuredSelection)aSelection).getFirstElement();
 		if (null != element && element instanceof R4EUIReviewGroup) {
-			fGroup = (R4EUIReviewGroup)element;
+			fGroupProps = (ReviewGroupProperties) ((R4EUIReviewGroup)element).getAdapter(IPropertySource.class);
 			refresh();
 		}
 	}
@@ -221,7 +221,7 @@ public class ReviewGroupTabPropertySection extends AbstractPropertySection imple
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EReviewGroup modelGroup = fGroup.getReviewGroup();
+		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fGroupProps.getElement()).getReviewGroup();
 		fNameText.setText(modelGroup.getName());
 		fFolderText.setText(modelGroup.getFolder());
 		if (null != modelGroup.getDescription()) fDescriptionText.setText(modelGroup.getDescription());
@@ -245,7 +245,6 @@ public class ReviewGroupTabPropertySection extends AbstractPropertySection imple
 	 * @param propId int
 	 * @see org.eclipse.ui.IPropertyListener#propertyChanged(Object, int)
 	 */
-	@Override
 	public void propertyChanged(Object source, int propId) {
 		setEnabledFields();
 	}
@@ -254,7 +253,7 @@ public class ReviewGroupTabPropertySection extends AbstractPropertySection imple
 	 * Method setEnabledFields.
 	 */
 	private void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen() || (!fGroup.isOpen())) {
+		if (R4EUIModelController.isDialogOpen() || !((R4EUIReviewGroup)fGroupProps.getElement()).isOpen()) {
 			fNameText.setEnabled(false);
 			fDescriptionText.setEnabled(false);
 		} else {

@@ -17,7 +17,7 @@
  *   
  ******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.ui.commands;
+package org.eclipse.mylyn.reviews.r4e.ui.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -39,7 +39,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
 
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
@@ -51,6 +50,10 @@ import org.eclipse.ui.PlatformUI;
 @SuppressWarnings("restriction")
 public class CommandUtils {
 
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Method getTargetFileURI.
 	 * @return URI 
@@ -77,24 +80,24 @@ public class CommandUtils {
 			try {
 				final Class<?> proxyClass = Class.forName("org.eclipse.egit.ui.internal.EgitProxy");
 				final Method method = proxyClass.getMethod("getCompareLeftFile", GitCompareFileRevisionEditorInput.class);
-				file = (IFile) method.invoke(CommandUtils.class, (GitCompareFileRevisionEditorInput)input);
+				file = (IFile) method.invoke(CommandUtils.class, (GitCompareFileRevisionEditorInput)input); // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.preferInterfacesToReflection
 			} catch (ClassNotFoundException e) {
-				Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
 			} catch (SecurityException e) {
-				Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
 			} catch (NoSuchMethodException e) {
-				Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
 			} catch (IllegalArgumentException e) {
-				Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
 			} catch (InvocationTargetException e) {
-				Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
 			} catch (IllegalAccessException e) {
-				Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
 			}
 			if (null != file) return file;

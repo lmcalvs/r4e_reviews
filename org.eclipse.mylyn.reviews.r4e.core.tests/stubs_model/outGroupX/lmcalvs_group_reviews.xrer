@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
-<r4ecore:R4EUserReviews xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_Gg9UcgbjEeCKt5KhWKsZZw" name="lmcalvs">
-  <invitedToMap xmi:id="_Gg9UdAbjEeCKt5KhWKsZZw" key="Review1">
-    <value href="Review1/Review1_review.xrer#_GgzjcAbjEeCKt5KhWKsZZw"/>
+<r4ecore:R4EUserReviews xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_ldFe4C52EeCvo9WHavBoFQ" name="lmcalvs">
+  <invitedToMap xmi:id="_ldGF8S52EeCvo9WHavBoFQ" key="Review1">
+    <value href="Review1/Review1_review.xrer#_lc_YQC52EeCvo9WHavBoFQ"/>
   </invitedToMap>
-  <group href="Golden_Group_group_root.xrer#_Gd-R4QbjEeCKt5KhWKsZZw"/>
+  <group href="Golden_Group_group_root.xrer#_lYvKYS52EeCvo9WHavBoFQ"/>
   <createdReviews>Review1</createdReviews>
 </r4ecore:R4EUserReviews>

@@ -39,7 +39,7 @@ public class BaseSupportCommand {
 		List<String> results = execute(cmdPath, command, waitFor, errorNotified);
 
 		if (results == null || results.size() == 0) {
-			Activator.Tracer.traceInfo("execute received no results");
+			Activator.fTracer.traceInfo("execute received no results");
 			return new String("");
 		}
 
@@ -76,7 +76,7 @@ public class BaseSupportCommand {
 		StreamThread outputStream = new StreamThread();
 		StreamThread errorStream = new StreamThread();
 
-		Activator.Tracer.traceInfo("Command Path: " + cmdPath + "\n" + command.toString());
+		Activator.fTracer.traceInfo("Command Path: " + cmdPath + "\n" + command.toString());
 
 		int exitValue = manager.execute(outputStream, errorStream, waitFor /* true=wait */);
 
@@ -84,7 +84,7 @@ public class BaseSupportCommand {
 		if (!(outputStream.isAlive() || errorStream.isAlive())) {
 			str.append("outputStream  + errorStream CLOSED properly, Java Process exit value: ");
 			// Popup.info(null, str);
-			Activator.Tracer.traceInfo(str.toString() + exitValue);
+			Activator.fTracer.traceInfo(str.toString() + exitValue);
 		} else {
 			// Shellmanager waits for thread termination before providing the
 			// result so this should not happen unless the waiting period have elapsed
@@ -95,7 +95,7 @@ public class BaseSupportCommand {
 			if (errorStream.isAlive()) {
 				str.append("\nerrorStream is alive: Java Process exit value: "
 						+ exitValue);
-				Activator.Tracer.traceInfo(str.toString());
+				Activator.fTracer.traceInfo(str.toString());
 			}
 		}
 
@@ -113,7 +113,7 @@ public class BaseSupportCommand {
 				sb.append("Path: " + cmdPath + "\n");
 				sb.append("Command: \n");
 				sb.append(command.toString());
-				Activator.Tracer.traceInfo(sb.toString());
+				Activator.fTracer.traceInfo(sb.toString());
 				if (exitValue != 5) {
 					// Filter the eror code 5
 					// Error code 5 = Access is Denied

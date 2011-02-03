@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.Comment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
@@ -33,20 +31,11 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.AddChildNodeAction;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.OpenEditorAction;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.RemoveNodeAction;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.R4ECommentInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
-import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.AnomalyProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.views.properties.IPropertyDescriptor;
-import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.eclipse.ui.views.properties.TextPropertyDescriptor;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
  * @author lmcdubo
@@ -68,44 +57,26 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	 * Field ADD_ELEMENT_ACTION_NAME.
 	 * (value is ""Add Comment"")
 	 */
-	private static final String ADD_ELEMENT_ACTION_NAME = "Add Comment";
-	
-	/**
-	 * Field REMOVE_ELEMENT_ACTION_NAME.
-	 * (value is ""Delete Anomaly"")
-	 */
-	private static final String REMOVE_ELEMENT_ACTION_NAME = "Delete Anomaly";
-	
+	private static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Comment";
+
     /**
      * Field ADD_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Add a new comment to the current anomaly"")
      */
-    private static final String ADD_ELEMENT_ACTION_TOOLTIP = "Add a new comment to the current anomaly";
+    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a new comment to the current anomaly";
     
+	/**
+	 * Field REMOVE_ELEMENT_ACTION_NAME.
+	 * (value is ""Delete Anomaly"")
+	 */
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Delete Anomaly";
+	
     /**
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this anomaly from its parent file or review item"")
      */
-    private static final String REMOVE_ELEMENT_ACTION_TOOLTIP = "Remove this anomaly from its parent file or review item";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this anomaly from its parent file or review item";
     
-    /**
-     * Field OPEN_EDITOR_ACTION_NAME.
-     * (value is ""Open parent file in editor"")
-     */
-    private static final String OPEN_EDITOR_ACTION_NAME = "Open parent file in editor";
-    
-    /**
-     * Field OPEN_EDITOR_ACTION_TOOLTIP.
-     * (value is ""Open the parent file with the matching editor and locate this anomaly"")
-     */
-    private static final String OPEN_EDITOR_ACTION_TOOLTIP = "Open the parent file with the matching editor and locate this anomaly";
-    
-	/**
-	 * Field OPEN_EDITOR_ACTION_ICON_FILE.
-	 * (value is ""icons/done.gif"")
-	 */
-	private static final String OPEN_EDITOR_ACTION_ICON_FILE = "icons/open_file.gif";
-	
 	/**
 	 * Field ADD_COMMENT_DIALOG_TITLE.
 	 * (value is ""Enter Comment details"")
@@ -117,68 +88,6 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	 * (value is ""Enter your new Comments for this Anomaly:"")
 	 */
 	private static final String ADD_COMMENT_DIALOG_VALUE = "Enter your new Comments for this Anomaly:";
-	
-	/**
-	 * Field ANOMALY_TITLE_ID. (value is ""anomalyElement.title"")
-	 */
-	private static final String ANOMALY_TITLE_ID = "anomalyElement.title";
-
-	/**
-	 * Field ANOMALY_TITLE_PROPERTY_DESCRIPTOR.
-	 */
-	private static final TextPropertyDescriptor ANOMALY_TITLE_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
-			ANOMALY_TITLE_ID, R4EUIConstants.TITLE_LABEL);
-	
-	/**
-	 * Field ANOMALY_POSITION_ID. (value is ""anomalyElement.position"")
-	 */
-	private static final String ANOMALY_POSITION_ID = "anomalyElement.position";
-
-	/**
-	 * Field ANOMALY_POSITION_PROPERTY_DESCRIPTOR.
-	 */
-	private static final PropertyDescriptor ANOMALY_POSITION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			ANOMALY_POSITION_ID, R4EUIConstants.POSITION_LABEL);
-	
-	/**
-	 * Field ANOMALY_AUTHOR_ID. (value is ""anomalyElement.author"")
-	 */
-	private static final String ANOMALY_AUTHOR_ID = "anomalyElement.author";
-
-	/**
-	 * Field ANOMALY_AUTHOR_PROPERTY_DESCRIPTOR.
-	 */
-	private static final PropertyDescriptor ANOMALY_AUTHOR_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			ANOMALY_AUTHOR_ID, R4EUIConstants.AUTHOR_LABEL);
-
-	/**
-	 * Field ANOMALY_CREATION_DATE_ID. (value is ""anomalyElement.creationDate"")
-	 */
-	private static final String ANOMALY_CREATION_DATE_ID = "anomalyElement.creationDate";
-
-	/**
-	 * Field ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR.
-	 */
-	private static final PropertyDescriptor ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			ANOMALY_CREATION_DATE_ID, R4EUIConstants.CREATION_DATE_LABEL);
-	
-	/**
-	 * Field ANOMALY_DESCRIPTION_ID. (value is ""anomalyElement.description"")
-	 */
-	private static final String ANOMALY_DESCRIPTION_ID = "anomalyElement.description";
-
-	/**
-	 * Field ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR.
-	 */
-	private static final TextPropertyDescriptor ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
-			ANOMALY_DESCRIPTION_ID, R4EUIConstants.DESCRIPTION_LABEL);
-	
-	/**
-	 * Field DESCRIPTORS.
-	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { ANOMALY_TITLE_PROPERTY_DESCRIPTOR,
-		ANOMALY_POSITION_PROPERTY_DESCRIPTOR, ANOMALY_AUTHOR_PROPERTY_DESCRIPTOR,  
-		ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR, ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR };
 	
 	
 	// ------------------------------------------------------------------------
@@ -194,21 +103,6 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	 * Field fComments.
 	 */
 	private final List<R4EUIComment> fComments;
-
-	/**
-	 * Field fContextAddChildNodeAction.
-	 */
-	private static AddChildNodeAction FContextAddChildNodeAction = null;
-	
-	/**
-	 * Field fContextRemoveNodeAction.
-	 */
-	private static RemoveNodeAction FContextRemoveNodeAction = null;
-	
-	/**
-	 * Field FContextOpenEditorAction.
-	 */
-	private static OpenEditorAction FContextOpenEditorAction = null;
 	
 	/**
 	 * Field fPosition.
@@ -225,11 +119,9 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	 * @param aParent IR4EUIModelElement
 	 * @param aAnomaly R4EAnomaly
 	 * @param aPosition IR4EUIPosition
-	 * @param aTitle String
 	 */
-	public R4EUIAnomaly(IR4EUIModelElement aParent, R4EAnomaly aAnomaly, IR4EUIPosition aPosition, String aTitle) {
-		super(aParent, ((null == aPosition) ?  aTitle :
-			aPosition.toString()), aAnomaly.getUser().getId() + ": " + aAnomaly.getDescription());
+	public R4EUIAnomaly(IR4EUIModelElement aParent, R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
+		super(aParent, ((null == aPosition) ?  aAnomaly.getTitle() : aPosition.toString()), buildAnomalyToolTip(aAnomaly));
 		fAnomaly = aAnomaly;
 		fComments = new ArrayList<R4EUIComment>();
 		fImage = UIUtils.loadIcon(ANOMALY_ICON_FILE);
@@ -240,6 +132,19 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+	
+	/**
+	 * Method getAdapter.
+	 * @param adapter Class
+	 * @return Object
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
+	 */
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
+		if (IR4EUIModelElement.class.equals(adapter)) return this;
+		if (IPropertySource.class.equals(adapter)) return new AnomalyProperties(this);
+		return null;
+	}
 	
 	//Attributes
 	
@@ -297,76 +202,16 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 		fAnomaly.setTitle(((R4EAnomaly)aModelComponent).getTitle());
 		fAnomaly.setDescription(((R4EAnomaly)aModelComponent).getDescription());
     	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+    	setToolTip(buildAnomalyToolTip(fAnomaly));   //Also set UI tooltip immediately
     }
 	
-	
-	// Properties
-	
 	/**
-	 * Method getPropertyDescriptors.
-	 * @return IPropertyDescriptor[]
-	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
+	 * Method buildAnomalyToolTip.
+	 * @param aAnomaly - the anomaly to use
+	 * @return String - the new tooltip
 	 */
-	@Override
-	public IPropertyDescriptor[] getPropertyDescriptors() {
-		return DESCRIPTORS;
-	}
-	
-	/**
-	 * Method getPropertyValue.
-	 * 
-	 * @param aId
-	 *            Object
-	 * @return Object
-	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
-	 */
-	@Override
-	public Object getPropertyValue(Object aId) {
-		if (ANOMALY_TITLE_ID.equals(aId)) { 
-			return fAnomaly.getTitle();
-		} else if (ANOMALY_POSITION_ID.equals(aId)) {
-			if (null == fPosition ) {
-				return R4EUIConstants.GLOBAL_ANOMALY_PROPERTY_VALUE;
-			}
-			return fPosition.toString();
-		} else if (ANOMALY_AUTHOR_ID.equals(aId)) { 
-			return fAnomaly.getUser().getId();
-		} else if (ANOMALY_CREATION_DATE_ID.equals(aId)) {
-			return fAnomaly.getCreatedOn().toString();
-		} else if (ANOMALY_DESCRIPTION_ID.equals(aId)) {
-			return fAnomaly.getDescription();
-		}
-		return null;
-	}
-	
-	/** // $codepro.audit.disable blockDepth
-	 * Method setPropertyValue.
-	 * @param aId Object
-	 * @param aValue Object
-	 * @see org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(Object, Object)
-	 */
-	@Override
-	public void setPropertyValue(Object aId, Object aValue) { // $codepro.audit.disable emptyMethod
-		if (!(R4EUIModelController.isDialogOpen())) {
-			try {
-				final String currentUser = R4EUIModelController.getReviewer();
-				if (fAnomaly.getUser().getId().equals(currentUser)) {
-					if (ANOMALY_TITLE_ID.equals(aId)) {
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly, currentUser);
-						fAnomaly.setTitle((String) aValue);
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-					} else if (ANOMALY_DESCRIPTION_ID.equals(aId)) { 
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly, currentUser);
-						fAnomaly.setDescription((String) aValue);
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);	
-					}
-				}
-			} catch (ResourceHandlingException e) {
-				UIUtils.displayResourceErrorDialog(e);
-			} catch (OutOfSyncException e) {
-				UIUtils.displaySyncErrorDialog(e);
-			}
-		}
+	public static String buildAnomalyToolTip(R4EAnomaly aAnomaly) {
+		return aAnomaly.getUser().getId() + ": " + aAnomaly.getDescription();
 	}
 	
 	
@@ -416,7 +261,6 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	 * Method loadModelData.
 	 * 		Load the serialization model data into UI model
 	 */
-	@Override
 	public void loadModelData() {
 		final List<Comment> comments = fAnomaly.getComments();
 		if (null != comments) {
@@ -424,7 +268,7 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 			final int commentsSize = comments.size();
 			for (int i = 0; i < commentsSize; i++) {
 				r4eComment = (R4EComment)comments.get(i);
-				addChildren(new R4EUIComment(this, r4eComment, r4eComment.getDescription()));
+				addChildren(new R4EUIComment(this, r4eComment));
 			}
 		}
 	}
@@ -460,12 +304,52 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 			participant = ((R4EUIReview)getParent().getParent()).getParticipant(user, true);
 		}
 		final R4EComment comment = R4EUIModelController.FModelExt.createR4EComment(participant, fAnomaly);
-		final R4EUIComment addedChild = new R4EUIComment(this, comment, ((R4EComment)aModelComponent).getDescription()); 
-		addedChild.setModelData(aModelComponent);
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(comment, 
+				R4EUIModelController.getReviewer());
+		comment.setDescription(((Comment)aModelComponent).getDescription());
+    	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		final R4EUIComment addedChild = new R4EUIComment(this, comment); 
 		addChildren(addedChild);
 		return addedChild;
 	}
 
+	/**
+	 * Method createComment.
+	 * @return R4EUIComment
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 */
+	public R4EUIComment createComment() throws ResourceHandlingException, OutOfSyncException {
+
+		R4EUIComment uiComment = null;
+		
+		//Get comment details from user
+		R4EUIModelController.setDialogOpen(true);
+		final R4ECommentInputDialog dialog = new R4ECommentInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+				getSite().getWorkbenchWindow().getShell(), ADD_COMMENT_DIALOG_TITLE, ADD_COMMENT_DIALOG_VALUE);
+    	final int result = dialog.open();
+    	
+    	if (result == Window.OK) {
+    		
+    		//Create comment model element
+    		final R4EUIReview uiReview = R4EUIModelController.getActiveReview();
+    		final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(), true);
+    
+    		final R4EComment comment = R4EUIModelController.FModelExt.createR4EComment(participant, fAnomaly);
+    		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(comment, 
+    				R4EUIModelController.getReviewer());
+    		comment.setDescription(dialog.getCommentValue());
+        	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+        	
+    		//Create and set UI model element
+    		uiComment = new R4EUIComment(this, comment);
+    		addChildren(uiComment);	
+    	}
+    	// else Window.CANCEL
+		R4EUIModelController.setDialogOpen(false);
+    	return uiComment;
+	}
+	
 	/**
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement
@@ -515,41 +399,75 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	}
 	
 	
-	//Actions
+	//Commands
 	
 	/**
-	 * Method createActions.
-	 * @param aView ReviewNavigatorView
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createActions(ReviewNavigatorView)
+	 * Method isOpenEditorCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isOpenEditorCmd()
 	 */
 	@Override
-	public void createActions(ReviewNavigatorView aView) {
-		FContextAddChildNodeAction = new AddChildNodeAction(aView, ADD_ELEMENT_ACTION_NAME, ADD_ELEMENT_ACTION_TOOLTIP,
-				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD), false);
-		FContextRemoveNodeAction = new RemoveNodeAction(aView, REMOVE_ELEMENT_ACTION_NAME, REMOVE_ELEMENT_ACTION_TOOLTIP,
-				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
-		FContextOpenEditorAction = new OpenEditorAction(aView, OPEN_EDITOR_ACTION_NAME, OPEN_EDITOR_ACTION_TOOLTIP, 
-				ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(OPEN_EDITOR_ACTION_ICON_FILE)));
+	public boolean isOpenEditorCmd() {
+		return true;
 	}
-
+	
 	/**
-	 * Method getActions.
-	 * @param aView ReviewNavigatorView
-	 * @return List<Action>
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getActions(ReviewNavigatorView)
+	 * Method isAddChildElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isAddChildElementCmd()
 	 */
 	@Override
-	public List<IAction> getActions(ReviewNavigatorView aView) {
-		if (null == FContextAddChildNodeAction) createActions(aView);
-		final List<IAction> actions = new ArrayList<IAction>();
-		if (!(R4EUIModelController.isDialogOpen()) && isOpen()) {
-			actions.add(FContextAddChildNodeAction);
-			actions.add(FContextRemoveNodeAction);
-			final IR4EUIModelElement element = getParent().getParent();
-			if (element instanceof R4EUIFileContext && null != ((R4EUIFileContext)element).getTargetFile()) {
-				actions.add(FContextOpenEditorAction);	
-			}
-		}
-		return actions;
+	public boolean isAddChildElementCmd() {
+		return true;
+	}
+	
+	/**
+	 * Method getAddChildElementCmdName.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdName()
+	 */
+	@Override
+	public String getAddChildElementCmdName() {
+		return ADD_CHILD_ELEMENT_COMMAND_NAME;
+	}
+	
+	/**
+	 * Method getAddChildElementCmdTooltip.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
+	 */
+	@Override
+	public String getAddChildElementCmdTooltip() {
+		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP; 
+	}
+	
+	/**
+	 * Method isRemoveElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isRemoveElementCmd()
+	 */
+	@Override
+	public boolean isRemoveElementCmd() {
+		return true;
+	}
+	
+	/**
+	 * Method getRemoveElementCmdName.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdName()
+	 */
+	@Override
+	public String getRemoveElementCmdName() {
+		return REMOVE_ELEMENT_COMMAND_NAME;
+	}
+	
+	/**
+	 * Method getRemoveElementCmdTooltip.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdTooltip()
+	 */
+	@Override
+	public String getRemoveElementCmdTooltip() {
+		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
 	}
 }

@@ -9,8 +9,8 @@
  * 
  * Description:
  * 
- * This class implements the Navigator View filter used to display the tree 
- * elements up to the review level
+ * This class implements the Navigator View filter used to filter out
+ * the selection elements
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -29,6 +29,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
  * @version $Revision: 1.0 $
  */
 public class AnomaliesOnlyFilter extends ViewerFilter  {
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
 	
 	/**
 	 * Method select.

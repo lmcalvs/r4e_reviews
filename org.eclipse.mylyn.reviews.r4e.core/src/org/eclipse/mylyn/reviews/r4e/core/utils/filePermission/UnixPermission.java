@@ -37,7 +37,7 @@ public class UnixPermission extends BaseSupportCommand implements
 	 */
 	public boolean grantWritePermission(String dir) throws IOException {
 		Boolean b = false;
-		Activator.Tracer.traceInfo("UnixPermission.changePermission() for :" + dir);
+		Activator.fTracer.traceInfo("UnixPermission.changePermission() for :" + dir);
 
 		List<String> command = new ArrayList<String>();
 		command.add("chmod");
@@ -47,10 +47,10 @@ public class UnixPermission extends BaseSupportCommand implements
 		
 		String ret = executeWithStringReturned(null, command, true /* wait */,
 				false /* ignore error */);
-		Activator.Tracer.traceInfo("changePermission() ret: " + ret);
+		Activator.fTracer.traceInfo("changePermission() ret: " + ret);
 		if (ret.length() > 0) {
 			b = true;
-			Activator.Tracer.traceInfo("Return msg from changePermission: " + ret);
+			Activator.fTracer.traceInfo("Return msg from changePermission: " + ret);
 		}
 
 		return b;

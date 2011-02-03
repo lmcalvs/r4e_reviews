@@ -19,9 +19,10 @@ package org.eclipse.mylyn.reviews.r4e.core.versions.impl;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException.VersionsExceptionCode;
-import org.eclipse.mylyn.reviews.r4e.core.versions.git.ReviewsGITVersionsIFImpl;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
+import org.eclipse.mylyn.reviews.r4e.core.versions.git.ReviewsGITVersionsIFImpl;
+import org.eclipse.team.core.RepositoryProvider;
 
 /**
  * @author lmcalvs
@@ -59,7 +60,9 @@ public class ReviewsVersionsIFFactoryImpl implements ReviewsVersionsIFFactory {
 	public ReviewsVersionsIF getVersionsIF(IProject project) throws ReviewVersionsException {
 		// Git supportted in initial version
 		if (!ReviewsGITVersionsIFImpl.isGitRepository(project)) {
-			ReviewVersionsException exc = new ReviewVersionsException("");
+			ReviewVersionsException exc = new ReviewVersionsException(
+					"The team provider associated to the project is not supported: "
+							+ RepositoryProvider.getProvider(project));
 			exc.setExceptionCode(VersionsExceptionCode.PROVIDER_NOT_SUPPORTED);
 			throw exc;
 		}

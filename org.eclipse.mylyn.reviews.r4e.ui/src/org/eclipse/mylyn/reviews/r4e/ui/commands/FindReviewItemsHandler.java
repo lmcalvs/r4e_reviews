@@ -9,8 +9,8 @@
  * 
  * Description:
  * 
- * This class implements the context-sensitive command to add an anomaly on 
- * a review item
+ * This class implements the context-sensitive command to find review items
+ * in the parent project to add to the review
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -37,6 +37,10 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class FindReviewItemsHandler extends AbstractHandler {
 
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Field ADD_ANOMALY_DIALOG_TITLE.
 	 * (value is ""Enter Anomaly details"")
@@ -55,6 +59,11 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	 */
 	private static final String FIND_REVIEW_ITEMS_DESCRIPTION_DIALOG_VALUE = "Review item components (Last Commit)";
 	
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Method execute.
 	 * @param event ExecutionEvent
@@ -62,7 +71,6 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	@Override
 	public Object execute(ExecutionEvent event) {
 
 		//Get project to use (use adapters if needed)
@@ -76,7 +84,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			project = (IProject) adaptableProject.getAdapter(IProject.class); 
 		} else {
 			//Should never happen
-			Activator.Tracer.traceError("Invalid selected element class " + selectedElement.getClass());
+			Activator.Ftracer.traceError("Invalid selected element class " + selectedElement.getClass());
 			Activator.getDefault().logError("Invalid selected element class " + selectedElement.getClass(), null);
 		}
 	

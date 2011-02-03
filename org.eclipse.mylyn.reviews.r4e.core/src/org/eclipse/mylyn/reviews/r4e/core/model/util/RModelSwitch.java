@@ -267,6 +267,7 @@ public class RModelSwitch<T> {
 			case RModelPackage.R4E_FILE_CONTEXT: {
 				R4EFileContext r4EFileContext = (R4EFileContext)theEObject;
 				T result = caseR4EFileContext(r4EFileContext);
+				if (result == null) result = caseR4EIDComponent(r4EFileContext);
 				if (result == null) result = caseR4EReviewComponent(r4EFileContext);
 				if (result == null) result = caseReviewComponent(r4EFileContext);
 				if (result == null) result = defaultCase(theEObject);

@@ -9,7 +9,7 @@
  * 
  * Description:
  * 
- * This class implements an image descriptor that is used to overlay multiplie 
+ * This class implements an image descriptor that is used to overlay multiple 
  * images into one. It is used to decorate icons
  * 
  * Contributors:

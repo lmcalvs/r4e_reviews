@@ -18,31 +18,18 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.AddLinkedAnomalyAction;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.ChangeReviewedStateAction;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.OpenEditorAction;
-import org.eclipse.mylyn.reviews.r4e.ui.actions.RemoveNodeAction;
-import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.SelectionProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.views.properties.IPropertyDescriptor;
-import org.eclipse.ui.views.properties.PropertyDescriptor;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
  * @author lmcdubo
@@ -64,79 +51,15 @@ public class R4EUISelection extends R4EUIModelElement {
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
 	 * (value is ""Delete Selection"")
 	 */
-	private static final String REMOVE_ELEMENT_ACTION_NAME = "Delete Selection";
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Delete Selection";
 	
     /**
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this selection from its parent file"")
      */
-    private static final String REMOVE_ELEMENT_ACTION_TOOLTIP = "Remove this selection from its parent file";
-    
-    /**
-     * Field CHANGE_REVIEW_STATE_ACTION_NAME.
-     * (value is ""Mark/Unmark as completed"")
-     */
-    private static final String CHANGE_REVIEW_STATE_ACTION_NAME = "Mark/Unmark as completed";
-    
-    /**
-     * Field CHANGE_REVIEW_STATE_ACTION_TOOLTIP.
-     * (value is ""Mark/Unmark this selection as reviewed"")
-     */
-    private static final String CHANGE_REVIEW_STATE_ACTION_TOOLTIP = "Mark/Unmark this selection as reviewed";
-    
-	/**
-	 * Field CHANGE_REVIEW_STATE_ACTION_ICON_FILE.
-	 * (value is ""icons/done.gif"")
-	 */
-	private static final String CHANGE_REVIEW_STATE_ACTION_ICON_FILE = "icons/done.gif";
-	
-    /**
-     * Field OPEN_EDITOR_ACTION_NAME.
-     * (value is ""Open parent file in editor"")
-     */
-    private static final String OPEN_EDITOR_ACTION_NAME = "Open parent file in editor";
-    
-    /**
-     * Field OPEN_EDITOR_ACTION_TOOLTIP.
-     * (value is ""Open the parent file with the matching editor and locate this selection"")
-     */
-    private static final String OPEN_EDITOR_ACTION_TOOLTIP = "Open the parent file with the matching editor and locate this selection";
-    
-	/**
-	 * Field OPEN_EDITOR_ACTION_ICON_FILE.
-	 * (value is ""icons/done.gif"")
-	 */
-	private static final String OPEN_EDITOR_ACTION_ICON_FILE = "icons/open_file.gif";
-	
-	/**
-	 * Field ADD_ANOMALY_ACTION_NAME.
-	 * (value is ""Add linked anomaly"")
-	 */
-	private static final String ADD_ANOMALY_ACTION_NAME = "Add linked anomaly";
-	
-    /**
-     * Field ADD_ANOMALY_ACTION_TOOLTIP.
-     * (value is ""Add a new linked anomaly to the current selection"")
-     */
-    private static final String ADD_ANOMALY_ACTION_TOOLTIP = "Add a new linked anomaly to the current selection";
-	
-	/**
-	 * Field SELECTION_POSITION_ID. (value is ""selectionElement.position"")
-	 */
-	private static final String SELECTION_POSITION_ID = "selectionElement.position";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this selection from its parent file";
 
-	/**
-	 * Field SELECTION_POSITION_PROPERTY_DESCRIPTOR.
-	 */
-	private static final PropertyDescriptor SELECTION_POSITION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			SELECTION_POSITION_ID, R4EUIConstants.POSITION_LABEL);
-	
-	/**
-	 * Field DESCRIPTORS.
-	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { SELECTION_POSITION_PROPERTY_DESCRIPTOR };
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -145,26 +68,6 @@ public class R4EUISelection extends R4EUIModelElement {
      * Field fDelta.
      */
     private final R4EDelta fDelta;
-    
-	/**
-	 * Field fContextRemoveNodeAction.
-	 */
-	private static RemoveNodeAction FContextRemoveNodeAction = null;
-	
-	/**
-	 * Field fChangeReviewedStateAction.
-	 */
-	private static ChangeReviewedStateAction FChangeReviewedStateAction = null;
-	
-	/**
-	 * Field FContextOpenEditorAction.
-	 */
-	private static OpenEditorAction FContextOpenEditorAction = null;
-	
-	/**
-	 * Field FAddLinkedAnomalyAction.
-	 */
-	private static AddLinkedAnomalyAction FAddLinkedAnomalyAction = null;
 	
 	/**
 	 * Field fPosition.
@@ -193,6 +96,19 @@ public class R4EUISelection extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+	
+	/**
+	 * Method getAdapter.
+	 * @param adapter Class
+	 * @return Object
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
+	 */
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
+		if (IR4EUIModelElement.class.equals(adapter)) return this;
+		if (IPropertySource.class.equals(adapter)) return new SelectionProperties(this);
+		return null;
+	}
 	
 	//Attributes
 	
@@ -305,7 +221,6 @@ public class R4EUISelection extends R4EUIModelElement {
 	/**
 	 * Load the serialization model data for this element
 	 */
-	@Override
 	public void loadModelData() {
 		try {
 			final R4EUIReview review = (R4EUIReview) getParent().getParent().getParent().getParent(); // $codepro.audit.disable methodChainLength
@@ -318,83 +233,74 @@ public class R4EUISelection extends R4EUIModelElement {
 				}			
 			}
 		} catch (ResourceHandlingException e) {
-			Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Error while setting element as reviewed",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
-		} catch (OutOfSyncException e) {
-			Activator.Tracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Synchronization error detected setting element as reviewed" +
-					"Please close the reviewe and re-open to sync in content",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
-			// TODO later we will want to do this automatically
-		}
-	}
-	
-	// Properties
-	
-	/**
-	 * Method getPropertyDescriptors.
-	 * @return IPropertyDescriptor[] 
-	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors() 
-	 */
-	@Override
-	public IPropertyDescriptor[] getPropertyDescriptors() {
-		return DESCRIPTORS;
-	}
-	
-	/**
-	 * Method getPropertyValue.
-	 * @param aId Object
-	 * @return Object
-	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
-	 */
-	@Override
-	public Object getPropertyValue(Object aId) {
-		if (SELECTION_POSITION_ID.equals(aId)) {
-			return fPosition.toString();
-		}
-		return null;
-	}
-	
-	
-	//Actions
-	
-	/**
-	 * Method createActions.
-	 * @param aView ReviewNavigatorView
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createActions(ReviewNavigatorView)
-	 */
-	@Override
-	public void createActions(ReviewNavigatorView aView) {
-		FAddLinkedAnomalyAction = new AddLinkedAnomalyAction(aView, ADD_ANOMALY_ACTION_NAME, ADD_ANOMALY_ACTION_TOOLTIP,
-				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD));
-		FContextRemoveNodeAction = new RemoveNodeAction(aView, REMOVE_ELEMENT_ACTION_NAME, REMOVE_ELEMENT_ACTION_TOOLTIP,
-				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
-		FChangeReviewedStateAction = new ChangeReviewedStateAction(aView, CHANGE_REVIEW_STATE_ACTION_NAME, CHANGE_REVIEW_STATE_ACTION_TOOLTIP, 
-				ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(CHANGE_REVIEW_STATE_ACTION_ICON_FILE)));
-		FContextOpenEditorAction = new OpenEditorAction(aView, OPEN_EDITOR_ACTION_NAME, OPEN_EDITOR_ACTION_TOOLTIP, 
-				ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(OPEN_EDITOR_ACTION_ICON_FILE)));
-	}
+			UIUtils.displayResourceErrorDialog(e);
 
+		} catch (OutOfSyncException e) {
+			UIUtils.displaySyncErrorDialog(e);
+
+		}
+	}
+	
+	
+	//Commands
+	
 	/**
-	 * Method getActions.
-	 * @param aView ReviewNavigatorView
-	 * @return List<Action>
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getActions(ReviewNavigatorView)
+	 * Method isAddLinkedAnomalyCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isAddLinkedAnomalyCmd()
 	 */
 	@Override
-	public List<IAction> getActions(ReviewNavigatorView aView) {
-		if (null == FContextRemoveNodeAction) createActions(aView);
-		final List<IAction> actions = new ArrayList<IAction>();
-		if (!(R4EUIModelController.isDialogOpen()) && isOpen()) {
-			actions.add(FAddLinkedAnomalyAction);
-			actions.add(FContextRemoveNodeAction);
-			actions.add(FChangeReviewedStateAction);
-			if (null != ((R4EUIFileContext)getParent().getParent()).getTargetFile()) actions.add(FContextOpenEditorAction);	
-		}
-		return actions;
+	public boolean isAddLinkedAnomalyCmd() {
+		return true;
+	}
+	
+	/**
+	 * Method isOpenEditorCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isOpenEditorCmd()
+	 */
+	@Override
+	public boolean isOpenEditorCmd() {
+		return true;
+	}
+	
+	/**
+	 * Method isChangeReviewStateCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeReviewStateCmd()
+	 */
+	@Override
+	public boolean isChangeReviewStateCmd() {
+		return true;
+	}
+	
+	/**
+	 * Method isRemoveElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isRemoveElementCmd()
+	 */
+	@Override
+	public boolean isRemoveElementCmd() {
+		return true;
+	}
+	
+	/**
+	 * Method getRemoveElementCmdName.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdName()
+	 */
+	@Override
+	public String getRemoveElementCmdName() {
+		return REMOVE_ELEMENT_COMMAND_NAME;
+	}
+	
+	/**
+	 * Method getRemoveElementCmdTooltip.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdTooltip()
+	 */
+	@Override
+	public String getRemoveElementCmdTooltip() {
+		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
 	}
 }

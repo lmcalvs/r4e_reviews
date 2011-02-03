@@ -72,7 +72,6 @@ public class FilePathEditor extends ListEditor {
 
     /**
      * Creates a file path field editor.
-     * 
      * @param aName - the name of the preference this field editor works on
      * @param aLabelText - the label text of the field editor
      * @param aFileExtensions  - the allowable files extensions to use in filter
@@ -92,7 +91,6 @@ public class FilePathEditor extends ListEditor {
 	/**
 	 * Creates a single string from the given array by separating each
      * string with the appropriate OS-specific path separator.
-     * 
      * @param aItems String[]
      * @return String
      */
@@ -149,6 +147,13 @@ public class FilePathEditor extends ListEditor {
         	stringArray.add((String) st.nextElement());
         }
         return stringArray.toArray(new String[stringArray.size()]);
-	}
+	}  
 
+    /**
+     * Method getSelection.
+     * @return String
+     */
+    public String getSelection() {
+    	return getList().getSelection()[0];
+    }
 }

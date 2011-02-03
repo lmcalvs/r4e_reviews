@@ -28,11 +28,20 @@ import java.util.regex.Pattern;
  */
 public class WildcardFileFilter implements FileFilter {
 
+	// ------------------------------------------------------------------------
+	// Member variables
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Field fPattern.
 	 */
 	private final String fPattern;
-	 
+	
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Constructor for WildcardFileFilter.
 	 * @param pattern String
@@ -47,7 +56,6 @@ public class WildcardFileFilter implements FileFilter {
 	 * @return boolean
 	 * @see java.io.FileFilter#accept(File)
 	 */
-	@Override
 	public boolean accept(File file) {
 		return Pattern.compile(fPattern).matcher(file.getName()).find();
 	}

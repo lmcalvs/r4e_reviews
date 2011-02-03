@@ -94,7 +94,6 @@ public class R4ECompareItem implements ITypedElement, IStreamContentAccessor {
 	 * @return InputStream
 	 * @see org.eclipse.compare.IStreamContentAccessor#getContents()
 	 */
-	@Override
 	public InputStream getContents() {
 
 		try {
@@ -108,7 +107,7 @@ public class R4ECompareItem implements ITypedElement, IStreamContentAccessor {
 			return EFS.getLocalFileSystem().getStore(fContent).openInputStream(EFS.NONE, null);
 
 		} catch (CoreException e) {
-			Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 			return null;
 		}
@@ -119,7 +118,6 @@ public class R4ECompareItem implements ITypedElement, IStreamContentAccessor {
 	 * @return String
 	 * @see org.eclipse.compare.ITypedElement#getName()
 	 */
-	@Override
 	public String getName() {
 		return fName;
 	}
@@ -129,7 +127,6 @@ public class R4ECompareItem implements ITypedElement, IStreamContentAccessor {
 	 * @return Image 
 	 * @see org.eclipse.compare.ITypedElement#getImage()
 	 */
-	@Override
 	public Image getImage() {
 		return null;   //No image provided
 	}
@@ -139,7 +136,6 @@ public class R4ECompareItem implements ITypedElement, IStreamContentAccessor {
 	 * @return String
 	 * @see org.eclipse.compare.ITypedElement#getType()
 	 */
-	@Override
 	public String getType() {
 		return fType; 
 	}

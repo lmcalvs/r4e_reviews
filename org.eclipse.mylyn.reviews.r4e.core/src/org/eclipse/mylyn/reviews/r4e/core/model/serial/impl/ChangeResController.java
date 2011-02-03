@@ -134,7 +134,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		if (context != null) {
 			unlockResource(context.getResource());
 		} else {
-			Activator.Tracer.traceError(new StringBuilder("UndoCheckOut failed: booking number is not active: "
+			Activator.fTracer.traceError(new StringBuilder("UndoCheckOut failed: booking number is not active: "
 					+ aBookingNumber).toString());
 		}
 	}
@@ -164,7 +164,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 			// remove lock
 			unlockResource(resource);
 		} else {
-			Activator.Tracer.traceError(new StringBuilder("CheckIn failed: booking number is not active: "
+			Activator.fTracer.traceError(new StringBuilder("CheckIn failed: booking number is not active: "
 					+ aBookingNumber).toString());
 		}
 	}
@@ -194,7 +194,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 				// TODO: Preference.
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				Activator.Tracer.traceDebug(new StringBuilder("Interrupter exception while waiting to lock resource")
+				Activator.fTracer.traceDebug(new StringBuilder("Interrupter exception while waiting to lock resource")
 						.toString());
 			}
 
@@ -212,7 +212,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 							line = breader.readLine();
 						}
 					} catch (IOException e) {
-						Activator.Tracer
+						Activator.fTracer
 								.traceDebug(new StringBuilder("IOException while reading lock file").toString());
 					}
 					finally {
@@ -328,7 +328,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 			if (absPath != null) {
 				message.append(": " + absPath);
 			}
-			Activator.Tracer.traceError(message.toString());
+			Activator.fTracer.traceError(message.toString());
 		}
 	}
 

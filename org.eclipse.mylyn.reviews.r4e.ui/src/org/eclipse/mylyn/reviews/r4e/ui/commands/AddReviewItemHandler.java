@@ -19,7 +19,6 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.commands;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,7 +28,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -41,30 +39,21 @@ import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.FileVersionInfo;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
-
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -76,6 +65,10 @@ import org.eclipse.ui.texteditor.ITextEditor;
  */
 public class AddReviewItemHandler extends AbstractHandler {
 	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Method execute.
 	 * @param event ExecutionEvent
@@ -83,7 +76,6 @@ public class AddReviewItemHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	@Override
 	public Object execute(ExecutionEvent event) {
 
 		final ISelection selection = HandlerUtil.getCurrentSelection(event);
@@ -125,10 +117,10 @@ public class AddReviewItemHandler extends AbstractHandler {
 			final IFile baseFile = null;
 			
 			//Add selection to model
-			addReviewItem(targetFile, baseFile, position);
+			addReviewItem(baseFile, targetFile, position);
 			
 		} catch (CoreException e) {
-			Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		}
 	}
@@ -166,21 +158,21 @@ public class AddReviewItemHandler extends AbstractHandler {
 				position = CommandUtils.getPosition((org.eclipse.cdt.core.model.ISourceReference)aSelection, targetFile);
 			} else {
 				//This should never happen
-				Activator.Tracer.traceWarning("Invalid selection " + aSelection.getClass().toString() + ".  Ignoring");
+				Activator.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString() + ".  Ignoring");
 				return;
 			}
 			
 			//Add selection to model
-			addReviewItem(targetFile, null, position);
+			addReviewItem(null, targetFile, position);
 			
 		} catch (JavaModelException e) {
-			Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (CModelException e) {
-			Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (CoreException e) {
-			Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		}
 	}
@@ -193,42 +185,15 @@ public class AddReviewItemHandler extends AbstractHandler {
 	 * @param aBaseFile IFile
 	 * @throws ReviewVersionsException 
 	 */
-	private void addReviewItem(IFile aTargetFile, IFile aBaseFile, IR4EUIPosition aUIPosition) {
+	private void addReviewItem(IFile aBaseFile, IFile aTargetFile, IR4EUIPosition aUIPosition) {
 
 		try {
-
-			//Get core version interface
-			final IProject project = aTargetFile.getProject();
-			ReviewsVersionsIF versionsIf = null;
-			try {
-				versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(project);
-			} catch (ReviewVersionsException e) {
-				Activator.Tracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logInfo("Exception: " + e.toString(), e);
-				final ErrorDialog dialog = new ErrorDialog(null, "Info", 
-						"Take note that the review item you are trying to add is not in source control.",
-	    				new Status(IStatus.INFO, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.INFO);
-				dialog.open();
-			}
 			
 			//Check if the file element and/or selection already exist
 			//If file exists, add selection element to it
 			//if selection element already exist, ignore command
-			//for all other cases, create the parent elements as needed as well.
-			final R4EUIReview review = R4EUIModelController.getActiveReview();
-
-			//Get the reviewer (i.e. ourselves :-) or create it if it does not exist
-			final String user = R4EUIModelController.getReviewer();
-			final R4EParticipant participant = review.getParticipant(user, true);
-			
-			//Get review items only
-			final IR4EUIModelElement[] reviewChildren = review.getChildren();
-			final List<R4EUIReviewItem> reviewItems = new ArrayList<R4EUIReviewItem>();
-			for (IR4EUIModelElement child : reviewChildren) {
-				if (child instanceof R4EUIReviewItem) {
-					reviewItems.add((R4EUIReviewItem)child);
-				}
-			}
+			//for all other cases, create the parent elements as needed as well.	
+			final List<R4EUIReviewItem> reviewItems = R4EUIModelController.getActiveReview().getReviewItems();
 
 			boolean newSelection = true;
 			for (R4EUIReviewItem reviewItem : reviewItems) {
@@ -237,29 +202,29 @@ public class AddReviewItemHandler extends AbstractHandler {
 					if (aTargetFile.equals(file.getTargetFile()) && reviewItem.getType() == R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE) {
 						if ((null == aBaseFile && null == file.getBaseFile()) || 
 								(null != aBaseFile && null != file.getBaseFile() && aBaseFile.equals(file.getBaseFile()))) {
+							
 							//File already exists, check if selection also exists
 							R4EUISelectionContainer selectionContainer = (R4EUISelectionContainer) file.getSelectionContainerElement();
 							if (null != selectionContainer) {
-
-							R4EUISelection[] selectionElements = (R4EUISelection[])selectionContainer.getChildren();
-							for (R4EUISelection selectionElement : selectionElements) {
-								if (selectionElement.getPosition().isSameAs(aUIPosition)) {
-									newSelection = false;
+								R4EUISelection[] selectionElements = (R4EUISelection[])selectionContainer.getChildren();
+								for (R4EUISelection selectionElement : selectionElements) {
+									if (selectionElement.getPosition().isSameAs(aUIPosition)) {
+										newSelection = false;
+									}
 								}
-							}
 							} else {
 								selectionContainer = new R4EUISelectionContainer(file, R4EUIConstants.SELECTIONS_LABEL_NAME);
 								file.addChildren(selectionContainer);
 							}
 							if (newSelection) {
-								addReviewItemToExistingFileContext(selectionContainer, file, aUIPosition);
-								Activator.Tracer.traceInfo("Added review item: Target = " + aTargetFile.toString() + 
+								addReviewItemToExistingFileContext(selectionContainer, aUIPosition);
+								Activator.Ftracer.traceInfo("Added review item: Target = " + aTargetFile.toString() + 
 										((null != aBaseFile) ? "Base = " + aBaseFile.toString(): "") + " Position = " 
 										+ aUIPosition.toString());
 							} else {						
 								//The selection already exists so ignore command
-								Activator.Tracer.traceWarning("Review Item already exists.  Ignoring");
-								final ErrorDialog dialog = new ErrorDialog(null, "Warning", "Cannot add Review Item",
+								Activator.Ftracer.traceWarning("Review Item already exists.  Ignoring");
+								final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING, "Cannot add Review Item",
 					    				new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, "Review Item already exists", null), IStatus.WARNING);
 								dialog.open();
 							}
@@ -270,25 +235,17 @@ public class AddReviewItemHandler extends AbstractHandler {
 			}
 
 			//This is a new file create it (and its parent reviewItem) and all its children
-			addReviewItemToNewFileContext(review, aTargetFile, aBaseFile, aUIPosition, participant, versionsIf);
-			Activator.Tracer.traceInfo("Added review item: Target = " + aTargetFile.toString() + 
+			addReviewItemToNewFileContext(aBaseFile, aTargetFile, aUIPosition);
+			Activator.Ftracer.traceInfo("Added review item: Target = " + aTargetFile.toString() + 
 					((null != aBaseFile) ? "Base = " + aBaseFile.getFullPath(): "") + " Position = " 
 					+ aUIPosition.toString());
 			
 		} catch (ResourceHandlingException e) {
-			Activator.Tracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Resource error detected while adding review item ",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
+			UIUtils.displayResourceErrorDialog(e);
 			
 		} catch (OutOfSyncException e) {
-			Activator.Tracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			final ErrorDialog dialog = new ErrorDialog(null, "Error", "Synchronization error detected while adding review item.  " +
-					"Please refresh the review navigator view and try the command again",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
-			// TODO later we will want to do this automatically
+			UIUtils.displaySyncErrorDialog(e);
+
 		}
 	}
 	
@@ -296,125 +253,48 @@ public class AddReviewItemHandler extends AbstractHandler {
 	/**
 	 * Method addReviewItemToExistingFileContext.
 	 * @param aContainer R4EUISelectionContainer
-	 * @param aFile R4EUIFileContext
 	 * @param aUIPosition IR4EUIPosition
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	private void addReviewItemToExistingFileContext(R4EUISelectionContainer aContainer, R4EUIFileContext aFile, 
-			IR4EUIPosition aUIPosition) throws ResourceHandlingException, OutOfSyncException {
+	private void addReviewItemToExistingFileContext(R4EUISelectionContainer aContainer, IR4EUIPosition aUIPosition) 
+		throws ResourceHandlingException, OutOfSyncException {
 		
-		//Add selectionElement to model in this container
-		final R4EDelta selection = R4EUIModelController.FModelExt.createR4EDelta(aFile.getFileContext());
-		final R4ETextPosition position = R4EUIModelController.FModelExt.createR4ETextPosition(
-				R4EUIModelController.FModelExt.createR4ETargetTextContent(selection));
-		aUIPosition.setPositionInModel(position);
-		final R4EUISelection uiSelection = new R4EUISelection(aContainer, selection, aUIPosition);
-		aContainer.addChildren(uiSelection);
-
-		//Set focus on the new element in the Review Navigator
+		final R4EUISelection uiSelection = aContainer.createSelection((R4EUITextPosition) aUIPosition);
+		
+		//Set focus to newly created anomaly comment
 		R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiSelection, AbstractTreeViewer.ALL_LEVELS);
 		R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(new StructuredSelection(uiSelection), true);
-
 	}
 	
 	/**
 	 * Method addReviewItemToNewFileContext.
-	 * @param aReview R4EUIReview
-	 * @param aUIPosition IR4EUIPosition
-	 * @param aParticipant R4EParticipant
-	 * @param aTargetFile IFile
 	 * @param aBaseFile IFile
-	 * @param aVersionsIf ReviewsVersionsIF
+	 * @param aTargetFile IFile
+	 * @param aUIPosition IR4EUIPosition
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @throws ReviewVersionsException 
 	 */
-	private void addReviewItemToNewFileContext(R4EUIReview aReview, IFile aTargetFile, IFile aBaseFile, 
-			IR4EUIPosition aUIPosition, R4EParticipant aParticipant, ReviewsVersionsIF aVersionsIf) 
-	throws ResourceHandlingException, OutOfSyncException {
+	private void addReviewItemToNewFileContext(IFile aBaseFile, IFile aTargetFile, IR4EUIPosition aUIPosition) 
+		throws ResourceHandlingException, OutOfSyncException {
 		
-		final R4EItem reviewItem = R4EUIModelController.FModelExt.createR4EItem(aParticipant);
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem, R4EUIModelController.getReviewer());
-		reviewItem.getProjectURIs().add(ResourceUtils.toPlatformURIStr(aTargetFile.getProject()));
-		reviewItem.setDescription("");
-		reviewItem.setRepositoryRef(aTargetFile.getFullPath().toOSString());
-		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-		final R4EFileContext fileContext = R4EUIModelController.FModelExt.createR4EFileContext(reviewItem);
-		if (null != aBaseFile) {
-			//  TODO: for now comparisons using the compare editor from the UI are not supported.  The compare input comes
-			// from the eGIT code in the R4E core plugin
-			final R4EFileVersion baseVersion = R4EUIModelController.FModelExt.createR4EBaseFileVersion(fileContext);
-			bookNum = R4EUIModelController.FResourceUpdater.checkOut(baseVersion, R4EUIModelController.getReviewer());
-			try {
-				final FileVersionInfo baseVersionInfo = aVersionsIf.getFileVersionInfo(aBaseFile);
-				baseVersion.setName(baseVersionInfo.getName());
-				baseVersion.setRepositoryPath(baseVersionInfo.getRepositoryPath());
-				baseVersion.setVersionID(baseVersionInfo.getId());
-			} catch (ReviewVersionsException e) {
-				Activator.Tracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Version error detected while adding anomaly. " +
-						" Assuming no base version is present.",
-	    				new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
-				dialog.open();
-			} finally {
-				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-			}
+		final R4EUIReview uiReview = R4EUIModelController.getActiveReview();
+		final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(aTargetFile);
+		if (null == uiReviewItem) return;
+		
+		final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(aBaseFile, aTargetFile);
+		if (null == uiFileContext) {
+			uiReview.removeChildren(uiReviewItem);
+			return;
 		}
-		final R4EFileVersion targetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
-		bookNum = R4EUIModelController.FResourceUpdater.checkOut(targetVersion, R4EUIModelController.getReviewer());
-		targetVersion.setResource(aTargetFile);
-		targetVersion.setPlatformURI(ResourceUtils.toPlatformURI(aTargetFile).toString());
 		
-		if (null != aVersionsIf) {
-			//File is in a Git repository
-			try {
-				final FileVersionInfo targetVersionInfo = aVersionsIf.getFileVersionInfo(aTargetFile);
-				targetVersion.setName(targetVersionInfo.getName());
-				targetVersion.setRepositoryPath(targetVersionInfo.getRepositoryPath());
-				targetVersion.setVersionID(targetVersionInfo.getId());
-			} catch (ReviewVersionsException e) {
-				Activator.Tracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-				final ErrorDialog dialog = new ErrorDialog(null, "Error", "Version error detected while adding anomaly. " +
-						" Assuming no version control is present",
-	    				new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
-				dialog.open();
-				
-				//File is not version-controlled
-				targetVersion.setName(aTargetFile.getName());
-				targetVersion.setRepositoryPath(aTargetFile.getFullPath().toOSString());
-				targetVersion.setVersionID(R4EUIConstants.FILE_NOT_IN_VERSION_CONTROL_MSG);
-			}
-		} else {
-			//File is not version-controlled
-			targetVersion.setName(aTargetFile.getName());
-			targetVersion.setRepositoryPath(aTargetFile.getFullPath().toOSString());
-			targetVersion.setVersionID(R4EUIConstants.FILE_NOT_IN_VERSION_CONTROL_MSG);
-		}
-		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(aReview, reviewItem, 
-				R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE, reviewItem);
-		final R4EUIFileContext uiFile = new R4EUIFileContext(uiReviewItem, fileContext);
+		final R4EUISelectionContainer uiSelectionContainer = new R4EUISelectionContainer(
+				uiFileContext, R4EUIConstants.ANOMALIES_LABEL_NAME);
+		uiFileContext.addChildren(uiSelectionContainer);
 		
-		final R4EUISelectionContainer uiSelectionContainer = new R4EUISelectionContainer(uiFile, R4EUIConstants.SELECTIONS_LABEL_NAME);
-		
-		final R4EDelta selection = R4EUIModelController.FModelExt.createR4EDelta(fileContext);
-		final R4ETextPosition position = R4EUIModelController.FModelExt.createR4ETextPosition(
-				R4EUIModelController.FModelExt.createR4ETargetTextContent(selection));
-		aUIPosition.setPositionInModel(position);
-		final R4EUISelection uiSelection = new R4EUISelection(uiSelectionContainer, selection, aUIPosition);
-		
-		uiSelectionContainer.addChildren(uiSelection);
-		uiFile.addChildren(uiSelectionContainer);
-		uiReviewItem.addChildren(uiFile);
-		aReview.addChildren(uiReviewItem);
-
-		//Set focus on the new element in the Review Navigator
-		R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiSelection, AbstractTreeViewer.ALL_LEVELS);
-		R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(new StructuredSelection(uiSelection), true);
+		final R4EUISelection uiSelection = uiSelectionContainer.createSelection((R4EUITextPosition) aUIPosition);
+			//Set focus to newly created anomaly comment
+			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiSelection, AbstractTreeViewer.ALL_LEVELS);
+			R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(new StructuredSelection(uiSelection), true);
 	}
 }

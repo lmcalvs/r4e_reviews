@@ -17,7 +17,7 @@
  *   
  *******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.ui.model;
+package org.eclipse.mylyn.reviews.r4e.ui.properties;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -30,7 +30,7 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EUIFileVersionSource implements IPropertySource {
+public class FileVersionSourceProperties implements IPropertySource {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -94,7 +94,7 @@ public class R4EUIFileVersionSource implements IPropertySource {
 	 * Constructor for R4EUIFileVersionSource.
 	 * @param aVersion R4EFileVersion
 	 */
-	public R4EUIFileVersionSource(R4EFileVersion aVersion) {
+	public FileVersionSourceProperties(R4EFileVersion aVersion) {
 		fFileVersion = aVersion;
 	}
 	
@@ -108,7 +108,6 @@ public class R4EUIFileVersionSource implements IPropertySource {
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getEditableValue()
 	 */
-	@Override
 	public Object getEditableValue() {
 		return null;
 	}
@@ -118,7 +117,6 @@ public class R4EUIFileVersionSource implements IPropertySource {
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
-	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		return DESCRIPTORS;
 	}
@@ -129,7 +127,6 @@ public class R4EUIFileVersionSource implements IPropertySource {
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
-	@Override
 	public Object getPropertyValue(Object aId) {
 		if (FILE_VERSION_NAME_ID.equals(aId)) { 
 			return fFileVersion.getName();
@@ -150,7 +147,6 @@ public class R4EUIFileVersionSource implements IPropertySource {
 	 * @return boolean
 	 * @see org.eclipse.ui.views.properties.IPropertySource#isPropertySet(Object)
 	 */
-	@Override
 	public boolean isPropertySet(Object id) {
 		return false;
 	}
@@ -160,7 +156,6 @@ public class R4EUIFileVersionSource implements IPropertySource {
 	 * @param id Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#resetPropertyValue(Object)
 	 */
-	@Override
 	public void resetPropertyValue(Object id) { // $codepro.audit.disable emptyMethod
 		//no implementation needed
 	}
@@ -171,7 +166,6 @@ public class R4EUIFileVersionSource implements IPropertySource {
 	 * @param value Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(Object, Object)
 	 */
-	@Override
 	public void setPropertyValue(Object id, Object value) { // $codepro.audit.disable emptyMethod
 		//no implementation needed
 	}

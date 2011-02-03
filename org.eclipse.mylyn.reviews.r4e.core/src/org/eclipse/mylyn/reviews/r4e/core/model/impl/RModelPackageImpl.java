@@ -2070,7 +2070,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		r4ECommentEClass.getESuperTypes().add(this.getR4EReviewComponent());
 		r4ECommentEClass.getESuperTypes().add(this.getR4EIDComponent());
 		r4EReviewComponentEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
-		r4EFileContextEClass.getESuperTypes().add(this.getR4EReviewComponent());
+		r4EFileContextEClass.getESuperTypes().add(this.getR4EIDComponent());
 		r4EDeltaEClass.getESuperTypes().add(this.getR4EIDComponent());
 		r4ECommentTypeEClass.getESuperTypes().add(theModelPackage.getCommentType());
 		r4EContentEClass.getESuperTypes().add(theModelPackage.getLocation());

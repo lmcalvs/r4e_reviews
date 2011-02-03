@@ -28,6 +28,10 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
  */
 public interface IR4EUIPosition {
 
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Method toString.
 	 * 		Returns the position as a readable string

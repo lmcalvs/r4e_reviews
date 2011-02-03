@@ -19,10 +19,10 @@
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.ParticipantProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
-import org.eclipse.ui.views.properties.IPropertyDescriptor;
-import org.eclipse.ui.views.properties.PropertyDescriptor;
+import org.eclipse.ui.views.properties.IPropertySource;
+
 
 /**
  * @author lmcdubo
@@ -39,34 +39,6 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * (value is ""icons/selection.gif"")
 	 */
 	private static final String PARTICIPANT_ICON_FILE = "icons/participant.png";
-	
-	/**
-	 * Field PARTICIPANT_ID. (value is ""participantElement.id"")
-	 */
-	private static final String PARTICIPANT_ID = "participantElement.id";
-
-	/**
-	 * Field PARTICIPANT_PROPERTY_DESCRIPTOR.
-	 */
-	private static final PropertyDescriptor PARTICIPANT_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			PARTICIPANT_ID, R4EUIConstants.ID_LABEL);
-	
-	/**
-	 * Field PARTICIPANT_NUM_COMMENTS_ID. (value is ""participantElement.numComments"")
-	 */
-	private static final String PARTICIPANT_NUM_COMMENTS_ID = "participantElement.numComments";
-
-	/**
-	 * Field PARTICIPANT_NUM_COMMENTS_PROPERTY_DESCRIPTOR.
-	 */
-	private static final PropertyDescriptor PARTICIPANT_NUM_COMMENTS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			PARTICIPANT_NUM_COMMENTS_ID, R4EUIConstants.NUM_COMMENTS_LABEL);
-	
-	/**
-	 * Field DESCRIPTORS.
-	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { PARTICIPANT_PROPERTY_DESCRIPTOR,  
-		PARTICIPANT_NUM_COMMENTS_PROPERTY_DESCRIPTOR };
 	
 	
 	// ------------------------------------------------------------------------
@@ -99,7 +71,19 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	// Methods
 	// ------------------------------------------------------------------------
 	
-	//Attributes
+	/**
+	 * Method getAdapter.
+	 * @param adapter Class
+	 * @return Object
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
+	 */
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
+		if (IR4EUIModelElement.class.equals(adapter)) return this;
+		if (IPropertySource.class.equals(adapter)) return new ParticipantProperties(this);
+		return null;
+	}
+	
 	/**
 	 * Method getParticipant.
 	 * @return R4EParticipant
@@ -108,31 +92,4 @@ public class R4EUIParticipant extends R4EUIModelElement {
 		return fParticipant;
 	}
 	
-	// Properties
-	
-	/**
-	 * Method getPropertyDescriptors.
-	 * @return IPropertyDescriptor[]
-	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
-	 */
-	@Override
-	public IPropertyDescriptor[] getPropertyDescriptors() {
-		return DESCRIPTORS;
-	}
-	
-	/**
-	 * Method getPropertyValue.
-	 * @param aId Object
-	 * @return Object
-	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
-	 */
-	@Override
-	public Object getPropertyValue(Object aId) {
-		if (PARTICIPANT_ID.equals(aId)) { 
-			return fParticipant.getId();
-		} else if (PARTICIPANT_NUM_COMMENTS_ID.equals(aId)) {
-			return Integer.valueOf(fParticipant.getAddedComments().size());
-		}
-		return null;
-	}
 }

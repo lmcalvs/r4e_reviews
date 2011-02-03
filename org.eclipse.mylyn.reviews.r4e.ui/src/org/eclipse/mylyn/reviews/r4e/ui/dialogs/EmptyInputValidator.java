@@ -27,11 +27,20 @@ import org.eclipse.jface.dialogs.IInputValidator;
  */
 public class EmptyInputValidator implements IInputValidator {
 
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Field EMPTY_VALIDATION_ERROR_MESSAGE.
 	 * (value is ""No input given"")
 	 */
 	private static final String EMPTY_VALIDATION_ERROR_MESSAGE = "No input given";
+	
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
 	
 	/**
 	 * Method isValid.
@@ -39,7 +48,6 @@ public class EmptyInputValidator implements IInputValidator {
 	 * @return String
 	 * @see org.eclipse.jface.dialogs.IInputValidator#isValid(String)
 	 */
-	@Override
 	public String isValid(String newText) {
 		if (null == newText || 0 == newText.length()) return EMPTY_VALIDATION_ERROR_MESSAGE;
 		return null;

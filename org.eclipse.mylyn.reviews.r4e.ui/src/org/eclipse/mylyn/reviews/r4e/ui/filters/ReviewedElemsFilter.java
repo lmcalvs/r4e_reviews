@@ -28,7 +28,11 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewedItemsFilter extends ViewerFilter  {
+public class ReviewedElemsFilter extends ViewerFilter  {
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
 	
 	/**
 	 * Method select.

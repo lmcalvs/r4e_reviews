@@ -101,8 +101,7 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
 	 * 	<code>IBaseLabelProvider</code> method adds the listener to both the
 	 * 	nested label provider and the label decorator.
 	 *
-	 * @param listener
-	 *            a label provider listener
+	 * @param listener - a label provider listener
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(ILabelProviderListener)
 	 */
 	@Override
@@ -148,7 +147,6 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
 	 * @return Image
 	 * @see org.eclipse.jface.viewers.ILabelProvider#getImage(Object)
 	 */
-	@Override
 	public Image getImage(Object element) {
 		final Image image = provider.getImage(element);
 		if (null != decorator) {
@@ -179,7 +177,6 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
 
 	/**
 	 * Returns the nested label provider.
-	 *
 	 * @return the nested label provider
 	 */
 	public ILabelProvider getLabelProvider() {
@@ -196,7 +193,6 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
 	 * @return String
 	 * @see org.eclipse.jface.viewers.ILabelProvider#getText(Object)
 	 */
-	@Override
 	public String getText(Object element) {
 		final String text = provider.getText(element);
 		if (null != decorator) {
@@ -295,7 +291,6 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
 	 * @param element Object
 	 * @see org.eclipse.jface.viewers.IViewerLabelProvider#updateLabel(ViewerLabel, Object)
 	 */
-	@Override
 	public void updateLabel(ViewerLabel settings, Object element) {
 
 		final ILabelDecorator currentDecorator = getLabelDecorator();
@@ -359,7 +354,6 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
 	 * @return Color
 	 * @see org.eclipse.jface.viewers.IColorProvider#getBackground(Object)
 	 */
-	@Override
 	public Color getBackground(Object element) {
 		if (provider instanceof IColorProvider) {
 			return ((IColorProvider) provider).getBackground(element);
@@ -373,7 +367,6 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
 	 * @return Font
 	 * @see org.eclipse.jface.viewers.IFontProvider#getFont(Object)
 	 */
-	@Override
 	public Font getFont(Object element) {
 		if (provider instanceof IFontProvider) {
 			return ((IFontProvider) provider).getFont(element);
@@ -387,7 +380,6 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
 	 * @return Color
 	 * @see org.eclipse.jface.viewers.IColorProvider#getForeground(Object)
 	 */
-	@Override
 	public Color getForeground(Object element) {
 		if (provider instanceof IColorProvider) {
 			return ((IColorProvider) provider).getForeground(element);
@@ -545,7 +537,6 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
 	 * @param elementPath TreePath
 	 * @see org.eclipse.jface.viewers.ITreePathLabelProvider#updateLabel(ViewerLabel, TreePath)
 	 */
-	@Override
 	public void updateLabel(ViewerLabel settings, TreePath elementPath) { // $codepro.audit.disable overloadedMethods
 		final ILabelDecorator currentDecorator = getLabelDecorator();
 		final String oldText = settings.getText();

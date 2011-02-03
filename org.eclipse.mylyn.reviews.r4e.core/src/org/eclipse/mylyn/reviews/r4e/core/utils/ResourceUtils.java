@@ -90,7 +90,7 @@ public class ResourceUtils {
 		if (!ifile.exists()) {
 			StringBuilder sb = new StringBuilder("The file: " + platformUri.toString()
 					+ " does not exists in the workspace");
-			Activator.Tracer.traceError(sb.toString());
+			Activator.fTracer.traceError(sb.toString());
 			throw new FileNotFoundException(sb.toString());
 		}
 
@@ -118,7 +118,7 @@ public class ResourceUtils {
 		if (iProject == null) {
 			StringBuilder sb = new StringBuilder("The Project: " + platformUri.toString()
 					+ " does not exists in the workspace");
-			Activator.Tracer.traceError(sb.toString());
+			Activator.fTracer.traceError(sb.toString());
 			throw new FileNotFoundException(sb.toString());
 		}
 
