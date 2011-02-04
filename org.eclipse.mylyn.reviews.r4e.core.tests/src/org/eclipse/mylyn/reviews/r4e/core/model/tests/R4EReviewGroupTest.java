@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 import junit.framework.TestCase;
 import junit.textui.TestRunner;
@@ -37,6 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.impl.SampleR4EModel;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.R4EReader;
@@ -355,6 +357,33 @@ public class R4EReviewGroupTest extends TestCase {
 			e.printStackTrace();
 			fail("Exception");
 		}
+
+		// USER REVIEWS
+		// Verify that the group is loaded with user reviews information
+		R4EUserReviews tomReviews = loadedGroup.getUserReviews().get("Tom10");
+		R4EUserReviews jerryReviews = loadedGroup.getUserReviews().get("Jerry20");
+
+		assertNotNull(tomReviews);
+		assertNotNull(jerryReviews);
+
+		EList<String> createdByTom = tomReviews.getCreatedReviews();
+		EList<String> createdByJerry = jerryReviews.getCreatedReviews();
+
+		Set<String> tomInvitedTo = tomReviews.getInvitedToMap().keySet();
+		Set<String> jerryInvitedTo = jerryReviews.getInvitedToMap().keySet();
+
+		assertTrue(createdByTom.contains("ReviewSampl"));
+		assertTrue(createdByTom.contains("ReviewTwo"));
+		assertTrue(createdByTom.size() == 2);
+		assertTrue(createdByJerry.size() == 0);
+
+		assertTrue(tomInvitedTo.contains("ReviewSampl"));
+		assertTrue(tomInvitedTo.contains("ReviewTwo"));
+		assertTrue(tomInvitedTo.size() == 2);
+
+		assertTrue(jerryInvitedTo.contains("ReviewSampl"));
+		assertTrue(jerryInvitedTo.contains("ReviewTwo"));
+		assertTrue(jerryInvitedTo.size() == 2);
 
 		// The number of created resources shall match the number of physical files
 		String folderPath = groupFileURI.trimSegments(1).devicePath();
