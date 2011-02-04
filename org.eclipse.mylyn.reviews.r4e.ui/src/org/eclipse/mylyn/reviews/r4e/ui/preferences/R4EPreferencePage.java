@@ -31,6 +31,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.editors.FilePathEditor;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -124,12 +126,12 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	/**
 	 * Field fReviewMyFilterButton.
 	 */
-	//private Button fReviewMyFilterButton = null;
+	private Button fReviewMyFilterButton = null;
 	
 	/**
 	 * Field fParticipantFilterButton.
 	 */
-	//private Button fParticipantFilterButton = null;
+	private Button fParticipantFilterButton = null;
 	
 	/**
 	 * Field fAnomaliesFilterButton.
@@ -144,7 +146,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	/**
 	 * Field fParticipantIdText.
 	 */
-	//private Text fParticipantIdText = null;
+	private Text fParticipantIdText = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -321,7 +323,6 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fReviewsOnlyFilterButton.setText(R4EUIConstants.REVIEWS_ONLY_FILTER_NAME);
 		fReviewsOnlyFilterButton.setLayoutData(r4EFilterPrefsGroupData);
 		fReviewsOnlyFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_REVIEWS_ONLY_FILTER));
-		/* TODO the model needs to be changed so that we can query for the info needed for these filters.  This will be added later
 
 		fReviewMyFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fReviewMyFilterButton.setText(R4EUIConstants.REVIEWS_MY_FILTER_NAME);
@@ -350,7 +351,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 				}
 			}
 		});
-		*/
+
 		fAnomaliesFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fAnomaliesFilterButton.setText(R4EUIConstants.ANOMALIES_FILTER_NAME);
 		fAnomaliesFilterButton.setLayoutData(r4EFilterPrefsGroupData);
@@ -383,7 +384,6 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
     	store.setValue(PreferenceConstants.P_SHOW_DISABLED, fReviewShowDisabledButton.getSelection());
     	store.setValue(PreferenceConstants.P_REVIEWS_ONLY_FILTER, fReviewsOnlyFilterButton.getSelection());
     	store.setValue(PreferenceConstants.P_REVIEWS_CURRENT_FILTER, fReviewCurrentFilterButton.getSelection());
-    	/* TODO uncomment when model is fixed
     	store.setValue(PreferenceConstants.P_REVIEWS_MY_FILTER, fReviewMyFilterButton.getSelection());
     	if (fParticipantFilterButton.getSelection()) {
         	final String filterUserId = fParticipantIdText.getText();
@@ -397,7 +397,6 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
         	store.setValue(PreferenceConstants.P_PARTICIPANT_FILTER, "");
 			fParticipantIdText.setText("");
     	}
-    	*/
     	store.setValue(PreferenceConstants.P_ANOMALIES_FILTER, fAnomaliesFilterButton.getSelection());
     	store.setValue(PreferenceConstants.P_REVIEWED_ITEMS_FILTER, fReviewedItemsFilterButton.getSelection());
     	

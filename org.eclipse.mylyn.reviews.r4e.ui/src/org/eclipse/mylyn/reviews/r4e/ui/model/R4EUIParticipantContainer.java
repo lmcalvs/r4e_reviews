@@ -23,8 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 
 /**
@@ -180,7 +178,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override
-	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+	public void removeAllChildren(boolean aFileRemove) {
 		//Recursively remove all children
 		for (R4EUIParticipant participant : fParticipants) {
 			removeChildren(participant, aFileRemove);

@@ -84,7 +84,10 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 */
 	public Image decorateImage(Image aBaseImage, Object element) { // $codepro.audit.disable
 			 
-		if (((IR4EUIModelElement)element).isReviewed()) {
+		if (!((IR4EUIModelElement)element).isEnabled()) {
+			final OverlayImageIcon overlayIcon = new OverlayImageIcon(aBaseImage, ((IR4EUIModelElement)element).getDisabledImage() , OverlayImageIcon.BOTTOM_RIGHT); 
+			return overlayIcon.getImage();	
+		} else if (((IR4EUIModelElement)element).isReviewed()) {
 			final OverlayImageIcon overlayIcon = new OverlayImageIcon(aBaseImage, ((IR4EUIModelElement)element).getReviewedImage() , OverlayImageIcon.BOTTOM_RIGHT); 
 			return overlayIcon.getImage();	
 		}

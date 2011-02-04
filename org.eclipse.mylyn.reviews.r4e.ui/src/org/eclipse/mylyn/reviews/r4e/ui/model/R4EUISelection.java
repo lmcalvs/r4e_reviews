@@ -219,7 +219,7 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fDelta, R4EUIModelController.getReviewer());
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fDelta, R4EUIModelController.getReviewer());
 		fDelta.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();

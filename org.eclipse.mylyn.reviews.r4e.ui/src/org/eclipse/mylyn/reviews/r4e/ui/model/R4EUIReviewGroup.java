@@ -269,7 +269,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		final EList<Review> reviews = fGroup.getReviews();
 		if (null != reviews) {
 			final int reviewsSize = reviews.size();
-			R4EReview review;
+			R4EReview review = null;
 			for (int i = 0; i < reviewsSize; i++) {
 				review = (R4EReview)reviews.get(i);
 				if (review.isEnabled() || Activator.getDefault().getPreferenceStore().
@@ -314,7 +314,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
 		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
 		R4EUIModelController.FModelExt.openR4EReviewGroup(getGroupURI());
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
 		fGroup.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup);
@@ -415,7 +415,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		//This was the current review, so tell the controller that no review is now active
 		if (((R4EUIReview)aChildToRemove).isOpen()) R4EUIModelController.setActiveReview(null);
 
-		R4EUIReview removedElement = fReviews.get(fReviews.indexOf(aChildToRemove));
+		final R4EUIReview removedElement = fReviews.get(fReviews.indexOf(aChildToRemove));
 		
 		//Also recursively remove all children 
 		removedElement.removeAllChildren(aFileRemove);
@@ -443,6 +443,8 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	/**
 	 * Method removeAllChildren.
 	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override

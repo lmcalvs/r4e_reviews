@@ -213,7 +213,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			final List<R4EAnomaly> anomalies = ((R4EUIFileContext)parentElement).getAnomalies();
 			R4EUITextPosition position = null;
 			final int anomaliesSize = anomalies.size();
-			R4EAnomaly anomaly;
+			R4EAnomaly anomaly = null;
 			for (int i = 0; i < anomaliesSize; i++) {
 				anomaly = anomalies.get(i);
 				if (anomaly.isEnabled() || Activator.getDefault().getPreferenceStore().
@@ -246,7 +246,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			final EList<Topic> anomalies =((R4EUIReview)parentElement).getReview().getTopics();
 			if (null != anomalies) {
 				final int anomaliesSize = anomalies.size();
-				R4EAnomaly anomaly;
+				R4EAnomaly anomaly = null;
 				for (int i = 0; i < anomaliesSize; i++) {
 					anomaly = (R4EAnomaly) anomalies.get(i);
 					if (anomaly.isEnabled() || Activator.getDefault().getPreferenceStore().
@@ -272,7 +272,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	@Override
 	public boolean isEnabled() {
 		if (getParent().isEnabled()) {
-			if (fAnomalies.size() == 0) return true;
+			if (0 == fAnomalies.size()) return true;
 			for (R4EUIAnomaly anomaly : fAnomalies) {
 				if (anomaly.isEnabled()) return true;
 			}
@@ -398,7 +398,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
-		R4EUIAnomaly removedElement = fAnomalies.get(fAnomalies.indexOf(aChildToRemove));
+		final R4EUIAnomaly removedElement = fAnomalies.get(fAnomalies.indexOf(aChildToRemove));
 		
 		//Also recursively remove all children 
 		removedElement.removeAllChildren(aFileRemove);
@@ -406,8 +406,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		/* TODO uncomment when core model supports hard-removing of elements
 		if (aFileRemove) removedElement.getAnomaly().remove());
 		else */ 
-		R4EAnomaly modelAnomaly = removedElement.getAnomaly();
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, R4EUIModelController.getReviewer());
+		final R4EAnomaly modelAnomaly = removedElement.getAnomaly();
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, R4EUIModelController.getReviewer());
 		modelAnomaly.setEnabled(false);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
@@ -424,6 +424,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	/**
 	 * Method removeAllChildren.
 	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override
