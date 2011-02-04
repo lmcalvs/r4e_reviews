@@ -81,13 +81,29 @@ public class AddChildElementHandler extends AbstractHandler {
 			UIUtils.displayResourceErrorDialog(e);
 			
 			//Remove object if partially created
-			if (null != element && null != newElement) element.removeChildren(newElement);
+			if (null != element && null != newElement) {
+				try {
+					element.removeChildren(newElement, true);
+				} catch (ResourceHandlingException e1) {
+					UIUtils.displayResourceErrorDialog(e1);
+				} catch (OutOfSyncException e1) {
+					UIUtils.displaySyncErrorDialog(e1);
+				}
+			}
 			
 		} catch (OutOfSyncException e) {
 			UIUtils.displaySyncErrorDialog(e);
 
 			//Remove object if partially created
-			if (null != element && null != newElement) element.removeChildren(newElement);		
+			if (null != element && null != newElement) {
+				try {
+					element.removeChildren(newElement, true);
+				} catch (ResourceHandlingException e1) {
+					UIUtils.displayResourceErrorDialog(e1);
+				} catch (OutOfSyncException e1) {
+					UIUtils.displaySyncErrorDialog(e1);
+				}		
+			}
 		}
 		
 		try {

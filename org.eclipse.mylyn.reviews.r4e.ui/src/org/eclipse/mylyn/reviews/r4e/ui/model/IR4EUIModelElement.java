@@ -71,6 +71,12 @@ public interface IR4EUIModelElement {
 	Image getImage();
 	
 	/**
+	 * Method setImage.
+	 * @param aLocation String
+	 */
+	void setImage(String aLocation);
+
+	/**
 	 * Gets the overlay image that indicate that the element is reviewed
 	 * @return Image
 	 */
@@ -83,12 +89,26 @@ public interface IR4EUIModelElement {
 	boolean isReviewed();
 	
 	/**
+	 * Checks if the corresponding model element is enabled or disabled
+	 * @return true/false
+	 */
+	boolean isEnabled();
+	
+	/**
 	 * Sets the reviewed flag.  Take note that this is not applicable to all model elements
 	 * @param aReviewed - the reviewed flag (true/false)
 	 * @throws ResourceHandlingException 
 	 * @throws OutOfSyncException
 	 */
 	void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException;
+	
+	/**
+	 * Sets the enabled flag.  Take note that this is not applicable to all model elements
+	 * @param aEnabled - the enable flag (true/false)
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException
+	 */
+	void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException;
 	
 	/**
 	 * Set this child reviewed state
@@ -186,10 +206,19 @@ public interface IR4EUIModelElement {
 	/**
 	 * Remove a child from the current element list
 	 * @param aChildToRemove - the child to remove
+	 * @param aFileRemove - also remove from file (hard remove)
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 */
-	void removeChildren(IR4EUIModelElement aChildToRemove);
+	void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException;
 
+	/**
+	 * Method removeAllChildren.
+	 * @param aFileRemove boolean
+	 */
+	void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException;
 
+		
 	//Listeners
 	
 	/**
@@ -253,6 +282,12 @@ public interface IR4EUIModelElement {
 	 * @return boolean
 	 */
 	 boolean isCloseElementCmd();
+	 
+	/**
+	 * Method isRestoreElementCmd.
+	 * @return boolean
+	 */
+	 boolean isRestoreElementCmd();
 	 
 	/**
 	 * Method isAddChildElementCmd.

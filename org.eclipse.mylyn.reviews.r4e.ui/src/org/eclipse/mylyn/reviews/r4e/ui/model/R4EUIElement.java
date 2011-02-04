@@ -180,8 +180,10 @@ public class R4EUIElement extends R4EUIModelElement {
 	 * @throws ResourceHandlingException 
 	 */
 	public void loadReviewGroup(R4EReviewGroup aGroup) {
-		final R4EUIReviewGroup addedChild = new R4EUIReviewGroup(this, aGroup, false);
-		addChildren(addedChild);
+		if (aGroup.isEnabled() || Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+			final R4EUIReviewGroup addedChild = new R4EUIReviewGroup(this, aGroup, false);
+			addChildren(addedChild);
+		}
 	}
 	
 	/**
@@ -237,16 +239,57 @@ public class R4EUIElement extends R4EUIModelElement {
 	/**
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement
+	 * @param aFileRemove - also remove from file (hard remove)
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
-	public void removeChildren(IR4EUIModelElement aChildToRemove) {
-		fReviewGroups.remove(aChildToRemove);
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
+		
+		//Also recursively remove all children 
+		removedElement.removeAllChildren(aFileRemove);
+		
+		/* TODO uncomment when core model supports hard-removing of elements
+		if (aFileRemove) removedElement.getReviewGroup().remove());
+		else */
+		R4EReviewGroup modelReviewGroup = removedElement.getReviewGroup();
+		
+		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
+		R4EUIModelController.FModelExt.openR4EReviewGroup(removedElement.getGroupURI());
+		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReviewGroup, R4EUIModelController.getReviewer());
+		modelReviewGroup.setEnabled(false);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		R4EUIModelController.FModelExt.closeR4EReviewGroup(modelReviewGroup);
+
+		//Remove element from UI if the show disabled element option is off
+		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			fReviewGroups.remove(removedElement);
+			aChildToRemove.removeListener();
+			fireRemove(aChildToRemove);
+		} else {
+			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+		}
+		
 		aChildToRemove.removeListener();
 		fireRemove(aChildToRemove);
 	}
 	
-
+	/**
+	 * Method removeAllChildren.
+	 * @param aFileRemove boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
+	 */
+	@Override
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		//Recursively remove all children
+		for (R4EUIReviewGroup group : fReviewGroups) {
+			removeChildren(group, aFileRemove);
+		}
+	}
+	
+	
 	//Listeners
 	
 	/**
@@ -292,7 +335,8 @@ public class R4EUIElement extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		return true;
+		if (isEnabled()) return true;
+		return false;
 	}
 	
 	/**

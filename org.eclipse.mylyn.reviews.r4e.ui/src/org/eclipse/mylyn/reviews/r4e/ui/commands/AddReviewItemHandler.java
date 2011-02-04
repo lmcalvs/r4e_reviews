@@ -284,7 +284,7 @@ public class AddReviewItemHandler extends AbstractHandler {
 		
 		final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(aBaseFile, aTargetFile);
 		if (null == uiFileContext) {
-			uiReview.removeChildren(uiReviewItem);
+			uiReview.removeChildren(uiReviewItem, false);
 			return;
 		}
 		

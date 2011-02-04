@@ -60,6 +60,12 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_REVIEW_GROUP_FILE_EXT = "*.xrer";
 	
 	/**
+	 * Field P_SHOW_DISABLED.
+	 * (value is ""showDisabled"")
+	 */
+	public static final String P_SHOW_DISABLED = "showDisabled";
+	
+	/**
 	 * Field P_REVIEWS_ONLY_FILTER.
 	 * (value is ""reviewsOnlyFilter"")
 	 */

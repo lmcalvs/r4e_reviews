@@ -284,20 +284,19 @@ public class R4EFindReviewItemsDialog extends Dialog {
     	Composite composite = null;
 
     	try {
-    		// create composite
-    		composite = (Composite) super.createDialogArea(parent);
-    		composite.setLayout(new GridLayout());
-
     		final ReviewsVersionsIF versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(fInputProject);
     		final CommitDescriptor commit = versionsIf.getLastCommitInfo(fInputProject);
 
+    		// create composite
+    		composite = (Composite) super.createDialogArea(parent);
+    		composite.setLayout(new GridLayout());
+    		
     		createReviewItemDetails(composite, commit);
     		createReviewItemComponents(composite, commit);
     		applyDialogFont(composite);
 
     	} catch (ReviewVersionsException e) {
 			UIUtils.displayVersionErrorDialog(e);
-
     	}
     	return composite;
     }

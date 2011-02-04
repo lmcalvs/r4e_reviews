@@ -32,12 +32,15 @@ import org.eclipse.mylyn.reviews.frame.core.model.Review;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.R4EReviewInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
+import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewGroupProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -82,13 +85,13 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
 	 * (value is ""Delete Review Group"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Delete Review Group";
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Review Group";
     
     /**
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this review group"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this review group";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this review group";
 
 	
 	/**
@@ -146,10 +149,10 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		fGroupFileURI = aGroup.eResource().getURI();
 		fReviews = new ArrayList<R4EUIReview>();
 		if (aOpen) {
-			fImage = UIUtils.loadIcon(R4EUIConstants.REVIEW_GROUP_ICON_FILE);
+			setImage(R4EUIConstants.REVIEW_GROUP_ICON_FILE);
 			fOpen = true;
 		} else {
-			fImage = UIUtils.loadIcon(REVIEW_GROUP_CLOSED_ICON_FILE);
+			setImage(REVIEW_GROUP_CLOSED_ICON_FILE);
 			fOpen = false;
 		}
 	}
@@ -182,6 +185,14 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		return fGroup;
 	}
 
+	/**
+	 * Method getGroupURI.
+	 * @return URI
+	 */
+	public URI getGroupURI() {
+		return fGroupFileURI;
+	}
+	
 	/**
 	 * Set serialization model data by copying it from the passed-in object
 	 * @param aModelComponent - a serialization model element to copy information from
@@ -258,8 +269,23 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		final EList<Review> reviews = fGroup.getReviews();
 		if (null != reviews) {
 			final int reviewsSize = reviews.size();
+			R4EReview review;
 			for (int i = 0; i < reviewsSize; i++) {
-				addChildren(new R4EUIReview(this, (R4EReview)reviews.get(i), false));
+				review = (R4EReview)reviews.get(i);
+				if (review.isEnabled() || Activator.getDefault().getPreferenceStore().
+						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+					R4EUIReview uiReview = new R4EUIReview(this, review, false);
+					addChildren(uiReview);
+					
+					//Check if this review is completed
+					if (((R4EReviewState)review.getState()).getState() == R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) {
+						try {
+							uiReview.setReviewed(true);
+						} catch (OutOfSyncException e) {
+							UIUtils.displaySyncErrorDialog(e);
+						}
+					}
+				}
 			}
 		}
 		fOpen = true;
@@ -274,6 +300,35 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	public R4EReviewGroup getReviewGroup() {
 		return fGroup;
+	}
+	
+	
+	/**
+	 * Method setEnabled.
+	 * @param aEnabled boolean
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 */
+	@Override
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
+		R4EUIModelController.FModelExt.openR4EReviewGroup(getGroupURI());
+		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
+		fGroup.setEnabled(true);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup);
+		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+	}
+	
+	/**
+	 * Method isEnabled.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
+	 */
+	@Override
+	public boolean isEnabled() {
+		return fGroup.isEnabled();
 	}
 	
 	
@@ -350,18 +405,53 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	/**
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement
+	 * @param aFileRemove - also remove from file (hard remove)
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
-	public void removeChildren(IR4EUIModelElement aChildToRemove) {
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
 		//This was the current review, so tell the controller that no review is now active
 		if (((R4EUIReview)aChildToRemove).isOpen()) R4EUIModelController.setActiveReview(null);
+
+		R4EUIReview removedElement = fReviews.get(fReviews.indexOf(aChildToRemove));
 		
-		fReviews.remove(aChildToRemove);
+		//Also recursively remove all children 
+		removedElement.removeAllChildren(aFileRemove);
+		
+		/* TODO uncomment when core model supports hard-removing of elements
+		if (aFileRemove) removedElement.getReview().remove());
+		else */
+		
+		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
+		removedElement.setEnabled(false);
+
+		//Remove element from UI if the show disabled element option is off
+		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			fReviews.remove(removedElement);
+			aChildToRemove.removeListener();
+			fireRemove(aChildToRemove);
+		} else {
+			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+		}
+		
 		aChildToRemove.removeListener();
 		fireRemove(aChildToRemove);
 	}
 	
+	/**
+	 * Method removeAllChildren.
+	 * @param aFileRemove boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
+	 */
+	@Override
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		//Recursively remove all children
+		for (R4EUIReview review : fReviews) {
+			removeChildren(review, aFileRemove);
+		}
+	}
 	
 	//Listeners
 	
@@ -408,6 +498,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenElementCmd() {
+		if (!isEnabled() || isOpen()) return false;
 		return true;
 	}
 	
@@ -418,7 +509,8 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isCloseElementCmd() {
-		return true;
+		if (isEnabled() && isOpen()) return true;
+		return false;
 	}
 	
 	/**
@@ -428,7 +520,8 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		return true;
+		if (isEnabled() && isOpen()) return true;
+		return false;
 	}
 	
 	/**
@@ -458,6 +551,18 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
+		if (!isOpen() && isEnabled()) return true;
+		return false;
+	}
+	
+	/**
+	 * Method isRestoreElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (isOpen() || isEnabled()) return false;
 		return true;
 	}
 	

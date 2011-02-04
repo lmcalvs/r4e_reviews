@@ -107,6 +107,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private Text fGroupDescriptionText = null;
 	
 	/**
+	 * Field fReviewShowDisabledButton.
+	 */
+	private Button fReviewShowDisabledButton = null;
+	
+	/**
 	 * Field fReviewsOnlyFilterButton.
 	 */
 	private Button fReviewsOnlyFilterButton = null;
@@ -301,6 +306,12 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4EGroupPrefsSpacer.setLayoutData(r4EGroupPrefsSpacerData);
 		
 		//Filers checkboxes
+		
+		fReviewShowDisabledButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fReviewShowDisabledButton.setText(R4EUIConstants.SHOW_DISABLED_FILTER_NAME);
+		fReviewShowDisabledButton.setLayoutData(r4EFilterPrefsGroupData);
+		fReviewShowDisabledButton.setSelection(store.getBoolean(PreferenceConstants.P_SHOW_DISABLED));
+		
 		fReviewCurrentFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fReviewCurrentFilterButton.setText(R4EUIConstants.CURRENT_REVIEW_FILTER_NAME);
 		fReviewCurrentFilterButton.setLayoutData(r4EFilterPrefsGroupData);
@@ -369,6 +380,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 
         //Set preferences for default filters and apply them
+    	store.setValue(PreferenceConstants.P_SHOW_DISABLED, fReviewShowDisabledButton.getSelection());
     	store.setValue(PreferenceConstants.P_REVIEWS_ONLY_FILTER, fReviewsOnlyFilterButton.getSelection());
     	store.setValue(PreferenceConstants.P_REVIEWS_CURRENT_FILTER, fReviewCurrentFilterButton.getSelection());
     	/* TODO uncomment when model is fixed

@@ -135,6 +135,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final String DIALOG_TITLE_INFO = "R4E Info";
 	
+	/**
+	 * Field SHOW_DISABLED_FILTER_NAME.
+	 * (value is ""Show disabled elements"")
+	 */
+	public static final String SHOW_DISABLED_FILTER_NAME = "Show disabled elements";
+	
 	
 	//Tooltips
 	
@@ -712,17 +718,41 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REMOVE_ELEMENT_COMMAND_NAME.
 	 * (value is ""Remove element"")
 	 */
-	public static final String REMOVE_ELEMENT_COMMAND_NAME = "Remove element";
+	public static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable element";
 	
 	/**
 	 * Field REMOVE_ELEMENT_COMMAND_TOOLTIP.
 	 * (value is ""Remove this element"")
 	 */
-	public static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this element";
+	public static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this element";
 	
 	/**
 	 * Field REMOVE_ELEMENT_COMMAND_MNEMONIC.
 	 * (value is ""r"")
 	 */
-	public static final String REMOVE_ELEMENT_COMMAND_MNEMONIC = "r";
+	public static final String REMOVE_ELEMENT_COMMAND_MNEMONIC = "x";
+	
+	/**
+	 * Field RESTORE_ELEMENT_COMMAND.
+	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.restoreElement"")
+	 */
+	public static final String RESTORE_ELEMENT_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.restoreElement";
+	
+	/**
+	 * Field RESTORE_ELEMENT_COMMAND_NAME.
+	 * (value is ""Restore element"")
+	 */
+	public static final String RESTORE_ELEMENT_COMMAND_NAME = "Restore element";
+	
+	/**
+	 * Field RESTORE_ELEMENT_COMMAND_TOOLTIP.
+	 * (value is ""Restore this disabled element"")
+	 */
+	public static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this disabled element";
+	
+	/**
+	 * Field RESTORE_ELEMENT_COMMAND_MNEMONIC.
+	 * (value is ""r"")
+	 */
+	public static final String RESTORE_ELEMENT_COMMAND_MNEMONIC = "r";
 }

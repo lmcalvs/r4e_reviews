@@ -493,6 +493,12 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.removeElement"
             name="Remove element">
       </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
+            description="Restore element"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.restoreElement"
+            name="Restore element">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.services">
@@ -753,6 +759,15 @@
          </enabledWhen>
       </handler>
       <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddChildElementHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.commands.RemoveElementHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.removeElement">
          <enabledWhen>
@@ -762,8 +777,8 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddChildElementHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement">
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.RestoreElementHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.restoreElement">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen">

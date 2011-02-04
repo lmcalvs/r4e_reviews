@@ -48,8 +48,8 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.R4EAnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
+import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 
 
 /**
@@ -121,7 +121,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	public R4EUIAnomalyContainer(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName, null);
 		fAnomalies = new ArrayList<R4EUIAnomaly>();
-		fImage = UIUtils.loadIcon(ANOMALY_CONTAINER_ICON_FILE);
+		setImage(ANOMALY_CONTAINER_ICON_FILE);
 	}
 
 	
@@ -202,7 +202,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * Method loadModelData.
 	 * 		Load the serialization model data into UI model
 	 */
-	public void loadModelData() {
+	@Override
+	public void open() {
 
 		R4EUIAnomaly uiAnomaly = null;
 		final IR4EUIModelElement parentElement = getParent();
@@ -212,25 +213,29 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			final List<R4EAnomaly> anomalies = ((R4EUIFileContext)parentElement).getAnomalies();
 			R4EUITextPosition position = null;
 			final int anomaliesSize = anomalies.size();
+			R4EAnomaly anomaly;
 			for (int i = 0; i < anomaliesSize; i++) {
-
-				//Do not set position for global EList<E>lies
-				position = null;
-				EList<Location> locations = anomalies.get(i).getLocation(); // $codepro.audit.disable variableDeclaredInLoop
-				if (null != locations) {
-					if (null != locations.get(0)) {
-						int locationsSize = locations.size(); // $codepro.audit.disable variableDeclaredInLoop
-						for (int j = 0; j < locationsSize; j++) {
-							position = new R4EUITextPosition(
-									((R4EContent)anomalies.get(i).getLocation().get(j)).getLocation());  // $codepro.audit.disable methodChainLength
-							uiAnomaly = new R4EUIAnomaly(this, anomalies.get(i), position);
+				anomaly = anomalies.get(i);
+				if (anomaly.isEnabled() || Activator.getDefault().getPreferenceStore().
+						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+					//Do not set position for global EList<E>lies
+					position = null;
+					EList<Location> locations = anomalies.get(i).getLocation(); // $codepro.audit.disable variableDeclaredInLoop
+					if (null != locations) {
+						if (null != locations.get(0)) {
+							int locationsSize = locations.size(); // $codepro.audit.disable variableDeclaredInLoop
+							for (int j = 0; j < locationsSize; j++) {
+								position = new R4EUITextPosition(
+										((R4EContent)anomalies.get(i).getLocation().get(j)).getLocation());  // $codepro.audit.disable methodChainLength
+								uiAnomaly = new R4EUIAnomaly(this, anomalies.get(i), position);
+								addChildren(uiAnomaly);
+								uiAnomaly.open();
+							}
+						} else {
+							uiAnomaly = new R4EUIAnomaly(this, anomalies.get(i), null);
 							addChildren(uiAnomaly);
-							uiAnomaly.loadModelData();
+							uiAnomaly.open();
 						}
-					} else {
-						uiAnomaly = new R4EUIAnomaly(this, anomalies.get(i), null);
-						addChildren(uiAnomaly);
-						uiAnomaly.loadModelData();
 					}
 				}
 			}
@@ -241,18 +246,38 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			final EList<Topic> anomalies =((R4EUIReview)parentElement).getReview().getTopics();
 			if (null != anomalies) {
 				final int anomaliesSize = anomalies.size();
+				R4EAnomaly anomaly;
 				for (int i = 0; i < anomaliesSize; i++) {
-					R4EAnomaly anomaly = (R4EAnomaly) anomalies.get(i); // $codepro.audit.disable variableDeclaredInLoop
-					if (0 == anomaly.getLocation().size()) {
-						uiAnomaly = new R4EUIAnomaly(this, anomaly, null);
-						addChildren(uiAnomaly);
-						uiAnomaly.loadModelData();
+					anomaly = (R4EAnomaly) anomalies.get(i);
+					if (anomaly.isEnabled() || Activator.getDefault().getPreferenceStore().
+							getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						if (0 == anomaly.getLocation().size()) {
+							uiAnomaly = new R4EUIAnomaly(this, anomaly, null);
+							addChildren(uiAnomaly);
+							uiAnomaly.open();
+						}
 					}
 				}
 			}
 			
 		}
 		fOpen = true;
+	}
+	
+	/**
+	 * Method isEnabled.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
+	 */
+	@Override
+	public boolean isEnabled() {
+		if (getParent().isEnabled()) {
+			if (fAnomalies.size() == 0) return true;
+			for (R4EUIAnomaly anomaly : fAnomalies) {
+				if (anomaly.isEnabled()) return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -366,15 +391,48 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	/**
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement
+	 * @param aFileRemove - also remove from file (hard remove)
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
-	public void removeChildren(IR4EUIModelElement aChildToRemove) {
-		fAnomalies.remove(aChildToRemove);
-		aChildToRemove.removeListener();
-		fireRemove(aChildToRemove);
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		R4EUIAnomaly removedElement = fAnomalies.get(fAnomalies.indexOf(aChildToRemove));
+		
+		//Also recursively remove all children 
+		removedElement.removeAllChildren(aFileRemove);
+
+		/* TODO uncomment when core model supports hard-removing of elements
+		if (aFileRemove) removedElement.getAnomaly().remove());
+		else */ 
+		R4EAnomaly modelAnomaly = removedElement.getAnomaly();
+		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, R4EUIModelController.getReviewer());
+		modelAnomaly.setEnabled(false);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+		//Remove element from UI if the show disabled element option is off
+		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			fAnomalies.remove(removedElement);
+			aChildToRemove.removeListener();
+			fireRemove(aChildToRemove);
+		} else {
+			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+		}
 	}
 	
+	/**
+	 * Method removeAllChildren.
+	 * @param aFileRemove boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
+	 */
+	@Override
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		//Recursively remove all children
+		for (R4EUIAnomaly anomaly : fAnomalies) {
+			removeChildren(anomaly, aFileRemove);
+		}
+	}
 	
 	//Listeners
 	
@@ -421,7 +479,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		return true;
+		if (getParent().isEnabled()) return true;
+		return false;
 	}
 	
 	/**
