@@ -1,7 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: R4eproxy
+Bundle-Name: Mylyn Reviews R4E
 Bundle-SymbolicName: org.eclipse.mylyn.reviews.r4e.egitproxy
 Bundle-Version: 0.1.0.qualifier
 Fragment-Host: org.eclipse.egit.ui;bundle-version="0.9.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: Eclipse Mylyn
