@@ -141,7 +141,7 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 			R4EUITextPosition position = null;
 			R4EUISelection newSelection = null;
 			final int deltasSize = deltas.size();
-			R4EDelta delta;
+			R4EDelta delta = null;
 			for (int i = 0; i < deltasSize; i++) {
 				delta = deltas.get(i);
 				if (delta.isEnabled() || Activator.getDefault().getPreferenceStore().
@@ -232,12 +232,12 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
-		R4EUISelection removedElement = fSelections.get(fSelections.indexOf(aChildToRemove));
+		final R4EUISelection removedElement = fSelections.get(fSelections.indexOf(aChildToRemove));
 		/* TODO uncomment when core model supports hard-removing of elements
 		if (aFileRemove) removedElement.getSelection().remove());
 		else */
-		R4EDelta modelSelection = removedElement.getSelection();
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelSelection, R4EUIModelController.getReviewer());
+		final R4EDelta modelSelection = removedElement.getSelection();
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelSelection, R4EUIModelController.getReviewer());
 		modelSelection.setEnabled(false);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		
@@ -254,6 +254,8 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 	/**
 	 * Method removeAllChildren.
 	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override

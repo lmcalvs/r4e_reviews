@@ -22,10 +22,12 @@ import java.util.List;
 
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorActionGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.actions.CompoundContributionItem;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
+
 
 /**
  * @author lmcdubo
@@ -56,7 +58,6 @@ public class FiltersContributionItems extends CompoundContributionItem {
 					null, null, null, null, R4EUIConstants.REVIEWS_ONLY_FILTER_NAME, R4EUIConstants.REVIEWS_ONLY_FILTER_MNEMONIC, 
 					R4EUIConstants.REVIEWS_ONLY_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
 		list.add(new CommandContributionItem(params));
-		/* TODO the model needs to be changed so that we can query for the info needed for these filters.  This will be added later
 		params = 
 			new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 					R4EUIConstants.REVIEWS_MY_FILTER_COMMAND,
@@ -65,7 +66,7 @@ public class FiltersContributionItems extends CompoundContributionItem {
 					R4EUIConstants.REVIEWS_MY_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
 		list.add(new CommandContributionItem(params));
 		
-		String participant = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().
+		final String participant = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().
 				getActionSet()).getFilterParticipant();
 		params = 
 			new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
@@ -76,7 +77,7 @@ public class FiltersContributionItems extends CompoundContributionItem {
 					R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_MNEMONIC, 
 					R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
 		list.add(new CommandContributionItem(params));
-		*/
+
 		params = 
 			new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 					R4EUIConstants.ANOMALIES_FILTER_COMMAND,

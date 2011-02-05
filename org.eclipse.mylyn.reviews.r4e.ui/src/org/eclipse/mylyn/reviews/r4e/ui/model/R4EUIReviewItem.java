@@ -250,7 +250,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
 		fItem.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		for (R4EUIFileContext file : fFileContexts) {
@@ -321,7 +321,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		if (null != files) {	
 			R4EUIFileContext newFileContext = null;
 			final int filesSize = files.size();
-			R4EFileContext file;
+			R4EFileContext file = null;
 			for (int i = 0; i < filesSize; i++) {
 				file = files.get(i);
 				if (file.isEnabled() || Activator.getDefault().getPreferenceStore().
@@ -450,7 +450,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 */
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
-		R4EUIFileContext removedElement = fFileContexts.get(fFileContexts.indexOf(aChildToRemove));
+		final R4EUIFileContext removedElement = fFileContexts.get(fFileContexts.indexOf(aChildToRemove));
 		
 		//Also recursively remove all children 
 		removedElement.removeAllChildren(aFileRemove);
@@ -458,8 +458,8 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		/* TODO uncomment when core model supports hard-removing of elements
 		if (aFileRemove) removedElement.getFileContext().remove());
 		else */
-		R4EFileContext modelFile = removedElement.getFileContext();
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelFile, R4EUIModelController.getReviewer());
+		final R4EFileContext modelFile = removedElement.getFileContext();
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelFile, R4EUIModelController.getReviewer());
 		modelFile.setEnabled(false);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
@@ -476,6 +476,8 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	/**
 	 * Method removeAllChildren.
 	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override

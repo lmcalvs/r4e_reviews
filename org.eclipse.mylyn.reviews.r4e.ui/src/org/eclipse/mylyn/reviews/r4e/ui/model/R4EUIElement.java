@@ -246,7 +246,7 @@ public class R4EUIElement extends R4EUIModelElement {
 	 */
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
-		R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
+		final R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
 		
 		//Also recursively remove all children 
 		removedElement.removeAllChildren(aFileRemove);
@@ -258,7 +258,7 @@ public class R4EUIElement extends R4EUIModelElement {
 		
 		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
 		modelReviewGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(removedElement.getGroupURI());
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReviewGroup, R4EUIModelController.getReviewer());
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReviewGroup, R4EUIModelController.getReviewer());
 		modelReviewGroup.setEnabled(false);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		R4EUIModelController.FModelExt.closeR4EReviewGroup(modelReviewGroup);
@@ -279,6 +279,8 @@ public class R4EUIElement extends R4EUIModelElement {
 	/**
 	 * Method removeAllChildren.
 	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override

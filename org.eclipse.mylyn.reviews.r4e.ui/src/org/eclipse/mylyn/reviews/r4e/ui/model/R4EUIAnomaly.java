@@ -225,7 +225,7 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly, R4EUIModelController.getReviewer());
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly, R4EUIModelController.getReviewer());
 		fAnomaly.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -391,12 +391,12 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
 		
-		R4EUIComment removedElement = fComments.get(fComments.indexOf(aChildToRemove));
+		final R4EUIComment removedElement = fComments.get(fComments.indexOf(aChildToRemove));
 		/* TODO uncomment when core model supports hard-removing of elements
 		if (aFileRemove) removedElement.getComment().remove());
 		else */
-		R4EComment modelComment = removedElement.getComment();
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelComment, R4EUIModelController.getReviewer());
+		final R4EComment modelComment = removedElement.getComment();
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelComment, R4EUIModelController.getReviewer());
 		modelComment.setEnabled(false);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
@@ -413,6 +413,8 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	/**
 	 * Method removeAllChildren.
 	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override

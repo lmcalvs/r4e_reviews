@@ -50,6 +50,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	private static final String REVIEWED_OVERLAY_ICON_FILE = "icons/reviewedOverlay.gif";
 
+	/**
+	 * Field fReviewedOverlayFile.
+	 */
+	private static final String DISABLED_OVERLAY_ICON_FILE = "icons/disabledOverlay.gif";
+	
 	
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -190,7 +195,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @param aLocation String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setImage(String)
 	 */
-	public void setImage(String aLocation) {
+	public final void setImage(String aLocation) {
 		fImage = UIUtils.loadIcon(aLocation);
 		fDisabledImage = new Image(null, fImage, SWT.IMAGE_DISABLE);
 	}
@@ -252,6 +257,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
+	 * Method getDisabledImage.
+	 * @return Image
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getDisabledImage()
+	 */
+	public Image getDisabledImage() {
+		return UIUtils.loadIcon(DISABLED_OVERLAY_ICON_FILE);
+	}
+	
+	
+	/**
 	 * Method setReviewed.
 	 * @param aReviewed boolean
 	 * @throws ResourceHandlingException 
@@ -269,7 +284,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws OutOfSyncException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
 	 */
-	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
 		//default implementation
 	}
 
@@ -390,9 +405,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	/**
 	 * Method removeAllChildren.
 	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
-	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod -->
 		//default implementation
 	}
 	

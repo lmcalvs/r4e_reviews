@@ -83,6 +83,12 @@ public interface IR4EUIModelElement {
 	Image getReviewedImage();
 	
 	/**
+	 * Gets the overlay image that indicate that the element is disabled
+	 * @return Image
+	 */
+	Image getDisabledImage();
+	
+	/**
 	 * Gets the reviewed flag.  Take note that this is not applicable to all model elements
 	 * @return true/false
 	 */
@@ -215,6 +221,8 @@ public interface IR4EUIModelElement {
 	/**
 	 * Method removeAllChildren.
 	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 */
 	void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException;
 
