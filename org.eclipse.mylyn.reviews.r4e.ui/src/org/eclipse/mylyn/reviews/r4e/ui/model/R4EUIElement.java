@@ -257,7 +257,7 @@ public class R4EUIElement extends R4EUIModelElement {
 		R4EReviewGroup modelReviewGroup = removedElement.getReviewGroup();
 		
 		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
-		R4EUIModelController.FModelExt.openR4EReviewGroup(removedElement.getGroupURI());
+		modelReviewGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(removedElement.getGroupURI());
 		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReviewGroup, R4EUIModelController.getReviewer());
 		modelReviewGroup.setEnabled(false);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
