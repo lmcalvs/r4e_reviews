@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 
 /**
  * @author lmcdubo
@@ -65,7 +64,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	public R4EUIParticipantContainer(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName, null);
 		fParticipants = new ArrayList<R4EUIParticipant>();
-		fImage = UIUtils.loadIcon(PARTICIPANT_CONTAINER_ICON_FILE);
+		setImage(PARTICIPANT_CONTAINER_ICON_FILE);
 	}
 
 	
@@ -125,9 +124,10 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	}
 	
 	/**
-	 * Method loadModelData.
+	 * Method open.
 	 */
-	public void loadModelData() {
+	@Override
+	public void open() {
 		final List<R4EParticipant> participants = ((R4EUIReview)getParent()).getParticipants();
 		if (null != participants) {
 			final int participantsSize = participants.size();
@@ -136,6 +136,16 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 			}
 		}
 		fOpen = true;
+	}
+	
+	/**
+	 * Method isEnabled.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
+	 */
+	@Override
+	public boolean isEnabled() {
+		return getParent().isEnabled();
 	}
 	
 	/**
@@ -152,15 +162,28 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	/**
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement
+	 * @param aFileRemove - also remove from file (hard remove)
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
-	public void removeChildren(IR4EUIModelElement aChildToRemove) {
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) {
 		fParticipants.remove(aChildToRemove);
 		aChildToRemove.removeListener();
 		fireRemove(aChildToRemove);
 	}
 	
+	/**
+	 * Method removeAllChildren.
+	 * @param aFileRemove boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
+	 */
+	@Override
+	public void removeAllChildren(boolean aFileRemove) {
+		//Recursively remove all children
+		for (R4EUIParticipant participant : fParticipants) {
+			removeChildren(participant, aFileRemove);
+		}
+	}
 	
 	//Listeners
 

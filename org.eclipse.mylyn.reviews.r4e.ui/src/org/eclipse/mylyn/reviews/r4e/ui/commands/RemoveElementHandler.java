@@ -23,9 +23,14 @@ import java.util.Iterator;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.window.Window;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -52,8 +57,24 @@ public class RemoveElementHandler extends AbstractHandler {
 			IR4EUIModelElement element = null;
 			for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
 			    element = (IR4EUIModelElement) iterator.next();
-				Activator.Ftracer.traceInfo("Remove element " + element.getName());
-				element.getParent().removeChildren(element);
+				Activator.Ftracer.traceInfo("Disable element " + element.getName());
+				//String[] labels = {"Ok", "Cancel"};
+				MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(null,
+						"Disable element",
+						"Do you really want to disable this element?",
+						"Also delete from file (not supported yet)",
+                        false,
+                        null,
+                        null);
+		    	if (dialog.getReturnCode() == Window.OK) {
+		    		try {
+						element.getParent().removeChildren(element, dialog.getToggleState());
+					} catch (ResourceHandlingException e) {
+						UIUtils.displayResourceErrorDialog(e);
+					} catch (OutOfSyncException e) {
+						UIUtils.displaySyncErrorDialog(e);
+					}
+		    	}
 			}
 		}
 		return null;

@@ -46,6 +46,8 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.LinePositionComparator;
@@ -221,6 +223,13 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * Method resetInput.
 	 */
 	public void resetInput() {
+		final R4EUIReviewGroup[] groups = (R4EUIReviewGroup[]) R4EUIModelController.getRootElement().getChildren();
+		for (R4EUIReviewGroup group : groups) {
+			if (group.isOpen()) {
+				group.close();
+			}
+		}
+		R4EUIModelController.setActiveReview(null);
 		reviewTreeViewer.setInput(getInitalInput());
 	}
 
@@ -404,17 +413,25 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 				}
 			}
 			for (IR4EUIModelElement groupToRemove : groupsToRemove) {
-				R4EUIModelController.getRootElement().removeChildren(groupToRemove);
+				try {
+					R4EUIModelController.getRootElement().removeChildren(groupToRemove, false);
+				} catch (ResourceHandlingException e) {
+					UIUtils.displayResourceErrorDialog(e);
+				} catch (OutOfSyncException e) {
+					UIUtils.displaySyncErrorDialog(e);
+				}
 			}
-			
+		} else if (event.getKey().equals(PreferenceConstants.P_SHOW_DISABLED)) {
+			resetInput();
 		}
+
 	}
 
 	/**
 	 * Method applyDefaultFilters.
 	 */
 	public void applyDefaultFilters() {
-		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();	
 		try {
 			((ReviewNavigatorActionGroup) fActionSet).resetAllFilterActions();
 			((ReviewNavigatorActionGroup) fActionSet).runReviewCurrentFilterCommand(

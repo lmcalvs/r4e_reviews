@@ -31,10 +31,11 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.R4ECommentInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
+import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.AnomalyProperties;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -69,13 +70,14 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
 	 * (value is ""Delete Anomaly"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Delete Anomaly";
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Anomaly";
 	
     /**
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this anomaly from its parent file or review item"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this anomaly from its parent file or review item";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this anomaly " +
+    		"from its parent file or review";
     
 	/**
 	 * Field ADD_COMMENT_DIALOG_TITLE.
@@ -124,7 +126,7 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 		super(aParent, ((null == aPosition) ?  aAnomaly.getTitle() : aPosition.toString()), buildAnomalyToolTip(aAnomaly));
 		fAnomaly = aAnomaly;
 		fComments = new ArrayList<R4EUIComment>();
-		fImage = UIUtils.loadIcon(ANOMALY_ICON_FILE);
+		setImage(ANOMALY_ICON_FILE);
 		fPosition = aPosition;
 	}
 	
@@ -214,6 +216,30 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 		return aAnomaly.getUser().getId() + ": " + aAnomaly.getDescription();
 	}
 	
+	/**
+	 * Method setEnabled.
+	 * @param aEnabled boolean
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 */
+	@Override
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly, R4EUIModelController.getReviewer());
+		fAnomaly.setEnabled(true);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+	}
+	
+	/**
+	 * Method isEnabled.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
+	 */
+	@Override
+	public boolean isEnabled() {
+		return fAnomaly.isEnabled();
+	}
 	
 	//Hierarchy
 	
@@ -258,17 +284,21 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	}
 	
 	/**
-	 * Method loadModelData.
+	 * Method open.
 	 * 		Load the serialization model data into UI model
 	 */
-	public void loadModelData() {
+	@Override
+	public void open() {
 		final List<Comment> comments = fAnomaly.getComments();
 		if (null != comments) {
 			R4EComment r4eComment = null;
 			final int commentsSize = comments.size();
 			for (int i = 0; i < commentsSize; i++) {
 				r4eComment = (R4EComment)comments.get(i);
-				addChildren(new R4EUIComment(this, r4eComment));
+				if (r4eComment.isEnabled() || Activator.getDefault().getPreferenceStore().
+						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+					addChildren(new R4EUIComment(this, r4eComment));
+				}
 			}
 		}
 	}
@@ -353,15 +383,47 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	/**
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement
+	 * @param aFileRemove - also remove from file (hard remove)
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
-	public void removeChildren(IR4EUIModelElement aChildToRemove) {
-		fComments.remove(aChildToRemove);
-		aChildToRemove.removeListener();
-		fireRemove(aChildToRemove);
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		
+		final R4EUIComment removedElement = fComments.get(fComments.indexOf(aChildToRemove));
+		/* TODO uncomment when core model supports hard-removing of elements
+		if (aFileRemove) removedElement.getComment().remove());
+		else */
+		final R4EComment modelComment = removedElement.getComment();
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelComment, R4EUIModelController.getReviewer());
+		modelComment.setEnabled(false);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+		//Remove element from UI if the show disabled element option is off
+		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			fComments.remove(removedElement);
+			aChildToRemove.removeListener();
+			fireRemove(aChildToRemove);
+		} else {
+			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+		}
 	}
 	
+	/**
+	 * Method removeAllChildren.
+	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
+	 */
+	@Override
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		//Recursively remove all children
+		for (R4EUIComment comment : fComments) {
+			removeChildren(comment, aFileRemove);
+		}
+	}
 	
 	//Listeners
 	
@@ -408,7 +470,8 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		return true;
+		if (isEnabled() && null != ((R4EUIFileContext)getParent().getParent()).getTargetFile()) return true;
+		return false;
 	}
 	
 	/**
@@ -418,7 +481,8 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		return true;
+		if (isEnabled()) return true;
+		return false;
 	}
 	
 	/**
@@ -448,6 +512,19 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
+		if (isEnabled()) return true;
+		return false;
+	}
+	
+	/**
+	 * Method isRestoreElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (!(getParent().getParent().isEnabled())) return false;
+		if (isEnabled()) return false;
 		return true;
 	}
 	

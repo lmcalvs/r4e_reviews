@@ -25,7 +25,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.CommentProperties;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -48,13 +47,14 @@ public class R4EUIComment extends R4EUIModelElement {
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
 	 * (value is ""Delete Comment"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Delete Comment";
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Comment";
 	
     /**
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this comment from its parent anomaly"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this comment from its parent anomaly";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this comment " +
+    		"from its parent anomaly";
     
 	/**
 	 * Field START_STRING_INDEX.
@@ -93,7 +93,7 @@ public class R4EUIComment extends R4EUIModelElement {
 					new String(aComment.getDescription()).substring(START_STRING_INDEX, END_STRING_NAME_INDEX) + "...", 
 					aComment.getUser().getId() + ": " + aComment.getDescription());
 		fComment = aComment;
-		fImage = UIUtils.loadIcon(COMMENT_ICON_FILE);
+		setImage(COMMENT_ICON_FILE);
 	}
 	
 	
@@ -140,6 +140,30 @@ public class R4EUIComment extends R4EUIModelElement {
     	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
     }
 	
+	/**
+	 * Method setEnabled.
+	 * @param aEnabled boolean
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 */
+	@Override
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fComment, R4EUIModelController.getReviewer());
+		fComment.setEnabled(true);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+	}
+	
+	/**
+	 * Method isEnabled.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
+	 */
+	@Override
+	public boolean isEnabled() {
+		return fComment.isEnabled();
+	}
 	
 	//Commands
 	
@@ -150,7 +174,9 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		return true;
+		if (isEnabled() && 
+				null != ((R4EUIFileContext)getParent().getParent().getParent()).getTargetFile()) return true;
+		return false;
 	}
 	
 	/**
@@ -160,6 +186,19 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
+		if (isEnabled()) return true;
+		return false;
+	}
+	
+	/**
+	 * Method isRestoreElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (!(getParent().isEnabled())) return false;
+		if (isEnabled()) return false;
 		return true;
 	}
 	

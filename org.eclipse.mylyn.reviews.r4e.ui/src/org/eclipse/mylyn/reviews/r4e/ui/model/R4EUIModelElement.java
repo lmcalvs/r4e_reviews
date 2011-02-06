@@ -30,6 +30,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider
 import org.eclipse.mylyn.reviews.r4e.ui.properties.ModelElementProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -49,6 +50,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	private static final String REVIEWED_OVERLAY_ICON_FILE = "icons/reviewedOverlay.gif";
 
+	/**
+	 * Field fReviewedOverlayFile.
+	 */
+	private static final String DISABLED_OVERLAY_ICON_FILE = "icons/disabledOverlay.gif";
+	
 	
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -69,6 +75,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	protected Image fImage;
 
+	/**
+	 * Field fDisabledImage.
+	 */
+	protected Image fDisabledImage;
+	
 	/**
 	 * Field fParent.
 	 */
@@ -172,12 +183,23 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	/**
 	 * Method getImage.
 	 * @return Image 
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getImage()
 	 */
 	public Image getImage() {
-		return fImage;
+		if (isEnabled()) return fImage;
+		return fDisabledImage;
 	}
-
+	
+	/**
+	 * Method setImage.
+	 * @param aLocation String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setImage(String)
+	 */
+	public final void setImage(String aLocation) {
+		fImage = UIUtils.loadIcon(aLocation);
+		fDisabledImage = new Image(null, fImage, SWT.IMAGE_DISABLE);
+	}
+	
 	/**
 	 * Method isReviewed.
 	 * @return boolean
@@ -187,6 +209,15 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 		return fReviewed;
 	}
 
+	/**
+	 * Method isEnabled.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
+	 */
+	public boolean isEnabled() {
+		return true;   //default implementation
+	}
+	
 	/**
 	 * Close the model element (i.e. disable it)
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#close()
@@ -226,6 +257,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
+	 * Method getDisabledImage.
+	 * @return Image
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getDisabledImage()
+	 */
+	public Image getDisabledImage() {
+		return UIUtils.loadIcon(DISABLED_OVERLAY_ICON_FILE);
+	}
+	
+	
+	/**
 	 * Method setReviewed.
 	 * @param aReviewed boolean
 	 * @throws ResourceHandlingException 
@@ -233,6 +274,17 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
 	 */
 	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+		//default implementation
+	}
+
+	/**
+	 * Method setEnabled.
+	 * @param aEnabled boolean
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 */
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
 		//default implementation
 	}
 
@@ -249,9 +301,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method checkToSetReviewed.
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#checkToSetReviewed()
 	 */
-	public void checkToSetReviewed() { // $codepro.audit.disable emptyMethod
+	public void checkToSetReviewed() throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
 		// default implementation
 	}
 
@@ -339,12 +393,26 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	/**
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
+	 * @param aFileRemove - also remove from file (hard remove)
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement, boolean)
 	 */
-	public void removeChildren(IR4EUIModelElement aChildToRemove) { // $codepro.audit.disable emptyMethod
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
 		// default implementation
 	}
 
+	/**
+	 * Method removeAllChildren.
+	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
+	 */
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod -->
+		//default implementation
+	}
+	
 	// Listeners
 
 	/**
@@ -478,6 +546,15 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isRemoveElementCmd()
 	 */
 	public boolean isRemoveElementCmd() {
+		return false;   //default implementation
+	}
+	
+	/**
+	 * Method isRestoreElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	public boolean isRestoreElementCmd() {
 		return false;   //default implementation
 	}
 	

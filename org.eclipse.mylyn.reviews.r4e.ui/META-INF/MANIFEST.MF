@@ -4,24 +4,25 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.mylyn.reviews.r4e.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.eclipse.mylyn.reviews.r4e.ui.Activator
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
- org.eclipse.ui.views;bundle-version="3.5.0",
- org.eclipse.ui.ide;bundle-version="3.6.0",
- org.eclipse.compare;bundle-version="3.5.100",
- org.eclipse.team.ui;bundle-version="3.5.100",
- org.eclipse.core.filesystem;bundle-version="1.3.0",
- org.eclipse.jface.text;bundle-version="3.6.0",
- org.eclipse.ui.editors;bundle-version="3.6.0",
- org.eclipse.jdt.core;bundle-version="3.6.0",
- org.eclipse.cdt.core;bundle-version="5.2.0",
+ org.eclipse.ui.views;bundle-version="3.4.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.compare;bundle-version="3.5.0",
+ org.eclipse.team.ui;bundle-version="3.5.0",
+ org.eclipse.core.filesystem,
+ org.eclipse.jface.text;bundle-version="3.5.0",
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ org.eclipse.jdt.core;bundle-version="3.5.0",
+ org.eclipse.cdt.core;bundle-version="5.0.0",
  org.eclipse.mylyn.reviews.frame.core;bundle-version="0.1.0",
  org.eclipse.mylyn.reviews.r4e.core;bundle-version="0.1.0",
- org.eclipse.ui.views.properties.tabbed;bundle-version="3.5.100",
+ org.eclipse.ui.views.properties.tabbed;bundle-version="3.5.0",
  org.eclipse.core.expressions
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.apache.commons.io,
+Import-Package: org.apache.commons.io;version="1.4.0",
  org.eclipse.egit.ui.internal;version="0.9.1"
 Bundle-Vendor: %providerName

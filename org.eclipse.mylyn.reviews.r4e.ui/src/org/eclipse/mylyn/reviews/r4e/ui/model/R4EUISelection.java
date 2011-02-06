@@ -18,17 +18,12 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.SelectionProperties;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -51,13 +46,14 @@ public class R4EUISelection extends R4EUIModelElement {
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
 	 * (value is ""Delete Selection"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Delete Selection";
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Selection";
 	
     /**
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this selection from its parent file"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this selection from its parent file";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this selection" +
+    		" from its parent file";
 
 
 	// ------------------------------------------------------------------------
@@ -90,7 +86,7 @@ public class R4EUISelection extends R4EUIModelElement {
 				((R4EItem)aDelta.eContainer().eContainer()).getAddedBy().getId()); // $codepro.audit.disable methodChainLength
 		fDelta = aDelta;
 		fPosition = aPosition;
-		fImage = UIUtils.loadIcon(SELECTION_ICON_FILE);
+		setImage(SELECTION_ICON_FILE);
 	}
 	
 	// ------------------------------------------------------------------------
@@ -137,26 +133,23 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
-		if (aReviewed) {
-			if (fReviewed != aReviewed) {   //Reviewed state is changed
+		if (fReviewed != aReviewed) {   //Reviewed state is changed
+			fReviewed = aReviewed;
+			if (fReviewed) {
 				//Add delta to the reviewedContent for this user
 				addContentReviewed();
-				fReviewed = aReviewed;
-
+				
 				//Check to see if we should mark the parent reviewed as well
 				getParent().getParent().checkToSetReviewed();
-			}
-		} else {
-			if (fReviewed != aReviewed) {   //Reviewed state is changed
+			} else {
 				//Remove delta from the reviewedContent for this user
 				removeContentReviewed();
-				fReviewed = aReviewed;
-
+				
 				//Remove check on parent, since at least one children is not set anymore
-				getParent().getParent().setReviewed(aReviewed);
+				getParent().getParent().setReviewed(fReviewed);
 			}
+			fireReviewStateChanged(this);
 		}
-		fireReviewStateChanged(this);
 	}
 	
 	/**
@@ -168,19 +161,18 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public void setChildReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
-		if (aReviewed) {
-			if (fReviewed != aReviewed) {   //Reviewed state is changed
+		if (fReviewed != aReviewed) {   //Reviewed state is changed
+			fReviewed = aReviewed;
+			if (aReviewed) {
 				//Add delta to the reviewedContent for this user
 				addContentReviewed();
-			}
-		} else {
-			if (fReviewed != aReviewed) {   //Reviewed state is changed
+			} else {
 				//Remove delta from the reviewedContent for this user
 				removeContentReviewed();
 			}
+			fReviewed = aReviewed;
+			fireReviewStateChanged(this);
 		}
-		fReviewed = aReviewed;
-		fireReviewStateChanged(this);
 	}
 	
 	
@@ -219,26 +211,28 @@ public class R4EUISelection extends R4EUIModelElement {
 	}
 	
 	/**
-	 * Load the serialization model data for this element
+	 * Method setEnabled.
+	 * @param aEnabled boolean
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
 	 */
-	public void loadModelData() {
-		try {
-			final R4EUIReview review = (R4EUIReview) getParent().getParent().getParent().getParent(); // $codepro.audit.disable methodChainLength
-			final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
-
-			if (null != user) {
-				//Check if the current selection is part of the reviewed content 
-				if (user.getReviewedContent().contains(fDelta.getId())) {
-					setReviewed(true);
-				}			
-			}
-		} catch (ResourceHandlingException e) {
-			UIUtils.displayResourceErrorDialog(e);
-
-		} catch (OutOfSyncException e) {
-			UIUtils.displaySyncErrorDialog(e);
-
-		}
+	@Override
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fDelta, R4EUIModelController.getReviewer());
+		fDelta.setEnabled(true);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+	}
+	
+	/**
+	 * Method isEnabled.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
+	 */
+	@Override
+	public boolean isEnabled() {
+		return fDelta.isEnabled();
 	}
 	
 	
@@ -251,7 +245,8 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddLinkedAnomalyCmd() {
-		return true;
+		if (isEnabled()) return true;
+		return false;
 	}
 	
 	/**
@@ -261,7 +256,8 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		return true;
+		if (isEnabled() && null != ((R4EUIFileContext)getParent().getParent()).getTargetFile()) return true;
+		return false;
 	}
 	
 	/**
@@ -271,7 +267,8 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isChangeReviewStateCmd() {
-		return true;
+		if (isEnabled()) return true;
+		return false;
 	}
 	
 	/**
@@ -281,6 +278,19 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
+		if (isEnabled()) return true;
+		return false;
+	}
+	
+	/**
+	 * Method isRestoreElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (!(getParent().getParent().isEnabled())) return false;
+		if (isEnabled()) return false;
 		return true;
 	}
 	

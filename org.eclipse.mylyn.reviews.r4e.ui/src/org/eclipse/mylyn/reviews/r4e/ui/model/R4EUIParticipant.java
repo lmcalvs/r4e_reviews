@@ -20,7 +20,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.model;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.ParticipantProperties;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 
@@ -63,7 +62,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	public R4EUIParticipant(IR4EUIModelElement aParent, R4EParticipant aParticipant) {
 		super(aParent, aParticipant.getId(), null);  //TODO add email adress as tooltip later
 		fParticipant = aParticipant;
-		fImage = UIUtils.loadIcon(PARTICIPANT_ICON_FILE);
+		setImage(PARTICIPANT_ICON_FILE);
 	}
 
 	
@@ -92,4 +91,13 @@ public class R4EUIParticipant extends R4EUIModelElement {
 		return fParticipant;
 	}
 	
+	/**
+	 * Method isEnabled.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
+	 */
+	@Override
+	public boolean isEnabled() {
+		return getParent().isEnabled();
+	}
 }

@@ -31,6 +31,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
@@ -41,6 +42,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.FileVersion
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
+import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewItemProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -66,13 +68,14 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
 	 * (value is ""Delete Review Item"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Delete Review Item";
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Review Item";
 	
     /**
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this review item from its parent review"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this review item from its parent review";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this review " +
+    		"item from its parent review";
 	
 	
 	// ------------------------------------------------------------------------
@@ -113,7 +116,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		fItem = aItem;
 		fType = aType;
 		fFileContexts = new ArrayList<R4EUIFileContext>();
-		fImage = UIUtils.loadIcon(REVIEW_ITEM_ICON_FILE);
+		setImage(REVIEW_ITEM_ICON_FILE);
 	}
 	
 	
@@ -238,6 +241,34 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		
 	}
 	
+	/**
+	 * Method setEnabled.
+	 * @param aEnabled boolean
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 */
+	@Override
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
+		fItem.setEnabled(true);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		for (R4EUIFileContext file : fFileContexts) {
+			file.setEnabled(true);
+		}
+		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+	}
+	
+	/**
+	 * Method isEnabled.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
+	 */
+	@Override
+	public boolean isEnabled() {
+		return fItem.isEnabled();
+	}
+	
 	
 	//Hierarchy
 	
@@ -282,17 +313,43 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	}
 	
 	/**
-	 * Method loadModelData.
+	 * Method open.
 	 */
-	public void loadModelData() {
+	@Override
+	public void open() {
 		final EList<R4EFileContext> files = fItem.getFileContextList();
 		if (null != files) {	
 			R4EUIFileContext newFileContext = null;
 			final int filesSize = files.size();
+			R4EFileContext file = null;
 			for (int i = 0; i < filesSize; i++) {
-				newFileContext = new R4EUIFileContext(this, files.get(i));
-				addChildren(newFileContext);
-				newFileContext.loadModelData();
+				file = files.get(i);
+				if (file.isEnabled() || Activator.getDefault().getPreferenceStore().
+						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+					newFileContext = new R4EUIFileContext(this, files.get(i));
+					addChildren(newFileContext);
+					newFileContext.open();
+				}
+			}
+			
+			try {
+				final R4EUIReview review = (R4EUIReview) getParent();
+				final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
+
+				if (null != user) {
+					//Check if the file contexts are part of the reviewed content
+					for (R4EUIFileContext uiFile : fFileContexts) {
+						if (user.getReviewedContent().contains(uiFile.getFileContext().getId())) {
+							uiFile.setReviewed(true);
+						}
+					}			
+				}
+			} catch (ResourceHandlingException e) {
+				UIUtils.displayResourceErrorDialog(e);
+
+			} catch (OutOfSyncException e) {
+				UIUtils.displaySyncErrorDialog(e);
+
 			}
 		}
 		fOpen = true;
@@ -386,13 +443,49 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	/**
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement
+	 * @param aFileRemove - also remove from file (hard remove)
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
-	public void removeChildren(IR4EUIModelElement aChildToRemove) {
-		fFileContexts.remove(aChildToRemove);
-		aChildToRemove.removeListener();
-		fireRemove(aChildToRemove);
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		final R4EUIFileContext removedElement = fFileContexts.get(fFileContexts.indexOf(aChildToRemove));
+		
+		//Also recursively remove all children 
+		removedElement.removeAllChildren(aFileRemove);
+		
+		/* TODO uncomment when core model supports hard-removing of elements
+		if (aFileRemove) removedElement.getFileContext().remove());
+		else */
+		final R4EFileContext modelFile = removedElement.getFileContext();
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelFile, R4EUIModelController.getReviewer());
+		modelFile.setEnabled(false);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+		//Remove element from UI if the show disabled element option is off
+		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			fFileContexts.remove(removedElement);
+			aChildToRemove.removeListener();
+			fireRemove(aChildToRemove);
+		} else {
+			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+		}
+	}
+	
+	/**
+	 * Method removeAllChildren.
+	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
+	 */
+	@Override
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		//Recursively remove all children
+		for (R4EUIFileContext file : fFileContexts) {
+			removeChildren(file, aFileRemove);
+		}
 	}
 	
 	
@@ -441,7 +534,8 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isChangeReviewStateCmd() {
-		return true;
+		if (isEnabled()) return true;
+		return false;
 	}
 	
 	/**
@@ -451,6 +545,19 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
+		if (isEnabled()) return true;
+		return false;
+	}
+	
+	/**
+	 * Method isRestoreElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (!(getParent().isEnabled())) return false;
+		if (isEnabled()) return false;
 		return true;
 	}
 	

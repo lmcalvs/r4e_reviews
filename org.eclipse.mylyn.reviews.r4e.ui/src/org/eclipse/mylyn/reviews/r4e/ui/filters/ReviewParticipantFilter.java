@@ -22,8 +22,8 @@ package org.eclipse.mylyn.reviews.r4e.ui.filters;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
 
 /**
  * @author lmcdubo
@@ -71,12 +71,9 @@ public class ReviewParticipantFilter extends ViewerFilter {
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 	
-		//TODO:  We need to find a way to get the participants for closed review to implement this functionality correctly
-		if (null != R4EUIModelController.getActiveReview()) {
-			if (isParentReviewParticipant((IR4EUIModelElement)element)) return true;
-			return isChildrenReviewParticipant((IR4EUIModelElement)element);
-		}
-		return true;
+		if (element instanceof R4EUIReviewGroup && !((R4EUIReviewGroup) element).isOpen()) return true;
+		if (isParentReviewParticipant((IR4EUIModelElement)element)) return true;
+		return isChildrenReviewParticipant((IR4EUIModelElement)element);
 	}
 	
 	/**

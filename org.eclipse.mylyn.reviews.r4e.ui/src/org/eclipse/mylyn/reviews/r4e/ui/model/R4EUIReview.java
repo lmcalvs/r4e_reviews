@@ -31,6 +31,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -39,7 +42,9 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.CommitDescriptor;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
+import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
+import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -72,13 +77,14 @@ public class R4EUIReview extends R4EUIModelElement {
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
 	 * (value is ""Delete Review"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Delete Review";
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Review";
         
     /**
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this review from its parent review group"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this review from its parent review group";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this review from " +
+    		"its parent review group";
 	
 	
 	// ------------------------------------------------------------------------
@@ -131,7 +137,7 @@ public class R4EUIReview extends R4EUIModelElement {
 		fItems = new ArrayList<R4EUIReviewItem>();
 		if (aOpen) {
 			//Open the new review and make itt the active one (close any other that is open)
-			fImage = UIUtils.loadIcon(REVIEW_ICON_FILE);
+			setImage(REVIEW_ICON_FILE);
 			fOpen = true;
 			final List<R4EUserRole> role = new ArrayList<R4EUserRole>(1);
 			role.add(R4EUserRole.R4E_ROLE_LEAD);
@@ -141,7 +147,7 @@ public class R4EUIReview extends R4EUIModelElement {
 			if (null != activeReview ) activeReview.close();
 			R4EUIModelController.setActiveReview(this);
 		} else {
-			fImage = UIUtils.loadIcon(REVIEW_CLOSED_ICON_FILE);
+			setImage(REVIEW_CLOSED_ICON_FILE);
 			fOpen = false;
 		}
 	}
@@ -218,9 +224,19 @@ public class R4EUIReview extends R4EUIModelElement {
 	 * @return true/false
 	 */
 	public boolean isParticipant(String aParticipant) {
-		if ((null != fReview) && (null != ((R4EParticipant)fReview.getUsersMap().get(aParticipant)))) return true;
+		if (null != fReview) {
+			if (isOpen()) {
+				if (null != ((R4EParticipant)fReview.getUsersMap().get(aParticipant))) {
+					return true;
+				}
+			} else {
+				final R4EUserReviews userReviews = ((R4EUIReviewGroup)getParent()).getReviewGroup().getUserReviews().get(aParticipant);
+				if (null != userReviews && userReviews.getInvitedToMap().containsValue(fReview)) return true;
+			}
+		}
 		return false;
 	}
+	
 	
 	/**
 	 * Method getParticipants.
@@ -235,6 +251,36 @@ public class R4EUIReview extends R4EUIModelElement {
 			participants.add((R4EParticipant) user);
 		}
 		return participants;
+	}
+	
+	/**
+	 * Method setReviewed.
+	 * @param aReviewed boolean
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 */
+	@Override
+	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
+		if (aReviewed) {
+			((R4EReviewState)fReview.getState()).setState(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+		} else {
+			((R4EReviewState)fReview.getState()).setState(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
+		}
+    	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		fReviewed = aReviewed;
+		
+		if (fReviewed) {
+			//Also set the children
+			final int length = fItems.size();
+			for (int i = 0; i < length; i++) {
+				fItems.get(i).setReviewed(aReviewed);
+			}
+		}
+		
+		//TODO maybe we want to set the element as disabled as well?
+		fireReviewStateChanged(this);
 	}
 	
 	/**
@@ -272,6 +318,7 @@ public class R4EUIReview extends R4EUIModelElement {
 	@Override
 	public void open() throws ResourceHandlingException, ReviewVersionsException, FileNotFoundException {
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup)getParent()).getReviewGroup(), fReviewName);
+		
 		final EList<Item> items = fReview.getReviewItems();
 		if (null != items) {
 		
@@ -282,29 +329,60 @@ public class R4EUIReview extends R4EUIModelElement {
 			for (int i = 0; i < itemsSize; i++) {
 				//TODO This is a temporary fix to be able to distinguish between various review item types
 				item = (R4EItem)items.get(i);
-				if (null == item.getFileContextList().get(0).getBase()) {
-					//Assume resource
-					uiItem = new R4EUIReviewItem(this, item, R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE, item,
-							item.getFileContextList().get(0).getTarget().getName());
-				} else {
-					//commit
-					IProject project = ResourceUtils.toIProject(item.getProjectURIs().get(0));
-					ReviewsVersionsIF versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(project);
-					CommitDescriptor descriptor = versionsIf.getCommitInfo(project, item.getRepositoryRef());
-					uiItem = new R4EUIReviewItem(this, item, R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT, descriptor, null);
+				if (item.isEnabled() || Activator.getDefault().getPreferenceStore().
+						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+					if (null == item.getFileContextList().get(0).getBase()) {
+						//Assume resource
+						uiItem = new R4EUIReviewItem(this, item, R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE, item,
+								item.getFileContextList().get(0).getTarget().getName());
+					} else {
+						//commit
+						IProject project = ResourceUtils.toIProject(item.getProjectURIs().get(0));
+						ReviewsVersionsIF versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(project);
+						CommitDescriptor descriptor = versionsIf.getCommitInfo(project, item.getRepositoryRef());
+						uiItem = new R4EUIReviewItem(this, item, R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT, descriptor, null);
+					}
+
+					uiItem.open();
+					addChildren(uiItem);
 				}
-				
-				uiItem.loadModelData();
-				addChildren(uiItem);
 			}
 		}
 		
-		fAnomalyContainer.loadModelData();
-		fParticipantsContainer.loadModelData();
+		fAnomalyContainer.open();
+		fParticipantsContainer.open();
 		
 		fOpen = true;
 		fImage = UIUtils.loadIcon(REVIEW_ICON_FILE);
 		fireReviewStateChanged(this);
+	}
+	
+	/**
+	 * Method setEnabled.
+	 * @param aEnabled boolean
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 */
+	@Override
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup) getParent()).getReviewGroup(),
+				fReviewName);
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
+		fReview.setEnabled(aEnabled);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		R4EUIModelController.FModelExt.closeR4EReview(fReview);
+		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+	}
+	
+	/**
+	 * Method isEnabled.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
+	 */
+	@Override
+	public boolean isEnabled() {
+		return fReview.isEnabled();
 	}
 	
 	//Hierarchy
@@ -399,18 +477,68 @@ public class R4EUIReview extends R4EUIModelElement {
 	/**
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement
+	 * @param aFileRemove - also remove from file (hard remove)
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
-	public void removeChildren(IR4EUIModelElement aChildToRemove) {
-		aChildToRemove.removeListener();
-		fireRemove(aChildToRemove);
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
 		if (aChildToRemove instanceof R4EUIReviewItem) {
-			fItems.remove(aChildToRemove);
+			final R4EUIReviewItem removedElement = fItems.get(fItems.indexOf(aChildToRemove));
+			
+			//Also recursively remove all children 
+			removedElement.removeAllChildren(aFileRemove);
+			
+			/* TODO uncomment when core model supports hard-removing of elements
+			if (aFileRemove) removedElement.getItem().remove());
+			else */ 
+			final R4EItem modelItem = removedElement.getItem();
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelItem, R4EUIModelController.getReviewer());
+			modelItem.setEnabled(false);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+			//Remove element from UI if the show disabled element option is off
+			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+				fItems.remove(removedElement);
+				aChildToRemove.removeListener();
+				fireRemove(aChildToRemove);
+			} else {
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+			}
 		} else if (aChildToRemove instanceof R4EUIAnomalyContainer) {
-			fAnomalyContainer = null;
+			fAnomalyContainer.removeAllChildren(aFileRemove);
+			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+				fAnomalyContainer = null;
+				aChildToRemove.removeListener();
+				fireRemove(aChildToRemove);
+			} else {
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+			}
 		} else if (aChildToRemove instanceof R4EUIParticipantContainer) {
-			fParticipantsContainer = null;
+			fParticipantsContainer.removeAllChildren(aFileRemove);
+			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+				fParticipantsContainer = null;
+				aChildToRemove.removeListener();
+				fireRemove(aChildToRemove);
+			} else {
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+			}
+		}
+	}
+	
+	/**
+	 * Method removeAllChildren.
+	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
+	 */
+	@Override
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		//Recursively remove all children
+		for (R4EUIReviewItem item : fItems) {
+			removeChildren(item, aFileRemove);
 		}
 	}
 	
@@ -458,12 +586,24 @@ public class R4EUIReview extends R4EUIModelElement {
 	//Commands
 	
 	/**
+	 * Method isChangeReviewStateCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeReviewStateCmd()
+	 */
+	@Override
+	public boolean isChangeReviewStateCmd() {
+		if (isEnabled() && isOpen()) return true;
+		return false;
+	}
+	
+	/**
 	 * Method isOpenElementCmd.
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isOpenElementCmd()
 	 */
 	@Override
 	public boolean isOpenElementCmd() {
+		if (!isEnabled() || isOpen()) return false;
 		return true;
 	}
 	
@@ -474,7 +614,8 @@ public class R4EUIReview extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isCloseElementCmd() {
-		return true;
+		if (isOpen()) return true;
+		return false;
 	}
 	
 	/**
@@ -484,6 +625,19 @@ public class R4EUIReview extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
+		if (!isOpen() && isEnabled()) return true;
+		return false;
+	}
+	
+	/**
+	 * Method isRestoreElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (!(getParent().isEnabled())) return false;
+		if (isOpen() || isEnabled()) return false;
 		return true;
 	}
 	
