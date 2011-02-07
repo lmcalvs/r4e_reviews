@@ -164,14 +164,29 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 	 * .reviews.r4e.core.model.R4EReviewGroup)
 	 */
 	public String closeR4EReviewGroup(R4EReviewGroup aReviewGroup) {
+		StringBuilder sb = new StringBuilder();
+
 		// Obtain all resources
-		EList<Resource> resList = aReviewGroup.eResource().getResourceSet().getResources();
+		Resource resource = aReviewGroup.eResource();
+		if (resource == null) {
+			sb.append("Attempting to close a review group with no associated resource");
+			Activator.fTracer.traceDebug(sb.toString());
+			return sb.toString();
+		}
+
+		ResourceSet resSet = resource.getResourceSet();
+		if (resSet == null) {
+			sb.append("Attempting to close a review group with no associated resource set");
+			Activator.fTracer.traceDebug(sb.toString());
+			return sb.toString();
+		}
+
+		EList<Resource> resList = resSet.getResources();
 
 		// unload then all
 		for (Resource res : resList) {
 			res.unload();
 		}
-
 		return null;
 	}
 
