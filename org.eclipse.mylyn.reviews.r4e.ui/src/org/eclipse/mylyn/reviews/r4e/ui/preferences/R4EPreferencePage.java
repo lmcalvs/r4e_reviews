@@ -248,7 +248,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 					final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
 					fGroupNameText.setText(group.getName());
 					fGroupDescriptionText.setText(group.getDescription());
-					
+					R4EUIModelController.FModelExt.closeR4EReviewGroup(group);
+
 				} catch (ResourceHandlingException e) {
 	    			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 	    			Activator.getDefault().logWarning("Exception: " + e.toString(), e);

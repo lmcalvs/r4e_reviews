@@ -254,26 +254,14 @@ public class R4EUIElement extends R4EUIModelElement {
 		/* TODO uncomment when core model supports hard-removing of elements
 		if (aFileRemove) removedElement.getReviewGroup().remove());
 		else */
-		R4EReviewGroup modelReviewGroup = removedElement.getReviewGroup();
+		removedElement.setEnabled(false);
 		
-		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
-		modelReviewGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(removedElement.getGroupURI());
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReviewGroup, R4EUIModelController.getReviewer());
-		modelReviewGroup.setEnabled(false);
-		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		R4EUIModelController.FModelExt.closeR4EReviewGroup(modelReviewGroup);
-
 		//Remove element from UI if the show disabled element option is off
 		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fReviewGroups.remove(removedElement);
 			aChildToRemove.removeListener();
 			fireRemove(aChildToRemove);
-		} else {
-			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 		}
-		
-		aChildToRemove.removeListener();
-		fireRemove(aChildToRemove);
 	}
 	
 	/**
