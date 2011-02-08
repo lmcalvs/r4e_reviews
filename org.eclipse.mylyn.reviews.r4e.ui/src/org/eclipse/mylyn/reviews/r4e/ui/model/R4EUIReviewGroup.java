@@ -315,7 +315,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
 		fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(getGroupURI());
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
-		fGroup.setEnabled(true);
+		fGroup.setEnabled(aEnabled);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup);
 		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -423,8 +423,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		/* TODO uncomment when core model supports hard-removing of elements
 		if (aFileRemove) removedElement.getReview().remove());
 		else */
-		
-		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
 		removedElement.setEnabled(false);
 
 		//Remove element from UI if the show disabled element option is off
@@ -432,12 +430,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			fReviews.remove(removedElement);
 			aChildToRemove.removeListener();
 			fireRemove(aChildToRemove);
-		} else {
-			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 		}
-		
-		aChildToRemove.removeListener();
-		fireRemove(aChildToRemove);
 	}
 	
 	/**

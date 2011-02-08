@@ -223,14 +223,31 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * Method resetInput.
 	 */
 	public void resetInput() {
-		final R4EUIReviewGroup[] groups = (R4EUIReviewGroup[]) R4EUIModelController.getRootElement().getChildren();
+		R4EUIReviewGroup[] groups = (R4EUIReviewGroup[]) R4EUIModelController.getRootElement().getChildren();
+		List<String> openGroupNames = new ArrayList<String>();
 		for (R4EUIReviewGroup group : groups) {
 			if (group.isOpen()) {
 				group.close();
+				openGroupNames.add(group.getName());
 			}
 		}
 		R4EUIModelController.setActiveReview(null);
 		reviewTreeViewer.setInput(getInitalInput());
+		
+		//Restore previously open groups
+		groups = (R4EUIReviewGroup[]) R4EUIModelController.getRootElement().getChildren();
+		for (String groupName : openGroupNames) {
+			for (R4EUIReviewGroup group : groups) {
+				if (group.getName().equals(groupName)) {
+					try {
+						group.open();
+					} catch (ResourceHandlingException e) {
+						UIUtils.displayResourceErrorDialog(e);
+					}
+					break;
+				}
+			}
+		}
 	}
 
 	/**
@@ -308,12 +325,12 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 				if (element instanceof R4EUIReview || element instanceof R4EUIReviewGroup) {
 					try {
 						//open or close review if ReviewElement is double-clicked
-						if (element.isOpen()) {
-							((ReviewNavigatorActionGroup) getActionSet()).closeElementCommand();
-							//((R4EUIReview)element).getCloseReviewAction().run();
-						} else {
-							((ReviewNavigatorActionGroup) getActionSet()).openElementCommand();
-							//((R4EUIReview)element).OpenElementCommand().run();
+						if (element.isEnabled()) {
+							if (element.isOpen()) {
+								((ReviewNavigatorActionGroup) getActionSet()).closeElementCommand();
+							} else {
+								((ReviewNavigatorActionGroup) getActionSet()).openElementCommand();
+							}
 						}
 					} catch (ExecutionException e) {
 						Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
