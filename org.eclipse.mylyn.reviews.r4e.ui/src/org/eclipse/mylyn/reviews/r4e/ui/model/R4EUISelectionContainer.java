@@ -45,9 +45,9 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 	
 	/**
 	 * Field fSelectionContainerFile.
-	 * (value is ""icons/selection_container.gif"")
+	 * (value is ""icons/obj16/selcont_obj.gif"")
 	 */
-	private static final String SELECTION_CONTAINER_ICON_FILE = "icons/selection_container.gif";
+	private static final String SELECTION_CONTAINER_ICON_FILE = "icons/obj16/selcont_obj.gif";
     
 	
 	// ------------------------------------------------------------------------

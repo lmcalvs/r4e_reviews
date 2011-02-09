@@ -54,7 +54,7 @@ public class R4EUIElement extends R4EUIModelElement {
 	 * Field ADD_REVIEW_GROUP_DIALOG_TITLE.
 	 * (value is ""Enter Review Group details"")
 	 */
-	private static final String ADD_REVIEW_GROUP_DIALOG_TITLE = "Enter Review Group details";
+	private static final String ADD_REVIEW_GROUP_DIALOG_TITLE = "Enter Review Group Details";
 	
 	/**
 	 * Field ADD_REVIEW_GROUP_NAME_DIALOG_VALUE.

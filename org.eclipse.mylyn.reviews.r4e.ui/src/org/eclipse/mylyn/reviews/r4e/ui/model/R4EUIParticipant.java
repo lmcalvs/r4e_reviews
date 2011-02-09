@@ -35,9 +35,9 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	
 	/**
 	 * Field fSelectionFile.
-	 * (value is ""icons/selection.gif"")
+	 * (value is ""icons/obj16/part_obj.png"")
 	 */
-	private static final String PARTICIPANT_ICON_FILE = "icons/participant.png";
+	private static final String PARTICIPANT_ICON_FILE = "icons/obj16/part_obj.png";
 	
 	
 	// ------------------------------------------------------------------------

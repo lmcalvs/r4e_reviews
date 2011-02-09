@@ -35,7 +35,7 @@ public class EmptyInputValidator implements IInputValidator {
 	 * Field EMPTY_VALIDATION_ERROR_MESSAGE.
 	 * (value is ""No input given"")
 	 */
-	private static final String EMPTY_VALIDATION_ERROR_MESSAGE = "No input given";
+	private static final String EMPTY_VALIDATION_ERROR_MESSAGE = "No Input given";
 	
 	
 	// ------------------------------------------------------------------------
