@@ -68,7 +68,7 @@ public class UIUtils {
     public static void displayResourceErrorDialog(ResourceHandlingException e) {
 		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		Activator.getDefault().logError("Exception: " + e.toString(), e);
-		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Resource error detected",
+		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Resource Error Detected",
 				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 		dialog.open();
     }
@@ -79,7 +79,7 @@ public class UIUtils {
      */
     public static void displaySyncErrorDialog(OutOfSyncException e) {
 		Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Synchronization error detected" +
+		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Synchronization Error Detected" +
 				"Please refresh the review navigator view and try the command again",
 				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 		dialog.open();
@@ -93,7 +93,7 @@ public class UIUtils {
     public static void displayVersionErrorDialog(ReviewVersionsException e) {
     	Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
     	Activator.getDefault().logError("Exception: " + e.toString(), e);
-    	final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Version error detected",
+    	final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Version Error Detected",
     			new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
     	dialog.open();
     }

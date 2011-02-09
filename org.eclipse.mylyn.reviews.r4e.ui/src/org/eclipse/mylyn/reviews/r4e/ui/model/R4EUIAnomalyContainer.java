@@ -64,9 +64,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	
 	/**
 	 * Field fAnomalyContainerFile.
-	 * (value is ""icons/anomaly_container.gif"")
+	 * (value is ""icons/obj16/anmlycont_obj.gif"")
 	 */
-	private static final String ANOMALY_CONTAINER_ICON_FILE = "icons/anomaly_container.gif";
+	private static final String ANOMALY_CONTAINER_ICON_FILE = "icons/obj16/anmlycont_obj.gif";
 	  
 	/**
 	 * Field ADD_ELEMENT_ACTION_NAME.
@@ -78,25 +78,25 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
      * Field ADD_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Add a new global anomaly to the current review item"")
      */
-    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a new global anomaly to the current review item";
+    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Global Anomaly to the Current Review Item";
 
 	/**
 	 * Field ADD_ANOMALY_DIALOG_TITLE.
 	 * (value is ""Enter Anomaly details"")
 	 */
-	private static final String ADD_ANOMALY_DIALOG_TITLE = "Enter Anomaly details";
+	private static final String ADD_ANOMALY_DIALOG_TITLE = "Enter Anomaly Details";
 	
 	/**
 	 * Field ADD_ANOMALY_DIALOG_VALUE.
 	 * (value is ""Enter the Anomaly title:"")
 	 */
-	private static final String ADD_ANOMALY_DIALOG_VALUE = "Enter the Anomaly title:";
+	private static final String ADD_ANOMALY_DIALOG_VALUE = "Enter the Anomaly Title:";
 	
 	/**
 	 * Field ADD_COMMENT_DIALOG_VALUE.
 	 * (value is ""Enter your comments for the new Anomaly:"")
 	 */
-	private static final String ADD_DESCRIPTION_DIALOG_VALUE = "Enter the Anomaly description:";
+	private static final String ADD_DESCRIPTION_DIALOG_VALUE = "Enter the Anomaly Description:";
 	
 	
 	// ------------------------------------------------------------------------

@@ -326,7 +326,6 @@ public class R4EAnomalyInputDialog extends Dialog {
 	protected void setShellStyle(int newShellStyle) {	
     	int newstyle = newShellStyle & ~SWT.APPLICATION_MODAL; /* turn off APPLICATION_MODAL */
     	newstyle |= SWT.MODELESS; /* turn on MODELESS */
-    	newstyle |= SWT.ON_TOP;
     	super.setShellStyle(newstyle); 
     }
     

@@ -194,9 +194,10 @@ public class EditorProxy {
 
 		//Check if file exists in workspace
 		if (null != aFile) {
-				//Open the editor on the target file
-				Activator.Ftracer.traceInfo("Open workspace file " + aFile.getName() + " with single-mode editor");
-				editor = IDE.openEditor(aPage, aFile);
+			
+			//Open the editor on the target file
+			Activator.Ftracer.traceInfo("Open workspace file " + aFile.getName() + " with single-mode editor");
+			editor = IDE.openEditor(aPage, aFile);
 		/*} 
 		 TODO:  This is not supported for now
 		else {
@@ -208,14 +209,14 @@ public class EditorProxy {
 		}
 		 */
 		
-				//Set highlighted selection and reset cursor if possible
-				if (editor instanceof ITextEditor && aPosition instanceof R4EUITextPosition) {
-					((ITextEditor) editor).setHighlightRange(((R4EUITextPosition)aPosition).getOffset(), 
-							((R4EUITextPosition)aPosition).getLength(), true);
-					final TextSelection selectedText = new TextSelection(((R4EUITextPosition)aPosition).getOffset(), 
-							((R4EUITextPosition)aPosition).getLength());
-					((ITextEditor) editor).getSelectionProvider().setSelection(selectedText);
-				}
+			//Set highlighted selection and reset cursor if possible
+			if (editor instanceof ITextEditor && aPosition instanceof R4EUITextPosition) {
+				((ITextEditor) editor).setHighlightRange(((R4EUITextPosition)aPosition).getOffset(), 
+						((R4EUITextPosition)aPosition).getLength(), true);
+				final TextSelection selectedText = new TextSelection(((R4EUITextPosition)aPosition).getOffset(), 
+						((R4EUITextPosition)aPosition).getLength());
+				((ITextEditor) editor).getSelectionProvider().setSelection(selectedText);
+			}
 		}
 	}
 	

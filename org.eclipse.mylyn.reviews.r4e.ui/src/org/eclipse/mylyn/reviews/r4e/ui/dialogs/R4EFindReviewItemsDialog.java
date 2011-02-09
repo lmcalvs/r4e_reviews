@@ -165,8 +165,8 @@ public class R4EFindReviewItemsDialog extends Dialog {
 				final R4EItem tmpReviewItem = versionsIf.createCommitReviewItem(fInputProject, fReviewItemDescriptor.getId(), participant);
 				if (null == tmpReviewItem) {
 					//No files are found
-					Activator.Ftracer.traceWarning("No files found for this review item");
-					Activator.getDefault().logWarning("No files found for this review item", null);
+					Activator.Ftracer.traceWarning("No Files found for this Review Item");
+					Activator.getDefault().logWarning("No Files found for this Review Item", null);
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING, "No files found for this review item.",
 							new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, null, null), IStatus.WARNING);
 					dialog.open();	
@@ -175,8 +175,8 @@ public class R4EFindReviewItemsDialog extends Dialog {
 					if (0 == tmpFiles.size())
 					{
 						//No files are found
-						Activator.Ftracer.traceWarning("No files found for this review item");
-						Activator.getDefault().logWarning("No files found for this review item", null);
+						Activator.Ftracer.traceWarning("No Files found for this Review Item");
+						Activator.getDefault().logWarning("No Files found for this Review Item", null);
 						final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING, "No files found for this review item.",
 								new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, null, null), IStatus.WARNING);
 						dialog.open();

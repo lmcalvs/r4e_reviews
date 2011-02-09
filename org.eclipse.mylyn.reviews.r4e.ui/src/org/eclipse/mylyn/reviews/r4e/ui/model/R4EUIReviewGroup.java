@@ -61,13 +61,13 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * Field REVIEW_GROUP_FILE_PREFIX.
 	 * (value is ""File location: "")
 	 */
-	private static final String REVIEW_GROUP_FILE_PREFIX = "File location: ";
+	private static final String REVIEW_GROUP_FILE_PREFIX = "File Location: ";
 	
 	/**
 	 * Field fReviewGroupFile.
-	 * (value is ""icons/groups.gif"")
+	 * (value is ""icons/obj16/revgrp_obj.gif"")
 	 */
-	private static final String REVIEW_GROUP_CLOSED_ICON_FILE = "icons/groups_closed.gif";
+	private static final String REVIEW_GROUP_CLOSED_ICON_FILE = "icons/obj16/revgrpclsd_obj.gif";
 	
 	/**
 	 * Field ADD_ELEMENT_ACTION_NAME.
@@ -79,7 +79,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
      * Field ADD_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Add a new review to the current review group"")
      */
-    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a new review to the current review group";
+    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Review to the Current Review Group";
     
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
@@ -91,20 +91,20 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this review group"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this review group";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review Group";
 
 	
 	/**
 	 * Field ADD_REVIEW_DIALOG_TITLE.
 	 * (value is ""Enter Review details"")
 	 */
-	private static final String ADD_REVIEW_DIALOG_TITLE = "Enter Review details";
-	
+	private static final String ADD_REVIEW_DIALOG_TITLE = "Enter Review Details";
+
 	/**
 	 * Field ADD_REVIEW_NAME_DIALOG_VALUE.
 	 * (value is ""Enter the Review name"")
 	 */
-	private static final String ADD_REVIEW_NAME_DIALOG_VALUE = "Enter the Review name";
+	private static final String ADD_REVIEW_NAME_DIALOG_VALUE = "Enter the Review Name";
 	
 	/**
 	 * Field ADD_REVIEW_DESCRIPTION_DIALOG_VALUE.
@@ -315,7 +315,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
 		fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(getGroupURI());
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
-		fGroup.setEnabled(true);
+		fGroup.setEnabled(aEnabled);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup);
 		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -423,8 +423,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		/* TODO uncomment when core model supports hard-removing of elements
 		if (aFileRemove) removedElement.getReview().remove());
 		else */
-		
-		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
 		removedElement.setEnabled(false);
 
 		//Remove element from UI if the show disabled element option is off
@@ -432,12 +430,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			fReviews.remove(removedElement);
 			aChildToRemove.removeListener();
 			fireRemove(aChildToRemove);
-		} else {
-			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 		}
-		
-		aChildToRemove.removeListener();
-		fireRemove(aChildToRemove);
 	}
 	
 	/**

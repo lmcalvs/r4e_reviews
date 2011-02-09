@@ -60,9 +60,9 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	
 	/**
 	 * Field fReviewItemFile.
-	 * (value is ""icons/review_item.gif"")
+	 * (value is ""icons/obj16/revitm_obj.gif"")
 	 */
-	private static final String REVIEW_ITEM_ICON_FILE = "icons/review_item.gif";
+	private static final String REVIEW_ITEM_ICON_FILE = "icons/obj16/revitm_obj.gif";
 	
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
@@ -74,8 +74,8 @@ public class R4EUIReviewItem extends R4EUIModelElement {
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this review item from its parent review"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this review " +
-    		"item from its parent review";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review " +
+    		"Item from its Parent Review";
 	
 	
 	// ------------------------------------------------------------------------

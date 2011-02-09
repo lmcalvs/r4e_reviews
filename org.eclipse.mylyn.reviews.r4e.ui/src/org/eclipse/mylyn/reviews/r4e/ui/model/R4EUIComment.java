@@ -39,9 +39,9 @@ public class R4EUIComment extends R4EUIModelElement {
 	
 	/**
 	 * Field fCommentFile.
-	 * (value is ""icons/comment.gif"")
+	 * (value is ""icons/obj16/cmmnt_obj.gif"")
 	 */
-	private static final String COMMENT_ICON_FILE = "icons/comment.gif";
+	private static final String COMMENT_ICON_FILE = "icons/obj16/cmmnt_obj.gif";
 	
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
@@ -53,7 +53,7 @@ public class R4EUIComment extends R4EUIModelElement {
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this comment from its parent anomaly"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this comment " +
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Comment " +
     		"from its parent anomaly";
     
 	/**
