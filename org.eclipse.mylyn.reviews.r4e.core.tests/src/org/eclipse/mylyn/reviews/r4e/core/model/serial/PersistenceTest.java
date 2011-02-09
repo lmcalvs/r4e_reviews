@@ -25,7 +25,7 @@ import junit.framework.TestCase;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.mylyn.reviews.r4e.core.TestGeneral;
+import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
@@ -49,7 +49,7 @@ public class PersistenceTest extends TestCase {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	private static final URI		fGoldenGroup	= TestGeneral.GOLDEN_GROUP_FILE;
+	private static final URI		fGoldenGroup	= TstGeneral.GOLDEN_GROUP_FILE;
 	private static File				fTestDir;
 
 	// ------------------------------------------------------------------------
@@ -92,7 +92,7 @@ public class PersistenceTest extends TestCase {
 		}
 
 		// Tracing on
-		TestGeneral.activateTracer();
+		TstGeneral.activateTracer();
 	}
 
 	/**

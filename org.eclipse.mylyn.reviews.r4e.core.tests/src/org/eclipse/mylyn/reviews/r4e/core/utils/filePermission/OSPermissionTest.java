@@ -20,7 +20,7 @@ import java.io.IOException;
 import junit.framework.TestCase;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.mylyn.reviews.r4e.core.TestGeneral;
+import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 
 /**
  * The class <code>WindowPermissionTest</code> contains tests for the class
@@ -61,7 +61,7 @@ public class OSPermissionTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
-		TestGeneral.activateTracer();
+		TstGeneral.activateTracer();
 	}
 
 	/**

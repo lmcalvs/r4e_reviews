@@ -21,7 +21,7 @@ import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.mylyn.reviews.r4e.core.TestGeneral;
+import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.impl.SampleR4EModel;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
@@ -42,7 +42,7 @@ public class GoldenStubHandler extends TestCase {
 	 */
 	protected R4EReviewGroup				fixture		= null;
 	private static final RModelFactoryExt	fFactory	= SerializeFactory.getModelExtension();
-	private static File						fGroupDir	= new File(TestGeneral.GROUP_PATH_STR);
+	private static File						fGroupDir	= new File(TstGeneral.GROUP_PATH_STR);
 	private static URI						fGroupPath	= URI.createFileURI(fGroupDir.getAbsolutePath());
 
 	/**
@@ -88,7 +88,7 @@ public class GoldenStubHandler extends TestCase {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		TestGeneral.activateTracer();
+		TstGeneral.activateTracer();
 	}
 
 	/**
@@ -114,8 +114,8 @@ public class GoldenStubHandler extends TestCase {
 		}
 
 		// Check against published golden directory
-		boolean same = TestGeneral.compareDirectories(new File(fGroupPath.devicePath()),
-				new File(TestGeneral.GOLDEN_GROUP_DIR.devicePath()));
+		boolean same = TstGeneral.compareDirectories(new File(fGroupPath.devicePath()),
+				new File(TstGeneral.GOLDEN_GROUP_DIR.devicePath()));
 
 		assertTrue("Contents differ from base directory", same);
 
@@ -145,7 +145,7 @@ public class GoldenStubHandler extends TestCase {
 	public static R4EReviewGroup loadGolden() throws ResourceHandlingException {
 		// Load Group
 		R4EReviewGroup loadedGroup = null;
-		loadedGroup = fFactory.openR4EReviewGroup(TestGeneral.GOLDEN_GROUP_FILE);
+		loadedGroup = fFactory.openR4EReviewGroup(TstGeneral.GOLDEN_GROUP_FILE);
 
 		return loadedGroup;
 	}

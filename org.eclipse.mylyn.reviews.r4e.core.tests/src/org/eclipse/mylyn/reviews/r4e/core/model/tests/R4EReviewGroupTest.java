@@ -32,7 +32,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.mylyn.reviews.frame.core.model.Review;
-import org.eclipse.mylyn.reviews.r4e.core.TestGeneral;
+import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -117,7 +117,7 @@ public class R4EReviewGroupTest extends TestCase {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		TestGeneral.activateTracer();
+		TstGeneral.activateTracer();
 		File groupFile = new File(fGroupPathStr);
 		fGroupPath = URI.createFileURI(groupFile.getAbsolutePath());
 	}
@@ -247,8 +247,8 @@ public class R4EReviewGroupTest extends TestCase {
 
 		// This check is done comparing the size only. to eliminate the changes from Id values e.g. equal size per id.
 		// good enough for the time being.
-		boolean same = TestGeneral.compareDirectories(new File(fGroupPath.devicePath()), new File(
-				TestGeneral.GOLDEN_GROUP_DIR.devicePath()));
+		boolean same = TstGeneral.compareDirectories(new File(fGroupPath.devicePath()), new File(
+				TstGeneral.GOLDEN_GROUP_DIR.devicePath()));
 
 		assertTrue("Contents differ from base directory", same);
 
@@ -315,7 +315,7 @@ public class R4EReviewGroupTest extends TestCase {
 			fail("Exception");
 		}
 
-		boolean result = TestGeneral.compareDirectories(srcDir, destDir);
+		boolean result = TstGeneral.compareDirectories(srcDir, destDir);
 		assertTrue("Serialized model does not match Loaded one", result);
 
 		// CleanUp
@@ -334,7 +334,7 @@ public class R4EReviewGroupTest extends TestCase {
 	public void testLoadGoldenGroup() {
 		// Read actual uri
 		String groupName = "Golden Group";
-		File groupfile = new File(TestGeneral.GOLDEN_GROUP_FILE_STR);
+		File groupfile = new File(TstGeneral.GOLDEN_GROUP_FILE_STR);
 		URI groupFileURI = null;
 		try {
 			groupFileURI = URI.createFileURI(groupfile.getCanonicalPath().toString());
@@ -450,7 +450,7 @@ public class R4EReviewGroupTest extends TestCase {
 	 * @return
 	 */
 	private File toDestinationFolder(URI groupFileUri) {
-		String toReplace = TestGeneral.GROUP_PATH_STR;
+		String toReplace = TstGeneral.GROUP_PATH_STR;
 		String forReplace = toReplace + "Y";
 
 		String path = groupFileUri.devicePath();

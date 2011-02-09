@@ -19,7 +19,7 @@ import junit.framework.TestCase;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.mylyn.reviews.r4e.core.TestGeneral;
+import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 
@@ -74,7 +74,7 @@ public class ChangeResControllerTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		// Activate Traces
-		TestGeneral.activateTracer();
+		TstGeneral.activateTracer();
 
 		// Create resource and initiate check-out
 		try {
