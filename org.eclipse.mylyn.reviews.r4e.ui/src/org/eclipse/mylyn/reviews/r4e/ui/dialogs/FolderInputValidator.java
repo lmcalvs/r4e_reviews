@@ -44,7 +44,7 @@ public class FolderInputValidator implements IInputValidator {
 	 * Field EMPTY_VALIDATION_ERROR_MESSAGE.
 	 * (value is ""No input given"")
 	 */
-	private static final String EMPTY_VALIDATION_ERROR_MESSAGE = "No input given";
+	private static final String EMPTY_VALIDATION_ERROR_MESSAGE = "No Input given";
 
 	/**
 	 * Field GROUP_WILDCARD_NAME.
@@ -56,7 +56,7 @@ public class FolderInputValidator implements IInputValidator {
 	 * Field FOLDER_GROUP_EXISTS_VALIDATION_ERROR_MESSAGE.
 	 * (value is ""Folder already contains a group file"")
 	 */
-	private static final String FOLDER_GROUP_EXISTS_VALIDATION_ERROR_MESSAGE = "Folder already contains a group file";
+	private static final String FOLDER_GROUP_EXISTS_VALIDATION_ERROR_MESSAGE = "Folder already contains a Group File";
 	
 	
 	// ------------------------------------------------------------------------

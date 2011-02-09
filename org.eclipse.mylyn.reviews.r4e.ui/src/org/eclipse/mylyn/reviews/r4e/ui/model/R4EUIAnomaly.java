@@ -50,9 +50,9 @@ public class R4EUIAnomaly extends R4EUIModelElement {
 	
 	/**
 	 * Field fAnomalyFile.
-	 * (value is ""icons/anomaly.gif"")
+	 * (value is ""icons/obj16/anmly_obj.gif"")
 	 */
-	private static final String ANOMALY_ICON_FILE = "icons/anomaly.gif";
+	private static final String ANOMALY_ICON_FILE = "icons/obj16/anmly_obj.gif";
 	
 	/**
 	 * Field ADD_ELEMENT_ACTION_NAME.
@@ -64,7 +64,7 @@ public class R4EUIAnomaly extends R4EUIModelElement {
      * Field ADD_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Add a new comment to the current anomaly"")
      */
-    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a new comment to the current anomaly";
+    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Comment to the Current Anomaly";
     
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
@@ -76,20 +76,20 @@ public class R4EUIAnomaly extends R4EUIModelElement {
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this anomaly from its parent file or review item"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this anomaly " +
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Anomaly " +
     		"from its parent file or review";
     
 	/**
 	 * Field ADD_COMMENT_DIALOG_TITLE.
 	 * (value is ""Enter Comment details"")
 	 */
-	private static final String ADD_COMMENT_DIALOG_TITLE = "Enter Comment details";
+	private static final String ADD_COMMENT_DIALOG_TITLE = "Enter Comment Details";
 	
 	/**
 	 * Field ADD_COMMENT_DIALOG_VALUE.
 	 * (value is ""Enter your new Comments for this Anomaly:"")
 	 */
-	private static final String ADD_COMMENT_DIALOG_VALUE = "Enter your new Comments for this Anomaly:";
+	private static final String ADD_COMMENT_DIALOG_VALUE = "Enter your New Comments for this Anomaly:";
 	
 	
 	// ------------------------------------------------------------------------

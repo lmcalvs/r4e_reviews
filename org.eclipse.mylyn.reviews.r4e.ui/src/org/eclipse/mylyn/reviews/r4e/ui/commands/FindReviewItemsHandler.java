@@ -45,19 +45,19 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	 * Field ADD_ANOMALY_DIALOG_TITLE.
 	 * (value is ""Enter Anomaly details"")
 	 */
-	private static final String FIND_REVIEW_ITEMS_DIALOG_TITLE = "Find review items";
+	private static final String FIND_REVIEW_ITEMS_DIALOG_TITLE = "Find Review Items";
 
 	/**
 	 * Field ADD_ANOMALY_DIALOG_VALUE.
 	 * (value is ""Enter the Anomaly title:"")
 	 */
-	private static final String FIND_REVIEW_ITEMS_DIALOG_VALUE = "Review item info (Last Commit)";
+	private static final String FIND_REVIEW_ITEMS_DIALOG_VALUE = "Review Item Info (Last Commit)";
 
 	/**
 	 * Field ADD_COMMENT_DIALOG_VALUE.
 	 * (value is ""Enter your comments for the new Anomaly:"")
 	 */
-	private static final String FIND_REVIEW_ITEMS_DESCRIPTION_DIALOG_VALUE = "Review item components (Last Commit)";
+	private static final String FIND_REVIEW_ITEMS_DESCRIPTION_DIALOG_VALUE = "Review Item Components (Last Commit)";
 	
 	
 	// ------------------------------------------------------------------------

@@ -52,7 +52,7 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	/**
 	 * The FilePathEditor main label text
 	 */
-	public static final String P_FILE_PATH_LABEL =  "Review Group files:";
+	public static final String P_FILE_PATH_LABEL =  "Review Group Files:";
 	
 	/**
 	 * The review group file extension

@@ -21,7 +21,7 @@
             allowMultiple="false"
             category="org.eclipse.mylyn.reviews.r4e.ui.navigatorViewCategory"
             class="org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView"
-            icon="icons/r4e_navigator.gif"
+            icon="icons/view16/revnav_misc.gif"
             id="org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView"
             name="Review Navigator"
             restorable="true">
@@ -34,7 +34,7 @@
             allowMultiple="false"
             category="org.eclipse.mylyn.reviews.r4e.ui.navigatorViewCategory"
             class="org.eclipse.mylyn.reviews.r4e.ui.properties.R4EPropertiesView"            
-            icon="icons/link_properties.gif"
+            icon="icons/elcl16/lnkprop_menu.gif"
             id="org.eclipse.mylyn.reviews.r4e.ui.properties.R4EPropertiesView"
             name="R4E Properties"
             restorable="true">
@@ -50,13 +50,52 @@
                label="R4E"
                mnemonic="r">
             <command
+                  commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems"
+                  icon="icons/view16/finditms_tsk.gif"
+                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems"
+                  label="Find Review Items"
+                  mnemonic="F"
+                  style="push"
+                  tooltip="Find Review Items from a given Project in Workspace">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="selection">
+                     <iterate
+                           ifEmpty="false"
+                           operator="or">
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.core.resources.IProject">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.jdt.core.IJavaProject">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.cdt.core.model.ICProject">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.core.resources.IFolder">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.jdt.core.IPackageFragmentRoot">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.jdt.core.IPackageFragment">
+                           </instanceof>
+                        </or>
+                     </iterate>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
                   commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem"
-                  icon="icons/r4e_new_item.gif"
+                  icon="icons/view16/newitm_tsk.gif"
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem"
-                  label="Add review item"
+                  label="Add Review Item"
                   mnemonic="I"
                   style="push"
-                  tooltip="Add a review item to the current review">
+                  tooltip="Add a Review Item to the Current Review">
                <visibleWhen
                      checkEnabled="false">
                   <or>
@@ -89,12 +128,12 @@
             </command>
             <command
                   commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomaly"
-                  icon="icons/r4e_new_anomaly.gif"
+                  icon="icons/view16/newanmly_tsk.gif"
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomaly"
-                  label="Add anomaly"
+                  label="Add Anomaly"
                   mnemonic="A"
                   style="push"
-                  tooltip="Add an anomaly to the current review">
+                  tooltip="Add an Anomaly to the Current Review">
                <visibleWhen
                      checkEnabled="false">
                   <or>
@@ -123,45 +162,6 @@
                   </or>
                </visibleWhen>
             </command>
-            <command
-                  commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems"
-                  icon="icons/r4e_find_items.gif"
-                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems"
-                  label="Find review items"
-                  mnemonic="F"
-                  style="push"
-                  tooltip="Find review items from a given project in workspace">
-               <visibleWhen
-                     checkEnabled="false">
-                  <with
-                        variable="selection">
-                     <iterate
-                           ifEmpty="false"
-                           operator="or">
-                        <or>
-                           <instanceof
-                                 value="org.eclipse.core.resources.IProject">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.jdt.core.IJavaProject">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.cdt.core.model.ICProject">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.core.resources.IFolder">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.jdt.core.IPackageFragmentRoot">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.jdt.core.IPackageFragment">
-                           </instanceof>
-                        </or>
-                     </iterate>
-                  </with>
-               </visibleWhen>
-            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -169,99 +169,91 @@
             locationURI="toolbar:org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView?after=additions">
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
-               icon="icons/groups.gif"
+               icon="icons/obj16/revgrp_obj.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
-               label="Add review group"
+               label="Add Review Group"
                mnemonic="a"
                style="push"
-               tooltip="Add a new Review Group">
-         </command>
-         <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
-               icon="icons/expandall.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
-               label="Expand all"
-               mnemonic="e"
-               style="push"
-               tooltip="Expand all elements of the review navigator tree">
-         </command>
-         <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
-               icon="icons/collapseall.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
-               label="Collapse all"
-               mnemonic="c"
-               style="push"
-               tooltip="Collapse all elements of the review navigator tree">
+               tooltip="Add a New Review Group">
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.DefaultSort"
-               icon="icons/alpha_sort.gif"
+               icon="icons/elcl16/defsort_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.DefaultSort"
-               label="Sort by element name"
+               label="Sort by Element Name"
                mnemonic="s"
                style="toggle"
-               tooltip="Sort by element name alphabetically ">
+               tooltip="Sort by Element Name Alphabetically ">
          </command>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
-               icon="icons/link_editor.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
-               label="Link editor"
-               mnemonic="l"
-               style="toggle"
-               tooltip="Link the navigator view with the editor">
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
+               icon="icons/elcl16/expndall_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
+               label="Expand All"
+               mnemonic="e"
+               style="push"
+               tooltip="Expand All Elements of the Review Navigator Tree">
          </command>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
-               icon="icons/link_properties.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
-               label="Link properties"
-               mnemonic="p"
-               style="toggle"
-               tooltip="Link the navigator view with the R4E properties view">
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
+               icon="icons/elcl16/clpseall_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
+               label="Collapse All"
+               mnemonic="c"
+               style="push"
+               tooltip="Collapse All Elements of the Review Navigator Tree">
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext"
-               disabledIcon="icons/next_disabled.gif"
-               icon="icons/next.gif"
+               disabledIcon="icons/dlcl16/nxtdbld_menu.gif"
+               icon="icons/elcl16/nxtelem_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext"
-               label="Select next"
+               label="Select Next"
                mnemonic="n"
                style="push"
-               tooltip="Select and open next element in editor">
+               tooltip="Select and Open Next Element in Editor">
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectPrevious"
-               disabledIcon="icons/prev_disabled.gif"
-               icon="icons/prev.gif"
+               disabledIcon="icons/dlcl16/prvdbld_menu.gif"
+               icon="icons/elcl16/prvelem_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectPrevious"
-               label="Select previous"
+               label="Select Previous"
                mnemonic="p"
                style="push"
-               tooltip="Select and open previous element in editor">
+               tooltip="Select and Open Previous Element in Editor">
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
-               icon="icons/refresh.gif"
+               icon="icons/elcl16/refrsh_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
                label="Refresh"
                mnemonic="r"
                style="push"
-               tooltip="Refresh data">
+               tooltip="Refresh Data">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
+               icon="icons/elcl16/lnked_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
+               label="Link Editor"
+               mnemonic="l"
+               style="toggle"
+               tooltip="Link the Navigator View with the Editor">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
+               icon="icons/elcl16/lnkprop_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
+               label="Link Properties"
+               mnemonic="p"
+               style="toggle"
+               tooltip="Link the Navigator View with the R4E Properties View">
          </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
             locationURI="menu:org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView">
-         <menu
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.filter.menu"
-               label="Filters">
-            <dynamic
-                  class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.FiltersContributionItems"
-                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.items">
-            </dynamic>
-         </menu>
          <menu
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.menu"
                label="Sort by">
@@ -270,6 +262,100 @@
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.items">
             </dynamic>
          </menu>
+         <menu
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.filter.menu"
+               label="Filters">
+            <dynamic
+                  class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.FiltersContributionItems"
+                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.items">
+            </dynamic>
+         </menu>
+         <separator
+               name="org.eclipse.mylyn.reviews.r4e.ui.separator1"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
+               icon="icons/obj16/revgrp_obj.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
+               label="Add Review Group"
+               mnemonic="a"
+               style="push"
+               tooltip="Add a New Review Group">
+         </command>
+         <separator
+               name="org.eclipse.mylyn.reviews.r4e.ui.separator2"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
+               icon="icons/elcl16/expndall_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
+               label="Expand All"
+               mnemonic="e"
+               style="push"
+               tooltip="Expand All Elements of the Review Navigator Tree">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
+               icon="icons/elcl16/clpseall_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
+               label="Collapse All"
+               mnemonic="c"
+               style="push"
+               tooltip="Collapse All Elements of the Review Navigator Tree">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext"
+               disabledIcon="icons/dlcl16/nxtdbld_menu.gif"
+               icon="icons/elcl16/nxtelem_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext"
+               label="Select Next"
+               mnemonic="n"
+               style="push"
+               tooltip="Select and Open Next Element in Editor">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectPrevious"
+               disabledIcon="icons/dlcl16/prvdbld_menu.gif"
+               icon="icons/elcl16/prvelem_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectPrevious"
+               label="Select Previous"
+               mnemonic="p"
+               style="push"
+               tooltip="Select and Open Previous Element in Editor">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
+               icon="icons/elcl16/refrsh_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
+               label="Refresh"
+               mnemonic="r"
+               style="push"
+               tooltip="Refresh Data">
+         </command>
+         <separator
+               name="org.eclipse.mylyn.reviews.r4e.ui.separator3"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
+               icon="icons/elcl16/lnked_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
+               label="Link Editor"
+               mnemonic="l"
+               style="toggle"
+               tooltip="Link the Navigator View with the Editor">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
+               icon="icons/elcl16/lnkprop_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
+               label="Link Properties"
+               mnemonic="p"
+               style="toggle"
+               tooltip="Link the Navigator View with the R4E Properties View">
+         </command>
       </menuContribution>
       <menuContribution
             allPopups="true"
@@ -283,27 +369,27 @@
    <extension
          point="org.eclipse.ui.commands">
       <category
-            description="R4E Context-sensitive commands"
+            description="R4E Context-sensitive Commands"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
             name="R4E Context Commands">
       </category>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
-            description="add a review item to the current review"
+            description="Add a Review Item to the Current Review"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem"
-            name="Add review item">
+            name="Add Review Item">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
-            description="add an anomaly to the current review"
+            description="Add an Anomaly to the Current Review"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomaly"
-            name="Add anomaly">
+            name="Add Anomaly">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
-            description="find review items from a given project in workspace"
+            description="Find Review Items from a given Project in Workspace"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems"
-            name="Find review items">
+            name="Find Review Items">
       </command>
       <category
             description="R4E Navigator view toolbar commands"
@@ -312,39 +398,39 @@
       </category>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
-            description="select and open next element in editor"
+            description="Select and Open Next Element in Editor"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext"
-            name="Select next element">
+            name="Select Next Element">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
-            description="select and open previous element in editor"
+            description="Select and Open Previous Element in Editor"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectPrevious"
-            name="Select previous element">
+            name="Select Previous Element">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
-            description="Refresh data for element or parent review/review group element"
+            description="Refresh Data for Element or Parent Review/Review Group Element"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
             name="Refresh">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
-            description="Expand all elements of the review navigator tree"
+            description="Expand All Elements of the Review Navigator Tree"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
-            name="ExpandAll">
+            name="Expand All">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
-            description="Collapse all elements of the review navigator tree"
+            description="Collapse All Elements of the Review Navigator Tree"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
-            name="CollapseAll">
+            name="Collapse All">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
-            description="Link with editor"
+            description="Link with Editor"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
-            name="LinkEditor">
+            name="Link Editor">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:true"
                id="org.eclipse.ui.commands.toggleState">
@@ -352,22 +438,22 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
-            description="Link with properties"
+            description="Link with Properties"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
-            name="LinkProperties">
+            name="Link Properties">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:true"
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
       <category
-            description="R4E Navigator view toolbar filter commands"
+            description="R4E Navigator view toolbar Filter Commands"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
             name="R4E Navigator View Filters">
       </category>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Current review only filter"
+            description="Current Review Filter"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.CurrentReview"
             name="FiltersCurrentReview">
          <state
@@ -377,7 +463,7 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Reviews only filter"
+            description="Reviews Only Filter"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsOnly"
             name="FiltersReviewsOnly">
          <state
@@ -387,7 +473,7 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Show my reviews"
+            description="Show My Reviews"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsMy"
             name="ReviewsMy">
          <state
@@ -397,7 +483,7 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Show reviews for participant"
+            description="Show Reviews for Participant"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsParticipant"
             name="ReviewsParticipant">
          <state
@@ -407,9 +493,9 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Hide selections"
+            description="Hide Selections"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies"
-            name="AnomaliesOnly">
+            name="HideSelections">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -417,9 +503,9 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Hide reviewed elements"
+            description="Hide Reviewed Elements"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewedElems"
-            name="ReviewedElems">
+            name="HideReviewedElems">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -432,13 +518,13 @@
             name="FiltersRemoveAll">
       </command>
       <category
-            description="R4E Navigator view toolbar sort commands"
+            description="R4E Navigator View Toolbar Sort Commands"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.sortersCategory"
             name="R4E Navigator View Sorters">
       </category>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.sortersCategory"
-            description="Element name"
+            description="Sort by Element Name"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.DefaultSort"
             name="DefaultSort">
          <state
@@ -447,57 +533,57 @@
          </state>
       </command>
       <category
-            description="R4E Navigator view popup commands"
+            description="R4E Navigator View Popup Commands"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
             name="R4E Navigator Popup Commands">
       </category>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Add linked anomaly"
+            description="Add Linked Anomaly"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.addLinkedAnomaly"
-            name="Add linked anomaly">
+            name="Add Linked Anomaly">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Open editor"
+            description="Open Editor"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.openEditor"
-            name="Open editor">
+            name="Open Editor">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Change review state"
+            description="Change Review State"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState"
-            name="Change review state">
+            name="Change Review State">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Open element"
+            description="Open Element"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.openElement"
-            name="Open element">
+            name="Open Element">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Close element"
+            description="Close Element"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.closeElement"
-            name="Close element">
+            name="Close Element">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Add child element"
+            description="Add Child Element"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
-            name="Add child element">
+            name="Add Child Element">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Remove element"
+            description="Remove Element"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.removeElement"
-            name="Remove element">
+            name="Remove Element">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Restore element"
+            description="Restore Element"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.restoreElement"
-            name="Restore element">
+            name="Restore Element">
       </command>
    </extension>
    <extension
@@ -801,13 +887,13 @@
          <propertyTab
                category="org.eclipse.mylyn.reviews.r4e.ui.properties.NavigatorPropertiesCategory"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab"
-               label="Detailed">
+               label="General">
          </propertyTab>
          <propertyTab
                afterTab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab"
                category="org.eclipse.mylyn.reviews.r4e.ui.properties.NavigatorPropertiesCategory"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyClassicTab"
-               label="Classic">
+               label="All">
          </propertyTab>
       </propertyTabs>
    </extension>

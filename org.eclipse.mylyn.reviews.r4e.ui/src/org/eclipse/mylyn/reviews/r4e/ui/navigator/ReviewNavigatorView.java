@@ -24,11 +24,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//import org.eclipse.core.runtime.Path;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
@@ -45,6 +46,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -52,6 +54,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.LinePositionComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
@@ -62,9 +65,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -91,17 +100,17 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	/**
 	 * Field reviewTreeViewer.
 	 */
-	private ReviewNavigatorTreeViewer reviewTreeViewer = null;
+	private ReviewNavigatorTreeViewer fReviewTreeViewer = null;
 	
 	/**
 	 * Field fContextMenu.
 	 */
-	private Menu fContextMenu;
+	private Menu fContextMenu = null;
 	
 	/**
 	 * Field fActionSet.
 	 */
-	private ActionGroup fActionSet;
+	private ActionGroup fActionSet = null;
 	
 	/**
 	 * Field fEditorLinked - this is set if the editor is linked to the review Navigator view
@@ -112,6 +121,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * Field fPropertiesLinked - this is set if the R4E properties view is linked to the review Navigator view
 	 */
 	private boolean fPropertiesLinked;
+	
+	/**
+	 * Field fPartListener
+	 */
+	private IPartListener fPartListener = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -168,9 +182,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 */
 	@Override
 	public void dispose() {
+		if (null != fPartListener) getSite().getPage().removePartListener(fPartListener);
 		if (null != fContextMenu && !fContextMenu.isDisposed()) fContextMenu.dispose();
 		if (null != fActionSet)	fActionSet.dispose();
 		super.dispose();
+
 	}
 	 
 	/**
@@ -183,28 +199,28 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	    Activator.Ftracer.traceInfo("Build Review Navigator view");
 	    
 		//Set tree viewer
-		reviewTreeViewer = new ReviewNavigatorTreeViewer(parent, SWT.MULTI);
-		reviewTreeViewer.setUseHashlookup(true);
-		reviewTreeViewer.getTree().setHeaderVisible(true);
-		ColumnViewerToolTipSupport.enableFor(reviewTreeViewer);
-		reviewTreeViewer.setContentProvider(new ReviewNavigatorContentProvider());
+		fReviewTreeViewer = new ReviewNavigatorTreeViewer(parent, SWT.MULTI);
+		fReviewTreeViewer.setUseHashlookup(true);
+		fReviewTreeViewer.getTree().setHeaderVisible(true);
+		ColumnViewerToolTipSupport.enableFor(fReviewTreeViewer);
+		fReviewTreeViewer.setContentProvider(new ReviewNavigatorContentProvider());
 		
 		final DecoratingCellLabelProvider provider = new DecoratingCellLabelProvider(new ReviewNavigatorLabelProvider(), new ReviewNavigatorDecorator());
-		reviewTreeViewer.setLabelProvider(provider);
-		reviewTreeViewer.setComparator(new LinePositionComparator());
-		reviewTreeViewer.setInput(getInitalInput());
+		fReviewTreeViewer.setLabelProvider(provider);
+		fReviewTreeViewer.setComparator(new LinePositionComparator());
+		fReviewTreeViewer.setInput(getInitalInput());
 		
 		//Set Context menus
 		final MenuManager menuMgr = new MenuManager();
 		menuMgr.setRemoveAllWhenShown(true);
 		menuMgr.addMenuListener(this);
-		fContextMenu = menuMgr.createContextMenu(reviewTreeViewer.getTree());
-		reviewTreeViewer.getTree().setMenu(fContextMenu);
+		fContextMenu = menuMgr.createContextMenu(fReviewTreeViewer.getTree());
+		fReviewTreeViewer.getTree().setMenu(fContextMenu);
 		
 		// Register viewer with site. This must be done before making the actions.
 		final IWorkbenchPartSite site = getSite();
-		site.registerContextMenu(menuMgr, reviewTreeViewer);
-		site.setSelectionProvider(reviewTreeViewer);
+		site.registerContextMenu(menuMgr, fReviewTreeViewer);
+		site.setSelectionProvider(fReviewTreeViewer);
 		
 		//Set Actions in Action group
 		makeActions(); // call before registering for selection changes
@@ -224,7 +240,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 */
 	public void resetInput() {
 		R4EUIReviewGroup[] groups = (R4EUIReviewGroup[]) R4EUIModelController.getRootElement().getChildren();
-		List<String> openGroupNames = new ArrayList<String>();
+		final List<String> openGroupNames = new ArrayList<String>();
 		for (R4EUIReviewGroup group : groups) {
 			if (group.isOpen()) {
 				group.close();
@@ -232,7 +248,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			}
 		}
 		R4EUIModelController.setActiveReview(null);
-		reviewTreeViewer.setInput(getInitalInput());
+		fReviewTreeViewer.setInput(getInitalInput());
 		
 		//Restore previously open groups
 		groups = (R4EUIReviewGroup[]) R4EUIModelController.getRootElement().getChildren();
@@ -256,7 +272,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 */
 	@Override
 	public void setFocus() {
-		reviewTreeViewer.getControl().setFocus();
+		fReviewTreeViewer.getControl().setFocus();
 	}
 	
 	/**
@@ -265,7 +281,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * @see org.eclipse.jface.action.IMenuListener#menuAboutToShow(IMenuManager)
 	 */
 	public void menuAboutToShow(IMenuManager aMenuManager) {
-		fActionSet.setContext(new ActionContext(reviewTreeViewer.getSelection()));
+		fActionSet.setContext(new ActionContext(fReviewTreeViewer.getSelection()));
 		fActionSet.fillContextMenu(aMenuManager);
 		fActionSet.setContext(null);
 	}
@@ -276,7 +292,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * @return the tree viewer
 	 */
 	public TreeViewer getTreeViewer() {
-		return reviewTreeViewer;
+		return fReviewTreeViewer;
 	}
 	
 	
@@ -295,7 +311,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * Add the listeners to the tree viewer
 	 */
 	protected void hookListeners() {
-		reviewTreeViewer.addSelectionChangedListener(new ISelectionChangedListener() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
+		fReviewTreeViewer.addSelectionChangedListener(new ISelectionChangedListener() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 			public void selectionChanged(SelectionChangedEvent event) {
 				if(event.getSelection() instanceof IStructuredSelection) {
 					final IStructuredSelection selection = (IStructuredSelection)event.getSelection();
@@ -312,11 +328,46 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 							Activator.getDefault().logError("Exception: " + e.toString(), e);
 						}
 					}
+					
+					if (isEditorLinked()) {
+						IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
+						
+						//Find the parent FileContextElement
+						while (element != null && !(element instanceof R4EUIFileContext)) {
+							element = element.getParent();
+						}
+						if (null == element) return;
+						
+						//Get file reference
+						final IResource resource = ((R4EUIFileContext)element).getFileContext().getTarget().getResource();
+						
+						if (resource instanceof IFile) {
+						
+							//Get open editors
+							final IEditorReference[] editors = PlatformUI.getWorkbench().
+								getActiveWorkbenchWindow().getActivePage().getEditorReferences();
+						
+							for (IEditorReference editor : editors) {
+								try {
+									final IEditorInput input = editor.getEditorInput();
+									if (input instanceof IFileEditorInput) {
+										if (((IFileEditorInput)input).getFile().equals(resource)) {
+											PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().
+												activate(editor.getPart(true));
+											break;
+										}
+									}
+								} catch (PartInitException e) {
+									continue;   //ignore
+								}
+							}
+						}
+					}
 				}
 			}
 		});
 		
-		reviewTreeViewer.addDoubleClickListener(new IDoubleClickListener() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
+		fReviewTreeViewer.addDoubleClickListener(new IDoubleClickListener() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 			public void doubleClick(DoubleClickEvent event) {
 				Activator.Ftracer.traceInfo("Double-click event received");
 
@@ -349,7 +400,53 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 					EditorProxy.openEditor(getSite().getPage(), selection, false);
 				}
 			}
-		});  
+		});
+		
+		getSite().getPage().addPartListener(fPartListener = new IPartListener() {
+
+			public void partOpened(IWorkbenchPart part) { // $codepro.audit.disable emptyMethod
+				// No implementation	
+			}
+
+			public void partDeactivated(IWorkbenchPart part) { // $codepro.audit.disable emptyMethod
+				// No implementation	
+			}
+
+			public void partClosed(IWorkbenchPart part) { // $codepro.audit.disable emptyMethod
+				// No implementation		
+			}
+
+			public void partBroughtToTop(IWorkbenchPart part) { // $codepro.audit.disable emptyMethod
+				// No implementation	
+			}
+
+			@SuppressWarnings("synthetic-access")
+			public void partActivated(IWorkbenchPart part) {
+				if (isEditorLinked() && part instanceof IEditorPart) {
+					//Check if the part activated is an editor, if so select corresponding
+					//review navigator file context if applicable
+					final IEditorInput input = ((IEditorPart)part).getEditorInput();
+					if (input instanceof IFileEditorInput) {
+						final IFile editorFile = ((IFileEditorInput)input).getFile();
+						final IR4EUIModelElement rootElement = R4EUIModelController.getRootElement();
+
+						for (IR4EUIModelElement group : rootElement.getChildren()) {
+							for (IR4EUIModelElement review : group.getChildren()) {
+								for (IR4EUIModelElement item : review.getChildren()) {
+									R4EUIFileContext[] files = (R4EUIFileContext[]) item.getChildren();
+									for (R4EUIFileContext navigatorFile : files) {
+										if (((IFile)navigatorFile.getFileContext().getTarget().getResource()).equals(editorFile)) {								
+											fReviewTreeViewer.setSelection(new StructuredSelection(navigatorFile), true);
+											return;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
 	}
 	
 	

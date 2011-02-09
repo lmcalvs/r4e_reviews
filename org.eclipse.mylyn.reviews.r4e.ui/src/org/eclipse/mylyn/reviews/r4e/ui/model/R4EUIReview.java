@@ -63,15 +63,15 @@ public class R4EUIReview extends R4EUIModelElement {
 	
 	/**
 	 * Field REVIEW_ICON_FILE.
-	 * (value is ""icons/review.gif"")
+	 * (value is ""icons/obj16/review_obj.gif"")
 	 */
-	private static final String REVIEW_ICON_FILE = "icons/review.gif";
+	private static final String REVIEW_ICON_FILE = "icons/obj16/review_obj.gif";
 	
 	/**
 	 * Field REVIEW_ICON_FILE.
-	 * (value is ""icons/review_closed.gif"")
+	 * (value is ""icons/obj16/revclsd_obj.gif"")
 	 */
-	private static final String REVIEW_CLOSED_ICON_FILE = "icons/review_closed.gif";
+	private static final String REVIEW_CLOSED_ICON_FILE = "icons/obj16/revclsd_obj.gif";
 	
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
@@ -83,8 +83,8 @@ public class R4EUIReview extends R4EUIModelElement {
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this review from its parent review group"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this review from " +
-    		"its parent review group";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review from " +
+    		"its Parent Review Group";
 	
 	
 	// ------------------------------------------------------------------------
