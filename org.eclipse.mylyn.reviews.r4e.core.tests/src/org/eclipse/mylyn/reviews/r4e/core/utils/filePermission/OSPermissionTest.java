@@ -81,7 +81,7 @@ public class OSPermissionTest extends TestCase {
 	 */
 	public void testChangePermission() {
 		// add test code here
-		String dirStr = "PermDirTest";
+		String dirStr = System.getProperty("java.io.tmpdir") + "PermDirTest" + File.separator;
 		File dir = new File(dirStr);
 		dir.mkdir();
 

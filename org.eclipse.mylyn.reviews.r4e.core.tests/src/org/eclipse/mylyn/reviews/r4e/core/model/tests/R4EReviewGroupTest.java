@@ -71,6 +71,7 @@ public class R4EReviewGroupTest extends TestCase {
 	private static final String		REVIEW_NAME1	= "Alpha 1";
 
 	private static final String		fUser1			= "au 1";
+	private File					fRootTestDir	= null;
 
 
 
@@ -118,8 +119,9 @@ public class R4EReviewGroupTest extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		TstGeneral.activateTracer();
-		File groupFile = new File(fGroupPathStr);
-		fGroupPath = URI.createFileURI(groupFile.getAbsolutePath());
+		String baseDir = System.getProperty("java.io.tmpdir");
+		fRootTestDir = new File(baseDir + fGroupPathStr + File.separator);
+		fGroupPath = URI.createFileURI(fRootTestDir.getAbsolutePath());
 	}
 
 	/**
@@ -131,6 +133,10 @@ public class R4EReviewGroupTest extends TestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		setFixture(null);
+		// remove test directory
+		if (fRootTestDir != null && fRootTestDir.exists()) {
+			FileUtils.deleteDirectory(fRootTestDir);
+		}
 	}
 
 	/**

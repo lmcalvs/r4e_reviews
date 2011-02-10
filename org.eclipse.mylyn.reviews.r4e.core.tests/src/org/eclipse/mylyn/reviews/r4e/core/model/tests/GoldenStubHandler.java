@@ -42,7 +42,8 @@ public class GoldenStubHandler extends TestCase {
 	 */
 	protected R4EReviewGroup				fixture		= null;
 	private static final RModelFactoryExt	fFactory	= SerializeFactory.getModelExtension();
-	private static File						fGroupDir	= new File(TstGeneral.GROUP_PATH_STR);
+	private static File						fGroupDir	= new File(System.getProperty("java.io.tmpdir")
+																+ TstGeneral.GROUP_PATH_STR + File.separator);
 	private static URI						fGroupPath	= URI.createFileURI(fGroupDir.getAbsolutePath());
 
 	/**
@@ -114,7 +115,7 @@ public class GoldenStubHandler extends TestCase {
 		}
 
 		// Check against published golden directory
-		boolean same = TstGeneral.compareDirectories(new File(fGroupPath.devicePath()),
+		boolean same = TstGeneral.compareDirectories(new File(GoldenStubHandler.fGroupPath.devicePath()),
 				new File(TstGeneral.GOLDEN_GROUP_DIR.devicePath()));
 
 		assertTrue("Contents differ from base directory", same);
