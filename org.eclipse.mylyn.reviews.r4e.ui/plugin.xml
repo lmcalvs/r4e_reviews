@@ -162,6 +162,22 @@
                   </or>
                </visibleWhen>
             </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <with
+                        variable="org.eclipse.mylyn.reviews.r4e.ui.commands.review">
+                     <not>
+                        <equals
+                              value="null">
+                        </equals>
+                     </not>
+                  </with>
+                  <test
+                        property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen">
+                  </test>
+               </and>
+            </visibleWhen>
          </menu>
       </menuContribution>
       <menuContribution
