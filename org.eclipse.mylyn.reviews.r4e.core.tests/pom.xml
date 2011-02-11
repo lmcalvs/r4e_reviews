@@ -23,7 +23,7 @@
 		  <skip>${mylyn-reviews-skip-test}</skip>
           <useUIHarness>true</useUIHarness>
           <forkedProcessTimeoutInSeconds>7200</forkedProcessTimeoutInSeconds>
-          <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+          <argLine>-Xmx1024m -XX:MaxPermSize=256m -Djava.io.tmpdir=${project.build.directory}</argLine>
           <includes>
             <include>**/*R4ECoreAllTests.class</include>
           </includes>
