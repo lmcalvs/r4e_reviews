@@ -430,23 +430,24 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 						for (IR4EUIModelElement group : rootElement.getChildren()) {
 							for (IR4EUIModelElement review : group.getChildren()) {
 								for (IR4EUIModelElement item : review.getChildren()) {
-									R4EUIFileContext[] files = (R4EUIFileContext[]) item.getChildren();
-									for (R4EUIFileContext navigatorFile : files) {
-										if (((IFile)navigatorFile.getFileContext().getTarget().getResource()).equals(editorFile)) {								
-											
-											//We found the parent fileContext, now check if the selection is already within this branch
-											IR4EUIModelElement selectedElement = 
-												(IR4EUIModelElement) ((IStructuredSelection)fReviewTreeViewer.getSelection()).getFirstElement();
-											IR4EUIModelElement fileContextElement = selectedElement;
-											while (fileContextElement != null && !(fileContextElement instanceof R4EUIFileContext)) {
-												fileContextElement = fileContextElement.getParent();
+									for (IR4EUIModelElement navigatorFile : item.getChildren()) {
+										if (navigatorFile instanceof R4EUIFileContext) {
+											if (((IFile)((R4EUIFileContext) navigatorFile).getFileContext().getTarget().getResource()).equals(editorFile)) {								
+
+												//We found the parent fileContext, now check if the selection is already within this branch
+												IR4EUIModelElement selectedElement = 
+													(IR4EUIModelElement) ((IStructuredSelection)fReviewTreeViewer.getSelection()).getFirstElement();
+												IR4EUIModelElement fileContextElement = selectedElement;
+												while (fileContextElement != null && !(fileContextElement instanceof R4EUIFileContext)) {
+													fileContextElement = fileContextElement.getParent();
+												}
+												if (null != fileContextElement) {
+													if (fileContextElement == navigatorFile) return;   //Correct selection already set
+												}
+												//selection to the file context corresponding to the editor input
+												fReviewTreeViewer.setSelection(new StructuredSelection(navigatorFile), true);
+												return;
 											}
-											if (null != fileContextElement) {
-												if (fileContextElement == navigatorFile) return;   //Correct selection already set
-											}
-											//selection to the file context corresponding to the editor input
-											fReviewTreeViewer.setSelection(new StructuredSelection(navigatorFile), true);
-											return;
 										}
 									}
 								}
