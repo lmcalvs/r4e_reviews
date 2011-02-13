@@ -164,14 +164,29 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 	 * .reviews.r4e.core.model.R4EReviewGroup)
 	 */
 	public String closeR4EReviewGroup(R4EReviewGroup aReviewGroup) {
+		StringBuilder sb = new StringBuilder();
+
 		// Obtain all resources
-		EList<Resource> resList = aReviewGroup.eResource().getResourceSet().getResources();
+		Resource resource = aReviewGroup.eResource();
+		if (resource == null) {
+			sb.append("Attempting to close a review group with no associated resource");
+			Activator.fTracer.traceDebug(sb.toString());
+			return sb.toString();
+		}
+
+		ResourceSet resSet = resource.getResourceSet();
+		if (resSet == null) {
+			sb.append("Attempting to close a review group with no associated resource set");
+			Activator.fTracer.traceDebug(sb.toString());
+			return sb.toString();
+		}
+
+		EList<Resource> resList = resSet.getResources();
 
 		// unload then all
 		for (Resource res : resList) {
 			res.unload();
 		}
-
 		return null;
 	}
 
@@ -187,9 +202,9 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 	 */
 	public R4EReview createR4EReview(R4EReviewGroup aReviewGroup, String aReviewName, String aCreatedByUser)
 			throws ResourceHandlingException {
-		//validate
+		// validate
 		if (aReviewGroup == null || aReviewName == null || aCreatedByUser == null) {
-			return  null;
+			return null;
 		}
 
 		// Initialize block
@@ -214,7 +229,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		List<R4EUserRole> role = new ArrayList<R4EUserRole>();
 		role.add(R4EUserRole.R4E_ROLE_ORGANIZER);
 		R4EParticipant participant = (R4EParticipant) createR4EUser(review, aCreatedByUser, role, true);
-		
+
 		// Update pending associations to Review
 		Date now = new Date(new Date().getTime());
 		R4EReviewState state = RModelFactory.eINSTANCE.createR4EReviewState();
@@ -240,7 +255,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 	private Resource createReviewInputCheck(R4EReviewGroup aReviewGroup, String aReviewName)
 			throws ResourceHandlingException {
 		StringBuilder sb = new StringBuilder("ResourceSet not found in the review group provided");
-		//group resource
+		// group resource
 		Resource groupResource = aReviewGroup.eResource();
 		if (groupResource == null) {
 			throw new ResourceHandlingException(sb.toString());
@@ -440,14 +455,14 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			sb.append("can not delete a null review");
 			return sb.toString();
 		}
-		
+
 		sb.setLength(0);
 		Resource resource = aReview.eResource();
 		if (resource == null) {
 			sb.append("No able to mark delete a review not associated to a resource");
 			return sb.toString();
 		}
-		
+
 		String reviewName = aReview.getName();
 		R4EReviewGroup group = (R4EReviewGroup) aReview.eContainer();
 		group.getReviewsMap().remove(reviewName);
@@ -475,13 +490,13 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		// Update ReviewGroup
 		group.getReviews().remove(aReview);
 
-		//Mark the review as disabled
+		// Mark the review as disabled
 		aReview.setEnabled(false);
 
 		// Save the status, this may cause
 		fWriter.saveResource(resource);
-		
-		//unload resources
+
+		// unload resources
 		closeR4EReview(aReview);
 
 		return null;
@@ -522,7 +537,6 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		item.setAddedById(aParticipant.getId());
 		item.setReview(review);
 		item.setId(itemID);
-
 
 		// update derived references to the review
 		review.getIdsMap().put(itemID, item);
@@ -938,7 +952,6 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		// associate the participant with the resource
 		participantResource.getContents().add(participant);
 
-
 		// Serialize the participant resources
 		Resource userReviewsRes = createUserReviewsResource(aReview, participant);
 		fWriter.saveResource(participantResource);
@@ -1195,7 +1208,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		}
 
 		// Perform actual write test
-		return UserPermission.canWrite(path + "/test.txt");
+		return UserPermission.canWrite(path + File.separator + "test.txt");
 	}
 
 	/*
@@ -1220,7 +1233,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		if (resource == null) {
 			return false;
 		}
-	
+
 		// The associated resource is not null
 		return true;
 	}

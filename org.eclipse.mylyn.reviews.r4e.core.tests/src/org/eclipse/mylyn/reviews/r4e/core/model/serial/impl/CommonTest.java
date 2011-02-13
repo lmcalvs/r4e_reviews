@@ -22,7 +22,7 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.mylyn.reviews.r4e.core.TestGeneral;
+import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.Common.ResourceType;
 
 /**
@@ -40,6 +40,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.Common.ResourceType;
 public class CommonTest extends TestCase {
 
 	R4EWriter	fixture	= SerializeFactory.getWriter();
+	String		fTmpDir	= null;
+	String		fSep	= null;
 
 	/**
 	 * Construct new test instance
@@ -48,6 +50,8 @@ public class CommonTest extends TestCase {
 	 */
 	public CommonTest(String name) {
 		super(name);
+		fTmpDir = System.getProperty("java.io.tmpdir");
+		fSep = File.separator;
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class CommonTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		// Add additional set up code here
-		TestGeneral.activateTracer();
+		TstGeneral.activateTracer();
 	}
 
 	/**
@@ -76,10 +80,13 @@ public class CommonTest extends TestCase {
 	}
 
 	public void testGetRootPath() {
-		URI uri = URI.createURI("c:/folder/file.ext");
+		String folder = "folder";
+		String file = "file.ext";
+		URI urib = URI.createFileURI(fTmpDir + folder + fSep + file);
 
-		uri = fixture.getFolderPath(uri);
-		assertEquals("c:/folder", uri.toString());
+		URI urit = fixture.getFolderPath(urib);
+		int endIndex = urib.toString().length() - file.length() - 1;
+		assertEquals(urib.toString().subSequence(0, endIndex), urit.toString());
 	}
 
 	/**
@@ -104,17 +111,20 @@ public class CommonTest extends TestCase {
 		// review name or user id with special characters will be converted to a string usable for file and directory
 		// names
 		String name = "abc def \\/|z)l";
-		// review.setName("normal Name");
-		URI uriIn = URI.createURI("c:/folder");
+		String folder = "folder";
+		URI uriIn = URI.createFileURI(fTmpDir + folder);
 		URI uriOut = null;
 
 		// review folder added
 		uriOut = fixture.createResourceURI(name, uriIn, ResourceType.REVIEW);
-		assertEquals("c:/folder/abc_def____z_l/abc_def____z_l_review.xrer", uriOut.toString());
+		String ending = fTmpDir + folder + fSep + "abc_def____z_l" + fSep + "abc_def____z_l_review.xrer";
+		assertTrue(uriOut.toFileString() + " does not end with: " + ending, uriOut.toFileString()
+				.endsWith(ending));
 
 		// review folder does not need to be added
 		uriOut = fixture.createResourceURI(name, uriIn, ResourceType.USER_COMMENT);
-		assertEquals("c:/folder/abc_def____z_l_comments.xrer", uriOut.toString());
+		ending = fTmpDir + folder + fSep + "abc_def____z_l_comments.xrer";
+		assertTrue(uriOut.toFileString().endsWith(ending));
 	}
 
 	/**
@@ -128,9 +138,9 @@ public class CommonTest extends TestCase {
 		folder.mkdir();
 
 		List<File> fileList = new ArrayList<File>();
-		fileList.add(new File(path + "/abd_124_group_reviews.xrer"));
-		fileList.add(new File(path + "/abd_124_group_.xrer"));
-		fileList.add(new File(path + "/abd_124_group_.xrer.xml"));
+		fileList.add(new File(path + fSep + "abd_124_group_reviews.xrer"));
+		fileList.add(new File(path + fSep + "abd_124_group_.xrer"));
+		fileList.add(new File(path + fSep + "abd_124_group_.xrer.xml"));
 		try {
 			for (File tfile : fileList) {
 				tfile.createNewFile();
@@ -165,10 +175,10 @@ public class CommonTest extends TestCase {
 		folder.mkdir();
 
 		List<File> fileList = new ArrayList<File>();
-		fileList.add(new File(path + "/abd_124_group_reviews.xrer"));
-		fileList.add(new File(path + "/abd_124_group_.xrer"));
-		fileList.add(new File(path + "/abd_124__group_root.xrer.xml"));
-		fileList.add(new File(path + "/abd_124__group_root.xrer"));
+		fileList.add(new File(path + fSep + "abd_124_group_reviews.xrer"));
+		fileList.add(new File(path + fSep + "abd_124_group_.xrer"));
+		fileList.add(new File(path + fSep + "abd_124__group_root.xrer.xml"));
+		fileList.add(new File(path + fSep + "abd_124__group_root.xrer"));
 		try {
 			for (File tfile : fileList) {
 				tfile.createNewFile();

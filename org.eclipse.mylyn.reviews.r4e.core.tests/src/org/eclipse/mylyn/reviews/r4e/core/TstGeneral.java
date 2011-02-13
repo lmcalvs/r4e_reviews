@@ -21,7 +21,7 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
 
-public class TestGeneral {
+public class TstGeneral {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------

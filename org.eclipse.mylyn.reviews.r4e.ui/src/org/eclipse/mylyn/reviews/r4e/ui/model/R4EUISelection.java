@@ -24,6 +24,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.SelectionProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -38,9 +39,9 @@ public class R4EUISelection extends R4EUIModelElement {
 	
 	/**
 	 * Field fSelectionFile.
-	 * (value is ""icons/selection.gif"")
+	 * (value is ""icons/obj16/sel_obj.gif"")
 	 */
-	private static final String SELECTION_ICON_FILE = "icons/selection.gif";
+	private static final String SELECTION_ICON_FILE = "icons/obj16/sel_obj.gif";
 	
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
@@ -52,7 +53,7 @@ public class R4EUISelection extends R4EUIModelElement {
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this selection from its parent file"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this selection" +
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Selection" +
     		" from its parent file";
 
 
@@ -82,7 +83,7 @@ public class R4EUISelection extends R4EUIModelElement {
 	 * @param aPosition IR4EUIPosition
 	 */
 	public R4EUISelection(IR4EUIModelElement aParent, R4EDelta aDelta, IR4EUIPosition aPosition) {
-		super(aParent, aPosition.toString(), "Added by: " + 
+		super(aParent, aPosition.toString(), R4EUIConstants.AUTHOR_LABEL + 
 				((R4EItem)aDelta.eContainer().eContainer()).getAddedBy().getId()); // $codepro.audit.disable methodChainLength
 		fDelta = aDelta;
 		fPosition = aPosition;

@@ -20,7 +20,7 @@ import java.io.IOException;
 import junit.framework.TestCase;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.mylyn.reviews.r4e.core.TestGeneral;
+import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 
 /**
  * The class <code>WindowPermissionTest</code> contains tests for the class
@@ -61,7 +61,7 @@ public class OSPermissionTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
-		TestGeneral.activateTracer();
+		TstGeneral.activateTracer();
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class OSPermissionTest extends TestCase {
 	 */
 	public void testChangePermission() {
 		// add test code here
-		String dirStr = "PermDirTest";
+		String dirStr = System.getProperty("java.io.tmpdir") + "PermDirTest" + File.separator;
 		File dir = new File(dirStr);
 		dir.mkdir();
 

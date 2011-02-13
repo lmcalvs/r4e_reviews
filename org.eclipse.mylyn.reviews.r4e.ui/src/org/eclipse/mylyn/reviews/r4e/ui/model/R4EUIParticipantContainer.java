@@ -37,9 +37,9 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	
 	/**
 	 * Field fSelectionContainerFile.
-	 * (value is ""icons/selection_container.gif"")
+	 * (value is ""icons/obj16/partcont_obj.png"")
 	 */
-	private static final String PARTICIPANT_CONTAINER_ICON_FILE = "icons/users.png";
+	private static final String PARTICIPANT_CONTAINER_ICON_FILE = "icons/obj16/partcont_obj.png";
     
 	
 	// ------------------------------------------------------------------------
@@ -116,7 +116,6 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 			
 			participant = fParticipants.get(i);
 			participant.close();
-			//fireRemove(participant);
 		}
 		fParticipants.clear();
 		fOpen = false;

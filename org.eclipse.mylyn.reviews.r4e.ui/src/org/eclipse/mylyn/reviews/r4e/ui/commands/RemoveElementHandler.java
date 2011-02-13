@@ -58,7 +58,6 @@ public class RemoveElementHandler extends AbstractHandler {
 			for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
 			    element = (IR4EUIModelElement) iterator.next();
 				Activator.Ftracer.traceInfo("Disable element " + element.getName());
-				//String[] labels = {"Ok", "Cancel"};
 				MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(null,
 						"Disable element",
 						"Do you really want to disable this element?",

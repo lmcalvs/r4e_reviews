@@ -61,13 +61,13 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * Field REVIEW_GROUP_FILE_PREFIX.
 	 * (value is ""File location: "")
 	 */
-	private static final String REVIEW_GROUP_FILE_PREFIX = "File location: ";
+	private static final String REVIEW_GROUP_FILE_PREFIX = "File Location: ";
 	
 	/**
 	 * Field fReviewGroupFile.
-	 * (value is ""icons/groups.gif"")
+	 * (value is ""icons/obj16/revgrp_obj.gif"")
 	 */
-	private static final String REVIEW_GROUP_CLOSED_ICON_FILE = "icons/groups_closed.gif";
+	private static final String REVIEW_GROUP_CLOSED_ICON_FILE = "icons/obj16/revgrpclsd_obj.gif";
 	
 	/**
 	 * Field ADD_ELEMENT_ACTION_NAME.
@@ -79,7 +79,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
      * Field ADD_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Add a new review to the current review group"")
      */
-    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a new review to the current review group";
+    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Review to the Current Review Group";
     
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
@@ -91,20 +91,20 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
      * (value is ""Remove this review group"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this review group";
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review Group";
 
 	
 	/**
 	 * Field ADD_REVIEW_DIALOG_TITLE.
 	 * (value is ""Enter Review details"")
 	 */
-	private static final String ADD_REVIEW_DIALOG_TITLE = "Enter Review details";
-	
+	private static final String ADD_REVIEW_DIALOG_TITLE = "Enter Review Details";
+
 	/**
 	 * Field ADD_REVIEW_NAME_DIALOG_VALUE.
 	 * (value is ""Enter the Review name"")
 	 */
-	private static final String ADD_REVIEW_NAME_DIALOG_VALUE = "Enter the Review name";
+	private static final String ADD_REVIEW_NAME_DIALOG_VALUE = "Enter the Review Name";
 	
 	/**
 	 * Field ADD_REVIEW_DESCRIPTION_DIALOG_VALUE.

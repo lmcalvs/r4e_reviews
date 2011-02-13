@@ -25,7 +25,7 @@ import junit.framework.TestCase;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.mylyn.reviews.r4e.core.TestGeneral;
+import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
@@ -49,7 +49,7 @@ public class PersistenceTest extends TestCase {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	private static final URI		fGoldenGroup	= TestGeneral.GOLDEN_GROUP_FILE;
+	private static final URI		fGoldenGroup	= TstGeneral.GOLDEN_GROUP_FILE;
 	private static File				fTestDir;
 
 	// ------------------------------------------------------------------------
@@ -58,7 +58,8 @@ public class PersistenceTest extends TestCase {
 	private final RModelFactoryExt	fResFactory		= SerializeFactory.getModelExtension();
 	private final ResourceUpdater	fUpdater		= SerializeFactory.getResourceSetUpdater();
 	private R4EReviewGroup			fGroup			= null;
-	private static final File		fRootTestDir	= new File("/OutL1");
+	private static File				fRootTestDir	= null;
+	private final String			fSep			= File.separator;
 
 	// ------------------------------------------------------------------------
 	// Common
@@ -69,12 +70,14 @@ public class PersistenceTest extends TestCase {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		fRootTestDir = new File(System.getProperty("java.io.tmpdir") + "r4eTst");
+
 		// Resolve golden group storage dir
 		String rootFile = fGoldenGroup.lastSegment();
 		File goldenDir = new File(fGoldenGroup.trimSegments(1).devicePath());
 
 		// Take the directory name to be used as copy destination
-		String testDir = fRootTestDir.toString() + "/OutL2/" + goldenDir.getName();
+		String testDir = fRootTestDir.toString() + fSep + "OutL1" + fSep + "OutL2" + fSep + goldenDir.getName();
 		fTestDir = new File(testDir);
 
 		// Determine the location of the group file in the destination folder
@@ -92,7 +95,7 @@ public class PersistenceTest extends TestCase {
 		}
 
 		// Tracing on
-		TestGeneral.activateTracer();
+		TstGeneral.activateTracer();
 	}
 
 	/**
@@ -173,7 +176,7 @@ public class PersistenceTest extends TestCase {
 	 * Testing writing permissions
 	 */
 	public void testReadWritePermissions() {
-		String dirName = "tFolder";
+		String dirName = fRootTestDir.toString() + fSep + "tFolder";
 		File tfolder = new File(dirName);
 		tfolder.mkdir();
 

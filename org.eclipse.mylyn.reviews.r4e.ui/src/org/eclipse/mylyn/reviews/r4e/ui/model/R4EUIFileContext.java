@@ -50,9 +50,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	
 	/**
 	 * Field FILE_CONTEXT_ICON_FILE.
-	 * (value is ""icons/file.gif"")
+	 * (value is ""icons/obj16/filectx_obj.gif"")
 	 */
-	private static final String FILE_CONTEXT_ICON_FILE = "icons/file.gif";
+	private static final String FILE_CONTEXT_ICON_FILE = "icons/obj16/filectx_obj.gif";
 	
 	
 	// ------------------------------------------------------------------------

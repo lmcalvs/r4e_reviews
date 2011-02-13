@@ -37,7 +37,7 @@ import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.mylyn.reviews.r4e.core.TestGeneral;
+import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
@@ -52,7 +52,7 @@ import org.junit.Test;
  * @author lmcalvs
  * 
  */
-public class ReviewsVersionsIFTest extends GitTestCase {
+public class ReviewsVersionsIFTst extends GitTestCase {
 
 	private IProject			fIProject		= null;
 	private TestRepository		testRepo		= null;
@@ -69,7 +69,7 @@ public class ReviewsVersionsIFTest extends GitTestCase {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		TestGeneral.activateTracer();
+		TstGeneral.activateTracer();
 		fIProject = project.getProject();
 		fIProject.open(null);
 		testRepo = new TestRepository(gitDir);

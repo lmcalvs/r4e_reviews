@@ -139,7 +139,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field SHOW_DISABLED_FILTER_NAME.
 	 * (value is ""Show disabled elements"")
 	 */
-	public static final String SHOW_DISABLED_FILTER_NAME = "Show disabled elements";
+	public static final String SHOW_DISABLED_FILTER_NAME = "Show Disabled Elements";
 	
 	
 	//Tooltips
@@ -185,9 +185,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	
 	/**
 	 * Field fReviewGroupFile.
-	 * (value is ""icons/groups.gif"")
+	 * (value is ""icons/obj16/revgrp_obj.gif"")
 	 */
-	public static final String REVIEW_GROUP_ICON_FILE = "icons/groups.gif";
+	public static final String REVIEW_GROUP_ICON_FILE = "icons/obj16/revgrp_obj.gif";
 	
 
 	//Properties
@@ -220,13 +220,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field CREATION_DATE_LABEL.
 	 * (value is ""Creation date: "")
 	 */
-	public static final String CREATION_DATE_LABEL = "Creation date: ";
+	public static final String CREATION_DATE_LABEL = "Creation Date: ";
 	
 	/**
 	 * Field AUTHOR_LABEL.
 	 * (value is ""Added by: "")
 	 */
-	public static final String AUTHOR_LABEL = "Added by: ";
+	public static final String AUTHOR_LABEL = "Added By: ";
 	
 	/**
 	 * Field ID_LABEL.
@@ -262,7 +262,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field NO_VERSION_PROPERTY_MESSAGE.
 	 * (value is ""(Not present)"")
 	 */
-	public static final String NO_VERSION_PROPERTY_MESSAGE = "(Not present)";
+	public static final String NO_VERSION_PROPERTY_MESSAGE = "(Not Present)";
 	
 	/**
 	 * Field PROJECT_ID_LABEL.
@@ -298,13 +298,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field GLOBAL_ANOMALY_PROPERTY_VALUE.
 	 * (value is ""(Global review anomaly)"")
 	 */
-	public static final String GLOBAL_ANOMALY_PROPERTY_VALUE = "(Global review anomaly)";
+	public static final String GLOBAL_ANOMALY_PROPERTY_VALUE = "(Global Review Anomaly)";
 	
 	/**
 	 * Field FILE_NOT_IN_VERSION_CONTROL_MSG.
 	 * (value is ""(Not version controlled)"")
 	 */
-	public static final String FILE_NOT_IN_VERSION_CONTROL_MSG = "(Not version controlled)";
+	public static final String FILE_NOT_IN_VERSION_CONTROL_MSG = "(Not Version Controlled)";
 	
 	
 	//Review item types
@@ -350,21 +350,21 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	
 	/**
 	 * Field ALPHA_SORTER_ICON_FILE.
-	 * (value is ""icons/alpha_sort.gif"")
+	 * (value is ""icons/elcl16/defsort_menu.gif"")
 	 */
-	public static final String ALPHA_SORTER_ICON_FILE = "icons/alpha_sort.gif";
+	public static final String ALPHA_SORTER_ICON_FILE = "icons/elcl16/defsort_menu.gif";
 	
 	/**
 	 * Field ALPHA_SORTER_NAME.
 	 * (value is ""Element name"")
 	 */
-	public static final String ALPHA_SORTER_NAME = "Element name";
+	public static final String ALPHA_SORTER_NAME = "Element Name";
 	
 	/**
 	 * Field ALPHA_SORTER_TOOLTIP.
 	 * (value is ""Sort alphabetically"")
 	 */
-	public static final String ALPHA_SORTER_TOOLTIP = "Sort alphabetically";
+	public static final String ALPHA_SORTER_TOOLTIP = "Sort Alphabetically";
 	
 	/**
 	 * Field ALPHA_SORTER_MNEMONIC.
@@ -382,13 +382,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field CURRENT_REVIEW_FILTER_NAME.
 	 * (value is ""Show current review"")
 	 */
-	public static final String CURRENT_REVIEW_FILTER_NAME = "Show current review";
+	public static final String CURRENT_REVIEW_FILTER_NAME = "Show Current Review";
 	
 	/**
 	 * Field CURRENT_REVIEW_FILTER_TOOLTIP.
 	 * (value is ""Only show the currently open review"")
 	 */
-	public static final String CURRENT_REVIEW_FILTER_TOOLTIP = "Only show the currently open review";
+	public static final String CURRENT_REVIEW_FILTER_TOOLTIP = "Only Show the Currently Open Review";
 	
 	/**
 	 * Field CURRENT_REVIEW_FILTER_MNEMONIC.
@@ -406,13 +406,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REVIEWS_ONLY_FILTER_NAME.
 	 * (value is ""Show reviews only"")
 	 */
-	public static final String REVIEWS_ONLY_FILTER_NAME = "Show reviews only";
+	public static final String REVIEWS_ONLY_FILTER_NAME = "Show Reviews Only";
 	
 	/**
 	 * Field REVIEWS_ONLY_FILTER_TOOLTIP.
 	 * (value is ""Only show reviews"")
 	 */
-	public static final String REVIEWS_ONLY_FILTER_TOOLTIP = "Only show reviews";
+	public static final String REVIEWS_ONLY_FILTER_TOOLTIP = "Only Show Review Elements";
 	
 	/**
 	 * Field REVIEWS_ONLY_FILTER_MNEMONIC.
@@ -430,13 +430,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REVIEWS_MY_FILTER_NAME.
 	 * (value is ""Show my reviews"")
 	 */
-	public static final String REVIEWS_MY_FILTER_NAME = "Show my reviews";
+	public static final String REVIEWS_MY_FILTER_NAME = "Show My Reviews";
 	
 	/**
 	 * Field REVIEWS_MY_FILTER_TOOLTIP.
 	 * (value is ""Show reviews I am participating in"")
 	 */
-	public static final String REVIEWS_MY_FILTER_TOOLTIP = "Show reviews I am participating in";
+	public static final String REVIEWS_MY_FILTER_TOOLTIP = "Show Reviews I am Participating In";
 	
 	/**
 	 * Field REVIEWS_MY_FILTER_MNEMONIC.
@@ -454,13 +454,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REVIEWS_PARTICIPANT_FILTER_NAME.
 	 * (value is ""Show reviews for participant... "")
 	 */
-	public static final String REVIEWS_PARTICIPANT_FILTER_NAME = "Show reviews for participant... ";
+	public static final String REVIEWS_PARTICIPANT_FILTER_NAME = "Show Reviews for Participant... ";
 	
 	/**
 	 * Field REVIEWS_PARTICIPANT_FILTER_TOOLTIP.
 	 * (value is ""Show reviews the given participant is participating in"")
 	 */
-	public static final String REVIEWS_PARTICIPANT_FILTER_TOOLTIP = "Show reviews the given participant is participating in";
+	public static final String REVIEWS_PARTICIPANT_FILTER_TOOLTIP = "Show Reviews the Given Participant is Participating In";
 	
 	/**
 	 * Field REVIEWS_PARTICIPANT_FILTER_MNEMONIC.
@@ -478,13 +478,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field ANOMALIES_FILTER_NAME.
 	 * (value is ""Hide selections"")
 	 */
-	public static final String ANOMALIES_FILTER_NAME = "Hide selections";
+	public static final String ANOMALIES_FILTER_NAME = "Hide Selections";
 	
 	/**
 	 * Field ANOMALIES_FILTER_TOOLTIP.
 	 * (value is ""Hide selections and only show anomalies"")
 	 */
-	public static final String ANOMALIES_FILTER_TOOLTIP = "Hide selections and only show anomalies";
+	public static final String ANOMALIES_FILTER_TOOLTIP = "Hide Selections and Only Show Anomalies";
 	
 	/**
 	 * Field ANOMALIES_FILTER_MNEMONIC.
@@ -502,13 +502,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REVIEWED_ELEMS_FILTER_NAME.
 	 * (value is ""Hide reviewed elements"")
 	 */
-	public static final String REVIEWED_ELEMS_FILTER_NAME = "Hide reviewed elements";
+	public static final String REVIEWED_ELEMS_FILTER_NAME = "Hide Reviewed Elements";
 	
 	/**
 	 * Field REVIEWED_ELEMS_FILTER_TOOLTIP.
 	 * (value is ""Hide reviewed elements"")
 	 */
-	public static final String REVIEWED_ELEMS_FILTER_TOOLTIP = "Hide reviewed elements";
+	public static final String REVIEWED_ELEMS_FILTER_TOOLTIP = "Hide Reviewed Elements";
 	
 	/**
 	 * Field REVIEWED_ELEMS_FILTER_MNEMONIC.
@@ -526,13 +526,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REMOVE_ALL_FILTER_NAME.
 	 * (value is ""Remove all filters"")
 	 */
-	public static final String REMOVE_ALL_FILTER_NAME = "Remove all filters";
+	public static final String REMOVE_ALL_FILTER_NAME = "Remove All Filters";
 	
 	/**
 	 * Field REMOVE_ALL_FILTER_TOOLTIP.
 	 * (value is ""Remove all applied filters"")
 	 */
-	public static final String REMOVE_ALL_FILTER_TOOLTIP = "Remove all applied filters";
+	public static final String REMOVE_ALL_FILTER_TOOLTIP = "Remove All Applied Filters";
 	
 	/**
 	 * Field REMOVE_ALL_FILTER_MNEMONIC.
@@ -550,13 +550,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field ADD_LINKED_ANOMALY_NAME.
 	 * (value is ""Add linked anomaly"")
 	 */
-	public static final String ADD_LINKED_ANOMALY_NAME = "Add linked anomaly";
+	public static final String ADD_LINKED_ANOMALY_NAME = "Add Linked Anomaly";
 	
 	/**
 	 * Field ADD_LINKED_ANOMALY_TOOLTIP.
 	 * (value is ""Add a new anomaly that is linked to this selection"")
 	 */
-	public static final String ADD_LINKED_ANOMALY_TOOLTIP = "Add a new anomaly that is linked to this selection";
+	public static final String ADD_LINKED_ANOMALY_TOOLTIP = "Add a New Anomaly that is Linked to this Selection";
 	
 	/**
 	 * Field ADD_LINKED_ANOMALY_MNEMONIC.
@@ -572,21 +572,21 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	
 	/**
 	 * Field OPEN_EDITOR_ICON_FILE.
-	 * (value is ""icons/open_file.gif"")
+	 * (value is ""icons/elcl16/openfile_menu.gif"")
 	 */
-	public static final String OPEN_EDITOR_ICON_FILE = "icons/open_file.gif";
+	public static final String OPEN_EDITOR_ICON_FILE = "icons/elcl16/openfile_menu.gif";
 	
 	/**
 	 * Field OPEN_EDITOR_COMMAND_NAME.
 	 * (value is ""Open file in editor"")
 	 */
-	public static final String OPEN_EDITOR_COMMAND_NAME = "Open file in editor";
+	public static final String OPEN_EDITOR_COMMAND_NAME = "Open File in Editor";
 	
 	/**
 	 * Field OPEN_EDITOR_COMMAND_TOOLTIP.
 	 * (value is ""Open the parent file with the matching editor and locate element"")
 	 */
-	public static final String OPEN_EDITOR_COMMAND_TOOLTIP = "Open the parent file with the matching editor and locate element";
+	public static final String OPEN_EDITOR_COMMAND_TOOLTIP = "Open the Parent File with the Matching Editor and Locate Element";
 	
 	/**
 	 * Field OPEN_EDITOR_COMMAND_MNEMONIC.
@@ -602,21 +602,21 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	
 	/**
 	 * Field CHANGE_REVIEW_STATE_ICON_FILE.
-	 * (value is ""icons/done.gif"")
+	 * (value is ""icons/obj16/done_tsk.gif"")
 	 */
-	public static final String CHANGE_REVIEW_STATE_ICON_FILE = "icons/done.gif";
+	public static final String CHANGE_REVIEW_STATE_ICON_FILE = "icons/obj16/done_tsk.gif";
 	
 	/**
 	 * Field CHANGE_REVIEW_STATE_COMMAND_NAME.
 	 * (value is ""Mark/Unmark as completed"")
 	 */
-	public static final String CHANGE_REVIEW_STATE_COMMAND_NAME = "Mark/Unmark as completed";
+	public static final String CHANGE_REVIEW_STATE_COMMAND_NAME = "Mark/Unmark as Completed";
 	
 	/**
 	 * Field CHANGE_REVIEW_STATE_COMMAND_TOOLTIP.
 	 * (value is ""Mark/Unmark this element as reviewed"")
 	 */
-	public static final String CHANGE_REVIEW_STATE_COMMAND_TOOLTIP = "Mark/Unmark this element as reviewed";
+	public static final String CHANGE_REVIEW_STATE_COMMAND_TOOLTIP = "Mark/Unmark this Element as Reviewed";
 	
 	/**
 	 * Field CHANGE_REVIEW_STATE_COMMAND_MNEMONIC.
@@ -632,21 +632,21 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	
 	/**
 	 * Field OPEN_ELEMENT_ICON_FILE.
-	 * (value is ""icons/open.gif"")
+	 * (value is ""icons/obj16/open_tsk.gif"")
 	 */
-	public static final String OPEN_ELEMENT_ICON_FILE = "icons/open.gif";
+	public static final String OPEN_ELEMENT_ICON_FILE = "icons/obj16/open_tsk.gif";
 	
 	/**
 	 * Field OPEN_ELEMENT_COMMAND_NAME.
 	 * (value is ""Open element"")
 	 */
-	public static final String OPEN_ELEMENT_COMMAND_NAME = "Open element";
+	public static final String OPEN_ELEMENT_COMMAND_NAME = "Open Element";
 	
 	/**
 	 * Field OPEN_ELEMENT_COMMAND_TOOLTIP.
 	 * (value is ""Open and load data for this element"")
 	 */
-	public static final String OPEN_ELEMENT_COMMAND_TOOLTIP = "Open and load data for this element";
+	public static final String OPEN_ELEMENT_COMMAND_TOOLTIP = "Open and Load Data for this Element";
 	
 	/**
 	 * Field OPEN_ELEMENT_COMMAND_MNEMONIC.
@@ -662,21 +662,21 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	
 	/**
 	 * Field CLOSE_ELEMENT_ICON_FILE.
-	 * (value is ""icons/close.gif"")
+	 * (value is ""icons/obj16/close_tsk.gif"")
 	 */
-	public static final String CLOSE_ELEMENT_ICON_FILE = "icons/close.gif";
+	public static final String CLOSE_ELEMENT_ICON_FILE = "icons/obj16/close_tsk.gif";
 	
 	/**
 	 * Field CLOSE_ELEMENT_COMMAND_NAME.
 	 * (value is ""Close element"")
 	 */
-	public static final String CLOSE_ELEMENT_COMMAND_NAME = "Close element";
+	public static final String CLOSE_ELEMENT_COMMAND_NAME = "Close Element";
 	
 	/**
 	 * Field CLOSE_ELEMENT_COMMAND_TOOLTIP.
 	 * (value is ""Close and unload data for this element"")
 	 */
-	public static final String CLOSE_ELEMENT_COMMAND_TOOLTIP = "Close and unload data for this element";
+	public static final String CLOSE_ELEMENT_COMMAND_TOOLTIP = "Close and Unload Data for this Element";
 	
 	/**
 	 * Field CLOSE_ELEMENT_COMMAND_MNEMONIC.
@@ -694,13 +694,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field ADD_CHILD_ELEMENT_COMMAND_NAME.
 	 * (value is ""Add review group"")
 	 */
-	public static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add review group";
+	public static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Review Group";
 	
 	/**
 	 * Field ADD_CHILD_ELEMENT_COMMAND_TOOLTIP.
 	 * (value is ""Add a new review group"")
 	 */
-	public static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a new review group";
+	public static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Review Group";
 	
 	/**
 	 * Field ADD_CHILD_ELEMENT_COMMAND_MNEMONIC.
@@ -718,13 +718,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REMOVE_ELEMENT_COMMAND_NAME.
 	 * (value is ""Remove element"")
 	 */
-	public static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable element";
+	public static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Element";
 	
 	/**
 	 * Field REMOVE_ELEMENT_COMMAND_TOOLTIP.
 	 * (value is ""Remove this element"")
 	 */
-	public static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and optionally remove) this element";
+	public static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Element";
 	
 	/**
 	 * Field REMOVE_ELEMENT_COMMAND_MNEMONIC.
@@ -742,13 +742,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field RESTORE_ELEMENT_COMMAND_NAME.
 	 * (value is ""Restore element"")
 	 */
-	public static final String RESTORE_ELEMENT_COMMAND_NAME = "Restore element";
+	public static final String RESTORE_ELEMENT_COMMAND_NAME = "Restore Element";
 	
 	/**
 	 * Field RESTORE_ELEMENT_COMMAND_TOOLTIP.
 	 * (value is ""Restore this disabled element"")
 	 */
-	public static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this disabled element";
+	public static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this Disabled Element";
 	
 	/**
 	 * Field RESTORE_ELEMENT_COMMAND_MNEMONIC.
