@@ -7,10 +7,10 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.mylyn.reviews.frame.core.model,
- org.eclipse.mylyn.reviews.frame.core.model.impl,
- org.eclipse.mylyn.reviews.frame.core.model.util,
- org.eclipse.mylyn.reviews.frame.core.utils
+Export-Package: org.eclipse.mylyn.reviews.frame.core.model;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.ui",
+ org.eclipse.mylyn.reviews.frame.core.model.impl;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.ui",
+ org.eclipse.mylyn.reviews.frame.core.model.util;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.ui",
+ org.eclipse.mylyn.reviews.frame.core.utils;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.ui"
 Require-Bundle: 
  org.eclipse.core.runtime;bundle-version="3.5.0",
  org.eclipse.emf.ecore;bundle-version="2.5.0"
