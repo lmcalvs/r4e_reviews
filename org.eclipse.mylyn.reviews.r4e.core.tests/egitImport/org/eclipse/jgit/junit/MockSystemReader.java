@@ -51,6 +51,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import org.eclipse.jgit.errors.ConfigInvalidException;
+import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.util.FS;
@@ -103,11 +104,6 @@ public class MockSystemReader extends SystemReader {
 	}
 
 	@Override
-	public FileBasedConfig openUserConfig(FS fs) {
-		return userGitConfig;
-	}
-
-	@Override
 	public String getHostname() {
 		return "fake.host.example.com";
 	}
@@ -120,5 +116,15 @@ public class MockSystemReader extends SystemReader {
 	@Override
 	public int getTimezone(long when) {
 		return TimeZone.getTimeZone("GMT-03:30").getOffset(when) / (60 * 1000);
+	}
+
+	@Override
+	public FileBasedConfig openUserConfig(Config parent, FS fs) {
+		return userGitConfig;
+	}
+
+	@Override
+	public FileBasedConfig openSystemConfig(Config parent, FS fs) {
+		return null;
 	}
 }
