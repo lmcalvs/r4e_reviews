@@ -45,6 +45,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.R4EReader;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.R4EWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
+import org.eclipse.mylyn.reviews.r4e.core.utils.sys.OSPLATFORM;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>R4E Review Group</b></em>'. <!-- end-user-doc -->
@@ -120,6 +121,9 @@ public class R4EReviewGroupTest extends TestCase {
 	protected void setUp() throws Exception {
 		TstGeneral.activateTracer();
 		String baseDir = System.getProperty("java.io.tmpdir");
+		if (!baseDir.endsWith(File.separator)) {
+			baseDir = baseDir + File.separator;
+		}
 		fRootTestDir = new File(baseDir + fGroupPathStr + File.separator);
 		fGroupPath = URI.createFileURI(fRootTestDir.getAbsolutePath());
 	}
@@ -251,10 +255,16 @@ public class R4EReviewGroupTest extends TestCase {
 		assertEquals(3, loadedGroup.getReviewsMap().size());
 		assertEquals(3, loadedGroup.getUserReviews().size());
 
+		//Select the golden file as per operating system
+		URI goldenDir = TstGeneral.GOLDEN_GROUP_DIR;
+		if (OSPLATFORM.TYPE.isWindowsOS()) {
+			goldenDir = TstGeneral.GOLDEN_GROUP_DIRW;
+		}
+		
 		// This check is done comparing the size only. to eliminate the changes from Id values e.g. equal size per id.
 		// good enough for the time being.
 		boolean same = TstGeneral.compareDirectories(new File(fGroupPath.devicePath()), new File(
-				TstGeneral.GOLDEN_GROUP_DIR.devicePath()));
+				goldenDir.devicePath()));
 
 		assertTrue("Contents differ from base directory", same);
 

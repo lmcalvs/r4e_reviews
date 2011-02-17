@@ -48,9 +48,10 @@ public class UnixPermission extends BaseSupportCommand implements
 		String ret = executeWithStringReturned(null, command, true /* wait */,
 				false /* ignore error */);
 		Activator.fTracer.traceInfo("changePermission() ret: " + ret);
-		if (ret.length() > 0) {
+		if (ret.length() == 0) {
 			b = true;
-			Activator.fTracer.traceInfo("Return msg from changePermission: " + ret);
+		} else {
+			Activator.fTracer.traceInfo("Return msg from changePermission: " + ret);			
 		}
 
 		return b;

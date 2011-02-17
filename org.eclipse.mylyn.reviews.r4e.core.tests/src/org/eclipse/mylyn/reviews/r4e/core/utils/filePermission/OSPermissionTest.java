@@ -41,7 +41,7 @@ public class OSPermissionTest extends TestCase {
 	 *
 	 * @see org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.WindowPermission
 	 */
-	private WindowPermission winPerm = new WindowPermission();
+	private IFileSupportCommand perm = FileSupportCommandFactory.getInstance();
 
 	/**
 	 * Construct new test instance
@@ -80,13 +80,46 @@ public class OSPermissionTest extends TestCase {
 	 * Run the boolean changePermission(String) method test
 	 */
 	public void testChangePermission() {
-		// add test code here
-		String dirStr = System.getProperty("java.io.tmpdir") + "PermDirTest" + File.separator;
+		String base = System.getProperty("java.io.tmpdir");
+		if (!base.endsWith(File.separator)) {
+			base = base + File.separator;
+		}
+		
+		String dirStr = base + "PermDirTest" + File.separator;
 		File dir = new File(dirStr);
 		dir.mkdir();
 
 		try {
-			assertTrue(winPerm.grantWritePermission(dirStr));
+			assertTrue(perm.grantWritePermission(dirStr));
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail("Exception");
+		}
+
+		try {
+			FileUtils.deleteDirectory(dir);
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail("Exception");
+		}
+	}
+	
+	/**
+	 * Run the boolean changePermission(String) method test
+	 */
+	public void testChangePermissionFailed() {
+		// add test code here
+		String base =  System.getProperty("java.io.tmpdir");
+		if (!base.endsWith(File.separator)) {
+			base = base + File.separator;
+		}
+		String dirStr = base + "PermDirTest" + File.separator;
+		File dir = new File(dirStr);
+		dir.mkdir();
+
+		try {
+			//Grant permissions shall be  false since the directory does not exist
+			assertFalse(perm.grantWritePermission(dirStr + "1"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			fail("Exception");
