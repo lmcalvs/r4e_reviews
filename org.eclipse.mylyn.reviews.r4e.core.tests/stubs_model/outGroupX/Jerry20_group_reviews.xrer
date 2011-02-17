@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ASCII"?>
-<r4ecore:R4EUserReviews xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_lfWvwi52EeCvo9WHavBoFQ" name="Jerry20">
-  <invitedToMap xmi:id="_lfWvxC52EeCvo9WHavBoFQ" key="ReviewSampl">
-    <value href="ReviewSampl/ReviewSampl_review.xrer#_leUN8C52EeCvo9WHavBoFQ"/>
+<r4ecore:R4EUserReviews xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_RgmiUjqrEeCNDvWgWqmA0w" name="Jerry20">
+  <invitedToMap xmi:id="_RgmiVDqrEeCNDvWgWqmA0w" key="ReviewSampl">
+    <value href="ReviewSampl/ReviewSampl_review.xrer#_RdKz0DqrEeCNDvWgWqmA0w"/>
   </invitedToMap>
-  <invitedToMap xmi:id="_lpGhoS52EeCvo9WHavBoFQ" key="ReviewTwo">
-    <value href="ReviewTwo/ReviewTwo_review.xrer#_loVFky52EeCvo9WHavBoFQ"/>
+  <invitedToMap xmi:id="_RrI-YjqrEeCNDvWgWqmA0w" key="ReviewTwo">
+    <value href="ReviewTwo/ReviewTwo_review.xrer#_RpCFkzqrEeCNDvWgWqmA0w"/>
   </invitedToMap>
-  <group href="Golden_Group_group_root.xrer#_lYvKYS52EeCvo9WHavBoFQ"/>
+  <group href="Golden_Group_group_root.xrer#_PV92wTqrEeCNDvWgWqmA0w"/>
 </r4ecore:R4EUserReviews>

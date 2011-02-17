@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
-<r4ecore:R4EReview xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_loVFky52EeCvo9WHavBoFQ" name="ReviewTwo" creationDate="1867-07-01T00:00:00.000-0500" project="P1" entryCriteria="Sample Entry Cryteria" extraNotes="Sample extra notes" objectives="Sample Objectives" referenceMaterial="sample reference material" startDate="1867-07-01T00:00:00.000-0500" endDate="1867-07-03T00:00:00.000-0500" type="R4E_REVIEW_TYPE_INFORMAL">
-  <reviewTask xsi:type="r4ecore:R4ETaskReference" xmi:id="_lvwjQi52EeCvo9WHavBoFQ" taskId="324328" repositoryURL="https://bugs.eclipse.org/bugs/show_bug.cgi?id=324328"/>
-  <state xsi:type="r4ecore:R4EReviewState" xmi:id="_lvwjQS52EeCvo9WHavBoFQ" state="R4E_REVIEW_PHASE_PREPARATION"/>
+<r4ecore:R4EReview xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_RpCFkzqrEeCNDvWgWqmA0w" name="ReviewTwo" creationDate="1867-07-01T00:00:00.000-0500" project="P1" entryCriteria="Sample Entry Cryteria" extraNotes="Sample extra notes" objectives="Sample Objectives" referenceMaterial="sample reference material" startDate="1867-07-01T00:00:00.000-0500" endDate="1867-07-03T00:00:00.000-0500" type="R4E_REVIEW_TYPE_INFORMAL">
+  <reviewTask xsi:type="r4ecore:R4ETaskReference" xmi:id="_RvvKgjqrEeCNDvWgWqmA0w" taskId="324328" repositoryURL="https://bugs.eclipse.org/bugs/show_bug.cgi?id=324328"/>
+  <state xsi:type="r4ecore:R4EReviewState" xmi:id="_RvvKgTqrEeCNDvWgWqmA0w" state="R4E_REVIEW_PHASE_PREPARATION"/>
   <components>Component1</components>
-  <decision xmi:id="_lvwjQC52EeCvo9WHavBoFQ" spentTime="120" value="R4E_REVIEW_DECISION_ACCEPTED"/>
-  <createdBy href="Tom10_comments.xrer#_loVFli52EeCvo9WHavBoFQ"/>
+  <decision xmi:id="_RvvKgDqrEeCNDvWgWqmA0w" spentTime="120" value="R4E_REVIEW_DECISION_ACCEPTED"/>
+  <createdBy href="Tom10_comments.xrer#_RpD6wDqrEeCNDvWgWqmA0w"/>
 </r4ecore:R4EReview>
