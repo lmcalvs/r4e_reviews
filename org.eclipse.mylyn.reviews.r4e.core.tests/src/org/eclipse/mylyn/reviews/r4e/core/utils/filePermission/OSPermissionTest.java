@@ -120,8 +120,8 @@ public class OSPermissionTest extends TestCase {
 		try {
 			// Grant permissions shall be false since the directory does not exist
 			// FIXME: Decide the best way to report it to the user.
-			// assertFalse(perm.grantWritePermission(dirStr + "1"));
-			assertFalse(perm.grantWritePermission(dirStr));
+			assertFalse(perm.grantWritePermission(dirStr + "1"));
+			// assertTrue(perm.grantWritePermission(dirStr));
 		} catch (IOException e) {
 			e.printStackTrace();
 			fail("Exception");
