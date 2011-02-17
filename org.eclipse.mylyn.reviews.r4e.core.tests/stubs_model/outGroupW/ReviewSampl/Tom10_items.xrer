@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/">
+  <r4ecore:R4EItem xmi:id="_lhFOES52EeCvo9WHavBoFQ" description="Tom10-Item to review 11" addedById="Tom10" repositoryRef="repository ref..0">
+    <id xmi:id="_lhFOEi52EeCvo9WHavBoFQ" sequenceID="4" userID="Tom10"/>
+    <addedBy href="Tom10_comments.xrer#_leUN8y52EeCvo9WHavBoFQ"/>
+    <review href="ReviewSampl_review.xrer#_leUN8C52EeCvo9WHavBoFQ"/>
+    <fileContextList href="#_lhp10C52EeCvo9WHavBoFQ"/>
+    <ProjectURIs>platform:resource/projX0</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EFileContext xmi:id="_lhp10C52EeCvo9WHavBoFQ">
+    <id xmi:id="_lhp10S52EeCvo9WHavBoFQ" sequenceID="5" userID="Tom10"/>
+    <deltas href="#_lh2DES52EeCvo9WHavBoFQ"/>
+    <base href="#_lhs5IC52EeCvo9WHavBoFQ"/>
+    <target href="#_lhwjgC52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EFileVersion xmi:id="_lhs5IC52EeCvo9WHavBoFQ" platformURI="platform:/resource/proj/src/dir3/dir4/file.xxx" versionID="-719978412" repositoryPath="root/folder_0" name="file_0"/>
+  <r4ecore:R4EFileVersion xmi:id="_lhwjgC52EeCvo9WHavBoFQ" platformURI="platform:/resource/proj/src/dir6/dir7/file.yyy" versionID="-719978411" repositoryPath="root/folder_0" name="file_0"/>
+  <r4ecore:R4EDelta xmi:id="_lh2DES52EeCvo9WHavBoFQ">
+    <id xmi:id="_lh2DEi52EeCvo9WHavBoFQ" sequenceID="6" userID="Tom10"/>
+    <base xsi:type="r4ecore:R4ETextContent" href="#_lh5GYC52EeCvo9WHavBoFQ"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_liAbIC52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_lh5GYC52EeCvo9WHavBoFQ" info="information for base content" content="base content">
+    <location href="#_lh8wwC52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_lh8wwC52EeCvo9WHavBoFQ" startPosition="200" length="50" startLine="10" endLine="20"/>
+  <r4ecore:R4ETextContent xmi:id="_liAbIC52EeCvo9WHavBoFQ" info="information for target content" content="target content">
+    <location href="#_liHI0C52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_liHI0C52EeCvo9WHavBoFQ" startPosition="300" length="100" startLine="30" endLine="40"/>
+  <r4ecore:R4EItem xmi:id="_liNPcS52EeCvo9WHavBoFQ" description="Tom10-Item to review 12" addedById="Tom10" repositoryRef="repository ref..1">
+    <id xmi:id="_liNPci52EeCvo9WHavBoFQ" sequenceID="7" userID="Tom10"/>
+    <addedBy href="Tom10_comments.xrer#_leUN8y52EeCvo9WHavBoFQ"/>
+    <review href="ReviewSampl_review.xrer#_leUN8C52EeCvo9WHavBoFQ"/>
+    <fileContextList href="#_liUkMC52EeCvo9WHavBoFQ"/>
+    <ProjectURIs>platform:resource/projX1</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EFileContext xmi:id="_liUkMC52EeCvo9WHavBoFQ">
+    <id xmi:id="_liUkMS52EeCvo9WHavBoFQ" sequenceID="8" userID="Tom10"/>
+    <deltas href="#_ligxcS52EeCvo9WHavBoFQ"/>
+    <base href="#_liYOkC52EeCvo9WHavBoFQ"/>
+    <target href="#_lib48C52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EFileVersion xmi:id="_liYOkC52EeCvo9WHavBoFQ" platformURI="platform:/resource/proj/src/dir3/dir4/file.xxx" versionID="-719978411" repositoryPath="root/folder_1" name="file_1"/>
+  <r4ecore:R4EFileVersion xmi:id="_lib48C52EeCvo9WHavBoFQ" platformURI="platform:/resource/proj/src/dir6/dir7/file.yyy" versionID="-719978410" repositoryPath="root/folder_1" name="file_1"/>
+  <r4ecore:R4EDelta xmi:id="_ligxcS52EeCvo9WHavBoFQ">
+    <id xmi:id="_ligxci52EeCvo9WHavBoFQ" sequenceID="9" userID="Tom10"/>
+    <base xsi:type="r4ecore:R4ETextContent" href="#_likb0C52EeCvo9WHavBoFQ"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_liuM0C52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_likb0C52EeCvo9WHavBoFQ" info="information for base content" content="base content">
+    <location href="#_linfIC52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_linfIC52EeCvo9WHavBoFQ" startPosition="200" length="50" startLine="10" endLine="20"/>
+  <r4ecore:R4ETextContent xmi:id="_liuM0C52EeCvo9WHavBoFQ" info="information for target content" content="target content">
+    <location href="#_li06gC52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_li06gC52EeCvo9WHavBoFQ" startPosition="300" length="100" startLine="30" endLine="40"/>
+  <r4ecore:R4EItem xmi:id="_li7oMS52EeCvo9WHavBoFQ" description="Tom10-Item to review 21" addedById="Tom10" repositoryRef="repository ref..2">
+    <id xmi:id="_li8PQC52EeCvo9WHavBoFQ" sequenceID="10" userID="Tom10"/>
+    <addedBy href="Tom10_comments.xrer#_leUN8y52EeCvo9WHavBoFQ"/>
+    <review href="ReviewSampl_review.xrer#_leUN8C52EeCvo9WHavBoFQ"/>
+    <fileContextList href="#_ljJqoC52EeCvo9WHavBoFQ"/>
+    <ProjectURIs>platform:resource/projX2</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EFileContext xmi:id="_ljJqoC52EeCvo9WHavBoFQ">
+    <id xmi:id="_ljJqoS52EeCvo9WHavBoFQ" sequenceID="11" userID="Tom10"/>
+    <deltas href="#_ljbXcC52EeCvo9WHavBoFQ"/>
+    <base href="#_ljPKMC52EeCvo9WHavBoFQ"/>
+    <target href="#_ljV34C52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EFileVersion xmi:id="_ljPKMC52EeCvo9WHavBoFQ" platformURI="platform:/resource/proj/src/dir3/dir4/file.xxx" versionID="-719978381" repositoryPath="root/folder_2" name="file_2"/>
+  <r4ecore:R4EFileVersion xmi:id="_ljV34C52EeCvo9WHavBoFQ" platformURI="platform:/resource/proj/src/dir6/dir7/file.yyy" versionID="-719978380" repositoryPath="root/folder_2" name="file_2"/>
+  <r4ecore:R4EDelta xmi:id="_ljbXcC52EeCvo9WHavBoFQ">
+    <id xmi:id="_ljbXcS52EeCvo9WHavBoFQ" sequenceID="12" userID="Tom10"/>
+    <base xsi:type="r4ecore:R4ETextContent" href="#_ljgP8C52EeCvo9WHavBoFQ"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_ljtEQC52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_ljgP8C52EeCvo9WHavBoFQ" info="information for base content" content="base content">
+    <location href="#_ljm9oC52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_ljm9oC52EeCvo9WHavBoFQ" startPosition="200" length="50" startLine="10" endLine="20"/>
+  <r4ecore:R4ETextContent xmi:id="_ljtEQC52EeCvo9WHavBoFQ" info="information for target content" content="target content">
+    <location href="#_ljzK4C52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_ljzK4C52EeCvo9WHavBoFQ" startPosition="300" length="100" startLine="30" endLine="40"/>
+  <r4ecore:R4EItem xmi:id="_lj7twS52EeCvo9WHavBoFQ" description="Tom10-Item to review 22" addedById="Tom10" repositoryRef="repository ref..3">
+    <id xmi:id="_lj7twi52EeCvo9WHavBoFQ" sequenceID="13" userID="Tom10"/>
+    <addedBy href="Tom10_comments.xrer#_leUN8y52EeCvo9WHavBoFQ"/>
+    <review href="ReviewSampl_review.xrer#_leUN8C52EeCvo9WHavBoFQ"/>
+    <fileContextList href="#_lkH7AC52EeCvo9WHavBoFQ"/>
+    <ProjectURIs>platform:resource/projX3</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EFileContext xmi:id="_lkH7AC52EeCvo9WHavBoFQ">
+    <id xmi:id="_lkH7AS52EeCvo9WHavBoFQ" sequenceID="14" userID="Tom10"/>
+    <deltas href="#_lkbdAS52EeCvo9WHavBoFQ"/>
+    <base href="#_lkNakC52EeCvo9WHavBoFQ"/>
+    <target href="#_lkUvUC52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EFileVersion xmi:id="_lkNakC52EeCvo9WHavBoFQ" platformURI="platform:/resource/proj/src/dir3/dir4/file.xxx" versionID="-719978380" repositoryPath="root/folder_3" name="file_3"/>
+  <r4ecore:R4EFileVersion xmi:id="_lkUvUC52EeCvo9WHavBoFQ" platformURI="platform:/resource/proj/src/dir6/dir7/file.yyy" versionID="-719978379" repositoryPath="root/folder_3" name="file_3"/>
+  <r4ecore:R4EDelta xmi:id="_lkbdAS52EeCvo9WHavBoFQ">
+    <id xmi:id="_lkbdAi52EeCvo9WHavBoFQ" sequenceID="15" userID="Tom10"/>
+    <base xsi:type="r4ecore:R4ETextContent" href="#_lkg8kC52EeCvo9WHavBoFQ"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_lktJ0C52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4ETextContent xmi:id="_lkg8kC52EeCvo9WHavBoFQ" info="information for base content" content="base content">
+    <location href="#_lkmcIC52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_lkmcIC52EeCvo9WHavBoFQ" startPosition="200" length="50" startLine="10" endLine="20"/>
+  <r4ecore:R4ETextContent xmi:id="_lktJ0C52EeCvo9WHavBoFQ" info="information for target content" content="target content">
+    <location href="#_lk0ekC52EeCvo9WHavBoFQ"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_lk0ekC52EeCvo9WHavBoFQ" startPosition="300" length="100" startLine="30" endLine="40"/>
+</xmi:XMI>
