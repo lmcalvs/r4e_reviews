@@ -12,7 +12,7 @@
  *   Alvaro Sanchez-Leon - Initial Implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.core.versions;
+package org.eclipse.mylyn.reviews.r4e.core.versions.git.internal;
 
 
 import static org.eclipse.jgit.lib.Constants.HEAD;
@@ -248,6 +248,21 @@ public class TstGIT {
 		URI genURI = URI.createPlatformResourceURI(iFile.getFullPath().toString(), true);
 
 		System.out.println("Resource resolved: " + genURI.toString());
+	}
+
+	@Test
+	public void createRepository() {
+
+	}
+
+	@Test
+	public void insertObject() {
+
+	}
+
+	@Test
+	public void retrieveObject() {
+
 	}
 
 	// ------------------------------------------------------------------------

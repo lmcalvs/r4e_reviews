@@ -46,7 +46,7 @@ public class WindowPermission extends BaseSupportCommand implements
 		command.add(dir); // filename or directory to modify
 		command.add("/grant");
 		command.add("Everyone:F");
-		// command.add("/T"); // Change ACLs recursively
+		command.add("/T"); // Change ACLs recursively
 
 		String ret = executeWithStringReturned(null, command, true /* wait */,
 				true /* ignore error */);
