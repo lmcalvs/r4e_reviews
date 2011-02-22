@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext#getDeltas <em>Deltas</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext#getBase <em>Base</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext#getTarget <em>Target</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -103,4 +104,33 @@ public interface R4EFileContext extends R4EIDComponent {
 	 * @generated
 	 */
 	void setTarget(R4EFileVersion value);
+
+	/**
+	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type</em>' attribute.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType
+	 * @see #setType(R4EContextType)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFileContext_Type()
+	 * @model
+	 * @generated
+	 */
+	R4EContextType getType();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext#getType <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type</em>' attribute.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType
+	 * @see #getType()
+	 * @generated
+	 */
+	void setType(R4EContextType value);
 } // R4EFileContext

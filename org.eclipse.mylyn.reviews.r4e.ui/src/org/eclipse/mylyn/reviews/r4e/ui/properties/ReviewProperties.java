@@ -52,13 +52,14 @@ public class ReviewProperties extends ModelElementProperties {
 	/**
 	 * Field REVIEW_CREATION_DATE_ID. (value is ""reviewElement.creationDate"")
 	 */
-	private static final String REVIEW_CREATION_DATE_ID = "reviewElement.creationDate";
+	private static final String					REVIEW_CREATION_DATE_ID						= "reviewElement.creationDate";
 
 	/**
 	 * Field REVIEW_CREATION_DATE_PROPERTY_DESCRIPTOR.
 	 */
-	private static final PropertyDescriptor REVIEW_CREATION_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			REVIEW_CREATION_DATE_ID, R4EUIConstants.CREATION_DATE_LABEL);
+	private static final PropertyDescriptor		REVIEW_CREATION_DATE_PROPERTY_DESCRIPTOR	= new PropertyDescriptor(
+																									REVIEW_CREATION_DATE_ID,
+																									R4EUIConstants.CREATION_DATE_LABEL);
 	
 	/**
 	 * Field REVIEW_DESCRIPTION_ID. (value is ""reviewElement.description"")
@@ -74,9 +75,9 @@ public class ReviewProperties extends ModelElementProperties {
 	/**
 	 * Field DESCRIPTORS.
 	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { REVIEW_NAME_PROPERTY_DESCRIPTOR,  
-		REVIEW_CREATION_DATE_PROPERTY_DESCRIPTOR, REVIEW_DESCRIPTION_PROPERTY_DESCRIPTOR };
-	
+	private static final IPropertyDescriptor[]	DESCRIPTORS									= {
+			REVIEW_NAME_PROPERTY_DESCRIPTOR, REVIEW_CREATION_DATE_PROPERTY_DESCRIPTOR,
+			REVIEW_DESCRIPTION_PROPERTY_DESCRIPTOR											};
 	
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -118,7 +119,7 @@ public class ReviewProperties extends ModelElementProperties {
 			if (REVIEW_NAME_ID.equals(aId)) { 
 				return ((R4EUIReview)getElement()).getReview().getName();
 			} else if (REVIEW_CREATION_DATE_ID.equals(aId)) {
-				return ((R4EUIReview)getElement()).getReview().getCreationDate().toString();
+				return ((R4EUIReview) getElement()).getReview().getStartDate().toString();
 			} else if (REVIEW_DESCRIPTION_ID.equals(aId)) {
 				return ((R4EUIReview)getElement()).getReview().getExtraNotes();
 			}

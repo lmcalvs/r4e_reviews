@@ -14,6 +14,7 @@
  *******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.core.utils.filePermission;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,9 @@ public class WindowPermission extends BaseSupportCommand implements
 	 */
 	public boolean grantWritePermission(String dir) throws IOException {
 		Boolean b = false;
+		File tstFile = new File(dir);
+		boolean isDirectory = tstFile.isDirectory();
+
 		// Activator.Tracer.traceInfo("Changing permissions for dir: " + dir);
 
 		// NOTE: The permissions can be changed by the file / folder owner only, i.e. This update shall be done right
@@ -46,7 +50,9 @@ public class WindowPermission extends BaseSupportCommand implements
 		command.add(dir); // filename or directory to modify
 		command.add("/grant");
 		command.add("Everyone:F");
-		command.add("/T"); // Change ACLs recursively
+		if (isDirectory) {
+			command.add("/T"); // Change ACLs recursively
+		}
 
 		String ret = executeWithStringReturned(null, command, true /* wait */,
 				true /* ignore error */);

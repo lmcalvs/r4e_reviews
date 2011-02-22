@@ -18,6 +18,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.tasks.core.ITask;
+import org.eclipse.team.core.history.IFileRevision;
 
 /**
  * <!-- begin-user-doc -->
@@ -394,6 +395,26 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 	String convertR4ECommentEnum(R4ECommentEnum instanceValue);
 
 	/**
+	 * Returns an instance of data type '<em>R4E Context Type</em>' corresponding the given literal.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param literal a literal of the data type.
+	 * @return a new instance value of the data type.
+	 * @generated
+	 */
+	R4EContextType createR4EContextType(String literal);
+
+	/**
+	 * Returns a literal representation of an instance of data type '<em>R4E Context Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param instanceValue an instance value of the data type.
+	 * @return a literal representation of the instance value.
+	 * @generated
+	 */
+	String convertR4EContextType(R4EContextType instanceValue);
+
+	/**
 	 * Returns an instance of data type '<em>Mylyn Task</em>' corresponding the given literal.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -432,6 +453,26 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 	 * @generated
 	 */
 	String convertIResource(IResource instanceValue);
+
+	/**
+	 * Returns an instance of data type '<em>IFile Revision</em>' corresponding the given literal.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param literal a literal of the data type.
+	 * @return a new instance value of the data type.
+	 * @generated
+	 */
+	IFileRevision createIFileRevision(String literal);
+
+	/**
+	 * Returns a literal representation of an instance of data type '<em>IFile Revision</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param instanceValue an instance value of the data type.
+	 * @return a literal representation of the instance value.
+	 * @generated
+	 */
+	String convertIFileRevision(IFileRevision instanceValue);
 
 	/**
 	 * Returns the package supported by this factory.

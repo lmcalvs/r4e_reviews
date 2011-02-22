@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -40,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getDeltas <em>Deltas</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getBase <em>Base</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,6 +75,24 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	 * @ordered
 	 */
 	protected R4EFileVersion target;
+	/**
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final R4EContextType TYPE_EDEFAULT = R4EContextType.R4E_UNDEFINED;
+	/**
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected R4EContextType type = TYPE_EDEFAULT;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -241,6 +261,27 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public R4EContextType getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setType(R4EContextType newType) {
+		R4EContextType oldType = type;
+		type = newType == null ? TYPE_EDEFAULT : newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_FILE_CONTEXT__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -270,6 +311,8 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 			case RModelPackage.R4E_FILE_CONTEXT__TARGET:
 				if (resolve) return getTarget();
 				return basicGetTarget();
+			case RModelPackage.R4E_FILE_CONTEXT__TYPE:
+				return getType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -293,6 +336,9 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 			case RModelPackage.R4E_FILE_CONTEXT__TARGET:
 				setTarget((R4EFileVersion)newValue);
 				return;
+			case RModelPackage.R4E_FILE_CONTEXT__TYPE:
+				setType((R4EContextType)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -314,6 +360,9 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 			case RModelPackage.R4E_FILE_CONTEXT__TARGET:
 				setTarget((R4EFileVersion)null);
 				return;
+			case RModelPackage.R4E_FILE_CONTEXT__TYPE:
+				setType(TYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -332,8 +381,26 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 				return base != null;
 			case RModelPackage.R4E_FILE_CONTEXT__TARGET:
 				return target != null;
+			case RModelPackage.R4E_FILE_CONTEXT__TYPE:
+				return type != TYPE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (type: ");
+		result.append(type);
+		result.append(')');
+		return result.toString();
 	}
 
 } //R4EFileContextImpl

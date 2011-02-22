@@ -34,6 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
@@ -60,6 +61,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
 import org.eclipse.mylyn.tasks.core.ITask;
+import org.eclipse.team.core.history.IFileRevision;
 
 /**
  * <!-- begin-user-doc -->
@@ -332,6 +334,13 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EEnum r4EContextTypeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType mylynTaskEDataType = null;
 
 	/**
@@ -347,6 +356,13 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	private EDataType uriEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType iFileRevisionEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -544,7 +560,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EReview_CreationDate() {
+	public EAttribute getR4EReview_Project() {
 		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -553,7 +569,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EReview_Project() {
+	public EAttribute getR4EReview_Components() {
 		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -562,7 +578,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EReview_Components() {
+	public EAttribute getR4EReview_EntryCriteria() {
 		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -571,7 +587,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EReview_EntryCriteria() {
+	public EAttribute getR4EReview_ExtraNotes() {
 		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -580,7 +596,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EReview_ExtraNotes() {
+	public EAttribute getR4EReview_Objectives() {
 		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -589,7 +605,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EReview_Objectives() {
+	public EAttribute getR4EReview_ReferenceMaterial() {
 		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -598,17 +614,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EReview_ReferenceMaterial() {
-		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getR4EReview_Decision() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(8);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -617,7 +624,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EReview_StartDate() {
-		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(9);
+		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -626,7 +633,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EReview_EndDate() {
-		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(10);
+		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -635,7 +642,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EReview_XmlVersion() {
-		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(11);
+		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -644,7 +651,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_AnomalyTemplate() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(12);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -653,7 +660,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EReview_Type() {
-		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(13);
+		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -662,7 +669,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_UsersMap() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(14);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -671,7 +678,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_IdsMap() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(16);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(15);
 	}
 
 	/**
@@ -680,7 +687,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_CreatedBy() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(15);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(14);
 	}
 
 	/**
@@ -1183,6 +1190,24 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getR4EItem_AuthorRep() {
+		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EItem_Submitted() {
+		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getR4ETextContent() {
 		return r4ETextContentEClass;
 	}
@@ -1354,6 +1379,15 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getR4EFileContext_Type() {
+		return (EAttribute)r4EFileContextEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getR4EDelta() {
 		return r4EDeltaEClass;
 	}
@@ -1509,6 +1543,24 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 */
 	public EAttribute getR4EFileVersion_Resource() {
 		return (EAttribute)r4EFileVersionEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EFileVersion_LocalVersionID() {
+		return (EAttribute)r4EFileVersionEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EFileVersion_FileRevision() {
+		return (EAttribute)r4EFileVersionEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -1777,6 +1829,15 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getR4EContextType() {
+		return r4EContextTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getMylynTask() {
 		return mylynTaskEDataType;
 	}
@@ -1797,6 +1858,15 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 */
 	public EDataType getURI() {
 		return uriEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getIFileRevision() {
+		return iFileRevisionEDataType;
 	}
 
 	/**
@@ -1842,7 +1912,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		r4EReviewEClass = createEClass(R4E_REVIEW);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__NAME);
-		createEAttribute(r4EReviewEClass, R4E_REVIEW__CREATION_DATE);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__PROJECT);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__COMPONENTS);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__ENTRY_CRITERIA);
@@ -1920,6 +1989,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEReference(r4EItemEClass, R4E_ITEM__FILE_CONTEXT_LIST);
 		createEAttribute(r4EItemEClass, R4E_ITEM__REPOSITORY_REF);
 		createEAttribute(r4EItemEClass, R4E_ITEM__PROJECT_UR_IS);
+		createEAttribute(r4EItemEClass, R4E_ITEM__AUTHOR_REP);
+		createEAttribute(r4EItemEClass, R4E_ITEM__SUBMITTED);
 
 		r4ETextContentEClass = createEClass(R4E_TEXT_CONTENT);
 		createEAttribute(r4ETextContentEClass, R4E_TEXT_CONTENT__CONTENT);
@@ -1947,6 +2018,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEReference(r4EFileContextEClass, R4E_FILE_CONTEXT__DELTAS);
 		createEReference(r4EFileContextEClass, R4E_FILE_CONTEXT__BASE);
 		createEReference(r4EFileContextEClass, R4E_FILE_CONTEXT__TARGET);
+		createEAttribute(r4EFileContextEClass, R4E_FILE_CONTEXT__TYPE);
 
 		r4EDeltaEClass = createEClass(R4E_DELTA);
 		createEReference(r4EDeltaEClass, R4E_DELTA__BASE);
@@ -1971,6 +2043,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EFileVersionEClass, R4E_FILE_VERSION__REPOSITORY_PATH);
 		createEAttribute(r4EFileVersionEClass, R4E_FILE_VERSION__NAME);
 		createEAttribute(r4EFileVersionEClass, R4E_FILE_VERSION__RESOURCE);
+		createEAttribute(r4EFileVersionEClass, R4E_FILE_VERSION__LOCAL_VERSION_ID);
+		createEAttribute(r4EFileVersionEClass, R4E_FILE_VERSION__FILE_REVISION);
 
 		mapNameToReviewEClass = createEClass(MAP_NAME_TO_REVIEW);
 		createEAttribute(mapNameToReviewEClass, MAP_NAME_TO_REVIEW__KEY);
@@ -2009,11 +2083,13 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		r4EDecisionEEnum = createEEnum(R4E_DECISION);
 		r4EReviewTypeEEnum = createEEnum(R4E_REVIEW_TYPE);
 		r4ECommentEnumEEnum = createEEnum(R4E_COMMENT_ENUM);
+		r4EContextTypeEEnum = createEEnum(R4E_CONTEXT_TYPE);
 
 		// Create data types
 		mylynTaskEDataType = createEDataType(MYLYN_TASK);
 		iResourceEDataType = createEDataType(IRESOURCE);
 		uriEDataType = createEDataType(URI);
+		iFileRevisionEDataType = createEDataType(IFILE_REVISION);
 	}
 
 	/**
@@ -2093,7 +2169,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		initEClass(r4EReviewEClass, R4EReview.class, "R4EReview", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4EReview_Name(), ecorePackage.getEString(), "name", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EReview_CreationDate(), ecorePackage.getEDate(), "creationDate", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_Project(), ecorePackage.getEString(), "project", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_Components(), ecorePackage.getEString(), "components", null, 0, -1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_EntryCriteria(), ecorePackage.getEString(), "entryCriteria", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2171,6 +2246,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EItem_FileContextList(), this.getR4EFileContext(), null, "fileContextList", null, 0, -1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EItem_RepositoryRef(), ecorePackage.getEString(), "repositoryRef", null, 0, 1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EItem_ProjectURIs(), ecorePackage.getEString(), "ProjectURIs", null, 0, -1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EItem_AuthorRep(), ecorePackage.getEString(), "authorRep", null, 0, 1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EItem_Submitted(), ecorePackage.getEDate(), "submitted", null, 0, 1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4ETextContentEClass, R4ETextContent.class, "R4ETextContent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4ETextContent_Content(), ecorePackage.getEString(), "content", null, 0, 1, R4ETextContent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2198,6 +2275,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EFileContext_Deltas(), this.getR4EDelta(), null, "deltas", null, 0, -1, R4EFileContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EFileContext_Base(), this.getR4EFileVersion(), null, "base", null, 0, 1, R4EFileContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EFileContext_Target(), this.getR4EFileVersion(), null, "target", null, 1, 1, R4EFileContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EFileContext_Type(), this.getR4EContextType(), "type", null, 0, 1, R4EFileContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EDeltaEClass, R4EDelta.class, "R4EDelta", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getR4EDelta_Base(), this.getR4EContent(), null, "base", null, 0, 1, R4EDelta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2222,6 +2300,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EFileVersion_RepositoryPath(), ecorePackage.getEString(), "repositoryPath", null, 0, 1, R4EFileVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EFileVersion_Name(), ecorePackage.getEString(), "name", null, 0, 1, R4EFileVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EFileVersion_Resource(), this.getIResource(), "resource", null, 0, 1, R4EFileVersion.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EFileVersion_LocalVersionID(), ecorePackage.getEString(), "localVersionID", null, 0, 1, R4EFileVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EFileVersion_FileRevision(), this.getIFileRevision(), "fileRevision", null, 0, 1, R4EFileVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mapNameToReviewEClass, Map.Entry.class, "MapNameToReview", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getMapNameToReview_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2260,7 +2340,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
 		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
 		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_POSTPONED);
+		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_SATE_VERIFIED);
 
 		initEEnum(r4EAnomalyRankEEnum, R4EAnomalyRank.class, "R4EAnomalyRank");
@@ -2295,10 +2375,18 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEEnum(r4ECommentEnumEEnum, R4ECommentEnum.class, "R4ECommentEnum");
 		addEEnumLiteral(r4ECommentEnumEEnum, R4ECommentEnum.R4E_COMMENT_BASE);
 
+		initEEnum(r4EContextTypeEEnum, R4EContextType.class, "R4EContextType");
+		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_UNDEFINED);
+		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_ADDED);
+		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_DELETED);
+		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_MODIFIED);
+		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_REPLACED);
+
 		// Initialize data types
 		initEDataType(mylynTaskEDataType, ITask.class, "MylynTask", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(iResourceEDataType, IResource.class, "IResource", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(iFileRevisionEDataType, IFileRevision.class, "IFileRevision", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

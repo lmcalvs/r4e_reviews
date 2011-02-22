@@ -15,7 +15,10 @@
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
 import org.eclipse.core.resources.IResource;
+
 import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.team.core.history.IFileRevision;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,6 +33,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getRepositoryPath <em>Repository Path</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getResource <em>Resource</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getLocalVersionID <em>Local Version ID</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getFileRevision <em>File Revision</em>}</li>
  * </ul>
  * </p>
  *
@@ -38,7 +43,6 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface R4EFileVersion extends EObject {
-
 	/**
 	 * Returns the value of the '<em><b>Platform URI</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -168,4 +172,57 @@ public interface R4EFileVersion extends EObject {
 	 * @generated
 	 */
 	void setResource(IResource value);
+
+	/**
+	 * Returns the value of the '<em><b>Local Version ID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Local Version ID</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Local Version ID</em>' attribute.
+	 * @see #setLocalVersionID(String)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFileVersion_LocalVersionID()
+	 * @model
+	 * @generated
+	 */
+	String getLocalVersionID();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getLocalVersionID <em>Local Version ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Local Version ID</em>' attribute.
+	 * @see #getLocalVersionID()
+	 * @generated
+	 */
+	void setLocalVersionID(String value);
+
+	/**
+	 * Returns the value of the '<em><b>File Revision</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>File Revision</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>File Revision</em>' attribute.
+	 * @see #setFileRevision(IFileRevision)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFileVersion_FileRevision()
+	 * @model dataType="org.eclipse.mylyn.reviews.r4e.core.model.IFileRevision"
+	 * @generated
+	 */
+	IFileRevision getFileRevision();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion#getFileRevision <em>File Revision</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>File Revision</em>' attribute.
+	 * @see #getFileRevision()
+	 * @generated
+	 */
+	void setFileRevision(IFileRevision value);
+
 } // R4EFileVersion

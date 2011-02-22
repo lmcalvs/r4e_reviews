@@ -91,16 +91,14 @@ public enum R4EAnomalyState implements Enumerator {
 	R4E_ANOMALY_STATE_REJECTED(2, "R4E_ANOMALY_STATE_REJECTED", "R4E_ANOMALY_STATE_REJECTED"),
 
 	/**
-	 * The '<em><b>R4E ANOMALY STATE POSTPONED</b></em>' literal object.
+	 * The '<em><b>R4E ANOMALY STATE DEFERRED</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #R4E_ANOMALY_STATE_POSTPONED_VALUE
+	 * @see #R4E_ANOMALY_STATE_DEFERRED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_ANOMALY_STATE_POSTPONED(3, "R4E_ANOMALY_STATE_POSTPONED", "R4E_ANOMALY_STATE_POSTPONED"),
-
-	/**
+	R4E_ANOMALY_STATE_DEFERRED(3, "R4E_ANOMALY_STATE_DEFERRED", "R4E_ANOMALY_STATE_DEFERRED"), /**
 	 * The '<em><b>R4E ANOMALY SATE VERIFIED</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -201,19 +199,19 @@ public enum R4EAnomalyState implements Enumerator {
 	public static final int R4E_ANOMALY_STATE_REJECTED_VALUE = 2;
 
 	/**
-	 * The '<em><b>R4E ANOMALY STATE POSTPONED</b></em>' literal value.
+	 * The '<em><b>R4E ANOMALY STATE DEFERRED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ANOMALY STATE POSTPONED</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>R4E ANOMALY STATE DEFERRED</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_ANOMALY_STATE_POSTPONED
+	 * @see #R4E_ANOMALY_STATE_DEFERRED
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_ANOMALY_STATE_POSTPONED_VALUE = 3;
+	public static final int R4E_ANOMALY_STATE_DEFERRED_VALUE = 3;
 
 	/**
 	 * The '<em><b>R4E ANOMALY SATE VERIFIED</b></em>' literal value.
@@ -244,7 +242,7 @@ public enum R4EAnomalyState implements Enumerator {
 			R4E_ANOMALY_STATE_FIXED,
 			R4E_ANOMALY_STATE_DUPLICATED,
 			R4E_ANOMALY_STATE_REJECTED,
-			R4E_ANOMALY_STATE_POSTPONED,
+			R4E_ANOMALY_STATE_DEFERRED,
 			R4E_ANOMALY_SATE_VERIFIED,
 		};
 
@@ -302,7 +300,7 @@ public enum R4EAnomalyState implements Enumerator {
 			case R4E_ANOMALY_STATE_FIXED_VALUE: return R4E_ANOMALY_STATE_FIXED;
 			case R4E_ANOMALY_STATE_DUPLICATED_VALUE: return R4E_ANOMALY_STATE_DUPLICATED;
 			case R4E_ANOMALY_STATE_REJECTED_VALUE: return R4E_ANOMALY_STATE_REJECTED;
-			case R4E_ANOMALY_STATE_POSTPONED_VALUE: return R4E_ANOMALY_STATE_POSTPONED;
+			case R4E_ANOMALY_STATE_DEFERRED_VALUE: return R4E_ANOMALY_STATE_DEFERRED;
 			case R4E_ANOMALY_SATE_VERIFIED_VALUE: return R4E_ANOMALY_SATE_VERIFIED;
 		}
 		return null;

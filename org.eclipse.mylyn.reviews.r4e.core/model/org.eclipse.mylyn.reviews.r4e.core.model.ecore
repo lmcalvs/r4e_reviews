@@ -31,7 +31,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EReview" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Review #//R4EReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="creationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="project" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="components" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -86,7 +85,7 @@
     <eLiterals name="R4E_ANOMALY_STATE_FIXED" value="7"/>
     <eLiterals name="R4E_ANOMALY_STATE_DUPLICATED" value="1"/>
     <eLiterals name="R4E_ANOMALY_STATE_REJECTED" value="2"/>
-    <eLiterals name="R4E_ANOMALY_STATE_POSTPONED" value="3"/>
+    <eLiterals name="R4E_ANOMALY_STATE_DEFERRED" value="3" literal="R4E_ANOMALY_STATE_DEFERRED"/>
     <eLiterals name="R4E_ANOMALY_SATE_VERIFIED" value="6"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="R4EAnomalyRank">
@@ -167,6 +166,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="repositoryRef" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ProjectURIs" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authorRep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="submitted" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4ETextContent" eSuperTypes="#//R4EContent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -202,6 +203,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
         eType="#//R4EFileVersion" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//R4EContextType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EDelta" eSuperTypes="#//R4EIDComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="base" eType="#//R4EContent"
@@ -232,6 +234,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="resource" eType="#//IResource"
         transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="localVersionID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileRevision" eType="#//IFileRevision"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="MylynTask" instanceClassName="org.eclipse.mylyn.tasks.core.ITask"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IResource" instanceClassName="org.eclipse.core.resources.IResource"/>
@@ -270,4 +274,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="file" eType="#//R4EFileVersion"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="R4EContextType">
+    <eLiterals name="R4E_UNDEFINED" value="4"/>
+    <eLiterals name="R4E_ADDED"/>
+    <eLiterals name="R4E_DELETED" value="1"/>
+    <eLiterals name="R4E_MODIFIED" value="2"/>
+    <eLiterals name="R4E_REPLACED" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="IFileRevision" instanceClassName="org.eclipse.team.core.history.IFileRevision"/>
 </ecore:EPackage>

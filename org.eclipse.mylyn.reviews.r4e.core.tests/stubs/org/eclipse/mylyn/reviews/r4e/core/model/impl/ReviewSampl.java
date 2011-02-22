@@ -29,6 +29,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
@@ -85,7 +86,6 @@ public class ReviewSampl {
 		Date startDate = indCal.getTime();
 		// 2 days after
 		Date endDate = new Date(startDate.getTime() + 2 * 24 * 60 * 60 * 1000);
-		fReview.setCreationDate(startDate);
 		fReview.setStartDate(startDate);
 		fReview.setEndDate(endDate);
 
@@ -243,25 +243,35 @@ public class ReviewSampl {
 				participant.getId() + "-Item to review 22" };
 
 		R4EItem item;
+
+		Calendar indCal = new GregorianCalendar(1867, Calendar.JULY, 1);
+		Date submittedDate = indCal.getTime();
+
 		for (int i = 0; i < itemDescriptions.length; i++) {
 			try {
 				item = fResFactory.createR4EItem(participant);
 				item.setDescription(itemDescriptions[i]);
 				item.setRepositoryRef("repository ref.." + i);
 				item.getProjectURIs().add("platform:resource/projX" + i);
+				item.setAuthorRep("changeAuthor_" + i);
+				item.setSubmitted(submittedDate);
+
 				R4EFileContext context = fResFactory.createR4EFileContext(item);
+				context.setType(R4EContextType.R4E_ADDED);
 
 				R4EFileVersion fvBase = fResFactory.createR4EBaseFileVersion(context);
 				fvBase.setName("file_" + i);
 				fvBase.setRepositoryPath("root/folder_" + i);
 				fvBase.setPlatformURI("platform:/resource/proj/src/dir3/dir4/file.xxx");
 				fvBase.setVersionID(Integer.toString(itemDescriptions[i].hashCode()));
+				fvBase.setLocalVersionID("locIdB_1234_" + i);
 
 				R4EFileVersion fvTarget = fResFactory.createR4ETargetFileVersion(context);
 				fvTarget.setName("file_" + i);
 				fvTarget.setRepositoryPath("root/folder_" + i);
 				fvTarget.setPlatformURI("platform:/resource/proj/src/dir6/dir7/file.yyy");
 				fvTarget.setVersionID(Integer.toString(itemDescriptions[i].hashCode() + 1));
+				fvTarget.setLocalVersionID("locIdT_1234_" + i);
 
 				R4EDelta delta = fResFactory.createR4EDelta(context);
 

@@ -224,7 +224,7 @@ public class ReviewTabPropertySection extends AbstractPropertySection implements
 		fRefreshInProgress = true;
 		final R4EReview modelReview = ((R4EUIReview)fReviewProps.getElement()).getReview();
 		FNameText.setText(modelReview.getName());
-		FCreationDateText.setText(modelReview.getCreationDate().toString());
+		FCreationDateText.setText(modelReview.getStartDate().toString());
 		if (null != modelReview.getExtraNotes()) FDescriptionText.setText(modelReview.getExtraNotes());
 		setEnabledFields();
 		fRefreshInProgress = false;
