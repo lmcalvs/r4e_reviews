@@ -11,6 +11,7 @@ import junit.framework.TestCase;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.mylyn.reviews.r4e.core.rrepo.ReviewsRepoProxy;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

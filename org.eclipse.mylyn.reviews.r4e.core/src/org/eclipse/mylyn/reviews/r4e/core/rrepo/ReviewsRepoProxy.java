@@ -11,7 +11,7 @@
  * Contributors:
  *   Alvaro Sanchez-Leon - Initial API
  *******************************************************************************/
-package org.eclipse.mylyn.reviews.r4e.core.versions.git.internal;
+package org.eclipse.mylyn.reviews.r4e.core.rrepo;
 
 import java.io.File;
 import java.io.FileInputStream;
