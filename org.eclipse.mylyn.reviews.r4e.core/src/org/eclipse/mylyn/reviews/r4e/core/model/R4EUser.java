@@ -41,7 +41,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.User;
  * @model
  * @generated
  */
-public interface R4EUser extends User {
+public interface R4EUser extends User, R4EReviewComponent {
 	/**
 	 * Returns the value of the '<em><b>Group Paths</b></em>' attribute list.
 	 * The list contents are of type {@link java.lang.String}.

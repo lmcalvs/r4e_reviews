@@ -14,6 +14,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
@@ -141,6 +143,8 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 			case RModelPackage.MAP_ID_TO_COMPONENT: return (EObject)createMapIDToComponent();
 			case RModelPackage.MAP_USER_ID_TO_USER_REVIEWS: return (EObject)createMapUserIDToUserReviews();
 			case RModelPackage.R4E_ANOMALY_TEXT_POSITION: return createR4EAnomalyTextPosition();
+			case RModelPackage.MAP_DATE_TO_DURATION: return (EObject)createMapDateToDuration();
+			case RModelPackage.MAP_KEY_TO_INFO_ATTRIBUTES: return (EObject)createMapKeyToInfoAttributes();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -474,6 +478,26 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	public R4EAnomalyTextPosition createR4EAnomalyTextPosition() {
 		R4EAnomalyTextPositionImpl r4EAnomalyTextPosition = new R4EAnomalyTextPositionImpl();
 		return r4EAnomalyTextPosition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<Date, Integer> createMapDateToDuration() {
+		MapDateToDurationImpl mapDateToDuration = new MapDateToDurationImpl();
+		return mapDateToDuration;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, String> createMapKeyToInfoAttributes() {
+		MapKeyToInfoAttributesImpl mapKeyToInfoAttributes = new MapKeyToInfoAttributesImpl();
+		return mapKeyToInfoAttributes;
 	}
 
 	/**

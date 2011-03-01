@@ -20,11 +20,14 @@ import java.util.Date;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
@@ -51,6 +54,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getProjectURIs <em>Project UR Is</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getAuthorRep <em>Author Rep</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getSubmitted <em>Submitted</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getInfoAtt <em>Info Att</em>}</li>
  * </ul>
  * </p>
  *
@@ -216,6 +220,16 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * @ordered
 	 */
 	protected Date submitted = SUBMITTED_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInfoAtt()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> infoAtt;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -467,11 +481,25 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EMap<String, String> getInfoAtt() {
+		if (infoAtt == null) {
+			infoAtt = new EcoreEMap<String,String>(RModelPackage.Literals.MAP_KEY_TO_INFO_ATTRIBUTES, MapKeyToInfoAttributesImpl.class, this, RModelPackage.R4E_ITEM__INFO_ATT);
+		}
+		return infoAtt;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case RModelPackage.R4E_ITEM__FILE_CONTEXT_LIST:
 				return ((InternalEList<?>)getFileContextList()).basicRemove(otherEnd, msgs);
+			case RModelPackage.R4E_ITEM__INFO_ATT:
+				return ((InternalEList<?>)getInfoAtt()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -506,6 +534,9 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 				return getAuthorRep();
 			case RModelPackage.R4E_ITEM__SUBMITTED:
 				return getSubmitted();
+			case RModelPackage.R4E_ITEM__INFO_ATT:
+				if (coreType) return getInfoAtt();
+				else return getInfoAtt().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -551,6 +582,9 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 			case RModelPackage.R4E_ITEM__SUBMITTED:
 				setSubmitted((Date)newValue);
 				return;
+			case RModelPackage.R4E_ITEM__INFO_ATT:
+				((EStructuralFeature.Setting)getInfoAtt()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -593,6 +627,9 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 			case RModelPackage.R4E_ITEM__SUBMITTED:
 				setSubmitted(SUBMITTED_EDEFAULT);
 				return;
+			case RModelPackage.R4E_ITEM__INFO_ATT:
+				getInfoAtt().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -625,6 +662,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 				return AUTHOR_REP_EDEFAULT == null ? authorRep != null : !AUTHOR_REP_EDEFAULT.equals(authorRep);
 			case RModelPackage.R4E_ITEM__SUBMITTED:
 				return SUBMITTED_EDEFAULT == null ? submitted != null : !SUBMITTED_EDEFAULT.equals(submitted);
+			case RModelPackage.R4E_ITEM__INFO_ATT:
+				return infoAtt != null && !infoAtt.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

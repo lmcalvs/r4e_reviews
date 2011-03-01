@@ -20,10 +20,13 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
@@ -42,6 +45,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getBase <em>Base</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl#getInfoAtt <em>Info Att</em>}</li>
  * </ul>
  * </p>
  *
@@ -93,6 +97,15 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	 * @ordered
 	 */
 	protected R4EContextType type = TYPE_EDEFAULT;
+	/**
+	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInfoAtt()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> infoAtt;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -282,6 +295,18 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EMap<String, String> getInfoAtt() {
+		if (infoAtt == null) {
+			infoAtt = new EcoreEMap<String,String>(RModelPackage.Literals.MAP_KEY_TO_INFO_ATTRIBUTES, MapKeyToInfoAttributesImpl.class, this, RModelPackage.R4E_FILE_CONTEXT__INFO_ATT);
+		}
+		return infoAtt;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -291,6 +316,8 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 				return basicSetBase(null, msgs);
 			case RModelPackage.R4E_FILE_CONTEXT__TARGET:
 				return basicSetTarget(null, msgs);
+			case RModelPackage.R4E_FILE_CONTEXT__INFO_ATT:
+				return ((InternalEList<?>)getInfoAtt()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -313,6 +340,9 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 				return basicGetTarget();
 			case RModelPackage.R4E_FILE_CONTEXT__TYPE:
 				return getType();
+			case RModelPackage.R4E_FILE_CONTEXT__INFO_ATT:
+				if (coreType) return getInfoAtt();
+				else return getInfoAtt().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -339,6 +369,9 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 			case RModelPackage.R4E_FILE_CONTEXT__TYPE:
 				setType((R4EContextType)newValue);
 				return;
+			case RModelPackage.R4E_FILE_CONTEXT__INFO_ATT:
+				((EStructuralFeature.Setting)getInfoAtt()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -363,6 +396,9 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 			case RModelPackage.R4E_FILE_CONTEXT__TYPE:
 				setType(TYPE_EDEFAULT);
 				return;
+			case RModelPackage.R4E_FILE_CONTEXT__INFO_ATT:
+				getInfoAtt().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -383,6 +419,8 @@ public class R4EFileContextImpl extends R4EIDComponentImpl implements R4EFileCon
 				return target != null;
 			case RModelPackage.R4E_FILE_CONTEXT__TYPE:
 				return type != TYPE_EDEFAULT;
+			case RModelPackage.R4E_FILE_CONTEXT__INFO_ATT:
+				return infoAtt != null && !infoAtt.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
-<r4ecore:R4EReview xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_Ea_wUz7EEeC3PpPWb8WEmg" name="ReviewTwo" project="P1" entryCriteria="Sample Entry Cryteria" extraNotes="Sample extra notes" objectives="Sample Objectives" referenceMaterial="sample reference material" startDate="1867-07-01T00:00:00.000-0500" endDate="1867-07-03T00:00:00.000-0500" type="R4E_REVIEW_TYPE_INFORMAL">
-  <reviewTask xsi:type="r4ecore:R4ETaskReference" xmi:id="_EhZ6VT7EEeC3PpPWb8WEmg" taskId="324328" repositoryURL="https://bugs.eclipse.org/bugs/show_bug.cgi?id=324328"/>
-  <state xsi:type="r4ecore:R4EReviewState" xmi:id="_EhZ6VD7EEeC3PpPWb8WEmg" state="R4E_REVIEW_PHASE_PREPARATION"/>
+<r4ecore:R4EReview xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_yC9Ts0RCEeC2DrmWDHmN2w" name="ReviewTwo" project="P1" entryCriteria="Sample Entry Cryteria" extraNotes="Sample extra notes" objectives="Sample Objectives" referenceMaterial="sample reference material" startDate="1867-07-01T00:00:00.000-0500" endDate="1867-07-03T00:00:00.000-0500" type="R4E_REVIEW_TYPE_INFORMAL">
+  <reviewTask xsi:type="r4ecore:R4ETaskReference" xmi:id="_yKAW4kRCEeC2DrmWDHmN2w" taskId="324328" repositoryURL="https://bugs.eclipse.org/bugs/show_bug.cgi?id=324328"/>
+  <state xsi:type="r4ecore:R4EReviewState" xmi:id="_yKAW4URCEeC2DrmWDHmN2w" state="R4E_REVIEW_PHASE_PREPARATION"/>
   <components>Component1</components>
-  <decision xmi:id="_EhZ6Uz7EEeC3PpPWb8WEmg" spentTime="120" value="R4E_REVIEW_DECISION_ACCEPTED"/>
-  <createdBy href="Tom10_comments.xrer#_Ea_wVj7EEeC3PpPWb8WEmg"/>
+  <decision xmi:id="_yKAW4ERCEeC2DrmWDHmN2w" spentTime="120" value="R4E_REVIEW_DECISION_ACCEPTED"/>
+  <createdBy href="Tom10_comments.xrer#_yC96wURCEeC2DrmWDHmN2w"/>
 </r4ecore:R4EReview>

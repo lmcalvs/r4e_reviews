@@ -285,6 +285,20 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass mapDateToDurationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass mapKeyToInfoAttributesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum r4EAnomalyStateEEnum = null;
 
 	/**
@@ -1091,7 +1105,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EParticipant_SpentTime() {
+	public EAttribute getR4EParticipant_FocusArea() {
 		return (EAttribute)r4EParticipantEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -1100,7 +1114,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EParticipant_FocusArea() {
+	public EAttribute getR4EParticipant_IsPartOfDecision() {
 		return (EAttribute)r4EParticipantEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -1109,8 +1123,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EParticipant_IsPartOfDecision() {
-		return (EAttribute)r4EParticipantEClass.getEStructuralFeatures().get(3);
+	public EReference getR4EParticipant_ReviewedContent() {
+		return (EReference)r4EParticipantEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1118,7 +1132,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getR4EParticipant_ReviewedContent() {
+	public EReference getR4EParticipant_TimeLog() {
 		return (EReference)r4EParticipantEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -1201,6 +1215,15 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 */
 	public EAttribute getR4EItem_Submitted() {
 		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getR4EItem_InfoAtt() {
+		return (EReference)r4EItemEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -1388,6 +1411,15 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getR4EFileContext_InfoAtt() {
+		return (EReference)r4EFileContextEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getR4EDelta() {
 		return r4EDeltaEClass;
 	}
@@ -1561,6 +1593,15 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 */
 	public EAttribute getR4EFileVersion_FileRevision() {
 		return (EAttribute)r4EFileVersionEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getR4EFileVersion_InfoAtt() {
+		return (EReference)r4EFileVersionEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -1759,6 +1800,60 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 */
 	public EReference getR4EAnomalyTextPosition_File() {
 		return (EReference)r4EAnomalyTextPositionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getMapDateToDuration() {
+		return mapDateToDurationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMapDateToDuration_Key() {
+		return (EAttribute)mapDateToDurationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMapDateToDuration_Value() {
+		return (EAttribute)mapDateToDurationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getMapKeyToInfoAttributes() {
+		return mapKeyToInfoAttributesEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMapKeyToInfoAttributes_Key() {
+		return (EAttribute)mapKeyToInfoAttributesEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMapKeyToInfoAttributes_Value() {
+		return (EAttribute)mapKeyToInfoAttributesEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1977,10 +2072,10 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		r4EParticipantEClass = createEClass(R4E_PARTICIPANT);
 		createEAttribute(r4EParticipantEClass, R4E_PARTICIPANT__ROLES);
-		createEAttribute(r4EParticipantEClass, R4E_PARTICIPANT__SPENT_TIME);
 		createEAttribute(r4EParticipantEClass, R4E_PARTICIPANT__FOCUS_AREA);
 		createEAttribute(r4EParticipantEClass, R4E_PARTICIPANT__IS_PART_OF_DECISION);
 		createEReference(r4EParticipantEClass, R4E_PARTICIPANT__REVIEWED_CONTENT);
+		createEReference(r4EParticipantEClass, R4E_PARTICIPANT__TIME_LOG);
 
 		r4EItemEClass = createEClass(R4E_ITEM);
 		createEAttribute(r4EItemEClass, R4E_ITEM__XML_VERSION);
@@ -1991,6 +2086,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EItemEClass, R4E_ITEM__PROJECT_UR_IS);
 		createEAttribute(r4EItemEClass, R4E_ITEM__AUTHOR_REP);
 		createEAttribute(r4EItemEClass, R4E_ITEM__SUBMITTED);
+		createEReference(r4EItemEClass, R4E_ITEM__INFO_ATT);
 
 		r4ETextContentEClass = createEClass(R4E_TEXT_CONTENT);
 		createEAttribute(r4ETextContentEClass, R4E_TEXT_CONTENT__CONTENT);
@@ -2019,6 +2115,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEReference(r4EFileContextEClass, R4E_FILE_CONTEXT__BASE);
 		createEReference(r4EFileContextEClass, R4E_FILE_CONTEXT__TARGET);
 		createEAttribute(r4EFileContextEClass, R4E_FILE_CONTEXT__TYPE);
+		createEReference(r4EFileContextEClass, R4E_FILE_CONTEXT__INFO_ATT);
 
 		r4EDeltaEClass = createEClass(R4E_DELTA);
 		createEReference(r4EDeltaEClass, R4E_DELTA__BASE);
@@ -2045,6 +2142,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EFileVersionEClass, R4E_FILE_VERSION__RESOURCE);
 		createEAttribute(r4EFileVersionEClass, R4E_FILE_VERSION__LOCAL_VERSION_ID);
 		createEAttribute(r4EFileVersionEClass, R4E_FILE_VERSION__FILE_REVISION);
+		createEReference(r4EFileVersionEClass, R4E_FILE_VERSION__INFO_ATT);
 
 		mapNameToReviewEClass = createEClass(MAP_NAME_TO_REVIEW);
 		createEAttribute(mapNameToReviewEClass, MAP_NAME_TO_REVIEW__KEY);
@@ -2074,6 +2172,14 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		r4EAnomalyTextPositionEClass = createEClass(R4E_ANOMALY_TEXT_POSITION);
 		createEReference(r4EAnomalyTextPositionEClass, R4E_ANOMALY_TEXT_POSITION__FILE);
+
+		mapDateToDurationEClass = createEClass(MAP_DATE_TO_DURATION);
+		createEAttribute(mapDateToDurationEClass, MAP_DATE_TO_DURATION__KEY);
+		createEAttribute(mapDateToDurationEClass, MAP_DATE_TO_DURATION__VALUE);
+
+		mapKeyToInfoAttributesEClass = createEClass(MAP_KEY_TO_INFO_ATTRIBUTES);
+		createEAttribute(mapKeyToInfoAttributesEClass, MAP_KEY_TO_INFO_ATTRIBUTES__KEY);
+		createEAttribute(mapKeyToInfoAttributesEClass, MAP_KEY_TO_INFO_ATTRIBUTES__VALUE);
 
 		// Create enums
 		r4EAnomalyStateEEnum = createEEnum(R4E_ANOMALY_STATE);
@@ -2134,6 +2240,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		r4EFormalReviewEClass.getESuperTypes().add(this.getR4EReview());
 		r4ETextPositionEClass.getESuperTypes().add(this.getR4EPosition());
 		r4EUserEClass.getESuperTypes().add(theModelPackage.getUser());
+		r4EUserEClass.getESuperTypes().add(this.getR4EReviewComponent());
 		r4EParticipantEClass.getESuperTypes().add(this.getR4EUser());
 		r4EItemEClass.getESuperTypes().add(this.getR4EIDComponent());
 		r4EItemEClass.getESuperTypes().add(theModelPackage.getItem());
@@ -2234,10 +2341,10 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		initEClass(r4EParticipantEClass, R4EParticipant.class, "R4EParticipant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4EParticipant_Roles(), this.getR4EUserRole(), "roles", null, 0, -1, R4EParticipant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EParticipant_SpentTime(), ecorePackage.getEInt(), "spentTime", null, 0, 1, R4EParticipant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EParticipant_FocusArea(), ecorePackage.getEString(), "focusArea", null, 0, 1, R4EParticipant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EParticipant_IsPartOfDecision(), ecorePackage.getEBoolean(), "isPartOfDecision", null, 0, 1, R4EParticipant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EParticipant_ReviewedContent(), this.getR4EID(), null, "reviewedContent", null, 0, -1, R4EParticipant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EParticipant_TimeLog(), this.getMapDateToDuration(), null, "timeLog", null, 0, -1, R4EParticipant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EItemEClass, R4EItem.class, "R4EItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4EItem_XmlVersion(), ecorePackage.getEString(), "xmlVersion", "1.0.0", 0, 1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2248,6 +2355,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EItem_ProjectURIs(), ecorePackage.getEString(), "ProjectURIs", null, 0, -1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EItem_AuthorRep(), ecorePackage.getEString(), "authorRep", null, 0, 1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EItem_Submitted(), ecorePackage.getEDate(), "submitted", null, 0, 1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EItem_InfoAtt(), this.getMapKeyToInfoAttributes(), null, "infoAtt", null, 0, -1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4ETextContentEClass, R4ETextContent.class, "R4ETextContent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4ETextContent_Content(), ecorePackage.getEString(), "content", null, 0, 1, R4ETextContent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2276,6 +2384,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EFileContext_Base(), this.getR4EFileVersion(), null, "base", null, 0, 1, R4EFileContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EFileContext_Target(), this.getR4EFileVersion(), null, "target", null, 1, 1, R4EFileContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EFileContext_Type(), this.getR4EContextType(), "type", null, 0, 1, R4EFileContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EFileContext_InfoAtt(), this.getMapKeyToInfoAttributes(), null, "infoAtt", null, 0, -1, R4EFileContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EDeltaEClass, R4EDelta.class, "R4EDelta", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getR4EDelta_Base(), this.getR4EContent(), null, "base", null, 0, 1, R4EDelta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2302,6 +2411,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EFileVersion_Resource(), this.getIResource(), "resource", null, 0, 1, R4EFileVersion.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EFileVersion_LocalVersionID(), ecorePackage.getEString(), "localVersionID", null, 0, 1, R4EFileVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EFileVersion_FileRevision(), this.getIFileRevision(), "fileRevision", null, 0, 1, R4EFileVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EFileVersion_InfoAtt(), this.getMapKeyToInfoAttributes(), null, "infoAtt", null, 0, -1, R4EFileVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mapNameToReviewEClass, Map.Entry.class, "MapNameToReview", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getMapNameToReview_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2331,6 +2441,14 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		initEClass(r4EAnomalyTextPositionEClass, R4EAnomalyTextPosition.class, "R4EAnomalyTextPosition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getR4EAnomalyTextPosition_File(), this.getR4EFileVersion(), null, "file", null, 0, 1, R4EAnomalyTextPosition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(mapDateToDurationEClass, Map.Entry.class, "MapDateToDuration", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getMapDateToDuration_Key(), ecorePackage.getEDate(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMapDateToDuration_Value(), ecorePackage.getEIntegerObject(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(mapKeyToInfoAttributesEClass, Map.Entry.class, "MapKeyToInfoAttributes", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getMapKeyToInfoAttributes_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMapKeyToInfoAttributes_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(r4EAnomalyStateEEnum, R4EAnomalyState.class, "R4EAnomalyState");

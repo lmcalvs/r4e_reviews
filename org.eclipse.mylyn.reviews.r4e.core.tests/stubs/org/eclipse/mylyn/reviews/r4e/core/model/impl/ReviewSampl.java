@@ -19,8 +19,10 @@ package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
@@ -113,12 +115,19 @@ public class ReviewSampl {
 		} catch (ResourceHandlingException e3) {
 			e3.printStackTrace();
 		}
-		participant.setSpentTime(60);
+		participant.getTimeLog().put(startDate, 30);
+		participant.getTimeLog().put(endDate, 30);
+
 		participant.setFocusArea("Performance");
 		participant.setIsPartOfDecision(true);
 		participant.getGroupPaths().add("c:/users/test/group1/");
 		participant.getGroupPaths().add("c:/users/test/group2/");
-		value += participant.getSpentTime();
+
+		Collection<Integer> userTimes = participant.getTimeLog().values();
+		for (Iterator<Integer> iterator = userTimes.iterator(); iterator.hasNext();) {
+			Integer time = iterator.next();
+			value += time;
+		}
 
 		R4EParticipant participant2 = null;
 		try {
@@ -126,13 +135,19 @@ public class ReviewSampl {
 		} catch (ResourceHandlingException e2) {
 			e2.printStackTrace();
 		}
-		participant2.setSpentTime(60);
+		participant2.getTimeLog().put(startDate, 30);
+		participant2.getTimeLog().put(endDate, 30);
 		participant2.setFocusArea("Feature");
 		participant2.setIsPartOfDecision(true);
 		participant2.getGroupPaths().add("c:/group1/");
 		participant2.getGroupPaths().add("c:/group2/");
-		value += participant2.getSpentTime();
 		
+		userTimes = participant2.getTimeLog().values();
+		for (Iterator<Integer> iterator = userTimes.iterator(); iterator.hasNext();) {
+			Integer time = iterator.next();
+			value += time;
+		}
+
 		// Anomaly
 		R4EAnomaly anomalyP1 = createAnomalies(participant);
 		R4EAnomaly anomalyP2 = createAnomalies(participant2);

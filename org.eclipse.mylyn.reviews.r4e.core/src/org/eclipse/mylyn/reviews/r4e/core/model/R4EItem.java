@@ -17,6 +17,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model;
 import java.util.Date;
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 
 /**
@@ -35,6 +36,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.Item;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getProjectURIs <em>Project UR Is</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getAuthorRep <em>Author Rep</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getSubmitted <em>Submitted</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getInfoAtt <em>Info Att</em>}</li>
  * </ul>
  * </p>
  *
@@ -231,5 +233,22 @@ public interface R4EItem extends R4EIDComponent, Item {
 	 * @generated
 	 */
 	void setSubmitted(Date value);
+
+	/**
+	 * Returns the value of the '<em><b>Info Att</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Info Att</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Info Att</em>' map.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EItem_InfoAtt()
+	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapKeyToInfoAttributes<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getInfoAtt();
 
 } // R4EItem

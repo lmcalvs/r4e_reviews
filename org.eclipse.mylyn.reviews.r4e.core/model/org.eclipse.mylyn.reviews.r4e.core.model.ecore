@@ -130,7 +130,7 @@
     <eLiterals name="R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP" value="2"/>
     <eLiterals name="R4E_REVIEW_DECISION_REJECTED" value="3"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="R4EUser" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//User">
+  <eClassifiers xsi:type="ecore:EClass" name="R4EUser" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//User #//R4EReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="groupPaths" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" transient="true"
         derived="true"/>
@@ -150,11 +150,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="R4EParticipant" eSuperTypes="#//R4EUser">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="roles" upperBound="-1"
         eType="#//R4EUserRole"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="spentTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="focusArea" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isPartOfDecision" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reviewedContent" upperBound="-1"
         eType="#//R4EID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="timeLog" upperBound="-1"
+        eType="#//MapDateToDuration" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EItem" eSuperTypes="#//R4EIDComponent ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Item">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -168,6 +169,8 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="authorRep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="submitted" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="infoAtt" upperBound="-1"
+        eType="#//MapKeyToInfoAttributes" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4ETextContent" eSuperTypes="#//R4EContent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -204,6 +207,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
         eType="#//R4EFileVersion" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//R4EContextType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="infoAtt" upperBound="-1"
+        eType="#//MapKeyToInfoAttributes" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EDelta" eSuperTypes="#//R4EIDComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="base" eType="#//R4EContent"
@@ -236,6 +241,8 @@
         transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="localVersionID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileRevision" eType="#//IFileRevision"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="infoAtt" upperBound="-1"
+        eType="#//MapKeyToInfoAttributes" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="MylynTask" instanceClassName="org.eclipse.mylyn.tasks.core.ITask"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IResource" instanceClassName="org.eclipse.core.resources.IResource"/>
@@ -282,4 +289,12 @@
     <eLiterals name="R4E_REPLACED" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="IFileRevision" instanceClassName="org.eclipse.team.core.history.IFileRevision"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MapDateToDuration" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MapKeyToInfoAttributes" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>
