@@ -44,7 +44,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomaly;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
@@ -109,12 +109,12 @@ public class EditorProxy {
 				//Also check to get the position we should put the cursor on and the highlight range in the editor
 				/*if (element instanceof R4EUIAnomalyContainer) {
 					targetFileEditable = true;
-				} else */if (element instanceof R4EUIAnomaly) {
+				} else */if (element instanceof R4EUIAnomalyBasic) {
 					//targetFileEditable = true;
-					position = ((R4EUIAnomaly)element).getPosition();
+					position = ((R4EUIAnomalyBasic)element).getPosition();
 				} else if (element instanceof R4EUIComment) {
 					//targetFileEditable = true;
-					position = ((R4EUIAnomaly)element.getParent()).getPosition();
+					position = ((R4EUIAnomalyBasic)element.getParent()).getPosition();
 				} else if (element instanceof R4EUISelection) {
 					position = ((R4EUISelection)element).getPosition();
 					//container = (R4EUISelectionContainer) ((R4EUISelection)element).getParent();

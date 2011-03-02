@@ -32,7 +32,13 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * @author lmcdubo
@@ -124,4 +130,41 @@ public class UIUtils {
         }
         return stringArray;
 	}
+    
+    /**
+     * Method addTabbedPropertiesTextResizeListener.
+     * 	Resizes a Text widget in a ScrolledComposite to fit the text being typed.  It also adds scrollbars to the composite as needed
+     * @param aText Text - The Text widget
+     * @return none
+     */
+    //TODO this only works for flatFormComposites and not vanilla ones.  For now this is not a big deal, but we will want to review it later
+    //A new auto-resizable text widget class should be created for this eventually
+    public static void addTabbedPropertiesTextResizeListener(final Text aText) {
+    	aText.addModifyListener(new ModifyListener() {
+	    	public void modifyText(ModifyEvent e) {
+	    		//compute new Text field size
+	    	    final Point newSize = aText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+	    	    final Point oldSize = aText.getSize();
+	    	    int heightDiff = newSize.y - oldSize.y;
+	    	    if (heightDiff != 0) {
+	    	    	aText.setSize(newSize);
+	    	    	aText.getParent().layout();
+	    	    	
+	    	    	//Set scrollable height so that scrollbar appear if needed
+	    	    	ScrolledComposite scrolledParent = (ScrolledComposite) aText.getParent().getParent().getParent().getParent().getParent().getParent();
+	    	    	scrolledParent.setMinSize(aText.getParent().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	    	    	
+	    	    	//If the text falls outside of the display scroll down to reposition
+	    	    	if ((aText.getLocation().y + aText.getCaretLocation().y + aText.getLineHeight()) >
+	    	    		(scrolledParent.getClientArea().y + scrolledParent.getClientArea().height)) {
+		    	    	
+		    	    	Point origin = scrolledParent.getOrigin();
+		    	    	origin.y += heightDiff;
+		    	    	
+		    	    	scrolledParent.setOrigin(origin);
+	    	    	}
+	    	    }    
+	    	}
+	    });
+    }
 }

@@ -27,7 +27,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomaly;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
@@ -71,7 +71,7 @@ public class SelectPreviousHandler extends AbstractHandler {
 			    //Open the editor on FileContexts, selections amd anomalies
 				if (previousElement instanceof R4EUIFileContext ||
 						previousElement instanceof R4EUISelection ||
-						previousElement instanceof R4EUIAnomaly) {
+						previousElement instanceof R4EUIAnomalyBasic) {
 					EditorProxy.openEditor(view.getSite().getPage(), previousSelection, false);
 				}
 			}			

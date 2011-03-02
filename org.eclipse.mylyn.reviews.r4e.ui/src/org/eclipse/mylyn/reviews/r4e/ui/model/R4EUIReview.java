@@ -20,6 +20,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.model;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,6 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -45,7 +47,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -99,22 +101,22 @@ public class R4EUIReview extends R4EUIModelElement {
 	/**
 	 * Field fReviewName.
 	 */
-	private final String fReviewName;
+	protected final String fReviewName;
 	
 	/**
 	 * Field fItems.
 	 */
-	private final List<R4EUIReviewItem> fItems;
+	protected final List<R4EUIReviewItem> fItems;
 	
 	/**
 	 * Field fParticipantsContainer.
 	 */
-	private R4EUIParticipantContainer fParticipantsContainer;
+	protected R4EUIParticipantContainer fParticipantsContainer;
 	
 	/**
 	 * Field fAnomalyContainer.
 	 */
-	private R4EUIAnomalyContainer fAnomalyContainer = null;
+	protected R4EUIAnomalyContainer fAnomalyContainer = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -128,15 +130,16 @@ public class R4EUIReview extends R4EUIModelElement {
 	 * @param aOpen boolean
 	 * @throws ResourceHandlingException
 	 */
-	public R4EUIReview(R4EUIReviewGroup aParent, R4EReview aReview, boolean aOpen) throws ResourceHandlingException {
-		super(aParent, aReview.getName(), aReview.getExtraNotes());
+	//TODO have different icons for all review types
+	public R4EUIReview(R4EUIReviewGroup aParent, R4EReview aReview, R4EReviewType aType, boolean aOpen) throws ResourceHandlingException {
+		super(aParent, getReviewDisplayName(aReview.getName(), aType), aReview.getExtraNotes());
 		fReview = aReview;
 		fReviewName = aReview.getName();
 		fParticipantsContainer = new R4EUIParticipantContainer(this, R4EUIConstants.PARTICIPANTS_LABEL_NAME);
 		fAnomalyContainer = new R4EUIAnomalyContainer(this, R4EUIConstants.GLOBAL_ANOMALIES_LABEL_NAME);
 		fItems = new ArrayList<R4EUIReviewItem>();
 		if (aOpen) {
-			//Open the new review and make itt the active one (close any other that is open)
+			//Open the new review and make it the active one (close any other that is open)
 			setImage(REVIEW_ICON_FILE);
 			fOpen = true;
 			final List<R4EUserRole> role = new ArrayList<R4EUserRole>(1);
@@ -173,6 +176,20 @@ public class R4EUIReview extends R4EUIModelElement {
 	//Attributes
 	
 	/**
+	 * Method getReviewDisplayName.
+	 * @param aName String
+	 * @param aType R4EReviewType
+	 * @return String
+	 */
+	private static String getReviewDisplayName(String aName, R4EReviewType aType) {
+		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) 
+			return R4EUIConstants.REVIEW_TYPE_FORMAL + ": " + aName;
+		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) 
+			return R4EUIConstants.REVIEW_TYPE_INFORMAL + ": " + aName;
+		return R4EUIConstants.REVIEW_TYPE_BASIC + ": " + aName;		
+	}
+	
+	/**
 	 * Set serialization model data by copying it from the passed-in object
 	 * @param aModelComponent - a serialization model element to copy information from
 	 * @throws ResourceHandlingException
@@ -185,6 +202,14 @@ public class R4EUIReview extends R4EUIModelElement {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, 
 				R4EUIModelController.getReviewer());
     	fReview.setExtraNotes(((R4EReview)aModelComponent).getExtraNotes());
+    	fReview.setType(((R4EReview)aModelComponent).getType());
+
+    	//Optional properties
+    	fReview.setProject(((R4EReview)aModelComponent).getProject());
+		fReview.getComponents().addAll(((R4EReview)aModelComponent).getComponents());
+		fReview.setEntryCriteria(((R4EReview)aModelComponent).getEntryCriteria());
+    	fReview.setObjectives(((R4EReview)aModelComponent).getObjectives());
+    	fReview.setReferenceMaterial(((R4EReview)aModelComponent).getReferenceMaterial());
     	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
     }
 	
@@ -265,8 +290,10 @@ public class R4EUIReview extends R4EUIModelElement {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
 		if (aReviewed) {
 			((R4EReviewState)fReview.getState()).setState(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+			fReview.setEndDate(new Date(new Date().getTime()));
 		} else {
 			((R4EReviewState)fReview.getState()).setState(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
+			fReview.setEndDate(null);
 		}
     	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		fReviewed = aReviewed;
@@ -281,6 +308,7 @@ public class R4EUIReview extends R4EUIModelElement {
 		
 		//TODO maybe we want to set the element as disabled as well?
 		fireReviewStateChanged(this);
+		R4EUIModelController.propertyChanged();
 	}
 	
 	/**

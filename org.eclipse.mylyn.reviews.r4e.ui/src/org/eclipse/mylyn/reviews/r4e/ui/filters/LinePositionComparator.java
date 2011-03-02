@@ -23,7 +23,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.filters;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomaly;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 
@@ -58,9 +58,9 @@ public class LinePositionComparator extends ViewerComparator {
         if (e1 instanceof R4EUISelection) {
         	position1 = ((R4EUISelection)e1).getPosition();
         	position2 = ((R4EUISelection)e2).getPosition();
-        } else if (e1 instanceof R4EUIAnomaly) {
-        	position1 = ((R4EUIAnomaly)e1).getPosition();
-        	position2 = ((R4EUIAnomaly)e2).getPosition();
+        } else if (e1 instanceof R4EUIAnomalyBasic) {
+        	position1 = ((R4EUIAnomalyBasic)e1).getPosition();
+        	position2 = ((R4EUIAnomalyBasic)e2).getPosition();
         } else {
         	return 0;
         }

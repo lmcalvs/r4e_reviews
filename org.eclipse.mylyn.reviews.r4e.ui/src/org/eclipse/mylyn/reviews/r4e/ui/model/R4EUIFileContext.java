@@ -33,7 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.FileContextProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.FileContextProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -547,7 +547,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isChangeReviewStateCmd() {
-		if (isEnabled()) return true;
+		if (isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) return true;
 		return false;
 	}
 }

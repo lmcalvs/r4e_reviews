@@ -38,12 +38,12 @@ public class ReviewState extends AbstractSourceProvider {
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Field MY_STATE.
-	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.editors.commands.open"")
+	 * Field REVIEW_CURRENT.
+	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCurrent"")
 	 */
-	public static final String MY_REVIEW_STATE = "org.eclipse.mylyn.reviews.r4e.ui.commands.review";
+	public static final String REVIEW_CURRENT = "org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCurrent";
 	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -69,7 +69,7 @@ public class ReviewState extends AbstractSourceProvider {
 	 */
 	public Map<String, R4EUIReview> getCurrentState() {
 		final Map<String, R4EUIReview> map = new HashMap<String, R4EUIReview>(1, 1);
-		map.put(MY_REVIEW_STATE, R4EUIModelController.getActiveReview());
+		map.put(REVIEW_CURRENT, R4EUIModelController.getActiveReview());
 		return map;
 	}
 
@@ -79,14 +79,14 @@ public class ReviewState extends AbstractSourceProvider {
 	 * @see org.eclipse.ui.ISourceProvider#getProvidedSourceNames()
 	 */
 	public String[] getProvidedSourceNames() {
-		return new String[] { MY_REVIEW_STATE };
+		return new String[] { REVIEW_CURRENT };
 	}
 	
 	/**
 	 * Method setReview.
 	 * @param aOpenReview ReviewElement
 	 */
-	public void setReview(R4EUIReview aOpenReview) {
-		fireSourceChanged(ISources.WORKBENCH, ReviewState.MY_REVIEW_STATE, aOpenReview);
+	public void setCurrentReview(R4EUIReview aOpenReview) {
+		fireSourceChanged(ISources.WORKBENCH, REVIEW_CURRENT, aOpenReview);
 	}
 }
