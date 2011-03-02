@@ -138,7 +138,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_Pxop0cWhEd-OHt4UvkWdIw"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_X3f9sMWhEd-OHt4UvkWdIw" type="2001">
-        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/fiexeByID"/>
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/fixedByID"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_X3f9scWhEd-OHt4UvkWdIw"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_cBvJgMWhEd-OHt4UvkWdIw" type="2001">
@@ -190,7 +190,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_VkFI57qFEd-6aOwQ22t3_g"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_oXUI8LqGEd-6aOwQ22t3_g" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState/R4E_ANOMALY_SATE_VERIFIED"/>
+        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState/R4E_ANOMALY_STATE_VERIFIED"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_oXUI8bqGEd-6aOwQ22t3_g"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_e5nFgrX-Ed-Xj-3H8XK7WQ"/>

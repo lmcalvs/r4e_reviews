@@ -99,14 +99,14 @@ public enum R4EAnomalyState implements Enumerator {
 	 * @ordered
 	 */
 	R4E_ANOMALY_STATE_DEFERRED(3, "R4E_ANOMALY_STATE_DEFERRED", "R4E_ANOMALY_STATE_DEFERRED"), /**
-	 * The '<em><b>R4E ANOMALY SATE VERIFIED</b></em>' literal object.
+	 * The '<em><b>R4E ANOMALY STATE VERIFIED</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #R4E_ANOMALY_SATE_VERIFIED_VALUE
+	 * @see #R4E_ANOMALY_STATE_VERIFIED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_ANOMALY_SATE_VERIFIED(6, "R4E_ANOMALY_SATE_VERIFIED", "R4E_ANOMALY_SATE_VERIFIED");
+	R4E_ANOMALY_STATE_VERIFIED(6, "R4E_ANOMALY_STATE_VERIFIED", "R4E_ANOMALY_STATE_VERIFIED");
 
 	/**
 	 * The '<em><b>R4E ANOMALY STATE CREATED</b></em>' literal value.
@@ -214,19 +214,19 @@ public enum R4EAnomalyState implements Enumerator {
 	public static final int R4E_ANOMALY_STATE_DEFERRED_VALUE = 3;
 
 	/**
-	 * The '<em><b>R4E ANOMALY SATE VERIFIED</b></em>' literal value.
+	 * The '<em><b>R4E ANOMALY STATE VERIFIED</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ANOMALY SATE VERIFIED</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>R4E ANOMALY STATE VERIFIED</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_ANOMALY_SATE_VERIFIED
+	 * @see #R4E_ANOMALY_STATE_VERIFIED
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_ANOMALY_SATE_VERIFIED_VALUE = 6;
+	public static final int R4E_ANOMALY_STATE_VERIFIED_VALUE = 6;
 
 	/**
 	 * An array of all the '<em><b>R4E Anomaly State</b></em>' enumerators.
@@ -243,7 +243,7 @@ public enum R4EAnomalyState implements Enumerator {
 			R4E_ANOMALY_STATE_DUPLICATED,
 			R4E_ANOMALY_STATE_REJECTED,
 			R4E_ANOMALY_STATE_DEFERRED,
-			R4E_ANOMALY_SATE_VERIFIED,
+			R4E_ANOMALY_STATE_VERIFIED,
 		};
 
 	/**
@@ -301,7 +301,7 @@ public enum R4EAnomalyState implements Enumerator {
 			case R4E_ANOMALY_STATE_DUPLICATED_VALUE: return R4E_ANOMALY_STATE_DUPLICATED;
 			case R4E_ANOMALY_STATE_REJECTED_VALUE: return R4E_ANOMALY_STATE_REJECTED;
 			case R4E_ANOMALY_STATE_DEFERRED_VALUE: return R4E_ANOMALY_STATE_DEFERRED;
-			case R4E_ANOMALY_SATE_VERIFIED_VALUE: return R4E_ANOMALY_SATE_VERIFIED;
+			case R4E_ANOMALY_STATE_VERIFIED_VALUE: return R4E_ANOMALY_STATE_VERIFIED;
 		}
 		return null;
 	}

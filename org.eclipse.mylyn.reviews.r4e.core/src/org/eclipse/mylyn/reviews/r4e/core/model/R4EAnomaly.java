@@ -43,7 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedInVersion <em>Fixed In Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRuleID <em>Rule ID</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDecidedByID <em>Decided By ID</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFiexeByID <em>Fiexe By ID</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedByID <em>Fixed By ID</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFollowUpByID <em>Follow Up By ID</em>}</li>
  * </ul>
  * </p>
@@ -450,30 +450,30 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	void setDecidedByID(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Fiexe By ID</b></em>' attribute.
+	 * Returns the value of the '<em><b>Fixed By ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Fiexe By ID</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Fixed By ID</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Fiexe By ID</em>' attribute.
-	 * @see #setFiexeByID(String)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EAnomaly_FiexeByID()
+	 * @return the value of the '<em>Fixed By ID</em>' attribute.
+	 * @see #setFixedByID(String)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EAnomaly_FixedByID()
 	 * @model
 	 * @generated
 	 */
-	String getFiexeByID();
+	String getFixedByID();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFiexeByID <em>Fiexe By ID</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedByID <em>Fixed By ID</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Fiexe By ID</em>' attribute.
-	 * @see #getFiexeByID()
+	 * @param value the new value of the '<em>Fixed By ID</em>' attribute.
+	 * @see #getFixedByID()
 	 * @generated
 	 */
-	void setFiexeByID(String value);
+	void setFixedByID(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Follow Up By ID</b></em>' attribute.

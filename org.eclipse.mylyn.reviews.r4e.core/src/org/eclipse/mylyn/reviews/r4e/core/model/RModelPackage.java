@@ -686,13 +686,13 @@ public interface RModelPackage extends EPackage {
 	int R4E_ANOMALY__DECIDED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 17;
 
 	/**
-	 * The feature id for the '<em><b>Fiexe By ID</b></em>' attribute.
+	 * The feature id for the '<em><b>Fixed By ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FIEXE_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 18;
+	int R4E_ANOMALY__FIXED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 18;
 
 	/**
 	 * The feature id for the '<em><b>Follow Up By ID</b></em>' attribute.
@@ -3138,15 +3138,15 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EAnomaly_DecidedByID();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFiexeByID <em>Fiexe By ID</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedByID <em>Fixed By ID</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Fiexe By ID</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFiexeByID()
+	 * @return the meta object for the attribute '<em>Fixed By ID</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedByID()
 	 * @see #getR4EAnomaly()
 	 * @generated
 	 */
-	EAttribute getR4EAnomaly_FiexeByID();
+	EAttribute getR4EAnomaly_FixedByID();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFollowUpByID <em>Follow Up By ID</em>}'.
@@ -4867,12 +4867,12 @@ public interface RModelPackage extends EPackage {
 		EAttribute R4E_ANOMALY__DECIDED_BY_ID = eINSTANCE.getR4EAnomaly_DecidedByID();
 
 		/**
-		 * The meta object literal for the '<em><b>Fiexe By ID</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Fixed By ID</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute R4E_ANOMALY__FIEXE_BY_ID = eINSTANCE.getR4EAnomaly_FiexeByID();
+		EAttribute R4E_ANOMALY__FIXED_BY_ID = eINSTANCE.getR4EAnomaly_FixedByID();
 
 		/**
 		 * The meta object literal for the '<em><b>Follow Up By ID</b></em>' attribute feature.
