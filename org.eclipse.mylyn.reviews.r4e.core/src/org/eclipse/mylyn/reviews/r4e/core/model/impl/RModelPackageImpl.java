@@ -853,7 +853,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EAnomaly_FiexeByID() {
+	public EAttribute getR4EAnomaly_FixedByID() {
 		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(15);
 	}
 
@@ -2039,7 +2039,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEReference(r4EAnomalyEClass, R4E_ANOMALY__FIXED_IN_VERSION);
 		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__RULE_ID);
 		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__DECIDED_BY_ID);
-		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__FIEXE_BY_ID);
+		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__FIXED_BY_ID);
 		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__FOLLOW_UP_BY_ID);
 
 		r4EFormalReviewEClass = createEClass(R4E_FORMAL_REVIEW);
@@ -2308,7 +2308,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EAnomaly_FixedInVersion(), this.getR4EFileVersion(), null, "fixedInVersion", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EAnomaly_RuleID(), ecorePackage.getEString(), "ruleID", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EAnomaly_DecidedByID(), ecorePackage.getEString(), "decidedByID", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EAnomaly_FiexeByID(), ecorePackage.getEString(), "fiexeByID", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EAnomaly_FixedByID(), ecorePackage.getEString(), "fixedByID", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EAnomaly_FollowUpByID(), ecorePackage.getEString(), "followUpByID", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EFormalReviewEClass, R4EFormalReview.class, "R4EFormalReview", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2459,7 +2459,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
 		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_SATE_VERIFIED);
+		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
 
 		initEEnum(r4EAnomalyRankEEnum, R4EAnomalyRank.class, "R4EAnomalyRank");
 		addEEnumLiteral(r4EAnomalyRankEEnum, R4EAnomalyRank.R4E_ANOMALY_RANK_NONE);

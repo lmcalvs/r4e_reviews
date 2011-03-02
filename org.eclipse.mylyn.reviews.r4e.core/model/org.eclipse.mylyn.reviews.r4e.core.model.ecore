@@ -75,7 +75,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="fixedInVersion" eType="#//R4EFileVersion"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ruleID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="decidedByID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fiexeByID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fixedByID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="followUpByID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="R4EAnomalyState">
@@ -86,7 +86,7 @@
     <eLiterals name="R4E_ANOMALY_STATE_DUPLICATED" value="1"/>
     <eLiterals name="R4E_ANOMALY_STATE_REJECTED" value="2"/>
     <eLiterals name="R4E_ANOMALY_STATE_DEFERRED" value="3" literal="R4E_ANOMALY_STATE_DEFERRED"/>
-    <eLiterals name="R4E_ANOMALY_SATE_VERIFIED" value="6"/>
+    <eLiterals name="R4E_ANOMALY_STATE_VERIFIED" value="6"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="R4EAnomalyRank">
     <eLiterals name="R4E_ANOMALY_RANK_NONE"/>

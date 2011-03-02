@@ -60,7 +60,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getFixedInVersion <em>Fixed In Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getRuleID <em>Rule ID</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getDecidedByID <em>Decided By ID</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getFiexeByID <em>Fiexe By ID</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getFixedByID <em>Fixed By ID</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getFollowUpByID <em>Follow Up By ID</em>}</li>
  * </ul>
  * </p>
@@ -329,24 +329,24 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	protected String decidedByID = DECIDED_BY_ID_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getFiexeByID() <em>Fiexe By ID</em>}' attribute.
+	 * The default value of the '{@link #getFixedByID() <em>Fixed By ID</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFiexeByID()
+	 * @see #getFixedByID()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String FIEXE_BY_ID_EDEFAULT = null;
+	protected static final String FIXED_BY_ID_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getFiexeByID() <em>Fiexe By ID</em>}' attribute.
+	 * The cached value of the '{@link #getFixedByID() <em>Fixed By ID</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFiexeByID()
+	 * @see #getFixedByID()
 	 * @generated
 	 * @ordered
 	 */
-	protected String fiexeByID = FIEXE_BY_ID_EDEFAULT;
+	protected String fixedByID = FIXED_BY_ID_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getFollowUpByID() <em>Follow Up By ID</em>}' attribute.
@@ -902,8 +902,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getFiexeByID() {
-		return fiexeByID;
+	public String getFixedByID() {
+		return fixedByID;
 	}
 
 	/**
@@ -911,11 +911,11 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFiexeByID(String newFiexeByID) {
-		String oldFiexeByID = fiexeByID;
-		fiexeByID = newFiexeByID;
+	public void setFixedByID(String newFixedByID) {
+		String oldFixedByID = fixedByID;
+		fixedByID = newFixedByID;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__FIEXE_BY_ID, oldFiexeByID, fiexeByID));
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__FIXED_BY_ID, oldFixedByID, fixedByID));
 	}
 
 	/**
@@ -1073,8 +1073,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 				return getRuleID();
 			case RModelPackage.R4E_ANOMALY__DECIDED_BY_ID:
 				return getDecidedByID();
-			case RModelPackage.R4E_ANOMALY__FIEXE_BY_ID:
-				return getFiexeByID();
+			case RModelPackage.R4E_ANOMALY__FIXED_BY_ID:
+				return getFixedByID();
 			case RModelPackage.R4E_ANOMALY__FOLLOW_UP_BY_ID:
 				return getFollowUpByID();
 		}
@@ -1143,8 +1143,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 			case RModelPackage.R4E_ANOMALY__DECIDED_BY_ID:
 				setDecidedByID((String)newValue);
 				return;
-			case RModelPackage.R4E_ANOMALY__FIEXE_BY_ID:
-				setFiexeByID((String)newValue);
+			case RModelPackage.R4E_ANOMALY__FIXED_BY_ID:
+				setFixedByID((String)newValue);
 				return;
 			case RModelPackage.R4E_ANOMALY__FOLLOW_UP_BY_ID:
 				setFollowUpByID((String)newValue);
@@ -1215,8 +1215,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 			case RModelPackage.R4E_ANOMALY__DECIDED_BY_ID:
 				setDecidedByID(DECIDED_BY_ID_EDEFAULT);
 				return;
-			case RModelPackage.R4E_ANOMALY__FIEXE_BY_ID:
-				setFiexeByID(FIEXE_BY_ID_EDEFAULT);
+			case RModelPackage.R4E_ANOMALY__FIXED_BY_ID:
+				setFixedByID(FIXED_BY_ID_EDEFAULT);
 				return;
 			case RModelPackage.R4E_ANOMALY__FOLLOW_UP_BY_ID:
 				setFollowUpByID(FOLLOW_UP_BY_ID_EDEFAULT);
@@ -1269,8 +1269,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 				return RULE_ID_EDEFAULT == null ? ruleID != null : !RULE_ID_EDEFAULT.equals(ruleID);
 			case RModelPackage.R4E_ANOMALY__DECIDED_BY_ID:
 				return DECIDED_BY_ID_EDEFAULT == null ? decidedByID != null : !DECIDED_BY_ID_EDEFAULT.equals(decidedByID);
-			case RModelPackage.R4E_ANOMALY__FIEXE_BY_ID:
-				return FIEXE_BY_ID_EDEFAULT == null ? fiexeByID != null : !FIEXE_BY_ID_EDEFAULT.equals(fiexeByID);
+			case RModelPackage.R4E_ANOMALY__FIXED_BY_ID:
+				return FIXED_BY_ID_EDEFAULT == null ? fixedByID != null : !FIXED_BY_ID_EDEFAULT.equals(fixedByID);
 			case RModelPackage.R4E_ANOMALY__FOLLOW_UP_BY_ID:
 				return FOLLOW_UP_BY_ID_EDEFAULT == null ? followUpByID != null : !FOLLOW_UP_BY_ID_EDEFAULT.equals(followUpByID);
 		}
@@ -1359,8 +1359,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 		result.append(ruleID);
 		result.append(", decidedByID: ");
 		result.append(decidedByID);
-		result.append(", fiexeByID: ");
-		result.append(fiexeByID);
+		result.append(", fixedByID: ");
+		result.append(fixedByID);
 		result.append(", followUpByID: ");
 		result.append(followUpByID);
 		result.append(')');
