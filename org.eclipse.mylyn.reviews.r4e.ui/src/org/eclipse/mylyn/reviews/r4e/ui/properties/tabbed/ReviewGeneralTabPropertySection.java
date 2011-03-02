@@ -189,7 +189,7 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 		fRefreshInProgress = true;
 		final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
 		fNameText.setText(modelReview.getName());
-		fStartDateText.setText(modelReview.getCreationDate().toString());
+		fStartDateText.setText(modelReview.getStartDate().toString());
 		if (null == modelReview.getEndDate()) fEndDateText.setText("(In Progress)");
 		else fEndDateText.setText(modelReview.getEndDate().toString());
 		fDescriptionText.setText(modelReview.getExtraNotes());

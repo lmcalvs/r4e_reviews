@@ -37,5 +37,6 @@ Export-Package: org.eclipse.mylyn.reviews.r4e.ui;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.model;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.navigator;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.preferences;x-internal:=true,
- org.eclipse.mylyn.reviews.r4e.ui.properties;x-internal:=true,
+ org.eclipse.mylyn.reviews.r4e.ui.properties.general;x-internal:=true,
+ org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.utils;x-internal:=true

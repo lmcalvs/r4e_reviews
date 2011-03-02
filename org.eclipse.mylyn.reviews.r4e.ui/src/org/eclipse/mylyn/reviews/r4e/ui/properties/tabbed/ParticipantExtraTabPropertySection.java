@@ -1,8 +1,12 @@
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -20,6 +24,7 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -138,7 +143,24 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 	public void refresh() {
 		fRefreshInProgress = true;
 		final R4EParticipant modelUser = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
-		fTimeSpentTotalText.setText(Integer.toString(modelUser.getSpentTime()));
+		int numTimeEntries = modelUser.getTimeLog().size();
+		fTimeSpentDetailedList.clearAll();
+		int totalTimeSpent = 0;
+		for (int i = 0; i < numTimeEntries; i++) {
+			Entry<Date, Integer> timeEntry = modelUser.getTimeLog().get(i);
+			Item item;
+			if (i >= fTimeSpentDetailedList.getItemCount()) {
+				item = fTimeSpentDetailedList.addItem(); 
+			} else {
+				item = fTimeSpentDetailedList.getItem(i);
+				if (null == item) item = fTimeSpentDetailedList.addItem(); 
+			}
+			String[] data = { timeEntry.getValue().toString(), timeEntry.getKey().toString() };
+			((TableItem)item).setText(data);
+			totalTimeSpent +=timeEntry.getValue().intValue();
+		}
+		fTimeSpentTotalText.setText(Integer.toString(totalTimeSpent));
+		
 		EList<R4EUserRole> roles = modelUser.getRoles();
 		for (R4EUserRole role : roles) {
 	    	//Review type (no validation needed as this is a read-only combo box
@@ -171,21 +193,26 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 
 	public void itemsUpdated(Item[] aItems, int aInstanceId) {
 		// TODO update time spent (detailed) when data structure available in core model
-		int totalTimeSpent = 0;
-		for (Item item : aItems) {
-			String text = item.getText();
-			totalTimeSpent += Integer.valueOf(text).intValue();
-		}
+		
 		try {
-
 			final R4EParticipant modelGroup = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
-			if (totalTimeSpent > modelGroup.getSpentTime()) {
-				//The time should never decrease
-				final String currentUser = R4EUIModelController.getReviewer();
-				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
-				modelGroup.setSpentTime(totalTimeSpent);
-				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+			final String currentUser = R4EUIModelController.getReviewer();
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+			EMap<Date, Integer> timeMap = modelGroup.getTimeLog();
+			DateFormat format = DateFormat.getDateInstance();
+			for (Item item : aItems) {
+				try {
+					timeMap.put(format.parse(((TableItem)item).getText(1)), 
+									Integer.valueOf(((TableItem)item).getText(0)));
+				} catch (NumberFormatException e) {
+					//skip this entry
+					continue;
+				} catch (ParseException e) {
+					//skip this entry
+					continue;
+				}
 			}
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		} catch (ResourceHandlingException e1) {
 			UIUtils.displayResourceErrorDialog(e1);
 		} catch (OutOfSyncException e1) {

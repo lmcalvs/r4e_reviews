@@ -184,7 +184,7 @@ public class ParticipantProperties extends ModelElementProperties {
 			}
 			return Integer.valueOf(numComments);
 		} else if (PARTICIPANT_TIME_SPENT_ID.equals(aId)) { 
-			return Integer.valueOf(((R4EUIParticipant)getElement()).getParticipant().getSpentTime());
+			return Integer.valueOf(((R4EUIParticipant)getElement()).getParticipant().getTimeLog().toString());
 		} else if (PARTICIPANT_ROLES_ID.equals(aId)) {
 			return ((R4EUIParticipant)getElement()).getParticipant().getRoles().toString() ;
 		} else if (PARTICIPANT_FOCUS_AREA_ID.equals(aId)) {

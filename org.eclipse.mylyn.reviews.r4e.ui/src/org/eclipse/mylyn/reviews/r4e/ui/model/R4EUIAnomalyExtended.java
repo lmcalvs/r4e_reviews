@@ -16,7 +16,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	private static final String ANOMALY_STATE_ACCEPTED = "ACCEPTED";
 	private static final String ANOMALY_STATE_DUPLICATED = "DUPLICATED";
 	private static final String ANOMALY_STATE_REJECTED = "REJECTED";
-	private static final String ANOMALY_STATE_POSTPONED = "POSTPONED";
+	private static final String ANOMALY_STATE_DEFERRED = "DEFERRED";
 	private static final String ANOMALY_STATE_FIXED = "FIXED";
 	private static final String ANOMALY_STATE_VERIFIED = "VERIFIED";
 
@@ -44,7 +44,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	// Methods
 	// ------------------------------------------------------------------------
 	
-	private String getStateString(R4EAnomalyState aNewState) {
+	public static String getStateString(R4EAnomalyState aNewState) {
 		if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
 			return ANOMALY_STATE_CREATED;
 		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
@@ -55,12 +55,14 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 			return ANOMALY_STATE_DUPLICATED;
 		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)) {
 			return ANOMALY_STATE_REJECTED;
-		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_POSTPONED)) {
-			return ANOMALY_STATE_POSTPONED;
+		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)) {
+			return ANOMALY_STATE_DEFERRED;
 		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
 			return ANOMALY_STATE_FIXED;
 		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_SATE_VERIFIED)) {
 			return ANOMALY_STATE_VERIFIED;
 		} else return "";
 	}
+	
+	//TODO add state machine and related methods here
 }

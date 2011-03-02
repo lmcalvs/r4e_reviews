@@ -1,6 +1,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
@@ -14,9 +14,9 @@ public class AnomalyExtraProperties extends AnomalyGeneralProperties {
 	// Constants
 	// ------------------------------------------------------------------------
 	
-	private static String[] stateValues = { "CREATED" };  //TODO rework
-	private static String[] rankValues = { "MAJOR" };  //TODO rework
-	private static String[] participantValues = { "" };  //TODO rework
+	private static String[] stateValues = { "ACCEPTED", "DUPLICATED", "REJECTED", "DEFERRED", 
+		"ASSIGNED", "CREATED", "VERIFIED", "FIXED" };  //NOTE: This has to match R4EAnomalyState in R4E core plugin
+	private static String[] rankValues = { "NONE", "MINOR", "MAJOR" };  //NOTE: This has to match R4EAnomalyRank in R4E core plugin
 	
 	/**
 	 * Field ANOMALY_STATE_ID. (value is ""anomalyElement.state"")
@@ -70,8 +70,8 @@ public class AnomalyExtraProperties extends AnomalyGeneralProperties {
 	/**
 	 * Field ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final ComboBoxPropertyDescriptor ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_DECIDED_BY_ID, R4EUIConstants.DECIDED_BY_LABEL, participantValues);
+	protected static final TextPropertyDescriptor ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+			ANOMALY_DECIDED_BY_ID, R4EUIConstants.DECIDED_BY_LABEL);
 	
 	/**
 	 * Field ANOMALY_FIXED_BY_ID. (value is ""anomalyElement.fixedBy"")
@@ -81,8 +81,8 @@ public class AnomalyExtraProperties extends AnomalyGeneralProperties {
 	/**
 	 * Field ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final ComboBoxPropertyDescriptor ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_FIXED_BY_ID, R4EUIConstants.FIXED_BY_LABEL, participantValues);
+	protected static final TextPropertyDescriptor ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+			ANOMALY_FIXED_BY_ID, R4EUIConstants.FIXED_BY_LABEL);
 	
 	/**
 	 * Field ANOMALY_FOLLOWUP_BY_ID. (value is ""anomalyElement.followupBy"")
@@ -92,8 +92,8 @@ public class AnomalyExtraProperties extends AnomalyGeneralProperties {
 	/**
 	 * Field ANOMALY_FOLLOWUP_BY_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final ComboBoxPropertyDescriptor ANOMALY_FOLLOWUP_BY_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_FOLLOWUP_BY_ID, R4EUIConstants.FOLLOWUP_BY_LABEL, participantValues);
+	protected static final TextPropertyDescriptor ANOMALY_FOLLOWUP_BY_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+			ANOMALY_FOLLOWUP_BY_ID, R4EUIConstants.FOLLOWUP_BY_LABEL);
 	
 	/**
 	 * Field DESCRIPTORS.
@@ -143,19 +143,24 @@ public class AnomalyExtraProperties extends AnomalyGeneralProperties {
 	 */
 	@Override
 	public Object getPropertyValue(Object aId) {
+		Object result = super.getPropertyValue(aId);
+		if (null != result) return result;
+		if (ANOMALY_STATE_ID.equals(aId)) { 
+			return Integer.valueOf(((R4EUIAnomalyExtended)getElement()).getAnomaly().getState().getValue());
+		} else if (ANOMALY_DUE_DATE_ID.equals(aId)) { 
+			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate().toString();
+		} else if (ANOMALY_RANK_ID.equals(aId)) { 
+			return Integer.valueOf(((R4EUIAnomalyExtended)getElement()).getAnomaly().getRank().getValue());
+		} else if (ANOMALY_NOT_ACCEPTED_REASON_ID.equals(aId)) { 
+			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getNotAcceptedReason();
+		} else if (ANOMALY_DECIDED_BY_ID.equals(aId)) { 
+			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDecidedByID();
+		} else if (ANOMALY_FIXED_BY_ID.equals(aId)) { 
+			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFiexeByID();
+		} else if (ANOMALY_FOLLOWUP_BY_ID.equals(aId)) { 
+			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFollowUpByID();
+		}
 		return null;
 	}
-	
-	/**
-	 * Method setPropertyValue.
-	 * @param aId Object
-	 * @param aValue Object
-	 * @see org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(Object, Object)
-	 */
-	@Override
-	public void setPropertyValue(Object aId, Object aValue) { // $codepro.audit.disable emptyMethod
-		if (!(R4EUIModelController.isDialogOpen())) {
-
-		}
-	}
+	//NOTE:  Since state management for anomalies is complex, the value are only editable using the tabbed properties view
 }

@@ -109,11 +109,10 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
     		tempParticipant.setId(dialog.getParticipantIdValue());
     		tempParticipant.getRoles().addAll(dialog.getParticipantRolesValue());
     		tempParticipant.setFocusArea(dialog.getFocusAreaValue());
-    		tempParticipant.setSpentTime(0);
     	}
     	// else Window.CANCEL
 		R4EUIModelController.setDialogOpen(false);
-    	return (R4EReviewComponent) tempParticipant;
+    	return tempParticipant;
 	}
 	
 	
