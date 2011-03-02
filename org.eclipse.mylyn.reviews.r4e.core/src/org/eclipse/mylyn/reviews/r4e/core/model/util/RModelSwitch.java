@@ -14,6 +14,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.util;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -188,6 +189,8 @@ public class RModelSwitch<T> {
 				R4EUser r4EUser = (R4EUser)theEObject;
 				T result = caseR4EUser(r4EUser);
 				if (result == null) result = caseUser(r4EUser);
+				if (result == null) result = caseR4EReviewComponent(r4EUser);
+				if (result == null) result = caseReviewComponent(r4EUser);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -196,6 +199,8 @@ public class RModelSwitch<T> {
 				T result = caseR4EParticipant(r4EParticipant);
 				if (result == null) result = caseR4EUser(r4EParticipant);
 				if (result == null) result = caseUser(r4EParticipant);
+				if (result == null) result = caseR4EReviewComponent(r4EParticipant);
+				if (result == null) result = caseReviewComponent(r4EParticipant);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -357,6 +362,18 @@ public class RModelSwitch<T> {
 				T result = caseR4EAnomalyTextPosition(r4EAnomalyTextPosition);
 				if (result == null) result = caseR4ETextPosition(r4EAnomalyTextPosition);
 				if (result == null) result = caseR4EPosition(r4EAnomalyTextPosition);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case RModelPackage.MAP_DATE_TO_DURATION: {
+				@SuppressWarnings("unchecked") Map.Entry<Date, Integer> mapDateToDuration = (Map.Entry<Date, Integer>)theEObject;
+				T result = caseMapDateToDuration(mapDateToDuration);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case RModelPackage.MAP_KEY_TO_INFO_ATTRIBUTES: {
+				@SuppressWarnings("unchecked") Map.Entry<String, String> mapKeyToInfoAttributes = (Map.Entry<String, String>)theEObject;
+				T result = caseMapKeyToInfoAttributes(mapKeyToInfoAttributes);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -811,6 +828,36 @@ public class RModelSwitch<T> {
 	 * @generated
 	 */
 	public T caseR4EAnomalyTextPosition(R4EAnomalyTextPosition object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Map Date To Duration</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Map Date To Duration</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMapDateToDuration(Map.Entry<Date, Integer> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Map Key To Info Attributes</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Map Key To Info Attributes</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMapKeyToInfoAttributes(Map.Entry<String, String> object) {
 		return null;
 	}
 

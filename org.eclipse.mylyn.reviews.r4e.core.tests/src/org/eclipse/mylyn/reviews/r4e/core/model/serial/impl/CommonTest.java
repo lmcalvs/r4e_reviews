@@ -52,6 +52,9 @@ public class CommonTest extends TestCase {
 		super(name);
 		fTmpDir = System.getProperty("java.io.tmpdir");
 		fSep = File.separator;
+		if (!fTmpDir.endsWith(File.separator)) {
+			fTmpDir = fTmpDir + fSep;
+		}
 	}
 
 	/**

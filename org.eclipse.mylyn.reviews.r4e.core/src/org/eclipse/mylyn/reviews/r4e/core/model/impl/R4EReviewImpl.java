@@ -47,7 +47,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getCreationDate <em>Creation Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getProject <em>Project</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getComponents <em>Components</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getEntryCriteria <em>Entry Criteria</em>}</li>
@@ -88,26 +87,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getCreationDate() <em>Creation Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCreationDate()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date CREATION_DATE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getCreationDate() <em>Creation Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCreationDate()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date creationDate = CREATION_DATE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getProject() <em>Project</em>}' attribute.
@@ -387,27 +366,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 		name = newName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCreationDate(Date newCreationDate) {
-		Date oldCreationDate = creationDate;
-		creationDate = newCreationDate;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW__CREATION_DATE, oldCreationDate, creationDate));
 	}
 
 	/**
@@ -835,8 +793,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 		switch (featureID) {
 			case RModelPackage.R4E_REVIEW__NAME:
 				return getName();
-			case RModelPackage.R4E_REVIEW__CREATION_DATE:
-				return getCreationDate();
 			case RModelPackage.R4E_REVIEW__PROJECT:
 				return getProject();
 			case RModelPackage.R4E_REVIEW__COMPONENTS:
@@ -887,9 +843,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 		switch (featureID) {
 			case RModelPackage.R4E_REVIEW__NAME:
 				setName((String)newValue);
-				return;
-			case RModelPackage.R4E_REVIEW__CREATION_DATE:
-				setCreationDate((Date)newValue);
 				return;
 			case RModelPackage.R4E_REVIEW__PROJECT:
 				setProject((String)newValue);
@@ -952,9 +905,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 			case RModelPackage.R4E_REVIEW__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case RModelPackage.R4E_REVIEW__CREATION_DATE:
-				setCreationDate(CREATION_DATE_EDEFAULT);
-				return;
 			case RModelPackage.R4E_REVIEW__PROJECT:
 				setProject(PROJECT_EDEFAULT);
 				return;
@@ -1014,8 +964,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 		switch (featureID) {
 			case RModelPackage.R4E_REVIEW__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case RModelPackage.R4E_REVIEW__CREATION_DATE:
-				return CREATION_DATE_EDEFAULT == null ? creationDate != null : !CREATION_DATE_EDEFAULT.equals(creationDate);
 			case RModelPackage.R4E_REVIEW__PROJECT:
 				return PROJECT_EDEFAULT == null ? project != null : !PROJECT_EDEFAULT.equals(project);
 			case RModelPackage.R4E_REVIEW__COMPONENTS:
@@ -1062,8 +1010,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", creationDate: ");
-		result.append(creationDate);
 		result.append(", project: ");
 		result.append(project);
 		result.append(", components: ");

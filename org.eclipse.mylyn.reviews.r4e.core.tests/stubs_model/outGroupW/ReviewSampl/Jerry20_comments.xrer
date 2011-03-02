@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/">
+  <r4ecore:R4EParticipant xmi:id="_x6UVEURCEeC2DrmWDHmN2w" id="Jerry20" sequenceIDCounter="15" focusArea="Feature" isPartOfDecision="true">
+    <addedComments href="#_x78swERCEeC2DrmWDHmN2w"/>
+    <addedComments href="#_x8TSEERCEeC2DrmWDHmN2w"/>
+    <addedComments href="#_x8YKkURCEeC2DrmWDHmN2w"/>
+    <addedItems href="Jerry20_items.xrer#_yAWroERCEeC2DrmWDHmN2w"/>
+    <addedItems href="Jerry20_items.xrer#_yA9voURCEeC2DrmWDHmN2w"/>
+    <addedItems href="Jerry20_items.xrer#_yBmo0URCEeC2DrmWDHmN2w"/>
+    <addedItems href="Jerry20_items.xrer#_yCRXMERCEeC2DrmWDHmN2w"/>
+    <reviewInstance href="ReviewSampl_review.xrer#_x22KUERCEeC2DrmWDHmN2w"/>
+    <roles>R4E_ROLE_LEAD</roles>
+    <timeLog xmi:id="_x7ahQERCEeC2DrmWDHmN2w" key="1867-07-01T00:00:00.000-0500" value="30"/>
+    <timeLog xmi:id="_x7bIUERCEeC2DrmWDHmN2w" key="1867-07-03T00:00:00.000-0500" value="30"/>
+  </r4ecore:R4EParticipant>
+  <r4ecore:R4EAnomaly xmi:id="_x78swERCEeC2DrmWDHmN2w" user="_x6UVEURCEeC2DrmWDHmN2w" description="Jerry20- Anomaly text here ....." title="This is sample Title - Anomaly" createdOn="1867-07-11T00:00:00.000-0500">
+    <location xsi:type="r4ecore:R4ETextContent" href="#_x7-h8ERCEeC2DrmWDHmN2w"/>
+    <id xmi:id="_x78swURCEeC2DrmWDHmN2w" sequenceID="1" userID="Jerry20"/>
+  </r4ecore:R4EAnomaly>
+  <r4ecore:R4ETextContent xmi:id="_x7-h8ERCEeC2DrmWDHmN2w" info="Write any information here">
+    <location href="#_x8DacERCEeC2DrmWDHmN2w"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4EAnomalyTextPosition xmi:id="_x8DacERCEeC2DrmWDHmN2w" startPosition="1230" length="40" startLine="50" endLine="100">
+    <file href="#_x8HE0ERCEeC2DrmWDHmN2w"/>
+  </r4ecore:R4EAnomalyTextPosition>
+  <r4ecore:R4EFileVersion xmi:id="_x8HE0ERCEeC2DrmWDHmN2w" platformURI="platform:/resource/projName/src/dir1/dir2" versionID="8" repositoryPath="/Dir1/Dir2" name="R4ETestFile"/>
+  <r4ecore:R4EComment xmi:id="_x8TSEERCEeC2DrmWDHmN2w" user="_x6UVEURCEeC2DrmWDHmN2w" description="This is test comment number 1" createdOn="2011-03-01T15:30:43.121-0500">
+    <id xmi:id="_x8T5IERCEeC2DrmWDHmN2w" sequenceID="2" userID="Jerry20"/>
+    <anomaly href="Tom10_comments.xrer#_x7h2AERCEeC2DrmWDHmN2w"/>
+  </r4ecore:R4EComment>
+  <r4ecore:R4EComment xmi:id="_x8YKkURCEeC2DrmWDHmN2w" user="_x6UVEURCEeC2DrmWDHmN2w" description="This is test comment number 2" createdOn="2011-03-01T15:30:43.129-0500">
+    <type xsi:type="r4ecore:R4ECommentType" xmi:id="_x8YKkERCEeC2DrmWDHmN2w"/>
+    <id xmi:id="_x8YKkkRCEeC2DrmWDHmN2w" sequenceID="3" userID="Jerry20"/>
+    <anomaly href="Tom10_comments.xrer#_x7h2AERCEeC2DrmWDHmN2w"/>
+  </r4ecore:R4EComment>
+</xmi:XMI>

@@ -15,7 +15,7 @@
 /**
  * 
  */
-package org.eclipse.mylyn.reviews.r4e.core.versions;
+package org.eclipse.mylyn.reviews.r4e.core.versions.git.internal;
 
 import static org.junit.Assert.fail;
 
@@ -42,8 +42,11 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.CommitDescriptor;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.FileVersionInfo;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

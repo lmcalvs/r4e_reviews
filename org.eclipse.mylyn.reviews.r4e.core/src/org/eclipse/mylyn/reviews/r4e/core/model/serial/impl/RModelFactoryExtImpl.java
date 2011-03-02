@@ -235,7 +235,6 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		R4EReviewState state = RModelFactory.eINSTANCE.createR4EReviewState();
 		state.setState(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
 		review.setCreatedBy(participant);
-		review.setCreationDate(now);
 		review.setStartDate(now);
 		review.getUsersMap().put(participant.getId(), participant);
 		review.setState(state);

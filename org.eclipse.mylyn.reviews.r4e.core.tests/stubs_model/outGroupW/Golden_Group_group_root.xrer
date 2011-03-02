@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ASCII"?>
+<r4ecore:R4EReviewGroup xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_xxzSQERCEeC2DrmWDHmN2w" description="This is sample description - Group level" name="Golden Group" defaultEntryCriteria="-Entry Criteria" xmlVersion="1.0">
+  <reviewGroupTask xsi:type="r4ecore:R4ETaskReference" xmi:id="_x0s1QERCEeC2DrmWDHmN2w" taskId="324327" repositoryURL="https://bugs.eclipse.org/bugs/show_bug.cgi?id=324327"/>
+  <availableProjects>P1</availableProjects>
+  <availableProjects>P2</availableProjects>
+  <availableProjects>P3</availableProjects>
+  <availableComponents>Component1</availableComponents>
+  <availableComponents>Component2</availableComponents>
+  <availableComponents>Component3</availableComponents>
+  <designRuleLocations xsi:nil="true"/>
+  <availableAnomalyTypes xmi:id="_x0uqcERCEeC2DrmWDHmN2w" type="Erroneous"/>
+  <availableAnomalyTypes xmi:id="_x0uqckRCEeC2DrmWDHmN2w" type="Superflous"/>
+  <availableAnomalyTypes xmi:id="_x0uqdERCEeC2DrmWDHmN2w" type="Improvement"/>
+  <availableAnomalyTypes xmi:id="_x0uqdkRCEeC2DrmWDHmN2w" type="Question"/>
+</r4ecore:R4EReviewGroup>

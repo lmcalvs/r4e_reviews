@@ -14,8 +14,10 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
+import java.util.Date;
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 
 /**
@@ -32,6 +34,9 @@ import org.eclipse.mylyn.reviews.frame.core.model.Item;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getFileContextList <em>File Context List</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getRepositoryRef <em>Repository Ref</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getProjectURIs <em>Project UR Is</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getAuthorRep <em>Author Rep</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getSubmitted <em>Submitted</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getInfoAtt <em>Info Att</em>}</li>
  * </ul>
  * </p>
  *
@@ -176,5 +181,74 @@ public interface R4EItem extends R4EIDComponent, Item {
 	 * @generated
 	 */
 	EList<String> getProjectURIs();
+
+	/**
+	 * Returns the value of the '<em><b>Author Rep</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Author Rep</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Author Rep</em>' attribute.
+	 * @see #setAuthorRep(String)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EItem_AuthorRep()
+	 * @model
+	 * @generated
+	 */
+	String getAuthorRep();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getAuthorRep <em>Author Rep</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Author Rep</em>' attribute.
+	 * @see #getAuthorRep()
+	 * @generated
+	 */
+	void setAuthorRep(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Submitted</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Submitted</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Submitted</em>' attribute.
+	 * @see #setSubmitted(Date)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EItem_Submitted()
+	 * @model
+	 * @generated
+	 */
+	Date getSubmitted();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getSubmitted <em>Submitted</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Submitted</em>' attribute.
+	 * @see #getSubmitted()
+	 * @generated
+	 */
+	void setSubmitted(Date value);
+
+	/**
+	 * Returns the value of the '<em><b>Info Att</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Info Att</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Info Att</em>' map.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EItem_InfoAtt()
+	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapKeyToInfoAttributes<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getInfoAtt();
 
 } // R4EItem
