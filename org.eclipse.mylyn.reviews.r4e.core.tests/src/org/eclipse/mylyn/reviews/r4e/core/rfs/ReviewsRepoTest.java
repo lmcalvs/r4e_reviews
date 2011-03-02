@@ -1,4 +1,18 @@
-package org.eclipse.mylyn.reviews.r4e.core.versions.git.internal;
+/*******************************************************************************
+ * Copyright (c) 2011 Ericsson
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * Contributors:
+ *   Alvaro Sanchez-Leon - Initial Implementation
+ *******************************************************************************/
+
+package org.eclipse.mylyn.reviews.r4e.core.rfs;
 
 import static org.junit.Assert.fail;
 
@@ -11,15 +25,20 @@ import junit.framework.TestCase;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.mylyn.reviews.r4e.core.rrepo.ReviewsRepoProxy;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ReviewsRepoTest {
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
 	String		fRootDir	= null;
-	ReviewsRepoProxy	fRepoProx		= null;
+	ReviewsRFSProxy	fRepoProx		= null;
 
+	// ------------------------------------------------------------------------
+	// setUp and tearDown
+	// ------------------------------------------------------------------------
 	@Before
 	public void setUp() throws Exception {
 		fRootDir = System.getProperty("java.io.tmpdir");
@@ -28,7 +47,7 @@ public class ReviewsRepoTest {
 		}
 
 		// point to location
-		fRepoProx = new ReviewsRepoProxy(new File(fRootDir), true);
+		fRepoProx = new ReviewsRFSProxy(new File(fRootDir), true);
 	}
 
 	@After
@@ -41,6 +60,9 @@ public class ReviewsRepoTest {
 		}
 	}
 
+	// ------------------------------------------------------------------------
+	// Test methods
+	// ------------------------------------------------------------------------
 	@Test
 	public void testRegisterReviewBlobByteArray() {
 		String strContent = new String("The Content");
@@ -63,6 +85,21 @@ public class ReviewsRepoTest {
 			e.printStackTrace();
 			fail("Exception");
 		}
+	}
+
+	@Test
+	public void testGetRepoRegistry() {
+
+	}
+
+	@Test
+	public void testSwitchRepoRegistries() {
+
+	}
+
+	@Test
+	public void testGetRepoRegistryException() {
+
 	}
 
 	@Test

@@ -11,7 +11,7 @@
  * Contributors:
  *   Alvaro Sanchez-Leon - Initial API
  *******************************************************************************/
-package org.eclipse.mylyn.reviews.r4e.core.rrepo;
+package org.eclipse.mylyn.reviews.r4e.core.rfs;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +28,8 @@ import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.mylyn.reviews.r4e.core.Activator;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.FileSupportCommandFactory;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 
@@ -35,7 +37,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
  * @author lmcalvs
  *
  */
-public class ReviewsRepoProxy {
+public class ReviewsRFSProxy implements IRFSRegistry {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
@@ -51,7 +53,7 @@ public class ReviewsRepoProxy {
 	 * @param aParentDir
 	 * @throws IOException
 	 */
-	public ReviewsRepoProxy(File aReviewGroupDir, boolean create) throws ReviewVersionsException {
+	public ReviewsRFSProxy(File aReviewGroupDir, boolean create) throws ReviewsFileStorageException {
 		File repoLoc = new File(aReviewGroupDir, repoName);
 		if (create) {
 			fRepository = initializeRepo(repoLoc);
@@ -71,7 +73,7 @@ public class ReviewsRepoProxy {
 	 * @return
 	 * @throws ReviewVersionsException
 	 */
-	private Repository initializeRepo(File aReviewGroupDir) throws ReviewVersionsException {
+	private Repository initializeRepo(File aReviewGroupDir) throws ReviewsFileStorageException {
 		try {
 			Repository newRepo = new FileRepository(aReviewGroupDir);
 			newRepo.create(true);
@@ -80,7 +82,7 @@ public class ReviewsRepoProxy {
 
 			return newRepo;
 		} catch (IOException e) {
-			throw new ReviewVersionsException(e);
+			throw new ReviewsFileStorageException(e);
 		}
 	}
 
@@ -89,20 +91,18 @@ public class ReviewsRepoProxy {
 	 * @return
 	 * @throws ReviewVersionsException
 	 */
-	private Repository openRepository(File aReviewGroupDir) throws ReviewVersionsException {
+	private Repository openRepository(File aReviewGroupDir) throws ReviewsFileStorageException {
 		Repository r;
 		try {
 			r = FileKey.exact(aReviewGroupDir, FS.DETECTED).open(true);
 		} catch (IOException e) {
-			throw new ReviewVersionsException(e);
+			throw new ReviewsFileStorageException(e);
 		}
 		return r;
 	}
 
-	/**
-	 * @param content
-	 * @return
-	 * @throws Exception
+	/* (non-Javadoc)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.rrepo.IBlobRegistry#registerReviewBlob(byte[])
 	 */
 	public ObjectId registerReviewBlob(final byte[] content) throws Exception {
 		ObjectId id;
@@ -118,19 +118,15 @@ public class ReviewsRepoProxy {
 		return id;
 	}
 
-	/**
-	 * Register a blob by copying existing file content
-	 * 
-	 * @param aFromFile
-	 * @return
-	 * @throws ReviewVersionsException
+	/* (non-Javadoc)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.rrepo.IBlobRegistry#registerReviewBlob(java.io.File)
 	 */
-	public ObjectId registerReviewBlob(final File aFromFile) throws ReviewVersionsException {
+	public ObjectId registerReviewBlob(final File aFromFile) throws ReviewsFileStorageException {
 		InputStream stream = null;
 		try {
 			stream = new FileInputStream(aFromFile);
 		} catch (FileNotFoundException e) {
-			throw new ReviewVersionsException(e);
+			throw new ReviewsFileStorageException(e);
 		}
 
 		ObjectId id;
@@ -139,7 +135,7 @@ public class ReviewsRepoProxy {
 			fInserter.flush();
 			FileSupportCommandFactory.getInstance().grantWritePermission(fRepository.getDirectory().getAbsolutePath());
 		} catch (IOException e) {
-			throw new ReviewVersionsException(e);
+			throw new ReviewsFileStorageException(e);
 		} finally {
 			fInserter.release();
 			if (stream != null) {
@@ -155,20 +151,16 @@ public class ReviewsRepoProxy {
 		return id;
 	}
 
-	/**
-	 * @param monitor
-	 * @param id
-	 *            - Blob type is expected
-	 * @return - The stream shall be closed by the receiver
-	 * @throws ReviewVersionsException
+	/* (non-Javadoc)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.rrepo.IBlobRegistry#getBlobContent(org.eclipse.core.runtime.IProgressMonitor, org.eclipse.jgit.lib.ObjectId)
 	 */
-	public InputStream getBlobContent(IProgressMonitor monitor, ObjectId id) throws ReviewVersionsException {
+	public InputStream getBlobContent(IProgressMonitor monitor, ObjectId id) throws ReviewsFileStorageException {
 		InputStream resStream = null;
 
 		try {
 			resStream = fRepository.open(id, Constants.OBJ_BLOB).openStream();
 		} catch (Exception e) {
-			throw new ReviewVersionsException(e);
+			throw new ReviewsFileStorageException(e);
 		}
 
 		return resStream;
