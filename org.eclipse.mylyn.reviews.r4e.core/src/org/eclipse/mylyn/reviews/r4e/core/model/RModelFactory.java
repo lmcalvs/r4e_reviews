@@ -375,24 +375,24 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 	String convertR4EReviewType(R4EReviewType instanceValue);
 
 	/**
-	 * Returns an instance of data type '<em>R4E Comment Enum</em>' corresponding the given literal.
+	 * Returns an instance of data type '<em>R4E Comment Class</em>' corresponding the given literal.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param literal a literal of the data type.
 	 * @return a new instance value of the data type.
 	 * @generated
 	 */
-	R4ECommentEnum createR4ECommentEnum(String literal);
+	R4ECommentClass createR4ECommentClass(String literal);
 
 	/**
-	 * Returns a literal representation of an instance of data type '<em>R4E Comment Enum</em>'.
+	 * Returns a literal representation of an instance of data type '<em>R4E Comment Class</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param instanceValue an instance value of the data type.
 	 * @return a literal representation of the instance value.
 	 * @generated
 	 */
-	String convertR4ECommentEnum(R4ECommentEnum instanceValue);
+	String convertR4ECommentClass(R4ECommentClass instanceValue);
 
 	/**
 	 * Returns an instance of data type '<em>R4E Context Type</em>' corresponding the given literal.

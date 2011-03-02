@@ -216,11 +216,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
         eType="#//R4EContent" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="R4ECommentEnum">
-    <eLiterals name="R4E_COMMENT_BASE"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="R4ECommentClass">
+    <eLiterals name="R4E_CLASS_ERRONEOUS"/>
+    <eLiterals name="R4E_CLASS_SUPERFLUOUS" value="1"/>
+    <eLiterals name="R4E_CLASS_IMPROVEMENT" value="2"/>
+    <eLiterals name="R4E_CLASS_QUESTION" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4ECommentType" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//CommentType">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//R4ECommentEnum"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//R4ECommentClass"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MapToAnomalyType" instanceClassName="java.util.Map$Entry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

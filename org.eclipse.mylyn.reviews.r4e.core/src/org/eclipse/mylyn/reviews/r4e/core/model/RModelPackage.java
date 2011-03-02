@@ -2584,14 +2584,14 @@ public interface RModelPackage extends EPackage {
 	int R4E_REVIEW_TYPE = 37;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum <em>R4E Comment Enum</em>}' enum.
+	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass <em>R4E Comment Class</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ECommentEnum()
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ECommentClass()
 	 * @generated
 	 */
-	int R4E_COMMENT_ENUM = 38;
+	int R4E_COMMENT_CLASS = 38;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType <em>R4E Context Type</em>}' enum.
@@ -4415,14 +4415,14 @@ public interface RModelPackage extends EPackage {
 	EEnum getR4EReviewType();
 
 	/**
-	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum <em>R4E Comment Enum</em>}'.
+	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass <em>R4E Comment Class</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>R4E Comment Enum</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum
+	 * @return the meta object for enum '<em>R4E Comment Class</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass
 	 * @generated
 	 */
-	EEnum getR4ECommentEnum();
+	EEnum getR4ECommentClass();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType <em>R4E Context Type</em>}'.
@@ -5881,14 +5881,14 @@ public interface RModelPackage extends EPackage {
 		EEnum R4E_REVIEW_TYPE = eINSTANCE.getR4EReviewType();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum <em>R4E Comment Enum</em>}' enum.
+		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass <em>R4E Comment Class</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum
-		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ECommentEnum()
+		 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass
+		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ECommentClass()
 		 * @generated
 		 */
-		EEnum R4E_COMMENT_ENUM = eINSTANCE.getR4ECommentEnum();
+		EEnum R4E_COMMENT_CLASS = eINSTANCE.getR4ECommentClass();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType <em>R4E Context Type</em>}' enum.

@@ -682,16 +682,28 @@
     <children xmi:type="notation:Node" xmi:id="_qi9QgMoxEd-GnoJBk9E8XQ" type="4010"/>
     <children xmi:type="notation:Node" xmi:id="_qi93kMoxEd-GnoJBk9E8XQ" type="5008">
       <children xmi:type="notation:Node" xmi:id="_theQEMoxEd-GnoJBk9E8XQ" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentEnum/R4E_COMMENT_BASE"/>
+        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_ERRONEOUS"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_theQEcoxEd-GnoJBk9E8XQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="__VgDkUUNEeCdooscN54lQg" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_SUPERFLUOUS"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="__VgDkkUNEeCdooscN54lQg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_Ck5-0EUOEeCdooscN54lQg" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_IMPROVEMENT"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Ck5-0UUOEeCdooscN54lQg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_Eig7AEUOEeCdooscN54lQg" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_QUESTION"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Eig7AUUOEeCdooscN54lQg"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_qi-eoMoxEd-GnoJBk9E8XQ"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_qi-eocoxEd-GnoJBk9E8XQ"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_qi-eosoxEd-GnoJBk9E8XQ"/>
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_qi6NMcoxEd-GnoJBk9E8XQ" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
-    <element xmi:type="ecore:EEnum" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentEnum"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qi6NMsoxEd-GnoJBk9E8XQ" x="48" y="1104" width="176" height="75"/>
+    <element xmi:type="ecore:EEnum" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qi6NMsoxEd-GnoJBk9E8XQ" x="48" y="1104" width="231" height="123"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_O8-9kMoyEd-GnoJBk9E8XQ" type="1001">
     <children xmi:type="notation:Node" xmi:id="_O9AywMoyEd-GnoJBk9E8XQ" type="4001"/>

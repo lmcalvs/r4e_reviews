@@ -19,7 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.mylyn.reviews.frame.core.model.impl.CommentTypeImpl;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
@@ -45,7 +45,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4ECommentEnum TYPE_EDEFAULT = R4ECommentEnum.R4E_COMMENT_BASE;
+	protected static final R4ECommentClass TYPE_EDEFAULT = R4ECommentClass.R4E_CLASS_ERRONEOUS;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -55,7 +55,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	 * @generated
 	 * @ordered
 	 */
-	protected R4ECommentEnum type = TYPE_EDEFAULT;
+	protected R4ECommentClass type = TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -81,7 +81,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public R4ECommentEnum getType() {
+	public R4ECommentClass getType() {
 		return type;
 	}
 
@@ -90,8 +90,8 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setType(R4ECommentEnum newType) {
-		R4ECommentEnum oldType = type;
+	public void setType(R4ECommentClass newType) {
+		R4ECommentClass oldType = type;
 		type = newType == null ? TYPE_EDEFAULT : newType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_COMMENT_TYPE__TYPE, oldType, type));
@@ -120,7 +120,7 @@ public class R4ECommentTypeImpl extends CommentTypeImpl implements R4ECommentTyp
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case RModelPackage.R4E_COMMENT_TYPE__TYPE:
-				setType((R4ECommentEnum)newValue);
+				setType((R4ECommentClass)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

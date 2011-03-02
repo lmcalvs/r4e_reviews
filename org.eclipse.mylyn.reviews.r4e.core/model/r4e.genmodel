@@ -48,8 +48,11 @@
       <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewType/R4E_REVIEW_TYPE_INFORMAL"/>
       <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewType/R4E_REVIEW_TYPE_FORMAL"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentEnum">
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentEnum/R4E_COMMENT_BASE"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass">
+      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_ERRONEOUS"/>
+      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_SUPERFLUOUS"/>
+      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_IMPROVEMENT"/>
+      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_QUESTION"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContextType">
       <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContextType/R4E_UNDEFINED"/>
