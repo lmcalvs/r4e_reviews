@@ -12,10 +12,7 @@
  *   Alvaro Sanchez-Leon - Initial Implementation
  *******************************************************************************/
 
-/**
- * 
- */
-package org.eclipse.mylyn.reviews.r4e.core.versions.git.internal;
+package org.eclipse.mylyn.reviews.r4e.core.rfs;
 
 import static org.junit.Assert.fail;
 
@@ -56,7 +53,9 @@ import org.junit.Test;
  * 
  */
 public class ReviewsVersionsIFTst extends GitTestCase {
-
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
 	private IProject			fIProject		= null;
 	private TestRepository		testRepo		= null;
 	private Repository			repo			= null;
@@ -66,6 +65,9 @@ public class ReviewsVersionsIFTst extends GitTestCase {
 
 	private IFile				ifileB			= null;
 
+	// ------------------------------------------------------------------------
+	// Setup and Teardown
+	// ------------------------------------------------------------------------
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -108,6 +110,9 @@ public class ReviewsVersionsIFTst extends GitTestCase {
 		super.tearDown();
 	}
 
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
 	/**
 	 * Test method for
 	 * {@link org.eclipse.mylyn.reviews.r4e.core.versions.impl.ReviewsVersionsIF#isProviderSupported(org.eclipse.core.resources.IProject)}

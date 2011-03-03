@@ -35,7 +35,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.CommentType;
 public interface R4ECommentType extends CommentType {
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
-	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum}.
+	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
@@ -43,23 +43,23 @@ public interface R4ECommentType extends CommentType {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum
-	 * @see #setType(R4ECommentEnum)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass
+	 * @see #setType(R4ECommentClass)
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4ECommentType_Type()
 	 * @model
 	 * @generated
 	 */
-	R4ECommentEnum getType();
+	R4ECommentClass getType();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType#getType <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type</em>' attribute.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass
 	 * @see #getType()
 	 * @generated
 	 */
-	void setType(R4ECommentEnum value);
+	void setType(R4ECommentClass value);
 
 } // R4ECommentType

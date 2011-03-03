@@ -13,8 +13,8 @@ Export-Package: org.eclipse.egit.core.test;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.core.model.serial;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.core.model.serial.impl;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.core.model.tests;x-internal:=true,
- org.eclipse.mylyn.reviews.r4e.core.utils.filePermission;x-internal:=true,
- org.eclipse.mylyn.reviews.r4e.core.versions.git.internal;x-internal:=true
+ org.eclipse.mylyn.reviews.r4e.core.rfs;x-internal:=true,
+ org.eclipse.mylyn.reviews.r4e.core.utils.filePermission;x-internal:=true
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.reviews.r4e.core,
  org.eclipse.mylyn.reviews.frame.core,

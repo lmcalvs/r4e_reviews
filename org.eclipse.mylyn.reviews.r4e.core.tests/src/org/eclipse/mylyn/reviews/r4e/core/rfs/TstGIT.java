@@ -12,7 +12,7 @@
  *   Alvaro Sanchez-Leon - Initial Implementation
  *******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.core.versions.git.internal;
+package org.eclipse.mylyn.reviews.r4e.core.rfs;
 
 
 import static org.eclipse.jgit.lib.Constants.HEAD;

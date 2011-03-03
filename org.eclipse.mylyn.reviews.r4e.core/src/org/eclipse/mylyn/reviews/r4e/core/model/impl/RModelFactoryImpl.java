@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
@@ -34,7 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
@@ -170,8 +169,8 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 				return createR4EDecisionFromString(eDataType, initialValue);
 			case RModelPackage.R4E_REVIEW_TYPE:
 				return createR4EReviewTypeFromString(eDataType, initialValue);
-			case RModelPackage.R4E_COMMENT_ENUM:
-				return createR4ECommentEnumFromString(eDataType, initialValue);
+			case RModelPackage.R4E_COMMENT_CLASS:
+				return createR4ECommentClassFromString(eDataType, initialValue);
 			case RModelPackage.R4E_CONTEXT_TYPE:
 				return createR4EContextTypeFromString(eDataType, initialValue);
 			case RModelPackage.MYLYN_TASK:
@@ -205,8 +204,8 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 				return convertR4EDecisionToString(eDataType, instanceValue);
 			case RModelPackage.R4E_REVIEW_TYPE:
 				return convertR4EReviewTypeToString(eDataType, instanceValue);
-			case RModelPackage.R4E_COMMENT_ENUM:
-				return convertR4ECommentEnumToString(eDataType, instanceValue);
+			case RModelPackage.R4E_COMMENT_CLASS:
+				return convertR4ECommentClassToString(eDataType, instanceValue);
 			case RModelPackage.R4E_CONTEXT_TYPE:
 				return convertR4EContextTypeToString(eDataType, instanceValue);
 			case RModelPackage.MYLYN_TASK:
@@ -763,9 +762,9 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public R4ECommentEnum createR4ECommentEnum(String literal) {
-		R4ECommentEnum result = R4ECommentEnum.get(literal);
-		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_COMMENT_ENUM.getName() + "'");
+	public R4ECommentClass createR4ECommentClass(String literal) {
+		R4ECommentClass result = R4ECommentClass.get(literal);
+		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_COMMENT_CLASS.getName() + "'");
 		return result;
 	}
 
@@ -774,8 +773,8 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public R4ECommentEnum createR4ECommentEnumFromString(EDataType eDataType, String initialValue) {
-		return createR4ECommentEnum(initialValue);
+	public R4ECommentClass createR4ECommentClassFromString(EDataType eDataType, String initialValue) {
+		return createR4ECommentClass(initialValue);
 	}
 
 	/**
@@ -783,7 +782,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertR4ECommentEnum(R4ECommentEnum instanceValue) {
+	public String convertR4ECommentClass(R4ECommentClass instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
@@ -792,7 +791,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertR4ECommentEnumToString(EDataType eDataType, Object instanceValue) {
+	public String convertR4ECommentClassToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
