@@ -52,7 +52,7 @@ public class TstGeneral {
 	/**
 	 * @param fileA
 	 * @param fileB
-	 * @return
+	 * @return - true if they are the same
 	 */
 	public static boolean compareDirectories(File fileA, File fileB) {
 		// valid directories
