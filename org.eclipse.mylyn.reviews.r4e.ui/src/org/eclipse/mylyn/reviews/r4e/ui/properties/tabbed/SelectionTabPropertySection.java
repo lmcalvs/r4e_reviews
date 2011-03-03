@@ -45,7 +45,7 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 	/**
 	 * Field FPositionText.
 	 */
-	protected static Text FPositionText = null;
+	protected Text fPositionText = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -68,18 +68,18 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 	    FormData data = null;
 	   
 	    //Position (read-only)
-	    FPositionText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fPositionText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-	    FPositionText.setLayoutData(data);
+	    fPositionText.setLayoutData(data);
 
 	    final CLabel positionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.POSITION_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FPositionText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FPositionText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fPositionText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fPositionText, 0, SWT.CENTER);
 	    positionLabel.setLayoutData(data);
 	}
 
@@ -91,7 +91,7 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 	public void refresh() {
 		if (null != ((R4EUISelection)fProperties.getElement()).getPosition()) {
 			fRefreshInProgress = true;
-			FPositionText.setText(((R4EUISelection)fProperties.getElement()).getPosition().toString());
+			fPositionText.setText(((R4EUISelection)fProperties.getElement()).getPosition().toString());
 			setEnabledFields();
 			fRefreshInProgress = false;
 		}
@@ -103,9 +103,9 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isDialogOpen()) {
-			FPositionText.setEnabled(false);
+			fPositionText.setEnabled(false);
 		} else {
-			FPositionText.setEnabled(true);
+			fPositionText.setEnabled(true);
 		}
 	}
 }

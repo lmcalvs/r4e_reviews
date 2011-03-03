@@ -56,27 +56,27 @@ public class AnomalyGeneralTabPropertySection extends ModelElementTabPropertySec
 	/**
 	 * Field FTitleText.
 	 */
-	protected static Text FTitleText = null;
+	protected Text fTitleText = null;
 	
 	/**
 	 * Field FAuthorText.
 	 */
-	protected static Text FAuthorText = null;
+	protected Text fAuthorText = null;
 	
 	/**
 	 * Field FCreationDateText.
 	 */
-	protected static Text FCreationDateText = null;
+	protected Text fCreationDateText = null;
 	
 	/**
 	 * Field FPositionText.
 	 */
-	protected static Text FPositionText = null;
+	protected Text fPositionText = null;
 	
 	/**
 	 * Field FDescriptionText.
 	 */
-	protected static Text FDescriptionText = null;
+	protected Text fDescriptionText = null;
 
 	
 	// ------------------------------------------------------------------------
@@ -109,20 +109,20 @@ public class AnomalyGeneralTabPropertySection extends ModelElementTabPropertySec
 	    FormData data = null;
 	   
 	    //Anomaly title
-	    FTitleText = widgetFactory.createText(composite, "", SWT.MULTI);
+	    fTitleText = widgetFactory.createText(composite, "", SWT.MULTI);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-	    FTitleText.setLayoutData(data);
-	    FTitleText.addFocusListener(new FocusListener() {		
+	    fTitleText.setLayoutData(data);
+	    fTitleText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic)fProperties.getElement()).getAnomaly();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-						modelAnomaly.setTitle(FTitleText.getText());
+						modelAnomaly.setTitle(fTitleText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
@@ -135,75 +135,75 @@ public class AnomalyGeneralTabPropertySection extends ModelElementTabPropertySec
 				//Nothing to do
 			}
 		});
-	    UIUtils.addTabbedPropertiesTextResizeListener(FTitleText);
+	    UIUtils.addTabbedPropertiesTextResizeListener(fTitleText);
 	    
 	    final CLabel titleLabel = widgetFactory.createCLabel(composite, R4EUIConstants.TITLE_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FTitleText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FTitleText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fTitleText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fTitleText, 0, SWT.CENTER);
 	    titleLabel.setLayoutData(data);
 	    
 	    //Anomaly Author (read-only)
-	    FAuthorText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fAuthorText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(FTitleText, ITabbedPropertyConstants.VSPACE);
-	    FAuthorText.setLayoutData(data);
+	    data.top = new FormAttachment(fTitleText, ITabbedPropertyConstants.VSPACE);
+	    fAuthorText.setLayoutData(data);
 	
 	    final CLabel authorLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AUTHOR_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FAuthorText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FAuthorText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fAuthorText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fAuthorText, 0, SWT.CENTER);
 	    authorLabel.setLayoutData(data);
 	
 	    //Anomaly Creation Date (read-only)
-	    FCreationDateText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fCreationDateText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(FAuthorText, ITabbedPropertyConstants.VSPACE);
-	    FCreationDateText.setLayoutData(data);
+	    data.top = new FormAttachment(fAuthorText, ITabbedPropertyConstants.VSPACE);
+	    fCreationDateText.setLayoutData(data);
 	
 	    final CLabel creationDateLabel = widgetFactory.createCLabel(composite, R4EUIConstants.CREATION_DATE_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FCreationDateText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FCreationDateText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fCreationDateText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fCreationDateText, 0, SWT.CENTER);
 	    creationDateLabel.setLayoutData(data);
 	    
 	    //Anomaly position (read-only)
-	    FPositionText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fPositionText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(FCreationDateText, ITabbedPropertyConstants.VSPACE);
-	    FPositionText.setLayoutData(data);
+	    data.top = new FormAttachment(fCreationDateText, ITabbedPropertyConstants.VSPACE);
+	    fPositionText.setLayoutData(data);
 	
 	    final CLabel positionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.POSITION_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FPositionText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FPositionText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fPositionText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fPositionText, 0, SWT.CENTER);
 	    positionLabel.setLayoutData(data);
 	    
 	    //Anomaly Description
-	    FDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
+	    fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(FPositionText, ITabbedPropertyConstants.VSPACE);
-	    FDescriptionText.setLayoutData(data);
-	    FDescriptionText.addFocusListener(new FocusListener() {		
+	    data.top = new FormAttachment(fPositionText, ITabbedPropertyConstants.VSPACE);
+	    fDescriptionText.setLayoutData(data);
+	    fDescriptionText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
 	    		if (!fRefreshInProgress) {
 	    			try {
 	    				final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic)fProperties.getElement()).getAnomaly();
 	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-	    				modelAnomaly.setDescription(FDescriptionText.getText());
+	    				modelAnomaly.setDescription(fDescriptionText.getText());
 	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	    			} catch (ResourceHandlingException e1) {
 	    				UIUtils.displayResourceErrorDialog(e1);
@@ -216,13 +216,13 @@ public class AnomalyGeneralTabPropertySection extends ModelElementTabPropertySec
 				//Nothing to do
 			}
 		});
-	    UIUtils.addTabbedPropertiesTextResizeListener(FDescriptionText);
+	    UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
 	    
 	    final CLabel descriptionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DESCRIPTION_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FDescriptionText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FDescriptionText, 0, SWT.TOP);
+	    data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fDescriptionText, 0, SWT.TOP);
 	    descriptionLabel.setLayoutData(data);
 	}
 
@@ -234,16 +234,16 @@ public class AnomalyGeneralTabPropertySection extends ModelElementTabPropertySec
 	public void refresh() {
 		fRefreshInProgress = true;
 		final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic)fProperties.getElement()).getAnomaly();
-		FTitleText.setText(modelAnomaly.getTitle());
-		FAuthorText.setText(modelAnomaly.getUser().getId());
-		FCreationDateText.setText(modelAnomaly.getCreatedOn().toString());
+		fTitleText.setText(modelAnomaly.getTitle());
+		fAuthorText.setText(modelAnomaly.getUser().getId());
+		fCreationDateText.setText(modelAnomaly.getCreatedOn().toString());
 		fPosition = ((R4EUIAnomalyBasic)fProperties.getElement()).getPosition();
 		if (null == fPosition) {
-			FPositionText.setText(R4EUIConstants.GLOBAL_ANOMALY_PROPERTY_VALUE);
+			fPositionText.setText(R4EUIConstants.GLOBAL_ANOMALY_PROPERTY_VALUE);
 		} else {
-			FPositionText.setText(fPosition.toString());
+			fPositionText.setText(fPosition.toString());
 		}
-		FDescriptionText.setText(modelAnomaly.getDescription());
+		fDescriptionText.setText(modelAnomaly.getDescription());
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -254,17 +254,17 @@ public class AnomalyGeneralTabPropertySection extends ModelElementTabPropertySec
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isDialogOpen()) {
-			FTitleText.setEnabled(false);
-			FAuthorText.setEnabled(false);
-			FCreationDateText.setEnabled(false);
-			FPositionText.setEnabled(false);
-			FDescriptionText.setEnabled(false);
+			fTitleText.setEnabled(false);
+			fAuthorText.setEnabled(false);
+			fCreationDateText.setEnabled(false);
+			fPositionText.setEnabled(false);
+			fDescriptionText.setEnabled(false);
 		} else {
-			FTitleText.setEnabled(true);
-			FAuthorText.setEnabled(true);
-			FCreationDateText.setEnabled(true);
-			FPositionText.setEnabled(true);
-			FDescriptionText.setEnabled(true);
+			fTitleText.setEnabled(true);
+			fAuthorText.setEnabled(true);
+			fCreationDateText.setEnabled(true);
+			fPositionText.setEnabled(true);
+			fDescriptionText.setEnabled(true);
 		}
 	}
 }

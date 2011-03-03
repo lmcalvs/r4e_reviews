@@ -18,7 +18,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
@@ -141,12 +141,12 @@ public class EditableListWidget {
 							newItem.setText(((Text)editableControl).getText());
 						}
 					});
-				} else if (aEditableWidgetClass.equals(Combo.class)) {
-					editableControl = new Combo(aTable, SWT.READ_ONLY);
-					((Combo)editableControl).setItems(aEditableValues);
-					((Combo)editableControl).addModifyListener(new ModifyListener() {
+				} else if (aEditableWidgetClass.equals(CCombo.class)) {
+					editableControl = new CCombo(aTable, SWT.READ_ONLY);
+					((CCombo)editableControl).setItems(aEditableValues);
+					((CCombo)editableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
-							newItem.setText(((Combo)editableControl).getText());
+							newItem.setText(((CCombo)editableControl).getText());
 						}
 					});
 				} else if (aEditableWidgetClass.equals(Date.class)) {					

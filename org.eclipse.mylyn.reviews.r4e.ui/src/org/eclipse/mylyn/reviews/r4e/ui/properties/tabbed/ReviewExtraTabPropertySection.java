@@ -1,11 +1,17 @@
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
@@ -46,6 +52,11 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	 * Field FReferenceMaterialText.
 	 */
 	protected Text fReferenceMaterialText = null;
+	
+	/**
+	 * Field fExitDecision.
+	 */
+	protected CCombo fExitDecisionCombo = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -142,6 +153,42 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.right = new FormAttachment(fReferenceMaterialText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fReferenceMaterialText, 0, SWT.TOP);
 	    referenceMaterialLabel.setLayoutData(data);
+	    
+	    //Rank
+	    fExitDecisionCombo = widgetFactory.createCCombo(mainForm, SWT.READ_ONLY);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+	    data.top = new FormAttachment(fReferenceMaterialText, ITabbedPropertyConstants.VSPACE);
+	    fExitDecisionCombo.setLayoutData(data);
+	    fExitDecisionCombo.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+	    		if (!fRefreshInProgress) {
+	    			try {
+	    				final String currentUser = R4EUIModelController.getReviewer();
+						final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
+	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+	    				modelReview.setDecision(R4EUIReview.getDecisionValueFromString(fExitDecisionCombo.getText()));
+	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	    			} catch (ResourceHandlingException e1) {
+	    				UIUtils.displayResourceErrorDialog(e1);
+	    			} catch (OutOfSyncException e1) {
+	    				UIUtils.displaySyncErrorDialog(e1);
+	    			}
+	    		}	
+    			refresh();
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {
+				//No implementation needed
+			}
+		});
+	    
+	    final CLabel rankLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.EXIT_DECISION_LABEL);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, 0);
+	    data.right = new FormAttachment(fExitDecisionCombo, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fExitDecisionCombo, 0, SWT.CENTER);
+	    rankLabel.setLayoutData(data);
 	}
 	
 	/**
@@ -169,6 +216,9 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		fEntryCriteriaText.setText(modelReview.getEntryCriteria());
 		fObjectivesText.setText(modelReview.getObjectives());
 		fReferenceMaterialText.setText(modelReview.getReferenceMaterial());
+		fExitDecisionCombo.setItems(R4EUIReview.getExitDecisionValues());
+		if (null != modelReview.getDecision()) fExitDecisionCombo.select((null == modelReview.getDecision().getValue()) ? 0 : 
+			modelReview.getDecision().getValue().getValue());
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -185,12 +235,14 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			fEntryCriteriaText.setEnabled(false);
 			fObjectivesText.setEnabled(false);
 			fReferenceMaterialText.setEnabled(false);
+			fExitDecisionCombo.setEnabled(false);
 		} else {
 			fProjectText.setEnabled(true);
 			fComponents.setEnabled(true);
 			fEntryCriteriaText.setEnabled(true);
 			fObjectivesText.setEnabled(true);
 			fReferenceMaterialText.setEnabled(true);
+			fExitDecisionCombo.setEnabled(true);
 		}
 	}
 }

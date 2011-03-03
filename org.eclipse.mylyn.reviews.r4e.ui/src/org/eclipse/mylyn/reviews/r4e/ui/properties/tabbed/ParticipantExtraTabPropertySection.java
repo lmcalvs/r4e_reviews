@@ -11,6 +11,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.EditableListWidget;
@@ -168,7 +169,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 			else if (role.getValue() == R4EUserRole.R4E_ROLE_AUTHOR_VALUE) fRolesList.add(R4EUIConstants.USER_ROLE_AUTHOR);
 			else if (role.getValue() == R4EUserRole.R4E_ROLE_REVIEWER_VALUE) fRolesList.add(R4EUIConstants.USER_ROLE_REVIEWER);
 		}
-		//fFocusAreaText.setText(modelUser.getFocusArea());  //TODO uncomment later when core model updated
+		if (null != modelUser.getFocusArea()) fFocusAreaText.setText(modelUser.getFocusArea());
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -191,9 +192,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		}
 	}
 
-	public void itemsUpdated(Item[] aItems, int aInstanceId) {
-		// TODO update time spent (detailed) when data structure available in core model
-		
+	public void itemsUpdated(Item[] aItems, int aInstanceId) {		
 		try {
 			final R4EParticipant modelGroup = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
 			final String currentUser = R4EUIModelController.getReviewer();
@@ -206,9 +205,13 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 									Integer.valueOf(((TableItem)item).getText(0)));
 				} catch (NumberFormatException e) {
 					//skip this entry
+					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 					continue;
 				} catch (ParseException e) {
 					//skip this entry
+					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 					continue;
 				}
 			}

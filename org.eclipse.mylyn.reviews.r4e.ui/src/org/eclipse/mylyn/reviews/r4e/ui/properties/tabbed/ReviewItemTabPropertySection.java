@@ -47,17 +47,17 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	/**
 	 * Field FAuthorText.
 	 */
-	protected static Text FAuthorText = null;
+	protected Text fAuthorText = null;
 	
 	/**
 	 * Field FProjectIdList.
 	 */
-	protected static List FProjectIdList = null;
+	protected List fProjectIdList = null;
 	
 	/**
 	 * Field FDescriptionText.
 	 */
-	protected static Text FDescriptionText = null;
+	protected Text fDescriptionText = null;
 
 	
 	// ------------------------------------------------------------------------
@@ -80,48 +80,48 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	    FormData data = null;
 	   
 	    //Author (read-only)
-	    FAuthorText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fAuthorText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-	    FAuthorText.setLayoutData(data);
+	    fAuthorText.setLayoutData(data);
 
 	    final CLabel authorLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AUTHOR_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FAuthorText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FAuthorText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fAuthorText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fAuthorText, 0, SWT.CENTER);
 	    authorLabel.setLayoutData(data);
 	    
 	    //ProjectId (read-only)
-	    FProjectIdList = widgetFactory.createList(composite, SWT.READ_ONLY);
+	    fProjectIdList = widgetFactory.createList(composite, SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(FAuthorText, ITabbedPropertyConstants.VSPACE);
-	    FProjectIdList.setLayoutData(data);
+	    data.top = new FormAttachment(fAuthorText, ITabbedPropertyConstants.VSPACE);
+	    fProjectIdList.setLayoutData(data);
 
 	    final CLabel projectIdLabel = widgetFactory.createCLabel(composite, R4EUIConstants.PROJECT_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FProjectIdList, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FProjectIdList, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fProjectIdList, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fProjectIdList, 0, SWT.CENTER);
 	    projectIdLabel.setLayoutData(data);
 
 	    //Description (read-only)
-	    FDescriptionText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fDescriptionText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(FProjectIdList, ITabbedPropertyConstants.VSPACE);
-	    FDescriptionText.setLayoutData(data);
+	    data.top = new FormAttachment(fProjectIdList, ITabbedPropertyConstants.VSPACE);
+	    fDescriptionText.setLayoutData(data);
 
 	    final CLabel descriptionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DESCRIPTION_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FDescriptionText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FDescriptionText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fDescriptionText, 0, SWT.CENTER);
 	    descriptionLabel.setLayoutData(data);
 	}
 
@@ -133,9 +133,9 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	public void refresh() {
 		fRefreshInProgress = true;
 		final R4EItem modelItem = ((R4EUIReviewItem)fProperties.getElement()).getItem();
-		FAuthorText.setText(modelItem.getAddedById());
-		FProjectIdList.setItems((String[]) modelItem.getProjectURIs().toArray());
-		FDescriptionText.setText(modelItem.getDescription());
+		fAuthorText.setText(modelItem.getAddedById());
+		fProjectIdList.setItems((String[]) modelItem.getProjectURIs().toArray());
+		fDescriptionText.setText(modelItem.getDescription());
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -146,13 +146,13 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isDialogOpen()) {
-			FAuthorText.setEnabled(false);
-			FProjectIdList.setEnabled(false);
-			FDescriptionText.setEnabled(false);
+			fAuthorText.setEnabled(false);
+			fProjectIdList.setEnabled(false);
+			fDescriptionText.setEnabled(false);
 		} else {
-			FAuthorText.setEnabled(true);
-			FProjectIdList.setEnabled(true);
-			FDescriptionText.setEnabled(true);
+			fAuthorText.setEnabled(true);
+			fProjectIdList.setEnabled(true);
+			fDescriptionText.setEnabled(true);
 		}
 	}
 }

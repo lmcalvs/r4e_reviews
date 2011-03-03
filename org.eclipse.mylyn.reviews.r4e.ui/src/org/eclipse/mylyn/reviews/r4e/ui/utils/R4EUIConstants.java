@@ -136,6 +136,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String DIALOG_TITLE_INFO = "R4E Info";
 	
 	/**
+	 * Field REVIEW_NOT_COMPLETED_ERROR.
+	 * (value is ""Review Error"")
+	 */
+	public static final String REVIEW_NOT_COMPLETED_ERROR = "Review Error";
+	
+	/**
 	 * Field SHOW_DISABLED_FILTER_NAME.
 	 * (value is ""Show disabled elements"")
 	 */
@@ -275,6 +281,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""Reference Material: "")
 	 */
 	public static final String REFERENCE_MATERIAL_LABEL = "Reference Material: ";
+	
+	/**
+	 * Field EXIT_DECISION_LABEL.
+	 * (value is ""Exit Decision: "")
+	 */
+	public static final String EXIT_DECISION_LABEL = "Exit Decision: ";
 	
 	/**
 	 * Field CREATION_DATE_LABEL.
@@ -421,6 +433,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String DUE_DATE_LABEL = "Due Date: ";
 	
 	/**
+	 * Field CLASS_LABEL.
+	 * (value is ""Class: "")
+	 */
+	public static final String CLASS_LABEL = "Class: ";
+	
+	/**
 	 * Field RANK_LABEL.
 	 * (value is ""Rank: "")
 	 */
@@ -428,9 +446,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	
 	/**
 	 * Field NOT_ACCEPTED_REASON_LABEL.
-	 * (value is ""Not Accepted Reason: "")
+	 * (value is ""Reason for Rejection: "")
 	 */
-	public static final String NOT_ACCEPTED_REASON_LABEL = "Not Accepted Reason: ";
+	public static final String NOT_ACCEPTED_REASON_LABEL = "Reason for Rejection: ";
 	
 	/**
 	 * Field DECIDED_BY_LABEL.

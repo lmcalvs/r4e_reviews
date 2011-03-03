@@ -28,15 +28,18 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
@@ -88,6 +91,14 @@ public class R4EUIReview extends R4EUIModelElement {
     private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review from " +
     		"its Parent Review Group";
 	
+	private static final String EXIT_DECISION_NONE = "No Decision";
+	private static final String EXIT_DECISION_ACCEPTED = "Accepted";		
+	private static final String EXIT_DECISION_ACCEPTED_FOLLOWUP = "Accepted with Follow-up";
+	private static final String EXIT_DECISION_REJECTED = "Rejected";
+	
+	private static String[] decisionValues = { EXIT_DECISION_NONE, EXIT_DECISION_ACCEPTED,
+		EXIT_DECISION_ACCEPTED_FOLLOWUP, EXIT_DECISION_REJECTED };  //NOTE: This has to match R4EDecision in R4E core plugin
+
 	
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -688,4 +699,43 @@ public class R4EUIReview extends R4EUIModelElement {
 	public String getRemoveElementCmdTooltip() {
 		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
 	}
+	
+	public static String[] getExitDecisionValues() {
+		return decisionValues;
+	}
+	
+	public static R4EReviewDecision getDecisionValueFromString(String aDecision) {
+		R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
+		if (aDecision.equals(EXIT_DECISION_ACCEPTED)) {
+			reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED);
+		} else if (aDecision.equals(EXIT_DECISION_ACCEPTED_FOLLOWUP)) {
+			reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP);
+		} else if (aDecision.equals(EXIT_DECISION_REJECTED)) {
+			reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_REJECTED);
+		} else {
+			reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_NONE);
+		}
+		return reviewDecision;
+	}
+	
+	public boolean checkCompletionStatus() {
+		if (!(fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC))) {
+
+			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_NONE)) return false;	
+			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_REJECTED)) return true;
+			
+			//Check global anomalies state
+			if (false == fAnomalyContainer.checkCompletionStatus()) return false;
+			
+			for (R4EUIReviewItem item : fItems) {
+				R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
+				for (R4EUIFileContext context : contexts) {
+					R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
+					if (false == container.checkCompletionStatus()) return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 }

@@ -50,22 +50,22 @@ public class ParticipantGeneralTabPropertySection extends ModelElementTabPropert
 	/**
 	 * Field FIdText.
 	 */
-	protected static Text FIdText = null;
+	protected Text fIdText = null;
 	
 	/**
 	 * Field FNumItemsText.
 	 */
-	protected static Text FNumItemsText = null;
+	protected Text fNumItemsText = null;
 	
 	/**
 	 * Field FNumAnomaliesText.
 	 */
-	protected static Text FNumAnomaliesText = null;
+	protected Text fNumAnomaliesText = null;
 	
 	/**
 	 * Field FNumCommentsText.
 	 */
-	protected static Text FNumCommentsText = null;
+	protected Text fNumCommentsText = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -88,65 +88,65 @@ public class ParticipantGeneralTabPropertySection extends ModelElementTabPropert
 	    FormData data = null;
 	   
 	    //Author (read-only)
-	    FIdText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fIdText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-	    FIdText.setLayoutData(data);
+	    fIdText.setLayoutData(data);
 
 
 	    final CLabel idLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.ID_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FIdText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FIdText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fIdText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fIdText, 0, SWT.CENTER);
 	    idLabel.setLayoutData(data);
 	    
 	    //Number of Review Items added (read-only)
-	    FNumItemsText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
-	    FNumItemsText.setBackground(Display.getDefault().getSystemColor( SWT.COLOR_WIDGET_LIGHT_SHADOW));
+	    fNumItemsText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fNumItemsText.setBackground(Display.getDefault().getSystemColor( SWT.COLOR_WIDGET_LIGHT_SHADOW));
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(FIdText, ITabbedPropertyConstants.VSPACE);
-	    FNumItemsText.setLayoutData(data);
+	    data.top = new FormAttachment(fIdText, ITabbedPropertyConstants.VSPACE);
+	    fNumItemsText.setLayoutData(data);
 	
 	    final CLabel numItemsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.NUM_ITEMS_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FNumItemsText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FNumItemsText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fNumItemsText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fNumItemsText, 0, SWT.CENTER);
 	    numItemsLabel.setLayoutData(data);
 	    
 	    //Number of Anomalies added (read-only)
-	    FNumAnomaliesText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fNumAnomaliesText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(FNumItemsText, ITabbedPropertyConstants.VSPACE);
-	    FNumAnomaliesText.setLayoutData(data);
+	    data.top = new FormAttachment(fNumItemsText, ITabbedPropertyConstants.VSPACE);
+	    fNumAnomaliesText.setLayoutData(data);
 	
 	    final CLabel numAnomaliesLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.NUM_ANOMALIES_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FNumAnomaliesText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FNumAnomaliesText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fNumAnomaliesText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fNumAnomaliesText, 0, SWT.CENTER);
 	    numAnomaliesLabel.setLayoutData(data);
 	    
 	    //Number of Comments added (read-only)
-	    FNumCommentsText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fNumCommentsText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(FNumAnomaliesText, ITabbedPropertyConstants.VSPACE);
-	    FNumCommentsText.setLayoutData(data);
+	    data.top = new FormAttachment(fNumAnomaliesText, ITabbedPropertyConstants.VSPACE);
+	    fNumCommentsText.setLayoutData(data);
 	
 	    final CLabel numCommentsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.NUM_COMMENTS_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FNumCommentsText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FNumCommentsText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fNumCommentsText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fNumCommentsText, 0, SWT.CENTER);
 	    numCommentsLabel.setLayoutData(data);
 	}
 
@@ -158,8 +158,8 @@ public class ParticipantGeneralTabPropertySection extends ModelElementTabPropert
 	public void refresh() {
 		fRefreshInProgress = true;
 		final R4EParticipant modelUser = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
-		FIdText.setText(modelUser.getId());
-		FNumItemsText.setText(String.valueOf(modelUser.getAddedItems().size()));
+		fIdText.setText(modelUser.getId());
+		fNumItemsText.setText(String.valueOf(modelUser.getAddedItems().size()));
 
 		int numAnomalies = 0;
 		int numComments = 0;
@@ -172,8 +172,8 @@ public class ParticipantGeneralTabPropertySection extends ModelElementTabPropert
 				++numComments;
 			}
 		}
-		FNumAnomaliesText.setText(String.valueOf(numAnomalies));
-		FNumCommentsText.setText(String.valueOf(numComments));
+		fNumAnomaliesText.setText(String.valueOf(numAnomalies));
+		fNumCommentsText.setText(String.valueOf(numComments));
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -184,15 +184,15 @@ public class ParticipantGeneralTabPropertySection extends ModelElementTabPropert
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isDialogOpen()) {
-			FIdText.setEnabled(false);
-			FNumItemsText.setEnabled(false);
-			FNumAnomaliesText.setEnabled(false);
-			FNumCommentsText.setEnabled(false);
+			fIdText.setEnabled(false);
+			fNumItemsText.setEnabled(false);
+			fNumAnomaliesText.setEnabled(false);
+			fNumCommentsText.setEnabled(false);
 		} else {
-			FIdText.setEnabled(true);
-			FNumItemsText.setEnabled(true);
-			FNumAnomaliesText.setEnabled(true);
-			FNumCommentsText.setEnabled(true);
+			fIdText.setEnabled(true);
+			fNumItemsText.setEnabled(true);
+			fNumAnomaliesText.setEnabled(true);
+			fNumCommentsText.setEnabled(true);
 		}
 	}
 }

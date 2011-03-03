@@ -13,11 +13,7 @@ public class AnomalyExtraProperties extends AnomalyGeneralProperties {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
-	private static String[] stateValues = { "ACCEPTED", "DUPLICATED", "REJECTED", "DEFERRED", 
-		"ASSIGNED", "CREATED", "VERIFIED", "FIXED" };  //NOTE: This has to match R4EAnomalyState in R4E core plugin
-	private static String[] rankValues = { "NONE", "MINOR", "MAJOR" };  //NOTE: This has to match R4EAnomalyRank in R4E core plugin
-	
+		
 	/**
 	 * Field ANOMALY_STATE_ID. (value is ""anomalyElement.state"")
 	 */
@@ -27,7 +23,7 @@ public class AnomalyExtraProperties extends AnomalyGeneralProperties {
 	 * Field ANOMALY_STATE_PROPERTY_DESCRIPTOR.
 	 */
 	protected static final ComboBoxPropertyDescriptor ANOMALY_STATE_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_STATE_ID, R4EUIConstants.STATE_LABEL, stateValues);
+			ANOMALY_STATE_ID, R4EUIConstants.STATE_LABEL, R4EUIAnomalyExtended.getStates());
 	
 	/**
 	 * Field ANOMALY_DUE_DATE_ID. (value is ""anomalyElement.dueDate"")
@@ -49,7 +45,7 @@ public class AnomalyExtraProperties extends AnomalyGeneralProperties {
 	 * Field ANOMALY_RANK_PROPERTY_DESCRIPTOR.
 	 */
 	protected static final ComboBoxPropertyDescriptor ANOMALY_RANK_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_RANK_ID, R4EUIConstants.RANK_LABEL, rankValues);
+			ANOMALY_RANK_ID, R4EUIConstants.RANK_LABEL, R4EUIAnomalyExtended.getRanks());
 	
 	/**
 	 * Field ANOMALY_NOT_ACCEPTED_REASON_ID. (value is ""anomalyElement.notAcceptedReason"")
@@ -156,7 +152,7 @@ public class AnomalyExtraProperties extends AnomalyGeneralProperties {
 		} else if (ANOMALY_DECIDED_BY_ID.equals(aId)) { 
 			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDecidedByID();
 		} else if (ANOMALY_FIXED_BY_ID.equals(aId)) { 
-			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFiexeByID();
+			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFixedByID();
 		} else if (ANOMALY_FOLLOWUP_BY_ID.equals(aId)) { 
 			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFollowUpByID();
 		}

@@ -50,17 +50,17 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field FAuthorText.
 	 */
-	protected static Text FAuthorText = null;
+	protected Text fAuthorText = null;
 	
 	/**
 	 * Field FCreationDateText.
 	 */
-	protected static Text FCreationDateText = null;
+	protected Text fCreationDateText = null;
 	
 	/**
 	 * Field FDescriptionText.
 	 */
-	protected static Text FDescriptionText = null;
+	protected Text fDescriptionText = null;
 
 	
 	// ------------------------------------------------------------------------
@@ -93,50 +93,50 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	    FormData data = null;
 	   
 	    //Author (read-only)
-	    FAuthorText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fAuthorText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-	    FAuthorText.setLayoutData(data);
+	    fAuthorText.setLayoutData(data);
 
 	    final CLabel authorLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AUTHOR_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FAuthorText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FAuthorText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fAuthorText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fAuthorText, 0, SWT.CENTER);
 	    authorLabel.setLayoutData(data);
 	    
 	    //Creation Date (read-only)
-	    FCreationDateText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fCreationDateText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(FAuthorText, ITabbedPropertyConstants.VSPACE);
-	    FCreationDateText.setLayoutData(data);
+	    data.top = new FormAttachment(fAuthorText, ITabbedPropertyConstants.VSPACE);
+	    fCreationDateText.setLayoutData(data);
 	
 	    final CLabel creationDateLabel = widgetFactory.createCLabel(composite, R4EUIConstants.CREATION_DATE_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FCreationDateText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FCreationDateText, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fCreationDateText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fCreationDateText, 0, SWT.CENTER);
 	    creationDateLabel.setLayoutData(data);
 	
 	    //Description
-	    FDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
+	    fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(FCreationDateText, ITabbedPropertyConstants.VSPACE);
-	    FDescriptionText.setLayoutData(data);
-	    FDescriptionText.addFocusListener(new FocusListener() {		
+	    data.top = new FormAttachment(fCreationDateText, ITabbedPropertyConstants.VSPACE);
+	    fDescriptionText.setLayoutData(data);
+	    fDescriptionText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EComment modelComment = ((R4EUIComment)fProperties.getElement()).getComment();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelComment, currentUser);
-						modelComment.setDescription(FDescriptionText.getText());
+						modelComment.setDescription(fDescriptionText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
@@ -149,13 +149,13 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 				//Nothing to do
 			}
 		});
-	    UIUtils.addTabbedPropertiesTextResizeListener(FDescriptionText);
+	    UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
 	    
 	    final CLabel descriptionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DESCRIPTION_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(FDescriptionText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(FDescriptionText, 0, SWT.TOP);
+	    data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fDescriptionText, 0, SWT.TOP);
 	    descriptionLabel.setLayoutData(data);
 	}
 
@@ -167,9 +167,9 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	public void refresh() {
 		fRefreshInProgress = true;
 		final R4EComment modelComment = ((R4EUIComment)fProperties.getElement()).getComment();
-		FAuthorText.setText(modelComment.getUser().getId());
-		FCreationDateText.setText(modelComment.getCreatedOn().toString());
-		FDescriptionText.setText(modelComment.getDescription());
+		fAuthorText.setText(modelComment.getUser().getId());
+		fCreationDateText.setText(modelComment.getCreatedOn().toString());
+		fDescriptionText.setText(modelComment.getDescription());
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -180,13 +180,13 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isDialogOpen()) {
-			FAuthorText.setEnabled(false);
-			FCreationDateText.setEnabled(false);
-			FDescriptionText.setEnabled(false);
+			fAuthorText.setEnabled(false);
+			fCreationDateText.setEnabled(false);
+			fDescriptionText.setEnabled(false);
 		} else {
-			FAuthorText.setEnabled(true);
-			FCreationDateText.setEnabled(true);
-			FDescriptionText.setEnabled(true);
+			fAuthorText.setEnabled(true);
+			fCreationDateText.setEnabled(true);
+			fDescriptionText.setEnabled(true);
 		}
 	}
 }

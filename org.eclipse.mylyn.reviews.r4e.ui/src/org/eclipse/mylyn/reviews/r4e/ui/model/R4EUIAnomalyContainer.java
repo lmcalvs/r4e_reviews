@@ -35,6 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
@@ -214,6 +215,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 					    			uiAnomaly = new R4EUIAnomalyBasic(this, anomalies.get(i), position);
 					    		} else {
 					    			uiAnomaly = new R4EUIAnomalyExtended(this, anomalies.get(i), position);
+					    			uiAnomaly.setName(R4EUIAnomalyExtended.getStateString(anomalies.get(i).getState()) + ": " + getName());
 					    		}
 								
 								addChildren(uiAnomaly);
@@ -240,7 +242,12 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 					if (anomaly.isEnabled() || Activator.getDefault().getPreferenceStore().
 							getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 						if (0 == anomaly.getLocation().size()) {
-							uiAnomaly = new R4EUIAnomalyBasic(this, anomaly, null);
+				    		if (((R4EUIReview)getParent()).getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+								uiAnomaly = new R4EUIAnomalyBasic(this, anomaly, null);
+				    		} else {
+				    			uiAnomaly = new R4EUIAnomalyExtended(this, anomaly, null);
+				    			uiAnomaly.setName(R4EUIAnomalyExtended.getStateString(anomaly.getState()) + ": " + getName());
+				    		}
 							addChildren(uiAnomaly);
 							uiAnomaly.open();
 						}
@@ -301,7 +308,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     		addedChild = new R4EUIAnomalyBasic(this, anomaly, null);
 		} else {
 			addedChild = new R4EUIAnomalyExtended(this, anomaly, null);
-			((R4EUIAnomalyExtended)addedChild).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+			((R4EUIAnomalyExtended)addedChild).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
 		}
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
@@ -376,7 +383,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     			uiAnomaly = new R4EUIAnomalyBasic(this, anomaly, aUiPosition);	
     		} else {
     			uiAnomaly = new R4EUIAnomalyExtended(this, anomaly, aUiPosition);
-    			((R4EUIAnomalyExtended)uiAnomaly).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+    			((R4EUIAnomalyExtended)uiAnomaly).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
     		}
     		aUiPosition.setPositionInModel(position);
     		uiAnomaly.setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(anomaly));   //Also set UI tooltip immediately
@@ -505,5 +512,20 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	@Override
 	public String getAddChildElementCmdTooltip() {
 		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP; 
+	}
+	
+	public boolean checkCompletionStatus() {
+		for (R4EUIAnomalyBasic anomaly : fAnomalies) {
+			if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED) ||
+				anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED) ||	
+				anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
+				return(false);
+			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
+				if (R4EUIModelController.getActiveReview().getReview().getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP)) {
+					return(false);
+				}
+			}
+		}
+		return true;
 	}
 }
