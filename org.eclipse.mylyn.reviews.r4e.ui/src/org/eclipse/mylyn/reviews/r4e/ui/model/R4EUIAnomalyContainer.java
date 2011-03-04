@@ -211,11 +211,11 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 							for (int j = 0; j < locationsSize; j++) {
 								position = new R4EUITextPosition(
 										((R4EContent)anomalies.get(i).getLocation().get(j)).getLocation());  // $codepro.audit.disable methodChainLength
-					    		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+					    		if (((R4EUIReview)getParent().getParent().getParent()).getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
 					    			uiAnomaly = new R4EUIAnomalyBasic(this, anomalies.get(i), position);
 					    		} else {
 					    			uiAnomaly = new R4EUIAnomalyExtended(this, anomalies.get(i), position);
-					    			uiAnomaly.setName(R4EUIAnomalyExtended.getStateString(anomalies.get(i).getState()) + ": " + getName());
+					    			uiAnomaly.setName(R4EUIAnomalyExtended.getStateString(anomalies.get(i).getState()) + ": " + uiAnomaly.getName());
 					    		}
 								
 								addChildren(uiAnomaly);
@@ -303,7 +303,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				R4EUIModelController.getReviewer());
 		anomaly.setTitle(((R4EAnomaly)aModelComponent).getTitle());  //This is needed as the global anomaly title is displayed in the navigator view
     	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-    	R4EUIAnomalyBasic addedChild;
+    	R4EUIAnomalyBasic addedChild = null;
     	if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
     		addedChild = new R4EUIAnomalyBasic(this, anomaly, null);
 		} else {
@@ -514,15 +514,19 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP; 
 	}
 	
-	public boolean checkCompletionStatus() {
+	/**
+	 * Method checkCompletionStatus.
+	 * @return boolean
+	 */
+	public boolean checkCompletionStatus() { // $codepro.audit.disable booleanMethodNamingConvention
 		for (R4EUIAnomalyBasic anomaly : fAnomalies) {
 			if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED) ||
 				anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED) ||	
 				anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
-				return(false);
+				return false;
 			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
 				if (R4EUIModelController.getActiveReview().getReview().getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP)) {
-					return(false);
+					return false;
 				}
 			}
 		}

@@ -50,12 +50,12 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field FAuthorText.
 	 */
-	protected Text fAuthorText = null;
+	private Text fAuthorText = null;
 	
 	/**
 	 * Field FCreationDateText.
 	 */
-	protected Text fCreationDateText = null;
+	private Text fCreationDateText = null;
 	
 	/**
 	 * Field FDescriptionText.
@@ -145,7 +145,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 					}
 				}
 			}
-			public void focusGained(FocusEvent e) {
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});

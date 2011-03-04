@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Ericsson Research Canada
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * This class implements the dialog used to display and select a date in a calendar
+ * 
+ * Contributors:
+ *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   
+ ******************************************************************************/
+
 package org.eclipse.mylyn.reviews.r4e.ui.dialogs;
 
 import java.util.Date;
@@ -14,12 +31,20 @@ import org.eclipse.ui.forms.FormDialog;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class CalendarDialog extends FormDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 	
+	/**
+	 * Field ADD_CALENDAR_DIALOG_TITLE.
+	 * (value is ""Select Date"")
+	 */
 	private static final String ADD_CALENDAR_DIALOG_TITLE = "Select Date";
 	
 	
@@ -27,7 +52,13 @@ public class CalendarDialog extends FormDialog {
 	// Member variables
 	// ------------------------------------------------------------------------
 	
-	protected DateTime fCalendar = null;
+	/**
+	 * Field fCalendar.
+	 */
+	private DateTime fCalendar = null;
+	/**
+	 * Field fDate.
+	 */
 	private GregorianCalendar fDate = null;
 	
 	
@@ -35,6 +66,10 @@ public class CalendarDialog extends FormDialog {
 	// Constructor
 	// ------------------------------------------------------------------------
 	
+	/**
+	 * Constructor for CalendarDialog.
+	 * @param aParentShell Shell
+	 */
 	public CalendarDialog(Shell aParentShell) {
 		super(aParentShell);
     	setBlockOnOpen(true);
@@ -81,13 +116,17 @@ public class CalendarDialog extends FormDialog {
 
 		final ScrolledForm sform = mform.getForm();
 		sform.setExpandVertical(true);
-		Composite composite = sform.getBody();
-		GridLayout layout = new GridLayout();
+		final Composite composite = sform.getBody();
+		final GridLayout layout = new GridLayout();
 		composite.setLayout(layout);
 	    fCalendar = new DateTime(composite, SWT.CALENDAR | SWT.BORDER);
 	    fCalendar.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 	}
     
+    /**
+     * Method getDate.
+	 * @return Date
+     */
 	public Date getDate() {
 		return fDate.getTime();
 	}

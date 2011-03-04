@@ -91,12 +91,31 @@ public class R4EUIReview extends R4EUIModelElement {
     private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review from " +
     		"its Parent Review Group";
 	
+	/**
+	 * Field EXIT_DECISION_NONE.
+	 * (value is ""No Decision"")
+	 */
 	private static final String EXIT_DECISION_NONE = "No Decision";
+	/**
+	 * Field EXIT_DECISION_ACCEPTED.
+	 * (value is ""Accepted"")
+	 */
 	private static final String EXIT_DECISION_ACCEPTED = "Accepted";		
+	/**
+	 * Field EXIT_DECISION_ACCEPTED_FOLLOWUP.
+	 * (value is ""Accepted with Follow-up"")
+	 */
 	private static final String EXIT_DECISION_ACCEPTED_FOLLOWUP = "Accepted with Follow-up";
+	/**
+	 * Field EXIT_DECISION_REJECTED.
+	 * (value is ""Rejected"")
+	 */
 	private static final String EXIT_DECISION_REJECTED = "Rejected";
 	
-	private static String[] decisionValues = { EXIT_DECISION_NONE, EXIT_DECISION_ACCEPTED,
+	/**
+	 * Field decisionValues.
+	 */
+	private static final String[] FDecisionValues = { EXIT_DECISION_NONE, EXIT_DECISION_ACCEPTED,
 		EXIT_DECISION_ACCEPTED_FOLLOWUP, EXIT_DECISION_REJECTED };  //NOTE: This has to match R4EDecision in R4E core plugin
 
 	
@@ -138,6 +157,7 @@ public class R4EUIReview extends R4EUIModelElement {
 	 * Constructor for R4EUIReview.
 	 * @param aParent R4EUIReviewGroup
 	 * @param aReview R4EReview
+	 * @param aType R4EReviewType
 	 * @param aOpen boolean
 	 * @throws ResourceHandlingException
 	 */
@@ -179,8 +199,12 @@ public class R4EUIReview extends R4EUIModelElement {
 	 */
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter)) return this;
-		if (IPropertySource.class.equals(adapter)) return new ReviewProperties(this);
+		if (IR4EUIModelElement.class.equals(adapter)) {
+			return this;
+		}
+		if (IPropertySource.class.equals(adapter)) {
+			return new ReviewProperties(this);
+		}
 		return null;
 	}
 	
@@ -193,10 +217,12 @@ public class R4EUIReview extends R4EUIModelElement {
 	 * @return String
 	 */
 	private static String getReviewDisplayName(String aName, R4EReviewType aType) {
-		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) 
+		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 			return R4EUIConstants.REVIEW_TYPE_FORMAL + ": " + aName;
-		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) 
+		}
+		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
 			return R4EUIConstants.REVIEW_TYPE_INFORMAL + ": " + aName;
+		}
 		return R4EUIConstants.REVIEW_TYPE_BASIC + ": " + aName;		
 	}
 	
@@ -316,8 +342,6 @@ public class R4EUIReview extends R4EUIModelElement {
 				fItems.get(i).setReviewed(aReviewed);
 			}
 		}
-		
-		//TODO maybe we want to set the element as disabled as well?
 		fireReviewStateChanged(this);
 		R4EUIModelController.propertyChanged();
 	}
@@ -700,12 +724,21 @@ public class R4EUIReview extends R4EUIModelElement {
 		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
 	}
 	
+	/**
+	 * Method getExitDecisionValues.
+	 * @return String[]
+	 */
 	public static String[] getExitDecisionValues() {
-		return decisionValues;
+		return FDecisionValues;
 	}
 	
+	/**
+	 * Method getDecisionValueFromString.
+	 * @param aDecision - String
+	 * @return R4EReviewDecision
+	 */
 	public static R4EReviewDecision getDecisionValueFromString(String aDecision) {
-		R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
+		final R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
 		if (aDecision.equals(EXIT_DECISION_ACCEPTED)) {
 			reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED);
 		} else if (aDecision.equals(EXIT_DECISION_ACCEPTED_FOLLOWUP)) {
@@ -718,24 +751,27 @@ public class R4EUIReview extends R4EUIModelElement {
 		return reviewDecision;
 	}
 	
-	public boolean checkCompletionStatus() {
+	/**
+	 * Method checkCompletionStatus.
+	 * @return boolean
+	 */
+	public boolean checkCompletionStatus() { // $codepro.audit.disable booleanMethodNamingConvention
 		if (!(fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC))) {
-
+			if (null == fReview.getDecision() || null == fReview.getDecision().getValue()) return false;
 			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_NONE)) return false;	
 			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_REJECTED)) return true;
 			
 			//Check global anomalies state
-			if (false == fAnomalyContainer.checkCompletionStatus()) return false;
+			if (!(fAnomalyContainer.checkCompletionStatus())) return false;
 			
 			for (R4EUIReviewItem item : fItems) {
 				R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
 				for (R4EUIFileContext context : contexts) {
 					R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
-					if (false == container.checkCompletionStatus()) return false;
+					if (!(container.checkCompletionStatus())) return false;
 				}
 			}
 		}
 		return true;
 	}
-	
 }

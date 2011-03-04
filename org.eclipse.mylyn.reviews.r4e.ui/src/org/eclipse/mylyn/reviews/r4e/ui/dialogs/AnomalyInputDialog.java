@@ -70,7 +70,13 @@ public class AnomalyInputDialog extends FormDialog {
 	 * (value is ""Enter your comments for the new Anomaly:"")
 	 */
 	private static final String ADD_DESCRIPTION_DIALOG_VALUE = "Anomaly Description: ";
-
+	
+	/**
+	 * Field BASIC_PARAMS_HEADER_MSG.
+	 * (value is ""Enter the mandatory basic parameters for this anomaly"")
+	 */
+	private static final String BASIC_PARAMS_HEADER_MSG = "Enter the mandatory basic parameters for this anomaly";
+	
 	
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -109,9 +115,6 @@ public class AnomalyInputDialog extends FormDialog {
 	/**
 	 * Constructor for R4EAnomalyInputDialog.
 	 * @param aParentShell Shell
-	 * @param aDialogTitle String
-	 * @param aAnomalyMessage String
-	 * @param aCommentMessage String
 	 */
 	public AnomalyInputDialog(Shell aParentShell) {
 		super(aParentShell);
@@ -187,11 +190,11 @@ public class AnomalyInputDialog extends FormDialog {
 	@Override
 	protected void createFormContent(final IManagedForm mform) {
 
-		FormToolkit toolkit = mform.getToolkit();
+		final FormToolkit toolkit = mform.getToolkit();
 		final ScrolledForm sform = mform.getForm();
 		sform.setExpandVertical(true);
-		Composite composite = sform.getBody();
-		GridLayout layout = new GridLayout(4, false);
+		final Composite composite = sform.getBody();
+		final GridLayout layout = new GridLayout(4, false);
 		composite.setLayout(layout);
         
         //Grid data values
@@ -204,11 +207,11 @@ public class AnomalyInputDialog extends FormDialog {
 		//Basic parameters section
         final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-        GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         basicSectionGridData.horizontalSpan = 4;
         basicSection.setLayoutData(basicSectionGridData);
-        basicSection.setText("Basic Parameters");
-        basicSection.setDescription("Enter the mandatory basic parameters for this anomaly");
+        basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
+        basicSection.setDescription(BASIC_PARAMS_HEADER_MSG);
         basicSection.addExpansionListener(new ExpansionAdapter()
 		{
 			@Override
@@ -218,7 +221,7 @@ public class AnomalyInputDialog extends FormDialog {
 			}
 		});
         
-        Composite basicSectionClient = toolkit.createComposite(basicSection);
+        final Composite basicSectionClient = toolkit.createComposite(basicSection);
         basicSectionClient.setLayout(layout);
         basicSection.setClient(basicSectionClient);
         

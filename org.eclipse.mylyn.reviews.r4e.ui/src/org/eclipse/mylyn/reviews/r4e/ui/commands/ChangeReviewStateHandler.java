@@ -58,14 +58,15 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		if (!selection.isEmpty()) {
 			IR4EUIModelElement element = null;
+			ErrorDialog dialog = null;
 			for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
 				try {
 					element = (IR4EUIModelElement) iterator.next();
 					Activator.Ftracer.traceInfo("Changing review state for element " + element.getName());
 					//We need to do a special check for R4EReviews
 					if (element instanceof R4EUIReview) {
-						if (false == ((R4EUIReview)element).checkCompletionStatus()) {
-					    	final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.REVIEW_NOT_COMPLETED_ERROR, "Review cannot be set to completed",
+						if (!(((R4EUIReview)element).checkCompletionStatus())) {
+					    	dialog = new ErrorDialog(null, R4EUIConstants.REVIEW_NOT_COMPLETED_ERROR, "Review cannot be set to completed",
 					    			new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "Some anomalies are not in the proper state to complete this review", null), IStatus.ERROR);
 					    	dialog.open();
 							return null;

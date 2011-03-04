@@ -146,7 +146,7 @@ public class ReviewGroupGeneralTabPropertySection extends ModelElementTabPropert
 					}
 				}
 			}
-			public void focusGained(FocusEvent e) {
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});

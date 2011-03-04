@@ -131,7 +131,7 @@ public class AnomalyGeneralTabPropertySection extends ModelElementTabPropertySec
 					}
 				}
 			}
-			public void focusGained(FocusEvent e) {
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
@@ -212,7 +212,7 @@ public class AnomalyGeneralTabPropertySection extends ModelElementTabPropertySec
 	    			}
 	    		}
 			}
-			public void focusGained(FocusEvent e) {
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});

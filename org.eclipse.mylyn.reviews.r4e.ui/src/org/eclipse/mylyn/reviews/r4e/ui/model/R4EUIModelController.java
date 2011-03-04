@@ -223,7 +223,6 @@ public class R4EUIModelController {
 	
 	/**
 	 * Refresh properties
-	 * @param aSelection the selected element
 	 */
 	public static void propertyChanged() {
 		for (IPropertyListener listener : FElementStateListenerList) {

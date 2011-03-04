@@ -69,7 +69,7 @@ public class R4EInputValidator implements IInputValidator {
 	 * @return String
 	 * @see org.eclipse.jface.dialogs.IInputValidator#isValid(String)
 	 */
-	public String isFolderValid(String newText) {
+	public String isFolderValid(String newText) { // $codepro.audit.disable booleanMethodNamingConvention
 		if (null == newText || 0 == newText.length()) return FOLDER_VALIDATION_ERROR_MESSAGE;
 		final File folder = new File (newText);
 		if (folder.exists()) return null;

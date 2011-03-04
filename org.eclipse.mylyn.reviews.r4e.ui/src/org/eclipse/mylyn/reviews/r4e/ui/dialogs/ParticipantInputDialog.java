@@ -1,3 +1,21 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Ericsson Research Canada
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * This class implements the dialog used to fill-in the Participant element details.
+ *  This is a modal dialog
+ * 
+ * Contributors:
+ *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   
+ ******************************************************************************/
+
 package org.eclipse.mylyn.reviews.r4e.ui.dialogs;
 
 import java.util.ArrayList;
@@ -13,9 +31,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
@@ -30,6 +48,10 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class ParticipantInputDialog extends FormDialog {
 
 	// ------------------------------------------------------------------------
@@ -67,7 +89,7 @@ public class ParticipantInputDialog extends FormDialog {
 	/**
 	 * Field fParticipantIdInputTextField.
 	 */
-    Text fParticipantIdInputTextField;
+    private Text fParticipantIdInputTextField;
     
 	/**
 	 * Field fAvailableComponents.
@@ -87,7 +109,7 @@ public class ParticipantInputDialog extends FormDialog {
 	/**
 	 * Field fFocusAreaTextField.
 	 */
-    Text fFocusAreaTextField;
+    private Text fFocusAreaTextField;
     
     /**
      * The input validator, or <code>null</code> if none.
@@ -102,9 +124,6 @@ public class ParticipantInputDialog extends FormDialog {
 	/**
 	 * Constructor for ParticipantInputDialog.
 	 * @param aParentShell Shell
-	 * @param aDialogTitle String
-	 * @param aReviewNameMessage String
-	 * @param aReviewDescriptionMessage String
 	 */
 	public ParticipantInputDialog(Shell aParentShell) {
 		super(aParentShell);
@@ -143,12 +162,15 @@ public class ParticipantInputDialog extends FormDialog {
         	fRolesValue = new ArrayList<R4EUserRole>();
 			for (Item item : fRoleTypes.getItems()) {
 		    	//Review type (no validation needed as this is a read-only combo box
-		        if (item.getText().equals(R4EUIConstants.USER_ROLE_LEAD)) 
+		        if (item.getText().equals(R4EUIConstants.USER_ROLE_LEAD)) {
 		        	fRolesValue.add(R4EUserRole.R4E_ROLE_LEAD);
-		        else if (item.getText().equals(R4EUIConstants.USER_ROLE_AUTHOR)) 
+		        }
+		        else if (item.getText().equals(R4EUIConstants.USER_ROLE_AUTHOR)) {
 		        	fRolesValue.add(R4EUserRole.R4E_ROLE_AUTHOR);
-		        else if (item.getText().equals(R4EUIConstants.USER_ROLE_REVIEWER)) 
+		        }
+		        else if (item.getText().equals(R4EUIConstants.USER_ROLE_REVIEWER)) {
 		        	fRolesValue.add(R4EUserRole.R4E_ROLE_REVIEWER);
+		        }
 			}
 			
         	//Validate Focus Area (optional)
@@ -185,11 +207,11 @@ public class ParticipantInputDialog extends FormDialog {
 	@Override
 	protected void createFormContent(final IManagedForm mform) {
 
-		FormToolkit toolkit = mform.getToolkit();
+		final FormToolkit toolkit = mform.getToolkit();
 		final ScrolledForm sform = mform.getForm();
 		sform.setExpandVertical(true);
-		Composite composite = sform.getBody();
-		GridLayout layout = new GridLayout(4, false);
+		final Composite composite = sform.getBody();
+		final GridLayout layout = new GridLayout(4, false);
 		composite.setLayout(layout);
 		
         //Grid data values
@@ -202,7 +224,7 @@ public class ParticipantInputDialog extends FormDialog {
 		//Basic parameters section
         final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-        GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         basicSectionGridData.horizontalSpan = 4;
         basicSection.setLayoutData(basicSectionGridData);
         basicSection.setText("Basic Parameters");
@@ -216,7 +238,7 @@ public class ParticipantInputDialog extends FormDialog {
 			}
 		});
         
-        Composite basicSectionClient = toolkit.createComposite(basicSection);
+        final Composite basicSectionClient = toolkit.createComposite(basicSection);
         basicSectionClient.setLayout(layout);
         basicSection.setClient(basicSectionClient);
         
@@ -229,9 +251,9 @@ public class ParticipantInputDialog extends FormDialog {
         //Extra parameters section
         final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE);
-        GridData ExtraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        ExtraSectionGridData.horizontalSpan = 4;
-        extraSection.setLayoutData(ExtraSectionGridData);
+        final GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        extraSectionGridData.horizontalSpan = 4;
+        extraSection.setLayoutData(extraSectionGridData);
         extraSection.setText("Extra Parameters");
         extraSection.setDescription("Enter the optional extra parameters for this participant");
         extraSection.addExpansionListener(new ExpansionAdapter()
@@ -250,7 +272,7 @@ public class ParticipantInputDialog extends FormDialog {
 		//Roles
         label = toolkit.createLabel(extraSectionClient, "Roles: ");
         label.setLayoutData(labelData);
-        fRoleTypes = new EditableListWidget(toolkit, extraSectionClient, textSingleData, null, 0, Combo.class,
+        fRoleTypes = new EditableListWidget(toolkit, extraSectionClient, textSingleData, null, 0, CCombo.class,
         		PARTICIPANT_ROLES);
 
         //Focus Area

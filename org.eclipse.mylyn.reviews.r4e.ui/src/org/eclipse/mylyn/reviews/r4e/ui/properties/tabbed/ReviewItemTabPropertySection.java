@@ -47,17 +47,17 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	/**
 	 * Field FAuthorText.
 	 */
-	protected Text fAuthorText = null;
+	private Text fAuthorText = null;
 	
 	/**
 	 * Field FProjectIdList.
 	 */
-	protected List fProjectIdList = null;
+	private List fProjectIdList = null;
 	
 	/**
 	 * Field FDescriptionText.
 	 */
-	protected Text fDescriptionText = null;
+	private Text fDescriptionText = null;
 
 	
 	// ------------------------------------------------------------------------

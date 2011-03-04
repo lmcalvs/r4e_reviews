@@ -69,6 +69,12 @@ public class CommentInputDialog extends FormDialog {
 	 */
 	private static final String ADD_COMMENT_DIALOG_VALUE = "Comments Description:";
 
+	/**
+	 * Field BASIC_PARAMS_HEADER_MSG.
+	 * (value is ""Enter the mandatory basic parameters for this comment"")
+	 */
+	private static final String BASIC_PARAMS_HEADER_MSG = "Enter the mandatory basic parameters for this comment";
+	
 	
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -97,8 +103,6 @@ public class CommentInputDialog extends FormDialog {
 	/**
 	 * Constructor for R4ECommentInputDialog.
 	 * @param aParentShell Shell
-	 * @param aDialogTitle String
-	 * @param aCommentMessage String
 	 */
 	public CommentInputDialog(Shell aParentShell) {
 		super(aParentShell);
@@ -159,11 +163,11 @@ public class CommentInputDialog extends FormDialog {
 	@Override
 	protected void createFormContent(final IManagedForm mform) {
 
-		FormToolkit toolkit = mform.getToolkit();
+		final FormToolkit toolkit = mform.getToolkit();
 		final ScrolledForm sform = mform.getForm();
 		sform.setExpandVertical(true);
-		Composite composite = sform.getBody();
-		GridLayout layout = new GridLayout(4, false);
+		final Composite composite = sform.getBody();
+		final GridLayout layout = new GridLayout(4, false);
 		composite.setLayout(layout);
         
         //Grid data values
@@ -176,11 +180,11 @@ public class CommentInputDialog extends FormDialog {
 		//Basic parameters section
         final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-        GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         basicSectionGridData.horizontalSpan = 4;
         basicSection.setLayoutData(basicSectionGridData);
-        basicSection.setText("Basic Parameters");
-        basicSection.setDescription("Enter the mandatory basic parameters for this comment");
+        basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
+        basicSection.setDescription(BASIC_PARAMS_HEADER_MSG);
         basicSection.addExpansionListener(new ExpansionAdapter()
 		{
 			@Override
@@ -190,12 +194,12 @@ public class CommentInputDialog extends FormDialog {
 			}
 		});
         
-        Composite basicSectionClient = toolkit.createComposite(basicSection);
+        final Composite basicSectionClient = toolkit.createComposite(basicSection);
         basicSectionClient.setLayout(layout);
         basicSection.setClient(basicSectionClient);
         
         //Comment Description
-        Label label = toolkit.createLabel(basicSectionClient, ADD_COMMENT_DIALOG_VALUE);
+        final Label label = toolkit.createLabel(basicSectionClient, ADD_COMMENT_DIALOG_VALUE);
         label.setLayoutData(labelData);
         fCommentInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
         textMultiData.heightHint = fCommentInputTextField.getLineHeight() * 3;

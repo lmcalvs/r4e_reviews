@@ -86,6 +86,36 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 */
 	private static final String ADD_REVIEW_GROUP_DESCRIPTION_DIALOG_VALUE = "Group Description:";
 	
+	/**
+	 * Field ADD_REVIEW_GROUP_AVAILABLE_PROJECTS_DIALOG_VALUE.
+	 * (value is ""Available Projects:"")
+	 */
+	private static final String ADD_REVIEW_GROUP_AVAILABLE_PROJECTS_DIALOG_VALUE = "Available Projects:";
+	
+	/**
+	 * Field ADD_REVIEW_GROUP_AVAILABLE_COMPONENTS_DIALOG_VALUE.
+	 * (value is ""Available Components:"")
+	 */
+	private static final String ADD_REVIEW_GROUP_AVAILABLE_COMPONENTS_DIALOG_VALUE = "Available Components:";
+	
+	/**
+	 * Field ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE.
+	 * (value is ""Default Entry Criteria:"")
+	 */
+	private static final String ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE = "Default Entry Criteria:";
+	
+	/**
+	 * Field BASIC_PARAMS_HEADER_MSG.
+	 * (value is ""Enter the mandatory basic parameters for this Review Group"")
+	 */
+	private static final String BASIC_PARAMS_HEADER_MSG = "Enter the mandatory basic parameters for this Review Group";
+	
+	/**
+	 * Field EXTRA_PARAMS_HEADER_MSG.
+	 * (value is ""Enter the optional extra parameters for this Review Group"")
+	 */
+	private static final String EXTRA_PARAMS_HEADER_MSG = "Enter the optional extra parameters for this Review Group";
+	
 	
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -165,10 +195,6 @@ public class ReviewGroupInputDialog extends FormDialog {
 	/**
 	 * Constructor for R4EReviewGroupInputDialog.
 	 * @param aParentShell Shell
-	 * @param aDialogTitle String
-	 * @param aGroupNameMessage String
-	 * @param aGroupFolderMessage String
-	 * @param aGroupDescriptionMessage String
 	 */
 	public ReviewGroupInputDialog(Shell aParentShell) {
 		super(aParentShell);
@@ -232,7 +258,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 			}
 			
         	//Validate Projects (optional)
-        	ArrayList<String> projectsValues = new ArrayList<String>();
+        	final ArrayList<String> projectsValues = new ArrayList<String>();
 			for (Item item : fAvailableProjects.getItems()) {	
 	        	validateResult = validateEmptyInput(item.getText());
 	        	if (null == validateResult) {
@@ -242,7 +268,7 @@ public class ReviewGroupInputDialog extends FormDialog {
         	fAvailableProjectsValues = projectsValues.toArray(new String[projectsValues.size()]);
 			
         	//Validate Components (optional)
-        	ArrayList<String> componentsValues = new ArrayList<String>();
+        	final ArrayList<String> componentsValues = new ArrayList<String>();
 			for (Item item : fAvailableComponents.getItems()) {
 	        	validateResult = validateEmptyInput(item.getText());
 	        	if (null == validateResult) {
@@ -291,11 +317,11 @@ public class ReviewGroupInputDialog extends FormDialog {
 	@Override
 	protected void createFormContent(final IManagedForm mform) {
 
-		FormToolkit toolkit = mform.getToolkit();
+		final FormToolkit toolkit = mform.getToolkit();
 		final ScrolledForm sform = mform.getForm();
 		sform.setExpandVertical(true);
-		Composite composite = sform.getBody();
-		GridLayout layout = new GridLayout(4, false);
+		final Composite composite = sform.getBody();
+		final GridLayout layout = new GridLayout(4, false);
 		composite.setLayout(layout);
 		
         //Grid data values
@@ -304,17 +330,17 @@ public class ReviewGroupInputDialog extends FormDialog {
         textSingleData.horizontalSpan = 3;
         final GridData textMultiData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textMultiData.horizontalSpan = 3;
-        GridData buttonData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+        final GridData buttonData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
         buttonData.horizontalSpan = 1;
         
 		//Basic parameters section
         final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-        GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         basicSectionGridData.horizontalSpan = 4;
         basicSection.setLayoutData(basicSectionGridData);
-        basicSection.setText("Basic Parameters");
-        basicSection.setDescription("Enter the mandatory basic parameters for this review group");
+        basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
+        basicSection.setDescription(BASIC_PARAMS_HEADER_MSG);
         basicSection.addExpansionListener(new ExpansionAdapter()
 		{
 			@Override
@@ -324,7 +350,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 			}
 		});
         
-        Composite basicSectionClient = toolkit.createComposite(basicSection);
+        final Composite basicSectionClient = toolkit.createComposite(basicSection);
         basicSectionClient.setLayout(layout);
         basicSection.setClient(basicSectionClient);
         
@@ -338,19 +364,23 @@ public class ReviewGroupInputDialog extends FormDialog {
         label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE);
         label.setLayoutData(labelData);
         fGroupFolderInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
-        GridData folderTextData = new GridData(GridData.FILL, GridData.BEGINNING, true, false);
+        final GridData folderTextData = new GridData(GridData.FILL, GridData.BEGINNING, true, false);
         folderTextData.horizontalSpan = 2;
         fGroupFolderInputTextField.setLayoutData(folderTextData);
-        Button folderButton = toolkit.createButton(basicSectionClient, "", SWT.NONE);
+        final Button folderButton = toolkit.createButton(basicSectionClient, "", SWT.NONE);
         folderButton.setImage(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER).createImage()); // $codepro.audit.disable methodChainLength
         folderButton.setLayoutData(buttonData);
         folderButton.addSelectionListener(new SelectionAdapter() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 			@SuppressWarnings("synthetic-access")
 			@Override
 			public void widgetSelected(SelectionEvent event) {
-				String result = folderButtonPressed();
-				if (null == result) fGroupFolderInputTextField.setText("");
-				else fGroupFolderInputTextField.setText(result);
+				final String result = folderButtonPressed();
+				if (null == result) {
+					fGroupFolderInputTextField.setText("");
+				}
+				else {
+					fGroupFolderInputTextField.setText(result);
+				}
 			}
 		});
         
@@ -364,11 +394,11 @@ public class ReviewGroupInputDialog extends FormDialog {
         //Extra parameters section
         final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE);
-        GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        final GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         extraSectionGridData.horizontalSpan = 4;
         extraSection.setLayoutData(extraSectionGridData);
-        extraSection.setText("Extra Parameters");
-        extraSection.setDescription("Enter the optional extra parameters for this review");
+        extraSection.setText(R4EUIConstants.EXTRA_PARAMS_HEADER);
+        extraSection.setDescription(EXTRA_PARAMS_HEADER_MSG);
         extraSection.addExpansionListener(new ExpansionAdapter()
 		{
 			@Override
@@ -383,17 +413,17 @@ public class ReviewGroupInputDialog extends FormDialog {
         extraSection.setClient(extraSectionClient);
         
 		//Available Projects
-        label = toolkit.createLabel(extraSectionClient, "Available Projects: ");
+        label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_GROUP_AVAILABLE_PROJECTS_DIALOG_VALUE);
         label.setLayoutData(labelData);
         fAvailableProjects = new EditableListWidget(toolkit, extraSectionClient, textSingleData, null, 0, Text.class, null);
         
 		//Available Components
-        label = toolkit.createLabel(extraSectionClient, "Available Components: ");
+        label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_GROUP_AVAILABLE_COMPONENTS_DIALOG_VALUE);
         label.setLayoutData(labelData);
         fAvailableComponents = new EditableListWidget(toolkit, extraSectionClient, textSingleData, null, 0, Text.class, null);
         
         // Default Entry Criteria
-        label = toolkit.createLabel(extraSectionClient, "Default Entry Criteria: ");
+        label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE);
         label.setLayoutData(labelData);
         fDefaultEntryCriteriaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
         fDefaultEntryCriteriaTextField.setLayoutData(textMultiData);

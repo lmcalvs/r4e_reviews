@@ -55,10 +55,11 @@ public class RemoveElementHandler extends AbstractHandler {
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		if (!selection.isEmpty()) {
 			IR4EUIModelElement element = null;
+			MessageDialogWithToggle dialog = null;
 			for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
 			    element = (IR4EUIModelElement) iterator.next();
 				Activator.Ftracer.traceInfo("Disable element " + element.getName());
-				MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(null,
+				dialog = MessageDialogWithToggle.openOkCancelConfirm(null,
 						"Disable element",
 						"Do you really want to disable this element?",
 						"Also delete from file (not supported yet)",

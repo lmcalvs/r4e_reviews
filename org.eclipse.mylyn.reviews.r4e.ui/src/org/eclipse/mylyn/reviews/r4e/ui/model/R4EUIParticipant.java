@@ -85,7 +85,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 		super(aParent, aParticipant.getId(), null);  //TODO add email adress as tooltip later
 		fParticipant = aParticipant;
 		
-		EList<R4EUserRole> roles = fParticipant.getRoles();
+		final EList<R4EUserRole> roles = fParticipant.getRoles();
 		for (R4EUserRole role : roles) {
 			if (role == R4EUserRole.R4E_ROLE_LEAD) {
 				setImage(PARTICIPANT_LEAD_ICON_FILE);

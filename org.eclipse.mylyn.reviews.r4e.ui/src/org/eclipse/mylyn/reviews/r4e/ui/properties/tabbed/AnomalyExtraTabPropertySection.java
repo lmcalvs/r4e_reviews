@@ -1,3 +1,21 @@
+/*******************************************************************************
+ * Copyright (c) 2011 Ericsson Research Canada
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * This class implements the tabbed property section for the Anomaly Extended 
+ * model element
+ * 
+ * Contributors:
+ *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   
+ ******************************************************************************/
+
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
 import java.text.SimpleDateFormat;
@@ -6,7 +24,9 @@ import java.util.List;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.CalendarDialog;
@@ -32,6 +52,10 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySection {
 
 	// ------------------------------------------------------------------------
@@ -138,7 +162,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    		}
     			refresh();
 			}
-			public void widgetDefaultSelected(SelectionEvent e) {
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				//No implementation needed
 			}
 		});
@@ -164,7 +188,9 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    				final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended)fProperties.getElement()).getAnomaly();
 	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-	    				modelAnomaly.setType(R4EUIAnomalyExtended.getClassFromString(fClassCombo.getText()));
+	    				final R4ECommentType type = RModelFactoryExt.eINSTANCE.createR4ECommentType();
+	    				type.setType(R4EUIAnomalyExtended.getClassFromString(fClassCombo.getText()));
+	    				modelAnomaly.setType(type);
 	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	    			} catch (ResourceHandlingException e1) {
 	    				UIUtils.displayResourceErrorDialog(e1);
@@ -174,7 +200,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    		}
     			refresh();
 			}
-			public void widgetDefaultSelected(SelectionEvent e) {
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				//No implementation needed
 			}
 		});
@@ -210,7 +236,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    		}	
     			refresh();
 			}
-			public void widgetDefaultSelected(SelectionEvent e) {
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				//No implementation needed
 			}
 		});
@@ -238,11 +264,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    fCalendarButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 	    fCalendarButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				CalendarDialog dialog = new CalendarDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+				final CalendarDialog dialog = new CalendarDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 						getSite().getWorkbenchWindow().getShell());
 		    	final int result = dialog.open();
 		    	if (result == Window.OK) {
-		    		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");	
+		    		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);	
 		    		fDateText.setText(dateFormat.format(dialog.getDate()));
 		    		if (!fRefreshInProgress) {
 		    			try {
@@ -260,7 +286,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    			refresh();
 		    	}
 			}
-			public void widgetDefaultSelected(SelectionEvent e) {
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				// No implementation needed
 			}
 		});
@@ -296,7 +322,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    		}
     			refresh();
 			}
-			public void widgetDefaultSelected(SelectionEvent e) {
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				//No implementation needed
 			}
 		});
@@ -332,7 +358,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    		}
     			refresh();
 			}
-			public void widgetDefaultSelected(SelectionEvent e) {
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				//No implementation needed
 			}
 		});
@@ -368,7 +394,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    		}
     			refresh();
 			}
-			public void widgetDefaultSelected(SelectionEvent e) {
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				//No implementation needed
 			}
 		});
@@ -404,7 +430,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    		}
     			refresh();
 			}
-			public void focusGained(FocusEvent e) {
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
@@ -427,22 +453,24 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		R4EUIAnomalyExtended uiModelAnomaly = (R4EUIAnomalyExtended)fProperties.getElement();
+		final R4EUIAnomalyExtended uiModelAnomaly = (R4EUIAnomalyExtended)fProperties.getElement();
 		final R4EAnomaly modelAnomaly = uiModelAnomaly.getAnomaly();
-    	List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
-    	List<String> participantsList = new ArrayList<String>();
+    	final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
+    	final List<String> participantsList = new ArrayList<String>();
     	for (R4EParticipant participant : participants) {
     		participantsList.add(participant.getId());
     	}
-		String[] participantsStr = participantsList.toArray(new String[participantsList.size()]);
+		final String[] participantsStr = participantsList.toArray(new String[participantsList.size()]);
 		fStateCombo.setItems(uiModelAnomaly.getAvailableStates());
 		fStateCombo.select(uiModelAnomaly.mapStateToIndex(modelAnomaly.getState()));
 		fClassCombo.setItems(R4EUIAnomalyExtended.getClasses());
-		//fClassCombo.select(modelAnomaly.getType().getValue();
+		if (null != modelAnomaly.getType() && null != ((R4ECommentType)modelAnomaly.getType()).getType()) {
+			fClassCombo.select(((R4ECommentType)modelAnomaly.getType()).getType().getValue());
+		}
 		fRankCombo.setItems(R4EUIAnomalyExtended.getRanks());
 		fRankCombo.select(modelAnomaly.getRank().getValue());
 		if (null != modelAnomaly.getDueDate()) {
-    		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");	
+    		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);	
     		fDateText.setText(dateFormat.format(modelAnomaly.getDueDate()));
 		}
 		fDecidedByCombo.setItems(participantsStr);
@@ -463,6 +491,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isDialogOpen()) {
 			fStateCombo.setEnabled(false);
+			fClassCombo.setEnabled(false);
 			fRankCombo.setEnabled(false);
 			fDateText.setEnabled(false);
 			fCalendarButton.setEnabled(false);
@@ -471,28 +500,53 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 			fFollowUpByCombo.setEnabled(false);
 			fNotAcceptedReasonText.setEnabled(false);
 		} else {
-			R4EUIAnomalyExtended uiAnomaly = (R4EUIAnomalyExtended)fProperties.getElement();
+			final R4EUIAnomalyExtended uiAnomaly = (R4EUIAnomalyExtended)fProperties.getElement();
 			fStateCombo.setEnabled(true);
-			if (true == uiAnomaly.isRankEnabled()) fRankCombo.setEnabled(true);
-			else  fRankCombo.setEnabled(false);
 			
-			if (true == uiAnomaly.isDueDateEnabled()) {
+			if (uiAnomaly.isClassEnabled()) {
+				fClassCombo.setEnabled(true);
+			} else {
+				fClassCombo.setEnabled(false);
+			}
+			
+			if (uiAnomaly.isRankEnabled()) {
+				fRankCombo.setEnabled(true);
+			} else  {
+				fRankCombo.setEnabled(false);
+			}
+			
+			if (uiAnomaly.isDueDateEnabled()) {
 				fDateText.setEnabled(true);
 				fCalendarButton.setEnabled(true);
+			} else {
+				fDateText.setEnabled(false);
 			}
-			else  fDateText.setEnabled(false);
 			
-			if (true == uiAnomaly.isDecidedByEnabled()) fDecidedByCombo.setEnabled(true);
-			else  fDecidedByCombo.setEnabled(false);
+			if (uiAnomaly.isDecidedByEnabled()) {
+				fDecidedByCombo.setEnabled(true);
+			} else {
+				fDecidedByCombo.setEnabled(false);
+			}
 			
-			if (true == uiAnomaly.isFixedByEnabled()) fFixedByCombo.setEnabled(true);
-			else  fFixedByCombo.setEnabled(false);
+			if (uiAnomaly.isFixedByEnabled()) {
+				fFixedByCombo.setEnabled(true);
+			} else {
+				fFixedByCombo.setEnabled(false);
+			}
 			
-			if (true == uiAnomaly.isFollowUpByEnabled()) fFollowUpByCombo.setEnabled(true);
-			else  fFollowUpByCombo.setEnabled(false);
+			if (uiAnomaly.isFollowUpByEnabled()) {
+				fFollowUpByCombo.setEnabled(true);
+			} else {
+				fFollowUpByCombo.setEnabled(false);
+			}
 			
-			if (true == uiAnomaly.isNotAcceptedReasonEnabled()) fNotAcceptedReasonText.setEnabled(true);
-			else  fNotAcceptedReasonText.setEnabled(false);
+			if (uiAnomaly.isNotAcceptedReasonEnabled()) {
+				fNotAcceptedReasonText.setEnabled(true);
+				fNotAcceptedReasonText.setEditable(true);
+			}
+			else {
+				fNotAcceptedReasonText.setEnabled(false);
+			}
 		}
 	}
 }

@@ -17,9 +17,13 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 
+import java.util.Date;
+import java.util.Map.Entry;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -183,8 +187,15 @@ public class ParticipantProperties extends ModelElementProperties {
 				}
 			}
 			return Integer.valueOf(numComments);
-		} else if (PARTICIPANT_TIME_SPENT_ID.equals(aId)) { 
-			return ((R4EUIParticipant)getElement()).getParticipant().getTimeLog();
+		} else if (PARTICIPANT_TIME_SPENT_ID.equals(aId)) {
+			final R4EParticipant modelUser = ((R4EUIParticipant)getElement()).getParticipant();
+			final int numTimeEntries = modelUser.getTimeLog().size();
+			int totalTimeSpent = 0;
+			for (int i = 0; i < numTimeEntries; i++) {
+				Entry<Date, Integer> timeEntry = modelUser.getTimeLog().get(i);
+				totalTimeSpent +=timeEntry.getValue().intValue();
+			}
+			return Integer.toString(totalTimeSpent);
 		} else if (PARTICIPANT_ROLES_ID.equals(aId)) {
 			return ((R4EUIParticipant)getElement()).getParticipant().getRoles();
 		} else if (PARTICIPANT_FOCUS_AREA_ID.equals(aId)) {

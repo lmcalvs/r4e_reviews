@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * Copyright (c) 2011 Ericsson Research Canada
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * This class implements the tabbed property section for the additional properties
+ * for the Review Group model element
+ * 
+ * Contributors:
+ *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   
+ ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
 import org.eclipse.emf.common.util.EList;
@@ -23,6 +40,10 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertySection implements IEditableListListener {
 
 	// ------------------------------------------------------------------------
@@ -135,7 +156,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 					}
 				}
 			}
-			public void focusGained(FocusEvent e) {
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
@@ -158,11 +179,11 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		fRefreshInProgress = true;
 		final R4EReviewGroup modelReview = ((R4EUIReviewGroup)fProperties.getElement()).getGroup();
 	
-		String[] projects = (String[]) modelReview.getAvailableProjects().toArray();
+		final String[] projects = (String[]) modelReview.getAvailableProjects().toArray();
 		fAvailableProjects.clearAll();
+		Item item = null;
 		for (int i = 0; i < projects.length; i++) {
 			String project  = projects[i];
-			Item item;
 			if (i >= fAvailableProjects.getItemCount()) {
 				item = fAvailableProjects.addItem(); 
 			} else {
@@ -171,11 +192,10 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 			}
 			item.setText(project);
 		}
-		String[] components = (String[]) modelReview.getAvailableComponents().toArray();
+		final String[] components = (String[]) modelReview.getAvailableComponents().toArray();
 		fAvailableComponents.clearAll();
 		for (int i = 0; i < components.length; i++) {
 			String component  = components[i];
-			Item item;
 			if (i >= fAvailableComponents.getItemCount()) {
 				item = fAvailableComponents.addItem();
 			} else {
@@ -208,6 +228,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 	/**
 	 * Method itemsUpdated.
 	 * @param aItems Item[]
+	 * @param aInstanceId int
 	 * @see org.eclipse.ui.utils.IEditableListListener#itemsUpdated(Item[] aItems)
 	 */
 	public void itemsUpdated(Item[] aItems, int aInstanceId) {
@@ -219,7 +240,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 					final String currentUser = R4EUIModelController.getReviewer();
 					final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getReviewGroup();
 					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
-					EList<String> projects = modelGroup.getAvailableProjects();
+					final EList<String> projects = modelGroup.getAvailableProjects();
 					projects.clear();
 					for (Item item : aItems) {
 						projects.add(item.getText());
@@ -232,7 +253,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 					final String currentUser = R4EUIModelController.getReviewer();
 					final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getReviewGroup();
 					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
-					EList<String> components = modelGroup.getAvailableComponents();
+					final EList<String> components = modelGroup.getAvailableComponents();
 					components.clear();
 					for (Item item : aItems) {
 						components.add(item.getText());
@@ -240,6 +261,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 				}
 			}
+			refresh();
 		} catch (ResourceHandlingException e1) {
 			UIUtils.displayResourceErrorDialog(e1);
 		} catch (OutOfSyncException e1) {

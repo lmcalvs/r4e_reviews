@@ -1,7 +1,25 @@
+/*******************************************************************************
+ * Copyright (c) 2011 Ericsson Research Canada
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * This class implements the tabbed property section for additional properties for
+ * the Participant model element
+ * 
+ * Contributors:
+ *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   
+ ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map.Entry;
 
@@ -31,6 +49,10 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class ParticipantExtraTabPropertySection extends ModelElementTabPropertySection implements IEditableListListener {
 
 	// ------------------------------------------------------------------------
@@ -74,7 +96,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
 	    FormData data = null;
-	    Composite mainForm = widgetFactory.createFlatFormComposite(parent);
+	    final Composite mainForm = widgetFactory.createFlatFormComposite(parent);
 	    
 	    //Time Spent (detailed)
 		data = new FormData();
@@ -144,30 +166,36 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 	public void refresh() {
 		fRefreshInProgress = true;
 		final R4EParticipant modelUser = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
-		int numTimeEntries = modelUser.getTimeLog().size();
+		final int numTimeEntries = modelUser.getTimeLog().size();
 		fTimeSpentDetailedList.clearAll();
 		int totalTimeSpent = 0;
+		Item item = null;
+		final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);	
 		for (int i = 0; i < numTimeEntries; i++) {
 			Entry<Date, Integer> timeEntry = modelUser.getTimeLog().get(i);
-			Item item;
 			if (i >= fTimeSpentDetailedList.getItemCount()) {
 				item = fTimeSpentDetailedList.addItem(); 
 			} else {
 				item = fTimeSpentDetailedList.getItem(i);
 				if (null == item) item = fTimeSpentDetailedList.addItem(); 
 			}
-			String[] data = { timeEntry.getValue().toString(), timeEntry.getKey().toString() };
+			String[] data = { timeEntry.getValue().toString(), dateFormat.format(timeEntry.getKey()) };
 			((TableItem)item).setText(data);
 			totalTimeSpent +=timeEntry.getValue().intValue();
 		}
 		fTimeSpentTotalText.setText(Integer.toString(totalTimeSpent));
 		
-		EList<R4EUserRole> roles = modelUser.getRoles();
+		fRolesList.removeAll();
+		final EList<R4EUserRole> roles = modelUser.getRoles();
 		for (R4EUserRole role : roles) {
 	    	//Review type (no validation needed as this is a read-only combo box
-			if (role.getValue() == R4EUserRole.R4E_ROLE_LEAD_VALUE) fRolesList.add(R4EUIConstants.USER_ROLE_LEAD);
-			else if (role.getValue() == R4EUserRole.R4E_ROLE_AUTHOR_VALUE) fRolesList.add(R4EUIConstants.USER_ROLE_AUTHOR);
-			else if (role.getValue() == R4EUserRole.R4E_ROLE_REVIEWER_VALUE) fRolesList.add(R4EUIConstants.USER_ROLE_REVIEWER);
+			if (role.getValue() == R4EUserRole.R4E_ROLE_LEAD_VALUE) {
+				fRolesList.add(R4EUIConstants.USER_ROLE_LEAD);
+			} else if (role.getValue() == R4EUserRole.R4E_ROLE_AUTHOR_VALUE) {
+				fRolesList.add(R4EUIConstants.USER_ROLE_AUTHOR);
+			} else if (role.getValue() == R4EUserRole.R4E_ROLE_REVIEWER_VALUE) {
+				fRolesList.add(R4EUIConstants.USER_ROLE_REVIEWER);
+			}
 		}
 		if (null != modelUser.getFocusArea()) fFocusAreaText.setText(modelUser.getFocusArea());
 		setEnabledFields();
@@ -192,17 +220,25 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		}
 	}
 
+	/**
+	 * Method itemsUpdated.
+	 * @param aItems Item[]
+	 * @param aInstanceId int
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.utils.IEditableListListener#itemsUpdated(Item[], int)
+	 */
 	public void itemsUpdated(Item[] aItems, int aInstanceId) {		
 		try {
 			final R4EParticipant modelGroup = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
 			final String currentUser = R4EUIModelController.getReviewer();
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
-			EMap<Date, Integer> timeMap = modelGroup.getTimeLog();
-			DateFormat format = DateFormat.getDateInstance();
+			final EMap<Date, Integer> timeMap = modelGroup.getTimeLog();
+			final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
 			for (Item item : aItems) {
 				try {
-					timeMap.put(format.parse(((TableItem)item).getText(1)), 
+					if (!((TableItem)item).getText(1).equals("")) {
+						timeMap.put(dateFormat.parse(((TableItem)item).getText(1)), 
 									Integer.valueOf(((TableItem)item).getText(0)));
+					}
 				} catch (NumberFormatException e) {
 					//skip this entry
 					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
@@ -216,6 +252,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 				}
 			}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+			refresh();
 		} catch (ResourceHandlingException e1) {
 			UIUtils.displayResourceErrorDialog(e1);
 		} catch (OutOfSyncException e1) {

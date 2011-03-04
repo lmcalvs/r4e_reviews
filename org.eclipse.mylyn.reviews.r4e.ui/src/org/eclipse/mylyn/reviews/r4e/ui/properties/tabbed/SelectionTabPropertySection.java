@@ -45,7 +45,7 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 	/**
 	 * Field FPositionText.
 	 */
-	protected Text fPositionText = null;
+	private Text fPositionText = null;
 	
 	
 	// ------------------------------------------------------------------------

@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Ericsson Research Canada
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * This class extends the anomaly erlement to include additional parameters used
+ * in informal and formal reviews
+ * 
+ * Contributors:
+ *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   
+ *******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
 import java.util.ArrayList;
@@ -6,52 +23,162 @@ import java.util.List;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.AnomalyExtraProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.ui.views.properties.IPropertySource;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 	
+	/**
+	 * Field ANOMALY_STATE_CREATED.
+	 * (value is ""CREATED"")
+	 */
 	private static final String ANOMALY_STATE_CREATED = "CREATED";
+	/**
+	 * Field ANOMALY_STATE_ASSIGNED.
+	 * (value is ""ASSIGNED"")
+	 */
 	private static final String ANOMALY_STATE_ASSIGNED = "ASSIGNED";
+	/**
+	 * Field ANOMALY_STATE_ACCEPTED.
+	 * (value is ""ACCEPTED"")
+	 */
 	private static final String ANOMALY_STATE_ACCEPTED = "ACCEPTED";
+	/**
+	 * Field ANOMALY_STATE_DUPLICATED.
+	 * (value is ""DUPLICATED"")
+	 */
 	private static final String ANOMALY_STATE_DUPLICATED = "DUPLICATED";
+	/**
+	 * Field ANOMALY_STATE_REJECTED.
+	 * (value is ""REJECTED"")
+	 */
 	private static final String ANOMALY_STATE_REJECTED = "REJECTED";
+	/**
+	 * Field ANOMALY_STATE_DEFERRED.
+	 * (value is ""DEFERRED"")
+	 */
 	private static final String ANOMALY_STATE_DEFERRED = "DEFERRED";
+	/**
+	 * Field ANOMALY_STATE_FIXED.
+	 * (value is ""FIXED"")
+	 */
 	private static final String ANOMALY_STATE_FIXED = "FIXED";
+	/**
+	 * Field ANOMALY_STATE_VERIFIED.
+	 * (value is ""VERIFIED"")
+	 */
 	private static final String ANOMALY_STATE_VERIFIED = "VERIFIED";
+	
+	/**
+	 * Field ANOMALY_RANK_NONE.
+	 * (value is ""NONE"")
+	 */
+	private static final String ANOMALY_RANK_NONE = "NONE";
+	/**
+	 * Field ANOMALY_RANK_MINOR.
+	 * (value is ""MINOR"")
+	 */
+	private static final String ANOMALY_RANK_MINOR = "MINOR";
+	/**
+	 * Field ANOMALY_RANK_MAJOR.
+	 * (value is ""MAJOR"")
+	 */
+	private static final String ANOMALY_RANK_MAJOR = "MAJOR";
 
-	private static String[] stateValues = { ANOMALY_STATE_ACCEPTED, ANOMALY_STATE_DUPLICATED, ANOMALY_STATE_REJECTED, 
+	/**
+	 * Field ANOMALY_CLASS_ERRONEOUS.
+	 * (value is ""Erroneous"")
+	 */
+	private static final String ANOMALY_CLASS_ERRONEOUS = "Erroneous";
+	/**
+	 * Field ANOMALY_CLASS_SUPERFLUOUS.
+	 * (value is ""Superfluous"")
+	 */
+	private static final String ANOMALY_CLASS_SUPERFLUOUS = "Superfluous";
+	/**
+	 * Field ANOMALY_CLASS_IMPROVEMENT.
+	 * (value is ""Improvement"")
+	 */
+	private static final String ANOMALY_CLASS_IMPROVEMENT = "Improvement";
+	/**
+	 * Field ANOMALY_CLASS_QUESTION.
+	 * (value is ""Question"")
+	 */
+	private static final String ANOMALY_CLASS_QUESTION = "Question";
+	
+	/**
+	 * Field FStateValues.
+	 */
+	private static final String[] FStateValues = { ANOMALY_STATE_ACCEPTED, ANOMALY_STATE_DUPLICATED, ANOMALY_STATE_REJECTED, 
 		ANOMALY_STATE_DEFERRED, ANOMALY_STATE_ASSIGNED, ANOMALY_STATE_CREATED, ANOMALY_STATE_VERIFIED, 
 		ANOMALY_STATE_FIXED };  //NOTE: This has to match R4EAnomalyState in R4E core plugin
 	
-	private static final String ANOMALY_RANK_NONE = "NONE";
-	private static final String ANOMALY_RANK_MINOR = "MINOR";
-	private static final String ANOMALY_RANK_MAJOR = "MAJOR";
-	
-	private static String[] rankValues = { ANOMALY_RANK_NONE, ANOMALY_RANK_MINOR,
+	/**
+	 * Field rankValues.
+	 */
+	private static final String[] FRankValues = { ANOMALY_RANK_NONE, ANOMALY_RANK_MINOR,
 		ANOMALY_RANK_MAJOR };  //NOTE: This has to match R4EAnomalyRank in R4E core plugin
-
-	private static final String ANOMALY_CLASS_ERROR = "Error";
-
-	private static String[] classValues = { ANOMALY_CLASS_ERROR };  //TODO complete NOTE: This has to match CommentType in R4E core plugin
+	
+	/**
+	 * Field FClassValues.
+	 */
+	private static final String[] FClassValues = { ANOMALY_CLASS_ERRONEOUS, ANOMALY_CLASS_SUPERFLUOUS,
+		ANOMALY_CLASS_IMPROVEMENT, ANOMALY_CLASS_QUESTION };  //NOTE: This has to match CommentType in R4E core plugin
+	
 	
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
 	
+	/**
+	 * Constructor for R4EUIAnomalyExtended.
+	 * @param aParent IR4EUIModelElement
+	 * @param aAnomaly R4EAnomaly
+	 * @param aPosition IR4EUIPosition
+	 */
 	public R4EUIAnomalyExtended(IR4EUIModelElement aParent,
 			R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
 		super(aParent, aAnomaly, aPosition);
 	}
 	
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Method getAdapter.
+	 * @param adapter Class
+	 * @return Object
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
+	 */
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
+		if (IR4EUIModelElement.class.equals(adapter)) return this;
+		if (IPropertySource.class.equals(adapter)) return new AnomalyExtraProperties(this);
+		return null;
+	}
+	
+	/**
+	 * Method updateState.
+	 * @param aNewState R4EAnomalyState
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
+	 */
 	public void updateState(R4EAnomalyState aNewState) throws ResourceHandlingException, OutOfSyncException {
 		//Set data in model element
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly, 
@@ -61,11 +188,11 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
     	setName(getStateString(aNewState) + ": " + getName());
 	}
 	
-	
-	// ------------------------------------------------------------------------
-	// Methods
-	// ------------------------------------------------------------------------
-	
+	/**
+	 * Method getStateString.
+	 * @param aNewState R4EAnomalyState
+ 	 * @return String
+	 */
 	public static String getStateString(R4EAnomalyState aNewState) {
 		if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
 			return ANOMALY_STATE_CREATED;
@@ -86,6 +213,11 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		} else return "";
 	}
 	
+	/**
+	 * Method getStateFromString.
+	 * @param aNewState String
+	 * @return R4EAnomalyState
+	 */
 	public static R4EAnomalyState getStateFromString(String aNewState) {
 		if (aNewState.equals(ANOMALY_STATE_CREATED)) {
 			return R4EAnomalyState.R4E_ANOMALY_STATE_CREATED;
@@ -106,24 +238,37 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		} else return null;   //should never happen
 	}
 	
+	/**
+	 * Method getStates.
+	 * @return String[]
+	 */
 	public static String[] getStates() {
-		return stateValues;
+		return FStateValues;
 	}
 	
+	/**
+	 * Method getAvailableStates.
+	 * @return String[]
+	 */
 	public String[] getAvailableStates() {
 		//Peek state machine to get available states
-		R4EAnomalyState[] states = getAllowedState(R4EUIModelController.getActiveReview().getReview().getType(),
+		final R4EAnomalyState[] states = getAllowedState(R4EUIModelController.getActiveReview().getReview().getType(),
 				getAnomaly().getState());
-		List<String> stateStrings = new ArrayList<String>();
+		final List<String> stateStrings = new ArrayList<String>();
 		for (R4EAnomalyState state : states) {
 			stateStrings.add(getStateString(state));
 		}
 		return stateStrings.toArray(new String[stateStrings.size()]);
 	}
 	
+	/**
+	 * Method mapStateToIndex.
+	 * @param aState R4EAnomalyState
+	 * @return int
+	 */
 	public int mapStateToIndex(R4EAnomalyState aState) {
 		//Peek state machine to get available states
-		R4EAnomalyState[] states = getAllowedState(R4EUIModelController.getActiveReview().getReview().getType(),
+		final R4EAnomalyState[] states = getAllowedState(R4EUIModelController.getActiveReview().getReview().getType(),
 				getAnomaly().getState());
 		for (int i = 0; i < states.length; i++) {
 			if (states[i].getValue() == aState.getValue()) return i;		
@@ -131,21 +276,44 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		return R4EUIConstants.INVALID_VALUE;   //should never happen
 	}
 	
+	/**
+	 * Method getClasses.
+	 * @return String[]
+	 */
 	public static String[] getClasses() {
-		return classValues;
+		return FClassValues;
 	} 
 	
-	//TODO
-	public static R4ECommentType getClassFromString(String aClass) {
-		if (aClass.equals(ANOMALY_CLASS_ERROR)) {
-			return null;
+	/**
+	 * Method getClassFromString.
+	 * @param aClass String
+	 * @return R4ECommentClass
+	 */
+	public static R4ECommentClass getClassFromString(String aClass) {
+		if (aClass.equals(ANOMALY_CLASS_ERRONEOUS)) {
+			return R4ECommentClass.R4E_CLASS_ERRONEOUS;
+		} else if (aClass.equals(ANOMALY_CLASS_SUPERFLUOUS)) {
+			return R4ECommentClass.R4E_CLASS_SUPERFLUOUS;
+		} else if (aClass.equals(ANOMALY_CLASS_IMPROVEMENT)) {
+			return R4ECommentClass.R4E_CLASS_IMPROVEMENT;
+		} else if (aClass.equals(ANOMALY_CLASS_QUESTION)) {
+			return R4ECommentClass.R4E_CLASS_QUESTION;
 		} else return null;   //should never happen
 	}
-	
+
+	/**
+	 * Method getRanks.
+	 * @return String[]
+	 */
 	public static String[] getRanks() {
-		return rankValues;
+		return FRankValues;
 	}
 	
+	/**
+	 * Method getRankFromString.
+	 * @param aRank String
+	 * @return R4EAnomalyRank
+	 */
 	public static R4EAnomalyRank getRankFromString(String aRank) {
 		if (aRank.equals(ANOMALY_RANK_NONE)) {
 			return R4EAnomalyRank.R4E_ANOMALY_RANK_NONE;
@@ -156,9 +324,15 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		} else return null;   //should never happen
 	}
 	
+	/**
+	 * Method mapParticipantToIndex.
+	 * @param aParticipant String
+	 * @return int
+	 */
 	public int mapParticipantToIndex(String aParticipant) {
-		List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
-		for (int i = 0; i < participants.size(); i++) {
+		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
+		final int numParticipants = participants.size();
+		for (int i = 0; i < numParticipants; i++) {
 			if (participants.get(i).getId().equals(aParticipant)) return i;		
 		}
 		return R4EUIConstants.INVALID_VALUE;   //should never happen
@@ -167,6 +341,23 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	
 	//Anomaly State Machine
 	
+	/**
+	 * Method isClassEnabled.
+	 * @return boolean
+	 */
+	public boolean isClassEnabled() {
+		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+			if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Method isRankEnabled.
+	 * @return boolean
+	 */
 	public boolean isRankEnabled() {
 		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
 			if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
@@ -176,6 +367,10 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		return false;
 	}
 	
+	/**
+	 * Method isDueDateEnabled.
+	 * @return boolean
+	 */
 	public boolean isDueDateEnabled() {
 		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
 			if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
@@ -185,6 +380,10 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		return false;
 	}
 	
+	/**
+	 * Method isDecidedByEnabled.
+	 * @return boolean
+	 */
 	public boolean isDecidedByEnabled() {
 		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED) ||
 			fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED) ||
@@ -196,6 +395,10 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		return false;
 	}
 	
+	/**
+	 * Method isFixedByEnabled.
+	 * @return boolean
+	 */
 	public boolean isFixedByEnabled() {
 		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
 			return true;
@@ -203,6 +406,10 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		return false;
 	}
 	
+	/**
+	 * Method isFollowUpByEnabled.
+	 * @return boolean
+	 */
 	public boolean isFollowUpByEnabled() {
 		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
 			return true;
@@ -210,6 +417,10 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		return false;
 	}
 	
+	/**
+	 * Method isNotAcceptedReasonEnabled.
+	 * @return boolean
+	 */
 	public boolean isNotAcceptedReasonEnabled() {
 		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)) {
 			return true;
@@ -217,8 +428,14 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		return false;
 	}
 	
+	/**
+	 * Method isNotAcceptedReasonEnabled.
+	 * @param aReviewType R4EReviewType
+	 * @param aCurrentState R4EAnomalyState
+	 * @return R4EAnomalyState[]
+	 */
 	private R4EAnomalyState[] getAllowedState(R4EReviewType aReviewType, R4EAnomalyState aCurrentState) {
-		List<R4EAnomalyState> states = new ArrayList<R4EAnomalyState>();
+		final List<R4EAnomalyState> states = new ArrayList<R4EAnomalyState>();
 		if (aReviewType == R4EReviewType.R4E_REVIEW_TYPE_INFORMAL) {
 			switch (aCurrentState.getValue()) {
 				case R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED_VALUE:
@@ -257,9 +474,12 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 				case R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED_VALUE:
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
 					break;
+					
+				default:
+					//should never happen
 			}
 		} else {
-			//Assume formal review TODO
+			//TODO Assume formal review 
 		}
 		return states.toArray(new R4EAnomalyState[states.size()]);
 	}

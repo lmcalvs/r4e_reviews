@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * Copyright (c) 2011 Ericsson Research Canada
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * This class implements the tabbed property section for the additional properties
+ * for the Review model element.
+ * 
+ * Contributors:
+ *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   
+ ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -22,6 +39,10 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class ReviewExtraTabPropertySection extends ModelElementTabPropertySection {
 
 	// ------------------------------------------------------------------------
@@ -75,7 +96,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
 	    FormData data = null;
-	    Composite mainForm = widgetFactory.createFlatFormComposite(parent);
+	    final Composite mainForm = widgetFactory.createFlatFormComposite(parent);
 
 	    //Project (read-only)
 	    fProjectText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
@@ -178,7 +199,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    		}	
     			refresh();
 			}
-			public void widgetDefaultSelected(SelectionEvent e) {
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				//No implementation needed
 			}
 		});
@@ -200,11 +221,11 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		fRefreshInProgress = true;
 		final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
 		fProjectText.setText(modelReview.getProject());
-		String[] components = (String[]) modelReview.getComponents().toArray();
+		final String[] components = (String[]) modelReview.getComponents().toArray();
 		fComponents.clearAll();
+		TableItem item = null;
 		for (int i = 0; i < components.length; i++) {
 			String component  = components[i];
-			TableItem item;
 			if (i >= fComponents.getItemCount()) {
 				 item = new TableItem (fComponents, SWT.NONE);
 			} else {

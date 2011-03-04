@@ -50,22 +50,22 @@ public class ParticipantGeneralTabPropertySection extends ModelElementTabPropert
 	/**
 	 * Field FIdText.
 	 */
-	protected Text fIdText = null;
+	private Text fIdText = null;
 	
 	/**
 	 * Field FNumItemsText.
 	 */
-	protected Text fNumItemsText = null;
+	private Text fNumItemsText = null;
 	
 	/**
 	 * Field FNumAnomaliesText.
 	 */
-	protected Text fNumAnomaliesText = null;
+	private Text fNumAnomaliesText = null;
 	
 	/**
 	 * Field FNumCommentsText.
 	 */
-	protected Text fNumCommentsText = null;
+	private Text fNumCommentsText = null;
 	
 	
 	// ------------------------------------------------------------------------

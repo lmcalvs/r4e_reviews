@@ -51,7 +51,7 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 	/**
 	 * Field FNameText.
 	 */
-	protected Text fNameText = null;
+	private Text fNameText = null;
 	
 	/**
 	 * Field FCreationDateText.
@@ -166,7 +166,7 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 	    			}
 	    		}
 			}
-			public void focusGained(FocusEvent e) {
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
@@ -190,8 +190,11 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 		final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
 		fNameText.setText(modelReview.getName());
 		fStartDateText.setText(modelReview.getStartDate().toString());
-		if (null == modelReview.getEndDate()) fEndDateText.setText("(In Progress)");
-		else fEndDateText.setText(modelReview.getEndDate().toString());
+		if (null == modelReview.getEndDate()) {
+			fEndDateText.setText("(In Progress)");
+		} else {
+			fEndDateText.setText(modelReview.getEndDate().toString());
+		}
 		fDescriptionText.setText(modelReview.getExtraNotes());
 		setEnabledFields();
 		fRefreshInProgress = false;

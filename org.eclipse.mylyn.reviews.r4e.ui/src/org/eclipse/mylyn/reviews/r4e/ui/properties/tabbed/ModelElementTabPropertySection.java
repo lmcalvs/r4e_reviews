@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Ericsson Research Canada
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * This class defines the base class for the tabbed proprties for all UI elements
+ * 
+ * Contributors:
+ *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   
+ ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
 import org.eclipse.jface.viewers.ISelection;
@@ -7,13 +23,18 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ModelElementProperties;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IPropertyListener;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
-import org.eclipse.ui.IPropertyListener;
-import org.eclipse.ui.IWorkbenchPart;
 
+
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class ModelElementTabPropertySection extends AbstractPropertySection
 		implements IPropertyListener {
 
@@ -103,7 +124,7 @@ public class ModelElementTabPropertySection extends AbstractPropertySection
 	/**
 	 * Method setEnabledFields.
 	 */
-	protected void setEnabledFields() {
+	protected void setEnabledFields() { // $codepro.audit.disable emptyMethod
 		//default implementation
 	}
 }

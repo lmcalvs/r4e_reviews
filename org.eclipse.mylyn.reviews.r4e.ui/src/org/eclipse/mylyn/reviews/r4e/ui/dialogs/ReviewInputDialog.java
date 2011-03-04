@@ -32,9 +32,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
@@ -78,6 +78,48 @@ public class ReviewInputDialog extends FormDialog {
 	private static final String ADD_REVIEW_DESCRIPTION_DIALOG_VALUE = "Review Description: ";
 	
 	/**
+	 * Field BASIC_PARAMS_HEADER_MSG.
+	 * (value is ""Enter the mandatory basic parameters for this Review Group"")
+	 */
+	private static final String BASIC_PARAMS_HEADER_MSG = "Enter the mandatory basic parameters for this Review";
+	
+	/**
+	 * Field EXTRA_PARAMS_HEADER_MSG.
+	 * (value is ""Enter the optional extra parameters for this Review Group"")
+	 */
+	private static final String EXTRA_PARAMS_HEADER_MSG = "Enter the optional extra parameters for this Review";
+	
+	/**
+	 * Field ADD_REVIEW_GROUP_PROJECT_DIALOG_VALUE.
+	 * (value is ""Available Projects:"")
+	 */
+	private static final String ADD_REVIEW_PROJECT_DIALOG_VALUE = "Project:";
+	
+	/**
+	 * Field ADD_REVIEW_GROUP_COMPONENTS_DIALOG_VALUE.
+	 * (value is ""Available Components:"")
+	 */
+	private static final String ADD_REVIEW_COMPONENTS_DIALOG_VALUE = "Components:";
+	
+	/**
+	 * Field ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE.
+	 * (value is ""Default Entry Criteria:"")
+	 */
+	private static final String ADD_REVIEW_ENTRY_CRITERIA_DIALOG_VALUE = "Entry Criteria:";
+	
+	/**
+	 * Field ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE.
+	 * (value is ""Default Entry Criteria:"")
+	 */
+	private static final String ADD_REVIEW_OBJECTIVES_DIALOG_VALUE = "Objectives:";
+	
+	/**
+	 * Field ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE.
+	 * (value is ""Default Entry Criteria:"")
+	 */
+	private static final String ADD_REVIEW_REFERENCE_MATERIAL_DIALOG_VALUE = "Reference Material:";
+	
+	/**
 	 * Field REVIEW_TYPES.
 	 */
 	private static final String[] REVIEW_TYPES = { R4EUIConstants.REVIEW_TYPE_BASIC, 
@@ -91,12 +133,12 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Field fReviewGroup.
 	 */
-	protected R4EUIReviewGroup fReviewGroup;
+	protected final R4EUIReviewGroup fReviewGroup;
 	
 	/**
 	 * Field fReviewType.
 	 */
-	private Combo fReviewType = null;
+	private CCombo fReviewType = null;
 	
 	/**
 	 * Field fReviewTypeValue.
@@ -131,7 +173,7 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Field fProjectTextField.
 	 */
-	private Combo fProjectsCombo = null;
+	private CCombo fProjectsCombo = null;
 	
 	/**
 	 * Field fComponentsValues.
@@ -186,9 +228,7 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Constructor for R4EReviewInputDialog.
 	 * @param aParentShell Shell
-	 * @param aDialogTitle String
-	 * @param aReviewNameMessage String
-	 * @param aReviewDescriptionMessage String
+	 * @param aReviewGroup R4EUIReviewGroup
 	 */
 	public ReviewInputDialog(Shell aParentShell, R4EUIReviewGroup aReviewGroup) {
 		super(aParentShell);
@@ -213,11 +253,14 @@ public class ReviewInputDialog extends FormDialog {
 	    	this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
         	
 	    	//Review type (no validation needed as this is a read-only combo box
-	        if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_FORMAL)) 
+	        if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_FORMAL)) {
 	        	fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_FORMAL;
-	        if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_INFORMAL)) 
+	        }
+	        if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_INFORMAL)) {
 	        	fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_INFORMAL;
-	        else fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_BASIC;
+	        } else {
+	        	fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_BASIC;
+	        }
 	    	
         	//Validate Review Name
         	String validateResult = validateEmptyInput(fReviewNameInputTextField);
@@ -248,7 +291,7 @@ public class ReviewInputDialog extends FormDialog {
         	}
         	
         	//Validate Components (optional)
-        	ArrayList<String> componentsValues = new ArrayList<String>();
+        	final ArrayList<String> componentsValues = new ArrayList<String>();
 			for (Item item : fComponents.getItems()) {
 	        	validateResult = validateEmptyInput(item.getText());
 	        	if (null == validateResult) {
@@ -307,11 +350,11 @@ public class ReviewInputDialog extends FormDialog {
 	@Override
 	protected void createFormContent(final IManagedForm mform) {
 
-		FormToolkit toolkit = mform.getToolkit();
+		final FormToolkit toolkit = mform.getToolkit();
 		final ScrolledForm sform = mform.getForm();
 		sform.setExpandVertical(true);
-		Composite composite = sform.getBody();
-		GridLayout layout = new GridLayout(4, false);
+		final Composite composite = sform.getBody();
+		final GridLayout layout = new GridLayout(4, false);
 		composite.setLayout(layout);
 		
         //Grid data values
@@ -324,7 +367,7 @@ public class ReviewInputDialog extends FormDialog {
 		//Review Type
         Label label = toolkit.createLabel(composite, "Review Type: ");
         label.setLayoutData(labelData);
-		fReviewType = new Combo(composite, SWT.READ_ONLY);
+		fReviewType = new CCombo(composite, SWT.BORDER | SWT.READ_ONLY);
 		fReviewType.setItems(REVIEW_TYPES);
 		fReviewType.select(0);
 		fReviewType.setLayoutData(textSingleData);
@@ -332,11 +375,11 @@ public class ReviewInputDialog extends FormDialog {
 		//Basic parameters section
         final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-        GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         basicSectionGridData.horizontalSpan = 4;
         basicSection.setLayoutData(basicSectionGridData);
-        basicSection.setText("Basic Parameters");
-        basicSection.setDescription("Enter the mandatory basic parameters for this review");
+        basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
+        basicSection.setDescription(BASIC_PARAMS_HEADER_MSG);
         basicSection.addExpansionListener(new ExpansionAdapter()
 		{
 			@Override
@@ -346,7 +389,7 @@ public class ReviewInputDialog extends FormDialog {
 			}
 		});
         
-        Composite basicSectionClient = toolkit.createComposite(basicSection);
+        final Composite basicSectionClient = toolkit.createComposite(basicSection);
         basicSectionClient.setLayout(layout);
         basicSection.setClient(basicSectionClient);
         
@@ -366,11 +409,11 @@ public class ReviewInputDialog extends FormDialog {
         //Extra parameters section
         final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE);
-        GridData ExtraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        ExtraSectionGridData.horizontalSpan = 4;
-        extraSection.setLayoutData(ExtraSectionGridData);
-        extraSection.setText("Extra Parameters");
-        extraSection.setDescription("Enter the optional extra parameters for this review");
+        final GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        extraSectionGridData.horizontalSpan = 4;
+        extraSection.setLayoutData(extraSectionGridData);
+        extraSection.setText(R4EUIConstants.EXTRA_PARAMS_HEADER);
+        extraSection.setDescription(EXTRA_PARAMS_HEADER_MSG);
         extraSection.addExpansionListener(new ExpansionAdapter()
 		{
 			@Override
@@ -385,26 +428,26 @@ public class ReviewInputDialog extends FormDialog {
         extraSection.setClient(extraSectionClient);
 
         //Project
-        label = toolkit.createLabel(extraSectionClient, "Project: ");
+        label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_PROJECT_DIALOG_VALUE);
         label.setLayoutData(labelData);
-		fProjectsCombo = new Combo(extraSectionClient, SWT.NONE);
-		String[] projects = (String[]) fReviewGroup.getReviewGroup().getAvailableProjects().toArray();
-		if (projects.length == 0) fProjectsCombo.setEnabled(false);
+		fProjectsCombo = new CCombo(extraSectionClient, SWT.BORDER | SWT.READ_ONLY);
+		final String[] projects = (String[]) fReviewGroup.getReviewGroup().getAvailableProjects().toArray();
+		if (0 == projects.length) fProjectsCombo.setEnabled(false);
 		fProjectsCombo.setItems(projects);
-		GridData data1 = new GridData(GridData.FILL, GridData.FILL, true, false);
+		final GridData data1 = new GridData(GridData.FILL, GridData.FILL, true, false);
 		data1.horizontalSpan = 3;
 		fProjectsCombo.setLayoutData(data1);
 		
 		//Components
-        label = toolkit.createLabel(extraSectionClient, "Components: ");
+        label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_COMPONENTS_DIALOG_VALUE);
         label.setLayoutData(labelData);
-		String[] components = (String[]) fReviewGroup.getReviewGroup().getAvailableComponents().toArray();
-        fComponents = new EditableListWidget(toolkit, extraSectionClient, textSingleData, null, 0, Combo.class,
+		final String[] components = (String[]) fReviewGroup.getReviewGroup().getAvailableComponents().toArray();
+        fComponents = new EditableListWidget(toolkit, extraSectionClient, textSingleData, null, 0, CCombo.class,
         		components);
-		if (components.length == 0) fComponents.setEnabled(false);
+		if (0 == components.length) fComponents.setEnabled(false);
 
         //Entry Criteria
-        label = toolkit.createLabel(extraSectionClient, "Entry Criteria: ");
+        label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_ENTRY_CRITERIA_DIALOG_VALUE);
         label.setLayoutData(labelData);
         fEntryCriteriaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
         if (null != fReviewGroup.getGroup().getDefaultEntryCriteria()) {
@@ -413,13 +456,13 @@ public class ReviewInputDialog extends FormDialog {
         fEntryCriteriaTextField.setLayoutData(textMultiData);
 
         //Objectives
-        label = toolkit.createLabel(extraSectionClient, "Objectives: ");
+        label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_OBJECTIVES_DIALOG_VALUE);
         label.setLayoutData(labelData);
         fObjectivesTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
         fObjectivesTextField.setLayoutData(textMultiData);
         
         //Reference Material
-        label = toolkit.createLabel(extraSectionClient, "Reference Material: ");
+        label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_REFERENCE_MATERIAL_DIALOG_VALUE);
         label.setLayoutData(labelData);
         fReferenceMaterialTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
         fReferenceMaterialTextField.setLayoutData(textMultiData);

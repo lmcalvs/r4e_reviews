@@ -207,7 +207,18 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final String REVIEW_GROUP_ICON_FILE = "icons/obj16/revgrp_obj.gif";
 	
-
+	/**
+	 * Field BUTTON_ADD_LABEL.
+	 * (value is ""Add"")
+	 */
+	public static final String BUTTON_ADD_LABEL = "Add";
+	
+	/**
+	 * Field BUTTON_REMOVE_LABEL.
+	 * (value is ""Remove"")
+	 */
+	public static final String BUTTON_REMOVE_LABEL = "Remove";
+	
 	//Properties
 	
 	/**
@@ -467,6 +478,42 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""Follow-up by: "")
 	 */
 	public static final String FOLLOWUP_BY_LABEL = "Follow-up by: ";
+	
+	/**
+	 * Field DEFAULT_DATE_FORMAT.
+	 * (value is ""yyyy/MM/dd HH:mm:ss"")
+	 */
+	public static final String DEFAULT_DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
+	
+	/**
+	 * Field SIMPLE_DATE_FORMAT.
+	 * (value is ""yyyy/MM/dd"")
+	 */
+	public static final String SIMPLE_DATE_FORMAT = "yyyy/MM/dd";
+	
+	/**
+	 * Field SPENT_TIME_COLUMN_HEADER.
+	 * (value is ""Time spent (minutes)"")
+	 */
+	public static final String SPENT_TIME_COLUMN_HEADER = "Time spent (minutes)";
+	
+	/**
+	 * Field ENTRY_TIME_COLUMN_HEADER.
+	 * (value is ""Time of entry"")
+	 */
+	public static final String ENTRY_TIME_COLUMN_HEADER = "Time of entry";
+	
+	/**
+	 * Field BASIC_PARAMS_HEADER.
+	 * (value is ""Basic Parameters"")
+	 */
+	public static final String BASIC_PARAMS_HEADER = "Basic Parameters";
+	
+	/**
+	 * Field EXTRA_PARAMS_HEADER.
+	 * (value is ""Extra Parameters"")
+	 */
+	public static final String EXTRA_PARAMS_HEADER = "Extra Parameters";
 	
 	
 	//Review types
