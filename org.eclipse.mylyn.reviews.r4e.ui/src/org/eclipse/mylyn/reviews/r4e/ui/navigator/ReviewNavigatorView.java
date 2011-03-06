@@ -229,7 +229,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		hookListeners();
 		final IEclipsePreferences node = new InstanceScope().getNode(Activator.PLUGIN_ID);
 		node.addPreferenceChangeListener(this);
-		R4EUIModelController.addDialogStateListener(this);
+		R4EUIModelController.addElementStateListener(this);
 		
         //Apply default filters
         applyDefaultFilters();
@@ -333,7 +333,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 						IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
 						
 						//Find the parent FileContextElement
-						while (element != null && !(element instanceof R4EUIFileContext)) {
+						while (null != element && !(element instanceof R4EUIFileContext)) {
 							element = element.getParent();
 						}
 						if (null == element) return;
@@ -438,11 +438,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 												IR4EUIModelElement selectedElement = 
 													(IR4EUIModelElement) ((IStructuredSelection)fReviewTreeViewer.getSelection()).getFirstElement();
 												IR4EUIModelElement fileContextElement = selectedElement;
-												while (fileContextElement != null && !(fileContextElement instanceof R4EUIFileContext)) {
+												while (null != fileContextElement && !(fileContextElement instanceof R4EUIFileContext)) {
 													fileContextElement = fileContextElement.getParent();
 												}
 												if (null != fileContextElement) {
-													if (fileContextElement == navigatorFile) return;   //Correct selection already set
+													if (fileContextElement.equals(navigatorFile)) return;   //Correct selection already set
 												}
 												//selection to the file context corresponding to the editor input
 												fReviewTreeViewer.setSelection(new StructuredSelection(navigatorFile), true);

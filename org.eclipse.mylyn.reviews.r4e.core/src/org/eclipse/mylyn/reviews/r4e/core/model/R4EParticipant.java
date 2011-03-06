@@ -14,7 +14,9 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
+import java.util.Date;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,10 +27,10 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getRoles <em>Roles</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getSpentTime <em>Spent Time</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getFocusArea <em>Focus Area</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#isIsPartOfDecision <em>Is Part Of Decision</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getReviewedContent <em>Reviewed Content</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getTimeLog <em>Time Log</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,32 +56,6 @@ public interface R4EParticipant extends R4EUser {
 	 * @generated
 	 */
 	EList<R4EUserRole> getRoles();
-
-	/**
-	 * Returns the value of the '<em><b>Spent Time</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Spent Time</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Spent Time</em>' attribute.
-	 * @see #setSpentTime(int)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EParticipant_SpentTime()
-	 * @model
-	 * @generated
-	 */
-	int getSpentTime();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant#getSpentTime <em>Spent Time</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Spent Time</em>' attribute.
-	 * @see #getSpentTime()
-	 * @generated
-	 */
-	void setSpentTime(int value);
 
 	/**
 	 * Returns the value of the '<em><b>Focus Area</b></em>' attribute.
@@ -148,5 +124,22 @@ public interface R4EParticipant extends R4EUser {
 	 * @generated
 	 */
 	EList<R4EID> getReviewedContent();
+
+	/**
+	 * Returns the value of the '<em><b>Time Log</b></em>' map.
+	 * The key is of type {@link java.util.Date},
+	 * and the value is of type {@link java.lang.Integer},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Time Log</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Time Log</em>' map.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EParticipant_TimeLog()
+	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapDateToDuration<org.eclipse.emf.ecore.EDate, org.eclipse.emf.ecore.EIntegerObject>"
+	 * @generated
+	 */
+	EMap<Date, Integer> getTimeLog();
 
 } // R4EParticipant

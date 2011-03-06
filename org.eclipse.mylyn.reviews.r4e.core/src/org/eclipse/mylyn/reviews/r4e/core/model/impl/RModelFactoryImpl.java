@@ -14,6 +14,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,9 +33,10 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
@@ -64,6 +66,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.mylyn.tasks.core.ITask;
+import org.eclipse.team.core.history.IFileRevision;
 
 /**
  * <!-- begin-user-doc -->
@@ -139,6 +142,8 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 			case RModelPackage.MAP_ID_TO_COMPONENT: return (EObject)createMapIDToComponent();
 			case RModelPackage.MAP_USER_ID_TO_USER_REVIEWS: return (EObject)createMapUserIDToUserReviews();
 			case RModelPackage.R4E_ANOMALY_TEXT_POSITION: return createR4EAnomalyTextPosition();
+			case RModelPackage.MAP_DATE_TO_DURATION: return (EObject)createMapDateToDuration();
+			case RModelPackage.MAP_KEY_TO_INFO_ATTRIBUTES: return (EObject)createMapKeyToInfoAttributes();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -164,12 +169,16 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 				return createR4EDecisionFromString(eDataType, initialValue);
 			case RModelPackage.R4E_REVIEW_TYPE:
 				return createR4EReviewTypeFromString(eDataType, initialValue);
-			case RModelPackage.R4E_COMMENT_ENUM:
-				return createR4ECommentEnumFromString(eDataType, initialValue);
+			case RModelPackage.R4E_COMMENT_CLASS:
+				return createR4ECommentClassFromString(eDataType, initialValue);
+			case RModelPackage.R4E_CONTEXT_TYPE:
+				return createR4EContextTypeFromString(eDataType, initialValue);
 			case RModelPackage.MYLYN_TASK:
 				return createMylynTaskFromString(eDataType, initialValue);
 			case RModelPackage.IRESOURCE:
 				return createIResourceFromString(eDataType, initialValue);
+			case RModelPackage.IFILE_REVISION:
+				return createIFileRevisionFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -195,12 +204,16 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 				return convertR4EDecisionToString(eDataType, instanceValue);
 			case RModelPackage.R4E_REVIEW_TYPE:
 				return convertR4EReviewTypeToString(eDataType, instanceValue);
-			case RModelPackage.R4E_COMMENT_ENUM:
-				return convertR4ECommentEnumToString(eDataType, instanceValue);
+			case RModelPackage.R4E_COMMENT_CLASS:
+				return convertR4ECommentClassToString(eDataType, instanceValue);
+			case RModelPackage.R4E_CONTEXT_TYPE:
+				return convertR4EContextTypeToString(eDataType, instanceValue);
 			case RModelPackage.MYLYN_TASK:
 				return convertMylynTaskToString(eDataType, instanceValue);
 			case RModelPackage.IRESOURCE:
 				return convertIResourceToString(eDataType, instanceValue);
+			case RModelPackage.IFILE_REVISION:
+				return convertIFileRevisionToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -471,6 +484,26 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Map.Entry<Date, Integer> createMapDateToDuration() {
+		MapDateToDurationImpl mapDateToDuration = new MapDateToDurationImpl();
+		return mapDateToDuration;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, String> createMapKeyToInfoAttributes() {
+		MapKeyToInfoAttributesImpl mapKeyToInfoAttributes = new MapKeyToInfoAttributesImpl();
+		return mapKeyToInfoAttributes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public R4ECommentType createR4ECommentType() {
 		R4ECommentTypeImpl r4ECommentType = new R4ECommentTypeImpl();
 		return r4ECommentType;
@@ -729,9 +762,9 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public R4ECommentEnum createR4ECommentEnum(String literal) {
-		R4ECommentEnum result = R4ECommentEnum.get(literal);
-		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_COMMENT_ENUM.getName() + "'");
+	public R4ECommentClass createR4ECommentClass(String literal) {
+		R4ECommentClass result = R4ECommentClass.get(literal);
+		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_COMMENT_CLASS.getName() + "'");
 		return result;
 	}
 
@@ -740,8 +773,8 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public R4ECommentEnum createR4ECommentEnumFromString(EDataType eDataType, String initialValue) {
-		return createR4ECommentEnum(initialValue);
+	public R4ECommentClass createR4ECommentClassFromString(EDataType eDataType, String initialValue) {
+		return createR4ECommentClass(initialValue);
 	}
 
 	/**
@@ -749,7 +782,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertR4ECommentEnum(R4ECommentEnum instanceValue) {
+	public String convertR4ECommentClass(R4ECommentClass instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
@@ -758,7 +791,45 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertR4ECommentEnumToString(EDataType eDataType, Object instanceValue) {
+	public String convertR4ECommentClassToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EContextType createR4EContextType(String literal) {
+		R4EContextType result = R4EContextType.get(literal);
+		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_CONTEXT_TYPE.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EContextType createR4EContextTypeFromString(EDataType eDataType, String initialValue) {
+		return createR4EContextType(initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertR4EContextType(R4EContextType instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertR4EContextTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
@@ -831,6 +902,42 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * @generated
 	 */
 	public String convertIResourceToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public IFileRevision createIFileRevision(String literal) {
+		return (IFileRevision)super.createFromString(RModelPackage.Literals.IFILE_REVISION, literal);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public IFileRevision createIFileRevisionFromString(EDataType eDataType, String initialValue) {
+		return (IFileRevision)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertIFileRevision(IFileRevision instanceValue) {
+		return super.convertToString(RModelPackage.Literals.IFILE_REVISION, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertIFileRevisionToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

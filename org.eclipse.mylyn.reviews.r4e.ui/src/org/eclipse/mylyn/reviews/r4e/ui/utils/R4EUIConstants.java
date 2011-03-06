@@ -136,10 +136,28 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String DIALOG_TITLE_INFO = "R4E Info";
 	
 	/**
+	 * Field REVIEW_NOT_COMPLETED_ERROR.
+	 * (value is ""Review Error"")
+	 */
+	public static final String REVIEW_NOT_COMPLETED_ERROR = "Review Error";
+	
+	/**
 	 * Field SHOW_DISABLED_FILTER_NAME.
 	 * (value is ""Show disabled elements"")
 	 */
 	public static final String SHOW_DISABLED_FILTER_NAME = "Show Disabled Elements";
+	
+	/**
+	 * Field DIALOG_DEFAULT_HEIGHT.
+	 * (value is 500)
+	 */
+	public static final int DIALOG_DEFAULT_HEIGHT = 600;
+	
+	/**
+	 * Field DIALOG_DEFAULT_WIDTH.
+	 * (value is 500)
+	 */
+	public static final int DIALOG_DEFAULT_WIDTH = 500;
 	
 	
 	//Tooltips
@@ -189,14 +207,49 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final String REVIEW_GROUP_ICON_FILE = "icons/obj16/revgrp_obj.gif";
 	
-
+	/**
+	 * Field BUTTON_ADD_LABEL.
+	 * (value is ""Add"")
+	 */
+	public static final String BUTTON_ADD_LABEL = "Add";
+	
+	/**
+	 * Field BUTTON_REMOVE_LABEL.
+	 * (value is ""Remove"")
+	 */
+	public static final String BUTTON_REMOVE_LABEL = "Remove";
+	
 	//Properties
+	
+	/**
+	 * Field AVAILABLE_PROJECTS_LABEL.
+	 * (value is ""Available Projects: "")
+	 */
+	public static final String AVAILABLE_PROJECTS_LABEL = "Available Projects: ";
+	
+	/**
+	 * Field AVAILABLE_COMPONENTS_LABEL.
+	 * (value is ""Available Components: "")
+	 */
+	public static final String AVAILABLE_COMPONENTS_LABEL = "Available Components: ";
+	
+	/**
+	 * Field DEFAULT_ENTRY_CRITERIA_LABEL.
+	 * (value is ""Default Entry Criteria: "")
+	 */
+	public static final String DEFAULT_ENTRY_CRITERIA_LABEL = "Default Entry Criteria: ";
 	
 	/**
 	 * Field TABBED_PROPERTY_LABEL_WIDTH.
 	 * (value is 105)
 	 */
-	public static final int TABBED_PROPERTY_LABEL_WIDTH = 135;
+	public static final int TABBED_PROPERTY_LABEL_WIDTH = 150;   //pixels
+	
+	/**
+	 * Field TABBED_PROPERTY_TEXT_HEIGHT_DEFAULT.
+	 * (value is 50)
+	 */
+	public static final int TABBED_PROPERTY_TEXT_HEIGHT_DEFAULT = 50;   //pixels
 	
 	/**
 	 * Field NAME_LABEL.
@@ -217,10 +270,76 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String DESCRIPTION_LABEL = "Description: ";
 	
 	/**
-	 * Field CREATION_DATE_LABEL.
-	 * (value is ""Creation date: "")
+	 * Field COMPONENTS_LABEL.
+	 * (value is ""Components: "")
 	 */
-	public static final String CREATION_DATE_LABEL = "Creation Date: ";
+	public static final String COMPONENTS_LABEL = "Components: ";
+	
+	/**
+	 * Field ENTRY_CRITERIA_LABEL.
+	 * (value is ""Entry Criteria: "")
+	 */
+	public static final String ENTRY_CRITERIA_LABEL = "Entry Criteria: ";
+	
+	/**
+	 * Field OBJECTIVES_LABEL.
+	 * (value is ""Objectives: "")
+	 */
+	public static final String OBJECTIVES_LABEL = "Objectives: ";
+	
+	/**
+	 * Field REFERENCE_MATERIAL_LABEL.
+	 * (value is ""Reference Material: "")
+	 */
+	public static final String REFERENCE_MATERIAL_LABEL = "Reference Material: ";
+	
+	/**
+	 * Field EXIT_DECISION_LABEL.
+	 * (value is ""Exit Decision: "")
+	 */
+	public static final String EXIT_DECISION_LABEL = "Exit Decision: ";
+	
+	/**
+	 * Field CREATION_DATE_LABEL.
+	 * (value is ""Created: "")
+	 */
+	public static final String CREATION_DATE_LABEL = "Created: ";
+	
+	/**
+	 * Field START_DATE_LABEL.
+	 * (value is ""Started: "")
+	 */
+	public static final String START_DATE_LABEL = "Started: ";
+	
+	/**
+	 * Field END_DATE_LABEL.
+	 * (value is ""Completed: "")
+	 */
+	public static final String END_DATE_LABEL = "Completed: ";
+	
+	/**
+	 * Field TIME_SPENT_CURRENT_LABEL.
+	 * (value is ""Time Spent (current): "")
+	 */
+	public static final String TIME_SPENT_DETAILED_LABEL = "Time Spent (detailed): ";
+	
+	/**
+	 * Field TIME_SPENT_TOTAL_LABEL.
+	 * (value is ""Time Spent (total): "")
+	 */
+	public static final String TIME_SPENT_TOTAL_LABEL = "Time Spent (total): ";
+	
+	/**
+	 * Field TIME_SPENT_CURRENT_LABEL.
+	 * (value is ""Time Spent (current): "")
+	 */
+	public static final String ROLES_LABEL = "Roles: ";
+	
+	/**
+	 * Field FOCUS_AREA_LABEL.
+	 * (value is ""Focus Area: "")
+	 */
+	public static final String FOCUS_AREA_LABEL = "Focus Area: ";
 	
 	/**
 	 * Field AUTHOR_LABEL.
@@ -268,7 +387,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field PROJECT_ID_LABEL.
 	 * (value is ""Project Id: "")
 	 */
-	public static final String PROJECT_ID_LABEL = "Project Id: ";
+	public static final String PROJECT_LABEL = "Project Id: ";
 	
 	/**
 	 * Field PATH_LABEL.
@@ -306,6 +425,117 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final String FILE_NOT_IN_VERSION_CONTROL_MSG = "(Not Version Controlled)";
 	
+	/**
+	 * Field IN_PROGRESS_MSG.
+	 * (value is ""(In Progress)"")
+	 */
+	public static final String IN_PROGRESS_MSG = "(In Progress)";
+	
+	/**
+	 * Field STATE_LABEL.
+	 * (value is ""State: "")
+	 */
+	public static final String STATE_LABEL = "State: ";
+	
+	/**
+	 * Field DUE_DATE_LABEL.
+	 * (value is ""Due Date: "")
+	 */
+	public static final String DUE_DATE_LABEL = "Due Date: ";
+	
+	/**
+	 * Field CLASS_LABEL.
+	 * (value is ""Class: "")
+	 */
+	public static final String CLASS_LABEL = "Class: ";
+	
+	/**
+	 * Field RANK_LABEL.
+	 * (value is ""Rank: "")
+	 */
+	public static final String RANK_LABEL = "Rank: ";
+	
+	/**
+	 * Field NOT_ACCEPTED_REASON_LABEL.
+	 * (value is ""Reason for Rejection: "")
+	 */
+	public static final String NOT_ACCEPTED_REASON_LABEL = "Reason for Rejection: ";
+	
+	/**
+	 * Field DECIDED_BY_LABEL.
+	 * (value is ""Decided by: "")
+	 */
+	public static final String DECIDED_BY_LABEL = "Decided by: ";
+	
+	/**
+	 * Field FIXED_BY_LABEL.
+	 * (value is ""Fixed by: "")
+	 */
+	public static final String FIXED_BY_LABEL = "Fixed by: ";
+	
+	/**
+	 * Field FOLLOWUP_BY_LABEL.
+	 * (value is ""Follow-up by: "")
+	 */
+	public static final String FOLLOWUP_BY_LABEL = "Follow-up by: ";
+	
+	/**
+	 * Field DEFAULT_DATE_FORMAT.
+	 * (value is ""yyyy/MM/dd HH:mm:ss"")
+	 */
+	public static final String DEFAULT_DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
+	
+	/**
+	 * Field SIMPLE_DATE_FORMAT.
+	 * (value is ""yyyy/MM/dd"")
+	 */
+	public static final String SIMPLE_DATE_FORMAT = "yyyy/MM/dd";
+	
+	/**
+	 * Field SPENT_TIME_COLUMN_HEADER.
+	 * (value is ""Time spent (minutes)"")
+	 */
+	public static final String SPENT_TIME_COLUMN_HEADER = "Time spent (minutes)";
+	
+	/**
+	 * Field ENTRY_TIME_COLUMN_HEADER.
+	 * (value is ""Time of entry"")
+	 */
+	public static final String ENTRY_TIME_COLUMN_HEADER = "Time of entry";
+	
+	/**
+	 * Field BASIC_PARAMS_HEADER.
+	 * (value is ""Basic Parameters"")
+	 */
+	public static final String BASIC_PARAMS_HEADER = "Basic Parameters";
+	
+	/**
+	 * Field EXTRA_PARAMS_HEADER.
+	 * (value is ""Extra Parameters"")
+	 */
+	public static final String EXTRA_PARAMS_HEADER = "Extra Parameters";
+	
+	
+	//Review types
+	
+	/**
+	 * Field REVIEW_TYPE_BASIC.
+	 * (value is ""Basic"")
+	 */
+	public static final String REVIEW_TYPE_BASIC = "Basic";
+	
+	/**
+	 * Field REVIEW_TYPE_INFORMAL.
+	 * (value is ""Informal"")
+	 */
+	public static final String REVIEW_TYPE_INFORMAL = "Informal";
+	
+	/**
+	 * Field REVIEW_TYPE_FORMAL.
+	 * (value is ""Formal"")
+	 */
+	public static final String REVIEW_TYPE_FORMAL = "Formal";
+	
 	
 	//Review item types
 	
@@ -320,6 +550,27 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is 1)
 	 */
 	public static final int REVIEW_ITEM_TYPE_COMMIT = 1;
+	
+	
+	//User Roles
+	
+	/**
+	 * Field USER_ROLE_LEAD.
+	 * (value is ""Lead"")
+	 */
+	public static final String USER_ROLE_LEAD = "Lead";
+	
+	/**
+	 * Field USER_ROLE_AUTHOR.
+	 * (value is ""Author"")
+	 */
+	public static final String USER_ROLE_AUTHOR = "Author";
+	
+	/**
+	 * Field USER_ROLE_REVIEWER.
+	 * (value is ""Reviewer"")
+	 */
+	public static final String USER_ROLE_REVIEWER = "Reviewer";
 	
 	
 	//Commands

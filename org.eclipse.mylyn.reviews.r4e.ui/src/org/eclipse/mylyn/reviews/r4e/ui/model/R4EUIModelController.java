@@ -111,9 +111,9 @@ public class R4EUIModelController {
 	private static final Map<String,List<R4EAnomaly>> FFileAnomalyMap = new HashMap<String,List<R4EAnomaly>>(32, 0.75f); // $codepro.audit.disable constantNamingConvention
 	
 	/**
-	 * Field FDialogStateListenerList.
+	 * Field FElementStateListenerList.
 	 */
-	private static final List<IPropertyListener> FDialogStateListenerList = new ArrayList<IPropertyListener>(); // $codepro.audit.disable constantNamingConvention
+	private static final List<IPropertyListener> FElementStateListenerList = new ArrayList<IPropertyListener>(); // $codepro.audit.disable constantNamingConvention
 	
 	
 	// ------------------------------------------------------------------------
@@ -121,19 +121,19 @@ public class R4EUIModelController {
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Method addDialogStateListener.
+	 * Method addElementStateListener.
 	 * @param aListener IPropertyListener
 	 */
-	public static void addDialogStateListener(IPropertyListener aListener) {
-		FDialogStateListenerList.add(aListener);
+	public static void addElementStateListener(IPropertyListener aListener) {
+		FElementStateListenerList.add(aListener);
 	}
 	
 	/**
-	 * Method removeDialogStateListener.
+	 * Method removeElementStateListener.
 	 * @param aListener IPropertyListener
 	 */
-	public static void removeDialogStateListener(IPropertyListener aListener) {
-		FDialogStateListenerList.remove(aListener);
+	public static void removeElementStateListener(IPropertyListener aListener) {
+		FElementStateListenerList.remove(aListener);
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class R4EUIModelController {
 	public static void setActiveReview(R4EUIReview aActiveReview) {
 		FActiveReview = aActiveReview;
 		if (null != FReviewSourceProvider) {
-			FReviewSourceProvider.setReview(FActiveReview);
+			FReviewSourceProvider.setCurrentReview(FActiveReview);
 		}
 		//check to apply filters
 		try {
@@ -201,26 +201,34 @@ public class R4EUIModelController {
 	}
 	
 	/**
-	 * Set the currently dialog state (true if a dialog is currently in progress)
+	 * Set properties state based on the current dialog state
 	 * @param aIsDialogOpen boolean
 	 */
 	public static void setDialogOpen(boolean aIsDialogOpen) {
 		FIsDialogOpen = aIsDialogOpen;
-		for (IPropertyListener listener : FDialogStateListenerList) {
+		for (IPropertyListener listener : FElementStateListenerList) {
 			listener.propertyChanged(null, 0);
 		}
 	}
 	
 	/**
-	 * Set the currently dialog state (true if a dialog is currently in progress)
+	 * Set properties state based on the selected element
 	 * @param aSelection the selected element
 	 */
 	public static void selectionChanged(IStructuredSelection aSelection) {
-		for (IPropertyListener listener : FDialogStateListenerList) {
+		for (IPropertyListener listener : FElementStateListenerList) {
 			listener.propertyChanged(null, 0);  //TODO this is temporary and should be refined later
 		}
 	}
 	
+	/**
+	 * Refresh properties
+	 */
+	public static void propertyChanged() {
+		for (IPropertyListener listener : FElementStateListenerList) {
+			listener.propertyChanged(null, 0);  //TODO this is temporary and should be refined later
+		}
+	}
 	
 	/**
 	 * Get the currently active review

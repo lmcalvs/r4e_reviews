@@ -34,14 +34,15 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.dialogs.R4EReviewInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ReviewInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewGroupProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewGroupProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -92,25 +93,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
      * (value is ""Remove this review group"")
      */
     private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review Group";
-
-	
-	/**
-	 * Field ADD_REVIEW_DIALOG_TITLE.
-	 * (value is ""Enter Review details"")
-	 */
-	private static final String ADD_REVIEW_DIALOG_TITLE = "Enter Review Details";
-
-	/**
-	 * Field ADD_REVIEW_NAME_DIALOG_VALUE.
-	 * (value is ""Enter the Review name"")
-	 */
-	private static final String ADD_REVIEW_NAME_DIALOG_VALUE = "Enter the Review Name";
-	
-	/**
-	 * Field ADD_REVIEW_DESCRIPTION_DIALOG_VALUE.
-	 * (value is ""Enter the Review Description"")
-	 */
-	private static final String ADD_REVIEW_DESCRIPTION_DIALOG_VALUE = "Enter the Review Description";
 	
 	
 	// ------------------------------------------------------------------------
@@ -205,7 +187,10 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
     	//Set data in model element
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
 		fGroup.setDescription(((R4EReviewGroup)aModelComponent).getDescription());
-    	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		fGroup.getAvailableProjects().addAll(((R4EReviewGroup)aModelComponent).getAvailableProjects());
+		fGroup.getAvailableComponents().addAll(((R4EReviewGroup)aModelComponent).getAvailableComponents());
+		fGroup.setDefaultEntryCriteria(((R4EReviewGroup)aModelComponent).getDefaultEntryCriteria());
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
     }
 	
 	/**
@@ -218,14 +203,24 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		//Get comment from user and set it in model data
 		R4EReview tempReview = null;
 		R4EUIModelController.setDialogOpen(true);
-		final R4EReviewInputDialog dialog = new R4EReviewInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite().getWorkbenchWindow().getShell(), ADD_REVIEW_DIALOG_TITLE, ADD_REVIEW_NAME_DIALOG_VALUE, 
-				ADD_REVIEW_DESCRIPTION_DIALOG_VALUE);
+		final ReviewInputDialog dialog = new ReviewInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+				getSite().getWorkbenchWindow().getShell(), this);
+		dialog.create();
     	final int result = dialog.open();
     	if (result == Window.OK) {
+    		//All reviews
     		tempReview = RModelFactory.eINSTANCE.createR4EReview();
+    		tempReview.setType(dialog.getReviewTypeValue());
     		tempReview.setName(dialog.getReviewNameValue());
     		tempReview.setExtraNotes(dialog.getReviewDescriptionValue());
+    		//Informal reviews
+    		tempReview.setProject(dialog.getProjectValue());
+    		for (String component : dialog.getComponentsValues()) {
+    			tempReview.getComponents().add(component);
+    		}
+    		tempReview.setEntryCriteria(dialog.getEntryCriteriaValue());
+    		tempReview.setObjectives(dialog.getObjectivesValue());
+    		tempReview.setReferenceMaterial(dialog.getReferenceMaterialValue());
     	}
     	//else Window.CANCEL
 		R4EUIModelController.setDialogOpen(false);
@@ -274,7 +269,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 				review = (R4EReview)reviews.get(i);
 				if (review.isEnabled() || Activator.getDefault().getPreferenceStore().
 						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					R4EUIReview uiReview = new R4EUIReview(this, review, false);
+					R4EUIReview uiReview = new R4EUIReview(this, review, review.getType(), false);
 					addChildren(uiReview);
 					
 					//Check if this review is completed
@@ -369,6 +364,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	public IR4EUIModelElement createChildren(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		
 		final String reviewName = ((R4EReview)aModelComponent).getName();
+		final R4EReviewType type = ((R4EReview)aModelComponent).getType();
 		
 		//Check if group already exists.  If so it cannot be recreated
 		for (R4EUIReview review : fReviews) {
@@ -383,7 +379,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		
 		final R4EUIReview addedChild = new R4EUIReview(this, 
 				R4EUIModelController.FModelExt.createR4EReview(getReviewGroup(), reviewName, 
-						R4EUIModelController.getReviewer()), true);
+						R4EUIModelController.getReviewer()), type, true);
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
 		return addedChild;

@@ -14,6 +14,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.util;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -233,6 +234,14 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseR4EAnomalyTextPosition(R4EAnomalyTextPosition object) {
 				return createR4EAnomalyTextPositionAdapter();
+			}
+			@Override
+			public Adapter caseMapDateToDuration(Map.Entry<Date, Integer> object) {
+				return createMapDateToDurationAdapter();
+			}
+			@Override
+			public Adapter caseMapKeyToInfoAttributes(Map.Entry<String, String> object) {
+				return createMapKeyToInfoAttributesAdapter();
 			}
 			@Override
 			public Adapter caseReviewComponent(ReviewComponent object) {
@@ -715,6 +724,34 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createR4EAnomalyTextPositionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Map Date To Duration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createMapDateToDurationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Map Key To Info Attributes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createMapKeyToInfoAttributesAdapter() {
 		return null;
 	}
 

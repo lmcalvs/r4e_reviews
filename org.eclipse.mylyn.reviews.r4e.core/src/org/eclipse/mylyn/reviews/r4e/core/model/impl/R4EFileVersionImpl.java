@@ -1,5 +1,4 @@
 /**
-/**
  * Copyright (c) 2010 Ericsson
  *  
  * All rights reserved. This program and the accompanying materials are
@@ -16,12 +15,24 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import org.eclipse.core.resources.IResource;
+
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
+
+import org.eclipse.team.core.history.IFileRevision;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,6 +46,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getRepositoryPath <em>Repository Path</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getResource <em>Resource</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getLocalVersionID <em>Local Version ID</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getFileRevision <em>File Revision</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl#getInfoAtt <em>Info Att</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,6 +64,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * @ordered
 	 */
 	protected static final String PLATFORM_URI_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getPlatformURI() <em>Platform URI</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -59,6 +74,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * @ordered
 	 */
 	protected String platformURI = PLATFORM_URI_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getVersionID() <em>Version ID</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -68,6 +84,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * @ordered
 	 */
 	protected static final String VERSION_ID_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getVersionID() <em>Version ID</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -77,6 +94,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * @ordered
 	 */
 	protected String versionID = VERSION_ID_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getRepositoryPath() <em>Repository Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -86,6 +104,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * @ordered
 	 */
 	protected static final String REPOSITORY_PATH_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getRepositoryPath() <em>Repository Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -95,6 +114,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * @ordered
 	 */
 	protected String repositoryPath = REPOSITORY_PATH_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -104,6 +124,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * @ordered
 	 */
 	protected static final String NAME_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -113,6 +134,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getResource() <em>Resource</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -122,6 +144,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * @ordered
 	 */
 	protected static final IResource RESOURCE_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getResource() <em>Resource</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -131,6 +154,57 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * @ordered
 	 */
 	protected IResource resource = RESOURCE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getLocalVersionID() <em>Local Version ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLocalVersionID()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LOCAL_VERSION_ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLocalVersionID() <em>Local Version ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLocalVersionID()
+	 * @generated
+	 * @ordered
+	 */
+	protected String localVersionID = LOCAL_VERSION_ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getFileRevision() <em>File Revision</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFileRevision()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final IFileRevision FILE_REVISION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getFileRevision() <em>File Revision</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFileRevision()
+	 * @generated
+	 * @ordered
+	 */
+	protected IFileRevision fileRevision = FILE_REVISION_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInfoAtt()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> infoAtt;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -260,6 +334,74 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getLocalVersionID() {
+		return localVersionID;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLocalVersionID(String newLocalVersionID) {
+		String oldLocalVersionID = localVersionID;
+		localVersionID = newLocalVersionID;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_FILE_VERSION__LOCAL_VERSION_ID, oldLocalVersionID, localVersionID));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public IFileRevision getFileRevision() {
+		return fileRevision;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFileRevision(IFileRevision newFileRevision) {
+		IFileRevision oldFileRevision = fileRevision;
+		fileRevision = newFileRevision;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_FILE_VERSION__FILE_REVISION, oldFileRevision, fileRevision));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, String> getInfoAtt() {
+		if (infoAtt == null) {
+			infoAtt = new EcoreEMap<String,String>(RModelPackage.Literals.MAP_KEY_TO_INFO_ATTRIBUTES, MapKeyToInfoAttributesImpl.class, this, RModelPackage.R4E_FILE_VERSION__INFO_ATT);
+		}
+		return infoAtt;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case RModelPackage.R4E_FILE_VERSION__INFO_ATT:
+				return ((InternalEList<?>)getInfoAtt()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -273,6 +415,13 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 				return getName();
 			case RModelPackage.R4E_FILE_VERSION__RESOURCE:
 				return getResource();
+			case RModelPackage.R4E_FILE_VERSION__LOCAL_VERSION_ID:
+				return getLocalVersionID();
+			case RModelPackage.R4E_FILE_VERSION__FILE_REVISION:
+				return getFileRevision();
+			case RModelPackage.R4E_FILE_VERSION__INFO_ATT:
+				if (coreType) return getInfoAtt();
+				else return getInfoAtt().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -299,6 +448,15 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 				return;
 			case RModelPackage.R4E_FILE_VERSION__RESOURCE:
 				setResource((IResource)newValue);
+				return;
+			case RModelPackage.R4E_FILE_VERSION__LOCAL_VERSION_ID:
+				setLocalVersionID((String)newValue);
+				return;
+			case RModelPackage.R4E_FILE_VERSION__FILE_REVISION:
+				setFileRevision((IFileRevision)newValue);
+				return;
+			case RModelPackage.R4E_FILE_VERSION__INFO_ATT:
+				((EStructuralFeature.Setting)getInfoAtt()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -327,6 +485,15 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 			case RModelPackage.R4E_FILE_VERSION__RESOURCE:
 				setResource(RESOURCE_EDEFAULT);
 				return;
+			case RModelPackage.R4E_FILE_VERSION__LOCAL_VERSION_ID:
+				setLocalVersionID(LOCAL_VERSION_ID_EDEFAULT);
+				return;
+			case RModelPackage.R4E_FILE_VERSION__FILE_REVISION:
+				setFileRevision(FILE_REVISION_EDEFAULT);
+				return;
+			case RModelPackage.R4E_FILE_VERSION__INFO_ATT:
+				getInfoAtt().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -349,6 +516,12 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case RModelPackage.R4E_FILE_VERSION__RESOURCE:
 				return RESOURCE_EDEFAULT == null ? resource != null : !RESOURCE_EDEFAULT.equals(resource);
+			case RModelPackage.R4E_FILE_VERSION__LOCAL_VERSION_ID:
+				return LOCAL_VERSION_ID_EDEFAULT == null ? localVersionID != null : !LOCAL_VERSION_ID_EDEFAULT.equals(localVersionID);
+			case RModelPackage.R4E_FILE_VERSION__FILE_REVISION:
+				return FILE_REVISION_EDEFAULT == null ? fileRevision != null : !FILE_REVISION_EDEFAULT.equals(fileRevision);
+			case RModelPackage.R4E_FILE_VERSION__INFO_ATT:
+				return infoAtt != null && !infoAtt.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -373,6 +546,10 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 		result.append(name);
 		result.append(", resource: ");
 		result.append(resource);
+		result.append(", localVersionID: ");
+		result.append(localVersionID);
+		result.append(", fileRevision: ");
+		result.append(fileRevision);
 		result.append(')');
 		return result.toString();
 	}

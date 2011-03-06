@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.dialogs.R4EFindReviewItemsDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.dialogs.FindReviewItemsDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -91,7 +91,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		//Fire up the find review items dialog to get the latest commit info for the first selection
 		R4EUIModelController.setDialogOpen(true);
 
-		final R4EFindReviewItemsDialog dialog = new R4EFindReviewItemsDialog(R4EUIModelController.getNavigatorView().
+		final FindReviewItemsDialog dialog = new FindReviewItemsDialog(R4EUIModelController.getNavigatorView().
 				getSite().getWorkbenchWindow().getShell(), FIND_REVIEW_ITEMS_DIALOG_TITLE, FIND_REVIEW_ITEMS_DIALOG_VALUE, 
 				FIND_REVIEW_ITEMS_DESCRIPTION_DIALOG_VALUE, project);
     	dialog.open();

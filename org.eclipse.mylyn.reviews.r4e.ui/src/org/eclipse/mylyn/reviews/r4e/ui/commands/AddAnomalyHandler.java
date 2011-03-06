@@ -42,7 +42,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomaly;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
@@ -205,8 +205,8 @@ public class AddAnomalyHandler extends AbstractHandler {
 						//File already exists, check if anomaly also exists
 						R4EUIAnomalyContainer anomalyContainer = (R4EUIAnomalyContainer) file.getAnomalyContainerElement();
 						if (null != anomalyContainer) {
-							R4EUIAnomaly[] anomalies = (R4EUIAnomaly[])anomalyContainer.getChildren();
-							for (R4EUIAnomaly uiAnomaly : anomalies) {
+							R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[])anomalyContainer.getChildren();
+							for (R4EUIAnomalyBasic uiAnomaly : anomalies) {
 								if (uiAnomaly.getPosition().isSameAs(aUIPosition)) {
 									isNewAnomaly = false;		
 									addCommentToExistingAnomaly(uiAnomaly);
@@ -251,7 +251,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException 
 	 */
-	private void addCommentToExistingAnomaly(R4EUIAnomaly aUIAnomaly) throws ResourceHandlingException, OutOfSyncException {
+	private void addCommentToExistingAnomaly(R4EUIAnomalyBasic aUIAnomaly) throws ResourceHandlingException, OutOfSyncException {
 		
 		final R4EUIComment uiComment = aUIAnomaly.createComment();
 		if (null != uiComment) {
@@ -272,7 +272,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 	private void addAnomalyToExistingFileContext(R4EUIAnomalyContainer aContainer, IR4EUIPosition aUIPosition) 
 		throws ResourceHandlingException, OutOfSyncException {
 
-		final R4EUIAnomaly uiAnomaly = aContainer.createAnomaly((R4EUITextPosition) aUIPosition);
+		final R4EUIAnomalyBasic uiAnomaly = aContainer.createAnomaly((R4EUITextPosition) aUIPosition);
 		if (null != uiAnomaly) {
 			//Set focus to newly created anomaly comment
 			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
@@ -306,7 +306,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 				uiFileContext, R4EUIConstants.ANOMALIES_LABEL_NAME);
 		uiFileContext.addChildren(uiAnomalyContainer);
 		
-		final R4EUIAnomaly uiAnomaly = uiAnomalyContainer.createAnomaly((R4EUITextPosition) aUIPosition);
+		final R4EUIAnomalyBasic uiAnomaly = uiAnomalyContainer.createAnomaly((R4EUITextPosition) aUIPosition);
 		if (null != uiAnomaly) {
 			//Set focus to newly created anomaly comment
 			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);

@@ -34,7 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.dialogs.R4EReviewGroupInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ReviewGroupInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -46,35 +46,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
  */
 public class R4EUIElement extends R4EUIModelElement {
 
-	// ------------------------------------------------------------------------
-	// Constants
-	// ------------------------------------------------------------------------
-    
-	/**
-	 * Field ADD_REVIEW_GROUP_DIALOG_TITLE.
-	 * (value is ""Enter Review Group details"")
-	 */
-	private static final String ADD_REVIEW_GROUP_DIALOG_TITLE = "Enter Review Group Details";
-	
-	/**
-	 * Field ADD_REVIEW_GROUP_NAME_DIALOG_VALUE.
-	 * (value is ""Enter the Review Group Name:"")
-	 */
-	private static final String ADD_REVIEW_GROUP_NAME_DIALOG_VALUE = "Enter the Review Group Name:";
-	
-	/**
-	 * Field ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE.
-	 * (value is ""Enter the Review Group Folder:"")
-	 */
-	private static final String ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE = "Enter the Review Group Folder:";
-	
-	/**
-	 * Field ADD_REVIEW_GROUP_DESCRIPTION_DIALOG_VALUE.
-	 * (value is ""Enter the Review Group Description:"")
-	 */
-	private static final String ADD_REVIEW_GROUP_DESCRIPTION_DIALOG_VALUE = "Enter the Review Group Description:";
-	
-	
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -115,15 +86,22 @@ public class R4EUIElement extends R4EUIModelElement {
 		//Get comment from user and set it in model data
 		R4EReviewGroup tempReviewGroup = null;
 		R4EUIModelController.setDialogOpen(true);
-		final R4EReviewGroupInputDialog dialog = new R4EReviewGroupInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite().getWorkbenchWindow().getShell(), ADD_REVIEW_GROUP_DIALOG_TITLE, ADD_REVIEW_GROUP_NAME_DIALOG_VALUE, 
-				ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE, ADD_REVIEW_GROUP_DESCRIPTION_DIALOG_VALUE);
+		final ReviewGroupInputDialog dialog = new ReviewGroupInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+				getSite().getWorkbenchWindow().getShell());
+		dialog.create();
     	final int result = dialog.open();
     	if (result == Window.OK) {
     		tempReviewGroup = RModelFactory.eINSTANCE.createR4EReviewGroup();
     		tempReviewGroup.setName(dialog.getGroupNameValue());
     		tempReviewGroup.setDescription(dialog.getGroupDescriptionValue());
     		tempReviewGroup.setFolder(dialog.getGroupFolderValue());
+    		for (String project : dialog.getAvailableProjectsValues()) {
+    			tempReviewGroup.getAvailableProjects().add(project);
+    		}
+    		for (String component : dialog.getAvailableComponentsValues()) {
+    			tempReviewGroup.getAvailableComponents().add(component);
+    		}
+    		tempReviewGroup.setDefaultEntryCriteria(dialog.getDefaultEntryCriteriaValue());
     	}
     	//else Window.CANCEL
 		R4EUIModelController.setDialogOpen(false);

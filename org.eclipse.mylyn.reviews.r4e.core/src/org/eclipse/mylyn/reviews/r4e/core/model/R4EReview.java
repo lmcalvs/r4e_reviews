@@ -29,7 +29,6 @@ import org.eclipse.mylyn.reviews.frame.core.model.Review;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getCreationDate <em>Creation Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getProject <em>Project</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getComponents <em>Components</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEntryCriteria <em>Entry Criteria</em>}</li>
@@ -78,32 +77,6 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * @generated
 	 */
 	void setName(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Creation Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Creation Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Creation Date</em>' attribute.
-	 * @see #setCreationDate(Date)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_CreationDate()
-	 * @model
-	 * @generated
-	 */
-	Date getCreationDate();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getCreationDate <em>Creation Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Creation Date</em>' attribute.
-	 * @see #getCreationDate()
-	 * @generated
-	 */
-	void setCreationDate(Date value);
 
 	/**
 	 * Returns the value of the '<em><b>Project</b></em>' attribute.

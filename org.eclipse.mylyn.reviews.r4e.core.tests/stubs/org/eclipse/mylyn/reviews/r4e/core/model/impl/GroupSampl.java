@@ -119,7 +119,6 @@ public class GroupSampl {
 			Date startDate = indCal.getTime();
 			// 2 days after
 			Date endDate = new Date(startDate.getTime() + 2 * 24 * 60 * 60 * 1000);
-			review1.setCreationDate(startDate);
 			review1.setStartDate(startDate);
 			review1.setEndDate(endDate);
 		} catch (ResourceHandlingException e) {

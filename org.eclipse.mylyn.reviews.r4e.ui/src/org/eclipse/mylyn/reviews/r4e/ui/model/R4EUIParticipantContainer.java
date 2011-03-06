@@ -22,7 +22,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ParticipantInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 
 /**
@@ -41,7 +47,19 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	private static final String PARTICIPANT_CONTAINER_ICON_FILE = "icons/obj16/partcont_obj.png";
     
+	/**
+	 * Field ADD_ELEMENT_ACTION_NAME.
+	 * (value is ""Add Participant"")
+	 */
+	private static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Participant";
 	
+    /**
+     * Field ADD_ELEMENT_ACTION_TOOLTIP.
+     * (value is ""Add a New Participant to the Current Review"")
+     */
+    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Participant to the Current Review";
+
+    
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -71,6 +89,32 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+	
+	//Attributes
+	
+	/**
+	 * Create a serialization model element object
+	 * @return the new serialization element object
+	 */
+	@Override
+	public R4EReviewComponent createChildModelDataElement() {
+		//Get comment from user and set it in model data
+		R4EParticipant tempParticipant = null;
+		R4EUIModelController.setDialogOpen(true);
+		final ParticipantInputDialog dialog = new ParticipantInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+				getSite().getWorkbenchWindow().getShell());
+    	final int result = dialog.open();
+    	if (result == Window.OK) {
+    		tempParticipant = RModelFactory.eINSTANCE.createR4EParticipant();
+    		tempParticipant.setId(dialog.getParticipantIdValue());
+    		tempParticipant.getRoles().addAll(dialog.getParticipantRolesValue());
+    		tempParticipant.setFocusArea(dialog.getFocusAreaValue());
+    	}
+    	// else Window.CANCEL
+		R4EUIModelController.setDialogOpen(false);
+    	return tempParticipant;
+	}
+	
 	
 	//Hierarchy
 	
@@ -159,6 +203,24 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method createChildren
+	 * @param aModelComponent - the serialization model component object
+	 * @return IR4EUIModelElement
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildren(ReviewNavigatorContentProvider)
+	 */
+	@Override
+	public IR4EUIModelElement createChildren(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+		final R4EParticipant participant = R4EUIModelController.FModelExt.createR4EParticipant(
+				((R4EUIReview)getParent()).getReview(), ((R4EParticipant)aModelComponent).getId(), ((R4EParticipant)aModelComponent).getRoles());
+		final R4EUIParticipant addedChild = new R4EUIParticipant(this, participant);
+		addedChild.setModelData(aModelComponent);
+		addChildren(addedChild);
+		return addedChild;
+	}
+	
+	/**
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement
 	 * @param aFileRemove - also remove from file (hard remove)
@@ -217,5 +279,38 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 				element.removeListener();
 			}
 		}
+	}
+	
+	//Commands
+	
+	/**
+	 * Method isAddChildElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isAddChildElementCmd()
+	 */
+	@Override
+	public boolean isAddChildElementCmd() {
+		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) return true;
+		return false;
+	}
+	
+	/**
+	 * Method getAddChildElementCmdName.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdName()
+	 */
+	@Override
+	public String getAddChildElementCmdName() {
+		return ADD_CHILD_ELEMENT_COMMAND_NAME;
+	}
+	
+	/**
+	 * Method getAddChildElementCmdTooltip.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
+	 */
+	@Override
+	public String getAddChildElementCmdTooltip() {
+		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP; 
 	}
 }

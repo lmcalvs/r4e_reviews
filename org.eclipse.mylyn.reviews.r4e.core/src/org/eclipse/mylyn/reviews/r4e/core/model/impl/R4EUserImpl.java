@@ -26,10 +26,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.frame.core.model.impl.UserImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
@@ -40,6 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#isEnabled <em>Enabled</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#getGroupPaths <em>Group Paths</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#getSequenceIDCounter <em>Sequence ID Counter</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#getAddedComments <em>Added Comments</em>}</li>
@@ -55,6 +59,26 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * @generated
  */
 public class R4EUserImpl extends UserImpl implements R4EUser {
+	/**
+	 * The default value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isEnabled()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ENABLED_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isEnabled()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean enabled = ENABLED_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getGroupPaths() <em>Group Paths</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -211,6 +235,27 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	@Override
 	protected EClass eStaticClass() {
 		return RModelPackage.Literals.R4E_USER;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setEnabled(boolean newEnabled) {
+		boolean oldEnabled = enabled;
+		enabled = newEnabled;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_USER__ENABLED, oldEnabled, enabled));
 	}
 
 	/**
@@ -427,6 +472,8 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case RModelPackage.R4E_USER__ENABLED:
+				return isEnabled();
 			case RModelPackage.R4E_USER__GROUP_PATHS:
 				return getGroupPaths();
 			case RModelPackage.R4E_USER__SEQUENCE_ID_COUNTER:
@@ -459,6 +506,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case RModelPackage.R4E_USER__ENABLED:
+				setEnabled((Boolean)newValue);
+				return;
 			case RModelPackage.R4E_USER__GROUP_PATHS:
 				getGroupPaths().clear();
 				getGroupPaths().addAll((Collection<? extends String>)newValue);
@@ -501,6 +551,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case RModelPackage.R4E_USER__ENABLED:
+				setEnabled(ENABLED_EDEFAULT);
+				return;
 			case RModelPackage.R4E_USER__GROUP_PATHS:
 				getGroupPaths().clear();
 				return;
@@ -540,6 +593,8 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case RModelPackage.R4E_USER__ENABLED:
+				return enabled != ENABLED_EDEFAULT;
 			case RModelPackage.R4E_USER__GROUP_PATHS:
 				return groupPaths != null && !groupPaths.isEmpty();
 			case RModelPackage.R4E_USER__SEQUENCE_ID_COUNTER:
@@ -568,11 +623,55 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	 * @generated
 	 */
 	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == ReviewComponent.class) {
+			switch (derivedFeatureID) {
+				case RModelPackage.R4E_USER__ENABLED: return ModelPackage.REVIEW_COMPONENT__ENABLED;
+				default: return -1;
+			}
+		}
+		if (baseClass == R4EReviewComponent.class) {
+			switch (derivedFeatureID) {
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == ReviewComponent.class) {
+			switch (baseFeatureID) {
+				case ModelPackage.REVIEW_COMPONENT__ENABLED: return RModelPackage.R4E_USER__ENABLED;
+				default: return -1;
+			}
+		}
+		if (baseClass == R4EReviewComponent.class) {
+			switch (baseFeatureID) {
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (groupPaths: ");
+		result.append(" (enabled: ");
+		result.append(enabled);
+		result.append(", groupPaths: ");
 		result.append(groupPaths);
 		result.append(", sequenceIDCounter: ");
 		result.append(sequenceIDCounter);

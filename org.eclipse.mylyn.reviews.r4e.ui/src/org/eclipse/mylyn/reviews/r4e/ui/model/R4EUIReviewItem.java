@@ -43,7 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewItemProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewItemProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -534,7 +534,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isChangeReviewStateCmd() {
-		if (isEnabled()) return true;
+		if (isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) return true;
 		return false;
 	}
 	

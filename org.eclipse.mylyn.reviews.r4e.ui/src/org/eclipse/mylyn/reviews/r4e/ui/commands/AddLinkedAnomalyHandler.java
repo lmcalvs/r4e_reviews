@@ -29,7 +29,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomaly;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
@@ -96,7 +96,7 @@ public class AddLinkedAnomalyHandler extends AbstractHandler {
 			fileContext.addChildren(container);
 		}
 		
-		final R4EUIAnomaly uiAnomaly = container.createAnomaly((R4EUITextPosition) aElement.getPosition());
+		final R4EUIAnomalyBasic uiAnomaly = container.createAnomaly((R4EUITextPosition) aElement.getPosition());
 		if (null != uiAnomaly) {
 			//Set focus to newly created anomaly comment
 			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);

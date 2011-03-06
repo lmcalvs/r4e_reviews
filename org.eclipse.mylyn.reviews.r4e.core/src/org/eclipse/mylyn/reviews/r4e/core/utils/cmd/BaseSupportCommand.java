@@ -43,11 +43,6 @@ public class BaseSupportCommand {
 			return new String("");
 		}
 
-		int size = results.size();
-		if (size == 0) {
-			return new String("");
-		}
-
 		// reasonable limit to 10 lines, if more lines needed, use method "execute"
 		StringBuilder result = new StringBuilder();
 		int maxLines = results.size() > 10 ? 10 : results.size();
@@ -99,7 +94,11 @@ public class BaseSupportCommand {
 			}
 		}
 
-		results = outputStream.getLines();
+		if (exitValue == 0) {
+			results = outputStream.getLines();			
+		} else {
+			results = errorStream.getLines();			
+		}
 
 		// Print errors, if any
 		if (notifyIfError) {

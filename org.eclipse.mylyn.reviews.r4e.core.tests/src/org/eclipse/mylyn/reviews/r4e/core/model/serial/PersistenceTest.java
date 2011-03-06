@@ -70,14 +70,19 @@ public class PersistenceTest extends TestCase {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		fRootTestDir = new File(System.getProperty("java.io.tmpdir") + "r4eTst");
+		String base = System.getProperty("java.io.tmpdir");
+		if (!base.endsWith(File.separator)) {
+			base = base + File.separator;
+		}
+		
+		fRootTestDir = new File(base + "r4eTst");
 
 		// Resolve golden group storage dir
 		String rootFile = fGoldenGroup.lastSegment();
 		File goldenDir = new File(fGoldenGroup.trimSegments(1).devicePath());
 
 		// Take the directory name to be used as copy destination
-		String testDir = fRootTestDir.toString() + fSep + "OutL1" + fSep + "OutL2" + fSep + goldenDir.getName();
+		String testDir = fRootTestDir.toString() + "OutL1" + fSep + "OutL2" + fSep + goldenDir.getName();
 		fTestDir = new File(testDir);
 
 		// Determine the location of the group file in the destination folder
@@ -176,7 +181,7 @@ public class PersistenceTest extends TestCase {
 	 * Testing writing permissions
 	 */
 	public void testReadWritePermissions() {
-		String dirName = fRootTestDir.toString() + fSep + "tFolder";
+		String dirName = fRootTestDir.toString() + "tFolder";
 		File tfolder = new File(dirName);
 		tfolder.mkdir();
 

@@ -19,16 +19,19 @@ package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentEnum;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
@@ -85,7 +88,6 @@ public class ReviewSampl {
 		Date startDate = indCal.getTime();
 		// 2 days after
 		Date endDate = new Date(startDate.getTime() + 2 * 24 * 60 * 60 * 1000);
-		fReview.setCreationDate(startDate);
 		fReview.setStartDate(startDate);
 		fReview.setEndDate(endDate);
 
@@ -113,12 +115,19 @@ public class ReviewSampl {
 		} catch (ResourceHandlingException e3) {
 			e3.printStackTrace();
 		}
-		participant.setSpentTime(60);
+		participant.getTimeLog().put(startDate, 30);
+		participant.getTimeLog().put(endDate, 30);
+
 		participant.setFocusArea("Performance");
 		participant.setIsPartOfDecision(true);
 		participant.getGroupPaths().add("c:/users/test/group1/");
 		participant.getGroupPaths().add("c:/users/test/group2/");
-		value += participant.getSpentTime();
+
+		Collection<Integer> userTimes = participant.getTimeLog().values();
+		for (Iterator<Integer> iterator = userTimes.iterator(); iterator.hasNext();) {
+			Integer time = iterator.next();
+			value += time;
+		}
 
 		R4EParticipant participant2 = null;
 		try {
@@ -126,13 +135,19 @@ public class ReviewSampl {
 		} catch (ResourceHandlingException e2) {
 			e2.printStackTrace();
 		}
-		participant2.setSpentTime(60);
+		participant2.getTimeLog().put(startDate, 30);
+		participant2.getTimeLog().put(endDate, 30);
 		participant2.setFocusArea("Feature");
 		participant2.setIsPartOfDecision(true);
 		participant2.getGroupPaths().add("c:/group1/");
 		participant2.getGroupPaths().add("c:/group2/");
-		value += participant2.getSpentTime();
 		
+		userTimes = participant2.getTimeLog().values();
+		for (Iterator<Integer> iterator = userTimes.iterator(); iterator.hasNext();) {
+			Integer time = iterator.next();
+			value += time;
+		}
+
 		// Anomaly
 		R4EAnomaly anomalyP1 = createAnomalies(participant);
 		R4EAnomaly anomalyP2 = createAnomalies(participant2);
@@ -209,7 +224,7 @@ public class ReviewSampl {
 		// Additional comments from two users on the same anomaly
 		// Comments
 		R4ECommentType commType = RModelFactory.eINSTANCE.createR4ECommentType();
-		commType.setType(R4ECommentEnum.R4E_COMMENT_BASE);
+		commType.setType(R4ECommentClass.R4E_CLASS_ERRONEOUS);
 		
 		// comment1
 		R4EComment comment1 = null;
@@ -243,25 +258,35 @@ public class ReviewSampl {
 				participant.getId() + "-Item to review 22" };
 
 		R4EItem item;
+
+		Calendar indCal = new GregorianCalendar(1867, Calendar.JULY, 1);
+		Date submittedDate = indCal.getTime();
+
 		for (int i = 0; i < itemDescriptions.length; i++) {
 			try {
 				item = fResFactory.createR4EItem(participant);
 				item.setDescription(itemDescriptions[i]);
 				item.setRepositoryRef("repository ref.." + i);
 				item.getProjectURIs().add("platform:resource/projX" + i);
+				item.setAuthorRep("changeAuthor_" + i);
+				item.setSubmitted(submittedDate);
+
 				R4EFileContext context = fResFactory.createR4EFileContext(item);
+				context.setType(R4EContextType.R4E_ADDED);
 
 				R4EFileVersion fvBase = fResFactory.createR4EBaseFileVersion(context);
 				fvBase.setName("file_" + i);
 				fvBase.setRepositoryPath("root/folder_" + i);
 				fvBase.setPlatformURI("platform:/resource/proj/src/dir3/dir4/file.xxx");
 				fvBase.setVersionID(Integer.toString(itemDescriptions[i].hashCode()));
+				fvBase.setLocalVersionID("locIdB_1234_" + i);
 
 				R4EFileVersion fvTarget = fResFactory.createR4ETargetFileVersion(context);
 				fvTarget.setName("file_" + i);
 				fvTarget.setRepositoryPath("root/folder_" + i);
 				fvTarget.setPlatformURI("platform:/resource/proj/src/dir6/dir7/file.yyy");
 				fvTarget.setVersionID(Integer.toString(itemDescriptions[i].hashCode() + 1));
+				fvTarget.setLocalVersionID("locIdT_1234_" + i);
 
 				R4EDelta delta = fResFactory.createR4EDelta(context);
 

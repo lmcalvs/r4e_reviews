@@ -18,8 +18,10 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.ParticipantProperties;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ParticipantProperties;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 
@@ -33,11 +35,31 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	// Constants
 	// ------------------------------------------------------------------------
 	
+	//TODO get different icons depending on the role
+	
 	/**
-	 * Field fSelectionFile.
+	 * Field PARTICIPANT_REVIEWER_ICON_FILE.
 	 * (value is ""icons/obj16/part_obj.png"")
 	 */
-	private static final String PARTICIPANT_ICON_FILE = "icons/obj16/part_obj.png";
+	private static final String PARTICIPANT_REVIEWER_ICON_FILE = "icons/obj16/part_obj.png";
+	
+	/**
+	 * Field PARTICIPANT_REVIEWER_ICON_FILE.
+	 * (value is ""icons/obj16/part_obj.png"")
+	 */
+	private static final String PARTICIPANT_LEAD_ICON_FILE = "icons/obj16/part_obj.png";
+	
+	/**
+	 * Field PARTICIPANT_REVIEWER_ICON_FILE.
+	 * (value is ""icons/obj16/part_obj.png"")
+	 */
+	private static final String PARTICIPANT_AUTHOR_ICON_FILE = "icons/obj16/part_obj.png";
+	
+	/**
+	 * Field PARTICIPANT_REVIEWER_ICON_FILE.
+	 * (value is ""icons/obj16/part_obj.png"")
+	 */
+	private static final String PARTICIPANT_ORGANIZER_ICON_FILE = "icons/obj16/part_obj.png";
 	
 	
 	// ------------------------------------------------------------------------
@@ -62,7 +84,22 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	public R4EUIParticipant(IR4EUIModelElement aParent, R4EParticipant aParticipant) {
 		super(aParent, aParticipant.getId(), null);  //TODO add email adress as tooltip later
 		fParticipant = aParticipant;
-		setImage(PARTICIPANT_ICON_FILE);
+		
+		final EList<R4EUserRole> roles = fParticipant.getRoles();
+		for (R4EUserRole role : roles) {
+			if (role == R4EUserRole.R4E_ROLE_LEAD) {
+				setImage(PARTICIPANT_LEAD_ICON_FILE);
+				return;
+			} else if (role == R4EUserRole.R4E_ROLE_AUTHOR) {
+				setImage(PARTICIPANT_AUTHOR_ICON_FILE);
+				return;
+			} else if (role == R4EUserRole.R4E_ROLE_ORGANIZER) {
+				setImage(PARTICIPANT_ORGANIZER_ICON_FILE);
+				return;
+			}
+		}
+		setImage(PARTICIPANT_REVIEWER_ICON_FILE);
+		return;
 	}
 
 	

@@ -23,7 +23,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.SelectionProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.SelectionProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -246,7 +246,7 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddLinkedAnomalyCmd() {
-		if (isEnabled()) return true;
+		if (isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) return true;
 		return false;
 	}
 	
@@ -268,7 +268,7 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isChangeReviewStateCmd() {
-		if (isEnabled()) return true;
+		if (isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) return true;
 		return false;
 	}
 	
