@@ -153,7 +153,7 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 			}
 			
 			try {
-				final R4EUIReview review = (R4EUIReview) getParent().getParent().getParent();
+				final R4EUIReviewBasic review = (R4EUIReviewBasic) getParent().getParent().getParent();
 				final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
 
 				if (null != user) {

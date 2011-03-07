@@ -23,7 +23,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -155,7 +155,7 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 	    		if (!fRefreshInProgress) {
 	    			try {
 	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
+						final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
 	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
 	    				modelReview.setExtraNotes(fDescriptionText.getText());
 	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -187,7 +187,7 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
+		final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
 		fNameText.setText(modelReview.getName());
 		fStartDateText.setText(modelReview.getStartDate().toString());
 		if (null == modelReview.getEndDate()) {
@@ -205,8 +205,8 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReview)fProperties.getElement()).isOpen()) ||
-				((R4EUIReview)fProperties.getElement()).isReviewed()) {
+		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReviewBasic)fProperties.getElement()).isOpen()) ||
+				((R4EUIReviewBasic)fProperties.getElement()).isReviewed()) {
 			fNameText.setEnabled(false);
 			fDescriptionText.setEnabled(false);
 			fStartDateText.setEnabled(false);

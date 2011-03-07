@@ -77,7 +77,7 @@ public class R4EUIModelController {
 	/**
 	 * Field fActiveReview.
 	 */
-	private static R4EUIReview FActiveReview = null;
+	private static R4EUIReviewBasic FActiveReview = null;
 	
 	/**
 	 * Field FReviewSourceProvider.
@@ -172,7 +172,7 @@ public class R4EUIModelController {
 	 * Set the currently active review
 	 * @param aActiveReview ReviewElement - the currently open ReviewElement
 	 */
-	public static void setActiveReview(R4EUIReview aActiveReview) {
+	public static void setActiveReview(R4EUIReviewBasic aActiveReview) {
 		FActiveReview = aActiveReview;
 		if (null != FReviewSourceProvider) {
 			FReviewSourceProvider.setCurrentReview(FActiveReview);
@@ -234,7 +234,7 @@ public class R4EUIModelController {
 	 * Get the currently active review
 	 * @return the currently open ReviewElement
 	 */
-	public static R4EUIReview getActiveReview() {
+	public static R4EUIReviewBasic getActiveReview() {
 		return FActiveReview;
 	}
 	

@@ -43,7 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -156,7 +156,7 @@ public class FindReviewItemsDialog extends Dialog {
 		    	this.getButton(IDialogConstants.CANCEL_ID).setEnabled(false);
 		    	
 				//Get the reviewer (i.e. ourselves :-) or create it if it does not exist
-				final R4EUIReview uiReview = R4EUIModelController.getActiveReview();
+				final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
 				final String user = R4EUIModelController.getReviewer();
 				final R4EParticipant participant = uiReview.getParticipant(user, true);
 				

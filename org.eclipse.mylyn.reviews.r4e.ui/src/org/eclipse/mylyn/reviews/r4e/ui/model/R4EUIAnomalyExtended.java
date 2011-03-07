@@ -47,36 +47,43 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * (value is ""CREATED"")
 	 */
 	private static final String ANOMALY_STATE_CREATED = "CREATED";
+	
 	/**
 	 * Field ANOMALY_STATE_ASSIGNED.
 	 * (value is ""ASSIGNED"")
 	 */
 	private static final String ANOMALY_STATE_ASSIGNED = "ASSIGNED";
+	
 	/**
 	 * Field ANOMALY_STATE_ACCEPTED.
 	 * (value is ""ACCEPTED"")
 	 */
 	private static final String ANOMALY_STATE_ACCEPTED = "ACCEPTED";
+	
 	/**
 	 * Field ANOMALY_STATE_DUPLICATED.
 	 * (value is ""DUPLICATED"")
 	 */
 	private static final String ANOMALY_STATE_DUPLICATED = "DUPLICATED";
+	
 	/**
 	 * Field ANOMALY_STATE_REJECTED.
 	 * (value is ""REJECTED"")
 	 */
 	private static final String ANOMALY_STATE_REJECTED = "REJECTED";
+	
 	/**
 	 * Field ANOMALY_STATE_DEFERRED.
 	 * (value is ""DEFERRED"")
 	 */
 	private static final String ANOMALY_STATE_DEFERRED = "DEFERRED";
+	
 	/**
 	 * Field ANOMALY_STATE_FIXED.
 	 * (value is ""FIXED"")
 	 */
 	private static final String ANOMALY_STATE_FIXED = "FIXED";
+	
 	/**
 	 * Field ANOMALY_STATE_VERIFIED.
 	 * (value is ""VERIFIED"")
@@ -88,6 +95,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * (value is ""NONE"")
 	 */
 	private static final String ANOMALY_RANK_NONE = "NONE";
+	
 	/**
 	 * Field ANOMALY_RANK_MINOR.
 	 * (value is ""MINOR"")
@@ -104,16 +112,19 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * (value is ""Erroneous"")
 	 */
 	private static final String ANOMALY_CLASS_ERRONEOUS = "Erroneous";
+	
 	/**
 	 * Field ANOMALY_CLASS_SUPERFLUOUS.
 	 * (value is ""Superfluous"")
 	 */
 	private static final String ANOMALY_CLASS_SUPERFLUOUS = "Superfluous";
+	
 	/**
 	 * Field ANOMALY_CLASS_IMPROVEMENT.
 	 * (value is ""Improvement"")
 	 */
 	private static final String ANOMALY_CLASS_IMPROVEMENT = "Improvement";
+	
 	/**
 	 * Field ANOMALY_CLASS_QUESTION.
 	 * (value is ""Question"")

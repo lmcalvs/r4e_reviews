@@ -271,7 +271,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	private void addContentReviewed() throws ResourceHandlingException, OutOfSyncException {
 		//First get the current user
-		final R4EUIReview review = (R4EUIReview) getParent().getParent();
+		final R4EUIReviewBasic review = (R4EUIReviewBasic) getParent().getParent();
 		final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), true);
 		
 		//Add this selection to the reviewed content for this user
@@ -287,7 +287,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	private void removeContentReviewed() throws ResourceHandlingException, OutOfSyncException {
 		//First get the current user
-		final R4EUIReview review = (R4EUIReview) getParent().getParent();
+		final R4EUIReviewBasic review = (R4EUIReviewBasic) getParent().getParent();
 		final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
 		
 		if (null != user) {

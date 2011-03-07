@@ -171,7 +171,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public void open() {
-		final List<R4EParticipant> participants = ((R4EUIReview)getParent()).getParticipants();
+		final List<R4EParticipant> participants = ((R4EUIReviewBasic)getParent()).getParticipants();
 		if (null != participants) {
 			final int participantsSize = participants.size();
 			for (int i = 0; i < participantsSize; i++) {
@@ -213,7 +213,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	@Override
 	public IR4EUIModelElement createChildren(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		final R4EParticipant participant = R4EUIModelController.FModelExt.createR4EParticipant(
-				((R4EUIReview)getParent()).getReview(), ((R4EParticipant)aModelComponent).getId(), ((R4EParticipant)aModelComponent).getRoles());
+				((R4EUIReviewBasic)getParent()).getReview(), ((R4EParticipant)aModelComponent).getId(), ((R4EParticipant)aModelComponent).getRoles());
 		final R4EUIParticipant addedChild = new R4EUIParticipant(this, participant);
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);

@@ -211,7 +211,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 							for (int j = 0; j < locationsSize; j++) {
 								position = new R4EUITextPosition(
 										((R4EContent)anomalies.get(i).getLocation().get(j)).getLocation());  // $codepro.audit.disable methodChainLength
-					    		if (((R4EUIReview)getParent().getParent().getParent()).getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+					    		if (((R4EUIReviewBasic)getParent().getParent().getParent()).getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
 					    			uiAnomaly = new R4EUIAnomalyBasic(this, anomalies.get(i), position);
 					    		} else {
 					    			uiAnomaly = new R4EUIAnomalyExtended(this, anomalies.get(i), position);
@@ -229,11 +229,11 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 					}
 				}
 			}
-		} else if (parentElement instanceof R4EUIReview) {
+		} else if (parentElement instanceof R4EUIReviewBasic) {
 			
 			//Get anomalies that do not have any location.  These are global anomalies
 			
-			final EList<Topic> anomalies =((R4EUIReview)parentElement).getReview().getTopics();
+			final EList<Topic> anomalies =((R4EUIReviewBasic)parentElement).getReview().getTopics();
 			if (null != anomalies) {
 				final int anomaliesSize = anomalies.size();
 				R4EAnomaly anomaly = null;
@@ -242,7 +242,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 					if (anomaly.isEnabled() || Activator.getDefault().getPreferenceStore().
 							getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 						if (0 == anomaly.getLocation().size()) {
-				    		if (((R4EUIReview)getParent()).getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+				    		if (((R4EUIReviewBasic)getParent()).getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
 								uiAnomaly = new R4EUIAnomalyBasic(this, anomaly, null);
 				    		} else {
 				    			uiAnomaly = new R4EUIAnomalyExtended(this, anomaly, null);
@@ -298,7 +298,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	@Override
 	public IR4EUIModelElement createChildren(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		final String user = R4EUIModelController.getReviewer();
-		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(((R4EUIReview)getParent()).getParticipant(user, true));
+		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(((R4EUIReviewBasic)getParent()).getParticipant(user, true));
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, 
 				R4EUIModelController.getReviewer());
 		anomaly.setTitle(((R4EAnomaly)aModelComponent).getTitle());  //This is needed as the global anomaly title is displayed in the navigator view
@@ -335,7 +335,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     	if (result == Window.OK) {
     		
     		//Create anomaly model element
-    		final R4EUIReview uiReview = R4EUIModelController.getActiveReview();
+    		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
     		final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(), true);
     		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
     		

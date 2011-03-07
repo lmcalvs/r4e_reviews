@@ -21,7 +21,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -187,9 +187,9 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    		if (!fRefreshInProgress) {
 	    			try {
 	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
+						final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
 	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-	    				modelReview.setDecision(R4EUIReview.getDecisionValueFromString(fExitDecisionCombo.getText()));
+	    				modelReview.setDecision(R4EUIReviewBasic.getDecisionValueFromString(fExitDecisionCombo.getText()));
 	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	    			} catch (ResourceHandlingException e1) {
 	    				UIUtils.displayResourceErrorDialog(e1);
@@ -219,7 +219,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
+		final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
 		fProjectText.setText(modelReview.getProject());
 		final String[] components = (String[]) modelReview.getComponents().toArray();
 		fComponents.clearAll();
@@ -237,7 +237,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		fEntryCriteriaText.setText(modelReview.getEntryCriteria());
 		fObjectivesText.setText(modelReview.getObjectives());
 		fReferenceMaterialText.setText(modelReview.getReferenceMaterial());
-		fExitDecisionCombo.setItems(R4EUIReview.getExitDecisionValues());
+		fExitDecisionCombo.setItems(R4EUIReviewBasic.getExitDecisionValues());
 		if (null != modelReview.getDecision()) fExitDecisionCombo.select((null == modelReview.getDecision().getValue()) ? 0 : 
 			modelReview.getDecision().getValue().getValue());
 		setEnabledFields();
@@ -249,8 +249,8 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReview)fProperties.getElement()).isOpen()) ||
-				((R4EUIReview)fProperties.getElement()).isReviewed()) {
+		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReviewBasic)fProperties.getElement()).isOpen()) ||
+				((R4EUIReviewBasic)fProperties.getElement()).isReviewed()) {
 			fProjectText.setEnabled(false);
 			fComponents.setEnabled(false);
 			fEntryCriteriaText.setEnabled(false);
