@@ -112,7 +112,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	/**
 	 * Field fReviews.
 	 */
-	private final List<R4EUIReview> fReviews;
+	private final List<R4EUIReviewBasic> fReviews;
 	
 	
 	// ------------------------------------------------------------------------
@@ -129,7 +129,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		super(aParent, aGroup.getName(), REVIEW_GROUP_FILE_PREFIX + aGroup.eResource().getURI().devicePath());
 		fGroup = aGroup;
 		fGroupFileURI = aGroup.eResource().getURI();
-		fReviews = new ArrayList<R4EUIReview>();
+		fReviews = new ArrayList<R4EUIReviewBasic>();
 		if (aOpen) {
 			setImage(R4EUIConstants.REVIEW_GROUP_ICON_FILE);
 			fOpen = true;
@@ -234,7 +234,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public void close() {
 		//Remove all children references
-		R4EUIReview review = null;
+		R4EUIReviewBasic review = null;
 		final int reviewsSize = fReviews.size();
 		for (int i = 0; i < reviewsSize; i++) {
 			
@@ -269,7 +269,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 				review = (R4EReview)reviews.get(i);
 				if (review.isEnabled() || Activator.getDefault().getPreferenceStore().
 						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					R4EUIReview uiReview = new R4EUIReview(this, review, review.getType(), false);
+					R4EUIReviewBasic uiReview = new R4EUIReviewBasic(this, review, review.getType(), false);
 					addChildren(uiReview);
 					
 					//Check if this review is completed
@@ -336,7 +336,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public IR4EUIModelElement[] getChildren() {
-		return fReviews.toArray(new R4EUIReview[fReviews.size()]);
+		return fReviews.toArray(new R4EUIReviewBasic[fReviews.size()]);
 	}
 	
 	/**
@@ -367,7 +367,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		final R4EReviewType type = ((R4EReview)aModelComponent).getType();
 		
 		//Check if group already exists.  If so it cannot be recreated
-		for (R4EUIReview review : fReviews) {
+		for (R4EUIReviewBasic review : fReviews) {
 			if (review.getReview().getName().equals(reviewName)) {
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Error while creating new review ",
 	    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "Review " +
@@ -377,7 +377,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			}
 		}
 		
-		final R4EUIReview addedChild = new R4EUIReview(this, 
+		final R4EUIReviewBasic addedChild = new R4EUIReviewBasic(this, 
 				R4EUIModelController.FModelExt.createR4EReview(getReviewGroup(), reviewName, 
 						R4EUIModelController.getReviewer()), type, true);
 		addedChild.setModelData(aModelComponent);
@@ -392,7 +392,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
-		fReviews.add((R4EUIReview) aChildToAdd);
+		fReviews.add((R4EUIReviewBasic) aChildToAdd);
 		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView().
 				getTreeViewer().getContentProvider());
 		fireAdd(aChildToAdd);
@@ -409,9 +409,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
 		//This was the current review, so tell the controller that no review is now active
-		if (((R4EUIReview)aChildToRemove).isOpen()) R4EUIModelController.setActiveReview(null);
+		if (((R4EUIReviewBasic)aChildToRemove).isOpen()) R4EUIModelController.setActiveReview(null);
 
-		final R4EUIReview removedElement = fReviews.get(fReviews.indexOf(aChildToRemove));
+		final R4EUIReviewBasic removedElement = fReviews.get(fReviews.indexOf(aChildToRemove));
 		
 		//Also recursively remove all children 
 		removedElement.removeAllChildren(aFileRemove);
@@ -439,7 +439,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
 		//Recursively remove all children
-		for (R4EUIReview review : fReviews) {
+		for (R4EUIReviewBasic review : fReviews) {
 			removeChildren(review, aFileRemove);
 		}
 	}
@@ -455,8 +455,8 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
 		fListener = aProvider;
 		if (null != fReviews) {
-			R4EUIReview element = null;
-			for (final Iterator<R4EUIReview> iterator = fReviews.iterator(); iterator.hasNext();) {
+			R4EUIReviewBasic element = null;
+			for (final Iterator<R4EUIReviewBasic> iterator = fReviews.iterator(); iterator.hasNext();) {
 				element = iterator.next();
 				element.addListener(aProvider);
 			}
@@ -471,8 +471,8 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	public void removeListener() {
 		fListener = null;
 		if (null != fReviews) {
-			R4EUIReview element = null;
-			for (final Iterator<R4EUIReview> iterator = fReviews.iterator(); iterator.hasNext();) {
+			R4EUIReviewBasic element = null;
+			for (final Iterator<R4EUIReviewBasic> iterator = fReviews.iterator(); iterator.hasNext();) {
 				element = iterator.next();
 				element.removeListener();
 			}

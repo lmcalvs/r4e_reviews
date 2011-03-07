@@ -21,7 +21,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -32,7 +32,7 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewProperties extends ModelElementProperties {
+public class ReviewGeneralProperties extends ModelElementProperties {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -155,7 +155,7 @@ public class ReviewProperties extends ModelElementProperties {
 	 * Constructor for ReviewGeneralProperties.
 	 * @param aElement R4EUIModelElement
 	 */
-	public ReviewProperties(R4EUIModelElement aElement) {
+	public ReviewGeneralProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
@@ -185,24 +185,24 @@ public class ReviewProperties extends ModelElementProperties {
 	public Object getPropertyValue(Object aId) {
 		if (null != getElement()) {
 			if (REVIEW_NAME_ID.equals(aId)) { 
-				return ((R4EUIReview)getElement()).getReview().getName();
+				return ((R4EUIReviewBasic)getElement()).getReview().getName();
 			} else if (REVIEW_START_DATE_ID.equals(aId)) {
-				return ((R4EUIReview)getElement()).getReview().getStartDate().toString();
+				return ((R4EUIReviewBasic)getElement()).getReview().getStartDate().toString();
 			} else if (REVIEW_END_DATE_ID.equals(aId)) {
-				if (null == ((R4EUIReview)getElement()).getReview().getEndDate()) return R4EUIConstants.IN_PROGRESS_MSG;
-				return ((R4EUIReview)getElement()).getReview().getEndDate().toString();
+				if (null == ((R4EUIReviewBasic)getElement()).getReview().getEndDate()) return R4EUIConstants.IN_PROGRESS_MSG;
+				return ((R4EUIReviewBasic)getElement()).getReview().getEndDate().toString();
 			} else if (REVIEW_DESCRIPTION_ID.equals(aId)) {
-				return ((R4EUIReview)getElement()).getReview().getExtraNotes();
+				return ((R4EUIReviewBasic)getElement()).getReview().getExtraNotes();
 			} else if (REVIEW_PROJECT_ID.equals(aId)) {
-				return ((R4EUIReview)getElement()).getReview().getProject();
+				return ((R4EUIReviewBasic)getElement()).getReview().getProject();
 			} else if (REVIEW_COMPONENTS_ID.equals(aId)) { 
-				return ((R4EUIReview)getElement()).getReview().getComponents().toString();
+				return ((R4EUIReviewBasic)getElement()).getReview().getComponents().toString();
 			} else if (REVIEW_ENTRY_CRITERIA_ID.equals(aId)) {
-				return ((R4EUIReview)getElement()).getReview().getEntryCriteria();
+				return ((R4EUIReviewBasic)getElement()).getReview().getEntryCriteria();
 			} else if (REVIEW_OBJECTIVES_ID.equals(aId)) {
-				return ((R4EUIReview)getElement()).getReview().getObjectives();
+				return ((R4EUIReviewBasic)getElement()).getReview().getObjectives();
 			} else if (REVIEW_REFERENCE_MATERIAL_ID.equals(aId)) {
-				return ((R4EUIReview)getElement()).getReview().getReferenceMaterial();
+				return ((R4EUIReviewBasic)getElement()).getReview().getReferenceMaterial();
 			}
 		}
 		return null;
@@ -219,14 +219,14 @@ public class ReviewProperties extends ModelElementProperties {
 		if (!(R4EUIModelController.isDialogOpen()) && getElement().isOpen() && !getElement().isReviewed()) {
 			try {
 				if (REVIEW_NAME_ID.equals(aId)) { 
-					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(((R4EUIReview)getElement()).getReview(), 
+					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(((R4EUIReviewBasic)getElement()).getReview(), 
 							R4EUIModelController.getReviewer());
-					((R4EUIReview)getElement()).getReview().setName((String) aValue);
+					((R4EUIReviewBasic)getElement()).getReview().setName((String) aValue);
 					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 				} else if (REVIEW_DESCRIPTION_ID.equals(aId)) {
-					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(((R4EUIReview)getElement()).getReview(), 
+					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(((R4EUIReviewBasic)getElement()).getReview(), 
 							R4EUIModelController.getReviewer());
-					((R4EUIReview)getElement()).getReview().setExtraNotes((String) aValue);
+					((R4EUIReviewBasic)getElement()).getReview().setExtraNotes((String) aValue);
 					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 				}
 			} catch (ResourceHandlingException e) {

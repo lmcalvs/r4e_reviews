@@ -32,7 +32,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -97,7 +97,7 @@ public class RefreshHandler extends AbstractHandler  {
 		IR4EUIModelElement refreshElement = element;
 		
 		try {
-			while (null != refreshElement && !(refreshElement instanceof R4EUIReview)) {
+			while (null != refreshElement && !(refreshElement instanceof R4EUIReviewBasic)) {
 				refreshElement = refreshElement.getParent();
 			}
 			

@@ -889,7 +889,7 @@
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewGeneralSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic">
             </input>
          </propertySection>
          <propertySection
@@ -897,7 +897,7 @@
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewExtraSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyExtraTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic">
             </input>
          </propertySection>
          <propertySection

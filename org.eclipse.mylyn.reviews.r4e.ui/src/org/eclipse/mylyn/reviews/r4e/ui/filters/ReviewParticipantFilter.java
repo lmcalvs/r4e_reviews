@@ -22,7 +22,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.filters;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
 
 /**
@@ -86,8 +86,8 @@ public class ReviewParticipantFilter extends ViewerFilter {
 		IR4EUIModelElement element = null;
 		for (int i = 0; i < length; i++) {
 			element = aCurrentElement.getChildren()[i];
-			if (!(element instanceof R4EUIReview)) return false;
-			if (((R4EUIReview)element).isParticipant(fParticipant)) return true;
+			if (!(element instanceof R4EUIReviewBasic)) return false;
+			if (((R4EUIReviewBasic)element).isParticipant(fParticipant)) return true;
 		}
 		return false;
 	}
@@ -101,13 +101,13 @@ public class ReviewParticipantFilter extends ViewerFilter {
 		
 		//Get Review parent
 		IR4EUIModelElement reviewParentElement = aCurrentElement;
-		while (!(reviewParentElement instanceof R4EUIReview)) {
+		while (!(reviewParentElement instanceof R4EUIReviewBasic)) {
 			reviewParentElement = reviewParentElement.getParent();
 			if (null == reviewParentElement) return false;
 		}
 	
 		//Check if we are a participant for this review
-		if (((R4EUIReview)reviewParentElement).isParticipant(fParticipant)) return true;
+		if (((R4EUIReviewBasic)reviewParentElement).isParticipant(fParticipant)) return true;
 		return false;
 	}
 }

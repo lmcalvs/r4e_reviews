@@ -47,7 +47,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
@@ -292,7 +292,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 	private void addAnomalyToNewFileContext(IFile aBaseFile, IFile aTargetFile, IR4EUIPosition aUIPosition) 
 		throws ResourceHandlingException, OutOfSyncException {
 			
-		final R4EUIReview uiReview = R4EUIModelController.getActiveReview();
+		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
 		final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(aTargetFile);
 		if (null == uiReviewItem) return;
 		

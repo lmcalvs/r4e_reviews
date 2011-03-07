@@ -50,7 +50,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -79,12 +79,12 @@ public class OpenElementHandler extends AbstractHandler {
 			try {
 				final IR4EUIModelElement element = (IR4EUIModelElement)selection.getFirstElement();
 
-				if (element instanceof R4EUIReview) {					
+				if (element instanceof R4EUIReviewBasic) {					
 					Activator.Ftracer.traceInfo("Opening element " + element.getName());
-					final R4EUIReview activeReview = R4EUIModelController.getActiveReview();
+					final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 					if (null != activeReview ) activeReview.close();
 					element.open();
-					R4EUIModelController.setActiveReview((R4EUIReview)element);
+					R4EUIModelController.setActiveReview((R4EUIReviewBasic)element);
 				} else {
 					element.open();	
 				}

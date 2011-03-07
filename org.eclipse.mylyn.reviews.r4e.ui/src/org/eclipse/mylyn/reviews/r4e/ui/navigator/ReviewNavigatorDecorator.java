@@ -25,7 +25,7 @@ import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.OverlayImageIcon;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
@@ -102,7 +102,7 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * @see org.eclipse.jface.viewers.ILabelDecorator#decorateText(String, Object)
 	 */
 	public String decorateText(String aText, Object aElement) {
-		if (isMyReview((IR4EUIModelElement)aElement) && aElement instanceof R4EUIReview) {
+		if (isMyReview((IR4EUIModelElement)aElement) && aElement instanceof R4EUIReviewBasic) {
 			return "> " + aText;
 		}
 		return null;
@@ -130,8 +130,8 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 		
 		IR4EUIModelElement currentElement = aElement;
 		while (null != currentElement) {
-			if (currentElement instanceof R4EUIReview) {
-				if (((R4EUIReview)currentElement).isParticipant(R4EUIModelController.getReviewer())) {
+			if (currentElement instanceof R4EUIReviewBasic) {
+				if (((R4EUIReviewBasic)currentElement).isParticipant(R4EUIModelController.getReviewer())) {
 					return true;
 				}
 			}

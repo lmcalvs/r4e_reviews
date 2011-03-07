@@ -50,7 +50,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewGeneralProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -60,7 +60,7 @@ import org.eclipse.ui.views.properties.IPropertySource;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EUIReview extends R4EUIModelElement {
+public class R4EUIReviewBasic extends R4EUIModelElement {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -162,7 +162,7 @@ public class R4EUIReview extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 */
 	//TODO have different icons for all review types
-	public R4EUIReview(R4EUIReviewGroup aParent, R4EReview aReview, R4EReviewType aType, boolean aOpen) throws ResourceHandlingException {
+	public R4EUIReviewBasic(R4EUIReviewGroup aParent, R4EReview aReview, R4EReviewType aType, boolean aOpen) throws ResourceHandlingException {
 		super(aParent, getReviewDisplayName(aReview.getName(), aType), aReview.getExtraNotes());
 		fReview = aReview;
 		fReviewName = aReview.getName();
@@ -177,7 +177,7 @@ public class R4EUIReview extends R4EUIModelElement {
 			role.add(R4EUserRole.R4E_ROLE_LEAD);
 			final R4EParticipant participant = R4EUIModelController.FModelExt.createR4EParticipant(fReview, R4EUIModelController.getReviewer(), role);
 			fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer, participant));
-			final R4EUIReview activeReview = R4EUIModelController.getActiveReview();
+			final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 			if (null != activeReview ) activeReview.close();
 			R4EUIModelController.setActiveReview(this);
 		} else {
@@ -203,10 +203,11 @@ public class R4EUIReview extends R4EUIModelElement {
 			return this;
 		}
 		if (IPropertySource.class.equals(adapter)) {
-			return new ReviewProperties(this);
+			return new ReviewGeneralProperties(this);
 		}
 		return null;
 	}
+	
 	
 	//Attributes
 	
@@ -217,13 +218,14 @@ public class R4EUIReview extends R4EUIModelElement {
 	 * @return String
 	 */
 	private static String getReviewDisplayName(String aName, R4EReviewType aType) {
-		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			return R4EUIConstants.REVIEW_TYPE_FORMAL + ": " + aName;
-		}
 		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
 			return R4EUIConstants.REVIEW_TYPE_INFORMAL + ": " + aName;
+		} else if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+			return R4EUIConstants.REVIEW_TYPE_BASIC + ": " + aName;		
+		} else {
+			//No change.  For formal review the name is srt in the subclass
+			return aName;
 		}
-		return R4EUIConstants.REVIEW_TYPE_BASIC + ": " + aName;		
 	}
 	
 	/**
