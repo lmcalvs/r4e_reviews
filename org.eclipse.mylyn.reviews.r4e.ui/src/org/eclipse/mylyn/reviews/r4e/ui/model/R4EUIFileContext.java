@@ -27,14 +27,19 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.FileContextProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 
@@ -389,6 +394,16 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		
 		//Restore resource data in serialization model
 		final R4EFileVersion baseFileVersion = fFile.getBase();
+		// Get review
+		R4EReview review = ((R4EUIReview) this.getParent()).getReview();
+		IRFSRegistry revRegistry = null;
+		try {
+			revRegistry = RFSRegistryFactory.getRegistry(review);
+		} catch (ReviewsFileStorageException e1) {
+			Activator.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
+			Activator.getDefault().logInfo("Exception: " + e1.toString(), e1);
+		}
+
 		if (null != baseFileVersion) {
 			try {
 				final IFile baseFile = ResourceUtils.toIFile(baseFileVersion.getPlatformURI());
@@ -397,6 +412,17 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logInfo("Exception: " + e.toString(), e);
 				baseFileVersion.setResource(null);
+			}
+
+			baseFileVersion.setFileRevision(null);
+			if (revRegistry != null) {
+				try {
+					IFileRevision fileRev = revRegistry.getIFileRevision(null, baseFileVersion);
+					baseFileVersion.setFileRevision(fileRev);
+				} catch (ReviewsFileStorageException e) {
+					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					Activator.getDefault().logInfo("Exception: " + e.toString(), e);
+				}
 			}
 		}
 		
@@ -409,6 +435,17 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
 				targetFileVersion.setResource(null);
+			}
+
+			targetFileVersion.setFileRevision(null);
+			if (revRegistry != null) {
+				try {
+					IFileRevision fileRev = revRegistry.getIFileRevision(null, targetFileVersion);
+					targetFileVersion.setFileRevision(fileRev);
+				} catch (ReviewsFileStorageException e) {
+					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					Activator.getDefault().logInfo("Exception: " + e.toString(), e);
+				}
 			}
 		}
 		
