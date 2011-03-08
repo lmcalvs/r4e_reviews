@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.ReviewsRFSProxy;
 
@@ -29,9 +30,11 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.ReviewsRFSProxy;
 public class RFSRegistryFactory {
 	private static final Map<R4EReviewGroup, ReviewsRFSProxy>	fOpenStore	= new HashMap<R4EReviewGroup, ReviewsRFSProxy>();
 
-	public static IRFSRegistry getRegistry(R4EReviewGroup aGroup) throws ReviewsFileStorageException {
+	public static IRFSRegistry getRegistry(R4EReview aReview) throws ReviewsFileStorageException {
+
+		R4EReviewGroup group = (R4EReviewGroup) aReview.eContainer();
 		// If still using the same group, return cached instance
-		ReviewsRFSProxy cachedGroupStorage = fOpenStore.get(aGroup);
+		ReviewsRFSProxy cachedGroupStorage = fOpenStore.get(group);
 		if (cachedGroupStorage != null) {
 			return cachedGroupStorage;
 		}
@@ -39,8 +42,8 @@ public class RFSRegistryFactory {
 		// close previous review group storage
 		Set<R4EReviewGroup> groups = fOpenStore.keySet();
 		for (Iterator<R4EReviewGroup> iterator = groups.iterator(); iterator.hasNext();) {
-			R4EReviewGroup group = iterator.next();
-			ReviewsRFSProxy rfs = fOpenStore.get(group);
+			R4EReviewGroup oGroup = iterator.next();
+			ReviewsRFSProxy rfs = fOpenStore.get(oGroup);
 			if (rfs != null) {
 				rfs.close();
 			}
@@ -48,9 +51,9 @@ public class RFSRegistryFactory {
 		fOpenStore.clear();
 
 		// Create new instance and cache it
-		File groupDir = new File(aGroup.getFolder());
+		File groupDir = new File(group.getFolder());
 		ReviewsRFSProxy fsStore = new ReviewsRFSProxy(groupDir, false);
-		fOpenStore.put(aGroup, fsStore);
+		fOpenStore.put(group, fsStore);
 
 		return fsStore;
 	}

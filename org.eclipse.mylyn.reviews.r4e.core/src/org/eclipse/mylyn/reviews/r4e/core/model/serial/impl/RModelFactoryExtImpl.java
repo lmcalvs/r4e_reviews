@@ -51,19 +51,13 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.ReviewsRFSProxy;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.UserPermission;
 
 /**
  * @author lmcalvs
  *
- */
-/**
- * @author lmcalvs
- * 
- */
-/**
- * @author lmcalvs
- * 
  */
 public class RModelFactoryExtImpl extends Common implements Persistence.RModelFactoryExt {
 
@@ -95,7 +89,29 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		group.setName(aGroupName);
 		group.setFolder(group.eResource().getURI().trimSegments(1).devicePath().toString());
 		fWriter.saveResource(resource);
+
+		// Make sure a local review repository exist in this location
+		File groupFolder = new File(aFolderPath.devicePath());
+		try {
+			checkOrCreateRepo(groupFolder);
+		} catch (ReviewsFileStorageException e) {
+			throw new ResourceHandlingException(e);
+		}
+
 		return group;
+	}
+
+	/**
+	 * @param aFolderPath
+	 * @throws ReviewsFileStorageException
+	 */
+	private void checkOrCreateRepo(File aDir) throws ReviewsFileStorageException {
+		boolean valid = ReviewsRFSProxy.isValidRepo(aDir);
+		if (!valid) {
+			// No valid review repository exist, time to create it
+			ReviewsRFSProxy revRepo = new ReviewsRFSProxy(aDir, true);
+			revRepo.close();
+		}
 	}
 
 	/*
@@ -125,6 +141,14 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 
 		// update the transient value of folder
 		group.setFolder(group.eResource().getURI().trimSegments(1).devicePath().toString());
+		// Make sure a local review repository exist in this location
+		File groupFolder = new File(folder.devicePath());
+		try {
+			checkOrCreateRepo(groupFolder);
+		} catch (ReviewsFileStorageException e) {
+			throw new ResourceHandlingException(e);
+		}
+
 		return group;
 	}
 
