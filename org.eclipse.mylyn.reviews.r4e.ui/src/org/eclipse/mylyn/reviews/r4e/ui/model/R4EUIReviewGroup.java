@@ -269,7 +269,14 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 				review = (R4EReview)reviews.get(i);
 				if (review.isEnabled() || Activator.getDefault().getPreferenceStore().
 						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					R4EUIReviewBasic uiReview = new R4EUIReviewBasic(this, review, review.getType(), false);
+					R4EUIReviewBasic uiReview;
+					if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+						uiReview = new R4EUIReviewExtended(this, review, review.getType(), false);
+						uiReview.setName(R4EUIReviewBasic.getPhaseString(
+								((R4EReviewState)review.getState()).getState()) + ": " + uiReview.getName());
+					} else {
+						uiReview = new R4EUIReviewBasic(this, review, review.getType(), false);
+					}
 					addChildren(uiReview);
 					
 					//Check if this review is completed
@@ -366,7 +373,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		final String reviewName = ((R4EReview)aModelComponent).getName();
 		final R4EReviewType type = ((R4EReview)aModelComponent).getType();
 		
-		//Check if group already exists.  If so it cannot be recreated
+		//Check if review already exists.  If so it cannot be recreated
 		for (R4EUIReviewBasic review : fReviews) {
 			if (review.getReview().getName().equals(reviewName)) {
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Error while creating new review ",
@@ -377,9 +384,17 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			}
 		}
 		
-		final R4EUIReviewBasic addedChild = new R4EUIReviewBasic(this, 
-				R4EUIModelController.FModelExt.createR4EReview(getReviewGroup(), reviewName, 
-						R4EUIModelController.getReviewer()), type, true);
+		final R4EUIReviewBasic addedChild;
+		if (type.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+			addedChild = new R4EUIReviewExtended(this, 
+					R4EUIModelController.FModelExt.createR4EReview(getReviewGroup(), reviewName, 
+							R4EUIModelController.getReviewer()), type, true);
+		} else {
+			addedChild = new R4EUIReviewBasic(this, 
+					R4EUIModelController.FModelExt.createR4EReview(getReviewGroup(), reviewName, 
+							R4EUIModelController.getReviewer()), type, true);
+		}
+		((R4EUIReviewExtended)addedChild).updatePhase(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
 		return addedChild;

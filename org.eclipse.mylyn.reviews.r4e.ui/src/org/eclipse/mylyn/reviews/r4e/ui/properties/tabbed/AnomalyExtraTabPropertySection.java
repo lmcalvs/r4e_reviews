@@ -19,13 +19,11 @@
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -455,12 +453,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 		fRefreshInProgress = true;
 		final R4EUIAnomalyExtended uiModelAnomaly = (R4EUIAnomalyExtended)fProperties.getElement();
 		final R4EAnomaly modelAnomaly = uiModelAnomaly.getAnomaly();
-    	final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
-    	final List<String> participantsList = new ArrayList<String>();
-    	for (R4EParticipant participant : participants) {
-    		participantsList.add(participant.getId());
-    	}
-		final String[] participantsStr = participantsList.toArray(new String[participantsList.size()]);
+    	final List<String> participants = R4EUIModelController.getActiveReview().getParticipantIDs();
 		fStateCombo.setItems(uiModelAnomaly.getAvailableStates());
 		fStateCombo.select(uiModelAnomaly.mapStateToIndex(modelAnomaly.getState()));
 		fClassCombo.setItems(R4EUIAnomalyExtended.getClasses());
@@ -473,12 +466,12 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
     		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);	
     		fDateText.setText(dateFormat.format(modelAnomaly.getDueDate()));
 		}
-		fDecidedByCombo.setItems(participantsStr);
-		fDecidedByCombo.select(uiModelAnomaly.mapParticipantToIndex(modelAnomaly.getDecidedByID()));
-		fFixedByCombo.setItems(participantsStr);
-		fFixedByCombo.select(uiModelAnomaly.mapParticipantToIndex(modelAnomaly.getFixedByID()));
-		fFollowUpByCombo.setItems(participantsStr);
-		fFollowUpByCombo.select(uiModelAnomaly.mapParticipantToIndex(modelAnomaly.getFollowUpByID()));
+		fDecidedByCombo.setItems((String[]) participants.toArray());
+		fDecidedByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getDecidedByID()));
+		fFixedByCombo.setItems((String[]) participants.toArray());
+		fFixedByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getFixedByID()));
+		fFollowUpByCombo.setItems((String[]) participants.toArray());
+		fFollowUpByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getFollowUpByID()));
 		if (null != modelAnomaly.getNotAcceptedReason()) fNotAcceptedReasonText.setText(modelAnomaly.getNotAcceptedReason());
 		setEnabledFields();
 		fRefreshInProgress = false;

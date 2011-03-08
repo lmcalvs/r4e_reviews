@@ -532,4 +532,17 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		}
 		return true;
 	}
+	
+	/**
+	 * Method checkCompletionStatus.
+	 * @return boolean
+	 */
+	public boolean checkReworkStatus() { // $codepro.audit.disable booleanMethodNamingConvention
+		for (R4EUIAnomalyBasic anomaly : fAnomalies) {
+			if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

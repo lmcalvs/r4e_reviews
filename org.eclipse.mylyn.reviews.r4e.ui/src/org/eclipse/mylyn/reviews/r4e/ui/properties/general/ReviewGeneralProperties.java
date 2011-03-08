@@ -17,13 +17,17 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
@@ -49,6 +53,17 @@ public class ReviewGeneralProperties extends ModelElementProperties {
 	protected static final TextPropertyDescriptor REVIEW_NAME_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
 			REVIEW_NAME_ID, R4EUIConstants.NAME_LABEL);
 
+	/**
+	 * Field REVIEW_PHASE_ID. (value is ""reviewElement.phase"")
+	 */
+	protected static final String REVIEW_PHASE_ID = "reviewElement.phase";
+
+	/**
+	 * Field REVIEW_PHASE_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final ComboBoxPropertyDescriptor REVIEW_PHASE_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
+			REVIEW_PHASE_ID, R4EUIConstants.PHASE_OWNER_LABEL, R4EUIReviewBasic.getPhases());
+	
 	/**
 	 * Field REVIEW_START_DATE_ID. (value is ""reviewElement.startDate"")
 	 */
@@ -85,66 +100,67 @@ public class ReviewGeneralProperties extends ModelElementProperties {
 	/**
 	 * Field REVIEW_PROJECT_ID. (value is ""reviewElement.project"")
 	 */
-	private static final String REVIEW_PROJECT_ID = "reviewElement.project";
+	protected static final String REVIEW_PROJECT_ID = "reviewElement.project";
 
 	/**
 	 * Field REVIEW_PROJECT_PROPERTY_DESCRIPTOR.
 	 */
-	private static final TextPropertyDescriptor REVIEW_PROJECT_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final TextPropertyDescriptor REVIEW_PROJECT_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
 			REVIEW_PROJECT_ID, R4EUIConstants.PROJECT_LABEL);
 	
 	/**
 	 * Field REVIEW_COMPONENTS_ID. (value is ""reviewElement.components"")
 	 */
-	private static final String REVIEW_COMPONENTS_ID = "reviewElement.components";
+	protected static final String REVIEW_COMPONENTS_ID = "reviewElement.components";
 
 	/**
 	 * Field REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR.
 	 */
-	private static final TextPropertyDescriptor REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final TextPropertyDescriptor REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
 			REVIEW_COMPONENTS_ID, R4EUIConstants.COMPONENTS_LABEL);
 	
 	/**
 	 * Field REVIEW_ENTRY_CRITERIA_ID. (value is ""reviewElement.entryCriteria"")
 	 */
-	private static final String REVIEW_ENTRY_CRITERIA_ID = "reviewElement.entryCriteria";
+	protected static final String REVIEW_ENTRY_CRITERIA_ID = "reviewElement.entryCriteria";
 
 	/**
 	 * Field REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR.
 	 */
-	private static final TextPropertyDescriptor REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final TextPropertyDescriptor REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
 			REVIEW_ENTRY_CRITERIA_ID, R4EUIConstants.ENTRY_CRITERIA_LABEL);
 	
 	/**
 	 * Field REVIEW_OBJECTIVES_ID. (value is ""reviewElement.objectives"")
 	 */
-	private static final String REVIEW_OBJECTIVES_ID = "reviewElement.objectives";
+	protected static final String REVIEW_OBJECTIVES_ID = "reviewElement.objectives";
 
 	/**
 	 * Field REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR.
 	 */
-	private static final TextPropertyDescriptor REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final TextPropertyDescriptor REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
 			REVIEW_OBJECTIVES_ID, R4EUIConstants.OBJECTIVES_LABEL);
 	
 	/**
 	 * Field REVIEW_REFERENCE_MATERIAL_ID. (value is ""reviewElement.referenceMaterial"")
 	 */
-	private static final String REVIEW_REFERENCE_MATERIAL_ID = "reviewElement.referenceMaterial";
+	protected static final String REVIEW_REFERENCE_MATERIAL_ID = "reviewElement.referenceMaterial";
 
 	/**
 	 * Field REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR.
 	 */
-	private static final TextPropertyDescriptor REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final TextPropertyDescriptor REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
 			REVIEW_REFERENCE_MATERIAL_ID, R4EUIConstants.REFERENCE_MATERIAL_LABEL);
 	
 	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { REVIEW_NAME_PROPERTY_DESCRIPTOR,  
-		REVIEW_START_DATE_PROPERTY_DESCRIPTOR, REVIEW_END_DATE_PROPERTY_DESCRIPTOR, 
-		REVIEW_DESCRIPTION_PROPERTY_DESCRIPTOR, REVIEW_PROJECT_PROPERTY_DESCRIPTOR,
-		REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR, REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR,
-		REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR, REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR};
+		REVIEW_PHASE_PROPERTY_DESCRIPTOR, REVIEW_START_DATE_PROPERTY_DESCRIPTOR,
+		REVIEW_END_DATE_PROPERTY_DESCRIPTOR, REVIEW_DESCRIPTION_PROPERTY_DESCRIPTOR,
+		REVIEW_PROJECT_PROPERTY_DESCRIPTOR, REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR,
+		REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR, REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR, 
+		REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR};
 	
 	
 	// ------------------------------------------------------------------------
@@ -186,6 +202,9 @@ public class ReviewGeneralProperties extends ModelElementProperties {
 		if (null != getElement()) {
 			if (REVIEW_NAME_ID.equals(aId)) { 
 				return ((R4EUIReviewBasic)getElement()).getReview().getName();
+			} else if (REVIEW_PHASE_ID.equals(aId)) {
+				return Integer.valueOf(((R4EReviewState)((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).
+						getState()).getState().getValue());
 			} else if (REVIEW_START_DATE_ID.equals(aId)) {
 				return ((R4EUIReviewBasic)getElement()).getReview().getStartDate().toString();
 			} else if (REVIEW_END_DATE_ID.equals(aId)) {

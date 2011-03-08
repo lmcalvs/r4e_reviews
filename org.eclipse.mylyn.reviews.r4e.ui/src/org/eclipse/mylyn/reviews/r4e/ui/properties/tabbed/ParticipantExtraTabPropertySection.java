@@ -60,7 +60,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Field fAvailableComponents.
+	 * Field fTimeSpentDetailedList.
 	 */
 	protected EditableListWidget fTimeSpentDetailedList = null;
 	
@@ -228,10 +228,10 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 	 */
 	public void itemsUpdated(Item[] aItems, int aInstanceId) {		
 		try {
-			final R4EParticipant modelGroup = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
+			final R4EParticipant modelParticipant = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
 			final String currentUser = R4EUIModelController.getReviewer();
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
-			final EMap<Date, Integer> timeMap = modelGroup.getTimeLog();
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant, currentUser);
+			final EMap<Date, Integer> timeMap = modelParticipant.getTimeLog();
 			final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
 			for (Item item : aItems) {
 				try {
