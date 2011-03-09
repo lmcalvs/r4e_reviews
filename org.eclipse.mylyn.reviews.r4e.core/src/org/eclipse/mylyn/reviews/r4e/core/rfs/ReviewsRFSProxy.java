@@ -331,4 +331,70 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 		fRepository.close();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry#blobIdFor(java.io.InputStream)
+	 */
+	public String blobIdFor(InputStream content) throws ReviewsFileStorageException {
+		try {
+			blobIdFor(IOUtils.readFully(content));
+		} catch (IOException e) {
+			throw new ReviewsFileStorageException(e);
+		}
+
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry#blobIdFor(byte[])
+	 */
+	public String blobIdFor(byte[] content) {
+		String id = fInserter.idFor(Constants.OBJ_BLOB, content).getName();
+		fInserter.release();
+
+		return id;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry#blobIdFor(java.io.File)
+	 */
+	public String blobIdFor(File aFromFile) throws ReviewsFileStorageException {
+		InputStream stream = null;
+		try {
+			stream = new FileInputStream(aFromFile);
+		} catch (FileNotFoundException e) {
+			throw new ReviewsFileStorageException(e);
+		}
+
+		String id = null;
+		ObjectId objid = null;
+		try {
+			objid = fInserter.idFor(Constants.OBJ_BLOB, aFromFile.length(), stream);
+			FileSupportCommandFactory.getInstance().grantWritePermission(fRepository.getDirectory().getAbsolutePath());
+		} catch (IOException e) {
+			throw new ReviewsFileStorageException(e);
+		} finally {
+			fInserter.release();
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+					StringBuilder sb = new StringBuilder("Exception: " + e.getMessage());
+					Activator.fTracer.traceDebug(sb.toString());
+				}
+			}
+		}
+
+		if (objid != null) {
+			id = objid.getName();
+		}
+
+		return id;
+	}
+
 }
