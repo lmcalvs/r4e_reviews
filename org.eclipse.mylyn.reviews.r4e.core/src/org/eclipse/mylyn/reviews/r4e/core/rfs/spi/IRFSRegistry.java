@@ -65,4 +65,31 @@ public interface IRFSRegistry {
 	 */
 	public abstract String registerReviewBlob(final InputStream content) throws ReviewsFileStorageException;
 
+	/**
+	 * Calculate the SHA-1 id for the given input without registering the contents in the repository
+	 * 
+	 * @param contect
+	 * @return
+	 * @throws ReviewsFileStorageException
+	 */
+	public abstract String blobIdFor(final InputStream content) throws ReviewsFileStorageException;
+
+	/**
+	 * Calculate the SHA-1 id for the given input without registering the contents in the repository
+	 * 
+	 * @param contect
+	 * @return
+	 * @throws ReviewsFileStorageException
+	 */
+	public abstract String blobIdFor(final byte[] content) throws ReviewsFileStorageException;
+
+	/**
+	 * Calculate the SHA-1 id for the given input without registering the contents in the repository
+	 * 
+	 * @param contect
+	 * @return
+	 * @throws ReviewsFileStorageException
+	 */
+	public abstract String blobIdFor(final File content) throws ReviewsFileStorageException;
+
 }
