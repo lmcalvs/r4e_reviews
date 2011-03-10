@@ -912,49 +912,31 @@ public interface RModelPackage extends EPackage {
 	int R4E_FORMAL_REVIEW__IDS_MAP = R4E_REVIEW__IDS_MAP;
 
 	/**
-	 * The feature id for the '<em><b>Preparation Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_FORMAL_REVIEW__PREPARATION_DATE = R4E_REVIEW_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Decision Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_FORMAL_REVIEW__DECISION_DATE = R4E_REVIEW_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Rework Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_FORMAL_REVIEW__REWORK_DATE = R4E_REVIEW_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Phase Owner ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_FORMAL_REVIEW__PHASE_OWNER_ID = R4E_REVIEW_FEATURE_COUNT + 3;
-
-	/**
 	 * The feature id for the '<em><b>Phase Owner</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_FORMAL_REVIEW__PHASE_OWNER = R4E_REVIEW_FEATURE_COUNT + 4;
+	int R4E_FORMAL_REVIEW__PHASE_OWNER = R4E_REVIEW_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Phases</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FORMAL_REVIEW__PHASES = R4E_REVIEW_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Current</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FORMAL_REVIEW__CURRENT = R4E_REVIEW_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>R4E Formal Review</em>' class.
@@ -963,7 +945,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_FORMAL_REVIEW_FEATURE_COUNT = R4E_REVIEW_FEATURE_COUNT + 5;
+	int R4E_FORMAL_REVIEW_FEATURE_COUNT = R4E_REVIEW_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EPositionImpl <em>R4E Position</em>}' class.
@@ -2524,6 +2506,52 @@ public interface RModelPackage extends EPackage {
 	int MAP_KEY_TO_INFO_ATTRIBUTES_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl <em>R4E Review Phase Info</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewPhaseInfo()
+	 * @generated
+	 */
+	int R4E_REVIEW_PHASE_INFO = 32;
+
+	/**
+	 * The feature id for the '<em><b>End Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW_PHASE_INFO__END_DATE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW_PHASE_INFO__TYPE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Phase Owner ID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW_PHASE_INFO__PHASE_OWNER_ID = 2;
+
+	/**
+	 * The number of structural features of the '<em>R4E Review Phase Info</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW_PHASE_INFO_FEATURE_COUNT = 3;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2531,7 +2559,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomalyState()
 	 * @generated
 	 */
-	int R4E_ANOMALY_STATE = 32;
+	int R4E_ANOMALY_STATE = 33;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank <em>R4E Anomaly Rank</em>}' enum.
@@ -2541,7 +2569,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomalyRank()
 	 * @generated
 	 */
-	int R4E_ANOMALY_RANK = 33;
+	int R4E_ANOMALY_RANK = 34;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase <em>R4E Review Phase</em>}' enum.
@@ -2551,7 +2579,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewPhase()
 	 * @generated
 	 */
-	int R4E_REVIEW_PHASE = 34;
+	int R4E_REVIEW_PHASE = 35;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole <em>R4E User Role</em>}' enum.
@@ -2561,7 +2589,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EUserRole()
 	 * @generated
 	 */
-	int R4E_USER_ROLE = 35;
+	int R4E_USER_ROLE = 36;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision <em>R4E Decision</em>}' enum.
@@ -2571,7 +2599,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EDecision()
 	 * @generated
 	 */
-	int R4E_DECISION = 36;
+	int R4E_DECISION = 37;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType <em>R4E Review Type</em>}' enum.
@@ -2581,7 +2609,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewType()
 	 * @generated
 	 */
-	int R4E_REVIEW_TYPE = 37;
+	int R4E_REVIEW_TYPE = 38;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass <em>R4E Comment Class</em>}' enum.
@@ -2591,7 +2619,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ECommentClass()
 	 * @generated
 	 */
-	int R4E_COMMENT_CLASS = 38;
+	int R4E_COMMENT_CLASS = 39;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType <em>R4E Context Type</em>}' enum.
@@ -2601,7 +2629,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EContextType()
 	 * @generated
 	 */
-	int R4E_CONTEXT_TYPE = 39;
+	int R4E_CONTEXT_TYPE = 40;
 
 	/**
 	 * The meta object id for the '<em>Mylyn Task</em>' data type.
@@ -2611,7 +2639,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMylynTask()
 	 * @generated
 	 */
-	int MYLYN_TASK = 40;
+	int MYLYN_TASK = 41;
 
 	/**
 	 * The meta object id for the '<em>IResource</em>' data type.
@@ -2621,7 +2649,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIResource()
 	 * @generated
 	 */
-	int IRESOURCE = 41;
+	int IRESOURCE = 42;
 
 
 	/**
@@ -2632,7 +2660,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getURI()
 	 * @generated
 	 */
-	int URI = 42;
+	int URI = 43;
 
 
 	/**
@@ -2643,7 +2671,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIFileRevision()
 	 * @generated
 	 */
-	int IFILE_REVISION = 43;
+	int IFILE_REVISION = 44;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup <em>R4E Review Group</em>}'.
@@ -3170,50 +3198,6 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EFormalReview();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPreparationDate <em>Preparation Date</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Preparation Date</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPreparationDate()
-	 * @see #getR4EFormalReview()
-	 * @generated
-	 */
-	EAttribute getR4EFormalReview_PreparationDate();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getDecisionDate <em>Decision Date</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Decision Date</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getDecisionDate()
-	 * @see #getR4EFormalReview()
-	 * @generated
-	 */
-	EAttribute getR4EFormalReview_DecisionDate();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getReworkDate <em>Rework Date</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Rework Date</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getReworkDate()
-	 * @see #getR4EFormalReview()
-	 * @generated
-	 */
-	EAttribute getR4EFormalReview_ReworkDate();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwnerID <em>Phase Owner ID</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Phase Owner ID</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwnerID()
-	 * @see #getR4EFormalReview()
-	 * @generated
-	 */
-	EAttribute getR4EFormalReview_PhaseOwnerID();
-
-	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwner <em>Phase Owner</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3223,6 +3207,28 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getR4EFormalReview_PhaseOwner();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhases <em>Phases</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Phases</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhases()
+	 * @see #getR4EFormalReview()
+	 * @generated
+	 */
+	EReference getR4EFormalReview_Phases();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getCurrent <em>Current</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Current</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getCurrent()
+	 * @see #getR4EFormalReview()
+	 * @generated
+	 */
+	EReference getR4EFormalReview_Current();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition <em>R4E Text Position</em>}'.
@@ -4355,6 +4361,49 @@ public interface RModelPackage extends EPackage {
 	EAttribute getMapKeyToInfoAttributes_Value();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo <em>R4E Review Phase Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>R4E Review Phase Info</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo
+	 * @generated
+	 */
+	EClass getR4EReviewPhaseInfo();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getEndDate <em>End Date</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>End Date</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getEndDate()
+	 * @see #getR4EReviewPhaseInfo()
+	 * @generated
+	 */
+	EAttribute getR4EReviewPhaseInfo_EndDate();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getType()
+	 * @see #getR4EReviewPhaseInfo()
+	 * @generated
+	 */
+	EAttribute getR4EReviewPhaseInfo_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getPhaseOwnerID <em>Phase Owner ID</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Phase Owner ID</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getPhaseOwnerID()
+	 * @see #getR4EReviewPhaseInfo()
+	 * @generated
+	 */
+	EAttribute getR4EReviewPhaseInfo_PhaseOwnerID();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4893,44 +4942,28 @@ public interface RModelPackage extends EPackage {
 		EClass R4E_FORMAL_REVIEW = eINSTANCE.getR4EFormalReview();
 
 		/**
-		 * The meta object literal for the '<em><b>Preparation Date</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute R4E_FORMAL_REVIEW__PREPARATION_DATE = eINSTANCE.getR4EFormalReview_PreparationDate();
-
-		/**
-		 * The meta object literal for the '<em><b>Decision Date</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute R4E_FORMAL_REVIEW__DECISION_DATE = eINSTANCE.getR4EFormalReview_DecisionDate();
-
-		/**
-		 * The meta object literal for the '<em><b>Rework Date</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute R4E_FORMAL_REVIEW__REWORK_DATE = eINSTANCE.getR4EFormalReview_ReworkDate();
-
-		/**
-		 * The meta object literal for the '<em><b>Phase Owner ID</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute R4E_FORMAL_REVIEW__PHASE_OWNER_ID = eINSTANCE.getR4EFormalReview_PhaseOwnerID();
-
-		/**
 		 * The meta object literal for the '<em><b>Phase Owner</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference R4E_FORMAL_REVIEW__PHASE_OWNER = eINSTANCE.getR4EFormalReview_PhaseOwner();
+
+		/**
+		 * The meta object literal for the '<em><b>Phases</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference R4E_FORMAL_REVIEW__PHASES = eINSTANCE.getR4EFormalReview_Phases();
+
+		/**
+		 * The meta object literal for the '<em><b>Current</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference R4E_FORMAL_REVIEW__CURRENT = eINSTANCE.getR4EFormalReview_Current();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl <em>R4E Text Position</em>}' class.
@@ -5819,6 +5852,40 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute MAP_KEY_TO_INFO_ATTRIBUTES__VALUE = eINSTANCE.getMapKeyToInfoAttributes_Value();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl <em>R4E Review Phase Info</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl
+		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewPhaseInfo()
+		 * @generated
+		 */
+		EClass R4E_REVIEW_PHASE_INFO = eINSTANCE.getR4EReviewPhaseInfo();
+
+		/**
+		 * The meta object literal for the '<em><b>End Date</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_REVIEW_PHASE_INFO__END_DATE = eINSTANCE.getR4EReviewPhaseInfo_EndDate();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_REVIEW_PHASE_INFO__TYPE = eINSTANCE.getR4EReviewPhaseInfo_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Phase Owner ID</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_REVIEW_PHASE_INFO__PHASE_OWNER_ID = eINSTANCE.getR4EReviewPhaseInfo_PhaseOwnerID();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.

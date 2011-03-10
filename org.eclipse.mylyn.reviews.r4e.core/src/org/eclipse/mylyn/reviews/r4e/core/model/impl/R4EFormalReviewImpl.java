@@ -15,14 +15,19 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
-import java.util.Date;
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
@@ -32,97 +37,15 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getPreparationDate <em>Preparation Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getDecisionDate <em>Decision Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getReworkDate <em>Rework Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getPhaseOwnerID <em>Phase Owner ID</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getPhaseOwner <em>Phase Owner</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getPhases <em>Phases</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl#getCurrent <em>Current</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalReview {
-	/**
-	 * The default value of the '{@link #getPreparationDate() <em>Preparation Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPreparationDate()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date PREPARATION_DATE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getPreparationDate() <em>Preparation Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPreparationDate()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date preparationDate = PREPARATION_DATE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getDecisionDate() <em>Decision Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDecisionDate()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date DECISION_DATE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getDecisionDate() <em>Decision Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDecisionDate()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date decisionDate = DECISION_DATE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getReworkDate() <em>Rework Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getReworkDate()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date REWORK_DATE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getReworkDate() <em>Rework Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getReworkDate()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date reworkDate = REWORK_DATE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getPhaseOwnerID() <em>Phase Owner ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPhaseOwnerID()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String PHASE_OWNER_ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getPhaseOwnerID() <em>Phase Owner ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPhaseOwnerID()
-	 * @generated
-	 * @ordered
-	 */
-	protected String phaseOwnerID = PHASE_OWNER_ID_EDEFAULT;
-
 	/**
 	 * The cached value of the '{@link #getPhaseOwner() <em>Phase Owner</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -132,6 +55,26 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	 * @ordered
 	 */
 	protected R4EParticipant phaseOwner;
+
+	/**
+	 * The cached value of the '{@link #getPhases() <em>Phases</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPhases()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<R4EReviewPhaseInfo> phases;
+
+	/**
+	 * The cached value of the '{@link #getCurrent() <em>Current</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCurrent()
+	 * @generated
+	 * @ordered
+	 */
+	protected R4EReviewPhaseInfo current;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -150,90 +93,6 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	@Override
 	protected EClass eStaticClass() {
 		return RModelPackage.Literals.R4E_FORMAL_REVIEW;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Date getPreparationDate() {
-		return preparationDate;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setPreparationDate(Date newPreparationDate) {
-		Date oldPreparationDate = preparationDate;
-		preparationDate = newPreparationDate;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_FORMAL_REVIEW__PREPARATION_DATE, oldPreparationDate, preparationDate));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Date getDecisionDate() {
-		return decisionDate;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDecisionDate(Date newDecisionDate) {
-		Date oldDecisionDate = decisionDate;
-		decisionDate = newDecisionDate;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_FORMAL_REVIEW__DECISION_DATE, oldDecisionDate, decisionDate));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Date getReworkDate() {
-		return reworkDate;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setReworkDate(Date newReworkDate) {
-		Date oldReworkDate = reworkDate;
-		reworkDate = newReworkDate;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_FORMAL_REVIEW__REWORK_DATE, oldReworkDate, reworkDate));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getPhaseOwnerID() {
-		return phaseOwnerID;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setPhaseOwnerID(String newPhaseOwnerID) {
-		String oldPhaseOwnerID = phaseOwnerID;
-		phaseOwnerID = newPhaseOwnerID;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_FORMAL_REVIEW__PHASE_OWNER_ID, oldPhaseOwnerID, phaseOwnerID));
 	}
 
 	/**
@@ -279,20 +138,81 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<R4EReviewPhaseInfo> getPhases() {
+		if (phases == null) {
+			phases = new EObjectContainmentEList.Resolving<R4EReviewPhaseInfo>(R4EReviewPhaseInfo.class, this, RModelPackage.R4E_FORMAL_REVIEW__PHASES);
+		}
+		return phases;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EReviewPhaseInfo getCurrent() {
+		if (current != null && current.eIsProxy()) {
+			InternalEObject oldCurrent = (InternalEObject)current;
+			current = (R4EReviewPhaseInfo)eResolveProxy(oldCurrent);
+			if (current != oldCurrent) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_FORMAL_REVIEW__CURRENT, oldCurrent, current));
+			}
+		}
+		return current;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EReviewPhaseInfo basicGetCurrent() {
+		return current;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCurrent(R4EReviewPhaseInfo newCurrent) {
+		R4EReviewPhaseInfo oldCurrent = current;
+		current = newCurrent;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_FORMAL_REVIEW__CURRENT, oldCurrent, current));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case RModelPackage.R4E_FORMAL_REVIEW__PHASES:
+				return ((InternalEList<?>)getPhases()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case RModelPackage.R4E_FORMAL_REVIEW__PREPARATION_DATE:
-				return getPreparationDate();
-			case RModelPackage.R4E_FORMAL_REVIEW__DECISION_DATE:
-				return getDecisionDate();
-			case RModelPackage.R4E_FORMAL_REVIEW__REWORK_DATE:
-				return getReworkDate();
-			case RModelPackage.R4E_FORMAL_REVIEW__PHASE_OWNER_ID:
-				return getPhaseOwnerID();
 			case RModelPackage.R4E_FORMAL_REVIEW__PHASE_OWNER:
 				if (resolve) return getPhaseOwner();
 				return basicGetPhaseOwner();
+			case RModelPackage.R4E_FORMAL_REVIEW__PHASES:
+				return getPhases();
+			case RModelPackage.R4E_FORMAL_REVIEW__CURRENT:
+				if (resolve) return getCurrent();
+				return basicGetCurrent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -302,23 +222,19 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case RModelPackage.R4E_FORMAL_REVIEW__PREPARATION_DATE:
-				setPreparationDate((Date)newValue);
-				return;
-			case RModelPackage.R4E_FORMAL_REVIEW__DECISION_DATE:
-				setDecisionDate((Date)newValue);
-				return;
-			case RModelPackage.R4E_FORMAL_REVIEW__REWORK_DATE:
-				setReworkDate((Date)newValue);
-				return;
-			case RModelPackage.R4E_FORMAL_REVIEW__PHASE_OWNER_ID:
-				setPhaseOwnerID((String)newValue);
-				return;
 			case RModelPackage.R4E_FORMAL_REVIEW__PHASE_OWNER:
 				setPhaseOwner((R4EParticipant)newValue);
+				return;
+			case RModelPackage.R4E_FORMAL_REVIEW__PHASES:
+				getPhases().clear();
+				getPhases().addAll((Collection<? extends R4EReviewPhaseInfo>)newValue);
+				return;
+			case RModelPackage.R4E_FORMAL_REVIEW__CURRENT:
+				setCurrent((R4EReviewPhaseInfo)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -332,20 +248,14 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case RModelPackage.R4E_FORMAL_REVIEW__PREPARATION_DATE:
-				setPreparationDate(PREPARATION_DATE_EDEFAULT);
-				return;
-			case RModelPackage.R4E_FORMAL_REVIEW__DECISION_DATE:
-				setDecisionDate(DECISION_DATE_EDEFAULT);
-				return;
-			case RModelPackage.R4E_FORMAL_REVIEW__REWORK_DATE:
-				setReworkDate(REWORK_DATE_EDEFAULT);
-				return;
-			case RModelPackage.R4E_FORMAL_REVIEW__PHASE_OWNER_ID:
-				setPhaseOwnerID(PHASE_OWNER_ID_EDEFAULT);
-				return;
 			case RModelPackage.R4E_FORMAL_REVIEW__PHASE_OWNER:
 				setPhaseOwner((R4EParticipant)null);
+				return;
+			case RModelPackage.R4E_FORMAL_REVIEW__PHASES:
+				getPhases().clear();
+				return;
+			case RModelPackage.R4E_FORMAL_REVIEW__CURRENT:
+				setCurrent((R4EReviewPhaseInfo)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -359,40 +269,14 @@ public class R4EFormalReviewImpl extends R4EReviewImpl implements R4EFormalRevie
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case RModelPackage.R4E_FORMAL_REVIEW__PREPARATION_DATE:
-				return PREPARATION_DATE_EDEFAULT == null ? preparationDate != null : !PREPARATION_DATE_EDEFAULT.equals(preparationDate);
-			case RModelPackage.R4E_FORMAL_REVIEW__DECISION_DATE:
-				return DECISION_DATE_EDEFAULT == null ? decisionDate != null : !DECISION_DATE_EDEFAULT.equals(decisionDate);
-			case RModelPackage.R4E_FORMAL_REVIEW__REWORK_DATE:
-				return REWORK_DATE_EDEFAULT == null ? reworkDate != null : !REWORK_DATE_EDEFAULT.equals(reworkDate);
-			case RModelPackage.R4E_FORMAL_REVIEW__PHASE_OWNER_ID:
-				return PHASE_OWNER_ID_EDEFAULT == null ? phaseOwnerID != null : !PHASE_OWNER_ID_EDEFAULT.equals(phaseOwnerID);
 			case RModelPackage.R4E_FORMAL_REVIEW__PHASE_OWNER:
 				return phaseOwner != null;
+			case RModelPackage.R4E_FORMAL_REVIEW__PHASES:
+				return phases != null && !phases.isEmpty();
+			case RModelPackage.R4E_FORMAL_REVIEW__CURRENT:
+				return current != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (preparationDate: ");
-		result.append(preparationDate);
-		result.append(", decisionDate: ");
-		result.append(decisionDate);
-		result.append(", reworkDate: ");
-		result.append(reworkDate);
-		result.append(", phaseOwnerID: ");
-		result.append(phaseOwnerID);
-		result.append(')');
-		return result.toString();
 	}
 
 } //R4EFormalReviewImpl

@@ -255,6 +255,15 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 	R4EAnomalyTextPosition createR4EAnomalyTextPosition();
 
 	/**
+	 * Returns a new object of class '<em>R4E Review Phase Info</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>R4E Review Phase Info</em>'.
+	 * @generated
+	 */
+	R4EReviewPhaseInfo createR4EReviewPhaseInfo();
+
+	/**
 	 * Returns an instance of data type '<em>R4E Anomaly State</em>' corresponding the given literal.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
