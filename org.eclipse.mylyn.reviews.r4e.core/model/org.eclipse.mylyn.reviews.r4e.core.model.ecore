@@ -94,12 +94,11 @@
     <eLiterals name="R4E_ANOMALY_RANK_MAJOR" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EFormalReview" eSuperTypes="#//R4EReview">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preparationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decisionDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reworkDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phaseOwnerID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="phaseOwner" lowerBound="1"
         eType="#//R4EParticipant" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="phases" upperBound="-1"
+        eType="#//R4EReviewPhaseInfo" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="current" eType="#//R4EReviewPhaseInfo"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="R4EReviewPhase">
     <eLiterals name="R4E_REVIEW_PHASE_STARTED"/>
@@ -299,5 +298,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="MapKeyToInfoAttributes" instanceClassName="java.util.Map$Entry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="R4EReviewPhaseInfo">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//R4EReviewPhase"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phaseOwnerID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

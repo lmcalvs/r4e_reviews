@@ -14,7 +14,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-import java.util.Date;
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,11 +24,9 @@ import java.util.Date;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPreparationDate <em>Preparation Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getDecisionDate <em>Decision Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getReworkDate <em>Rework Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwnerID <em>Phase Owner ID</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwner <em>Phase Owner</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhases <em>Phases</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getCurrent <em>Current</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,110 +35,6 @@ import java.util.Date;
  * @generated
  */
 public interface R4EFormalReview extends R4EReview {
-	/**
-	 * Returns the value of the '<em><b>Preparation Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Preparation Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Preparation Date</em>' attribute.
-	 * @see #setPreparationDate(Date)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFormalReview_PreparationDate()
-	 * @model
-	 * @generated
-	 */
-	Date getPreparationDate();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPreparationDate <em>Preparation Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Preparation Date</em>' attribute.
-	 * @see #getPreparationDate()
-	 * @generated
-	 */
-	void setPreparationDate(Date value);
-
-	/**
-	 * Returns the value of the '<em><b>Decision Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Decision Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Decision Date</em>' attribute.
-	 * @see #setDecisionDate(Date)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFormalReview_DecisionDate()
-	 * @model
-	 * @generated
-	 */
-	Date getDecisionDate();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getDecisionDate <em>Decision Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Decision Date</em>' attribute.
-	 * @see #getDecisionDate()
-	 * @generated
-	 */
-	void setDecisionDate(Date value);
-
-	/**
-	 * Returns the value of the '<em><b>Rework Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Rework Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Rework Date</em>' attribute.
-	 * @see #setReworkDate(Date)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFormalReview_ReworkDate()
-	 * @model
-	 * @generated
-	 */
-	Date getReworkDate();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getReworkDate <em>Rework Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Rework Date</em>' attribute.
-	 * @see #getReworkDate()
-	 * @generated
-	 */
-	void setReworkDate(Date value);
-
-	/**
-	 * Returns the value of the '<em><b>Phase Owner ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Phase Owner ID</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Phase Owner ID</em>' attribute.
-	 * @see #setPhaseOwnerID(String)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFormalReview_PhaseOwnerID()
-	 * @model
-	 * @generated
-	 */
-	String getPhaseOwnerID();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getPhaseOwnerID <em>Phase Owner ID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Phase Owner ID</em>' attribute.
-	 * @see #getPhaseOwnerID()
-	 * @generated
-	 */
-	void setPhaseOwnerID(String value);
-
 	/**
 	 * Returns the value of the '<em><b>Phase Owner</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -166,5 +60,47 @@ public interface R4EFormalReview extends R4EReview {
 	 * @generated
 	 */
 	void setPhaseOwner(R4EParticipant value);
+
+	/**
+	 * Returns the value of the '<em><b>Phases</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Phases</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Phases</em>' containment reference list.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFormalReview_Phases()
+	 * @model containment="true" resolveProxies="true"
+	 * @generated
+	 */
+	EList<R4EReviewPhaseInfo> getPhases();
+
+	/**
+	 * Returns the value of the '<em><b>Current</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Current</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Current</em>' reference.
+	 * @see #setCurrent(R4EReviewPhaseInfo)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFormalReview_Current()
+	 * @model
+	 * @generated
+	 */
+	R4EReviewPhaseInfo getCurrent();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview#getCurrent <em>Current</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Current</em>' reference.
+	 * @see #getCurrent()
+	 * @generated
+	 */
+	void setCurrent(R4EReviewPhaseInfo value);
 
 } // R4EFormalReview

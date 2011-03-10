@@ -116,11 +116,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/followUpByID"/>
     </genClasses>
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview/preparationDate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview/decisionDate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview/reworkDate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview/phaseOwnerID"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview/phaseOwner"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview/phases"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview/current"/>
     </genClasses>
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETextPosition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETextPosition/startPosition"/>
@@ -251,6 +249,11 @@
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapKeyToInfoAttributes">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapKeyToInfoAttributes/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapKeyToInfoAttributes/value"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/endDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/phaseOwnerID"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

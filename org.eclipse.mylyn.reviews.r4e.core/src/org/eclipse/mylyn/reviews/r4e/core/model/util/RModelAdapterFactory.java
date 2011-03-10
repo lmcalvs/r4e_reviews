@@ -244,6 +244,10 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 				return createMapKeyToInfoAttributesAdapter();
 			}
 			@Override
+			public Adapter caseR4EReviewPhaseInfo(R4EReviewPhaseInfo object) {
+				return createR4EReviewPhaseInfoAdapter();
+			}
+			@Override
 			public Adapter caseReviewComponent(ReviewComponent object) {
 				return createReviewComponentAdapter();
 			}
@@ -752,6 +756,20 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMapKeyToInfoAttributesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo <em>R4E Review Phase Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo
+	 * @generated
+	 */
+	public Adapter createR4EReviewPhaseInfoAdapter() {
 		return null;
 	}
 

@@ -49,6 +49,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference;
@@ -293,6 +294,13 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	private EClass mapKeyToInfoAttributesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass r4EReviewPhaseInfoEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -880,44 +888,26 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EFormalReview_PreparationDate() {
-		return (EAttribute)r4EFormalReviewEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getR4EFormalReview_DecisionDate() {
-		return (EAttribute)r4EFormalReviewEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getR4EFormalReview_ReworkDate() {
-		return (EAttribute)r4EFormalReviewEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getR4EFormalReview_PhaseOwnerID() {
-		return (EAttribute)r4EFormalReviewEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getR4EFormalReview_PhaseOwner() {
-		return (EReference)r4EFormalReviewEClass.getEStructuralFeatures().get(4);
+		return (EReference)r4EFormalReviewEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getR4EFormalReview_Phases() {
+		return (EReference)r4EFormalReviewEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getR4EFormalReview_Current() {
+		return (EReference)r4EFormalReviewEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1861,6 +1851,42 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getR4EReviewPhaseInfo() {
+		return r4EReviewPhaseInfoEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EReviewPhaseInfo_EndDate() {
+		return (EAttribute)r4EReviewPhaseInfoEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EReviewPhaseInfo_Type() {
+		return (EAttribute)r4EReviewPhaseInfoEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EReviewPhaseInfo_PhaseOwnerID() {
+		return (EAttribute)r4EReviewPhaseInfoEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getR4EAnomalyState() {
 		return r4EAnomalyStateEEnum;
 	}
@@ -2043,11 +2069,9 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__FOLLOW_UP_BY_ID);
 
 		r4EFormalReviewEClass = createEClass(R4E_FORMAL_REVIEW);
-		createEAttribute(r4EFormalReviewEClass, R4E_FORMAL_REVIEW__PREPARATION_DATE);
-		createEAttribute(r4EFormalReviewEClass, R4E_FORMAL_REVIEW__DECISION_DATE);
-		createEAttribute(r4EFormalReviewEClass, R4E_FORMAL_REVIEW__REWORK_DATE);
-		createEAttribute(r4EFormalReviewEClass, R4E_FORMAL_REVIEW__PHASE_OWNER_ID);
 		createEReference(r4EFormalReviewEClass, R4E_FORMAL_REVIEW__PHASE_OWNER);
+		createEReference(r4EFormalReviewEClass, R4E_FORMAL_REVIEW__PHASES);
+		createEReference(r4EFormalReviewEClass, R4E_FORMAL_REVIEW__CURRENT);
 
 		r4ETextPositionEClass = createEClass(R4E_TEXT_POSITION);
 		createEAttribute(r4ETextPositionEClass, R4E_TEXT_POSITION__START_POSITION);
@@ -2181,6 +2205,11 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(mapKeyToInfoAttributesEClass, MAP_KEY_TO_INFO_ATTRIBUTES__KEY);
 		createEAttribute(mapKeyToInfoAttributesEClass, MAP_KEY_TO_INFO_ATTRIBUTES__VALUE);
 
+		r4EReviewPhaseInfoEClass = createEClass(R4E_REVIEW_PHASE_INFO);
+		createEAttribute(r4EReviewPhaseInfoEClass, R4E_REVIEW_PHASE_INFO__END_DATE);
+		createEAttribute(r4EReviewPhaseInfoEClass, R4E_REVIEW_PHASE_INFO__TYPE);
+		createEAttribute(r4EReviewPhaseInfoEClass, R4E_REVIEW_PHASE_INFO__PHASE_OWNER_ID);
+
 		// Create enums
 		r4EAnomalyStateEEnum = createEEnum(R4E_ANOMALY_STATE);
 		r4EAnomalyRankEEnum = createEEnum(R4E_ANOMALY_RANK);
@@ -2312,11 +2341,9 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EAnomaly_FollowUpByID(), ecorePackage.getEString(), "followUpByID", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EFormalReviewEClass, R4EFormalReview.class, "R4EFormalReview", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getR4EFormalReview_PreparationDate(), ecorePackage.getEDate(), "preparationDate", null, 0, 1, R4EFormalReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EFormalReview_DecisionDate(), ecorePackage.getEDate(), "decisionDate", null, 0, 1, R4EFormalReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EFormalReview_ReworkDate(), ecorePackage.getEDate(), "reworkDate", null, 0, 1, R4EFormalReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EFormalReview_PhaseOwnerID(), ecorePackage.getEString(), "phaseOwnerID", null, 0, 1, R4EFormalReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EFormalReview_PhaseOwner(), this.getR4EParticipant(), null, "phaseOwner", null, 1, 1, R4EFormalReview.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EFormalReview_Phases(), this.getR4EReviewPhaseInfo(), null, "phases", null, 0, -1, R4EFormalReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EFormalReview_Current(), this.getR4EReviewPhaseInfo(), null, "current", null, 0, 1, R4EFormalReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4ETextPositionEClass, R4ETextPosition.class, "R4ETextPosition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4ETextPosition_StartPosition(), ecorePackage.getEInt(), "startPosition", null, 0, 1, R4ETextPosition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2449,6 +2476,11 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEClass(mapKeyToInfoAttributesEClass, Map.Entry.class, "MapKeyToInfoAttributes", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getMapKeyToInfoAttributes_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMapKeyToInfoAttributes_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(r4EReviewPhaseInfoEClass, R4EReviewPhaseInfo.class, "R4EReviewPhaseInfo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getR4EReviewPhaseInfo_EndDate(), ecorePackage.getEDate(), "endDate", null, 0, 1, R4EReviewPhaseInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EReviewPhaseInfo_Type(), this.getR4EReviewPhase(), "type", null, 0, 1, R4EReviewPhaseInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EReviewPhaseInfo_PhaseOwnerID(), ecorePackage.getEString(), "phaseOwnerID", null, 0, 1, R4EReviewPhaseInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(r4EAnomalyStateEEnum, R4EAnomalyState.class, "R4EAnomalyState");

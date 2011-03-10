@@ -19,7 +19,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.eclipse.core.resources.IStorage;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
@@ -28,21 +34,25 @@ import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.mylyn.reviews.r4e.core.Activator;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
+import org.eclipse.mylyn.reviews.r4e.core.utils.IOUtils;
 import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.FileSupportCommandFactory;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
+import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.core.history.provider.FileRevision;
 
 /**
  * @author lmcalvs
- *
+ * 
  */
 public class ReviewsRFSProxy implements IRFSRegistry {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 
-	private static final String	repoName	= "R4EBareRepo.git";
+	private static final String	repoName	= "ReviewsRepo.git";
 	private ObjectInserter		fInserter	= null;
 	private Repository			fRepository	= null;
 
@@ -57,7 +67,14 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 		File repoLoc = new File(aReviewGroupDir, repoName);
 		if (create) {
 			fRepository = initializeRepo(repoLoc);
+			// Set writing permissions to the shared location
+			try {
+				FileSupportCommandFactory.getInstance().grantWritePermission(aReviewGroupDir.getAbsolutePath());
+			} catch (IOException e) {
+				throw new ReviewsFileStorageException(e);
+			}
 		} else {
+			// permissions must have been already set
 			fRepository = openRepository(repoLoc);
 		}
 
@@ -67,6 +84,17 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Validate if the given directory is a valid repository
+	 * 
+	 * @param dir
+	 * @return
+	 */
+	public static boolean isValidRepo(File dir) {
+		File repoDir = new File(dir, repoName);
+		return FileKey.isGitRepository(repoDir, FS.DETECTED);
+	}
 
 	/**
 	 * @param aReviewGroupDir
@@ -101,27 +129,50 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 		return r;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.core.rrepo.IBlobRegistry#registerReviewBlob(byte[])
 	 */
-	public ObjectId registerReviewBlob(final byte[] content) throws Exception {
-		ObjectId id;
-
+	public String registerReviewBlob(final byte[] content) throws ReviewsFileStorageException {
+		String id = null;
+		ObjectId objid = null;
 		try {
-			id = fInserter.insert(Constants.OBJ_BLOB, content);
+			objid = fInserter.insert(Constants.OBJ_BLOB, content);
 			fInserter.flush();
 			FileSupportCommandFactory.getInstance().grantWritePermission(fRepository.getDirectory().getAbsolutePath());
+		} catch (IOException e) {
+			throw new ReviewsFileStorageException(e);
 		} finally {
 			fInserter.release();
+		}
+
+		if (objid != null) {
+			id = objid.getName();
 		}
 
 		return id;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry#registerReviewBlob(java.io.InputStream)
+	 */
+	public String registerReviewBlob(final InputStream content) throws ReviewsFileStorageException {
+		try {
+			return registerReviewBlob(IOUtils.readFully(content));
+		} catch (IOException e) {
+			throw new ReviewsFileStorageException(e);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.core.rrepo.IBlobRegistry#registerReviewBlob(java.io.File)
 	 */
-	public ObjectId registerReviewBlob(final File aFromFile) throws ReviewsFileStorageException {
+	public String registerReviewBlob(final File aFromFile) throws ReviewsFileStorageException {
 		InputStream stream = null;
 		try {
 			stream = new FileInputStream(aFromFile);
@@ -129,9 +180,10 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 			throw new ReviewsFileStorageException(e);
 		}
 
-		ObjectId id;
+		String id = null;
+		ObjectId objid = null;
 		try {
-			id = fInserter.insert(Constants.OBJ_BLOB, aFromFile.length(), stream);
+			objid = fInserter.insert(Constants.OBJ_BLOB, aFromFile.length(), stream);
 			fInserter.flush();
 			FileSupportCommandFactory.getInstance().grantWritePermission(fRepository.getDirectory().getAbsolutePath());
 		} catch (IOException e) {
@@ -148,22 +200,121 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 			}
 		}
 
+		if (objid != null) {
+			id = objid.getName();
+		}
+
 		return id;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.rrepo.IBlobRegistry#getBlobContent(org.eclipse.core.runtime.IProgressMonitor, org.eclipse.jgit.lib.ObjectId)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry#getBlobContent(org.eclipse.core.runtime.IProgressMonitor,
+	 * java.lang.String)
 	 */
-	public InputStream getBlobContent(IProgressMonitor monitor, ObjectId id) throws ReviewsFileStorageException {
+	public InputStream getBlobContent(IProgressMonitor monitor, String id) throws ReviewsFileStorageException {
 		InputStream resStream = null;
 
 		try {
-			resStream = fRepository.open(id, Constants.OBJ_BLOB).openStream();
+			ObjectId objId = ObjectId.fromString(id);
+			resStream = fRepository.open(objId, Constants.OBJ_BLOB).openStream();
 		} catch (Exception e) {
 			throw new ReviewsFileStorageException(e);
 		}
 
 		return resStream;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry#getIFileRevision(org.eclipse.core.runtime.IProgressMonitor
+	 * , org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion)
+	 */
+	public IFileRevision getIFileRevision(IProgressMonitor monitor, final R4EFileVersion fileVersion)
+			throws ReviewsFileStorageException {
+		final String localId = fileVersion.getLocalVersionID();
+
+		// Validation
+		if (localId == null) {
+			return null;
+		}
+
+		try {
+			final IPath path = Path.fromPortableString(fileVersion.getRepositoryPath());
+			return new FileRevision() {
+
+				public IFileRevision withAllProperties(IProgressMonitor monitor) throws CoreException {
+					return this;
+				}
+
+				public boolean isPropertyMissing() {
+					return false;
+				}
+
+				public IStorage getStorage(IProgressMonitor monitor) throws CoreException {
+					return getIStorage(null, fileVersion);
+				}
+
+				public String getName() {
+					return path.lastSegment();
+				}
+			};
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry#getIStorage(org.eclipse.core.runtime.IProgressMonitor,
+	 * org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion)
+	 */
+	public IStorage getIStorage(IProgressMonitor monitor, R4EFileVersion fileVersion) {
+
+		final IPath path = Path.fromPortableString(fileVersion.getRepositoryPath());
+		final String localId = fileVersion.getLocalVersionID();
+
+		// Validation
+		if (localId == null) {
+			return null;
+		}
+
+		return new IStorage() {
+
+			@SuppressWarnings("rawtypes")
+			public Object getAdapter(Class adapter) {
+				return null;
+			}
+
+			public boolean isReadOnly() {
+				return true;
+			}
+
+			public String getName() {
+				return path.lastSegment();
+			}
+
+			public IPath getFullPath() {
+				return path;
+			}
+
+			public InputStream getContents() throws CoreException {
+				try {
+					return getBlobContent(null, localId);
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage()));
+				}
+			}
+		};
 	}
 
 	/**

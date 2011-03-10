@@ -377,6 +377,12 @@ public class RModelSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case RModelPackage.R4E_REVIEW_PHASE_INFO: {
+				R4EReviewPhaseInfo r4EReviewPhaseInfo = (R4EReviewPhaseInfo)theEObject;
+				T result = caseR4EReviewPhaseInfo(r4EReviewPhaseInfo);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -858,6 +864,21 @@ public class RModelSwitch<T> {
 	 * @generated
 	 */
 	public T caseMapKeyToInfoAttributes(Map.Entry<String, String> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>R4E Review Phase Info</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>R4E Review Phase Info</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseR4EReviewPhaseInfo(R4EReviewPhaseInfo object) {
 		return null;
 	}
 

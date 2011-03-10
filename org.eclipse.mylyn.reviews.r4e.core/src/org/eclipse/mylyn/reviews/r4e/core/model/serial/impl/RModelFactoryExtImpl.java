@@ -35,6 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
@@ -51,19 +52,13 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.ReviewsRFSProxy;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.UserPermission;
 
 /**
  * @author lmcalvs
  *
- */
-/**
- * @author lmcalvs
- * 
- */
-/**
- * @author lmcalvs
- * 
  */
 public class RModelFactoryExtImpl extends Common implements Persistence.RModelFactoryExt {
 
@@ -95,7 +90,29 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		group.setName(aGroupName);
 		group.setFolder(group.eResource().getURI().trimSegments(1).devicePath().toString());
 		fWriter.saveResource(resource);
+
+		// Make sure a local review repository exist in this location
+		File groupFolder = new File(aFolderPath.devicePath());
+		try {
+			checkOrCreateRepo(groupFolder);
+		} catch (ReviewsFileStorageException e) {
+			throw new ResourceHandlingException(e);
+		}
+
 		return group;
+	}
+
+	/**
+	 * @param aFolderPath
+	 * @throws ReviewsFileStorageException
+	 */
+	private void checkOrCreateRepo(File aDir) throws ReviewsFileStorageException {
+		boolean valid = ReviewsRFSProxy.isValidRepo(aDir);
+		if (!valid) {
+			// No valid review repository exist, time to create it
+			ReviewsRFSProxy revRepo = new ReviewsRFSProxy(aDir, true);
+			revRepo.close();
+		}
 	}
 
 	/*
@@ -125,6 +142,14 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 
 		// update the transient value of folder
 		group.setFolder(group.eResource().getURI().trimSegments(1).devicePath().toString());
+		// Make sure a local review repository exist in this location
+		File groupFolder = new File(folder.devicePath());
+		try {
+			checkOrCreateRepo(groupFolder);
+		} catch (ReviewsFileStorageException e) {
+			throw new ResourceHandlingException(e);
+		}
+
 		return group;
 	}
 
@@ -207,6 +232,21 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			return null;
 		}
 
+		R4EReview review = RModelFactory.eINSTANCE.createR4EReview();
+
+		reviewInit(aReviewGroup, aReviewName, aCreatedByUser, review);
+		return review;
+	}
+
+	/**
+	 * @param aReviewGroup
+	 * @param aReviewName
+	 * @param aCreatedByUser
+	 * @param review
+	 * @throws ResourceHandlingException
+	 */
+	private void reviewInit(R4EReviewGroup aReviewGroup, String aReviewName, String aCreatedByUser, R4EReview review)
+			throws ResourceHandlingException {
 		// Initialize block
 		Resource groupResource = createReviewInputCheck(aReviewGroup, aReviewName);
 		ResourceSet resSet = groupResource.getResourceSet();
@@ -214,7 +254,6 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		groupFilePath = fWriter.getFolderPath(groupFilePath); /* To directory */
 
 		// CREATE REVIEW - and associate it to a resource
-		R4EReview review = RModelFactory.eINSTANCE.createR4EReview();
 		review.setName(aReviewName);
 		URI reviewURI = fWriter.createResourceURI(aReviewName, groupFilePath, ResourceType.REVIEW);
 		Resource reviewResource = resSet.createResource(reviewURI);
@@ -242,6 +281,25 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 
 		// SAVE REVIEW
 		fWriter.saveResource(reviewResource);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#createR4EFormalReview(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EReviewGroup, java.lang.String, java.lang.String)
+	 */
+	public R4EFormalReview createR4EFormalReview(R4EReviewGroup aReviewGroup, String aReviewName, String aCreatedByUser)
+			throws ResourceHandlingException {
+		// validate
+		if (aReviewGroup == null || aReviewName == null || aCreatedByUser == null) {
+			return null;
+		}
+
+		R4EFormalReview review = RModelFactory.eINSTANCE.createR4EFormalReview();
+		reviewInit(aReviewGroup, aReviewName, aCreatedByUser, review);
+
 		return review;
 	}
 
