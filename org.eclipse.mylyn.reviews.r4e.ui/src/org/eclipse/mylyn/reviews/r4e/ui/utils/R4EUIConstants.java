@@ -602,6 +602,18 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final String USER_ROLE_REVIEWER = "Reviewer";
 	
+	/**
+	 * Field USER_ROLE_ORGANIZER.
+	 * (value is ""Organizer"")
+	 */
+	public static final String USER_ROLE_ORGANIZER = "Organizer";
+	
+	/**
+	 * Field PARTICIPANT_ROLES.
+	 */
+	public static final String[] PARTICIPANT_ROLES = { R4EUIConstants.USER_ROLE_LEAD, 
+		R4EUIConstants.USER_ROLE_AUTHOR, R4EUIConstants.USER_ROLE_REVIEWER, USER_ROLE_ORGANIZER };
+	
 	
 	//Commands
 	

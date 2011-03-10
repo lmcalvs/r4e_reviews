@@ -17,14 +17,12 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
@@ -62,7 +60,7 @@ public class ReviewGeneralProperties extends ModelElementProperties {
 	 * Field REVIEW_PHASE_PROPERTY_DESCRIPTOR.
 	 */
 	protected static final ComboBoxPropertyDescriptor REVIEW_PHASE_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			REVIEW_PHASE_ID, R4EUIConstants.PHASE_OWNER_LABEL, R4EUIReviewBasic.getPhases());
+			REVIEW_PHASE_ID, R4EUIConstants.PHASE_LABEL, R4EUIReviewBasic.getPhases());
 	
 	/**
 	 * Field REVIEW_START_DATE_ID. (value is ""reviewElement.startDate"")
@@ -203,7 +201,7 @@ public class ReviewGeneralProperties extends ModelElementProperties {
 			if (REVIEW_NAME_ID.equals(aId)) { 
 				return ((R4EUIReviewBasic)getElement()).getReview().getName();
 			} else if (REVIEW_PHASE_ID.equals(aId)) {
-				return Integer.valueOf(((R4EReviewState)((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).
+				return Integer.valueOf(((R4EReviewState)((R4EUIReviewBasic)getElement()).getReview().
 						getState()).getState().getValue());
 			} else if (REVIEW_START_DATE_ID.equals(aId)) {
 				return ((R4EUIReviewBasic)getElement()).getReview().getStartDate().toString();

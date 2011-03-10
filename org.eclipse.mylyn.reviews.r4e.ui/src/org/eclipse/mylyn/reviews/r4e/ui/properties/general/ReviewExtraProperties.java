@@ -1,6 +1,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -109,8 +110,9 @@ public class ReviewExtraProperties extends ReviewGeneralProperties {
 	public Object getPropertyValue(Object aId) {
 		final Object result = super.getPropertyValue(aId);
 		if (null != result) return result;
+    	R4EReview review = ((R4EUIReviewExtended)getElement()).getReview();
 	    if (REVIEW_PHASE_OWNER_ID.equals(aId)) {
-			return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getPhaseOwnerID();
+	    	return ((R4EFormalReview)review).getPhaseOwnerID();
 		} else if (REVIEW_PREPARATION_DATE_ID.equals(aId)) {
 			return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getPreparationDate().toString();
 		} else if (REVIEW_DECISION_DATE_ID.equals(aId)) {
