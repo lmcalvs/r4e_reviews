@@ -37,6 +37,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl#getEndDate <em>End Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl#getPhaseOwnerID <em>Phase Owner ID</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewPhaseInfoImpl#getStartDate <em>Start Date</em>}</li>
  * </ul>
  * </p>
  *
@@ -102,6 +103,26 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	 * @ordered
 	 */
 	protected String phaseOwnerID = PHASE_OWNER_ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getStartDate() <em>Start Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStartDate()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Date START_DATE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getStartDate() <em>Start Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStartDate()
+	 * @generated
+	 * @ordered
+	 */
+	protected Date startDate = START_DATE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -190,6 +211,27 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setStartDate(Date newStartDate) {
+		Date oldStartDate = startDate;
+		startDate = newStartDate;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW_PHASE_INFO__START_DATE, oldStartDate, startDate));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -199,6 +241,8 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 				return getType();
 			case RModelPackage.R4E_REVIEW_PHASE_INFO__PHASE_OWNER_ID:
 				return getPhaseOwnerID();
+			case RModelPackage.R4E_REVIEW_PHASE_INFO__START_DATE:
+				return getStartDate();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -219,6 +263,9 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 				return;
 			case RModelPackage.R4E_REVIEW_PHASE_INFO__PHASE_OWNER_ID:
 				setPhaseOwnerID((String)newValue);
+				return;
+			case RModelPackage.R4E_REVIEW_PHASE_INFO__START_DATE:
+				setStartDate((Date)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -241,6 +288,9 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 			case RModelPackage.R4E_REVIEW_PHASE_INFO__PHASE_OWNER_ID:
 				setPhaseOwnerID(PHASE_OWNER_ID_EDEFAULT);
 				return;
+			case RModelPackage.R4E_REVIEW_PHASE_INFO__START_DATE:
+				setStartDate(START_DATE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -259,6 +309,8 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 				return type != TYPE_EDEFAULT;
 			case RModelPackage.R4E_REVIEW_PHASE_INFO__PHASE_OWNER_ID:
 				return PHASE_OWNER_ID_EDEFAULT == null ? phaseOwnerID != null : !PHASE_OWNER_ID_EDEFAULT.equals(phaseOwnerID);
+			case RModelPackage.R4E_REVIEW_PHASE_INFO__START_DATE:
+				return START_DATE_EDEFAULT == null ? startDate != null : !START_DATE_EDEFAULT.equals(startDate);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -279,6 +331,8 @@ public class R4EReviewPhaseInfoImpl extends EObjectImpl implements R4EReviewPhas
 		result.append(type);
 		result.append(", phaseOwnerID: ");
 		result.append(phaseOwnerID);
+		result.append(", startDate: ");
+		result.append(startDate);
 		result.append(')');
 		return result.toString();
 	}
