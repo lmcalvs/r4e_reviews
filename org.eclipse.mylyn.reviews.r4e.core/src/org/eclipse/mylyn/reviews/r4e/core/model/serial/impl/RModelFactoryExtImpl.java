@@ -35,6 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
@@ -231,6 +232,21 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			return null;
 		}
 
+		R4EReview review = RModelFactory.eINSTANCE.createR4EReview();
+
+		reviewInit(aReviewGroup, aReviewName, aCreatedByUser, review);
+		return review;
+	}
+
+	/**
+	 * @param aReviewGroup
+	 * @param aReviewName
+	 * @param aCreatedByUser
+	 * @param review
+	 * @throws ResourceHandlingException
+	 */
+	private void reviewInit(R4EReviewGroup aReviewGroup, String aReviewName, String aCreatedByUser, R4EReview review)
+			throws ResourceHandlingException {
 		// Initialize block
 		Resource groupResource = createReviewInputCheck(aReviewGroup, aReviewName);
 		ResourceSet resSet = groupResource.getResourceSet();
@@ -238,7 +254,6 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		groupFilePath = fWriter.getFolderPath(groupFilePath); /* To directory */
 
 		// CREATE REVIEW - and associate it to a resource
-		R4EReview review = RModelFactory.eINSTANCE.createR4EReview();
 		review.setName(aReviewName);
 		URI reviewURI = fWriter.createResourceURI(aReviewName, groupFilePath, ResourceType.REVIEW);
 		Resource reviewResource = resSet.createResource(reviewURI);
@@ -266,6 +281,25 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 
 		// SAVE REVIEW
 		fWriter.saveResource(reviewResource);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#createR4EFormalReview(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EReviewGroup, java.lang.String, java.lang.String)
+	 */
+	public R4EFormalReview createR4EFormalReview(R4EReviewGroup aReviewGroup, String aReviewName, String aCreatedByUser)
+			throws ResourceHandlingException {
+		// validate
+		if (aReviewGroup == null || aReviewName == null || aCreatedByUser == null) {
+			return null;
+		}
+
+		R4EFormalReview review = RModelFactory.eINSTANCE.createR4EFormalReview();
+		reviewInit(aReviewGroup, aReviewName, aCreatedByUser, review);
+
 		return review;
 	}
 

@@ -28,6 +28,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -114,6 +115,18 @@ public interface Persistence {
 		 */
 		public R4EReview createR4EReview(R4EReviewGroup aRviewGroup, String aReviewName, String aCreatedByUser)
 				throws ResourceHandlingException;
+
+		/**
+		 * The creation is similar to R4EReview except for the additional extensions of the instance type
+		 * 
+		 * @param aRviewGroup
+		 * @param aReviewName
+		 * @param aCreatedByUser
+		 * @return
+		 * @throws ResourceHandlingException
+		 */
+		public R4EFormalReview createR4EFormalReview(R4EReviewGroup aRviewGroup, String aReviewName,
+				String aCreatedByUser) throws ResourceHandlingException;
 
 		/**
 		 * Although opening the actual review shall done automatically via proxy resolution from the elements in the

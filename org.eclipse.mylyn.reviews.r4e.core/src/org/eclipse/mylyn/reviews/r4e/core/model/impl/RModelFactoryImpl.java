@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
@@ -144,6 +145,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 			case RModelPackage.R4E_ANOMALY_TEXT_POSITION: return createR4EAnomalyTextPosition();
 			case RModelPackage.MAP_DATE_TO_DURATION: return (EObject)createMapDateToDuration();
 			case RModelPackage.MAP_KEY_TO_INFO_ATTRIBUTES: return (EObject)createMapKeyToInfoAttributes();
+			case RModelPackage.R4E_REVIEW_PHASE_INFO: return createR4EReviewPhaseInfo();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -497,6 +499,16 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	public Map.Entry<String, String> createMapKeyToInfoAttributes() {
 		MapKeyToInfoAttributesImpl mapKeyToInfoAttributes = new MapKeyToInfoAttributesImpl();
 		return mapKeyToInfoAttributes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EReviewPhaseInfo createR4EReviewPhaseInfo() {
+		R4EReviewPhaseInfoImpl r4EReviewPhaseInfo = new R4EReviewPhaseInfoImpl();
+		return r4EReviewPhaseInfo;
 	}
 
 	/**
@@ -1004,6 +1016,18 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	public R4EReview createR4EReview(R4EReviewGroup aRviewGroup, String aReviewName, String aCreatedByUser)
 			throws ResourceHandlingException {
 		return factoryExtension.createR4EReview(aRviewGroup, aReviewName, aCreatedByUser);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#createR4EFormalReview(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EReviewGroup, java.lang.String, java.lang.String)
+	 */
+	public R4EFormalReview createR4EFormalReview(R4EReviewGroup aRviewGroup, String aReviewName, String aCreatedByUser)
+			throws ResourceHandlingException {
+		return factoryExtension.createR4EFormalReview(aRviewGroup, aReviewName, aCreatedByUser);
 	}
 
 	/*
