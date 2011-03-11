@@ -761,11 +761,11 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public void setDate(R4EReviewPhase aNewPhase) throws ResourceHandlingException, OutOfSyncException {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
 		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-			((R4EFormalReview)fReview).setPreparationDate(new Date(new Date().getTime()));
+			((R4EFormalReview)fReview).getCurrent().setEndDate(new Date(new Date().getTime()));
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-			((R4EFormalReview)fReview).setDecisionDate(new Date(new Date().getTime()));
+			((R4EFormalReview)fReview).getCurrent().setEndDate(new Date(new Date().getTime()));
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
-			((R4EFormalReview)fReview).setReworkDate(new Date(new Date().getTime()));
+			((R4EFormalReview)fReview).getCurrent().setEndDate(new Date(new Date().getTime()));
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			fReview.setEndDate(new Date(new Date().getTime()));
 		}

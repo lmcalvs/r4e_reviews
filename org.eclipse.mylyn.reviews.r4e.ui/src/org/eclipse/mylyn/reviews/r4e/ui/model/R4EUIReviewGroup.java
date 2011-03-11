@@ -209,8 +209,13 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
     	final int result = dialog.open();
     	if (result == Window.OK) {
     		//All reviews
-    		tempReview = RModelFactory.eINSTANCE.createR4EReview();
-    		tempReview.setType(dialog.getReviewTypeValue());
+    		R4EReviewType type = dialog.getReviewTypeValue();
+    		if (type.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+        		tempReview = RModelFactory.eINSTANCE.createR4EFormalReview();
+    		} else {
+        		tempReview = RModelFactory.eINSTANCE.createR4EReview();
+    		}
+    		tempReview.setType(type);
     		tempReview.setName(dialog.getReviewNameValue());
     		tempReview.setExtraNotes(dialog.getReviewDescriptionValue());
     		//Informal reviews
@@ -387,7 +392,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		final R4EUIReviewBasic addedChild;
 		if (type.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 			addedChild = new R4EUIReviewExtended(this, 
-					R4EUIModelController.FModelExt.createR4EReview(getReviewGroup(), reviewName, 
+					R4EUIModelController.FModelExt.createR4EFormalReview(getReviewGroup(), reviewName, 
 							R4EUIModelController.getReviewer()), type, true);
 			((R4EUIReviewExtended)addedChild).updatePhase(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
 		} else {

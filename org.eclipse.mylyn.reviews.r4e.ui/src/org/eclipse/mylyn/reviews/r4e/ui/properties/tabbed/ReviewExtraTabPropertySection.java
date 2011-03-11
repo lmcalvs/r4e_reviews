@@ -20,9 +20,12 @@ package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
@@ -261,7 +264,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		    				final String currentUser = R4EUIModelController.getReviewer();
 							final R4EReview modelReview = ((R4EUIReviewExtended)fProperties.getElement()).getReview();
 		    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-		    				((R4EFormalReview)modelReview).setPhaseOwnerID(fPhaseOwnerCombo.getText());
+		    				((R4EFormalReview)modelReview).getCurrent().setPhaseOwnerID(fPhaseOwnerCombo.getText());
 		    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		    			} catch (ResourceHandlingException e1) {
 		    				UIUtils.displayResourceErrorDialog(e1);
@@ -385,10 +388,17 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    	}
 			final String[] participantsStr = participantsList.toArray(new String[participantsList.size()]);
 			fPhaseOwnerCombo.setItems(participantsStr);
-			fPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex(((R4EFormalReview)modelReview).getPhaseOwnerID()));
-			fPreparationDateText.setText(((R4EFormalReview)modelReview).getPreparationDate().toString());
-			fDecisionDateText.setText(((R4EFormalReview)modelReview).getDecisionDate().toString());
-			fReworkDateText.setText(((R4EFormalReview)modelReview).getReworkDate().toString());
+			fPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex(((R4EFormalReview)modelReview).getCurrent().getPhaseOwnerID()));
+			EList<R4EReviewPhaseInfo> phases = ((R4EFormalReview)modelReview).getPhases();
+			for (R4EReviewPhaseInfo phase : phases) {
+				if (phase.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+					fPreparationDateText.setText(phase.getEndDate().toString());
+				} else if (phase.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+					fDecisionDateText.setText(phase.getEndDate().toString());
+				} else if (phase.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+					fReworkDateText.setText(phase.getEndDate().toString());
+				}
+			}
 		}
 		
 		setEnabledFields();

@@ -218,7 +218,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	@Override
 	public boolean validatePhaseChange(R4EReviewPhase aNextPhase, AtomicReference<String> aErrorMessage) {
 		
-		if (!R4EUIModelController.getReviewer().equals(((R4EFormalReview)fReview).getPhaseOwnerID())) {
+		if (!R4EUIModelController.getReviewer().equals(((R4EFormalReview)fReview).getCurrent().getPhaseOwnerID())) {
 			aErrorMessage.set("Phase cannot be changed as you are not the phase owner");
 			return false;
 		}
