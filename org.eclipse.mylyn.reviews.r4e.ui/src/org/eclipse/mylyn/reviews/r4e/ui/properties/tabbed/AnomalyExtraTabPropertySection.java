@@ -147,11 +147,8 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 			public void widgetSelected(SelectionEvent e) {
 	    		if (!fRefreshInProgress) {
 	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended)fProperties.getElement()).getAnomaly();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-	    				modelAnomaly.setState(R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText()));
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	    				((R4EUIAnomalyExtended)fProperties.getElement()).updateState(
+	    						R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText()));
 	    			} catch (ResourceHandlingException e1) {
 	    				UIUtils.displayResourceErrorDialog(e1);
 	    			} catch (OutOfSyncException e1) {
@@ -466,15 +463,16 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
     		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);	
     		fDateText.setText(dateFormat.format(modelAnomaly.getDueDate()));
 		}
-		fDecidedByCombo.setItems((String[]) participants.toArray());
+		fDecidedByCombo.setItems(participants.toArray(new String[participants.size()]));
 		fDecidedByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getDecidedByID()));
-		fFixedByCombo.setItems((String[]) participants.toArray());
+		fFixedByCombo.setItems(participants.toArray(new String[participants.size()]));
 		fFixedByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getFixedByID()));
-		fFollowUpByCombo.setItems((String[]) participants.toArray());
+		fFollowUpByCombo.setItems(participants.toArray(new String[participants.size()]));
 		fFollowUpByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getFollowUpByID()));
 		if (null != modelAnomaly.getNotAcceptedReason()) fNotAcceptedReasonText.setText(modelAnomaly.getNotAcceptedReason());
 		setEnabledFields();
 		fRefreshInProgress = false;
+		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 	
 	/**

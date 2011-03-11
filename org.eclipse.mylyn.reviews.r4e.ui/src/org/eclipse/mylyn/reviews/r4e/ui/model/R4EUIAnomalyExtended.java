@@ -195,7 +195,13 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 				R4EUIModelController.getReviewer());
 		fAnomaly.setState(aNewState);
     	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-    	setName(getStateString(aNewState) + ": " + getName());
+    	String nameLabel;
+    	if (null == getPosition()) {
+    		nameLabel = fAnomaly.getTitle();
+    	} else {
+    		nameLabel = getPosition().toString();
+    	}
+    	setName(getStateString(aNewState) + ": " + nameLabel);
 	}
 	
 	/**

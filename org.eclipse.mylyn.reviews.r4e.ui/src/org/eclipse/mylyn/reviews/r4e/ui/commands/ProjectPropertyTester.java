@@ -11,6 +11,9 @@ import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 public class ProjectPropertyTester extends PropertyTester {
@@ -35,10 +38,19 @@ public class ProjectPropertyTester extends PropertyTester {
 	}
 
 	private Object getSelection() {
-		ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getSelection();
-		if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
-			IStructuredSelection sel = (IStructuredSelection) selection;
-			return sel.getFirstElement();
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		if (null != workbench) {
+			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+			if (null != window) {
+				IWorkbenchPage page = window.getActivePage();
+				if (null != page) {
+					ISelection selection = page.getSelection();
+					if (null != selection && selection instanceof IStructuredSelection && !selection.isEmpty()) {
+						IStructuredSelection sel = (IStructuredSelection) selection;
+						return sel.getFirstElement();
+					}
+				}
+			}
 		}
 		return null;
 	}

@@ -1,9 +1,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
@@ -110,16 +107,18 @@ public class ReviewExtraProperties extends ReviewGeneralProperties {
 	public Object getPropertyValue(Object aId) {
 		final Object result = super.getPropertyValue(aId);
 		if (null != result) return result;
+    	//TODO bug in model?  Phase are not defined
+	    /*
     	R4EReview review = ((R4EUIReviewExtended)getElement()).getReview();
-	    if (REVIEW_PHASE_OWNER_ID.equals(aId)) {
+    	if (REVIEW_PHASE_OWNER_ID.equals(aId)) {
 	    	return ((R4EFormalReview)review).getCurrent().getPhaseOwnerID();
 		} else if (REVIEW_PREPARATION_DATE_ID.equals(aId)) {
-			return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getEndDate().toString();
+			return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getStartDate().toString();
 		} else if (REVIEW_DECISION_DATE_ID.equals(aId)) {
-			return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getEndDate().toString();
+			return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getStartDate().toString();
 		} else if (REVIEW_REWORK_DATE_ID.equals(aId)) {
-			return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getEndDate().toString();
-		}
+			return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getStartDate().toString();
+		}*/
 		return null;
 	}
 	//NOTE:  Since state management for anomalies is complex, the value are only editable using the tabbed properties view

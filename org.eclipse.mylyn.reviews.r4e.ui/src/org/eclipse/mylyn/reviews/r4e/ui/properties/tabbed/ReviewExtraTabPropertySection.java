@@ -17,15 +17,11 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
@@ -380,6 +376,8 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		if (null != modelReview.getDecision()) fExitDecisionCombo.select((null == modelReview.getDecision().getValue()) ? 0 : 
 			modelReview.getDecision().getValue().getValue());
 		
+    	//TODO bug in model?  Phase are not defined
+		/*
 		if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 	    	final List<R4EParticipant> participants = ((R4EUIReviewBasic)fProperties.getElement()).getParticipants();
 	    	final List<String> participantsList = new ArrayList<String>();
@@ -392,15 +390,15 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			EList<R4EReviewPhaseInfo> phases = ((R4EFormalReview)modelReview).getPhases();
 			for (R4EReviewPhaseInfo phase : phases) {
 				if (phase.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-					fPreparationDateText.setText(phase.getEndDate().toString());
+					fPreparationDateText.setText(phase.getStartDate().toString());
 				} else if (phase.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-					fDecisionDateText.setText(phase.getEndDate().toString());
+					fDecisionDateText.setText(phase.getStartDate().toString());
 				} else if (phase.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
-					fReworkDateText.setText(phase.getEndDate().toString());
+					fReworkDateText.setText(phase.getStartDate().toString());
 				}
 			}
 		}
-		
+		*/
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -427,12 +425,16 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 				fReworkDateText.setEnabled(false);
 			}
 		} else {
-			fProjectText.setEnabled(true);
-			fComponents.setEnabled(true);
-			fEntryCriteriaText.setEnabled(true);
-			fObjectivesText.setEnabled(true);
-			fReferenceMaterialText.setEnabled(true);
-
+			if (null != fProjectText.getText() && !("".equals(fProjectText.getText()))) fProjectText.setEnabled(true);
+			else fProjectText.setEnabled(false);
+			if (0 != fComponents.getItems().length) fComponents.setEnabled(true);
+			else fComponents.setEnabled(false);
+			if (null != fEntryCriteriaText.getText() && !("".equals(fEntryCriteriaText.getText()))) fEntryCriteriaText.setEnabled(true);
+			else fEntryCriteriaText.setEnabled(false);
+			if (null != fObjectivesText.getText() && !("".equals(fObjectivesText.getText()))) fObjectivesText.setEnabled(true);
+			else fObjectivesText.setEnabled(false);
+			if (null != fReferenceMaterialText.getText() && !("".equals(fReferenceMaterialText.getText()))) fReferenceMaterialText.setEnabled(true);
+			else fReferenceMaterialText.setEnabled(false);
 			
 		    if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 				final R4EUIReviewExtended uiReview = (R4EUIReviewExtended)fProperties.getElement();
@@ -462,7 +464,11 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 					fReworkDateText.setEnabled(false);
 				}
 		    } else {
-		    	fExitDecisionCombo.setEnabled(true);
+				if (((R4EUIReviewBasic)fProperties.getElement()).isExitDecisionEnabled()) {
+			    	fExitDecisionCombo.setEnabled(true);
+				} else {
+			    	fExitDecisionCombo.setEnabled(false);
+				}
 		    }
 		}
 	}

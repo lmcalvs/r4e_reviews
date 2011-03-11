@@ -185,7 +185,7 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+	    data.top = new FormAttachment(fPhaseCombo, ITabbedPropertyConstants.VSPACE);
 	    fStartDateText.setLayoutData(data);
 
 	    final CLabel creationDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.START_DATE_LABEL);

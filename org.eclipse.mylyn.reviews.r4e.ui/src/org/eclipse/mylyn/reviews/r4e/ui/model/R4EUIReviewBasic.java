@@ -761,14 +761,17 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public void setDate(R4EReviewPhase aNewPhase) throws ResourceHandlingException, OutOfSyncException {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
 		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-			((R4EFormalReview)fReview).getCurrent().setEndDate(new Date(new Date().getTime()));
+			((R4EFormalReview)fReview).getCurrent().setStartDate(new Date(new Date().getTime()));
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-			((R4EFormalReview)fReview).getCurrent().setEndDate(new Date(new Date().getTime()));
+			((R4EFormalReview)fReview).getCurrent().setStartDate(new Date(new Date().getTime()));
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
-			((R4EFormalReview)fReview).getCurrent().setEndDate(new Date(new Date().getTime()));
+			((R4EFormalReview)fReview).getCurrent().setStartDate(new Date(new Date().getTime()));
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			fReview.setEndDate(new Date(new Date().getTime()));
+		} else {
+			fReview.setEndDate(null);
 		}
+		
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
 	
@@ -859,13 +862,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		switch (aCurrentPhase.getValue()) {
 			case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:
 				phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
-				phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
+				phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
 				break;
 
 			case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
 				phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
-				phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
-				phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
+				phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
 				break;
 
 		default:
@@ -918,6 +920,17 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					if (!(container.checkCompletionStatus())) return false;
 				}
 			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Method isExitDecisionEnabled.
+	 * @return boolean
+	 */
+	public boolean isExitDecisionEnabled() {
+		if (((R4EReviewState)fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+			return false;
 		}
 		return true;
 	}

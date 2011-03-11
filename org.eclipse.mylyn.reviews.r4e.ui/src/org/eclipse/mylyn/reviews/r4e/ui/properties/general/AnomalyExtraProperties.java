@@ -164,7 +164,8 @@ public class AnomalyExtraProperties extends AnomalyGeneralProperties {
 		if (ANOMALY_STATE_ID.equals(aId)) { 
 			return Integer.valueOf(((R4EUIAnomalyExtended)getElement()).getAnomaly().getState().getValue());
 		} else if (ANOMALY_DUE_DATE_ID.equals(aId)) { 
-			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate().toString();
+			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate())
+				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate().toString();
 		} else if (ANOMALY_RANK_ID.equals(aId)) { 
 			return Integer.valueOf(((R4EUIAnomalyExtended)getElement()).getAnomaly().getRank().getValue());
 		} else if (ANOMALY_NOT_ACCEPTED_REASON_ID.equals(aId)) { 

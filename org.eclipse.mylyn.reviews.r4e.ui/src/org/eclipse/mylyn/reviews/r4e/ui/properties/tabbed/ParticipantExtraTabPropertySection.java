@@ -135,7 +135,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 				R4EUIConstants.PARTICIPANT_ROLES);
 
 
-	    final CLabel componentsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.AVAILABLE_COMPONENTS_LABEL);
+	    final CLabel componentsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.ROLES_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fRolesList.getComposite(), -ITabbedPropertyConstants.HSPACE);
