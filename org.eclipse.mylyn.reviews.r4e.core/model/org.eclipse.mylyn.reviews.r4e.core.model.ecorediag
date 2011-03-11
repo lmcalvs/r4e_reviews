@@ -1069,6 +1069,10 @@
   <children xmi:type="notation:Node" xmi:id="_NSQS0UsjEeCkEvu0hBjtTg" type="1001">
     <children xmi:type="notation:Node" xmi:id="_NSUkQEsjEeCkEvu0hBjtTg" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_NSVLUEsjEeCkEvu0hBjtTg" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_JnMooUtrEeCpWeh4YKtbZg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/startDate"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_JnMooktrEeCpWeh4YKtbZg"/>
+      </children>
       <children xmi:type="notation:Node" xmi:id="_aHlmgEsjEeCkEvu0hBjtTg" type="2001">
         <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/endDate"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_aHlmgUsjEeCkEvu0hBjtTg"/>

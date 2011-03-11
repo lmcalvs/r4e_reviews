@@ -2543,13 +2543,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_REVIEW_PHASE_INFO__PHASE_OWNER_ID = 2;
 
 	/**
+	 * The feature id for the '<em><b>Start Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW_PHASE_INFO__START_DATE = 3;
+
+	/**
 	 * The number of structural features of the '<em>R4E Review Phase Info</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_PHASE_INFO_FEATURE_COUNT = 3;
+	int R4E_REVIEW_PHASE_INFO_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.
@@ -4404,6 +4413,17 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EReviewPhaseInfo_PhaseOwnerID();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getStartDate <em>Start Date</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Start Date</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo#getStartDate()
+	 * @see #getR4EReviewPhaseInfo()
+	 * @generated
+	 */
+	EAttribute getR4EReviewPhaseInfo_StartDate();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5886,6 +5906,14 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_PHASE_INFO__PHASE_OWNER_ID = eINSTANCE.getR4EReviewPhaseInfo_PhaseOwnerID();
+
+		/**
+		 * The meta object literal for the '<em><b>Start Date</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_REVIEW_PHASE_INFO__START_DATE = eINSTANCE.getR4EReviewPhaseInfo_StartDate();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.

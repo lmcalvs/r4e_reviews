@@ -1887,6 +1887,15 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getR4EReviewPhaseInfo_StartDate() {
+		return (EAttribute)r4EReviewPhaseInfoEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getR4EAnomalyState() {
 		return r4EAnomalyStateEEnum;
 	}
@@ -2209,6 +2218,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EReviewPhaseInfoEClass, R4E_REVIEW_PHASE_INFO__END_DATE);
 		createEAttribute(r4EReviewPhaseInfoEClass, R4E_REVIEW_PHASE_INFO__TYPE);
 		createEAttribute(r4EReviewPhaseInfoEClass, R4E_REVIEW_PHASE_INFO__PHASE_OWNER_ID);
+		createEAttribute(r4EReviewPhaseInfoEClass, R4E_REVIEW_PHASE_INFO__START_DATE);
 
 		// Create enums
 		r4EAnomalyStateEEnum = createEEnum(R4E_ANOMALY_STATE);
@@ -2481,6 +2491,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EReviewPhaseInfo_EndDate(), ecorePackage.getEDate(), "endDate", null, 0, 1, R4EReviewPhaseInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReviewPhaseInfo_Type(), this.getR4EReviewPhase(), "type", null, 0, 1, R4EReviewPhaseInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReviewPhaseInfo_PhaseOwnerID(), ecorePackage.getEString(), "phaseOwnerID", null, 0, 1, R4EReviewPhaseInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EReviewPhaseInfo_StartDate(), ecorePackage.getEDate(), "startDate", null, 0, 1, R4EReviewPhaseInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(r4EAnomalyStateEEnum, R4EAnomalyState.class, "R4EAnomalyState");
