@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.apache.commons.io.FileUtils;
@@ -86,6 +87,25 @@ public class ReviewsRepoTest {
 			e.printStackTrace();
 			fail("Exception");
 		}
+	}
+
+	@Test
+	public void testResolveIdFor() {
+		String strContent = new String("The Content");
+		byte[] content = strContent.getBytes();
+		String regId = null;
+		String calcId = null;
+		InputStream is = null;
+		try {
+			regId = fRepoProx.registerReviewBlob(content);
+			calcId = fRepoProx.blobIdFor(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Exception");
+		}
+
+		Assert.assertEquals(calcId, regId);
+
 	}
 
 	// /**
