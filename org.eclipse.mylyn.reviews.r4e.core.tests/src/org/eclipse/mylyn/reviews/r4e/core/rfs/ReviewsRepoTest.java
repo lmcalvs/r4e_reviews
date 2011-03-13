@@ -14,8 +14,6 @@
 
 package org.eclipse.mylyn.reviews.r4e.core.rfs;
 
-import static org.junit.Assert.fail;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +27,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ReviewsRepoTest {
+public class ReviewsRepoTest extends TestCase {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
@@ -65,6 +63,9 @@ public class ReviewsRepoTest {
 	// ------------------------------------------------------------------------
 	// Test methods
 	// ------------------------------------------------------------------------
+	/**
+	 * Register a couple of Blobs and verify it exists in the repo
+	 */
 	@Test
 	public void testRegisterReviewBlobByteArray() {
 		String strContent = new String("The Content");
@@ -80,9 +81,9 @@ public class ReviewsRepoTest {
 			fail("Exception");
 		}
 
-		TestCase.assertNotNull("blob stream is null", is);
+		assertNotNull("blob stream is null", is);
 		try {
-			TestCase.assertEquals(strContent, IOUtils.toString(is));
+			assertEquals(strContent, IOUtils.toString(is));
 		} catch (IOException e) {
 			e.printStackTrace();
 			fail("Exception");
@@ -95,7 +96,6 @@ public class ReviewsRepoTest {
 		byte[] content = strContent.getBytes();
 		String regId = null;
 		String calcId = null;
-		InputStream is = null;
 		try {
 			regId = fRepoProx.registerReviewBlob(content);
 			calcId = fRepoProx.blobIdFor(content);
@@ -105,7 +105,6 @@ public class ReviewsRepoTest {
 		}
 
 		Assert.assertEquals(calcId, regId);
-
 	}
 
 	// /**
@@ -218,29 +217,20 @@ public class ReviewsRepoTest {
 	// }
 	// }
 
-	@Test
-	public void testGetRepoRegistry() {
-
-	}
-
-	@Test
-	public void testSwitchRepoRegistries() {
-
-	}
-
-	@Test
-	public void testGetRepoRegistryException() {
-
-	}
-
-	@Test
-	public void testGetBlobFromPackedRepo() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testWrittePermissionSetting() {
-		fail("Not yet implemented");
-	}
+	// TODO: Add missing test cases
+	// @Test
+	// public void testGetRepoRegistryException() {
+	//
+	// }
+	//
+	// @Test
+	// public void testGetBlobFromPackedRepo() {
+	//
+	// }
+	//
+	// @Test
+	// public void testWrittePermissionSetting() {
+	//
+	// }
 
 }
