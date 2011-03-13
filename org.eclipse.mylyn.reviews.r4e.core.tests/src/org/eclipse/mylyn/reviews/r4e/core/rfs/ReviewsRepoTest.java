@@ -90,6 +90,25 @@ public class ReviewsRepoTest extends TestCase {
 		}
 	}
 
+	@Test
+	public void testResolveIdFor() {
+		String strContent = new String("The Content");
+		byte[] content = strContent.getBytes();
+		String regId = null;
+		String calcId = null;
+		InputStream is = null;
+		try {
+			regId = fRepoProx.registerReviewBlob(content);
+			calcId = fRepoProx.blobIdFor(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Exception");
+		}
+
+		Assert.assertEquals(calcId, regId);
+
+	}
+
 	/**
 	 * Verify the calculation of a SHA results in the same value as the actual registration
 	 */
