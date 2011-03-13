@@ -33,6 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
@@ -127,6 +128,15 @@ public interface Persistence {
 		 */
 		public R4EFormalReview createR4EFormalReview(R4EReviewGroup aRviewGroup, String aReviewName,
 				String aCreatedByUser) throws ResourceHandlingException;
+
+		/**
+		 * Creates a review phase instance and it's added to the list of phases to the given formal review container
+		 * 
+		 * @param review
+		 * @return
+		 * @throws ResourceHandlingException
+		 */
+		public R4EReviewPhaseInfo createR4EReviewPhaseInfo(R4EFormalReview review) throws ResourceHandlingException;
 
 		/**
 		 * Although opening the actual review shall done automatically via proxy resolution from the elements in the

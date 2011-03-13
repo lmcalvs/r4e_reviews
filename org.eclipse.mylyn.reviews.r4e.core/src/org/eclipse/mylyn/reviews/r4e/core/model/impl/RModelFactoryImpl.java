@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
@@ -53,6 +52,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference;
@@ -1028,6 +1028,17 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	public R4EFormalReview createR4EFormalReview(R4EReviewGroup aRviewGroup, String aReviewName, String aCreatedByUser)
 			throws ResourceHandlingException {
 		return factoryExtension.createR4EFormalReview(aRviewGroup, aReviewName, aCreatedByUser);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#createR4EReviewPhaseInfo(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EFormalReview)
+	 */
+	public R4EReviewPhaseInfo createR4EReviewPhaseInfo(R4EFormalReview review) throws ResourceHandlingException {
+		return factoryExtension.createR4EReviewPhaseInfo(review);
 	}
 
 	/*
