@@ -333,7 +333,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			}
 			
 			try {
-				final R4EUIReview review = (R4EUIReview) getParent();
+				final R4EUIReviewBasic review = (R4EUIReviewBasic) getParent();
 				final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
 
 				if (null != user) {

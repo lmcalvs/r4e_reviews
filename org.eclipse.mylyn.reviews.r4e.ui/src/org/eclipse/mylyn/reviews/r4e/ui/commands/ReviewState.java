@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.ui.AbstractSourceProvider;
 import org.eclipse.ui.ISources;
 
@@ -67,8 +67,8 @@ public class ReviewState extends AbstractSourceProvider {
 	 * @return Map<String,ReviewElement> 
 	 * @see org.eclipse.ui.ISourceProvider#getCurrentState()
 	 */
-	public Map<String, R4EUIReview> getCurrentState() {
-		final Map<String, R4EUIReview> map = new HashMap<String, R4EUIReview>(1, 1);
+	public Map<String, R4EUIReviewBasic> getCurrentState() {
+		final Map<String, R4EUIReviewBasic> map = new HashMap<String, R4EUIReviewBasic>(1, 1);
 		map.put(REVIEW_CURRENT, R4EUIModelController.getActiveReview());
 		return map;
 	}
@@ -86,7 +86,7 @@ public class ReviewState extends AbstractSourceProvider {
 	 * Method setReview.
 	 * @param aOpenReview ReviewElement
 	 */
-	public void setCurrentReview(R4EUIReview aOpenReview) {
+	public void setCurrentReview(R4EUIReviewBasic aOpenReview) {
 		fireSourceChanged(ISources.WORKBENCH, REVIEW_CURRENT, aOpenReview);
 	}
 }

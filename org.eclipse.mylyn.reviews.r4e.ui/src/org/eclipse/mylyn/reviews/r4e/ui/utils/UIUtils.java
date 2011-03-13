@@ -28,10 +28,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
@@ -166,4 +168,18 @@ public class UIUtils {
 	    	}
 	    });
     }
+    
+	/**
+	 * Method mapParticipantToIndex.
+	 * @param aParticipant String
+	 * @return int
+	 */
+	public static int mapParticipantToIndex(String aParticipant) {
+		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
+		final int numParticipants = participants.size();
+		for (int i = 0; i < numParticipants; i++) {
+			if (participants.get(i).getId().equals(aParticipant)) return i;		
+		}
+		return R4EUIConstants.INVALID_VALUE;   //should never happen
+	}
 }

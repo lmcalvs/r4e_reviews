@@ -70,12 +70,6 @@ public class ParticipantInputDialog extends FormDialog {
 	 */
 	private static final String ADD_PARTICIPANT_ID_DIALOG_VALUE = "Id: ";
 	
-	/**
-	 * Field PARTICIPANT_ROLES.
-	 */
-	private static final String[] PARTICIPANT_ROLES = { R4EUIConstants.USER_ROLE_LEAD, 
-		R4EUIConstants.USER_ROLE_AUTHOR, R4EUIConstants.USER_ROLE_REVIEWER };
-	
 	
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -273,7 +267,7 @@ public class ParticipantInputDialog extends FormDialog {
         label = toolkit.createLabel(extraSectionClient, "Roles: ");
         label.setLayoutData(labelData);
         fRoleTypes = new EditableListWidget(toolkit, extraSectionClient, textSingleData, null, 0, CCombo.class,
-        		PARTICIPANT_ROLES);
+        		R4EUIConstants.PARTICIPANT_ROLES);
 
         //Focus Area
         label = toolkit.createLabel(extraSectionClient, "Focus Area: ");

@@ -29,7 +29,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelListener;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelEvent;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
 
 
@@ -153,7 +153,7 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	public void changedEvent(R4EUIModelEvent aEvent) {
 		final IR4EUIModelElement affectedObject = (IR4EUIModelElement)aEvent.receiver();
 	    Activator.Ftracer.traceInfo("Changed event received for element " + affectedObject.getName());
-		if (affectedObject instanceof R4EUIReviewGroup || affectedObject instanceof R4EUIReview) {
+		if (affectedObject instanceof R4EUIReviewGroup || affectedObject instanceof R4EUIReviewBasic) {
 			
 			//Open or Close review or review group
 			fViewer.collapseToLevel(affectedObject, AbstractTreeViewer.ALL_LEVELS );

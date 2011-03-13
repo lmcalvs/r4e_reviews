@@ -24,7 +24,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -47,36 +46,43 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * (value is ""CREATED"")
 	 */
 	private static final String ANOMALY_STATE_CREATED = "CREATED";
+	
 	/**
 	 * Field ANOMALY_STATE_ASSIGNED.
 	 * (value is ""ASSIGNED"")
 	 */
 	private static final String ANOMALY_STATE_ASSIGNED = "ASSIGNED";
+	
 	/**
 	 * Field ANOMALY_STATE_ACCEPTED.
 	 * (value is ""ACCEPTED"")
 	 */
 	private static final String ANOMALY_STATE_ACCEPTED = "ACCEPTED";
+	
 	/**
 	 * Field ANOMALY_STATE_DUPLICATED.
 	 * (value is ""DUPLICATED"")
 	 */
 	private static final String ANOMALY_STATE_DUPLICATED = "DUPLICATED";
+	
 	/**
 	 * Field ANOMALY_STATE_REJECTED.
 	 * (value is ""REJECTED"")
 	 */
 	private static final String ANOMALY_STATE_REJECTED = "REJECTED";
+	
 	/**
 	 * Field ANOMALY_STATE_DEFERRED.
 	 * (value is ""DEFERRED"")
 	 */
 	private static final String ANOMALY_STATE_DEFERRED = "DEFERRED";
+	
 	/**
 	 * Field ANOMALY_STATE_FIXED.
 	 * (value is ""FIXED"")
 	 */
 	private static final String ANOMALY_STATE_FIXED = "FIXED";
+	
 	/**
 	 * Field ANOMALY_STATE_VERIFIED.
 	 * (value is ""VERIFIED"")
@@ -88,6 +94,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * (value is ""NONE"")
 	 */
 	private static final String ANOMALY_RANK_NONE = "NONE";
+	
 	/**
 	 * Field ANOMALY_RANK_MINOR.
 	 * (value is ""MINOR"")
@@ -104,16 +111,19 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * (value is ""Erroneous"")
 	 */
 	private static final String ANOMALY_CLASS_ERRONEOUS = "Erroneous";
+	
 	/**
 	 * Field ANOMALY_CLASS_SUPERFLUOUS.
 	 * (value is ""Superfluous"")
 	 */
 	private static final String ANOMALY_CLASS_SUPERFLUOUS = "Superfluous";
+	
 	/**
 	 * Field ANOMALY_CLASS_IMPROVEMENT.
 	 * (value is ""Improvement"")
 	 */
 	private static final String ANOMALY_CLASS_IMPROVEMENT = "Improvement";
+	
 	/**
 	 * Field ANOMALY_CLASS_QUESTION.
 	 * (value is ""Question"")
@@ -185,7 +195,13 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 				R4EUIModelController.getReviewer());
 		fAnomaly.setState(aNewState);
     	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-    	setName(getStateString(aNewState) + ": " + getName());
+    	String nameLabel;
+    	if (null == getPosition()) {
+    		nameLabel = fAnomaly.getTitle();
+    	} else {
+    		nameLabel = getPosition().toString();
+    	}
+    	setName(getStateString(aNewState) + ": " + nameLabel);
 	}
 	
 	/**
@@ -252,7 +268,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 */
 	public String[] getAvailableStates() {
 		//Peek state machine to get available states
-		final R4EAnomalyState[] states = getAllowedState(R4EUIModelController.getActiveReview().getReview().getType(),
+		final R4EAnomalyState[] states = getAllowedStates(R4EUIModelController.getActiveReview().getReview().getType(),
 				getAnomaly().getState());
 		final List<String> stateStrings = new ArrayList<String>();
 		for (R4EAnomalyState state : states) {
@@ -268,7 +284,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 */
 	public int mapStateToIndex(R4EAnomalyState aState) {
 		//Peek state machine to get available states
-		final R4EAnomalyState[] states = getAllowedState(R4EUIModelController.getActiveReview().getReview().getType(),
+		final R4EAnomalyState[] states = getAllowedStates(R4EUIModelController.getActiveReview().getReview().getType(),
 				getAnomaly().getState());
 		for (int i = 0; i < states.length; i++) {
 			if (states[i].getValue() == aState.getValue()) return i;		
@@ -322,20 +338,6 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		} else if (aRank.equals(ANOMALY_RANK_MAJOR)) {
 			return R4EAnomalyRank.R4E_ANOMALY_RANK_MAJOR;
 		} else return null;   //should never happen
-	}
-	
-	/**
-	 * Method mapParticipantToIndex.
-	 * @param aParticipant String
-	 * @return int
-	 */
-	public int mapParticipantToIndex(String aParticipant) {
-		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
-		final int numParticipants = participants.size();
-		for (int i = 0; i < numParticipants; i++) {
-			if (participants.get(i).getId().equals(aParticipant)) return i;		
-		}
-		return R4EUIConstants.INVALID_VALUE;   //should never happen
 	}
 	
 	
@@ -429,12 +431,12 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	}
 	
 	/**
-	 * Method isNotAcceptedReasonEnabled.
+	 * Method getAllowedState.
 	 * @param aReviewType R4EReviewType
 	 * @param aCurrentState R4EAnomalyState
 	 * @return R4EAnomalyState[]
 	 */
-	private R4EAnomalyState[] getAllowedState(R4EReviewType aReviewType, R4EAnomalyState aCurrentState) {
+	private R4EAnomalyState[] getAllowedStates(R4EReviewType aReviewType, R4EAnomalyState aCurrentState) {
 		final List<R4EAnomalyState> states = new ArrayList<R4EAnomalyState>();
 		if (aReviewType == R4EReviewType.R4E_REVIEW_TYPE_INFORMAL) {
 			switch (aCurrentState.getValue()) {
@@ -479,7 +481,54 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 					//should never happen
 			}
 		} else {
-			//TODO Assume formal review 
+			switch (aCurrentState.getValue()) {
+			case R4EAnomalyState.R4E_ANOMALY_STATE_CREATED_VALUE:
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+				break;
+				
+			case R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED_VALUE:
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
+				break;
+				
+			case R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED_VALUE:
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+				break;
+				
+			case R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED_VALUE:
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+				break;
+				
+			case R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED_VALUE:
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
+				break;
+				
+			case R4EAnomalyState.R4E_ANOMALY_STATE_FIXED_VALUE:
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
+				break;
+				
+			case R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED_VALUE:
+				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
+				break;
+				
+			default:
+				//should never happen
+			}
 		}
 		return states.toArray(new R4EAnomalyState[states.size()]);
 	}

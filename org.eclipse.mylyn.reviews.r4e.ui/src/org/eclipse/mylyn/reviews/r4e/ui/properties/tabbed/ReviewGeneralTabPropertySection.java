@@ -19,17 +19,28 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
@@ -49,22 +60,27 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Field FNameText.
+	 * Field fNameText.
 	 */
 	private Text fNameText = null;
 	
 	/**
-	 * Field FCreationDateText.
+	 * Field fPhaseCombo.
+	 */
+	protected CCombo fPhaseCombo = null;
+	
+	/**
+	 * Field fStartDateText.
 	 */
 	private Text fStartDateText = null;
 	
 	/**
-	 * Field FEndDateText.
+	 * Field fEndDateText.
 	 */
 	private Text fEndDateText = null;
 	
 	/**
-	 * Field FDescriptionText.
+	 * Field fDescriptionText.
 	 */
 	protected Text fDescriptionText = null;
 	
@@ -113,12 +129,63 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 	    data.top = new FormAttachment(fNameText, 0, SWT.TOP);
 	    nameLabel.setLayoutData(data);
 	    
+    	//Phase
+	    fPhaseCombo = widgetFactory.createCCombo(mainForm, SWT.READ_ONLY);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+	    data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+	    fPhaseCombo.setLayoutData(data);
+	    fPhaseCombo.addSelectionListener(new SelectionListener() {
+	    	public void widgetSelected(SelectionEvent e) {
+				final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
+				AtomicReference<String> aResultMsg = new AtomicReference<String>(null);
+				R4EReviewPhase phase = R4EUIReviewBasic.getPhaseFromString(fPhaseCombo.getText());
+				if (((R4EUIReviewBasic)fProperties.getElement()).validatePhaseChange(phase, aResultMsg)) {
+	    			if (!fRefreshInProgress) {
+	    				if (null != aResultMsg.get()) {
+	    					ErrorDialog dialog = new ErrorDialog(null, "Warning", aResultMsg.get(),
+				    			new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, null, null), IStatus.WARNING);
+	    					dialog.open();
+	    				}
+	    				try {
+	    					final String currentUser = R4EUIModelController.getReviewer();
+	    					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+	    					((R4EReviewState)modelReview.getState()).setState(phase);
+	    					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	    					((R4EUIReviewBasic)fProperties.getElement()).setDate(phase);
+	    					
+	    				} catch (ResourceHandlingException e1) {
+	    					UIUtils.displayResourceErrorDialog(e1);
+	    				} catch (OutOfSyncException e1) {
+	    					UIUtils.displaySyncErrorDialog(e1);
+	    				}
+	    			}
+	    			refresh();
+	    		} else {
+	    			ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.REVIEW_NOT_COMPLETED_ERROR, "Review cannot be set to completed",
+			    			new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, aResultMsg.get(), null), IStatus.ERROR);
+			    	dialog.open();
+	    		}
+	    	}
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
+				//No implementation needed
+			}
+		});
+	    
+	    final CLabel phaseLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.PHASE_LABEL);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, 0);
+	    data.right = new FormAttachment(fPhaseCombo, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fPhaseCombo, 0, SWT.CENTER);
+	    phaseLabel.setLayoutData(data);
+	    
 	    //Review Start Date (read-only)
 	    fStartDateText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+	    data.top = new FormAttachment(fPhaseCombo, ITabbedPropertyConstants.VSPACE);
 	    fStartDateText.setLayoutData(data);
 
 	    final CLabel creationDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.START_DATE_LABEL);
@@ -155,7 +222,7 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 	    		if (!fRefreshInProgress) {
 	    			try {
 	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
+						final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
 	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
 	    				modelReview.setExtraNotes(fDescriptionText.getText());
 	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -187,8 +254,11 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
+		final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
 		fNameText.setText(modelReview.getName());
+		fPhaseCombo.setItems(((R4EUIReviewBasic)fProperties.getElement()).getAvailablePhases());
+		fPhaseCombo.select(((R4EUIReviewBasic)fProperties.getElement()).mapPhaseToIndex(
+				((R4EReviewState)modelReview.getState()).getState()));
 		fStartDateText.setText(modelReview.getStartDate().toString());
 		if (null == modelReview.getEndDate()) {
 			fEndDateText.setText("(In Progress)");
@@ -199,20 +269,22 @@ public class ReviewGeneralTabPropertySection extends ModelElementTabPropertySect
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
-	
+
 	/**
 	 * Method setEnabledFields.
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReview)fProperties.getElement()).isOpen()) ||
-				((R4EUIReview)fProperties.getElement()).isReviewed()) {
+		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReviewBasic)fProperties.getElement()).isOpen()) ||
+				((R4EUIReviewBasic)fProperties.getElement()).isReviewed()) {
 			fNameText.setEnabled(false);
+			fPhaseCombo.setEnabled(false);
 			fDescriptionText.setEnabled(false);
 			fStartDateText.setEnabled(false);
 			fEndDateText.setEnabled(false);
 		} else {
 			fNameText.setEnabled(true);
+			fPhaseCombo.setEnabled(true);
 			fStartDateText.setEnabled(true);
 			fEndDateText.setEnabled(true);
 			fDescriptionText.setEnabled(true);

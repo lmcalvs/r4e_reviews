@@ -315,11 +315,11 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	public IR4EUIModelElement createChildren(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		final String user = R4EUIModelController.getReviewer();
 		R4EParticipant participant = null;
-		if (getParent().getParent().getParent().getParent() instanceof R4EUIReview) { // $codepro.audit.disable methodChainLength
-			participant = ((R4EUIReview)getParent().getParent().getParent().getParent()).getParticipant(user, true); // $codepro.audit.disable methodChainLength
+		if (getParent().getParent().getParent().getParent() instanceof R4EUIReviewBasic) { // $codepro.audit.disable methodChainLength
+			participant = ((R4EUIReviewBasic)getParent().getParent().getParent().getParent()).getParticipant(user, true); // $codepro.audit.disable methodChainLength
 		} else {
 			//Global anomaly
-			participant = ((R4EUIReview)getParent().getParent()).getParticipant(user, true);
+			participant = ((R4EUIReviewBasic)getParent().getParent()).getParticipant(user, true);
 		}
 		final R4EComment comment = R4EUIModelController.FModelExt.createR4EComment(participant, fAnomaly);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(comment, 
@@ -350,7 +350,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
     	if (result == Window.OK) {
     		
     		//Create comment model element
-    		final R4EUIReview uiReview = R4EUIModelController.getActiveReview();
+    		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
     		final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(), true);
     
     		final R4EComment comment = R4EUIModelController.FModelExt.createR4EComment(participant, fAnomaly);

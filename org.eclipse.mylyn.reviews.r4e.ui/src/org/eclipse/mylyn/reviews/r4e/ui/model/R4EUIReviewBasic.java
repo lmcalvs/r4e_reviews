@@ -23,12 +23,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -50,7 +52,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewGeneralProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -60,7 +62,7 @@ import org.eclipse.ui.views.properties.IPropertySource;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EUIReview extends R4EUIModelElement {
+public class R4EUIReviewBasic extends R4EUIModelElement {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -91,6 +93,23 @@ public class R4EUIReview extends R4EUIModelElement {
     private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review from " +
     		"its Parent Review Group";
 	
+	/**
+	 * Field REVIEW_PHASE_STARTED.
+	 * (value is ""PLANNING"")
+	 */
+	private static final String REVIEW_PHASE_STARTED = "STARTED";
+	
+	/**
+	 * Field REVIEW_PHASE_COMPLETED.
+	 * (value is ""COMPLETED"")
+	 */
+	protected static final String REVIEW_PHASE_COMPLETED = "COMPLETED";
+		
+	/**
+	 * Field FBasicPhaseValues.
+	 */
+	private static final String[] FBasicPhaseValues = { REVIEW_PHASE_STARTED, REVIEW_PHASE_COMPLETED };
+
 	/**
 	 * Field EXIT_DECISION_NONE.
 	 * (value is ""No Decision"")
@@ -162,7 +181,7 @@ public class R4EUIReview extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 */
 	//TODO have different icons for all review types
-	public R4EUIReview(R4EUIReviewGroup aParent, R4EReview aReview, R4EReviewType aType, boolean aOpen) throws ResourceHandlingException {
+	public R4EUIReviewBasic(R4EUIReviewGroup aParent, R4EReview aReview, R4EReviewType aType, boolean aOpen) throws ResourceHandlingException {
 		super(aParent, getReviewDisplayName(aReview.getName(), aType), aReview.getExtraNotes());
 		fReview = aReview;
 		fReviewName = aReview.getName();
@@ -177,7 +196,7 @@ public class R4EUIReview extends R4EUIModelElement {
 			role.add(R4EUserRole.R4E_ROLE_LEAD);
 			final R4EParticipant participant = R4EUIModelController.FModelExt.createR4EParticipant(fReview, R4EUIModelController.getReviewer(), role);
 			fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer, participant));
-			final R4EUIReview activeReview = R4EUIModelController.getActiveReview();
+			final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 			if (null != activeReview ) activeReview.close();
 			R4EUIModelController.setActiveReview(this);
 		} else {
@@ -203,10 +222,11 @@ public class R4EUIReview extends R4EUIModelElement {
 			return this;
 		}
 		if (IPropertySource.class.equals(adapter)) {
-			return new ReviewProperties(this);
+			return new ReviewGeneralProperties(this);
 		}
 		return null;
 	}
+	
 	
 	//Attributes
 	
@@ -217,13 +237,14 @@ public class R4EUIReview extends R4EUIModelElement {
 	 * @return String
 	 */
 	private static String getReviewDisplayName(String aName, R4EReviewType aType) {
-		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			return R4EUIConstants.REVIEW_TYPE_FORMAL + ": " + aName;
-		}
 		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
 			return R4EUIConstants.REVIEW_TYPE_INFORMAL + ": " + aName;
+		} else if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+			return R4EUIConstants.REVIEW_TYPE_BASIC + ": " + aName;		
+		} else {
+			//No change.  For formal review the name is set in the subclass
+			return aName;
 		}
-		return R4EUIConstants.REVIEW_TYPE_BASIC + ": " + aName;		
 	}
 	
 	/**
@@ -316,6 +337,21 @@ public class R4EUIReview extends R4EUIModelElement {
 	}
 	
 	/**
+	 * Method getParticipantIDs.
+	 * @return List<String>
+	 */
+	public List<String> getParticipantIDs() {
+		final Object[] users = fReview.getUsersMap().values().toArray();
+		
+		//Cast list to R4EParticipants
+		final List<String> participantIDs = new ArrayList<String>();
+		for (Object user : users) {
+			participantIDs.add(((R4EParticipant)user).getId());
+		}
+		return participantIDs;
+	}
+	
+	/**
 	 * Method setReviewed.
 	 * @param aReviewed boolean
 	 * @throws ResourceHandlingException 
@@ -324,14 +360,9 @@ public class R4EUIReview extends R4EUIModelElement {
 	 */
 	@Override
 	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+		R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
-		if (aReviewed) {
-			((R4EReviewState)fReview.getState()).setState(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
-			fReview.setEndDate(new Date(new Date().getTime()));
-		} else {
-			((R4EReviewState)fReview.getState()).setState(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
-			fReview.setEndDate(null);
-		}
+		participant.setReviewCompleted(aReviewed);
     	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		fReviewed = aReviewed;
 		
@@ -724,6 +755,186 @@ public class R4EUIReview extends R4EUIModelElement {
 		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
 	}
 	
+	
+	//Phase Management
+	
+	public void setDate(R4EReviewPhase aNewPhase) throws ResourceHandlingException, OutOfSyncException {
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
+		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+			((R4EFormalReview)fReview).getCurrent().setStartDate(new Date(new Date().getTime()));
+		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+			((R4EFormalReview)fReview).getCurrent().setStartDate(new Date(new Date().getTime()));
+		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+			((R4EFormalReview)fReview).getCurrent().setStartDate(new Date(new Date().getTime()));
+		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+			fReview.setEndDate(new Date(new Date().getTime()));
+		} else {
+			fReview.setEndDate(null);
+		}
+		
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	}
+	
+	/**
+	 * Method updatePhase.
+	 * @param aNewPhase R4EReviewPhase
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
+	 */
+	public void updatePhase(R4EReviewPhase aNewPhase) throws ResourceHandlingException, OutOfSyncException {
+		//Set data in model element
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, 
+				R4EUIModelController.getReviewer());
+		((R4EReviewState)fReview.getState()).setState(aNewPhase);
+    	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	}
+	
+	/**
+	 * Method getPhaseString.
+	 * @param aNewPhase R4EReviewPhase
+ 	 * @return String
+	 */
+	public static String getPhaseString(R4EReviewPhase aNewPhase) {
+		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
+			return REVIEW_PHASE_STARTED;
+		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+			return REVIEW_PHASE_COMPLETED;
+		} else return "";
+	}
+	
+	/**
+	 * Method getStateFromString.
+	 * @param aNewPhase String
+	 * @return R4EReviewPhase
+	 */
+	public static R4EReviewPhase getPhaseFromString(String aNewPhase) {
+		if (aNewPhase.equals(REVIEW_PHASE_STARTED)) {
+			return R4EReviewPhase.R4E_REVIEW_PHASE_STARTED;
+		} else if (aNewPhase.equals(REVIEW_PHASE_COMPLETED)) {
+			return R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED;
+		} else return null;   //should never happen
+	}
+	
+	/**
+	 * Method getPhases.
+	 * @return String[]
+	 */
+	public static String[] getPhases() {
+		return FBasicPhaseValues;
+	}
+	
+	/**
+	 * Method getAvailablePhases.
+	 * @return String[]
+	 */
+	public String[] getAvailablePhases() {
+		//Peek state machine to get available states
+		final R4EReviewPhase[] phases = getAllowedPhases(((R4EReviewState)getReview().getState()).getState());
+		final List<String> phaseStrings = new ArrayList<String>();
+		for (R4EReviewPhase phase : phases) {
+			phaseStrings.add(getPhaseString(phase));
+		}
+		return phaseStrings.toArray(new String[phaseStrings.size()]);
+	}
+	
+	/**
+	 * Method mapPhaseToIndex.
+	 * @param aPhase R4EReviewPhase
+	 * @return int
+	 */
+	public int mapPhaseToIndex(R4EReviewPhase aPhase) {
+		//Peek state machine to get available states
+		final R4EReviewPhase[] phases = getAllowedPhases(((R4EReviewState)getReview().getState()).getState());
+		for (int i = 0; i < phases.length; i++) {
+			if (phases[i].getValue() == aPhase.getValue()) return i;		
+		}
+		return R4EUIConstants.INVALID_VALUE;   //should never happen
+	}
+	
+	/**
+	 * Method getAllowedPhases.
+	 * @param aReviewPhase R4EReviewPhase
+	 * @return R4EReviewPhase[]
+	 */
+	private R4EReviewPhase[] getAllowedPhases(R4EReviewPhase aCurrentPhase) {
+		final List<R4EReviewPhase> phases = new ArrayList<R4EReviewPhase>();
+		
+		switch (aCurrentPhase.getValue()) {
+			case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:
+				phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
+				phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+				break;
+
+			case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
+				phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+				phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
+				break;
+
+		default:
+			//should never happen
+		}
+
+		return phases.toArray(new R4EReviewPhase[phases.size()]);
+	}
+	
+	/**
+	 * Method validatePhaseChange.
+	 * @param aNextPhase - R4EReviewPhase
+	 * @param aErrorMessage - AtomicReference<String>
+	 * @return R4EReviewDecision
+	 */
+	public boolean validatePhaseChange(R4EReviewPhase aNextPhase, AtomicReference<String> aErrorMessage) {
+				
+		switch (aNextPhase.getValue()) {	
+			case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
+				if (!checkCompletionStatus()) {
+					aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
+										" as some anomalies are not in the proper state");
+					return false;
+				}
+				break;
+				
+			default:
+				//Nothing to do
+		}
+		return true;
+	}
+	
+	/**
+	 * Method checkCompletionStatus.
+	 * @return boolean
+	 */
+	public boolean checkCompletionStatus() { // $codepro.audit.disable booleanMethodNamingConvention
+		if (!(fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC))) {
+			if (null == fReview.getDecision() || null == fReview.getDecision().getValue()) return false;
+			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_NONE)) return false;	
+			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_REJECTED)) return true;
+			
+			//Check global anomalies state
+			if (!(fAnomalyContainer.checkCompletionStatus())) return false;
+			
+			for (R4EUIReviewItem item : fItems) {
+				R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
+				for (R4EUIFileContext context : contexts) {
+					R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
+					if (!(container.checkCompletionStatus())) return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Method isExitDecisionEnabled.
+	 * @return boolean
+	 */
+	public boolean isExitDecisionEnabled() {
+		if (((R4EReviewState)fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+			return false;
+		}
+		return true;
+	}
+	
 	/**
 	 * Method getExitDecisionValues.
 	 * @return String[]
@@ -749,29 +960,5 @@ public class R4EUIReview extends R4EUIModelElement {
 			reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_NONE);
 		}
 		return reviewDecision;
-	}
-	
-	/**
-	 * Method checkCompletionStatus.
-	 * @return boolean
-	 */
-	public boolean checkCompletionStatus() { // $codepro.audit.disable booleanMethodNamingConvention
-		if (!(fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC))) {
-			if (null == fReview.getDecision() || null == fReview.getDecision().getValue()) return false;
-			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_NONE)) return false;	
-			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_REJECTED)) return true;
-			
-			//Check global anomalies state
-			if (!(fAnomalyContainer.checkCompletionStatus())) return false;
-			
-			for (R4EUIReviewItem item : fItems) {
-				R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
-				for (R4EUIFileContext context : contexts) {
-					R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
-					if (!(container.checkCompletionStatus())) return false;
-				}
-			}
-		}
-		return true;
 	}
 }

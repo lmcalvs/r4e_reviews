@@ -255,8 +255,7 @@ public class ReviewInputDialog extends FormDialog {
 	    	//Review type (no validation needed as this is a read-only combo box
 	        if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_FORMAL)) {
 	        	fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_FORMAL;
-	        }
-	        if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_INFORMAL)) {
+	        } else if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_INFORMAL)) {
 	        	fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_INFORMAL;
 	        } else {
 	        	fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_BASIC;

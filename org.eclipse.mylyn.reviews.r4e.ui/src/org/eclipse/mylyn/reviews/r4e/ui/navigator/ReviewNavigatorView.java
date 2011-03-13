@@ -56,7 +56,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.filters.LinePositionComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -373,7 +373,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 				final IStructuredSelection selection = (IStructuredSelection)event.getSelection();
 				final IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
-				if (element instanceof R4EUIReview || element instanceof R4EUIReviewGroup) {
+				if (element instanceof R4EUIReviewBasic || element instanceof R4EUIReviewGroup) {
 					try {
 						//open or close review if ReviewElement is double-clicked
 						if (element.isEnabled()) {

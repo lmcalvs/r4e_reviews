@@ -18,10 +18,14 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ParticipantProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 
@@ -126,6 +130,35 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 */
 	public R4EParticipant getParticipant() {
 		return fParticipant;
+	}
+	
+	public String[] getRoles(EList<R4EUserRole> aRoles) {
+		List<String> roles = new ArrayList<String>();
+		for (R4EUserRole role : aRoles) {
+			if (role.getValue() == R4EUserRole.R4E_ROLE_ORGANIZER_VALUE) {
+				roles.add(R4EUIConstants.USER_ROLE_ORGANIZER);
+			} else if (role.getValue() == R4EUserRole.R4E_ROLE_LEAD_VALUE) {
+				roles.add(R4EUIConstants.USER_ROLE_LEAD);
+			} else if (role.getValue() == R4EUserRole.R4E_ROLE_AUTHOR_VALUE) {
+				roles.add(R4EUIConstants.USER_ROLE_AUTHOR);
+			} else if (role.getValue() == R4EUserRole.R4E_ROLE_REVIEWER_VALUE) {
+				roles.add(R4EUIConstants.USER_ROLE_REVIEWER);
+			}
+		}
+		return roles.toArray(new String[roles.size()]);
+	}
+	
+	public R4EUserRole mapStringToRole(String aRoleStr) {
+		if (aRoleStr.equals(R4EUIConstants.USER_ROLE_ORGANIZER)) {
+			return R4EUserRole.R4E_ROLE_ORGANIZER;
+		} else if (aRoleStr.equals(R4EUIConstants.USER_ROLE_LEAD)) {
+			return R4EUserRole.R4E_ROLE_LEAD;
+		} if (aRoleStr.equals(R4EUIConstants.USER_ROLE_AUTHOR)) {
+			return R4EUserRole.R4E_ROLE_AUTHOR;
+		} else if (aRoleStr.equals(R4EUIConstants.USER_ROLE_REVIEWER)) {
+			return R4EUserRole.R4E_ROLE_REVIEWER;
+		}
+		return null;
 	}
 	
 	/**

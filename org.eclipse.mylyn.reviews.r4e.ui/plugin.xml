@@ -101,9 +101,7 @@
                   <or>
                      <with
                            variable="selection">
-                        <iterate
-                              ifEmpty="false"
-                              operator="or">
+                        <iterate>
                            <or>
                               <instanceof
                                     value="org.eclipse.core.resources.IFile">
@@ -386,21 +384,18 @@
       </category>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
-            defaultHandler="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItemHandler"
             description="Add a Review Item to the Current Review"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem"
             name="Add Review Item">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
-            defaultHandler="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomalyHandler"
             description="Add an Anomaly to the Current Review"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomaly"
             name="Add Anomaly">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
-            defaultHandler="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItemsHandler"
             description="Find Review Items from a given Project in Workspace"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems"
             name="Find Review Items">
@@ -832,6 +827,39 @@
             </test>
          </enabledWhen>
       </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItemsHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems">
+         <enabledWhen>
+            <and>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewItem.reviewItem">
+               </test>
+               <test
+                     args="selection"
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.project.project">
+               </test>
+            </and>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomalyHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomaly">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.anomaly.anomaly">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItemHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewItem.reviewItem">
+            </test>
+         </enabledWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
@@ -889,7 +917,7 @@
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewGeneralSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic">
             </input>
          </propertySection>
          <propertySection
@@ -897,7 +925,7 @@
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewExtraSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyExtraTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic">
             </input>
          </propertySection>
          <propertySection
@@ -988,6 +1016,27 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.completedPropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.review"
             properties="completed"
+            type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomalyPropertyTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.addAnomalyPropertyTester"
+            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.anomaly"
+            properties="anomaly"
+            type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItemPropertyTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.addReviewItemPropertyTester"
+            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewItem"
+            properties="reviewItem"
+            type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.ProjectPropertyTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.projectPropertyTester"
+            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.project"
+            properties="project"
             type="java.lang.Object">
       </propertyTester>
    </extension>

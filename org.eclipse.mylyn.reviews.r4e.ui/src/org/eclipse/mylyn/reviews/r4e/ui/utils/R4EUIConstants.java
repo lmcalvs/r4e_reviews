@@ -303,19 +303,37 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field CREATION_DATE_LABEL.
 	 * (value is ""Created: "")
 	 */
-	public static final String CREATION_DATE_LABEL = "Created: ";
+	public static final String CREATION_DATE_LABEL = "Creation Date: ";
 	
 	/**
 	 * Field START_DATE_LABEL.
 	 * (value is ""Started: "")
 	 */
-	public static final String START_DATE_LABEL = "Started: ";
+	public static final String START_DATE_LABEL = "Start Date: ";
+	
+	/**
+	 * Field PREPARATION_DATE_LABEL.
+	 * (value is ""Preparation Date: "")
+	 */
+	public static final String PREPARATION_DATE_LABEL = "Preparation Date: ";
+	
+	/**
+	 * Field DECISION_DATE_LABEL.
+	 * (value is ""Decision Date: "")
+	 */
+	public static final String DECISION_DATE_LABEL = "Decision Date: ";
+	
+	/**
+	 * Field REWORK_DATE_LABEL.
+	 * (value is ""Rework Date: "")
+	 */
+	public static final String REWORK_DATE_LABEL = "Rework Date: ";
 	
 	/**
 	 * Field END_DATE_LABEL.
-	 * (value is ""Completed: "")
+	 * (value is ""CEnd Date: "")
 	 */
-	public static final String END_DATE_LABEL = "Completed: ";
+	public static final String END_DATE_LABEL = "End Date: ";
 	
 	/**
 	 * Field TIME_SPENT_CURRENT_LABEL.
@@ -340,6 +358,18 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""Focus Area: "")
 	 */
 	public static final String FOCUS_AREA_LABEL = "Focus Area: ";
+	
+	/**
+	 * Field PHASE_LABEL.
+	 * (value is ""Phase: "")
+	 */
+	public static final String PHASE_LABEL = "Phase: ";
+	
+	/**
+	 * Field PHASE_OWNER_LABEL.
+	 * (value is ""Owner: "")
+	 */
+	public static final String PHASE_OWNER_LABEL = "Owner: ";
 	
 	/**
 	 * Field AUTHOR_LABEL.
@@ -571,6 +601,18 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""Reviewer"")
 	 */
 	public static final String USER_ROLE_REVIEWER = "Reviewer";
+	
+	/**
+	 * Field USER_ROLE_ORGANIZER.
+	 * (value is ""Organizer"")
+	 */
+	public static final String USER_ROLE_ORGANIZER = "Organizer";
+	
+	/**
+	 * Field PARTICIPANT_ROLES.
+	 */
+	public static final String[] PARTICIPANT_ROLES = { R4EUIConstants.USER_ROLE_LEAD, 
+		R4EUIConstants.USER_ROLE_AUTHOR, R4EUIConstants.USER_ROLE_REVIEWER, USER_ROLE_ORGANIZER };
 	
 	
 	//Commands

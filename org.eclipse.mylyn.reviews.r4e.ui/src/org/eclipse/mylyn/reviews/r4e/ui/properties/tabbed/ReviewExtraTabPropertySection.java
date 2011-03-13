@@ -17,11 +17,18 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
+import java.util.List;
+
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReview;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.EditableListWidget;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.IEditableListListener;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -32,6 +39,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
@@ -43,7 +51,8 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewExtraTabPropertySection extends ModelElementTabPropertySection {
+public class ReviewExtraTabPropertySection extends ModelElementTabPropertySection
+	implements IEditableListListener {
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -78,6 +87,31 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	 * Field fExitDecision.
 	 */
 	protected CCombo fExitDecisionCombo = null;
+	
+	/**
+	 * Field fPhaseOwnerCombo.
+	 */
+	protected CCombo fPhaseOwnerCombo = null;
+	
+	/**
+	 * Field fPreparationDateText.
+	 */
+	private Text fPreparationDateText = null;
+	
+	/**
+	 * Field fDecisionDetailsList.
+	 */
+	protected EditableListWidget fDecisionDetailsList = null;
+	
+	/**
+	 * Field fDecisionDateText.
+	 */
+	private Text fDecisionDateText = null;
+	
+	/**
+	 * Field fReworkDateText.
+	 */
+	private Text fReworkDateText = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -175,7 +209,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.top = new FormAttachment(fReferenceMaterialText, 0, SWT.TOP);
 	    referenceMaterialLabel.setLayoutData(data);
 	    
-	    //Rank
+	    //Exit Decision
 	    fExitDecisionCombo = widgetFactory.createCCombo(mainForm, SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
@@ -187,9 +221,9 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    		if (!fRefreshInProgress) {
 	    			try {
 	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
+						final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
 	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-	    				modelReview.setDecision(R4EUIReview.getDecisionValueFromString(fExitDecisionCombo.getText()));
+	    				modelReview.setDecision(R4EUIReviewBasic.getDecisionValueFromString(fExitDecisionCombo.getText()));
 	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	    			} catch (ResourceHandlingException e1) {
 	    				UIUtils.displayResourceErrorDialog(e1);
@@ -210,6 +244,107 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.right = new FormAttachment(fExitDecisionCombo, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fExitDecisionCombo, 0, SWT.CENTER);
 	    rankLabel.setLayoutData(data);
+	    
+	    if (R4EUIModelController.getActiveReview() instanceof R4EUIReviewExtended) {
+	    	//Phase Owner
+		    fPhaseOwnerCombo = widgetFactory.createCCombo(mainForm, SWT.READ_ONLY);
+		    data = new FormData();
+		    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		    data.top = new FormAttachment(fExitDecisionCombo, ITabbedPropertyConstants.VSPACE);
+		    fPhaseOwnerCombo.setLayoutData(data);
+		    fPhaseOwnerCombo.addSelectionListener(new SelectionListener() {
+				public void widgetSelected(SelectionEvent e) {
+		    		if (!fRefreshInProgress) {
+		    			try {
+		    				final String currentUser = R4EUIModelController.getReviewer();
+							final R4EReview modelReview = ((R4EUIReviewExtended)fProperties.getElement()).getReview();
+		    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+		    				((R4EFormalReview)modelReview).getCurrent().setPhaseOwnerID(fPhaseOwnerCombo.getText());
+		    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		    			} catch (ResourceHandlingException e1) {
+		    				UIUtils.displayResourceErrorDialog(e1);
+		    			} catch (OutOfSyncException e1) {
+		    				UIUtils.displaySyncErrorDialog(e1);
+		    			}
+		    		}
+	    			refresh();
+				}
+				public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
+					//No implementation needed
+				}
+			});
+		    		    
+		    final CLabel phaseOwnerLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.DECIDED_BY_LABEL);
+		    data = new FormData();
+		    data.left = new FormAttachment(0, 0);
+		    data.right = new FormAttachment(fPhaseOwnerCombo, -ITabbedPropertyConstants.HSPACE);
+		    data.top = new FormAttachment(fPhaseOwnerCombo, 0, SWT.CENTER);
+		    phaseOwnerLabel.setLayoutData(data);
+		    
+	    	//Preparation Date
+		    fPreparationDateText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+		    data = new FormData();
+		    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		    data.top = new FormAttachment(fPhaseOwnerCombo, ITabbedPropertyConstants.VSPACE);
+		    fPreparationDateText.setLayoutData(data);
+
+		    final CLabel preparationDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.PREPARATION_DATE_LABEL);
+		    data = new FormData();
+		    data.left = new FormAttachment(0, 0);
+		    data.right = new FormAttachment(fPreparationDateText, -ITabbedPropertyConstants.HSPACE);
+		    data.top = new FormAttachment(fPreparationDateText, 0, SWT.TOP);
+		    preparationDateLabel.setLayoutData(data);
+		    
+		    //Decision Details
+			data = new FormData();
+			data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+			data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+			data.top = new FormAttachment(fPreparationDateText, ITabbedPropertyConstants.VSPACE);
+			List<String> participants = R4EUIModelController.getActiveReview().getParticipantIDs();
+			fDecisionDetailsList = new EditableListWidget(
+					widgetFactory, mainForm, data, this, 1, CCombo.class, participants.toArray(new String[participants.size()]));
+		    //TODO update editableList widget to handle a table with two text columns
+			//Also talk to alvaro for a model change to be able to track decision time spent for every participant
+			
+		    final CLabel decisionDetailsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.TIME_SPENT_DETAILED_LABEL);
+		    data = new FormData();
+		    data.left = new FormAttachment(0, 0);
+		    data.right = new FormAttachment(fDecisionDetailsList.getComposite(), -ITabbedPropertyConstants.HSPACE);
+		    data.top = new FormAttachment(fDecisionDetailsList.getComposite(), 0, SWT.CENTER);
+		    decisionDetailsLabel.setLayoutData(data);
+		    
+	    	//Decision Date
+		    fDecisionDateText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+		    data = new FormData();
+		    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		    data.top = new FormAttachment(fDecisionDetailsList.getComposite(), ITabbedPropertyConstants.VSPACE);
+		    fDecisionDateText.setLayoutData(data);
+
+		    final CLabel decisionDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.DECISION_DATE_LABEL);
+		    data = new FormData();
+		    data.left = new FormAttachment(0, 0);
+		    data.right = new FormAttachment(fDecisionDateText, -ITabbedPropertyConstants.HSPACE);
+		    data.top = new FormAttachment(fDecisionDateText, 0, SWT.TOP);
+		    decisionDateLabel.setLayoutData(data);
+		    
+	    	//Rework Date
+		    fReworkDateText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+		    data = new FormData();
+		    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		    data.top = new FormAttachment(fDecisionDateText, ITabbedPropertyConstants.VSPACE);
+		    fReworkDateText.setLayoutData(data);
+
+		    final CLabel reworkDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.REWORK_DATE_LABEL);
+		    data = new FormData();
+		    data.left = new FormAttachment(0, 0);
+		    data.right = new FormAttachment(fReworkDateText, -ITabbedPropertyConstants.HSPACE);
+		    data.top = new FormAttachment(fReworkDateText, 0, SWT.TOP);
+		    reworkDateLabel.setLayoutData(data);
+	    }
 	}
 	
 	/**
@@ -219,7 +354,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EReview modelReview = ((R4EUIReview)fProperties.getElement()).getReview();
+		final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
 		fProjectText.setText(modelReview.getProject());
 		final String[] components = (String[]) modelReview.getComponents().toArray();
 		fComponents.clearAll();
@@ -237,9 +372,33 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		fEntryCriteriaText.setText(modelReview.getEntryCriteria());
 		fObjectivesText.setText(modelReview.getObjectives());
 		fReferenceMaterialText.setText(modelReview.getReferenceMaterial());
-		fExitDecisionCombo.setItems(R4EUIReview.getExitDecisionValues());
+		fExitDecisionCombo.setItems(R4EUIReviewBasic.getExitDecisionValues());
 		if (null != modelReview.getDecision()) fExitDecisionCombo.select((null == modelReview.getDecision().getValue()) ? 0 : 
 			modelReview.getDecision().getValue().getValue());
+		
+    	//TODO bug in model?  Phase are not defined
+		/*
+		if (fProperties.getElement() instanceof R4EUIReviewExtended) {
+	    	final List<R4EParticipant> participants = ((R4EUIReviewBasic)fProperties.getElement()).getParticipants();
+	    	final List<String> participantsList = new ArrayList<String>();
+	    	for (R4EParticipant participant : participants) {
+	    		participantsList.add(participant.getId());
+	    	}
+			final String[] participantsStr = participantsList.toArray(new String[participantsList.size()]);
+			fPhaseOwnerCombo.setItems(participantsStr);
+			fPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex(((R4EFormalReview)modelReview).getCurrent().getPhaseOwnerID()));
+			EList<R4EReviewPhaseInfo> phases = ((R4EFormalReview)modelReview).getPhases();
+			for (R4EReviewPhaseInfo phase : phases) {
+				if (phase.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+					fPreparationDateText.setText(phase.getStartDate().toString());
+				} else if (phase.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+					fDecisionDateText.setText(phase.getStartDate().toString());
+				} else if (phase.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+					fReworkDateText.setText(phase.getStartDate().toString());
+				}
+			}
+		}
+		*/
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -249,21 +408,95 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReview)fProperties.getElement()).isOpen()) ||
-				((R4EUIReview)fProperties.getElement()).isReviewed()) {
+		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReviewBasic)fProperties.getElement()).isOpen()) ||
+				((R4EUIReviewBasic)fProperties.getElement()).isReviewed()) {
 			fProjectText.setEnabled(false);
 			fComponents.setEnabled(false);
 			fEntryCriteriaText.setEnabled(false);
 			fObjectivesText.setEnabled(false);
 			fReferenceMaterialText.setEnabled(false);
 			fExitDecisionCombo.setEnabled(false);
+			
+			if (fProperties.getElement() instanceof R4EUIReviewExtended) {
+				fPhaseOwnerCombo.setEnabled(false);
+				fPreparationDateText.setEnabled(false);
+				fDecisionDetailsList.setEnabled(false);
+				fDecisionDateText.setEnabled(false);
+				fReworkDateText.setEnabled(false);
+			}
 		} else {
-			fProjectText.setEnabled(true);
-			fComponents.setEnabled(true);
-			fEntryCriteriaText.setEnabled(true);
-			fObjectivesText.setEnabled(true);
-			fReferenceMaterialText.setEnabled(true);
-			fExitDecisionCombo.setEnabled(true);
+			if (null != fProjectText.getText() && !("".equals(fProjectText.getText()))) fProjectText.setEnabled(true);
+			else fProjectText.setEnabled(false);
+			if (0 != fComponents.getItems().length) fComponents.setEnabled(true);
+			else fComponents.setEnabled(false);
+			if (null != fEntryCriteriaText.getText() && !("".equals(fEntryCriteriaText.getText()))) fEntryCriteriaText.setEnabled(true);
+			else fEntryCriteriaText.setEnabled(false);
+			if (null != fObjectivesText.getText() && !("".equals(fObjectivesText.getText()))) fObjectivesText.setEnabled(true);
+			else fObjectivesText.setEnabled(false);
+			if (null != fReferenceMaterialText.getText() && !("".equals(fReferenceMaterialText.getText()))) fReferenceMaterialText.setEnabled(true);
+			else fReferenceMaterialText.setEnabled(false);
+			
+		    if (fProperties.getElement() instanceof R4EUIReviewExtended) {
+				final R4EUIReviewExtended uiReview = (R4EUIReviewExtended)fProperties.getElement();
+
+				fPhaseOwnerCombo.setEnabled(true);
+
+				if (uiReview.isPreparationDateEnabled()) {
+					fPreparationDateText.setEnabled(true);
+				} else {
+					fPreparationDateText.setEnabled(false);
+				}
+				
+				if (uiReview.isDecisionDateEnabled()) {
+					fDecisionDateText.setEnabled(true);
+					fDecisionDetailsList.setEnabled(true);
+					fExitDecisionCombo.setEnabled(true);
+
+				} else {
+					fDecisionDateText.setEnabled(false);
+					fDecisionDetailsList.setEnabled(false);
+					fExitDecisionCombo.setEnabled(false);
+				}
+				
+				if (uiReview.isReworkDateEnabled()) {
+					fReworkDateText.setEnabled(true);
+				} else {
+					fReworkDateText.setEnabled(false);
+				}
+		    } else {
+				if (((R4EUIReviewBasic)fProperties.getElement()).isExitDecisionEnabled()) {
+			    	fExitDecisionCombo.setEnabled(true);
+				} else {
+			    	fExitDecisionCombo.setEnabled(false);
+				}
+		    }
+		}
+	}
+
+	/**
+	 * Method itemsUpdated.
+	 * @param aItems Item[]
+	 * @param aInstanceId int
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.utils.IEditableListListener#itemsUpdated(Item[], int)
+	 */
+	public void itemsUpdated(Item[] aItems, int aInstanceId) {
+		try {
+			final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
+			final String currentUser = R4EUIModelController.getReviewer();
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+			
+			for (Item item : aItems) {
+				R4EParticipant participant = (R4EParticipant) modelReview.getUsersMap().get(item.getText());
+				if (null != participant) participant.setIsPartOfDecision(true);
+				//TODO model change: track time spent in decision for every participant
+			}
+			
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+			refresh();
+		} catch (ResourceHandlingException e1) {
+			UIUtils.displayResourceErrorDialog(e1);
+		} catch (OutOfSyncException e1) {
+			UIUtils.displaySyncErrorDialog(e1);
 		}
 	}
 }
