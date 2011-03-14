@@ -153,7 +153,7 @@ public class R4EUIElement extends R4EUIModelElement {
 	}
 	
 	/**
-	 * Method addInitialChildren.
+	 * Method loadReviewGroup.
 	 * @param aGroup R4EReviewGroup
 	 * @throws ResourceHandlingException 
 	 */
@@ -232,10 +232,17 @@ public class R4EUIElement extends R4EUIModelElement {
 		/* TODO uncomment when core model supports hard-removing of elements
 		if (aFileRemove) removedElement.getReviewGroup().remove());
 		else */
-		removedElement.setEnabled(false);
+		if (aFileRemove) {
+			removedElement.setEnabled(false);
 		
-		//Remove element from UI if the show disabled element option is off
-		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			//Remove element from UI if the show disabled element option is off
+			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+				fReviewGroups.remove(removedElement);
+				aChildToRemove.removeListener();
+				fireRemove(aChildToRemove);
+			}
+		} else {
+			//Just remove from the UI
 			fReviewGroups.remove(removedElement);
 			aChildToRemove.removeListener();
 			fireRemove(aChildToRemove);

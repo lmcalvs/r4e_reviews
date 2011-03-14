@@ -336,10 +336,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String END_DATE_LABEL = "End Date: ";
 	
 	/**
-	 * Field TIME_SPENT_CURRENT_LABEL.
-	 * (value is ""Time Spent (current): "")
+	 * Field DECISION_PARTICIPANTS_LABEL.
+	 * (value is ""Decision Participants: "")
 	 */
-	public static final String TIME_SPENT_DETAILED_LABEL = "Time Spent (detailed): ";
+	public static final String DECISION_PARTICIPANTS_LABEL = "Decision Participants: ";
+	
+	/**
+	 * Field DECISION_TIME_SPENT_LABEL.
+	 * (value is ""Decision Time Spent: "")
+	 */
+	public static final String DECISION_TIME_SPENT_LABEL = "Decision Time Spent: ";
 	
 	/**
 	 * Field TIME_SPENT_TOTAL_LABEL.

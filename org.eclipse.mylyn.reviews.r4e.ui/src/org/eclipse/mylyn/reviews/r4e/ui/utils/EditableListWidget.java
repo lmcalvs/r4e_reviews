@@ -331,6 +331,14 @@ public class EditableListWidget {
 	}
 	
 	/**
+	 * Method setVisible.
+	 * @param aEnabled - boolean
+	 */
+	public void setVisible(boolean aEnabled) {
+		fMainComposite.setVisible(aEnabled);
+	}
+	
+	/**
 	 * Method getComposite.
 	 * @return Composite
 	 */

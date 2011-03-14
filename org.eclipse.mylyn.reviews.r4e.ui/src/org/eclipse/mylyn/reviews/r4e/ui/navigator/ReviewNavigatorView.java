@@ -518,17 +518,22 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 						group.getName() + R4EUIConstants.GROUP_FILE_SUFFIX).getPath());
 			}
 			
+			//TODO:  This does not work when creating new groups it happens twice.  Need to fix
 			//Groups that are in preferences, but not loaded should be loaded
-			final List<String> result = new ArrayList<String>(groupsPreferencesPaths);
-		    result.removeAll(groupsLoadedPaths);
-		    R4EUIModelController.loadReviewGroups(result);
-		    
-			//Groups that are loaded, but not in preferences should be removed from the UI model
+			List<String> result = new ArrayList<String>();
+		    result.addAll(groupsPreferencesPaths);
+		    result.removeAll(groupsLoadedPaths);		
+			final List<String> groupsToLoad = new ArrayList<String>();
+			for (String groupToLoad : result) {
+					groupsToLoad.add(groupToLoad);
+			}
+			
+			//Groups that are loaded, but not in preferences should be removed
 		    result.clear();
 		    result.addAll(groupsLoadedPaths);
 		    result.removeAll(groupsPreferencesPaths);
 		    final List<IR4EUIModelElement> groupsToRemove = new ArrayList<IR4EUIModelElement>();
-			for (IR4EUIModelElement group : groupsLoaded) {				
+			for (IR4EUIModelElement group : groupsLoaded) {
 				for (String groupPath : result) {
 					if (groupPath.equals(new File(((R4EUIReviewGroup)group).getGroup().getFolder() + File.separator + 
 							group.getName() + R4EUIConstants.GROUP_FILE_SUFFIX).getPath())) {
@@ -536,6 +541,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 					}
 				}
 			}
+			
+			//Adjust loaded groups
 			for (IR4EUIModelElement groupToRemove : groupsToRemove) {
 				try {
 					R4EUIModelController.getRootElement().removeChildren(groupToRemove, false);
@@ -545,6 +552,10 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 					UIUtils.displaySyncErrorDialog(e);
 				}
 			}
+			if (groupsToLoad.size() > 0) {
+			    R4EUIModelController.loadReviewGroups(groupsToLoad);
+			}
+
 		} else if (event.getKey().equals(PreferenceConstants.P_SHOW_DISABLED)) {
 			resetInput();
 		}
