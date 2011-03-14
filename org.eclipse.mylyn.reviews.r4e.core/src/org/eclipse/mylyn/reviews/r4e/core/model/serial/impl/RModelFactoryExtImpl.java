@@ -43,6 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent;
@@ -301,6 +302,29 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		reviewInit(aReviewGroup, aReviewName, aCreatedByUser, review);
 
 		return review;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#createR4EReviewPhaseInfo(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EFormalReview)
+	 */
+	public R4EReviewPhaseInfo createR4EReviewPhaseInfo(R4EFormalReview aReview) throws ResourceHandlingException {
+		// validate
+		if (aReview == null) {
+			return null;
+		}
+
+		R4EReviewPhaseInfo phase = RModelFactory.eINSTANCE.createR4EReviewPhaseInfo();
+		aReview.getPhases().add(phase);
+
+		// Initial save of the new element
+		aReview.eResource().getContents().add(phase);
+		fWriter.saveResource(phase.eResource());
+
+		return phase;
 	}
 
 	/**
