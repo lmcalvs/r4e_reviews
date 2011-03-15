@@ -137,7 +137,11 @@ public class EditorProxy {
 					openCompareEditor(context);
 				} else {
 					targetFile = context.getTargetFile();
-					openSingleEditor(aPage, targetFile, position);
+					if (targetFile != null) {
+						openSingleEditor(aPage, targetFile, position);
+					} else {
+
+					}
 				}
 			} catch (PartInitException e) {
 				traceException(e);

@@ -18,12 +18,16 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
@@ -32,8 +36,12 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF;
@@ -383,10 +391,28 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		final IProject project = aTargetFile.getProject();
 		ReviewsVersionsIF versionsIf = null;
 		
+		// Get handle to local storage repo. No need to continue in case of failure.
+		IRFSRegistry revRepo;
+		try {
+			revRepo = RFSRegistryFactory.getRegistry((R4EReview) fItem.getReview());
+		} catch (ReviewsFileStorageException e1) {
+			Activator.Ftracer.traceWarning("Exception while obtaining handle to local repo: " + e1.toString() + " ("
+					+ e1.getMessage() + ")");
+			Activator.getDefault().logWarning("Exception: " + e1.toString(), e1);
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+					"Error detected while adding anomaly."
+							+ " Assuming not able to interface with the local reviews repository", new Status(
+							IStatus.WARNING, Activator.PLUGIN_ID, 0, e1.getMessage(), e1), IStatus.WARNING);
+			dialog.open();
+			return null;
+		}
+
+		R4EFileVersion baseVersion = null;
+		R4EFileVersion targetVersion = null;
 		//  TODO: for now comparisons using the compare editor from the UI are not supported.  The compare input comes
 		// from the eGIT code in the R4E core plugin
 		if (null != aBaseFile) {
-			final R4EFileVersion baseVersion = R4EUIModelController.FModelExt.createR4EBaseFileVersion(fileContext);
+			baseVersion = R4EUIModelController.FModelExt.createR4EBaseFileVersion(fileContext);
 			
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(baseVersion, R4EUIModelController.getReviewer());
 			try {
@@ -403,11 +429,12 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 						new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
 				dialog.open();
 			} finally {
+				// TODO: Checking-in even after exception ?
 				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 			}	
 		}
 		
-		final R4EFileVersion targetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
+		targetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(targetVersion, R4EUIModelController.getReviewer());
 		targetVersion.setResource(aTargetFile);
 		targetVersion.setPlatformURI(ResourceUtils.toPlatformURI(aTargetFile).toString());
@@ -432,8 +459,83 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			targetVersion.setRepositoryPath(aTargetFile.getFullPath().toOSString());
 			targetVersion.setVersionID(R4EUIConstants.FILE_NOT_IN_VERSION_CONTROL_MSG);
 		}
-		
+
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		
+		// Register base and target files to the local storage
+		StringBuffer message = new StringBuffer();
+		Exception exc = null;
+		try {
+			if (baseVersion != null) {
+				String locBaseFileId;
+				InputStream is = null;
+				try {
+					is = aBaseFile.getContents(false);
+					locBaseFileId = revRepo.registerReviewBlob(is);
+					baseVersion.setLocalVersionID(locBaseFileId);
+				} catch (CoreException e) {
+					Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+
+					message.append("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					message.append("\nUnable to extract contents from base IFile while adding anomaly. ");
+					if (aBaseFile != null) {
+						URI uri = aBaseFile.getLocationURI();
+						if (uri != null) {
+							message.append(", IFile path: " + uri.getPath());
+						}
+					}
+					Activator.Ftracer.traceWarning(message.toString());
+
+					exc = e;
+					message.append("\n\n");
+				} finally {
+					if (is != null) {
+						try {
+							is.close();
+						} catch (IOException e) {
+							message.setLength(0);
+							message.append("IOException while trying to close input stream");
+							Activator.Ftracer.traceWarning(message.toString());
+						}
+					}
+				}
+			}
+
+			if (targetVersion != null) {
+				String locTargetFileId;
+				try {
+					locTargetFileId = revRepo.registerReviewBlob(aTargetFile.getContents(false));
+					targetVersion.setLocalVersionID(locTargetFileId);
+				} catch (CoreException e) {
+					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+					message.append("Unable to extract contents from target IFile while adding anomaly.");
+					if (aTargetFile != null) {
+						URI uri = aTargetFile.getLocationURI();
+						if (uri != null) {
+							message.append(", IFile path: " + uri.getPath());
+						}
+					}
+					if (exc == null) {
+						exc = e;
+					}
+				}
+				message.append("\n\n");
+			}
+		} catch (ReviewsFileStorageException e) {
+			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+			message.append("Local File repository error detected while adding anomaly. Assuming not able to register files in the reviews repository");
+			if (exc == null) {
+				exc = e;
+			}
+		}
+
+		if (message.length() > 0 && exc != null) {
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, message.toString(),
+					new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, exc.getMessage(), exc), IStatus.WARNING);
+			dialog.open();
+		}
 
 		final R4EUIFileContext uiFile = new R4EUIFileContext(this, fileContext);
 		addChildren(uiFile);
