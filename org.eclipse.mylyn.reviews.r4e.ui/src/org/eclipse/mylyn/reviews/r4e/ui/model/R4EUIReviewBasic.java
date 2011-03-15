@@ -314,7 +314,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				}
 			} else {
 				final R4EUserReviews userReviews = ((R4EUIReviewGroup)getParent()).getReviewGroup().getUserReviews().get(aParticipant);
-				if (null != userReviews && userReviews.getInvitedToMap().containsValue(fReview)) return true;
+				if (null != userReviews && userReviews.getInvitedToMap().containsKey(fReview.getName())) return true;
 			}
 		}
 		return false;
