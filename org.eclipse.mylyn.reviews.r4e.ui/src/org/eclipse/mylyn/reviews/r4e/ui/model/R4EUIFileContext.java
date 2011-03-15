@@ -395,7 +395,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		//Restore resource data in serialization model
 		final R4EFileVersion baseFileVersion = fFile.getBase();
 		// Get review
-		R4EReview review = ((R4EUIReview) this.getParent()).getReview();
+		R4EReview review = ((R4EUIReviewBasic) this.getParent()).getReview();
 		IRFSRegistry revRegistry = null;
 		try {
 			revRegistry = RFSRegistryFactory.getRegistry(review);
