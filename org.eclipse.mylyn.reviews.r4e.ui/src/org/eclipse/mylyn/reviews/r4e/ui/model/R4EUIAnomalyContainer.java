@@ -37,8 +37,10 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -246,7 +248,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 								uiAnomaly = new R4EUIAnomalyBasic(this, anomaly, null);
 				    		} else {
 				    			uiAnomaly = new R4EUIAnomalyExtended(this, anomaly, null);
-				    			uiAnomaly.setName(R4EUIAnomalyExtended.getStateString(anomaly.getState()) + ": " + getName());
+				    			uiAnomaly.setName(R4EUIAnomalyExtended.getStateString(anomaly.getState()) + ": " + uiAnomaly.getName());
 				    		}
 							addChildren(uiAnomaly);
 							uiAnomaly.open();
@@ -308,7 +310,11 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     		addedChild = new R4EUIAnomalyBasic(this, anomaly, null);
 		} else {
 			addedChild = new R4EUIAnomalyExtended(this, anomaly, null);
-			((R4EUIAnomalyExtended)addedChild).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
+			if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				((R4EUIAnomalyExtended)addedChild).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+			} else {  //R4EReviewType.R4E_REVIEW_TYPE_INFORMAL
+				((R4EUIAnomalyExtended)addedChild).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
+			}
 		}
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
@@ -383,7 +389,11 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     			uiAnomaly = new R4EUIAnomalyBasic(this, anomaly, aUiPosition);	
     		} else {
     			uiAnomaly = new R4EUIAnomalyExtended(this, anomaly, aUiPosition);
-    			((R4EUIAnomalyExtended)uiAnomaly).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
+    			if (uiReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+    				((R4EUIAnomalyExtended)uiAnomaly).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+    			} else {  //R4EReviewType.R4E_REVIEW_TYPE_INFORMAL
+    				((R4EUIAnomalyExtended)uiAnomaly).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
+    			}
     		}
     		aUiPosition.setPositionInModel(position);
     		uiAnomaly.setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(anomaly));   //Also set UI tooltip immediately
@@ -490,6 +500,13 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
+		//If this is a formal review, we need to be in the preparation phase
+		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+			if (!(((R4EFormalReview)R4EUIModelController.getActiveReview().getReview()).getCurrent().getType().
+					equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION))) {
+				return false;
+			}
+		}
 		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) return true;
 		return false;
 	}
@@ -525,7 +542,14 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
 				return false;
 			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
+				if (null == anomaly.getAnomaly().getFixedByID() || ("").equals(anomaly.getAnomaly().getFixedByID())) {
+					return false;
+				}
 				if (R4EUIModelController.getActiveReview().getReview().getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP)) {
+					return false;
+				}
+			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
+				if (null == anomaly.getAnomaly().getFollowUpByID() || ("").equals(anomaly.getAnomaly().getFollowUpByID())) {
 					return false;
 				}
 			}
@@ -540,6 +564,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	public boolean checkReworkStatus() { // $codepro.audit.disable booleanMethodNamingConvention
 		for (R4EUIAnomalyBasic anomaly : fAnomalies) {
 			if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
+				return false;
+			}
+			if (null == anomaly.getAnomaly().getDecidedByID() || ("").equals(anomaly.getAnomaly().getDecidedByID())) {
 				return false;
 			}
 		}

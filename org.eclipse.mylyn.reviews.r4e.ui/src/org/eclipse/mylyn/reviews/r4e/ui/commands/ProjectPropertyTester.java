@@ -1,3 +1,21 @@
+/*******************************************************************************
+ * Copyright (c) 2011 Ericsson Research Canada
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * This class implements a property tester that is used to see if a selected
+ * ellement is contained in a workspace project
+ * 
+ * Contributors:
+ *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   
+ ******************************************************************************/
+
 package org.eclipse.mylyn.reviews.r4e.ui.commands;
 
 import org.eclipse.cdt.core.model.ICProject;
@@ -16,11 +34,24 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class ProjectPropertyTester extends PropertyTester {
 
+	/**
+	 * Method test.
+	 * @param receiver Object
+	 * @param property String
+	 * @param args Object[]
+	 * @param expectedValue Object
+	 * @return boolean
+	 * @see org.eclipse.core.expressions.IPropertyTester#test(Object, String, Object[], Object)
+	 */
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
-		Object selectedElement = getSelection();
+		final Object selectedElement = getSelection();
 		if (selectedElement instanceof IProject) { 
 			return true;
 		} else if (selectedElement instanceof IJavaProject) {
@@ -37,16 +68,20 @@ public class ProjectPropertyTester extends PropertyTester {
 		return false;
 	}
 
+	/**
+	 * Method getSelection.
+	 * @return Object
+	 */
 	private Object getSelection() {
-		IWorkbench workbench = PlatformUI.getWorkbench();
+		final IWorkbench workbench = PlatformUI.getWorkbench();
 		if (null != workbench) {
-			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+			final IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 			if (null != window) {
-				IWorkbenchPage page = window.getActivePage();
+				final IWorkbenchPage page = window.getActivePage();
 				if (null != page) {
-					ISelection selection = page.getSelection();
+					final ISelection selection = page.getSelection();
 					if (null != selection && selection instanceof IStructuredSelection && !selection.isEmpty()) {
-						IStructuredSelection sel = (IStructuredSelection) selection;
+						final IStructuredSelection sel = (IStructuredSelection) selection;
 						return sel.getFirstElement();
 					}
 				}

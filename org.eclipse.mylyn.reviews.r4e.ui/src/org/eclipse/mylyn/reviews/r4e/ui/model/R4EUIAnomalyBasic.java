@@ -35,7 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.CommentInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.general.AnomalyGeneralProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.AnomalyBasicProperties;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -132,7 +132,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
 		if (IR4EUIModelElement.class.equals(adapter)) return this;
-		if (IPropertySource.class.equals(adapter)) return new AnomalyGeneralProperties(this);
+		if (IPropertySource.class.equals(adapter)) return new AnomalyBasicProperties(this);
 		return null;
 	}
 	

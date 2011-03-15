@@ -199,7 +199,10 @@ public class ParticipantProperties extends ModelElementProperties {
 		} else if (PARTICIPANT_ROLES_ID.equals(aId)) {
 			return ((R4EUIParticipant)getElement()).getParticipant().getRoles();
 		} else if (PARTICIPANT_FOCUS_AREA_ID.equals(aId)) {
-			return ((R4EUIParticipant)getElement()).getParticipant().getFocusArea() ;
+			if (null != ((R4EUIParticipant)getElement()).getParticipant().getFocusArea()) {
+				return ((R4EUIParticipant)getElement()).getParticipant().getFocusArea();
+			}
+			return "";
 		}
 		return null;
 	}

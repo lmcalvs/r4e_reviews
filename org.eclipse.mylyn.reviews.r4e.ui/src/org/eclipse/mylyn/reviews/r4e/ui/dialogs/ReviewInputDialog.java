@@ -153,7 +153,7 @@ public class ReviewInputDialog extends FormDialog {
     /**
      * Input text widget.
      */
-    Text fReviewNameInputTextField;
+    protected Text fReviewNameInputTextField;
 	
 	/**
 	 * Field fReviewDescriptionValue.

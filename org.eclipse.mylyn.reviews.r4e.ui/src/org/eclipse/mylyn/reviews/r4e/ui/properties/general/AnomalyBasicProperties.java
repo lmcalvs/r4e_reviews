@@ -32,7 +32,7 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AnomalyGeneralProperties extends ModelElementProperties {
+public class AnomalyBasicProperties extends ModelElementProperties {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -109,7 +109,7 @@ public class AnomalyGeneralProperties extends ModelElementProperties {
 	 * Constructor for AnomalyProperties.
 	 * @param aElement R4EUIModelElement
 	 */
-	public AnomalyGeneralProperties(R4EUIModelElement aElement) {
+	public AnomalyBasicProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 

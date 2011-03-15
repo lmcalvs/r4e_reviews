@@ -132,8 +132,13 @@ public class R4EUIParticipant extends R4EUIModelElement {
 		return fParticipant;
 	}
 	
+	/**
+	 * Method getRoles.
+	 * @param aRoles EList<R4EUserRole>
+	 * @return String[]
+	 */
 	public String[] getRoles(EList<R4EUserRole> aRoles) {
-		List<String> roles = new ArrayList<String>();
+		final List<String> roles = new ArrayList<String>();
 		for (R4EUserRole role : aRoles) {
 			if (role.getValue() == R4EUserRole.R4E_ROLE_ORGANIZER_VALUE) {
 				roles.add(R4EUIConstants.USER_ROLE_ORGANIZER);
@@ -148,6 +153,11 @@ public class R4EUIParticipant extends R4EUIModelElement {
 		return roles.toArray(new String[roles.size()]);
 	}
 	
+	/**
+	 * Method mapStringToRole.
+	 * @param aRoleStr String
+	 * @return R4EUserRole
+	 */
 	public R4EUserRole mapStringToRole(String aRoleStr) {
 		if (aRoleStr.equals(R4EUIConstants.USER_ROLE_ORGANIZER)) {
 			return R4EUserRole.R4E_ROLE_ORGANIZER;

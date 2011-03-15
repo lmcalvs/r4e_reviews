@@ -348,14 +348,20 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String DECISION_TIME_SPENT_LABEL = "Decision Time Spent: ";
 	
 	/**
+	 * Field TIME_SPENT_LABEL.
+	 * (value is ""Time Spent: "")
+	 */
+	public static final String TIME_SPENT_LABEL = "Time Spent: ";
+	
+	/**
 	 * Field TIME_SPENT_TOTAL_LABEL.
 	 * (value is ""Time Spent (total): "")
 	 */
 	public static final String TIME_SPENT_TOTAL_LABEL = "Time Spent (total): ";
 	
 	/**
-	 * Field TIME_SPENT_CURRENT_LABEL.
-	 * (value is ""Time Spent (current): "")
+	 * Field ROLES_LABEL.
+	 * (value is ""Roles: "")
 	 */
 	public static final String ROLES_LABEL = "Roles: ";
 	

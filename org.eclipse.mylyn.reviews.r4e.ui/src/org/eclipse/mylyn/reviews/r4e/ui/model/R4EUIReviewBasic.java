@@ -52,7 +52,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewGeneralProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewBasicProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -108,7 +108,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	/**
 	 * Field FBasicPhaseValues.
 	 */
-	private static final String[] FBasicPhaseValues = { REVIEW_PHASE_STARTED, REVIEW_PHASE_COMPLETED };
+	private static final String[] BASIC_PHASE_VALUES = { REVIEW_PHASE_STARTED, REVIEW_PHASE_COMPLETED };
 
 	/**
 	 * Field EXIT_DECISION_NONE.
@@ -134,7 +134,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	/**
 	 * Field decisionValues.
 	 */
-	private static final String[] FDecisionValues = { EXIT_DECISION_NONE, EXIT_DECISION_ACCEPTED,
+	private static final String[] DECISION_VALUES = { EXIT_DECISION_NONE, EXIT_DECISION_ACCEPTED,
 		EXIT_DECISION_ACCEPTED_FOLLOWUP, EXIT_DECISION_REJECTED };  //NOTE: This has to match R4EDecision in R4E core plugin
 
 	
@@ -222,7 +222,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			return this;
 		}
 		if (IPropertySource.class.equals(adapter)) {
-			return new ReviewGeneralProperties(this);
+			return new ReviewBasicProperties(this);
 		}
 		return null;
 	}
@@ -360,10 +360,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
-		R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
-		participant.setReviewCompleted(aReviewed);
-    	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
+		if (null != participant) {
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
+			participant.setReviewCompleted(aReviewed);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		}
 		fReviewed = aReviewed;
 		
 		if (fReviewed) {
@@ -758,6 +760,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	
 	//Phase Management
 	
+	/**
+	 * Method setDate.
+	 * @param aNewPhase R4EReviewPhase
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
+	 */
 	public void setDate(R4EReviewPhase aNewPhase) throws ResourceHandlingException, OutOfSyncException {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
 		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
@@ -782,7 +790,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @throws ResourceHandlingException 
 	 */
 	public void updatePhase(R4EReviewPhase aNewPhase) throws ResourceHandlingException, OutOfSyncException {
-		//Set data in model element
+		//Update review state
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, 
 				R4EUIModelController.getReviewer());
 		((R4EReviewState)fReview.getState()).setState(aNewPhase);
@@ -794,7 +802,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @param aNewPhase R4EReviewPhase
  	 * @return String
 	 */
-	public static String getPhaseString(R4EReviewPhase aNewPhase) {
+	public String getPhaseString(R4EReviewPhase aNewPhase) {
 		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
 			return REVIEW_PHASE_STARTED;
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
@@ -807,7 +815,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @param aNewPhase String
 	 * @return R4EReviewPhase
 	 */
-	public static R4EReviewPhase getPhaseFromString(String aNewPhase) {
+	public R4EReviewPhase getPhaseFromString(String aNewPhase) {
 		if (aNewPhase.equals(REVIEW_PHASE_STARTED)) {
 			return R4EReviewPhase.R4E_REVIEW_PHASE_STARTED;
 		} else if (aNewPhase.equals(REVIEW_PHASE_COMPLETED)) {
@@ -819,8 +827,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * Method getPhases.
 	 * @return String[]
 	 */
-	public static String[] getPhases() {
-		return FBasicPhaseValues;
+	public String[] getPhases() {
+		return BASIC_PHASE_VALUES;
 	}
 	
 	/**
@@ -853,10 +861,10 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	
 	/**
 	 * Method getAllowedPhases.
-	 * @param aReviewPhase R4EReviewPhase
+	 * @param aCurrentPhase R4EReviewPhase
 	 * @return R4EReviewPhase[]
 	 */
-	private R4EReviewPhase[] getAllowedPhases(R4EReviewPhase aCurrentPhase) {
+	protected R4EReviewPhase[] getAllowedPhases(R4EReviewPhase aCurrentPhase) {
 		final List<R4EReviewPhase> phases = new ArrayList<R4EReviewPhase>();
 		
 		switch (aCurrentPhase.getValue()) {
@@ -883,7 +891,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @param aErrorMessage - AtomicReference<String>
 	 * @return R4EReviewDecision
 	 */
-	public boolean validatePhaseChange(R4EReviewPhase aNextPhase, AtomicReference<String> aErrorMessage) {
+	public boolean validatePhaseChange(R4EReviewPhase aNextPhase, AtomicReference<String> aErrorMessage) { // $codepro.audit.disable booleanMethodNamingConvention
 				
 		switch (aNextPhase.getValue()) {	
 			case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
@@ -917,7 +925,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
 				for (R4EUIFileContext context : contexts) {
 					R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
-					if (!(container.checkCompletionStatus())) return false;
+					if (null != container && !(container.checkCompletionStatus())) return false;
 				}
 			}
 		}
@@ -939,8 +947,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * Method getExitDecisionValues.
 	 * @return String[]
 	 */
-	public static String[] getExitDecisionValues() {
-		return FDecisionValues;
+	public String[] getExitDecisionValues() {
+		return DECISION_VALUES;
 	}
 	
 	/**

@@ -1,11 +1,36 @@
+/*******************************************************************************
+ * Copyright (c) 2011 Ericsson Research Canada
+ * 
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * This class encapsulates the properties for the ReviewExtended UI model element
+ * 
+ * Contributors:
+ *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   
+ ******************************************************************************/
+
 package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
-public class ReviewExtraProperties extends ReviewGeneralProperties {
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
+public class ReviewExtraProperties extends ReviewBasicProperties {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -107,18 +132,28 @@ public class ReviewExtraProperties extends ReviewGeneralProperties {
 	public Object getPropertyValue(Object aId) {
 		final Object result = super.getPropertyValue(aId);
 		if (null != result) return result;
-    	//TODO bug in model?  Phase are not defined
-	    /*
-    	R4EReview review = ((R4EUIReviewExtended)getElement()).getReview();
+    	final R4EReview review = ((R4EUIReviewExtended)getElement()).getReview();
     	if (REVIEW_PHASE_OWNER_ID.equals(aId)) {
-	    	return ((R4EFormalReview)review).getCurrent().getPhaseOwnerID();
+	    	if (null != ((R4EFormalReview)review).getCurrent().getPhaseOwnerID()) {
+	    		return ((R4EFormalReview)review).getCurrent().getPhaseOwnerID();
+	    	}
+	    	return "";
 		} else if (REVIEW_PREPARATION_DATE_ID.equals(aId)) {
-			return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getStartDate().toString();
+			if (((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+				return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getStartDate().toString();
+			}
+			return "";
 		} else if (REVIEW_DECISION_DATE_ID.equals(aId)) {
-			return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getStartDate().toString();
+			if (((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+				return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getStartDate().toString();
+			}
+			return "";
 		} else if (REVIEW_REWORK_DATE_ID.equals(aId)) {
-			return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getStartDate().toString();
-		}*/
+			if (((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+				return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).getReview()).getCurrent().getStartDate().toString();
+			}
+			return "";
+		}
 		return null;
 	}
 	//NOTE:  Since state management for anomalies is complex, the value are only editable using the tabbed properties view

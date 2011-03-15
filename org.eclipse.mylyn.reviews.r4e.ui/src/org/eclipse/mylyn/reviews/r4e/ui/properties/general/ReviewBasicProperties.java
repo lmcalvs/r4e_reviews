@@ -23,9 +23,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
-import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
@@ -34,7 +34,7 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewGeneralProperties extends ModelElementProperties {
+public class ReviewBasicProperties extends ModelElementProperties {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -59,8 +59,8 @@ public class ReviewGeneralProperties extends ModelElementProperties {
 	/**
 	 * Field REVIEW_PHASE_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final ComboBoxPropertyDescriptor REVIEW_PHASE_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			REVIEW_PHASE_ID, R4EUIConstants.PHASE_LABEL, R4EUIReviewBasic.getPhases());
+	protected static final PropertyDescriptor REVIEW_PHASE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			REVIEW_PHASE_ID, R4EUIConstants.PHASE_LABEL);
 	
 	/**
 	 * Field REVIEW_START_DATE_ID. (value is ""reviewElement.startDate"")
@@ -169,7 +169,7 @@ public class ReviewGeneralProperties extends ModelElementProperties {
 	 * Constructor for ReviewGeneralProperties.
 	 * @param aElement R4EUIModelElement
 	 */
-	public ReviewGeneralProperties(R4EUIModelElement aElement) {
+	public ReviewBasicProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
@@ -201,8 +201,12 @@ public class ReviewGeneralProperties extends ModelElementProperties {
 			if (REVIEW_NAME_ID.equals(aId)) { 
 				return ((R4EUIReviewBasic)getElement()).getReview().getName();
 			} else if (REVIEW_PHASE_ID.equals(aId)) {
-				return Integer.valueOf(((R4EReviewState)((R4EUIReviewBasic)getElement()).getReview().
-						getState()).getState().getValue());
+				if (fElement instanceof R4EUIReviewExtended) {
+					return ((R4EUIReviewExtended)getElement()).getPhaseString(
+							((R4EReviewState)((R4EUIReviewExtended)getElement()).getReview().getState()).getState());
+				}
+				return ((R4EUIReviewBasic)getElement()).getPhaseString(
+						((R4EReviewState)((R4EUIReviewBasic)getElement()).getReview().getState()).getState());				
 			} else if (REVIEW_START_DATE_ID.equals(aId)) {
 				return ((R4EUIReviewBasic)getElement()).getReview().getStartDate().toString();
 			} else if (REVIEW_END_DATE_ID.equals(aId)) {

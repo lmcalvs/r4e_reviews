@@ -135,7 +135,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
 		final Composite composite = widgetFactory.createFlatFormComposite(parent);
 	    FormData data = null;
-	    
+        
 	    //State
 	    fStateCombo = widgetFactory.createCCombo(composite, SWT.READ_ONLY);
 	    data = new FormData();
@@ -203,8 +203,8 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    final CLabel classLabel = widgetFactory.createCLabel(composite, R4EUIConstants.CLASS_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fRankCombo, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fRankCombo, 0, SWT.CENTER);
+	    data.right = new FormAttachment(fClassCombo, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fClassCombo, 0, SWT.CENTER);
 	    classLabel.setLayoutData(data);
 	    
 	    //Rank
@@ -212,7 +212,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fStateCombo, ITabbedPropertyConstants.VSPACE);
+	    data.top = new FormAttachment(fClassCombo, ITabbedPropertyConstants.VSPACE);
 	    fRankCombo.setLayoutData(data);
 	    fRankCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -511,6 +511,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 				fCalendarButton.setEnabled(true);
 			} else {
 				fDateText.setEnabled(false);
+				fCalendarButton.setEnabled(false);
 			}
 			
 			if (uiAnomaly.isDecidedByEnabled()) {

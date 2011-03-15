@@ -209,7 +209,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
     	final int result = dialog.open();
     	if (result == Window.OK) {
     		//All reviews
-    		R4EReviewType type = dialog.getReviewTypeValue();
+    		final R4EReviewType type = dialog.getReviewTypeValue();
     		if (type.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
         		tempReview = RModelFactory.eINSTANCE.createR4EFormalReview();
     		} else {
@@ -274,10 +274,10 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 				review = (R4EReview)reviews.get(i);
 				if (review.isEnabled() || Activator.getDefault().getPreferenceStore().
 						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					R4EUIReviewBasic uiReview;
+					R4EUIReviewBasic uiReview = null;
 					if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 						uiReview = new R4EUIReviewExtended(this, review, review.getType(), false);
-						((R4EUIReviewExtended)uiReview).setName(R4EUIReviewExtended.getPhaseString(
+						((R4EUIReviewExtended)uiReview).setName(((R4EUIReviewExtended)uiReview).getPhaseString(
 								((R4EReviewState)review.getState()).getState()) + ": " + uiReview.getName());
 					} else {
 						uiReview = new R4EUIReviewBasic(this, review, review.getType(), false);

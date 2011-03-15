@@ -74,22 +74,32 @@ public class EditableListWidget {
 	/**
 	 * Field fMainComposite.
 	 */
-	private Composite fMainComposite = null;
+	protected Composite fMainComposite = null;
 	
 	/**
 	 * Field fMainTable.
 	 */
-	private Table fMainTable = null;
+	protected Table fMainTable = null;
+	
+	/**
+	 * Field fAddButton.
+	 */
+	protected Button fAddButton = null;
+	
+	/**
+	 * Field fRemoveButton.
+	 */
+	protected Button fRemoveButton = null;
 	
 	/**
 	 * Field fListener.
 	 */
-	private IEditableListListener fListener = null;
+	protected IEditableListListener fListener = null;
 	
 	/**
 	 * Field fInstanceId.
 	 */
-	private int fInstanceId = 0;
+	protected int fInstanceId = 0;
 	
 	
 	// ------------------------------------------------------------------------
@@ -123,8 +133,7 @@ public class EditableListWidget {
 		fMainTable.setLinesVisible(true);
 		fListener = aListener;
 		fInstanceId = aInstanceId;
-		createEditableListFromTable(aToolkit, fMainComposite, fMainTable, fListener, fInstanceId, aEditableWidgetClass,
-				aEditableValues);
+		createEditableListFromTable(aToolkit, aEditableWidgetClass, aEditableValues);
 	}
 	
 	
@@ -143,76 +152,74 @@ public class EditableListWidget {
      * Method createEditableListFromTable.
      * 		Builds the editable list in the provided table
      * @param aToolkit - FormToolkit
-     * @param aParent - Composite
-     * @param aTable - Table
-     * @param aListener - IEditableListListener
-     * @param aInstanceId - int
      * @param aEditableWidgetClass - Class<?>
      * @param aEditableValues - String[]
      */
-	public static void createEditableListFromTable(FormToolkit aToolkit, Composite aParent, final Table aTable,
-			final IEditableListListener aListener, final int aInstanceId, final Class<?> aEditableWidgetClass, 
+	public void createEditableListFromTable(FormToolkit aToolkit, final Class<?> aEditableWidgetClass, 
 			final String[] aEditableValues) {
 
-		final TableColumn tableColumn = new TableColumn(aTable, SWT.LEFT, 0);
-		final TableColumn tableColumn2 = new TableColumn(aTable, SWT.RIGHT, 1);
+		final TableColumn tableColumn = new TableColumn(fMainTable, SWT.LEFT, 0);
+		final TableColumn tableColumn2 = new TableColumn(fMainTable, SWT.RIGHT, 1);
 		
 		if (aEditableWidgetClass.equals(Date.class)) {
-			aTable.setHeaderVisible(true);
+			fMainTable.setHeaderVisible(true);
 			tableColumn.setText(R4EUIConstants.SPENT_TIME_COLUMN_HEADER);
 			tableColumn2.setText(R4EUIConstants.ENTRY_TIME_COLUMN_HEADER);
 		}
 
-        aTable.addControlListener(new ControlAdapter() { 
+		fMainTable.addControlListener(new ControlAdapter() { 
 			@Override
 			public void controlResized(ControlEvent e) {
 				//TODO:  This is a hack so that the table is displayed somewhat correctly.  However, we need to have a better implementation later
 				if (aEditableWidgetClass.equals(Date.class)) {
-					tableColumn.setWidth((aTable.getClientArea().width > MAX_COLUMN_WIDTH) ? MAX_COLUMN_HALF_WIDTH : aTable.getClientArea().width >> 1);
-					tableColumn2.setWidth((aTable.getClientArea().width > MAX_COLUMN_WIDTH) ? MAX_COLUMN_HALF_WIDTH : aTable.getClientArea().width >> 1);
+					tableColumn.setWidth((fMainTable.getClientArea().width > MAX_COLUMN_WIDTH) ? 
+							MAX_COLUMN_HALF_WIDTH : fMainTable.getClientArea().width >> 1);
+					tableColumn2.setWidth((fMainTable.getClientArea().width > MAX_COLUMN_WIDTH) ? 
+							MAX_COLUMN_HALF_WIDTH : fMainTable.getClientArea().width >> 1);
 				} else {
-					tableColumn.setWidth((aTable.getClientArea().width > MAX_COLUMN_WIDTH) ? MAX_COLUMN_WIDTH : aTable.getClientArea().width);
+					tableColumn.setWidth((fMainTable.getClientArea().width > MAX_COLUMN_WIDTH) ? 
+							MAX_COLUMN_WIDTH : fMainTable.getClientArea().width);
 				}
 			}
 		});
         
-        aTable.addFocusListener(new FocusListener() {
+		fMainTable.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
 				//Send items updated notification
-				if (null != aListener) {
-					aListener.itemsUpdated(aTable.getItems(), aInstanceId);
+				if (null != fListener) {
+					fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
 				}
 			}
 			public void focusGained(FocusEvent e) {
 				//Send items updated notification
-				if (null != aListener) {
-					aListener.itemsUpdated(aTable.getItems(), aInstanceId);
+				if (null != fListener) {
+					fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
 				}
 			}
 		});
 	      
-		final Composite buttonsComposite = aToolkit.createComposite(aParent);
+		final Composite buttonsComposite = aToolkit.createComposite(fMainComposite);
 		buttonsComposite.setLayout(new GridLayout());
 		buttonsComposite.setLayoutData(new GridData(GridData.CENTER, GridData.CENTER, false, false));
 
-        final Button addButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_ADD_LABEL, SWT.NONE);
-        final Button removeButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_REMOVE_LABEL, SWT.NONE);
+        fAddButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_ADD_LABEL, SWT.NONE);
+        fRemoveButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_REMOVE_LABEL, SWT.NONE);
 
-        addButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
-        addButton.addSelectionListener(new SelectionListener() {
+        fAddButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+        fAddButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				final TableItem newItem = new TableItem(aTable, SWT.NONE);
+				final TableItem newItem = new TableItem(fMainTable, SWT.NONE);
 				
 				final Control editableControl;
 				if (aEditableWidgetClass.equals(Text.class)) {
-					editableControl = new Text(aTable, SWT.NONE);
+					editableControl = new Text(fMainTable, SWT.NONE);
 					((Text)editableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
 							newItem.setText(((Text)editableControl).getText());
 						}
 					});
 				} else if (aEditableWidgetClass.equals(CCombo.class)) {
-					editableControl = new CCombo(aTable, SWT.BORDER | SWT.READ_ONLY);
+					editableControl = new CCombo(fMainTable, SWT.BORDER | SWT.READ_ONLY);
 					((CCombo)editableControl).setItems(aEditableValues);
 					((CCombo)editableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
@@ -220,7 +227,7 @@ public class EditableListWidget {
 						}
 					});
 				} else if (aEditableWidgetClass.equals(Date.class)) {					
-					editableControl = new Text(aTable, SWT.NONE);
+					editableControl = new Text(fMainTable, SWT.NONE);
 					final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
 					final String[] data = { ((Text)editableControl).getText(), 
 							dateFormat.format(Calendar.getInstance().getTime()) };
@@ -245,27 +252,27 @@ public class EditableListWidget {
 					return;
 				}
 				editableControl.setFocus();
-				final TableEditor editor = new TableEditor (aTable);
+				final TableEditor editor = new TableEditor (fMainTable);
 				editor.grabHorizontal = true;
 				editor.grabVertical = true;
 				editor.setEditor(editableControl, newItem, 0);
-				removeButton.setEnabled(true);
+				fRemoveButton.setEnabled(true);
 				
 			}
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 			}
 		});
-        removeButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));	
-        removeButton.addSelectionListener(new SelectionListener() {
+        fRemoveButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));	
+        fRemoveButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				final int numItems = aTable.getItemCount();
+				final int numItems = fMainTable.getItemCount();
 				if (numItems > 0) {
 					//Find the table index for the first control
-					final Control[] controls = aTable.getChildren();
+					final Control[] controls = fMainTable.getChildren();
 					final int firstControlIndex = numItems - controls.length;
 						
 					//Currently selected item
-					int tableItemIndex = aTable.getSelectionIndex();
+					int tableItemIndex = fMainTable.getSelectionIndex();
 					if ( R4EUIConstants.INVALID_VALUE == tableItemIndex) {
 						//Remove the selected element (and control if there is one) or the last one if noe is selected
 						tableItemIndex = numItems - 1;
@@ -273,9 +280,9 @@ public class EditableListWidget {
 					if (tableItemIndex >=  firstControlIndex ) {
 						controls[tableItemIndex - firstControlIndex].dispose();
 					}
-					aTable.getItem(tableItemIndex).dispose();
+					fMainTable.getItem(tableItemIndex).dispose();
 				}
-				if (0 == aTable.getItemCount()) removeButton.setEnabled(false);		
+				if (0 == fMainTable.getItemCount()) fRemoveButton.setEnabled(false);		
 			}
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 			}
@@ -328,6 +335,9 @@ public class EditableListWidget {
 	 */
 	public void setEnabled(boolean aEnabled) {
 		fMainComposite.setEnabled(aEnabled);
+		fMainTable.setEnabled(aEnabled);
+		fAddButton.setEnabled(aEnabled);
+		fRemoveButton.setEnabled(aEnabled);
 	}
 	
 	/**
@@ -336,6 +346,9 @@ public class EditableListWidget {
 	 */
 	public void setVisible(boolean aEnabled) {
 		fMainComposite.setVisible(aEnabled);
+		fMainTable.setVisible(aEnabled);
+		fAddButton.setVisible(aEnabled);
+		fRemoveButton.setVisible(aEnabled);
 	}
 	
 	/**

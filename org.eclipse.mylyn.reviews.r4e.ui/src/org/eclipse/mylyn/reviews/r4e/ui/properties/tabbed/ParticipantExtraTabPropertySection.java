@@ -31,6 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipant;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.IEditableListListener;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -104,7 +105,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		data.top = new FormAttachment(mainForm, ITabbedPropertyConstants.VSPACE);
 		fTimeSpentDetailedList = new EditableListWidget(widgetFactory, mainForm, data, this, 1, Date.class, null);
 
-	    final CLabel timeSpentDetailedLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.DECISION_TIME_SPENT_LABEL);
+	    final CLabel timeSpentDetailedLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.TIME_SPENT_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fTimeSpentDetailedList.getComposite(), -ITabbedPropertyConstants.HSPACE);
@@ -214,10 +215,30 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 			fRolesList.setEnabled(false);
 			fFocusAreaText.setEnabled(false);
 		} else {
-			fTimeSpentDetailedList.setEnabled(true);
-			fTimeSpentTotalText.setEnabled(true);
-			fRolesList.setEnabled(true);
-			fFocusAreaText.setEnabled(true);
+		    if (R4EUIModelController.getActiveReview() instanceof R4EUIReviewExtended) {
+				final R4EUIReviewExtended uiReview = (R4EUIReviewExtended)R4EUIModelController.getActiveReview(); 
+			
+				if (uiReview.isParticipantTimeSpentEnabled()) {
+					fTimeSpentDetailedList.setEnabled(true);
+					fTimeSpentTotalText.setEnabled(true);
+				} else {
+					fTimeSpentDetailedList.setEnabled(false);
+					fTimeSpentTotalText.setEnabled(false);
+				}
+				
+				if (uiReview.isParticipantExtraDetailsEnabled()) {
+					fRolesList.setEnabled(true);
+					fFocusAreaText.setEnabled(true);
+				} else {
+					fRolesList.setEnabled(false);
+					fFocusAreaText.setEnabled(false);
+				}
+		    } else {
+				fTimeSpentDetailedList.setEnabled(true);
+				fTimeSpentTotalText.setEnabled(true);
+				fRolesList.setEnabled(true);
+				fFocusAreaText.setEnabled(true);
+		    }
 		}
 	}
 

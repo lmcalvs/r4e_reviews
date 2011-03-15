@@ -34,7 +34,7 @@ public class ModelElementProperties implements IPropertySource {
 	/**
 	 * Field fElement.
 	 */
-	private final R4EUIModelElement fElement;
+	protected final R4EUIModelElement fElement;
 	
 	
 	// ------------------------------------------------------------------------

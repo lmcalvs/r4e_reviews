@@ -28,7 +28,7 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AnomalyExtraProperties extends AnomalyGeneralProperties {
+public class AnomalyExtraProperties extends AnomalyBasicProperties {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -164,18 +164,31 @@ public class AnomalyExtraProperties extends AnomalyGeneralProperties {
 		if (ANOMALY_STATE_ID.equals(aId)) { 
 			return Integer.valueOf(((R4EUIAnomalyExtended)getElement()).getAnomaly().getState().getValue());
 		} else if (ANOMALY_DUE_DATE_ID.equals(aId)) { 
-			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate())
+			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate()) {
 				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate().toString();
+			}
 		} else if (ANOMALY_RANK_ID.equals(aId)) { 
 			return Integer.valueOf(((R4EUIAnomalyExtended)getElement()).getAnomaly().getRank().getValue());
 		} else if (ANOMALY_NOT_ACCEPTED_REASON_ID.equals(aId)) { 
-			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getNotAcceptedReason();
-		} else if (ANOMALY_DECIDED_BY_ID.equals(aId)) { 
-			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDecidedByID();
-		} else if (ANOMALY_FIXED_BY_ID.equals(aId)) { 
-			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFixedByID();
+			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getNotAcceptedReason()) {
+				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getNotAcceptedReason();
+			}
+			return "";
+		} else if (ANOMALY_DECIDED_BY_ID.equals(aId)) {
+			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDecidedByID()) {
+				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDecidedByID();
+			}
+			return "";
+		} else if (ANOMALY_FIXED_BY_ID.equals(aId)) {
+			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFixedByID()) {
+				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFixedByID();
+			}
+			return "";
 		} else if (ANOMALY_FOLLOWUP_BY_ID.equals(aId)) { 
-			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFollowUpByID();
+			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFollowUpByID()) {	
+				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFollowUpByID();
+			}
+			return "";
 		}
 		return null;
 	}

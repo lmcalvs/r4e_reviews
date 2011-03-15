@@ -41,7 +41,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ParticipantGeneralTabPropertySection extends ModelElementTabPropertySection {
+public class ParticipantBasicTabPropertySection extends ModelElementTabPropertySection {
 	
 	// ------------------------------------------------------------------------
 	// Member variables

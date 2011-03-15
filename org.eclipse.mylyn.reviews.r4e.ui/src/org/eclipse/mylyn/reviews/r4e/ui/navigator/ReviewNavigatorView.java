@@ -520,7 +520,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			
 			//TODO:  This does not work when creating new groups it happens twice.  Need to fix
 			//Groups that are in preferences, but not loaded should be loaded
-			List<String> result = new ArrayList<String>();
+			final List<String> result = new ArrayList<String>();
 		    result.addAll(groupsPreferencesPaths);
 		    result.removeAll(groupsLoadedPaths);		
 			final List<String> groupsToLoad = new ArrayList<String>();

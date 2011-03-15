@@ -897,7 +897,7 @@
       <propertySections
             contributorId="org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView">
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ReviewGroupGeneralTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ReviewGroupBasicTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewGroupGeneralSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
@@ -913,7 +913,7 @@
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ReviewGeneralTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ReviewBasicTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewGeneralSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
@@ -929,7 +929,7 @@
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ParticipantGeneralTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ParticipantBasicTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ParticipantGeneralSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
@@ -969,7 +969,7 @@
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.AnomalyGeneralTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.AnomalyBasicTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.AnomalyGeneralSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input

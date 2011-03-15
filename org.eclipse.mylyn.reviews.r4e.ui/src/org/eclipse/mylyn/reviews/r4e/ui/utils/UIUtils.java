@@ -175,6 +175,7 @@ public class UIUtils {
 	 * @return int
 	 */
 	public static int mapParticipantToIndex(String aParticipant) {
+		if (null == R4EUIModelController.getActiveReview()) return 0;
 		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
 		final int numParticipants = participants.size();
 		for (int i = 0; i < numParticipants; i++) {
