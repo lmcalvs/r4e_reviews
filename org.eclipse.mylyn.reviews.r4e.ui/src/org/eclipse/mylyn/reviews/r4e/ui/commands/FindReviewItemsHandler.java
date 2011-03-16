@@ -112,6 +112,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		}
 	
 		//Fire up the find review items dialog to get the latest commit info for the first selection
+		//TODO:  This should be changed to use the new core interface for the current Version control system.
 		R4EUIModelController.setDialogOpen(true);
 
 		final FindReviewItemsDialog dialog = new FindReviewItemsDialog(R4EUIModelController.getNavigatorView().

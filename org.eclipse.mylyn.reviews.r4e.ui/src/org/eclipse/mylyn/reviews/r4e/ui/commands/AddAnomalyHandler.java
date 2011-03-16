@@ -109,9 +109,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 		try {
 			final R4EUITextPosition position = CommandUtils.getPosition(aSelection);
 			final IFile targetFile = CommandUtils.getTargetFile();
-			//TODO For now we set the base file to null since the comparison is being done in the Egit compare editor
-			//later we will do our own comparisons
-			final IFile baseFile = null;
+			final IFile baseFile = CommandUtils.getBaseFile();
 			
 			//Add anomaly to model
 			addAnomaly(baseFile, targetFile, position);

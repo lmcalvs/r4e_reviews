@@ -19,25 +19,22 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.utils;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
+import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.eclipse.cdt.core.model.ICElement;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.ResourceNode;
-
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
-
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
@@ -47,7 +44,6 @@ import org.eclipse.ui.PlatformUI;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-@SuppressWarnings("restriction")
 public class CommandUtils {
 
 	// ------------------------------------------------------------------------
@@ -70,11 +66,14 @@ public class CommandUtils {
 				return (IFile) ((ResourceNode)targetElement).getResource();
 			//TODO: for now comparisons using the compare editor from the UI are not supported.  The compare input comes
 			//from the eGIT code in the R4E core plugin
-			//} else if (targetElement instanceof R4ECompareItem) {
-			//	return ((R4ECompareItem)targetElement).getURI();
+			} else if (targetElement instanceof R4ECompareItem) {
+				//TODO:  For now we pick the first IFile with the specified URI.  Is this okay?
+				URI uri = ((R4ECompareItem)targetElement).getURI();
+				return ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(uri)[0];
 			} 
 		//TODO: For now we let egit do the comparison.  We need to be able to get the target file from the egit compare
 		//		input, thus this dirty hack is necessary.  This will be changed later when we will manage our own compare input 
+		/*
 		} else if (input instanceof GitCompareFileRevisionEditorInput) {
 			IFile file = null;
 			try {
@@ -101,6 +100,7 @@ public class CommandUtils {
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
 			}
 			if (null != file) return file;
+			*/
 		}
 		//Should never happen
 		throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, 
@@ -123,8 +123,10 @@ public class CommandUtils {
 				return (IFile) ((ResourceNode)baseElement).getResource();
 				//TODO: for now comparisons using the compare editor from the UI are not supported.  The compare input comes
 				//from the eGIT code in the R4E core plugin
-			//} else if (baseElement instanceof R4ECompareItem) {
-			//	return ((R4ECompareItem)baseElement).get;
+			} else if (baseElement instanceof R4ECompareItem) {
+				//TODO:  For now we pick the first IFile with the specified URI.  Is this okay?
+				URI uri = ((R4ECompareItem)baseElement).getURI();
+				return ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(uri)[0];
 			}
 		}
 		//Should never happen

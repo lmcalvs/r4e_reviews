@@ -518,7 +518,6 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 						group.getName() + R4EUIConstants.GROUP_FILE_SUFFIX).getPath());
 			}
 			
-			//TODO:  This does not work when creating new groups it happens twice.  Need to fix
 			//Groups that are in preferences, but not loaded should be loaded
 			final List<String> result = new ArrayList<String>();
 		    result.addAll(groupsPreferencesPaths);

@@ -45,10 +45,12 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -93,12 +95,10 @@ public class EditorProxy {
 		if (aSelection.isEmpty() || !(aSelection instanceof IStructuredSelection)) return;
 
 		IR4EUIModelElement element = null;
-		//boolean targetFileEditable = false;
+		boolean targetFileEditable = false;
 		IR4EUIPosition position = null;
-		//R4EUISelectionContainer container = null;
-		//int selectionIndex = 0;
-		// URI baseFileURI = null;
-		IFile targetFile = null;
+		R4EUISelectionContainer container = null;
+		int selectionIndex = 0;
 		
 		for (final Iterator<?> iterator = ((IStructuredSelection)aSelection).iterator(); iterator.hasNext();) {
 			element = (IR4EUIModelElement) iterator.next();
@@ -107,18 +107,18 @@ public class EditorProxy {
 				//Depending on which element was selected in the tree, we make the target file editable
 				//The file is editable if it was opened from the anomaly or comment level, otherwise it is not
 				//Also check to get the position we should put the cursor on and the highlight range in the editor
-				/*if (element instanceof R4EUIAnomalyContainer) {
+				if (element instanceof R4EUIAnomalyContainer) {
 					targetFileEditable = true;
-				} else */if (element instanceof R4EUIAnomalyBasic) {
-					//targetFileEditable = true;
+				} else if (element instanceof R4EUIAnomalyBasic) {
+					targetFileEditable = true;
 					position = ((R4EUIAnomalyBasic)element).getPosition();
 				} else if (element instanceof R4EUIComment) {
-					//targetFileEditable = true;
+					targetFileEditable = true;
 					position = ((R4EUIAnomalyBasic)element.getParent()).getPosition();
 				} else if (element instanceof R4EUISelection) {
 					position = ((R4EUISelection)element).getPosition();
-					//container = (R4EUISelectionContainer) ((R4EUISelection)element).getParent();
-					//selectionIndex = container.getSelectionList().indexOf(element);
+					container = (R4EUISelectionContainer) ((R4EUISelection)element).getParent();
+					selectionIndex = container.getSelectionList().indexOf(element);
 				}
 
 				//Find the parent FileContextElement
@@ -126,30 +126,31 @@ public class EditorProxy {
 					element = element.getParent();
 					if (null == element) return;
 				}
-
-				//  TODO: for now comparisons using the compare editor from the UI are not supported.  The compare input comes
-				//        from the eGIT code in the R4E core plugin
 				R4EUIFileContext context = ((R4EUIFileContext) element);
-
+				
+				//Get file from FileContext
+				IFile baseFile = context.getBaseFile();
+				IFile targetFile = context.getTargetFile();
+				
 				//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
 				if (context.isFileVersionsComparable() && !forceSingleEditor) {
-					// openCompareEditor(aPage, baseFileURI, targetFile, targetFileEditable, selectionIndex);
-					openCompareEditor(context);
+					openCompareEditor(aPage, baseFile, targetFile, targetFileEditable, selectionIndex);
+					//openCompareEditor(context); //TODO this was used when using Egit compare engine
 				} else {
 					targetFile = context.getTargetFile();
 					if (targetFile != null) {
 						openSingleEditor(aPage, targetFile, position);
 					} else {
-
+						//TODO can this happen??? or this should be an error?
 					}
 				}
 			} catch (PartInitException e) {
 				traceException(e);
-			} catch (FileNotFoundException e) {
+			} /*catch (FileNotFoundException e) {
 				traceException(e);
 			} catch (ReviewVersionsException e) {
 				traceException(e);
-			}
+			}*/
 		}
 	}
 
@@ -168,6 +169,8 @@ public class EditorProxy {
 	 * @throws FileNotFoundException
 	 * @throws ReviewVersionsException
 	 */
+	//TODO this was used when using Egit compare engine
+	@SuppressWarnings("unused")
 	private static void openCompareEditor(R4EUIFileContext context) throws FileNotFoundException,
 			ReviewVersionsException {
 		final R4EUIReviewItem commitItem = (R4EUIReviewItem) (context.getParent());
@@ -198,21 +201,18 @@ public class EditorProxy {
 
 		//Check if file exists in workspace
 		if (null != aFile) {
-			
 			//Open the editor on the target file
 			Activator.Ftracer.traceInfo("Open workspace file " + aFile.getName() + " with single-mode editor");
 			editor = IDE.openEditor(aPage, aFile);
-		/*} 
-		 TODO:  This is not supported for now
-		else {
+		/*} else {
+			// TODO this is not supported for now
 			//File is not in workspace, try to open it as an external file
 			//Open the editor on the target file
-			Activator.Tracer.traceInfo("Open external file " + aFileURI.toString() + " with single-mode editor");
-			editor = IDE.openEditor(aPage, new URI(aFileURI.getPath()), 
-					PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(aFileURI.getPath()).getId(), true); // $codepro.audit.disable methodChainLength
+			Activator.Ftracer.traceInfo("Open external file " + aFile.toString() + " with single-mode editor");
+			editor = IDE.openEditor(aPage, aFile.getLocationURI(), 
+					PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(aFile.getName()).getId(), true); // $codepro.audit.disable methodChainLength
 		}
-		 */
-		
+		*/
 			//Set highlighted selection and reset cursor if possible
 			if (editor instanceof ITextEditor && aPosition instanceof R4EUITextPosition) {
 				((ITextEditor) editor).setHighlightRange(((R4EUITextPosition)aPosition).getOffset(), 
@@ -229,19 +229,18 @@ public class EditorProxy {
 	 *  	Open the compare-mode default editor for the file types
 	 * @param aPage IWorkbenchPage - the current workbench page
 	 * @param aBaseFileURI URI - the base (or reference) file URI
+	 * @param aTargetFile IFile
 	 * @param aTargetFileEditable boolean - flag set whether the target file is editable or not
 	 * @param selectionIndex int - the index of the selection to go to in the target file
-	 * @param aTargetFile IFile
 	 */
-	@SuppressWarnings("unused")
-	private static void openCompareEditor(IWorkbenchPage aPage, URI aBaseFileURI, IFile aTargetFile,  // $codepro.audit.disable unusedMethod
+	private static void openCompareEditor(IWorkbenchPage aPage, IFile aBaseFile, IFile aTargetFile,  // $codepro.audit.disable unusedMethod
 			boolean aTargetFileEditable, int selectionIndex) {
 		
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;
-		final IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileURI, aTargetFile.getLocationURI());
+		final IEditorPart editor = findReusableCompareEditor(aPage, aBaseFile.getLocationURI(), aTargetFile.getLocationURI());
 		if (null != editor) {
-			// simply provide focus to editor
+			//Simply provide focus to editor
 			aPage.activate(editor);
 			input = (R4ECompareEditorInput) editor.getEditorInput();
 		} else {
@@ -252,7 +251,7 @@ public class EditorProxy {
 
 			final ITypedElement ancestor = null;   //Might be improved later
 			final ITypedElement left = getCompareItem(aTargetFile.getLocationURI());
-			final ITypedElement right = getCompareItem(aBaseFileURI);
+			final ITypedElement right = getCompareItem(aBaseFile.getLocationURI());
 
 		    input = new R4ECompareEditorInput(config, ancestor, left, right);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE);   // Adjust the compare title
@@ -275,7 +274,7 @@ public class EditorProxy {
 	}
 	
 	
-	/** // $codepro.audit.disable blockDepth
+	/** 
 	 * Method findReusableCompareEditor.
 	 * 		Find the appropriate compare editor based on the file types
 	 * @param aPage IWorkbenchPage - the current workbench page
