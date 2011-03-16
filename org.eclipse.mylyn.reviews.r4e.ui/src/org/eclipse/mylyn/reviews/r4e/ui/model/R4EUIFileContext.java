@@ -19,6 +19,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -144,9 +145,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * @return IFile
 	 */
 	public IFile getBaseFile() {
-		if (null != fFile.getBase()) {
-			//TODO this is what need to be changed.  We need to get an IFile from the
-			//blob stored in the local repository
+		if (null != fFile.getBase()) {		
 			//return (IFile) fFile.getBase().getResource();
 			return getTempFile(fFile.getBase());
 		}
@@ -178,54 +177,94 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		IRFSRegistry revRepo = null;
 		try {
 			revRepo = RFSRegistryFactory.getRegistry((R4EReview) ((R4EUIReviewItem)getParent()).getItem().getReview());
-		} catch (ReviewsFileStorageException e1) {
-			Activator.Ftracer.traceWarning("Exception while obtaining handle to local repo: " + e1.toString() + " ("
-					+ e1.getMessage() + ")");
-			Activator.getDefault().logWarning("Exception: " + e1.toString(), e1);
+		} catch (ReviewsFileStorageException e) {
+			Activator.Ftracer.traceWarning("Exception while obtaining handle to local repo: " + e.toString() + " ("
+					+ e.getMessage() + ")");
+			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 					"Error detected while adding File Context element."
 							+ " Cannot get to interface to the local reviews repository", new Status(
-							IStatus.WARNING, Activator.PLUGIN_ID, 0, e1.getMessage(), e1), IStatus.WARNING);
+							IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
 			dialog.open();
 			return null;
 		}
 		
-		//Get input blob
-		IProgressMonitor monitor = null;   //not used for now
+		//First see if the right file is alreadyu in the workspace, if so, return that file.  Otherwise
+		//create a temporary file from the data in the local repository
+		InputStream is = null;
+		IFile file = null;
 		try {
-			//Extract data from local repository
-			InputStream is = revRepo.getBlobContent(monitor, aVersion.getLocalVersionID());
-			
-			//Create a temporary IFileRevision from extracted data
-			//TODO:  Talk to Alvaro about location of temp file
-			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("tempProject");
-			IFolder folder = project.getFolder("tempFolder");
-			IFile file = folder.getFile(aVersion.getName());
-			if (!project.exists()) project.create(null);
-			if (!project.isOpen()) project.open(null);
-			if (!folder.exists()) folder.create(IResource.NONE, true, null);
-			//Always start from fresh copy because we never know what the temp file version is
-			if (file.exists()) file.delete(true, null);
-			file.create(is, IResource.NONE, null);
-			return file;
+			is = ((IFile)aVersion.getResource()).getContents();
+			if (aVersion.getLocalVersionID().equals(revRepo.blobIdFor(is))) {
+				file = (IFile) aVersion.getResource();
+			}
 		} catch (ReviewsFileStorageException e) {
-			Activator.Ftracer.traceWarning("Exception while extracting data from local repo: " + e.toString() + " ("
-					+ e.getMessage() + ")");
+			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-					"Error detected extracting file info while opening File Context.", new Status(
-							IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
-			dialog.open();
+			e.printStackTrace();
 		} catch (CoreException e) {
-			Activator.Ftracer.traceWarning("Exception while creating temporary file: " + e.toString() + " ("
-					+ e.getMessage() + ")");
+			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-					"Error detected while creating temporary file for File Context.", new Status(
-							IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
-			dialog.open();
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+				}
+			}
 		}
-		return null;
+		
+		if (null == file) {
+			//Get input blob
+			IProgressMonitor monitor = null;   //not used for now
+			is = null;
+			try {
+				//Extract data from local repository
+				is = revRepo.getBlobContent(monitor, aVersion.getLocalVersionID());
+
+				//Create a temporary IFileRevision from extracted data
+				//TODO For now we use a dummy project in the workspace to store the temp files.  This should be improved later
+				//IPath path = Activator.getDefault().getStateLocation().addTrailingSeparator().append("temp");
+				//IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
+				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("R4ETemp");
+				if (!project.exists()) project.create(null);
+				if (!project.isOpen()) project.open(null);
+				IFolder folder = project.getFolder("temp");
+				if (!folder.exists()) folder.create(IResource.NONE, true, null);
+				file = folder.getFile(aVersion.getName());
+				//Always start from fresh copy because we never know what the temp file version is
+				if (file.exists()) file.delete(true, null);
+				file.create(is, IResource.NONE, null);
+			} catch (ReviewsFileStorageException e) {
+				Activator.Ftracer.traceWarning("Exception while extracting data from local repo: " + e.toString() + " ("
+						+ e.getMessage() + ")");
+				Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+						"Error detected extracting file info while opening File Context.", new Status(
+								IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
+				dialog.open();
+			} catch (CoreException e) {
+				Activator.Ftracer.traceWarning("Exception while creating temporary file: " + e.toString() + " ("
+						+ e.getMessage() + ")");
+				Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+						"Error detected while creating temporary file for File Context.", new Status(
+								IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
+				dialog.open();
+			} finally {
+				if (is != null) {
+					try {
+						is.close();
+					} catch (IOException e) {
+						Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+					}
+				}
+			}
+		}
+		return file;
 	}
 	
 	/**
@@ -472,7 +511,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		//Restore resource data in serialization model
 		IRFSRegistry revRegistry = null;
 		try {
-			revRegistry = RFSRegistryFactory.getRegistry(((R4EUIReviewBasic) this.getParent()).getReview());
+			revRegistry = RFSRegistryFactory.getRegistry(((R4EUIReviewBasic) this.getParent().getParent()).getReview());
 		} catch (ReviewsFileStorageException e1) {
 			Activator.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
 			Activator.getDefault().logInfo("Exception: " + e1.toString(), e1);

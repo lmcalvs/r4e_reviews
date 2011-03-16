@@ -337,13 +337,13 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry#blobIdFor(java.io.InputStream)
 	 */
 	public String blobIdFor(InputStream content) throws ReviewsFileStorageException {
+		String id = null;
 		try {
-			blobIdFor(IOUtils.readFully(content));
+			id = blobIdFor(IOUtils.readFully(content));
 		} catch (IOException e) {
 			throw new ReviewsFileStorageException(e);
 		}
-
-		return null;
+		return id;
 	}
 
 	/*

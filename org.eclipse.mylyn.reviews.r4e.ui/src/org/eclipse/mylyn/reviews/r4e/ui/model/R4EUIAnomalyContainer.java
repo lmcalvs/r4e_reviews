@@ -18,6 +18,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -405,8 +407,10 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
     		
 			//Register Target file to the local storage space
+			InputStream is = null;
 			try {
-				String locTargetFileId = revRepo.registerReviewBlob(anomalyFile.getContents(false));
+				is = anomalyFile.getContents(false);
+				String locTargetFileId = revRepo.registerReviewBlob(is);
 				anomalyFileVersion.setLocalVersionID(locTargetFileId);
 			} catch (CoreException e) {
 				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
@@ -423,6 +427,15 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 						"Local File repository error detected while adding File Context. Cannot register files in the reviews repository",
 						new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.toString(), e), IStatus.WARNING);
 				errorDialog.open();
+			} finally {
+				if (is != null) {
+					try {
+						is.close();
+					} catch (IOException e) {
+						Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+					}
+				}
 			}
 		
     		//Create and set UI model element

@@ -488,8 +488,10 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			}
 
 			//Register Target file to the local storage space
+			InputStream is = null;
 			try {
-				String locTargetFileId = revRepo.registerReviewBlob(aTargetFile.getContents(false));
+				is = aTargetFile.getContents(false);
+				String locTargetFileId = revRepo.registerReviewBlob(is);
 				targetVersion.setLocalVersionID(locTargetFileId);
 			} catch (CoreException e) {
 				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
@@ -497,6 +499,16 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 				message.append("Unable to extract contents from target IFile while adding target file version.");
 				message.append((null != aTargetFile.getLocationURI() ? ", IFile path: " + aTargetFile.getLocationURI().getPath() : ""));
 				if (exc == null) exc = e;
+			} finally {
+				if (is != null) {
+					try {
+						is.close();
+					} catch (IOException e) {
+						message.setLength(0);
+						message.append("IOException while trying to close input stream");
+						Activator.Ftracer.traceWarning(message.toString());
+					}
+				}
 			}
 			message.append("\n\n");
 		} catch (ReviewsFileStorageException e) {
