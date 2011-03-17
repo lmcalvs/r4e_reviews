@@ -151,22 +151,27 @@ public class ParticipantInputDialog extends FormDialog {
     			return;
         	}
         	fParticipantIdValue = fParticipantIdInputTextField.getText();
-        	
+
         	//Validate Roles (optional)
         	fRolesValue = new ArrayList<R4EUserRole>();
-			for (Item item : fRoleTypes.getItems()) {
-		    	//Review type (no validation needed as this is a read-only combo box
-		        if (item.getText().equals(R4EUIConstants.USER_ROLE_LEAD)) {
-		        	fRolesValue.add(R4EUserRole.R4E_ROLE_LEAD);
-		        }
-		        else if (item.getText().equals(R4EUIConstants.USER_ROLE_AUTHOR)) {
-		        	fRolesValue.add(R4EUserRole.R4E_ROLE_AUTHOR);
-		        }
-		        else if (item.getText().equals(R4EUIConstants.USER_ROLE_REVIEWER)) {
-		        	fRolesValue.add(R4EUserRole.R4E_ROLE_REVIEWER);
-		        }
-			}
-			
+        	if (fRoleTypes.getItems().length > 0) {
+        		for (Item item : fRoleTypes.getItems()) {
+        			//Review type (no validation needed as this is a read-only combo box
+        			if (item.getText().equals(R4EUIConstants.USER_ROLE_LEAD)) {
+        				fRolesValue.add(R4EUserRole.R4E_ROLE_LEAD);
+        			}
+        			else if (item.getText().equals(R4EUIConstants.USER_ROLE_AUTHOR)) {
+        				fRolesValue.add(R4EUserRole.R4E_ROLE_AUTHOR);
+        			}
+        			else if (item.getText().equals(R4EUIConstants.USER_ROLE_REVIEWER)) {
+        				fRolesValue.add(R4EUserRole.R4E_ROLE_REVIEWER);
+        			}
+        		}
+        	} else {
+        		//If there is no roles defined, put reviewer as default
+        		fRolesValue.add(R4EUserRole.R4E_ROLE_REVIEWER);
+        	}
+
         	//Validate Focus Area (optional)
         	validateResult = validateEmptyInput(fFocusAreaTextField);
         	if (null == validateResult) {

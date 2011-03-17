@@ -24,6 +24,8 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ParticipantProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -178,6 +180,45 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isEnabled() {
-		return getParent().isEnabled();
+		return fParticipant.isEnabled();
 	}
+	
+	/**
+	 * Method setEnabled.
+	 * @param aEnabled boolean
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 */
+	@Override
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fParticipant, R4EUIModelController.getReviewer());
+		fParticipant.setEnabled(true);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+	}
+	
+	/**
+	 * Method isRemoveElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isRemoveElementCmd()
+	 */
+	@Override
+	public boolean isRemoveElementCmd() {
+		if (isEnabled()) return true;
+		return false;
+	}
+	
+	/**
+	 * Method isRestoreElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (!(getParent().getParent().isEnabled())) return false;
+		if (isEnabled()) return false;
+		return true;
+	}
+
 }

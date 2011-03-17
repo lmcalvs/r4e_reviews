@@ -525,7 +525,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field DEFAULT_DATE_FORMAT.
 	 * (value is ""yyyy/MM/dd HH:mm:ss"")
 	 */
-	public static final String DEFAULT_DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
+	public static final String DEFAULT_DATE_FORMAT = "yyyy-MMM-dd HH:mm:ss";
 	
 	/**
 	 * Field SIMPLE_DATE_FORMAT.

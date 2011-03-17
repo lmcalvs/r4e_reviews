@@ -101,6 +101,7 @@ public class EditableListWidget {
 	 */
 	protected int fInstanceId = 0;
 	
+	protected String[] fValues = null;
 	
 	// ------------------------------------------------------------------------
 	// Constructor
@@ -133,7 +134,8 @@ public class EditableListWidget {
 		fMainTable.setLinesVisible(true);
 		fListener = aListener;
 		fInstanceId = aInstanceId;
-		createEditableListFromTable(aToolkit, aEditableWidgetClass, aEditableValues);
+		fValues = aEditableValues;
+		createEditableListFromTable(aToolkit, aEditableWidgetClass);
 	}
 	
 	
@@ -155,8 +157,7 @@ public class EditableListWidget {
      * @param aEditableWidgetClass - Class<?>
      * @param aEditableValues - String[]
      */
-	public void createEditableListFromTable(FormToolkit aToolkit, final Class<?> aEditableWidgetClass, 
-			final String[] aEditableValues) {
+	public void createEditableListFromTable(FormToolkit aToolkit, final Class<?> aEditableWidgetClass) {
 
 		final TableColumn tableColumn = new TableColumn(fMainTable, SWT.LEFT, 0);
 		final TableColumn tableColumn2 = new TableColumn(fMainTable, SWT.RIGHT, 1);
@@ -220,7 +221,7 @@ public class EditableListWidget {
 					});
 				} else if (aEditableWidgetClass.equals(CCombo.class)) {
 					editableControl = new CCombo(fMainTable, SWT.BORDER | SWT.READ_ONLY);
-					((CCombo)editableControl).setItems(aEditableValues);
+					((CCombo)editableControl).setItems(fValues);
 					((CCombo)editableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
 							newItem.setText(((CCombo)editableControl).getText());
@@ -357,5 +358,13 @@ public class EditableListWidget {
 	 */
 	public Composite getComposite() {
 		return fMainComposite;
+	}
+	
+	/**
+	 * Method setEditableValues.
+	 * @param aValues - String[]
+	 */
+	public void setEditableValues(String[] aValues) {
+		fValues = aValues;
 	}
 }

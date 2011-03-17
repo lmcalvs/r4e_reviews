@@ -28,8 +28,10 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ParticipantInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
+import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 
 /**
  * @author lmcdubo
@@ -224,22 +226,41 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 * Method removeChildren.
 	 * @param aChildToRemove IR4EUIModelElement
 	 * @param aFileRemove - also remove from file (hard remove)
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
-	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) {
-		fParticipants.remove(aChildToRemove);
-		aChildToRemove.removeListener();
-		fireRemove(aChildToRemove);
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		
+		final R4EUIParticipant removedElement = fParticipants.get(fParticipants.indexOf(aChildToRemove));
+		/* TODO uncomment when core model supports hard-removing of elements
+		if (aFileRemove) removedElement.getParticipant().remove());
+		else */
+		final R4EParticipant modelParticipant = removedElement.getParticipant();
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant, R4EUIModelController.getReviewer());
+		modelParticipant.setEnabled(false);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		
+		//Remove element from UI if the show disabled element option is off
+		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			fParticipants.remove(removedElement);
+			aChildToRemove.removeListener();
+			fireRemove(aChildToRemove);
+		} else {
+			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+		}
 	}
 	
 	/**
 	 * Method removeAllChildren.
 	 * @param aFileRemove boolean
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override
-	public void removeAllChildren(boolean aFileRemove) {
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
 		//Recursively remove all children
 		for (R4EUIParticipant participant : fParticipants) {
 			removeChildren(participant, aFileRemove);

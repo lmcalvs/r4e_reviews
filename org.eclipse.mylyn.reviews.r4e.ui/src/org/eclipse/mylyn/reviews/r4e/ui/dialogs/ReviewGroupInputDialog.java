@@ -90,13 +90,13 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * Field ADD_REVIEW_GROUP_AVAILABLE_PROJECTS_DIALOG_VALUE.
 	 * (value is ""Available Projects:"")
 	 */
-	private static final String ADD_REVIEW_GROUP_AVAILABLE_PROJECTS_DIALOG_VALUE = "Available Projects:";
+	private static final String ADD_REVIEW_GROUP_AVAILABLE_PROJECTS_DIALOG_VALUE = "Default Projects:";
 	
 	/**
 	 * Field ADD_REVIEW_GROUP_AVAILABLE_COMPONENTS_DIALOG_VALUE.
 	 * (value is ""Available Components:"")
 	 */
-	private static final String ADD_REVIEW_GROUP_AVAILABLE_COMPONENTS_DIALOG_VALUE = "Available Components:";
+	private static final String ADD_REVIEW_GROUP_AVAILABLE_COMPONENTS_DIALOG_VALUE = "Default Components:";
 	
 	/**
 	 * Field ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE.
@@ -247,15 +247,6 @@ public class ReviewGroupInputDialog extends FormDialog {
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			} 
-
-			//Validate Description
-			validateResult = validateEmptyInput(fGroupDescriptionInputTextField);
-			if (null != validateResult) {
-				//Validate of input failed
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING, "No input given for Group Description",
-						new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.WARNING);
-				dialog.open();
-			}
 			
         	//Validate Projects (optional)
         	final ArrayList<String> projectsValues = new ArrayList<String>();
@@ -319,12 +310,11 @@ public class ReviewGroupInputDialog extends FormDialog {
 
 		final FormToolkit toolkit = mform.getToolkit();
 		final ScrolledForm sform = mform.getForm();
-		sform.setExpandVertical(true);
 		final Composite composite = sform.getBody();
-		final GridLayout layout = new GridLayout(4, false);
-		composite.setLayout(layout);
+		composite.setLayout(new GridLayout());
 		
         //Grid data values
+		final GridLayout layout = new GridLayout(4, false);
         final GridData labelData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
         final GridData textSingleData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textSingleData.horizontalSpan = 3;
@@ -336,9 +326,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 		//Basic parameters section
         final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-        final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        basicSectionGridData.horizontalSpan = 4;
-        basicSection.setLayoutData(basicSectionGridData);
+        basicSection.setLayout(new GridLayout());
+        basicSection.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
         basicSection.setDescription(BASIC_PARAMS_HEADER_MSG);
         basicSection.addExpansionListener(new ExpansionAdapter()
@@ -352,6 +341,7 @@ public class ReviewGroupInputDialog extends FormDialog {
         
         final Composite basicSectionClient = toolkit.createComposite(basicSection);
         basicSectionClient.setLayout(layout);
+        basicSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         basicSection.setClient(basicSectionClient);
         
         //Review Group Name
@@ -394,9 +384,8 @@ public class ReviewGroupInputDialog extends FormDialog {
         //Extra parameters section
         final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE);
-        final GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        extraSectionGridData.horizontalSpan = 4;
-        extraSection.setLayoutData(extraSectionGridData);
+        extraSection.setLayout(new GridLayout());
+        extraSection.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         extraSection.setText(R4EUIConstants.EXTRA_PARAMS_HEADER);
         extraSection.setDescription(EXTRA_PARAMS_HEADER_MSG);
         extraSection.addExpansionListener(new ExpansionAdapter()
@@ -410,6 +399,7 @@ public class ReviewGroupInputDialog extends FormDialog {
         
         final Composite extraSectionClient = toolkit.createComposite(extraSection);
         extraSectionClient.setLayout(layout);
+        extraSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         extraSection.setClient(extraSectionClient);
         
 		//Available Projects

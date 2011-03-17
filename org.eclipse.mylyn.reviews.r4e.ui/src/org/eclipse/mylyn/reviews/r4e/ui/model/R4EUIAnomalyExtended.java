@@ -196,6 +196,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly, 
 				R4EUIModelController.getReviewer());
 		fAnomaly.setState(aNewState);
+		updateDecider(aNewState);
     	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
     	String nameLabel = null;
     	if (null == getPosition()) {
@@ -204,6 +205,23 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
     		nameLabel = getPosition().toString();
     	}
     	setName(getStateString(aNewState) + ": " + nameLabel);
+	}
+	
+	/**
+	 * Method updateDecider.
+	 * @param aNewState R4EAnomalyState
+	 */
+	private void updateDecider(R4EAnomalyState aNewState) {
+		if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED) || 
+				aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED) ||
+				aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED) ||
+				aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)) {
+			fAnomaly.setDecidedByID(R4EUIModelController.getReviewer());
+		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
+			fAnomaly.setFixedByID(R4EUIModelController.getReviewer());
+		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
+			fAnomaly.setFollowUpByID(R4EUIModelController.getReviewer());
+		}
 	}
 	
 	/**

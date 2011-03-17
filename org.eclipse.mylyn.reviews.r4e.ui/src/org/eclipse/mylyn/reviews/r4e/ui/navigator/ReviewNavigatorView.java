@@ -58,6 +58,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -544,7 +545,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			//Adjust loaded groups
 			for (IR4EUIModelElement groupToRemove : groupsToRemove) {
 				try {
-					R4EUIModelController.getRootElement().removeChildren(groupToRemove, false);
+					((R4EUIRootElement)R4EUIModelController.getRootElement()).removeChildrenFromUI(groupToRemove);
 				} catch (ResourceHandlingException e) {
 					UIUtils.displayResourceErrorDialog(e);
 				} catch (OutOfSyncException e) {

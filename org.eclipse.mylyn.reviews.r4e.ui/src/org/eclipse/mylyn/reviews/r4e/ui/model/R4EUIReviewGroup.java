@@ -319,7 +319,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
-		//NOTE we need to oppen the model element temporarly to be able to set the enabled state
+		//NOTE we need to open the model element temporarly to be able to set the enabled state
 		fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(getGroupURI());
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
 		fGroup.setEnabled(aEnabled);

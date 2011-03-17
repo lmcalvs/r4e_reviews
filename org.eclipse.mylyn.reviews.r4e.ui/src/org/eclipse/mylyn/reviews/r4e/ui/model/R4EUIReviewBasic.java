@@ -20,6 +20,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.model;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -462,6 +463,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+		//NOTE we need to open the model element temporarly to be able to set the enabled state
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup) getParent()).getReviewGroup(),
 				fReviewName);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
@@ -768,14 +770,15 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	public void setDate(R4EReviewPhase aNewPhase) throws ResourceHandlingException, OutOfSyncException {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
+		final Date date = Calendar.getInstance().getTime();
 		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-			((R4EFormalReview)fReview).getCurrent().setStartDate(new Date(new Date().getTime()));
+			((R4EFormalReview)fReview).getCurrent().setStartDate(date);
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-			((R4EFormalReview)fReview).getCurrent().setStartDate(new Date(new Date().getTime()));
+			((R4EFormalReview)fReview).getCurrent().setStartDate(date);
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
-			((R4EFormalReview)fReview).getCurrent().setStartDate(new Date(new Date().getTime()));
+			((R4EFormalReview)fReview).getCurrent().setStartDate(date);
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-			fReview.setEndDate(new Date(new Date().getTime()));
+			fReview.setEndDate(date);
 		} else {
 			fReview.setEndDate(null);
 		}

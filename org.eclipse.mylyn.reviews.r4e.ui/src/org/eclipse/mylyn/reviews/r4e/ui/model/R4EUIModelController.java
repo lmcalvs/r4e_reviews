@@ -67,7 +67,7 @@ public class R4EUIModelController {
 	/**
 	 * Field fRootElement.
 	 */
-	private static R4EUIElement FRootElement = null;
+	private static R4EUIRootElement FRootElement = null;
 	
 	/**
 	 * Field FIsDialogOpen.
@@ -269,7 +269,7 @@ public class R4EUIModelController {
         setReviewer(Activator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_USER_ID));
         
 		//Add root for Review Navigator
-		FRootElement = new R4EUIElement(null, "R4E");
+		FRootElement = new R4EUIRootElement(null, "R4E");
 		
 		//Load Review Groups
 		final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();

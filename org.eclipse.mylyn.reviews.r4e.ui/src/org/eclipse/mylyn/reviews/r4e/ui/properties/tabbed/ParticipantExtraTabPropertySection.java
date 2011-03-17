@@ -39,6 +39,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
@@ -77,7 +79,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 	/**
 	 * Field fFocusAreaText.
 	 */
-	private Text fFocusAreaText = null;
+	protected Text fFocusAreaText = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -135,7 +137,6 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		fRolesList = new EditableListWidget(widgetFactory, mainForm, data, this, 2, CCombo.class,
 				R4EUIConstants.PARTICIPANT_ROLES);
 
-
 	    final CLabel componentsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.ROLES_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
@@ -143,14 +144,35 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		data.top = new FormAttachment(fRolesList.getComposite(), 0, SWT.TOP);
 	    componentsLabel.setLayoutData(data);
 	    
-	    //Focus Area (read-only)
-	    fFocusAreaText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    //Focus Area
+	    fFocusAreaText = widgetFactory.createText(mainForm, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fRolesList.getComposite(), ITabbedPropertyConstants.VSPACE);
 	    fFocusAreaText.setLayoutData(data);
-
+	    fFocusAreaText.addFocusListener(new FocusListener() {		
+			public void focusLost(FocusEvent e) {
+	    		if (!fRefreshInProgress) {
+	    			try {
+	    				final String currentUser = R4EUIModelController.getReviewer();
+						final R4EParticipant modelReview = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
+	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+	    				modelReview.setFocusArea(fFocusAreaText.getText());
+	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	    			} catch (ResourceHandlingException e1) {
+	    				UIUtils.displayResourceErrorDialog(e1);
+	    			} catch (OutOfSyncException e1) {
+	    				UIUtils.displaySyncErrorDialog(e1);
+	    			}
+	    		}
+			}
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
+				//Nothing to do
+			}
+		});
+	    UIUtils.addTabbedPropertiesTextResizeListener(fFocusAreaText);
+	    
 	    final CLabel focusAreaLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.FOCUS_AREA_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
@@ -186,17 +208,17 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		}
 		fTimeSpentTotalText.setText(Integer.toString(totalTimeSpent));
 		
-		final String[] components = ((R4EUIParticipant)fProperties.getElement()).getRoles(modelUser.getRoles());
+		final String[] roles = ((R4EUIParticipant)fProperties.getElement()).getRoles(modelUser.getRoles());
 		fRolesList.clearAll();
-		for (int i = 0; i < components.length; i++) {
-			String component  = components[i];
+		for (int i = 0; i < roles.length; i++) {
+			String role  = roles[i];
 			if (i >= fRolesList.getItemCount()) {
 				item = fRolesList.addItem();
 			} else {
 				item = fRolesList.getItem(i);
 				if (null == item) item = fRolesList.addItem();
 			}
-			item.setText(component);
+			item.setText(role);
 		}
 
 		if (null != modelUser.getFocusArea()) fFocusAreaText.setText(modelUser.getFocusArea());
@@ -284,9 +306,6 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 					if (null != role) modelParticipant.getRoles().add(role);
 				}
 			}
-
-
-			
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 			refresh();
 		} catch (ResourceHandlingException e1) {

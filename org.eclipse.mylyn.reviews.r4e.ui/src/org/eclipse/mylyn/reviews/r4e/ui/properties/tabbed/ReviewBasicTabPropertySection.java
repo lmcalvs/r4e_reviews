@@ -19,6 +19,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.runtime.IStatus;
@@ -259,17 +261,18 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
+		final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
 		if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 			final R4EUIReviewExtended uiReview = (R4EUIReviewExtended)fProperties.getElement();
 			final R4EFormalReview modelReview = (R4EFormalReview) uiReview.getReview();
 			fPhaseCombo.setItems(uiReview.getAvailablePhases());
 			fPhaseCombo.select(uiReview.mapPhaseToIndex(((R4EReviewState)modelReview.getState()).getState()));
 			fNameText.setText(modelReview.getName());
-			fStartDateText.setText(modelReview.getStartDate().toString());
+			fStartDateText.setText(dateFormat.format(modelReview.getStartDate()));
 			if (null == modelReview.getEndDate()) {
 				fEndDateText.setText("(In Progress)");
 			} else {
-				fEndDateText.setText(modelReview.getEndDate().toString());
+				fEndDateText.setText(dateFormat.format(modelReview.getEndDate()));
 			}
 			fDescriptionText.setText(modelReview.getExtraNotes());
 		} else {
@@ -278,11 +281,11 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 			fPhaseCombo.setItems(uiReview.getAvailablePhases());
 			fPhaseCombo.select(uiReview.mapPhaseToIndex(((R4EReviewState)modelReview.getState()).getState()));
 			fNameText.setText(modelReview.getName());
-			fStartDateText.setText(modelReview.getStartDate().toString());
+			fStartDateText.setText(dateFormat.format(modelReview.getStartDate()));
 			if (null == modelReview.getEndDate()) {
 				fEndDateText.setText("(In Progress)");
 			} else {
-				fEndDateText.setText(modelReview.getEndDate().toString());
+				fEndDateText.setText(dateFormat.format(modelReview.getEndDate()));
 			}
 			fDescriptionText.setText(modelReview.getExtraNotes());
 		}

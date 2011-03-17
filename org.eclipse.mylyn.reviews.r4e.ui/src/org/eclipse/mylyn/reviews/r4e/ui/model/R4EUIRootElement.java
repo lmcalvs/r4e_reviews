@@ -44,7 +44,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EUIElement extends R4EUIModelElement {
+public class R4EUIRootElement extends R4EUIModelElement {
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -65,7 +65,7 @@ public class R4EUIElement extends R4EUIModelElement {
 	 * @param aParent IR4EUIModelElement
 	 * @param aName String
 	 */
-	public R4EUIElement(IR4EUIModelElement aParent, String aName) {
+	public R4EUIRootElement(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName, null);
 		fReviewGroups = new ArrayList<R4EUIReviewGroup>();
 	}
@@ -224,6 +224,7 @@ public class R4EUIElement extends R4EUIModelElement {
 	 */
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		
 		final R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
 		
 		//Also recursively remove all children 
@@ -232,21 +233,29 @@ public class R4EUIElement extends R4EUIModelElement {
 		/* TODO uncomment when core model supports hard-removing of elements
 		if (aFileRemove) removedElement.getReviewGroup().remove());
 		else */
-		if (aFileRemove) {
-			removedElement.setEnabled(false);
+		removedElement.setEnabled(false);
 		
-			//Remove element from UI if the show disabled element option is off
-			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
-				fReviewGroups.remove(removedElement);
-				aChildToRemove.removeListener();
-				fireRemove(aChildToRemove);
-			}
-		} else {
-			//Just remove from the UI
+		//Remove element from UI if the show disabled element option is off
+		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fReviewGroups.remove(removedElement);
 			aChildToRemove.removeListener();
 			fireRemove(aChildToRemove);
 		}
+	}
+	
+	/**
+	 * Method removeChildrenFromUI.
+	 * @param aChildToRemove IR4EUIModelElement
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
+	 */
+	public void removeChildrenFromUI(IR4EUIModelElement aChildToRemove) throws ResourceHandlingException, OutOfSyncException {
+		
+		final R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
+		removedElement.removeAllChildren(false);
+		fReviewGroups.remove(removedElement);
+		aChildToRemove.removeListener();
+		fireRemove(aChildToRemove);
 	}
 	
 	/**
