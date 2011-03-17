@@ -46,7 +46,7 @@ public class ReviewGroupProperties extends ModelElementProperties {
 	/**
 	 * Field GROUP_NAME_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor GROUP_NAME_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor GROUP_NAME_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			GROUP_NAME_ID, R4EUIConstants.NAME_LABEL);
 
 	/**
@@ -66,7 +66,7 @@ public class ReviewGroupProperties extends ModelElementProperties {
 	protected static final String GROUP_DESCRIPTION_ID = "reviewGroupElement.description";
 
 	/**
-	 * Field GROUP_NAME_PROPERTY_DESCRIPTOR.
+	 * Field GROUP_DESCRIPTION_PROPERTY_DESCRIPTOR.
 	 */
 	protected static final TextPropertyDescriptor GROUP_DESCRIPTION_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
 			GROUP_DESCRIPTION_ID, R4EUIConstants.DESCRIPTION_LABEL);
@@ -79,7 +79,7 @@ public class ReviewGroupProperties extends ModelElementProperties {
 	/**
 	 * Field GROUP_AVAILABLE_PROJECTS_PROPERTY_DESCRIPTOR.
 	 */
-	private static final TextPropertyDescriptor GROUP_AVAILABLE_PROJECTS_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	private static final PropertyDescriptor GROUP_AVAILABLE_PROJECTS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			GROUP_AVAILABLE_PROJECTS_ID, R4EUIConstants.AVAILABLE_PROJECTS_LABEL);
 	
 	/**
@@ -90,7 +90,7 @@ public class ReviewGroupProperties extends ModelElementProperties {
 	/**
 	 * Field GROUP_AVAILABLE_COMPONENTS_PROPERTY_DESCRIPTOR.
 	 */
-	private static final TextPropertyDescriptor GROUP_AVAILABLE_COMPONENTS_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	private static final PropertyDescriptor GROUP_AVAILABLE_COMPONENTS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			GROUP_AVAILABLE_COMPONENTS_ID, R4EUIConstants.AVAILABLE_COMPONENTS_LABEL);
 	
 	/**
@@ -101,7 +101,7 @@ public class ReviewGroupProperties extends ModelElementProperties {
 	/**
 	 * Field GROUP_DEFAULT_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR.
 	 */
-	private static final TextPropertyDescriptor GROUP_DEFAULT_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	private static final PropertyDescriptor GROUP_DEFAULT_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			GROUP_DEFAULT_ENTRY_CRITERIA_ID, R4EUIConstants.DEFAULT_ENTRY_CRITERIA_LABEL);
 	
 	/**

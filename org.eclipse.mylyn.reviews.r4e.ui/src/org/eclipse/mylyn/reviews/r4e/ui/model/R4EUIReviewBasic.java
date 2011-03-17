@@ -31,6 +31,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -430,8 +431,15 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					if (null == item.getFileContextList().get(0).getBase()) {
 						//Assume resource
-						uiItem = new R4EUIReviewItem(this, item, R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE, item,
-								item.getFileContextList().get(0).getTarget().getName());
+						R4EFileVersion version = item.getFileContextList().get(0).getTarget();
+						//TODO this is temporary to prevent a nast bug.  We need to find out why the FileVersion is not populated
+						//at review item creation to reaslly fix this.
+						if (null != version) {
+							uiItem = new R4EUIReviewItem(this, item, R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE, item,
+									version.getName());
+						} else {
+							continue;
+						}
 					} else {
 						//commit
 						IProject project = ResourceUtils.toIProject(item.getProjectURIs().get(0));

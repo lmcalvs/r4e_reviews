@@ -32,7 +32,6 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -50,22 +49,22 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	/**
 	 * Field FIdText.
 	 */
-	private Text fIdText = null;
+	private CLabel fIdText = null;
 	
 	/**
 	 * Field FNumItemsText.
 	 */
-	private Text fNumItemsText = null;
+	private CLabel fNumItemsText = null;
 	
 	/**
 	 * Field FNumAnomaliesText.
 	 */
-	private Text fNumAnomaliesText = null;
+	private CLabel fNumAnomaliesText = null;
 	
 	/**
 	 * Field FNumCommentsText.
 	 */
-	private Text fNumCommentsText = null;
+	private CLabel fNumCommentsText = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -88,7 +87,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    FormData data = null;
 	   
 	    //Author (read-only)
-	    fIdText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fIdText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -104,7 +103,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    idLabel.setLayoutData(data);
 	    
 	    //Number of Review Items added (read-only)
-	    fNumItemsText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fNumItemsText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    fNumItemsText.setBackground(Display.getDefault().getSystemColor( SWT.COLOR_WIDGET_LIGHT_SHADOW));
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
@@ -120,7 +119,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    numItemsLabel.setLayoutData(data);
 	    
 	    //Number of Anomalies added (read-only)
-	    fNumAnomaliesText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fNumAnomaliesText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -135,7 +134,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    numAnomaliesLabel.setLayoutData(data);
 	    
 	    //Number of Comments added (read-only)
-	    fNumCommentsText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fNumCommentsText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

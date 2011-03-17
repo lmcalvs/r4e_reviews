@@ -48,7 +48,7 @@ public class ReviewBasicProperties extends ModelElementProperties {
 	/**
 	 * Field REVIEW_NAME_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor REVIEW_NAME_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor REVIEW_NAME_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_NAME_ID, R4EUIConstants.NAME_LABEL);
 
 	/**
@@ -103,7 +103,7 @@ public class ReviewBasicProperties extends ModelElementProperties {
 	/**
 	 * Field REVIEW_PROJECT_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor REVIEW_PROJECT_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor REVIEW_PROJECT_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_PROJECT_ID, R4EUIConstants.PROJECT_LABEL);
 	
 	/**
@@ -114,7 +114,7 @@ public class ReviewBasicProperties extends ModelElementProperties {
 	/**
 	 * Field REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_COMPONENTS_ID, R4EUIConstants.COMPONENTS_LABEL);
 	
 	/**
@@ -125,7 +125,7 @@ public class ReviewBasicProperties extends ModelElementProperties {
 	/**
 	 * Field REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_ENTRY_CRITERIA_ID, R4EUIConstants.ENTRY_CRITERIA_LABEL);
 	
 	/**
@@ -136,7 +136,7 @@ public class ReviewBasicProperties extends ModelElementProperties {
 	/**
 	 * Field REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_OBJECTIVES_ID, R4EUIConstants.OBJECTIVES_LABEL);
 	
 	/**
@@ -147,7 +147,7 @@ public class ReviewBasicProperties extends ModelElementProperties {
 	/**
 	 * Field REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_REFERENCE_MATERIAL_ID, R4EUIConstants.REFERENCE_MATERIAL_LABEL);
 	
 	/**

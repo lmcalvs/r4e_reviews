@@ -186,6 +186,9 @@ public class EditableListWidget {
         
 		fMainTable.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
+				
+				//Remove control, since the text was set in the table item
+				
 				//Send items updated notification
 				if (null != fListener) {
 					fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
@@ -252,13 +255,28 @@ public class EditableListWidget {
 				} else {
 					return;
 				}
+				editableControl.addFocusListener(new FocusListener() {
+					public void focusLost(FocusEvent fe) {
+						// TODO Auto-generated method stub
+						((Control)fe.getSource()).dispose();
+						
+						//Send items updated notification
+						if (null != fListener) {
+							fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
+						}
+					}
+					public void focusGained(FocusEvent fe) {
+						//Nothing to do
+					}
+				});
+				
 				editableControl.setFocus();
 				final TableEditor editor = new TableEditor (fMainTable);
 				editor.grabHorizontal = true;
 				editor.grabVertical = true;
 				editor.setEditor(editableControl, newItem, 0);
 				fRemoveButton.setEnabled(true);
-				
+				fMainTable.redraw();
 			}
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 			}
@@ -283,7 +301,8 @@ public class EditableListWidget {
 					}
 					fMainTable.getItem(tableItemIndex).dispose();
 				}
-				if (0 == fMainTable.getItemCount()) fRemoveButton.setEnabled(false);		
+				if (0 == fMainTable.getItemCount()) fRemoveButton.setEnabled(false);	
+				fMainTable.redraw();
 			}
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 			}
@@ -366,5 +385,14 @@ public class EditableListWidget {
 	 */
 	public void setEditableValues(String[] aValues) {
 		fValues = aValues;
+	}
+	
+	public void setTableHeader(int aIndex, String aText) {
+		try {
+			TableColumn column = fMainTable.getColumn(aIndex);
+			column.setText(aText);
+		} catch (IllegalArgumentException e) {
+			//Just ignore
+		}
 	}
 }

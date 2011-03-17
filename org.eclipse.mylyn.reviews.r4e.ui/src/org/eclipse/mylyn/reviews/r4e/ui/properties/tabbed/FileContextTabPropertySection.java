@@ -32,7 +32,6 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -50,32 +49,32 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field FBaseFileNameText.
 	 */
-	protected Text fBaseFileNameText = null;
+	protected CLabel fBaseFileNameText = null;
 	
 	/**
 	 * Field FBaseFilePathText.
 	 */
-	protected Text fBaseFilePathText = null;
+	protected CLabel fBaseFilePathText = null;
 	
 	/**
 	 * Field FBaseFileVersionText.
 	 */
-	protected Text fBaseFileVersionText = null;
+	protected CLabel fBaseFileVersionText = null;
 	
 	/**
 	 * Field FTargetFileNameText.
 	 */
-	protected Text fTargetFileNameText = null;
+	protected CLabel fTargetFileNameText = null;
 	
 	/**
 	 * Field FTargetFilePathText.
 	 */
-	protected Text fTargetFilePathText = null;
+	protected CLabel fTargetFilePathText = null;
 	
 	/**
 	 * Field FTargetFileVersionText.
 	 */
-	protected Text fTargetFileVersionText = null;
+	protected CLabel fTargetFileVersionText = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -130,7 +129,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    FormData data = null;
 
 	    //File Name (read-only)
-	    fBaseFileNameText = aWidgetFactory.createText(aParent, "", SWT.READ_ONLY);
+	    fBaseFileNameText = aWidgetFactory.createCLabel(aParent, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -145,7 +144,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    fileNameLabel.setLayoutData(data);
 	
 	    //File Path (read-only)
-	    fBaseFilePathText = aWidgetFactory.createText(aParent, "", SWT.READ_ONLY);
+	    fBaseFilePathText = aWidgetFactory.createCLabel(aParent, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -160,7 +159,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    filePathLabel.setLayoutData(data);
 	    
 	    //File Version (read-only)
-	    fBaseFileVersionText = aWidgetFactory.createText(aParent, "", SWT.READ_ONLY);
+	    fBaseFileVersionText = aWidgetFactory.createCLabel(aParent, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -184,7 +183,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    FormData data = null;
 
 	    //File Name (read-only)
-	    fTargetFileNameText = aWidgetFactory.createText(aParent, "", SWT.READ_ONLY);
+	    fTargetFileNameText = aWidgetFactory.createCLabel(aParent, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -199,7 +198,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    fileNameLabel.setLayoutData(data);
 	
 	    //File Path (read-only)
-	    fTargetFilePathText = aWidgetFactory.createText(aParent, "", SWT.READ_ONLY);
+	    fTargetFilePathText = aWidgetFactory.createCLabel(aParent, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -214,7 +213,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    filePathLabel.setLayoutData(data);
 	    
 	    //File Version (read-only)
-	    fTargetFileVersionText = aWidgetFactory.createText(aParent, "", SWT.READ_ONLY);
+	    fTargetFileVersionText = aWidgetFactory.createCLabel(aParent, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

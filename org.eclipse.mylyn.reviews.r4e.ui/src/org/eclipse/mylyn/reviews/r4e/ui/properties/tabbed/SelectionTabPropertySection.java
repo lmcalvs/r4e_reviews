@@ -27,7 +27,6 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -45,7 +44,7 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 	/**
 	 * Field FPositionText.
 	 */
-	private Text fPositionText = null;
+	private CLabel fPositionText = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -68,7 +67,7 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 	    FormData data = null;
 	   
 	    //Position (read-only)
-	    fPositionText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fPositionText = widgetFactory.createCLabel(composite, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

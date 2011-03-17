@@ -66,7 +66,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fNameText.
 	 */
-	private Text fNameText = null;
+	private CLabel fNameText = null;
 	
 	/**
 	 * Field fPhaseCombo.
@@ -76,12 +76,12 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fStartDateText.
 	 */
-	private Text fStartDateText = null;
+	private CLabel fStartDateText = null;
 	
 	/**
 	 * Field fEndDateText.
 	 */
-	private Text fEndDateText = null;
+	private CLabel fEndDateText = null;
 	
 	/**
 	 * Field fDescriptionText.
@@ -119,7 +119,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    FormData data = null;
 	   
 	    //Review Name (read-only for now)
-	    fNameText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fNameText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -188,7 +188,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    phaseLabel.setLayoutData(data);
 	    
 	    //Review Start Date (read-only)
-	    fStartDateText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fStartDateText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -203,7 +203,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    creationDateLabel.setLayoutData(data);
 	
 	    //End Date (read-only)
-	    fEndDateText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fEndDateText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

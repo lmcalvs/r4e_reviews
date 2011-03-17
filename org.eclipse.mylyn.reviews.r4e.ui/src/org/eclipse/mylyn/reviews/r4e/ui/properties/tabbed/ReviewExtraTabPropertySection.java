@@ -78,7 +78,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field FEntryCriteriaText.
 	 */
-	protected Text fEntryCriteriaText = null;
+	protected CLabel fEntryCriteriaText = null;
 	
 	/**
 	 * Field FObjectivesText.
@@ -108,7 +108,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fPreparationDateText.
 	 */
-	private Text fPreparationDateText = null;
+	private CLabel fPreparationDateText = null;
 	
 	/**
 	 * Field fPreparationDateLabel.
@@ -128,7 +128,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fDecisionTimeSpentText.
 	 */
-	protected Text fDecisionTimeSpentText = null;
+	protected CLabel fDecisionTimeSpentText = null;
 	
 	/**
 	 * Field fDecisionTimeSpentLabel.
@@ -138,7 +138,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fDecisionDateText.
 	 */
-	private Text fDecisionDateText = null;
+	private CLabel fDecisionDateText = null;
 	
 	/**
 	 * Field fDecisionDateLabel.
@@ -148,7 +148,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fReworkDateText.
 	 */
-	private Text fReworkDateText = null;
+	private CLabel fReworkDateText = null;
 	
 	/**
 	 * Field fReworkDateLabel.
@@ -217,16 +217,6 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		data.top = new FormAttachment(fProjectCombo, ITabbedPropertyConstants.VSPACE);
 		fComponents = new EditableListWidget(widgetFactory, mainForm, data, this, 1, CCombo.class, null);
 		
-		/*
-	    fComponents = widgetFactory.createTable(mainForm, SWT.READ_ONLY | SWT.VIRTUAL);
-	    fComponents.setLinesVisible(true);
-	    fComponents.setItemCount(0);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fProjectCombo, ITabbedPropertyConstants.VSPACE);
-	    fComponents.setLayoutData(data);
-		*/
 	    final CLabel componentsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.COMPONENTS_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
@@ -235,7 +225,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    componentsLabel.setLayoutData(data);
 	    
 	    //Entry Criteria (read-only)
-	    fEntryCriteriaText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fEntryCriteriaText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -394,7 +384,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    fPhaseOwnerLabel.setLayoutData(data);
 
 	    //Preparation Date
-	    fPreparationDateText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fPreparationDateText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -430,7 +420,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    fDecisionUsersListLabel.setLayoutData(data);
 
 	    //Decision Time Spent
-	    fDecisionTimeSpentText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fDecisionTimeSpentText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -465,7 +455,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    fDecisionTimeSpentLabel.setLayoutData(data);
 
 	    //Decision Date
-	    fDecisionDateText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fDecisionDateText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -480,7 +470,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    fDecisionDateLabel.setLayoutData(data);
 
 	    //Rework Date
-	    fReworkDateText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);
+	    fReworkDateText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -639,7 +629,6 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 					fDecisionDateText.setEnabled(true);
 					fDecisionUsersList.setEnabled(true);
 					fDecisionTimeSpentText.setEnabled(true);
-					fDecisionTimeSpentText.setEditable(true);
 					fExitDecisionCombo.setEnabled(true);
 
 				} else {

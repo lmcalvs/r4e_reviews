@@ -22,7 +22,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
 /**
  * @author lmcdubo
@@ -75,7 +74,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	/**
 	 * Field ANOMALY_NOT_ACCEPTED_REASON_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor ANOMALY_NOT_ACCEPTED_REASON_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor ANOMALY_NOT_ACCEPTED_REASON_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_NOT_ACCEPTED_REASON_ID, R4EUIConstants.NOT_ACCEPTED_REASON_LABEL);
 	
 	/**
@@ -86,7 +85,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	/**
 	 * Field ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_DECIDED_BY_ID, R4EUIConstants.DECIDED_BY_LABEL);
 	
 	/**
@@ -97,7 +96,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	/**
 	 * Field ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_FIXED_BY_ID, R4EUIConstants.FIXED_BY_LABEL);
 	
 	/**
@@ -108,7 +107,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	/**
 	 * Field ANOMALY_FOLLOWUP_BY_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor ANOMALY_FOLLOWUP_BY_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor ANOMALY_FOLLOWUP_BY_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_FOLLOWUP_BY_ID, R4EUIConstants.FOLLOWUP_BY_LABEL);
 	
 	/**

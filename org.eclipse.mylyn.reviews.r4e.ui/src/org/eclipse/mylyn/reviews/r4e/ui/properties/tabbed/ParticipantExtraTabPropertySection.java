@@ -67,11 +67,6 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 	protected EditableListWidget fTimeSpentDetailedList = null;
 	
 	/**
-	 * Field fTimeSpentTotalText.
-	 */
-	private Text fTimeSpentTotalText = null;
-	
-	/**
 	 * Field fRolesList.
 	 */
 	private EditableListWidget fRolesList = null;
@@ -114,26 +109,11 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 	    data.top = new FormAttachment(fTimeSpentDetailedList.getComposite(), 0, SWT.CENTER);
 	    timeSpentDetailedLabel.setLayoutData(data);
 	    
-	    //Time Spent (total - read only)
-	    fTimeSpentTotalText = widgetFactory.createText(mainForm, "", SWT.READ_ONLY);	
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fTimeSpentDetailedList.getComposite(), ITabbedPropertyConstants.VSPACE);
-	    fTimeSpentTotalText.setLayoutData(data);
-	    
-	    final CLabel timeSpentLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.TIME_SPENT_TOTAL_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fTimeSpentTotalText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fTimeSpentTotalText, 0, SWT.CENTER);
-	    timeSpentLabel.setLayoutData(data);
-	    
 	    //Roles
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fTimeSpentTotalText, ITabbedPropertyConstants.VSPACE);
+		data.top = new FormAttachment(fTimeSpentDetailedList.getComposite(), ITabbedPropertyConstants.VSPACE);
 		fRolesList = new EditableListWidget(widgetFactory, mainForm, data, this, 2, CCombo.class,
 				R4EUIConstants.PARTICIPANT_ROLES);
 
@@ -206,7 +186,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 			((TableItem)item).setText(data);
 			totalTimeSpent +=timeEntry.getValue().intValue();
 		}
-		fTimeSpentTotalText.setText(Integer.toString(totalTimeSpent));
+		fTimeSpentDetailedList.setTableHeader(0, "Time Spent: " + Integer.toString(totalTimeSpent) + " minutes");
 		
 		final String[] roles = ((R4EUIParticipant)fProperties.getElement()).getRoles(modelUser.getRoles());
 		fRolesList.clearAll();
@@ -233,7 +213,6 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isDialogOpen()) {
 			fTimeSpentDetailedList.setEnabled(false);
-			fTimeSpentTotalText.setEnabled(false);
 			fRolesList.setEnabled(false);
 			fFocusAreaText.setEnabled(false);
 		} else {
@@ -242,10 +221,8 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 			
 				if (uiReview.isParticipantTimeSpentEnabled()) {
 					fTimeSpentDetailedList.setEnabled(true);
-					fTimeSpentTotalText.setEnabled(true);
 				} else {
 					fTimeSpentDetailedList.setEnabled(false);
-					fTimeSpentTotalText.setEnabled(false);
 				}
 				
 				if (uiReview.isParticipantExtraDetailsEnabled()) {
@@ -257,7 +234,6 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 				}
 		    } else {
 				fTimeSpentDetailedList.setEnabled(true);
-				fTimeSpentTotalText.setEnabled(true);
 				fRolesList.setEnabled(true);
 				fFocusAreaText.setEnabled(true);
 		    }
@@ -280,6 +256,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 				//Update spent time
 				final EMap<Date, Integer> timeMap = modelParticipant.getTimeLog();
 				final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
+				timeMap.clear();
 				for (Item item : aItems) {
 					try {
 						if (!((TableItem)item).getText(1).equals("")) {

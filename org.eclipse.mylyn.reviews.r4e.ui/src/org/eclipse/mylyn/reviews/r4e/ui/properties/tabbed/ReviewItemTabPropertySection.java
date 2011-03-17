@@ -29,7 +29,6 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -47,7 +46,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	/**
 	 * Field FAuthorText.
 	 */
-	private Text fAuthorText = null;
+	private CLabel fAuthorText = null;
 	
 	/**
 	 * Field FProjectIdList.
@@ -57,7 +56,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	/**
 	 * Field FDescriptionText.
 	 */
-	private Text fDescriptionText = null;
+	private CLabel fDescriptionText = null;
 
 	
 	// ------------------------------------------------------------------------
@@ -80,7 +79,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	    FormData data = null;
 	   
 	    //Author (read-only)
-	    fAuthorText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fAuthorText = widgetFactory.createCLabel(composite, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -110,7 +109,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	    projectIdLabel.setLayoutData(data);
 
 	    //Description (read-only)
-	    fDescriptionText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fDescriptionText = widgetFactory.createCLabel(composite, "", SWT.READ_ONLY);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

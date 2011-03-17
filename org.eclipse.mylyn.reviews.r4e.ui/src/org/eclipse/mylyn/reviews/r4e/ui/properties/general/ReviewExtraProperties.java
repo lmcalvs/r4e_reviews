@@ -24,7 +24,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
-import org.eclipse.ui.views.properties.TextPropertyDescriptor;
+import org.eclipse.ui.views.properties.PropertyDescriptor;
 
 /**
  * @author lmcdubo
@@ -44,7 +44,7 @@ public class ReviewExtraProperties extends ReviewBasicProperties {
 	/**
 	 * Field REVIEW_PHASE_OWNER_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor REVIEW_PHASE_OWNER_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor REVIEW_PHASE_OWNER_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_PHASE_OWNER_ID, R4EUIConstants.PHASE_OWNER_LABEL);
 	
 	/**
@@ -55,7 +55,7 @@ public class ReviewExtraProperties extends ReviewBasicProperties {
 	/**
 	 * Field REVIEW_PREPARATION_DATE_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor REVIEW_PREPARATION_DATE_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor REVIEW_PREPARATION_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_PREPARATION_DATE_ID, R4EUIConstants.PREPARATION_DATE_LABEL);
 	
 	/**
@@ -66,7 +66,7 @@ public class ReviewExtraProperties extends ReviewBasicProperties {
 	/**
 	 * Field REVIEW_DECISION_DATE_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor REVIEW_DECISION_DATE_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor REVIEW_DECISION_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_DECISION_DATE_ID, R4EUIConstants.DECISION_DATE_LABEL);
 	
 	/**
@@ -77,7 +77,7 @@ public class ReviewExtraProperties extends ReviewBasicProperties {
 	/**
 	 * Field REVIEW_REWORK_DATE_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor REVIEW_REWORK_DATE_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor REVIEW_REWORK_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_REWORK_DATE_ID, R4EUIConstants.REWORK_DATE_LABEL);
 	
 	/**
