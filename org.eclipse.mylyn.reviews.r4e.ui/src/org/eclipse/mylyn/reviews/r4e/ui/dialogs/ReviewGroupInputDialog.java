@@ -334,8 +334,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 		{
 			@Override
 			public void expansionStateChanged(ExpansionEvent e){
-				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				sform.reflow(true);
+				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
 			}
 		});
         
@@ -392,8 +392,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 		{
 			@Override
 			public void expansionStateChanged(ExpansionEvent e){
-				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				sform.reflow(true);
+				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
 			}
 		});
         
