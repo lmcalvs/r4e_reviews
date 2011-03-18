@@ -906,9 +906,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				
 		switch (aNextPhase.getValue()) {	
 			case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
-				if (!checkCompletionStatus()) {
-					aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
-										" as some anomalies are not in the proper state");
+				if (!checkCompletionStatus(aErrorMessage)) {
 					return false;
 				}
 				break;
@@ -923,20 +921,40 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * Method checkCompletionStatus.
 	 * @return boolean
 	 */
-	public boolean checkCompletionStatus() { // $codepro.audit.disable booleanMethodNamingConvention
+	public boolean checkCompletionStatus(AtomicReference<String> aErrorMessage) { // $codepro.audit.disable booleanMethodNamingConvention
 		if (!(fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC))) {
-			if (null == fReview.getDecision() || null == fReview.getDecision().getValue()) return false;
-			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_NONE)) return false;	
-			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_REJECTED)) return true;
+			if (null == fReview.getDecision() || null == fReview.getDecision().getValue()) {
+				aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
+				" as review decision information is missing");
+				return false;
+			}
+			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_NONE)) {
+				aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
+				" as review decision information is set to NONE");
+				return false;	
+			}
+			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_REJECTED)) {
+				aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
+				" as review decision information is set to REJECTED");
+				return true;
+			}
 			
 			//Check global anomalies state
-			if (!(fAnomalyContainer.checkCompletionStatus())) return false;
+			if (!(fAnomalyContainer.checkCompletionStatus())) {
+				aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
+				" as some global anomalies are in the wrong state");
+				return false;
+			}
 			
 			for (R4EUIReviewItem item : fItems) {
 				R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
 				for (R4EUIFileContext context : contexts) {
 					R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
-					if (null != container && !(container.checkCompletionStatus())) return false;
+					if (null != container && !(container.checkCompletionStatus())) {
+						aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
+						" as some anomalies are in the wrong state");
+						return false;
+					}
 				}
 			}
 		}

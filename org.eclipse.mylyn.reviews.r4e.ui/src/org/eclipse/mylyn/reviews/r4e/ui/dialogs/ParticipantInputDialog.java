@@ -278,6 +278,7 @@ public class ParticipantInputDialog extends FormDialog {
         label = toolkit.createLabel(extraSectionClient, "Focus Area: ");
         label.setLayoutData(labelData);
         fFocusAreaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
+        textMultiData.heightHint = fFocusAreaTextField.getLineHeight() * 3;
         fFocusAreaTextField.setLayoutData(textMultiData);
 	}
     

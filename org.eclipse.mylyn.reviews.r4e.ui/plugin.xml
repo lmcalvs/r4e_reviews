@@ -747,7 +747,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.DefaultSortHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSortHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.DefaultSort">
          <enabledWhen>
             <test

@@ -31,7 +31,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class DefaultSortHandler extends AbstractHandler {
+public class AlphaSortHandler extends AbstractHandler {
 
 	/**
 	 * Method execute.
@@ -45,7 +45,7 @@ public class DefaultSortHandler extends AbstractHandler {
 		//We need to preserve the expansion state and restore it afterwards
 	    final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
 	    final ViewerComparator sorter = 
-	    	((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).getDefaultSorter();
+	    	((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).getAlphaSorter();
 		
 	    final Object[] elements =  viewer.getExpandedElements();
 	    boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());

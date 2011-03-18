@@ -46,7 +46,7 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 	 */
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
-		//For formal reviews, anomalies can only be added by reveiwers in the preparation pahse
+		//For formal reviews, review items can only be added by reveiwers in the planning and preparation pahse
 		final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 		if (null == activeReview) return false;
 		
@@ -60,8 +60,11 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 		if (null == reviewer) return false;
 
 		if (activeReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			if (!(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD) || reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR)) || 
-					!((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
+			if (((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
+				if (!(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)) || (reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR))) {
+					return false;
+				}
+			} else if (!((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 				return false;
 			}
 		}

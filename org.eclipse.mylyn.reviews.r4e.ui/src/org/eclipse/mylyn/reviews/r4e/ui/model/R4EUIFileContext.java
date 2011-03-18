@@ -228,10 +228,10 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				//TODO For now we use a dummy project in the workspace to store the temp files.  This should be improved later
 				//IPath path = Activator.getDefault().getStateLocation().addTrailingSeparator().append("temp");
 				//IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
-				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("R4ETemp");
+				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
 				if (!project.exists()) project.create(null);
 				if (!project.isOpen()) project.open(null);
-				IFolder folder = project.getFolder("temp");
+				IFolder folder = project.getFolder(R4EUIConstants.R4E_TEMP_FOLDER);
 				if (!folder.exists()) folder.create(IResource.NONE, true, null);
 				file = folder.getFile(aVersion.getName());
 				//Always start from fresh copy because we never know what the temp file version is

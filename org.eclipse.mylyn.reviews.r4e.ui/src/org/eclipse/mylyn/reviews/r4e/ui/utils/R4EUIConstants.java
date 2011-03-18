@@ -28,6 +28,18 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	// ------------------------------------------------------------------------
 	
 	/**
+	 * Field R4E_TEMP_PROJECT.
+	 * (value is ""R4ETemp"")
+	 */
+	public static final String R4E_TEMP_PROJECT = "R4ETemp";
+	
+	/**
+	 * Field R4E_TEMP_FOLDER.
+	 * (value is ""temp"")
+	 */
+	public static final String R4E_TEMP_FOLDER = "temp";
+	
+	/**
 	 * Field R4E_PROPERTIES_VIEW_NAME.
 	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.properties.R4EPropertiesView"")
 	 */
@@ -378,10 +390,46 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String PHASE_LABEL = "Phase: ";
 	
 	/**
+	 * Field PHASE_MAP_LABEL.
+	 * (value is ""Phase Map: "")
+	 */
+	public static final String PHASE_MAP_LABEL = "Phase Map: ";
+	
+	/**
 	 * Field PHASE_OWNER_LABEL.
 	 * (value is ""Owner: "")
 	 */
 	public static final String PHASE_OWNER_LABEL = "Owner: ";
+	
+	/**
+	 * Field REVIEW_PHASE_PLANNING.
+	 * (value is ""PLANNING"")
+	 */
+	public static final String PHASE_PLANNING_LABEL = "PLANNING";
+	
+	/**
+	 * Field REVIEW_PHASE_PREPARATION.
+	 * (value is ""PREPARATION"")
+	 */
+	public static final String PHASE_PREPARATION_LABEL = "PREPARATION";
+	
+	/**
+	 * Field REVIEW_PHASE_DECISION.
+	 * (value is ""DECISION"")
+	 */
+	public static final String PHASE_DECISION_LABEL = "DECISION";
+	
+	/**
+	 * Field REVIEW_PHASE_REWORK.
+	 * (value is ""REWORK"")
+	 */
+	public static final String PHASE_REWORK_LABEL = "REWORK";
+	
+	/**
+	 * Field REVIEW_PHASE_COMPLETED.
+	 * (value is ""COMPLETED"")
+	 */
+	public static final String PHASE_COMPLETED_LABEL = "COMPLETED";
 	
 	/**
 	 * Field AUTHOR_LABEL.
@@ -531,7 +579,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field SIMPLE_DATE_FORMAT.
 	 * (value is ""yyyy/MM/dd"")
 	 */
-	public static final String SIMPLE_DATE_FORMAT = "yyyy/MM/dd";
+	public static final String SIMPLE_DATE_FORMAT = "yyyy-MMM-dd";
 	
 	/**
 	 * Field SPENT_TIME_COLUMN_HEADER.

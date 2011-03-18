@@ -79,7 +79,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	    FormData data = null;
 	   
 	    //Author (read-only)
-	    fAuthorText = widgetFactory.createCLabel(composite, "", SWT.READ_ONLY);
+	    fAuthorText = widgetFactory.createCLabel(composite, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -109,7 +109,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	    projectIdLabel.setLayoutData(data);
 
 	    //Description (read-only)
-	    fDescriptionText = widgetFactory.createCLabel(composite, "", SWT.READ_ONLY);
+	    fDescriptionText = widgetFactory.createCLabel(composite, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

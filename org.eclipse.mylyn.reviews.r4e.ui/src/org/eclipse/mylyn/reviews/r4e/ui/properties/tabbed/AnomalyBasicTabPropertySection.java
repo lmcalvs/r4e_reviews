@@ -61,17 +61,17 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	/**
 	 * Field FAuthorText.
 	 */
-	protected Text fAuthorText = null;
+	protected CLabel fAuthorText = null;
 	
 	/**
 	 * Field FCreationDateText.
 	 */
-	protected Text fCreationDateText = null;
+	protected CLabel fCreationDateText = null;
 	
 	/**
 	 * Field FPositionText.
 	 */
-	protected Text fPositionText = null;
+	protected CLabel fPositionText = null;
 	
 	/**
 	 * Field FDescriptionText.
@@ -145,7 +145,7 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    titleLabel.setLayoutData(data);
 	    
 	    //Anomaly Author (read-only)
-	    fAuthorText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fAuthorText = widgetFactory.createCLabel(composite, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -160,7 +160,7 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    authorLabel.setLayoutData(data);
 	
 	    //Anomaly Creation Date (read-only)
-	    fCreationDateText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fCreationDateText = widgetFactory.createCLabel(composite, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -175,7 +175,7 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    creationDateLabel.setLayoutData(data);
 	    
 	    //Anomaly position (read-only)
-	    fPositionText = widgetFactory.createText(composite, "", SWT.READ_ONLY);
+	    fPositionText = widgetFactory.createCLabel(composite, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

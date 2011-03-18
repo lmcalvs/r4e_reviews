@@ -87,7 +87,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    FormData data = null;
 	   
 	    //Author (read-only)
-	    fIdText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
+	    fIdText = widgetFactory.createCLabel(mainForm, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -103,7 +103,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    idLabel.setLayoutData(data);
 	    
 	    //Number of Review Items added (read-only)
-	    fNumItemsText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
+	    fNumItemsText = widgetFactory.createCLabel(mainForm, "");
 	    fNumItemsText.setBackground(Display.getDefault().getSystemColor( SWT.COLOR_WIDGET_LIGHT_SHADOW));
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
@@ -119,7 +119,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    numItemsLabel.setLayoutData(data);
 	    
 	    //Number of Anomalies added (read-only)
-	    fNumAnomaliesText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
+	    fNumAnomaliesText = widgetFactory.createCLabel(mainForm, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -134,7 +134,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    numAnomaliesLabel.setLayoutData(data);
 	    
 	    //Number of Comments added (read-only)
-	    fNumCommentsText = widgetFactory.createCLabel(mainForm, "", SWT.READ_ONLY);
+	    fNumCommentsText = widgetFactory.createCLabel(mainForm, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

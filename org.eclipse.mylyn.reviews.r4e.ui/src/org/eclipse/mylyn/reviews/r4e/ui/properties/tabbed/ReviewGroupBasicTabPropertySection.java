@@ -94,7 +94,7 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		FormData data = null;
 
 		//Group Name (Read-only for now)
-		fNameText = widgetFactory.createCLabel(composite, "", SWT.READ_ONLY);
+		fNameText = widgetFactory.createCLabel(composite, "");
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -109,7 +109,7 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		nameLabel.setLayoutData(data);
 
 		//Group Folder (read-only)
-		fFolderText = widgetFactory.createCLabel(composite, "", SWT.READ_ONLY);
+		fFolderText = widgetFactory.createCLabel(composite, "");
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

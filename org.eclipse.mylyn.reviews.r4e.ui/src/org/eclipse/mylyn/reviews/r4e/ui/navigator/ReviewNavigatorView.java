@@ -1,4 +1,4 @@
-// $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.disallowReturnMutable, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity
+// $codepro.audit.able com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.disallowReturnMutable, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity
 /*******************************************************************************
  * Copyright (c) 2010 Ericsson Research Canada
  * 
@@ -29,7 +29,10 @@ import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
@@ -186,6 +189,14 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		if (null != fPartListener) getSite().getPage().removePartListener(fPartListener);
 		if (null != fContextMenu && !fContextMenu.isDisposed()) fContextMenu.dispose();
 		if (null != fActionSet)	fActionSet.dispose();
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
+		if (project.exists()) {
+			try {
+				project.delete(true, null);
+			} catch (CoreException e) {
+				//Do nothing
+			}
+		}
 		super.dispose();
 
 	}
@@ -210,6 +221,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		fReviewTreeViewer.setLabelProvider(provider);
 		fReviewTreeViewer.setComparator(new LinePositionComparator());
 		fReviewTreeViewer.setInput(getInitalInput());
+		fReviewTreeViewer.setSorter(new LineViewerSorter());
 		
 		//Set Context menus
 		final MenuManager menuMgr = new MenuManager();

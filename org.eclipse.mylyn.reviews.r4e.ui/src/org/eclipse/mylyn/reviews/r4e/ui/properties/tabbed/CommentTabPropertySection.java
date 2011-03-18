@@ -93,7 +93,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	    FormData data = null;
 	   
 	    //Author (read-only)
-	    fAuthorText = widgetFactory.createCLabel(composite, "", SWT.READ_ONLY);
+	    fAuthorText = widgetFactory.createCLabel(composite, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -108,7 +108,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	    authorLabel.setLayoutData(data);
 	    
 	    //Creation Date (read-only)
-	    fCreationDateText = widgetFactory.createCLabel(composite, "", SWT.READ_ONLY);
+	    fCreationDateText = widgetFactory.createCLabel(composite, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

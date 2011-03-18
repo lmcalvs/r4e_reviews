@@ -178,7 +178,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 * Method getDefaultSorter.
 	 * @return ViewerComparator
 	 */
-	public ViewerComparator getDefaultSorter() {
+	public ViewerComparator getAlphaSorter() {
 		return fAlphaReviewSorter;
 	}
 	

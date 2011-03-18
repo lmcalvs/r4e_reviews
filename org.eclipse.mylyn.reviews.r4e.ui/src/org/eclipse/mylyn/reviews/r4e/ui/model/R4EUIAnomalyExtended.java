@@ -570,6 +570,8 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					} else {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 					}
 					break;
 				

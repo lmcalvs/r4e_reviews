@@ -67,7 +67,7 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 	    FormData data = null;
 	   
 	    //Position (read-only)
-	    fPositionText = widgetFactory.createCLabel(composite, "", SWT.READ_ONLY);
+	    fPositionText = widgetFactory.createCLabel(composite, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
