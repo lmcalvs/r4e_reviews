@@ -196,14 +196,8 @@ public class AnomalyInputDialog extends FormDialog {
 		final Composite composite = sform.getBody();
 		final GridLayout layout = new GridLayout(4, false);
 		composite.setLayout(layout);
-        
-        //Grid data values
-        final GridData labelData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-        final GridData textSingleData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textSingleData.horizontalSpan = 3;
-        final GridData textMultiData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textMultiData.horizontalSpan = 3;
-        
+        GridData textGridData = null;
+
 		//Basic parameters section
         final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
@@ -227,16 +221,20 @@ public class AnomalyInputDialog extends FormDialog {
         
         //Anomaly Title
         Label label = toolkit.createLabel(basicSectionClient, ADD_ANOMALY_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fAnomalyTitleInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
-        fAnomalyTitleInputTextField.setLayoutData(textSingleData);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        fAnomalyTitleInputTextField.setLayoutData(textGridData);
         
         //Anomaly Description
         label = toolkit.createLabel(basicSectionClient, ADD_DESCRIPTION_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fAnomalyDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
-        textMultiData.heightHint = fAnomalyTitleInputTextField.getLineHeight() * 3;
-        fAnomalyDescriptionInputTextField.setLayoutData(textMultiData);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        textGridData.heightHint = fAnomalyTitleInputTextField.getLineHeight() * 3;
+        fAnomalyDescriptionInputTextField.setLayoutData(textGridData);
     }
     
 	/**

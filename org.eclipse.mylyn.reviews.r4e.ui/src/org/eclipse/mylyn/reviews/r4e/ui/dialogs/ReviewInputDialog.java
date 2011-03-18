@@ -355,21 +355,17 @@ public class ReviewInputDialog extends FormDialog {
 		final Composite composite = sform.getBody();
 		final GridLayout layout = new GridLayout(4, false);
 		composite.setLayout(layout);
-		
-        //Grid data values
-        final GridData labelData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-        final GridData textSingleData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textSingleData.horizontalSpan = 3;
-        final GridData textMultiData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textMultiData.horizontalSpan = 3;
+        GridData textGridData = null;
         
 		//Review Type
         Label label = toolkit.createLabel(composite, "Review Type: ");
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fReviewType = new CCombo(composite, SWT.BORDER | SWT.READ_ONLY);
 		fReviewType.setItems(REVIEW_TYPES);
 		fReviewType.select(0);
-		fReviewType.setLayoutData(textSingleData);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		fReviewType.setLayoutData(textGridData);
 		
 		//Basic parameters section
         final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
@@ -394,16 +390,20 @@ public class ReviewInputDialog extends FormDialog {
         
         //Review Name
         label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_NAME_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fReviewNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
-        fReviewNameInputTextField.setLayoutData(textSingleData);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+        fReviewNameInputTextField.setLayoutData(textGridData);
         
         //Review Description
         label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_DESCRIPTION_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fReviewDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
-        textMultiData.heightHint = fReviewNameInputTextField.getLineHeight() * 3;
-        fReviewDescriptionInputTextField.setLayoutData(textMultiData);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		textGridData.heightHint = fReviewNameInputTextField.getLineHeight() * 3;
+        fReviewDescriptionInputTextField.setLayoutData(textGridData);
               
         //Extra parameters section
         final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
@@ -428,7 +428,7 @@ public class ReviewInputDialog extends FormDialog {
 
         //Project
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_PROJECT_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fProjectsCombo = new CCombo(extraSectionClient, SWT.BORDER | SWT.READ_ONLY);
 		final String[] projects = (String[]) fReviewGroup.getReviewGroup().getAvailableProjects().toArray();
 		if (0 == projects.length) fProjectsCombo.setEnabled(false);
@@ -439,32 +439,43 @@ public class ReviewInputDialog extends FormDialog {
 		
 		//Components
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_COMPONENTS_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		final String[] components = (String[]) fReviewGroup.getReviewGroup().getAvailableComponents().toArray();
-        fComponents = new EditableListWidget(toolkit, extraSectionClient, textSingleData, null, 0, CCombo.class,
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+        fComponents = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
         		components);
 		if (0 == components.length) fComponents.setEnabled(false);
 
         //Entry Criteria
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_ENTRY_CRITERIA_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fEntryCriteriaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
         if (null != fReviewGroup.getGroup().getDefaultEntryCriteria()) {
         	fEntryCriteriaTextField.setText(fReviewGroup.getGroup().getDefaultEntryCriteria());
         }
-        fEntryCriteriaTextField.setLayoutData(textMultiData);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		textGridData.heightHint = fReviewNameInputTextField.getLineHeight() * 3;
+        fEntryCriteriaTextField.setLayoutData(textGridData);
 
         //Objectives
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_OBJECTIVES_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fObjectivesTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
-        fObjectivesTextField.setLayoutData(textMultiData);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		textGridData.heightHint = fReviewNameInputTextField.getLineHeight() * 3;
+        fObjectivesTextField.setLayoutData(textGridData);
         
         //Reference Material
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_REFERENCE_MATERIAL_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fReferenceMaterialTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
-        fReferenceMaterialTextField.setLayoutData(textMultiData);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		textGridData.heightHint = fReviewNameInputTextField.getLineHeight() * 3;
+        fReferenceMaterialTextField.setLayoutData(textGridData);
 	}
     
 	/**

@@ -431,7 +431,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		}
 		
 		//Get Target version from Version control system
-		R4EFileVersion targetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
+		final R4EFileVersion targetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(targetVersion, R4EUIModelController.getReviewer());
 		targetVersion.setResource(aTargetFile);
 		targetVersion.setPlatformURI(ResourceUtils.toPlatformURI(aTargetFile).toString());
@@ -458,7 +458,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		
 		//Register Base file to the local storage space
-		StringBuffer message = new StringBuffer();
+		final StringBuffer message = new StringBuffer();
 		Exception exc = null;
 		try {
 			if (null != aBaseFile && null != baseVersion ) {
@@ -470,17 +470,18 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 					Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 					message.append("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 					message.append("\nUnable to extract contents from base IFile while adding base file version. ");
-					message.append((null != aBaseFile.getLocationURI() ? ", IFile path: " + aBaseFile.getLocationURI().getPath() : ""));
+					message.append(((null != aBaseFile.getLocationURI()) ? ", IFile path: " + aBaseFile.getLocationURI().getPath() : ""));
 					Activator.Ftracer.traceWarning(message.toString());
 					exc = e;
 					message.append("\n\n");
 				} finally {
-					if (is != null) {
+					if (null != is) {
 						try {
 							is.close();
 						} catch (IOException e) {
 							message.setLength(0);
 							message.append("IOException while trying to close input stream");
+							Activator.getDefault().logWarning(message.toString(), e);
 							Activator.Ftracer.traceWarning(message.toString());
 						}
 					}
@@ -491,21 +492,22 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			InputStream is = null;
 			try {
 				is = aTargetFile.getContents(false);
-				String locTargetFileId = revRepo.registerReviewBlob(is);
+				final String locTargetFileId = revRepo.registerReviewBlob(is);
 				targetVersion.setLocalVersionID(locTargetFileId);
 			} catch (CoreException e) {
 				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 				message.append("Unable to extract contents from target IFile while adding target file version.");
-				message.append((null != aTargetFile.getLocationURI() ? ", IFile path: " + aTargetFile.getLocationURI().getPath() : ""));
-				if (exc == null) exc = e;
+				message.append(((null != aTargetFile.getLocationURI()) ? ", IFile path: " + aTargetFile.getLocationURI().getPath() : ""));
+				if (null == exc) exc = e;
 			} finally {
-				if (is != null) {
+				if (null != is) {
 					try {
 						is.close();
 					} catch (IOException e) {
 						message.setLength(0);
 						message.append("IOException while trying to close input stream");
+						Activator.getDefault().logWarning(message.toString(), e);
 						Activator.Ftracer.traceWarning(message.toString());
 					}
 				}
@@ -515,10 +517,10 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 			message.append("Local File repository error detected while adding File Context. Cannot register files in the reviews repository");
-			if (exc == null) exc = e;
+			if (null == exc) exc = e;
 		}
 
-		if (message.length() > 0 && exc != null) {
+		if (message.length() > 0 && null != exc) {
 			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, message.toString(),
 					new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, exc.getMessage(), exc), IStatus.WARNING);
 			dialog.open();

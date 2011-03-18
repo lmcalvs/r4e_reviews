@@ -97,9 +97,21 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	protected Text fDescriptionText = null;
 	
+	/**
+	 * Field fColumnPhase.
+	 */
 	TableColumn fColumnPhase = null;
+	/**
+	 * Field fColumnOwner.
+	 */
 	TableColumn fColumnOwner = null;
+	/**
+	 * Field fColumnStartDate.
+	 */
 	TableColumn fColumnStartDate = null;
+	/**
+	 * Field fColumnEndDate.
+	 */
 	TableColumn fColumnEndDate = null;
 	
 	/**
@@ -127,9 +139,21 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	private TableItem fPhaseRework = null;
 	
+	/**
+	 * Field fPlanningPhaseOwnerCombo.
+	 */
 	protected CCombo fPlanningPhaseOwnerCombo = null;
+	/**
+	 * Field fPreparationPhaseOwnerCombo.
+	 */
 	protected CCombo fPreparationPhaseOwnerCombo = null;
+	/**
+	 * Field fDecisionPhaseOwnerCombo.
+	 */
 	protected CCombo fDecisionPhaseOwnerCombo = null;
+	/**
+	 * Field fReworkPhaseOwnerCombo.
+	 */
 	protected CCombo fReworkPhaseOwnerCombo = null;
 
 	
@@ -404,8 +428,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    fDecisionPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
 	    fDecisionPhaseOwnerCombo.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
+				//Nothing to do
 			}
 
 			public void focusLost(FocusEvent e) {
@@ -435,8 +458,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    fReworkPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
 	    fReworkPhaseOwnerCombo.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
+				//Nothing to do
 			}
 
 			public void focusLost(FocusEvent e) {
@@ -484,7 +506,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 				fEndDateText.setText(dateFormat.format(modelReview.getEndDate()));
 			}
 			fDescriptionText.setText(modelReview.getExtraNotes());
-			int columnWidth = fPhaseTable.getClientArea().width/fPhaseTable.getColumnCount();
+			final int columnWidth = fPhaseTable.getClientArea().width/fPhaseTable.getColumnCount();
 			fColumnPhase.setWidth(columnWidth);
 			fColumnOwner.setWidth(columnWidth);
 			fColumnStartDate.setWidth(columnWidth);
@@ -498,7 +520,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 			final String[] participantsStr = participantsList.toArray(new String[participantsList.size()]);
 			
 			R4EReviewPhaseInfo phaseInfo = uiReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
-			R4EReviewPhaseInfo currentPhaseInfo = modelReview.getCurrent();
+			final R4EReviewPhaseInfo currentPhaseInfo = modelReview.getCurrent();
 			if (null != phaseInfo) {
 				fPhasePlanning.setText(1, phaseInfo.getPhaseOwnerID());
 				fPhasePlanning.setText(2, (null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
@@ -658,8 +680,11 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 		}
 	}
 	
+	/**
+	 * Method setPhaseControlVisibility.
+	 */
 	private void setPhaseControlVisibility() {
-		R4EReviewPhase currentPhase = ((R4EFormalReview)((R4EUIReviewExtended)fProperties.getElement()).
+		final R4EReviewPhase currentPhase = ((R4EFormalReview)((R4EUIReviewExtended)fProperties.getElement()).
 				getReview()).getCurrent().getType();
 		switch (currentPhase.getValue()) {
 			case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:

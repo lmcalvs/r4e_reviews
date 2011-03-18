@@ -19,7 +19,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.editors;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Iterator;
@@ -30,17 +29,11 @@ import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ICompareNavigator;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
-import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
@@ -48,7 +41,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
@@ -138,11 +130,11 @@ public class EditorProxy {
 					//openCompareEditor(context); //TODO this was used when using Egit compare engine
 				} else {
 					targetFile = context.getTargetFile();
-					if (targetFile != null) {
+					if (null != targetFile) {
 						openSingleEditor(aPage, targetFile, position);
-					} else {
+					} /*else {
 						//TODO can this happen??? or this should be an error?
-					}
+					}*/
 				}
 			} catch (PartInitException e) {
 				traceException(e);
@@ -169,8 +161,8 @@ public class EditorProxy {
 	 * @throws FileNotFoundException
 	 * @throws ReviewVersionsException
 	 */
+	/*
 	//TODO this was used when using Egit compare engine
-	@SuppressWarnings("unused")
 	private static void openCompareEditor(R4EUIFileContext context) throws FileNotFoundException,
 			ReviewVersionsException {
 		final R4EUIReviewItem commitItem = (R4EUIReviewItem) (context.getParent());
@@ -185,7 +177,8 @@ public class EditorProxy {
 		versionsIf.openCompareEditor(sessionNum, context.getFileContext());
 		versionsIf.closeCompareSession(sessionNum);
 	}
-
+	*/
+	
 	/**
 	 * Method openSingleEditor.
 	 *  	Open the single-mode default editor for the file type
@@ -228,7 +221,7 @@ public class EditorProxy {
 	 * Method openCompareEditor.
 	 *  	Open the compare-mode default editor for the file types
 	 * @param aPage IWorkbenchPage - the current workbench page
-	 * @param aBaseFileURI URI - the base (or reference) file URI
+	 * @param aBaseFile IFile - the base (or reference) file 
 	 * @param aTargetFile IFile
 	 * @param aTargetFileEditable boolean - flag set whether the target file is editable or not
 	 * @param selectionIndex int - the index of the selection to go to in the target file

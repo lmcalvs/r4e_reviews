@@ -212,14 +212,8 @@ public class ParticipantInputDialog extends FormDialog {
 		final Composite composite = sform.getBody();
 		final GridLayout layout = new GridLayout(4, false);
 		composite.setLayout(layout);
+        GridData textGridData = null;
 		
-        //Grid data values
-        final GridData labelData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-        final GridData textSingleData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textSingleData.horizontalSpan = 3;
-        final GridData textMultiData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textMultiData.horizontalSpan = 3;
-        
 		//Basic parameters section
         final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
@@ -243,9 +237,11 @@ public class ParticipantInputDialog extends FormDialog {
         
         //Participant Id
         Label label = toolkit.createLabel(basicSectionClient, ADD_PARTICIPANT_ID_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fParticipantIdInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
-        fParticipantIdInputTextField.setLayoutData(textSingleData);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        fParticipantIdInputTextField.setLayoutData(textGridData);
               
         //Extra parameters section
         final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
@@ -270,16 +266,20 @@ public class ParticipantInputDialog extends FormDialog {
 
 		//Roles
         label = toolkit.createLabel(extraSectionClient, "Roles: ");
-        label.setLayoutData(labelData);
-        fRoleTypes = new EditableListWidget(toolkit, extraSectionClient, textSingleData, null, 0, CCombo.class,
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        fRoleTypes = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
         		R4EUIConstants.PARTICIPANT_ROLES);
 
         //Focus Area
         label = toolkit.createLabel(extraSectionClient, "Focus Area: ");
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fFocusAreaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
-        textMultiData.heightHint = fFocusAreaTextField.getLineHeight() * 3;
-        fFocusAreaTextField.setLayoutData(textMultiData);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        textGridData.heightHint = fFocusAreaTextField.getLineHeight() * 3;
+        fFocusAreaTextField.setLayoutData(textGridData);
 	}
     
 	/**

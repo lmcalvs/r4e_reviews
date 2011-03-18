@@ -312,17 +312,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 		final ScrolledForm sform = mform.getForm();
 		final Composite composite = sform.getBody();
 		composite.setLayout(new GridLayout());
-		
-        //Grid data values
-		final GridLayout layout = new GridLayout(4, false);
-        final GridData labelData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-        final GridData textSingleData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textSingleData.horizontalSpan = 3;
-        final GridData textMultiData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textMultiData.horizontalSpan = 3;
-        final GridData buttonData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-        buttonData.horizontalSpan = 1;
-        
+        GridData textGridData = null;
+
 		//Basic parameters section
         final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
@@ -340,26 +331,30 @@ public class ReviewGroupInputDialog extends FormDialog {
 		});
         
         final Composite basicSectionClient = toolkit.createComposite(basicSection);
-        basicSectionClient.setLayout(layout);
+        basicSectionClient.setLayout(new GridLayout(4, false));
         basicSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         basicSection.setClient(basicSectionClient);
         
         //Review Group Name
         Label label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_NAME_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fGroupNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
-        fGroupNameInputTextField.setLayoutData(textSingleData);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        fGroupNameInputTextField.setLayoutData(textGridData);
         
         //Group Folder
         label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fGroupFolderInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
         final GridData folderTextData = new GridData(GridData.FILL, GridData.BEGINNING, true, false);
         folderTextData.horizontalSpan = 2;
         fGroupFolderInputTextField.setLayoutData(folderTextData);
         final Button folderButton = toolkit.createButton(basicSectionClient, "", SWT.NONE);
         folderButton.setImage(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER).createImage()); // $codepro.audit.disable methodChainLength
-        folderButton.setLayoutData(buttonData);
+        textGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+        textGridData.horizontalSpan = 1;
+        folderButton.setLayoutData(textGridData);
         folderButton.addSelectionListener(new SelectionAdapter() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 			@SuppressWarnings("synthetic-access")
 			@Override
@@ -376,10 +371,12 @@ public class ReviewGroupInputDialog extends FormDialog {
         
         //Group Description
         label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_DESCRIPTION_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fGroupDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
-        textMultiData.heightHint = fGroupNameInputTextField.getLineHeight() * 3;
-        fGroupDescriptionInputTextField.setLayoutData(textMultiData);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        textGridData.heightHint = fGroupNameInputTextField.getLineHeight() * 3;
+        fGroupDescriptionInputTextField.setLayoutData(textGridData);
         
         //Extra parameters section
         final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
@@ -398,25 +395,32 @@ public class ReviewGroupInputDialog extends FormDialog {
 		});
         
         final Composite extraSectionClient = toolkit.createComposite(extraSection);
-        extraSectionClient.setLayout(layout);
+        extraSectionClient.setLayout(new GridLayout(4, false));
         extraSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         extraSection.setClient(extraSectionClient);
         
 		//Available Projects
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_GROUP_AVAILABLE_PROJECTS_DIALOG_VALUE);
-        label.setLayoutData(labelData);
-        fAvailableProjects = new EditableListWidget(toolkit, extraSectionClient, textSingleData, null, 0, Text.class, null);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        fAvailableProjects = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, Text.class, null);
         
 		//Available Components
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_GROUP_AVAILABLE_COMPONENTS_DIALOG_VALUE);
-        label.setLayoutData(labelData);
-        fAvailableComponents = new EditableListWidget(toolkit, extraSectionClient, textSingleData, null, 0, Text.class, null);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        fAvailableComponents = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, Text.class, null);
         
         // Default Entry Criteria
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fDefaultEntryCriteriaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
-        fDefaultEntryCriteriaTextField.setLayoutData(textMultiData);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        textGridData.heightHint = fGroupNameInputTextField.getLineHeight() * 3;
+        fDefaultEntryCriteriaTextField.setLayoutData(textGridData);
 	}
 	
     /**

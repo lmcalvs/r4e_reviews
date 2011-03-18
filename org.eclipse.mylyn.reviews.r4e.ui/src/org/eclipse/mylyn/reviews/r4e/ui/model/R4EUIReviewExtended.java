@@ -392,6 +392,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	
 	/**
 	 * Method checkReworkStatus.
+	 * @param aErrorMessage AtomicReference<String>
 	 * @return boolean
 	 */
 	public boolean checkReworkStatus(AtomicReference<String> aErrorMessage) { // $codepro.audit.disable booleanMethodNamingConvention
