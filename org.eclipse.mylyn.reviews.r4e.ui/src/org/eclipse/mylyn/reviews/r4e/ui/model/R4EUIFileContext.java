@@ -193,10 +193,13 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		//create a temporary file from the data in the local repository
 		InputStream is = null;
 		IFile file = null;
+
 		try {
-			is = ((IFile)aVersion.getResource()).getContents();
-			if (aVersion.getLocalVersionID().equals(revRepo.blobIdFor(is))) {
-				file = (IFile) aVersion.getResource();
+			if ((IFile) aVersion.getResource() != null) {
+				is = ((IFile) aVersion.getResource()).getContents();
+				if (aVersion.getLocalVersionID().equals(revRepo.blobIdFor(is))) {
+					file = (IFile) aVersion.getResource();
+				}
 			}
 		} catch (ReviewsFileStorageException e) {
 			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");

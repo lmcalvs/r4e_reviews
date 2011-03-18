@@ -16,6 +16,9 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.versions;
 
+import java.io.InputStream;
+import java.util.List;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
@@ -50,6 +53,15 @@ public interface ReviewsVersionsIF {
 	public CommitDescriptor getLastCommitInfo(IProject project) throws ReviewVersionsException;
 
 	/**
+	 * Retrieves the list of commit ids from the commit log
+	 * 
+	 * @param project
+	 * @return
+	 * @throws ReviewVersionsException
+	 */
+	public List<String> getCommitIds(IProject project) throws ReviewVersionsException;
+
+	/**
 	 * @param project
 	 * @param commitId
 	 * @return
@@ -69,6 +81,16 @@ public interface ReviewsVersionsIF {
 	 */
 	public R4EItem createCommitReviewItem(IProject project, String commiId, R4EUser reviewUser)
 			throws ReviewVersionsException;
+
+	/**
+	 * User application is responsible to close the stream
+	 * 
+	 * @param project
+	 * @param Id
+	 * @return
+	 * @throws ReviewVersionsException
+	 */
+	public InputStream getBlobById(IProject project, String Id) throws ReviewVersionsException;
 
 	/**
 	 * Obtain the repository information for the last commit of the given file
