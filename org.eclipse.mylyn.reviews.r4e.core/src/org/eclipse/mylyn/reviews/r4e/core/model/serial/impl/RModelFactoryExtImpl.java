@@ -398,6 +398,10 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			throw new ResourceHandlingException(sb.toString());
 		}
 
+		// refresh transient references
+		// aReviewGroup.getReviewsMap().put(aReviewName, review);
+		aReviewGroup.getReviews().add(review);
+
 		URI folder = getFolderPath(review.eResource().getURI());
 		// Load resources from all participants
 		List<URI> usrFiles = fReader.selectUsrCommentsRes(folder);
