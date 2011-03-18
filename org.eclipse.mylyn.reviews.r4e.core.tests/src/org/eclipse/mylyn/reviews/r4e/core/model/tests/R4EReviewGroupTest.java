@@ -23,6 +23,7 @@ import junit.textui.TestRunner;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -34,6 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.R4EReader;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.R4EWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
+import org.junit.Test;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>R4E Review Group</b></em>'. <!-- end-user-doc -->
@@ -448,6 +450,55 @@ public class R4EReviewGroupTest extends TestCase {
 	// File groupResourceFolder = new File(loadedGroup.eResource().getURI().trimSegments(1).devicePath());
 	// assertEquals(storedFolder, groupResourceFolder);
 	// }
+
+	/**
+	 * Make sure the invited to map is still usable after re-opening of a review.
+	 */
+	@Test
+	public void testReviewReopening() {
+		// From Objects to Disk
+		R4EReviewGroup loadedGroup = null;
+		try {
+			loadedGroup = GoldenStubHandler.serializeStub();
+		} catch (ResourceHandlingException e) {
+			e.printStackTrace();
+			fail("Exception");
+		}
+
+		// initialise local refs
+		String dReviewName = "ReviewTwo";
+		String dUser = "Jerry20";
+		// Save a reference to the initial review
+		R4EReview oReview = loadedGroup.getUserReviews().get(dUser).getInvitedToMap().get(dReviewName);
+		R4EReview nReview = null;
+
+		// Action: Close the review
+		fFactory.closeR4EReview(oReview);
+		
+		try {
+			nReview = fFactory.openR4EReview(loadedGroup, dReviewName);
+		} catch (ResourceHandlingException e) {
+			e.printStackTrace();
+			fail("Exception");
+		}
+		
+		assertNotNull("Opened Review is null", nReview);
+
+		// A new instance of the review should have been created
+		assertNotSame(oReview, nReview);
+		// Read the review reference available in the invitedto map
+		R4EReview wasInvitedTo = loadedGroup.getUserReviews().get(dUser).getInvitedToMap().get(dReviewName);
+
+		// The reference resolved from the invited to, shall be the same as the new one re-opened and without manually
+		// refreshing the reference to the new instance
+		assertSame(nReview, wasInvitedTo);
+
+		// The container group shall be re-initialised as part of the review opening sequence
+		EObject rContainer = nReview.eContainer();
+		assertNotNull(rContainer);
+		// Make sure that the reference to the parent group is updated to the original parent group
+		assertSame(loadedGroup, nReview.eContainer());
+	}
 
 	/**
 	 * @param groupFileUri
