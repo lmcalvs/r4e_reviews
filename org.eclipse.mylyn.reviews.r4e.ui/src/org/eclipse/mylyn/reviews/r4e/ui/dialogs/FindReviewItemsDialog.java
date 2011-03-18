@@ -134,13 +134,37 @@ public class FindReviewItemsDialog extends FormDialog {
      */
     protected CommitDescriptor fReviewItemDescriptor;
     
+    /**
+     * Field fTitleText.
+     */
     Label fTitleText = null;
+    /**
+     * Field fIdText.
+     */
     Label fIdText = null;
+    /**
+     * Field fAuthorText.
+     */
     Label fAuthorText = null;
+    /**
+     * Field fCommitterText.
+     */
     Label fCommitterText = null;
+    /**
+     * Field fDateText.
+     */
     Label fDateText = null;
+    /**
+     * Field fMessageText.
+     */
     Label fMessageText = null;
+    /**
+     * Field fComponentsList.
+     */
     List fComponentsList = null;
+	/**
+	 * Field fDateFormat.
+	 */
 	final SimpleDateFormat fDateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);	
 
 	
@@ -151,9 +175,6 @@ public class FindReviewItemsDialog extends FormDialog {
 	/**
 	 * Constructor for R4EReviewGroupInputDialog.
 	 * @param aParentShell Shell
-	 * @param aDialogTitle String
-	 * @param aItemDetailsMessage String
-	 * @param aItemComponentsMessage String
 	 * @param aInputProject IProject
 	 */
 	public FindReviewItemsDialog(Shell aParentShell, IProject aInputProject) {
@@ -274,7 +295,7 @@ public class FindReviewItemsDialog extends FormDialog {
 										dialog.open();
 										return;
 									} finally {
-										if (is != null) {
+										if (null != is) {
 											try {
 												is.close();
 											} catch (IOException e) {
@@ -324,7 +345,7 @@ public class FindReviewItemsDialog extends FormDialog {
 									dialog.open();
 									return;
 								} finally {
-									if (is != null) {
+									if (null != is) {
 										try {
 											is.close();
 										} catch (IOException e) {
@@ -395,14 +416,14 @@ public class FindReviewItemsDialog extends FormDialog {
     		composite.setLayout(new GridLayout(4, false));
     		
     		//Add Commit List in drop-down menu
-            Label label = toolkit.createLabel(composite, "Available Commits: ");
+            final Label label = toolkit.createLabel(composite, "Available Commits: ");
             label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
     		final CCombo commitList = new CCombo(composite, SWT.WRAP | SWT.READ_ONLY);
     		commitList.setItems(getCommitTitleList(versionsIf));
     		commitList.setTextLimit(DIALOG_COMBO_MAX_CHARACTERS);
     		commitList.select(0);
     		fReviewItemDescriptor = versionsIf.getCommitInfo(fInputProject, versionsIf.getCommitIds(fInputProject).get(0));
-    		GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+    		final GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
             textGridData.horizontalSpan = 3;
     		commitList.setLayoutData(textGridData);
     		commitList.addSelectionListener(new SelectionListener() {
@@ -433,8 +454,8 @@ public class FindReviewItemsDialog extends FormDialog {
     
     /**
      * Method createReviewItemDetails.
+     * @param aToolkit FormToolkit
      * @param aParent Composite
-     * @param aCommit CommitDescriptor
      */
     private void createReviewItemDetails(FormToolkit aToolkit, final ScrolledForm aParent) {
         
@@ -474,7 +495,6 @@ public class FindReviewItemsDialog extends FormDialog {
         fIdText = aToolkit.createLabel(basicSectionClient, fReviewItemDescriptor.getId(), SWT.NONE);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
-        textGridData.widthHint = 80;
         fIdText.setLayoutData(textGridData);
 	    
 	    //Author
@@ -483,7 +503,6 @@ public class FindReviewItemsDialog extends FormDialog {
         fAuthorText = aToolkit.createLabel(basicSectionClient, fReviewItemDescriptor.getAuthor(), SWT.NONE);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
-        textGridData.widthHint = 80;
         fAuthorText.setLayoutData(textGridData);
 	      
 	    //Committer
@@ -492,17 +511,15 @@ public class FindReviewItemsDialog extends FormDialog {
         fCommitterText = aToolkit.createLabel(basicSectionClient, fReviewItemDescriptor.getCommitter(), SWT.NONE);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
-        textGridData.widthHint = 80;
         fCommitterText.setLayoutData(textGridData);
 	    
 	    //Date
         final Label datelabel = aToolkit.createLabel(basicSectionClient, "Date: ", SWT.WRAP);
 	    datelabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		String dateStr = fDateFormat.format(new Date(fReviewItemDescriptor.getCommitDate().longValue()));
+		final String dateStr = fDateFormat.format(new Date(fReviewItemDescriptor.getCommitDate().longValue()));
         fDateText = aToolkit.createLabel(basicSectionClient, dateStr, SWT.NONE);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
-        textGridData.widthHint = 80;
         fDateText.setLayoutData(textGridData);
 	    
 	    //Message
@@ -511,7 +528,6 @@ public class FindReviewItemsDialog extends FormDialog {
         fMessageText = aToolkit.createLabel(basicSectionClient, fReviewItemDescriptor.getMessage(), SWT.NONE);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
-        textGridData.widthHint = 80;
         fMessageText.setLayoutData(textGridData);
 	    
 	    basicSectionClient.layout();
@@ -519,8 +535,8 @@ public class FindReviewItemsDialog extends FormDialog {
     
     /**
      * Method createReviewItemComponents.
+     * @param aToolkit FormToolkit
      * @param aParent Composite
-     * @param aCommit CommitDescriptor
      */
     private void createReviewItemComponents(FormToolkit aToolkit, final ScrolledForm aParent) {
         
@@ -557,20 +573,24 @@ public class FindReviewItemsDialog extends FormDialog {
 	 * Method getCommitTitleList.
 	 * @param aVersionsIf ReviewsVersionsIF
 	 * @return String[]
+	 * @throws ReviewVersionsException
 	 */
     public String[] getCommitTitleList(ReviewsVersionsIF aVersionsIf) throws ReviewVersionsException {
-    	java.util.List<String> commitIds = aVersionsIf.getCommitIds(fInputProject);
-    	java.util.List<String> commitTitles = new ArrayList<String>();
+    	final java.util.List<String> commitIds = aVersionsIf.getCommitIds(fInputProject);
+    	final java.util.List<String> commitTitles = new ArrayList<String>();
     	String title = null;
     	for (String commitId : commitIds) {
     		title = aVersionsIf.getCommitInfo(fInputProject, commitId).getTitle();
     		//Truncate title is it is too long to avoid screwing up the display
-    		if (title.length() > DIALOG_COMBO_MAX_CHARACTERS) title = (title.substring(0, DIALOG_COMBO_MAX_CHARACTERS - 3) + "...");
+    		if (title.length() > DIALOG_COMBO_MAX_CHARACTERS) title = (title.substring(0, DIALOG_COMBO_MAX_CHARACTERS) + "...");
     		commitTitles.add(title);
     	}
     	return commitTitles.toArray(new String[commitTitles.size()]);
     }
     
+	/**
+	 * Method refresh.
+	 */
     void refresh() {
     	fTitleText.setText(fReviewItemDescriptor.getTitle());
     	fIdText.setText(fReviewItemDescriptor.getId());

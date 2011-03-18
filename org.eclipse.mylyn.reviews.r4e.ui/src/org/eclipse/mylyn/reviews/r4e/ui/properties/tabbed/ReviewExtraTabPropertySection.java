@@ -306,7 +306,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fExitDecisionCombo, ITabbedPropertyConstants.VSPACE);
-	    List<String> participants;
+	    List<String> participants = null;
 	    if (null != R4EUIModelController.getActiveReview()) {
 	    	participants = R4EUIModelController.getActiveReview().getParticipantIDs();
 	    } else {
@@ -368,9 +368,9 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	public void refresh() {
 		fRefreshInProgress = true;
 		final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
-		String[] availableProjects = (String[]) ((R4EUIReviewGroup)((R4EUIReviewBasic)fProperties.getElement()).getParent()).getGroup().getAvailableProjects().toArray();
+		final String[] availableProjects = (String[]) ((R4EUIReviewGroup)((R4EUIReviewBasic)fProperties.getElement()).getParent()).getGroup().getAvailableProjects().toArray();
 		fProjectCombo.setItems(availableProjects);
-		String project = modelReview.getProject();
+		final String project = modelReview.getProject();
 		for (int i = 0; i < availableProjects.length; i++) {
 			if (project.equals(availableProjects[i])) {
 				fProjectCombo.select(i);
@@ -495,7 +495,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			final String currentUser = R4EUIModelController.getReviewer();
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
 			
-			if (aInstanceId == 1) {
+			if (1 == aInstanceId) {
 				//Update roles
 				modelReview.getComponents().clear();
 				for (Item item : aItems) {

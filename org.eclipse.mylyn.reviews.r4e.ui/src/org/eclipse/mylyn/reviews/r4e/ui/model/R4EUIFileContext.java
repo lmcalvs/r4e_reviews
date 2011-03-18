@@ -189,13 +189,13 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			return null;
 		}
 		
-		//First see if the right file is alreadyu in the workspace, if so, return that file.  Otherwise
+		//First see if the right file is already in the workspace, if so, return that file.  Otherwise
 		//create a temporary file from the data in the local repository
 		InputStream is = null;
 		IFile file = null;
 
 		try {
-			if ((IFile) aVersion.getResource() != null) {
+			if (null != (IFile) aVersion.getResource()) {
 				is = ((IFile) aVersion.getResource()).getContents();
 				if (aVersion.getLocalVersionID().equals(revRepo.blobIdFor(is))) {
 					file = (IFile) aVersion.getResource();
@@ -204,12 +204,11 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		} catch (ReviewsFileStorageException e) {
 			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-			e.printStackTrace();
 		} catch (CoreException e) {
 			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 		} finally {
-			if (is != null) {
+			if (null != is) {
 				try {
 					is.close();
 				} catch (IOException e) {
@@ -221,7 +220,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		
 		if (null == file) {
 			//Get input blob
-			IProgressMonitor monitor = null;   //not used for now
+			final IProgressMonitor monitor = null;   //not used for now
 			is = null;
 			try {
 				//Extract data from local repository
@@ -231,12 +230,12 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				//TODO For now we use a dummy project in the workspace to store the temp files.  This should be improved later
 				//IPath path = Activator.getDefault().getStateLocation().addTrailingSeparator().append("temp");
 				//IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
-				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
+				final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
 				if (!project.exists()) project.create(null);
 				if (!project.isOpen()) project.open(null);
-				IFolder folder = project.getFolder(R4EUIConstants.R4E_TEMP_FOLDER);
+				final IFolder folder = project.getFolder(R4EUIConstants.R4E_TEMP_FOLDER);
 				if (!folder.exists()) folder.create(IResource.NONE, true, null);
-				file = folder.getFile(aVersion.getName());
+				file = folder.getFile(aVersion.getName() + "_" + aVersion.getVersionID());
 				//Always start from fresh copy because we never know what the temp file version is
 				if (file.exists()) file.delete(true, null);
 				file.create(is, IResource.NONE, null);
@@ -257,7 +256,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 								IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
 				dialog.open();
 			} finally {
-				if (is != null) {
+				if (null != is) {
 					try {
 						is.close();
 					} catch (IOException e) {
@@ -533,9 +532,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			}
 
 			baseFileVersion.setFileRevision(null);
-			if (revRegistry != null) {
+			if (null != revRegistry) {
 				try {
-					IFileRevision fileRev = revRegistry.getIFileRevision(null, baseFileVersion);
+					final IFileRevision fileRev = revRegistry.getIFileRevision(null, baseFileVersion);
 					baseFileVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
 					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
@@ -557,9 +556,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			}
 
 			targetFileVersion.setFileRevision(null);
-			if (revRegistry != null) {
+			if (null != revRegistry) {
 				try {
-					IFileRevision fileRev = revRegistry.getIFileRevision(null, targetFileVersion);
+					final IFileRevision fileRev = revRegistry.getIFileRevision(null, targetFileVersion);
 					targetFileVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
 					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");

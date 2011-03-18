@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableEditor;
@@ -101,6 +102,9 @@ public class EditableListWidget {
 	 */
 	protected int fInstanceId = 0;
 	
+	/**
+	 * Field fValues.
+	 */
 	protected String[] fValues = null;
 	
 	// ------------------------------------------------------------------------
@@ -155,7 +159,6 @@ public class EditableListWidget {
      * 		Builds the editable list in the provided table
      * @param aToolkit - FormToolkit
      * @param aEditableWidgetClass - Class<?>
-     * @param aEditableValues - String[]
      */
 	public void createEditableListFromTable(FormToolkit aToolkit, final Class<?> aEditableWidgetClass) {
 
@@ -387,12 +390,18 @@ public class EditableListWidget {
 		fValues = aValues;
 	}
 	
+	/**
+	 * Method setTableHeader.
+	 * @param aIndex int
+	 * @param aText String
+	 */
 	public void setTableHeader(int aIndex, String aText) {
 		try {
-			TableColumn column = fMainTable.getColumn(aIndex);
+			final TableColumn column = fMainTable.getColumn(aIndex);
 			column.setText(aText);
 		} catch (IllegalArgumentException e) {
-			//Just ignore
+			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 		}
 	}
 }

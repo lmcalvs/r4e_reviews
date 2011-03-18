@@ -189,12 +189,13 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		if (null != fPartListener) getSite().getPage().removePartListener(fPartListener);
 		if (null != fContextMenu && !fContextMenu.isDisposed()) fContextMenu.dispose();
 		if (null != fActionSet)	fActionSet.dispose();
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
 		if (project.exists()) {
 			try {
 				project.delete(true, null);
 			} catch (CoreException e) {
-				//Do nothing
+				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 			}
 		}
 		super.dispose();

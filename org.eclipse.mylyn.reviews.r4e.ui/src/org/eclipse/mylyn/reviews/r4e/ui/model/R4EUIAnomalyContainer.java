@@ -410,14 +410,14 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			InputStream is = null;
 			try {
 				is = anomalyFile.getContents(false);
-				String locTargetFileId = revRepo.registerReviewBlob(is);
+				final String locTargetFileId = revRepo.registerReviewBlob(is);
 				anomalyFileVersion.setLocalVersionID(locTargetFileId);
 			} catch (CoreException e) {
 				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 				final ErrorDialog errorDialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, 
 						"Unable to extract contents from target IFile while adding anomaly target file version." +
-						(null != anomalyFile.getLocationURI() ? ", IFile path: " + anomalyFile.getLocationURI().getPath() : ""),
+						((null != anomalyFile.getLocationURI()) ? ", IFile path: " + anomalyFile.getLocationURI().getPath() : ""),
 						new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.toString(), e), IStatus.WARNING);
 				errorDialog.open();
 			} catch (ReviewsFileStorageException e) {
@@ -428,7 +428,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 						new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.toString(), e), IStatus.WARNING);
 				errorDialog.open();
 			} finally {
-				if (is != null) {
+				if (null != is) {
 					try {
 						is.close();
 					} catch (IOException e) {

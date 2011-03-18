@@ -68,7 +68,7 @@ public class CommandUtils {
 			//from the eGIT code in the R4E core plugin
 			} else if (targetElement instanceof R4ECompareItem) {
 				//TODO:  For now we pick the first IFile with the specified URI.  Is this okay?
-				URI uri = ((R4ECompareItem)targetElement).getURI();
+				final URI uri = ((R4ECompareItem)targetElement).getURI();
 				return ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(uri)[0];
 			} 
 		//TODO: For now we let egit do the comparison.  We need to be able to get the target file from the egit compare
@@ -125,7 +125,7 @@ public class CommandUtils {
 				//from the eGIT code in the R4E core plugin
 			} else if (baseElement instanceof R4ECompareItem) {
 				//TODO:  For now we pick the first IFile with the specified URI.  Is this okay?
-				URI uri = ((R4ECompareItem)baseElement).getURI();
+				final URI uri = ((R4ECompareItem)baseElement).getURI();
 				return ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(uri)[0];
 			}
 		}

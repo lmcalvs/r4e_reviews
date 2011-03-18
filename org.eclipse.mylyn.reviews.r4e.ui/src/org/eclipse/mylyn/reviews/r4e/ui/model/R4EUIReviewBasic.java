@@ -919,6 +919,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	
 	/**
 	 * Method checkCompletionStatus.
+	 * @param aErrorMessage AtomicReference<String>
 	 * @return boolean
 	 */
 	public boolean checkCompletionStatus(AtomicReference<String> aErrorMessage) { // $codepro.audit.disable booleanMethodNamingConvention

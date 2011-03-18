@@ -169,13 +169,7 @@ public class CommentInputDialog extends FormDialog {
 		final Composite composite = sform.getBody();
 		final GridLayout layout = new GridLayout(4, false);
 		composite.setLayout(layout);
-        
-        //Grid data values
-        final GridData labelData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-        final GridData textSingleData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textSingleData.horizontalSpan = 3;
-        final GridData textMultiData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textMultiData.horizontalSpan = 3;
+        GridData textGridData = null;
         
 		//Basic parameters section
         final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
@@ -200,10 +194,12 @@ public class CommentInputDialog extends FormDialog {
         
         //Comment Description
         final Label label = toolkit.createLabel(basicSectionClient, ADD_COMMENT_DIALOG_VALUE);
-        label.setLayoutData(labelData);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fCommentInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
-        textMultiData.heightHint = fCommentInputTextField.getLineHeight() * 3;
-        fCommentInputTextField.setLayoutData(textMultiData);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        textGridData.heightHint = fCommentInputTextField.getLineHeight() * 3;
+        fCommentInputTextField.setLayoutData(textGridData);
     }
     
 	/**
