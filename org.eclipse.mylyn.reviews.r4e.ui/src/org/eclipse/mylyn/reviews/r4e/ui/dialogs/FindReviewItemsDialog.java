@@ -20,6 +20,8 @@
 package org.eclipse.mylyn.reviews.r4e.ui.dialogs;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 
 import org.eclipse.core.resources.IProject;
@@ -33,8 +35,12 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF;
@@ -181,16 +187,37 @@ public class FindReviewItemsDialog extends Dialog {
 								new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, null, null), IStatus.WARNING);
 						dialog.open();
 					} else {
-						//Create a new review item in the serialization model
+						// Create a new review item in the serialization model
 						final R4EItem reviewItem = R4EUIModelController.FModelExt.createR4EItem(participant);
-						final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(uiReview, reviewItem, 
+						final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(uiReview, reviewItem,
 								R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT, fReviewItemDescriptor, null);
-						Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem, R4EUIModelController.getReviewer());
-						reviewItem.getProjectURIs().add(tmpReviewItem.getProjectURIs().get(0));   //For now we only take the first project ID
+						Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem,
+								R4EUIModelController.getReviewer());
+						reviewItem.getProjectURIs().add(tmpReviewItem.getProjectURIs().get(0)); // For now we only take
+																								// the first project ID
 						reviewItem.setDescription(tmpReviewItem.getDescription());
 						reviewItem.setRepositoryRef(tmpReviewItem.getRepositoryRef());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						// Get handle to local storage repository. No need to continue in case of failure.
+						IRFSRegistry revRepo = null;
+						try {
+							revRepo = RFSRegistryFactory.getRegistry((R4EReview) reviewItem.getReview());
+						} catch (ReviewsFileStorageException e1) {
+							Activator.Ftracer.traceWarning("Exception while obtaining handle to local repo: "
+									+ e1.toString() + " (" + e1.getMessage() + ")");
+							Activator.getDefault().logWarning("Exception: " + e1.toString(), e1);
+							final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+									"Exception while obtaining handle to local repo: "
+											+ " Cannot get to interface to the local reviews repository", new Status(
+											IStatus.WARNING, Activator.PLUGIN_ID, 0, e1.getMessage(), e1),
+									IStatus.WARNING);
 
+							// TODO: Disable created item (incomplete), i.e. shall not be visible to the users
+							R4EUIModelController.FResourceUpdater.undoCheckOut(bookNum);
+							dialog.open();
+							return;
+						}
+
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 						//Copy the data from the temporary object to the ones in the serialization model/UI
 						final int tmpFilesSize = tmpFiles.size();
 						for (int i = 0; i < tmpFilesSize; i++) {
@@ -208,7 +235,40 @@ public class FindReviewItemsDialog extends Dialog {
 									baseVersion.setVersionID(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
 								} else {
 									baseVersion.setVersionID(versionId);
+									InputStream is = versionsIf.getBlobById(fInputProject, versionId);
+									try {
+										String localId = revRepo.registerReviewBlob(is);
+										baseVersion.setLocalVersionID(localId);
+									} catch (ReviewsFileStorageException e) {
+										Activator.Ftracer
+												.traceWarning("Exception while obtaining handle to local repo: "
+														+ e.toString() + " (" + e.getMessage() + ")");
+										Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+										final ErrorDialog dialog = new ErrorDialog(null,
+												R4EUIConstants.DIALOG_TITLE_ERROR,
+												"Exception while obtaining handle to local repo: "
+														+ " Cannot get to interface to the local reviews repository",
+												new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e),
+												IStatus.WARNING);
+
+										// TODO: Disable created item (incomplete), i.e. shall not be visible to the
+										// users
+										R4EUIModelController.FResourceUpdater.undoCheckOut(bookNum);
+										dialog.open();
+										return;
+									} finally {
+										if (is != null) {
+											try {
+												is.close();
+											} catch (IOException e) {
+												Activator.Ftracer
+														.traceError("IOException while trying to close stream: "
+																+ e.getMessage());
+											}
+										}
+									}
 								}
+
 								R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 							}
 							final R4EFileVersion targetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
@@ -230,6 +290,36 @@ public class FindReviewItemsDialog extends Dialog {
 								targetVersion.setVersionID(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
 							} else {
 								targetVersion.setVersionID(versionId);
+								InputStream is = versionsIf.getBlobById(fInputProject, versionId);
+								try {
+									String localId = revRepo.registerReviewBlob(is);
+									targetVersion.setLocalVersionID(localId);
+								} catch (ReviewsFileStorageException e) {
+									Activator.Ftracer.traceWarning("Exception while obtaining handle to local repo: "
+											+ e.toString() + " (" + e.getMessage() + ")");
+									Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+									final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+											"Exception while obtaining handle to local repo: "
+													+ " Cannot get to interface to the local reviews repository",
+											new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e),
+											IStatus.WARNING);
+
+									// TODO: Disable created item (incomplete), i.e. shall not be visible to the
+									// users
+									R4EUIModelController.FResourceUpdater.undoCheckOut(bookNum);
+									dialog.open();
+									return;
+								} finally {
+									if (is != null) {
+										try {
+											is.close();
+										} catch (IOException e) {
+											Activator.Ftracer
+													.traceError("IOException while trying to close stream: "
+															+ e.getMessage());
+										}										
+									}
+								}
 							}
 							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
@@ -237,8 +327,8 @@ public class FindReviewItemsDialog extends Dialog {
 							final R4EUIFileContext uiFile = new R4EUIFileContext(uiReviewItem, fileContext); // $codepro.audit.disable variableUsage
 							uiReviewItem.addChildren(new R4EUIFileContext(uiReviewItem, fileContext));
 						}
-						R4EUIModelController.getActiveReview().addChildren(uiReviewItem);
 
+						R4EUIModelController.getActiveReview().addChildren(uiReviewItem);
 					}
 				}
 			} catch (ReviewVersionsException e) {

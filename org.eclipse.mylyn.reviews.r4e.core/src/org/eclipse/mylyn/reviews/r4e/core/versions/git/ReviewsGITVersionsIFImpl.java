@@ -21,6 +21,7 @@ import static org.eclipse.jgit.lib.Constants.HEAD;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,9 +38,13 @@ import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.errors.AmbiguousObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
@@ -100,6 +105,37 @@ public class ReviewsGITVersionsIFImpl implements ReviewsVersionsIF {
 		CommitDescriptor descriptor = new GitCommitDescriptorImpl(dCommit, project, repo);
 
 		return descriptor;
+	}
+
+	/**
+	 * @param project
+	 * @return
+	 * @throws CoreException
+	 */
+	public List<String> getCommitIds(IProject project) throws ReviewVersionsException {
+		if (project == null) {
+			return null;
+		}
+
+		Repository repo = getRepository(project);
+		List<String> commits = new ArrayList<String>();
+
+		Git git = new Git(repo);
+
+		Iterable<RevCommit> revs = null;
+		try {
+			revs = git.log().call();
+		} catch (NoHeadException e) {
+			throw new ReviewVersionsException(e);
+		} catch (JGitInternalException e) {
+			throw new ReviewVersionsException(e);
+		}
+
+		for (RevCommit r : revs) {
+			commits.add(r.getName());
+		}
+
+		return commits;
 	}
 
 	/* (non-Javadoc)
@@ -171,8 +207,34 @@ public class ReviewsGITVersionsIFImpl implements ReviewsVersionsIF {
 		return commitRevItem;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF#openCompareSession(org.eclipse.mylyn.reviews.r4e.core.model.R4EItem)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF#getBlobById(org.eclipse.core.resources.IProject,
+	 * java.lang.String)
+	 */
+	public InputStream getBlobById(IProject project, String id) throws ReviewVersionsException {
+		InputStream resStream = null;
+		ObjectId objId = ObjectId.fromString(id);
+		Repository repo = getRepository(project);
+
+		try {
+			objId = ObjectId.fromString(id);
+			resStream = repo.open(objId, Constants.OBJ_BLOB).openStream();
+		} catch (Exception e) {
+			throw new ReviewVersionsException(e);
+		}
+
+		return resStream;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF#openCompareSession(org.eclipse.mylyn.reviews.r4e
+	 * .core.model.R4EItem)
 	 */
 	public String openCompareSession(R4EItem item) throws ReviewVersionsException {
 		// Resolve Projects
