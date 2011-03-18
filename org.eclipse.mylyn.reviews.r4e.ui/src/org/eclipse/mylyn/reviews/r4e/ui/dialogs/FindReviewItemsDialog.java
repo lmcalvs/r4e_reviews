@@ -22,13 +22,14 @@ package org.eclipse.mylyn.reviews.r4e.ui.dialogs;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
@@ -54,72 +55,95 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
+import org.eclipse.ui.forms.FormDialog;
+import org.eclipse.ui.forms.IManagedForm;
+import org.eclipse.ui.forms.events.ExpansionAdapter;
+import org.eclipse.ui.forms.events.ExpansionEvent;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.forms.widgets.Section;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class FindReviewItemsDialog extends Dialog {
+public class FindReviewItemsDialog extends FormDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
+	
+	/**
+	 * Field ADD_ANOMALY_DIALOG_TITLE.
+	 * (value is ""Enter Anomaly details"")
+	 */
+	private static final String FIND_REVIEW_ITEMS_DIALOG_TITLE = "Find Review Items";
 
 	/**
-	 * Field TEXT_LEFT_ALIGNMENT.
-	 * (value is 50)
+	 * Field ADD_ANOMALY_DIALOG_VALUE.
+	 * (value is ""Enter the Anomaly title:"")
 	 */
-	private static final int TEXT_LEFT_ALIGNMENT = 50;
+	private static final String FIND_REVIEW_ITEMS_DIALOG_VALUE = "Review Item Info";
+
 	/**
-	 * Field TEXT_RIGHT_ALIGNMENT.
-	 * (value is 100)
+	 * Field ADD_COMMENT_DIALOG_VALUE.
+	 * (value is ""Enter your comments for the new Anomaly:"")
 	 */
-	private static final int TEXT_RIGHT_ALIGNMENT = 100;
+	private static final String FIND_REVIEW_ITEMS_DESCRIPTION_DIALOG_VALUE = "Review Item Components";
 	
+	/**
+	 * Field COMMIT_INFO_HEADER_MSG.
+	 * (value is ""Commit Information"")
+	 */
+	private static final String COMMIT_INFO_HEADER_MSG = "Commit Information";
+	
+	/**
+	 * Field COMMIT_COMPONENTS_HEADER_MSG.
+	 * (value is ""Committed Components"")
+	 */
+	private static final String COMMIT_COMPONENTS_HEADER_MSG = "Committed Components";
+	
+	/**
+	 * Field DIALOG_COMBO_MAX_CHARACTERS.
+	 * (value is 80)
+	 */
+	private static final int DIALOG_COMBO_MAX_CHARACTERS = 80;
+
 	
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
-    /**
-     * The title of the dialog.
-     */
-    private final String fTitle;
-
-    /**
-     * The item message to display
-     */
-    private final String fItemDetailsMessage;
-    
-    /**
-     * The item details message to display
-     */
-    private final String fItemComponentsMessage;
     
     /**
      * Input text widget.
      */
-    private final IProject fInputProject;
+	protected final IProject fInputProject;
 
     /**
      * Field fReviewItemDescriptor.
      */
-    private CommitDescriptor fReviewItemDescriptor;
+    protected CommitDescriptor fReviewItemDescriptor;
     
-    
+    Label fTitleText = null;
+    Label fIdText = null;
+    Label fAuthorText = null;
+    Label fCommitterText = null;
+    Label fDateText = null;
+    Label fMessageText = null;
+    List fComponentsList = null;
+	final SimpleDateFormat fDateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);	
+
+	
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -132,13 +156,9 @@ public class FindReviewItemsDialog extends Dialog {
 	 * @param aItemComponentsMessage String
 	 * @param aInputProject IProject
 	 */
-	public FindReviewItemsDialog(Shell aParentShell, String aDialogTitle, String aItemDetailsMessage, 
-			String aItemComponentsMessage, IProject aInputProject) {
+	public FindReviewItemsDialog(Shell aParentShell, IProject aInputProject) {
 		super(aParentShell);
     	setBlockOnOpen(true);
-		fTitle = aDialogTitle;
-		fItemDetailsMessage = aItemDetailsMessage;
-		fItemComponentsMessage = aItemComponentsMessage;
 		fInputProject = aInputProject;
 	}
 	
@@ -240,16 +260,13 @@ public class FindReviewItemsDialog extends Dialog {
 										String localId = revRepo.registerReviewBlob(is);
 										baseVersion.setLocalVersionID(localId);
 									} catch (ReviewsFileStorageException e) {
-										Activator.Ftracer
-												.traceWarning("Exception while obtaining handle to local repo: "
-														+ e.toString() + " (" + e.getMessage() + ")");
+										Activator.Ftracer.traceWarning("Exception while obtaining handle to local repo: " + 
+												e.toString() + " (" + e.getMessage() + ")");
 										Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-										final ErrorDialog dialog = new ErrorDialog(null,
-												R4EUIConstants.DIALOG_TITLE_ERROR,
-												"Exception while obtaining handle to local repo: "
-														+ " Cannot get to interface to the local reviews repository",
-												new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e),
-												IStatus.WARNING);
+										final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+												"Exception while obtaining handle to local repo: " + 
+												" Cannot get to interface to the local reviews repository",
+												new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e),IStatus.WARNING);
 
 										// TODO: Disable created item (incomplete), i.e. shall not be visible to the
 										// users
@@ -261,9 +278,7 @@ public class FindReviewItemsDialog extends Dialog {
 											try {
 												is.close();
 											} catch (IOException e) {
-												Activator.Ftracer
-														.traceError("IOException while trying to close stream: "
-																+ e.getMessage());
+												Activator.Ftracer.traceError("IOException while trying to close stream: " + e.getMessage());
 											}
 										}
 									}
@@ -299,13 +314,12 @@ public class FindReviewItemsDialog extends Dialog {
 											+ e.toString() + " (" + e.getMessage() + ")");
 									Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 									final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-											"Exception while obtaining handle to local repo: "
-													+ " Cannot get to interface to the local reviews repository",
+											"Exception while obtaining handle to local repo: " + 
+											" Cannot get to interface to the local reviews repository",
 											new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e),
 											IStatus.WARNING);
 
-									// TODO: Disable created item (incomplete), i.e. shall not be visible to the
-									// users
+									// TODO: Disable created item (incomplete), i.e. shall not be visible to the users
 									R4EUIModelController.FResourceUpdater.undoCheckOut(bookNum);
 									dialog.open();
 									return;
@@ -314,9 +328,7 @@ public class FindReviewItemsDialog extends Dialog {
 										try {
 											is.close();
 										} catch (IOException e) {
-											Activator.Ftracer
-													.traceError("IOException while trying to close stream: "
-															+ e.getMessage());
+											Activator.Ftracer.traceError("IOException while trying to close stream: " + e.getMessage());
 										}										
 									}
 								}
@@ -357,160 +369,152 @@ public class FindReviewItemsDialog extends Dialog {
     @Override
 	protected void configureShell(Shell shell) {
         super.configureShell(shell);
-        if (null != fTitle) {
-			shell.setText(fTitle);
-		}
+        shell.setText(FIND_REVIEW_ITEMS_DIALOG_TITLE);
     }
     
-    /**
-     * Method createDialogArea.
-     * @param parent Composite
-     * @return Control
-	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
+	/**
+	 * Configures the dialog form and creates form content. Clients should
+	 * override this method.
+	 * 
+	 * @param mform
+	 *            the dialog form
 	 */
-    @Override
-	protected Control createDialogArea(Composite parent) {
-
-    	Composite composite = null;
+	@Override
+	protected void createFormContent(final IManagedForm mform) {
 
     	try {
     		final ReviewsVersionsIF versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(fInputProject);
-    		final CommitDescriptor commit = versionsIf.getLastCommitInfo(fInputProject);
+    		//fReviewItemDescriptor = versionsIf.getLastCommitInfo(fInputProject);
 
-    		// create composite
-    		composite = (Composite) super.createDialogArea(parent);
-    		composite.setLayout(new GridLayout());
+    		final FormToolkit toolkit = mform.getToolkit();
+    		final ScrolledForm sform = mform.getForm();
+    		sform.setExpandVertical(true);
+
+            //Main dialog composite
+    		final Composite composite = sform.getBody();
+    		composite.setLayout(new GridLayout(4, false));
     		
-    		createReviewItemDetails(composite, commit);
-    		createReviewItemComponents(composite, commit);
-    		applyDialogFont(composite);
+    		//Add Commit List in drop-down menu
+            Label label = toolkit.createLabel(composite, "Available Commits: ");
+            label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+    		final CCombo commitList = new CCombo(composite, SWT.WRAP | SWT.READ_ONLY);
+    		commitList.setItems(getCommitTitleList(versionsIf));
+    		commitList.setTextLimit(DIALOG_COMBO_MAX_CHARACTERS);
+    		commitList.select(0);
+    		fReviewItemDescriptor = versionsIf.getCommitInfo(fInputProject, versionsIf.getCommitIds(fInputProject).get(0));
+    		GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+            textGridData.horizontalSpan = 3;
+    		commitList.setLayoutData(textGridData);
+    		commitList.addSelectionListener(new SelectionListener() {
+				public void widgetSelected(SelectionEvent e) {
+		    		try {
+						fReviewItemDescriptor = versionsIf.getCommitInfo(fInputProject, 
+								versionsIf.getCommitIds(fInputProject).get(commitList.getSelectionIndex()));
+						refresh();
+					} catch (ReviewVersionsException e1) {
+						//TODO add error hangling code
+						e1.printStackTrace();
+					}
+					commitList.getText();
+				}
+				public void widgetDefaultSelected(SelectionEvent e) {
+					//Nothing to do
+				}
+			});
+    		
+    		createReviewItemDetails(toolkit, sform);
+    		createReviewItemComponents(toolkit, sform);
 
     	} catch (ReviewVersionsException e) {
 			UIUtils.displayVersionErrorDialog(e);
     	}
-    	return composite;
-    }
-
+    	return;
+	}
     
     /**
      * Method createReviewItemDetails.
      * @param aParent Composite
      * @param aCommit CommitDescriptor
      */
-    private void createReviewItemDetails(Composite aParent, CommitDescriptor aCommit) {
-    	
-    	FormData data = null;
+    private void createReviewItemDetails(FormToolkit aToolkit, final ScrolledForm aParent) {
         
-        //Review Item info composite
-		final Group reviewItemDetailsGroup = new Group(aParent, SWT.BORDER_SOLID);
-		reviewItemDetailsGroup.setText(fItemDetailsMessage);
-        final GridData groupLayoutData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        groupLayoutData.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
-        reviewItemDetailsGroup.setLayoutData(groupLayoutData);
-        reviewItemDetailsGroup.setLayout(new FormLayout());
+        GridData textGridData = null;
+
+		//Basic parameters section
+        final Section basicSection = aToolkit.createSection(aParent.getBody(), Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
+        		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+        final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        basicSectionGridData.horizontalSpan = 4;
+        basicSection.setLayoutData(basicSectionGridData);
+        basicSection.setText(COMMIT_INFO_HEADER_MSG);
+        basicSection.setDescription(FIND_REVIEW_ITEMS_DIALOG_VALUE);
+        basicSection.addExpansionListener(new ExpansionAdapter()
+		{
+			@Override
+			public void expansionStateChanged(ExpansionEvent e){
+				aParent.reflow(true);
+				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			}
+		});
+        final Composite basicSectionClient = aToolkit.createComposite(basicSection);
+        basicSectionClient.setLayout(new GridLayout(4, false));
+        basicSection.setClient(basicSectionClient);
         
 	    //Title
-        final Label titlelabel = new Label(reviewItemDetailsGroup, SWT.NONE);
-        titlelabel.setText("Title: ");
-	    data = new FormData();
-	    data.left = new FormAttachment(reviewItemDetailsGroup, ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(reviewItemDetailsGroup, ITabbedPropertyConstants.VSPACE);
-	    titlelabel.setLayoutData(data);
-        
-        final Text titleText = new Text(reviewItemDetailsGroup, getInputTextStyle());
-        titleText.setText(aCommit.getTitle());
-        titleText.setEditable(false);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, convertHorizontalDLUsToPixels(TEXT_LEFT_ALIGNMENT));
-	    data.right = new FormAttachment(TEXT_RIGHT_ALIGNMENT, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(reviewItemDetailsGroup, ITabbedPropertyConstants.VSPACE);
-	    titleText.setLayoutData(data);
+        final Label titlelabel = aToolkit.createLabel(basicSectionClient, "Title: ", SWT.WRAP);
+	    titlelabel.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+        fTitleText = aToolkit.createLabel(basicSectionClient, fReviewItemDescriptor.getTitle(), SWT.NONE);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        fTitleText.setLayoutData(textGridData);
 	    
 	    //Id
-        final Label idlabel = new Label(reviewItemDetailsGroup, SWT.NONE);
-        idlabel.setText("ID: ");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(titlelabel, ITabbedPropertyConstants.VSPACE);
-	    idlabel.setLayoutData(data);
-        
-        final Text idText = new Text(reviewItemDetailsGroup, getInputTextStyle());
-        fReviewItemDescriptor = aCommit;
-        idText.setText(fReviewItemDescriptor.getId());
-        idText.setEditable(false);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, convertHorizontalDLUsToPixels(TEXT_LEFT_ALIGNMENT));
-	    data.right = new FormAttachment(TEXT_RIGHT_ALIGNMENT, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(titleText, ITabbedPropertyConstants.VSPACE);
-	    idText.setLayoutData(data);
+        final Label idlabel = aToolkit.createLabel(basicSectionClient, "ID: ", SWT.WRAP);
+	    idlabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        fIdText = aToolkit.createLabel(basicSectionClient, fReviewItemDescriptor.getId(), SWT.NONE);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        textGridData.widthHint = 80;
+        fIdText.setLayoutData(textGridData);
 	    
 	    //Author
-        final Label authorlabel = new Label(reviewItemDetailsGroup, SWT.NONE);
-        authorlabel.setText("Author: ");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(idlabel, ITabbedPropertyConstants.VSPACE);
-	    authorlabel.setLayoutData(data);
-        
-        final Text authorText = new Text(reviewItemDetailsGroup, getInputTextStyle());
-        authorText.setText(aCommit.getAuthor());
-        authorText.setEditable(false);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, convertHorizontalDLUsToPixels(TEXT_LEFT_ALIGNMENT));
-	    data.right = new FormAttachment(TEXT_RIGHT_ALIGNMENT, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(idText, ITabbedPropertyConstants.VSPACE);
-	    authorText.setLayoutData(data);
+        final Label authorlabel = aToolkit.createLabel(basicSectionClient, "Author: ", SWT.WRAP);
+	    authorlabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        fAuthorText = aToolkit.createLabel(basicSectionClient, fReviewItemDescriptor.getAuthor(), SWT.NONE);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        textGridData.widthHint = 80;
+        fAuthorText.setLayoutData(textGridData);
 	      
 	    //Committer
-        final Label commiterlabel = new Label(reviewItemDetailsGroup, SWT.NONE);
-        commiterlabel.setText("Committer: ");
-	    data = new FormData();
-	    data.left = new FormAttachment(reviewItemDetailsGroup, ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(authorlabel, ITabbedPropertyConstants.VSPACE);
-	    commiterlabel.setLayoutData(data);
-        
-        final Text commiterText = new Text(reviewItemDetailsGroup, getInputTextStyle());
-        commiterText.setText(aCommit.getAuthor());
-        commiterText.setEditable(false);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, convertHorizontalDLUsToPixels(TEXT_LEFT_ALIGNMENT));
-	    data.right = new FormAttachment(TEXT_RIGHT_ALIGNMENT, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(authorText, ITabbedPropertyConstants.VSPACE);
-	    commiterText.setLayoutData(data);
+        final Label committerlabel = aToolkit.createLabel(basicSectionClient, "Committer: ", SWT.WRAP);
+        committerlabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        fCommitterText = aToolkit.createLabel(basicSectionClient, fReviewItemDescriptor.getCommitter(), SWT.NONE);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        textGridData.widthHint = 80;
+        fCommitterText.setLayoutData(textGridData);
 	    
 	    //Date
-        final Label datelabel = new Label(reviewItemDetailsGroup, SWT.NONE);
-        datelabel.setText("Date: ");
-	    data = new FormData();
-	    data.left = new FormAttachment(reviewItemDetailsGroup, ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(commiterlabel, ITabbedPropertyConstants.VSPACE);
-	    datelabel.setLayoutData(data);
-        
-        final Text dateText = new Text(reviewItemDetailsGroup, getInputTextStyle());
-        dateText.setText(new Date(aCommit.getCommitDate().longValue()).toString());
-        dateText.setEditable(false);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, convertHorizontalDLUsToPixels(TEXT_LEFT_ALIGNMENT));
-	    data.right = new FormAttachment(TEXT_RIGHT_ALIGNMENT, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(commiterText, ITabbedPropertyConstants.VSPACE);
-	    dateText.setLayoutData(data);
+        final Label datelabel = aToolkit.createLabel(basicSectionClient, "Date: ", SWT.WRAP);
+	    datelabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+		String dateStr = fDateFormat.format(new Date(fReviewItemDescriptor.getCommitDate().longValue()));
+        fDateText = aToolkit.createLabel(basicSectionClient, dateStr, SWT.NONE);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        textGridData.widthHint = 80;
+        fDateText.setLayoutData(textGridData);
 	    
 	    //Message
-        final Label messagelabel = new Label(reviewItemDetailsGroup, SWT.NONE);
-        messagelabel.setText("Message: ");
-	    data = new FormData();
-	    data.left = new FormAttachment(reviewItemDetailsGroup, ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(datelabel, ITabbedPropertyConstants.VSPACE);
-	    messagelabel.setLayoutData(data);
-        
-        final Text messageText = new Text(reviewItemDetailsGroup, getInputTextStyle());
-        messageText.setText(aCommit.getMessage());
-        messageText.setEditable(false);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, convertHorizontalDLUsToPixels(TEXT_LEFT_ALIGNMENT));
-	    data.right = new FormAttachment(TEXT_RIGHT_ALIGNMENT, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(dateText, ITabbedPropertyConstants.VSPACE);
-	    messageText.setLayoutData(data);
+        final Label messagelabel = aToolkit.createLabel(basicSectionClient, "Message: ", SWT.WRAP);
+	    messagelabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        fMessageText = aToolkit.createLabel(basicSectionClient, fReviewItemDescriptor.getMessage(), SWT.NONE);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        textGridData.widthHint = 80;
+        fMessageText.setLayoutData(textGridData);
+	    
+	    basicSectionClient.layout();
     }
     
     /**
@@ -518,33 +522,66 @@ public class FindReviewItemsDialog extends Dialog {
      * @param aParent Composite
      * @param aCommit CommitDescriptor
      */
-    private void createReviewItemComponents(Composite aParent, CommitDescriptor aCommit) {
+    private void createReviewItemComponents(FormToolkit aToolkit, final ScrolledForm aParent) {
         
-        //Review Item info composite
-		final Group reviewItemComponentsGroup = new Group(aParent, SWT.BORDER_SOLID);
-		reviewItemComponentsGroup.setText(fItemComponentsMessage);
-        final GridData groupLayoutData = new GridData(GridData.FILL, GridData.FILL, true, true);
-        groupLayoutData.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
-        reviewItemComponentsGroup.setLayoutData(groupLayoutData);
-        reviewItemComponentsGroup.setLayout(new GridLayout());
-        //This is a test
-        final List componentsList = new List(reviewItemComponentsGroup, getInputTextStyle());
-        componentsList.setItems(aCommit.getChangeSet());
+        //Extra parameters section
+        final Section extraSection = aToolkit.createSection(aParent.getBody(), Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
+        		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+        final GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+        extraSectionGridData.horizontalSpan = 4;
+        extraSection.setLayoutData(extraSectionGridData);
+        extraSection.setText(COMMIT_COMPONENTS_HEADER_MSG);
+        extraSection.setDescription(FIND_REVIEW_ITEMS_DESCRIPTION_DIALOG_VALUE);
+        extraSection.addExpansionListener(new ExpansionAdapter()
+		{
+			@Override
+			public void expansionStateChanged(ExpansionEvent e){
+				aParent.reflow(true);
+				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			}
+		});
+        
+        final Composite extraSectionClient = aToolkit.createComposite(extraSection);
+        extraSectionClient.setLayout(new GridLayout(4, false));
+        extraSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+        extraSection.setClient(extraSectionClient);
+        
+        //Components List
+        fComponentsList = new List(extraSectionClient, SWT.V_SCROLL | SWT.H_SCROLL);
+        fComponentsList.setItems(fReviewItemDescriptor.getChangeSet());
         final GridData data = new GridData(GridData.FILL, GridData.FILL, true, true);
-	    componentsList.setLayoutData(data);
-	    
+        fComponentsList.setLayoutData(data);
+    }
+	
+	/**
+	 * Method getCommitTitleList.
+	 * @param aVersionsIf ReviewsVersionsIF
+	 * @return String[]
+	 */
+    public String[] getCommitTitleList(ReviewsVersionsIF aVersionsIf) throws ReviewVersionsException {
+    	java.util.List<String> commitIds = aVersionsIf.getCommitIds(fInputProject);
+    	java.util.List<String> commitTitles = new ArrayList<String>();
+    	String title = null;
+    	for (String commitId : commitIds) {
+    		title = aVersionsIf.getCommitInfo(fInputProject, commitId).getTitle();
+    		//Truncate title is it is too long to avoid screwing up the display
+    		if (title.length() > DIALOG_COMBO_MAX_CHARACTERS) title = (title.substring(0, DIALOG_COMBO_MAX_CHARACTERS - 3) + "...");
+    		commitTitles.add(title);
+    	}
+    	return commitTitles.toArray(new String[commitTitles.size()]);
     }
     
-	/**
-	 * Returns the style bits that should be used for the input text field.
-	 * Defaults to a single line entry. Subclasses may override.
-	 * @since 3.4
-	 * @return the integer style bits that should be used when creating the input text
-	 */
-	protected int getInputTextStyle() {
-		return SWT.WRAP | SWT.READ_ONLY | SWT.H_SCROLL;
-	}
-	
+    void refresh() {
+    	fTitleText.setText(fReviewItemDescriptor.getTitle());
+    	fIdText.setText(fReviewItemDescriptor.getId());
+    	fAuthorText.setText(fReviewItemDescriptor.getAuthor());
+    	fCommitterText.setText(fReviewItemDescriptor.getCommitter());
+    	fDateText.setText(fDateFormat.format(new Date(fReviewItemDescriptor.getCommitDate().longValue())));
+    	fMessageText.setText(fReviewItemDescriptor.getMessage());
+    	fComponentsList.setItems(fReviewItemDescriptor.getChangeSet());
+    }
+     
+     
 	/**
 	 * Method isResizable.
 	 * @return boolean
