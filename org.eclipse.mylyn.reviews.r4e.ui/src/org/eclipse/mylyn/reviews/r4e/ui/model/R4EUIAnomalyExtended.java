@@ -202,7 +202,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
     	if (null == getPosition()) {
     		nameLabel = fAnomaly.getTitle();
     	} else {
-    		nameLabel = getPosition().toString();
+    		nameLabel = getPosition().toString() + "->" + fAnomaly.getTitle();
     	}
     	setName(getStateString(aNewState) + ": " + nameLabel);
 	}

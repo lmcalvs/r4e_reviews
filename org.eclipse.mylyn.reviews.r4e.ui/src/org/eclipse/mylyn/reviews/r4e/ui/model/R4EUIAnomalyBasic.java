@@ -111,7 +111,8 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @param aPosition IR4EUIPosition
 	 */
 	public R4EUIAnomalyBasic(IR4EUIModelElement aParent, R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
-		super(aParent, ((null == aPosition) ?  aAnomaly.getTitle() : aPosition.toString()), buildAnomalyToolTip(aAnomaly));
+		super(aParent, ((null == aPosition) ?  aAnomaly.getTitle() : aPosition.toString() + "->" + aAnomaly.getTitle()), 
+				buildAnomalyToolTip(aAnomaly));
 		fAnomaly = aAnomaly;
 		fComments = new ArrayList<R4EUIComment>();
 		setImage(ANOMALY_ICON_FILE);
