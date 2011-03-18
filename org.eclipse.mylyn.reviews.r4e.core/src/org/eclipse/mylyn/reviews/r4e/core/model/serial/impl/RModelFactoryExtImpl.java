@@ -391,11 +391,18 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			return null;
 		}
 
+		// when the review is closed the element is marked as proxy and it's ready to be reloaded upon request.
 		R4EReview review = aReviewGroup.getReviewsMap().get(aReviewName);
 		if (review == null) {
 			StringBuilder sb = new StringBuilder("Not able to find Review: " + aReviewName + "\tin group: "
 					+ aReviewGroup);
 			throw new ResourceHandlingException(sb.toString());
+		}
+
+		boolean added = aReviewGroup.getReviews().add(review);
+		if (added == false) {
+			StringBuilder sb = new StringBuilder("The review was not added.. already present in parent group");
+			Activator.fTracer.traceDebug(sb.toString());
 		}
 
 		URI folder = getFolderPath(review.eResource().getURI());
@@ -513,6 +520,14 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 					}
 				}
 			}
+		}
+
+		R4EReviewGroup group = (R4EReviewGroup) aReview.eContainer();
+		if (group != null) {
+			group.getReviews().remove(aReview);
+		} else {
+			StringBuilder sb = new StringBuilder("Closing a review where the parent group is null");
+			Activator.fTracer.traceError(sb.toString());
 		}
 
 		// finally dispose the resource at the review level
