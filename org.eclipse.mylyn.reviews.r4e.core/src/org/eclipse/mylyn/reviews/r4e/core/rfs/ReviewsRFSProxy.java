@@ -217,6 +217,10 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	public InputStream getBlobContent(IProgressMonitor monitor, String id) throws ReviewsFileStorageException {
 		InputStream resStream = null;
 
+		if (id == null) {
+			return null;
+		}
+
 		try {
 			ObjectId objId = ObjectId.fromString(id);
 			resStream = fRepository.open(objId, Constants.OBJ_BLOB).openStream();
