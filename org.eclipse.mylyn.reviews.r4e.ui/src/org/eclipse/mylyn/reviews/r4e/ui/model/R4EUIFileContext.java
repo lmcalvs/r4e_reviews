@@ -235,7 +235,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				if (!project.isOpen()) project.open(null);
 				final IFolder folder = project.getFolder(R4EUIConstants.R4E_TEMP_FOLDER);
 				if (!folder.exists()) folder.create(IResource.NONE, true, null);
-				file = folder.getFile(aVersion.getName() + "_" + aVersion.getVersionID());
+				file = folder.getFile(aVersion.getVersionID() + "_" + aVersion.getName());
 				//Always start from fresh copy because we never know what the temp file version is
 				if (file.exists()) file.delete(true, null);
 				file.create(is, IResource.NONE, null);
