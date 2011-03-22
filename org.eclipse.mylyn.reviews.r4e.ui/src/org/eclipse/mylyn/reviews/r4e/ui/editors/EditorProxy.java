@@ -90,7 +90,7 @@ public class EditorProxy {
 		boolean targetFileEditable = false;
 		IR4EUIPosition position = null;
 		R4EUISelectionContainer container = null;
-		int selectionIndex = 0;
+		int selectionIndex = -1;
 		
 		for (final Iterator<?> iterator = ((IStructuredSelection)aSelection).iterator(); iterator.hasNext();) {
 			element = (IR4EUIModelElement) iterator.next();
@@ -227,7 +227,7 @@ public class EditorProxy {
 	 * @param selectionIndex int - the index of the selection to go to in the target file
 	 */
 	private static void openCompareEditor(IWorkbenchPage aPage, IFile aBaseFile, IFile aTargetFile,  // $codepro.audit.disable unusedMethod
-			boolean aTargetFileEditable, int selectionIndex) {
+			boolean aTargetFileEditable, int aSelectionIndex) {
 		
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;
@@ -254,15 +254,17 @@ public class EditorProxy {
 			CompareUI.openCompareEditor(input, true);
 		}
 		
-		//Set the correct difference, based on the selection index, in the compare editor
-		final ICompareNavigator navigator = input.getNavigator();
+		if (aSelectionIndex != -1) {
+			//Set the correct difference, based on the selection index, in the compare editor
+			final ICompareNavigator navigator = input.getNavigator();
 		
-		while (!(navigator.selectChange(false))) { // $codepro.audit.disable emptyWhileStatement, methodInvocationInLoopCondition
-			//Reset position to the first difference
-		}
+			while (!(navigator.selectChange(false))) { // $codepro.audit.disable emptyWhileStatement, methodInvocationInLoopCondition
+				//Reset position to the first difference
+			}
 			
-		for (int i = 0; i < selectionIndex; i++) {
-			navigator.selectChange(true);   //get the difference that corresponds to the right selection
+			for (int i = 0; i < aSelectionIndex; i++) {
+				navigator.selectChange(true);   //get the difference that corresponds to the right selection
+			}
 		}
 	}
 	
