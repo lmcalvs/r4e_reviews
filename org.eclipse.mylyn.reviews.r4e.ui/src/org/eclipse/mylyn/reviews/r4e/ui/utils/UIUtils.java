@@ -31,6 +31,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
@@ -105,12 +106,29 @@ public class UIUtils {
     			new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
     	dialog.open();
     }
-    
-    /**
-     * Method isFilterPreferenceSet.
-     * @param aFilterSet Object
-     * @return boolean
-     */
+
+	/**
+	 * Method displayVersionErrorDialog.
+	 * 
+	 * @param e
+	 *            ReviewVersionsException
+	 */
+	public static void displayReviewsFileStorageErrorDialog(ReviewsFileStorageException e) {
+		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		Activator.getDefault().logError("Exception: " + e.toString(), e);
+		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+				"Local Review Storage Error Detected",
+				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+		dialog.open();
+	}
+
+	/**
+	 * Method isFilterPreferenceSet.
+	 * 
+	 * @param aFilterSet
+	 *            Object
+	 * @return boolean
+	 */
     public static boolean isFilterPreferenceSet(Object aFilterSet) {
     	if (null != aFilterSet && aFilterSet.toString().equals(R4EUIConstants.VALUE_TRUE_STR)) return true;
     	return false;
