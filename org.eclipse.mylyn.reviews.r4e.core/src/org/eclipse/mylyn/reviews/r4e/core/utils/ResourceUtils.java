@@ -151,7 +151,21 @@ public class ResourceUtils {
 		URI resUri = URI.createPlatformResourceURI(iResource.getFullPath().toString(), true);
 		return resUri.toString();
 	}
-	
+
+	/**
+	 * @param project
+	 * @param relativeProjectPath
+	 * @return
+	 */
+	public static IResource findResource(IProject project, String relativeProjectPath) {
+		if (project == null || relativeProjectPath == null) {
+			return null;
+		}
+
+		// resolve the resource from the relative path
+		return project.findMember(relativeProjectPath);
+	}
+
 	/**
 	 * Return the projects currently opened in the work space
 	 * 
