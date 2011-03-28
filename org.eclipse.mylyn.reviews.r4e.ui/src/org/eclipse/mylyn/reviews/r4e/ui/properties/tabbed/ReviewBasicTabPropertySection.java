@@ -649,6 +649,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 				fPreparationPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
 				fDecisionPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
 				fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
+				fPhaseTable.setVisible(true);
 				setPhaseControlVisibility();	
 			} else {
 				fPhaseTable.setVisible(false);
@@ -669,6 +670,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 				fPreparationPhaseOwnerCombo.setEnabled(true);
 				fDecisionPhaseOwnerCombo.setEnabled(true);
 				fReworkPhaseOwnerCombo.setEnabled(true);
+				fPhaseTable.setVisible(true);
 				setPhaseControlVisibility();
 			} else {
 				fPhaseTable.setVisible(false);
@@ -688,24 +690,28 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 				getReview()).getCurrent().getType();
 		switch (currentPhase.getValue()) {
 			case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:
+				fPlanningPhaseOwnerCombo.setVisible(true);
 				fPreparationPhaseOwnerCombo.setVisible(false);
 				fDecisionPhaseOwnerCombo.setVisible(false);
 				fReworkPhaseOwnerCombo.setVisible(false);
 				break;
 
 			case R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION_VALUE:
+				fPreparationPhaseOwnerCombo.setVisible(true);
 				fPlanningPhaseOwnerCombo.setVisible(false);
 				fDecisionPhaseOwnerCombo.setVisible(false);
 				fReworkPhaseOwnerCombo.setVisible(false);
 				break;
 
 			case R4EReviewPhase.R4E_REVIEW_PHASE_DECISION_VALUE:
+				fDecisionPhaseOwnerCombo.setVisible(true);
 				fPlanningPhaseOwnerCombo.setVisible(false);
 				fPreparationPhaseOwnerCombo.setVisible(false);
 				fReworkPhaseOwnerCombo.setVisible(false);
 				break;
 
 			case R4EReviewPhase.R4E_REVIEW_PHASE_REWORK_VALUE:
+				fReworkPhaseOwnerCombo.setVisible(true);
 				fPlanningPhaseOwnerCombo.setVisible(false);
 				fPreparationPhaseOwnerCombo.setVisible(false);
 				fDecisionPhaseOwnerCombo.setVisible(false);

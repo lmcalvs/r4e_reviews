@@ -41,9 +41,14 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.forms.events.ExpansionAdapter;
+import org.eclipse.ui.forms.events.ExpansionEvent;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -55,6 +60,13 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 public class ReviewExtraTabPropertySection extends ModelElementTabPropertySection
 	implements IEditableListListener {
 
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+	
+	private static final String DECISION_SECTION_LABEL = "Decision information";
+	
+	
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -265,13 +277,38 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.top = new FormAttachment(fReferenceMaterialText, 0, SWT.TOP);
 	    referenceMaterialLabel.setLayoutData(data);
 	    
-	    //Exit Decision
-	    fExitDecisionCombo = widgetFactory.createCCombo(mainForm, SWT.READ_ONLY);
+	    //Decision section
+        final ExpandableComposite decisionSection = widgetFactory.createExpandableComposite(mainForm, ExpandableComposite.TWISTIE |
+        		ExpandableComposite.EXPANDED);
 	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fReferenceMaterialText, ITabbedPropertyConstants.VSPACE);
-	    fExitDecisionCombo.setLayoutData(data);
+	    data.bottom = new FormAttachment(100, 0);
+	    decisionSection.setLayoutData(data);
+        decisionSection.setText(DECISION_SECTION_LABEL);
+        decisionSection.addExpansionListener(new ExpansionAdapter()
+		{
+			@Override
+			public void expansionStateChanged(ExpansionEvent e){
+				mainForm.layout();
+			}
+		});
+        decisionSection.setLayout(new GridLayout(1, false));
+        
+        final Composite decisionSectionClient = widgetFactory.createComposite(decisionSection);
+        decisionSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+        decisionSectionClient.setLayout(new GridLayout(4, false));
+        decisionSection.setClient(decisionSectionClient);
+        
+	    //Exit Decision
+	    final CLabel exitDecisionLabel = widgetFactory.createCLabel(decisionSectionClient, R4EUIConstants.EXIT_DECISION_LABEL);
+	    exitDecisionLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+	    
+	    fExitDecisionCombo = widgetFactory.createCCombo(decisionSectionClient, SWT.READ_ONLY);
+	    GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		fExitDecisionCombo.setLayoutData(textGridData);
 	    fExitDecisionCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 	    		if (!fRefreshInProgress) {
@@ -294,41 +331,29 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			}
 		});
 	    
-	    final CLabel exitDecisionLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.EXIT_DECISION_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fExitDecisionCombo, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fExitDecisionCombo, 0, SWT.CENTER);
-	    exitDecisionLabel.setLayoutData(data);
+	    //Decision Participants
+	    fDecisionUsersListLabel = widgetFactory.createCLabel(decisionSectionClient, R4EUIConstants.DECISION_PARTICIPANTS_LABEL);
+	    fDecisionUsersListLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 
-	    //Decision (Participants)
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fExitDecisionCombo, ITabbedPropertyConstants.VSPACE);
 	    List<String> participants = null;
 	    if (null != R4EUIModelController.getActiveReview()) {
 	    	participants = R4EUIModelController.getActiveReview().getParticipantIDs();
 	    } else {
 	    	participants = new ArrayList<String>();
 	    }
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
 	    fDecisionUsersList = new EditableListWidget(
-	    		widgetFactory, mainForm, data, this, 2, CCombo.class, participants.toArray(new String[participants.size()]));
-
-	    fDecisionUsersListLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.DECISION_PARTICIPANTS_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fDecisionUsersList.getComposite(), -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fDecisionUsersList.getComposite(), 0, SWT.CENTER);
-	    fDecisionUsersListLabel.setLayoutData(data);
+	    		widgetFactory, decisionSectionClient, textGridData, this, 2, CCombo.class, participants.toArray(new String[participants.size()]));
 
 	    //Decision Time Spent
-	    fDecisionTimeSpentText = widgetFactory.createText(mainForm, "");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fDecisionUsersList.getComposite(), ITabbedPropertyConstants.VSPACE);
-	    fDecisionTimeSpentText.setLayoutData(data);
+	    fDecisionTimeSpentLabel = widgetFactory.createCLabel(decisionSectionClient, R4EUIConstants.DECISION_TIME_SPENT_LABEL);
+	    fDecisionTimeSpentLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+	    
+	    fDecisionTimeSpentText = widgetFactory.createText(decisionSectionClient, "");
+	    textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		fDecisionTimeSpentText.setLayoutData(textGridData);
 	    fDecisionTimeSpentText.addFocusListener(new FocusListener() {		
 	    	public void focusLost(FocusEvent e) {
 	    		if (!fRefreshInProgress) {
@@ -349,15 +374,6 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    		//Nothing to do
 	    	}
 	    });
-
-	    fDecisionTimeSpentLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.DECISION_TIME_SPENT_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fDecisionTimeSpentText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fDecisionTimeSpentText, 0, SWT.TOP);
-	    fDecisionTimeSpentLabel.setLayoutData(data);
-
-	    if (null == R4EUIModelController.getActiveReview()) return;   //TODO temporary we need a better display solution
 	}
 	
 	/**
@@ -396,6 +412,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		fEntryCriteriaText.setText(modelReview.getEntryCriteria());
 		fObjectivesText.setText(modelReview.getObjectives());
 		fReferenceMaterialText.setText(modelReview.getReferenceMaterial());
+
 		fExitDecisionCombo.setItems(((R4EUIReviewBasic)fProperties.getElement()).getExitDecisionValues());
 		if (null != modelReview.getDecision()) fExitDecisionCombo.select((null == modelReview.getDecision().getValue()) ? 0 : 
 			modelReview.getDecision().getValue().getValue());
@@ -439,6 +456,10 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 				fDecisionUsersList.setEnabled(false);
 				fDecisionTimeSpentText.setEnabled(false);
+		    	fDecisionUsersListLabel.setVisible(true);
+				fDecisionUsersList.setVisible(true);
+				fDecisionTimeSpentText.setVisible(true);
+		    	fDecisionTimeSpentLabel.setVisible(true);
 			} else {
 		    	fDecisionUsersListLabel.setVisible(false);
 				fDecisionUsersList.setVisible(false);
@@ -469,6 +490,10 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 					fDecisionTimeSpentText.setEnabled(false);
 					fExitDecisionCombo.setEnabled(false);
 				}
+		    	fDecisionUsersListLabel.setVisible(true);
+				fDecisionUsersList.setVisible(true);
+				fDecisionTimeSpentText.setVisible(true);
+		    	fDecisionTimeSpentLabel.setVisible(true);
 		    } else {
 		    	fDecisionUsersListLabel.setVisible(false);
 				fDecisionUsersList.setVisible(false);
@@ -496,7 +521,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
 			
 			if (1 == aInstanceId) {
-				//Update roles
+				//Update components
 				modelReview.getComponents().clear();
 				for (Item item : aItems) {
 					modelReview.getComponents().add(item.getText());

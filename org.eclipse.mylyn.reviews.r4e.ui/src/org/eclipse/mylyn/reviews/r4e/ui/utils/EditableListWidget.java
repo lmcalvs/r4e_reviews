@@ -33,12 +33,15 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -59,13 +62,13 @@ public class EditableListWidget {
 	 * Field MAX_COLUMN_WIDTH.
 	 * (value is 600)
 	 */
-	private static final int MAX_COLUMN_WIDTH = 600;
+	private static final int DEFAULT_TABLE_WIDTH = 200;
 	
 	/**
 	 * Field MAX_COLUMN_HALF_WIDTH.
 	 * (value is 300)
 	 */
-	private static final int MAX_COLUMN_HALF_WIDTH = 300;
+	private static final int DEFAULT_TABLE_HEIGHT = 200;
 	
 	
 	// ------------------------------------------------------------------------
@@ -140,6 +143,7 @@ public class EditableListWidget {
 		fInstanceId = aInstanceId;
 		fValues = aEditableValues;
 		createEditableListFromTable(aToolkit, aEditableWidgetClass);
+		fMainTable.setSize(DEFAULT_TABLE_WIDTH, DEFAULT_TABLE_HEIGHT);   //default table size
 	}
 	
 	
@@ -171,26 +175,47 @@ public class EditableListWidget {
 			tableColumn2.setText(R4EUIConstants.ENTRY_TIME_COLUMN_HEADER);
 		}
 
-		fMainTable.addControlListener(new ControlAdapter() { 
+		fMainComposite.addControlListener(new ControlAdapter() { 
 			@Override
 			public void controlResized(ControlEvent e) {
-				//TODO:  This is a hack so that the table is displayed somewhat correctly.  However, we need to have a better implementation later
-				if (aEditableWidgetClass.equals(Date.class)) {
-					tableColumn.setWidth((fMainTable.getClientArea().width > MAX_COLUMN_WIDTH) ? 
-							MAX_COLUMN_HALF_WIDTH : fMainTable.getClientArea().width >> 1);
-					tableColumn2.setWidth((fMainTable.getClientArea().width > MAX_COLUMN_WIDTH) ? 
-							MAX_COLUMN_HALF_WIDTH : fMainTable.getClientArea().width >> 1);
-				} else {
-					tableColumn.setWidth((fMainTable.getClientArea().width > MAX_COLUMN_WIDTH) ? 
-							MAX_COLUMN_WIDTH : fMainTable.getClientArea().width);
-				}
+				
+                Rectangle area = fMainTable.getClientArea();
+                Point size = fMainTable.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+                ScrollBar vBar = fMainTable.getVerticalBar();
+                int width = area.width - fMainTable.computeTrim(0,0,0,0).width - vBar.getSize().x;
+                if (size.y > area.height + fMainTable.getHeaderHeight()) {
+                	// Subtract the scrollbar width from the total column width
+                	// if a vertical scrollbar will be required
+                	Point vBarSize = vBar.getSize();
+                	width -= vBarSize.x;
+                }
+                Point oldSize = fMainTable.getSize();
+                if (oldSize.x > area.width) {
+                    // table is getting smaller so make the columns smaller first and then resize the table to
+                    // match the client area width
+                	if (aEditableWidgetClass.equals(Date.class)) {
+                    	tableColumn.setWidth(width/3);
+                    	tableColumn2.setWidth(width - tableColumn.getWidth());
+                	} else {
+                		tableColumn.setWidth(width);
+                	}
+                    fMainTable.setSize(area.width, area.height);
+                } else {
+                    // table is getting bigger so make the table bigger first and then make the columns wider
+                    // to match the client area width
+                	fMainTable.setSize(area.width, area.height);
+                	if (aEditableWidgetClass.equals(Date.class)) {
+                    	tableColumn.setWidth(width/3);
+                    	tableColumn2.setWidth(width - tableColumn.getWidth());
+                	} else {
+                    	tableColumn.setWidth(width);
+                	}
+                }
 			}
 		});
         
 		fMainTable.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-				
-				//Remove control, since the text was set in the table item
 				
 				//Send items updated notification
 				if (null != fListener) {
@@ -204,7 +229,7 @@ public class EditableListWidget {
 				}
 			}
 		});
-	      
+		
 		final Composite buttonsComposite = aToolkit.createComposite(fMainComposite);
 		buttonsComposite.setLayout(new GridLayout());
 		buttonsComposite.setLayoutData(new GridData(GridData.CENTER, GridData.CENTER, false, false));

@@ -183,7 +183,6 @@ public class CommentInputDialog extends FormDialog {
 		{
 			@Override
 			public void expansionStateChanged(ExpansionEvent e){
-				sform.reflow(true);
 				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
 			}
 		});
