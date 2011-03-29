@@ -265,8 +265,6 @@ public class FindReviewItemsDialog extends FormDialog {
 							final R4EFileContext fileContext = R4EUIModelController.FModelExt.createR4EFileContext(reviewItem);
 							R4EFileVersion tmpBaseVersion = tmpFiles.get(i).getBase();
 							if (null != tmpBaseVersion) {
-								//TODO: for now comparisons using the compare editor from the UI are not supported.  The compare input comes
-								//from the eGIT code in the R4E core plugin
 								final R4EFileVersion baseVersion = R4EUIModelController.FModelExt.createR4EBaseFileVersion(fileContext);
 								bookNum = R4EUIModelController.FResourceUpdater.checkOut(baseVersion, R4EUIModelController.getReviewer());
 								baseVersion.setName(tmpBaseVersion.getName());
@@ -289,8 +287,7 @@ public class FindReviewItemsDialog extends FormDialog {
 												" Cannot get to interface to the local reviews repository",
 												new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e),IStatus.WARNING);
 
-										// TODO: Disable created item (incomplete), i.e. shall not be visible to the
-										// users
+										// TODO: Disable created item (incomplete), i.e. shall not be visible to the users
 										R4EUIModelController.FResourceUpdater.undoCheckOut(bookNum);
 										dialog.open();
 										return;
@@ -433,7 +430,7 @@ public class FindReviewItemsDialog extends FormDialog {
 								versionsIf.getCommitIds(fInputProject).get(commitList.getSelectionIndex()));
 						refresh();
 					} catch (ReviewVersionsException e1) {
-						//TODO add error hangling code
+						//TODO add error handling code
 						e1.printStackTrace();
 					}
 					commitList.getText();

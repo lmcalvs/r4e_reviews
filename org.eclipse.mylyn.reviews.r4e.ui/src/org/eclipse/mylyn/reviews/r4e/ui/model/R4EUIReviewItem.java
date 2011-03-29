@@ -53,6 +53,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewItemProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -170,7 +171,13 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			
 			case R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT:
 			{
-				return "Commit: " + ((CommitDescriptor)aItemInfo).getTitle();
+				String commitId = "";
+				if (aItemInfo instanceof CommitDescriptor) {
+					commitId = ((CommitDescriptor)aItemInfo).getTitle();
+				} else if (aItemInfo instanceof ChangeSet) {
+					commitId = ((ChangeSet)aItemInfo).getId();
+				}
+				return "Commit: " + commitId;
 			}
 			
 			default:
@@ -193,7 +200,13 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			
 			case R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT:
 			{
-				return "Description: " + ((CommitDescriptor)aItemInfo).getMessage();
+				String message = "";
+				if (aItemInfo instanceof CommitDescriptor) {
+					message = ((CommitDescriptor)aItemInfo).getMessage();
+				} else if (aItemInfo instanceof ChangeSet) {
+					message = ((ChangeSet)aItemInfo).getMessage();
+				}
+				return "Description: " + message;
 			}
 			
 			default:

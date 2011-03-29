@@ -56,6 +56,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.FindReviewItemsDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.mylyn.versions.core.Change;
@@ -129,7 +130,10 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			createReviewItem(changeSet);
 			return null;
 		}
-		//Fire up the find review items dialog to get the latest commit info for the first selection
+		//We could not find any version control system, thus no items
+		return null;
+
+		/*
 		// TODO: This should be changed to use the new core interface for the Git Version control system.
 		R4EUIModelController.setDialogOpen(true);
 
@@ -138,7 +142,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
     	dialog.open();
     	//Note the review item will be added to the review in the dialog if needed
 		R4EUIModelController.setDialogOpen(false);
-		return null;
+		*/
 	}
 
 	/**
@@ -172,16 +176,15 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			final String user = R4EUIModelController.getReviewer();
 			final R4EParticipant participant = uiReview.getParticipant(user, true);
 
-
 			// Create a new review item in the serialization model
 			final R4EItem reviewItem = R4EUIModelController.FModelExt.createR4EItem(participant);
 			// initialize list of project uri's, will be filled as file versions are created.
 			Set<String> projectUris = new HashSet<String>(2);
 
 			//For each change
-			//--Build File Contexts
-			// --Build Base File Version
-			// --Build Target File Version
+			//- Build File Contexts
+			//- Build Base File Version
+			//- Build Target File Version
 			for (Change change : changeSet.getChanges()) {
 				ScmArtifact baseArt = change.getBase();
 				ScmArtifact targetArt = change.getTarget();
@@ -226,6 +229,11 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				reviewItem.getProjectURIs().add(projUri);
 			}
 
+			//Finally, populate UI model with item info
+			final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(uiReview, reviewItem,
+					R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT, changeSet, null);
+			uiReviewItem.open();
+			
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
 		} catch (ReviewsFileStorageException e) {
