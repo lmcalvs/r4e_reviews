@@ -1040,4 +1040,67 @@
             type="java.lang.Object">
       </propertyTester>
    </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+R F">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem"
+            contextId="org.eclipse.ui.textEditorScope"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+R I">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomaly"
+            contextId="org.eclipse.ui.textEditorScope"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+R A">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+R R">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+R E">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+R C">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+R S">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.openEditor"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+R O">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addLinkedAnomaly"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+R L">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.removeElement"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+R X">
+      </key>
+   </extension>
 </plugin>

@@ -68,6 +68,16 @@ public class RemoveElementHandler extends AbstractHandler {
                         null);
 		    	if (dialog.getReturnCode() == Window.OK) {
 		    		try {
+		    			//First close element if is it open
+		    			if (element.isOpen()) {
+		    				element.close();
+		    				for (IR4EUIModelElement childElement: element.getChildren()) {
+		    					if (null != childElement && childElement.isOpen()) {
+		    						childElement.close();
+		    						break;
+		    					}
+		    				}
+		    			}
 						element.getParent().removeChildren(element, dialog.getToggleState());
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);
