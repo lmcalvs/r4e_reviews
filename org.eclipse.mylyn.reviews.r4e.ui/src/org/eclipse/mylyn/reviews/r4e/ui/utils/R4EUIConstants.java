@@ -697,15 +697,15 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	
 	/**
 	 * Field ALPHA_SORTER_COMMAND.
-	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.DefaultSort"")
+	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort"")
 	 */
-	public static final String ALPHA_SORTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.DefaultSort";
+	public static final String ALPHA_SORTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort";
 	
 	/**
 	 * Field ALPHA_SORTER_ICON_FILE.
-	 * (value is ""icons/elcl16/defsort_menu.gif"")
+	 * (value is ""icons/elcl16/alphasort_menu.gif"")
 	 */
-	public static final String ALPHA_SORTER_ICON_FILE = "icons/elcl16/defsort_menu.gif";
+	public static final String ALPHA_SORTER_ICON_FILE = "icons/elcl16/alphasort_menu.gif";
 	
 	/**
 	 * Field ALPHA_SORTER_NAME.
@@ -724,6 +724,36 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""s"")
 	 */
 	public static final String ALPHA_SORTER_MNEMONIC = "s";
+	
+	/**
+	 * Field REVIEW_TYPE_SORTER_COMMAND.
+	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort"")
+	 */
+	public static final String REVIEW_TYPE_SORTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort";
+	
+	/**
+	 * Field REVIEW_TYPE_SORTER_ICON_FILE.
+	 * (value is ""icons/elcl16/revtypesort_menu.gif"")
+	 */
+	public static final String REVIEW_TYPE_SORTER_ICON_FILE = "icons/elcl16/revtypesort_menu.gif";
+	
+	/**
+	 * Field REVIEW_TYPE_SORTER_NAME.
+	 * (value is ""Review Type"")
+	 */
+	public static final String REVIEW_TYPE_SORTER_NAME = "Review Type";
+	
+	/**
+	 * Field REVIEW_TYPE_SORTER_TOOLTIP.
+	 * (value is ""Sort Reviews by Review Type"")
+	 */
+	public static final String REVIEW_TYPE_SORTER_TOOLTIP = "Sort Reviews by Review Type";
+	
+	/**
+	 * Field REVIEW_TYPE_SORTER_MNEMONIC.
+	 * (value is ""t"")
+	 */
+	public static final String REVIEW_TYPE_SORTER_MNEMONIC = "t";
 	
 	/**
 	 * Field CURRENT_REVIEW_FILTER_COMMAND.

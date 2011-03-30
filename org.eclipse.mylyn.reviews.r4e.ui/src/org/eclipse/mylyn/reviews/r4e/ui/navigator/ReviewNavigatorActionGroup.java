@@ -28,6 +28,7 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.AnomaliesOnlyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.CurrentReviewFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.FocusFilter;
@@ -70,6 +71,11 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 * Field fAlphaReviewSorterAction.
 	 */
 	private final ViewerComparator fAlphaReviewSorter;
+	
+	/**
+	 * Field fReviewTypeSorter.
+	 */
+	private final ViewerComparator fReviewTypeSorter;
 	
 	/**
 	 * Field fFocusFilter.
@@ -128,6 +134,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 				R4EUIConstants.LINK_PROPERTIES_COMMAND).getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY).getValue()).booleanValue());
 		
 		fAlphaReviewSorter = new NavigatorElementComparator();
+		fReviewTypeSorter = new ReviewTypeComparator();
 		fFocusFilter = new FocusFilter();
 		fCurrentReviewFilter = new CurrentReviewFilter();
 		fReviewsOnlyFilter = new ReviewsOnlyFilter();
@@ -187,6 +194,14 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	public ViewerComparator getAlphaSorter() {
 		return fAlphaReviewSorter;
+	}
+	
+	/**
+	 * Method getDefaultSorter.
+	 * @return ViewerComparator
+	 */
+	public ViewerComparator getReviewTypeSorter() {
+		return fReviewTypeSorter;
 	}
 	
 	/**
