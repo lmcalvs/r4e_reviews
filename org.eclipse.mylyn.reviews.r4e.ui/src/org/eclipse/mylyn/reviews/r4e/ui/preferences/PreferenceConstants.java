@@ -72,12 +72,6 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_REVIEWS_ONLY_FILTER = "reviewsOnlyFilter";
 	
 	/**
-	 * Field P_REVIEWS_CURRENT_FILTER.
-	 * (value is ""reviewsCurrentFilter"")
-	 */
-	public static final String P_REVIEWS_CURRENT_FILTER = "reviewsCurrentFilter";
-	
-	/**
 	 * Field P_REVIEWS_MY_FILTER.
 	 * (value is ""reviewsMyFilter"")
 	 */
@@ -90,10 +84,16 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_PARTICIPANT_FILTER = "participantFilter";
 	
 	/**
-	 * Field P_ANOMALIES_FILTER.
+	 * Field P_ANOMALIES_ALL_FILTER.
 	 * (value is ""anomaliesFilter"")
 	 */
-	public static final String P_ANOMALIES_FILTER = "anomaliesFilter";
+	public static final String P_ANOMALIES_ALL_FILTER = "anomaliesFilter";
+	
+	/**
+	 * Field P_ANOMALIES_MY_FILTER.
+	 * (value is ""anomaliesMyFilter"")
+	 */
+	public static final String P_ANOMALIES_MY_FILTER = "anomaliesMyFilter";
 	
 	/**
 	 * Field P_REVIEWED_ITEMS_FILTER.

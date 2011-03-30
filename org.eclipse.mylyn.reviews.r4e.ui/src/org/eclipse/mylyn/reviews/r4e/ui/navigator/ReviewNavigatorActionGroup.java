@@ -30,7 +30,7 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.AnomaliesOnlyFilter;
-import org.eclipse.mylyn.reviews.r4e.ui.filters.CurrentReviewFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.filters.AnomaliesMyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.FocusFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.NavigatorElementComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.ReviewParticipantFilter;
@@ -85,7 +85,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	/**
 	 * Field fCurrentReviewFilter.
 	 */
-	private final CurrentReviewFilter fCurrentReviewFilter;
+	private final AnomaliesMyFilter fCurrentReviewFilter;
 	
 	/**
 	 * Field fReviewsOnlyFilter.
@@ -136,7 +136,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		fAlphaReviewSorter = new NavigatorElementComparator();
 		fReviewTypeSorter = new ReviewTypeComparator();
 		fFocusFilter = new FocusFilter();
-		fCurrentReviewFilter = new CurrentReviewFilter();
+		fCurrentReviewFilter = new AnomaliesMyFilter();
 		fReviewsOnlyFilter = new ReviewsOnlyFilter();
 		fReviewsMyFilter = new ReviewParticipantFilter();
 		fReviewsParticipantFilter = new ReviewParticipantFilter();
@@ -162,11 +162,11 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 * @throws ExecutionException 
 	 */
 	public void resetAllFilterActions() throws ExecutionException, NotDefinedException, NotEnabledException, NotHandledException {
-		runReviewCurrentFilterCommand(false);
 		runReviewsOnlyFilterCommand(false);
 		runReviewsMyFilterCommand(false);
 		runReviewsParticipantFilterCommand("");
 		runAnomaliesFilterCommand(false);
+		runAnomaliesMyFilterCommand(false);
 		runReviewElemsFilterCommand(false);
 	}
 	
@@ -248,7 +248,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 * Method getCurrentReviewFilter.
 	 * @return CurrentReviewFilter
 	 */
-	public CurrentReviewFilter getCurrentReviewFilter() {
+	public AnomaliesMyFilter getCurrentReviewFilter() {
 		return fCurrentReviewFilter;
 	}
 	
@@ -256,17 +256,17 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 * Method isCurrentReviewFilterSet.
 	 * @return boolean
 	 */
-	public boolean isCurrentReviewFilterSet() {
-		return ((Boolean) fCommandService.getCommand(R4EUIConstants.CURRENT_REVIEW_FILTER_COMMAND).
+	public boolean isAnomaliesMyFilterSet() {
+		return ((Boolean) fCommandService.getCommand(R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND).
     			getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY).getValue()).booleanValue();
 	}
 	
 	/**
 	 * Method resetReviewCurrentFilterCommand.
 	 */
-	private void resetReviewCurrentFilterCommand() {
+	private void resetAnomaliesMyFilterCommand() {
 		fView.getTreeViewer().removeFilter(fCurrentReviewFilter);
-        fCommandService.getCommand(R4EUIConstants.CURRENT_REVIEW_FILTER_COMMAND).
+        fCommandService.getCommand(R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND).
     		getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY).setValue(Boolean.valueOf(false));
 	}
 	
@@ -278,10 +278,10 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 * @throws NotDefinedException 
 	 * @throws ExecutionException 
 	 */
-	public void runReviewCurrentFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException, NotEnabledException, NotHandledException {
-		resetReviewCurrentFilterCommand();
+	public void runAnomaliesMyFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException, NotEnabledException, NotHandledException {
+		resetAnomaliesMyFilterCommand();
 		if (aApply) {
-				fHandlerService.executeCommand(R4EUIConstants.CURRENT_REVIEW_FILTER_COMMAND, null);
+			fHandlerService.executeCommand(R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND, null);
 		}
 	}	
 	

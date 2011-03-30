@@ -315,11 +315,6 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fReviewShowDisabledButton.setLayoutData(r4EFilterPrefsGroupData);
 		fReviewShowDisabledButton.setSelection(store.getBoolean(PreferenceConstants.P_SHOW_DISABLED));
 		
-		fReviewCurrentFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
-		fReviewCurrentFilterButton.setText(R4EUIConstants.CURRENT_REVIEW_FILTER_NAME);
-		fReviewCurrentFilterButton.setLayoutData(r4EFilterPrefsGroupData);
-		fReviewCurrentFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_REVIEWS_CURRENT_FILTER));
-		
 		fReviewsOnlyFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fReviewsOnlyFilterButton.setText(R4EUIConstants.REVIEWS_ONLY_FILTER_NAME);
 		fReviewsOnlyFilterButton.setLayoutData(r4EFilterPrefsGroupData);
@@ -356,7 +351,12 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fAnomaliesFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fAnomaliesFilterButton.setText(R4EUIConstants.ANOMALIES_FILTER_NAME);
 		fAnomaliesFilterButton.setLayoutData(r4EFilterPrefsGroupData);
-		fAnomaliesFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_ANOMALIES_FILTER));
+		fAnomaliesFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_ANOMALIES_ALL_FILTER));
+		
+		fReviewCurrentFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fReviewCurrentFilterButton.setText(R4EUIConstants.ANOMALIES_MY_FILTER_NAME);
+		fReviewCurrentFilterButton.setLayoutData(r4EFilterPrefsGroupData);
+		fReviewCurrentFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
 		
 		fReviewedItemsFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fReviewedItemsFilterButton.setText(R4EUIConstants.REVIEWED_ELEMS_FILTER_NAME);
@@ -384,7 +384,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
         //Set preferences for default filters and apply them
     	store.setValue(PreferenceConstants.P_SHOW_DISABLED, fReviewShowDisabledButton.getSelection());
     	store.setValue(PreferenceConstants.P_REVIEWS_ONLY_FILTER, fReviewsOnlyFilterButton.getSelection());
-    	store.setValue(PreferenceConstants.P_REVIEWS_CURRENT_FILTER, fReviewCurrentFilterButton.getSelection());
+    	store.setValue(PreferenceConstants.P_ANOMALIES_MY_FILTER, fReviewCurrentFilterButton.getSelection());
     	store.setValue(PreferenceConstants.P_REVIEWS_MY_FILTER, fReviewMyFilterButton.getSelection());
     	if (fParticipantFilterButton.getSelection()) {
         	final String filterUserId = fParticipantIdText.getText();
@@ -398,7 +398,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
         	store.setValue(PreferenceConstants.P_PARTICIPANT_FILTER, "");
 			fParticipantIdText.setText("");
     	}
-    	store.setValue(PreferenceConstants.P_ANOMALIES_FILTER, fAnomaliesFilterButton.getSelection());
+    	store.setValue(PreferenceConstants.P_ANOMALIES_ALL_FILTER, fAnomaliesFilterButton.getSelection());
     	store.setValue(PreferenceConstants.P_REVIEWED_ITEMS_FILTER, fReviewedItemsFilterButton.getSelection());
     	
     	R4EUIModelController.getNavigatorView().applyDefaultFilters();

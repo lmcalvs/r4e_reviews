@@ -22,7 +22,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.filters.CurrentReviewFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.filters.AnomaliesMyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorActionGroup;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -31,7 +31,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class CurrentReviewFilterHandler extends AbstractHandler {
+public class AnomaliesMyFilterHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -48,7 +48,7 @@ public class CurrentReviewFilterHandler extends AbstractHandler {
 		
 		//We need to preserve the expansion state and restore it afterwards
 	    final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
-	    final CurrentReviewFilter filter = 
+	    final AnomaliesMyFilter filter = 
 	    	((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).getCurrentReviewFilter();
 		
 	    final Object[] elements =  viewer.getExpandedElements();

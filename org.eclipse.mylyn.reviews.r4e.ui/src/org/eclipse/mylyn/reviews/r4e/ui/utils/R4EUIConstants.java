@@ -756,28 +756,28 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REVIEW_TYPE_SORTER_MNEMONIC = "t";
 	
 	/**
-	 * Field CURRENT_REVIEW_FILTER_COMMAND.
-	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.CurrentReview"")
+	 * Field ANOMALIES_MY_FILTER_COMMAND.
+	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesMy"")
 	 */
-	public static final String CURRENT_REVIEW_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.CurrentReview";
+	public static final String ANOMALIES_MY_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesMy";
 	
 	/**
-	 * Field CURRENT_REVIEW_FILTER_NAME.
-	 * (value is ""Show current review"")
+	 * Field ANOMALIES_MY_FILTER_NAME.
+	 * (value is ""Show My Anomalies"")
 	 */
-	public static final String CURRENT_REVIEW_FILTER_NAME = "Show Current Review";
+	public static final String ANOMALIES_MY_FILTER_NAME = "Show My Anomalies";
 	
 	/**
-	 * Field CURRENT_REVIEW_FILTER_TOOLTIP.
-	 * (value is ""Only show the currently open review"")
+	 * Field ANOMALIES_MY_FILTER_TOOLTIP.
+	 * (value is ""Show my Currently Assigned Anomalies"")
 	 */
-	public static final String CURRENT_REVIEW_FILTER_TOOLTIP = "Only Show the Currently Open Review";
+	public static final String ANOMALIES_MY_FILTER_TOOLTIP = "Show My Currently Assigned Anomalies";
 	
 	/**
-	 * Field CURRENT_REVIEW_FILTER_MNEMONIC.
-	 * (value is ""c"")
+	 * Field ANOMALIES_MY_REVIEW_FILTER_MNEMONIC.
+	 * (value is ""z"")
 	 */
-	public static final String CURRENT_REVIEW_FILTER_MNEMONIC = "c";
+	public static final String ANOMALIES_MY_FILTER_MNEMONIC = "z";
 	
 	/**
 	 * Field REVIEWS_ONLY_FILTER_COMMAND.

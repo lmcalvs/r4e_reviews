@@ -499,9 +499,9 @@
       </category>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Current Review Filter"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.CurrentReview"
-            name="FiltersCurrentReview">
+            description="Show My Anomalies"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesMy"
+            name="AnomaliesMy">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -511,7 +511,7 @@
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
             description="Reviews Only Filter"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsOnly"
-            name="FiltersReviewsOnly">
+            name="ReviewsOnly">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -749,8 +749,8 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.CurrentReviewFilterHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.CurrentReview">
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesMyFilterHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesMy">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">

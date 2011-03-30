@@ -180,7 +180,6 @@ public class R4EUIModelController {
 		//check to apply filters
 		try {
 			final ReviewNavigatorActionGroup actionGroup = (ReviewNavigatorActionGroup)FView.getActionSet();
-			if (actionGroup.isCurrentReviewFilterSet()) actionGroup.runReviewCurrentFilterCommand(true);
 			if (actionGroup.isMyReviewFilterSet()) actionGroup.runReviewsMyFilterCommand(true);
 			if (actionGroup.isParticipantFilterSet()) { 
 				actionGroup.runReviewsParticipantFilterCommand(actionGroup.getFilterParticipant());

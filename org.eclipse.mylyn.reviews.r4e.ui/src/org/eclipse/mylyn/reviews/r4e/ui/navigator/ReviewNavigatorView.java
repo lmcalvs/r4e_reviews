@@ -582,8 +582,6 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();	
 		try {
 			((ReviewNavigatorActionGroup) fActionSet).resetAllFilterActions();
-			((ReviewNavigatorActionGroup) fActionSet).runReviewCurrentFilterCommand(
-					store.getBoolean(PreferenceConstants.P_REVIEWS_CURRENT_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runReviewsOnlyFilterCommand(
 					store.getBoolean(PreferenceConstants.P_REVIEWS_ONLY_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runReviewsMyFilterCommand(
@@ -591,7 +589,9 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			((ReviewNavigatorActionGroup) fActionSet).runReviewsParticipantFilterCommand(
 					store.getString(PreferenceConstants.P_PARTICIPANT_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runAnomaliesFilterCommand(
-					store.getBoolean(PreferenceConstants.P_ANOMALIES_FILTER));
+					store.getBoolean(PreferenceConstants.P_ANOMALIES_ALL_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runAnomaliesMyFilterCommand(
+					store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runReviewElemsFilterCommand(
 					store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));
 		} catch (ExecutionException e) {

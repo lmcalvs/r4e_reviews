@@ -43,15 +43,8 @@ public class FiltersContributionItems extends CompoundContributionItem {
 	protected IContributionItem[] getContributionItems() {
 
 		final List<IContributionItem> list = new ArrayList<IContributionItem>();
+
 		CommandContributionItemParameter params = 
-			new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-					R4EUIConstants.CURRENT_REVIEW_FILTER_COMMAND,
-					R4EUIConstants.CURRENT_REVIEW_FILTER_COMMAND,
-					null, null, null, null, R4EUIConstants.CURRENT_REVIEW_FILTER_NAME, R4EUIConstants.CURRENT_REVIEW_FILTER_MNEMONIC,
-					R4EUIConstants.CURRENT_REVIEW_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
-		list.add(new CommandContributionItem(params));
-		
-		params = 
 			new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 					R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND,
 					R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND,
@@ -84,6 +77,14 @@ public class FiltersContributionItems extends CompoundContributionItem {
 					R4EUIConstants.ANOMALIES_FILTER_COMMAND,
 					null, null, null, null, R4EUIConstants.ANOMALIES_FILTER_NAME, R4EUIConstants.ANOMALIES_FILTER_MNEMONIC, 
 					R4EUIConstants.ANOMALIES_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
+		list.add(new CommandContributionItem(params));
+		
+		params = 
+			new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+					R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND,
+					R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND,
+					null, null, null, null, R4EUIConstants.ANOMALIES_MY_FILTER_NAME, R4EUIConstants.ANOMALIES_MY_FILTER_MNEMONIC,
+					R4EUIConstants.ANOMALIES_MY_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
 		list.add(new CommandContributionItem(params));
 		
 		params = 
