@@ -248,8 +248,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		} catch (ReviewsFileStorageException e) {
 			UIUtils.displayReviewsFileStorageErrorDialog(e);
 		} catch (OutOfSyncException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			UIUtils.displaySyncErrorDialog(e);
 		}
 	}
 

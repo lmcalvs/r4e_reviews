@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
@@ -57,6 +58,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewBasicProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.mylyn.versions.core.ScmCore;
+import org.eclipse.mylyn.versions.core.ScmRepository;
+import org.eclipse.mylyn.versions.core.spi.ScmConnector;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 
@@ -442,9 +446,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						}
 					} else {
 						//commit
-						IProject project = ResourceUtils.toIProject(item.getProjectURIs().get(0));
-						ReviewsVersionsIF versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(project);
-						CommitDescriptor descriptor = versionsIf.getCommitInfo(project, item.getRepositoryRef());
+						CommitDescriptor descriptor = createChangeSetDescriptor(item);
 						uiItem = new R4EUIReviewItem(this, item, R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT, descriptor, null);
 					}
 
@@ -462,6 +464,44 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fireReviewStateChanged(this);
 	}
 	
+	private CommitDescriptor createChangeSetDescriptor(final R4EItem item) {
+		CommitDescriptor desc = new CommitDescriptor() {
+			public String getTitle() {
+				return item.getDescription();
+			}
+			
+			public String[] getParentIDs() {
+				return new String[0];
+			}
+			
+			public String getMessage() {
+				return item.getDescription();
+			}
+			
+			public String getId() {
+				return item.getRepositoryRef();
+			}
+			
+			public String getCommitter() {
+				return item.getAuthorRep();
+			}
+			
+			public Long getCommitDate() {
+				return item.getSubmitted().getTime();
+			}
+			
+			public String[] getChangeSet() {
+				return new String[0];
+			}
+			
+			public String getAuthor() {
+				return item.getAddedById();
+			}
+		};
+		return desc;
+	}
+
+
 	/**
 	 * Method setEnabled.
 	 * @param aEnabled boolean
