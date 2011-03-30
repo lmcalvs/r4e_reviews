@@ -47,7 +47,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
@@ -225,22 +227,30 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				}
 			}
 
+			//Prepare for updates to the review item
+			Long bookNum = SerializeFactory.getResourceUpdater().checkOut(reviewItem, user);
+			
 			// Load the Review item with the list of projects involved
 			for (String projUri : projectUris) {
 				reviewItem.getProjectURIs().add(projUri);
 			}
-
-			//Finally, populate UI model with item info
-			final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(uiReview, reviewItem,
-					R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT, changeSet, null);
-			uiReviewItem.open();
 			
+			//carry on updates
+			SerializeFactory.getResourceUpdater().checkIn(bookNum);
+
+			// Finally, populate UI model with item info
+			final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(uiReview,
+					reviewItem, R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT,
+					changeSet, null);
+			uiReviewItem.open();
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
 		} catch (ReviewsFileStorageException e) {
 			UIUtils.displayReviewsFileStorageErrorDialog(e);
+		} catch (OutOfSyncException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -293,7 +303,8 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		IResource resource = ResourceUtils.findResource(project, projPath);
 		String repoPath = scmArt.getPath();
 		String versionId = scmArt.getId();
-		String platformURI = ResourceUtils.toPlatformURIStr(project);
+		String resPlatformURI = ResourceUtils.toPlatformURIStr(resource);
+		String projPlatformURI = ResourceUtils.toPlatformURIStr(project);
 
 		if (projPath == null) {
 			sb.setLength(0);
@@ -301,8 +312,8 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			Activator.Ftracer.traceDebug(sb.toString());
 		}
 
-		if (platformURI != null) {
-			projectUris.add(platformURI);
+		if (projPlatformURI != null) {
+			projectUris.add(projPlatformURI);
 		} else {
 			sb.setLength(0);
 			sb.append("Unable to resolve the project: " + projectName + " platform's URI, in scmArtifact with path: "
@@ -312,7 +323,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 
 		fileVer.setLocalVersionID(localId);
 		fileVer.setName(fname);
-		fileVer.setPlatformURI(projPath);
+		fileVer.setPlatformURI(resPlatformURI);
 		fileVer.setRepositoryPath(repoPath);
 		fileVer.setResource(resource);
 		fileVer.setVersionID(versionId);
