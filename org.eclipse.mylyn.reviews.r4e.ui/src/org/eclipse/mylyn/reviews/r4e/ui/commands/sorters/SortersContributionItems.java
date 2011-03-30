@@ -39,9 +39,9 @@ public class SortersContributionItems extends CompoundContributionItem {
 	@Override
 	protected IContributionItem[] getContributionItems() {
 
-		final IContributionItem[] list = new IContributionItem[1];
+		final IContributionItem[] list = new IContributionItem[2];
 
-		final CommandContributionItemParameter params = 
+		CommandContributionItemParameter params = 
 			new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 					R4EUIConstants.ALPHA_SORTER_COMMAND,
 					R4EUIConstants.ALPHA_SORTER_COMMAND,
@@ -50,6 +50,17 @@ public class SortersContributionItems extends CompoundContributionItem {
 					null, null, R4EUIConstants.ALPHA_SORTER_NAME, R4EUIConstants.ALPHA_SORTER_MNEMONIC,
 					R4EUIConstants.ALPHA_SORTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
 		list[0] = new CommandContributionItem(params);
+		
+		params = 
+			new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+					R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND,
+					R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND,
+					null, ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(
+							R4EUIConstants.REVIEW_TYPE_SORTER_ICON_FILE)),
+					null, null, R4EUIConstants.REVIEW_TYPE_SORTER_NAME, R4EUIConstants.REVIEW_TYPE_SORTER_MNEMONIC,
+					R4EUIConstants.REVIEW_TYPE_SORTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
+		list[1] = new CommandContributionItem(params);
+		
 		return list;
 	}
 

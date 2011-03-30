@@ -186,13 +186,22 @@
                tooltip="Add a New Review Group">
          </command>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.DefaultSort"
-               icon="icons/elcl16/defsort_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.DefaultSort"
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort"
+               icon="icons/elcl16/alphasort_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort"
                label="Sort by Element Name"
                mnemonic="s"
                style="toggle"
                tooltip="Sort by Element Name Alphabetically ">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort"
+               icon="icons/elcl16/revtypesort_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort"
+               label="Sort by Review Type"
+               mnemonic="t"
+               style="toggle"
+               tooltip="Sort Reviews by Review Type">
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
@@ -548,27 +557,6 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
-      <command
-            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Remove All Filters"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.RemoveAll"
-            name="FiltersRemoveAll">
-      </command>
-      <category
-            description="R4E Navigator View Toolbar Sort Commands"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.sortersCategory"
-            name="R4E Navigator View Sorters">
-      </category>
-      <command
-            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.sortersCategory"
-            description="Sort by Element Name"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.DefaultSort"
-            name="DefaultSort">
-         <state
-               class="org.eclipse.ui.handlers.RegistryToggleState:false"
-               id="org.eclipse.ui.commands.toggleState">
-         </state>
-      </command>
       <category
             description="R4E Navigator View Popup Commands"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
@@ -621,6 +609,37 @@
             description="Restore Element"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.restoreElement"
             name="Restore Element">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
+            description="Remove All Filters"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.RemoveAll"
+            name="FiltersRemoveAll">
+      </command>
+      <category
+            description="R4E Navigator View Toolbar Sort Commands"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.sortersCategory"
+            name="R4E Navigator View Sorters">
+      </category>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.sortersCategory"
+            description="Sort by Element Name"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort"
+            name="AlphaSort">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.sortersCategory"
+            description="Sort Reviews by Type"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort"
+            name="ReviewTypeSort">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
       </command>
    </extension>
    <extension
@@ -785,7 +804,16 @@
       </handler>
       <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSortHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.DefaultSort">
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSortHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
