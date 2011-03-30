@@ -213,6 +213,15 @@
                tooltip="Collapse All Elements of the Review Navigator Tree">
          </command>
          <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"
+               icon="icons/elcl16/focus_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"
+               label="Set Focus"
+               mnemonic="f"
+               style="toggle"
+               tooltip="Set Focus on Current Element">
+         </command>
+         <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext"
                disabledIcon="icons/dlcl16/nxtdbld_menu.gif"
                icon="icons/elcl16/nxtelem_menu.gif"
@@ -313,6 +322,15 @@
                mnemonic="c"
                style="push"
                tooltip="Collapse All Elements of the Review Navigator Tree">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"
+               icon="icons/elcl16/focus_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"
+               label="Set Focus"
+               mnemonic="f"
+               style="toggle"
+               tooltip="Set Focus on Current Element">
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext"
@@ -434,6 +452,16 @@
             description="Collapse All Elements of the Review Navigator Tree"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
             name="Collapse All">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
+            description="Set Focus on Current Element"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"
+            name="Focus">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
@@ -659,6 +687,15 @@
       <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAllHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocusHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">

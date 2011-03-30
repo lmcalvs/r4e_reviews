@@ -30,6 +30,7 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.AnomaliesOnlyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.CurrentReviewFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.filters.FocusFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.NavigatorElementComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.ReviewParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.ReviewedElemsFilter;
@@ -69,6 +70,11 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 * Field fAlphaReviewSorterAction.
 	 */
 	private final ViewerComparator fAlphaReviewSorter;
+	
+	/**
+	 * Field fFocusFilter.
+	 */
+	private final FocusFilter fFocusFilter;
 	
 	/**
 	 * Field fCurrentReviewFilter.
@@ -122,6 +128,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 				R4EUIConstants.LINK_PROPERTIES_COMMAND).getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY).getValue()).booleanValue());
 		
 		fAlphaReviewSorter = new NavigatorElementComparator();
+		fFocusFilter = new FocusFilter();
 		fCurrentReviewFilter = new CurrentReviewFilter();
 		fReviewsOnlyFilter = new ReviewsOnlyFilter();
 		fReviewsMyFilter = new ReviewParticipantFilter();
@@ -180,6 +187,14 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	public ViewerComparator getAlphaSorter() {
 		return fAlphaReviewSorter;
+	}
+	
+	/**
+	 * Method getFocusFilter.
+	 * @return FocusFilter
+	 */
+	public FocusFilter getFocusFilter() {
+		return fFocusFilter;
 	}
 	
 	/**

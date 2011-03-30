@@ -130,11 +130,11 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			createReviewItem(changeSet);
 			return null;
 		}
-		//We could not find any version control system, thus no items
-		return null;
 
-		/*
-		// TODO: This should be changed to use the new core interface for the Git Version control system.
+
+		//We could not find any version control system, thus no items
+
+		// TODO: So this code should be removed and replace by a Git connector
 		R4EUIModelController.setDialogOpen(true);
 
 		final FindReviewItemsDialog dialog = new FindReviewItemsDialog(R4EUIModelController.getNavigatorView().
@@ -142,7 +142,8 @@ public class FindReviewItemsHandler extends AbstractHandler {
     	dialog.open();
     	//Note the review item will be added to the review in the dialog if needed
 		R4EUIModelController.setDialogOpen(false);
-		*/
+		
+		return null;
 	}
 
 	/**
