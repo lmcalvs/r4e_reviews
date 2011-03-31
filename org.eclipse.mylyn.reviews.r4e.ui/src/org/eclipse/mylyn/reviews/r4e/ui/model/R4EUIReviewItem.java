@@ -408,7 +408,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		final R4EFileContext fileContext = R4EUIModelController.FModelExt.createR4EFileContext(fItem);			
 		fileContext.setType(aType);
 		
-		//Get Base version from Version control system
+		//Get Base version from Version control system and set core model data
 		if (aBaseArt != null) {
 			R4EFileVersion rfileBaseVersion = R4EUIModelController.FModelExt.createR4EBaseFileVersion(fileContext);
 			rfileBaseVersion.setLocalVersionID(aBaseLocalVersion);
@@ -420,7 +420,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}
 	
-		//Get Target version from Version control system
+		//Get Target version from Version control system and set core model data
 		if (aTargetArt != null) {
 			R4EFileVersion rfileTargetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
 			rfileTargetVersion.setLocalVersionID(aTargetLocalVersion);
@@ -432,165 +432,6 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}
 		
-		final R4EUIFileContext uiFile = new R4EUIFileContext(this, fileContext);
-		addChildren(uiFile);
-		return uiFile;
-	}
-	
-	
-	
-	/**
-	 * Method createReviewItem
-	 * @param aBaseFile - the base file used for this review item (if any)
-	 * @param aTargetFile - the target file used for this review item
-	 * @return R4EUIFileContext
-	 * @throws ResourceHandlingException
-	 * @throws OutOfSyncException 
-	 */
-	public R4EUIFileContext createFileContext(IFile aBaseFile, IFile aTargetFile) throws ResourceHandlingException, OutOfSyncException  {
-		
-		final R4EFileContext fileContext = R4EUIModelController.FModelExt.createR4EFileContext(fItem);			
-		
-		//Create and set review item model element
-		final IProject project = aTargetFile.getProject();
-		ReviewsVersionsIF versionsIf = null;
-		
-		// Get handle to local storage repository. No need to continue in case of failure.
-		IRFSRegistry revRepo = null;
-		try {
-			revRepo = RFSRegistryFactory.getRegistry((R4EReview) fItem.getReview());
-		} catch (ReviewsFileStorageException e1) {
-			Activator.Ftracer.traceWarning("Exception while obtaining handle to local repo: " + e1.toString() + " ("
-					+ e1.getMessage() + ")");
-			Activator.getDefault().logWarning("Exception: " + e1.toString(), e1);
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-					"Error detected while adding File Context element."
-							+ " Cannot get to interface to the local reviews repository", new Status(
-							IStatus.WARNING, Activator.PLUGIN_ID, 0, e1.getMessage(), e1), IStatus.WARNING);
-			dialog.open();
-			return null;
-		}
-
-		//Get Base version from Version control system
-		R4EFileVersion baseVersion = null;
-		if (null != aBaseFile) {
-			baseVersion = R4EUIModelController.FModelExt.createR4EBaseFileVersion(fileContext);
-			
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(baseVersion, R4EUIModelController.getReviewer());
-			try {
-				versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(project);
-				final FileVersionInfo baseVersionInfo = versionsIf.getFileVersionInfo(aBaseFile);
-				baseVersion.setName(baseVersionInfo.getName());
-				baseVersion.setRepositoryPath(baseVersionInfo.getRepositoryPath());
-				baseVersion.setVersionID(baseVersionInfo.getId());
-			} catch (ReviewVersionsException e) {
-				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Version error detected while adding anomaly. " +
-						" Assuming no base version is present.",
-						new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
-				dialog.open();
-			} finally {
-				R4EUIModelController.FResourceUpdater.undoCheckOut(bookNum);
-			}	
-		}
-		
-		//Get Target version from Version control system
-		final R4EFileVersion targetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(targetVersion, R4EUIModelController.getReviewer());
-		targetVersion.setResource(aTargetFile);
-		targetVersion.setPlatformURI(ResourceUtils.toPlatformURI(aTargetFile).toString());
-		try {
-			//File is version-controlled
-			versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(project);
-			final FileVersionInfo versionInfo = versionsIf.getFileVersionInfo(aTargetFile);
-			targetVersion.setName(versionInfo.getName());
-			targetVersion.setRepositoryPath(versionInfo.getRepositoryPath());
-			targetVersion.setVersionID(versionInfo.getId());
-		} catch (ReviewVersionsException e) {
-			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Version error detected while adding anomaly. " +
-					" Assuming no version control is present",
-    				new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
-			dialog.open();
-			
-			//File is not version-controlled
-			targetVersion.setName(aTargetFile.getName());
-			targetVersion.setRepositoryPath(aTargetFile.getFullPath().toOSString());
-			targetVersion.setVersionID(R4EUIConstants.FILE_NOT_IN_VERSION_CONTROL_MSG);
-		}
-		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		
-		//Register Base file to the local storage space
-		final StringBuffer message = new StringBuffer();
-		Exception exc = null;
-		try {
-			if (null != aBaseFile && null != baseVersion ) {
-				InputStream is = null;
-				try {
-					is = aBaseFile.getContents(false);
-					baseVersion.setLocalVersionID(revRepo.registerReviewBlob(is));
-				} catch (CoreException e) {
-					Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-					message.append("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					message.append("\nUnable to extract contents from base IFile while adding base file version. ");
-					message.append(((null != aBaseFile.getLocationURI()) ? ", IFile path: " + aBaseFile.getLocationURI().getPath() : ""));
-					Activator.Ftracer.traceWarning(message.toString());
-					exc = e;
-					message.append("\n\n");
-				} finally {
-					if (null != is) {
-						try {
-							is.close();
-						} catch (IOException e) {
-							message.setLength(0);
-							message.append("IOException while trying to close input stream");
-							Activator.getDefault().logWarning(message.toString(), e);
-							Activator.Ftracer.traceWarning(message.toString());
-						}
-					}
-				}
-			}
-
-			//Register Target file to the local storage space
-			InputStream is = null;
-			try {
-				is = aTargetFile.getContents(false);
-				final String locTargetFileId = revRepo.registerReviewBlob(is);
-				targetVersion.setLocalVersionID(locTargetFileId);
-			} catch (CoreException e) {
-				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-				message.append("Unable to extract contents from target IFile while adding target file version.");
-				message.append(((null != aTargetFile.getLocationURI()) ? ", IFile path: " + aTargetFile.getLocationURI().getPath() : ""));
-				if (null == exc) exc = e;
-			} finally {
-				if (null != is) {
-					try {
-						is.close();
-					} catch (IOException e) {
-						message.setLength(0);
-						message.append("IOException while trying to close input stream");
-						Activator.getDefault().logWarning(message.toString(), e);
-						Activator.Ftracer.traceWarning(message.toString());
-					}
-				}
-			}
-			message.append("\n\n");
-		} catch (ReviewsFileStorageException e) {
-			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-			message.append("Local File repository error detected while adding File Context. Cannot register files in the reviews repository");
-			if (null == exc) exc = e;
-		}
-
-		if (message.length() > 0 && null != exc) {
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, message.toString(),
-					new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, exc.getMessage(), exc), IStatus.WARNING);
-			dialog.open();
-		}
-
 		final R4EUIFileContext uiFile = new R4EUIFileContext(this, fileContext);
 		addChildren(uiFile);
 		return uiFile;

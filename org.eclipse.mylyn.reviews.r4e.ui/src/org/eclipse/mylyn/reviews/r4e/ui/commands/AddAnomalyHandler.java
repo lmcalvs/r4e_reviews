@@ -111,11 +111,13 @@ public class AddAnomalyHandler extends AbstractHandler {
 		//the position of the selection within the file
 		try {
 			final R4EUITextPosition position = CommandUtils.getPosition(aSelection);
+			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
 			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
+			final ScmArtifact baseArt = CommandUtils.getBaseFileData(baseVersionId);
 			final ScmArtifact targetArt = CommandUtils.getTargetFileData(targetVersionId);
 			
 			//Add anomaly to model
-			addAnomaly(null, "", targetArt, targetVersionId.get(), position);
+			addAnomaly(baseArt, baseVersionId.get(), targetArt, targetVersionId.get(), position);
 
 		} catch (CoreException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
@@ -169,9 +171,11 @@ public class AddAnomalyHandler extends AbstractHandler {
 			}
 			
 			//Add anomaly to model
+			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
 			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
+			final ScmArtifact baseArt = CommandUtils.getBaseFileData(baseVersionId);
 			final ScmArtifact targetArt = CommandUtils.updateTargetFile(workspaceFile, targetVersionId);
-			addAnomaly(null, "", targetArt, targetVersionId.get(), position);
+			addAnomaly(baseArt, baseVersionId.get(), targetArt, targetVersionId.get(), position);
 			
 		} catch (JavaModelException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
@@ -287,7 +291,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 	private void addAnomalyToExistingFileContext(R4EUIAnomalyContainer aContainer, IR4EUIPosition aUIPosition) 
 		throws ResourceHandlingException, OutOfSyncException {
 
-		final R4EUIAnomalyBasic uiAnomaly = aContainer.createAnomaly((R4EUITextPosition) aUIPosition);
+		final R4EUIAnomalyBasic uiAnomaly = aContainer.createAnomaly(null, null, (R4EUITextPosition) aUIPosition);
 		if (null != uiAnomaly) {
 			//Set focus to newly created anomaly comment
 			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
@@ -320,11 +324,12 @@ public class AddAnomalyHandler extends AbstractHandler {
 			return;
 		}
 		
-		final R4EUIAnomalyContainer uiAnomalyContainer = new R4EUIAnomalyContainer(
-				uiFileContext, R4EUIConstants.ANOMALIES_LABEL_NAME);
+		final R4EUIAnomalyContainer uiAnomalyContainer = new R4EUIAnomalyContainer(uiFileContext, 
+				R4EUIConstants.ANOMALIES_LABEL_NAME);
 		uiFileContext.addChildren(uiAnomalyContainer);
 		
-		final R4EUIAnomalyBasic uiAnomaly = uiAnomalyContainer.createAnomaly((R4EUITextPosition) aUIPosition);
+		final R4EUIAnomalyBasic uiAnomaly = uiAnomalyContainer.createAnomaly(aTargetArt, aTargetFileVersion,
+				(R4EUITextPosition) aUIPosition);
 		if (null != uiAnomaly) {
 			//Set focus to newly created anomaly comment
 			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
