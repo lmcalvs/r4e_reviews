@@ -142,6 +142,14 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * @return IFile
 	 */
 	public IFile getBaseFile() {
+		return null;
+	}
+	
+	/**
+	 * Method getTempBaseFile.
+	 * @return IFile
+	 */
+	public IFile getTempBaseFile() {
 		if (null != fFile.getBase()) {		
 			return getTempFile(fFile.getBase());
 		}
@@ -175,6 +183,14 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * @return IFile
 	 */
 	public IFile getTargetFile() {
+		return null;
+	}
+	
+	/**
+	 * Method getTempTargetFile.
+	 * @return IFile
+	 */
+	public IFile getTempTargetFile() {
 		if (null != fFile.getTarget()) {
 			return getTempFile(fFile.getTarget());
 		}

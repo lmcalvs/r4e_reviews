@@ -107,34 +107,42 @@ public class CommandUtils {
 	 * @throws CoreException
 	 * @throws ReviewsFileStorageException 
 	 */
-	public static ScmArtifact updateTargetFile(IFile aFile, AtomicReference<String> aVersionId) throws CoreException, ReviewsFileStorageException {
+	public static ScmArtifact updateTargetFile(IFile aFile,
+			AtomicReference<String> aVersionId) throws CoreException,
+			ReviewsFileStorageException {
 
 		// Get handle to local storage repository
-		IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview().getReview());
-		String workspaceFileVersion = localRepository.blobIdFor(aFile.getContents());
+		IRFSRegistry localRepository = RFSRegistryFactory
+				.getRegistry(R4EUIModelController.getActiveReview().getReview());
+		String workspaceFileVersion = localRepository.blobIdFor(aFile
+				.getContents());
 
-		if (isFileInSynch(aFile)) {
-			//File was not modified
-			//Get Remote repository file info
-			ScmConnector connector = ScmCore.getConnector(aFile.getProject());
-			if (null != connector) {
+		// Get Remote repository file info
+		ScmConnector connector = ScmCore.getConnector(aFile.getProject());
+		if (null != connector) {
 
-				ScmArtifact artifact = connector.getArtifact(aFile);
-				if (null != artifact) {  //No remote file detected, just return the workspace file
+			ScmArtifact artifact = connector.getArtifact(aFile);
+			if (null != artifact) { // No remote file detected, just return the
+									// workspace file
 
-					//Check if the file in workspace if the same as the file in the remote repository
-					if (artifact.getId().equals(workspaceFileVersion)) {
-						//Files are different, so fetch file from remote repo and copy it to the temp work area
-						aVersionId.set(copyRemoteFileToLocalRepository(localRepository, artifact));
-						return artifact;
-					}
+				// Check if the file in workspace if the same as the file in the
+				// remote repository
+				if (artifact.getId().equals(workspaceFileVersion)) {
+					// Files are different, so fetch file from remote repo and
+					// copy it to the temp work area
+					aVersionId.set(copyRemoteFileToLocalRepository(
+							localRepository, artifact));
+					return artifact;
 				}
+				// else Files are the same so we can copy the file in the
+				// workspace to the local repository, see below
 			}
-			//Files are the same so we can copy the file in the workspace to the local repository, see below
-		}
+		} // else this is the case where files are not in source control
 
-		//The current file was modified by the user, so we need to copy the current file in the workspace to the work area
-		aVersionId.set(copyWorkspaceFileToLocalRepository(localRepository, aFile));
+		// The current file was modified by the user, so we need to copy the
+		// current file in the workspace to the work area
+		aVersionId.set(copyWorkspaceFileToLocalRepository(localRepository,
+				aFile));
 		return null;
 	}
 
@@ -202,10 +210,13 @@ public class CommandUtils {
 	 * @throws TeamException
 	 */
 	public static boolean isFileInSynch(IFile aFile) throws TeamException {
-		RepositoryProvider provider = RepositoryProvider.getProvider(aFile.getProject());
-		Subscriber subscriber = provider.getSubscriber();
-		SyncInfo info = subscriber.getSyncInfo(aFile);
-		return SyncInfo.isInSync(info.getKind());
+		// TODO: Later optimization
+		// RepositoryProvider provider =
+		// RepositoryProvider.getProvider(aFile.getProject());
+		// Subscriber subscriber = provider.getSubscriber();
+		// SyncInfo info = subscriber.getSyncInfo(aFile);
+		// return SyncInfo.isInSync(info.getKind());
+		return false;
 	}
 	
 	/**

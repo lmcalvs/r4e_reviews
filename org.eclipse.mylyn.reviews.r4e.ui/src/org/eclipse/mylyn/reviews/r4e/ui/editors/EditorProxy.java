@@ -121,9 +121,9 @@ public class EditorProxy {
 				R4EUIFileContext context = ((R4EUIFileContext) element);
 				
 				//Get file from FileContext
-				IFile baseFile = context.getBaseFile();
+				IFile baseFile = context.getTempBaseFile();
 				String baseFileVersion = context.getBaseLocalFileVersion();
-				IFile targetFile = context.getTargetFile();
+				IFile targetFile = context.getTempTargetFile();
 				String targetFileVersion = context.getTargetLocalFileVersion();
 
 				//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
@@ -131,7 +131,7 @@ public class EditorProxy {
 					openCompareEditor(aPage, baseFile, baseFileVersion, targetFile, targetFileVersion,
 							targetFileEditable, selectionIndex);
 				} else {
-					targetFile = context.getTargetFile();
+					targetFile = context.getTempTargetFile();
 					if (null != targetFile) {
 						openSingleEditor(aPage, targetFile, position);
 					} else {
