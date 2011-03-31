@@ -1138,4 +1138,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""r"")
 	 */
 	public static final String RESTORE_ELEMENT_COMMAND_MNEMONIC = "r";
+	
+	/**
+	 * Field START_STRING_INDEX.
+	 * (value is 0)
+	 */
+	public static final int START_STRING_INDEX = 0;
+	
+	/**
+	 * Field END_STRING_NAME_INDEX.
+	 * (value is 10)
+	 */
+	public static final int END_STRING_NAME_INDEX = 10;
 }

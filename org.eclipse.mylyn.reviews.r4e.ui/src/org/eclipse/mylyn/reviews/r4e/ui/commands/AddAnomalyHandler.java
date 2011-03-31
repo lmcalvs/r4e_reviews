@@ -113,7 +113,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 			final R4EUITextPosition position = CommandUtils.getPosition(aSelection);
 			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
 			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
-			final ScmArtifact baseArt = CommandUtils.getBaseFileData(baseVersionId);
+			final ScmArtifact baseArt = null;
 			final ScmArtifact targetArt = CommandUtils.getTargetFileData(targetVersionId);
 			
 			//Add anomaly to model
@@ -173,7 +173,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 			//Add anomaly to model
 			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
 			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
-			final ScmArtifact baseArt = CommandUtils.updateBaseFile(workspaceFile, baseVersionId);
+			final ScmArtifact baseArt = null;
 			final ScmArtifact targetArt = CommandUtils.updateTargetFile(workspaceFile, targetVersionId);
 			addAnomaly(baseArt, baseVersionId.get(), targetArt, targetVersionId.get(), position);
 			

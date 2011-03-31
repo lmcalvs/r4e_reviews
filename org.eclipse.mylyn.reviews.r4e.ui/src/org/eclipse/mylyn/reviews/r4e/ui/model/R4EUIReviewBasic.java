@@ -52,6 +52,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewBasicProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 
@@ -599,15 +600,21 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
 		final R4EItem reviewItem = R4EUIModelController.FModelExt.createR4EItem(participant);
 		
-		//final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem, R4EUIModelController.getReviewer());
-		//reviewItem.getProjectURIs().add(ResourceUtils.toPlatformURIStr(aTargetFile.getProject()));
-		//reviewItem.setDescription("");
-		//reviewItem.setRepositoryRef(aTargetFile.getFullPath().toOSString());
-		//R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		int type = R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE;
+		if (aItemInfo != null && aItemInfo instanceof ChangeSet) {
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem, R4EUIModelController.getReviewer());
+			ChangeSet changeSet = (ChangeSet) aItemInfo;
+			reviewItem.setDescription(changeSet.getMessage());
+			reviewItem.setAuthorRep(changeSet.getAuthor().getId());
+			reviewItem.setRepositoryRef(changeSet.getId());
+			reviewItem.setSubmitted(changeSet.getDate());
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+			type = R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT;
+		}
 		
 		//Create and set UI model element
 		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, 
-				R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE, aItemInfo, aFilename);
+				type, aItemInfo, aFilename);
 		addChildren(uiReviewItem);	
 		return uiReviewItem;
 	}

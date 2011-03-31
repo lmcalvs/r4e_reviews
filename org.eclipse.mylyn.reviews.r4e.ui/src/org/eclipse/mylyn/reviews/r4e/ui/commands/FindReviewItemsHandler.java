@@ -55,7 +55,6 @@ import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.mylyn.versions.ui.ScmUi;
 import org.eclipse.mylyn.versions.ui.spi.ScmUiConnector;
-import org.eclipse.mylyn.versions.ui.spi.ScmUiException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -110,9 +109,9 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			ChangeSet changeSet = null;
 			try {
 				changeSet = uiConnector.getChangeSet(null, project, null);
-			} catch (ScmUiException e) {
+			} catch (CoreException e) {
 				Activator.Ftracer.traceError("Exception: " + e.getMessage());
-				e.printStackTrace();
+				Activator.getDefault().logError("Exception: " + e.toString(), e);	
 				return null;
 			}
 
@@ -152,11 +151,6 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
 			final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(changeSet, null);
 			if (null == uiReviewItem) return;
-			
-			reviewItem.setDescription(changeSet.getMessage());
-			reviewItem.setAuthorRep(changeSet.getAuthor().getId());
-			reviewItem.setRepositoryRef(changeSet.getId());
-			reviewItem.setSubmitted(changeSet.getDate());
 	
 			for (Change change : changeSet.getChanges()) {
 				

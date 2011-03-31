@@ -180,7 +180,8 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 				if (aItemInfo instanceof CommitDescriptor) {
 					commitId = ((CommitDescriptor)aItemInfo).getTitle();
 				} else if (aItemInfo instanceof ChangeSet) {
-					commitId = ((ChangeSet)aItemInfo).getId();
+					commitId = ((ChangeSet)aItemInfo).getMessage().substring(R4EUIConstants.START_STRING_INDEX, 
+							R4EUIConstants.END_STRING_NAME_INDEX) + "...";
 				}
 				return "Commit: " + commitId;
 			}
@@ -423,7 +424,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		if (aTargetArt != null) {
 			R4EFileVersion rfileTargetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
 			rfileTargetVersion.setLocalVersionID(aTargetLocalVersion);
-			String projectURI = CommandUtils.setFileVersionData(rfileTargetVersion, aBaseArt);
+			String projectURI = CommandUtils.setFileVersionData(rfileTargetVersion, aTargetArt);
 			
 			//Add ProjectURI to the review item
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());

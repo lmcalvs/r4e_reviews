@@ -25,6 +25,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.CommentProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -55,18 +56,6 @@ public class R4EUIComment extends R4EUIModelElement {
      */
     private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Comment " +
     		"from its parent anomaly";
-    
-	/**
-	 * Field START_STRING_INDEX.
-	 * (value is 0)
-	 */
-	private static final int START_STRING_INDEX = 0;
-	/**
-	 * Field END_STRING_NAME_INDEX.
-	 * (value is 10)
-	 */
-	private static final int END_STRING_NAME_INDEX = 10;
-	
 	
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -88,9 +77,9 @@ public class R4EUIComment extends R4EUIModelElement {
 	 * @param aComment R4EComment
 	 */
 	public R4EUIComment(IR4EUIModelElement aParent, R4EComment aComment) {
-		super(aParent, (aComment.getDescription().length() < END_STRING_NAME_INDEX) ? 
-				new String(aComment.getDescription()).substring(START_STRING_INDEX, aComment.getDescription().length()) + "..." :
-					new String(aComment.getDescription()).substring(START_STRING_INDEX, END_STRING_NAME_INDEX) + "...", 
+		super(aParent, (aComment.getDescription().length() < R4EUIConstants.END_STRING_NAME_INDEX) ? 
+				new String(aComment.getDescription()).substring(R4EUIConstants.START_STRING_INDEX, aComment.getDescription().length()) + "..." :
+					new String(aComment.getDescription()).substring(R4EUIConstants.START_STRING_INDEX, R4EUIConstants.END_STRING_NAME_INDEX) + "...", 
 					aComment.getUser().getId() + ": " + aComment.getDescription());
 		fComment = aComment;
 		setImage(COMMENT_ICON_FILE);
