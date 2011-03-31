@@ -84,24 +84,20 @@ public class CommandUtils {
 		IFile editorFile = null;   //The file we use in the current editor/workspace
 		if (input instanceof IFileEditorInput) {
 			editorFile = ((IFileEditorInput) input).getFile();
+			//Now we have the file in editor, we need to use the versions interface to see if we should copy it
+			//to the local repo and update model info
+			return updateTargetFile(editorFile, aVersionId);
 		} else if (input instanceof R4ECompareEditorInput) {
-			final ITypedElement targetElement = ((R4ECompareEditorInput)input).getLeftElement();
-			if (targetElement instanceof ResourceNode) {
-				editorFile =  (IFile) ((ResourceNode)targetElement).getResource();
-			} else if (targetElement instanceof R4ECompareItem) {
-				//TODO:  For now we pick the first IFile with the specified URI.  Is this okay?
-				final URI uri = ((R4ECompareItem)targetElement).getURI();
-				editorFile =  ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(uri)[0];
-			} 
+			//If we get here, this is because we are trying to act on the compare editor contents
+			//this means that the file we are acting on is already in the local repository
+			//in this case, we only need to provide the versionId of this file
+			aVersionId.set(((R4ECompareEditorInput)input).getLeftElementVersion());
+			return null;
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, 
 					"Invalid input " + input.getClass().toString() , null));
 		}
-		
-		//Now we have the file in editor, we need to use the versions interface to see if we should copy it
-		//to the local repo and update model info
-		return updateTargetFile(editorFile, aVersionId);
 	}
 	
 	/**
@@ -154,23 +150,20 @@ public class CommandUtils {
 		IFile editorFile = null;   //The file we use in the current editor/workspace
 		if (input instanceof IFileEditorInput) {
 			editorFile = ((IFileEditorInput) input).getFile();
+			//Now we have the file in editor, we need to use the versions interface to see if we should copy it
+			//to the local repo and update model info
+			return updateBaseFile(editorFile, aVersionId);
 		} else if (input instanceof R4ECompareEditorInput) {
-			final ITypedElement baseElement = ((R4ECompareEditorInput)input).getRightElement();
-			if (baseElement instanceof ResourceNode) {
-				editorFile = (IFile) ((ResourceNode)baseElement).getResource();
-			} else if (baseElement instanceof R4ECompareItem) {
-				//TODO:  For now we pick the first IFile with the specified URI.  Is this okay?
-				final URI uri = ((R4ECompareItem)baseElement).getURI();
-				editorFile = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(uri)[0];
-			}
+			//If we get here, this is because we are trying to act on the compare editor contents
+			//this means that the file we are acting on is already in the local repository
+			//in this case, we only need to provide the versionId of this file
+			aVersionId.set(((R4ECompareEditorInput)input).getRightElementVersion());
+			return null;
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, 
 					"Invalid input " + input.getClass().toString() , null));
 		}
-		//Now we have the file in editor, we need to use the versions interface to see if we should copy it
-		//to the local repo and update model info
-		return updateBaseFile(editorFile, aVersionId);
 	}
 	
 	/**

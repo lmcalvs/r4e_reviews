@@ -111,13 +111,11 @@ public class AddAnomalyHandler extends AbstractHandler {
 		//the position of the selection within the file
 		try {
 			final R4EUITextPosition position = CommandUtils.getPosition(aSelection);
-			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
 			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
-			final ScmArtifact baseArt = null;
 			final ScmArtifact targetArt = CommandUtils.getTargetFileData(targetVersionId);
 			
 			//Add anomaly to model
-			addAnomaly(baseArt, baseVersionId.get(), targetArt, targetVersionId.get(), position);
+			addAnomaly(null, "", targetArt, targetVersionId.get(), position);
 
 		} catch (CoreException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
@@ -171,11 +169,9 @@ public class AddAnomalyHandler extends AbstractHandler {
 			}
 			
 			//Add anomaly to model
-			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
 			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
-			final ScmArtifact baseArt = null;
 			final ScmArtifact targetArt = CommandUtils.updateTargetFile(workspaceFile, targetVersionId);
-			addAnomaly(baseArt, baseVersionId.get(), targetArt, targetVersionId.get(), position);
+			addAnomaly(null, "", targetArt, targetVersionId.get(), position);
 			
 		} catch (JavaModelException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");

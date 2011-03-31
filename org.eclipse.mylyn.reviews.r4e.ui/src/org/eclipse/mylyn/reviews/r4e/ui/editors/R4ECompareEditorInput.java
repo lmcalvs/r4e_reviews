@@ -48,20 +48,30 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	private final CompareConfiguration fConfig;
 	
 	/**
-	 * Field fRight - the element that will appear on the right side of the compare editor
+	 * Field fAncestor - the optional element that will appear on the top of the compare editor
 	 */
-	private final ITypedElement fRight;
+	private final ITypedElement fAncestor;
 	
 	/**
-	 * Field fLeft - the element that will appear on the right side of the compare editor
+	 * Field fLeft - the element that will appear on the left side of the compare editor
 	 */
 	private final ITypedElement fLeft;
 	
 	/**
-	 * Field fAncestor - the optional element that will appear on the top of the compare editor
+	 * Field fRight - the element that will appear on the right side of the compare editor
 	 */
-	private final ITypedElement fAncestor;
+	private final ITypedElement fRight;
 
+	/**
+	 * Field fLeftVersion - the local version of the element that will appear on the left side of the compare editor
+	 */
+	private final String fLeftVersion;
+	
+	/**
+	 * Field fRightVersion - the local version of the element that will appear on the right side of the compare editor
+	 */
+	private final String fRightVersion;
+	
 	
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -74,13 +84,15 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * @param aLeft ITypedElement
 	 * @param aRight ITypedElement
 	 */
-	public R4ECompareEditorInput(CompareConfiguration aConfig,
-			ITypedElement aAncestor, ITypedElement aLeft, ITypedElement aRight) {
+	public R4ECompareEditorInput(CompareConfiguration aConfig, ITypedElement aAncestor, ITypedElement aLeft, 
+			String aLeftRevision, ITypedElement aRight, String aRightRevision) {
 		super(aConfig, null);
 		fConfig = aConfig;
-		fRight = aRight;
-		fLeft = aLeft;
 		fAncestor = aAncestor;
+		fLeft = aLeft;
+		fLeftVersion = aLeftRevision;
+		fRight = aRight;
+		fRightVersion = aRightRevision;
 	}
 
 	
@@ -103,6 +115,22 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 */
 	public ITypedElement getRightElement() {
 		return fRight;
+	}
+	
+	/**
+	 * Method getLeftElementVersion.
+	 * @return String
+	 */
+	public String getLeftElementVersion() {
+		return fLeftVersion;
+	}
+	
+	/**
+	 * Method getRightElementVersion.
+	 * @return String
+	 */
+	public String getRightElementVersion() {
+		return fRightVersion;
 	}
 	
 	/**

@@ -122,27 +122,26 @@ public class EditorProxy {
 				
 				//Get file from FileContext
 				IFile baseFile = context.getBaseFile();
+				String baseFileVersion = context.getBaseLocalFileVersion();
 				IFile targetFile = context.getTargetFile();
-				
+				String targetFileVersion = context.getTargetLocalFileVersion();
+
 				//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
 				if (context.isFileVersionsComparable() && !forceSingleEditor) {
-					openCompareEditor(aPage, baseFile, targetFile, targetFileEditable, selectionIndex);
-					//openCompareEditor(context); //TODO this was used when using Egit compare engine
+					openCompareEditor(aPage, baseFile, baseFileVersion, targetFile, targetFileVersion,
+							targetFileEditable, selectionIndex);
 				} else {
 					targetFile = context.getTargetFile();
 					if (null != targetFile) {
 						openSingleEditor(aPage, targetFile, position);
-					} /*else {
-						//TODO can this happen??? or this should be an error?
-					}*/
+					} else {
+						//This should never happen
+						Activator.Ftracer.traceError("Target file to open not found");
+					}
 				}
 			} catch (PartInitException e) {
 				traceException(e);
-			} /*catch (FileNotFoundException e) {
-				traceException(e);
-			} catch (ReviewVersionsException e) {
-				traceException(e);
-			}*/
+			}
 		}
 	}
 
@@ -154,30 +153,6 @@ public class EditorProxy {
 		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		Activator.getDefault().logError("Exception: " + e.toString(), e);
 	}
-
-	/**
-	 * Method openCompareEditor.
-	 * @param context
-	 * @throws FileNotFoundException
-	 * @throws ReviewVersionsException
-	 */
-	/*
-	//TODO this was used when using Egit compare engine
-	private static void openCompareEditor(R4EUIFileContext context) throws FileNotFoundException,
-			ReviewVersionsException {
-		final R4EUIReviewItem commitItem = (R4EUIReviewItem) (context.getParent());
-		final R4EItem item = commitItem.getItem();
-		// TODO: Only one project per Review Item supported at the moment
-		final String projectPlatStr = item.getProjectURIs().get(0);
-		final IProject project = ResourceUtils.toIProject(projectPlatStr);
-		final ReviewsVersionsIF versionsIf = ReviewsVersionsIFFactory.instance.getVersionsIF(project);
-		// TODO: Check the possibility to optimise the selections to take advantage of the session e.g. keep the
-		// sessions per review and clean them at closing of the review
-		final String sessionNum = versionsIf.openCompareSession(item);
-		versionsIf.openCompareEditor(sessionNum, context.getFileContext());
-		versionsIf.closeCompareSession(sessionNum);
-	}
-	*/
 	
 	/**
 	 * Method openSingleEditor.
@@ -198,7 +173,7 @@ public class EditorProxy {
 			Activator.Ftracer.traceInfo("Open workspace file " + aFile.getName() + " with single-mode editor");
 			editor = IDE.openEditor(aPage, aFile);
 		/*} else {
-			// TODO this is not supported for now
+			// TODO this is not supported for now, it might not even be needed as for now we copy all files in the workspace
 			//File is not in workspace, try to open it as an external file
 			//Open the editor on the target file
 			Activator.Ftracer.traceInfo("Open external file " + aFile.toString() + " with single-mode editor");
@@ -226,8 +201,8 @@ public class EditorProxy {
 	 * @param aTargetFileEditable boolean - flag set whether the target file is editable or not
 	 * @param selectionIndex int - the index of the selection to go to in the target file
 	 */
-	private static void openCompareEditor(IWorkbenchPage aPage, IFile aBaseFile, IFile aTargetFile,  // $codepro.audit.disable unusedMethod
-			boolean aTargetFileEditable, int aSelectionIndex) {
+	private static void openCompareEditor(IWorkbenchPage aPage, IFile aBaseFile, String aBaseFileVersion,
+			IFile aTargetFile, String aTargetFileVersion, boolean aTargetFileEditable, int aSelectionIndex) {
 		
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;
@@ -246,7 +221,7 @@ public class EditorProxy {
 			final ITypedElement left = getCompareItem(aTargetFile.getLocationURI());
 			final ITypedElement right = getCompareItem(aBaseFile.getLocationURI());
 
-		    input = new R4ECompareEditorInput(config, ancestor, left, right);
+		    input = new R4ECompareEditorInput(config, ancestor, left, aTargetFileVersion, right, aBaseFileVersion);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE);   // Adjust the compare title
 
 			Activator.Ftracer.traceInfo("Open compare editor on files " + left.getName() + " (Target) and "
