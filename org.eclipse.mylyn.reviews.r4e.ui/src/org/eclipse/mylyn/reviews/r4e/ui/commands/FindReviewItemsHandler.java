@@ -153,6 +153,11 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(changeSet, null);
 			if (null == uiReviewItem) return;
 			
+			reviewItem.setDescription(changeSet.getMessage());
+			reviewItem.setAuthorRep(changeSet.getAuthor().getId());
+			reviewItem.setRepositoryRef(changeSet.getId());
+			reviewItem.setSubmitted(changeSet.getDate());
+	
 			for (Change change : changeSet.getChanges()) {
 				
 				ScmArtifact baseArt = change.getBase();
