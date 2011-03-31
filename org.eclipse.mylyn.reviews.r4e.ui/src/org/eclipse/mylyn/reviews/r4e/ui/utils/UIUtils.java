@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -122,6 +123,21 @@ public class UIUtils {
 		dialog.open();
 	}
 
+	/**
+	 * Method displayCoreErrorDialog.
+	 * 
+	 * @param e
+	 *            CoreException
+	 */
+	public static void displayCoreErrorDialog(CoreException e) {
+		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		Activator.getDefault().logError("Exception: " + e.toString(), e);
+		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+				"Eclipse Runtime Core Error Detected",
+				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+		dialog.open();
+	}
+	
 	/**
 	 * Method isFilterPreferenceSet.
 	 * 

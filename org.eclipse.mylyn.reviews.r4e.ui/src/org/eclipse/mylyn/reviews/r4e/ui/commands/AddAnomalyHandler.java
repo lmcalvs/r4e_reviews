@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.commands;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.cdt.core.model.CModelException;
 import org.eclipse.cdt.core.model.ICElement;
@@ -40,6 +41,7 @@ import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
@@ -53,6 +55,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -108,13 +111,18 @@ public class AddAnomalyHandler extends AbstractHandler {
 		//the position of the selection within the file
 		try {
 			final R4EUITextPosition position = CommandUtils.getPosition(aSelection);
-			final IFile targetFile = CommandUtils.getTargetFile();
-			final IFile baseFile = CommandUtils.getBaseFile();
+			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
+			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
+			final ScmArtifact baseArt = CommandUtils.getBaseFileData(baseVersionId);
+			final ScmArtifact targetArt = CommandUtils.getTargetFileData(targetVersionId);
 			
 			//Add anomaly to model
-			addAnomaly(baseFile, targetFile, position);
-			
+			addAnomaly(baseArt, baseVersionId.get(), targetArt, targetVersionId.get(), position);
+
 		} catch (CoreException e) {
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logError("Exception: " + e.toString(), e);
+		} catch (ReviewsFileStorageException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		}
@@ -135,25 +143,27 @@ public class AddAnomalyHandler extends AbstractHandler {
 		try {
 
 			R4EUITextPosition position = null;
-			IFile targetFile = null;
+			IFile workspaceFile = null;
 			
 			if (aSelection instanceof IFile) {
 				position = CommandUtils.getPosition((IFile)aSelection);
-				targetFile = (IFile)aSelection;
+				workspaceFile = (IFile)aSelection;
 			} else if (aSelection instanceof org.eclipse.jdt.core.ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement IJavaElement.  The resource is always an IFile
-				targetFile = (IFile)((IJavaElement)aSelection).getResource();
-				position = CommandUtils.getPosition((org.eclipse.jdt.core.ISourceReference)aSelection, targetFile);
+				workspaceFile = (IFile)((IJavaElement)aSelection).getResource();
+				//TODO is that the right file to get the position???
+				position = CommandUtils.getPosition((org.eclipse.jdt.core.ISourceReference)aSelection, workspaceFile);
 			} else if (aSelection instanceof org.eclipse.cdt.core.model.ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement ICElement.  The resource is always an IFile
 				if (aSelection instanceof ITranslationUnit) {
-					targetFile = (IFile)((ICElement) aSelection).getResource();
+					workspaceFile = (IFile)((ICElement) aSelection).getResource();
 				} else if (aSelection instanceof ISourceReference) {
-					targetFile = (IFile)((ICElement) aSelection).getParent().getResource();
+					workspaceFile = (IFile)((ICElement) aSelection).getParent().getResource();
 				}
-				position = CommandUtils.getPosition((org.eclipse.cdt.core.model.ISourceReference)aSelection, targetFile);
+				//TODO is that the right file to get the position???
+				position = CommandUtils.getPosition((org.eclipse.cdt.core.model.ISourceReference)aSelection, workspaceFile);
 			} else {
 				//This should never happen
 				Activator.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString() + ".  Ignoring");
@@ -161,7 +171,11 @@ public class AddAnomalyHandler extends AbstractHandler {
 			}
 			
 			//Add anomaly to model
-			addAnomaly(null, targetFile, position);
+			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
+			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
+			final ScmArtifact baseArt = CommandUtils.updateBaseFile(workspaceFile, baseVersionId);
+			final ScmArtifact targetArt = CommandUtils.updateTargetFile(workspaceFile, targetVersionId);
+			addAnomaly(baseArt, baseVersionId.get(), targetArt, targetVersionId.get(), position);
 			
 		} catch (JavaModelException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
@@ -170,6 +184,9 @@ public class AddAnomalyHandler extends AbstractHandler {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (CoreException e) {
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logError("Exception: " + e.toString(), e);
+		} catch (ReviewsFileStorageException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		}
@@ -184,7 +201,8 @@ public class AddAnomalyHandler extends AbstractHandler {
 	 * @param aTargetFile IFile
 	 * @param aUIPosition IR4EUIPosition
 	 */
-	private void addAnomaly(IFile aBaseFile, IFile aTargetFile, IR4EUIPosition aUIPosition) {
+	private void addAnomaly(ScmArtifact aBaseArt, String aBaseFileVersion, ScmArtifact aTargetArt,
+			String aTargetFileVersion, IR4EUIPosition aUIPosition) {
 		
 		try {
 			
@@ -198,7 +216,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 			for (R4EUIReviewItem reviewItem : reviewItems) {
 				R4EUIFileContext[] files = (R4EUIFileContext[]) reviewItem.getChildren();
 				for (R4EUIFileContext file : files) {
-					if (aTargetFile.equals(file.getTargetFile())) {
+					if (aTargetFileVersion.equals(file.getFileContext().getTarget().getLocalVersionID())) {
 						
 						//File already exists, check if anomaly also exists
 						R4EUIAnomalyContainer anomalyContainer = (R4EUIAnomalyContainer) file.getAnomalyContainerElement();
@@ -208,8 +226,10 @@ public class AddAnomalyHandler extends AbstractHandler {
 								if (uiAnomaly.getPosition().isSameAs(aUIPosition)) {
 									isNewAnomaly = false;		
 									addCommentToExistingAnomaly(uiAnomaly);
-									Activator.Ftracer.traceInfo("Added comment to existing anomaly: Target = " + aTargetFile.toString() + 
-											((null != aBaseFile) ? "Base = " + aBaseFile.getFullPath(): "") + " Position = " 
+									Activator.Ftracer.traceInfo("Added comment to existing anomaly: Target = " + 
+											file.getFileContext().getTarget().getName().toString() + 
+											((null != file.getFileContext().getBase()) ? "Base = " + 
+													file.getFileContext().getBase().getName().toString() : "") + " Position = " 
 											+ aUIPosition.toString());
 								}
 							}
@@ -219,8 +239,9 @@ public class AddAnomalyHandler extends AbstractHandler {
 						}
 						if (isNewAnomaly) {
 							addAnomalyToExistingFileContext(anomalyContainer, aUIPosition);
-							Activator.Ftracer.traceInfo("Added anomaly: Target = " + aTargetFile.toString() + 
-									((null != aBaseFile) ? "Base = " + aBaseFile.getFullPath(): "") + " Position = " 
+							Activator.Ftracer.traceInfo("Added anomaly: Target = " + file.getFileContext().getTarget().getName().toString() + 
+									((null != file.getFileContext().getBase()) ? "Base = " + 
+											file.getFileContext().getBase().getName().toString() : "") + " Position = " 
 									+ aUIPosition.toString());
 						}
 						return;  //We found the file so we are done here	
@@ -229,10 +250,10 @@ public class AddAnomalyHandler extends AbstractHandler {
 			}
 
 			//This is a new file create it (and its parent reviewItem) and all its children
-			addAnomalyToNewFileContext(aBaseFile, aTargetFile, aUIPosition);
-			Activator.Ftracer.traceInfo("Added anomaly: Target = " + aTargetFile.toString() + 
-					((null != aBaseFile) ? "Base = " + aBaseFile.getFullPath(): "") + " Position = " 
-					+ aUIPosition.toString());
+			addAnomalyToNewFileContext(aBaseArt, aBaseFileVersion, aTargetArt, aTargetFileVersion, aUIPosition);
+			Activator.Ftracer.traceInfo("Added Anomaly: Target = " + aTargetArt.getFileRevision(null).getName() + "_" +
+					aTargetArt.getId() + ((null != aBaseArt) ? "Base = " + aBaseArt.getFileRevision(null).getName() + "_" +
+					aBaseArt.getId() : "") + " Position = " + aUIPosition.toString());
 			
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
@@ -287,14 +308,17 @@ public class AddAnomalyHandler extends AbstractHandler {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	private void addAnomalyToNewFileContext(IFile aBaseFile, IFile aTargetFile, IR4EUIPosition aUIPosition) 
+	private void addAnomalyToNewFileContext(ScmArtifact aBaseArt, String aBaseFileVersion, ScmArtifact aTargetArt,
+			String aTargetFileVersion, IR4EUIPosition aUIPosition) 
 		throws ResourceHandlingException, OutOfSyncException {
 			
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
-		final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(aTargetFile);
+		//TODO maybe change name here for review item?
+		final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(null, aTargetArt.getFileRevision(null).getName());
 		if (null == uiReviewItem) return;
 		
-		final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(aBaseFile, aTargetFile);
+		final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(aBaseArt, aBaseFileVersion, aTargetArt, 
+				aTargetFileVersion, null);
 		if (null == uiFileContext) {
 			uiReview.removeChildren(uiReviewItem, false);
 			return;

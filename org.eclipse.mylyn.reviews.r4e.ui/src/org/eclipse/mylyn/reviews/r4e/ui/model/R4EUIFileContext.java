@@ -25,10 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -49,6 +45,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.FileContextProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -146,7 +143,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	public IFile getBaseFile() {
 		if (null != fFile.getBase()) {		
-			//return (IFile) fFile.getBase().getResource();
 			return getTempFile(fFile.getBase());
 		}
 		return null;
@@ -158,9 +154,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	public IFile getTargetFile() {
 		if (null != fFile.getTarget()) {
-			//TODO this is what need to be changed.  We need to get an IFile from the
-			//blob stored in the local repository
-			//return (IFile) fFile.getTarget().getResource();
 			return getTempFile(fFile.getTarget());
 		}
 		return null;
@@ -225,20 +218,10 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			try {
 				//Extract data from local repository
 				is = revRepo.getBlobContent(monitor, aVersion.getLocalVersionID());
-
-				//Create a temporary IFileRevision from extracted data
-				//TODO For now we use a dummy project in the workspace to store the temp files.  This should be improved later
-				//IPath path = Activator.getDefault().getStateLocation().addTrailingSeparator().append("temp");
-				//IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
-				final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
-				if (!project.exists()) project.create(null);
-				if (!project.isOpen()) project.open(null);
-				final IFolder folder = project.getFolder(R4EUIConstants.R4E_TEMP_FOLDER);
-				if (!folder.exists()) folder.create(IResource.NONE, true, null);
-				file = folder.getFile(aVersion.getVersionID() + "_" + aVersion.getName());
-				//Always start from fresh copy because we never know what the temp file version is
-				if (file.exists()) file.delete(true, null);
-				file.create(is, IResource.NONE, null);
+				
+				//Create a temporary IFile from extracted data
+				file = CommandUtils.createTempFile(is, aVersion.getVersionID() + "_" + aVersion.getName());
+				
 			} catch (ReviewsFileStorageException e) {
 				Activator.Ftracer.traceWarning("Exception while extracting data from local repo: " + e.toString() + " ("
 						+ e.getMessage() + ")");

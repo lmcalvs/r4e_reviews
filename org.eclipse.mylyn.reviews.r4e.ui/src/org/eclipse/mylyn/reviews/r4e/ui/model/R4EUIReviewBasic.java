@@ -26,9 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
@@ -47,20 +44,14 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.CommitDescriptor;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewBasicProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
-import org.eclipse.mylyn.versions.core.ScmCore;
-import org.eclipse.mylyn.versions.core.ScmRepository;
-import org.eclipse.mylyn.versions.core.spi.ScmConnector;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 
@@ -464,6 +455,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fireReviewStateChanged(this);
 	}
 	
+	//TODO this will need to be removed when we migrate Git stuff into versions package
 	private CommitDescriptor createChangeSetDescriptor(final R4EItem item) {
 		CommitDescriptor desc = new CommitDescriptor() {
 			public String getTitle() {
@@ -601,21 +593,21 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException 
 	 */
-	public R4EUIReviewItem createReviewItem(IFile aTargetFile) throws ResourceHandlingException, OutOfSyncException  {
+	public R4EUIReviewItem createReviewItem(Object aItemInfo, String aFilename) throws ResourceHandlingException, OutOfSyncException  {
 	
 		//Create and set review item model element
 		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
-		
 		final R4EItem reviewItem = R4EUIModelController.FModelExt.createR4EItem(participant);
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem, R4EUIModelController.getReviewer());
-		reviewItem.getProjectURIs().add(ResourceUtils.toPlatformURIStr(aTargetFile.getProject()));
-		reviewItem.setDescription("");
-		reviewItem.setRepositoryRef(aTargetFile.getFullPath().toOSString());
-		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		
+		//final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem, R4EUIModelController.getReviewer());
+		//reviewItem.getProjectURIs().add(ResourceUtils.toPlatformURIStr(aTargetFile.getProject()));
+		//reviewItem.setDescription("");
+		//reviewItem.setRepositoryRef(aTargetFile.getFullPath().toOSString());
+		//R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		
 		//Create and set UI model element
 		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, 
-				R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE, reviewItem, aTargetFile.getName());
+				R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE, aItemInfo, aFilename);
 		addChildren(uiReviewItem);	
 		return uiReviewItem;
 	}

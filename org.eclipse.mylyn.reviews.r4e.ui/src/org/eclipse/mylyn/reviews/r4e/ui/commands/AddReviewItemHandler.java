@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.commands;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.cdt.core.model.CModelException;
 import org.eclipse.cdt.core.model.ICElement;
@@ -41,6 +42,7 @@ import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
@@ -54,6 +56,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -113,13 +116,18 @@ public class AddReviewItemHandler extends AbstractHandler {
 		//the position of the selection within the file
 		try {
 			final IR4EUIPosition position = CommandUtils.getPosition(aSelection);
-			final IFile targetFile = CommandUtils.getTargetFile();
-			final IFile baseFile = null;
+			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
+			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
+			final ScmArtifact baseArt = CommandUtils.getBaseFileData(baseVersionId);
+			final ScmArtifact targetArt = CommandUtils.getTargetFileData(targetVersionId);
 			
 			//Add selection to model
-			addReviewItem(baseFile, targetFile, position);
+			addReviewItem(baseArt, baseVersionId.get(), targetArt, targetVersionId.get(), position);
 			
 		} catch (CoreException e) {
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logError("Exception: " + e.toString(), e);
+		} catch (ReviewsFileStorageException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		}
@@ -140,22 +148,24 @@ public class AddReviewItemHandler extends AbstractHandler {
 		try {
 			
 			IR4EUIPosition position = null;
-			IFile targetFile = null;
+			IFile workspaceFile = null;
 			
 			//Next find out what kind of selection we are dealing with
 			if (aSelection instanceof IFile) {
 				position = CommandUtils.getPosition((IFile)aSelection);
-				targetFile = (IFile)aSelection;
+				workspaceFile = (IFile)aSelection;
 			} else if (aSelection instanceof org.eclipse.jdt.core.ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement IJavaElement.  The resource is always an IFile
-				targetFile = (IFile)((IJavaElement)aSelection).getResource();
-				position = CommandUtils.getPosition((org.eclipse.jdt.core.ISourceReference)aSelection, targetFile);
+				workspaceFile = (IFile)((IJavaElement)aSelection).getResource();
+				//TODO is that the right file to get the position???
+				position = CommandUtils.getPosition((org.eclipse.jdt.core.ISourceReference)aSelection, workspaceFile);
 			} else if (aSelection instanceof org.eclipse.cdt.core.model.ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement ICElement.  The resource is always an IFile
-				targetFile = (IFile)((ICElement) aSelection).getParent().getResource();
-				position = CommandUtils.getPosition((org.eclipse.cdt.core.model.ISourceReference)aSelection, targetFile);
+				workspaceFile = (IFile)((ICElement) aSelection).getParent().getResource();
+				//TODO is that the right file to get the position???
+				position = CommandUtils.getPosition((org.eclipse.cdt.core.model.ISourceReference)aSelection, workspaceFile);
 			} else {
 				//This should never happen
 				Activator.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString() + ".  Ignoring");
@@ -163,7 +173,11 @@ public class AddReviewItemHandler extends AbstractHandler {
 			}
 			
 			//Add selection to model
-			addReviewItem(null, targetFile, position);
+			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
+			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
+			final ScmArtifact baseArt = CommandUtils.updateBaseFile(workspaceFile, baseVersionId);
+			final ScmArtifact targetArt = CommandUtils.updateTargetFile(workspaceFile, targetVersionId);
+			addReviewItem(baseArt, baseVersionId.get(), targetArt, targetVersionId.get(), position);
 			
 		} catch (JavaModelException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
@@ -172,6 +186,9 @@ public class AddReviewItemHandler extends AbstractHandler {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (CoreException e) {
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logError("Exception: " + e.toString(), e);
+		} catch (ReviewsFileStorageException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		}
@@ -185,7 +202,8 @@ public class AddReviewItemHandler extends AbstractHandler {
 	 * @param aBaseFile IFile
 	 * @throws ReviewVersionsException 
 	 */
-	private void addReviewItem(IFile aBaseFile, IFile aTargetFile, IR4EUIPosition aUIPosition) {
+	private void addReviewItem(ScmArtifact aBaseArt, String aBaseFileVersion, ScmArtifact aTargetArt,
+			String aTargetFileVersion, IR4EUIPosition aUIPosition) {
 
 		try {
 			
@@ -199,10 +217,9 @@ public class AddReviewItemHandler extends AbstractHandler {
 			for (R4EUIReviewItem reviewItem : reviewItems) {
 				R4EUIFileContext[] files = (R4EUIFileContext[]) reviewItem.getChildren();
 				for (R4EUIFileContext file : files) {
-					if (aTargetFile.equals(file.getTargetFile()) && reviewItem.getType() == R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE) {
-						if ((null == aBaseFile && null == file.getBaseFile()) || 
-								(null != aBaseFile && null != file.getBaseFile() && aBaseFile.equals(file.getBaseFile()))) {
-							
+					if (aTargetFileVersion.equals(file.getFileContext().getTarget().getLocalVersionID())) {
+						if (null == file.getFileContext().getBase() && "" == aBaseFileVersion ||
+								aBaseFileVersion.equals(file.getFileContext().getBase().getLocalVersionID())) {
 							//File already exists, check if selection also exists
 							R4EUISelectionContainer selectionContainer = (R4EUISelectionContainer) file.getSelectionContainerElement();
 							if (null != selectionContainer) {
@@ -218,9 +235,9 @@ public class AddReviewItemHandler extends AbstractHandler {
 							}
 							if (newSelection) {
 								addReviewItemToExistingFileContext(selectionContainer, aUIPosition);
-								Activator.Ftracer.traceInfo("Added review item: Target = " + aTargetFile.toString() + 
-										((null != aBaseFile) ? "Base = " + aBaseFile.toString(): "") + " Position = " 
-										+ aUIPosition.toString());
+								Activator.Ftracer.traceInfo("Added review item: Target = " + file.getFileContext().getTarget().getName().toString() + 
+										((null != file.getFileContext().getBase()) ? "Base = " + file.getFileContext().getBase().getName().toString() : "") + 
+										" Position = " + aUIPosition.toString());
 							} else {						
 								//The selection already exists so ignore command
 								Activator.Ftracer.traceWarning("Review Item already exists.  Ignoring");
@@ -235,11 +252,11 @@ public class AddReviewItemHandler extends AbstractHandler {
 			}
 
 			//This is a new file create it (and its parent reviewItem) and all its children
-			addReviewItemToNewFileContext(aBaseFile, aTargetFile, aUIPosition);
-			Activator.Ftracer.traceInfo("Added review item: Target = " + aTargetFile.toString() + 
-					((null != aBaseFile) ? "Base = " + aBaseFile.getFullPath(): "") + " Position = " 
-					+ aUIPosition.toString());
-			
+			addReviewItemToNewFileContext(aBaseArt, aBaseFileVersion, aTargetArt, aTargetFileVersion, aUIPosition);
+			Activator.Ftracer.traceInfo("Added review item: Target = " + aTargetArt.getFileRevision(null).getName() + "_" +
+					aTargetArt.getId() + ((null != aBaseArt) ? "Base = " + aBaseArt.getFileRevision(null).getName() + "_" +
+					aBaseArt.getId() : "") + " Position = " + aUIPosition.toString());
+			//
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
 			
@@ -275,14 +292,17 @@ public class AddReviewItemHandler extends AbstractHandler {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	private void addReviewItemToNewFileContext(IFile aBaseFile, IFile aTargetFile, IR4EUIPosition aUIPosition) 
+	private void addReviewItemToNewFileContext(ScmArtifact aBaseArt, String aBaseFileVersion, ScmArtifact aTargetArt,
+			String aTargetFileVersion, IR4EUIPosition aUIPosition) 
 		throws ResourceHandlingException, OutOfSyncException {
 		
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
-		final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(aTargetFile);
+		//TODO maybe change name here for review item?
+		final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(null, aTargetArt.getFileRevision(null).getName());
 		if (null == uiReviewItem) return;
 		
-		final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(aBaseFile, aTargetFile);
+		final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(aBaseArt, aBaseFileVersion, aTargetArt, 
+				aTargetFileVersion, null);
 		if (null == uiFileContext) {
 			uiReview.removeChildren(uiReviewItem, false);
 			return;
@@ -293,7 +313,7 @@ public class AddReviewItemHandler extends AbstractHandler {
 		uiFileContext.addChildren(uiSelectionContainer);
 		
 		final R4EUISelection uiSelection = uiSelectionContainer.createSelection((R4EUITextPosition) aUIPosition);
-			//Set focus to newly created anomaly comment
+			//Set focus to newly created selection
 			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiSelection, AbstractTreeViewer.ALL_LEVELS);
 			R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(new StructuredSelection(uiSelection), true);
 	}

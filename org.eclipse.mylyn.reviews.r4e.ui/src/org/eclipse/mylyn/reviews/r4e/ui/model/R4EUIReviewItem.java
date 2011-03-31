@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
@@ -38,6 +39,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
@@ -51,9 +53,12 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewItemProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.mylyn.versions.core.ChangeSet;
+import org.eclipse.mylyn.versions.core.ScmArtifact;
+import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -387,6 +392,52 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		fireAdd(aChildToAdd);
 	}
 
+	/**
+	 * Method createReviewItem
+	 * @param aBaseFile - the base file used for this review item (if any)
+	 * @param aTargetFile - the target file used for this review item
+	 * @return R4EUIFileContext
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException 
+	 */
+	public R4EUIFileContext createFileContext(ScmArtifact aBaseArt, String aBaseLocalVersion, ScmArtifact aTargetArt, 
+			String aTargetLocalVersion, R4EContextType aType) 
+	throws ResourceHandlingException, OutOfSyncException  {
+	
+		final R4EFileContext fileContext = R4EUIModelController.FModelExt.createR4EFileContext(fItem);			
+		fileContext.setType(aType);
+		
+		//Get Base version from Version control system
+		if (aBaseArt != null) {
+			R4EFileVersion rfileBaseVersion = R4EUIModelController.FModelExt.createR4EBaseFileVersion(fileContext);
+			rfileBaseVersion.setLocalVersionID(aBaseLocalVersion);
+			String projectURI = CommandUtils.setFileVersionData(rfileBaseVersion, aBaseArt);
+			
+			//Add ProjectURI to the review item
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
+			fItem.getProjectURIs().add(projectURI);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		}
+	
+		//Get Target version from Version control system
+		if (aTargetArt != null) {
+			R4EFileVersion rfileTargetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
+			rfileTargetVersion.setLocalVersionID(aTargetLocalVersion);
+			String projectURI = CommandUtils.setFileVersionData(rfileTargetVersion, aBaseArt);
+			
+			//Add ProjectURI to the review item
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
+			fItem.getProjectURIs().add(projectURI);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		}
+		
+		final R4EUIFileContext uiFile = new R4EUIFileContext(this, fileContext);
+		addChildren(uiFile);
+		return uiFile;
+	}
+	
+	
+	
 	/**
 	 * Method createReviewItem
 	 * @param aBaseFile - the base file used for this review item (if any)
