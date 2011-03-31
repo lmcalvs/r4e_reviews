@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
@@ -122,9 +123,9 @@ public class EditorProxy {
 				
 				//Get file from FileContext
 				IFile baseFile = context.getTempBaseFile();
-				String baseFileVersion = context.getBaseLocalFileVersion();
+				R4EFileVersion baseFileVersion = context.getBaseFileVersion();
 				IFile targetFile = context.getTempTargetFile();
-				String targetFileVersion = context.getTargetLocalFileVersion();
+				R4EFileVersion targetFileVersion = context.getTargetFileVersion();
 
 				//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
 				if (context.isFileVersionsComparable() && !forceSingleEditor) {
@@ -201,8 +202,8 @@ public class EditorProxy {
 	 * @param aTargetFileEditable boolean - flag set whether the target file is editable or not
 	 * @param selectionIndex int - the index of the selection to go to in the target file
 	 */
-	private static void openCompareEditor(IWorkbenchPage aPage, IFile aBaseFile, String aBaseFileVersion,
-			IFile aTargetFile, String aTargetFileVersion, boolean aTargetFileEditable, int aSelectionIndex) {
+	private static void openCompareEditor(IWorkbenchPage aPage, IFile aBaseFile, R4EFileVersion aBaseFileVersion,
+			IFile aTargetFile, R4EFileVersion aTargetFileVersion, boolean aTargetFileEditable, int aSelectionIndex) {
 		
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;

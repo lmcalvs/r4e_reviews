@@ -321,7 +321,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException 
 	 */
-	public R4EUIAnomalyBasic createAnomaly(ScmArtifact aAnomalyArt, String aAnomalyFileLocalVersion,
+	public R4EUIAnomalyBasic createAnomaly(R4EFileVersion aAnomalyTempFileVersion,
 			R4EUITextPosition aUiPosition) throws ResourceHandlingException, OutOfSyncException {
 		
 		R4EUIAnomalyBasic uiAnomaly = null;
@@ -348,12 +348,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     		final R4EAnomalyTextPosition position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(
     				R4EUIModelController.FModelExt.createR4ETextContent(anomaly));
     		
-    		if (null != aAnomalyArt) {
-    			//Set File version data
-    			final R4EFileVersion anomalyFileVersion = R4EUIModelController.FModelExt.createR4EFileVersion(position);
-    			anomalyFileVersion.setLocalVersionID(aAnomalyFileLocalVersion);
-    			CommandUtils.setFileVersionData(anomalyFileVersion, aAnomalyArt);
-    		}
+    		//Set File version data
+    		final R4EFileVersion anomalyFileVersion = R4EUIModelController.FModelExt.createR4EFileVersion(position);
+    		CommandUtils.copyFileVersionData(anomalyFileVersion, aAnomalyTempFileVersion);
     		
     		//Create and set UI model element
     		if (uiReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {

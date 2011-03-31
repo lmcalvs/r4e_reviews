@@ -29,6 +29,7 @@ import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 
 
@@ -65,12 +66,12 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	/**
 	 * Field fLeftVersion - the local version of the element that will appear on the left side of the compare editor
 	 */
-	private final String fLeftVersion;
+	private final R4EFileVersion fLeftVersion;
 	
 	/**
 	 * Field fRightVersion - the local version of the element that will appear on the right side of the compare editor
 	 */
-	private final String fRightVersion;
+	private final R4EFileVersion fRightVersion;
 	
 	
 	// ------------------------------------------------------------------------
@@ -85,14 +86,14 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * @param aRight ITypedElement
 	 */
 	public R4ECompareEditorInput(CompareConfiguration aConfig, ITypedElement aAncestor, ITypedElement aLeft, 
-			String aLeftRevision, ITypedElement aRight, String aRightRevision) {
+			R4EFileVersion aLeftVersion, ITypedElement aRight, R4EFileVersion aRightVersion) {
 		super(aConfig, null);
 		fConfig = aConfig;
 		fAncestor = aAncestor;
 		fLeft = aLeft;
-		fLeftVersion = aLeftRevision;
+		fLeftVersion = aLeftVersion;
 		fRight = aRight;
-		fRightVersion = aRightRevision;
+		fRightVersion = aRightVersion;
 	}
 
 	
@@ -119,17 +120,17 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	
 	/**
 	 * Method getLeftElementVersion.
-	 * @return String
+	 * @return R4EFileVersion
 	 */
-	public String getLeftElementVersion() {
+	public R4EFileVersion getLeftElementVersion() {
 		return fLeftVersion;
 	}
 	
 	/**
 	 * Method getRightElementVersion.
-	 * @return String
+	 * @return R4EFileVersion
 	 */
-	public String getRightElementVersion() {
+	public R4EFileVersion getRightElementVersion() {
 		return fRightVersion;
 	}
 	

@@ -96,7 +96,8 @@ public class AddLinkedAnomalyHandler extends AbstractHandler {
 			fileContext.addChildren(container);
 		}
 		
-		final R4EUIAnomalyBasic uiAnomaly = container.createAnomaly(null, null, (R4EUITextPosition) aElement.getPosition());
+		final R4EUIAnomalyBasic uiAnomaly = container.createAnomaly(fileContext.getTargetFileVersion(), 
+				(R4EUITextPosition) aElement.getPosition());
 		if (null != uiAnomaly) {
 			//Set focus to newly created anomaly comment
 			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);

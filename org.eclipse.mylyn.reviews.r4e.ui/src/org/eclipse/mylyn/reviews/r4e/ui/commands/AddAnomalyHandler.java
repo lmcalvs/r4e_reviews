@@ -21,7 +21,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.commands;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.cdt.core.model.CModelException;
 import org.eclipse.cdt.core.model.ICElement;
@@ -39,6 +38,7 @@ import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
@@ -55,7 +55,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
-import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -111,13 +110,11 @@ public class AddAnomalyHandler extends AbstractHandler {
 		//the position of the selection within the file
 		try {
 			final R4EUITextPosition position = CommandUtils.getPosition(aSelection);
-			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
-			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
-			final ScmArtifact baseArt = CommandUtils.getBaseFileData(baseVersionId);
-			final ScmArtifact targetArt = CommandUtils.getTargetFileData(targetVersionId);
+			final R4EFileVersion baseTempVersion = CommandUtils.getBaseFileData();
+			final R4EFileVersion targetTempVersion = CommandUtils.getTargetFileData();
 			
 			//Add anomaly to model
-			addAnomaly(baseArt, baseVersionId.get(), targetArt, targetVersionId.get(), position);
+			addAnomaly(baseTempVersion, targetTempVersion, position);
 
 		} catch (CoreException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
@@ -171,11 +168,11 @@ public class AddAnomalyHandler extends AbstractHandler {
 			}
 			
 			//Add anomaly to model
-			final AtomicReference<String> baseVersionId = new AtomicReference<String>(null);
-			final AtomicReference<String> targetVersionId = new AtomicReference<String>(null);
-			final ScmArtifact baseArt = CommandUtils.getBaseFileData(baseVersionId);
-			final ScmArtifact targetArt = CommandUtils.updateTargetFile(workspaceFile, targetVersionId);
-			addAnomaly(baseArt, baseVersionId.get(), targetArt, targetVersionId.get(), position);
+			final R4EFileVersion baseTempVersion = CommandUtils.updateBaseFile(workspaceFile);
+			final R4EFileVersion targetTempVersion = CommandUtils.updateTargetFile(workspaceFile);
+			
+			//Add anomaly to model
+			addAnomaly(baseTempVersion, targetTempVersion, position);
 			
 		} catch (JavaModelException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
@@ -201,8 +198,8 @@ public class AddAnomalyHandler extends AbstractHandler {
 	 * @param aTargetFile IFile
 	 * @param aUIPosition IR4EUIPosition
 	 */
-	private void addAnomaly(ScmArtifact aBaseArt, String aBaseFileVersion, ScmArtifact aTargetArt,
-			String aTargetFileVersion, IR4EUIPosition aUIPosition) {
+	private void addAnomaly(R4EFileVersion aBaseFileVersion, R4EFileVersion aTargetFileVersion, 
+			IR4EUIPosition aUIPosition) {
 		
 		try {
 			
@@ -216,7 +213,8 @@ public class AddAnomalyHandler extends AbstractHandler {
 			for (R4EUIReviewItem reviewItem : reviewItems) {
 				R4EUIFileContext[] files = (R4EUIFileContext[]) reviewItem.getChildren();
 				for (R4EUIFileContext file : files) {
-					if (aTargetFileVersion.equals(file.getFileContext().getTarget().getLocalVersionID())) {
+					if (aTargetFileVersion.getLocalVersionID().equals(
+							file.getFileContext().getTarget().getLocalVersionID())) {
 						
 						//File already exists, check if anomaly also exists
 						R4EUIAnomalyContainer anomalyContainer = (R4EUIAnomalyContainer) file.getAnomalyContainerElement();
@@ -238,7 +236,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 							file.addChildren(anomalyContainer);
 						}
 						if (isNewAnomaly) {
-							addAnomalyToExistingFileContext(anomalyContainer, aUIPosition);
+							addAnomalyToExistingFileContext(aTargetFileVersion, anomalyContainer, aUIPosition);
 							Activator.Ftracer.traceInfo("Added anomaly: Target = " + file.getFileContext().getTarget().getName().toString() + 
 									((null != file.getFileContext().getBase()) ? "Base = " + 
 											file.getFileContext().getBase().getName().toString() : "") + " Position = " 
@@ -250,10 +248,10 @@ public class AddAnomalyHandler extends AbstractHandler {
 			}
 
 			//This is a new file create it (and its parent reviewItem) and all its children
-			addAnomalyToNewFileContext(aBaseArt, aBaseFileVersion, aTargetArt, aTargetFileVersion, aUIPosition);
-			Activator.Ftracer.traceInfo("Added Anomaly: Target = " + aTargetArt.getFileRevision(null).getName() + "_" +
-					aTargetArt.getId() + ((null != aBaseArt) ? "Base = " + aBaseArt.getFileRevision(null).getName() + "_" +
-					aBaseArt.getId() : "") + " Position = " + aUIPosition.toString());
+			addAnomalyToNewFileContext(aBaseFileVersion, aTargetFileVersion, aUIPosition);
+			Activator.Ftracer.traceInfo("Added Anomaly: Target = " + aTargetFileVersion.getName() + "_" +
+					aTargetFileVersion.getVersionID() + ((null != aBaseFileVersion) ? "Base = " + aBaseFileVersion.getName() + "_" +
+					aBaseFileVersion.getVersionID() : "") + " Position = " + aUIPosition.toString());
 			
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
@@ -288,10 +286,11 @@ public class AddAnomalyHandler extends AbstractHandler {
 	 * @throws ResourceHandlingException 
 	 * @throws OutOfSyncException
 	 */
-	private void addAnomalyToExistingFileContext(R4EUIAnomalyContainer aContainer, IR4EUIPosition aUIPosition) 
+	private void addAnomalyToExistingFileContext(R4EFileVersion aTargetFileVersion, 
+			R4EUIAnomalyContainer aContainer, IR4EUIPosition aUIPosition) 
 		throws ResourceHandlingException, OutOfSyncException {
 
-		final R4EUIAnomalyBasic uiAnomaly = aContainer.createAnomaly(null, null, (R4EUITextPosition) aUIPosition);
+		final R4EUIAnomalyBasic uiAnomaly = aContainer.createAnomaly(aTargetFileVersion, (R4EUITextPosition) aUIPosition);
 		if (null != uiAnomaly) {
 			//Set focus to newly created anomaly comment
 			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
@@ -308,16 +307,15 @@ public class AddAnomalyHandler extends AbstractHandler {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	private void addAnomalyToNewFileContext(ScmArtifact aBaseArt, String aBaseFileVersion, ScmArtifact aTargetArt,
-			String aTargetFileVersion, IR4EUIPosition aUIPosition) 
+	private void addAnomalyToNewFileContext(R4EFileVersion aBaseFileVersion, R4EFileVersion aTargetFileVersion, IR4EUIPosition aUIPosition) 
 		throws ResourceHandlingException, OutOfSyncException {
 			
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
 		//TODO maybe change name here for review item?
-		final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(null, aTargetArt.getFileRevision(null).getName());
+		final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(null, aTargetFileVersion.getName());
 		if (null == uiReviewItem) return;
 		
-		final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(aBaseArt, aBaseFileVersion, aTargetArt, 
+		final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(aBaseFileVersion, 
 				aTargetFileVersion, null);
 		if (null == uiFileContext) {
 			uiReview.removeChildren(uiReviewItem, false);
@@ -328,7 +326,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 				R4EUIConstants.ANOMALIES_LABEL_NAME);
 		uiFileContext.addChildren(uiAnomalyContainer);
 		
-		final R4EUIAnomalyBasic uiAnomaly = uiAnomalyContainer.createAnomaly(aTargetArt, aTargetFileVersion,
+		final R4EUIAnomalyBasic uiAnomaly = uiAnomalyContainer.createAnomaly(aTargetFileVersion,
 				(R4EUITextPosition) aUIPosition);
 		if (null != uiAnomaly) {
 			//Set focus to newly created anomaly comment

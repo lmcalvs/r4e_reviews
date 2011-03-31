@@ -36,6 +36,7 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
@@ -164,8 +165,8 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				// Get handle to local storage repository
 				IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview().getReview());
 				
-				String baseLocalVersion = null;
-				String targetLocalVersion = null;			
+				R4EFileVersion baseLocalVersion = null;
+				R4EFileVersion targetLocalVersion = null;			
 				//Copy remote files to the local repository
 				if (baseArt != null) {
 					baseLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository, baseArt);
@@ -175,7 +176,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				}
 				
 				//Add File Context
-				final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(baseArt, baseLocalVersion,targetArt, 
+				final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(baseLocalVersion, 
 						targetLocalVersion, CommandUtils.adaptType(change.getChangeType()));
 				if (null == uiFileContext) {
 					uiReview.removeChildren(uiReviewItem, false);

@@ -18,37 +18,20 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
-import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
-import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
-import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.CommitDescriptor;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.FileVersionInfo;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIFFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
@@ -57,8 +40,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.mylyn.versions.core.ChangeSet;
-import org.eclipse.mylyn.versions.core.ScmArtifact;
-import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -401,34 +382,37 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException 
 	 */
-	public R4EUIFileContext createFileContext(ScmArtifact aBaseArt, String aBaseLocalVersion, ScmArtifact aTargetArt, 
-			String aTargetLocalVersion, R4EContextType aType) 
-	throws ResourceHandlingException, OutOfSyncException  {
+	public R4EUIFileContext createFileContext(R4EFileVersion aBaseTempFileVersion, R4EFileVersion aTargetTempFileVersion,
+			R4EContextType aType) throws ResourceHandlingException, OutOfSyncException  {
 	
 		final R4EFileContext fileContext = R4EUIModelController.FModelExt.createR4EFileContext(fItem);			
 		fileContext.setType(aType);
 		
 		//Get Base version from Version control system and set core model data
-		if (aBaseArt != null) {
+		if (aBaseTempFileVersion != null) {
 			R4EFileVersion rfileBaseVersion = R4EUIModelController.FModelExt.createR4EBaseFileVersion(fileContext);
-			rfileBaseVersion.setLocalVersionID(aBaseLocalVersion);
-			String projectURI = CommandUtils.setFileVersionData(rfileBaseVersion, aBaseArt);
+			CommandUtils.copyFileVersionData(rfileBaseVersion, aBaseTempFileVersion);
 			
 			//Add ProjectURI to the review item
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
-			fItem.getProjectURIs().add(projectURI);
+			String projPlatformURI = ResourceUtils.toPlatformURIStr(rfileBaseVersion.getResource().getProject());
+			if (!fItem.getProjectURIs().contains(projPlatformURI)) {
+				fItem.getProjectURIs().add(projPlatformURI);
+			}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}
 	
 		//Get Target version from Version control system and set core model data
-		if (aTargetArt != null) {
+		if (aTargetTempFileVersion != null) {
 			R4EFileVersion rfileTargetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
-			rfileTargetVersion.setLocalVersionID(aTargetLocalVersion);
-			String projectURI = CommandUtils.setFileVersionData(rfileTargetVersion, aTargetArt);
+			CommandUtils.copyFileVersionData(rfileTargetVersion, aTargetTempFileVersion);
 			
 			//Add ProjectURI to the review item
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
-			fItem.getProjectURIs().add(projectURI);
+			String projPlatformURI = ResourceUtils.toPlatformURIStr(rfileTargetVersion.getResource().getProject());
+			if (!fItem.getProjectURIs().contains(projPlatformURI)) {
+				fItem.getProjectURIs().add(projPlatformURI);
+			}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}
 		

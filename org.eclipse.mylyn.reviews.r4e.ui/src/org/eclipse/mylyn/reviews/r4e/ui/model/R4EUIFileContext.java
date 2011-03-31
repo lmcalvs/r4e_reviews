@@ -157,25 +157,19 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	}
 	
 	/**
-	 * Method getBaseLocalFileVersion.
-	 * @return String
+	 * Method getBaseFileVersion.
+	 * @return R4EFileVersion
 	 */
-	public String getBaseLocalFileVersion() {
-		if (null != fFile.getBase()) {		
-			return fFile.getBase().getLocalVersionID();
-		}
-		return "";
+	public R4EFileVersion getBaseFileVersion() {	
+		return fFile.getBase();
 	}
 	
 	/**
-	 * Method getTargetLocalFileVersion.
-	 * @return String
+	 * Method getTargetFileVersion.
+	 * @return R4EFileVersion
 	 */
-	public String getTargetLocalFileVersion() {
-		if (null != fFile.getTarget()) {		
-			return fFile.getTarget().getLocalVersionID();
-		}
-		return "";
+	public R4EFileVersion getTargetFileVersion() {
+		return fFile.getTarget();
 	}
 	
 	/**

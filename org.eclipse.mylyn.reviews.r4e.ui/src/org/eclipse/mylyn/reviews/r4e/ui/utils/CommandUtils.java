@@ -20,14 +20,9 @@
 package org.eclipse.mylyn.reviews.r4e.ui.utils;
 
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.cdt.core.model.ICElement;
-import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.ResourceNode;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -40,24 +35,21 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
-import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.versions.core.ChangeType;
 import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.mylyn.versions.core.ScmCore;
 import org.eclipse.mylyn.versions.core.spi.ScmConnector;
-import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.core.subscribers.Subscriber;
-import org.eclipse.team.core.synchronize.SyncInfo;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
@@ -79,20 +71,19 @@ public class CommandUtils {
 	 * @throws CoreException
 	 * @throws ReviewsFileStorageException 
 	 */
-	public static ScmArtifact getTargetFileData(AtomicReference<String> aVersionId) throws CoreException, ReviewsFileStorageException {
+	public static R4EFileVersion getTargetFileData() throws CoreException, ReviewsFileStorageException {
 		final IEditorInput input = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput(); // $codepro.audit.disable methodChainLength
 		IFile editorFile = null;   //The file we use in the current editor/workspace
 		if (input instanceof IFileEditorInput) {
 			editorFile = ((IFileEditorInput) input).getFile();
 			//Now we have the file in editor, we need to use the versions interface to see if we should copy it
 			//to the local repo and update model info
-			return updateTargetFile(editorFile, aVersionId);
+			return updateTargetFile(editorFile);
 		} else if (input instanceof R4ECompareEditorInput) {
 			//If we get here, this is because we are trying to act on the compare editor contents
 			//this means that the file we are acting on is already in the local repository
 			//in this case, we only need to provide the versionId of this file
-			aVersionId.set(((R4ECompareEditorInput)input).getLeftElementVersion());
-			return null;
+			return ((R4ECompareEditorInput)input).getLeftElementVersion();
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, 
@@ -107,8 +98,7 @@ public class CommandUtils {
 	 * @throws CoreException
 	 * @throws ReviewsFileStorageException 
 	 */
-	public static ScmArtifact updateTargetFile(IFile aFile,
-			AtomicReference<String> aVersionId) throws CoreException,
+	public static R4EFileVersion updateTargetFile(IFile aFile) throws CoreException,
 			ReviewsFileStorageException {
 
 		// Get handle to local storage repository
@@ -130,9 +120,8 @@ public class CommandUtils {
 				if (artifact.getId().equals(workspaceFileVersion)) {
 					// Files are different, so fetch file from remote repo and
 					// copy it to the temp work area
-					aVersionId.set(copyRemoteFileToLocalRepository(
-							localRepository, artifact));
-					return artifact;
+					//TODO create temp R4EFileVersion
+					return copyRemoteFileToLocalRepository(localRepository, artifact);
 				}
 				// else Files are the same so we can copy the file in the
 				// workspace to the local repository, see below
@@ -141,9 +130,8 @@ public class CommandUtils {
 
 		// The current file was modified by the user, so we need to copy the
 		// current file in the workspace to the work area
-		aVersionId.set(copyWorkspaceFileToLocalRepository(localRepository,
-				aFile));
-		return null;
+		//TODO create temp R4EFileVersion
+		return copyWorkspaceFileToLocalRepository(localRepository, aFile);
 	}
 
 	/**
@@ -153,20 +141,19 @@ public class CommandUtils {
 	 * @throws CoreException
 	 * @throws ReviewsFileStorageException 
 	 */
-	public static ScmArtifact getBaseFileData(AtomicReference<String> aVersionId) throws CoreException, ReviewsFileStorageException {
+	public static R4EFileVersion getBaseFileData() throws CoreException, ReviewsFileStorageException {
 		final IEditorInput input = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput(); // $codepro.audit.disable methodChainLength
 		IFile editorFile = null;   //The file we use in the current editor/workspace
 		if (input instanceof IFileEditorInput) {
 			editorFile = ((IFileEditorInput) input).getFile();
 			//Now we have the file in editor, we need to use the versions interface to see if we should copy it
 			//to the local repo and update model info
-			return updateBaseFile(editorFile, aVersionId);
+			return updateBaseFile(editorFile);
 		} else if (input instanceof R4ECompareEditorInput) {
 			//If we get here, this is because we are trying to act on the compare editor contents
 			//this means that the file we are acting on is already in the local repository
 			//in this case, we only need to provide the versionId of this file
-			aVersionId.set(((R4ECompareEditorInput)input).getRightElementVersion());
-			return null;
+			return ((R4ECompareEditorInput)input).getRightElementVersion();
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, 
@@ -181,7 +168,7 @@ public class CommandUtils {
 	 * @throws CoreException
 	 * @throws ReviewsFileStorageException 
 	 */
-	public static ScmArtifact updateBaseFile(IFile aFile, AtomicReference<String> aVersionId) throws CoreException, ReviewsFileStorageException {
+	public static R4EFileVersion updateBaseFile(IFile aFile) throws CoreException, ReviewsFileStorageException {
 		if (!isFileInSynch(aFile)) { 
 
 			// Get handle to local storage repository
@@ -193,13 +180,12 @@ public class CommandUtils {
 				ScmArtifact artifact = connector.getArtifact(aFile);
 				if (null != artifact) {
 					//File was modified, so we need to fetch the base file from the versions repository and copy it to our own local repository
-					aVersionId.set(copyRemoteFileToLocalRepository(localRepository, artifact));
-					return artifact;
+					//TODO create temp R4EFileVersion
+					return copyRemoteFileToLocalRepository(localRepository, artifact);
 				}
 			}
 		}
 		//File was not modified, or No Version Control System or Remote File detected, so there is no base
-		aVersionId.set("");
 		return null;
 	}
 
@@ -227,7 +213,7 @@ public class CommandUtils {
 	 * @throws CoreException
 	 * @throws ReviewsFileStorageException 
 	 */
-	public static String copyRemoteFileToLocalRepository(IRFSRegistry aLocalRepository, ScmArtifact aArtifact) 
+	public static R4EFileVersion copyRemoteFileToLocalRepository(IRFSRegistry aLocalRepository, ScmArtifact aArtifact) 
 	throws CoreException, ReviewsFileStorageException {
 
 		IFileRevision fileRev = aArtifact.getFileRevision(null);
@@ -235,8 +221,14 @@ public class CommandUtils {
 		// Pull file from the version control system
 		InputStream iStream = fileRev.getStorage(null).getContents();
 		
+		//Create and Set value in temporary File version
+		R4EFileVersion tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
+		updateFileVersion(tmpFileVersion, aArtifact);
+		
 		// Push a local copy to local review repository, and obtain the local id
-		return aLocalRepository.registerReviewBlob(iStream);
+		tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(iStream));
+
+		return tmpFileVersion;
 	}
 	
 	/**
@@ -247,9 +239,17 @@ public class CommandUtils {
 	 * @throws CoreException
 	 * @throws ReviewsFileStorageException 
 	 */
-	public static String copyWorkspaceFileToLocalRepository(IRFSRegistry aLocalRepository, IFile aFile)
+	public static R4EFileVersion copyWorkspaceFileToLocalRepository(IRFSRegistry aLocalRepository, IFile aFile)
 	throws CoreException, ReviewsFileStorageException {
-		return aLocalRepository.registerReviewBlob(aFile.getContents());
+		
+		//Create and Set value in temporary File version
+		R4EFileVersion tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
+		updateFileVersion(tmpFileVersion, aFile);
+
+		// Push a local copy to local review repository, and obtain the local id
+		tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(aFile.getContents()));
+		
+		return tmpFileVersion;
 	}
 	
 	/**
@@ -373,11 +373,25 @@ public class CommandUtils {
 	 * @param projectUris
 	 * @param localId
 	 */
-	public static String setFileVersionData(R4EFileVersion aFileVer, ScmArtifact aScmArt) {
+	public static void copyFileVersionData(R4EFileVersion aTargetFileVer, R4EFileVersion aSourceFileVer) {
 		
-		aFileVer.setName(aScmArt.getFileRevision(null).getName());
-		aFileVer.setVersionID(aScmArt.getId());
-		aFileVer.setRepositoryPath(aScmArt.getPath());
+		aTargetFileVer.setName(aSourceFileVer.getName());
+		aTargetFileVer.setVersionID(aSourceFileVer.getVersionID());
+		aTargetFileVer.setRepositoryPath(aSourceFileVer.getRepositoryPath());
+		aTargetFileVer.setLocalVersionID(aSourceFileVer.getLocalVersionID());
+		aTargetFileVer.setPlatformURI(aSourceFileVer.getPlatformURI());
+		aTargetFileVer.setResource(aSourceFileVer.getResource());
+	}
+	
+	/**
+	 * @param aTargetFileVer
+	 * @param aScmArt
+	 */
+	public static void updateFileVersion(R4EFileVersion aTargetFileVer, ScmArtifact aScmArt) {
+
+		aTargetFileVer.setName(aScmArt.getFileRevision(null).getName());
+		aTargetFileVer.setVersionID(aScmArt.getId());
+		aTargetFileVer.setRepositoryPath(aScmArt.getPath());
 
 		String projPath = aScmArt.getProjectRelativePath();
 		if (projPath == null) {
@@ -386,16 +400,22 @@ public class CommandUtils {
 		}
 		IProject project = ResourceUtils.getProject(aScmArt.getProjectName());
 		IResource resource = ResourceUtils.findResource(project, projPath);
-		
-		aFileVer.setPlatformURI(ResourceUtils.toPlatformURIStr(resource));
-		aFileVer.setResource(resource);
-		
+
+		aTargetFileVer.setPlatformURI(ResourceUtils.toPlatformURIStr(resource));
+		aTargetFileVer.setResource(resource);
+
 		String projPlatformURI = ResourceUtils.toPlatformURIStr(project);
-		if (projPlatformURI != null) {
-			return projPlatformURI;
+		if (null == projPlatformURI) {
+			Activator.Ftracer.traceDebug("Unable to resolve the project: " + aScmArt.getProjectName() + 
+					" platform's URI, in scmArtifact with path: " + aScmArt.getPath());
 		}
-		Activator.Ftracer.traceDebug("Unable to resolve the project: " + aScmArt.getProjectName() + 
-				" platform's URI, in scmArtifact with path: " + aScmArt.getPath());
-		return null;
+	}
+	
+	public static void updateFileVersion(R4EFileVersion aTargetFileVer, IFile aSrcFile) {
+
+		aTargetFileVer.setName(aSrcFile.getName());
+		aTargetFileVer.setRepositoryPath(aSrcFile.getLocation().toPortableString());
+		aTargetFileVer.setResource(aSrcFile);
+		aTargetFileVer.setPlatformURI(ResourceUtils.toPlatformURIStr(aSrcFile));
 	}
 }
