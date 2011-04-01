@@ -193,8 +193,8 @@ public class AddReviewItemHandler extends AbstractHandler {
 	 * Method AddReviewItem.
 	 * 		Adds a review item to the model based on user input
 	 * @param aUIPosition IR4EUIPosition
-	 * @param aTargetFile IFile
-	 * @param aBaseFile IFile
+	 * @param aBaseFileVersion R4EFileVersion
+	 * @param aTargetFileVersion R4EFileVersion
 	 * @throws ReviewVersionsException 
 	 */
 	private void addReviewItem(R4EFileVersion aBaseFileVersion, R4EFileVersion aTargetFileVersion, 
@@ -213,7 +213,7 @@ public class AddReviewItemHandler extends AbstractHandler {
 				R4EUIFileContext[] files = (R4EUIFileContext[]) reviewItem.getChildren();
 				for (R4EUIFileContext file : files) {
 					if (aTargetFileVersion.equals(file.getFileContext().getTarget().getLocalVersionID())) {
-						if (null == file.getFileContext().getBase() && "" == aBaseFileVersion.getVersionID() ||
+						if (null == file.getFileContext().getBase() && "".equals(aBaseFileVersion.getVersionID()) ||
 								aBaseFileVersion.equals(file.getFileContext().getBase().getLocalVersionID())) {
 							//File already exists, check if selection also exists
 							R4EUISelectionContainer selectionContainer = (R4EUISelectionContainer) file.getSelectionContainerElement();
@@ -230,8 +230,8 @@ public class AddReviewItemHandler extends AbstractHandler {
 							}
 							if (newSelection) {
 								addReviewItemToExistingFileContext(selectionContainer, aUIPosition);
-								Activator.Ftracer.traceInfo("Added review item: Target = " + file.getFileContext().getTarget().getName().toString() + 
-										((null != file.getFileContext().getBase()) ? "Base = " + file.getFileContext().getBase().getName().toString() : "") + 
+								Activator.Ftracer.traceInfo("Added review item: Target = " + file.getFileContext().getTarget().getName() + 
+										((null != file.getFileContext().getBase()) ? "Base = " + file.getFileContext().getBase().getName() : "") + 
 										" Position = " + aUIPosition.toString());
 							} else {						
 								//The selection already exists so ignore command
@@ -281,8 +281,8 @@ public class AddReviewItemHandler extends AbstractHandler {
 	
 	/**
 	 * Method addReviewItemToNewFileContext.
-	 * @param aBaseFile IFile
-	 * @param aTargetFile IFile
+	 * @param aBaseFileVersion R4EFileVersion
+	 * @param aTargetFileVersion R4EFileVersion
 	 * @param aUIPosition IR4EUIPosition
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException

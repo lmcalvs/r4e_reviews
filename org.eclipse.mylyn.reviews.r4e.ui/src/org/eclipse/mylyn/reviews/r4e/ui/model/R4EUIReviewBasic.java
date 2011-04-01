@@ -410,7 +410,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#open()
 	 */
 	@Override
-	public void open() throws ResourceHandlingException, ReviewVersionsException, FileNotFoundException {
+	public void open() throws ResourceHandlingException {
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup)getParent()).getReviewGroup(), fReviewName);
 		
 		final EList<Item> items = fReview.getReviewItems();
@@ -429,7 +429,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						//Assume resource
 						R4EFileVersion version = item.getFileContextList().get(0).getTarget();
 						//TODO this is temporary to prevent a nast bug.  We need to find out why the FileVersion is not populated
-						//at review item creation to reaslly fix this.
+						//at review item creation to really fix this.
 						if (null != version) {
 							uiItem = new R4EUIReviewItem(this, item, R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE, item,
 									version.getName());
@@ -458,7 +458,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	
 	//TODO this will need to be removed when we migrate Git stuff into versions package
 	private CommitDescriptor createChangeSetDescriptor(final R4EItem item) {
-		CommitDescriptor desc = new CommitDescriptor() {
+		final CommitDescriptor desc = new CommitDescriptor() {
 			public String getTitle() {
 				return item.getDescription();
 			}
@@ -589,7 +589,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	
 	/**
 	 * Method createReviewItem
-	 * @param aTargetFile - the target file used for this review item
+	 * @param aItemInfo Object
+	 * @param aFilename String
 	 * @return R4EUIReviewItem
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException 
@@ -601,9 +602,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		final R4EItem reviewItem = R4EUIModelController.FModelExt.createR4EItem(participant);
 		
 		int type = R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE;
-		if (aItemInfo != null && aItemInfo instanceof ChangeSet) {
+		if (null != aItemInfo && aItemInfo instanceof ChangeSet) {
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem, R4EUIModelController.getReviewer());
-			ChangeSet changeSet = (ChangeSet) aItemInfo;
+			final ChangeSet changeSet = (ChangeSet) aItemInfo;
 			reviewItem.setDescription(changeSet.getMessage());
 			reviewItem.setAuthorRep(changeSet.getAuthor().getId());
 			reviewItem.setRepositoryRef(changeSet.getId());

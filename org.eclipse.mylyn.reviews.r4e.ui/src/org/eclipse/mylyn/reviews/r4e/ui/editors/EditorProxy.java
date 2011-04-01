@@ -197,8 +197,10 @@ public class EditorProxy {
 	 * Method openCompareEditor.
 	 *  	Open the compare-mode default editor for the file types
 	 * @param aPage IWorkbenchPage - the current workbench page
-	 * @param aBaseFile IFile - the base (or reference) file 
+	 * @param aBaseFile IFile - the base (or reference) file
+	 * @param aBaseFileVersion R4EFileVersion
 	 * @param aTargetFile IFile
+	 * @param aTargetFileVersion R4EFileVersion
 	 * @param aTargetFileEditable boolean - flag set whether the target file is editable or not
 	 * @param selectionIndex int - the index of the selection to go to in the target file
 	 */

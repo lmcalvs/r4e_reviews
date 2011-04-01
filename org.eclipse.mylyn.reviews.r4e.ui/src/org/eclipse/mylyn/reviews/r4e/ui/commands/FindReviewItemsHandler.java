@@ -43,7 +43,6 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.dialogs.FindReviewItemsDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
@@ -105,30 +104,21 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			return null;
 		}
 	
-		ScmUiConnector uiConnector = ScmUi.getUiConnector(project);
-		if (uiConnector != null) {
+		final ScmUiConnector uiConnector = ScmUi.getUiConnector(project);
+		if (null != uiConnector) {
 			ChangeSet changeSet = null;
 			try {
+				R4EUIModelController.setDialogOpen(true);
 				changeSet = uiConnector.getChangeSet(null, project, null);
+				R4EUIModelController.setDialogOpen(false);
 			} catch (CoreException e) {
 				Activator.Ftracer.traceError("Exception: " + e.getMessage());
 				Activator.getDefault().logError("Exception: " + e.toString(), e);	
 				return null;
 			}
-
 			createReviewItem(changeSet);
-			return null;
 		}
 		//We could not find any version control system, thus no items
-
-		R4EUIModelController.setDialogOpen(true);
-
-		// TODO: So this code should be replaced by a Git connector.  The dialog should be moved to the versions UI package
-		final FindReviewItemsDialog dialog = new FindReviewItemsDialog(R4EUIModelController.getNavigatorView().
-				getSite().getWorkbenchWindow().getShell(), project);
-    	dialog.open();
-    	
-		R4EUIModelController.setDialogOpen(false);
 		return null;
 	}
 
@@ -138,14 +128,14 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	 */
 	private void createReviewItem(ChangeSet changeSet) {
 
-		if (changeSet == null) {
+		if (null == changeSet) {
 			Activator.Ftracer.traceInfo("Received null ChangeSet");
 			return;
 		}
 		
-		int size = changeSet.getChanges().size();
+		final int size = changeSet.getChanges().size();
 		Activator.Ftracer.traceInfo("Received ChangeSet with " + size + " elements");
-		if (size == 0) return; // nothing to add
+		if (0 == size) return; // nothing to add
 	
 		try {
 			//Add Review Item
@@ -157,7 +147,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				
 				ScmArtifact baseArt = change.getBase();
 				ScmArtifact targetArt = change.getTarget();
-				if (baseArt == null && targetArt == null) {
+				if (null == baseArt && null == targetArt) {
 					Activator.Ftracer.traceDebug("Received a Change with no base and target in ChangeSet: " + changeSet.getId()
 							+ ", Date: " + changeSet.getDate().toString());
 				}
@@ -168,10 +158,10 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				R4EFileVersion baseLocalVersion = null;
 				R4EFileVersion targetLocalVersion = null;			
 				//Copy remote files to the local repository
-				if (baseArt != null) {
+				if (null != baseArt) {
 					baseLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository, baseArt);
 				}
-				if (targetArt != null) {
+				if (null != targetArt) {
 					targetLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository, targetArt);
 				}
 				

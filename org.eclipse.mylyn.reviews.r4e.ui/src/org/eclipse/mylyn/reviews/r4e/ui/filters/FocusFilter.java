@@ -45,7 +45,7 @@ public class FocusFilter extends ViewerFilter  {
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 		
-		IStructuredSelection selection = 
+		final IStructuredSelection selection = 
 			(IStructuredSelection) R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
 		if (null == selection) return true;
 		final IR4EUIModelElement selectedElement = (IR4EUIModelElement) selection.getFirstElement();

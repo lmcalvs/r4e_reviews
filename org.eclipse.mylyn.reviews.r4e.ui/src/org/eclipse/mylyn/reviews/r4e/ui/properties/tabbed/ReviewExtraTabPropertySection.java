@@ -64,6 +64,10 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	// Constants
 	// ------------------------------------------------------------------------
 	
+	/**
+	 * Field DECISION_SECTION_LABEL.
+	 * (value is ""Decision information"")
+	 */
 	private static final String DECISION_SECTION_LABEL = "Decision information";
 	
 	

@@ -194,8 +194,8 @@ public class AddAnomalyHandler extends AbstractHandler {
 	/** 
 	 * Method AddAnomaly.
 	 * 		Adds an anomaly to the model based on user input
-	 * @param aBaseFile IFile
-	 * @param aTargetFile IFile
+	 * @param aBaseFileVersion R4EFileVersion
+	 * @param aTargetFileVersion R4EFileVersion
 	 * @param aUIPosition IR4EUIPosition
 	 */
 	private void addAnomaly(R4EFileVersion aBaseFileVersion, R4EFileVersion aTargetFileVersion, 
@@ -225,9 +225,9 @@ public class AddAnomalyHandler extends AbstractHandler {
 									isNewAnomaly = false;		
 									addCommentToExistingAnomaly(uiAnomaly);
 									Activator.Ftracer.traceInfo("Added comment to existing anomaly: Target = " + 
-											file.getFileContext().getTarget().getName().toString() + 
+											file.getFileContext().getTarget().getName() + 
 											((null != file.getFileContext().getBase()) ? "Base = " + 
-													file.getFileContext().getBase().getName().toString() : "") + " Position = " 
+													file.getFileContext().getBase().getName() : "") + " Position = " 
 											+ aUIPosition.toString());
 								}
 							}
@@ -237,9 +237,9 @@ public class AddAnomalyHandler extends AbstractHandler {
 						}
 						if (isNewAnomaly) {
 							addAnomalyToExistingFileContext(aTargetFileVersion, anomalyContainer, aUIPosition);
-							Activator.Ftracer.traceInfo("Added anomaly: Target = " + file.getFileContext().getTarget().getName().toString() + 
+							Activator.Ftracer.traceInfo("Added anomaly: Target = " + file.getFileContext().getTarget().getName() + 
 									((null != file.getFileContext().getBase()) ? "Base = " + 
-											file.getFileContext().getBase().getName().toString() : "") + " Position = " 
+											file.getFileContext().getBase().getName() : "") + " Position = " 
 									+ aUIPosition.toString());
 						}
 						return;  //We found the file so we are done here	
@@ -281,6 +281,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 	
 	/**
 	 * Method addAnomalyToExistingFileContext.
+	 * @param aTargetFileVersion R4EFileVersion
 	 * @param aContainer R4EUIAnomalyContainer
 	 * @param aUIPosition IR4EUIPosition
 	 * @throws ResourceHandlingException 
@@ -301,8 +302,8 @@ public class AddAnomalyHandler extends AbstractHandler {
 	
 	/**
 	 * Method addAnomalyToNewFileContext.
-	 * @param aBaseFile IFile
-	 * @param aTargetFile IFile
+	 * @param aBaseFileVersion R4EFileVersion
+	 * @param aTargetFileVersion R4EFileVersion
 	 * @param aUIPosition IR4EUIPosition
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException

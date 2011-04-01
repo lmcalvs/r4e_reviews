@@ -102,16 +102,16 @@ public class CommandUtils {
 			ReviewsFileStorageException {
 
 		// Get handle to local storage repository
-		IRFSRegistry localRepository = RFSRegistryFactory
+		final IRFSRegistry localRepository = RFSRegistryFactory
 				.getRegistry(R4EUIModelController.getActiveReview().getReview());
-		String workspaceFileVersion = localRepository.blobIdFor(aFile
+		final String workspaceFileVersion = localRepository.blobIdFor(aFile
 				.getContents());
 
 		// Get Remote repository file info
-		ScmConnector connector = ScmCore.getConnector(aFile.getProject());
+		final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
 		if (null != connector) {
 
-			ScmArtifact artifact = connector.getArtifact(aFile);
+			final ScmArtifact artifact = connector.getArtifact(aFile);
 			if (null != artifact) { // No remote file detected, just return the
 									// workspace file
 
@@ -172,12 +172,12 @@ public class CommandUtils {
 		if (!isFileInSynch(aFile)) { 
 
 			// Get handle to local storage repository
-			IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview().getReview());
+			final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview().getReview());
 
 			//Get Remote repository file info
-			ScmConnector connector = ScmCore.getConnector(aFile.getProject());
+			final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
 			if (null != connector) {
-				ScmArtifact artifact = connector.getArtifact(aFile);
+				final ScmArtifact artifact = connector.getArtifact(aFile);
 				if (null != artifact) {
 					//File was modified, so we need to fetch the base file from the versions repository and copy it to our own local repository
 					//TODO create temp R4EFileVersion
@@ -195,7 +195,7 @@ public class CommandUtils {
 	 * @return boolean 
 	 * @throws TeamException
 	 */
-	public static boolean isFileInSynch(IFile aFile) throws TeamException {
+	public static boolean isFileInSynch(IFile aFile) {
 		// TODO: Later optimization
 		// RepositoryProvider provider =
 		// RepositoryProvider.getProvider(aFile.getProject());
@@ -216,13 +216,13 @@ public class CommandUtils {
 	public static R4EFileVersion copyRemoteFileToLocalRepository(IRFSRegistry aLocalRepository, ScmArtifact aArtifact) 
 	throws CoreException, ReviewsFileStorageException {
 
-		IFileRevision fileRev = aArtifact.getFileRevision(null);
+		final IFileRevision fileRev = aArtifact.getFileRevision(null);
 		
 		// Pull file from the version control system
-		InputStream iStream = fileRev.getStorage(null).getContents();
+		final InputStream iStream = fileRev.getStorage(null).getContents();
 		
 		//Create and Set value in temporary File version
-		R4EFileVersion tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
+		final R4EFileVersion tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
 		updateFileVersion(tmpFileVersion, aArtifact);
 		
 		// Push a local copy to local review repository, and obtain the local id
@@ -243,7 +243,7 @@ public class CommandUtils {
 	throws CoreException, ReviewsFileStorageException {
 		
 		//Create and Set value in temporary File version
-		R4EFileVersion tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
+		final R4EFileVersion tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
 		updateFileVersion(tmpFileVersion, aFile);
 
 		// Push a local copy to local review repository, and obtain the local id
@@ -339,8 +339,7 @@ public class CommandUtils {
 	
 	/**
 	 * Adapt change types from Mylyn Versions to R4E model
-	 * 
-	 * @param changeType
+	 * @param changeType ChangeType
 	 * @return
 	 */
 	public static R4EContextType adaptType(ChangeType changeType) {
@@ -367,10 +366,8 @@ public class CommandUtils {
 	
 	/**
 	 * Resolve and transfer values from ScmArtifact to R4EFileVersion
-	 * 
-	 * @param fileVer
-	 * @param scmArt
-	 * @param projectUris
+	 * @param aTargetFileVer R4EFileVersion
+	 * @param aSourceFileVer R4EFileVersion
 	 * @param localId
 	 */
 	public static void copyFileVersionData(R4EFileVersion aTargetFileVer, R4EFileVersion aSourceFileVer) {
@@ -384,8 +381,9 @@ public class CommandUtils {
 	}
 	
 	/**
-	 * @param aTargetFileVer
-	 * @param aScmArt
+	 * Method updateFileVersion
+	 * @param aTargetFileVer R4EFileVersion
+	 * @param aScmArt ScmArtifact
 	 */
 	public static void updateFileVersion(R4EFileVersion aTargetFileVer, ScmArtifact aScmArt) {
 
@@ -393,24 +391,29 @@ public class CommandUtils {
 		aTargetFileVer.setVersionID(aScmArt.getId());
 		aTargetFileVer.setRepositoryPath(aScmArt.getPath());
 
-		String projPath = aScmArt.getProjectRelativePath();
-		if (projPath == null) {
+		final String projPath = aScmArt.getProjectRelativePath();
+		if (null == projPath) {
 			Activator.Ftracer.traceDebug("Invalid relative project path in scmArtifact with path: " + 
 					aScmArt.getPath());
 		}
-		IProject project = ResourceUtils.getProject(aScmArt.getProjectName());
-		IResource resource = ResourceUtils.findResource(project, projPath);
+		final IProject project = ResourceUtils.getProject(aScmArt.getProjectName());
+		final IResource resource = ResourceUtils.findResource(project, projPath);
 
 		aTargetFileVer.setPlatformURI(ResourceUtils.toPlatformURIStr(resource));
 		aTargetFileVer.setResource(resource);
 
-		String projPlatformURI = ResourceUtils.toPlatformURIStr(project);
+		final String projPlatformURI = ResourceUtils.toPlatformURIStr(project);
 		if (null == projPlatformURI) {
 			Activator.Ftracer.traceDebug("Unable to resolve the project: " + aScmArt.getProjectName() + 
 					" platform's URI, in scmArtifact with path: " + aScmArt.getPath());
 		}
 	}
 	
+	/**
+	 * Method updateFileVersion
+	 * @param aTargetFileVer R4EFileVersion
+	 * @param aSrcFile IFile
+	 */
 	public static void updateFileVersion(R4EFileVersion aTargetFileVer, IFile aSrcFile) {
 
 		aTargetFileVer.setName(aSrcFile.getName());

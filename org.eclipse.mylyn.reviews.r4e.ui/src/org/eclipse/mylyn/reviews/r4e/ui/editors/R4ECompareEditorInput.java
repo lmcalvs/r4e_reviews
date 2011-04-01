@@ -83,7 +83,9 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * @param aConfig CompareConfiguration
 	 * @param aAncestor ITypedElement
 	 * @param aLeft ITypedElement
+	 * @param aLeftVersion R4EFileVersion
 	 * @param aRight ITypedElement
+	 * @param aRightVersion R4EFileVersion
 	 */
 	public R4ECompareEditorInput(CompareConfiguration aConfig, ITypedElement aAncestor, ITypedElement aLeft, 
 			R4EFileVersion aLeftVersion, ITypedElement aRight, R4EFileVersion aRightVersion) {

@@ -179,17 +179,17 @@ public class EditableListWidget {
 			@Override
 			public void controlResized(ControlEvent e) {
 				
-                Rectangle area = fMainTable.getClientArea();
-                Point size = fMainTable.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-                ScrollBar vBar = fMainTable.getVerticalBar();
+                final Rectangle area = fMainTable.getClientArea();
+                final Point size = fMainTable.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+                final ScrollBar vBar = fMainTable.getVerticalBar();
                 int width = area.width - fMainTable.computeTrim(0,0,0,0).width - vBar.getSize().x;
                 if (size.y > area.height + fMainTable.getHeaderHeight()) {
                 	// Subtract the scrollbar width from the total column width
                 	// if a vertical scrollbar will be required
-                	Point vBarSize = vBar.getSize();
+                	final Point vBarSize = vBar.getSize();
                 	width -= vBarSize.x;
                 }
-                Point oldSize = fMainTable.getSize();
+                final Point oldSize = fMainTable.getSize();
                 if (oldSize.x > area.width) {
                     // table is getting smaller so make the columns smaller first and then resize the table to
                     // match the client area width

@@ -45,7 +45,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.dialogs.AnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
-import org.eclipse.mylyn.versions.core.ScmArtifact;
 
 
 /**
@@ -314,8 +313,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	
 	/**
 	 * Method createAnomaly
-	 * @param aUiPosition - the position of the anomaly to create
-	 * @param aUiPosition - the position of the anomaly to create
+	 * @param aAnomalyTempFileVersion R4EFileVersion
 	 * @param aUiPosition - the position of the anomaly to create
 	 * @return R4EUIAnomalyBasic
 	 * @throws ResourceHandlingException
@@ -339,7 +337,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     		final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(), true);
     		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
     		
-    		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, R4EUIModelController.getReviewer());
+    		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, R4EUIModelController.getReviewer());
     		anomaly.setTitle(dialog.getAnomalyTitleValue());
     		anomaly.setDescription(dialog.getAnomalyDescriptionValue());
         	R4EUIModelController.FResourceUpdater.checkIn(bookNum);

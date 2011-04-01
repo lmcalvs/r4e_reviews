@@ -100,19 +100,19 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fColumnPhase.
 	 */
-	TableColumn fColumnPhase = null;
+	protected TableColumn fColumnPhase = null;
 	/**
 	 * Field fColumnOwner.
 	 */
-	TableColumn fColumnOwner = null;
+	protected TableColumn fColumnOwner = null;
 	/**
 	 * Field fColumnStartDate.
 	 */
-	TableColumn fColumnStartDate = null;
+	protected TableColumn fColumnStartDate = null;
 	/**
 	 * Field fColumnEndDate.
 	 */
-	TableColumn fColumnEndDate = null;
+	protected TableColumn fColumnEndDate = null;
 	
 	/**
 	 * Field fDescriptionText.
