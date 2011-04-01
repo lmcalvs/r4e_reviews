@@ -120,7 +120,6 @@ public class CommandUtils {
 				if (artifact.getId().equals(workspaceFileVersion)) {
 					// Files are different, so fetch file from remote repo and
 					// copy it to the temp work area
-					//TODO create temp R4EFileVersion
 					return copyRemoteFileToLocalRepository(localRepository, artifact);
 				}
 				// else Files are the same so we can copy the file in the
@@ -130,7 +129,6 @@ public class CommandUtils {
 
 		// The current file was modified by the user, so we need to copy the
 		// current file in the workspace to the work area
-		//TODO create temp R4EFileVersion
 		return copyWorkspaceFileToLocalRepository(localRepository, aFile);
 	}
 
@@ -180,7 +178,6 @@ public class CommandUtils {
 				final ScmArtifact artifact = connector.getArtifact(aFile);
 				if (null != artifact) {
 					//File was modified, so we need to fetch the base file from the versions repository and copy it to our own local repository
-					//TODO create temp R4EFileVersion
 					return copyRemoteFileToLocalRepository(localRepository, artifact);
 				}
 			}
@@ -391,13 +388,13 @@ public class CommandUtils {
 		aTargetFileVer.setVersionID(aScmArt.getId());
 		aTargetFileVer.setRepositoryPath(aScmArt.getPath());
 
-		final String projPath = aScmArt.getProjectRelativePath();
-		if (null == projPath) {
-			Activator.Ftracer.traceDebug("Invalid relative project path in scmArtifact with path: " + 
+		final String fileRelPath = aScmArt.getProjectRelativePath();
+		if (null == fileRelPath) {
+			Activator.Ftracer.traceDebug("Invalid relative file path in scmArtifact with path: " + 
 					aScmArt.getPath());
 		}
 		final IProject project = ResourceUtils.getProject(aScmArt.getProjectName());
-		final IResource resource = ResourceUtils.findResource(project, projPath);
+		final IResource resource = ResourceUtils.findResource(project, fileRelPath);
 
 		aTargetFileVer.setPlatformURI(ResourceUtils.toPlatformURIStr(resource));
 		aTargetFileVer.setResource(resource);
