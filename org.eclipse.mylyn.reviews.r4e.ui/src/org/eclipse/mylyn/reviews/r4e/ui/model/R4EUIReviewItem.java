@@ -179,15 +179,19 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 * @return String
 	 */
 	private static String getItemDisplayTooltip(int aType, Object aItemInfo) {
+		String message = "";
 		switch (aType) {
 			case R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE:
 			{
-				return "Description: " + ((R4EItem)aItemInfo).getDescription();
+				if (aItemInfo != null) {
+					message = ((R4EItem)aItemInfo).getDescription();
+				}
+				
+				return "Description: " + message;
 			}
 			
 			case R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT:
 			{
-				String message = "";
 				if (aItemInfo instanceof CommitDescriptor) {
 					message = ((CommitDescriptor)aItemInfo).getMessage();
 				} else if (aItemInfo instanceof ChangeSet) {

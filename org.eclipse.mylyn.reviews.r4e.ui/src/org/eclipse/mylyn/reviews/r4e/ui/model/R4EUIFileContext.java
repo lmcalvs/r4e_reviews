@@ -103,8 +103,13 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * @param aFile R4EFileContext
 	 */
 	public R4EUIFileContext(IR4EUIModelElement aParent, R4EFileContext aFile) {
-		super(aParent, aFile.getTarget().getName(), 
+		super(aParent, "", 
 				getNavigatorTooltip(aFile.getTarget(), aFile.getBase()));
+		if(aFile.getTarget() != null) {
+			setName(aFile.getTarget().getName());
+		} else if (aFile.getBase() != null){
+			setName(aFile.getBase().getName());
+		}
 		fFile = aFile;
 		setImage(FILE_CONTEXT_ICON_FILE);
 	}
