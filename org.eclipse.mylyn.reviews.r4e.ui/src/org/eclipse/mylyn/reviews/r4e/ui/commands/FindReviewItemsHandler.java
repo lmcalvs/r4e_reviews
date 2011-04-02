@@ -55,6 +55,7 @@ import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.mylyn.versions.ui.ScmUi;
 import org.eclipse.mylyn.versions.ui.spi.ScmUiConnector;
+import org.eclipse.mylyn.versions.ui.spi.ScmUiException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -66,44 +67,57 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
+	 * 
+	 * @param event
+	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		//Get project to use (use adapters if needed)
+		// Get project to use (use adapters if needed)
 		final ISelection selection = HandlerUtil.getCurrentSelection(event);
-		final Object selectedElement = ((IStructuredSelection)selection).getFirstElement();
+		final Object selectedElement = ((IStructuredSelection) selection)
+				.getFirstElement();
 		IProject project = null;
-		//NOTE:  The valadity testes are done if the ProjectPropertyTester class
-		if (selectedElement instanceof IProject) { 
+		// NOTE: The valadity testes are done if the ProjectPropertyTester class
+		if (selectedElement instanceof IProject) {
 			project = (IProject) selectedElement;
 		} else if (selectedElement instanceof IJavaProject) {
-			project = ((IJavaProject)selectedElement).getProject();
+			project = ((IJavaProject) selectedElement).getProject();
 		} else if (selectedElement instanceof ICProject) {
-			project = ((ICProject)selectedElement).getProject();
-		} else if (selectedElement instanceof IPackageFragment || selectedElement instanceof IPackageFragmentRoot) {
-			project = ((IJavaElement)selectedElement).getJavaProject().getProject();
+			project = ((ICProject) selectedElement).getProject();
+		} else if (selectedElement instanceof IPackageFragment
+				|| selectedElement instanceof IPackageFragmentRoot) {
+			project = ((IJavaElement) selectedElement).getJavaProject()
+					.getProject();
 		} else if (selectedElement instanceof IFolder) {
-			project = ((IFolder)selectedElement).getProject();
+			project = ((IFolder) selectedElement).getProject();
 		} else if (selectedElement instanceof IAdaptable) {
-			final IAdaptable adaptableProject = (IAdaptable) selectedElement; 
-			project = (IProject) adaptableProject.getAdapter(IProject.class); 
+			final IAdaptable adaptableProject = (IAdaptable) selectedElement;
+			project = (IProject) adaptableProject.getAdapter(IProject.class);
 		} else {
-			//Should never happen
-			Activator.Ftracer.traceError("No project defined for selection of class " + selectedElement.getClass());
-			Activator.getDefault().logError("No project defined for selection of class " + selectedElement.getClass(), null);
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Find Review Item Error",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "No project defined for selection", null), IStatus.ERROR);
+			// Should never happen
+			Activator.Ftracer
+					.traceError("No project defined for selection of class "
+							+ selectedElement.getClass());
+			Activator.getDefault().logError(
+					"No project defined for selection of class "
+							+ selectedElement.getClass(), null);
+			final ErrorDialog dialog = new ErrorDialog(null,
+					R4EUIConstants.DIALOG_TITLE_ERROR,
+					"Find Review Item Error", new Status(IStatus.ERROR,
+							Activator.PLUGIN_ID, 0,
+							"No project defined for selection", null),
+					IStatus.ERROR);
 			dialog.open();
 			return null;
 		}
-	
+
 		final ScmUiConnector uiConnector = ScmUi.getUiConnector(project);
 		if (null != uiConnector) {
 			ChangeSet changeSet = null;
@@ -111,76 +125,96 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				R4EUIModelController.setDialogOpen(true);
 				changeSet = uiConnector.getChangeSet(null, project, null);
 				R4EUIModelController.setDialogOpen(false);
-			} catch (CoreException e) {
+			} catch (final ScmUiException e) {
 				Activator.Ftracer.traceError("Exception: " + e.getMessage());
-				Activator.getDefault().logError("Exception: " + e.toString(), e);	
+				Activator.getDefault()
+						.logError("Exception: " + e.toString(), e);
 				return null;
 			}
 			createReviewItem(changeSet);
 		}
-		//We could not find any version control system, thus no items
+		// We could not find any version control system, thus no items
 		return null;
 	}
 
 	/**
 	 * Create and serialize the changeset in a Review Item
+	 * 
 	 * @param changeSet
 	 */
-	private void createReviewItem(ChangeSet changeSet) {
+	private void createReviewItem(final ChangeSet changeSet) {
 
 		if (null == changeSet) {
 			Activator.Ftracer.traceInfo("Received null ChangeSet");
 			return;
 		}
-		
+
 		final int size = changeSet.getChanges().size();
-		Activator.Ftracer.traceInfo("Received ChangeSet with " + size + " elements");
-		if (0 == size) return; // nothing to add
-	
+		Activator.Ftracer.traceInfo("Received ChangeSet with " + size
+				+ " elements");
+		if (0 == size) {
+			return; // nothing to add
+		}
+
 		try {
-			//Add Review Item
-			final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
-			final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(changeSet, null);
-			if (null == uiReviewItem) return;
-	
-			for (Change change : changeSet.getChanges()) {
-				
-				ScmArtifact baseArt = change.getBase();
-				ScmArtifact targetArt = change.getTarget();
+			// Add Review Item
+			final R4EUIReviewBasic uiReview = R4EUIModelController
+					.getActiveReview();
+			final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(
+					changeSet, null);
+			if (null == uiReviewItem) {
+				return;
+			}
+
+			for (final Change change : changeSet.getChanges()) {
+
+				final ScmArtifact baseArt = change.getBase();
+				final ScmArtifact targetArt = change.getTarget();
 				if (null == baseArt && null == targetArt) {
-					Activator.Ftracer.traceDebug("Received a Change with no base and target in ChangeSet: " + changeSet.getId()
-							+ ", Date: " + changeSet.getDate().toString());
+					Activator.Ftracer
+							.traceDebug("Received a Change with no base and target in ChangeSet: "
+									+ changeSet.getId()
+									+ ", Date: "
+									+ changeSet.getDate().toString());
 				}
-				
+
 				// Get handle to local storage repository
-				IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview().getReview());
-				
+				final IRFSRegistry localRepository = RFSRegistryFactory
+						.getRegistry(R4EUIModelController.getActiveReview()
+								.getReview());
+
 				R4EFileVersion baseLocalVersion = null;
-				R4EFileVersion targetLocalVersion = null;			
-				//Copy remote files to the local repository
+				R4EFileVersion targetLocalVersion = null;
+				// Copy remote files to the local repository
 				if (null != baseArt) {
-					baseLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository, baseArt);
+					baseLocalVersion = CommandUtils
+							.copyRemoteFileToLocalRepository(localRepository,
+									baseArt);
 				}
 				if (null != targetArt) {
-					targetLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository, targetArt);
+					targetLocalVersion = CommandUtils
+							.copyRemoteFileToLocalRepository(localRepository,
+									targetArt);
 				}
-				
-				//Add File Context
-				final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(baseLocalVersion, 
-						targetLocalVersion, CommandUtils.adaptType(change.getChangeType()));
+
+				// Add File Context
+				final R4EUIFileContext uiFileContext = uiReviewItem
+						.createFileContext(baseLocalVersion,
+								targetLocalVersion,
+								CommandUtils.adaptType(change.getChangeType()));
 				if (null == uiFileContext) {
 					uiReview.removeChildren(uiReviewItem, false);
 					return;
 				}
 			}
 
-		} catch (ResourceHandlingException e) {
+		} catch (final ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
-		} catch (ReviewsFileStorageException e) {
+		} catch (final ReviewsFileStorageException e) {
 			UIUtils.displayReviewsFileStorageErrorDialog(e);
-		} catch (OutOfSyncException e) {
+		} catch (final OutOfSyncException e) {
 			UIUtils.displaySyncErrorDialog(e);
-		} catch (CoreException e) {
+		} catch (final CoreException e) {
 			UIUtils.displayCoreErrorDialog(e);
 		}
 	}
