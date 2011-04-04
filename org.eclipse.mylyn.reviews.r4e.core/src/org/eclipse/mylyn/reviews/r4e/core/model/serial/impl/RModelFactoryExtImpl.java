@@ -52,6 +52,10 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.ReviewsRFSProxy;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
@@ -1332,6 +1336,37 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 
 		// The associated resource is not null
 		return true;
+	}
+
+	public R4EDesignRuleCollection createR4EDesignRuleCollection(URI aFolderPath, String aRuleCollectionName)
+			throws ResourceHandlingException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String closeR4EDesignRuleCollection(R4EDesignRuleCollection aDesRuleCollection) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public R4EDesignRuleArea createR4EDesignRuleArea(R4EDesignRuleCollection aRuleCollection) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public R4EDesignRuleViolation createR4EDesignRuleViolation(R4EDesignRuleCollection aRuleArea) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public R4EDesignRule createR4EDesignRule(R4EDesignRuleViolation aViolation) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -63,6 +63,10 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
@@ -1293,6 +1297,73 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 */
 	public List<Resource> pollDirUpdates(EObject atElementLoc) {
 		return factoryExtension.pollDirUpdates(atElementLoc);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRuleCollection(org.eclipse
+	 * .emf.common.util.URI, java.lang.String)
+	 */
+	public R4EDesignRuleCollection createR4EDesignRuleCollection(URI aFolderPath, String aRuleCollectionName)
+			throws ResourceHandlingException {
+		return factoryExtension.createR4EDesignRuleCollection(aFolderPath, aRuleCollectionName);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#openR4EDesignRuleCollection(org.eclipse
+	 * .emf.common.util.URI)
+	 */
+	public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException {
+		return factoryExtension.openR4EDesignRuleCollection(aResourcePath);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#closeR4EDesignRuleCollection(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection)
+	 */
+	public String closeR4EDesignRuleCollection(R4EDesignRuleCollection aDesRuleCollection) {
+		return factoryExtension.closeR4EDesignRuleCollection(aDesRuleCollection);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRuleArea(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection)
+	 */
+	public R4EDesignRuleArea createR4EDesignRuleArea(R4EDesignRuleCollection aRuleCollection) {
+		return factoryExtension.createR4EDesignRuleArea(aRuleCollection);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRuleViolation(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection)
+	 */
+	public R4EDesignRuleViolation createR4EDesignRuleViolation(R4EDesignRuleCollection aRuleArea) {
+		return factoryExtension.createR4EDesignRuleViolation(aRuleArea);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRule(org.eclipse.mylyn
+	 * .reviews.r4e.core.model.drules.R4EDesignRuleViolation)
+	 */
+	public R4EDesignRule createR4EDesignRule(R4EDesignRuleViolation aViolation) {
+		return factoryExtension.createR4EDesignRule(aViolation);
 	}
 
 } //RModelFactoryImpl
