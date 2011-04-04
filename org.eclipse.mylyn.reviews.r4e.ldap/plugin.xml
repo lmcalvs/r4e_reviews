@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.mylyn.reviews.r4e.ui.preferences.R4EPreferencePage"
+            class="org.eclipse.mylyn.reviews.ldap.internal.preferences.R4ELdapPreferencePage"
+            id="org.eclipse.mylyn.reviews.r4e.ldap.page1"
+            name="R4E LDAP settings" >
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.eclipse.mylyn.reviews.ldap.internal.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+
+</plugin>
