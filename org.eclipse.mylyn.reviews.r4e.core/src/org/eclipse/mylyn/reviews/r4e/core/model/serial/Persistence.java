@@ -425,21 +425,26 @@ public interface Persistence {
 		/**
 		 * @param aRuleCollection
 		 * @return
+		 * @throws ResourceHandlingException
 		 */
-		public R4EDesignRuleArea createR4EDesignRuleArea(R4EDesignRuleCollection aRuleCollection);
+		public R4EDesignRuleArea createR4EDesignRuleArea(R4EDesignRuleCollection aRuleCollection)
+				throws ResourceHandlingException;
 
 		/**
 		 * @param aRuleArea
 		 * @return
+		 * @throws ResourceHandlingException
 		 */
 
-		public R4EDesignRuleViolation createR4EDesignRuleViolation(R4EDesignRuleCollection aRuleArea);
+		public R4EDesignRuleViolation createR4EDesignRuleViolation(R4EDesignRuleArea aRuleArea)
+				throws ResourceHandlingException;
 
 		/**
 		 * @param aViolation
 		 * @return
+		 * @throws ResourceHandlingException
 		 */
-		public R4EDesignRule createR4EDesignRule(R4EDesignRuleViolation aViolation);
+		public R4EDesignRule createR4EDesignRule(R4EDesignRuleViolation aViolation) throws ResourceHandlingException;
 
 	}
 	/**

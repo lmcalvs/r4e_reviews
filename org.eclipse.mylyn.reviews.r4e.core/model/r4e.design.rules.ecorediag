@@ -7,9 +7,13 @@
         <element xmi:type="ecore:EAttribute" href="r4e.design.rules.ecore#//R4EDesignRuleCollection/version"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_1Pj6VeLhEd-_4rsUiqkbuA"/>
       </children>
-      <children xmi:type="notation:Node" xmi:id="_1PkhYOLhEd-_4rsUiqkbuA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="r4e.design.rules.ecore#//R4EDesignRuleCollection/filePaths"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_1PkhYeLhEd-_4rsUiqkbuA"/>
+      <children xmi:type="notation:Node" xmi:id="_hfI4sF70EeC7YYx9yY610w" type="2001">
+        <element xmi:type="ecore:EAttribute" href="r4e.design.rules.ecore#//R4EDesignRuleCollection/folder"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_hfI4sV70EeC7YYx9yY610w"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_ned94F70EeC7YYx9yY610w" type="2001">
+        <element xmi:type="ecore:EAttribute" href="r4e.design.rules.ecore#//R4EDesignRuleCollection/name"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_ned94V70EeC7YYx9yY610w"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_1PjTQuLhEd-_4rsUiqkbuA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_1PjTQ-LhEd-_4rsUiqkbuA"/>
@@ -121,7 +125,34 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_1PsdMeLhEd-_4rsUiqkbuA" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EEnum" href="r4e.design.rules.ecore#//R4EDesignRuleRank"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1PsdMuLhEd-_4rsUiqkbuA" x="228"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1PsdMuLhEd-_4rsUiqkbuA" x="228" y="12"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_vg0DsF70EeC7YYx9yY610w" type="1005">
+    <children xmi:type="notation:Node" xmi:id="_vg144F70EeC7YYx9yY610w" type="4010"/>
+    <children xmi:type="notation:Node" xmi:id="_vg3HAF70EeC7YYx9yY610w" type="5008">
+      <children xmi:type="notation:Node" xmi:id="_2vyL0F70EeC7YYx9yY610w" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_ERRONEOUS"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_2vyL0V70EeC7YYx9yY610w"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_5NjOwF70EeC7YYx9yY610w" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_SUPERFLUOUS"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_5NjOwV70EeC7YYx9yY610w"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_9GnLAF70EeC7YYx9yY610w" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_IMPROVEMENT"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_9GnLAV70EeC7YYx9yY610w"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_G8GpcF71EeC7YYx9yY610w" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_QUESTION"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_G8GpcV71EeC7YYx9yY610w"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_vg3HAV70EeC7YYx9yY610w"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_vg3HAl70EeC7YYx9yY610w"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_vg3HA170EeC7YYx9yY610w"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_vg0DsV70EeC7YYx9yY610w" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EEnum" href="r4e.design.rules.ecore#//R4EDesignRuleClass"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_vg0Dsl70EeC7YYx9yY610w" x="444" y="12"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_1POjIeLhEd-_4rsUiqkbuA"/>
   <element xmi:type="ecore:EPackage" href="r4e.design.rules.ecore#/"/>

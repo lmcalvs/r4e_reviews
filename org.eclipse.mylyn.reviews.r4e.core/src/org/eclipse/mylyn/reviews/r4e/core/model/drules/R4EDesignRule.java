@@ -94,6 +94,7 @@ public interface R4EDesignRule extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Class</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Class</em>' attribute isn't clear,
@@ -101,22 +102,24 @@ public interface R4EDesignRule extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Class</em>' attribute.
-	 * @see #setClass(String)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass
+	 * @see #setClass(R4EDesignRuleClass)
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage#getR4EDesignRule_Class()
 	 * @model
 	 * @generated
 	 */
-	String getClass_();
+	R4EDesignRuleClass getClass_();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule#getClass_ <em>Class</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Class</em>' attribute.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass
 	 * @see #getClass_()
 	 * @generated
 	 */
-	void setClass(String value);
+	void setClass(R4EDesignRuleClass value);
 
 	/**
 	 * Returns the value of the '<em><b>Title</b></em>' attribute.

@@ -201,29 +201,6 @@
     <element xmi:type="ecore:EEnum" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_e5mecrX-Ed-Xj-3H8XK7WQ" x="48" y="912" height="183"/>
   </children>
-  <children xmi:type="notation:Node" xmi:id="_e5nskLX-Ed-Xj-3H8XK7WQ" type="1005">
-    <children xmi:type="notation:Node" xmi:id="_e5nsk7X-Ed-Xj-3H8XK7WQ" type="4010"/>
-    <children xmi:type="notation:Node" xmi:id="_e5oToLX-Ed-Xj-3H8XK7WQ" type="5008">
-      <children xmi:type="notation:Node" xmi:id="_gVP_4LqaEd-6aOwQ22t3_g" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyRank/R4E_ANOMALY_RANK_NONE"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_gVP_4bqaEd-6aOwQ22t3_g"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_gVP_4rqaEd-6aOwQ22t3_g" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyRank/R4E_ANOMALY_RANK_MINOR"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_gVP_47qaEd-6aOwQ22t3_g"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_nOaI4LrCEd-6aOwQ22t3_g" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyRank/R4E_ANOMALY_RANK_MAJOR"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_nOaI4brCEd-6aOwQ22t3_g"/>
-      </children>
-      <styles xmi:type="notation:DrawerStyle" xmi:id="_e5oTobX-Ed-Xj-3H8XK7WQ"/>
-      <styles xmi:type="notation:SortingStyle" xmi:id="_e5oTorX-Ed-Xj-3H8XK7WQ"/>
-      <styles xmi:type="notation:FilteringStyle" xmi:id="_e5oTo7X-Ed-Xj-3H8XK7WQ"/>
-    </children>
-    <styles xmi:type="notation:ShapeStyle" xmi:id="_e5nskbX-Ed-Xj-3H8XK7WQ" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
-    <element xmi:type="ecore:EEnum" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyRank"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_e5nskrX-Ed-Xj-3H8XK7WQ" x="564" y="912" width="219" height="111"/>
-  </children>
   <children xmi:type="notation:Node" xmi:id="_e5phwLX-Ed-Xj-3H8XK7WQ" type="1001">
     <children xmi:type="notation:Node" xmi:id="_e5phw7X-Ed-Xj-3H8XK7WQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_e5qI0LX-Ed-Xj-3H8XK7WQ" type="5001">
@@ -662,33 +639,6 @@
     <element xmi:type="ecore:EClass" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EDelta"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_PMT68sW8Ed-OHt4UvkWdIw" x="1284" y="600"/>
   </children>
-  <children xmi:type="notation:Node" xmi:id="_qi6NMMoxEd-GnoJBk9E8XQ" type="1005">
-    <children xmi:type="notation:Node" xmi:id="_qi9QgMoxEd-GnoJBk9E8XQ" type="4010"/>
-    <children xmi:type="notation:Node" xmi:id="_qi93kMoxEd-GnoJBk9E8XQ" type="5008">
-      <children xmi:type="notation:Node" xmi:id="_theQEMoxEd-GnoJBk9E8XQ" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_ERRONEOUS"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_theQEcoxEd-GnoJBk9E8XQ"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="__VgDkUUNEeCdooscN54lQg" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_SUPERFLUOUS"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="__VgDkkUNEeCdooscN54lQg"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_Ck5-0EUOEeCdooscN54lQg" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_IMPROVEMENT"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_Ck5-0UUOEeCdooscN54lQg"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_Eig7AEUOEeCdooscN54lQg" type="2006">
-        <element xmi:type="ecore:EEnumLiteral" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass/R4E_CLASS_QUESTION"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_Eig7AUUOEeCdooscN54lQg"/>
-      </children>
-      <styles xmi:type="notation:DrawerStyle" xmi:id="_qi-eoMoxEd-GnoJBk9E8XQ"/>
-      <styles xmi:type="notation:SortingStyle" xmi:id="_qi-eocoxEd-GnoJBk9E8XQ"/>
-      <styles xmi:type="notation:FilteringStyle" xmi:id="_qi-eosoxEd-GnoJBk9E8XQ"/>
-    </children>
-    <styles xmi:type="notation:ShapeStyle" xmi:id="_qi6NMcoxEd-GnoJBk9E8XQ" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
-    <element xmi:type="ecore:EEnum" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentClass"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qi6NMsoxEd-GnoJBk9E8XQ" x="48" y="1104" width="231" height="123"/>
-  </children>
   <children xmi:type="notation:Node" xmi:id="_O8-9kMoyEd-GnoJBk9E8XQ" type="1001">
     <children xmi:type="notation:Node" xmi:id="_O9AywMoyEd-GnoJBk9E8XQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_O9BZ0MoyEd-GnoJBk9E8XQ" type="5001">
@@ -707,7 +657,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_O8-9kcoyEd-GnoJBk9E8XQ" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentType"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_O8-9ksoyEd-GnoJBk9E8XQ" x="-48" y="444" width="183"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_O8-9ksoyEd-GnoJBk9E8XQ" x="-48" y="444" width="207"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_Ksj08MpYEd-GnoJBk9E8XQ" type="1001">
     <children xmi:type="notation:Node" xmi:id="_KskcAMpYEd-GnoJBk9E8XQ" type="4001"/>
@@ -1518,7 +1468,7 @@
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_EFvNMOmtEd-9SopSv7VwjA" type="3002" source="_i0IhAMW6Ed-OHt4UvkWdIw" target="_e5kCMrX-Ed-Xj-3H8XK7WQ">
     <children xmi:type="notation:Node" xmi:id="_EFv0QOmtEd-9SopSv7VwjA" type="4011">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_EFv0QemtEd-9SopSv7VwjA" x="-8" y="-15"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_EFv0QemtEd-9SopSv7VwjA" x="-20" y="-1"/>
     </children>
     <children xmi:type="notation:Node" xmi:id="_EFv0QumtEd-9SopSv7VwjA" type="4012">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_EFv0Q-mtEd-9SopSv7VwjA" x="10" y="10"/>

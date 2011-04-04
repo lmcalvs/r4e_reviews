@@ -28,12 +28,10 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
@@ -165,8 +163,6 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 		switch (eDataType.getClassifierID()) {
 			case RModelPackage.R4E_ANOMALY_STATE:
 				return createR4EAnomalyStateFromString(eDataType, initialValue);
-			case RModelPackage.R4E_ANOMALY_RANK:
-				return createR4EAnomalyRankFromString(eDataType, initialValue);
 			case RModelPackage.R4E_REVIEW_PHASE:
 				return createR4EReviewPhaseFromString(eDataType, initialValue);
 			case RModelPackage.R4E_USER_ROLE:
@@ -175,8 +171,6 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 				return createR4EDecisionFromString(eDataType, initialValue);
 			case RModelPackage.R4E_REVIEW_TYPE:
 				return createR4EReviewTypeFromString(eDataType, initialValue);
-			case RModelPackage.R4E_COMMENT_CLASS:
-				return createR4ECommentClassFromString(eDataType, initialValue);
 			case RModelPackage.R4E_CONTEXT_TYPE:
 				return createR4EContextTypeFromString(eDataType, initialValue);
 			case RModelPackage.MYLYN_TASK:
@@ -200,8 +194,6 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 		switch (eDataType.getClassifierID()) {
 			case RModelPackage.R4E_ANOMALY_STATE:
 				return convertR4EAnomalyStateToString(eDataType, instanceValue);
-			case RModelPackage.R4E_ANOMALY_RANK:
-				return convertR4EAnomalyRankToString(eDataType, instanceValue);
 			case RModelPackage.R4E_REVIEW_PHASE:
 				return convertR4EReviewPhaseToString(eDataType, instanceValue);
 			case RModelPackage.R4E_USER_ROLE:
@@ -210,8 +202,6 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 				return convertR4EDecisionToString(eDataType, instanceValue);
 			case RModelPackage.R4E_REVIEW_TYPE:
 				return convertR4EReviewTypeToString(eDataType, instanceValue);
-			case RModelPackage.R4E_COMMENT_CLASS:
-				return convertR4ECommentClassToString(eDataType, instanceValue);
 			case RModelPackage.R4E_CONTEXT_TYPE:
 				return convertR4EContextTypeToString(eDataType, instanceValue);
 			case RModelPackage.MYLYN_TASK:
@@ -588,44 +578,6 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public R4EAnomalyRank createR4EAnomalyRank(String literal) {
-		R4EAnomalyRank result = R4EAnomalyRank.get(literal);
-		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_ANOMALY_RANK.getName() + "'");
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4EAnomalyRank createR4EAnomalyRankFromString(EDataType eDataType, String initialValue) {
-		return createR4EAnomalyRank(initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertR4EAnomalyRank(R4EAnomalyRank instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertR4EAnomalyRankToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public R4EReviewPhase createR4EReviewPhase(String literal) {
 		R4EReviewPhase result = R4EReviewPhase.get(literal);
 		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_REVIEW_PHASE.getName() + "'");
@@ -770,44 +722,6 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * @generated
 	 */
 	public String convertR4EReviewTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4ECommentClass createR4ECommentClass(String literal) {
-		R4ECommentClass result = R4ECommentClass.get(literal);
-		if (result == null) throw new IllegalArgumentException("The value '" + literal + "' is not a valid enumerator of '" + RModelPackage.Literals.R4E_COMMENT_CLASS.getName() + "'");
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4ECommentClass createR4ECommentClassFromString(EDataType eDataType, String initialValue) {
-		return createR4ECommentClass(initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertR4ECommentClass(R4ECommentClass instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertR4ECommentClassToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
@@ -1340,7 +1254,8 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRuleArea(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection)
 	 */
-	public R4EDesignRuleArea createR4EDesignRuleArea(R4EDesignRuleCollection aRuleCollection) {
+	public R4EDesignRuleArea createR4EDesignRuleArea(R4EDesignRuleCollection aRuleCollection)
+			throws ResourceHandlingException {
 		return factoryExtension.createR4EDesignRuleArea(aRuleCollection);
 	}
 
@@ -1351,7 +1266,8 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRuleViolation(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection)
 	 */
-	public R4EDesignRuleViolation createR4EDesignRuleViolation(R4EDesignRuleCollection aRuleArea) {
+	public R4EDesignRuleViolation createR4EDesignRuleViolation(R4EDesignRuleArea aRuleArea)
+			throws ResourceHandlingException {
 		return factoryExtension.createR4EDesignRuleViolation(aRuleArea);
 	}
 
@@ -1362,7 +1278,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRule(org.eclipse.mylyn
 	 * .reviews.r4e.core.model.drules.R4EDesignRuleViolation)
 	 */
-	public R4EDesignRule createR4EDesignRule(R4EDesignRuleViolation aViolation) {
+	public R4EDesignRule createR4EDesignRule(R4EDesignRuleViolation aViolation) throws ResourceHandlingException {
 		return factoryExtension.createR4EDesignRule(aViolation);
 	}
 

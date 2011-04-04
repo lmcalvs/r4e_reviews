@@ -1338,35 +1338,167 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRuleCollection(org.eclipse
+	 * .emf.common.util.URI, java.lang.String)
+	 */
 	public R4EDesignRuleCollection createR4EDesignRuleCollection(URI aFolderPath, String aRuleCollectionName)
 			throws ResourceHandlingException {
-		// TODO Auto-generated method stub
-		return null;
+
+		URI fileGroupURI = fWriter.createResourceURI(aRuleCollectionName, aFolderPath, ResourceType.DRULE_SET);
+		// create a new ResourceSet and resource for the given group
+		Resource resource = fWriter.createResourceSetWithResource(fileGroupURI);
+		R4EDesignRuleCollection ruleSet = RModelFactory.eINSTANCE.createR4EDesignRuleCollection(aFolderPath,
+				aRuleCollectionName);
+
+		resource.getContents().add(ruleSet);
+		// Update the resource
+		ruleSet.setName(aRuleCollectionName);
+		ruleSet.setFolder(ruleSet.eResource().getURI().trimSegments(1).devicePath().toString());
+		fWriter.saveResource(resource);
+
+		return ruleSet;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#openR4EDesignRuleCollection(org.eclipse
+	 * .emf.common.util.URI)
+	 */
 	public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException {
-		// TODO Auto-generated method stub
-		return null;
+		R4EDesignRuleCollection ruleSet = fReader.deserializeTopElement(aResourcePath, R4EDesignRuleCollection.class);
+
+		// update the transient value of folder
+		ruleSet.setFolder(ruleSet.eResource().getURI().trimSegments(1).devicePath().toString());
+
+		return ruleSet;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#closeR4EDesignRuleCollection(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection)
+	 */
 	public String closeR4EDesignRuleCollection(R4EDesignRuleCollection aDesRuleCollection) {
-		// TODO Auto-generated method stub
+		// TODO: Make generic as closing a review group is currently fairly similar
+		StringBuilder sb = new StringBuilder();
+
+		// Obtain all resources
+		Resource resource = aDesRuleCollection.eResource();
+		if (resource == null) {
+			sb.append("Attempting to close a design rule set with no associated resource");
+			Activator.fTracer.traceDebug(sb.toString());
+			return sb.toString();
+		}
+
+		ResourceSet resSet = resource.getResourceSet();
+		if (resSet == null) {
+			sb.append("Attempting to close a design rule set with no associated resource set");
+			Activator.fTracer.traceDebug(sb.toString());
+			return sb.toString();
+		}
+
+		EList<Resource> resList = resSet.getResources();
+
+		// unload then all
+		for (Resource res : resList) {
+			res.unload();
+		}
+
 		return null;
 	}
 
-	public R4EDesignRuleArea createR4EDesignRuleArea(R4EDesignRuleCollection aRuleCollection) {
-		// TODO Auto-generated method stub
-		return null;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRuleArea(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection)
+	 */
+	public R4EDesignRuleArea createR4EDesignRuleArea(R4EDesignRuleCollection aRuleCollection)
+			throws ResourceHandlingException {
+		R4EDesignRuleArea darea = null;
+		// Validate
+		if (!(isAssociatedToResource(aRuleCollection))) {
+			StringBuilder sb = new StringBuilder(
+					"Can not create design rule area from a rule collection not associated to a Resource");
+			throw new ResourceHandlingException(sb.toString());
+		}
+
+		// Crate design rule area
+		darea = RModelFactoryExt.eINSTANCE.createR4EDesignRuleArea(aRuleCollection);
+
+		// Associate the design rule area to the context resource
+		aRuleCollection.getAreas().add(darea);
+		// Save the resource
+		aRuleCollection.eResource().getContents().add(darea);
+		fWriter.saveResource(darea.eResource());
+
+		return darea;
 	}
 
-	public R4EDesignRuleViolation createR4EDesignRuleViolation(R4EDesignRuleCollection aRuleArea) {
-		// TODO Auto-generated method stub
-		return null;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRuleViolation(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea)
+	 */
+	public R4EDesignRuleViolation createR4EDesignRuleViolation(R4EDesignRuleArea aRuleArea)
+			throws ResourceHandlingException {
+		R4EDesignRuleViolation drViolation = null;
+		// Validate
+		if (!(isAssociatedToResource(aRuleArea))) {
+			StringBuilder sb = new StringBuilder(
+					"Can not create design rule violation from a rule area not associated to a Resource");
+			throw new ResourceHandlingException(sb.toString());
+		}
+
+		// Crate design rule violation
+		drViolation = RModelFactoryExt.eINSTANCE.createR4EDesignRuleViolation(aRuleArea);
+
+		// Associate the design rule violation to the context resource
+		aRuleArea.getViolations().add(drViolation);
+		// Save the resource
+		aRuleArea.eResource().getContents().add(drViolation);
+		fWriter.saveResource(drViolation.eResource());
+
+		return drViolation;
 	}
 
-	public R4EDesignRule createR4EDesignRule(R4EDesignRuleViolation aViolation) {
-		// TODO Auto-generated method stub
-		return null;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#createR4EDesignRule(org.eclipse.mylyn
+	 * .reviews.r4e.core.model.drules.R4EDesignRuleViolation)
+	 */
+	public R4EDesignRule createR4EDesignRule(R4EDesignRuleViolation aViolation) throws ResourceHandlingException {
+		R4EDesignRule dRule = null;
+		// Validate
+		if (!(isAssociatedToResource(aViolation))) {
+			StringBuilder sb = new StringBuilder(
+					"Can not create design rule from a container not associated to a Resource");
+			throw new ResourceHandlingException(sb.toString());
+		}
+
+		// Crate design rule
+		dRule = RModelFactoryExt.eINSTANCE.createR4EDesignRule(aViolation);
+
+		// Associate the design rule to the context resource
+		aViolation.getRules().add(dRule);
+		// Save the resource
+		aViolation.eResource().getContents().add(dRule);
+		fWriter.saveResource(dRule.eResource());
+
+		return dRule;
 	}
 
 }

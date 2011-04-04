@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -9,10 +9,10 @@
  * Description:
  * 
  * Contributors:
- * Alvaro Sanchez-Leon  - Initial API and implementation
+ *    Alvaro Sanchez-Leon - Initial API and implementation
  * 
  */
-package org.eclipse.mylyn.reviews.r4e.core.model;
+package org.eclipse.mylyn.reviews.r4e.core.model.drules;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,14 +22,14 @@ import org.eclipse.emf.common.util.Enumerator;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>R4E Comment Class</b></em>',
+ * A representation of the literals of the enumeration '<em><b>R4E Design Rule Class</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4ECommentClass()
+ * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage#getR4EDesignRuleClass()
  * @model
  * @generated
  */
-public enum R4ECommentClass implements Enumerator {
+public enum R4EDesignRuleClass implements Enumerator {
 	/**
 	 * The '<em><b>R4E CLASS ERRONEOUS</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -48,9 +48,7 @@ public enum R4ECommentClass implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	R4E_CLASS_SUPERFLUOUS(1, "R4E_CLASS_SUPERFLUOUS", "R4E_CLASS_SUPERFLUOUS"),
-
-	/**
+	R4E_CLASS_SUPERFLUOUS(1, "R4E_CLASS_SUPERFLUOUS", "R4E_CLASS_SUPERFLUOUS"), /**
 	 * The '<em><b>R4E CLASS IMPROVEMENT</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -131,13 +129,13 @@ public enum R4ECommentClass implements Enumerator {
 	public static final int R4E_CLASS_QUESTION_VALUE = 3;
 
 	/**
-	 * An array of all the '<em><b>R4E Comment Class</b></em>' enumerators.
+	 * An array of all the '<em><b>R4E Design Rule Class</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final R4ECommentClass[] VALUES_ARRAY =
-		new R4ECommentClass[] {
+	private static final R4EDesignRuleClass[] VALUES_ARRAY =
+		new R4EDesignRuleClass[] {
 			R4E_CLASS_ERRONEOUS,
 			R4E_CLASS_SUPERFLUOUS,
 			R4E_CLASS_IMPROVEMENT,
@@ -145,22 +143,22 @@ public enum R4ECommentClass implements Enumerator {
 		};
 
 	/**
-	 * A public read-only list of all the '<em><b>R4E Comment Class</b></em>' enumerators.
+	 * A public read-only list of all the '<em><b>R4E Design Rule Class</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final List<R4ECommentClass> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+	public static final List<R4EDesignRuleClass> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
-	 * Returns the '<em><b>R4E Comment Class</b></em>' literal with the specified literal value.
+	 * Returns the '<em><b>R4E Design Rule Class</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static R4ECommentClass get(String literal) {
+	public static R4EDesignRuleClass get(String literal) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			R4ECommentClass result = VALUES_ARRAY[i];
+			R4EDesignRuleClass result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal)) {
 				return result;
 			}
@@ -169,14 +167,14 @@ public enum R4ECommentClass implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>R4E Comment Class</b></em>' literal with the specified name.
+	 * Returns the '<em><b>R4E Design Rule Class</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static R4ECommentClass getByName(String name) {
+	public static R4EDesignRuleClass getByName(String name) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			R4ECommentClass result = VALUES_ARRAY[i];
+			R4EDesignRuleClass result = VALUES_ARRAY[i];
 			if (result.getName().equals(name)) {
 				return result;
 			}
@@ -185,12 +183,12 @@ public enum R4ECommentClass implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>R4E Comment Class</b></em>' literal with the specified integer value.
+	 * Returns the '<em><b>R4E Design Rule Class</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static R4ECommentClass get(int value) {
+	public static R4EDesignRuleClass get(int value) {
 		switch (value) {
 			case R4E_CLASS_ERRONEOUS_VALUE: return R4E_CLASS_ERRONEOUS;
 			case R4E_CLASS_SUPERFLUOUS_VALUE: return R4E_CLASS_SUPERFLUOUS;
@@ -227,7 +225,7 @@ public enum R4ECommentClass implements Enumerator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private R4ECommentClass(int value, String name, String literal) {
+	private R4EDesignRuleClass(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
@@ -271,4 +269,4 @@ public enum R4ECommentClass implements Enumerator {
 		return literal;
 	}
 	
-} //R4ECommentClass
+} //R4EDesignRuleClass

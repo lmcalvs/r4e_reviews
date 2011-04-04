@@ -61,7 +61,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="userFollowUp" eType="ecore:EClass ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="userDecision" eType="ecore:EClass ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dueDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rank" eType="#//R4EAnomalyRank"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rank" eType="ecore:EEnum r4e.design.rules.ecore#//R4EDesignRuleRank"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rule" eType="ecore:EClass r4e.design.rules.ecore#//R4EDesignRule"
         transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="decidedBy" eType="#//R4EParticipant"
@@ -87,11 +87,6 @@
     <eLiterals name="R4E_ANOMALY_STATE_REJECTED" value="2"/>
     <eLiterals name="R4E_ANOMALY_STATE_DEFERRED" value="3" literal="R4E_ANOMALY_STATE_DEFERRED"/>
     <eLiterals name="R4E_ANOMALY_STATE_VERIFIED" value="6"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="R4EAnomalyRank">
-    <eLiterals name="R4E_ANOMALY_RANK_NONE"/>
-    <eLiterals name="R4E_ANOMALY_RANK_MINOR" value="1" literal=""/>
-    <eLiterals name="R4E_ANOMALY_RANK_MAJOR" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EFormalReview" eSuperTypes="#//R4EReview">
     <eStructuralFeatures xsi:type="ecore:EReference" name="phaseOwner" lowerBound="1"
@@ -215,14 +210,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
         eType="#//R4EContent" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="R4ECommentClass">
-    <eLiterals name="R4E_CLASS_ERRONEOUS"/>
-    <eLiterals name="R4E_CLASS_SUPERFLUOUS" value="1"/>
-    <eLiterals name="R4E_CLASS_IMPROVEMENT" value="2"/>
-    <eLiterals name="R4E_CLASS_QUESTION" value="3"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4ECommentType" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//CommentType">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//R4ECommentClass"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum r4e.design.rules.ecore#//R4EDesignRuleClass"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MapToAnomalyType" instanceClassName="java.util.Map$Entry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

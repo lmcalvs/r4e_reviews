@@ -21,12 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.AnomalyExtraProperties;
@@ -323,15 +323,15 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * @param aClass String
 	 * @return R4ECommentClass
 	 */
-	public static R4ECommentClass getClassFromString(String aClass) {
+	public static R4EDesignRuleClass getClassFromString(String aClass) {
 		if (aClass.equals(ANOMALY_CLASS_ERRONEOUS)) {
-			return R4ECommentClass.R4E_CLASS_ERRONEOUS;
+			return R4EDesignRuleClass.R4E_CLASS_ERRONEOUS;
 		} else if (aClass.equals(ANOMALY_CLASS_SUPERFLUOUS)) {
-			return R4ECommentClass.R4E_CLASS_SUPERFLUOUS;
+			return R4EDesignRuleClass.R4E_CLASS_SUPERFLUOUS;
 		} else if (aClass.equals(ANOMALY_CLASS_IMPROVEMENT)) {
-			return R4ECommentClass.R4E_CLASS_IMPROVEMENT;
+			return R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT;
 		} else if (aClass.equals(ANOMALY_CLASS_QUESTION)) {
-			return R4ECommentClass.R4E_CLASS_QUESTION;
+			return R4EDesignRuleClass.R4E_CLASS_QUESTION;
 		} else return null;   //should never happen
 	}
 
@@ -348,13 +348,13 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * @param aRank String
 	 * @return R4EAnomalyRank
 	 */
-	public static R4EAnomalyRank getRankFromString(String aRank) {
+	public static R4EDesignRuleRank getRankFromString(String aRank) {
 		if (aRank.equals(ANOMALY_RANK_NONE)) {
-			return R4EAnomalyRank.R4E_ANOMALY_RANK_NONE;
+			return R4EDesignRuleRank.R4E_RANK_NONE;
 		} else if (aRank.equals(ANOMALY_RANK_MINOR)) {
-			return R4EAnomalyRank.R4E_ANOMALY_RANK_MINOR;
+			return R4EDesignRuleRank.R4E_RANK_MINOR;
 		} else if (aRank.equals(ANOMALY_RANK_MAJOR)) {
-			return R4EAnomalyRank.R4E_ANOMALY_RANK_MAJOR;
+			return R4EDesignRuleRank.R4E_RANK_MAJOR;
 		} else return null;   //should never happen
 	}
 	

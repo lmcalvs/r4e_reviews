@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.mylyn.reviews.frame.core.model.User;
 import org.eclipse.mylyn.reviews.frame.core.model.impl.TopicImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -34,6 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 
 /**
  * <!-- begin-user-doc -->
@@ -186,7 +186,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4EAnomalyRank RANK_EDEFAULT = R4EAnomalyRank.R4E_ANOMALY_RANK_NONE;
+	protected static final R4EDesignRuleRank RANK_EDEFAULT = R4EDesignRuleRank.R4E_RANK_NONE;
 
 	/**
 	 * The cached value of the '{@link #getRank() <em>Rank</em>}' attribute.
@@ -196,7 +196,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	 * @generated
 	 * @ordered
 	 */
-	protected R4EAnomalyRank rank = RANK_EDEFAULT;
+	protected R4EDesignRuleRank rank = RANK_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getRule() <em>Rule</em>}' reference.
@@ -607,7 +607,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public R4EAnomalyRank getRank() {
+	public R4EDesignRuleRank getRank() {
 		return rank;
 	}
 
@@ -616,8 +616,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setRank(R4EAnomalyRank newRank) {
-		R4EAnomalyRank oldRank = rank;
+	public void setRank(R4EDesignRuleRank newRank) {
+		R4EDesignRuleRank oldRank = rank;
 		rank = newRank == null ? RANK_EDEFAULT : newRank;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__RANK, oldRank, rank));
@@ -1114,7 +1114,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 				setDueDate((Date)newValue);
 				return;
 			case RModelPackage.R4E_ANOMALY__RANK:
-				setRank((R4EAnomalyRank)newValue);
+				setRank((R4EDesignRuleRank)newValue);
 				return;
 			case RModelPackage.R4E_ANOMALY__RULE:
 				setRule((R4EDesignRule)newValue);

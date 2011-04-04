@@ -28,7 +28,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getAreas <em>Areas</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getVersion <em>Version</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getFilePaths <em>File Paths</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getFolder <em>Folder</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -80,19 +81,55 @@ public interface R4EDesignRuleCollection extends EObject {
 	void setVersion(String value);
 
 	/**
-	 * Returns the value of the '<em><b>File Paths</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
+	 * Returns the value of the '<em><b>Folder</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>File Paths</em>' attribute list isn't clear,
+	 * If the meaning of the '<em>Folder</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>File Paths</em>' attribute list.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage#getR4EDesignRuleCollection_FilePaths()
+	 * @return the value of the '<em>Folder</em>' attribute.
+	 * @see #setFolder(String)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage#getR4EDesignRuleCollection_Folder()
+	 * @model transient="true" derived="true"
+	 * @generated
+	 */
+	String getFolder();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getFolder <em>Folder</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Folder</em>' attribute.
+	 * @see #getFolder()
+	 * @generated
+	 */
+	void setFolder(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage#getR4EDesignRuleCollection_Name()
 	 * @model
 	 * @generated
 	 */
-	EList<String> getFilePaths();
+	String getName();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
+	void setName(String value);
 
 } // R4EDesignRuleCollection
