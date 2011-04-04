@@ -55,7 +55,6 @@ import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.mylyn.versions.ui.ScmUi;
 import org.eclipse.mylyn.versions.ui.spi.ScmUiConnector;
-import org.eclipse.mylyn.versions.ui.spi.ScmUiException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -125,7 +124,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				R4EUIModelController.setDialogOpen(true);
 				changeSet = uiConnector.getChangeSet(null, project, null);
 				R4EUIModelController.setDialogOpen(false);
-			} catch (final ScmUiException e) {
+			} catch (final CoreException e) {
 				Activator.Ftracer.traceError("Exception: " + e.getMessage());
 				Activator.getDefault()
 						.logError("Exception: " + e.toString(), e);
