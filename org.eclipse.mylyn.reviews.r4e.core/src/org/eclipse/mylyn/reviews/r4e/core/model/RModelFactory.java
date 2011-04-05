@@ -284,26 +284,6 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 	String convertR4EAnomalyState(R4EAnomalyState instanceValue);
 
 	/**
-	 * Returns an instance of data type '<em>R4E Anomaly Rank</em>' corresponding the given literal.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param literal a literal of the data type.
-	 * @return a new instance value of the data type.
-	 * @generated
-	 */
-	R4EAnomalyRank createR4EAnomalyRank(String literal);
-
-	/**
-	 * Returns a literal representation of an instance of data type '<em>R4E Anomaly Rank</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param instanceValue an instance value of the data type.
-	 * @return a literal representation of the instance value.
-	 * @generated
-	 */
-	String convertR4EAnomalyRank(R4EAnomalyRank instanceValue);
-
-	/**
 	 * Returns an instance of data type '<em>R4E Review Phase</em>' corresponding the given literal.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -382,26 +362,6 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 	 * @generated
 	 */
 	String convertR4EReviewType(R4EReviewType instanceValue);
-
-	/**
-	 * Returns an instance of data type '<em>R4E Comment Class</em>' corresponding the given literal.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param literal a literal of the data type.
-	 * @return a new instance value of the data type.
-	 * @generated
-	 */
-	R4ECommentClass createR4ECommentClass(String literal);
-
-	/**
-	 * Returns a literal representation of an instance of data type '<em>R4E Comment Class</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param instanceValue an instance value of the data type.
-	 * @return a literal representation of the instance value.
-	 * @generated
-	 */
-	String convertR4ECommentClass(R4ECommentClass instanceValue);
 
 	/**
 	 * Returns an instance of data type '<em>R4E Context Type</em>' corresponding the given literal.

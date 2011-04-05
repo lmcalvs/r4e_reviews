@@ -97,13 +97,22 @@ public interface DRModelPackage extends EPackage {
 	int R4E_DESIGN_RULE_COLLECTION__VERSION = 1;
 
 	/**
-	 * The feature id for the '<em><b>File Paths</b></em>' attribute list.
+	 * The feature id for the '<em><b>Folder</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_COLLECTION__FILE_PATHS = 2;
+	int R4E_DESIGN_RULE_COLLECTION__FOLDER = 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_DESIGN_RULE_COLLECTION__NAME = 3;
 
 	/**
 	 * The number of structural features of the '<em>R4E Design Rule Collection</em>' class.
@@ -112,7 +121,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_COLLECTION_FEATURE_COUNT = 3;
+	int R4E_DESIGN_RULE_COLLECTION_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl <em>R4E Design Rule</em>}' class.
@@ -264,6 +273,17 @@ public interface DRModelPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass <em>R4E Design Rule Class</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.DRModelPackageImpl#getR4EDesignRuleClass()
+	 * @generated
+	 */
+	int R4E_DESIGN_RULE_CLASS = 5;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection <em>R4E Design Rule Collection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -296,15 +316,26 @@ public interface DRModelPackage extends EPackage {
 	EAttribute getR4EDesignRuleCollection_Version();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getFilePaths <em>File Paths</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getFolder <em>Folder</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>File Paths</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getFilePaths()
+	 * @return the meta object for the attribute '<em>Folder</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getFolder()
 	 * @see #getR4EDesignRuleCollection()
 	 * @generated
 	 */
-	EAttribute getR4EDesignRuleCollection_FilePaths();
+	EAttribute getR4EDesignRuleCollection_Folder();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection#getName()
+	 * @see #getR4EDesignRuleCollection()
+	 * @generated
+	 */
+	EAttribute getR4EDesignRuleCollection_Name();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule <em>R4E Design Rule</em>}'.
@@ -446,6 +477,16 @@ public interface DRModelPackage extends EPackage {
 	EEnum getR4EDesignRuleRank();
 
 	/**
+	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass <em>R4E Design Rule Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>R4E Design Rule Class</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass
+	 * @generated
+	 */
+	EEnum getR4EDesignRuleClass();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -494,12 +535,20 @@ public interface DRModelPackage extends EPackage {
 		EAttribute R4E_DESIGN_RULE_COLLECTION__VERSION = eINSTANCE.getR4EDesignRuleCollection_Version();
 
 		/**
-		 * The meta object literal for the '<em><b>File Paths</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Folder</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute R4E_DESIGN_RULE_COLLECTION__FILE_PATHS = eINSTANCE.getR4EDesignRuleCollection_FilePaths();
+		EAttribute R4E_DESIGN_RULE_COLLECTION__FOLDER = eINSTANCE.getR4EDesignRuleCollection_Folder();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_DESIGN_RULE_COLLECTION__NAME = eINSTANCE.getR4EDesignRuleCollection_Name();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl <em>R4E Design Rule</em>}' class.
@@ -612,6 +661,16 @@ public interface DRModelPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum R4E_DESIGN_RULE_RANK = eINSTANCE.getR4EDesignRuleRank();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass <em>R4E Design Rule Class</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass
+		 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.DRModelPackageImpl#getR4EDesignRuleClass()
+		 * @generated
+		 */
+		EEnum R4E_DESIGN_RULE_CLASS = eINSTANCE.getR4EDesignRuleClass();
 
 	}
 

@@ -2571,16 +2571,6 @@ public interface RModelPackage extends EPackage {
 	int R4E_ANOMALY_STATE = 33;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank <em>R4E Anomaly Rank</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomalyRank()
-	 * @generated
-	 */
-	int R4E_ANOMALY_RANK = 34;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase <em>R4E Review Phase</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2588,7 +2578,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewPhase()
 	 * @generated
 	 */
-	int R4E_REVIEW_PHASE = 35;
+	int R4E_REVIEW_PHASE = 34;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole <em>R4E User Role</em>}' enum.
@@ -2598,7 +2588,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EUserRole()
 	 * @generated
 	 */
-	int R4E_USER_ROLE = 36;
+	int R4E_USER_ROLE = 35;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision <em>R4E Decision</em>}' enum.
@@ -2608,7 +2598,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EDecision()
 	 * @generated
 	 */
-	int R4E_DECISION = 37;
+	int R4E_DECISION = 36;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType <em>R4E Review Type</em>}' enum.
@@ -2618,17 +2608,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewType()
 	 * @generated
 	 */
-	int R4E_REVIEW_TYPE = 38;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass <em>R4E Comment Class</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ECommentClass()
-	 * @generated
-	 */
-	int R4E_COMMENT_CLASS = 39;
+	int R4E_REVIEW_TYPE = 37;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType <em>R4E Context Type</em>}' enum.
@@ -2638,7 +2618,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EContextType()
 	 * @generated
 	 */
-	int R4E_CONTEXT_TYPE = 40;
+	int R4E_CONTEXT_TYPE = 38;
 
 	/**
 	 * The meta object id for the '<em>Mylyn Task</em>' data type.
@@ -2648,7 +2628,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMylynTask()
 	 * @generated
 	 */
-	int MYLYN_TASK = 41;
+	int MYLYN_TASK = 39;
 
 	/**
 	 * The meta object id for the '<em>IResource</em>' data type.
@@ -2658,7 +2638,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIResource()
 	 * @generated
 	 */
-	int IRESOURCE = 42;
+	int IRESOURCE = 40;
 
 
 	/**
@@ -2669,7 +2649,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getURI()
 	 * @generated
 	 */
-	int URI = 43;
+	int URI = 41;
 
 
 	/**
@@ -2680,7 +2660,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIFileRevision()
 	 * @generated
 	 */
-	int IFILE_REVISION = 44;
+	int IFILE_REVISION = 42;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup <em>R4E Review Group</em>}'.
@@ -4434,16 +4414,6 @@ public interface RModelPackage extends EPackage {
 	EEnum getR4EAnomalyState();
 
 	/**
-	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank <em>R4E Anomaly Rank</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>R4E Anomaly Rank</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank
-	 * @generated
-	 */
-	EEnum getR4EAnomalyRank();
-
-	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase <em>R4E Review Phase</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4482,16 +4452,6 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getR4EReviewType();
-
-	/**
-	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass <em>R4E Comment Class</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>R4E Comment Class</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass
-	 * @generated
-	 */
-	EEnum getR4ECommentClass();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType <em>R4E Context Type</em>}'.
@@ -5926,16 +5886,6 @@ public interface RModelPackage extends EPackage {
 		EEnum R4E_ANOMALY_STATE = eINSTANCE.getR4EAnomalyState();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank <em>R4E Anomaly Rank</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank
-		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomalyRank()
-		 * @generated
-		 */
-		EEnum R4E_ANOMALY_RANK = eINSTANCE.getR4EAnomalyRank();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase <em>R4E Review Phase</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5974,16 +5924,6 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum R4E_REVIEW_TYPE = eINSTANCE.getR4EReviewType();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass <em>R4E Comment Class</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass
-		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4ECommentClass()
-		 * @generated
-		 */
-		EEnum R4E_COMMENT_CLASS = eINSTANCE.getR4ECommentClass();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType <em>R4E Context Type</em>}' enum.

@@ -19,6 +19,7 @@ import java.util.Date;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.frame.core.model.User;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 
 /**
  * <!-- begin-user-doc -->
@@ -188,7 +189,7 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 
 	/**
 	 * Returns the value of the '<em><b>Rank</b></em>' attribute.
-	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank}.
+	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Rank</em>' attribute isn't clear,
@@ -196,24 +197,24 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Rank</em>' attribute.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank
-	 * @see #setRank(R4EAnomalyRank)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank
+	 * @see #setRank(R4EDesignRuleRank)
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EAnomaly_Rank()
 	 * @model
 	 * @generated
 	 */
-	R4EAnomalyRank getRank();
+	R4EDesignRuleRank getRank();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRank <em>Rank</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Rank</em>' attribute.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank
 	 * @see #getRank()
 	 * @generated
 	 */
-	void setRank(R4EAnomalyRank value);
+	void setRank(R4EDesignRuleRank value);
 
 	/**
 	 * Returns the value of the '<em><b>Rule</b></em>' reference.

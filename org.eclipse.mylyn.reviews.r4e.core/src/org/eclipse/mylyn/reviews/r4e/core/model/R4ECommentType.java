@@ -15,6 +15,7 @@
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
 import org.eclipse.mylyn.reviews.frame.core.model.CommentType;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,7 +36,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.CommentType;
 public interface R4ECommentType extends CommentType {
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
-	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass}.
+	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
@@ -43,23 +44,23 @@ public interface R4ECommentType extends CommentType {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass
-	 * @see #setType(R4ECommentClass)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass
+	 * @see #setType(R4EDesignRuleClass)
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4ECommentType_Type()
 	 * @model
 	 * @generated
 	 */
-	R4ECommentClass getType();
+	R4EDesignRuleClass getType();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType#getType <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type</em>' attribute.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass
 	 * @see #getType()
 	 * @generated
 	 */
-	void setType(R4ECommentClass value);
+	void setType(R4EDesignRuleClass value);
 
 } // R4ECommentType

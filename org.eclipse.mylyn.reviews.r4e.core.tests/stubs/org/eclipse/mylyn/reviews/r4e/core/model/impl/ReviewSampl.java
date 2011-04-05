@@ -29,7 +29,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
@@ -49,6 +48,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
@@ -224,7 +224,7 @@ public class ReviewSampl {
 		// Additional comments from two users on the same anomaly
 		// Comments
 		R4ECommentType commType = RModelFactory.eINSTANCE.createR4ECommentType();
-		commType.setType(R4ECommentClass.R4E_CLASS_ERRONEOUS);
+		commType.setType(R4EDesignRuleClass.R4E_CLASS_ERRONEOUS);
 		
 		// comment1
 		R4EComment comment1 = null;

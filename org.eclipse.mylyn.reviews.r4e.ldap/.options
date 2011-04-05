@@ -1,0 +1,6 @@
+org.eclipse.mylyn.reviews.r4e.ldap/error=true
+org.eclipse.mylyn.reviews.r4e.ldap/warning=true
+org.eclipse.mylyn.reviews.r4e.ldap/info=true
+org.eclipse.mylyn.reviews.r4e.ldap/debug=true
+org.eclipse.mylyn.reviews.r4e.ldap/consoleLog=true
+org.eclipse.mylyn.reviews.r4e.ldap/logfile=test.log

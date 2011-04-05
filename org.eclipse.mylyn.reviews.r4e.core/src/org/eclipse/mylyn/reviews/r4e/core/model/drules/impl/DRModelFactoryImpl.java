@@ -88,6 +88,8 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 		switch (eDataType.getClassifierID()) {
 			case DRModelPackage.R4E_DESIGN_RULE_RANK:
 				return createR4EDesignRuleRankFromString(eDataType, initialValue);
+			case DRModelPackage.R4E_DESIGN_RULE_CLASS:
+				return createR4EDesignRuleClassFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -103,6 +105,8 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 		switch (eDataType.getClassifierID()) {
 			case DRModelPackage.R4E_DESIGN_RULE_RANK:
 				return convertR4EDesignRuleRankToString(eDataType, instanceValue);
+			case DRModelPackage.R4E_DESIGN_RULE_CLASS:
+				return convertR4EDesignRuleClassToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -165,6 +169,26 @@ public class DRModelFactoryImpl extends EFactoryImpl implements DRModelFactory {
 	 * @generated
 	 */
 	public String convertR4EDesignRuleRankToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EDesignRuleClass createR4EDesignRuleClassFromString(EDataType eDataType, String initialValue) {
+		R4EDesignRuleClass result = R4EDesignRuleClass.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertR4EDesignRuleClassToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

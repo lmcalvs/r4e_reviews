@@ -13,10 +13,17 @@
       <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleRank/R4E_RANK_MINOR"/>
       <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleRank/R4E_RANK_MAJOR"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="r4e.design.rules.ecore#//R4EDesignRuleClass">
+      <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_ERRONEOUS"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_SUPERFLUOUS"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_IMPROVEMENT"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_QUESTION"/>
+    </genEnums>
     <genClasses ecoreClass="r4e.design.rules.ecore#//R4EDesignRuleCollection">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.design.rules.ecore#//R4EDesignRuleCollection/areas"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.design.rules.ecore#//R4EDesignRuleCollection/version"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.design.rules.ecore#//R4EDesignRuleCollection/filePaths"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.design.rules.ecore#//R4EDesignRuleCollection/folder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.design.rules.ecore#//R4EDesignRuleCollection/name"/>
     </genClasses>
     <genClasses ecoreClass="r4e.design.rules.ecore#//R4EDesignRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.design.rules.ecore#//R4EDesignRule/id"/>

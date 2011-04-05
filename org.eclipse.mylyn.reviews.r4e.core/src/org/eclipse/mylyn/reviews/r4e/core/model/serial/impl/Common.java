@@ -43,7 +43,7 @@ public class Common {
 	// Constants
 	// ------------------------------------------------------------------------
 	public enum ResourceType {
-		GROUP, USER_GROUP, REVIEW, USER_COMMENT, USER_ITEM
+		GROUP, USER_GROUP, REVIEW, USER_COMMENT, USER_ITEM, DRULE_SET
 	}
 	
 	protected final static String			EXTENSION				= "xrer";
@@ -52,6 +52,7 @@ public class Common {
 	private final static String				REVIEW_UITEM_TAG		= "_items";
 	private final static String				GROUP_ROOT_TAG			= "_group_root";
 	private final static String				GROUP_UREVIEW_TAG		= "_group_reviews";
+	private final static String				DRULE_SET_TAG			= "_rule_set";
 
 	// Patterns
 	private final static String				END						= "\\z";
@@ -63,7 +64,10 @@ public class Common {
 																			+ EXTENSION + END);
 	private final static Pattern			ROOT_GROUP_PATT			= Pattern.compile(GROUP_ROOT_TAG + "." + EXTENSION
 																			+ END);
+	private final static Pattern			DRULE_SET_PATT			= Pattern.compile(DRULE_SET_TAG + "." + EXTENSION
+																			+ END);
 
+	
 	// ------------------------------------------------------------------------
 	// Fields
 	// ------------------------------------------------------------------------
@@ -87,6 +91,7 @@ public class Common {
 		fresTypeToTag.put(ResourceType.REVIEW, REVIEW_RES_TAG);
 		fresTypeToTag.put(ResourceType.USER_GROUP, GROUP_UREVIEW_TAG);
 		fresTypeToTag.put(ResourceType.GROUP, GROUP_ROOT_TAG);
+		fresTypeToTag.put(ResourceType.DRULE_SET, DRULE_SET_TAG);
 	}
 
 	// ------------------------------------------------------------------------

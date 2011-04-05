@@ -26,12 +26,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
@@ -314,13 +312,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EEnum r4EAnomalyRankEEnum = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EEnum r4EReviewPhaseEEnum = null;
 
 	/**
@@ -343,13 +334,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	private EEnum r4EReviewTypeEEnum = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EEnum r4ECommentClassEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1905,15 +1889,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EEnum getR4EAnomalyRank() {
-		return r4EAnomalyRankEEnum;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EEnum getR4EReviewPhase() {
 		return r4EReviewPhaseEEnum;
 	}
@@ -1943,15 +1918,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 */
 	public EEnum getR4EReviewType() {
 		return r4EReviewTypeEEnum;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EEnum getR4ECommentClass() {
-		return r4ECommentClassEEnum;
 	}
 
 	/**
@@ -2222,12 +2188,10 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		// Create enums
 		r4EAnomalyStateEEnum = createEEnum(R4E_ANOMALY_STATE);
-		r4EAnomalyRankEEnum = createEEnum(R4E_ANOMALY_RANK);
 		r4EReviewPhaseEEnum = createEEnum(R4E_REVIEW_PHASE);
 		r4EUserRoleEEnum = createEEnum(R4E_USER_ROLE);
 		r4EDecisionEEnum = createEEnum(R4E_DECISION);
 		r4EReviewTypeEEnum = createEEnum(R4E_REVIEW_TYPE);
-		r4ECommentClassEEnum = createEEnum(R4E_COMMENT_CLASS);
 		r4EContextTypeEEnum = createEEnum(R4E_CONTEXT_TYPE);
 
 		// Create data types
@@ -2337,7 +2301,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EAnomaly_UserFollowUp(), theModelPackage.getUser(), null, "userFollowUp", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EAnomaly_UserDecision(), theModelPackage.getUser(), null, "userDecision", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EAnomaly_DueDate(), ecorePackage.getEDate(), "dueDate", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EAnomaly_Rank(), this.getR4EAnomalyRank(), "rank", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EAnomaly_Rank(), theDRModelPackage.getR4EDesignRuleRank(), "rank", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EAnomaly_Rule(), theDRModelPackage.getR4EDesignRule(), null, "rule", null, 0, 1, R4EAnomaly.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EAnomaly_DecidedBy(), this.getR4EParticipant(), null, "decidedBy", null, 0, 1, R4EAnomaly.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EAnomaly_FixedBy(), this.getR4EParticipant(), null, "fixedBy", null, 0, 1, R4EAnomaly.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
@@ -2428,7 +2392,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EDelta_Target(), this.getR4EContent(), null, "target", null, 1, 1, R4EDelta.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4ECommentTypeEClass, R4ECommentType.class, "R4ECommentType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getR4ECommentType_Type(), this.getR4ECommentClass(), "type", null, 0, 1, R4ECommentType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4ECommentType_Type(), theDRModelPackage.getR4EDesignRuleClass(), "type", null, 0, 1, R4ECommentType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mapToAnomalyTypeEClass, Map.Entry.class, "MapToAnomalyType", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getMapToAnomalyType_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2504,11 +2468,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
 
-		initEEnum(r4EAnomalyRankEEnum, R4EAnomalyRank.class, "R4EAnomalyRank");
-		addEEnumLiteral(r4EAnomalyRankEEnum, R4EAnomalyRank.R4E_ANOMALY_RANK_NONE);
-		addEEnumLiteral(r4EAnomalyRankEEnum, R4EAnomalyRank.R4E_ANOMALY_RANK_MINOR);
-		addEEnumLiteral(r4EAnomalyRankEEnum, R4EAnomalyRank.R4E_ANOMALY_RANK_MAJOR);
-
 		initEEnum(r4EReviewPhaseEEnum, R4EReviewPhase.class, "R4EReviewPhase");
 		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
 		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
@@ -2532,12 +2491,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		addEEnumLiteral(r4EReviewTypeEEnum, R4EReviewType.R4E_REVIEW_TYPE_BASIC);
 		addEEnumLiteral(r4EReviewTypeEEnum, R4EReviewType.R4E_REVIEW_TYPE_INFORMAL);
 		addEEnumLiteral(r4EReviewTypeEEnum, R4EReviewType.R4E_REVIEW_TYPE_FORMAL);
-
-		initEEnum(r4ECommentClassEEnum, R4ECommentClass.class, "R4ECommentClass");
-		addEEnumLiteral(r4ECommentClassEEnum, R4ECommentClass.R4E_CLASS_ERRONEOUS);
-		addEEnumLiteral(r4ECommentClassEEnum, R4ECommentClass.R4E_CLASS_SUPERFLUOUS);
-		addEEnumLiteral(r4ECommentClassEEnum, R4ECommentClass.R4E_CLASS_IMPROVEMENT);
-		addEEnumLiteral(r4ECommentClassEEnum, R4ECommentClass.R4E_CLASS_QUESTION);
 
 		initEEnum(r4EContextTypeEEnum, R4EContextType.class, "R4EContextType");
 		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_UNDEFINED);

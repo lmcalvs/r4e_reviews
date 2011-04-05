@@ -38,6 +38,10 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 
@@ -385,6 +389,64 @@ public interface Persistence {
 
 	}
 
+	public interface DRulesFactory {
+		/**
+		 * Creates an EMF ResourceSet an R4EDesignRuleCollection and its EMF Resource at the specified URI folder
+		 * location
+		 * 
+		 * @param aFolderPath
+		 *            - folder URI location where the resource group file shall be created e.g. file://c:\folder
+		 * @param aRuleCollectionName
+		 *            - The name of the Rule Collection
+		 * @return
+		 * @throws ResourceHandlingException
+		 */
+		public R4EDesignRuleCollection createR4EDesignRuleCollection(URI aFolderPath, String aRuleCollectionName)
+				throws ResourceHandlingException;
+
+		/**
+		 * Loads an R4EDesignRuleCollection from specified URI
+		 * 
+		 * @param aRresourcePath
+		 * @return R4EDesignRuleCollection or null if loading fails
+		 * @throws ResourceHandlingException
+		 */
+		public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException;
+
+		/**
+		 * The R4EDesignRuleCollection structure shall unload the associated resources and remove any references, the
+		 * application is responsible to remove any other references to this R4EDesignRuleCollection structure <br>
+		 * 
+		 * @param aDesRuleCollection
+		 * @return
+		 */
+		public String closeR4EDesignRuleCollection(R4EDesignRuleCollection aDesRuleCollection);
+
+		/**
+		 * @param aRuleCollection
+		 * @return
+		 * @throws ResourceHandlingException
+		 */
+		public R4EDesignRuleArea createR4EDesignRuleArea(R4EDesignRuleCollection aRuleCollection)
+				throws ResourceHandlingException;
+
+		/**
+		 * @param aRuleArea
+		 * @return
+		 * @throws ResourceHandlingException
+		 */
+
+		public R4EDesignRuleViolation createR4EDesignRuleViolation(R4EDesignRuleArea aRuleArea)
+				throws ResourceHandlingException;
+
+		/**
+		 * @param aViolation
+		 * @return
+		 * @throws ResourceHandlingException
+		 */
+		public R4EDesignRule createR4EDesignRule(R4EDesignRuleViolation aViolation) throws ResourceHandlingException;
+
+	}
 	/**
 	 * Limit visibility to the methods related to construction for Persistence
 	 * 
@@ -392,7 +454,7 @@ public interface Persistence {
 	 * 
 	 */
 	public interface RModelFactoryExt extends Persistence, Persistence.GroupResFactory, Persistence.ReviewResFactory,
-			Persistence.UserItemResFactory, Persistence.UserCommentResFactory {
+			Persistence.UserItemResFactory, Persistence.UserCommentResFactory, Persistence.DRulesFactory {
 		RModelFactory	eINSTANCE	= org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelFactoryImpl.init();
 	}
 

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 
 /**
@@ -91,7 +92,7 @@ public class R4EDesignRuleImpl extends EObjectImpl implements R4EDesignRule {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String CLASS_EDEFAULT = null;
+	protected static final R4EDesignRuleClass CLASS_EDEFAULT = R4EDesignRuleClass.R4E_CLASS_ERRONEOUS;
 
 	/**
 	 * The cached value of the '{@link #getClass_() <em>Class</em>}' attribute.
@@ -101,7 +102,7 @@ public class R4EDesignRuleImpl extends EObjectImpl implements R4EDesignRule {
 	 * @generated
 	 * @ordered
 	 */
-	protected String class_ = CLASS_EDEFAULT;
+	protected R4EDesignRuleClass class_ = CLASS_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getTitle() <em>Title</em>}' attribute.
@@ -209,7 +210,7 @@ public class R4EDesignRuleImpl extends EObjectImpl implements R4EDesignRule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getClass_() {
+	public R4EDesignRuleClass getClass_() {
 		return class_;
 	}
 
@@ -218,9 +219,9 @@ public class R4EDesignRuleImpl extends EObjectImpl implements R4EDesignRule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setClass(String newClass) {
-		String oldClass = class_;
-		class_ = newClass;
+	public void setClass(R4EDesignRuleClass newClass) {
+		R4EDesignRuleClass oldClass = class_;
+		class_ = newClass == null ? CLASS_EDEFAULT : newClass;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, DRModelPackage.R4E_DESIGN_RULE__CLASS, oldClass, class_));
 	}
@@ -304,7 +305,7 @@ public class R4EDesignRuleImpl extends EObjectImpl implements R4EDesignRule {
 				setRank((R4EDesignRuleRank)newValue);
 				return;
 			case DRModelPackage.R4E_DESIGN_RULE__CLASS:
-				setClass((String)newValue);
+				setClass((R4EDesignRuleClass)newValue);
 				return;
 			case DRModelPackage.R4E_DESIGN_RULE__TITLE:
 				setTitle((String)newValue);
@@ -356,7 +357,7 @@ public class R4EDesignRuleImpl extends EObjectImpl implements R4EDesignRule {
 			case DRModelPackage.R4E_DESIGN_RULE__RANK:
 				return rank != RANK_EDEFAULT;
 			case DRModelPackage.R4E_DESIGN_RULE__CLASS:
-				return CLASS_EDEFAULT == null ? class_ != null : !CLASS_EDEFAULT.equals(class_);
+				return class_ != CLASS_EDEFAULT;
 			case DRModelPackage.R4E_DESIGN_RULE__TITLE:
 				return TITLE_EDEFAULT == null ? title != null : !TITLE_EDEFAULT.equals(title);
 			case DRModelPackage.R4E_DESIGN_RULE__DESCRIPTION:

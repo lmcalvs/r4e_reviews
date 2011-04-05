@@ -39,7 +39,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl#getAreas <em>Areas</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl#getVersion <em>Version</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl#getFilePaths <em>File Paths</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl#getFolder <em>Folder</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,14 +78,44 @@ public class R4EDesignRuleCollectionImpl extends EObjectImpl implements R4EDesig
 	protected String version = VERSION_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getFilePaths() <em>File Paths</em>}' attribute list.
+	 * The default value of the '{@link #getFolder() <em>Folder</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFilePaths()
+	 * @see #getFolder()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<String> filePaths;
+	protected static final String FOLDER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getFolder() <em>Folder</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFolder()
+	 * @generated
+	 * @ordered
+	 */
+	protected String folder = FOLDER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -143,11 +174,41 @@ public class R4EDesignRuleCollectionImpl extends EObjectImpl implements R4EDesig
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getFilePaths() {
-		if (filePaths == null) {
-			filePaths = new EDataTypeUniqueEList<String>(String.class, this, DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FILE_PATHS);
-		}
-		return filePaths;
+	public String getFolder() {
+		return folder;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFolder(String newFolder) {
+		String oldFolder = folder;
+		folder = newFolder;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FOLDER, oldFolder, folder));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DRModelPackage.R4E_DESIGN_RULE_COLLECTION__NAME, oldName, name));
 	}
 
 	/**
@@ -176,8 +237,10 @@ public class R4EDesignRuleCollectionImpl extends EObjectImpl implements R4EDesig
 				return getAreas();
 			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__VERSION:
 				return getVersion();
-			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FILE_PATHS:
-				return getFilePaths();
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FOLDER:
+				return getFolder();
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -198,9 +261,11 @@ public class R4EDesignRuleCollectionImpl extends EObjectImpl implements R4EDesig
 			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__VERSION:
 				setVersion((String)newValue);
 				return;
-			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FILE_PATHS:
-				getFilePaths().clear();
-				getFilePaths().addAll((Collection<? extends String>)newValue);
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FOLDER:
+				setFolder((String)newValue);
+				return;
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__NAME:
+				setName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -220,8 +285,11 @@ public class R4EDesignRuleCollectionImpl extends EObjectImpl implements R4EDesig
 			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__VERSION:
 				setVersion(VERSION_EDEFAULT);
 				return;
-			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FILE_PATHS:
-				getFilePaths().clear();
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FOLDER:
+				setFolder(FOLDER_EDEFAULT);
+				return;
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__NAME:
+				setName(NAME_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -239,8 +307,10 @@ public class R4EDesignRuleCollectionImpl extends EObjectImpl implements R4EDesig
 				return areas != null && !areas.isEmpty();
 			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__VERSION:
 				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
-			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FILE_PATHS:
-				return filePaths != null && !filePaths.isEmpty();
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FOLDER:
+				return FOLDER_EDEFAULT == null ? folder != null : !FOLDER_EDEFAULT.equals(folder);
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -257,8 +327,10 @@ public class R4EDesignRuleCollectionImpl extends EObjectImpl implements R4EDesig
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (version: ");
 		result.append(version);
-		result.append(", filePaths: ");
-		result.append(filePaths);
+		result.append(", folder: ");
+		result.append(folder);
+		result.append(", name: ");
+		result.append(name);
 		result.append(')');
 		return result.toString();
 	}
