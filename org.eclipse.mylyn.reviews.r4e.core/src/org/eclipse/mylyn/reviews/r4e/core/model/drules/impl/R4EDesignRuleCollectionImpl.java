@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewComponentImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
@@ -46,7 +47,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
  *
  * @generated
  */
-public class R4EDesignRuleCollectionImpl extends EObjectImpl implements R4EDesignRuleCollection {
+public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements R4EDesignRuleCollection {
 	/**
 	 * The cached value of the '{@link #getAreas() <em>Areas</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

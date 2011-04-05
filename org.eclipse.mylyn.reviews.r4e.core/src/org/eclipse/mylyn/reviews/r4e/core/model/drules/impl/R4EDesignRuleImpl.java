@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewComponentImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
@@ -43,7 +44,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
  *
  * @generated
  */
-public class R4EDesignRuleImpl extends EObjectImpl implements R4EDesignRule {
+public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignRule {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->

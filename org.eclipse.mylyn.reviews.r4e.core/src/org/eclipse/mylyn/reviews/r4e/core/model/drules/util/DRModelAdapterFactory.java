@@ -21,6 +21,7 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.*;
 
 /**
@@ -96,6 +97,10 @@ public class DRModelAdapterFactory extends AdapterFactoryImpl {
 				return createR4EDesignRuleViolationAdapter();
 			}
 			@Override
+			public Adapter caseReviewComponent(ReviewComponent object) {
+				return createReviewComponentAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -168,6 +173,20 @@ public class DRModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createR4EDesignRuleViolationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent <em>Review Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent
+	 * @generated
+	 */
+	public Adapter createReviewComponentAdapter() {
 		return null;
 	}
 
