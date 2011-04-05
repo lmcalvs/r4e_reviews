@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewComponentImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
@@ -48,7 +49,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
  *
  * @generated
  */
-public class R4EDesignRuleAreaImpl extends EObjectImpl implements R4EDesignRuleArea {
+public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDesignRuleArea {
 	/**
 	 * The cached value of the '{@link #getViolations() <em>Violations</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

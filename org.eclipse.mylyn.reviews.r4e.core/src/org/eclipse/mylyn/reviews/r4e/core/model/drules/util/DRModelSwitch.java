@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.*;
 
 /**
@@ -98,24 +99,28 @@ public class DRModelSwitch<T> {
 			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION: {
 				R4EDesignRuleCollection r4EDesignRuleCollection = (R4EDesignRuleCollection)theEObject;
 				T result = caseR4EDesignRuleCollection(r4EDesignRuleCollection);
+				if (result == null) result = caseReviewComponent(r4EDesignRuleCollection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case DRModelPackage.R4E_DESIGN_RULE: {
 				R4EDesignRule r4EDesignRule = (R4EDesignRule)theEObject;
 				T result = caseR4EDesignRule(r4EDesignRule);
+				if (result == null) result = caseReviewComponent(r4EDesignRule);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case DRModelPackage.R4E_DESIGN_RULE_AREA: {
 				R4EDesignRuleArea r4EDesignRuleArea = (R4EDesignRuleArea)theEObject;
 				T result = caseR4EDesignRuleArea(r4EDesignRuleArea);
+				if (result == null) result = caseReviewComponent(r4EDesignRuleArea);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case DRModelPackage.R4E_DESIGN_RULE_VIOLATION: {
 				R4EDesignRuleViolation r4EDesignRuleViolation = (R4EDesignRuleViolation)theEObject;
 				T result = caseR4EDesignRuleViolation(r4EDesignRuleViolation);
+				if (result == null) result = caseReviewComponent(r4EDesignRuleViolation);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -180,6 +185,21 @@ public class DRModelSwitch<T> {
 	 * @generated
 	 */
 	public T caseR4EDesignRuleViolation(R4EDesignRuleViolation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Review Component</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Review Component</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseReviewComponent(ReviewComponent object) {
 		return null;
 	}
 

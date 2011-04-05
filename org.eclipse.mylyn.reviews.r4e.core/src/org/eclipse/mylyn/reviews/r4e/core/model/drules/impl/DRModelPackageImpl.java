@@ -20,6 +20,8 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
+import org.eclipse.mylyn.reviews.frame.core.model.impl.ModelPackageImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
@@ -124,11 +126,16 @@ public class DRModelPackageImpl extends EPackageImpl implements DRModelPackage {
 
 		isInited = true;
 
+		// Obtain or create and register interdependencies
+		ModelPackageImpl theModelPackage = (ModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI) instanceof ModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI) : ModelPackage.eINSTANCE);
+
 		// Create package meta-data objects
 		theDRModelPackage.createPackageContents();
+		theModelPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theDRModelPackage.initializePackageContents();
+		theModelPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theDRModelPackage.freeze();
@@ -387,11 +394,18 @@ public class DRModelPackageImpl extends EPackageImpl implements DRModelPackage {
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
+		// Obtain other dependent packages
+		ModelPackage theModelPackage = (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
+
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		r4EDesignRuleCollectionEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
+		r4EDesignRuleEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
+		r4EDesignRuleAreaEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
+		r4EDesignRuleViolationEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(r4EDesignRuleCollectionEClass, R4EDesignRuleCollection.class, "R4EDesignRuleCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
