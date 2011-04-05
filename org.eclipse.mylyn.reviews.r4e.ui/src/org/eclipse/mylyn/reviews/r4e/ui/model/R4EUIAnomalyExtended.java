@@ -27,8 +27,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.AnomalyExtraProperties;
@@ -276,54 +274,6 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 			if (states[i].getValue() == aState.getValue()) return i;		
 		}
 		return R4EUIConstants.INVALID_VALUE;   //should never happen
-	}
-
-	/**
-	 * Method getClasses.
-	 * @return String[]
-	 */
-	public static String[] getClasses() {
-		return R4EUIConstants.CLASS_VALUES;
-	} 
-	
-	/**
-	 * Method getClassFromString.
-	 * @param aClass String
-	 * @return R4ECommentClass
-	 */
-	public static R4EDesignRuleClass getClassFromString(String aClass) {
-		if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_ERRONEOUS)) {
-			return R4EDesignRuleClass.R4E_CLASS_ERRONEOUS;
-		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_SUPERFLUOUS)) {
-			return R4EDesignRuleClass.R4E_CLASS_SUPERFLUOUS;
-		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT)) {
-			return R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT;
-		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_QUESTION)) {
-			return R4EDesignRuleClass.R4E_CLASS_QUESTION;
-		} else return null;   //should never happen
-	}
-
-	/**
-	 * Method getRanks.
-	 * @return String[]
-	 */
-	public static String[] getRanks() {
-		return R4EUIConstants.RANK_VALUES;
-	}
-	
-	/**
-	 * Method getRankFromString.
-	 * @param aRank String
-	 * @return R4EAnomalyRank
-	 */
-	public static R4EDesignRuleRank getRankFromString(String aRank) {
-		if (aRank.equals(R4EUIConstants.ANOMALY_RANK_NONE)) {
-			return R4EDesignRuleRank.R4E_RANK_NONE;
-		} else if (aRank.equals(R4EUIConstants.ANOMALY_RANK_MINOR)) {
-			return R4EDesignRuleRank.R4E_RANK_MINOR;
-		} else if (aRank.equals(R4EUIConstants.ANOMALY_RANK_MAJOR)) {
-			return R4EDesignRuleRank.R4E_RANK_MAJOR;
-		} else return null;   //should never happen
 	}
 	
 	//Anomaly State Machine

@@ -322,7 +322,8 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		for (String ruleSetlocation : ruleSetlocations) {
 			for (R4EUIRuleSet ruleSet : ((R4EUIRootElement)getParent()).getRuleSets())
 			{
-				if (ruleSet.getRuleSet().getFilePaths().get(0).equals(ruleSetlocation)) {
+				if ((ruleSet.getRuleSet().getFolder() + "/" + ruleSet.getRuleSet().getName()).
+						equals(ruleSetlocation)) {
 					ruleSet.close();
 					ruleSet.open();
 					fRuleSets.add(ruleSet);

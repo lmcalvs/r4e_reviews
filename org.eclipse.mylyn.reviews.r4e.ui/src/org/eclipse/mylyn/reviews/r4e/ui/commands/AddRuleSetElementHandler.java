@@ -22,10 +22,9 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
@@ -33,9 +32,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.services.IEvaluationService;
 
@@ -64,7 +60,7 @@ public class AddRuleSetElementHandler extends AbstractHandler {
 
 		try {
 			//Get data from user
-				final R4EReviewComponent tempModelComponent = element.createRuleSetElement();
+				final ReviewComponent tempModelComponent = ((R4EUIRootElement)element).createRuleSetElement();
 				if (null != tempModelComponent) {
 					Activator.Ftracer.traceInfo("Adding Rule Set to the root element ");
 
@@ -78,31 +74,27 @@ public class AddRuleSetElementHandler extends AbstractHandler {
 				}
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
-			
+
 			//Remove object if partially created
-			if (null != element && null != newElement) {
-				try {
-					element.removeChildren(newElement, true);
-				} catch (ResourceHandlingException e1) {
-					UIUtils.displayResourceErrorDialog(e1);
-				} catch (OutOfSyncException e1) {
-					UIUtils.displaySyncErrorDialog(e1);
-				}
+			try {
+				element.removeChildren(newElement, true);
+			} catch (ResourceHandlingException e1) {
+				UIUtils.displayResourceErrorDialog(e1);
+			} catch (OutOfSyncException e1) {
+				UIUtils.displaySyncErrorDialog(e1);
 			}
-			
+
 		} catch (OutOfSyncException e) {
 			UIUtils.displaySyncErrorDialog(e);
 
 			//Remove object if partially created
-			if (null != element && null != newElement) {
-				try {
-					element.removeChildren(newElement, true);
-				} catch (ResourceHandlingException e1) {
-					UIUtils.displayResourceErrorDialog(e1);
-				} catch (OutOfSyncException e1) {
-					UIUtils.displaySyncErrorDialog(e1);
-				}		
-			}
+			try {
+				element.removeChildren(newElement, true);
+			} catch (ResourceHandlingException e1) {
+				UIUtils.displayResourceErrorDialog(e1);
+			} catch (OutOfSyncException e1) {
+				UIUtils.displaySyncErrorDialog(e1);
+			}		
 		}
 		
 		try {

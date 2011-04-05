@@ -122,7 +122,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * @param aName String
 	 */
 	public R4EUIRuleSet(IR4EUIModelElement aParent, R4EDesignRuleCollection aRuleSet, boolean aOpen) {
-		super(aParent, aRuleSet.getFilePaths().get(0), null);
+		super(aParent, aRuleSet.getName(), null);
 		fRuleSet = aRuleSet;
 		fRulesSetFileURI = aRuleSet.eResource().getURI();
 		fAreas = new ArrayList<R4EUIRuleArea>();
@@ -238,9 +238,10 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	
 	/**
 	 * Method open.
+	 * @throws ResourceHandlingException 
 	 */
 	@Override
-	public void open() {
+	public void open() throws ResourceHandlingException {
 		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRulesSetFileURI);
 		final List<R4EDesignRuleArea> areas = fRuleSet.getAreas();
 		if (null != areas) {

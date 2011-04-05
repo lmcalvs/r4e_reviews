@@ -24,8 +24,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -145,7 +145,7 @@ public class RuleInputDialog extends FormDialog {
 	/**
 	 * Field fClassTypeValue.
 	 */
-	private R4ECommentClass fClassValue;
+	private R4EDesignRuleClass fClassValue;
 	
 	/**
 	 * Field fRankType.
@@ -155,7 +155,7 @@ public class RuleInputDialog extends FormDialog {
 	/**
 	 * Field fRankTypeValue.
 	 */
-	private R4EAnomalyRank  fRankValue;
+	private R4EDesignRuleRank  fRankValue;
 	
     /**
      * The input validator, or <code>null</code> if none.
@@ -366,7 +366,7 @@ public class RuleInputDialog extends FormDialog {
      * Returns the string typed into this input dialog.
      * @return the Class input string
      */
-    public R4ECommentClass getClassValue() {
+    public R4EDesignRuleClass getClassValue() {
         return fClassValue;
     }
     
@@ -374,7 +374,7 @@ public class RuleInputDialog extends FormDialog {
      * Returns the string typed into this input dialog.
      * @return the Rank input string
      */
-    public R4EAnomalyRank getRankValue() {
+    public R4EDesignRuleRank getRankValue() {
         return fRankValue;
     }
     

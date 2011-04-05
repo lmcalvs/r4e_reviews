@@ -102,14 +102,24 @@ public class RuleSetInputDialog extends FormDialog {
     private Text fVersionInputTextField;
     
 	/**
-	 * Field fFileValue.
+	 * Field fFolderValue.
 	 */
-	private String fFileValue = "";  //TODO the file value = folder + name + rule set file suffix
+	private String fFolderValue = "";
 	
 	/**
 	 * Field fFolderInputTextField.
 	 */
 	private Text fFolderInputTextField = null;
+	
+	/**
+	 * Field fFolderValue.
+	 */
+	private String fNameValue = "";
+	
+	/**
+	 * Field fFolderInputTextField.
+	 */
+	private Text fNameInputTextField = null;
 	
     /**
      * The input validator, or <code>null</code> if none.
@@ -169,7 +179,8 @@ public class RuleSetInputDialog extends FormDialog {
 				return;
 			}
 			
-			validateResult = validateFileExists(fFolderInputTextField.getText() /*+ fNameInputTextField.getText() + R4EUIConstants.RULE_SET_FILE_SUFFIX*/ );
+			validateResult = validateFileExists(fFolderInputTextField.getText() + "/" + fNameInputTextField.getText() + 
+					R4EUIConstants.RULE_SET_FILE_SUFFIX);
 			if (null != validateResult) {
 				//Validate of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Rule Set file already exists",
@@ -178,11 +189,13 @@ public class RuleSetInputDialog extends FormDialog {
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
-			fFileValue = fFolderInputTextField.getText();
+			fFolderValue = fFolderInputTextField.getText();
+			fNameValue = fNameInputTextField.getText();
 
         } else {
         	fVersionValue = null;
-        	fFileValue = null;
+        	fFolderValue = null;
+        	fNameValue = null;
         }
 		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
         super.buttonPressed(buttonId);
@@ -309,10 +322,18 @@ public class RuleSetInputDialog extends FormDialog {
     
     /**
      * Returns the string typed into this input dialog.
-     * @return the rule set file input string
+     * @return the rule set folder input string
      */
-    public String getFileValue() {
-        return fFileValue;
+    public String getFolderValue() {
+        return fFolderValue;
+    }
+    
+    /**
+     * Returns the string typed into this input dialog.
+     * @return the rule set name input string
+     */
+    public String getNameValue() {
+        return fNameValue;
     }
     
     /**

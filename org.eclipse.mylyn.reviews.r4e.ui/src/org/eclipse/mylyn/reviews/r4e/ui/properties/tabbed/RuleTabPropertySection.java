@@ -19,15 +19,11 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRule;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -57,17 +53,17 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field fIdText.
 	 */
-	private CLabel fIdText = null;
+	protected CLabel fIdText = null;
 	
 	/**
 	 * Field fTitleText.
 	 */
-	private CLabel fTitleText = null;
+	protected CLabel fTitleText = null;
 	
 	/**
 	 * Field fDescriptionText.
 	 */
-	private CLabel fDescriptionText = null;
+	protected CLabel fDescriptionText = null;
 	
 	/**
 	 * Field fClassCombo.
@@ -218,9 +214,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	    				final String currentUser = R4EUIModelController.getReviewer();
 						final R4EDesignRule modelRule = ((R4EUIRule)fProperties.getElement()).getRule();
 	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-	    				final R4ECommentType type = RModelFactoryExt.eINSTANCE.createR4ECommentType();
-	    				type.setType(UIUtils.getClassFromString(fClassCombo.getText()));
-	    				modelRule.setType(type);
+	    				modelRule.setClass(UIUtils.getClassFromString(fClassCombo.getText()));
 	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	    			} catch (ResourceHandlingException e1) {
 	    				UIUtils.displayResourceErrorDialog(e1);
@@ -292,8 +286,8 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 			fTitleText.setText(modelRule.getTitle());
 			fDescriptionText.setText(modelRule.getDescription());
 			fClassCombo.setItems(UIUtils.getClasses());
-			if (null != modelRule.getType() && null != ((R4ECommentType)modelRule.getType()).getType()) {
-				fClassCombo.select(((R4ECommentType)modelRule.getType()).getType().getValue());
+			if (null != modelRule.getClass()) {
+				fClassCombo.select(modelRule.getClass_().getValue());
 			}
 			fRankCombo.setItems(UIUtils.getRanks());
 			fRankCombo.select(modelRule.getRank().getValue());

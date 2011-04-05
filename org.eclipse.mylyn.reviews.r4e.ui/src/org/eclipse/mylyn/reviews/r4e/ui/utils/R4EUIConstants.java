@@ -52,6 +52,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String GROUP_FILE_SUFFIX = "_group_root.xrer";
 	
 	/**
+	 * Field RULE_SET_FILE_SUFFIX.
+	 * (value is ""_rule_set.xrer"")
+	 */
+	public static final String RULE_SET_FILE_SUFFIX = "_rule_set.xrer";
+	
+	/**
 	 * Field VALUE_TRUE_STR.
 	 * (value is ""true"")
 	 */

@@ -26,7 +26,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
@@ -82,29 +81,25 @@ public class AddChildElementHandler extends AbstractHandler {
 			UIUtils.displayResourceErrorDialog(e);
 			
 			//Remove object if partially created
-			if (null != element && null != newElement) {
-				try {
-					element.removeChildren(newElement, true);
-				} catch (ResourceHandlingException e1) {
-					UIUtils.displayResourceErrorDialog(e1);
-				} catch (OutOfSyncException e1) {
-					UIUtils.displaySyncErrorDialog(e1);
-				}
+			try {
+				element.removeChildren(newElement, true);
+			} catch (ResourceHandlingException e1) {
+				UIUtils.displayResourceErrorDialog(e1);
+			} catch (OutOfSyncException e1) {
+				UIUtils.displaySyncErrorDialog(e1);
 			}
 			
 		} catch (OutOfSyncException e) {
 			UIUtils.displaySyncErrorDialog(e);
 
 			//Remove object if partially created
-			if (null != element && null != newElement) {
-				try {
-					element.removeChildren(newElement, true);
-				} catch (ResourceHandlingException e1) {
-					UIUtils.displayResourceErrorDialog(e1);
-				} catch (OutOfSyncException e1) {
-					UIUtils.displaySyncErrorDialog(e1);
-				}		
-			}
+			try {
+				element.removeChildren(newElement, true);
+			} catch (ResourceHandlingException e1) {
+				UIUtils.displayResourceErrorDialog(e1);
+			} catch (OutOfSyncException e1) {
+				UIUtils.displaySyncErrorDialog(e1);
+			}		
 		}
 		
 		try {

@@ -465,7 +465,7 @@ public class ReviewGroupInputDialog extends FormDialog {
         List<R4EUIRuleSet> uiRuleSets = fRootElement.getRuleSets();
         List<String> ruleLocations = new ArrayList<String>();
         for (R4EUIRuleSet ruleSet : uiRuleSets) {
-        	ruleLocations.add(ruleSet.getRuleSet().getFilePaths().get(0));
+        	ruleLocations.add(ruleSet.getRuleSet().getFolder() + "/" + ruleSet.getRuleSet().getName());
         }
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;

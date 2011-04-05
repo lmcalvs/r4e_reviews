@@ -138,7 +138,8 @@ public class R4EUIRootElement extends R4EUIModelElement {
     	if (result == Window.OK) {
     		tempRuleSet = DRModelFactory.eINSTANCE.createR4EDesignRuleCollection();
     		tempRuleSet.setVersion(dialog.getVersionValue());
-    		tempRuleSet.getFilePaths().add(dialog.getFileValue());
+    		tempRuleSet.setFolder(dialog.getFolderValue());
+    		tempRuleSet.setName(dialog.getNameValue());
     	}
     	//else Window.CANCEL
 		R4EUIModelController.setDialogOpen(false);
@@ -278,10 +279,10 @@ public class R4EUIRootElement extends R4EUIModelElement {
 					System.getProperty("line.separator") + reviewGroup.eResource().getURI().toFileString());
 			return addedChild;
 		} else if (aModelComponent instanceof R4EDesignRuleCollection) {
-			final String ruleSetName = ((R4EDesignRuleCollection)aModelComponent).getFilePaths().get(0);
+			final String ruleSetName = ((R4EDesignRuleCollection)aModelComponent).getName();
 			//Check if group already exists.  If so it cannot be recreated
 			for (R4EUIRuleSet ruleSet : fRuleSets) {
-				if (ruleSet.getRuleSet().getFilePaths().get(0).equals(ruleSetName)) {
+				if (ruleSet.getRuleSet().getName().equals(ruleSetName)) {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Error while creating new Rule Set  ",
 							new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "Rule Set " +
 									ruleSetName + " already exists", null), IStatus.ERROR);
@@ -290,8 +291,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 				}
 			}
 
-			final R4EDesignRuleCollection ruleSet = DRModelFactory.eINSTANCE.createR4EDesignRuleCollection(URI.createFileURI(
-					((R4EDesignRuleCollection)aModelComponent).getFilePaths().get(0)));
+			final R4EDesignRuleCollection ruleSet = DRModelFactory.eINSTANCE.createR4EDesignRuleCollection();
 			final R4EUIRuleSet addedChild = new R4EUIRuleSet(this, ruleSet, true);
 			addedChild.setModelData(aModelComponent);
 			addChildren(addedChild);
@@ -301,6 +301,8 @@ public class R4EUIRootElement extends R4EUIModelElement {
 					preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH) +
 					System.getProperty("line.separator") + ruleSet.eResource().getURI().toFileString());
 			return addedChild;
+		} else {
+			return null;   //should never happen
 		}
 
 

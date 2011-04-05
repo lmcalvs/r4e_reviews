@@ -28,15 +28,14 @@ import org.eclipse.mylyn.reviews.frame.core.model.Location;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
@@ -129,7 +128,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     		tempAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
     		if (null != dialog.getRuleReferenceValue()) {
     			R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
-    			tempAnomaly.setType(rule.getClass_());
+    			((R4ECommentType)tempAnomaly.getType()).setType(rule.getClass_());
     			tempAnomaly.setRank(UIUtils.mapRuleRank(rule.getRank()));
     		}
     	}
@@ -352,7 +351,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
         	
     		if (null != dialog.getRuleReferenceValue()) {
     			R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
-    			anomaly.setType(rule.getClass_());
+    			((R4ECommentType)anomaly.getType()).setType(rule.getClass_());
     			anomaly.setRank(UIUtils.mapRuleRank(rule.getRank()));
     		}
         	

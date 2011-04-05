@@ -137,7 +137,8 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 		if (null != ((R4EUIRuleSet)fProperties.getElement()).getRuleSet()) {
 			fRefreshInProgress = true;
 			fVersionText.setText(((R4EUIRuleSet)fProperties.getElement()).getRuleSet().getVersion());
-			fFilePathText.setText(((R4EUIRuleSet)fProperties.getElement()).getRuleSet().getFilePaths().get(0));
+			fFilePathText.setText(((R4EUIRuleSet)fProperties.getElement()).getRuleSet().getFolder() + "/" +
+					((R4EUIRuleSet)fProperties.getElement()).getRuleSet().getName());
 			setEnabledFields();
 			fRefreshInProgress = false;
 		}
