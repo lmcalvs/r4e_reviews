@@ -184,7 +184,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended)fProperties.getElement()).getAnomaly();
 	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 	    				final R4ECommentType type = RModelFactoryExt.eINSTANCE.createR4ECommentType();
-	    				type.setType(R4EUIAnomalyExtended.getClassFromString(fClassCombo.getText()));
+	    				type.setType(UIUtils.getClassFromString(fClassCombo.getText()));
 	    				modelAnomaly.setType(type);
 	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	    			} catch (ResourceHandlingException e1) {
@@ -221,7 +221,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    				final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended)fProperties.getElement()).getAnomaly();
 	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-	    				modelAnomaly.setRank(R4EUIAnomalyExtended.getRankFromString(fClassCombo.getText()));
+	    				modelAnomaly.setRank(UIUtils.getRankFromString(fRankCombo.getText()));
 	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	    			} catch (ResourceHandlingException e1) {
 	    				UIUtils.displayResourceErrorDialog(e1);
@@ -453,11 +453,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
     	final List<String> participants = R4EUIModelController.getActiveReview().getParticipantIDs();
 		fStateCombo.setItems(uiModelAnomaly.getAvailableStates());
 		fStateCombo.select(uiModelAnomaly.mapStateToIndex(modelAnomaly.getState()));
-		fClassCombo.setItems(R4EUIAnomalyExtended.getClasses());
+		fClassCombo.setItems(UIUtils.getClasses());
 		if (null != modelAnomaly.getType() && null != ((R4ECommentType)modelAnomaly.getType()).getType()) {
 			fClassCombo.select(((R4ECommentType)modelAnomaly.getType()).getType().getValue());
 		}
-		fRankCombo.setItems(R4EUIAnomalyExtended.getRanks());
+		fRankCombo.setItems(UIUtils.getRanks());
 		fRankCombo.select(modelAnomaly.getRank().getValue());
 		if (null != modelAnomaly.getDueDate()) {
     		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);	

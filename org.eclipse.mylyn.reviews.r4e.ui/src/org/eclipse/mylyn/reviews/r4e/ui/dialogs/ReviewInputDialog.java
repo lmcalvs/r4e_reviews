@@ -66,6 +66,12 @@ public class ReviewInputDialog extends FormDialog {
 	private static final String ADD_REVIEW_DIALOG_TITLE = "Enter Review Details";
 
 	/**
+	 * Field ADD_REVIEW_TYPE_DIALOG_VALUE.
+	 * (value is ""Review Type: "")
+	 */
+	private static final String ADD_REVIEW_TYPE_DIALOG_VALUE = "Review Type: ";
+	
+	/**
 	 * Field ADD_REVIEW_NAME_DIALOG_VALUE.
 	 * (value is ""Review Name: "")
 	 */
@@ -171,7 +177,7 @@ public class ReviewInputDialog extends FormDialog {
 	private String fProjectValue = "";
 	
 	/**
-	 * Field fProjectTextField.
+	 * Field fProjectsCombo.
 	 */
 	private CCombo fProjectsCombo = null;
 	
@@ -358,7 +364,7 @@ public class ReviewInputDialog extends FormDialog {
         GridData textGridData = null;
         
 		//Review Type
-        Label label = toolkit.createLabel(composite, "Review Type: ");
+        Label label = toolkit.createLabel(composite, ADD_REVIEW_TYPE_DIALOG_VALUE);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fReviewType = new CCombo(composite, SWT.BORDER | SWT.READ_ONLY);
 		fReviewType.setItems(REVIEW_TYPES);

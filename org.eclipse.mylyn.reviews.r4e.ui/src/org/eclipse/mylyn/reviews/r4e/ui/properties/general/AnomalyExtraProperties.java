@@ -19,6 +19,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -64,7 +65,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 * Field ANOMALY_RANK_PROPERTY_DESCRIPTOR.
 	 */
 	protected static final ComboBoxPropertyDescriptor ANOMALY_RANK_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_RANK_ID, R4EUIConstants.RANK_LABEL, R4EUIAnomalyExtended.getRanks());
+			ANOMALY_RANK_ID, R4EUIConstants.RANK_LABEL, UIUtils.getRanks());
 	
 	/**
 	 * Field ANOMALY_NOT_ACCEPTED_REASON_ID. (value is ""anomalyElement.notAcceptedReason"")

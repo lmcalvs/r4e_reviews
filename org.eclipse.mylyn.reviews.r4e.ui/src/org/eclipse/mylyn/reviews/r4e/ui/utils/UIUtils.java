@@ -29,7 +29,10 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
@@ -216,5 +219,65 @@ public class UIUtils {
 			if (participants.get(i).getId().equals(aParticipant)) return i;		
 		}
 		return R4EUIConstants.INVALID_VALUE;   //should never happen
+	}
+	
+	/**
+	 * Method getClassFromString.
+	 * @param aClass String
+	 * @return R4ECommentClass
+	 */
+	public static R4ECommentClass getClassFromString(String aClass) {
+		if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_ERRONEOUS)) {
+			return R4ECommentClass.R4E_CLASS_ERRONEOUS;
+		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_SUPERFLUOUS)) {
+			return R4ECommentClass.R4E_CLASS_SUPERFLUOUS;
+		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT)) {
+			return R4ECommentClass.R4E_CLASS_IMPROVEMENT;
+		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_QUESTION)) {
+			return R4ECommentClass.R4E_CLASS_QUESTION;
+		} else return null;   //should never happen
+	}
+	
+	/**
+	 * Method getRankFromString.
+	 * @param aRank String
+	 * @return R4EAnomalyRank
+	 */
+	public static R4EAnomalyRank getRankFromString(String aRank) {
+		if (aRank.equals(R4EUIConstants.ANOMALY_RANK_NONE)) {
+			return R4EAnomalyRank.R4E_ANOMALY_RANK_NONE;
+		} else if (aRank.equals(R4EUIConstants.ANOMALY_RANK_MINOR)) {
+			return R4EAnomalyRank.R4E_ANOMALY_RANK_MINOR;
+		} else if (aRank.equals(R4EUIConstants.ANOMALY_RANK_MAJOR)) {
+			return R4EAnomalyRank.R4E_ANOMALY_RANK_MAJOR;
+		} else return null;   //should never happen
+	}
+	
+	/**
+	 * Method getClasses.
+	 * @return String[]
+	 */
+	public static String[] getClasses() {
+		return R4EUIConstants.CLASS_VALUES;
+	} 
+
+	/**
+	 * Method getRanks.
+	 * @return String[]
+	 */
+	public static String[] getRanks() {
+		return R4EUIConstants.RANK_VALUES;
+	}
+	
+	/**
+	 * Method mapRuleRank.
+	 * @param aRuleRank R4EDesignRuleRank
+	 * @return R4EAnomalyRank
+	 */
+	public static R4EAnomalyRank mapRuleRank(R4EDesignRuleRank aRuleRank) {
+		if (aRuleRank.equals(R4EDesignRuleRank.R4E_RANK_NONE)) return R4EAnomalyRank.R4E_ANOMALY_RANK_NONE;
+		else if (aRuleRank.equals(R4EDesignRuleRank.R4E_RANK_MINOR)) return R4EAnomalyRank.R4E_ANOMALY_RANK_MINOR;
+		else if (aRuleRank.equals(R4EDesignRuleRank.R4E_RANK_MAJOR)) return R4EAnomalyRank.R4E_ANOMALY_RANK_MAJOR;
+		return null;
 	}
 }

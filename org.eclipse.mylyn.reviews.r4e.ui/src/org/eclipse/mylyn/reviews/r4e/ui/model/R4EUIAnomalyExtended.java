@@ -20,11 +20,11 @@ package org.eclipse.mylyn.reviews.r4e.ui.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -92,64 +92,11 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	private static final String ANOMALY_STATE_VERIFIED = "VERIFIED";
 	
 	/**
-	 * Field ANOMALY_RANK_NONE.
-	 * (value is ""NONE"")
-	 */
-	private static final String ANOMALY_RANK_NONE = "NONE";
-	
-	/**
-	 * Field ANOMALY_RANK_MINOR.
-	 * (value is ""MINOR"")
-	 */
-	private static final String ANOMALY_RANK_MINOR = "MINOR";
-	/**
-	 * Field ANOMALY_RANK_MAJOR.
-	 * (value is ""MAJOR"")
-	 */
-	private static final String ANOMALY_RANK_MAJOR = "MAJOR";
-
-	/**
-	 * Field ANOMALY_CLASS_ERRONEOUS.
-	 * (value is ""Erroneous"")
-	 */
-	private static final String ANOMALY_CLASS_ERRONEOUS = "Erroneous";
-	
-	/**
-	 * Field ANOMALY_CLASS_SUPERFLUOUS.
-	 * (value is ""Superfluous"")
-	 */
-	private static final String ANOMALY_CLASS_SUPERFLUOUS = "Superfluous";
-	
-	/**
-	 * Field ANOMALY_CLASS_IMPROVEMENT.
-	 * (value is ""Improvement"")
-	 */
-	private static final String ANOMALY_CLASS_IMPROVEMENT = "Improvement";
-	
-	/**
-	 * Field ANOMALY_CLASS_QUESTION.
-	 * (value is ""Question"")
-	 */
-	private static final String ANOMALY_CLASS_QUESTION = "Question";
-	
-	/**
 	 * Field FStateValues.
 	 */
 	private static final String[] STATE_VALUES = { ANOMALY_STATE_ACCEPTED, ANOMALY_STATE_DUPLICATED, ANOMALY_STATE_REJECTED, 
 		ANOMALY_STATE_DEFERRED, ANOMALY_STATE_ASSIGNED, ANOMALY_STATE_CREATED, ANOMALY_STATE_VERIFIED, 
 		ANOMALY_STATE_FIXED };  //NOTE: This has to match R4EAnomalyState in R4E core plugin
-	
-	/**
-	 * Field rankValues.
-	 */
-	private static final String[] RANK_VALUES = { ANOMALY_RANK_NONE, ANOMALY_RANK_MINOR,
-		ANOMALY_RANK_MAJOR };  //NOTE: This has to match R4EAnomalyRank in R4E core plugin
-	
-	/**
-	 * Field FClassValues.
-	 */
-	private static final String[] CLASS_VALUES = { ANOMALY_CLASS_ERRONEOUS, ANOMALY_CLASS_SUPERFLUOUS,
-		ANOMALY_CLASS_IMPROVEMENT, ANOMALY_CLASS_QUESTION };  //NOTE: This has to match CommentType in R4E core plugin
 	
 	
 	// ------------------------------------------------------------------------
@@ -184,6 +131,25 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		if (IPropertySource.class.equals(adapter)) return new AnomalyExtraProperties(this);
 		return null;
 	}
+	
+	/**
+	 * Set serialization model data by copying it from the passed-in object
+	 * @param aModelComponent - a serialization model element to copy information from
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
+	 */
+	@Override
+	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+    	
+		//Set data in model element
+    	super.setModelData(aModelComponent);
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly, 
+				R4EUIModelController.getReviewer());
+		fAnomaly.setType(((R4EAnomaly)aModelComponent).getType());
+		fAnomaly.setRank(((R4EAnomaly)aModelComponent).getRank());
+    	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+    }
 	
 	/**
 	 * Method updateState.
@@ -310,54 +276,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		return R4EUIConstants.INVALID_VALUE;   //should never happen
 	}
 	
-	/**
-	 * Method getClasses.
-	 * @return String[]
-	 */
-	public static String[] getClasses() {
-		return CLASS_VALUES;
-	} 
-	
-	/**
-	 * Method getClassFromString.
-	 * @param aClass String
-	 * @return R4ECommentClass
-	 */
-	public static R4ECommentClass getClassFromString(String aClass) {
-		if (aClass.equals(ANOMALY_CLASS_ERRONEOUS)) {
-			return R4ECommentClass.R4E_CLASS_ERRONEOUS;
-		} else if (aClass.equals(ANOMALY_CLASS_SUPERFLUOUS)) {
-			return R4ECommentClass.R4E_CLASS_SUPERFLUOUS;
-		} else if (aClass.equals(ANOMALY_CLASS_IMPROVEMENT)) {
-			return R4ECommentClass.R4E_CLASS_IMPROVEMENT;
-		} else if (aClass.equals(ANOMALY_CLASS_QUESTION)) {
-			return R4ECommentClass.R4E_CLASS_QUESTION;
-		} else return null;   //should never happen
-	}
 
-	/**
-	 * Method getRanks.
-	 * @return String[]
-	 */
-	public static String[] getRanks() {
-		return RANK_VALUES;
-	}
-	
-	/**
-	 * Method getRankFromString.
-	 * @param aRank String
-	 * @return R4EAnomalyRank
-	 */
-	public static R4EAnomalyRank getRankFromString(String aRank) {
-		if (aRank.equals(ANOMALY_RANK_NONE)) {
-			return R4EAnomalyRank.R4E_ANOMALY_RANK_NONE;
-		} else if (aRank.equals(ANOMALY_RANK_MINOR)) {
-			return R4EAnomalyRank.R4E_ANOMALY_RANK_MINOR;
-		} else if (aRank.equals(ANOMALY_RANK_MAJOR)) {
-			return R4EAnomalyRank.R4E_ANOMALY_RANK_MAJOR;
-		} else return null;   //should never happen
-	}
-	
 	
 	//Anomaly State Machine
 	

@@ -41,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -272,9 +273,12 @@ public class R4EUIModelController {
 		
 		//Load Review Groups
 		final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-		final String paths = preferenceStore.getString(PreferenceConstants.P_FILE_PATH);
-		final List<String> pathsList = UIUtils.parseStringList(paths);
-		loadReviewGroups(pathsList);
+		final String groupPaths = preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH);
+		final List<String> groupPathsList = UIUtils.parseStringList(groupPaths);
+		loadReviewGroups(groupPathsList);
+		final String ruleSetPaths = preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH);
+		final List<String> ruleSetPathsList = UIUtils.parseStringList(ruleSetPaths);
+		loadRuleSets(ruleSetPathsList);
 	}
 	
 	/**
@@ -317,7 +321,52 @@ public class R4EUIModelController {
         
         //Adjust review group paths in preferences
         if (changePrefsPaths) {
-        	Activator.getDefault().getPreferenceStore().setValue(PreferenceConstants.P_FILE_PATH, buildReviewGroupsStr(newGroupPaths));
+        	Activator.getDefault().getPreferenceStore().setValue(PreferenceConstants.P_GROUP_FILE_PATH, buildReviewGroupsStr(newGroupPaths));
+        }
+	}
+	
+	/**
+	 * Method loadReviewGroups.
+	 * @param aGroupPaths List<String>
+	 */
+	public static void loadRuleSets(List<String> aRuleSetPaths) {
+		
+		boolean changePrefsPaths = false;
+		R4EDesignRuleCollection ruleSet = null;
+		final List<String> newRuleSetPaths = new ArrayList<String>();
+		newRuleSetPaths.addAll(aRuleSetPaths);
+		
+        for (String ruleSetPath : aRuleSetPaths) {
+        	ruleSet = null;
+        	
+        	//First try to open the review group file as entrered in the preferences
+        	//If it fails, then create it
+        	try {
+        		ruleSet = FModelExt.openR4EDesignRuleCollection(URI.createFileURI(ruleSetPath));
+    			FRootElement.loadRuleSet(ruleSet);
+        	} catch (ResourceHandlingException e) {
+    			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+
+        		//Review Group not found, ask user for review group creation
+        		MessageDialog dialog = new MessageDialog( // $codepro.audit.disable variableDeclaredInLoop
+        				null, "Missing Rule Set", null, "Rule Set file at location " + ruleSetPath + 
+        					" not found, remove it from Preferences?",
+        				MessageDialog.WARNING,
+        				new String[] {"Yes", "No"},
+        				R4EUIConstants.DIALOG_NO); // no is the default
+        		int result = dialog.open(); // $codepro.audit.disable variableDeclaredInLoop
+
+        		if (result == R4EUIConstants.DIALOG_YES) {
+        			changePrefsPaths = true;
+        			newRuleSetPaths.remove(ruleSetPath);
+        		}      			
+        	}
+        }
+        
+        //Adjust review group paths in preferences
+        if (changePrefsPaths) {
+        	Activator.getDefault().getPreferenceStore().setValue(PreferenceConstants.
+        			P_RULE_SET_FILE_PATH, buildReviewGroupsStr(newRuleSetPaths));
         }
 	}
 	

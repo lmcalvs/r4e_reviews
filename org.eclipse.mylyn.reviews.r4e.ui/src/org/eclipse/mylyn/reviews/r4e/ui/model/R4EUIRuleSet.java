@@ -1,6 +1,6 @@
 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.disallowReturnMutable, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity, explicitThisUsage
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson Research Canada
+ * Copyright (c) 2011 Ericsson Research Canada
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -9,7 +9,7 @@
  * 
  * Description:
  * 
- * This class implements the Participant Container element of the UI model
+ * This class implements the Rule Set element of the UI model
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -22,54 +22,94 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ParticipantInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.dialogs.RuleAreaInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.RuleSetProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EUIParticipantContainer extends R4EUIModelElement {
+public class R4EUIRuleSet extends R4EUIModelElement {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Field fSelectionContainerFile.
-	 * (value is ""icons/obj16/partcont_obj.png"")
+	 * Field RULE_SET_ICON_FILE.
+	 * (value is ""icons/obj16/ruleset_obj.gif"")
 	 */
-	private static final String PARTICIPANT_CONTAINER_ICON_FILE = "icons/obj16/partcont_obj.png";
-    
+	private static final String RULE_SET_ICON_FILE = "icons/obj16/ruleset_obj.gif";
+	
 	/**
-	 * Field ADD_ELEMENT_ACTION_NAME.
-	 * (value is ""Add Participant"")
+	 * Field RULE_SET_CLOSED_ICON_FILE.
+	 * (value is ""icons/obj16/rulesetclsd_obj.gif"")
 	 */
-	private static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Participant";
+	private static final String RULE_SET_CLOSED_ICON_FILE = "icons/obj16/rulesetclsd_obj.gif";
+	
+	/**
+	 * Field ADD_CHILD_ELEMENT_COMMAND_NAME.
+	 * (value is ""Add Rule Area"")
+	 */
+	private static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Rule Area";
 	
     /**
-     * Field ADD_ELEMENT_ACTION_TOOLTIP.
-     * (value is ""Add a New Participant to the Current Review"")
+     * Field ADD_CHILD_ELEMENT_COMMAND_TOOLTIP.
+     * (value is ""Add a New Rule Area to the Current Rule Set"")
      */
-    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Participant to the Current Review";
+    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Rule Area to the Current Rule Set";
 
+	/**
+	 * Field REMOVE_ELEMENT_ACTION_NAME.
+	 * (value is ""Disable Rule Set"")
+	 */
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Rule Set";
+	
+    /**
+     * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
+     * (value is ""Disable (and Optionally Remove) this Rule Set"")
+     */
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Rule Set";
+    
     
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
     
 	/**
-	 * Field fSelections.
+	 * Field fGroup.
 	 */
-	private final List<R4EUIParticipant> fParticipants;
+	protected R4EDesignRuleCollection fRuleSet;
+	
+	/**
+	 * Field fRulesSetFileURI.
+	 */
+	private final URI fRulesSetFileURI;
+	
+	/**
+	 * Field fAreas.
+	 */
+	private final List<R4EUIRuleArea> fAreas;
 
 	
 	// ------------------------------------------------------------------------
@@ -81,10 +121,18 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 * @param aParent IR4EUIModelElement
 	 * @param aName String
 	 */
-	public R4EUIParticipantContainer(IR4EUIModelElement aParent, String aName) {
-		super(aParent, aName, null);
-		fParticipants = new ArrayList<R4EUIParticipant>();
-		setImage(PARTICIPANT_CONTAINER_ICON_FILE);
+	public R4EUIRuleSet(IR4EUIModelElement aParent, R4EDesignRuleCollection aRuleSet, boolean aOpen) {
+		super(aParent, aRuleSet.getFilePaths().get(0), null);
+		fRuleSet = aRuleSet;
+		fRulesSetFileURI = aRuleSet.eResource().getURI();
+		fAreas = new ArrayList<R4EUIRuleArea>();
+		if (aOpen) {
+			setImage(RULE_SET_ICON_FILE);
+			fOpen = true;
+		} else {
+			setImage(RULE_SET_CLOSED_ICON_FILE);
+			fOpen = false;
+		}
 	}
 
 	
@@ -92,7 +140,28 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	// Methods
 	// ------------------------------------------------------------------------
 	
+	/**
+	 * Method getAdapter.
+	 * @param adapter Class
+	 * @return Object
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
+	 */
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
+		if (IR4EUIModelElement.class.equals(adapter)) return this;
+		if (IPropertySource.class.equals(adapter)) return new RuleSetProperties(this);
+		return null;
+	}
+	
 	//Attributes
+	
+	/**
+	 * Method getRuleSet.
+	 * @return R4EDesignRuleCollection
+	 */
+	public R4EDesignRuleCollection getRuleSet() {
+		return fRuleSet;
+	}
 	
 	/**
 	 * Create a serialization model element object
@@ -101,20 +170,18 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	@Override
 	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
-		R4EParticipant tempParticipant = null;
+		R4EDesignRuleArea tempArea = null;
 		R4EUIModelController.setDialogOpen(true);
-		final ParticipantInputDialog dialog = new ParticipantInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+		final RuleAreaInputDialog dialog = new RuleAreaInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite().getWorkbenchWindow().getShell());
     	final int result = dialog.open();
     	if (result == Window.OK) {
-    		tempParticipant = RModelFactory.eINSTANCE.createR4EParticipant();
-    		tempParticipant.setId(dialog.getParticipantIdValue());
-    		tempParticipant.getRoles().addAll(dialog.getParticipantRolesValue());
-    		tempParticipant.setFocusArea(dialog.getFocusAreaValue());
+    		tempArea = DRModelFactory.eINSTANCE.createR4EDesignRuleArea();
+    		tempArea.setName(dialog.getNameValue());
     	}
     	// else Window.CANCEL
 		R4EUIModelController.setDialogOpen(false);
-    	return tempParticipant;
+    	return tempArea;
 	}
 	
 	
@@ -127,15 +194,15 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public IR4EUIModelElement[] getChildren() {
-		return fParticipants.toArray(new R4EUIParticipant[fParticipants.size()]);
+		return fAreas.toArray(new R4EUIRuleArea[fAreas.size()]);
 	}
 	
 	/**
-	 * Method getSelectionList.
-	 * @return List<R4EUIParticipant>
+	 * Method getAreaList.
+	 * @return List<R4EUIRuleArea>
 	 */
-	public List<R4EUIParticipant> getParticipantList() {
-		return fParticipants;
+	public List<R4EUIRuleArea> getAreaList() {
+		return fAreas;
 	}
 	
 	/**
@@ -145,7 +212,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (fParticipants.size() > 0) return true;
+		if (fAreas.size() > 0) return true;
 	    return false;
 	}
 	
@@ -156,14 +223,15 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	@Override
 	public void close() {
 		//Remove all children references
-		R4EUIParticipant participant = null;
-		final int participantsSize = fParticipants.size();
-		for (int i = 0; i < participantsSize; i++) {
+		R4EUIRuleArea area = null;
+		final int areaSize = fAreas.size();
+		for (int i = 0; i < areaSize; i++) {
 			
-			participant = fParticipants.get(i);
-			participant.close();
+			area = fAreas.get(i);
+			area.close();
 		}
-		fParticipants.clear();
+		fAreas.clear();
+		fImage = UIUtils.loadIcon(RULE_SET_CLOSED_ICON_FILE);
 		fOpen = false;
 		removeListener();
 	}
@@ -173,14 +241,31 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public void open() {
-		final List<R4EParticipant> participants = ((R4EUIReviewBasic)getParent()).getParticipants();
-		if (null != participants) {
-			final int participantsSize = participants.size();
-			for (int i = 0; i < participantsSize; i++) {
-				addChildren(new R4EUIParticipant(this, participants.get(i)));
+		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRulesSetFileURI);
+		final List<R4EDesignRuleArea> areas = fRuleSet.getAreas();
+		if (null != areas) {
+			final int areaSize = areas.size();
+			for (int i = 0; i < areaSize; i++) {
+				addChildren(new R4EUIRuleArea(this, areas.get(i)));
 			}
 		}
+		fImage = UIUtils.loadIcon(RULE_SET_ICON_FILE);
 		fOpen = true;
+	}
+	
+	/**
+	 * Method setEnabled.
+	 * @param aEnabled boolean
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 */
+	@Override
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRuleSet, R4EUIModelController.getReviewer());
+		fRuleSet.setEnabled(true);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 	
 	/**
@@ -190,7 +275,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isEnabled() {
-		return getParent().isEnabled();
+		return fRuleSet.isEnabled();
 	}
 	
 	/**
@@ -199,7 +284,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
-		fParticipants.add((R4EUIParticipant) aChildToAdd);
+		fAreas.add((R4EUIRuleArea) aChildToAdd);
 		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView().getTreeViewer().getContentProvider());
 		fireAdd(aChildToAdd);
 	}
@@ -214,9 +299,8 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
-		final R4EParticipant participant = R4EUIModelController.FModelExt.createR4EParticipant(
-				((R4EUIReviewBasic)getParent()).getReview(), ((R4EParticipant)aModelComponent).getId(), ((R4EParticipant)aModelComponent).getRoles());
-		final R4EUIParticipant addedChild = new R4EUIParticipant(this, participant);
+		final R4EDesignRuleArea area = DRModelFactory.eINSTANCE.createR4EDesignRuleArea();   //TODO how do we know the parent?
+		final R4EUIRuleArea addedChild = new R4EUIRuleArea(this, area);
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
 		return addedChild;
@@ -233,18 +317,18 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
 		
-		final R4EUIParticipant removedElement = fParticipants.get(fParticipants.indexOf(aChildToRemove));
+		final R4EUIRuleArea removedElement = fAreas.get(fAreas.indexOf(aChildToRemove));
 		/* TODO uncomment when core model supports hard-removing of elements
-		if (aFileRemove) removedElement.getParticipant().remove());
+		if (aFileRemove) removedElement.getArea().remove());
 		else */
-		final R4EParticipant modelParticipant = removedElement.getParticipant();
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant, R4EUIModelController.getReviewer());
-		modelParticipant.setEnabled(false);
+		final R4EDesignRuleArea modelArea = removedElement.getArea();
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelArea, R4EUIModelController.getReviewer());
+		modelArea.setEnabled(false);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		
 		//Remove element from UI if the show disabled element option is off
 		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
-			fParticipants.remove(removedElement);
+			fAreas.remove(removedElement);
 			aChildToRemove.removeListener();
 			fireRemove(aChildToRemove);
 		} else {
@@ -262,8 +346,8 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	@Override
 	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
 		//Recursively remove all children
-		for (R4EUIParticipant participant : fParticipants) {
-			removeChildren(participant, aFileRemove);
+		for (R4EUIRuleArea area : fAreas) {
+			removeChildren(area, aFileRemove);
 		}
 	}
 	
@@ -277,9 +361,9 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
 		fListener = aProvider;
-		if (null != fParticipants) {
-			R4EUIParticipant element = null;
-			for (final Iterator<R4EUIParticipant> iterator = fParticipants.iterator(); iterator.hasNext();) {
+		if (null != fAreas) {
+			R4EUIRuleArea element = null;
+			for (final Iterator<R4EUIRuleArea> iterator = fAreas.iterator(); iterator.hasNext();) {
 				element = iterator.next();
 				element.addListener(aProvider);
 			}
@@ -293,9 +377,9 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	@Override
 	public void removeListener() {
 		fListener = null;
-		if (null != fParticipants) {
-			R4EUIParticipant element = null;
-			for (final Iterator<R4EUIParticipant> iterator = fParticipants.iterator(); iterator.hasNext();) {
+		if (null != fAreas) {
+			R4EUIRuleArea element = null;
+			for (final Iterator<R4EUIRuleArea> iterator = fAreas.iterator(); iterator.hasNext();) {
 				element = iterator.next();
 				element.removeListener();
 			}
@@ -303,6 +387,28 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	}
 	
 	//Commands
+	
+	/**
+	 * Method isOpenElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isOpenElementCmd()
+	 */
+	@Override
+	public boolean isOpenElementCmd() {
+		if (!isEnabled() || isOpen()) return false;
+		return true;
+	}
+	
+	/**
+	 * Method isCloseElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isCloseElementCmd()
+	 */
+	@Override
+	public boolean isCloseElementCmd() {
+		if (isEnabled() && isOpen()) return true;
+		return false;
+	}
 	
 	/**
 	 * Method isAddChildElementCmd.
@@ -333,5 +439,47 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	@Override
 	public String getAddChildElementCmdTooltip() {
 		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP; 
+	}
+	
+	/**
+	 * Method isRemoveElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isRemoveElementCmd()
+	 */
+	@Override
+	public boolean isRemoveElementCmd() {
+		if (!isOpen() && isEnabled()) return true;
+		return false;
+	}
+	
+	/**
+	 * Method isRestoreElementCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (isOpen() || isEnabled()) return false;
+		return true;
+	}
+	
+	/**
+	 * Method getRemoveElementCmdName.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdName()
+	 */
+	@Override
+	public String getRemoveElementCmdName() {
+		return REMOVE_ELEMENT_COMMAND_NAME;
+	}
+	
+	/**
+	 * Method getRemoveElementCmdTooltip.
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdTooltip()
+	 */
+	@Override
+	public String getRemoveElementCmdTooltip() {
+		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
 	}
 }

@@ -520,7 +520,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 			R4EUIModelController.setReviewer(store.getString(PreferenceConstants.P_USER_ID));
 			
-		} else if (event.getKey().equals(PreferenceConstants.P_FILE_PATH)) {
+		} else if (event.getKey().equals(PreferenceConstants.P_GROUP_FILE_PATH)) {
 			//Check what is currently loaded vs. what is in the preferences.  Adjust input accordingly
 			final List<IR4EUIModelElement> groupsLoaded = Arrays.asList(R4EUIModelController.getRootElement().getChildren());
 			final List<String> groupsPreferencesPaths = UIUtils.parseStringList((String) event.getNewValue());
@@ -594,6 +594,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 					store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runReviewElemsFilterCommand(
 					store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runHideRuleSetsFilterCommand(
+					store.getBoolean(PreferenceConstants.P_HIDE_RULE_SETS_FILTER));
 		} catch (ExecutionException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);

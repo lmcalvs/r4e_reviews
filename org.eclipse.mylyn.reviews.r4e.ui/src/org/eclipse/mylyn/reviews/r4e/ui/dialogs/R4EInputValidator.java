@@ -58,6 +58,12 @@ public class R4EInputValidator implements IInputValidator {
 	 */
 	private static final String FOLDER_GROUP_EXISTS_VALIDATION_ERROR_MESSAGE = "Folder already contains a Group File";
 	
+	/**
+	 * Field FILE_EXISTS_VALIDATION_ERROR_MESSAGE.
+	 * (value is ""File already exists"")
+	 */
+	private static final String FILE_EXISTS_VALIDATION_ERROR_MESSAGE = "File already exists";
+	
 	
 	// ------------------------------------------------------------------------
 	// Methods
@@ -77,15 +83,26 @@ public class R4EInputValidator implements IInputValidator {
 	}
 	
 	/**
-	 * Method isGroupExists.
+	 * Method isFolderEmpty.
 	 * @param newText String
 	 * @return String
 	 */
-	public String isFileExists(String newText) { // $codepro.audit.disable booleanMethodNamingConvention
+	public String isFolderEmpty(String newText) { // $codepro.audit.disable booleanMethodNamingConvention
 		final File dir = new File(newText);
 		final File[] files = dir.listFiles(new WildcardFileFilter(GROUP_WILDCARD_NAME));
 		 
 		if (files.length > 0) return FOLDER_GROUP_EXISTS_VALIDATION_ERROR_MESSAGE;
+		return null;
+	}
+	
+	/**
+	 * Method isFileExists.
+	 * @param newText String
+	 * @return String
+	 */
+	public String isFileExists(String newText) { // $codepro.audit.disable booleanMethodNamingConvention
+		final File file = new File(newText);
+		if (file.exists()) return FILE_EXISTS_VALIDATION_ERROR_MESSAGE;
 		return null;
 	}
 	

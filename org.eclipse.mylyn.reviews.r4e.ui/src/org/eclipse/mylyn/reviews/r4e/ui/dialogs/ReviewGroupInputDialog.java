@@ -20,6 +20,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.dialogs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -27,9 +28,12 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRootElement;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -72,37 +76,43 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * Field ADD_REVIEW_GROUP_NAME_DIALOG_VALUE.
 	 * (value is ""Enter the Review Group Name:"")
 	 */
-	private static final String ADD_REVIEW_GROUP_NAME_DIALOG_VALUE = "Group Name:";
+	private static final String ADD_REVIEW_GROUP_NAME_DIALOG_VALUE = "Group Name: ";
 	
 	/**
 	 * Field ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE.
 	 * (value is ""Enter the Review Group Folder:"")
 	 */
-	private static final String ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE = "Group Folder:";
+	private static final String ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE = "Group Folder: ";
 	
 	/**
 	 * Field ADD_REVIEW_GROUP_DESCRIPTION_DIALOG_VALUE.
 	 * (value is ""Enter the Review Group Description:"")
 	 */
-	private static final String ADD_REVIEW_GROUP_DESCRIPTION_DIALOG_VALUE = "Group Description:";
+	private static final String ADD_REVIEW_GROUP_DESCRIPTION_DIALOG_VALUE = "Group Description: ";
 	
 	/**
 	 * Field ADD_REVIEW_GROUP_AVAILABLE_PROJECTS_DIALOG_VALUE.
 	 * (value is ""Available Projects:"")
 	 */
-	private static final String ADD_REVIEW_GROUP_AVAILABLE_PROJECTS_DIALOG_VALUE = "Default Projects:";
+	private static final String ADD_REVIEW_GROUP_AVAILABLE_PROJECTS_DIALOG_VALUE = "Default Projects: ";
 	
 	/**
 	 * Field ADD_REVIEW_GROUP_AVAILABLE_COMPONENTS_DIALOG_VALUE.
 	 * (value is ""Available Components:"")
 	 */
-	private static final String ADD_REVIEW_GROUP_AVAILABLE_COMPONENTS_DIALOG_VALUE = "Default Components:";
+	private static final String ADD_REVIEW_GROUP_AVAILABLE_COMPONENTS_DIALOG_VALUE = "Default Components: ";
 	
 	/**
 	 * Field ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE.
 	 * (value is ""Default Entry Criteria:"")
 	 */
-	private static final String ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE = "Default Entry Criteria:";
+	private static final String ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE = "Default Entry Criteria: ";
+	
+	/**
+	 * Field ADD_RULE_SETS_DIALOG_VALUE.
+	 * (value is ""Rule Sets: "")
+	 */
+	private static final String ADD_RULE_SETS_DIALOG_VALUE = "Rule Sets: ";
 	
 	/**
 	 * Field BASIC_PARAMS_HEADER_MSG.
@@ -121,6 +131,11 @@ public class ReviewGroupInputDialog extends FormDialog {
 	// Member variables
 	// ------------------------------------------------------------------------
     
+	/**
+	 * Field fRootElement.
+	 */
+	protected final R4EUIRootElement fRootElement;
+	
     /**
      * The input value; the empty string by default.
      */
@@ -181,6 +196,16 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 */
 	private Text fDefaultEntryCriteriaTextField = null;
     
+	/**
+	 * Field fRuleSets.
+	 */
+	private EditableListWidget fRuleSets = null;
+
+	/**
+	 * Field fRuleSetsValues.
+	 */
+	private String[] fRuleSetsValues = null;
+	
     /**
      * The input validator, or <code>null</code> if none.
      */
@@ -196,9 +221,10 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * Constructor for R4EReviewGroupInputDialog.
 	 * @param aParentShell Shell
 	 */
-	public ReviewGroupInputDialog(Shell aParentShell) {
+	public ReviewGroupInputDialog(Shell aParentShell, R4EUIRootElement aRootElement) {
 		super(aParentShell);
     	setBlockOnOpen(true);
+    	fRootElement = aRootElement;
 		fValidator = new R4EInputValidator();
 	}
 	
@@ -226,6 +252,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			} 
+			fGroupNameValue = fGroupNameInputTextField.getText();
 
 			//Validate Folder
 			validateResult = validateFolderInput(fGroupFolderInputTextField);
@@ -246,8 +273,9 @@ public class ReviewGroupInputDialog extends FormDialog {
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
-			} 
-			
+			}
+			fGroupFolderValue = fGroupFolderInputTextField.getText();
+
         	//Validate Projects (optional)
         	final ArrayList<String> projectsValues = new ArrayList<String>();
 			for (Item item : fAvailableProjects.getItems()) {	
@@ -274,9 +302,20 @@ public class ReviewGroupInputDialog extends FormDialog {
         		fDefaultEntryCriteriaValue = fDefaultEntryCriteriaTextField.getText();
         	}
         	
-			fGroupNameValue = fGroupNameInputTextField.getText();
-			fGroupFolderValue = fGroupFolderInputTextField.getText();
+        	//Validate Rule Sets (optional)
+        	final ArrayList<String> ruleSetLocationsValues = new ArrayList<String>();
+			for (Item item : fRuleSets.getItems()) {
+	        	validateResult = validateEmptyInput(item.getText());
+	        	if (null == validateResult) {
+	        		ruleSetLocationsValues.add(item.getText());
+	        	}
+			}
+			fRuleSetsValues = ruleSetLocationsValues.toArray(new String[ruleSetLocationsValues.size()]);
+        	
+        	
+        	
 			fGroupDescriptionValue = fGroupDescriptionInputTextField.getText();
+
 		} else {
 			fGroupNameValue = null;
 			fGroupFolderValue = null;
@@ -419,6 +458,20 @@ public class ReviewGroupInputDialog extends FormDialog {
         textGridData.horizontalSpan = 3;
         textGridData.heightHint = fGroupNameInputTextField.getLineHeight() * 3;
         fDefaultEntryCriteriaTextField.setLayoutData(textGridData);
+        
+        //RuleSet references
+        label = toolkit.createLabel(extraSectionClient, ADD_RULE_SETS_DIALOG_VALUE);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        List<R4EUIRuleSet> uiRuleSets = fRootElement.getRuleSets();
+        List<String> ruleLocations = new ArrayList<String>();
+        for (R4EUIRuleSet ruleSet : uiRuleSets) {
+        	ruleLocations.add(ruleSet.getRuleSet().getFilePaths().get(0));
+        }
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		fRuleSets = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
+        		(String[]) ruleLocations.toArray());
+		if (0 == ruleLocations.size()) fRuleSets.setEnabled(false);    
 	}
 	
     /**
@@ -498,6 +551,14 @@ public class ReviewGroupInputDialog extends FormDialog {
     }
     
     /**
+     * Returns the strings typed into this input dialog.
+     * @return the Rule Set input strings
+     */
+    public String[] getRuleSetValues() {
+        return fRuleSetsValues;
+    }
+    
+    /**
      * Validates the input.
      * <p>
      * The default implementation of this framework method delegates the request
@@ -518,7 +579,7 @@ public class ReviewGroupInputDialog extends FormDialog {
      * @return String
      */
     private String validateGroupExists(Text aText) {
-    	return ((R4EInputValidator) fValidator).isFileExists(aText.getText());
+    	return ((R4EInputValidator) fValidator).isFolderEmpty(aText.getText());
     }
     
     /**

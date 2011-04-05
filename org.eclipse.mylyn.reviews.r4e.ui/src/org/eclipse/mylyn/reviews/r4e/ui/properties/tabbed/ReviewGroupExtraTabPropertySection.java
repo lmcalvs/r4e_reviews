@@ -17,17 +17,23 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRootElement;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.IEditableListListener;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -61,9 +67,14 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 	protected EditableListWidget fAvailableComponents = null;
 	
 	/**
-	 * Field FEntryCriteriaText.
+	 * Field fDefaultEntryCriteriaText.
 	 */
 	protected Text fDefaultEntryCriteriaText = null;
+	
+	/**
+	 * Field fRuleSets.
+	 */
+	protected EditableListWidget fRuleSetLocations = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -168,6 +179,22 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		data.right = new FormAttachment(fDefaultEntryCriteriaText, -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fDefaultEntryCriteriaText, 0, SWT.TOP);
 		entryCriteriaLabel.setLayoutData(data);
+		
+		//Rule Sets
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fDefaultEntryCriteriaText, ITabbedPropertyConstants.VSPACE);
+		fRuleSetLocations = new EditableListWidget(widgetFactory, composite, data, this, 3, CCombo.class, null);
+		
+	    final CLabel ruleSetsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RULE_SETS_LABEL);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, 0);
+	    data.right = new FormAttachment(fRuleSetLocations.getComposite(), -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fRuleSetLocations.getComposite(), 0, SWT.TOP);
+	    ruleSetsLabel.setLayoutData(data);
+	    
+
 	}
 	
 	/**
@@ -177,9 +204,9 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EReviewGroup modelReview = ((R4EUIReviewGroup)fProperties.getElement()).getGroup();
+		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getGroup();
 	
-		final String[] projects = (String[]) modelReview.getAvailableProjects().toArray();
+		final String[] projects = (String[]) modelGroup.getAvailableProjects().toArray();
 		fAvailableProjects.clearAll();
 		Item item = null;
 		for (int i = 0; i < projects.length; i++) {
@@ -192,7 +219,8 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 			}
 			item.setText(project);
 		}
-		final String[] components = (String[]) modelReview.getAvailableComponents().toArray();
+		
+		final String[] components = (String[]) modelGroup.getAvailableComponents().toArray();
 		fAvailableComponents.clearAll();
 		for (int i = 0; i < components.length; i++) {
 			String component  = components[i];
@@ -204,7 +232,28 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 			}
 			item.setText(component);
 		}
-		fDefaultEntryCriteriaText.setText(modelReview.getDefaultEntryCriteria());
+		fDefaultEntryCriteriaText.setText(modelGroup.getDefaultEntryCriteria());
+		
+		List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement)((R4EUIReviewGroup)fProperties.getElement()).getParent()).getRuleSets();
+		List<String> ruleSetLocations = new ArrayList<String>();
+		for (R4EUIRuleSet uiRuleSet : uiRuleSets) {
+			ruleSetLocations.add(uiRuleSet.getRuleSet().getFilePaths().get(0));
+		}
+		fRuleSetLocations.setEditableValues((String[]) ruleSetLocations.toArray());
+		final String[] ruleSetsLocations = (String[]) modelGroup.getDesignRuleLocations().toArray();
+		fRuleSetLocations.clearAll();
+		item = null;
+		for (int i = 0; i < ruleSetsLocations.length; i++) {
+			String ruleSet  = ruleSetsLocations[i];
+			if (i >= fRuleSetLocations.getItemCount()) {
+				item = fRuleSetLocations.addItem();
+			} else {
+				item = fRuleSetLocations.getItem(i);
+				if (null == item) item = fRuleSetLocations.addItem();
+			}
+			item.setText(ruleSet);
+		}
+
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -218,10 +267,12 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 			fAvailableProjects.setEnabled(false);
 			fAvailableComponents.setEnabled(false);
 			fDefaultEntryCriteriaText.setEnabled(false);
+			fRuleSetLocations.setEnabled(false);
 		} else {
 			fAvailableProjects.setEnabled(true);
 			fAvailableComponents.setEnabled(true);
 			fDefaultEntryCriteriaText.setEnabled(true);
+			fRuleSetLocations.setEnabled(true);
 		}
 	}
 
@@ -234,34 +285,49 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 	public void itemsUpdated(Item[] aItems, int aInstanceId) {
 		// Update the core model data with new data
 		try {
-			if (1 == aInstanceId) {
-				//First widget: available projects
-				if (!fRefreshInProgress) {
-					final String currentUser = R4EUIModelController.getReviewer();
-					final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getReviewGroup();
-					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+			if (!fRefreshInProgress) {
+				final String currentUser = R4EUIModelController.getReviewer();
+				final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getReviewGroup();
+				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+				if (1 == aInstanceId) {
+					//First widget: available projects
 					final EList<String> projects = modelGroup.getAvailableProjects();
 					projects.clear();
 					for (Item item : aItems) {
 						projects.add(item.getText());
 					}
-					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-				}
-			} else if (2 == aInstanceId) {
-				//Second widget: available components
-				if (!fRefreshInProgress) {
-					final String currentUser = R4EUIModelController.getReviewer();
-					final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getReviewGroup();
-					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+				} else if (2 == aInstanceId) {
+					//Second widget: available components
 					final EList<String> components = modelGroup.getAvailableComponents();
 					components.clear();
 					for (Item item : aItems) {
 						components.add(item.getText());
 					}
-					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				} else if (3 == aInstanceId) {
+					//Third widget: applied Rule Sets
+					final EList<String> ruleSetLocations = modelGroup.getDesignRuleLocations();
+					ruleSetLocations.clear();
+					((R4EUIReviewGroup)fProperties.getElement()).getRuleSets().clear();
+					for (Item item : aItems) {
+						ruleSetLocations.add(item.getText());
+						//Update references in R4EUIReviewGroup
+						for (R4EUIRuleSet ruleSet : ((R4EUIRootElement)((R4EUIReviewGroup)fProperties.getElement()).getParent()).getRuleSets())
+						{
+							if (ruleSet.getRuleSet().getFilePaths().get(0).equals(item.getText())) {
+								ruleSet.close();
+								ruleSet.open();
+								((R4EUIReviewGroup)fProperties.getElement()).getRuleSets().add(ruleSet);
+								break;
+							}
+						}
+					}
+					
+
 				}
+				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				refresh();
 			}
-			refresh();
+
 		} catch (ResourceHandlingException e1) {
 			UIUtils.displayResourceErrorDialog(e1);
 		} catch (OutOfSyncException e1) {

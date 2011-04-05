@@ -214,12 +214,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	//Icons
 	
 	/**
-	 * Field fReviewGroupFile.
-	 * (value is ""icons/obj16/revgrp_obj.gif"")
-	 */
-	public static final String REVIEW_GROUP_ICON_FILE = "icons/obj16/revgrp_obj.gif";
-	
-	/**
 	 * Field BUTTON_ADD_LABEL.
 	 * (value is ""Add"")
 	 */
@@ -492,6 +486,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String VERSION_LABEL = "Version: ";
 	
 	/**
+	 * Field FILE_LABEL.
+	 * (value is ""File: "")
+	 */
+	public static final String FILE_LABEL = "File: ";
+	
+	/**
 	 * Field POSITION_LABEL.
 	 * (value is ""Position: "")
 	 */
@@ -568,6 +568,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""Follow-up by: "")
 	 */
 	public static final String FOLLOWUP_BY_LABEL = "Follow-up by: ";
+	
+	/**
+	 * Field RULE_SETS_LABEL.
+	 * (value is ""Applied Rule Sets: "")
+	 */
+	public static final String RULE_SETS_LABEL = "Applied Rule Sets: ";
 	
 	/**
 	 * Field DEFAULT_DATE_FORMAT.
@@ -674,6 +680,61 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String[] PARTICIPANT_ROLES = { R4EUIConstants.USER_ROLE_LEAD, 
 		R4EUIConstants.USER_ROLE_AUTHOR, R4EUIConstants.USER_ROLE_REVIEWER, USER_ROLE_ORGANIZER };
 	
+	//Anomaly Classes & Ranks
+	
+	/**
+	 * Field ANOMALY_CLASS_ERRONEOUS.
+	 * (value is ""Erroneous"")
+	 */
+	public static final String ANOMALY_CLASS_ERRONEOUS = "Erroneous";
+	
+	/**
+	 * Field ANOMALY_CLASS_SUPERFLUOUS.
+	 * (value is ""Superfluous"")
+	 */
+	public static final String ANOMALY_CLASS_SUPERFLUOUS = "Superfluous";
+	
+	/**
+	 * Field ANOMALY_CLASS_IMPROVEMENT.
+	 * (value is ""Improvement"")
+	 */
+	public static final String ANOMALY_CLASS_IMPROVEMENT = "Improvement";
+	
+	/**
+	 * Field ANOMALY_CLASS_QUESTION.
+	 * (value is ""Question"")
+	 */
+	public static final String ANOMALY_CLASS_QUESTION = "Question";
+	
+	/**
+	 * Field ANOMALY_RANK_NONE.
+	 * (value is ""NONE"")
+	 */
+	public static final String ANOMALY_RANK_NONE = "NONE";
+	
+	/**
+	 * Field ANOMALY_RANK_MINOR.
+	 * (value is ""MINOR"")
+	 */
+	public static final String ANOMALY_RANK_MINOR = "MINOR";
+	/**
+	 * Field ANOMALY_RANK_MAJOR.
+	 * (value is ""MAJOR"")
+	 */
+	public static final String ANOMALY_RANK_MAJOR = "MAJOR";
+	
+	/**
+	 * Field RANK_VALUES.
+	 */
+	public static final String[] RANK_VALUES = { R4EUIConstants.ANOMALY_RANK_NONE, R4EUIConstants.ANOMALY_RANK_MINOR,
+		R4EUIConstants.ANOMALY_RANK_MAJOR };  //NOTE: This has to match R4EAnomalyRank in R4E core plugin
+	
+	/**
+	 * Field CLASS_VALUES.
+	 */
+	public static final String[] CLASS_VALUES = { R4EUIConstants.ANOMALY_CLASS_ERRONEOUS, R4EUIConstants.ANOMALY_CLASS_SUPERFLUOUS,
+		R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT, R4EUIConstants.ANOMALY_CLASS_QUESTION };  //NOTE: This has to match CommentType in R4E core plugin
+
 	
 	//Commands
 	
@@ -898,6 +959,31 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""e"")
 	 */
 	public static final String REVIEWED_ELEMS_FILTER_MNEMONIC = "e";
+	
+	/**
+	 * Field HIDE_RULE_SETS_FILTER_COMMAND.
+	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideRuleSets"")
+	 */
+	public static final String HIDE_RULE_SETS_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideRuleSets";
+	
+	/**
+	 * Field HIDE_RULE_SETS_FILTER_NAME.
+	 * (value is ""Hide Rule Sets"")
+	 */
+	public static final String HIDE_RULE_SETS_FILTER_NAME = "Hide Rule Sets";
+	
+	/**
+	 * Field HIDE_RULE_SETS_FILTER_TOOLTIP.
+	 * (value is ""Hide Rule Sets"")
+	 */
+	public static final String HIDE_RULE_SETS_FILTER_TOOLTIP = "Hide Rule Sets";
+	
+	/**
+	 * Field HIDE_RULE_SETS_FILTER_MNEMONIC.
+	 * (value is ""n"")
+	 */
+	public static final String HIDE_RULE_SETS_FILTER_MNEMONIC = "n";
+	
 	
 	/**
 	 * Field REMOVE_ALL_FILTER_COMMAND.

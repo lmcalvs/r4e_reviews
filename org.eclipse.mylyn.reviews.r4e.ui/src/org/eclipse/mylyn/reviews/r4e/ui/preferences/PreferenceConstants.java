@@ -47,17 +47,22 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	/**
 	 * The file path preference name
 	 */
-	public static final String P_FILE_PATH = "filePathPreference";	
+	public static final String P_GROUP_FILE_PATH = "groupFilePathPreference";	
 	
 	/**
 	 * The FilePathEditor main label text
 	 */
-	public static final String P_FILE_PATH_LABEL =  "Review Group Files:";
+	public static final String P_GROUP_FILE_PATH_LABEL =  "Review Group Files:";
+	
+	/**
+	 * The file path preference name
+	 */
+	public static final String P_RULE_SET_FILE_PATH = "ruleSetFilePathPreference";	
 	
 	/**
 	 * The review group file extension
 	 */
-	public static final String P_REVIEW_GROUP_FILE_EXT = "*.xrer";
+	public static final String P_R4E_FILE_EXT = "*.xrer";
 	
 	/**
 	 * Field P_SHOW_DISABLED.
@@ -100,4 +105,11 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	 * (value is ""reviewItemsFilter"")
 	 */
 	public static final String P_REVIEWED_ITEMS_FILTER = "reviewItemsFilter";
+	
+	/**
+	 * Field P_HIDE_RULE_SETS_FILTER.
+	 * (value is ""hideRuleSetsFilter"")
+	 */
+	public static final String P_HIDE_RULE_SETS_FILTER = "hideRuleSetsFilter";
+	
 }
