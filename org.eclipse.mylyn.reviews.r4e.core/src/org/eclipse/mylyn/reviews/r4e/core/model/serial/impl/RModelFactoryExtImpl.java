@@ -52,6 +52,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
@@ -170,7 +171,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			return;
 		}
 
-		// Associate the usrRewviews to the group ResrourceSet
+		// Associate the usrReviews to the group ResrourceSet
 		associateToResourceSet(group, usrReviews);
 
 		// keep reference to all userReviews within group
@@ -744,6 +745,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		resource.getContents().add(fileContext);
 
 		R4EUser user = (R4EUser) item.eContainer();
+		
 		// Create an R4EID for the context
 		R4EID contextID = RModelFactoryExt.eINSTANCE.createR4EID();
 		contextID.setSequenceID(user.getSequenceIDCounterNext());
@@ -829,7 +831,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			return null;
 		}
 
-		// Crate delta
+		// Create delta
 		delta = RModelFactoryExt.eINSTANCE.createR4EDelta();
 
 		// Create an R4EID
@@ -1349,17 +1351,25 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			throws ResourceHandlingException {
 
 		URI fileGroupURI = fWriter.createResourceURI(aRuleCollectionName, aFolderPath, ResourceType.DRULE_SET);
+		
 		// create a new ResourceSet and resource for the given group
 		Resource resource = fWriter.createResourceSetWithResource(fileGroupURI);
-		R4EDesignRuleCollection ruleSet = RModelFactory.eINSTANCE.createR4EDesignRuleCollection(aFolderPath,
-				aRuleCollectionName);
-
+		R4EDesignRuleCollection ruleSet = DRModelFactory.eINSTANCE.createR4EDesignRuleCollection();
 		resource.getContents().add(ruleSet);
+		
 		// Update the resource
 		ruleSet.setName(aRuleCollectionName);
 		ruleSet.setFolder(ruleSet.eResource().getURI().trimSegments(1).devicePath().toString());
 		fWriter.saveResource(resource);
 
+		// Make sure a local review repository exist in this location
+		File ruleSetFolder = new File(aFolderPath.devicePath());
+		try {
+			checkOrCreateRepo(ruleSetFolder);
+		} catch (ReviewsFileStorageException e) {
+			throw new ResourceHandlingException(e);
+		}
+		
 		return ruleSet;
 	}
 
@@ -1376,6 +1386,20 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		// update the transient value of folder
 		ruleSet.setFolder(ruleSet.eResource().getURI().trimSegments(1).devicePath().toString());
 
+		//TODO this is buggy because all children will be added to all parents.  This is wrong.
+		List<R4EDesignRuleArea> areas = fReader.deserializeElements(aResourcePath, R4EDesignRuleArea.class);
+		for (R4EDesignRuleArea area : areas) {
+			ruleSet.getAreas().add(area);
+			List<R4EDesignRuleViolation> violations = fReader.deserializeElements(aResourcePath, R4EDesignRuleViolation.class);
+			for (R4EDesignRuleViolation violation : violations) {
+				area.getViolations().add(violation);
+				List<R4EDesignRule> rules = fReader.deserializeElements(aResourcePath, R4EDesignRule.class);
+				for (R4EDesignRule rule : rules) {
+					violation.getRules().add(rule);
+				}
+			}
+		}
+		
 		return ruleSet;
 	}
 
@@ -1404,14 +1428,13 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			Activator.fTracer.traceDebug(sb.toString());
 			return sb.toString();
 		}
-
 		EList<Resource> resList = resSet.getResources();
 
-		// unload then all
+		//TODO:  Here, unlike the R4EReviewGroup, we need to close all child resources recursively, down to the R4EDesignRule elements
+		// unload them all
 		for (Resource res : resList) {
 			res.unload();
 		}
-
 		return null;
 	}
 
@@ -1432,13 +1455,14 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			throw new ResourceHandlingException(sb.toString());
 		}
 
-		// Crate design rule area
-		darea = RModelFactoryExt.eINSTANCE.createR4EDesignRuleArea(aRuleCollection);
+		// Create design rule area
+		darea = DRModelFactory.eINSTANCE.createR4EDesignRuleArea();
 
 		// Associate the design rule area to the context resource
 		aRuleCollection.getAreas().add(darea);
-		// Save the resource
 		aRuleCollection.eResource().getContents().add(darea);
+		
+		// Save the resource
 		fWriter.saveResource(darea.eResource());
 
 		return darea;
@@ -1462,15 +1486,17 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		}
 
 		// Crate design rule violation
-		drViolation = RModelFactoryExt.eINSTANCE.createR4EDesignRuleViolation(aRuleArea);
+		drViolation = DRModelFactory.eINSTANCE.createR4EDesignRuleViolation();
 
 		// Associate the design rule violation to the context resource
 		aRuleArea.getViolations().add(drViolation);
+
 		// Save the resource
 		aRuleArea.eResource().getContents().add(drViolation);
 		fWriter.saveResource(drViolation.eResource());
 
 		return drViolation;
+		
 	}
 
 	/*
@@ -1490,10 +1516,11 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		}
 
 		// Crate design rule
-		dRule = RModelFactoryExt.eINSTANCE.createR4EDesignRule(aViolation);
+		dRule = DRModelFactory.eINSTANCE.createR4EDesignRule();
 
 		// Associate the design rule to the context resource
 		aViolation.getRules().add(dRule);
+		
 		// Save the resource
 		aViolation.eResource().getContents().add(dRule);
 		fWriter.saveResource(dRule.eResource());

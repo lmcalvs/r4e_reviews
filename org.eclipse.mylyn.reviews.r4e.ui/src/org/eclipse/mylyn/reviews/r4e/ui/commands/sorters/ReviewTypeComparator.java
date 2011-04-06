@@ -16,7 +16,6 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.commands.sorters;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.NavigatorElementComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;

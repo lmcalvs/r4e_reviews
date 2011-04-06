@@ -22,6 +22,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.model;
 import java.io.FileNotFoundException;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -315,7 +316,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws ResourceHandlingException 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
-    public R4EReviewComponent createChildModelDataElement() {
+    public ReviewComponent createChildModelDataElement() {
     	//default implementation
     	return null;
     }
@@ -327,7 +328,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
-    public void setModelData(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+    public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
     	//default implementation
     }
     
@@ -376,7 +377,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildren(R4EReviewComponent)
 	 */
-	public IR4EUIModelElement createChildren(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable unnecessaryExceptions
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable unnecessaryExceptions
 		return null;
 		// default implementation
 	}

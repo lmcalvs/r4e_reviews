@@ -24,7 +24,25 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRule;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleArea;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleSet;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleViolation;
+import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
+import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorLabelProvider;
+import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorTreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -77,6 +95,19 @@ public class AnomalyInputDialog extends FormDialog {
 	 */
 	private static final String BASIC_PARAMS_HEADER_MSG = "Enter the mandatory basic parameters for this anomaly";
 	
+	/**
+	 * Field EXTRA_PARAMS_HEADER_MSG.
+	 * (value is ""Enter the optional extra parameters for this Review Group"")
+	 */
+	private static final String EXTRA_PARAMS_HEADER_MSG = "Enter the optional extra parameters for this Review";
+	
+	/**
+	 * Field ADD_RULE_DIALOG_VALUE.
+	 * (value is ""Rule: "")
+	 */
+	private static final String ADD_RULE_DIALOG_VALUE = "Rule Tree " +
+			"(Take note that the Anomaly will be created with the Design Rule default values)";
+	
 	
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -90,7 +121,7 @@ public class AnomalyInputDialog extends FormDialog {
 	/**
 	 * Field fAnomalyTitleInputTextField.
 	 */
-	private Text fAnomalyTitleInputTextField = null;
+	protected Text fAnomalyTitleInputTextField = null;
 	
 	/**
 	 * Field fAnomalyDescriptionValue.
@@ -100,8 +131,18 @@ public class AnomalyInputDialog extends FormDialog {
 	/**
 	 * Field fAnomalyDescriptionInputTextField.
 	 */
-    private Text fAnomalyDescriptionInputTextField;
-    
+    protected Text fAnomalyDescriptionInputTextField;
+	
+	/**
+	 * Field fRuleTreeViewer.
+	 */
+	protected TreeViewer fRuleTreeViewer = null;
+	
+	/**
+	 * Field fRuleReferenceValue.
+	 */
+	private R4EUIRule fRuleReferenceValue = null;
+	
     /**
      * The input validator, or <code>null</code> if none.
      */
@@ -161,9 +202,18 @@ public class AnomalyInputDialog extends FormDialog {
         	}
         	fAnomalyDescriptionValue = fAnomalyDescriptionInputTextField.getText();
         	
+        	//Validate R4EUIRule (if present)
+        	fRuleReferenceValue = null;
+        	if (fRuleTreeViewer.getSelection() instanceof IStructuredSelection) {
+        		IStructuredSelection selection;
+        		if (null != (selection = ((IStructuredSelection)fRuleTreeViewer.getSelection()))) {
+        			fRuleReferenceValue = (R4EUIRule) selection.getFirstElement();
+        		}
+        	}
         } else {
         	fAnomalyTitleValue = null;
         	fAnomalyDescriptionValue = null;
+        	fRuleReferenceValue = null;
         }
 		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
         super.buttonPressed(buttonId);
@@ -234,6 +284,133 @@ public class AnomalyInputDialog extends FormDialog {
         textGridData.horizontalSpan = 3;
         textGridData.heightHint = fAnomalyTitleInputTextField.getLineHeight() * 3;
         fAnomalyDescriptionInputTextField.setLayoutData(textGridData);
+        
+        //Extra parameters section
+        final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
+        		  ExpandableComposite.TWISTIE);
+        final GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        extraSectionGridData.horizontalSpan = 4;
+        extraSection.setLayoutData(extraSectionGridData);
+        extraSection.setText(R4EUIConstants.EXTRA_PARAMS_HEADER);
+        extraSection.setDescription(EXTRA_PARAMS_HEADER_MSG);
+        extraSection.addExpansionListener(new ExpansionAdapter()
+		{
+			@Override
+			public void expansionStateChanged(ExpansionEvent e){
+				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			}
+		});
+        
+        final Composite extraSectionClient = toolkit.createComposite(extraSection);
+        extraSectionClient.setLayout(layout);
+        extraSection.setClient(extraSectionClient);
+        
+        //Rule Tree
+        label = toolkit.createLabel(extraSectionClient, ADD_RULE_DIALOG_VALUE);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        
+        fRuleTreeViewer = new ReviewNavigatorTreeViewer(extraSectionClient, SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL);
+        fRuleTreeViewer.setUseHashlookup(true);
+        fRuleTreeViewer.getTree().setHeaderVisible(true);
+        fRuleTreeViewer.setContentProvider(new ReviewNavigatorContentProvider());
+        
+		TreeViewerColumn elementColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
+		elementColumn.getColumn().setText("Rule Tree");
+		elementColumn.setLabelProvider(new ReviewNavigatorLabelProvider());
+        
+		TreeViewerColumn idColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
+		idColumn.getColumn().setText("Rule ID");
+		idColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof R4EUIRule) {
+					return ((R4EUIRule)element).getRule().getId();
+				}
+				return null;
+			}
+		});
+        
+		TreeViewerColumn classColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
+		classColumn.getColumn().setText("Rule Class");
+		classColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof R4EUIRule) {
+					return ((R4EUIRule)element).getRule().getClass().getName();
+				}
+				return null;
+			}
+		});
+        
+		TreeViewerColumn rankColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
+		rankColumn.getColumn().setText("Rule Rank");
+		rankColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof R4EUIRule) {
+					return ((R4EUIRule)element).getRule().getRank().getName();
+				}
+				return null;
+			}
+		});
+		
+		TreeViewerColumn titleColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
+		titleColumn.getColumn().setText("Rule Title");
+		titleColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof R4EUIRule) {
+					return ((R4EUIRule)element).getRule().getTitle();
+				}
+				return null;
+			}
+		});
+		
+		fRuleTreeViewer.setInput(R4EUIModelController.getRootElement());
+		fRuleTreeViewer.addFilter(new ViewerFilter() {		
+			@Override
+			public boolean select(Viewer viewer, Object parentElement, Object element) {
+		        //Only display rule sets that are included in the parent review group
+				if (element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea || element instanceof R4EUIRuleViolation ||
+						element instanceof R4EUIRule) {
+					//Get parent RuleSet
+					IR4EUIModelElement parentRuleSetElement = (IR4EUIModelElement) element;
+					while (!(parentRuleSetElement instanceof R4EUIRuleSet) || null != parentRuleSetElement.getParent()) {
+						parentRuleSetElement = parentRuleSetElement.getParent();
+					}
+					//If the current reveiw group contains a reference to this Rule Set, display it
+					if ((((R4EUIReviewGroup) R4EUIModelController.getActiveReview().getParent()).getRuleSets().
+							contains(parentRuleSetElement))) {
+						return true;
+					}		
+				}
+				return false;
+			}
+		});
+		fRuleTreeViewer.refresh();
+
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 4;
+		fRuleTreeViewer.getTree().setLayoutData(textGridData);
+		
+		fRuleTreeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				//Only Rules are selectable
+				if(event.getSelection() instanceof IStructuredSelection ) {
+					if (((IStructuredSelection)event.getSelection()).getFirstElement() instanceof R4EUIRule) {
+						R4EUIRule rule = (R4EUIRule) ((IStructuredSelection)event.getSelection()).getFirstElement();
+						fAnomalyTitleInputTextField.setText(rule.getRule().getTitle());
+						fAnomalyDescriptionInputTextField.setText(rule.getRule().getDescription());
+						return;
+					}
+				}
+				fRuleTreeViewer.setSelection(null);
+			}
+		});
+
+
+		
+		
     }
     
 	/**
@@ -260,6 +437,14 @@ public class AnomalyInputDialog extends FormDialog {
      */
     public String getAnomalyDescriptionValue() {
         return fAnomalyDescriptionValue;
+    }
+    
+    /**
+     * Returns the string typed into this input dialog.
+     * @return the R4EUIRule reference (if any)
+     */
+    public R4EUIRule getRuleReferenceValue() {
+        return fRuleReferenceValue;
     }
     
     /**

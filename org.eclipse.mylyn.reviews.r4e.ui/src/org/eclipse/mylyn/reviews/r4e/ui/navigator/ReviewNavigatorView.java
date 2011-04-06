@@ -62,6 +62,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRootElement;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -387,7 +388,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 				final IStructuredSelection selection = (IStructuredSelection)event.getSelection();
 				final IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
-				if (element instanceof R4EUIReviewBasic || element instanceof R4EUIReviewGroup) {
+				if (element instanceof R4EUIReviewBasic || element instanceof R4EUIReviewGroup ||
+						element instanceof R4EUIRuleSet) {
 					try {
 						//open or close review if ReviewElement is double-clicked
 						if (element.isEnabled()) {
@@ -520,9 +522,9 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 			R4EUIModelController.setReviewer(store.getString(PreferenceConstants.P_USER_ID));
 			
-		} else if (event.getKey().equals(PreferenceConstants.P_FILE_PATH)) {
+		} else if (event.getKey().equals(PreferenceConstants.P_GROUP_FILE_PATH)) {
 			//Check what is currently loaded vs. what is in the preferences.  Adjust input accordingly
-			final List<IR4EUIModelElement> groupsLoaded = Arrays.asList(R4EUIModelController.getRootElement().getChildren());
+			final List<R4EUIReviewGroup> groupsLoaded = Arrays.asList(((R4EUIRootElement)R4EUIModelController.getRootElement()).getGroups());
 			final List<String> groupsPreferencesPaths = UIUtils.parseStringList((String) event.getNewValue());
 
 			//Convert the loaded groups array to array of File Paths
@@ -594,6 +596,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 					store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runReviewElemsFilterCommand(
 					store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runHideRuleSetsFilterCommand(
+					store.getBoolean(PreferenceConstants.P_HIDE_RULE_SETS_FILTER));
 		} catch (ExecutionException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);

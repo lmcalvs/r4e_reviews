@@ -29,6 +29,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.Review;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -57,16 +58,16 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	 
-	/**
-	 * Field REVIEW_GROUP_FILE_PREFIX.
-	 * (value is ""File location: "")
-	 */
-	private static final String REVIEW_GROUP_FILE_PREFIX = "File Location: ";
 	
 	/**
-	 * Field fReviewGroupFile.
+	 * Field REVIEW_GROUP_ICON_FILE.
 	 * (value is ""icons/obj16/revgrp_obj.gif"")
+	 */
+	private static final String REVIEW_GROUP_ICON_FILE = "icons/obj16/revgrp_obj.gif";
+	
+	/**
+	 * Field REVIEW_GROUP_CLOSED_ICON_FILE.
+	 * (value is ""icons/obj16/revgrpclsd_obj.gif"")
 	 */
 	private static final String REVIEW_GROUP_CLOSED_ICON_FILE = "icons/obj16/revgrpclsd_obj.gif";
 	
@@ -114,6 +115,11 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	private final List<R4EUIReviewBasic> fReviews;
 	
+	/**
+	 * Field fRuleSets.
+	 */
+	private final List<R4EUIRuleSet> fRuleSets;
+	
 	
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -126,12 +132,13 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @param aOpen boolean
 	 */
 	public R4EUIReviewGroup(IR4EUIModelElement aParent, R4EReviewGroup aGroup, boolean aOpen) {
-		super(aParent, aGroup.getName(), REVIEW_GROUP_FILE_PREFIX + aGroup.eResource().getURI().devicePath());
+		super(aParent, aGroup.getName(), R4EUIConstants.FILE_LOCATION_LABEL + aGroup.eResource().getURI().devicePath());
 		fGroup = aGroup;
 		fGroupFileURI = aGroup.eResource().getURI();
 		fReviews = new ArrayList<R4EUIReviewBasic>();
+		fRuleSets = new ArrayList<R4EUIRuleSet>();
 		if (aOpen) {
-			setImage(R4EUIConstants.REVIEW_GROUP_ICON_FILE);
+			setImage(REVIEW_GROUP_ICON_FILE);
 			fOpen = true;
 		} else {
 			setImage(REVIEW_GROUP_CLOSED_ICON_FILE);
@@ -168,11 +175,11 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	}
 
 	/**
-	 * Method getGroupURI.
-	 * @return URI
+	 * Method getRuleSets.
+	 * @return List<R4EUIRuleSet>
 	 */
-	public URI getGroupURI() {
-		return fGroupFileURI;
+	public List<R4EUIRuleSet> getRuleSets() {
+		return fRuleSets;
 	}
 	
 	/**
@@ -183,7 +190,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
 	@Override
-	public void setModelData(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
     	//Set data in model element
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
 		fGroup.setDescription(((R4EReviewGroup)aModelComponent).getDescription());
@@ -199,7 +206,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
 	@Override
-	public R4EReviewComponent createChildModelDataElement() {
+	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EReview tempReview = null;
 		R4EUIModelController.setDialogOpen(true);
@@ -249,8 +256,8 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			review.removeListener();
 			fireRemove(review);
 		}
-		
 		fReviews.clear();
+		fRuleSets.clear();
 		fOpen = false;
 		R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup);   //Notify model
 		fImage = UIUtils.loadIcon(REVIEW_GROUP_CLOSED_ICON_FILE);
@@ -295,8 +302,23 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 				}
 			}
 		}
+		
+		//Close and Reopen the RulesSet to make sure we have the latest information
+		List<String> ruleSetlocations = fGroup.getDesignRuleLocations();
+		for (String ruleSetlocation : ruleSetlocations) {
+			for (R4EUIRuleSet ruleSet : ((R4EUIRootElement)getParent()).getRuleSets())
+			{
+				if (ruleSet.getRuleSet().eResource().getURI().toFileString().equals(ruleSetlocation)) {
+					ruleSet.close();
+					ruleSet.open();
+					fRuleSets.add(ruleSet);
+					break;
+				}
+			}
+		}
+		
 		fOpen = true;
-		fImage = UIUtils.loadIcon(R4EUIConstants.REVIEW_GROUP_ICON_FILE);
+		fImage = UIUtils.loadIcon(REVIEW_GROUP_ICON_FILE);
 		fireReviewStateChanged(this);
 	}
 	
@@ -320,7 +342,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
 		//NOTE we need to open the model element temporarly to be able to set the enabled state
-		fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(getGroupURI());
+		fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(fGroupFileURI);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
 		fGroup.setEnabled(aEnabled);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -373,7 +395,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildren(R4EReviewComponent)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		
 		final String reviewName = ((R4EReview)aModelComponent).getName();
 		final R4EReviewType type = ((R4EReview)aModelComponent).getType();

@@ -144,6 +144,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private Button fReviewedItemsFilterButton = null;
 	
 	/**
+	 * Field fHideRuleSetsFilterButton.
+	 */
+	private Button fHideRuleSetsFilterButton = null;
+	
+	/**
 	 * Field fParticipantIdText.
 	 */
 	private Text fParticipantIdText = null;
@@ -229,8 +234,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4EGroupPrefsSpacer.setLayoutData(r4EGroupPrefsSpacerData);
 		
 		// File Path Editor
-        final String[] extensions = { PreferenceConstants.P_REVIEW_GROUP_FILE_EXT };
-        final FilePathEditor groupFilesEditor = new FilePathEditor(PreferenceConstants.P_FILE_PATH, PreferenceConstants.P_FILE_PATH_LABEL, extensions, 
+        final String[] extensions = { PreferenceConstants.P_R4E_FILE_EXT };
+        final FilePathEditor groupFilesEditor = new FilePathEditor(PreferenceConstants.P_GROUP_FILE_PATH, PreferenceConstants.P_GROUP_FILE_PATH_LABEL, extensions, 
 				r4EGroupPrefsGroup);
 		addField(groupFilesEditor);
 		if (R4EUIModelController.isDialogOpen()) {
@@ -362,6 +367,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fReviewedItemsFilterButton.setText(R4EUIConstants.REVIEWED_ELEMS_FILTER_NAME);
 		fReviewedItemsFilterButton.setLayoutData(r4EFilterPrefsGroupData);
 		fReviewedItemsFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));
+		
+		fHideRuleSetsFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fHideRuleSetsFilterButton.setText(R4EUIConstants.HIDE_RULE_SETS_FILTER_NAME);
+		fHideRuleSetsFilterButton.setLayoutData(r4EFilterPrefsGroupData);
+		fHideRuleSetsFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_HIDE_RULE_SETS_FILTER));
 	}
 
 	/**
@@ -400,7 +410,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
     	}
     	store.setValue(PreferenceConstants.P_ANOMALIES_ALL_FILTER, fAnomaliesFilterButton.getSelection());
     	store.setValue(PreferenceConstants.P_REVIEWED_ITEMS_FILTER, fReviewedItemsFilterButton.getSelection());
-    	
+    	store.setValue(PreferenceConstants.P_HIDE_RULE_SETS_FILTER, fHideRuleSetsFilterButton.getSelection());
+
     	R4EUIModelController.getNavigatorView().applyDefaultFilters();
     	
         //For field editors

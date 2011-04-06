@@ -28,13 +28,16 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ReviewGroupInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.dialogs.RuleSetInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -55,6 +58,11 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	private final List<R4EUIReviewGroup> fReviewGroups;
 	
+	/**
+	 * Field fRuleSets.
+	 */
+	private final List<R4EUIRuleSet> fRuleSets;
+	
 	
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -68,6 +76,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	public R4EUIRootElement(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName, null);
 		fReviewGroups = new ArrayList<R4EUIReviewGroup>();
+		fRuleSets = new ArrayList<R4EUIRuleSet>();
 	}
 	
 	
@@ -82,12 +91,12 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * @throws ResourceHandlingException 
 	 */
 	@Override
-	public R4EReviewComponent createChildModelDataElement() {
+	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EReviewGroup tempReviewGroup = null;
 		R4EUIModelController.setDialogOpen(true);
 		final ReviewGroupInputDialog dialog = new ReviewGroupInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite().getWorkbenchWindow().getShell());
+				getSite().getWorkbenchWindow().getShell(), this);
 		dialog.create();
     	final int result = dialog.open();
     	if (result == Window.OK) {
@@ -101,12 +110,42 @@ public class R4EUIRootElement extends R4EUIModelElement {
     		for (String component : dialog.getAvailableComponentsValues()) {
     			tempReviewGroup.getAvailableComponents().add(component);
     		}
+    		for (String ruleSetLocation : dialog.getRuleSetValues()) {
+    			tempReviewGroup.getDesignRuleLocations().add(ruleSetLocation);
+    		}
     		tempReviewGroup.setDefaultEntryCriteria(dialog.getDefaultEntryCriteriaValue());
     	}
     	//else Window.CANCEL
 		R4EUIModelController.setDialogOpen(false);
     	return tempReviewGroup;
 	}
+	
+	/**
+	 * Create a serialization model Rule Set element object
+	 * @return the new serialization element object
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
+	 */
+	public ReviewComponent createRuleSetElement() {
+		//Get comment from user and set it in model data
+		R4EDesignRuleCollection tempRuleSet = null;
+		R4EUIModelController.setDialogOpen(true);
+		final RuleSetInputDialog dialog = new RuleSetInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+				getSite().getWorkbenchWindow().getShell());
+		dialog.create();
+    	final int result = dialog.open();
+    	if (result == Window.OK) {
+    		tempRuleSet = DRModelFactory.eINSTANCE.createR4EDesignRuleCollection();
+    		tempRuleSet.setVersion(dialog.getVersionValue());
+    		tempRuleSet.setFolder(dialog.getFolderValue());
+    		tempRuleSet.setName(dialog.getNameValue());
+    	}
+    	//else Window.CANCEL
+		R4EUIModelController.setDialogOpen(false);
+    	return tempRuleSet;
+	}
+	
+	
 	
 	/**
 	 * Close the model element (i.e. disable it)
@@ -126,7 +165,27 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			fireRemove(reviewGroup);
 		}
 		fReviewGroups.clear();
+		
+		R4EUIRuleSet ruleSet = null;
+		final int ruleSetSize = fRuleSets.size();
+		for (int i = 0; i < ruleSetSize; i++) {
+			
+			ruleSet = fRuleSets.get(i);
+			if (!ruleSet.isOpen()) continue;  //skip rule sets that are already closed
+			ruleSet.close();
+			ruleSet.removeListener();
+			fireRemove(ruleSet);
+		}
+		fRuleSets.clear();
 		fOpen = false;
+	}
+	
+	/**
+	 * Method getRuleSets
+	 * @return List<R4EUIRuleSet>
+	 */
+	public List<R4EUIRuleSet> getRuleSets() {
+		return fRuleSets;
 	}
 	
 	//Hierarchy
@@ -138,6 +197,21 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	@Override
 	public IR4EUIModelElement[] getChildren() {
+		final List<IR4EUIModelElement> newList = new ArrayList<IR4EUIModelElement>();
+		for (R4EUIReviewGroup group: fReviewGroups) {
+			newList.add(group);
+		}
+		for (R4EUIRuleSet ruleSet : fRuleSets) {
+			newList.add(ruleSet);
+		}
+		return newList.toArray(new IR4EUIModelElement[newList.size()]);
+	}
+	
+	/**
+	 * Method getGroups.
+	 * @return R4EUIReviewGroup[]
+	 */
+	public R4EUIReviewGroup[] getGroups() {
 		return fReviewGroups.toArray(new R4EUIReviewGroup[fReviewGroups.size()]);
 	}
 	
@@ -148,8 +222,8 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (fReviewGroups.size() > 0) return true;
-	    return false;
+		if (fReviewGroups.size() == 0 && fRuleSets.size() == 0) return false;
+	    return true;
 	}
 	
 	/**
@@ -165,6 +239,19 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	}
 	
 	/**
+	 * Method loadRuleSet.
+	 * @param aGroup R4EReviewGroup
+	 * @throws ResourceHandlingException 
+	 */
+	public void loadRuleSet(R4EDesignRuleCollection aRuleSet) {
+		if (aRuleSet.isEnabled() || Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+			final R4EUIRuleSet addedChild = new R4EUIRuleSet(this, aRuleSet, false);
+			addChildren(addedChild);
+			addedChild.close();
+		}
+	}
+	
+	/**
 	 * Method addChildren.
 	 * @param aModelComponent - the serialization model component object
 	 * @return IR4EUIModelElement
@@ -173,32 +260,61 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildren(ReviewNavigatorContentProvider)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
-		
-		final String groupName = ((R4EReviewGroup)aModelComponent).getName();
-		
-		//Check if group already exists.  If so it cannot be recreated
-		for (R4EUIReviewGroup group : fReviewGroups) {
-			if (group.getReviewGroup().getName().equals(groupName)) {
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Error while creating new review group ",
-	    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "Review Group " +
-	    						groupName + " already exists", null), IStatus.ERROR);
-				dialog.open();
-				return null;
-			}
-		}
-		
-		final R4EReviewGroup reviewGroup = R4EUIModelController.FModelExt.createR4EReviewGroup(URI.createFileURI(
-				((R4EReviewGroup)aModelComponent).getFolder()), groupName);
-		final R4EUIReviewGroup addedChild = new R4EUIReviewGroup(this, reviewGroup, true);
-		addedChild.setModelData(aModelComponent);
-		addChildren(addedChild);
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 
-		final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-    	preferenceStore.setValue(PreferenceConstants.P_FILE_PATH, 
-    			preferenceStore.getString(PreferenceConstants.P_FILE_PATH) +
-    			System.getProperty("line.separator") + reviewGroup.eResource().getURI().toFileString());
-		return addedChild;
+		if (aModelComponent instanceof R4EReviewGroup) {
+			final String groupName = ((R4EReviewGroup)aModelComponent).getName();
+			//Check if group already exists.  If so it cannot be recreated
+			for (R4EUIReviewGroup group : fReviewGroups) {
+				if (group.getReviewGroup().getName().equals(groupName)) {
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Error while creating new Review Group ",
+							new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "Review Group " +
+									groupName + " already exists", null), IStatus.ERROR);
+					dialog.open();
+					return null;
+				}
+			}
+
+			final R4EReviewGroup reviewGroup = R4EUIModelController.FModelExt.createR4EReviewGroup(URI.createFileURI(
+					((R4EReviewGroup)aModelComponent).getFolder()), groupName);
+			final R4EUIReviewGroup addedChild = new R4EUIReviewGroup(this, reviewGroup, true);
+			addedChild.setModelData(aModelComponent);
+			addChildren(addedChild);
+
+			final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+			preferenceStore.setValue(PreferenceConstants.P_GROUP_FILE_PATH, 
+					preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH) +
+					System.getProperty("line.separator") + reviewGroup.eResource().getURI().toFileString());
+			return addedChild;
+		} else if (aModelComponent instanceof R4EDesignRuleCollection) {
+			final String ruleSetName = ((R4EDesignRuleCollection)aModelComponent).getName();
+			//Check if group already exists.  If so it cannot be recreated
+			for (R4EUIRuleSet ruleSet : fRuleSets) {
+				if (ruleSet.getRuleSet().getName().equals(ruleSetName)) {
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Error while creating new Rule Set  ",
+							new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "Rule Set " +
+									ruleSetName + " already exists", null), IStatus.ERROR);
+					dialog.open();
+					return null;
+				}
+			}
+
+			final R4EDesignRuleCollection ruleSet = R4EUIModelController.FModelExt.createR4EDesignRuleCollection(URI.createFileURI(
+					((R4EDesignRuleCollection)aModelComponent).getFolder()), ruleSetName);
+			final R4EUIRuleSet addedChild = new R4EUIRuleSet(this, ruleSet, true);
+			addedChild.setModelData(aModelComponent);
+			addChildren(addedChild);
+
+			final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+			preferenceStore.setValue(PreferenceConstants.P_RULE_SET_FILE_PATH, 
+					preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH) +
+					System.getProperty("line.separator") + ruleSet.eResource().getURI().toFileString());
+			return addedChild;
+		} else {
+			return null;   //should never happen
+		}
+
+
 	}
 	
 	/**
@@ -208,7 +324,13 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
-		fReviewGroups.add((R4EUIReviewGroup) aChildToAdd);
+		if (aChildToAdd instanceof R4EUIReviewGroup) {
+			fReviewGroups.add((R4EUIReviewGroup) aChildToAdd);
+		} else if (aChildToAdd instanceof R4EUIRuleSet) {
+			fRuleSets.add((R4EUIRuleSet) aChildToAdd);
+		}  else {
+			return;
+		}
 		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView().
 				getTreeViewer().getContentProvider());
 		fireAdd(aChildToAdd);
@@ -224,22 +346,40 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+		if (aChildToRemove instanceof R4EUIReviewGroup) {
+			final R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
 		
-		final R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
+			//Also recursively remove all children 
+			removedElement.removeAllChildren(aFileRemove);
 		
-		//Also recursively remove all children 
-		removedElement.removeAllChildren(aFileRemove);
+			/* TODO uncomment when core model supports hard-removing of elements
+			if (aFileRemove) removedElement.getReviewGroup().remove());
+			else */
+			removedElement.setEnabled(false);
+			
+			//Remove element from UI if the show disabled element option is off
+			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+				fReviewGroups.remove(removedElement);
+				aChildToRemove.removeListener();
+				fireRemove(aChildToRemove);
+			}
+		} else if (aChildToRemove instanceof R4EUIRuleSet) {
+			final R4EUIRuleSet removedElement = fRuleSets.get(fRuleSets.indexOf(aChildToRemove));
+			
+			//Also recursively remove all children 
+			removedElement.removeAllChildren(aFileRemove);
 		
-		/* TODO uncomment when core model supports hard-removing of elements
-		if (aFileRemove) removedElement.getReviewGroup().remove());
-		else */
-		removedElement.setEnabled(false);
-		
-		//Remove element from UI if the show disabled element option is off
-		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
-			fReviewGroups.remove(removedElement);
-			aChildToRemove.removeListener();
-			fireRemove(aChildToRemove);
+			/* TODO uncomment when core model supports hard-removing of elements
+			if (aFileRemove) removedElement.getRuleSet().remove());
+			else */
+			removedElement.setEnabled(false);
+			
+			//Remove element from UI if the show disabled element option is off
+			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+				fRuleSets.remove(removedElement);
+				aChildToRemove.removeListener();
+				fireRemove(aChildToRemove);
+			}
 		}
 	}
 	
@@ -250,10 +390,15 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * @throws ResourceHandlingException 
 	 */
 	public void removeChildrenFromUI(IR4EUIModelElement aChildToRemove) throws ResourceHandlingException, OutOfSyncException {
-		
-		final R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
-		removedElement.removeAllChildren(false);
-		fReviewGroups.remove(removedElement);
+		if (aChildToRemove instanceof R4EUIReviewGroup) {
+			final R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
+			removedElement.removeAllChildren(false);
+			fReviewGroups.remove(removedElement);
+		} else {
+			final R4EUIRuleSet removedElement = fRuleSets.get(fRuleSets.indexOf(aChildToRemove));
+			removedElement.removeAllChildren(false);
+			fRuleSets.remove(removedElement);
+		}
 		aChildToRemove.removeListener();
 		fireRemove(aChildToRemove);
 	}
@@ -270,6 +415,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 		//Recursively remove all children
 		for (R4EUIReviewGroup group : fReviewGroups) {
 			removeChildren(group, aFileRemove);
+		}
+		for (R4EUIRuleSet ruleSet : fRuleSets) {
+			removeChildren(ruleSet, aFileRemove);
 		}
 	}
 	
@@ -291,6 +439,13 @@ public class R4EUIRootElement extends R4EUIModelElement {
 				element.addListener(aProvider);
 			}
 		}
+		if (null != fRuleSets) {
+			R4EUIRuleSet element = null;
+			for (final Iterator<R4EUIRuleSet> iterator = fRuleSets.iterator(); iterator.hasNext();) {
+			    element = iterator.next();
+				element.addListener(aProvider);
+			}
+		}
 	}
 	
 	/**
@@ -303,6 +458,13 @@ public class R4EUIRootElement extends R4EUIModelElement {
 		if (null != fReviewGroups) {
 			R4EUIReviewGroup element = null;
 			for (final Iterator<R4EUIReviewGroup> iterator = fReviewGroups.iterator(); iterator.hasNext();) {
+				element = iterator.next();
+				element.removeListener();
+			}
+		}
+		if (null != fRuleSets) {
+			R4EUIRuleSet element = null;
+			for (final Iterator<R4EUIRuleSet> iterator = fRuleSets.iterator(); iterator.hasNext();) {
 				element = iterator.next();
 				element.removeListener();
 			}

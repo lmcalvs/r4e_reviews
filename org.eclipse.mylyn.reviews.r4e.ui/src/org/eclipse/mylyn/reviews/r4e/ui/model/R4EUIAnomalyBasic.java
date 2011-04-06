@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.Comment;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -161,7 +162,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
 	@Override
-	public R4EReviewComponent createChildModelDataElement() {
+	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EComment tempComment = null;
 		R4EUIModelController.setDialogOpen(true);
@@ -185,7 +186,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
 	@Override
-	public void setModelData(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
     	
 		//Set data in model element
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly, 
@@ -313,7 +314,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildren(R4EReviewComponent)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		final String user = R4EUIModelController.getReviewer();
 		R4EParticipant participant = null;
 		if (getParent().getParent().getParent().getParent() instanceof R4EUIReviewBasic) { // $codepro.audit.disable methodChainLength

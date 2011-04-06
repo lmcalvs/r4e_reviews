@@ -32,6 +32,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.AnomaliesMyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.AnomaliesOnlyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.FocusFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.filters.HideRuleSetsFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.NavigatorElementComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.ReviewParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.ReviewedElemsFilter;
@@ -112,7 +113,10 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	private final ReviewedElemsFilter fReviewedElemsFilter;
 	
-
+	/**
+	 * Field fHideRuleSetsFilter.
+	 */
+	private final HideRuleSetsFilter fHideRuleSetsFilter;
 	
 	
 	// ------------------------------------------------------------------------
@@ -142,7 +146,8 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		fReviewsParticipantFilter = new ReviewParticipantFilter();
 		fAnomaliesFilter = new AnomaliesOnlyFilter();
 		fReviewedElemsFilter = new ReviewedElemsFilter();
-
+		fHideRuleSetsFilter = new HideRuleSetsFilter();
+		
 		final ReviewParticipantFilter filter = new ReviewParticipantFilter();
 		filter.setParticipant(R4EUIModelController.getReviewer());
 	}
@@ -440,6 +445,38 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		resetReviewedElemsFilterCommand();
 		if (aApply) {
 				fHandlerService.executeCommand(R4EUIConstants.REVIEWED_ELEMS_FILTER_COMMAND, null);
+		}
+	}
+	
+	/**
+	 * Method getHideRuleSetsFilter.
+	 * @return HideRuleSetsFilter
+	 */
+	public HideRuleSetsFilter getHideRuleSetsFilter() {
+		return fHideRuleSetsFilter;
+	}
+	
+	/**
+	 * Method resetHideRuleSetsFilterCommand.
+	 */
+	private void resetHideRuleSetsFilterCommand() {
+		fView.getTreeViewer().removeFilter(fHideRuleSetsFilter);
+        fCommandService.getCommand(R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND).
+    		getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY).setValue(Boolean.valueOf(false));
+	}
+	
+	/**
+	 * Method runHideRuleSetsFilterCommand.
+	 * @param aApply boolean
+	 * @throws NotHandledException 
+	 * @throws NotEnabledException 
+	 * @throws NotDefinedException 
+	 * @throws ExecutionException 
+	 */
+	public void runHideRuleSetsFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException, NotEnabledException, NotHandledException {
+		resetHideRuleSetsFilterCommand();
+		if (aApply) {
+				fHandlerService.executeCommand(R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND, null);
 		}
 	}
 	

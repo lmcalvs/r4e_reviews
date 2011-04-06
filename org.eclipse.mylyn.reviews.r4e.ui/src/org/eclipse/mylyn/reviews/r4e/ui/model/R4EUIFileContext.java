@@ -614,6 +614,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		}
 		else if (aChildToAdd instanceof R4EUIAnomalyContainer) {
 			fAnomalyContainer = (R4EUIAnomalyContainer) aChildToAdd;
+		} else {
+			return;
 		}
 		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView().getTreeViewer().getContentProvider());
 		fireAdd(aChildToAdd);

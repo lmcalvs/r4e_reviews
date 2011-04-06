@@ -181,9 +181,18 @@
                icon="icons/obj16/revgrp_obj.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
                label="Add Review Group"
-               mnemonic="a"
+               mnemonic="g"
                style="push"
                tooltip="Add a New Review Group">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
+               icon="icons/obj16/ruleset_obj.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
+               label="Add Rule Set"
+               mnemonic="a"
+               style="push"
+               tooltip="Add a New Rule Set">
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort"
@@ -306,9 +315,18 @@
                icon="icons/obj16/revgrp_obj.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
                label="Add Review Group"
-               mnemonic="a"
+               mnemonic="g"
                style="push"
                tooltip="Add a New Review Group">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
+               icon="icons/obj16/ruleset_obj.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
+               label="Add Rule Set"
+               mnemonic="a"
+               style="push"
+               tooltip="Add a New Rule Set">
          </command>
          <separator
                name="org.eclipse.mylyn.reviews.r4e.ui.separator2"
@@ -557,6 +575,16 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
+            description="Hide Rule Sets"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideRuleSets"
+            name="HideRuleSets">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
       <category
             description="R4E Navigator View Popup Commands"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
@@ -597,6 +625,12 @@
             description="Add Child Element"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
             name="Add Child Element">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
+            description="Add Rule Set Element"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
+            name="Add Rule Set Element">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
@@ -803,6 +837,15 @@
          </enabledWhen>
       </handler>
       <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideRuleSetsFilterHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideRuleSets">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSortHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort">
          <enabledWhen>
@@ -868,6 +911,15 @@
       <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddChildElementHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddRuleSetElementHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
@@ -1055,6 +1107,38 @@
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
                   type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment">
+            </input>
+         </propertySection>
+         <propertySection
+               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.RuleSetTabPropertySection"
+               id="org.eclipse.mylyn.reviews.r4e.ui.properties.RuleSetSection"
+               tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
+            <input
+                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleSet">
+            </input>
+         </propertySection>
+         <propertySection
+               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.RuleAreaTabPropertySection"
+               id="org.eclipse.mylyn.reviews.r4e.ui.properties.RuleAreaSection"
+               tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
+            <input
+                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleArea">
+            </input>
+         </propertySection>
+         <propertySection
+               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.RuleViolationTabPropertySection"
+               id="org.eclipse.mylyn.reviews.r4e.ui.properties.RuleViolationSection"
+               tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
+            <input
+                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleViolation">
+            </input>
+         </propertySection>
+         <propertySection
+               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.RuleTabPropertySection"
+               id="org.eclipse.mylyn.reviews.r4e.ui.properties.RuleSection"
+               tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
+            <input
+                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRule">
             </input>
          </propertySection>
          <propertySection

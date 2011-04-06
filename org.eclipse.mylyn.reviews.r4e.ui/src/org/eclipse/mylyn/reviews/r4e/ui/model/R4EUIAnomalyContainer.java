@@ -25,19 +25,21 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
@@ -45,7 +47,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.dialogs.AnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
-
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 
 /**
  * @author lmcdubo
@@ -113,7 +115,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * @return the new serialization element object
 	 */
 	@Override
-	public R4EReviewComponent createChildModelDataElement() {
+	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EAnomaly tempAnomaly = null;
 		R4EUIModelController.setDialogOpen(true);
@@ -124,6 +126,11 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     		tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
     		tempAnomaly.setTitle(dialog.getAnomalyTitleValue());
     		tempAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
+    		if (null != dialog.getRuleReferenceValue()) {
+    			R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
+    			((R4ECommentType)tempAnomaly.getType()).setType(rule.getClass_());
+    			tempAnomaly.setRank(UIUtils.mapRuleRank(rule.getRank()));
+    		}
     	}
     	// else Window.CANCEL
 		R4EUIModelController.setDialogOpen(false);
@@ -288,7 +295,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildren(ReviewNavigatorContentProvider)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(R4EReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		final String user = R4EUIModelController.getReviewer();
 		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(((R4EUIReviewBasic)getParent()).getParticipant(user, true));
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, 
@@ -341,6 +348,12 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     		anomaly.setTitle(dialog.getAnomalyTitleValue());
     		anomaly.setDescription(dialog.getAnomalyDescriptionValue());
         	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+        	
+    		if (null != dialog.getRuleReferenceValue()) {
+    			R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
+    			((R4ECommentType)anomaly.getType()).setType(rule.getClass_());
+    			anomaly.setRank(UIUtils.mapRuleRank(rule.getRank()));
+    		}
         	
         	//Set position data
     		final R4EAnomalyTextPosition position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(

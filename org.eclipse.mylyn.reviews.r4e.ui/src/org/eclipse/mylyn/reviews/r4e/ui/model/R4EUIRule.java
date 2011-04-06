@@ -1,6 +1,6 @@
-// $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.disallowReturnMutable, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity, com.instantiations.assist.eclipse.analysis.mutabilityOfArrays, explicitThisUsage
+// $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.disallowReturnMutable, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity, com.instantiations.assist.eclipse.analysis.mutabilityOfArrays
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson Research Canada
+ * Copyright (c) 2011 Ericsson Research Canada
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -9,7 +9,7 @@
  * 
  * Description:
  * 
- * This class implements the Comment element of the UI model
+ * This class implements the Rule element of the UI model
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -18,74 +18,70 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
-
-import org.eclipse.mylyn.reviews.frame.core.model.Comment;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.general.CommentProperties;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.RuleProperties;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EUIComment extends R4EUIModelElement {
+public class R4EUIRule extends R4EUIModelElement {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Field fCommentFile.
-	 * (value is ""icons/obj16/cmmnt_obj.gif"")
+	 * Field fSelectionFile.
+	 * (value is ""icons/obj16/rule_obj.gif"")
 	 */
-	private static final String COMMENT_ICON_FILE = "icons/obj16/cmmnt_obj.gif";
+	private static final String RULE_ICON_FILE = "icons/obj16/rule_obj.gif";
 	
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
-	 * (value is ""Delete Comment"")
+	 * (value is ""Disable Rule"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Comment";
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Rule";
 	
     /**
      * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
-     * (value is ""Remove this comment from its parent anomaly"")
+     * (value is ""Disable (and Optionally Remove) this Rule from its parent Rule Violation"")
      */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Comment " +
-    		"from its parent anomaly";
-	
+    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Rule" +
+    		" from its parent Rule Violation";
+
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-    
-	/**
-	 * Field fComment.
-	 */
-	private final R4EComment fComment;
+	
+    /**
+     * Field fDelta.
+     */
+    private final R4EDesignRule fRule;
 	
 	
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-
-	/**
-	 * Constructor for R4EUIComment.
-	 * @param aParent IR4EUIModelElement
-	 * @param aComment R4EComment
-	 */
-	public R4EUIComment(IR4EUIModelElement aParent, R4EComment aComment) {
-		super(aParent, (aComment.getDescription().length() < R4EUIConstants.END_STRING_NAME_INDEX) ? 
-				new String(aComment.getDescription()).substring(R4EUIConstants.START_STRING_INDEX, aComment.getDescription().length()) + "..." :
-					new String(aComment.getDescription()).substring(R4EUIConstants.START_STRING_INDEX, R4EUIConstants.END_STRING_NAME_INDEX) + "...", 
-					aComment.getUser().getId() + ": " + aComment.getDescription());
-		fComment = aComment;
-		setImage(COMMENT_ICON_FILE);
-	}
 	
+	/**
+	 * Constructor for R4EUISelection.
+	 * @param aParent IR4EUIModelElement
+	 * @param aDelta R4EDelta
+	 * @param aPosition IR4EUIPosition
+	 */
+	public R4EUIRule(IR4EUIModelElement aParent, R4EDesignRule aRule) {
+		super(aParent, aRule.getId(), aRule.getTitle());
+		fRule = aRule;
+		setImage(RULE_ICON_FILE);
+	}
 	
 	// ------------------------------------------------------------------------
 	// Methods
@@ -100,18 +96,18 @@ public class R4EUIComment extends R4EUIModelElement {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
 		if (IR4EUIModelElement.class.equals(adapter)) return this;
-		if (IPropertySource.class.equals(adapter)) return new CommentProperties(this);
+		if (IPropertySource.class.equals(adapter)) return new RuleProperties(this);
 		return null;
 	}
 	
 	//Attributes
-
+	
 	/**
-	 * Method getComment.
-	 * @return R4EComment
+	 * Method getSelection.
+	 * @return R4EDelta
 	 */
-	public R4EComment getComment() {
-		return fComment;
+	public R4EDesignRule getRule() {
+		return fRule;
 	}
 	
 	/**
@@ -124,10 +120,13 @@ public class R4EUIComment extends R4EUIModelElement {
 	@Override
 	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
     	//Set data in model element
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fComment, 
-				R4EUIModelController.getReviewer());
-    	fComment.setDescription(((Comment)aModelComponent).getDescription());
-    	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRule, R4EUIModelController.getReviewer());
+		fRule.setId(((R4EDesignRule)aModelComponent).getId());
+		fRule.setTitle(((R4EDesignRule)aModelComponent).getTitle());
+		fRule.setDescription(((R4EDesignRule)aModelComponent).getDescription());
+		fRule.setClass(((R4EDesignRule)aModelComponent).getClass_());
+		fRule.setRank(((R4EDesignRule)aModelComponent).getRank());
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
     }
 	
 	/**
@@ -139,8 +138,8 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fComment, R4EUIModelController.getReviewer());
-		fComment.setEnabled(true);
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRule, R4EUIModelController.getReviewer());
+		fRule.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
@@ -152,22 +151,11 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isEnabled() {
-		return fComment.isEnabled();
+		return fRule.isEnabled();
 	}
+	
 	
 	//Commands
-	
-	/**
-	 * Method isOpenEditorCmd.
-	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isOpenEditorCmd()
-	 */
-	@Override
-	public boolean isOpenEditorCmd() {
-		if (isEnabled() && 
-				null != ((R4EUIFileContext)getParent().getParent().getParent()).getTargetFile()) return true;
-		return false;
-	}
 	
 	/**
 	 * Method isRemoveElementCmd.
@@ -187,7 +175,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (!(getParent().isEnabled())) return false;
+		if (!(getParent().getParent().isEnabled())) return false;
 		if (isEnabled()) return false;
 		return true;
 	}
