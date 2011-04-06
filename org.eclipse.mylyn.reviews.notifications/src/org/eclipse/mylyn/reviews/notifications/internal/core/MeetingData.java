@@ -10,93 +10,96 @@
  *    Ericsson Research Canada - Initial API and implementation
  * 
  */
-package org.eclipse.mylyn.reviews.notifications.core;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+package org.eclipse.mylyn.reviews.notifications.internal.core;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 
 /**
  * 
  * @author Alvaro Sanchez-Leon
  */
 public class MeetingData implements IMeetingData {
-	private static long M_TIME_ZONE_OFFSET = TimeZone.getDefault().getOffset(
-			System.currentTimeMillis());
 
 	public static String[] getAttributeTypes() {
 		String[] types = { "Subject", "Location", "Start Time", "End Time" };
 		return types;
 	}
 
-	private String	m_customID;
+	private String	fCcustomID;
 
-	private String	m_subject;
+	private String	fSubject;
 
-	private String	m_location;
+	private String	fBody;
 
-	private String	m_startTime;
+	private String	fLocation;
 
-	private String	m_endTime;
+	private long	fSartTime;
+
+	private long	fEndTime;
 
 	private int		fSentCounter	= 0;
 
-	public MeetingData(String customId, String subject, String location,
-			long startTimeMilli, long endTimeMilli)
+	public MeetingData(String aCustomId, String aSubject, String aBody, String aLocation, long aStartTimeMilli,
+			long aEndTimeMilli)
 			throws CoreException {
-		m_customID = customId;
-		m_subject = subject;
-		m_location = location;
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-		long dateMilli = startTimeMilli - M_TIME_ZONE_OFFSET;
-		m_startTime = dateFormat.format(new Date(dateMilli));
-		dateMilli = endTimeMilli - M_TIME_ZONE_OFFSET;
-		m_endTime = dateFormat.format(new Date(dateMilli));
+		fCcustomID = aCustomId;
+		fSubject = aSubject;
+		fBody = aBody;
+		fLocation = aLocation;
+		fSartTime = aStartTimeMilli;
+		fEndTime = aEndTimeMilli;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getCustomID()
 	 */
 	public String getCustomID() {
-		return m_customID;
+		return fCcustomID;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getSubject()
 	 */
 	public String getSubject() {
-		return m_subject;
+		return fSubject;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getBody()
+	 */
+	public String getBody() {
+		return fBody;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getLocation()
 	 */
 	public String getLocation() {
-		return m_location;
+		return fLocation;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getStartTime()
 	 */
-	public String getStartTime() {
-		return m_startTime;
+	public long getStartTime() {
+		return fSartTime;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getEndTime()
 	 */
-	public String getEndTime() {
-		return m_endTime;
+	public long getEndTime() {
+		return fEndTime;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getAttributeValues()
 	 */
 	public String[] getAttributeValues() {
-		String[] values = { m_subject, m_location, m_startTime, m_endTime, };
+		String[] values = { fSubject, fLocation, Long.toString(fSartTime), Long.toString(fEndTime) };
 		return values;
 	}
 
@@ -124,8 +127,7 @@ public class MeetingData implements IMeetingData {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return m_subject + ", " + m_location + ", " + m_startTime + ", "
-				+ m_endTime;
+		return fSubject + ", " + fLocation + ", " + fBody + ", " + fSartTime + ", " + fEndTime;
 	}
 
 }

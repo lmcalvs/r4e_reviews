@@ -31,22 +31,32 @@ public interface IMeetingData {
 	public abstract String getSubject();
 
 	/**
-	 * Physical location information
+	 * Body of the message within Meeting appointment
+	 * 
+	 * @return
+	 */
+	public abstract String getBody();
+
+	/**
+	 * Physical location information e.g. room details
 	 * 
 	 * @return
 	 */
 	public abstract String getLocation();
 
 	/**
+	 * recommended to reflect a UTC value
 	 * 
 	 * @return
 	 */
-	public abstract String getStartTime();
+	public abstract long getStartTime();
 
 	/**
+	 * recommended to reflect a UTC value
+	 * 
 	 * @return
 	 */
-	public abstract String getEndTime();
+	public abstract long getEndTime();
 
 	/**
 	 * An indication of the number of times and invitation with this instance has been sent

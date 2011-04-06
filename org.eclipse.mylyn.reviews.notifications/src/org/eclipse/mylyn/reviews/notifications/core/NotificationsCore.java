@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -27,6 +28,7 @@ import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.mylyn.commons.core.StatusHandler;
+import org.eclipse.mylyn.reviews.notifications.internal.core.MeetingData;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.osgi.util.NLS;
 
@@ -178,4 +180,23 @@ public class NotificationsCore {
 
 		return null;
 	}
+
+	/**
+	 * Access factory method
+	 * 
+	 * @param aCustomId
+	 * @param aSubject
+	 * @param aBody
+	 * @param aLocation
+	 * @param aStartTimeMilli
+	 * @param aEndTimeMilli
+	 * @return
+	 * @throws CoreException
+	 */
+	public IMeetingData createMeetingData(String aCustomId, String aSubject, String aBody, String aLocation,
+			long aStartTimeMilli, long aEndTimeMilli) throws CoreException {
+		return new MeetingData(aCustomId, aSubject, aBody, aLocation, aStartTimeMilli,
+			 aEndTimeMilli);
+	}
+
 }
