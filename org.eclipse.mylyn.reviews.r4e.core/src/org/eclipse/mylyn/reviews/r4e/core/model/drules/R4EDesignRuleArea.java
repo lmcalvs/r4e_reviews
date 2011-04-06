@@ -48,7 +48,7 @@ public interface R4EDesignRuleArea extends ReviewComponent {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Violations</em>' containment reference list.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage#getR4EDesignRuleArea_Violations()
-	 * @model containment="true"
+	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	EList<R4EDesignRuleViolation> getViolations();

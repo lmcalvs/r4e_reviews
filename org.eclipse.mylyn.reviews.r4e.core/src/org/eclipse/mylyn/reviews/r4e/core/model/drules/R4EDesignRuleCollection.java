@@ -50,7 +50,7 @@ public interface R4EDesignRuleCollection extends ReviewComponent {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Areas</em>' containment reference list.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage#getR4EDesignRuleCollection_Areas()
-	 * @model containment="true"
+	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	EList<R4EDesignRuleArea> getAreas();

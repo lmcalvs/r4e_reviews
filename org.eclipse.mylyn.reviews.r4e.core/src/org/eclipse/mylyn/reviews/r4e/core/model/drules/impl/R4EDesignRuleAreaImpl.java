@@ -106,7 +106,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	 */
 	public EList<R4EDesignRuleViolation> getViolations() {
 		if (violations == null) {
-			violations = new EObjectContainmentEList<R4EDesignRuleViolation>(R4EDesignRuleViolation.class, this, DRModelPackage.R4E_DESIGN_RULE_AREA__VIOLATIONS);
+			violations = new EObjectContainmentEList.Resolving<R4EDesignRuleViolation>(R4EDesignRuleViolation.class, this, DRModelPackage.R4E_DESIGN_RULE_AREA__VIOLATIONS);
 		}
 		return violations;
 	}

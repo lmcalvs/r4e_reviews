@@ -48,7 +48,7 @@ public interface Topic extends Comment {
 	 * @return the value of the '<em>Task</em>' containment reference.
 	 * @see #setTask(TaskReference)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getTopic_Task()
-	 * @model containment="true"
+	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	TaskReference getTask();
@@ -74,7 +74,7 @@ public interface Topic extends Comment {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Location</em>' containment reference list.
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getTopic_Location()
-	 * @model containment="true"
+	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	EList<Location> getLocation();

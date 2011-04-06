@@ -48,7 +48,7 @@ public interface R4EDesignRuleViolation extends ReviewComponent {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Rules</em>' containment reference list.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage#getR4EDesignRuleViolation_Rules()
-	 * @model containment="true"
+	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	EList<R4EDesignRule> getRules();

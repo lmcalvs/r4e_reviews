@@ -71,7 +71,7 @@ public interface Comment extends ReviewComponent {
 	 * @return the value of the '<em>Type</em>' containment reference.
 	 * @see #setType(CommentType)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getComment_Type()
-	 * @model containment="true" required="true"
+	 * @model containment="true" resolveProxies="true" required="true"
 	 * @generated
 	 */
 	CommentType getType();

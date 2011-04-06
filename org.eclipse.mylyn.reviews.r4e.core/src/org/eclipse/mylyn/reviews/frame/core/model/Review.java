@@ -79,7 +79,7 @@ public interface Review extends ReviewComponent {
 	 * @return the value of the '<em>Review Task</em>' containment reference.
 	 * @see #setReviewTask(TaskReference)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getReview_ReviewTask()
-	 * @model containment="true"
+	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	TaskReference getReviewTask();
@@ -105,7 +105,7 @@ public interface Review extends ReviewComponent {
 	 * @return the value of the '<em>State</em>' containment reference.
 	 * @see #setState(ReviewState)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getReview_State()
-	 * @model containment="true" required="true"
+	 * @model containment="true" resolveProxies="true" required="true"
 	 * @generated
 	 */
 	ReviewState getState();

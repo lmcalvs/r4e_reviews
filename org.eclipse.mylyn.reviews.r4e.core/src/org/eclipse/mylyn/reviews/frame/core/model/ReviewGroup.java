@@ -46,7 +46,7 @@ public interface ReviewGroup extends ReviewComponent {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Reviews</em>' containment reference list.
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getReviewGroup_Reviews()
-	 * @model containment="true" transient="true" derived="true"
+	 * @model containment="true" resolveProxies="true" transient="true" derived="true"
 	 * @generated
 	 */
 	EList<Review> getReviews();
@@ -62,7 +62,7 @@ public interface ReviewGroup extends ReviewComponent {
 	 * @return the value of the '<em>Review Group Task</em>' containment reference.
 	 * @see #setReviewGroupTask(TaskReference)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getReviewGroup_ReviewGroupTask()
-	 * @model containment="true"
+	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	TaskReference getReviewGroupTask();

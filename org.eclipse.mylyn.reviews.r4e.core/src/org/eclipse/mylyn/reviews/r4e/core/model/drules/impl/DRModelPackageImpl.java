@@ -409,7 +409,7 @@ public class DRModelPackageImpl extends EPackageImpl implements DRModelPackage {
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(r4EDesignRuleCollectionEClass, R4EDesignRuleCollection.class, "R4EDesignRuleCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getR4EDesignRuleCollection_Areas(), this.getR4EDesignRuleArea(), null, "areas", null, 0, -1, R4EDesignRuleCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EDesignRuleCollection_Areas(), this.getR4EDesignRuleArea(), null, "areas", null, 0, -1, R4EDesignRuleCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EDesignRuleCollection_Version(), ecorePackage.getEString(), "version", null, 0, 1, R4EDesignRuleCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EDesignRuleCollection_Folder(), ecorePackage.getEString(), "folder", null, 0, 1, R4EDesignRuleCollection.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EDesignRuleCollection_Name(), ecorePackage.getEString(), "name", null, 0, 1, R4EDesignRuleCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -422,11 +422,11 @@ public class DRModelPackageImpl extends EPackageImpl implements DRModelPackage {
 		initEAttribute(getR4EDesignRule_Description(), ecorePackage.getEString(), "description", null, 0, 1, R4EDesignRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EDesignRuleAreaEClass, R4EDesignRuleArea.class, "R4EDesignRuleArea", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getR4EDesignRuleArea_Violations(), this.getR4EDesignRuleViolation(), null, "violations", null, 0, -1, R4EDesignRuleArea.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EDesignRuleArea_Violations(), this.getR4EDesignRuleViolation(), null, "violations", null, 0, -1, R4EDesignRuleArea.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EDesignRuleArea_Name(), ecorePackage.getEString(), "name", null, 0, 1, R4EDesignRuleArea.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EDesignRuleViolationEClass, R4EDesignRuleViolation.class, "R4EDesignRuleViolation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getR4EDesignRuleViolation_Rules(), this.getR4EDesignRule(), null, "rules", null, 0, -1, R4EDesignRuleViolation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EDesignRuleViolation_Rules(), this.getR4EDesignRule(), null, "rules", null, 0, -1, R4EDesignRuleViolation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EDesignRuleViolation_Name(), ecorePackage.getEString(), "name", null, 0, 1, R4EDesignRuleViolation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals

@@ -1362,14 +1362,6 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		ruleSet.setFolder(ruleSet.eResource().getURI().trimSegments(1).devicePath().toString());
 		fWriter.saveResource(resource);
 
-		// Make sure a local review repository exist in this location
-		File ruleSetFolder = new File(aFolderPath.devicePath());
-		try {
-			checkOrCreateRepo(ruleSetFolder);
-		} catch (ReviewsFileStorageException e) {
-			throw new ResourceHandlingException(e);
-		}
-		
 		return ruleSet;
 	}
 
@@ -1385,20 +1377,6 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 
 		// update the transient value of folder
 		ruleSet.setFolder(ruleSet.eResource().getURI().trimSegments(1).devicePath().toString());
-
-		//TODO this is buggy because all children will be added to all parents.  This is wrong.
-		List<R4EDesignRuleArea> areas = fReader.deserializeElements(aResourcePath, R4EDesignRuleArea.class);
-		for (R4EDesignRuleArea area : areas) {
-			ruleSet.getAreas().add(area);
-			List<R4EDesignRuleViolation> violations = fReader.deserializeElements(aResourcePath, R4EDesignRuleViolation.class);
-			for (R4EDesignRuleViolation violation : violations) {
-				area.getViolations().add(violation);
-				List<R4EDesignRule> rules = fReader.deserializeElements(aResourcePath, R4EDesignRule.class);
-				for (R4EDesignRule rule : rules) {
-					violation.getRules().add(rule);
-				}
-			}
-		}
 		
 		return ruleSet;
 	}
@@ -1430,8 +1408,6 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		}
 		EList<Resource> resList = resSet.getResources();
 
-		//TODO:  Here, unlike the R4EReviewGroup, we need to close all child resources recursively, down to the R4EDesignRule elements
-		// unload them all
 		for (Resource res : resList) {
 			res.unload();
 		}
@@ -1458,7 +1434,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		// Create design rule area
 		darea = DRModelFactory.eINSTANCE.createR4EDesignRuleArea();
 
-		// Associate the design rule area to the context resource
+		// Associate the design rule area to the t resource
 		aRuleCollection.getAreas().add(darea);
 		aRuleCollection.eResource().getContents().add(darea);
 		

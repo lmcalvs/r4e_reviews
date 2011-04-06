@@ -140,6 +140,29 @@ public class TopicImpl extends CommentImpl implements Topic {
 	 * @generated
 	 */
 	public TaskReference getTask() {
+		if (task != null && task.eIsProxy()) {
+			InternalEObject oldTask = (InternalEObject)task;
+			task = (TaskReference)eResolveProxy(oldTask);
+			if (task != oldTask) {
+				InternalEObject newTask = (InternalEObject)task;
+				NotificationChain msgs = oldTask.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.TOPIC__TASK, null, null);
+				if (newTask.eInternalContainer() == null) {
+					msgs = newTask.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.TOPIC__TASK, null, msgs);
+				}
+				if (msgs != null) msgs.dispatch();
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.TOPIC__TASK, oldTask, task));
+			}
+		}
+		return task;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TaskReference basicGetTask() {
 		return task;
 	}
 
@@ -184,7 +207,7 @@ public class TopicImpl extends CommentImpl implements Topic {
 	 */
 	public EList<Location> getLocation() {
 		if (location == null) {
-			location = new EObjectContainmentEList<Location>(Location.class, this, ModelPackage.TOPIC__LOCATION);
+			location = new EObjectContainmentEList.Resolving<Location>(Location.class, this, ModelPackage.TOPIC__LOCATION);
 		}
 		return location;
 	}
@@ -285,7 +308,8 @@ public class TopicImpl extends CommentImpl implements Topic {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ModelPackage.TOPIC__TASK:
-				return getTask();
+				if (resolve) return getTask();
+				return basicGetTask();
 			case ModelPackage.TOPIC__LOCATION:
 				return getLocation();
 			case ModelPackage.TOPIC__COMMENTS:

@@ -106,7 +106,7 @@ public class R4EDesignRuleViolationImpl extends ReviewComponentImpl implements R
 	 */
 	public EList<R4EDesignRule> getRules() {
 		if (rules == null) {
-			rules = new EObjectContainmentEList<R4EDesignRule>(R4EDesignRule.class, this, DRModelPackage.R4E_DESIGN_RULE_VIOLATION__RULES);
+			rules = new EObjectContainmentEList.Resolving<R4EDesignRule>(R4EDesignRule.class, this, DRModelPackage.R4E_DESIGN_RULE_VIOLATION__RULES);
 		}
 		return rules;
 	}

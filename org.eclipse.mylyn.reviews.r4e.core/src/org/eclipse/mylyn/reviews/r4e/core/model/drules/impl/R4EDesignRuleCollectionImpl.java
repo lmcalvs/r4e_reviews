@@ -144,7 +144,7 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	 */
 	public EList<R4EDesignRuleArea> getAreas() {
 		if (areas == null) {
-			areas = new EObjectContainmentEList<R4EDesignRuleArea>(R4EDesignRuleArea.class, this, DRModelPackage.R4E_DESIGN_RULE_COLLECTION__AREAS);
+			areas = new EObjectContainmentEList.Resolving<R4EDesignRuleArea>(R4EDesignRuleArea.class, this, DRModelPackage.R4E_DESIGN_RULE_COLLECTION__AREAS);
 		}
 		return areas;
 	}

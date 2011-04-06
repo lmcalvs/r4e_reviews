@@ -129,6 +129,29 @@ public class CommentImpl extends ReviewComponentImpl implements Comment {
 	 * @generated
 	 */
 	public CommentType getType() {
+		if (type != null && type.eIsProxy()) {
+			InternalEObject oldType = (InternalEObject)type;
+			type = (CommentType)eResolveProxy(oldType);
+			if (type != oldType) {
+				InternalEObject newType = (InternalEObject)type;
+				NotificationChain msgs = oldType.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.COMMENT__TYPE, null, null);
+				if (newType.eInternalContainer() == null) {
+					msgs = newType.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.COMMENT__TYPE, null, msgs);
+				}
+				if (msgs != null) msgs.dispatch();
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.COMMENT__TYPE, oldType, type));
+			}
+		}
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CommentType basicGetType() {
 		return type;
 	}
 
@@ -212,7 +235,8 @@ public class CommentImpl extends ReviewComponentImpl implements Comment {
 			case ModelPackage.COMMENT__USER:
 				return getUser();
 			case ModelPackage.COMMENT__TYPE:
-				return getType();
+				if (resolve) return getType();
+				return basicGetType();
 			case ModelPackage.COMMENT__DESCRIPTION:
 				return getDescription();
 		}

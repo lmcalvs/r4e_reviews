@@ -116,7 +116,7 @@ public class ReviewGroupImpl extends ReviewComponentImpl implements ReviewGroup 
 	 */
 	public EList<Review> getReviews() {
 		if (reviews == null) {
-			reviews = new EObjectContainmentEList<Review>(Review.class, this, ModelPackage.REVIEW_GROUP__REVIEWS);
+			reviews = new EObjectContainmentEList.Resolving<Review>(Review.class, this, ModelPackage.REVIEW_GROUP__REVIEWS);
 		}
 		return reviews;
 	}
@@ -127,6 +127,29 @@ public class ReviewGroupImpl extends ReviewComponentImpl implements ReviewGroup 
 	 * @generated
 	 */
 	public TaskReference getReviewGroupTask() {
+		if (reviewGroupTask != null && reviewGroupTask.eIsProxy()) {
+			InternalEObject oldReviewGroupTask = (InternalEObject)reviewGroupTask;
+			reviewGroupTask = (TaskReference)eResolveProxy(oldReviewGroupTask);
+			if (reviewGroupTask != oldReviewGroupTask) {
+				InternalEObject newReviewGroupTask = (InternalEObject)reviewGroupTask;
+				NotificationChain msgs = oldReviewGroupTask.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.REVIEW_GROUP__REVIEW_GROUP_TASK, null, null);
+				if (newReviewGroupTask.eInternalContainer() == null) {
+					msgs = newReviewGroupTask.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.REVIEW_GROUP__REVIEW_GROUP_TASK, null, msgs);
+				}
+				if (msgs != null) msgs.dispatch();
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.REVIEW_GROUP__REVIEW_GROUP_TASK, oldReviewGroupTask, reviewGroupTask));
+			}
+		}
+		return reviewGroupTask;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TaskReference basicGetReviewGroupTask() {
 		return reviewGroupTask;
 	}
 
@@ -212,7 +235,8 @@ public class ReviewGroupImpl extends ReviewComponentImpl implements ReviewGroup 
 			case ModelPackage.REVIEW_GROUP__REVIEWS:
 				return getReviews();
 			case ModelPackage.REVIEW_GROUP__REVIEW_GROUP_TASK:
-				return getReviewGroupTask();
+				if (resolve) return getReviewGroupTask();
+				return basicGetReviewGroupTask();
 			case ModelPackage.REVIEW_GROUP__DESCRIPTION:
 				return getDescription();
 		}

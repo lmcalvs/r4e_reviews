@@ -141,6 +141,29 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	 * @generated
 	 */
 	public TaskReference getReviewTask() {
+		if (reviewTask != null && reviewTask.eIsProxy()) {
+			InternalEObject oldReviewTask = (InternalEObject)reviewTask;
+			reviewTask = (TaskReference)eResolveProxy(oldReviewTask);
+			if (reviewTask != oldReviewTask) {
+				InternalEObject newReviewTask = (InternalEObject)reviewTask;
+				NotificationChain msgs = oldReviewTask.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.REVIEW__REVIEW_TASK, null, null);
+				if (newReviewTask.eInternalContainer() == null) {
+					msgs = newReviewTask.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.REVIEW__REVIEW_TASK, null, msgs);
+				}
+				if (msgs != null) msgs.dispatch();
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.REVIEW__REVIEW_TASK, oldReviewTask, reviewTask));
+			}
+		}
+		return reviewTask;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TaskReference basicGetReviewTask() {
 		return reviewTask;
 	}
 
@@ -184,6 +207,29 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	 * @generated
 	 */
 	public ReviewState getState() {
+		if (state != null && state.eIsProxy()) {
+			InternalEObject oldState = (InternalEObject)state;
+			state = (ReviewState)eResolveProxy(oldState);
+			if (state != oldState) {
+				InternalEObject newState = (InternalEObject)state;
+				NotificationChain msgs = oldState.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.REVIEW__STATE, null, null);
+				if (newState.eInternalContainer() == null) {
+					msgs = newState.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.REVIEW__STATE, null, msgs);
+				}
+				if (msgs != null) msgs.dispatch();
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.REVIEW__STATE, oldState, state));
+			}
+		}
+		return state;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ReviewState basicGetState() {
 		return state;
 	}
 
@@ -250,9 +296,11 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 			case ModelPackage.REVIEW__REVIEW_ITEMS:
 				return getReviewItems();
 			case ModelPackage.REVIEW__REVIEW_TASK:
-				return getReviewTask();
+				if (resolve) return getReviewTask();
+				return basicGetReviewTask();
 			case ModelPackage.REVIEW__STATE:
-				return getState();
+				if (resolve) return getState();
+				return basicGetState();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
