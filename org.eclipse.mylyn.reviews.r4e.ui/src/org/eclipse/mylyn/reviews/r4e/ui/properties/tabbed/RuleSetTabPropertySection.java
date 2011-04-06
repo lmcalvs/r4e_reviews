@@ -53,6 +53,11 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	protected CLabel fVersionText = null;
 	
 	/**
+	 * Field fNameText.
+	 */
+	private CLabel fNameText = null;
+	
+	/**
 	 * Field fFilePathText.
 	 */
 	private CLabel fFilePathText = null;
@@ -113,11 +118,26 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	    versionLabel.setLayoutData(data);
 	    
 	    //File Path (read-only)
-	    fFilePathText = widgetFactory.createCLabel(composite, "");
+	    fNameText = widgetFactory.createCLabel(composite, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fVersionText, ITabbedPropertyConstants.VSPACE);
+	    fNameText.setLayoutData(data);
+
+	    final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, 0);
+	    data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
+	    nameLabel.setLayoutData(data);
+	    
+	    //File Path (read-only)
+	    fFilePathText = widgetFactory.createCLabel(composite, "");
+	    data = new FormData();
+	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+	    data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
 	    fFilePathText.setLayoutData(data);
 
 	    final CLabel filePathLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
@@ -137,8 +157,11 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 		if (null != ((R4EUIRuleSet)fProperties.getElement()).getRuleSet()) {
 			fRefreshInProgress = true;
 			fVersionText.setText(((R4EUIRuleSet)fProperties.getElement()).getRuleSet().getVersion());
-			fFilePathText.setText(((R4EUIRuleSet)fProperties.getElement()).getRuleSet().getFolder() + "/" +
-					((R4EUIRuleSet)fProperties.getElement()).getRuleSet().getName());
+			fNameText.setText(((R4EUIRuleSet)fProperties.getElement()).getRuleSet().getName());
+			if (null != ((R4EUIRuleSet)fProperties.getElement()).getRuleSet().eResource()) { 
+				fFilePathText.setText(((R4EUIRuleSet)fProperties.getElement()).getRuleSet().
+					eResource().getURI().toFileString());
+			}
 			setEnabledFields();
 			fRefreshInProgress = false;
 		}
@@ -151,9 +174,11 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isDialogOpen()) {
 			fVersionText.setEnabled(false);
+			fNameText.setEnabled(false);
 			fFilePathText.setEnabled(false);
 		} else {
 			fVersionText.setEnabled(true);
+			fNameText.setEnabled(true);
 			fFilePathText.setEnabled(true);
 		}
 	}

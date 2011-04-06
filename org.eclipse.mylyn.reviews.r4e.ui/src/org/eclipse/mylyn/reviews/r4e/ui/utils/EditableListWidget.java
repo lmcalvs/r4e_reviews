@@ -235,7 +235,9 @@ public class EditableListWidget {
 		buttonsComposite.setLayoutData(new GridData(GridData.CENTER, GridData.CENTER, false, false));
 
         fAddButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_ADD_LABEL, SWT.NONE);
+		if (null == fValues || 0 == fValues.length) fAddButton.setEnabled(false);	
         fRemoveButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_REMOVE_LABEL, SWT.NONE);
+		if (0 == fMainTable.getItemCount()) fRemoveButton.setEnabled(false);	
 
         fAddButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
         fAddButton.addSelectionListener(new SelectionListener() {
@@ -384,19 +386,17 @@ public class EditableListWidget {
 	public void setEnabled(boolean aEnabled) {
 		fMainComposite.setEnabled(aEnabled);
 		fMainTable.setEnabled(aEnabled);
-		fAddButton.setEnabled(aEnabled);
-		fRemoveButton.setEnabled(aEnabled);
 	}
 	
 	/**
 	 * Method setVisible.
 	 * @param aEnabled - boolean
 	 */
-	public void setVisible(boolean aEnabled) {
-		fMainComposite.setVisible(aEnabled);
-		fMainTable.setVisible(aEnabled);
-		fAddButton.setVisible(aEnabled);
-		fRemoveButton.setVisible(aEnabled);
+	public void setVisible(boolean aVisible) {
+		fMainComposite.setVisible(aVisible);
+		fMainTable.setVisible(aVisible);
+		fAddButton.setVisible(aVisible);
+		fRemoveButton.setVisible(aVisible);
 	}
 	
 	/**
@@ -413,6 +413,10 @@ public class EditableListWidget {
 	 */
 	public void setEditableValues(String[] aValues) {
 		fValues = aValues;
+		if (null == fValues || 0 == fValues.length) fAddButton.setEnabled(false);	
+		else fAddButton.setEnabled(true);
+		if (0 == fMainTable.getItemCount()) fRemoveButton.setEnabled(false);	
+		else fRemoveButton.setEnabled(true);
 	}
 	
 	/**

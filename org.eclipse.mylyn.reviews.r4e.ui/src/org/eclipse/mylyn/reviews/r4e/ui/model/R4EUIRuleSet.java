@@ -25,18 +25,13 @@ import java.util.List;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
-import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ParticipantInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.RuleAreaInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
@@ -104,7 +99,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	/**
 	 * Field fRulesSetFileURI.
 	 */
-	private final URI fRulesSetFileURI;
+	private final URI fRuleSetFileURI;
 	
 	/**
 	 * Field fAreas.
@@ -122,9 +117,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * @param aName String
 	 */
 	public R4EUIRuleSet(IR4EUIModelElement aParent, R4EDesignRuleCollection aRuleSet, boolean aOpen) {
-		super(aParent, aRuleSet.getName(), null);
+		super(aParent, aRuleSet.getName(), R4EUIConstants.FILE_LOCATION_LABEL + aRuleSet.eResource().getURI().devicePath());
 		fRuleSet = aRuleSet;
-		fRulesSetFileURI = aRuleSet.eResource().getURI();
+		fRuleSetFileURI = aRuleSet.eResource().getURI();
 		fAreas = new ArrayList<R4EUIRuleArea>();
 		if (aOpen) {
 			setImage(RULE_SET_ICON_FILE);
@@ -162,6 +157,21 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	public R4EDesignRuleCollection getRuleSet() {
 		return fRuleSet;
 	}
+	
+	/**
+	 * Set serialization model data by copying it from the passed-in object
+	 * @param aModelComponent - a serialization model element to copy information from
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
+	 */
+	@Override
+	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+    	//Set data in model element
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRuleSet, R4EUIModelController.getReviewer());
+		fRuleSet.setVersion(((R4EDesignRuleCollection)aModelComponent).getVersion());
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+    }
 	
 	/**
 	 * Create a serialization model element object
@@ -231,9 +241,10 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 			area.close();
 		}
 		fAreas.clear();
-		fImage = UIUtils.loadIcon(RULE_SET_CLOSED_ICON_FILE);
 		fOpen = false;
-		removeListener();
+		R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
+		fImage = UIUtils.loadIcon(RULE_SET_CLOSED_ICON_FILE);
+		fireReviewStateChanged(this);
 	}
 	
 	/**
@@ -242,16 +253,20 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public void open() throws ResourceHandlingException {
-		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRulesSetFileURI);
+		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRuleSetFileURI);
 		final List<R4EDesignRuleArea> areas = fRuleSet.getAreas();
 		if (null != areas) {
+			R4EUIRuleArea uiArea = null;
 			final int areaSize = areas.size();
 			for (int i = 0; i < areaSize; i++) {
-				addChildren(new R4EUIRuleArea(this, areas.get(i)));
+				uiArea = new R4EUIRuleArea(this, areas.get(i));
+				addChildren(uiArea);
+				uiArea.open();	
 			}
 		}
-		fImage = UIUtils.loadIcon(RULE_SET_ICON_FILE);
 		fOpen = true;
+		fImage = UIUtils.loadIcon(RULE_SET_ICON_FILE);
+		fireReviewStateChanged(this);
 	}
 	
 	/**
@@ -263,8 +278,10 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+		//NOTE we need to open the model element temporarly to be able to set the enabled state
+		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRuleSetFileURI);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRuleSet, R4EUIModelController.getReviewer());
-		fRuleSet.setEnabled(true);
+		fRuleSet.setEnabled(aEnabled);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
@@ -300,9 +317,11 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
-		final R4EDesignRuleArea area = DRModelFactory.eINSTANCE.createR4EDesignRuleArea();   //TODO how do we know the parent?
+		final R4EDesignRuleArea area = R4EUIModelController.FModelExt.createR4EDesignRuleArea(fRuleSet);
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(area, R4EUIModelController.getReviewer());
+		area.setName(((R4EDesignRuleArea)aModelComponent).getName());
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		final R4EUIRuleArea addedChild = new R4EUIRuleArea(this, area);
-		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
 		return addedChild;
 	}
@@ -418,7 +437,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) return true;
+		if (isEnabled() && isOpen()) return true;
 		return false;
 	}
 	
@@ -460,7 +479,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isOpen() || isEnabled()) return false;
+		if (isEnabled()) return false;
 		return true;
 	}
 	

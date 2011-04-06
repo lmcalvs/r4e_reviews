@@ -173,7 +173,7 @@ public class RuleInputDialog extends FormDialog {
 	 */
 	public RuleInputDialog(Shell aParentShell) {
 		super(aParentShell);
-		setBlockOnOpen(false);
+		setBlockOnOpen(true);
 		fValidator = new R4EInputValidator();
 	}
 	
@@ -308,26 +308,6 @@ public class RuleInputDialog extends FormDialog {
         textGridData.horizontalSpan = 3;
         fTitleInputTextField.setLayoutData(textGridData);
         
-		//Rule Class
-        label = toolkit.createLabel(composite, ADD_RULE_CLASS_DIALOG_VALUE);
-        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fClassCombo = new CCombo(composite, SWT.BORDER | SWT.READ_ONLY);
-        fClassCombo.setItems(UIUtils.getClasses());
-        fClassCombo.select(0);
-		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-		textGridData.horizontalSpan = 3;
-		fClassCombo.setLayoutData(textGridData);
-		
-		//Rule Rank
-        label = toolkit.createLabel(composite, ADD_RULE_RANK_DIALOG_VALUE);
-        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fRankCombo = new CCombo(composite, SWT.BORDER | SWT.READ_ONLY);
-        fRankCombo.setItems(UIUtils.getClasses());
-        fRankCombo.select(0);
-		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-		textGridData.horizontalSpan = 3;
-		fRankCombo.setLayoutData(textGridData);
-		
         //Rule Description
         label = toolkit.createLabel(basicSectionClient, ADD_RULE_DESCRIPTION_DIALOG_VALUE);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
@@ -335,6 +315,28 @@ public class RuleInputDialog extends FormDialog {
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         fDescriptionInputTextField.setLayoutData(textGridData);
+        
+		//Rule Class
+        label = toolkit.createLabel(basicSectionClient, ADD_RULE_CLASS_DIALOG_VALUE);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        fClassCombo = new CCombo(basicSectionClient, SWT.BORDER | SWT.READ_ONLY);
+        fClassCombo.setItems(UIUtils.getClasses());
+        fClassCombo.select(0);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		fClassCombo.setLayoutData(textGridData);
+		
+		//Rule Rank
+        label = toolkit.createLabel(basicSectionClient, ADD_RULE_RANK_DIALOG_VALUE);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        fRankCombo = new CCombo(basicSectionClient, SWT.BORDER | SWT.READ_ONLY);
+        fRankCombo.setItems(UIUtils.getRanks());
+        fRankCombo.select(0);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		fRankCombo.setLayoutData(textGridData);
+		
+
     }
     
 	/**

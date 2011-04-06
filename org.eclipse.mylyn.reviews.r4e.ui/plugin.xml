@@ -186,8 +186,7 @@
                tooltip="Add a New Review Group">
          </command>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSet"
-               disabledIcon="icons/obj16/rulesetclsd_obj.gif"
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
                icon="icons/obj16/ruleset_obj.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
                label="Add Rule Set"
@@ -321,8 +320,7 @@
                tooltip="Add a New Review Group">
          </command>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSet"
-               disabledIcon="icons/obj16/rulesetclsd_obj.gif"
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
                icon="icons/obj16/ruleset_obj.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
                label="Add Rule Set"

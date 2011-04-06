@@ -18,18 +18,13 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.RuleProperties;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.general.SelectionProperties;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -114,6 +109,25 @@ public class R4EUIRule extends R4EUIModelElement {
 	public R4EDesignRule getRule() {
 		return fRule;
 	}
+	
+	/**
+	 * Set serialization model data by copying it from the passed-in object
+	 * @param aModelComponent - a serialization model element to copy information from
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
+	 */
+	@Override
+	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+    	//Set data in model element
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRule, R4EUIModelController.getReviewer());
+		fRule.setId(((R4EDesignRule)aModelComponent).getId());
+		fRule.setTitle(((R4EDesignRule)aModelComponent).getTitle());
+		fRule.setDescription(((R4EDesignRule)aModelComponent).getDescription());
+		fRule.setClass(((R4EDesignRule)aModelComponent).getClass_());
+		fRule.setRank(((R4EDesignRule)aModelComponent).getRank());
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+    }
 	
 	/**
 	 * Method setEnabled.

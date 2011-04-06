@@ -58,12 +58,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	 
-	/**
-	 * Field REVIEW_GROUP_FILE_PREFIX.
-	 * (value is ""File location: "")
-	 */
-	private static final String REVIEW_GROUP_FILE_PREFIX = "File Location: ";
 	
 	/**
 	 * Field REVIEW_GROUP_ICON_FILE.
@@ -138,7 +132,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @param aOpen boolean
 	 */
 	public R4EUIReviewGroup(IR4EUIModelElement aParent, R4EReviewGroup aGroup, boolean aOpen) {
-		super(aParent, aGroup.getName(), REVIEW_GROUP_FILE_PREFIX + aGroup.eResource().getURI().devicePath());
+		super(aParent, aGroup.getName(), R4EUIConstants.FILE_LOCATION_LABEL + aGroup.eResource().getURI().devicePath());
 		fGroup = aGroup;
 		fGroupFileURI = aGroup.eResource().getURI();
 		fReviews = new ArrayList<R4EUIReviewBasic>();
@@ -186,14 +180,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	public List<R4EUIRuleSet> getRuleSets() {
 		return fRuleSets;
-	}
-	
-	/**
-	 * Method getGroupURI.
-	 * @return URI
-	 */
-	public URI getGroupURI() {
-		return fGroupFileURI;
 	}
 	
 	/**
@@ -322,8 +308,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		for (String ruleSetlocation : ruleSetlocations) {
 			for (R4EUIRuleSet ruleSet : ((R4EUIRootElement)getParent()).getRuleSets())
 			{
-				if ((ruleSet.getRuleSet().getFolder() + "/" + ruleSet.getRuleSet().getName()).
-						equals(ruleSetlocation)) {
+				if (ruleSet.getRuleSet().eResource().getURI().toFileString().equals(ruleSetlocation)) {
 					ruleSet.close();
 					ruleSet.open();
 					fRuleSets.add(ruleSet);
@@ -357,7 +342,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
 		//NOTE we need to open the model element temporarly to be able to set the enabled state
-		fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(getGroupURI());
+		fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(fGroupFileURI);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
 		fGroup.setEnabled(aEnabled);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);

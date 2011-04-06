@@ -45,6 +45,17 @@ public class RuleSetProperties extends ModelElementProperties {
 			RULE_SET_VERSION_ID, R4EUIConstants.VERSION_LABEL);
 
 	/**
+	 * Field RULE_SET_NAME_ID. (value is ""ruleSetElement.name"")
+	 */
+	protected static final String RULE_SET_NAME_ID = "ruleSetElement.name";
+
+	/**
+	 * Field RULE_SET_NAME_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor RULE_SET_NAME_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			RULE_SET_NAME_ID, R4EUIConstants.NAME_LABEL);
+	
+	/**
 	 * Field RULE_SET_FILEPATH. (value is ""ruleSetElement.filePath"")
 	 */
 	protected static final String RULE_SET_FILEPATH_ID = "ruleSetElement.filePath";
@@ -59,7 +70,7 @@ public class RuleSetProperties extends ModelElementProperties {
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { RULE_SET_VERSION_PROPERTY_DESCRIPTOR,  
-		RULE_SET_FILEPATH_PROPERTY_DESCRIPTOR };
+		RULE_SET_NAME_PROPERTY_DESCRIPTOR, RULE_SET_FILEPATH_PROPERTY_DESCRIPTOR };
 	
 	
 	// ------------------------------------------------------------------------
@@ -100,9 +111,10 @@ public class RuleSetProperties extends ModelElementProperties {
 		if (null != getElement()) {
 			if (RULE_SET_VERSION_ID.equals(aId)) { 
 				return ((R4EUIRuleSet)getElement()).getRuleSet().getVersion();
+			} else if (RULE_SET_NAME_ID.equals(aId)) {
+				return ((R4EUIRuleSet)getElement()).getName();
 			} else if (RULE_SET_FILEPATH_ID.equals(aId)) {
-				return ((R4EUIRuleSet)getElement()).getRuleSet().getFolder() + "/" +
-				((R4EUIRuleSet)getElement()).getRuleSet().getName();
+				return ((R4EUIRuleSet)getElement()).getRuleSet().eResource().getURI().toFileString();
 			}
 		}
 		return null;

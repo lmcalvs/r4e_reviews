@@ -29,7 +29,6 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
@@ -209,6 +208,14 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	}
 	
 	/**
+	 * Method getGroups.
+	 * @return R4EUIReviewGroup[]
+	 */
+	public R4EUIReviewGroup[] getGroups() {
+		return fReviewGroups.toArray(new R4EUIReviewGroup[fReviewGroups.size()]);
+	}
+	
+	/**
 	 * Method hasChildren.
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#hasChildren()
@@ -240,6 +247,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 		if (aRuleSet.isEnabled() || Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 			final R4EUIRuleSet addedChild = new R4EUIRuleSet(this, aRuleSet, false);
 			addChildren(addedChild);
+			addedChild.close();
 		}
 	}
 	
@@ -291,7 +299,8 @@ public class R4EUIRootElement extends R4EUIModelElement {
 				}
 			}
 
-			final R4EDesignRuleCollection ruleSet = DRModelFactory.eINSTANCE.createR4EDesignRuleCollection();
+			final R4EDesignRuleCollection ruleSet = R4EUIModelController.FModelExt.createR4EDesignRuleCollection(URI.createFileURI(
+					((R4EDesignRuleCollection)aModelComponent).getFolder()), ruleSetName);
 			final R4EUIRuleSet addedChild = new R4EUIRuleSet(this, ruleSet, true);
 			addedChild.setModelData(aModelComponent);
 			addChildren(addedChild);

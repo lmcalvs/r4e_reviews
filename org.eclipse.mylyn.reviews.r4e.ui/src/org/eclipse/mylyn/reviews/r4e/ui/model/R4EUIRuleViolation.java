@@ -22,22 +22,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
-import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ParticipantInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.RuleInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
@@ -228,9 +220,11 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	public void open() {
 		final List<R4EDesignRule> rules = fViolation.getRules();
 		if (null != rules) {
+			R4EUIRule uiRule = null;
 			final int ruleSize = rules.size();
 			for (int i = 0; i < ruleSize; i++) {
-				addChildren(new R4EUIRule(this, rules.get(i)));
+				uiRule = new R4EUIRule(this, rules.get(i));
+				addChildren(uiRule);
 			}
 		}
 		fOpen = true;
@@ -282,7 +276,10 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 */
 	@Override
 	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
-		final R4EDesignRule rule = DRModelFactory.eINSTANCE.createR4EDesignRule();   //TODO how do we know the parent?
+		final R4EDesignRule rule = R4EUIModelController.FModelExt.createR4EDesignRule(fViolation);
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(rule, R4EUIModelController.getReviewer());
+		rule.setId(((R4EDesignRule)aModelComponent).getId());
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		final R4EUIRule addedChild = new R4EUIRule(this, rule);
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
@@ -378,7 +375,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) return true;
+		if (getParent().isEnabled()) return true;
 		return false;
 	}
 	

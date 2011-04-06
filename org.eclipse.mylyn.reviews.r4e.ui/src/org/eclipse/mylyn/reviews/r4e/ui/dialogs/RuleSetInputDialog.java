@@ -70,15 +70,21 @@ public class RuleSetInputDialog extends FormDialog {
 	
 	/**
 	 * Field ADD_RULE_SET_VERSION_DIALOG_VALUE.
-	 * (value is ""Rule Set Version:"")
+	 * (value is ""Version:"")
 	 */
-	private static final String ADD_RULE_SET_VERSION_DIALOG_VALUE = "Rule Set Version:";
+	private static final String ADD_RULE_SET_VERSION_DIALOG_VALUE = "Version:";
 
 	/**
-	 * Field ADD_RULE_SET_FOLDER_DIALOG_VALUE.
-	 * (value is ""Rule Set Folder:"")
+	 * Field ADD_RULE_SET_NAME_DIALOG_VALUE.
+	 * (value is ""Name:"")
 	 */
-	private static final String ADD_RULE_SET_FOLDER_DIALOG_VALUE = "Rule Set Folder:";
+	private static final String ADD_RULE_SET_NAME_DIALOG_VALUE = "Name:";
+	
+	/**
+	 * Field ADD_RULE_SET_FOLDER_DIALOG_VALUE.
+	 * (value is ""Folder:"")
+	 */
+	private static final String ADD_RULE_SET_FOLDER_DIALOG_VALUE = "Folder:";
 	
 	/**
 	 * Field BASIC_PARAMS_HEADER_MSG.
@@ -137,7 +143,7 @@ public class RuleSetInputDialog extends FormDialog {
 	 */
 	public RuleSetInputDialog(Shell aParentShell) {
 		super(aParentShell);
-		setBlockOnOpen(false);
+		setBlockOnOpen(true);
 		fValidator = new R4EInputValidator();
 	}
 	
@@ -180,7 +186,7 @@ public class RuleSetInputDialog extends FormDialog {
 			}
 			
 			validateResult = validateFileExists(fFolderInputTextField.getText() + "/" + fNameInputTextField.getText() + 
-					R4EUIConstants.RULE_SET_FILE_SUFFIX);
+					R4EUIConstants.RULE_SET_FILE_SUFFIX);  //TODO verify and change
 			if (null != validateResult) {
 				//Validate of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Rule Set file already exists",
@@ -257,6 +263,14 @@ public class RuleSetInputDialog extends FormDialog {
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         fVersionInputTextField.setLayoutData(textGridData);
+        
+        //Rule Set Name
+        label = toolkit.createLabel(basicSectionClient, ADD_RULE_SET_NAME_DIALOG_VALUE);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        fNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        fNameInputTextField.setLayoutData(textGridData);
         
         //Rule Set Folder
         label = toolkit.createLabel(basicSectionClient, ADD_RULE_SET_FOLDER_DIALOG_VALUE);

@@ -105,7 +105,7 @@ public class RuleAreaInputDialog extends FormDialog {
 	 */
 	public RuleAreaInputDialog(Shell aParentShell) {
 		super(aParentShell);
-		setBlockOnOpen(false);
+		setBlockOnOpen(true);
 		fValidator = new R4EInputValidator();
 	}
 	

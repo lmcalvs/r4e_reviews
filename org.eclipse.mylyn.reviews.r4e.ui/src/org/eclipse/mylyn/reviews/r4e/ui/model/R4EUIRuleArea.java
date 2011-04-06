@@ -22,21 +22,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
-import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ParticipantInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.RuleViolationInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
@@ -223,9 +216,12 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	public void open() {
 		final List<R4EDesignRuleViolation> violations = fArea.getViolations();
 		if (null != violations) {
+			R4EUIRuleViolation uiViolation = null;
 			final int violationSize = violations.size();
 			for (int i = 0; i < violationSize; i++) {
-				addChildren(new R4EUIRuleViolation(this, violations.get(i)));
+				uiViolation = new R4EUIRuleViolation(this, violations.get(i));
+				addChildren(uiViolation);
+				uiViolation.open();
 			}
 		}
 		fOpen = true;
@@ -277,9 +273,11 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 */
 	@Override
 	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
-		final R4EDesignRuleViolation violation = DRModelFactory.eINSTANCE.createR4EDesignRuleViolation();   //TODO how do we know the parent?
+		final R4EDesignRuleViolation violation = R4EUIModelController.FModelExt.createR4EDesignRuleViolation(fArea);
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(violation, R4EUIModelController.getReviewer());
+		violation.setName(((R4EDesignRuleViolation)aModelComponent).getName());
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		final R4EUIRuleViolation addedChild = new R4EUIRuleViolation(this, violation);
-		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
 		return addedChild;
 	}
@@ -373,7 +371,7 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) return true;
+		if (getParent().isEnabled()) return true;
 		return false;
 	}
 	

@@ -237,9 +237,17 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement)((R4EUIReviewGroup)fProperties.getElement()).getParent()).getRuleSets();
 		List<String> ruleSetLocations = new ArrayList<String>();
 		for (R4EUIRuleSet uiRuleSet : uiRuleSets) {
-			ruleSetLocations.add(uiRuleSet.getRuleSet().getFolder() + "/" + uiRuleSet.getRuleSet().getName());
+			if (uiRuleSet.isEnabled()) {
+				if (null == uiRuleSet.getRuleSet().eResource())
+					try {
+						uiRuleSet.open();
+					} catch (ResourceHandlingException e) {
+						UIUtils.displayResourceErrorDialog(e);
+					}
+					ruleSetLocations.add(uiRuleSet.getRuleSet().eResource().getURI().toFileString());
+			}
 		}
-		fRuleSetLocations.setEditableValues((String[]) ruleSetLocations.toArray());
+		fRuleSetLocations.setEditableValues(ruleSetLocations.toArray(new String[ruleSetLocations.size()]));
 		final String[] ruleSetsLocations = (String[]) modelGroup.getDesignRuleLocations().toArray();
 		fRuleSetLocations.clearAll();
 		item = null;
@@ -313,8 +321,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 						//Update references in R4EUIReviewGroup
 						for (R4EUIRuleSet ruleSet : ((R4EUIRootElement)((R4EUIReviewGroup)fProperties.getElement()).getParent()).getRuleSets())
 						{
-							if ((ruleSet.getRuleSet().getFolder() + "/" + ruleSet.getRuleSet().getName()).
-									equals(item.getText())) {
+							if ((ruleSet.getRuleSet().eResource().getURI().toFileString()).equals(item.getText())) {
 								ruleSet.close();
 								ruleSet.open();
 								((R4EUIReviewGroup)fProperties.getElement()).getRuleSets().add(ruleSet);

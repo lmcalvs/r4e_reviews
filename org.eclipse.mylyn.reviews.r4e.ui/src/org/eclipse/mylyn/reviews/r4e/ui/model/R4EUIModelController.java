@@ -350,10 +350,10 @@ public class R4EUIModelController {
         		//Review Group not found, ask user for review group creation
         		MessageDialog dialog = new MessageDialog( // $codepro.audit.disable variableDeclaredInLoop
         				null, "Missing Rule Set", null, "Rule Set file at location " + ruleSetPath + 
-        					" not found, remove it from Preferences?",
+        					" not found",
         				MessageDialog.WARNING,
-        				new String[] {"Yes", "No"},
-        				R4EUIConstants.DIALOG_NO); // no is the default
+        				new String[] {"Ok"},
+        				R4EUIConstants.DIALOG_YES); // no is the default
         		int result = dialog.open(); // $codepro.audit.disable variableDeclaredInLoop
 
         		if (result == R4EUIConstants.DIALOG_YES) {

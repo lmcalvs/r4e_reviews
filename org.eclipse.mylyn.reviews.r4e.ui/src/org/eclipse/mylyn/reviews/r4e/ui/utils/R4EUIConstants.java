@@ -264,6 +264,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final int TABBED_PROPERTY_TEXT_HEIGHT_DEFAULT = 50;   //pixels
 	
 	/**
+	 * Field FILE_LOCATION_LABEL.
+	 * (value is ""File location: "")
+	 */
+	public static final String FILE_LOCATION_LABEL = "File Location: ";
+	
+	/**
 	 * Field NAME_LABEL.
 	 * (value is ""Name: "")
 	 */

@@ -465,12 +465,12 @@ public class ReviewGroupInputDialog extends FormDialog {
         List<R4EUIRuleSet> uiRuleSets = fRootElement.getRuleSets();
         List<String> ruleLocations = new ArrayList<String>();
         for (R4EUIRuleSet ruleSet : uiRuleSets) {
-        	ruleLocations.add(ruleSet.getRuleSet().getFolder() + "/" + ruleSet.getRuleSet().getName());
+        	ruleLocations.add(ruleSet.getRuleSet().eResource().getURI().toFileString());
         }
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fRuleSets = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
-        		(String[]) ruleLocations.toArray());
+        		ruleLocations.toArray(new String[ruleLocations.size()]));
 		if (0 == ruleLocations.size()) fRuleSets.setEnabled(false);    
 	}
 	
