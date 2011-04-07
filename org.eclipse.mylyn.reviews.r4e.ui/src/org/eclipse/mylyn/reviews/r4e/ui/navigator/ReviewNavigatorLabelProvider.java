@@ -82,7 +82,8 @@ public class ReviewNavigatorLabelProvider extends ColumnLabelProvider {
 	 */
 	@Override
 	public void update(ViewerCell cell) {
-		cell.setText(cell.getElement().toString());
+		cell.setText(((IR4EUIModelElement)cell.getElement()).getName());
+		cell.setImage(((IR4EUIModelElement)cell.getElement()).getImage());	
 	}
 	
 	/**

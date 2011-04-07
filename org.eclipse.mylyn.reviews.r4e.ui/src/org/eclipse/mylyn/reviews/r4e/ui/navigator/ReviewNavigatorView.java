@@ -262,7 +262,6 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 				openGroupNames.add(group.getName());
 			}
 		}
-		R4EUIModelController.setActiveReview(null);
 		fReviewTreeViewer.setInput(getInitalInput());
 		
 		//Restore previously open groups

@@ -20,6 +20,8 @@
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
@@ -89,7 +91,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	/**
 	 * Field fListener.
 	 */
-	protected IR4EUIModelListener fListener;
+	protected List<IR4EUIModelListener> fListeners = new ArrayList<IR4EUIModelListener>();
 
 	/**
 	 * Field fReviewed.
@@ -225,7 +227,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public void close() {
 		fOpen = false;
-		removeListener();
+		removeListeners();
 	}
 
 	/**
@@ -422,25 +424,34 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
 	 */
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		fListener = aProvider;
+		fListeners.add(aProvider);
 	}
 
 	/**
 	 * Method removeListener.
+	 * @param aProvider ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
-	public void removeListener() {
-		fListener = null;
+	public void removeListener(ReviewNavigatorContentProvider aProvider) {
+		fListeners.remove(aProvider);
 	}
 
+	/**
+	 * Method removeListeners.
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListeners()
+	 */
+	public void removeListeners() {
+		fListeners.clear();
+	}
+	
 	/**
 	 * Method fireAdd.
 	 * @param aAdded Object
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#fireAdd(Object)
 	 */
 	public void fireAdd(Object aAdded) {
-		if (null != fListener) {
-			fListener.addEvent(new R4EUIModelEvent(aAdded));
+		for (IR4EUIModelListener listener : fListeners) {
+			listener.addEvent(new R4EUIModelEvent(aAdded));
 		}
 	}
 
@@ -450,8 +461,8 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#fireRemove(Object)
 	 */
 	public void fireRemove(Object aRemoved) {
-		if (null != fListener) {
-			fListener.removeEvent(new R4EUIModelEvent(aRemoved));
+		for (IR4EUIModelListener listener : fListeners) {
+			listener.removeEvent(new R4EUIModelEvent(aRemoved));
 		}
 	}
 
@@ -461,8 +472,8 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#fireReviewStateChanged(Object)
 	 */
 	public void fireReviewStateChanged(Object aChanged) {
-		if (null != fListener) {
-			fListener.changedEvent(new R4EUIModelEvent(aChanged));
+		for (IR4EUIModelListener listener : fListeners) {
+			listener.changedEvent(new R4EUIModelEvent(aChanged));
 		}
 	}
 

@@ -267,16 +267,4 @@ public class UIUtils {
 	public static String[] getRanks() {
 		return R4EUIConstants.RANK_VALUES;
 	}
-	
-	/**
-	 * Method mapRuleRank.
-	 * @param aRuleRank R4EDesignRuleRank
-	 * @return R4EAnomalyRank
-	 */
-	public static R4EDesignRuleRank mapRuleRank(R4EDesignRuleRank aRuleRank) {
-		if (aRuleRank.equals(R4EDesignRuleRank.R4E_RANK_NONE)) return R4EDesignRuleRank.R4E_RANK_NONE;
-		else if (aRuleRank.equals(R4EDesignRuleRank.R4E_RANK_MINOR)) return R4EDesignRuleRank.R4E_RANK_MINOR;
-		else if (aRuleRank.equals(R4EDesignRuleRank.R4E_RANK_MAJOR)) return R4EDesignRuleRank.R4E_RANK_MAJOR;
-		return null;
-	}
 }

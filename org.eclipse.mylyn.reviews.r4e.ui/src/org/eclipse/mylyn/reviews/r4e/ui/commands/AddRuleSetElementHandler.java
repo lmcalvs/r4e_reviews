@@ -55,7 +55,7 @@ public class AddRuleSetElementHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) {
 
 		final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
-		IR4EUIModelElement element = R4EUIModelController.getRootElement();
+		final IR4EUIModelElement element = R4EUIModelController.getRootElement();
 		IR4EUIModelElement newElement = null;
 
 		try {

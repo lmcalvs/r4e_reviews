@@ -303,7 +303,7 @@ public class AddReviewItemHandler extends AbstractHandler {
 		}
 		
 		final R4EUISelectionContainer uiSelectionContainer = new R4EUISelectionContainer(
-				uiFileContext, R4EUIConstants.ANOMALIES_LABEL_NAME);
+				uiFileContext, R4EUIConstants.SELECTIONS_LABEL_NAME);
 		uiFileContext.addChildren(uiSelectionContainer);
 		
 		final R4EUISelection uiSelection = uiSelectionContainer.createSelection((R4EUITextPosition) aUIPosition);

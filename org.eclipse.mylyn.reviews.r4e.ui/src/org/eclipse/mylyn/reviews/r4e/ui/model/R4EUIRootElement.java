@@ -161,7 +161,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			reviewGroup = fReviewGroups.get(i);
 			if (!reviewGroup.isOpen()) continue;  //skip reviews groups that are already closed
 			reviewGroup.close();
-			reviewGroup.removeListener();
+			reviewGroup.removeListeners();
 			fireRemove(reviewGroup);
 		}
 		fReviewGroups.clear();
@@ -173,7 +173,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			ruleSet = fRuleSets.get(i);
 			if (!ruleSet.isOpen()) continue;  //skip rule sets that are already closed
 			ruleSet.close();
-			ruleSet.removeListener();
+			ruleSet.removeListeners();
 			fireRemove(ruleSet);
 		}
 		fRuleSets.clear();
@@ -222,7 +222,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (fReviewGroups.size() == 0 && fRuleSets.size() == 0) return false;
+		if (0 == fReviewGroups.size() && 0 == fRuleSets.size()) return false;
 	    return true;
 	}
 	
@@ -240,7 +240,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	
 	/**
 	 * Method loadRuleSet.
-	 * @param aGroup R4EReviewGroup
+	 * @param aRuleSet R4EDesignRuleCollection
 	 * @throws ResourceHandlingException 
 	 */
 	public void loadRuleSet(R4EDesignRuleCollection aRuleSet) {
@@ -360,11 +360,23 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			//Remove element from UI if the show disabled element option is off
 			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fReviewGroups.remove(removedElement);
-				aChildToRemove.removeListener();
+				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
 			}
 		} else if (aChildToRemove instanceof R4EUIRuleSet) {
 			final R4EUIRuleSet removedElement = fRuleSets.get(fRuleSets.indexOf(aChildToRemove));
+			
+			//Verify if the rule set is referred to by any review group
+			for (R4EUIReviewGroup group : getGroups()) {
+				if (group.getRuleSets().contains(removedElement)) {
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+							"Rule Set cannot be removed because it is being used",
+							new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Rule Set used in Group " + group.getName()), IStatus.ERROR);
+					dialog.open();
+					return;
+				}
+			}
+			
 			
 			//Also recursively remove all children 
 			removedElement.removeAllChildren(aFileRemove);
@@ -377,7 +389,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			//Remove element from UI if the show disabled element option is off
 			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fRuleSets.remove(removedElement);
-				aChildToRemove.removeListener();
+				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
 			}
 		}
@@ -399,7 +411,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			removedElement.removeAllChildren(false);
 			fRuleSets.remove(removedElement);
 		}
-		aChildToRemove.removeListener();
+		aChildToRemove.removeListeners();
 		fireRemove(aChildToRemove);
 	}
 	
@@ -431,7 +443,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		fListener = aProvider;
+		super.addListener(aProvider);
 		if (null != fReviewGroups) {
 			R4EUIReviewGroup element = null;
 			for (final Iterator<R4EUIReviewGroup> iterator = fReviewGroups.iterator(); iterator.hasNext();) {
@@ -450,23 +462,24 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	
 	/**
 	 * Method removeListener.
+	 * @param aProvider ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	@Override
-	public void removeListener() {
-		fListener = null;
+	public void removeListener(ReviewNavigatorContentProvider aProvider) {
+		super.removeListener(aProvider);
 		if (null != fReviewGroups) {
 			R4EUIReviewGroup element = null;
 			for (final Iterator<R4EUIReviewGroup> iterator = fReviewGroups.iterator(); iterator.hasNext();) {
 				element = iterator.next();
-				element.removeListener();
+				element.removeListener(aProvider);
 			}
 		}
 		if (null != fRuleSets) {
 			R4EUIRuleSet element = null;
 			for (final Iterator<R4EUIRuleSet> iterator = fRuleSets.iterator(); iterator.hasNext();) {
 				element = iterator.next();
-				element.removeListener();
+				element.removeListener(aProvider);
 			}
 		}
 	}

@@ -57,7 +57,6 @@ public class CloseElementHandler extends AbstractHandler {
 				}
 			}
 			Activator.Ftracer.traceInfo("Closing element " + element.getName());
-			R4EUIModelController.setActiveReview(null);
 			
 			//The action is only performed on the first element, so select it
 			final StructuredSelection newSelection = new StructuredSelection(selection.getFirstElement());

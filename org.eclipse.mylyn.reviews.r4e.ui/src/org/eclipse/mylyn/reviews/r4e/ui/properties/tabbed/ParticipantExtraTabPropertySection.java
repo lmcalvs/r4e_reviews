@@ -173,9 +173,12 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		fTimeSpentDetailedList.clearAll();
 		int totalTimeSpent = 0;
 		Item item = null;
+		Entry<Date, Integer> timeEntry = null;
+		
 		final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);	
+		
 		for (int i = 0; i < numTimeEntries; i++) {
-			Entry<Date, Integer> timeEntry = modelUser.getTimeLog().get(i);
+			timeEntry = modelUser.getTimeLog().get(i);
 			if (i >= fTimeSpentDetailedList.getItemCount()) {
 				item = fTimeSpentDetailedList.addItem(); 
 			} else {
@@ -190,8 +193,9 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		
 		final String[] roles = ((R4EUIParticipant)fProperties.getElement()).getRoles(modelUser.getRoles());
 		fRolesList.clearAll();
+		String role  = null;
 		for (int i = 0; i < roles.length; i++) {
-			String role  = roles[i];
+			role  = roles[i];
 			if (i >= fRolesList.getItemCount()) {
 				item = fRolesList.addItem();
 			} else {

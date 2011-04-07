@@ -47,7 +47,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.dialogs.AnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 
 /**
  * @author lmcdubo
@@ -124,12 +123,14 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     	final int result = dialog.open();
     	if (result == Window.OK) {
     		tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
+    		final R4ECommentType tempCommentType = RModelFactory.eINSTANCE.createR4ECommentType();
     		tempAnomaly.setTitle(dialog.getAnomalyTitleValue());
     		tempAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
     		if (null != dialog.getRuleReferenceValue()) {
-    			R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
-    			((R4ECommentType)tempAnomaly.getType()).setType(rule.getClass_());
-    			tempAnomaly.setRank(UIUtils.mapRuleRank(rule.getRank()));
+    			final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
+    			tempCommentType.setType(rule.getClass_());
+    			tempAnomaly.setType(tempCommentType);
+    			tempAnomaly.setRank(rule.getRank());
     		}
     	}
     	// else Window.CANCEL
@@ -178,7 +179,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		}
 		fAnomalies.clear();
 		fOpen = false;
-		removeListener();
+		removeListeners();
 	}
 	
 	/** // $codepro.audit.disable blockDepth
@@ -218,12 +219,12 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 					    		}
 								
 								addChildren(uiAnomaly);
-								uiAnomaly.open();
+								if (uiAnomaly.isEnabled()) uiAnomaly.open();
 							}
 						} else {
 							uiAnomaly = new R4EUIAnomalyBasic(this, anomalies.get(i), null);
 							addChildren(uiAnomaly);
-							uiAnomaly.open();
+							if (uiAnomaly.isEnabled()) uiAnomaly.open();
 						}
 					}
 				}
@@ -248,7 +249,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				    			uiAnomaly.setName(R4EUIAnomalyExtended.getStateString(anomaly.getState()) + ": " + uiAnomaly.getName());
 				    		}
 							addChildren(uiAnomaly);
-							uiAnomaly.open();
+							if (uiAnomaly.isEnabled()) uiAnomaly.open();
 						}
 					}
 				}
@@ -350,9 +351,11 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
         	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
         	
     		if (null != dialog.getRuleReferenceValue()) {
-    			R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
-    			((R4ECommentType)anomaly.getType()).setType(rule.getClass_());
-    			anomaly.setRank(UIUtils.mapRuleRank(rule.getRank()));
+    			final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
+        		final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
+        		commentType.setType(rule.getClass_());
+        		anomaly.setType(commentType);
+    			anomaly.setRank(rule.getRank());
     		}
         	
         	//Set position data
@@ -410,7 +413,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fAnomalies.remove(removedElement);
-			aChildToRemove.removeListener();
+			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);
 		} else {
 			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -434,6 +437,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	
 	//Listeners
 	
+
 	/**
 	 * Method addListener.
 	 * @param aProvider ReviewNavigatorContentProvider
@@ -441,7 +445,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		fListener = aProvider;
+		super.addListener(aProvider);
 		if (null != fAnomalies) {
 			R4EUIAnomalyBasic element = null;
 			for (final Iterator<R4EUIAnomalyBasic> iterator = fAnomalies.iterator(); iterator.hasNext();) {
@@ -453,16 +457,17 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	
 	/**
 	 * Method removeListener
+	 * @param aProvider - the treeviewer content provider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	@Override
-	public void removeListener() {
-		fListener = null;
+	public void removeListener(ReviewNavigatorContentProvider aProvider) {
+		super.removeListener(aProvider);
 		if (null != fAnomalies) {
 			R4EUIAnomalyBasic element = null;
 			for (final Iterator<R4EUIAnomalyBasic> iterator = fAnomalies.iterator(); iterator.hasNext();) {
 				element = iterator.next();
-				element.removeListener();
+				element.removeListener(aProvider);
 			}
 		}
 	}

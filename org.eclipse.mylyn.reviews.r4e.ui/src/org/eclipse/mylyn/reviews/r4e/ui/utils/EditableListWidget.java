@@ -390,7 +390,7 @@ public class EditableListWidget {
 	
 	/**
 	 * Method setVisible.
-	 * @param aEnabled - boolean
+	 * @param aVisible - boolean
 	 */
 	public void setVisible(boolean aVisible) {
 		fMainComposite.setVisible(aVisible);
@@ -413,10 +413,16 @@ public class EditableListWidget {
 	 */
 	public void setEditableValues(String[] aValues) {
 		fValues = aValues;
-		if (null == fValues || 0 == fValues.length) fAddButton.setEnabled(false);	
-		else fAddButton.setEnabled(true);
-		if (0 == fMainTable.getItemCount()) fRemoveButton.setEnabled(false);	
-		else fRemoveButton.setEnabled(true);
+		if (null == fValues || 0 == fValues.length) {
+			fAddButton.setEnabled(false);	
+		} else {
+			fAddButton.setEnabled(true);
+		}
+		if (0 == fMainTable.getItemCount()) {
+			fRemoveButton.setEnabled(false);	
+		} else {
+			fRemoveButton.setEnabled(true);
+		}
 	}
 	
 	/**

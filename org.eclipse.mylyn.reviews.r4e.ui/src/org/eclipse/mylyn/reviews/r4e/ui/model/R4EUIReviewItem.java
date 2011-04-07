@@ -183,7 +183,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		switch (aType) {
 			case R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE:
 			{
-				if (aItemInfo != null) {
+				if (null != aItemInfo) {
 					message = ((R4EItem)aItemInfo).getDescription();
 				}
 				
@@ -320,7 +320,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		}
 		fFileContexts.clear();
 		fOpen = false;
-		removeListener();
+		removeListeners();
 	}
 	
 	/**
@@ -330,16 +330,16 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	public void open() {
 		final EList<R4EFileContext> files = fItem.getFileContextList();
 		if (null != files) {	
-			R4EUIFileContext newFileContext = null;
+			R4EUIFileContext uiFileContext = null;
 			final int filesSize = files.size();
 			R4EFileContext file = null;
 			for (int i = 0; i < filesSize; i++) {
 				file = files.get(i);
 				if (file.isEnabled() || Activator.getDefault().getPreferenceStore().
 						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					newFileContext = new R4EUIFileContext(this, files.get(i));
-					addChildren(newFileContext);
-					newFileContext.open();
+					uiFileContext = new R4EUIFileContext(this, files.get(i));
+					addChildren(uiFileContext);
+					if (uiFileContext.isEnabled()) uiFileContext.open();
 				}
 			}
 			
@@ -382,7 +382,8 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 * Method createReviewItem
 	 * @param aBaseTempFileVersion R4EFileVersion
 	 * @param aTargetTempFileVersion R4EFileVersion
-	 * @return aType R4EContextType
+	 * @param aType R4EContextType
+	 * @return R4EUIFileContext
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException 
 	 */
@@ -451,7 +452,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fFileContexts.remove(removedElement);
-			aChildToRemove.removeListener();
+			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);
 		} else {
 			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -483,7 +484,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 */
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		fListener = aProvider;
+		super.addListener(aProvider);
 		if (null != fFileContexts) {
 			R4EUIFileContext element = null;
 			for (final Iterator<R4EUIFileContext> iterator = fFileContexts.iterator(); iterator.hasNext();) {
@@ -495,16 +496,17 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	
 	/**
 	 * Method removeListener.
+	 * @param aProvider ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	@Override
-	public void removeListener() {
-		fListener = null;
+	public void removeListener(ReviewNavigatorContentProvider aProvider) {
+		super.removeListener(aProvider);
 		if (null != fFileContexts) {
 			R4EUIFileContext element = null;
 			for (final Iterator<R4EUIFileContext> iterator = fFileContexts.iterator(); iterator.hasNext();) {
 				element = iterator.next();
-				element.removeListener();
+				element.removeListener(aProvider);
 			}
 		}
 	}

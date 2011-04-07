@@ -20,7 +20,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.model;
 
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -74,8 +73,7 @@ public class R4EUIRule extends R4EUIModelElement {
 	/**
 	 * Constructor for R4EUISelection.
 	 * @param aParent IR4EUIModelElement
-	 * @param aDelta R4EDelta
-	 * @param aPosition IR4EUIPosition
+	 * @param aRule R4EDesignRule
 	 */
 	public R4EUIRule(IR4EUIModelElement aParent, R4EDesignRule aRule) {
 		super(aParent, aRule.getId(), aRule.getTitle());
@@ -175,7 +173,6 @@ public class R4EUIRule extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (!(getParent().getParent().isEnabled())) return false;
 		if (isEnabled()) return false;
 		return true;
 	}

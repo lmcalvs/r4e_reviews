@@ -93,6 +93,12 @@ public class EditorProxy {
 		R4EUISelectionContainer container = null;
 		int selectionIndex = -1;
 		
+		R4EUIFileContext context = null;
+		IFile baseFile = null;
+		R4EFileVersion baseFileVersion = null;
+		IFile targetFile = null;
+		R4EFileVersion targetFileVersion = null;
+		
 		for (final Iterator<?> iterator = ((IStructuredSelection)aSelection).iterator(); iterator.hasNext();) {
 			element = (IR4EUIModelElement) iterator.next();
 
@@ -119,13 +125,13 @@ public class EditorProxy {
 					element = element.getParent();
 					if (null == element) return;
 				}
-				R4EUIFileContext context = ((R4EUIFileContext) element);
+				context = ((R4EUIFileContext) element);
 				
 				//Get file from FileContext
-				IFile baseFile = context.getTempBaseFile();
-				R4EFileVersion baseFileVersion = context.getBaseFileVersion();
-				IFile targetFile = context.getTempTargetFile();
-				R4EFileVersion targetFileVersion = context.getTargetFileVersion();
+				baseFile = context.getTempBaseFile();
+				baseFileVersion = context.getBaseFileVersion();
+				targetFile = context.getTempTargetFile();
+				targetFileVersion = context.getTargetFileVersion();
 
 				//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
 				if (context.isFileVersionsComparable() && !forceSingleEditor) {
@@ -202,7 +208,7 @@ public class EditorProxy {
 	 * @param aTargetFile IFile
 	 * @param aTargetFileVersion R4EFileVersion
 	 * @param aTargetFileEditable boolean - flag set whether the target file is editable or not
-	 * @param selectionIndex int - the index of the selection to go to in the target file
+	 * @param aSelectionIndex int - the index of the selection to go to in the target file
 	 */
 	private static void openCompareEditor(IWorkbenchPage aPage, IFile aBaseFile, R4EFileVersion aBaseFileVersion,
 			IFile aTargetFile, R4EFileVersion aTargetFileVersion, boolean aTargetFileEditable, int aSelectionIndex) {
