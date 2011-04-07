@@ -126,16 +126,14 @@ public class DRModelPackageImpl extends EPackageImpl implements DRModelPackage {
 
 		isInited = true;
 
-		// Obtain or create and register interdependencies
-		ModelPackageImpl theModelPackage = (ModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI) instanceof ModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI) : ModelPackage.eINSTANCE);
+		// Initialize simple dependencies
+		ModelPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theDRModelPackage.createPackageContents();
-		theModelPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theDRModelPackage.initializePackageContents();
-		theModelPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theDRModelPackage.freeze();

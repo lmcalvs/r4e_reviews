@@ -424,13 +424,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_REVIEW__IDS_MAP = ModelPackage.REVIEW_FEATURE_COUNT + 15;
 
 	/**
+	 * The feature id for the '<em><b>Active Meeting</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW__ACTIVE_MEETING = ModelPackage.REVIEW_FEATURE_COUNT + 16;
+
+	/**
 	 * The number of structural features of the '<em>R4E Review</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_FEATURE_COUNT = ModelPackage.REVIEW_FEATURE_COUNT + 16;
+	int R4E_REVIEW_FEATURE_COUNT = ModelPackage.REVIEW_FEATURE_COUNT + 17;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl <em>R4E Anomaly</em>}' class.
@@ -912,6 +921,15 @@ public interface RModelPackage extends EPackage {
 	int R4E_FORMAL_REVIEW__IDS_MAP = R4E_REVIEW__IDS_MAP;
 
 	/**
+	 * The feature id for the '<em><b>Active Meeting</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FORMAL_REVIEW__ACTIVE_MEETING = R4E_REVIEW__ACTIVE_MEETING;
+
+	/**
 	 * The feature id for the '<em><b>Phase Owner</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1078,6 +1096,15 @@ public interface RModelPackage extends EPackage {
 	int R4E_USER__ID = ModelPackage.USER__ID;
 
 	/**
+	 * The feature id for the '<em><b>Email</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_USER__EMAIL = ModelPackage.USER__EMAIL;
+
+	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1194,6 +1221,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4E_PARTICIPANT__ID = R4E_USER__ID;
+
+	/**
+	 * The feature id for the '<em><b>Email</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_PARTICIPANT__EMAIL = R4E_USER__EMAIL;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -2561,6 +2597,79 @@ public interface RModelPackage extends EPackage {
 	int R4E_REVIEW_PHASE_INFO_FEATURE_COUNT = 4;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl <em>R4E Meeting Data</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EMeetingData()
+	 * @generated
+	 */
+	int R4E_MEETING_DATA = 33;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_MEETING_DATA__ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Subject</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_MEETING_DATA__SUBJECT = 1;
+
+	/**
+	 * The feature id for the '<em><b>Location</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_MEETING_DATA__LOCATION = 2;
+
+	/**
+	 * The feature id for the '<em><b>Start Time</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_MEETING_DATA__START_TIME = 3;
+
+	/**
+	 * The feature id for the '<em><b>End Time</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_MEETING_DATA__END_TIME = 4;
+
+	/**
+	 * The feature id for the '<em><b>Sent Count</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_MEETING_DATA__SENT_COUNT = 5;
+
+	/**
+	 * The number of structural features of the '<em>R4E Meeting Data</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_MEETING_DATA_FEATURE_COUNT = 6;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2568,7 +2677,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EAnomalyState()
 	 * @generated
 	 */
-	int R4E_ANOMALY_STATE = 33;
+	int R4E_ANOMALY_STATE = 34;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase <em>R4E Review Phase</em>}' enum.
@@ -2578,7 +2687,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewPhase()
 	 * @generated
 	 */
-	int R4E_REVIEW_PHASE = 34;
+	int R4E_REVIEW_PHASE = 35;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole <em>R4E User Role</em>}' enum.
@@ -2588,7 +2697,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EUserRole()
 	 * @generated
 	 */
-	int R4E_USER_ROLE = 35;
+	int R4E_USER_ROLE = 36;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision <em>R4E Decision</em>}' enum.
@@ -2598,7 +2707,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EDecision()
 	 * @generated
 	 */
-	int R4E_DECISION = 36;
+	int R4E_DECISION = 37;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType <em>R4E Review Type</em>}' enum.
@@ -2608,7 +2717,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EReviewType()
 	 * @generated
 	 */
-	int R4E_REVIEW_TYPE = 37;
+	int R4E_REVIEW_TYPE = 38;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType <em>R4E Context Type</em>}' enum.
@@ -2618,7 +2727,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EContextType()
 	 * @generated
 	 */
-	int R4E_CONTEXT_TYPE = 38;
+	int R4E_CONTEXT_TYPE = 39;
 
 	/**
 	 * The meta object id for the '<em>Mylyn Task</em>' data type.
@@ -2628,7 +2737,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMylynTask()
 	 * @generated
 	 */
-	int MYLYN_TASK = 39;
+	int MYLYN_TASK = 40;
 
 	/**
 	 * The meta object id for the '<em>IResource</em>' data type.
@@ -2638,7 +2747,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIResource()
 	 * @generated
 	 */
-	int IRESOURCE = 40;
+	int IRESOURCE = 41;
 
 
 	/**
@@ -2649,7 +2758,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getURI()
 	 * @generated
 	 */
-	int URI = 41;
+	int URI = 42;
 
 
 	/**
@@ -2660,7 +2769,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIFileRevision()
 	 * @generated
 	 */
-	int IFILE_REVISION = 42;
+	int IFILE_REVISION = 43;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup <em>R4E Review Group</em>}'.
@@ -2967,6 +3076,17 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getR4EReview_IdsMap();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getActiveMeeting <em>Active Meeting</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Active Meeting</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getActiveMeeting()
+	 * @see #getR4EReview()
+	 * @generated
+	 */
+	EReference getR4EReview_ActiveMeeting();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getCreatedBy <em>Created By</em>}'.
@@ -4404,6 +4524,82 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EReviewPhaseInfo_StartDate();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData <em>R4E Meeting Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>R4E Meeting Data</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData
+	 * @generated
+	 */
+	EClass getR4EMeetingData();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getId()
+	 * @see #getR4EMeetingData()
+	 * @generated
+	 */
+	EAttribute getR4EMeetingData_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSubject <em>Subject</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Subject</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSubject()
+	 * @see #getR4EMeetingData()
+	 * @generated
+	 */
+	EAttribute getR4EMeetingData_Subject();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getLocation <em>Location</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Location</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getLocation()
+	 * @see #getR4EMeetingData()
+	 * @generated
+	 */
+	EAttribute getR4EMeetingData_Location();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getStartTime <em>Start Time</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Start Time</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getStartTime()
+	 * @see #getR4EMeetingData()
+	 * @generated
+	 */
+	EAttribute getR4EMeetingData_StartTime();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getEndTime <em>End Time</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>End Time</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getEndTime()
+	 * @see #getR4EMeetingData()
+	 * @generated
+	 */
+	EAttribute getR4EMeetingData_EndTime();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSentCount <em>Sent Count</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Sent Count</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSentCount()
+	 * @see #getR4EMeetingData()
+	 * @generated
+	 */
+	EAttribute getR4EMeetingData_SentCount();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4756,6 +4952,14 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference R4E_REVIEW__IDS_MAP = eINSTANCE.getR4EReview_IdsMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Active Meeting</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference R4E_REVIEW__ACTIVE_MEETING = eINSTANCE.getR4EReview_ActiveMeeting();
 
 		/**
 		 * The meta object literal for the '<em><b>Created By</b></em>' reference feature.
@@ -5874,6 +6078,64 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW_PHASE_INFO__START_DATE = eINSTANCE.getR4EReviewPhaseInfo_StartDate();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl <em>R4E Meeting Data</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl
+		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getR4EMeetingData()
+		 * @generated
+		 */
+		EClass R4E_MEETING_DATA = eINSTANCE.getR4EMeetingData();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_MEETING_DATA__ID = eINSTANCE.getR4EMeetingData_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Subject</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_MEETING_DATA__SUBJECT = eINSTANCE.getR4EMeetingData_Subject();
+
+		/**
+		 * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_MEETING_DATA__LOCATION = eINSTANCE.getR4EMeetingData_Location();
+
+		/**
+		 * The meta object literal for the '<em><b>Start Time</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_MEETING_DATA__START_TIME = eINSTANCE.getR4EMeetingData_StartTime();
+
+		/**
+		 * The meta object literal for the '<em><b>End Time</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_MEETING_DATA__END_TIME = eINSTANCE.getR4EMeetingData_EndTime();
+
+		/**
+		 * The meta object literal for the '<em><b>Sent Count</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_MEETING_DATA__SENT_COUNT = eINSTANCE.getR4EMeetingData_SentCount();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.

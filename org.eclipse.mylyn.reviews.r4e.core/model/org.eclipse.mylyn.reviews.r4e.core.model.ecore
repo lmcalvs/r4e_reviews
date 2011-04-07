@@ -54,6 +54,8 @@
         eType="#//R4EUser"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="idsMap" upperBound="-1"
         eType="#//MapIDToComponent" transient="true" derived="true" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="activeMeeting" eType="#//R4EMeetingData"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EAnomaly" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Topic #//R4EReviewComponent #//R4EComment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="#//R4EAnomalyState"/>
@@ -293,5 +295,13 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//R4EReviewPhase"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="phaseOwnerID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="R4EMeetingData">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sentCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
 </ecore:EPackage>

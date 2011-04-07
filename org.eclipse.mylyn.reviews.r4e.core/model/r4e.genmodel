@@ -84,6 +84,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/usersMap"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/createdBy"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/idsMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/activeMeeting"/>
     </genClasses>
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/state"/>
@@ -244,6 +245,14 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/phaseOwnerID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/startDate"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/subject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/startTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/endTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/sentCount"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
