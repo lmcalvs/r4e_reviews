@@ -327,7 +327,7 @@ public class R4EUIModelController {
 	
 	/**
 	 * Method loadReviewGroups.
-	 * @param aGroupPaths List<String>
+	 * @param aRuleSetPaths List<String>
 	 */
 	public static void loadRuleSets(List<String> aRuleSetPaths) {
 		

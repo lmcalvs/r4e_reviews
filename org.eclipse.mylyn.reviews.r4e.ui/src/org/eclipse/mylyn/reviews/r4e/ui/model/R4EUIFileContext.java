@@ -105,9 +105,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	public R4EUIFileContext(IR4EUIModelElement aParent, R4EFileContext aFile) {
 		super(aParent, "", 
 				getNavigatorTooltip(aFile.getTarget(), aFile.getBase()));
-		if(aFile.getTarget() != null) {
+		if(null != aFile.getTarget()) {
 			setName(aFile.getTarget().getName());
-		} else if (aFile.getBase() != null){
+		} else if (null != aFile.getBase()){
 			setName(aFile.getBase().getName());
 		}
 		fFile = aFile;
@@ -521,7 +521,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		if (null != fAnomalyContainer)  fAnomalyContainer.close();
 		fAnomalyContainer = null;
 		fOpen = false;
-		removeListener();
+		removeListeners();
 	}
 	
 	/**
@@ -635,7 +635,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			fSelectionContainer.removeAllChildren(aFileRemove);
 			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fSelectionContainer = null;
-				aChildToRemove.removeListener();
+				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
 			} else {
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -645,7 +645,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			fAnomalyContainer.removeAllChildren(aFileRemove);
 			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fAnomalyContainer = null;
-				aChildToRemove.removeListener();
+				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
 			} else {
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -676,20 +676,21 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		fListener = aProvider;
+		super.addListener(aProvider);
 		if (null != fSelectionContainer) fSelectionContainer.addListener(aProvider);
 		if (null != fAnomalyContainer) fAnomalyContainer.addListener(aProvider);
 	}
 	
 	/**
 	 * Method removeListener.
+	 * @param aProvider - the treeviewer content provider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	@Override
-	public void removeListener() {
-		fListener = null;
-		if (null != fSelectionContainer) fSelectionContainer.removeListener();
-		if (null != fAnomalyContainer) fAnomalyContainer.removeListener();
+	public void removeListener(ReviewNavigatorContentProvider aProvider) {
+		super.removeListener(aProvider);
+		if (null != fSelectionContainer) fSelectionContainer.removeListener(aProvider);
+		if (null != fAnomalyContainer) fAnomalyContainer.removeListener(aProvider);
 	}
 	
 	

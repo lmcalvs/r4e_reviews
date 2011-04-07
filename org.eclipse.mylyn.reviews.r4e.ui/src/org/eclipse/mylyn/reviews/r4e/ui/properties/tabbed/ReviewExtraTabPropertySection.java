@@ -288,7 +288,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fReferenceMaterialText, ITabbedPropertyConstants.VSPACE);
-	    data.bottom = new FormAttachment(100, 0);
+	    data.bottom = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    decisionSection.setLayoutData(data);
         decisionSection.setText(DECISION_SECTION_LABEL);
         decisionSection.addExpansionListener(new ExpansionAdapter()
@@ -402,8 +402,10 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		final String[] components = (String[]) modelReview.getComponents().toArray();
 		fComponents.clearAll();
 		Item item = null;
+		String component  = null;
+		
 		for (int i = 0; i < components.length; i++) {
-			String component  = components[i];
+			component  = components[i];
 			if (i >= fComponents.getItemCount()) {
 				item = fComponents.addItem();
 			} else {

@@ -367,7 +367,7 @@ public class RuleSetInputDialog extends FormDialog {
     
     /**
      * Method validateFileExists.
-     * @param aText Text
+     * @param aFilePath String
      * @return String
      */
     private String validateFileExists(String aFilePath) {

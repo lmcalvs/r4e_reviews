@@ -32,6 +32,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
@@ -107,6 +109,18 @@ public class AnomalyInputDialog extends FormDialog {
 	 */
 	private static final String ADD_RULE_DIALOG_VALUE = "Rule Tree " +
 			"(Take note that the Anomaly will be created with the Design Rule default values)";
+	
+	/**
+	 * Field DEFAULT_ELEMENT_COLUMN_WIDTH.
+	 * (value is "150")
+	 */
+	private static final int DEFAULT_ELEMENT_COLUMN_WIDTH = 150;
+	
+	/**
+	 * Field DEFAULT_TREE_COLUMN_WIDTH.
+	 * (value is "100")
+	 */
+	private static final int DEFAULT_TREE_COLUMN_WIDTH = 100;
 	
 	
 	// ------------------------------------------------------------------------
@@ -205,8 +219,8 @@ public class AnomalyInputDialog extends FormDialog {
         	//Validate R4EUIRule (if present)
         	fRuleReferenceValue = null;
         	if (fRuleTreeViewer.getSelection() instanceof IStructuredSelection) {
-        		IStructuredSelection selection;
-        		if (null != (selection = ((IStructuredSelection)fRuleTreeViewer.getSelection()))) {
+        		final IStructuredSelection selection = (IStructuredSelection)fRuleTreeViewer.getSelection();
+        		if (null != selection) {
         			fRuleReferenceValue = (R4EUIRule) selection.getFirstElement();
         		}
         	}
@@ -288,7 +302,7 @@ public class AnomalyInputDialog extends FormDialog {
         //Extra parameters section
         final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE);
-        final GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        final GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
         extraSectionGridData.horizontalSpan = 4;
         extraSection.setLayoutData(extraSectionGridData);
         extraSection.setText(R4EUIConstants.EXTRA_PARAMS_HEADER);
@@ -307,66 +321,48 @@ public class AnomalyInputDialog extends FormDialog {
         
         //Rule Tree
         label = toolkit.createLabel(extraSectionClient, ADD_RULE_DIALOG_VALUE);
-        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 4;
+        label.setLayoutData(textGridData);
         
-        fRuleTreeViewer = new ReviewNavigatorTreeViewer(extraSectionClient, SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL);
-        fRuleTreeViewer.setUseHashlookup(true);
-        fRuleTreeViewer.getTree().setHeaderVisible(true);
+        fRuleTreeViewer = new ReviewNavigatorTreeViewer(extraSectionClient, SWT.FULL_SELECTION | 
+        		SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL);
         fRuleTreeViewer.setContentProvider(new ReviewNavigatorContentProvider());
+        fRuleTreeViewer.getTree().setHeaderVisible(true);
         
-		TreeViewerColumn elementColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
+		final TreeViewerColumn elementColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
 		elementColumn.getColumn().setText("Rule Tree");
+		elementColumn.getColumn().setWidth(DEFAULT_ELEMENT_COLUMN_WIDTH);
 		elementColumn.setLabelProvider(new ReviewNavigatorLabelProvider());
         
-		TreeViewerColumn idColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
-		idColumn.getColumn().setText("Rule ID");
-		idColumn.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				if (element instanceof R4EUIRule) {
-					return ((R4EUIRule)element).getRule().getId();
-				}
-				return null;
-			}
-		});
-        
-		TreeViewerColumn classColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
+		final TreeViewerColumn classColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
 		classColumn.getColumn().setText("Rule Class");
+		classColumn.getColumn().setWidth(DEFAULT_TREE_COLUMN_WIDTH);
 		classColumn.setLabelProvider(new ColumnLabelProvider() {
 			@Override
 			public String getText(Object element) {
 				if (element instanceof R4EUIRule) {
-					return ((R4EUIRule)element).getRule().getClass().getName();
+					return getClassStr(((R4EUIRule)element).getRule().getClass_());
 				}
 				return null;
 			}
 		});
         
-		TreeViewerColumn rankColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
+		final TreeViewerColumn rankColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
 		rankColumn.getColumn().setText("Rule Rank");
+		rankColumn.getColumn().setWidth(DEFAULT_TREE_COLUMN_WIDTH);
 		rankColumn.setLabelProvider(new ColumnLabelProvider() {
 			@Override
 			public String getText(Object element) {
 				if (element instanceof R4EUIRule) {
-					return ((R4EUIRule)element).getRule().getRank().getName();
-				}
-				return null;
-			}
-		});
-		
-		TreeViewerColumn titleColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
-		titleColumn.getColumn().setText("Rule Title");
-		titleColumn.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				if (element instanceof R4EUIRule) {
-					return ((R4EUIRule)element).getRule().getTitle();
+					return getRankStr(((R4EUIRule)element).getRule().getRank());
 				}
 				return null;
 			}
 		});
 		
 		fRuleTreeViewer.setInput(R4EUIModelController.getRootElement());
+		
 		fRuleTreeViewer.addFilter(new ViewerFilter() {		
 			@Override
 			public boolean select(Viewer viewer, Object parentElement, Object element) {
@@ -375,7 +371,8 @@ public class AnomalyInputDialog extends FormDialog {
 						element instanceof R4EUIRule) {
 					//Get parent RuleSet
 					IR4EUIModelElement parentRuleSetElement = (IR4EUIModelElement) element;
-					while (!(parentRuleSetElement instanceof R4EUIRuleSet) || null != parentRuleSetElement.getParent()) {
+					while (!(parentRuleSetElement instanceof R4EUIRuleSet) && null != parentRuleSetElement.getParent()) {
+						if (!parentRuleSetElement.isEnabled()) return false;
 						parentRuleSetElement = parentRuleSetElement.getParent();
 					}
 					//If the current reveiw group contains a reference to this Rule Set, display it
@@ -387,9 +384,10 @@ public class AnomalyInputDialog extends FormDialog {
 				return false;
 			}
 		});
+		fRuleTreeViewer.collapseAll();
 		fRuleTreeViewer.refresh();
 
-		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		textGridData.horizontalSpan = 4;
 		fRuleTreeViewer.getTree().setLayoutData(textGridData);
 		
@@ -397,8 +395,9 @@ public class AnomalyInputDialog extends FormDialog {
 			public void selectionChanged(SelectionChangedEvent event) {
 				//Only Rules are selectable
 				if(event.getSelection() instanceof IStructuredSelection ) {
+					if (null == ((IStructuredSelection)event.getSelection()).getFirstElement()) return;
 					if (((IStructuredSelection)event.getSelection()).getFirstElement() instanceof R4EUIRule) {
-						R4EUIRule rule = (R4EUIRule) ((IStructuredSelection)event.getSelection()).getFirstElement();
+						final R4EUIRule rule = (R4EUIRule) ((IStructuredSelection)event.getSelection()).getFirstElement();
 						fAnomalyTitleInputTextField.setText(rule.getRule().getTitle());
 						fAnomalyDescriptionInputTextField.setText(rule.getRule().getDescription());
 						return;
@@ -407,10 +406,6 @@ public class AnomalyInputDialog extends FormDialog {
 				fRuleTreeViewer.setSelection(null);
 			}
 		});
-
-
-		
-		
     }
     
 	/**
@@ -488,5 +483,39 @@ public class AnomalyInputDialog extends FormDialog {
     		if( !disp.readAndDispatch() ) disp.sleep();
     	}
     	disp.update();
+    }
+    
+    /**
+     * Method getClassStr.
+     * @param aClass R4EDesignRuleClass
+     * @return String
+     */
+    protected String getClassStr(R4EDesignRuleClass aClass) {
+		if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_ERRONEOUS)) {
+			return R4EUIConstants.ANOMALY_CLASS_ERRONEOUS;
+		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_SUPERFLUOUS)) {
+			return R4EUIConstants.ANOMALY_CLASS_SUPERFLUOUS;
+		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT)) {
+			return R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT;
+		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_QUESTION)) {
+			return R4EUIConstants.ANOMALY_CLASS_QUESTION;
+		} else {
+			return null;   //should never happen
+		}
+    }
+    
+    /**
+     * Method getRankStr.
+     * @param aRank R4EDesignRuleRank
+     * @return String
+     */
+    protected String getRankStr(R4EDesignRuleRank aRank) {
+		if (aRank.equals(R4EDesignRuleRank.R4E_RANK_NONE)) {
+			return R4EUIConstants.ANOMALY_RANK_NONE ;
+		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_MINOR)) {
+			return R4EUIConstants.ANOMALY_RANK_MINOR;
+		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_MAJOR)) {
+			return R4EUIConstants.ANOMALY_RANK_MAJOR;
+		} else return null;   //should never happen
     }
 }

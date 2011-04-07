@@ -83,11 +83,8 @@ public class OpenElementHandler extends AbstractHandler {
 					Activator.Ftracer.traceInfo("Opening element " + element.getName());
 					final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 					if (null != activeReview ) activeReview.close();
-					element.open();
-					R4EUIModelController.setActiveReview((R4EUIReviewBasic)element);
-				} else {
-					element.open();	
 				}
+				element.open();
 
 				//The action is only performed on the first element, so select it
 				final StructuredSelection newSelection = new StructuredSelection(selection.getFirstElement());

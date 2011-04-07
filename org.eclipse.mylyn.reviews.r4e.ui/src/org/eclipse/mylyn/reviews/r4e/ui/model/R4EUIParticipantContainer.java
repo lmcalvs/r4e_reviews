@@ -165,7 +165,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		}
 		fParticipants.clear();
 		fOpen = false;
-		removeListener();
+		removeListeners();
 	}
 	
 	/**
@@ -245,7 +245,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fParticipants.remove(removedElement);
-			aChildToRemove.removeListener();
+			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);
 		} else {
 			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -276,7 +276,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		fListener = aProvider;
+		super.addListener(aProvider);
 		if (null != fParticipants) {
 			R4EUIParticipant element = null;
 			for (final Iterator<R4EUIParticipant> iterator = fParticipants.iterator(); iterator.hasNext();) {
@@ -288,16 +288,17 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 
 	/**
 	 * Method removeListener.
+	 * @param aProvider ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	@Override
-	public void removeListener() {
-		fListener = null;
+	public void removeListener(ReviewNavigatorContentProvider aProvider) {
+		super.removeListener(aProvider);
 		if (null != fParticipants) {
 			R4EUIParticipant element = null;
 			for (final Iterator<R4EUIParticipant> iterator = fParticipants.iterator(); iterator.hasNext();) {
 				element = iterator.next();
-				element.removeListener();
+				element.removeListener(aProvider);
 			}
 		}
 	}

@@ -125,7 +125,7 @@ public class RuleAreaInputDialog extends FormDialog {
 	    	this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 	    	
         	//Validate Version
-        	String validateResult = validateEmptyInput(fNameInputTextField);
+        	final String validateResult = validateEmptyInput(fNameInputTextField);
         	if (null != validateResult) {
         		//Validation of input failed
     			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "No input given for Rule Area Name",
@@ -192,7 +192,7 @@ public class RuleAreaInputDialog extends FormDialog {
         basicSection.setClient(basicSectionClient);
         
         //Rule Area Name
-        Label label = toolkit.createLabel(basicSectionClient, ADD_RULE_AREA_NAME_DIALOG_VALUE);
+        final Label label = toolkit.createLabel(basicSectionClient, ADD_RULE_AREA_NAME_DIALOG_VALUE);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);

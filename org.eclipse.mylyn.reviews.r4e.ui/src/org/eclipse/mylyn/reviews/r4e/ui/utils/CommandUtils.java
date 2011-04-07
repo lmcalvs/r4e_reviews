@@ -337,7 +337,7 @@ public class CommandUtils {
 	/**
 	 * Adapt change types from Mylyn Versions to R4E model
 	 * @param changeType ChangeType
-	 * @return
+	 * @return R4EContextType
 	 */
 	public static R4EContextType adaptType(ChangeType changeType) {
 		R4EContextType dtype = null;
@@ -365,10 +365,8 @@ public class CommandUtils {
 	 * Resolve and transfer values from ScmArtifact to R4EFileVersion
 	 * @param aTargetFileVer R4EFileVersion
 	 * @param aSourceFileVer R4EFileVersion
-	 * @param localId
 	 */
 	public static void copyFileVersionData(R4EFileVersion aTargetFileVer, R4EFileVersion aSourceFileVer) {
-		
 		aTargetFileVer.setName(aSourceFileVer.getName());
 		aTargetFileVer.setVersionID(aSourceFileVer.getVersionID());
 		aTargetFileVer.setRepositoryPath(aSourceFileVer.getRepositoryPath());

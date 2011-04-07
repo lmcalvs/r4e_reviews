@@ -209,8 +209,10 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		final String[] projects = (String[]) modelGroup.getAvailableProjects().toArray();
 		fAvailableProjects.clearAll();
 		Item item = null;
+		String project = null;
+		
 		for (int i = 0; i < projects.length; i++) {
-			String project  = projects[i];
+			project = projects[i];
 			if (i >= fAvailableProjects.getItemCount()) {
 				item = fAvailableProjects.addItem(); 
 			} else {
@@ -222,8 +224,9 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		
 		final String[] components = (String[]) modelGroup.getAvailableComponents().toArray();
 		fAvailableComponents.clearAll();
+		String component = null;
 		for (int i = 0; i < components.length; i++) {
-			String component  = components[i];
+		    component = components[i];
 			if (i >= fAvailableComponents.getItemCount()) {
 				item = fAvailableComponents.addItem();
 			} else {
@@ -234,25 +237,27 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		}
 		fDefaultEntryCriteriaText.setText(modelGroup.getDefaultEntryCriteria());
 		
-		List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement)((R4EUIReviewGroup)fProperties.getElement()).getParent()).getRuleSets();
-		List<String> ruleSetLocations = new ArrayList<String>();
+		final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement)((R4EUIReviewGroup)fProperties.getElement()).getParent()).getRuleSets();
+		final List<String> ruleSetLocations = new ArrayList<String>();
 		for (R4EUIRuleSet uiRuleSet : uiRuleSets) {
 			if (uiRuleSet.isEnabled()) {
-				if (null == uiRuleSet.getRuleSet().eResource())
+				if (null == uiRuleSet.getRuleSet().eResource()) {
 					try {
 						uiRuleSet.open();
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);
 					}
 					ruleSetLocations.add(uiRuleSet.getRuleSet().eResource().getURI().toFileString());
+				}
 			}
 		}
 		fRuleSetLocations.setEditableValues(ruleSetLocations.toArray(new String[ruleSetLocations.size()]));
 		final String[] ruleSetsLocations = (String[]) modelGroup.getDesignRuleLocations().toArray();
 		fRuleSetLocations.clearAll();
 		item = null;
+		String ruleSet = null;
 		for (int i = 0; i < ruleSetsLocations.length; i++) {
-			String ruleSet  = ruleSetsLocations[i];
+			ruleSet = ruleSetsLocations[i];
 			if (i >= fRuleSetLocations.getItemCount()) {
 				item = fRuleSetLocations.addItem();
 			} else {

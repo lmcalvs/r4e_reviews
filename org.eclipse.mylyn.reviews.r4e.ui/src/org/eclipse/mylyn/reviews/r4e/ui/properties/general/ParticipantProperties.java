@@ -190,8 +190,9 @@ public class ParticipantProperties extends ModelElementProperties {
 			final R4EParticipant modelUser = ((R4EUIParticipant)getElement()).getParticipant();
 			final int numTimeEntries = modelUser.getTimeLog().size();
 			int totalTimeSpent = 0;
+			Entry<Date, Integer> timeEntry = null;
 			for (int i = 0; i < numTimeEntries; i++) {
-				Entry<Date, Integer> timeEntry = modelUser.getTimeLog().get(i);
+				timeEntry = modelUser.getTimeLog().get(i);
 				totalTimeSpent +=timeEntry.getValue().intValue();
 			}
 			return Integer.toString(totalTimeSpent);

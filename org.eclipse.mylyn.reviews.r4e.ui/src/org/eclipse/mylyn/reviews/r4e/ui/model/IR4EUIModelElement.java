@@ -237,8 +237,14 @@ public interface IR4EUIModelElement {
 	
 	/**
 	 * Remove the listener from the current element
+	 * @param aProvider - the treeviewer content provider
 	 */
-	void removeListener();
+	void removeListener(ReviewNavigatorContentProvider aProvider);
+	
+	/**
+	 * Remove all listeners from the current element
+	 */
+	void removeListeners();
 	
 	/**
 	 * Fire an add event to notify the UI of the model change

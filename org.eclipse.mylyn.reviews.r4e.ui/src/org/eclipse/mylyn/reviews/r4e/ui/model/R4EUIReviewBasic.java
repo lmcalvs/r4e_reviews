@@ -400,6 +400,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		R4EUIModelController.FModelExt.closeR4EReview(fReview);   //Notify model
 		R4EUIModelController.clearAnomalyMap();
 		fImage = UIUtils.loadIcon(REVIEW_CLOSED_ICON_FILE);
+		R4EUIModelController.setActiveReview(null);
 		fireReviewStateChanged(this);
 	}
 	
@@ -418,6 +419,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		if (null != items) {
 		
 			R4EUIReviewItem uiItem = null;
+			R4EFileVersion version = null;
+			CommitDescriptor descriptor = null;
+			
 			R4EUIModelController.mapAnomalies(fReview);
 			final int itemsSize = items.size();
 			R4EItem item = null;
@@ -428,7 +432,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					if (null == item.getFileContextList().get(0).getBase()) {
 						//Assume resource
-						R4EFileVersion version = item.getFileContextList().get(0).getTarget();
+						version = item.getFileContextList().get(0).getTarget();
 						//TODO this is temporary to prevent a nast bug.  We need to find out why the FileVersion is not populated
 						//at review item creation to really fix this.
 						if (null != version) {
@@ -439,11 +443,11 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						}
 					} else {
 						//commit
-						CommitDescriptor descriptor = createChangeSetDescriptor(item);
+						descriptor = createChangeSetDescriptor(item);
 						uiItem = new R4EUIReviewItem(this, item, R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT, descriptor, null);
 					}
 
-					uiItem.open();
+					if (uiItem.isEnabled()) uiItem.open();
 					addChildren(uiItem);
 				}
 			}
@@ -454,6 +458,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		
 		fOpen = true;
 		fImage = UIUtils.loadIcon(REVIEW_ICON_FILE);
+		R4EUIModelController.setActiveReview(this);
 		fireReviewStateChanged(this);
 	}
 	
@@ -648,7 +653,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			//Remove element from UI if the show disabled element option is off
 			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fItems.remove(removedElement);
-				aChildToRemove.removeListener();
+				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
 			} else {
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -657,7 +662,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			fAnomalyContainer.removeAllChildren(aFileRemove);
 			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fAnomalyContainer = null;
-				aChildToRemove.removeListener();
+				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
 			} else {
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -666,7 +671,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			fParticipantsContainer.removeAllChildren(aFileRemove);
 			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fParticipantsContainer = null;
-				aChildToRemove.removeListener();
+				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
 			} else {
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -699,7 +704,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		fListener = aProvider;
+		super.addListener(aProvider);
 		if (null != fItems) {
 			R4EUIReviewItem element = null;
 			for (final Iterator<R4EUIReviewItem> iterator = fItems.iterator(); iterator.hasNext();) {
@@ -713,20 +718,21 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	
 	/**
 	 * Method removeListener.
+	 * @param aProvider ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	@Override
-	public void removeListener() {
-		fListener = null;
+	public void removeListener(ReviewNavigatorContentProvider aProvider) {
+		super.removeListener(aProvider);
 		if (null != fItems) {
 			R4EUIReviewItem element = null;
 			for (final Iterator<R4EUIReviewItem> iterator = fItems.iterator(); iterator.hasNext();) {
 				element = iterator.next();
-				element.removeListener();
+				element.removeListener(aProvider);
 			}
 		}
-		if (null != fAnomalyContainer) fAnomalyContainer.removeListener();
-		if (null != fParticipantsContainer) fParticipantsContainer.removeListener();
+		if (null != fAnomalyContainer) fAnomalyContainer.removeListener(aProvider);
+		if (null != fParticipantsContainer) fParticipantsContainer.removeListener(aProvider);
 	}
 	
 	

@@ -220,6 +220,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 	/**
 	 * Constructor for R4EReviewGroupInputDialog.
 	 * @param aParentShell Shell
+	 * @param aRootElement R4EUIRootElement
 	 */
 	public ReviewGroupInputDialog(Shell aParentShell, R4EUIRootElement aRootElement) {
 		super(aParentShell);
@@ -462,8 +463,8 @@ public class ReviewGroupInputDialog extends FormDialog {
         //RuleSet references
         label = toolkit.createLabel(extraSectionClient, ADD_RULE_SETS_DIALOG_VALUE);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        List<R4EUIRuleSet> uiRuleSets = fRootElement.getRuleSets();
-        List<String> ruleLocations = new ArrayList<String>();
+        final List<R4EUIRuleSet> uiRuleSets = fRootElement.getRuleSets();
+        final List<String> ruleLocations = new ArrayList<String>();
         for (R4EUIRuleSet ruleSet : uiRuleSets) {
         	ruleLocations.add(ruleSet.getRuleSet().eResource().getURI().toFileString());
         }

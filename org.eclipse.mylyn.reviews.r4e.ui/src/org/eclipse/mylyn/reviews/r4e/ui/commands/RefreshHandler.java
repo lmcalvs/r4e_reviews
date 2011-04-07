@@ -65,7 +65,6 @@ public class RefreshHandler extends AbstractHandler  {
 				if (element instanceof R4EUIReviewGroup) {
 					//Refresh whole Review Group
 					((R4EUIReviewGroup)element).close();
-					R4EUIModelController.setActiveReview(null);
 					((R4EUIReviewGroup)element).open();
 				} else {
 					//Refresh Review
@@ -80,7 +79,6 @@ public class RefreshHandler extends AbstractHandler  {
 						group.open();
 					}
 				}
-				R4EUIModelController.setActiveReview(null);
 			}
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);

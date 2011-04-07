@@ -253,7 +253,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			review = fReviews.get(i);
 			if (!review.isOpen()) continue;  //skip reviews that are already closed
 			review.close();
-			review.removeListener();
+			review.removeListeners();
 			fireRemove(review);
 		}
 		fReviews.clear();
@@ -277,11 +277,13 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		if (null != reviews) {
 			final int reviewsSize = reviews.size();
 			R4EReview review = null;
+			R4EUIReviewBasic uiReview = null;
+			
 			for (int i = 0; i < reviewsSize; i++) {
 				review = (R4EReview)reviews.get(i);
 				if (review.isEnabled() || Activator.getDefault().getPreferenceStore().
 						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					R4EUIReviewBasic uiReview = null;
+					uiReview = null;
 					if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 						uiReview = new R4EUIReviewExtended(this, review, review.getType(), false);
 						((R4EUIReviewExtended)uiReview).setName(((R4EUIReviewExtended)uiReview).getPhaseString(
@@ -304,16 +306,16 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		}
 		
 		//Close and Reopen the RulesSet to make sure we have the latest information
-		List<String> ruleSetlocations = fGroup.getDesignRuleLocations();
+		final List<String> ruleSetlocations = fGroup.getDesignRuleLocations();
 		for (String ruleSetlocation : ruleSetlocations) {
 			for (R4EUIRuleSet ruleSet : ((R4EUIRootElement)getParent()).getRuleSets())
 			{
+				if (!ruleSet.isOpen()) ruleSet.open();
 				if (ruleSet.getRuleSet().eResource().getURI().toFileString().equals(ruleSetlocation)) {
-					ruleSet.close();
-					ruleSet.open();
 					fRuleSets.add(ruleSet);
 					break;
 				}
+				ruleSet.close();
 			}
 		}
 		
@@ -467,7 +469,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fReviews.remove(removedElement);
-			aChildToRemove.removeListener();
+			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);
 		}
 	}
@@ -496,7 +498,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		fListener = aProvider;
+		super.addListener(aProvider);
 		if (null != fReviews) {
 			R4EUIReviewBasic element = null;
 			for (final Iterator<R4EUIReviewBasic> iterator = fReviews.iterator(); iterator.hasNext();) {
@@ -508,16 +510,17 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	
 	/**
 	 * Method removeListener.
+	 * @param aProvider ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	@Override
-	public void removeListener() {
-		fListener = null;
+	public void removeListener(ReviewNavigatorContentProvider aProvider) {
+		super.removeListener(aProvider);
 		if (null != fReviews) {
 			R4EUIReviewBasic element = null;
 			for (final Iterator<R4EUIReviewBasic> iterator = fReviews.iterator(); iterator.hasNext();) {
 				element = iterator.next();
-				element.removeListener();
+				element.removeListener(aProvider);
 			}
 		}
 	}

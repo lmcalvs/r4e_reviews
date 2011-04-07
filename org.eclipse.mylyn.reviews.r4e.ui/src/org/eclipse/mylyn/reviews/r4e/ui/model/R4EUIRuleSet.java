@@ -114,7 +114,8 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	/**
 	 * Constructor for R4EUIParticipantContainer.
 	 * @param aParent IR4EUIModelElement
-	 * @param aName String
+	 * @param aRuleSet R4EDesignRuleCollection
+	 * @param aOpen boolean
 	 */
 	public R4EUIRuleSet(IR4EUIModelElement aParent, R4EDesignRuleCollection aRuleSet, boolean aOpen) {
 		super(aParent, aRuleSet.getName(), R4EUIConstants.FILE_LOCATION_LABEL + aRuleSet.eResource().getURI().devicePath());
@@ -261,7 +262,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 			for (int i = 0; i < areaSize; i++) {
 				uiArea = new R4EUIRuleArea(this, areas.get(i));
 				addChildren(uiArea);
-				uiArea.open();	
+				if (uiArea.isEnabled()) uiArea.open();	
 			}
 		}
 		fOpen = true;
@@ -349,7 +350,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fAreas.remove(removedElement);
-			aChildToRemove.removeListener();
+			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);
 		} else {
 			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -380,7 +381,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		fListener = aProvider;
+		super.addListener(aProvider);
 		if (null != fAreas) {
 			R4EUIRuleArea element = null;
 			for (final Iterator<R4EUIRuleArea> iterator = fAreas.iterator(); iterator.hasNext();) {
@@ -392,16 +393,17 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 
 	/**
 	 * Method removeListener.
+	 * @param aProvider ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	@Override
-	public void removeListener() {
-		fListener = null;
+	public void removeListener(ReviewNavigatorContentProvider aProvider) {
+		super.removeListener(aProvider);
 		if (null != fAreas) {
 			R4EUIRuleArea element = null;
 			for (final Iterator<R4EUIRuleArea> iterator = fAreas.iterator(); iterator.hasNext();) {
 				element = iterator.next();
-				element.removeListener();
+				element.removeListener(aProvider);
 			}
 		}
 	}

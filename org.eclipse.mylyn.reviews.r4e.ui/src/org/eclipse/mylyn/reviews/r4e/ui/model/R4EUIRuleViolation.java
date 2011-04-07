@@ -98,9 +98,9 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Constructor for R4EUIParticipantContainer.
+	 * Constructor for R4EUIRuleViolation.
 	 * @param aParent IR4EUIModelElement
-	 * @param aName String
+	 * @param aViolation R4EDesignRuleViolation
 	 */
 	public R4EUIRuleViolation(IR4EUIModelElement aParent, R4EDesignRuleViolation aViolation) {
 		super(aParent, aViolation.getName(), null);
@@ -210,7 +210,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 		}
 		fRules.clear();
 		fOpen = false;
-		removeListener();
+		removeListeners();
 	}
 	
 	/**
@@ -309,7 +309,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fRules.remove(removedElement);
-			aChildToRemove.removeListener();
+			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);
 		} else {
 			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -340,7 +340,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 */
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		fListener = aProvider;
+		super.addListener(aProvider);
 		if (null != fRules) {
 			R4EUIRule element = null;
 			for (final Iterator<R4EUIRule> iterator = fRules.iterator(); iterator.hasNext();) {
@@ -352,16 +352,17 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 
 	/**
 	 * Method removeListener.
+	 * @param aProvider ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	@Override
-	public void removeListener() {
-		fListener = null;
+	public void removeListener(ReviewNavigatorContentProvider aProvider) {
+		super.removeListener(aProvider);
 		if (null != fRules) {
 			R4EUIRule element = null;
 			for (final Iterator<R4EUIRule> iterator = fRules.iterator(); iterator.hasNext();) {
 				element = iterator.next();
-				element.removeListener();
+				element.removeListener(aProvider);
 			}
 		}
 	}
@@ -406,7 +407,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (!isOpen() && isEnabled()) return true;
+		if (isEnabled()) return true;
 		return false;
 	}
 	
@@ -417,7 +418,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isOpen() || isEnabled()) return false;
+		if (isEnabled()) return false;
 		return true;
 	}
 	
