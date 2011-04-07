@@ -28,6 +28,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.User;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.UserImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.UserImpl#getEmail <em>Email</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,6 +54,26 @@ public class UserImpl extends EObjectImpl implements User {
 	 * @ordered
 	 */
 	protected String id = ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getEmail() <em>Email</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEmail()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String EMAIL_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getEmail() <em>Email</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEmail()
+	 * @generated
+	 * @ordered
+	 */
+	protected String email = EMAIL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -99,11 +120,34 @@ public class UserImpl extends EObjectImpl implements User {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setEmail(String newEmail) {
+		String oldEmail = email;
+		email = newEmail;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.USER__EMAIL, oldEmail, email));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ModelPackage.USER__ID:
 				return getId();
+			case ModelPackage.USER__EMAIL:
+				return getEmail();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -118,6 +162,9 @@ public class UserImpl extends EObjectImpl implements User {
 		switch (featureID) {
 			case ModelPackage.USER__ID:
 				setId((String)newValue);
+				return;
+			case ModelPackage.USER__EMAIL:
+				setEmail((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -134,6 +181,9 @@ public class UserImpl extends EObjectImpl implements User {
 			case ModelPackage.USER__ID:
 				setId(ID_EDEFAULT);
 				return;
+			case ModelPackage.USER__EMAIL:
+				setEmail(EMAIL_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -148,6 +198,8 @@ public class UserImpl extends EObjectImpl implements User {
 		switch (featureID) {
 			case ModelPackage.USER__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case ModelPackage.USER__EMAIL:
+				return EMAIL_EDEFAULT == null ? email != null : !EMAIL_EDEFAULT.equals(email);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -164,6 +216,8 @@ public class UserImpl extends EObjectImpl implements User {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (id: ");
 		result.append(id);
+		result.append(", email: ");
+		result.append(email);
 		result.append(')');
 		return result.toString();
 	}

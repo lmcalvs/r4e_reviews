@@ -29,6 +29,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Location" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="User">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TaskReference" eSuperTypes="#//ReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="taskId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
