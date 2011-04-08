@@ -40,9 +40,19 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_USER_ID = "userIdPreference";	
 	
 	/**
+	 * The user Email preference name
+	 */
+	public static final String P_USER_EMAIL = "userEmailPreference";	
+	
+	/**
 	 * The user ID main label text
 	 */
 	public static final String P_USER_ID_LABEL =  "User ID:";
+	
+	/**
+	 * The user Email main label text
+	 */
+	public static final String P_USER_EMAIL_LABEL =  "User Email:";
 	
 	/**
 	 * The file path preference name

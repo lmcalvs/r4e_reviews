@@ -38,6 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
@@ -267,4 +268,18 @@ public class UIUtils {
 	public static String[] getRanks() {
 		return R4EUIConstants.RANK_VALUES;
 	}
+	
+	/**
+	 * Method buildUserDetailsString.
+	 * @param aUserInfo IUserInfo
+	 * @return String
+	 */
+    public static String buildUserDetailsString(IUserInfo aUserInfo) {
+    	StringBuffer tempStr = new StringBuffer();
+    	for (int i = 0; i < aUserInfo.getAttributeTypes().length; i++) {
+    		tempStr.append(aUserInfo.getAttributeTypes()[i] + " = " 
+    		+ aUserInfo.getAttributeValues()[i] + System.getProperty("line.separator"));
+    	}
+    	return tempStr.toString();
+    }
 }

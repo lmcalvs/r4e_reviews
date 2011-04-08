@@ -37,6 +37,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.FindUsersTableViewerSorter;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
 import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
@@ -205,7 +206,7 @@ public class FindUserDialog extends FormDialog {
 	    		IUserInfo userInfo = fUsersList.get(selectedTableIndex);
 		    	fUserIdValue = userInfo.getUserId();
 	    		fUserEmailValue = userInfo.getEmail();
-	    		buildUserDetailsString(fUsersList.get(selectedTableIndex));
+	    		UIUtils.buildUserDetailsString(fUsersList.get(selectedTableIndex));
 	    	} else {
 	        	fUserIdValue = "";
 	        	fUserEmailValue = "";
@@ -584,16 +585,6 @@ public class FindUserDialog extends FormDialog {
      */
     public String getUserEmailValue() {
         return fUserEmailValue;
-    }
-    
-    
-    public String buildUserDetailsString(IUserInfo aUserInfo) {
-    	StringBuffer tempStr = new StringBuffer();
-    	for (int i = 0; i < aUserInfo.getAttributeTypes().length; i++) {
-    		tempStr.append(aUserInfo.getAttributeTypes()[i] + " = " 
-    		+ aUserInfo.getAttributeValues()[i] + System.getProperty("line.separator"));
-    	}
-    	return tempStr.toString();
     }
     
     /**

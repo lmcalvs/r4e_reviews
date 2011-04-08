@@ -109,6 +109,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
     	if (result == Window.OK) {
     		tempParticipant = RModelFactory.eINSTANCE.createR4EParticipant();
     		tempParticipant.setId(dialog.getParticipantIdValue());
+    		tempParticipant.setEmail(dialog.getParticipantEmailValue());
     		tempParticipant.getRoles().addAll(dialog.getParticipantRolesValue());
     		tempParticipant.setFocusArea(dialog.getFocusAreaValue());
     	}
@@ -200,6 +201,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		fParticipants.add((R4EUIParticipant) aChildToAdd);
+		((R4EUIParticipant)aChildToAdd).setParticipantDetails();
 		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView().getTreeViewer().getContentProvider());
 		fireAdd(aChildToAdd);
 	}

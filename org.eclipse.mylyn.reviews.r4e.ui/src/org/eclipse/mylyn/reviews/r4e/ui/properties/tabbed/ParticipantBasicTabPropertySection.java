@@ -52,6 +52,11 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	private CLabel fIdText = null;
 	
 	/**
+	 * Field fEmailText.
+	 */
+	private CLabel fEmailText = null;
+	
+	/**
 	 * Field FNumItemsText.
 	 */
 	private CLabel fNumItemsText = null;
@@ -65,6 +70,11 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	 * Field FNumCommentsText.
 	 */
 	private CLabel fNumCommentsText = null;
+	
+	/**
+	 * Field fDetailsText.
+	 */
+	private CLabel fDetailsText = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -94,13 +104,27 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
 	    fIdText.setLayoutData(data);
 
-
 	    final CLabel idLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.ID_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fIdText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fIdText, 0, SWT.CENTER);
 	    idLabel.setLayoutData(data);
+	    
+	    //Email (read-only)
+	    fEmailText = widgetFactory.createCLabel(mainForm, "");
+	    data = new FormData();
+	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+	    data.top = new FormAttachment(fIdText, ITabbedPropertyConstants.VSPACE);
+	    fEmailText.setLayoutData(data);
+	    
+	    final CLabel emailLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.EMAIL_LABEL);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, 0);
+	    data.right = new FormAttachment(fEmailText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fEmailText, 0, SWT.CENTER);
+	    emailLabel.setLayoutData(data);
 	    
 	    //Number of Review Items added (read-only)
 	    fNumItemsText = widgetFactory.createCLabel(mainForm, "");
@@ -147,6 +171,21 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.right = new FormAttachment(fNumCommentsText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fNumCommentsText, 0, SWT.CENTER);
 	    numCommentsLabel.setLayoutData(data);
+	    
+	    //Details (read-only)
+	    fDetailsText = widgetFactory.createCLabel(mainForm, "");
+	    data = new FormData();
+	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+	    data.top = new FormAttachment(fNumCommentsText, ITabbedPropertyConstants.VSPACE);
+	    fDetailsText.setLayoutData(data);
+	    
+	    final CLabel detailsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.USER_DETAILS_LABEL);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, 0);
+	    data.right = new FormAttachment(fDetailsText, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fDetailsText, 0, SWT.CENTER);
+	    detailsLabel.setLayoutData(data);
 	}
 
 	/**
@@ -158,6 +197,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 		fRefreshInProgress = true;
 		final R4EParticipant modelUser = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
 		fIdText.setText(modelUser.getId());
+		fEmailText.setText(modelUser.getEmail());
 		fNumItemsText.setText(String.valueOf(modelUser.getAddedItems().size()));
 
 		int numAnomalies = 0;
@@ -173,6 +213,8 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 		}
 		fNumAnomaliesText.setText(String.valueOf(numAnomalies));
 		fNumCommentsText.setText(String.valueOf(numComments));
+		String details = ((R4EUIParticipant)fProperties.getElement()).getParticipantDetails();
+		if (null != details) fDetailsText.setText(details);
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
