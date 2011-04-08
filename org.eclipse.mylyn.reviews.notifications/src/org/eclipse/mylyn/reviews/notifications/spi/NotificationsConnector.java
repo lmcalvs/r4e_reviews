@@ -56,16 +56,20 @@ public abstract class NotificationsConnector {
 	 */
 	public abstract void sendEmailGraphical(String aEmailFrom, String[] aEMails, String aSubject, String aBody,
 			String aAttachment, NotificationFilter aFilter) throws CoreException;
-	
 
 	/**
 	 * @param aSubject
 	 * @param aBody
 	 * @param aEmails
+	 * @param startDate
+	 *            - proposed start date with time for the meeting
+	 * @param duration
+	 *            - proposed duration
 	 * @return
 	 * @throws CoreException
 	 */
-	public abstract IMeetingData createMeetingRequest(String aSubject, String aBody, String[] aEmails)
+	public abstract IMeetingData createMeetingRequest(String aSubject, String aBody, String[] aEmails, Long startDate,
+			Integer duration)
 			throws CoreException;
 
 	/**
