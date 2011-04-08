@@ -30,6 +30,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -141,6 +142,15 @@ public interface Persistence {
 		 * @throws ResourceHandlingException
 		 */
 		public R4EReviewPhaseInfo createR4EReviewPhaseInfo(R4EFormalReview review) throws ResourceHandlingException;
+
+		/**
+		 * Creates a meeting data instance and it's associated as the active meeting to the given review.
+		 * 
+		 * @param aReview
+		 * @return
+		 * @throws ResourceHandlingException
+		 */
+		public R4EMeetingData createR4EMeetingData(R4EReview aReview) throws ResourceHandlingException;
 
 		/**
 		 * Although opening the actual review shall done automatically via proxy resolution from the elements in the

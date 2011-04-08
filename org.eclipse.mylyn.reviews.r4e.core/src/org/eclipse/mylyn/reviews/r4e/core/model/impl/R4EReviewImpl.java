@@ -33,6 +33,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
@@ -62,6 +63,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getUsersMap <em>Users Map</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getCreatedBy <em>Created By</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getIdsMap <em>Ids Map</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getActiveMeeting <em>Active Meeting</em>}</li>
  * </ul>
  * </p>
  *
@@ -327,6 +329,16 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	 * @ordered
 	 */
 	protected EMap<R4EID, R4EIDComponent> idsMap;
+
+	/**
+	 * The cached value of the '{@link #getActiveMeeting() <em>Active Meeting</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getActiveMeeting()
+	 * @generated
+	 * @ordered
+	 */
+	protected R4EMeetingData activeMeeting;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -730,6 +742,72 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public R4EMeetingData getActiveMeeting() {
+		if (activeMeeting != null && activeMeeting.eIsProxy()) {
+			InternalEObject oldActiveMeeting = (InternalEObject)activeMeeting;
+			activeMeeting = (R4EMeetingData)eResolveProxy(oldActiveMeeting);
+			if (activeMeeting != oldActiveMeeting) {
+				InternalEObject newActiveMeeting = (InternalEObject)activeMeeting;
+				NotificationChain msgs = oldActiveMeeting.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_REVIEW__ACTIVE_MEETING, null, null);
+				if (newActiveMeeting.eInternalContainer() == null) {
+					msgs = newActiveMeeting.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_REVIEW__ACTIVE_MEETING, null, msgs);
+				}
+				if (msgs != null) msgs.dispatch();
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_REVIEW__ACTIVE_MEETING, oldActiveMeeting, activeMeeting));
+			}
+		}
+		return activeMeeting;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EMeetingData basicGetActiveMeeting() {
+		return activeMeeting;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetActiveMeeting(R4EMeetingData newActiveMeeting, NotificationChain msgs) {
+		R4EMeetingData oldActiveMeeting = activeMeeting;
+		activeMeeting = newActiveMeeting;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW__ACTIVE_MEETING, oldActiveMeeting, newActiveMeeting);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setActiveMeeting(R4EMeetingData newActiveMeeting) {
+		if (newActiveMeeting != activeMeeting) {
+			NotificationChain msgs = null;
+			if (activeMeeting != null)
+				msgs = ((InternalEObject)activeMeeting).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_REVIEW__ACTIVE_MEETING, null, msgs);
+			if (newActiveMeeting != null)
+				msgs = ((InternalEObject)newActiveMeeting).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RModelPackage.R4E_REVIEW__ACTIVE_MEETING, null, msgs);
+			msgs = basicSetActiveMeeting(newActiveMeeting, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW__ACTIVE_MEETING, newActiveMeeting, newActiveMeeting));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public R4EUser getCreatedBy() {
 		if (createdBy != null && createdBy.eIsProxy()) {
 			InternalEObject oldCreatedBy = (InternalEObject)createdBy;
@@ -779,6 +857,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 				return ((InternalEList<?>)getUsersMap()).basicRemove(otherEnd, msgs);
 			case RModelPackage.R4E_REVIEW__IDS_MAP:
 				return ((InternalEList<?>)getIdsMap()).basicRemove(otherEnd, msgs);
+			case RModelPackage.R4E_REVIEW__ACTIVE_MEETING:
+				return basicSetActiveMeeting(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -828,6 +908,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 			case RModelPackage.R4E_REVIEW__IDS_MAP:
 				if (coreType) return getIdsMap();
 				else return getIdsMap().map();
+			case RModelPackage.R4E_REVIEW__ACTIVE_MEETING:
+				if (resolve) return getActiveMeeting();
+				return basicGetActiveMeeting();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -890,6 +973,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 			case RModelPackage.R4E_REVIEW__IDS_MAP:
 				((EStructuralFeature.Setting)getIdsMap()).set(newValue);
 				return;
+			case RModelPackage.R4E_REVIEW__ACTIVE_MEETING:
+				setActiveMeeting((R4EMeetingData)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -950,6 +1036,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 			case RModelPackage.R4E_REVIEW__IDS_MAP:
 				getIdsMap().clear();
 				return;
+			case RModelPackage.R4E_REVIEW__ACTIVE_MEETING:
+				setActiveMeeting((R4EMeetingData)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -994,6 +1083,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 				return createdBy != null;
 			case RModelPackage.R4E_REVIEW__IDS_MAP:
 				return idsMap != null && !idsMap.isEmpty();
+			case RModelPackage.R4E_REVIEW__ACTIVE_MEETING:
+				return activeMeeting != null;
 		}
 		return super.eIsSet(featureID);
 	}

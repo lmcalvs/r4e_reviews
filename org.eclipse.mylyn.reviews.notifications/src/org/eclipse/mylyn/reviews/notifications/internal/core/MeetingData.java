@@ -95,14 +95,6 @@ public class MeetingData implements IMeetingData {
 		return fEndTime;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getAttributeValues()
-	 */
-	public String[] getAttributeValues() {
-		String[] values = { fSubject, fLocation, Long.toString(fSartTime), Long.toString(fEndTime) };
-		return values;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

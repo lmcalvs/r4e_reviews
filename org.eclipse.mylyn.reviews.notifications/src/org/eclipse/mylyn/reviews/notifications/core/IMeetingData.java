@@ -70,9 +70,5 @@ public interface IMeetingData {
 	 */
 	public abstract void incrementSentCounter();
 
-	/**
-	 * @return
-	 */
-	public abstract String[] getAttributeValues();
 
 }

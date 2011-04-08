@@ -26,6 +26,7 @@
     <genClasses image="false" ecoreClass="org.eclipse.mylyn.reviews.frame.core.model.ecore#//Location"/>
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.frame.core.model.ecore#//User">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.frame.core.model.ecore#//User/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.frame.core.model.ecore#//User/email"/>
     </genClasses>
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.frame.core.model.ecore#//TaskReference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.frame.core.model.ecore#//TaskReference/taskId"/>

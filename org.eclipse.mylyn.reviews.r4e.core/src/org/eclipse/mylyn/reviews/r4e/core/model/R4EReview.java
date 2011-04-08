@@ -44,6 +44,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.Review;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getUsersMap <em>Users Map</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getCreatedBy <em>Created By</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getIdsMap <em>Ids Map</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getActiveMeeting <em>Active Meeting</em>}</li>
  * </ul>
  * </p>
  *
@@ -418,6 +419,32 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * @generated
 	 */
 	EMap<R4EID, R4EIDComponent> getIdsMap();
+
+	/**
+	 * Returns the value of the '<em><b>Active Meeting</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Active Meeting</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Active Meeting</em>' containment reference.
+	 * @see #setActiveMeeting(R4EMeetingData)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_ActiveMeeting()
+	 * @model containment="true" resolveProxies="true"
+	 * @generated
+	 */
+	R4EMeetingData getActiveMeeting();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getActiveMeeting <em>Active Meeting</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Active Meeting</em>' containment reference.
+	 * @see #getActiveMeeting()
+	 * @generated
+	 */
+	void setActiveMeeting(R4EMeetingData value);
 
 	/**
 	 * Returns the value of the '<em><b>Created By</b></em>' reference.

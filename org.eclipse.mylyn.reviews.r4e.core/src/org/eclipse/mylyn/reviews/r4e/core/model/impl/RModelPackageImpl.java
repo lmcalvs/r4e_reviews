@@ -40,6 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -305,6 +306,13 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass r4EMeetingDataEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum r4EAnomalyStateEEnum = null;
 
 	/**
@@ -417,7 +425,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		isInited = true;
 
 		// Initialize simple dependencies
-		ModelPackage.eINSTANCE.eClass();
 		DRModelPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
@@ -685,6 +692,15 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 */
 	public EReference getR4EReview_IdsMap() {
 		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(15);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getR4EReview_ActiveMeeting() {
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(16);
 	}
 
 	/**
@@ -1880,6 +1896,69 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getR4EMeetingData() {
+		return r4EMeetingDataEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EMeetingData_Id() {
+		return (EAttribute)r4EMeetingDataEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EMeetingData_Subject() {
+		return (EAttribute)r4EMeetingDataEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EMeetingData_Location() {
+		return (EAttribute)r4EMeetingDataEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EMeetingData_StartTime() {
+		return (EAttribute)r4EMeetingDataEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EMeetingData_EndTime() {
+		return (EAttribute)r4EMeetingDataEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EMeetingData_SentCount() {
+		return (EAttribute)r4EMeetingDataEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getR4EAnomalyState() {
 		return r4EAnomalyStateEEnum;
 	}
@@ -2023,6 +2102,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEReference(r4EReviewEClass, R4E_REVIEW__USERS_MAP);
 		createEReference(r4EReviewEClass, R4E_REVIEW__CREATED_BY);
 		createEReference(r4EReviewEClass, R4E_REVIEW__IDS_MAP);
+		createEReference(r4EReviewEClass, R4E_REVIEW__ACTIVE_MEETING);
 
 		r4EAnomalyEClass = createEClass(R4E_ANOMALY);
 		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__STATE);
@@ -2186,6 +2266,14 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EReviewPhaseInfoEClass, R4E_REVIEW_PHASE_INFO__PHASE_OWNER_ID);
 		createEAttribute(r4EReviewPhaseInfoEClass, R4E_REVIEW_PHASE_INFO__START_DATE);
 
+		r4EMeetingDataEClass = createEClass(R4E_MEETING_DATA);
+		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__ID);
+		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__SUBJECT);
+		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__LOCATION);
+		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__START_TIME);
+		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__END_TIME);
+		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__SENT_COUNT);
+
 		// Create enums
 		r4EAnomalyStateEEnum = createEEnum(R4E_ANOMALY_STATE);
 		r4EReviewPhaseEEnum = createEEnum(R4E_REVIEW_PHASE);
@@ -2294,6 +2382,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EReview_UsersMap(), this.getMapToUsers(), null, "usersMap", null, 0, -1, R4EReview.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EReview_CreatedBy(), this.getR4EUser(), null, "createdBy", null, 1, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EReview_IdsMap(), this.getMapIDToComponent(), null, "idsMap", null, 0, -1, R4EReview.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EReview_ActiveMeeting(), this.getR4EMeetingData(), null, "activeMeeting", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EAnomalyEClass, R4EAnomaly.class, "R4EAnomaly", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4EAnomaly_State(), this.getR4EAnomalyState(), "state", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2456,6 +2545,14 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EReviewPhaseInfo_Type(), this.getR4EReviewPhase(), "type", null, 0, 1, R4EReviewPhaseInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReviewPhaseInfo_PhaseOwnerID(), ecorePackage.getEString(), "phaseOwnerID", null, 0, 1, R4EReviewPhaseInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReviewPhaseInfo_StartDate(), ecorePackage.getEDate(), "startDate", null, 0, 1, R4EReviewPhaseInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(r4EMeetingDataEClass, R4EMeetingData.class, "R4EMeetingData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getR4EMeetingData_Id(), ecorePackage.getEString(), "id", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EMeetingData_Subject(), ecorePackage.getEString(), "subject", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EMeetingData_Location(), ecorePackage.getEString(), "location", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EMeetingData_StartTime(), ecorePackage.getELong(), "startTime", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EMeetingData_EndTime(), ecorePackage.getEString(), "endTime", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EMeetingData_SentCount(), ecorePackage.getEInt(), "sentCount", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(r4EAnomalyStateEEnum, R4EAnomalyState.class, "R4EAnomalyState");

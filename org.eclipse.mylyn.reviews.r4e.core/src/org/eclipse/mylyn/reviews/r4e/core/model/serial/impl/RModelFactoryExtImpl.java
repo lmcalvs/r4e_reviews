@@ -39,6 +39,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -330,6 +331,29 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		fWriter.saveResource(phase.eResource());
 
 		return phase;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#createR4EMeetingData(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EReview)
+	 */
+	public R4EMeetingData createR4EMeetingData(R4EReview aReview) throws ResourceHandlingException {
+		// validate
+		if (aReview == null) {
+			return null;
+		}
+
+		R4EMeetingData meetingd = RModelFactory.eINSTANCE.createR4EMeetingData();
+		aReview.setActiveMeeting(meetingd);
+
+		// Initial save of the new element
+		aReview.eResource().getContents().add(meetingd);
+		fWriter.saveResource(meetingd.eResource());
+
+		return meetingd;
 	}
 
 	/**

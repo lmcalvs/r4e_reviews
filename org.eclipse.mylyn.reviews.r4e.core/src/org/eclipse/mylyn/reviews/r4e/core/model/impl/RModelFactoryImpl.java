@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
@@ -44,6 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -149,6 +149,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 			case RModelPackage.MAP_DATE_TO_DURATION: return (EObject)createMapDateToDuration();
 			case RModelPackage.MAP_KEY_TO_INFO_ATTRIBUTES: return (EObject)createMapKeyToInfoAttributes();
 			case RModelPackage.R4E_REVIEW_PHASE_INFO: return createR4EReviewPhaseInfo();
+			case RModelPackage.R4E_MEETING_DATA: return createR4EMeetingData();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -504,6 +505,16 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	public R4EReviewPhaseInfo createR4EReviewPhaseInfo() {
 		R4EReviewPhaseInfoImpl r4EReviewPhaseInfo = new R4EReviewPhaseInfoImpl();
 		return r4EReviewPhaseInfo;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EMeetingData createR4EMeetingData() {
+		R4EMeetingDataImpl r4EMeetingData = new R4EMeetingDataImpl();
+		return r4EMeetingData;
 	}
 
 	/**
@@ -958,6 +969,17 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 */
 	public R4EReviewPhaseInfo createR4EReviewPhaseInfo(R4EFormalReview review) throws ResourceHandlingException {
 		return factoryExtension.createR4EReviewPhaseInfo(review);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#createR4EMeetingData(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EReview)
+	 */
+	public R4EMeetingData createR4EMeetingData(R4EReview aReview) throws ResourceHandlingException {
+		return factoryExtension.createR4EMeetingData(aReview);
 	}
 
 	/*

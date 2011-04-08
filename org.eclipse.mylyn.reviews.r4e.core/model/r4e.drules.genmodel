@@ -4,7 +4,8 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2010 Ericsson&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials are&#xD;&#xA;made available under the terms of the Eclipse Public License v1.0 which&#xD;&#xA;accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Description:&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Alvaro Sanchez-Leon - Initial API and implementation&#xD;&#xA;"
     modelDirectory="/org.eclipse.mylyn.reviews.r4e.core/src" modelPluginID="org.eclipse.mylyn.reviews.r4e.core"
     modelName="R4e" importerID="org.eclipse.emf.importer.ecore" containmentProxies="true"
-    complianceLevel="5.0" copyrightFields="false" classNamePattern="">
+    complianceLevel="5.0" copyrightFields="false" usedGenPackages="../../org.eclipse.mylyn.reviews.frame.core/model/framework.genmodel#//model"
+    classNamePattern="">
   <foreignModel>r4e.design.rules.ecore</foreignModel>
   <genPackages prefix="DRModel" basePackage="org.eclipse.mylyn.reviews.r4e.core.model"
       disposableProviderFactory="true" ecorePackage="r4e.design.rules.ecore#/">
@@ -39,48 +40,6 @@
     <genClasses ecoreClass="r4e.design.rules.ecore#//R4EDesignRuleViolation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.design.rules.ecore#//R4EDesignRuleViolation/rules"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.design.rules.ecore#//R4EDesignRuleViolation/name"/>
-    </genClasses>
-  </genPackages>
-  <genPackages prefix="Model" basePackage="org.eclipse.mylyn.reviews.frame.core" ecorePackage="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#/">
-    <genClasses ecoreClass="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Review">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Review/topics"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Review/reviewItems"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Review/reviewTask"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Review/state"/>
-    </genClasses>
-    <genClasses ecoreClass="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Comment">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Comment/user"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Comment/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Comment/description"/>
-    </genClasses>
-    <genClasses ecoreClass="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Item">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Item/addedBy"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Item/review"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Location"/>
-    <genClasses ecoreClass="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//User">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//User/id"/>
-    </genClasses>
-    <genClasses ecoreClass="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//TaskReference">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//TaskReference/taskId"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//TaskReference/repositoryURL"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewState"/>
-    <genClasses ecoreClass="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewGroup">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewGroup/reviews"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewGroup/reviewGroupTask"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewGroup/description"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//CommentType"/>
-    <genClasses ecoreClass="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Topic">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Topic/task"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Topic/location"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Topic/comments"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Topic/review"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Topic/title"/>
-    </genClasses>
-    <genClasses ecoreClass="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewComponent">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewComponent/enabled"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

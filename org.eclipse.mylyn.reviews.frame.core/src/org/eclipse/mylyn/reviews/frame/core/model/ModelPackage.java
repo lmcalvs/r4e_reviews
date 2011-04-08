@@ -298,13 +298,22 @@ public interface ModelPackage extends EPackage {
 	int USER__ID = 0;
 
 	/**
+	 * The feature id for the '<em><b>Email</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USER__EMAIL = 1;
+
+	/**
 	 * The number of structural features of the '<em>User</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int USER_FEATURE_COUNT = 1;
+	int USER_FEATURE_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.frame.core.model.impl.TaskReferenceImpl <em>Task Reference</em>}' class.
@@ -715,6 +724,17 @@ public interface ModelPackage extends EPackage {
 	EAttribute getUser_Id();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.frame.core.model.User#getEmail <em>Email</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Email</em>'.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.User#getEmail()
+	 * @see #getUser()
+	 * @generated
+	 */
+	EAttribute getUser_Email();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.frame.core.model.TaskReference <em>Task Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1046,6 +1066,14 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute USER__ID = eINSTANCE.getUser_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Email</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute USER__EMAIL = eINSTANCE.getUser_Email();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.frame.core.model.impl.TaskReferenceImpl <em>Task Reference</em>}' class.
