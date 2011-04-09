@@ -122,7 +122,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fPhaseMapLabel.
 	 */
-	CLabel fPhaseMapLabel = null;
+	private CLabel fPhaseMapLabel = null;
 	
 	/**
 	 * Field fPhasePlanning.

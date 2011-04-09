@@ -275,8 +275,9 @@ public class UIUtils {
 	 * @return String
 	 */
     public static String buildUserDetailsString(IUserInfo aUserInfo) {
-    	StringBuffer tempStr = new StringBuffer();
-    	for (int i = 0; i < aUserInfo.getAttributeTypes().length; i++) {
+    	final StringBuffer tempStr = new StringBuffer(100);
+    	final int numAttributeTypes = aUserInfo.getAttributeTypes().length;
+    	for (int i = 0; i < numAttributeTypes; i++) {
     		tempStr.append(aUserInfo.getAttributeTypes()[i] + " = " 
     		+ aUserInfo.getAttributeValues()[i] + System.getProperty("line.separator"));
     	}

@@ -184,7 +184,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fDetailsText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fDetailsText, 0, SWT.CENTER);
+	    data.top = new FormAttachment(fDetailsText, 0, SWT.TOP);
 	    detailsLabel.setLayoutData(data);
 	}
 
@@ -213,7 +213,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 		}
 		fNumAnomaliesText.setText(String.valueOf(numAnomalies));
 		fNumCommentsText.setText(String.valueOf(numComments));
-		String details = ((R4EUIParticipant)fProperties.getElement()).getParticipantDetails();
+		final String details = ((R4EUIParticipant)fProperties.getElement()).getParticipantDetails();
 		if (null != details) fDetailsText.setText(details);
 		setEnabledFields();
 		fRefreshInProgress = false;

@@ -1,6 +1,22 @@
-/**
+/*******************************************************************************
+ * Copyright (c) 2008-2010 Ericsson Research Canada
  * 
- */
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Description:
+ * 
+ * This class extends the default viewer sorter to sort
+ * the items in TableViewers and TreeViewers
+ * 
+ * Contributors:
+ *   Jacques Bouthilier - Created for internal Ericsson R4E
+ *   Sebastien Dubois - Updated for Mylyn Review R4E project
+ *   
+ ******************************************************************************/
+
 package org.eclipse.mylyn.reviews.r4e.ui.filters;
 
 import org.eclipse.jface.viewers.TableViewer;
@@ -18,31 +34,59 @@ import org.eclipse.swt.widgets.TreeItem;
 
 /**
  * @author lmcbout
- * 
+ * @version $Revision: 1.0 $
  */
 public class FindUsersTableViewerSorter extends ViewerSorter {
-	private int columnIndex = 0;
+	
+	// ------------------------------------------------------------------------
+	// Member variables
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Field fColumnIndex.
+	 */
+	private int fColumnIndex = 0;
 
-	public FindUsersTableViewerSorter(int columnIndex) {
+	
+	// ------------------------------------------------------------------------
+	// Constructors
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Constructor
+	 * @param aColumnIndex int
+	 */
+	public FindUsersTableViewerSorter(int aColumnIndex) {
 		super();
-		this.columnIndex = columnIndex;
+		fColumnIndex = aColumnIndex;
 	}
 
-	/*
-	 * public static void reverseOrder() { order *= -1; }
-	 */
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Method compare.
+	 * @param aViewer Viewer
+	 * @param aObj1 Object
+	 * @param aObj2 Object
+	
+	 * @return int */
 	@Override
-	public int compare(Viewer viewer, Object e1, Object e2) {
-		if (viewer instanceof TableViewer) {
+	public int compare(Viewer aViewer, Object aObj1, Object aObj2) {
+		if (aViewer instanceof TableViewer) {
 
-			TableViewer tv = (TableViewer) viewer;
-			tv.getTable().setSortColumn(tv.getTable().getColumn(columnIndex));
+			final TableViewer tv = (TableViewer) aViewer;
+			tv.getTable().setSortColumn(tv.getTable().getColumn(fColumnIndex));
 			int idx1 = -1, idx2 = -1;
-			for (int i = 0; i < tv.getTable().getItemCount(); i++) {
-				Object obj = tv.getElementAt(i);
-				if (obj.equals(e1)) {
+			final int numItems = tv.getTable().getItemCount();
+			Object obj = null;
+			for (int i = 0; i < numItems; i++) {
+				obj = tv.getElementAt(i);
+				if (obj.equals(aObj1)) {
 					idx1 = i;
-				} else if (obj.equals(e2)) {
+				} else if (obj.equals(aObj2)) {
 					idx2 = i;
 				}
 				if (idx1 > 0 && idx2 > 0) {
@@ -52,30 +96,30 @@ public class FindUsersTableViewerSorter extends ViewerSorter {
 			
 			int order = 0;
 			if (idx1 > -1 && idx2 > -1) {
-				String str1 = tv.getTable().getItems()[idx1].getText(this.columnIndex);
-				String str2 = tv.getTable().getItems()[idx2].getText(this.columnIndex);
+				final String str1 = tv.getTable().getItems()[idx1].getText(fColumnIndex);
+				final String str2 = tv.getTable().getItems()[idx2].getText(fColumnIndex);
 				order = str1.compareTo(str2);
 				if (tv.getTable().getSortDirection() != SWT.UP) {
 					order *= -1;
 				}
 			}
 			return order;
-		} else if (viewer instanceof TreeViewer) {
-			TreeViewer tv = (TreeViewer) viewer;
-			tv.getTree().setSortColumn(tv.getTree().getColumn(columnIndex));
+		} else if (aViewer instanceof TreeViewer) {
+			final TreeViewer tv = (TreeViewer) aViewer;
+			tv.getTree().setSortColumn(tv.getTree().getColumn(fColumnIndex));
 			int idx1 = -1, idx2 = -1;
 
-			Object[] listObj = tv.getTree().getItems();
+			final Object[] listObj = tv.getTree().getItems();
+			Object obj = null;
 			for (int i = 0; i < listObj.length; i++) {
-				Object obj = null;
 				if (listObj[i] instanceof TreeItem) {
 					obj = ((TreeItem) listObj[i]).getData();
 					((TreeItem) listObj[i]).setExpanded(true);
 				}
-				if (obj != null) {
-					if (obj.equals(e1)) {
+				if (null != obj) {
+					if (obj.equals(aObj1)) {
 						idx1 = i;
-					} else if (obj.equals(e2)) {
+					} else if (obj.equals(aObj2)) {
 						idx2 = i;
 					}
 					if (idx1 > 0 && idx2 > 0) {
@@ -85,8 +129,8 @@ public class FindUsersTableViewerSorter extends ViewerSorter {
 			}
 			int order = 0;
 			if (idx1 > -1 && idx2 > -1) {
-				String str1 = tv.getTree().getItems()[idx1].getText(this.columnIndex);
-				String str2 = tv.getTree().getItems()[idx2].getText(this.columnIndex);
+				final String str1 = tv.getTree().getItems()[idx1].getText(fColumnIndex);
+				final String str2 = tv.getTree().getItems()[idx2].getText(fColumnIndex);
 				order = str1.compareTo(str2);
 				if (tv.getTree().getSortDirection() != SWT.UP) {
 					order *= -1;
@@ -98,18 +142,19 @@ public class FindUsersTableViewerSorter extends ViewerSorter {
 	}
 
 	/**
-	 * table is bind to Sorter.
-	 * @param tableViewer TableViewer
+	 * Bind Sorter to tableViewer.
+	 * @param aTableViewer TableViewer
 	 */
-	public static void bind(final TableViewer tableViewer) {
-		for (int i = 0; i < tableViewer.getTable().getColumnCount(); i++) {
+	public static void bind(final TableViewer aTableViewer) {
+		final int numColumns = aTableViewer.getTable().getColumnCount();
+		for (int i = 0; i < numColumns; i++) {
 			final int columnNum = i;
-			TableColumn column = tableViewer.getTable().getColumn(i);
+			TableColumn column = aTableViewer.getTable().getColumn(i);
 			column.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(final SelectionEvent e) {
 					FindUsersTableViewerSorter sorter = new FindUsersTableViewerSorter(columnNum);
-					Table table = tableViewer.getTable();
+					Table table = aTableViewer.getTable();
 					if (table.getSortDirection() == SWT.UP) {
 						table.setSortDirection(SWT.DOWN);
 					} else if (table.getSortDirection() == SWT.DOWN) {
@@ -117,25 +162,26 @@ public class FindUsersTableViewerSorter extends ViewerSorter {
 					} else {
 						table.setSortDirection(SWT.UP);
 					}
-					tableViewer.setComparator(sorter);
+					aTableViewer.setComparator(sorter);
 				}
 			});
 		}
 	}
 
 	/**
-	 * table tree bind to Sorter.
-	 * @param treeViewer TreeViewer
+	 * Bind Sorter to TreeViewer
+	 * @param aTreeViewer TreeViewer
 	 */
-	public static void bind(final TreeViewer treeViewer) {
-		for (int i = 0; i < treeViewer.getTree().getColumnCount(); i++) {
+	public static void bind(final TreeViewer aTreeViewer) {
+		final int numColumns = aTreeViewer.getTree().getColumnCount();
+		for (int i = 0; i < numColumns; i++) {
 			final int columnNum = i;
-			TreeColumn column = treeViewer.getTree().getColumn(i);
+			TreeColumn column = aTreeViewer.getTree().getColumn(i);
 			column.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(final SelectionEvent e) {
 					FindUsersTableViewerSorter sorter = new FindUsersTableViewerSorter(columnNum);
-					Tree table = treeViewer.getTree();
+					Tree table = aTreeViewer.getTree();
 					if (table.getSortDirection() == SWT.UP) {
 						table.setSortDirection(SWT.DOWN);
 					} else if (table.getSortDirection() == SWT.DOWN) {
@@ -143,7 +189,7 @@ public class FindUsersTableViewerSorter extends ViewerSorter {
 					} else {
 						table.setSortDirection(SWT.UP);
 					}
-					treeViewer.setComparator(sorter);
+					aTreeViewer.setComparator(sorter);
 				}
 			});
 		}
@@ -151,18 +197,18 @@ public class FindUsersTableViewerSorter extends ViewerSorter {
 
 	/**
 	 * table tree bind to Sorter with a specific column.
-	 * @param treeViewer TreeViewer
-	 * @param columnNum int
+	 * @param aTreeViewer TreeViewer
+	 * @param aColumnNum int
 	 */
-	public static void bind(final TreeViewer treeViewer, final int columnNum) {
-		int maxColumn = treeViewer.getTree().getColumnCount();
-		if (columnNum < maxColumn) {
-			TreeColumn column = treeViewer.getTree().getColumn(columnNum);
+	public static void bind(final TreeViewer aTreeViewer, final int aColumnNum) {
+		final int maxColumn = aTreeViewer.getTree().getColumnCount();
+		if (aColumnNum < maxColumn) {
+			final TreeColumn column = aTreeViewer.getTree().getColumn(aColumnNum);
 			column.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(final SelectionEvent e) {
-					FindUsersTableViewerSorter sorter = new FindUsersTableViewerSorter(columnNum);
-					Tree table = treeViewer.getTree();
+					final FindUsersTableViewerSorter sorter = new FindUsersTableViewerSorter(aColumnNum);
+					final Tree table = aTreeViewer.getTree();
 					if (table.getSortDirection() == SWT.UP) {
 						table.setSortDirection(SWT.DOWN);
 					} else if (table.getSortDirection() == SWT.DOWN) {
@@ -170,7 +216,7 @@ public class FindUsersTableViewerSorter extends ViewerSorter {
 					} else {
 						table.setSortDirection(SWT.UP);
 					}
-					treeViewer.setComparator(sorter);
+					aTreeViewer.setComparator(sorter);
 				}
 			});
 		}

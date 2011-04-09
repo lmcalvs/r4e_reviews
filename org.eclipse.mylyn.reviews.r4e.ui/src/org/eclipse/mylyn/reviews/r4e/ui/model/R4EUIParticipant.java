@@ -37,6 +37,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
 import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
+import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 
@@ -246,9 +247,12 @@ public class R4EUIParticipant extends R4EUIModelElement {
     	if (R4EUIModelController.isUserQueryAvailable()) {
     		try {
     			//Get detailed info from DB if available
-    			IQueryUser query = new QueryUserFactory().getInstance();
-    			fParticipantDetails = UIUtils.buildUserDetailsString(
-    					query.searchByUserId(fParticipant.getId()).get(0));
+    			final IQueryUser query = new QueryUserFactory().getInstance();
+    			IUserInfo userInfo = query.searchByUserId(fParticipant.getId()).get(0);
+    			fParticipantDetails = UIUtils.buildUserDetailsString(userInfo);
+    			if (null == fParticipant.getEmail()) {
+    				fParticipant.setEmail(userInfo.getEmail());
+    			}				
     		} catch (NamingException e) {
     			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
     			Activator.getDefault().logError("Exception: " + e.toString(), e);

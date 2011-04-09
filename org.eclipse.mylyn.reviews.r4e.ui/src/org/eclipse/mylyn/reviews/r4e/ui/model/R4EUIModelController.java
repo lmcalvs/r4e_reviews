@@ -55,7 +55,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.IPropertyListener;
-import org.osgi.framework.Bundle;
 
 /**
  * @author lmcdubo

@@ -38,6 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
 import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
+import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -431,16 +432,19 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
     	R4EUIModelController.getNavigatorView().applyDefaultFilters();
     	
-    	if (null == store.getString(PreferenceConstants.P_USER_EMAIL)) {
-			String userId = store.getString(PreferenceConstants.P_USER_ID);
+    	if ("".equals(store.getString(PreferenceConstants.P_USER_EMAIL))) {
+			final String userId = store.getString(PreferenceConstants.P_USER_ID);
 
     		//If not email preferences are set, try to retrieve it from the external DB
         	if (null != userId && R4EUIModelController.isUserQueryAvailable()) {
         		try {
         			//Get detailed info from DB if available
-        			IQueryUser query = new QueryUserFactory().getInstance();
-        			store.setValue(PreferenceConstants.P_USER_EMAIL, 
-        					query.searchByUserId(userId).get(0).getEmail());
+        			final IQueryUser query = new QueryUserFactory().getInstance();
+        			final java.util.List<IUserInfo> userInfos = query.searchByUserId(userId);
+        			if (userInfos.size() > 0) {
+        				store.setValue(PreferenceConstants.P_USER_EMAIL, userInfos.get(0).getEmail());
+        				//TODO:  Why is this not setting the preferences correctly???
+        			}
         		} catch (NamingException e) {
         			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
         			Activator.getDefault().logError("Exception: " + e.toString(), e);

@@ -284,8 +284,8 @@ public class ParticipantInputDialog extends FormDialog {
         fParticipantIdInputTextField.setLayoutData(textGridData);
 
         //Find user button
-        Button findUserButton = toolkit.createButton(basicSectionClient, FIND_BUTTON_LABEL, SWT.NONE);
-        GridData buttonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+        final Button findUserButton = toolkit.createButton(basicSectionClient, FIND_BUTTON_LABEL, SWT.NONE);
+        final GridData buttonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
         buttonGridData.horizontalSpan = 1;
         findUserButton.setLayoutData(buttonGridData);
         if (!R4EUIModelController.isUserQueryAvailable()) {
@@ -322,7 +322,7 @@ public class ParticipantInputDialog extends FormDialog {
         fParticipantDetailsInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.READ_ONLY);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
-        textGridData.heightHint = fParticipantDetailsInputTextField.getLineHeight() * 3;
+        textGridData.heightHint = fParticipantDetailsInputTextField.getLineHeight() << 3;
         fParticipantDetailsInputTextField.setLayoutData(textGridData);
         
         //Extra parameters section
