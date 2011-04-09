@@ -120,6 +120,11 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	protected Table fPhaseTable = null;
 	
 	/**
+	 * Field fPhaseMapLabel.
+	 */
+	private CLabel fPhaseMapLabel = null;
+	
+	/**
 	 * Field fPhasePlanning.
 	 */
 	private TableItem fPhasePlanning = null;
@@ -357,12 +362,12 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 		fPhaseDecision.setText(0, R4EUIConstants.PHASE_DECISION_LABEL);
 		fPhaseRework.setText(0, R4EUIConstants.PHASE_REWORK_LABEL);
 		
-	    final CLabel phaseMapLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.PHASE_MAP_LABEL);
+	    fPhaseMapLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.PHASE_MAP_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fPhaseTable, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fPhaseTable, 0, SWT.TOP);
-	    phaseMapLabel.setLayoutData(data);
+	    fPhaseMapLabel.setLayoutData(data);
 	    
 	    //Add Control for planning phase owner
 	    fPlanningPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
@@ -650,9 +655,11 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 				fDecisionPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
 				fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
 				fPhaseTable.setVisible(true);
+				fPhaseMapLabel.setVisible(true);
 				setPhaseControlVisibility();	
 			} else {
 				fPhaseTable.setVisible(false);
+				fPhaseMapLabel.setVisible(false);
 				fPlanningPhaseOwnerCombo.setVisible(false);
 				fPreparationPhaseOwnerCombo.setVisible(false);
 				fDecisionPhaseOwnerCombo.setVisible(false);
@@ -671,9 +678,11 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 				fDecisionPhaseOwnerCombo.setEnabled(true);
 				fReworkPhaseOwnerCombo.setEnabled(true);
 				fPhaseTable.setVisible(true);
+				fPhaseMapLabel.setVisible(true);
 				setPhaseControlVisibility();
 			} else {
 				fPhaseTable.setVisible(false);
+				fPhaseMapLabel.setVisible(false);
 				fPlanningPhaseOwnerCombo.setVisible(false);
 				fPreparationPhaseOwnerCombo.setVisible(false);
 				fDecisionPhaseOwnerCombo.setVisible(false);

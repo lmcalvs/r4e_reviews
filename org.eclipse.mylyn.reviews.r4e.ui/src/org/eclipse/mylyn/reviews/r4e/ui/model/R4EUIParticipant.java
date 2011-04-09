@@ -18,16 +18,26 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.NamingException;
+
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ParticipantProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
+import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
+import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 
@@ -77,6 +87,11 @@ public class R4EUIParticipant extends R4EUIModelElement {
      */
     private final R4EParticipant fParticipant;
 	
+    /**
+     * Field fParticipantDetails.
+     */
+	private String fParticipantDetails = null;
+	
 	
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -88,7 +103,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * @param aParticipant R4EParticipant
 	 */
 	public R4EUIParticipant(IR4EUIModelElement aParent, R4EParticipant aParticipant) {
-		super(aParent, aParticipant.getId(), null);  //TODO add email adress as tooltip later
+		super(aParent, aParticipant.getId(), aParticipant.getEmail());
 		fParticipant = aParticipant;
 		
 		final EList<R4EUserRole> roles = fParticipant.getRoles();
@@ -198,6 +213,57 @@ public class R4EUIParticipant extends R4EUIModelElement {
 		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 	
+	/**
+	 * Set serialization model data by copying it from the passed-in object
+	 * @param aModelComponent - a serialization model element to copy information from
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
+	 */
+    @Override
+	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+    	//Set data in model element
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fParticipant, 
+				R4EUIModelController.getReviewer());
+		fParticipant.setId(((R4EParticipant)aModelComponent).getId());
+		fParticipant.setEmail(((R4EParticipant)aModelComponent).getEmail());
+		fParticipant.getRoles().addAll(((R4EParticipant)aModelComponent).getRoles());
+		fParticipant.setFocusArea(((R4EParticipant)aModelComponent).getFocusArea());
+    	R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+    }
+    
+	/**
+	 * Method getParticipantDetails.
+	 * @return String
+	 */
+    public String getParticipantDetails() {
+    	return fParticipantDetails;
+    }
+
+	/**
+	 * Method setParticipantDetails.
+	 */
+    public void setParticipantDetails() {
+    	if (R4EUIModelController.isUserQueryAvailable()) {
+    		try {
+    			//Get detailed info from DB if available
+    			final IQueryUser query = new QueryUserFactory().getInstance();
+    			IUserInfo userInfo = query.searchByUserId(fParticipant.getId()).get(0);
+    			fParticipantDetails = UIUtils.buildUserDetailsString(userInfo);
+    			if (null == fParticipant.getEmail()) {
+    				fParticipant.setEmail(userInfo.getEmail());
+    			}				
+    		} catch (NamingException e) {
+    			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+    			Activator.getDefault().logError("Exception: " + e.toString(), e);
+    		} catch (IOException e) {
+    			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+    			Activator.getDefault().logError("Exception: " + e.toString(), e);
+    		}
+    	}
+    }
+    
+    
 	/**
 	 * Method isRemoveElementCmd.
 	 * @return boolean

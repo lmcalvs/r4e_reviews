@@ -41,15 +41,26 @@ public class ParticipantProperties extends ModelElementProperties {
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Field PARTICIPANT_ID. (value is ""participantElement.id"")
+	 * Field PARTICIPANT_ID_ID. (value is ""participantElement.id"")
 	 */
-	protected static final String PARTICIPANT_ID = "participantElement.id";
+	protected static final String PARTICIPANT_ID_ID = "participantElement.id";
 
 	/**
-	 * Field PARTICIPANT_PROPERTY_DESCRIPTOR.
+	 * Field PARTICIPANT_ID_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final PropertyDescriptor PARTICIPANT_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			PARTICIPANT_ID, R4EUIConstants.ID_LABEL);
+	protected static final PropertyDescriptor PARTICIPANT_ID_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			PARTICIPANT_ID_ID, R4EUIConstants.ID_LABEL);
+	
+	/**
+	 * Field PARTICIPANT_EMAIL_ID. (value is ""participantElement.email"")
+	 */
+	protected static final String PARTICIPANT_EMAIL_ID = "participantElement.email";
+
+	/**
+	 * Field PARTICIPANT_EMAIL_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor PARTICIPANT_EMAIL_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			PARTICIPANT_EMAIL_ID, R4EUIConstants.EMAIL_LABEL);
 	
 	/**
 	 * Field PARTICIPANT_NUM_ITEMS_ID. (value is ""participantElement.numItems"")
@@ -83,6 +94,17 @@ public class ParticipantProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor PARTICIPANT_NUM_COMMENTS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			PARTICIPANT_NUM_COMMENTS_ID, R4EUIConstants.NUM_COMMENTS_LABEL);
+	
+	/**
+	 * Field PARTICIPANT_DETAILS_ID. (value is ""participantElement.details"")
+	 */
+	protected static final String PARTICIPANT_DETAILS_ID = "participantElement.details";
+
+	/**
+	 * Field PARTICIPANT_DETAILS_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor PARTICIPANT_DETAILS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			PARTICIPANT_DETAILS_ID, R4EUIConstants.USER_DETAILS_LABEL);
 	
 	/**
 	 * Field PARTICIPANT_TIME_SPENT_ID. (value is ""participantElement.timeSpent"")
@@ -120,9 +142,10 @@ public class ParticipantProperties extends ModelElementProperties {
 	/**
 	 * Field DESCRIPTORS.
 	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { PARTICIPANT_PROPERTY_DESCRIPTOR,  
-		PARTICIPANT_NUM_ITEMS_PROPERTY_DESCRIPTOR, PARTICIPANT_NUM_ANOMALIES_PROPERTY_DESCR, 
-		PARTICIPANT_NUM_COMMENTS_PROPERTY_DESCRIPTOR, PARTICIPANT_TIME_SPENT_PROPERTY_DESCRIPTOR,
+	private static final IPropertyDescriptor[] DESCRIPTORS = { PARTICIPANT_ID_PROPERTY_DESCRIPTOR,
+		PARTICIPANT_EMAIL_PROPERTY_DESCRIPTOR, PARTICIPANT_NUM_ITEMS_PROPERTY_DESCRIPTOR, 
+		PARTICIPANT_NUM_ANOMALIES_PROPERTY_DESCR, PARTICIPANT_NUM_COMMENTS_PROPERTY_DESCRIPTOR, 
+		PARTICIPANT_DETAILS_PROPERTY_DESCRIPTOR, PARTICIPANT_TIME_SPENT_PROPERTY_DESCRIPTOR,
 		PARTICIPANT_ROLES_PROPERTY_DESCRIPTOR, PARTICIPANT_FOCUS_AREA_PROPERTY_DESCRIPTOR};
 	
 	
@@ -162,10 +185,12 @@ public class ParticipantProperties extends ModelElementProperties {
 
 	@Override
 	public Object getPropertyValue(Object aId) {
-		if (PARTICIPANT_ID.equals(aId)) { 
+		if (PARTICIPANT_ID_ID.equals(aId)) { 
 			return ((R4EUIParticipant)getElement()).getParticipant().getId();
+		} else if (PARTICIPANT_EMAIL_ID.equals(aId)) {
+			return ((R4EUIParticipant)getElement()).getParticipant().getEmail();
 		} else if (PARTICIPANT_NUM_ITEMS_ID.equals(aId)) {
-			return Integer.valueOf(((R4EUIParticipant)getElement()).getParticipant().getAddedItems().size());
+			return Integer.valueOf(((R4EUIParticipant)getElement()).getParticipant().getAddedItems().size());	
 		} else if (PARTICIPANT_NUM_ANOMALIES_ID.equals(aId)) {
 			int numAnomalies = 0;
 			final EList<R4EComment> comments = ((R4EUIParticipant)getElement()).getParticipant().getAddedComments();
@@ -186,6 +211,8 @@ public class ParticipantProperties extends ModelElementProperties {
 				}
 			}
 			return Integer.valueOf(numComments);
+		} else if (PARTICIPANT_DETAILS_ID.equals(aId)) {
+			return ((R4EUIParticipant)getElement()).getParticipantDetails();
 		} else if (PARTICIPANT_TIME_SPENT_ID.equals(aId)) {
 			final R4EParticipant modelUser = ((R4EUIParticipant)getElement()).getParticipant();
 			final int numTimeEntries = modelUser.getTimeLog().size();

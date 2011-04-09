@@ -26,14 +26,19 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
@@ -65,10 +70,10 @@ public class ParticipantInputDialog extends FormDialog {
 	private static final String ADD_PARTICIPANT_DIALOG_TITLE = "Enter Participant Details";
 	
 	/**
-	 * Field ADD_PARTICIPANT_ID_DIALOG_VALUE.
-	 * (value is ""Participant Id: "")
+	 * Field FIND_BUTTON_LABEL.
+	 * (value is ""Find"")
 	 */
-	private static final String ADD_PARTICIPANT_ID_DIALOG_VALUE = "Id: ";
+	private static final String FIND_BUTTON_LABEL = "Find";
 	
 	
 	// ------------------------------------------------------------------------
@@ -83,8 +88,28 @@ public class ParticipantInputDialog extends FormDialog {
 	/**
 	 * Field fParticipantIdInputTextField.
 	 */
-    private Text fParticipantIdInputTextField;
+    protected Text fParticipantIdInputTextField;
     
+	/**
+	 * Field fParticipantEmailInputTextField.
+	 */
+    protected Text fParticipantEmailInputTextField;
+    
+	/**
+	 * Field fParticipantEmailValue.
+	 */
+	private String fParticipantEmailValue;
+	
+	/**
+	 * Field fParticipantDetailsInputTextField.
+	 */
+	protected Text fParticipantDetailsInputTextField;
+	
+	/**
+	 * Field fParticipantDetailsValue.
+	 */
+	private String fParticipantDetailsValue;
+	
 	/**
 	 * Field fAvailableComponents.
 	 */
@@ -152,6 +177,18 @@ public class ParticipantInputDialog extends FormDialog {
         	}
         	fParticipantIdValue = fParticipantIdInputTextField.getText();
 
+        	//Validate Participant Email
+        	validateResult = validateEmptyInput(fParticipantEmailInputTextField);
+        	if (null != validateResult) {
+        		//Validation of input failed
+    			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "No input given for Participant Email",
+        				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+    			dialog.open();
+    			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+    			return;
+        	}
+        	fParticipantEmailValue = fParticipantEmailInputTextField.getText();
+        	
         	//Validate Roles (optional)
         	fRolesValue = new ArrayList<R4EUserRole>();
         	if (fRoleTypes.getItems().length > 0) {
@@ -177,9 +214,13 @@ public class ParticipantInputDialog extends FormDialog {
         	if (null == validateResult) {
         		fFocusAreaValue = fFocusAreaTextField.getText();
         	}
+        	
+        	fParticipantDetailsValue = fParticipantDetailsInputTextField.getText();  //No validation needed
         } else {
         	fParticipantIdValue = null;
         	fFocusAreaValue = null;
+        	fParticipantEmailValue = null;
+        	fParticipantDetailsValue = null;
         }
 		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
         super.buttonPressed(buttonId);
@@ -235,13 +276,55 @@ public class ParticipantInputDialog extends FormDialog {
         basicSection.setClient(basicSectionClient);
         
         //Participant Id
-        Label label = toolkit.createLabel(basicSectionClient, ADD_PARTICIPANT_ID_DIALOG_VALUE);
+        Label label = toolkit.createLabel(basicSectionClient, R4EUIConstants.ID_LABEL);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fParticipantIdInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textGridData.horizontalSpan = 3;
+        textGridData.horizontalSpan = 2;
         fParticipantIdInputTextField.setLayoutData(textGridData);
-              
+
+        //Find user button
+        final Button findUserButton = toolkit.createButton(basicSectionClient, FIND_BUTTON_LABEL, SWT.NONE);
+        final GridData buttonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+        buttonGridData.horizontalSpan = 1;
+        findUserButton.setLayoutData(buttonGridData);
+        if (!R4EUIModelController.isUserQueryAvailable()) {
+        	findUserButton.setEnabled(false);
+        }
+        findUserButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				final FindUserDialog dialog = new FindUserDialog(R4EUIModelController.getNavigatorView().
+						getSite().getWorkbenchWindow().getShell());
+				dialog.create();
+		    	final int result = dialog.open();
+		    	if (result == Window.OK) {
+		    		fParticipantIdInputTextField.setText(dialog.getUserIdValue());
+		    		fParticipantEmailInputTextField.setText(dialog.getUserEmailValue());
+		    		fParticipantDetailsInputTextField.setText(dialog.getUserDetailsValue());
+		    	}
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {
+				//Nothing to do
+			}
+		});
+        
+        //Participant Email
+        label = toolkit.createLabel(basicSectionClient, R4EUIConstants.EMAIL_LABEL);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        fParticipantEmailInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        fParticipantEmailInputTextField.setLayoutData(textGridData);
+        
+        //User details
+        label = toolkit.createLabel(basicSectionClient, R4EUIConstants.USER_DETAILS_LABEL);
+        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        fParticipantDetailsInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.READ_ONLY);
+        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+        textGridData.horizontalSpan = 3;
+        textGridData.heightHint = fParticipantDetailsInputTextField.getLineHeight() << 3;
+        fParticipantDetailsInputTextField.setLayoutData(textGridData);
+        
         //Extra parameters section
         final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
         		  ExpandableComposite.TWISTIE);
@@ -263,7 +346,7 @@ public class ParticipantInputDialog extends FormDialog {
         extraSection.setClient(extraSectionClient);
 
 		//Roles
-        label = toolkit.createLabel(extraSectionClient, "Roles: ");
+        label = toolkit.createLabel(extraSectionClient, R4EUIConstants.ROLES_LABEL);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
@@ -271,7 +354,7 @@ public class ParticipantInputDialog extends FormDialog {
         		R4EUIConstants.PARTICIPANT_ROLES);
 
         //Focus Area
-        label = toolkit.createLabel(extraSectionClient, "Focus Area: ");
+        label = toolkit.createLabel(extraSectionClient, R4EUIConstants.FOCUS_AREA_LABEL);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fFocusAreaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
@@ -291,19 +374,35 @@ public class ParticipantInputDialog extends FormDialog {
 	}
     
     /**
-     * Returns the participant role values
-     * @return the participant roles as a List
-     */
-    public List<R4EUserRole> getParticipantRolesValue() {
-    	return fRolesValue;
-    }
-    
-    /**
      * Returns the string typed into this input dialog.
      * @return the participant id input string
      */
     public String getParticipantIdValue() {
         return fParticipantIdValue;
+    }
+    
+    /**
+     * Returns the string typed into this input dialog.
+     * @return the participant email input string
+     */
+    public String getParticipantEmailValue() {
+        return fParticipantEmailValue;
+    }
+    
+    /**
+     * Returns the string typed into this input dialog.
+     * @return the participant details input string
+     */
+    public String getParticipantDetailsValue() {
+        return fParticipantDetailsValue;
+    }
+    
+    /**
+     * Returns the participant role values
+     * @return the participant roles as a List
+     */
+    public List<R4EUserRole> getParticipantRolesValue() {
+    	return fRolesValue;
     }
     
     /**

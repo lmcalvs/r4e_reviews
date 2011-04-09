@@ -23,13 +23,22 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.preferences;
 
-import org.eclipse.jface.preference.*;
+import java.io.IOException;
+
+import javax.naming.NamingException;
+
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.FilePathEditor;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
+import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
+import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -207,13 +216,22 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4EUserPrefsSpacerData.horizontalSpan = R4E_PREFS_CONTAINER_DATA_SPAN;
 		r4EUserPrefsSpacer.setLayoutData(r4EUserPrefsSpacerData);
 		
-		final StringFieldEditor userFieldEditor = new StringFieldEditor(PreferenceConstants.P_USER_ID, PreferenceConstants.P_USER_ID_LABEL,
+		final StringFieldEditor userIdFieldEditor = new StringFieldEditor(PreferenceConstants.P_USER_ID, PreferenceConstants.P_USER_ID_LABEL,
 				StringFieldEditor.UNLIMITED, r4EUserPrefsGroup);
-		addField(userFieldEditor);
+		addField(userIdFieldEditor);
 		if (R4EUIModelController.isDialogOpen()) {
-			userFieldEditor.setEnabled(false, r4EUserPrefsGroup);
+			userIdFieldEditor.setEnabled(false, r4EUserPrefsGroup);
 		} else {
-			userFieldEditor.setEnabled(true, r4EUserPrefsGroup);
+			userIdFieldEditor.setEnabled(true, r4EUserPrefsGroup);
+		}
+		
+		final StringFieldEditor userEmailFieldEditor = new StringFieldEditor(PreferenceConstants.P_USER_EMAIL, PreferenceConstants.P_USER_EMAIL_LABEL,
+				StringFieldEditor.UNLIMITED, r4EUserPrefsGroup);
+		addField(userEmailFieldEditor);
+		if (R4EUIModelController.isDialogOpen()) {
+			userEmailFieldEditor.setEnabled(false, r4EUserPrefsGroup);
+		} else {
+			userEmailFieldEditor.setEnabled(true, r4EUserPrefsGroup);
 		}
 		
 		//dummy spacer label
@@ -413,6 +431,29 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
     	store.setValue(PreferenceConstants.P_HIDE_RULE_SETS_FILTER, fHideRuleSetsFilterButton.getSelection());
 
     	R4EUIModelController.getNavigatorView().applyDefaultFilters();
+    	
+    	if ("".equals(store.getString(PreferenceConstants.P_USER_EMAIL))) {
+			final String userId = store.getString(PreferenceConstants.P_USER_ID);
+
+    		//If not email preferences are set, try to retrieve it from the external DB
+        	if (null != userId && R4EUIModelController.isUserQueryAvailable()) {
+        		try {
+        			//Get detailed info from DB if available
+        			final IQueryUser query = new QueryUserFactory().getInstance();
+        			final java.util.List<IUserInfo> userInfos = query.searchByUserId(userId);
+        			if (userInfos.size() > 0) {
+        				store.setValue(PreferenceConstants.P_USER_EMAIL, userInfos.get(0).getEmail());
+        				//TODO:  Why is this not setting the preferences correctly???
+        			}
+        		} catch (NamingException e) {
+        			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+        			Activator.getDefault().logError("Exception: " + e.toString(), e);
+        		} catch (IOException e) {
+        			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+        			Activator.getDefault().logError("Exception: " + e.toString(), e);
+        		}
+        	}
+    	}
     	
         //For field editors
     	return super.performOk();

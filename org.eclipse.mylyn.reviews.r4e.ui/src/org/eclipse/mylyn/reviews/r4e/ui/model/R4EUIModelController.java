@@ -29,6 +29,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -451,5 +452,15 @@ public class R4EUIModelController {
 	 */
 	public static void setReviewer(String aReviewer) {
 		FReviewer = aReviewer;
+	}
+
+	/**
+	 * Method isUserQueryAvailable.
+	 * @return boolean
+	 */
+	public static boolean isUserQueryAvailable() {
+		//Verify if the LDAP bundle is available
+		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.ldap")) return true;
+		return false;
 	}
 }

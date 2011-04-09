@@ -378,6 +378,19 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String TIME_SPENT_TOTAL_LABEL = "Time Spent (total): ";
 	
 	/**
+	 * Field EMAIL_LABEL.
+	 * (value is ""Email: "")
+	 */
+	public static final String EMAIL_LABEL = "Email: ";
+	
+	/**
+	 * Field USER_DETAILS_LABEL.
+	 * (value is ""User Details: "")
+	 */
+	public static final String USER_DETAILS_LABEL = "User Details: ";
+	
+	
+	/**
 	 * Field ROLES_LABEL.
 	 * (value is ""Roles: "")
 	 */
