@@ -14,6 +14,7 @@ package org.eclipse.mylyn.reviews.notifications.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -65,29 +66,50 @@ public class NotificationsCore {
 	}
 
 	/**
-	 * Get the first connector with status Enabled attempting the ids in the order of appearance within the provided
-	 * array
+	 * Get the first connector with status Enabled
+	 * 
+	 * @return
+	 */
+	public static NotificationsConnector getFirstEnabled() {
+		MultiStatus result = new MultiStatus(PLUGIN_ID, 0, "Notifications connectors failed to load.", null); //$NON-NLS-1$
+		Map<String, IConfigurationElement> configElements = resolveConfiguredElements();
+
+		// If no ids are provided, obtain the first connector found with state enabled
+		if (configElements.size() < 1) {
+			result.add(new Status(IStatus.WARNING, PLUGIN_ID, NLS.bind("No connectors found extending ''{0}''", //$NON-NLS-1$
+					NotificationsConnector.class.getCanonicalName())));
+			StatusHandler.log(result);
+			return null;
+		}
+
+		IConfigurationElement dConfigElement = null;
+		for (Iterator<IConfigurationElement> iterator = configElements.values().iterator(); iterator.hasNext();) {
+			dConfigElement = iterator.next();
+			NotificationsConnector connector = loadElement(dConfigElement, result);
+			if (connector != null && connector.isEnabled()) {
+				return connector;
+			}
+		}
+
+		if (!result.isOK()) {
+			StatusHandler.log(result);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get the first connector enabled, checking the status in the order provided in the ids array
 	 * 
 	 * @param ids
 	 * @return
 	 */
 	public static NotificationsConnector getFirstEnabled(String[] ids) {
 		Assert.isNotNull(ids);
+
 		MultiStatus result = new MultiStatus(PLUGIN_ID, 0, "Notifications connectors failed to load.", null); //$NON-NLS-1$
 
-		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IExtensionPoint connectorsExtensionPoint = registry.getExtensionPoint(PLUGIN_ID + ".connectors"); //$NON-NLS-1$
-		IExtension[] extensions = connectorsExtensionPoint.getExtensions();
-
-		Map<String, IConfigurationElement> configElements = new HashMap<String, IConfigurationElement>();
-
-		// Build a map of ids
-		for (IExtension extension : extensions) {
-			IConfigurationElement[] elements = extension.getConfigurationElements();
-			for (IConfigurationElement element : elements) {
-				configElements.put(element.getAttribute("id"), element);
-			}
-		}
+		Map<String, IConfigurationElement> configElements = resolveConfiguredElements();
 
 		// scan for the id in the order provided by the array
 		IConfigurationElement dConfigElement = null;
@@ -107,6 +129,26 @@ public class NotificationsCore {
 		}
 
 		return null;
+	}
+
+	/**
+	 * @return
+	 */
+	private static Map<String, IConfigurationElement> resolveConfiguredElements() {
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IExtensionPoint connectorsExtensionPoint = registry.getExtensionPoint(PLUGIN_ID + ".connectors"); //$NON-NLS-1$
+		IExtension[] extensions = connectorsExtensionPoint.getExtensions();
+
+		Map<String, IConfigurationElement> configElements = new HashMap<String, IConfigurationElement>();
+
+		// Build a map of available connector ids
+		for (IExtension extension : extensions) {
+			IConfigurationElement[] elements = extension.getConfigurationElements();
+			for (IConfigurationElement element : elements) {
+				configElements.put(element.getAttribute("id"), element);
+			}
+		}
+		return configElements;
 	}
 
 	private static NotificationsConnector loadElement(IConfigurationElement aElement, MultiStatus aStatus) {
