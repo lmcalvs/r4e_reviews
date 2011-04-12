@@ -34,33 +34,32 @@ public abstract class NotificationsConnector {
 	// ------------------------------------------------------------------------
 	/**
 	 * @param aEmailFrom
-	 * @param aEMails
+	 * @param aEmailsTo
 	 * @param aSubject
 	 * @param aBody
 	 * @param aAttachment
 	 * @param aFilter
 	 * @throws CoreException
 	 */
-	public abstract void sendEmail(String aEmailFrom, String[] aEMails, String aSubject, String aBody,
+	public abstract void sendEmail(String aEmailFrom, String[] aEmailsTo, String aSubject, String aBody,
 			String aAttachment, NotificationFilter aFilter) throws CoreException;
-
 
 	/**
 	 * @param aEmailFrom
-	 * @param aEMails
+	 * @param aEmailsTo
 	 * @param aSubject
 	 * @param aBody
 	 * @param aAttachment
 	 * @param aFilter
 	 * @throws CoreException
 	 */
-	public abstract void sendEmailGraphical(String aEmailFrom, String[] aEMails, String aSubject, String aBody,
+	public abstract void sendEmailGraphical(String aEmailFrom, String[] aEmailsTo, String aSubject, String aBody,
 			String aAttachment, NotificationFilter aFilter) throws CoreException;
 
 	/**
 	 * @param aSubject
 	 * @param aBody
-	 * @param aEmails
+	 * @param aEmailsTo
 	 * @param startDate
 	 *            - proposed start date with time for the meeting
 	 * @param duration
@@ -68,7 +67,8 @@ public abstract class NotificationsConnector {
 	 * @return
 	 * @throws CoreException
 	 */
-	public abstract IMeetingData createMeetingRequest(String aSubject, String aBody, String[] aEmails, Long startDate,
+	public abstract IMeetingData createMeetingRequest(String aSubject, String aBody, String[] aEmailsTo,
+			Long startDate,
 			Integer duration)
 			throws CoreException;
 
