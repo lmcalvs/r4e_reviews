@@ -130,6 +130,16 @@ public class ModelContributionItems extends CompoundContributionItem {
 						R4EUIConstants.RESTORE_ELEMENT_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
+			
+			if (element.isSendEmailCmd()) {
+				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+						R4EUIConstants.SEND_EMAIL_COMMAND,
+						R4EUIConstants.SEND_EMAIL_COMMAND,
+						null, ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(R4EUIConstants.SEND_EMAIL_ICON_FILE)),
+						null, null, R4EUIConstants.SEND_EMAIL_COMMAND_NAME, R4EUIConstants.SEND_EMAIL_COMMAND_MNEMONIC,
+						R4EUIConstants.SEND_EMAIL_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
+				list.add(new CommandContributionItem(params));
+			}
 		} else {
 			//When no element is selected, contribute add review group command
 			params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),

@@ -24,13 +24,20 @@ import java.util.Iterator;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -63,6 +70,16 @@ public class RestoreElementHandler extends AbstractHandler {
 					element.setEnabled(true);
 					element.open();
 					R4EUIModelController.getNavigatorView().getTreeViewer().refresh();  //TODO temporary fix to restore element properly
+					
+	    			if (element instanceof R4EUIReviewItem) {
+	    				//Send email notification if needed
+	    				R4EReview review = R4EUIModelController.getActiveReview().getReview();
+	    				if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+	    					if (((R4EFormalReview)review).getCurrent().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+	    						MailServicesProxy.sendItemsReadyNotification();
+	    					}
+	    				}
+	    			}
 				} catch (ResourceHandlingException e) {
 					UIUtils.displayResourceErrorDialog(e);
 				} catch (OutOfSyncException e) {
@@ -72,6 +89,8 @@ public class RestoreElementHandler extends AbstractHandler {
 			    	Activator.getDefault().logError("Exception: " + e.toString(), e);
 				} catch (ReviewVersionsException e) {
 					UIUtils.displayVersionErrorDialog(e);
+				} catch (CoreException e) {
+					UIUtils.displayCoreErrorDialog(e);
 				}
 			}
 		}

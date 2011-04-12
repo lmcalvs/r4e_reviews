@@ -587,4 +587,13 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	public String getRemoveElementCmdTooltip() {
 		return R4EUIConstants.REMOVE_ELEMENT_COMMAND_TOOLTIP;   //default implementation
 	}
+	
+	/**
+	 * Method isSendEmailCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isSendEmailCmd()
+	 */
+	public boolean isSendEmailCmd() {
+		return false;   //default implementation
+	}
 }

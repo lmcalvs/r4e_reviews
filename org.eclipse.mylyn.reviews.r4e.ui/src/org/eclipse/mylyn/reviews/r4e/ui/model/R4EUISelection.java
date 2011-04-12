@@ -324,4 +324,14 @@ public class R4EUISelection extends R4EUIModelElement {
 	public String getRemoveElementCmdTooltip() {
 		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
 	}
+	
+	/**
+	 * Method isSendEmailCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isSendEmailCmd()
+	 */
+	@Override
+	public boolean isSendEmailCmd() {
+		return true;
+	}
 }

@@ -814,6 +814,17 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
 	}
 	
+	/**
+	 * Method isSendEmailCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isSendEmailCmd()
+	 */
+	@Override
+	public boolean isSendEmailCmd() {
+		if (isOpen()) return true;
+		return false;
+	}
+	
 	
 	//Phase Management
 	

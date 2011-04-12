@@ -760,6 +760,36 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String[] CLASS_VALUES = { R4EUIConstants.ANOMALY_CLASS_ERRONEOUS, R4EUIConstants.ANOMALY_CLASS_SUPERFLUOUS,
 		R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT, R4EUIConstants.ANOMALY_CLASS_QUESTION };  //NOTE: This has to match CommentType in R4E core plugin
 
+	/**
+	 * Field MESSAGE_TYPE_ITEMS_READY.
+	 * (value is "0")
+	 */
+	public static final int MESSAGE_TYPE_ITEMS_READY = 0;
+	
+	/**
+	 * Field MESSAGE_TYPE_ITEMS_READY.
+	 * (value is "1")
+	 */
+	public static final int MESSAGE_TYPE_ITEMS_REMOVED = 1;
+	
+	/**
+	 * Field MESSAGE_TYPE_ITEMS_READY.
+	 * (value is "2")
+	 */
+	public static final int MESSAGE_TYPE_PROGRESS = 2;
+	
+	/**
+	 * Field MESSAGE_TYPE_ITEMS_READY.
+	 * (value is "3")
+	 */
+	public static final int MESSAGE_TYPE_COMPLETION = 3;
+	
+	/**
+	 * Field MESSAGE_TYPE_ITEMS_READY.
+	 * (value is "4")
+	 */
+	public static final int MESSAGE_TYPE_QUESTION = 4;
+	
 	
 	//Commands
 	
@@ -1249,6 +1279,36 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""r"")
 	 */
 	public static final String RESTORE_ELEMENT_COMMAND_MNEMONIC = "r";
+	
+	/**
+	 * Field SEND_EMAIL_COMMAND.
+	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.restoreElement"")
+	 */
+	public static final String SEND_EMAIL_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification";
+	
+	/**
+	 * Field SEND_EMAIL_ICON_FILE.
+	 * (value is ""icons/view16/sendmail_tsk.gif"")
+	 */
+	public static final String SEND_EMAIL_ICON_FILE = "icons/view16/sendmail_tsk.gif";
+	
+	/**
+	 * Field SEND_EMAIL_COMMAND_NAME.
+	 * (value is ""Send Email/Notification"")
+	 */
+	public static final String SEND_EMAIL_COMMAND_NAME = "Send Email/Notification";
+	
+	/**
+	 * Field SEND_EMAIL_COMMAND_TOOLTIP.
+	 * (value is ""Restore this disabled element"")
+	 */
+	public static final String SEND_EMAIL_COMMAND_TOOLTIP = "Send Email or Notification";
+	
+	/**
+	 * Field SEND_EMAIL_COMMAND_MNEMONIC.
+	 * (value is ""r"")
+	 */
+	public static final String SEND_EMAIL_COMMAND_MNEMONIC = "N";
 	
 	/**
 	 * Field START_STRING_INDEX.

@@ -160,6 +160,42 @@
                   </or>
                </visibleWhen>
             </command>
+            <command
+                  commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification"
+                  icon="icons/view16/sendmail_tsk.gif"
+                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification"
+                  label="Send Email/Notification"
+                  mnemonic="N"
+                  style="push"
+                  tooltip="Send Email or Notification">
+               <visibleWhen
+                     checkEnabled="false">
+                  <or>
+                     <with
+                           variable="selection">
+                        <iterate>
+                           <or>
+                              <instanceof
+                                    value="org.eclipse.core.resources.IFile">
+                              </instanceof>
+                              <instanceof
+                                    value="org.eclipse.jdt.core.ISourceReference">
+                              </instanceof>
+                              <instanceof
+                                    value="org.eclipse.cdt.core.model.ISourceReference">
+                              </instanceof>
+                           </or>
+                        </iterate>
+                     </with>
+                     <with
+                           variable="activePart">
+                        <instanceof
+                              value="org.eclipse.ui.IEditorPart">
+                        </instanceof>
+                     </with>
+                  </or>
+               </visibleWhen>
+            </command>
             <visibleWhen
                   checkEnabled="false">
                <and>
@@ -675,6 +711,12 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
+            description="Send Email/Notification"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification"
+            name="Send Email/Notification">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.services">
@@ -974,6 +1016,15 @@
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewItem.reviewItem">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.SendNotificationHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
             </test>
          </enabledWhen>
       </handler>

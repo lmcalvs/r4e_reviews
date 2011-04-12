@@ -728,4 +728,14 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		if (isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) return true;
 		return false;
 	}
+	
+	/**
+	 * Method isSendEmailCmd.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isSendEmailCmd()
+	 */
+	@Override
+	public boolean isSendEmailCmd() {
+		return true;
+	}
 }
