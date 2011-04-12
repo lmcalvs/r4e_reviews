@@ -151,12 +151,12 @@ public interface R4EMeetingData extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>End Time</em>' attribute.
-	 * @see #setEndTime(String)
+	 * @see #setEndTime(long)
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EMeetingData_EndTime()
 	 * @model
 	 * @generated
 	 */
-	String getEndTime();
+	long getEndTime();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getEndTime <em>End Time</em>}' attribute.
@@ -166,7 +166,7 @@ public interface R4EMeetingData extends EObject {
 	 * @see #getEndTime()
 	 * @generated
 	 */
-	void setEndTime(String value);
+	void setEndTime(long value);
 
 	/**
 	 * Returns the value of the '<em><b>Sent Count</b></em>' attribute.

@@ -131,7 +131,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String END_TIME_EDEFAULT = null;
+	protected static final long END_TIME_EDEFAULT = 0L;
 
 	/**
 	 * The cached value of the '{@link #getEndTime() <em>End Time</em>}' attribute.
@@ -141,7 +141,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	 * @generated
 	 * @ordered
 	 */
-	protected String endTime = END_TIME_EDEFAULT;
+	protected long endTime = END_TIME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getSentCount() <em>Sent Count</em>}' attribute.
@@ -271,7 +271,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getEndTime() {
+	public long getEndTime() {
 		return endTime;
 	}
 
@@ -280,8 +280,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setEndTime(String newEndTime) {
-		String oldEndTime = endTime;
+	public void setEndTime(long newEndTime) {
+		long oldEndTime = endTime;
 		endTime = newEndTime;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_MEETING_DATA__END_TIME, oldEndTime, endTime));
@@ -353,7 +353,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 				setStartTime((Long)newValue);
 				return;
 			case RModelPackage.R4E_MEETING_DATA__END_TIME:
-				setEndTime((String)newValue);
+				setEndTime((Long)newValue);
 				return;
 			case RModelPackage.R4E_MEETING_DATA__SENT_COUNT:
 				setSentCount((Integer)newValue);
@@ -409,7 +409,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 			case RModelPackage.R4E_MEETING_DATA__START_TIME:
 				return startTime != START_TIME_EDEFAULT;
 			case RModelPackage.R4E_MEETING_DATA__END_TIME:
-				return END_TIME_EDEFAULT == null ? endTime != null : !END_TIME_EDEFAULT.equals(endTime);
+				return endTime != END_TIME_EDEFAULT;
 			case RModelPackage.R4E_MEETING_DATA__SENT_COUNT:
 				return sentCount != SENT_COUNT_EDEFAULT;
 		}
