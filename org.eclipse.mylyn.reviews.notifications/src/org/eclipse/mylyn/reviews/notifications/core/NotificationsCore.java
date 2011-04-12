@@ -193,7 +193,7 @@ public class NotificationsCore {
 	 * @return
 	 * @throws CoreException
 	 */
-	public IMeetingData createMeetingData(String aCustomId, String aSubject, String aBody, String aLocation,
+	public static IMeetingData createMeetingData(String aCustomId, String aSubject, String aBody, String aLocation,
 			long aStartTimeMilli, long aEndTimeMilli) throws CoreException {
 		return new MeetingData(aCustomId, aSubject, aBody, aLocation, aStartTimeMilli,
 			 aEndTimeMilli);
