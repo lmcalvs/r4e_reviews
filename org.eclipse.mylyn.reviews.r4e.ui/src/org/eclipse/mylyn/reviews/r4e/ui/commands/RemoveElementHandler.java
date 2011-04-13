@@ -64,7 +64,7 @@ public class RemoveElementHandler extends AbstractHandler {
 		if (!selection.isEmpty()) {
 			IR4EUIModelElement element = null;
 			MessageDialogWithToggle dialog = null;
-			R4EReview review = R4EUIModelController.getActiveReview().getReview();
+			final R4EReview review = R4EUIModelController.getActiveReview().getReview();
 			for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
 			    element = (IR4EUIModelElement) iterator.next();
 				Activator.Ftracer.traceInfo("Disable element " + element.getName());

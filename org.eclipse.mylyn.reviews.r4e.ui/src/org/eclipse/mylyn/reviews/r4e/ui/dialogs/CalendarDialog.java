@@ -55,7 +55,7 @@ public class CalendarDialog extends FormDialog {
 	/**
 	 * Field fIncludeTime.
 	 */
-	private boolean fIncludeTime;
+	private final boolean fIncludeTime;
 	
 	/**
 	 * Field fCalendar.

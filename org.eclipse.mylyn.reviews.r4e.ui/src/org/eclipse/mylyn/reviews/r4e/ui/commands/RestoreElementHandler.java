@@ -63,7 +63,7 @@ public class RestoreElementHandler extends AbstractHandler {
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		if (!selection.isEmpty()) {
 			IR4EUIModelElement element = null;
-			R4EReview review = R4EUIModelController.getActiveReview().getReview();
+			final R4EReview review = R4EUIModelController.getActiveReview().getReview();
 			for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
 				try {
 					element = (IR4EUIModelElement) iterator.next();

@@ -133,13 +133,13 @@ public class SendNotificationInputDialog extends FormDialog {
         if (buttonId == IDialogConstants.OK_ID) {
         	fMessageType = R4EUIConstants.INVALID_VALUE;
 	    	this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-	    	if (fItemsReadyButton.getSelection()) {
+	    	if (null != fItemsReadyButton && fItemsReadyButton.getSelection()) {
 	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_ITEMS_READY;
-	    	} else if (fItemsRemovedButton.getSelection()) {
+	    	} else if (null != fItemsRemovedButton && fItemsRemovedButton.getSelection()) {
 	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_ITEMS_REMOVED;
-	    	} else if (fProgressButton.getSelection()) {
+	    	} else if (null != fProgressButton && fProgressButton.getSelection()) {
 	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_PROGRESS;
-	    	} else if (fCompletionButton.getSelection()) {
+	    	} else if (null != fCompletionButton && fCompletionButton.getSelection()) {
 	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_COMPLETION;
 	    	} else if (fQuestionButton.getSelection()) {
 	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_QUESTION;
