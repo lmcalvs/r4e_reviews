@@ -257,7 +257,7 @@ public class AddReviewItemHandler extends AbstractHandler {
 					aTargetFileVersion.getVersionID() + ((null != aBaseFileVersion) ? "Base = " + aBaseFileVersion.getName() + "_" +
 					aBaseFileVersion.getVersionID() : "") + " Position = " + aUIPosition.toString());
 			//Send email notification if needed
-			R4EReview review = R4EUIModelController.getActiveReview().getReview();
+			final R4EReview review = R4EUIModelController.getActiveReview().getReview();
 			if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 				if (((R4EFormalReview)review).getCurrent().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 					MailServicesProxy.sendItemsReadyNotification();

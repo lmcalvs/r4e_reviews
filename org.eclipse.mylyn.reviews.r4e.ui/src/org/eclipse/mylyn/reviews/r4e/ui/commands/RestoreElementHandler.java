@@ -63,6 +63,7 @@ public class RestoreElementHandler extends AbstractHandler {
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		if (!selection.isEmpty()) {
 			IR4EUIModelElement element = null;
+			R4EReview review = R4EUIModelController.getActiveReview().getReview();
 			for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
 				try {
 					element = (IR4EUIModelElement) iterator.next();
@@ -73,7 +74,6 @@ public class RestoreElementHandler extends AbstractHandler {
 					
 	    			if (element instanceof R4EUIReviewItem) {
 	    				//Send email notification if needed
-	    				R4EReview review = R4EUIModelController.getActiveReview().getReview();
 	    				if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 	    					if (((R4EFormalReview)review).getCurrent().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 	    						MailServicesProxy.sendItemsReadyNotification();

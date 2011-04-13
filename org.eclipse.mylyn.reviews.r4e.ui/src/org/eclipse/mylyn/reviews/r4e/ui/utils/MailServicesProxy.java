@@ -23,12 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 import org.eclipse.mylyn.reviews.notifications.core.NotificationsCore;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
@@ -49,96 +51,145 @@ public class MailServicesProxy {
 	// Constants
 	// ------------------------------------------------------------------------
 	
-	private final static String LINE_FEED_MSG_PART = System.getProperty("line.separator");
+	/**
+	 * Field LINE_FEED_MSG_PART.
+	 */
+	private static final String LINE_FEED_MSG_PART = System.getProperty("line.separator");
 	
-	private final static String TAB_MSG_PART = "\t";
+	/**
+	 * Field TAB_MSG_PART.
+	 * (value is ""\t"")
+	 */
+	private static final String TAB_MSG_PART = "\t";
 
-	private final static String SUBJECT_MSG_HEADER = " Review ";
+	/**
+	 * Field SUBJECT_MSG_HEADER.
+	 * (value is "" Review "")
+	 */
+	private static final String SUBJECT_MSG_HEADER = " Review ";
 
-	private final static String INTRO_MSG_BODY = "Hi,";
+	/**
+	 * Field INTRO_MSG_BODY.
+	 * (value is ""Hi,"")
+	 */
+	private static final String INTRO_MSG_BODY = "Hi,";
 	
-	private final static String OUTRO_MSG_BODY = "Best Regards,";
+	/**
+	 * Field OUTRO_MSG_BODY.
+	 * (value is ""Best Regards,"")
+	 */
+	private static final String OUTRO_MSG_BODY = "Best Regards,";
 
-	private final static String ITEMS_READY_MSG_BODY = "The following Review Item(s) and Files are Ready for you to Review";
+	/**
+	 * Field ITEMS_READY_MSG_BODY.
+	 * (value is ""The following Review Item(s) and Files are Ready for you to Review"")
+	 */
+	private static final String ITEMS_READY_MSG_BODY = "The following Review Item(s) and Files are Ready for you to Review";
 
-	private final static String REMOVED_ITEMS_MSG_BODY = "The following Review Item(s) and Files have been Removed." + LINE_FEED_MSG_PART +
+	/**
+	 * Field MEETING_REQUEST_MSG_BODY.
+	 * (value is ""This invitation is for the decision phase." + LINE_FEED_MSG_PART + 
+		"Please review the included items prior to the meeting."")
+	 */
+	private static final String MEETING_REQUEST_MSG_BODY = "This invitation is for the decision phase." + LINE_FEED_MSG_PART + 
+		"Please review the included items prior to the meeting.";
+	
+	/**
+	 * Field REMOVED_ITEMS_MSG_BODY.
+	 * (value is ""The following Review Item(s) and Files have been Removed." + LINE_FEED_MSG_PART +
+		"Please Refresh your Review if it is currently Open"")
+	 */
+	private static final String REMOVED_ITEMS_MSG_BODY = "The following Review Item(s) and Files have been Removed." + LINE_FEED_MSG_PART +
 		"Please Refresh your Review if it is currently Open";
 	
-	private final static String PROGRESS_MESSAGE = "Progress Update: " + LINE_FEED_MSG_PART;
+	/**
+	 * Field PROGRESS_MESSAGE.
+	 * (value is ""Progress Update: " + LINE_FEED_MSG_PART")
+	 */
+	private static final String PROGRESS_MESSAGE = "Progress Update: " + LINE_FEED_MSG_PART;
 
-	private final static String COMPLETION_MESSAGE = "I have Completed this Review, see Details below: " + LINE_FEED_MSG_PART;
+	/**
+	 * Field COMPLETION_MESSAGE.
+	 * (value is ""I have Completed this Review, see Details below: " + LINE_FEED_MSG_PART")
+	 */
+	private static final String COMPLETION_MESSAGE = "I have Completed this Review, see Details below: " + LINE_FEED_MSG_PART;
 
-	private final static String QUESTION_MSG_BODY = "I have a question concerning the following ";
+	/**
+	 * Field QUESTION_MSG_BODY.
+	 * (value is ""I have a Question concerning the Following "")
+	 */
+	private static final String QUESTION_MSG_BODY = "I have a Question concerning the Following ";
 	
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 	
+	//Notifications
+	
     /**
      * Method sendItemsReadyNotification
-     * @throws ResourceHandlingException 
-     * @throws CoreException 
+     * @throws CoreException
+     * @throws ResourceHandlingException
      */
     public static void sendItemsReadyNotification() throws CoreException, ResourceHandlingException {
-    	String messageBody = createItemsReadyNotificationMessage();
-    	String messageSubject = createSubject() + " - Items Ready for Review";
-    	String[] messageDestinations = createReviewerDestinations();
+    	final String[] messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_REVIEWER);
+    	final String messageSubject = createSubject() + " - Items Ready for Review";
+    	final String messageBody = createItemsReadyNotificationMessage(false);
     	sendMessage(messageDestinations, messageSubject, messageBody);
-    	//TODO combine with meeting request for formal reviews
     }
     
     /**
      * Method sendItemsRemovedNotification
-     * @throws ResourceHandlingException 
-     * @throws CoreException 
+     * @throws CoreException
+     * @throws ResourceHandlingException
      */
     public static void sendItemsRemovedNotification() throws CoreException, ResourceHandlingException {
-    	String messageBody = createRemovedItemsNotificationMessage();
-    	String messageSubject = createSubject() + " - Items Removed from Review";
-    	String[] messageDestinations = createReviewerDestinations();
+    	final String[] messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_REVIEWER);
+    	final String messageSubject = createSubject() + " - Items Removed from Review";
+    	final String messageBody = createRemovedItemsNotificationMessage();
     	sendMessage(messageDestinations, messageSubject, messageBody);
     }
     
     /**
      * Method sendProgressNotification
-     * @throws ResourceHandlingException 
-     * @throws CoreException 
+     * @throws CoreException
+     * @throws ResourceHandlingException
      */
     public static void sendProgressNotification() throws CoreException, ResourceHandlingException {
-    	String messageBody = createProgressNotification(PROGRESS_MESSAGE);
-    	String messageSubject = createSubject() + " - Participant Progress";
-    	String[] messageDestinations = createLeadDestinations();
+    	final String[] messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_LEAD);
+    	final String messageSubject = createSubject() + " - Participant Progress";
+    	final String messageBody = createProgressNotification(PROGRESS_MESSAGE);
     	sendMessage(messageDestinations, messageSubject, messageBody);
     }
     
     /**
      * Method sendCompletionNotification
-     * @throws ResourceHandlingException 
-     * @throws CoreException 
+     * @throws CoreException
+     * @throws ResourceHandlingException
      */
     public static void sendCompletionNotification() throws CoreException, ResourceHandlingException {
-    	String messageBody = createProgressNotification(COMPLETION_MESSAGE);
-    	String messageSubject = createSubject() + " - Participant Progress (Completed)";
-    	String[] messageDestinations = createLeadDestinations();
+    	final String[] messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_LEAD);
+    	final String messageSubject = createSubject() + " - Participant Progress (Completed)";
+    	final String messageBody = createProgressNotification(COMPLETION_MESSAGE);
     	sendMessage(messageDestinations, messageSubject, messageBody);
     }
     
     /**
      * Method sendQuestion
-     * @throws ResourceHandlingException 
-     * @throws CoreException 
+     * @param aSource Object
+     * @throws CoreException
+     * @throws ResourceHandlingException
      */
-    public static void sendQuestion(Object source) throws CoreException, ResourceHandlingException {
-    	String messageBody = createQuestionMessage(source);
-    	String messageSubject = createSubject() + " - Question regarding review " + 
-    		R4EUIModelController.getActiveReview().getName();
+    public static void sendQuestion(Object aSource) throws CoreException, ResourceHandlingException {
     	String[] messageDestinations = null;
-    	if (source instanceof R4EUIAnomalyBasic) {
-    		messageDestinations = createAnomalyCreatorDestination((R4EUIAnomalyBasic)source);
+    	if (aSource instanceof R4EUIAnomalyBasic) {
+    		messageDestinations = createAnomalyCreatorDestination((R4EUIAnomalyBasic)aSource);
     	} else {
-        	messageDestinations = createAuthorDestinations();
+        	messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_AUTHOR);
     	}
+    	final String messageSubject = createSubject() + " - Question regarding review ";
+    	final String messageBody = createQuestionMessage(aSource);
     	sendMessage(messageDestinations, messageSubject, messageBody);
     }
 
@@ -147,9 +198,11 @@ public class MailServicesProxy {
      * @param aDestinations String[]
      * @param aSubject String
      * @param aBody String
+     * @throws CoreException
+     * @throws ResourceHandlingException
      */
     public static void sendMessage(String[] aDestinations, String aSubject, String aBody) throws CoreException, ResourceHandlingException {
-    	NotificationsConnector mailService = NotificationsCore.getFirstEnabled(null);
+    	final NotificationsConnector mailService = NotificationsCore.getFirstEnabled(null);
     	mailService.sendEmail(R4EUIModelController.getActiveReview().getParticipant(R4EUIModelController.getReviewer(), false).getEmail(),
     			aDestinations, aSubject, aBody, null, null);
     }
@@ -159,7 +212,7 @@ public class MailServicesProxy {
      * @return String
      */
 	private static String createSubject() {
-		StringBuilder subject = new StringBuilder();
+		final StringBuilder subject = new StringBuilder();
 		subject.append("[r4e-mail] ");
 		subject.append(SUBJECT_MSG_HEADER);
 		subject.append(R4EUIModelController.getActiveReview().getName());
@@ -168,29 +221,14 @@ public class MailServicesProxy {
 	
     /**
      * Method createReviewerDestinations
+     * @param aRole R4EUserRole
      * @return String[]
      */
-	private static String[] createReviewerDestinations() {
-		ArrayList<String> destinations = new ArrayList<String>();
-		List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
+	private static String[] createDestinations(R4EUserRole aRole) {
+		final ArrayList<String> destinations = new ArrayList<String>();
+		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
 		for (R4EParticipant participant : participants) {
-			if (participant.getRoles().contains(R4EUserRole.R4E_ROLE_REVIEWER) &&
-					null != participant.getEmail()) {
-				destinations.add(participant.getEmail());
-			}
-		}
-		return destinations.toArray(new String[destinations.size()]);
-	}
-	
-    /**
-     * Method createLeadDestinations
-     * @return String[]
-     */
-	private static String[] createLeadDestinations() {
-		ArrayList<String> destinations = new ArrayList<String>();
-		List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
-		for (R4EParticipant participant : participants) {
-			if (participant.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD) &&
+			if ((null == aRole || participant.getRoles().contains(aRole)) &&
 					null != participant.getEmail()) {
 				destinations.add(participant.getEmail());
 			}
@@ -200,41 +238,30 @@ public class MailServicesProxy {
 	
     /**
      * Method createAnomalyCreatorDestination
+     * @param aAnomaly R4EUIAnomalyBasic
      * @return String
      */
 	private static String[] createAnomalyCreatorDestination(R4EUIAnomalyBasic aAnomaly) {
-		ArrayList<String> destinations = new ArrayList<String>();
+		final ArrayList<String> destinations = new ArrayList<String>();
 		destinations.add(aAnomaly.getAnomaly().getUser().getEmail());
 		return destinations.toArray(new String[destinations.size()]);
 	}
 	
     /**
-     * Method createAuthorDestinations
-     * @return String[]
-     */
-	private static String[] createAuthorDestinations() {
-		ArrayList<String> destinations = new ArrayList<String>();
-		List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
-		for (R4EParticipant participant : participants) {
-			if (participant.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR) &&
-					null != participant.getEmail()) {
-				destinations.add(participant.getEmail());
-			}
-		}
-		return destinations.toArray(new String[destinations.size()]);
-	}
-	
-    /**
      * Method createItemsReadyNotificationMessage
+     * @param aMeetingRequestIncluded boolean
      * @return String
      */
-    private static String createItemsReadyNotificationMessage() {
+    private static String createItemsReadyNotificationMessage(boolean aMeetingRequestIncluded) {
     	StringBuilder msgBody = new StringBuilder();
     	
     	msgBody.append(createIntroPart());
-    	msgBody.append(ITEMS_READY_MSG_BODY + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-
-    	List<R4EUIReviewItem> items = R4EUIModelController.getActiveReview().getReviewItems();
+    	if (aMeetingRequestIncluded) {
+    		msgBody.append(MEETING_REQUEST_MSG_BODY + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+    	} else {
+    		msgBody.append(ITEMS_READY_MSG_BODY + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+    	}
+    	final List<R4EUIReviewItem> items = R4EUIModelController.getActiveReview().getReviewItems();
     	for (R4EUIReviewItem item : items) {
     		if (!item.isEnabled()) {
     			msgBody.append("Review Item: " + item.getName() + LINE_FEED_MSG_PART);
@@ -253,7 +280,6 @@ public class MailServicesProxy {
 		msgBody.append(createOutroPart());
     	return msgBody.toString();
     }
-    
     
     /**
      * Method createRemovedItemsNotificationMessage
@@ -287,6 +313,7 @@ public class MailServicesProxy {
     
     /**
      * Method createProgressNotification
+     * @param aHeader String
      * @return String
      */
     private static String createProgressNotification(String aHeader) {
@@ -344,6 +371,7 @@ public class MailServicesProxy {
     
     /**
      * Method createQuestionMessage
+     * @param aSource Object
      * @return String
      */
     private static String createQuestionMessage(Object aSource) {
@@ -431,5 +459,48 @@ public class MailServicesProxy {
     	msgOutro.append(OUTRO_MSG_BODY);
     	msgOutro.append(R4EUIModelController.getReviewer());
     	return msgOutro.toString();
+    }
+    
+    
+    //Meetings
+    
+    /**
+     * Method sendMeetingRequest
+     * @param aStartDate Long
+     * @param aDuration Integer
+     * @param aLocation String
+     * @throws CoreException
+     * @throws ResourceHandlingException
+     */
+    public static void sendMeetingRequest(Long aStartDate, Integer aDuration, String aLocation ) throws CoreException, ResourceHandlingException {
+    	String[] messageDestinations = createDestinations(null);
+    	String messageSubject = null;
+    	if (null != R4EUIModelController.getActiveReview().getReview().getActiveMeeting()) {
+    		messageSubject = createSubject() + " - Decision Meeting Request Updated";
+    	} else {
+    		messageSubject = createSubject() + " - Items Ready for Review & Decision Meeting Request";
+    	}
+    	String messageBody = createItemsReadyNotificationMessage(true);
+    	sendMeetingRequest(messageDestinations, messageSubject, messageBody, aStartDate, aDuration);
+    }
+    
+    /**
+     * Method sendMessage
+     * @param aDestinations String[]
+     * @param aSubject String
+     * @param aBody String
+     * @param aStartDate Long
+     * @param aDuration Integer
+     * @throws CoreException
+     */
+    public static void sendMeetingRequest(String[] aDestinations, String aSubject, String aBody, 
+    		Long aStartDate, Integer aDuration) throws CoreException {
+    	NotificationsConnector mailService = NotificationsCore.getFirstEnabled(null);
+    	IMeetingData meetingData = mailService.createMeetingRequest(aSubject, aBody, aDestinations, aStartDate, aDuration);
+    	R4EReview review = R4EUIModelController.getActiveReview().getReview();
+    	//review.setActiveMeeting(meetingData);
+    	//review.getActiveMeeting().setSentCount((review.getActiveMeeting().getSentCount() + 1));
+    	//TODO verify if we need to do anything else to send the email
+    	//TODO the core should be changed to accept IMeetingData
     }
 }

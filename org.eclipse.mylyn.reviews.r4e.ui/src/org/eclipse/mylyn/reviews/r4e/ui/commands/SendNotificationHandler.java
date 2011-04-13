@@ -31,6 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.dialogs.SendNotificationInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 
 /**
  * @author lmcdubo
@@ -57,12 +58,12 @@ public class SendNotificationHandler extends AbstractHandler {
 		}
 		R4EUIModelController.setDialogOpen(true);
 		//if the source is Review element, all options are available.  O(therwise, only ask questions is supported
-		SendNotificationInputDialog dialog = new SendNotificationInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+		final SendNotificationInputDialog dialog = new SendNotificationInputDialog(R4EUIModelController.getNavigatorView().
 				getSite().getWorkbenchWindow().getShell(), source);
 		dialog.create();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			int messageType = dialog.getMessageTypeValue();
+			final int messageType = dialog.getMessageTypeValue();
 
 			try {
 				switch (messageType) {
@@ -90,11 +91,9 @@ public class SendNotificationHandler extends AbstractHandler {
 						//Do nothing, should never happen
 				}
 			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				UIUtils.displayCoreErrorDialog(e);
 			} catch (ResourceHandlingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				UIUtils.displayResourceErrorDialog(e);
 			}
 		}  //else Window.CANCEL
 		R4EUIModelController.setDialogOpen(false);	

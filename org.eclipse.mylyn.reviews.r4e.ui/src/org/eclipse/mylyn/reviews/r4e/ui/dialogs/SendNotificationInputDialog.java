@@ -51,8 +51,8 @@ public class SendNotificationInputDialog extends FormDialog {
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Field ADD_COMMENT_DIALOG_TITLE.
-	 * (value is ""Enter Comment details"")
+	 * Field SEND_MAIL_DIALOG_TITLE.
+	 * (value is ""Send Email/Notification"")
 	 */
 	private static final String SEND_MAIL_DIALOG_TITLE = "Send Email/Notification";
 
@@ -70,7 +70,7 @@ public class SendNotificationInputDialog extends FormDialog {
 	/**
 	 * Field fSource.
 	 */
-	Object fSource = null;
+	private Object fSource = null;
 	
 	/**
 	 * Field fMessageType.
@@ -80,27 +80,27 @@ public class SendNotificationInputDialog extends FormDialog {
 	/**
 	 * Field fItemsReadyButton.
 	 */
-    Button fItemsReadyButton = null;
+    private Button fItemsReadyButton = null;
     
 	/**
 	 * Field fItemsRemovedButton.
 	 */
-    Button fItemsRemovedButton = null;
+    private Button fItemsRemovedButton = null;
     
 	/**
 	 * Field fProgressButton.
 	 */
-    Button fProgressButton = null;
+    private Button fProgressButton = null;
     
 	/**
 	 * Field fCompletionButton.
 	 */
-    Button fCompletionButton = null;
+    private Button fCompletionButton = null;
     
 	/**
 	 * Field fQuestionButton.
 	 */
-    Button fQuestionButton = null;
+    private Button fQuestionButton = null;
     
     
 	// ------------------------------------------------------------------------
@@ -110,6 +110,7 @@ public class SendNotificationInputDialog extends FormDialog {
 	/**
 	 * Constructor for R4ECommentInputDialog.
 	 * @param aParentShell Shell
+	 * @param aSource Object
 	 */
 	public SendNotificationInputDialog(Shell aParentShell, Object aSource) {
 		super(aParentShell);
@@ -132,11 +133,17 @@ public class SendNotificationInputDialog extends FormDialog {
         if (buttonId == IDialogConstants.OK_ID) {
         	fMessageType = R4EUIConstants.INVALID_VALUE;
 	    	this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-	    	if (fItemsReadyButton.getSelection()) fMessageType = R4EUIConstants.MESSAGE_TYPE_ITEMS_READY;
-	    	if (fItemsRemovedButton.getSelection()) fMessageType = R4EUIConstants.MESSAGE_TYPE_ITEMS_REMOVED;
-	    	else if (fProgressButton.getSelection()) fMessageType = R4EUIConstants.MESSAGE_TYPE_PROGRESS;
-	    	else if (fCompletionButton.getSelection()) fMessageType = R4EUIConstants.MESSAGE_TYPE_COMPLETION;
-	    	else if (fQuestionButton.getSelection()) fMessageType = R4EUIConstants.MESSAGE_TYPE_QUESTION;
+	    	if (fItemsReadyButton.getSelection()) {
+	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_ITEMS_READY;
+	    	} else if (fItemsRemovedButton.getSelection()) {
+	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_ITEMS_REMOVED;
+	    	} else if (fProgressButton.getSelection()) {
+	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_PROGRESS;
+	    	} else if (fCompletionButton.getSelection()) {
+	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_COMPLETION;
+	    	} else if (fQuestionButton.getSelection()) {
+	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_QUESTION;
+	    	}
         } else {
         	fMessageType = R4EUIConstants.INVALID_VALUE;
         }

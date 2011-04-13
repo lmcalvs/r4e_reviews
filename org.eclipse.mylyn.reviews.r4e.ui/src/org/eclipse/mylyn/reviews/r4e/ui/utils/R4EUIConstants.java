@@ -451,6 +451,24 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String PHASE_COMPLETED_LABEL = "COMPLETED";
 	
 	/**
+	 * Field START_TIME_LABEL.
+	 * (value is ""Starts: "")
+	 */
+	public static final String START_TIME_LABEL = "Starts: ";
+	
+	/**
+	 * Field DURATION_LABEL.
+	 * (value is ""Duration (minutes): "")
+	 */
+	public static final String DURATION_LABEL = "Duration (minutes): ";
+	
+	/**
+	 * Field LOCATION_LABEL.
+	 * (value is ""Location: "")
+	 */
+	public static final String LOCATION_LABEL = "Location: ";
+	
+	/**
 	 * Field AUTHOR_LABEL.
 	 * (value is ""Added by: "")
 	 */
