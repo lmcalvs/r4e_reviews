@@ -251,7 +251,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/subject"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/startTime"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/endTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/duration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/sentCount"/>
     </genClasses>
   </genPackages>

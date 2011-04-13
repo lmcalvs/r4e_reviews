@@ -35,7 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSubject <em>Subject</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getStartTime <em>Start Time</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getEndTime <em>End Time</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getDuration <em>Duration</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSentCount <em>Sent Count</em>}</li>
  * </ul>
  * </p>
@@ -124,24 +124,24 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	protected long startTime = START_TIME_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getEndTime() <em>End Time</em>}' attribute.
+	 * The default value of the '{@link #getDuration() <em>Duration</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getEndTime()
+	 * @see #getDuration()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final long END_TIME_EDEFAULT = 0L;
+	protected static final int DURATION_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #getEndTime() <em>End Time</em>}' attribute.
+	 * The cached value of the '{@link #getDuration() <em>Duration</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getEndTime()
+	 * @see #getDuration()
 	 * @generated
 	 * @ordered
 	 */
-	protected long endTime = END_TIME_EDEFAULT;
+	protected int duration = DURATION_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getSentCount() <em>Sent Count</em>}' attribute.
@@ -271,8 +271,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public long getEndTime() {
-		return endTime;
+	public int getDuration() {
+		return duration;
 	}
 
 	/**
@@ -280,11 +280,11 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setEndTime(long newEndTime) {
-		long oldEndTime = endTime;
-		endTime = newEndTime;
+	public void setDuration(int newDuration) {
+		int oldDuration = duration;
+		duration = newDuration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_MEETING_DATA__END_TIME, oldEndTime, endTime));
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_MEETING_DATA__DURATION, oldDuration, duration));
 	}
 
 	/**
@@ -324,8 +324,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 				return getLocation();
 			case RModelPackage.R4E_MEETING_DATA__START_TIME:
 				return getStartTime();
-			case RModelPackage.R4E_MEETING_DATA__END_TIME:
-				return getEndTime();
+			case RModelPackage.R4E_MEETING_DATA__DURATION:
+				return getDuration();
 			case RModelPackage.R4E_MEETING_DATA__SENT_COUNT:
 				return getSentCount();
 		}
@@ -352,8 +352,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 			case RModelPackage.R4E_MEETING_DATA__START_TIME:
 				setStartTime((Long)newValue);
 				return;
-			case RModelPackage.R4E_MEETING_DATA__END_TIME:
-				setEndTime((Long)newValue);
+			case RModelPackage.R4E_MEETING_DATA__DURATION:
+				setDuration((Integer)newValue);
 				return;
 			case RModelPackage.R4E_MEETING_DATA__SENT_COUNT:
 				setSentCount((Integer)newValue);
@@ -382,8 +382,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 			case RModelPackage.R4E_MEETING_DATA__START_TIME:
 				setStartTime(START_TIME_EDEFAULT);
 				return;
-			case RModelPackage.R4E_MEETING_DATA__END_TIME:
-				setEndTime(END_TIME_EDEFAULT);
+			case RModelPackage.R4E_MEETING_DATA__DURATION:
+				setDuration(DURATION_EDEFAULT);
 				return;
 			case RModelPackage.R4E_MEETING_DATA__SENT_COUNT:
 				setSentCount(SENT_COUNT_EDEFAULT);
@@ -408,8 +408,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 				return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
 			case RModelPackage.R4E_MEETING_DATA__START_TIME:
 				return startTime != START_TIME_EDEFAULT;
-			case RModelPackage.R4E_MEETING_DATA__END_TIME:
-				return endTime != END_TIME_EDEFAULT;
+			case RModelPackage.R4E_MEETING_DATA__DURATION:
+				return duration != DURATION_EDEFAULT;
 			case RModelPackage.R4E_MEETING_DATA__SENT_COUNT:
 				return sentCount != SENT_COUNT_EDEFAULT;
 		}
@@ -434,8 +434,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 		result.append(location);
 		result.append(", startTime: ");
 		result.append(startTime);
-		result.append(", endTime: ");
-		result.append(endTime);
+		result.append(", duration: ");
+		result.append(duration);
 		result.append(", sentCount: ");
 		result.append(sentCount);
 		result.append(')');

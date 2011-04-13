@@ -2643,13 +2643,13 @@ public interface RModelPackage extends EPackage {
 	int R4E_MEETING_DATA__START_TIME = 3;
 
 	/**
-	 * The feature id for the '<em><b>End Time</b></em>' attribute.
+	 * The feature id for the '<em><b>Duration</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_MEETING_DATA__END_TIME = 4;
+	int R4E_MEETING_DATA__DURATION = 4;
 
 	/**
 	 * The feature id for the '<em><b>Sent Count</b></em>' attribute.
@@ -4578,15 +4578,15 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EMeetingData_StartTime();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getEndTime <em>End Time</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getDuration <em>Duration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>End Time</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getEndTime()
+	 * @return the meta object for the attribute '<em>Duration</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getDuration()
 	 * @see #getR4EMeetingData()
 	 * @generated
 	 */
-	EAttribute getR4EMeetingData_EndTime();
+	EAttribute getR4EMeetingData_Duration();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSentCount <em>Sent Count</em>}'.
@@ -6122,12 +6122,12 @@ public interface RModelPackage extends EPackage {
 		EAttribute R4E_MEETING_DATA__START_TIME = eINSTANCE.getR4EMeetingData_StartTime();
 
 		/**
-		 * The meta object literal for the '<em><b>End Time</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Duration</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute R4E_MEETING_DATA__END_TIME = eINSTANCE.getR4EMeetingData_EndTime();
+		EAttribute R4E_MEETING_DATA__DURATION = eINSTANCE.getR4EMeetingData_Duration();
 
 		/**
 		 * The meta object literal for the '<em><b>Sent Count</b></em>' attribute feature.

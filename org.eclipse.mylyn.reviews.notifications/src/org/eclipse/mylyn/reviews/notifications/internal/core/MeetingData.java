@@ -22,7 +22,7 @@ import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 public class MeetingData implements IMeetingData {
 
 	public static String[] getAttributeTypes() {
-		String[] types = { "Subject", "Location", "Start Time", "End Time" };
+		String[] types = { "Subject", "Location", "Start Time", "Duration", "Body" };
 		return types;
 	}
 
@@ -34,21 +34,30 @@ public class MeetingData implements IMeetingData {
 
 	private String	fLocation;
 
-	private long	fSartTime;
+	private Long	fSartTime;
 
-	private long	fEndTime;
+	private Integer	fDuration;
 
 	private int		fSentCounter	= 0;
 
-	public MeetingData(String aCustomId, String aSubject, String aBody, String aLocation, long aStartTimeMilli,
-			long aEndTimeMilli)
-			throws CoreException {
+	/**
+	 * @param aCustomId
+	 * @param aSubject
+	 * @param aBody
+	 * @param aLocation
+	 * @param aStartTimeMilli
+	 * @param aDuration
+	 *            - meeting duration in minutes
+	 * @throws CoreException
+	 */
+	public MeetingData(String aCustomId, String aSubject, String aBody, String aLocation, Long aStartTimeMilli,
+			Integer aDuration) throws CoreException {
 		fCcustomID = aCustomId;
 		fSubject = aSubject;
 		fBody = aBody;
 		fLocation = aLocation;
 		fSartTime = aStartTimeMilli;
-		fEndTime = aEndTimeMilli;
+		fDuration = aDuration;
 	}
 
 	/* (non-Javadoc)
@@ -84,15 +93,17 @@ public class MeetingData implements IMeetingData {
 	/* (non-Javadoc)
 	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getStartTime()
 	 */
-	public long getStartTime() {
+	public Long getStartTime() {
 		return fSartTime;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getEndTime()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getDuration()
 	 */
-	public long getEndTime() {
-		return fEndTime;
+	public Integer getDuration() {
+		return fDuration;
 	}
 
 	/*
@@ -119,7 +130,7 @@ public class MeetingData implements IMeetingData {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return fSubject + ", " + fLocation + ", " + fBody + ", " + fSartTime + ", " + fEndTime;
+		return fSubject + ", " + fLocation + ", " + fSartTime + ", " + fDuration + ", " + fBody;
 	}
 
 }
