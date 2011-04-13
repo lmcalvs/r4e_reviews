@@ -1068,7 +1068,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_cP1WgWFKEeCFVY01TT49FA"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_kxywgGFKEeCFVY01TT49FA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/endTime"/>
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/duration"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_kxywgWFKEeCFVY01TT49FA"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_sPf4MGFKEeCFVY01TT49FA" type="2001">

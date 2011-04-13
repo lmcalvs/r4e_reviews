@@ -239,14 +239,13 @@ public class NotificationsCore {
 	 * @param aBody
 	 * @param aLocation
 	 * @param aStartTimeMilli
-	 * @param aEndTimeMilli
+	 * @param aDuration
 	 * @return
 	 * @throws CoreException
 	 */
 	public static IMeetingData createMeetingData(String aCustomId, String aSubject, String aBody, String aLocation,
-			long aStartTimeMilli, long aEndTimeMilli) throws CoreException {
-		return new MeetingData(aCustomId, aSubject, aBody, aLocation, aStartTimeMilli,
-			 aEndTimeMilli);
+			long aStartTimeMilli, int aDuration) throws CoreException {
+		return new MeetingData(aCustomId, aSubject, aBody, aLocation, aStartTimeMilli, aDuration);
 	}
 
 }

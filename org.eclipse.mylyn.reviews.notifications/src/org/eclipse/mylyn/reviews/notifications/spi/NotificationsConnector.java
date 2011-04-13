@@ -68,9 +68,7 @@ public abstract class NotificationsConnector {
 	 * @throws CoreException
 	 */
 	public abstract IMeetingData createMeetingRequest(String aSubject, String aBody, String[] aEmailsTo,
-			Long startDate,
-			Integer duration)
-			throws CoreException;
+			Long startDate, Integer duration) throws CoreException;
 
 	/**
 	 * Open the dialog from the system and allow the user to update as necessary

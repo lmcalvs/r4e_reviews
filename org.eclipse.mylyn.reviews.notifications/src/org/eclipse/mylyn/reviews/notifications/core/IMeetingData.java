@@ -49,14 +49,14 @@ public interface IMeetingData {
 	 * 
 	 * @return
 	 */
-	public abstract long getStartTime();
+	public abstract Long getStartTime();
 
 	/**
-	 * recommended to reflect a UTC value
+	 * Meeting duration in minutes
 	 * 
 	 * @return
 	 */
-	public abstract long getEndTime();
+	public abstract Integer getDuration();
 
 	/**
 	 * An indication of the number of times and invitation with this instance has been sent

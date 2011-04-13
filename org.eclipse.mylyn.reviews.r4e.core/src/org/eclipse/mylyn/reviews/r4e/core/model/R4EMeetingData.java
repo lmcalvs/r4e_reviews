@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSubject <em>Subject</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getLocation <em>Location</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getStartTime <em>Start Time</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getEndTime <em>End Time</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getDuration <em>Duration</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSentCount <em>Sent Count</em>}</li>
  * </ul>
  * </p>
@@ -143,30 +143,30 @@ public interface R4EMeetingData extends EObject {
 	void setStartTime(long value);
 
 	/**
-	 * Returns the value of the '<em><b>End Time</b></em>' attribute.
+	 * Returns the value of the '<em><b>Duration</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>End Time</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Duration</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>End Time</em>' attribute.
-	 * @see #setEndTime(long)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EMeetingData_EndTime()
+	 * @return the value of the '<em>Duration</em>' attribute.
+	 * @see #setDuration(int)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EMeetingData_Duration()
 	 * @model
 	 * @generated
 	 */
-	long getEndTime();
+	int getDuration();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getEndTime <em>End Time</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getDuration <em>Duration</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>End Time</em>' attribute.
-	 * @see #getEndTime()
+	 * @param value the new value of the '<em>Duration</em>' attribute.
+	 * @see #getDuration()
 	 * @generated
 	 */
-	void setEndTime(long value);
+	void setDuration(int value);
 
 	/**
 	 * Returns the value of the '<em><b>Sent Count</b></em>' attribute.
