@@ -20,16 +20,20 @@ package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ScheduleMeetingInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.IEditableListListener;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -43,6 +47,7 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Text;
@@ -70,7 +75,25 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	private static final String DECISION_SECTION_LABEL = "Decision information";
 	
+	/**
+	 * Field MEETING_DECISION_LABEL.
+	 * (value is ""Meeting: "")
+	 */
+	private static final String MEETING_DECISION_LABEL = "Meeting: ";
 	
+	/**
+	 * Field SUBJECT_LABEL.
+	 * (value is ""Subject: "")
+	 */
+	private static final String SUBJECT_LABEL = "Subject: ";
+	
+	/**
+	 * Field UPDATE_LABEL.
+	 * (value is ""Update"")
+	 */
+	private static final String UPDATE_LABEL = "Update";
+	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -124,6 +147,26 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	 * Field fDecisionTimeSpentLabel.
 	 */
 	protected CLabel fDecisionTimeSpentLabel = null;
+	
+	/**
+	 * Field fMeetingSubjectLabel.
+	 */
+	protected CLabel fMeetingSubjectLabel = null;
+	
+	/**
+	 * Field fMeetingStartTimeLabel.
+	 */
+	protected CLabel fMeetingStartTimeLabel = null;
+	
+	/**
+	 * Field fMeetingEndTimeLabel.
+	 */
+	protected CLabel fMeetingDurationLabel = null;
+	
+	/**
+	 * Field fMeetingLocationLabel.
+	 */
+	protected CLabel fMeetingLocationLabel = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -305,12 +348,85 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
         decisionSectionClient.setLayout(new GridLayout(4, false));
         decisionSection.setClient(decisionSectionClient);
         
+	    //Scheduled Meetings
+	    final CLabel meetingInfoLabel = widgetFactory.createCLabel(decisionSectionClient, MEETING_DECISION_LABEL);
+	    meetingInfoLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+	    
+	    //Meeting composite
+        final Composite meetingComposite = widgetFactory.createComposite(decisionSectionClient, SWT.BORDER);
+	    GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		textGridData.horizontalSpan = 3;
+		meetingComposite.setLayoutData(textGridData);
+		meetingComposite.setLayout(new GridLayout(4, false));
+		
+		//Meeting Subject
+	    final CLabel meetingSubjectLabel = widgetFactory.createCLabel(meetingComposite, SUBJECT_LABEL);
+	    meetingSubjectLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+	    fMeetingSubjectLabel = widgetFactory.createCLabel(meetingComposite, "");
+	    textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+	    textGridData.horizontalSpan = 2;
+	    fMeetingSubjectLabel.setLayoutData(textGridData);
+		
+	    //Meeting update button
+	    final Button meetingUpdateButton = widgetFactory.createButton(meetingComposite, UPDATE_LABEL, SWT.PUSH);
+	    meetingUpdateButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+	    meetingUpdateButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					R4EUIModelController.setDialogOpen(true);
+					final ScheduleMeetingInputDialog dialog = new ScheduleMeetingInputDialog(R4EUIModelController.getNavigatorView().
+							getSite().getWorkbenchWindow().getShell());
+					dialog.create();
+					final int result = dialog.open();
+					if (result == Window.OK) {
+						MailServicesProxy.sendMeetingRequest(dialog.getStartTime(), dialog.getDuration(), dialog.getLocation());
+					} //else Window.CANCEL
+				} catch (ResourceHandlingException e1) {
+					UIUtils.displayResourceErrorDialog(e1);
+				} catch (CoreException e1) {
+					UIUtils.displayCoreErrorDialog(e1);
+				} finally {
+					R4EUIModelController.setDialogOpen(false);
+				}
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {
+				//Nothing to do
+			}
+		});
+	    
+		//Meeting Start Time
+	    final CLabel meetingStartTimeLabel = widgetFactory.createCLabel(meetingComposite, R4EUIConstants.START_TIME_LABEL);
+	    meetingStartTimeLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+	    fMeetingStartTimeLabel = widgetFactory.createCLabel(meetingComposite, "");
+	    textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+	    textGridData.horizontalSpan = 2;
+	    fMeetingStartTimeLabel.setLayoutData(textGridData);
+	    widgetFactory.createCLabel(meetingComposite, "");  //dummy label for alignment purposes
+	    
+		//Meeting Duration
+	    final CLabel meetingDurationLabel = widgetFactory.createCLabel(meetingComposite, R4EUIConstants.DURATION_LABEL);
+	    meetingDurationLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+	    fMeetingDurationLabel = widgetFactory.createCLabel(meetingComposite, "");
+	    textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+	    textGridData.horizontalSpan = 2;
+	    fMeetingDurationLabel.setLayoutData(textGridData);
+	    widgetFactory.createCLabel(meetingComposite, "");  //dummy label for alignment purposes
+
+		//Meeting Location
+	    final CLabel meetingLocationLabel = widgetFactory.createCLabel(meetingComposite, R4EUIConstants.LOCATION_LABEL);
+	    meetingLocationLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+	    fMeetingLocationLabel = widgetFactory.createCLabel(meetingComposite, "");
+	    textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+	    textGridData.horizontalSpan = 2;
+	    fMeetingLocationLabel.setLayoutData(textGridData);
+	    widgetFactory.createCLabel(meetingComposite, "");  //dummy label for alignment purposes
+
 	    //Exit Decision
 	    final CLabel exitDecisionLabel = widgetFactory.createCLabel(decisionSectionClient, R4EUIConstants.EXIT_DECISION_LABEL);
 	    exitDecisionLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 	    
 	    fExitDecisionCombo = widgetFactory.createCCombo(decisionSectionClient, SWT.READ_ONLY);
-	    GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+	    textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fExitDecisionCombo.setLayoutData(textGridData);
 	    fExitDecisionCombo.addSelectionListener(new SelectionListener() {

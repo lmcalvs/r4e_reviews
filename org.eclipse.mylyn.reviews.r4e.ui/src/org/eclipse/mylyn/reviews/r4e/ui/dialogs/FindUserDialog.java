@@ -348,12 +348,12 @@ public class FindUserDialog extends FormDialog {
 
 		// Id
 		final Label userIdLabel = aToolkit.createLabel(fUserDetailsForm, R4EUIConstants.ID_LABEL);
-		FormData userIdLabelData = new FormData();
+		final FormData userIdLabelData = new FormData();
 		userIdLabelData.top = new FormAttachment(5, 0);
 		userIdLabel.setLayoutData(userIdLabelData);
 		
 		fUserIdInputTextField = aToolkit.createText(fUserDetailsForm, "", SWT.SINGLE | SWT.BORDER);
-		FormData userIdTextData = new FormData();
+		final FormData userIdTextData = new FormData();
 		userIdTextData.top = new FormAttachment(userIdLabel, 0, SWT.TOP);
 		userIdTextData.left = new FormAttachment(userIdLabel, 60, SWT.RIGHT);
 		userIdTextData.width = TEXT_FIELD_WIDTH;
@@ -361,7 +361,7 @@ public class FindUserDialog extends FormDialog {
 
 		// Name
 		final Label userNameLabel = aToolkit.createLabel(fUserDetailsForm, R4EUIConstants.NAME_LABEL);
-		FormData userNameLabelData = new FormData();
+		final FormData userNameLabelData = new FormData();
 		userNameLabelData.top = new FormAttachment(userIdLabel, 0, SWT.TOP);
 		userNameLabelData.left = new FormAttachment(fUserIdInputTextField, 40, SWT.RIGHT);
 		userNameLabel.setLayoutData(userNameLabelData);
@@ -381,15 +381,15 @@ public class FindUserDialog extends FormDialog {
 		officeLabel.setLayoutData(officeLabelData);
 
 		fUserOfficeInputTextField = aToolkit.createText(fUserDetailsForm, "", SWT.SINGLE | SWT.BORDER);
-		FormData officeTextData = new FormData();
+		final FormData officeTextData = new FormData();
 		officeTextData.top = new FormAttachment(officeLabel, 0, SWT.TOP);
 		officeTextData.left = new FormAttachment(fUserIdInputTextField, 0, SWT.LEFT);
 		officeTextData.right = new FormAttachment(fUserIdInputTextField, 0, SWT.RIGHT);
 		fUserOfficeInputTextField.setLayoutData(officeTextData);
 
 		// Company
-		Label companyLabel = aToolkit.createLabel(fUserDetailsForm, COMPANY_LABEL);
-		FormData companyLabelData = new FormData();
+		final Label companyLabel = aToolkit.createLabel(fUserDetailsForm, COMPANY_LABEL);
+		final FormData companyLabelData = new FormData();
 		companyLabelData.top = new FormAttachment(officeLabel, 0, SWT.TOP);
 		companyLabelData.left = new FormAttachment(userNameLabel, 0, SWT.LEFT);
 		companyLabel.setLayoutData(companyLabelData);
@@ -403,7 +403,7 @@ public class FindUserDialog extends FormDialog {
 
 		// Department
 		final Label deptLabel = aToolkit.createLabel(fUserDetailsForm, DEPARTMENT_LABEL);
-		FormData deptLabelData = new FormData();
+		final FormData deptLabelData = new FormData();
 		deptLabelData.top = new FormAttachment(fUserOfficeInputTextField, 5, SWT.BOTTOM);
 		deptLabelData.left = new FormAttachment(userIdLabel, 0, SWT.LEFT);
 		deptLabel.setLayoutData(deptLabelData);
@@ -480,29 +480,29 @@ public class FindUserDialog extends FormDialog {
 		fUserQueyResultsForm = new Group(aParent, SWT.NONE);
 		fUserQueyResultsForm.setText(QUERY_RESULTS_LABEL);
 		fUserQueyResultsForm.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		FormData userFormData = new FormData();
+		final FormData userFormData = new FormData();
 		userFormData.top = new FormAttachment(fUserDetailsForm, 10, SWT.BOTTOM);
 		userFormData.left = new FormAttachment(0);
 		userFormData.right = new FormAttachment(100);
 		userFormData.bottom = new FormAttachment(100);
 		
 		fUserQueyResultsForm.setLayoutData(userFormData);
-		FormLayout layout = new FormLayout();
+		final FormLayout layout = new FormLayout();
 		layout.marginWidth = 7;
 		layout.marginHeight = 3;
 		fUserQueyResultsForm.setLayout(layout);
 
 		// Label for the number of items in the table
-		Label numEntriesLabel = new Label(fUserQueyResultsForm, SWT.NONE);
+		final Label numEntriesLabel = new Label(fUserQueyResultsForm, SWT.NONE);
 		numEntriesLabel.setText(NUM_ENTRIES_LABEL);
-		FormData numEntriesLabelData = new FormData();
+		final FormData numEntriesLabelData = new FormData();
 		numEntriesLabelData.top = new FormAttachment(fUserQueyResultsForm, 5, SWT.BOTTOM);
 		numEntriesLabelData.left = new FormAttachment(fUserQueyResultsForm, 0, SWT.LEFT);
 		numEntriesLabel.setLayoutData(numEntriesLabelData);
 
 		//Count Label
 		fNumEntriesValue = new Label(fUserQueyResultsForm, SWT.NONE);
-		FormData numEntriesValueData = new FormData();
+		final FormData numEntriesValueData = new FormData();
 		numEntriesValueData.top = new FormAttachment(numEntriesLabel, 0, SWT.TOP);
 		numEntriesValueData.left = new FormAttachment(numEntriesLabel, 10, SWT.RIGHT);
 		numEntriesValueData.width = 30;
@@ -513,7 +513,7 @@ public class FindUserDialog extends FormDialog {
 				| SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 
 		// Define the layout and columns in the table
-		String[] columnId = UserInformationFactory.getInstance().getAttributeTypes();
+		final String[] columnId = UserInformationFactory.getInstance().getAttributeTypes();
 		TableColumn nameColumn = null;
 		for (int i = 0; i < columnId.length; i++) {
 			// Create a new column
@@ -525,7 +525,7 @@ public class FindUserDialog extends FormDialog {
 		fUsersTableViewer.getTable().setHeaderVisible(true);
 		fUsersTableViewer.getTable().setLinesVisible(true);
 		
-		FormData usersTableData = new FormData();
+		final FormData usersTableData = new FormData();
 		usersTableData.top = new FormAttachment(numEntriesLabel, 5);
 		usersTableData.bottom = new FormAttachment(100);
 		usersTableData.left = new FormAttachment(0);
@@ -536,7 +536,7 @@ public class FindUserDialog extends FormDialog {
 			public void selectionChanged(SelectionChangedEvent event) {
 				if(fUsersTableViewer.getSelection() instanceof IStructuredSelection) {
 					final IStructuredSelection selection = (IStructuredSelection)fUsersTableViewer.getSelection();
-					IUserInfo userInfo = (IUserInfo) selection.getFirstElement();
+					final IUserInfo userInfo = (IUserInfo) selection.getFirstElement();
 					fUserIdInputTextField.setText(userInfo.getUserId());
 					fUserNameInputTextField.setText(userInfo.getName());
 					fUserOfficeInputTextField.setText(userInfo.getOffice());
@@ -565,7 +565,7 @@ public class FindUserDialog extends FormDialog {
 			}
 
 			public String getColumnText(Object aElement, int aColumnIndex) {
-				String[] usrElem = ((IUserInfo)aElement).getAttributeValues();
+				final String[] usrElem = ((IUserInfo)aElement).getAttributeValues();
 				return usrElem[aColumnIndex];
 			}
 
@@ -603,7 +603,7 @@ public class FindUserDialog extends FormDialog {
 
 			public void inputChanged(Viewer aViewer, Object aOldInput, Object aNewInput) {
 				if (aNewInput instanceof IUserInfo[]) {
-					IUserInfo[] usersData = (IUserInfo[]) aNewInput;
+					final IUserInfo[] usersData = (IUserInfo[]) aNewInput;
 					fNumEntriesValue.setText(Integer.toString(usersData.length));
 				}
 			}
@@ -616,7 +616,7 @@ public class FindUserDialog extends FormDialog {
 	 */
 	protected void searchUser() {
 		try {
-			IQueryUser query = new QueryUserFactory().getInstance();
+			final IQueryUser query = new QueryUserFactory().getInstance();
 			fUsersList = query.search(fUserIdInputTextField.getText().trim(),
 					fUserNameInputTextField.getText().trim(), 
 					fUserCompanyInputTextField.getText().trim(),
@@ -627,7 +627,7 @@ public class FindUserDialog extends FormDialog {
 
 			if (fUsersList.size() > 0) {				
 				fUsersTableViewer.setInput(fUsersList.toArray(new IUserInfo[fUsersList.size()]));
-				TableColumn[] columns = fUsersTableViewer.getTable().getColumns();
+				final TableColumn[] columns = fUsersTableViewer.getTable().getColumns();
 				for (TableColumn column : columns) {
 					column.pack();
 				}

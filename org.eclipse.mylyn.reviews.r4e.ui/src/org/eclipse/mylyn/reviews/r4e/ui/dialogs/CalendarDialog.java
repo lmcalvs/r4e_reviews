@@ -53,9 +53,20 @@ public class CalendarDialog extends FormDialog {
 	// ------------------------------------------------------------------------
 	
 	/**
+	 * Field fIncludeTime.
+	 */
+	private boolean fIncludeTime;
+	
+	/**
 	 * Field fCalendar.
 	 */
 	private DateTime fCalendar = null;
+	
+	/**
+	 * Field fTime.
+	 */
+	private DateTime fTime = null;
+	
 	/**
 	 * Field fDate.
 	 */
@@ -69,10 +80,12 @@ public class CalendarDialog extends FormDialog {
 	/**
 	 * Constructor for CalendarDialog.
 	 * @param aParentShell Shell
+	 * @param aIncludeTime boolean
 	 */
-	public CalendarDialog(Shell aParentShell) {
+	public CalendarDialog(Shell aParentShell, boolean aIncludeTime) {
 		super(aParentShell);
     	setBlockOnOpen(true);
+        fIncludeTime = aIncludeTime;
 	}
     
     
@@ -99,7 +112,12 @@ public class CalendarDialog extends FormDialog {
     @Override
 	protected void buttonPressed(int buttonId) {
         if (buttonId == IDialogConstants.OK_ID) {
-        	fDate = new GregorianCalendar(fCalendar.getYear(), fCalendar.getMonth(), fCalendar.getDay());
+        	if (fIncludeTime) {
+        		fDate = new GregorianCalendar(fCalendar.getYear(), fCalendar.getMonth(), fCalendar.getDay(),
+        				fTime.getHours(), fTime.getMinutes());
+        	} else {
+        		fDate = new GregorianCalendar(fCalendar.getYear(), fCalendar.getMonth(), fCalendar.getDay());
+        	}
         }
         super.buttonPressed(buttonId);
     }
@@ -121,6 +139,10 @@ public class CalendarDialog extends FormDialog {
 		composite.setLayout(layout);
 	    fCalendar = new DateTime(composite, SWT.CALENDAR | SWT.BORDER);
 	    fCalendar.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+	    if (fIncludeTime) {
+		    fTime = new DateTime(composite, SWT.TIME | SWT.SHORT | SWT.BORDER);
+		    fTime.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+	    }
 	}
     
     /**

@@ -40,6 +40,10 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
@@ -54,6 +58,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.IEditorPart;
@@ -251,13 +256,21 @@ public class AddReviewItemHandler extends AbstractHandler {
 			Activator.Ftracer.traceInfo("Added Review Item: Target = " + aTargetFileVersion.getName() + "_" +
 					aTargetFileVersion.getVersionID() + ((null != aBaseFileVersion) ? "Base = " + aBaseFileVersion.getName() + "_" +
 					aBaseFileVersion.getVersionID() : "") + " Position = " + aUIPosition.toString());
-			//
+			//Send email notification if needed
+			final R4EReview review = R4EUIModelController.getActiveReview().getReview();
+			if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				if (((R4EFormalReview)review).getCurrent().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+					MailServicesProxy.sendItemsReadyNotification();
+				}
+			}
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
 			
 		} catch (OutOfSyncException e) {
 			UIUtils.displaySyncErrorDialog(e);
 
+		} catch (CoreException e) {
+			UIUtils.displayCoreErrorDialog(e);
 		}
 	}
 	

@@ -260,7 +260,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    fCalendarButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				final CalendarDialog dialog = new CalendarDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-						getSite().getWorkbenchWindow().getShell());
+						getSite().getWorkbenchWindow().getShell(), false);
 		    	final int result = dialog.open();
 		    	if (result == Window.OK) {
 		    		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);	

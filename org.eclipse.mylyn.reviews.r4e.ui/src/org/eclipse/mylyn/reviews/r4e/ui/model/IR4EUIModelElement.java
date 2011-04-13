@@ -338,4 +338,10 @@ public interface IR4EUIModelElement {
 	 * @return String
 	 */
 	 String getRemoveElementCmdTooltip();
+	 
+	/**
+	 * Method isSendEmailCmd.
+	 * @return boolean
+	 */
+	 boolean isSendEmailCmd();
 }
