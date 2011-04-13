@@ -111,19 +111,27 @@ public class NotificationsCore {
 
 		Map<String, IConfigurationElement> configElements = resolveConfiguredElements();
 
+		NotificationsConnector connector = null;
 		// scan for the id in the order provided by the array
 		IConfigurationElement dConfigElement = null;
 		for (int i = 0; i < ids.length; i++) {
 			dConfigElement = configElements.get(ids[i]);
 			if (dConfigElement != null) {
 				// make sure it's enabled
-				NotificationsConnector connector = loadElement(dConfigElement, result);
+				connector = loadElement(dConfigElement, result);
 				if (connector != null && connector.isEnabled()) {
 					return connector;
 				}
 			}
 		}
 
+		//Nothing found from the given list
+		//resolve the first enabled
+		connector = getFirstEnabled();
+		if (connector != null) {
+			return connector;
+		}
+		
 		if (!result.isOK()) {
 			StatusHandler.log(result);
 		}
