@@ -496,7 +496,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			}
 			
 			public Long getCommitDate() {
-				return item.getSubmitted().getTime();
+				return Long.valueOf(item.getSubmitted().getTime());
 			}
 			
 			public String[] getChangeSet() {
@@ -552,8 +552,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		coreMeetingData.setId(aMeetingData.getCustomID());
 		coreMeetingData.setSubject(aMeetingData.getSubject());
 		coreMeetingData.setLocation(aMeetingData.getLocation());
-		coreMeetingData.setStartTime(aMeetingData.getStartTime());
-		coreMeetingData.setEndTime(aMeetingData.getEndTime());
+		coreMeetingData.setStartTime(aMeetingData.getStartTime().longValue());
+		coreMeetingData.setDuration(aMeetingData.getDuration().intValue());
 		coreMeetingData.setSentCount(coreMeetingData.getSentCount() + 1);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
@@ -574,8 +574,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				public String getSubject() {
 					return coreMeetingData.getSubject();
 				}
-				public long getStartTime() {
-					return coreMeetingData.getStartTime();
+				public Long getStartTime() {
+					return Long.valueOf(coreMeetingData.getStartTime());
 				}
 				public int getSentCounter() {
 					return coreMeetingData.getSentCount();
@@ -583,8 +583,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				public String getLocation() {
 					return coreMeetingData.getLocation();
 				}
-				public long getEndTime() {
-					return coreMeetingData.getEndTime();
+				public Integer getDuration() {
+					return Integer.valueOf(coreMeetingData.getDuration());
 				}
 				public String getCustomID() {
 					return coreMeetingData.getId();

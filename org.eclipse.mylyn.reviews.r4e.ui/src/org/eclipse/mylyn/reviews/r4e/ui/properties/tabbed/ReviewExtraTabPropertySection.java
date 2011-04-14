@@ -546,7 +546,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			fMeetingSubjectLabel.setText(meetingData.getSubject());
     		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT_MINUTES);	
 			fMeetingStartTimeLabel.setText(dateFormat.format(new Date(meetingData.getStartTime())));
-			fMeetingDurationLabel.setText(dateFormat.format(new Date(meetingData.getEndTime())));
+			fMeetingDurationLabel.setText(dateFormat.format(new Date(meetingData.getDuration())));
 			fMeetingLocationLabel.setText(meetingData.getLocation());
 		}
 		

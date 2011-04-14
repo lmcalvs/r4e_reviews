@@ -72,7 +72,7 @@ public class R4EUIModelController {
 	/**
 	 * Field MAIL_CONNECTOR_IDS.
 	 */
-	private static final String[] MAIL_CONNECTOR_IDS = { "com.ericsson.reviews.r4e.mail" };
+	private static final String[] MAIL_CONNECTOR_IDS = { "reviews.r4e.mail.outlook.connector" };
 	//TODO outlook lookup is temporary.  Will be replaced by generic later
 
 	

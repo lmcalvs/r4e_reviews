@@ -241,9 +241,9 @@ public class MailServicesProxy {
      * @throws ResourceHandlingException
      */
     public static void sendMessage(String[] aDestinations, String aSubject, String aBody) throws CoreException, ResourceHandlingException {
-    	final NotificationsConnector mailService = NotificationsCore.getFirstEnabled(null);
-    	mailService.sendEmail(R4EUIModelController.getActiveReview().getParticipant(R4EUIModelController.getReviewer(), false).getEmail(),
-    			aDestinations, aSubject, aBody, null, null);
+    	String originatorEmail = 
+    		R4EUIModelController.getActiveReview().getParticipant(R4EUIModelController.getReviewer(), false).getEmail();
+    	R4EUIModelController.getMailConnector().sendEmailGraphical(originatorEmail, aDestinations, aSubject, aBody, null, null);
     }
     
     /**
@@ -458,15 +458,17 @@ public class MailServicesProxy {
     	msgReviewInfo.append(LINE_FEED_MSG_PART);
     	msgReviewInfo.append("Group: " + R4EUIModelController.getActiveReview().getParent().getName() +
     			LINE_FEED_MSG_PART);
-    	msgReviewInfo.append("Review: " + R4EUIModelController.getActiveReview().getName() +
+    	msgReviewInfo.append("Review: " + R4EUIModelController.getActiveReview().getReview().getName() +
     			LINE_FEED_MSG_PART);
     	msgReviewInfo.append("Components: " + LINE_FEED_MSG_PART);
     	final List<String> components = R4EUIModelController.getActiveReview().getReview().getComponents();
     	for (String component : components) {
     		msgReviewInfo.append(TAB_MSG_PART + component + LINE_FEED_MSG_PART);
     	}
-    	msgReviewInfo.append("Project: " + R4EUIModelController.getActiveReview().getReview().getProject());
+    	msgReviewInfo.append("Project: " + R4EUIModelController.getActiveReview().getReview().getProject() +
+    			LINE_FEED_MSG_PART);
     	msgReviewInfo.append("Participants: ");
+    	msgReviewInfo.append(LINE_FEED_MSG_PART);
     	final List<String> participants = R4EUIModelController.getActiveReview().getParticipantIDs();
     	for (String participant : participants) {
     		msgReviewInfo.append(TAB_MSG_PART + participant + LINE_FEED_MSG_PART);
@@ -495,7 +497,7 @@ public class MailServicesProxy {
      */
     private static String createOutroPart() {
     	final StringBuilder msgOutro = new StringBuilder();
-    	msgOutro.append(OUTRO_MSG_BODY);
+    	msgOutro.append(OUTRO_MSG_BODY + LINE_FEED_MSG_PART);
     	msgOutro.append(R4EUIModelController.getReviewer());
     	return msgOutro.toString();
     }
