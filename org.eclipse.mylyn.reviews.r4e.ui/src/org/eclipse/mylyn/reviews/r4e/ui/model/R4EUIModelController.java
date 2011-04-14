@@ -37,6 +37,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
+import org.eclipse.mylyn.reviews.notifications.core.NotificationsCore;
+import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
@@ -62,6 +64,18 @@ import org.eclipse.ui.IPropertyListener;
  */
 public class R4EUIModelController {
 
+	
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Field MAIL_CONNECTOR_IDS.
+	 */
+	private static final String[] MAIL_CONNECTOR_IDS = { "reviews.r4e.mail.outlook.connector" };
+	//TODO outlook lookup is temporary.  Will be replaced by generic later
+
+	
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -116,6 +130,11 @@ public class R4EUIModelController {
 	 * Field FElementStateListenerList.
 	 */
 	private static final List<IPropertyListener> FElementStateListenerList = new ArrayList<IPropertyListener>(); // $codepro.audit.disable constantNamingConvention
+	
+	/**
+	 * Field FMailConnector.
+	 */
+	private static NotificationsConnector FMailConnector = null;
 	
 	
 	// ------------------------------------------------------------------------
@@ -280,6 +299,9 @@ public class R4EUIModelController {
 		final String ruleSetPaths = preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH);
 		final List<String> ruleSetPathsList = UIUtils.parseStringList(ruleSetPaths);
 		loadRuleSets(ruleSetPathsList);
+		
+		//Verify Mail Connectivity
+		FMailConnector = NotificationsCore.getFirstEnabled(MAIL_CONNECTOR_IDS);
 	}
 	
 	/**
@@ -384,7 +406,7 @@ public class R4EUIModelController {
         return newPathsStr.toString();
 	}
 	
-	/** // $codepro.audit.disable blockDepth
+	/**
 	 * Method mapAnomalies.
 	 * 		Map anomalies to the files in which they are located
 	 * @param aReview R4EReview
@@ -432,8 +454,8 @@ public class R4EUIModelController {
 	 * Method getAnomaliesForFile.
 	 * 		Get list of anomalies for a given file
 	 * @param aFilePath String
-	
-	 * @return List<R4EAnomaly> */
+	 * @return List<R4EAnomaly>
+	 */
 	public static List<R4EAnomaly> getAnomaliesForFile(String aFilePath) {
 		return FFileAnomalyMap.get(aFilePath);
 	}
@@ -456,11 +478,19 @@ public class R4EUIModelController {
 
 	/**
 	 * Method isUserQueryAvailable.
-	 * @return boolean
+	 * @return boolean\
 	 */
 	public static boolean isUserQueryAvailable() {
 		//Verify if the LDAP bundle is available
 		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.ldap")) return true;
 		return false;
+	}
+	
+	/**
+	 * Method getMailConnector.
+	 * @return NotificationsConnector
+	 */
+	public static NotificationsConnector getMailConnector() {
+		return FMailConnector;
 	}
 }

@@ -80,12 +80,7 @@ public class SendNotificationInputDialog extends FormDialog {
 	/**
 	 * Field fItemsReadyButton.
 	 */
-    private Button fItemsReadyButton = null;
-    
-	/**
-	 * Field fItemsRemovedButton.
-	 */
-    private Button fItemsRemovedButton = null;
+    private Button fItemsUpdatedButton = null;
     
 	/**
 	 * Field fProgressButton.
@@ -133,13 +128,11 @@ public class SendNotificationInputDialog extends FormDialog {
         if (buttonId == IDialogConstants.OK_ID) {
         	fMessageType = R4EUIConstants.INVALID_VALUE;
 	    	this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-	    	if (fItemsReadyButton.getSelection()) {
+	    	if (null != fItemsUpdatedButton && fItemsUpdatedButton.getSelection()) {
 	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_ITEMS_READY;
-	    	} else if (fItemsRemovedButton.getSelection()) {
-	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_ITEMS_REMOVED;
-	    	} else if (fProgressButton.getSelection()) {
+	    	} else if (null != fProgressButton && fProgressButton.getSelection()) {
 	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_PROGRESS;
-	    	} else if (fCompletionButton.getSelection()) {
+	    	} else if (null != fCompletionButton && fCompletionButton.getSelection()) {
 	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_COMPLETION;
 	    	} else if (fQuestionButton.getSelection()) {
 	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_QUESTION;
@@ -201,18 +194,18 @@ public class SendNotificationInputDialog extends FormDialog {
         
         //Email/Notification type radio button
         if (fSource instanceof R4EUIReviewBasic) {
-        	fItemsReadyButton = toolkit.createButton(basicSectionClient, 
-        			"Notify Participants of new Items Ready for Review", SWT.RADIO);
-        	fItemsReadyButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        	fItemsRemovedButton = toolkit.createButton(basicSectionClient, 
-        			"Notify Participants of Items Removed from Review", SWT.RADIO);
-        	fItemsRemovedButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        	fProgressButton = toolkit.createButton(basicSectionClient, 
-        			"Notify review Owner of Progress", SWT.RADIO);
-        	fProgressButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        	fCompletionButton = toolkit.createButton(basicSectionClient, 
-        			"Notify Review Owner of Completion", SWT.RADIO);
-        	fCompletionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        	fItemsUpdatedButton = toolkit.createButton(basicSectionClient, 
+        			"Notify Participants of New/Removed/Updated Items Ready for Review", SWT.RADIO);
+        	fItemsUpdatedButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        	if (((R4EUIReviewBasic)fSource).isReviewed()) {
+        		fCompletionButton = toolkit.createButton(basicSectionClient, 
+        				"Notify Review Owner of Completion", SWT.RADIO);
+        		fCompletionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        	} else {
+            	fProgressButton = toolkit.createButton(basicSectionClient, 
+            			"Notify review Owner of Progress", SWT.RADIO);
+            	fProgressButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        	}
         }
         fQuestionButton = toolkit.createButton(basicSectionClient, 
         		"Ask Question to Participant", SWT.RADIO);

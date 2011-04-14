@@ -165,7 +165,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	@Override
 	public boolean isOpenEditorCmd() {
 		if (isEnabled() && 
-				null != ((R4EUIFileContext)getParent().getParent().getParent()).getTargetFile()) return true;
+				null != ((R4EUIFileContext)getParent().getParent().getParent()).getTargetFileVersion()) return true;
 		return false;
 	}
 	

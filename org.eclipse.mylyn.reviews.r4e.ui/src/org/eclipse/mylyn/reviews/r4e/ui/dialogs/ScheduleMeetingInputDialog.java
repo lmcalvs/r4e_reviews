@@ -253,7 +253,7 @@ public class ScheduleMeetingInputDialog extends FormDialog {
 						getSite().getWorkbenchWindow().getShell(), true);
 		    	final int result = dialog.open();
 		    	if (result == Window.OK) {
-		    		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);	
+		    		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT_MINUTES);	
 		    		fStartTimeInputTextField.setText(dateFormat.format(dialog.getDate()));
 		    		fStartTime = Long.valueOf(dialog.getDate().getTime());
 		    	}

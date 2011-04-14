@@ -29,10 +29,13 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
+import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
@@ -415,6 +418,13 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public void open() throws ResourceHandlingException {
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup)getParent()).getReviewGroup(), fReviewName);
 		
+		//Refresh meeting data (if any)
+		try {
+			refreshMeetingData();
+		} catch (OutOfSyncException e) {
+			UIUtils.displaySyncErrorDialog(e);
+		}
+		
 		final EList<Item> items = fReview.getReviewItems();
 		if (null != items) {
 		
@@ -486,7 +496,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			}
 			
 			public Long getCommitDate() {
-				return item.getSubmitted().getTime();
+				return Long.valueOf(item.getSubmitted().getTime());
 			}
 			
 			public String[] getChangeSet() {
@@ -529,6 +539,72 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public boolean isEnabled() {
 		return fReview.isEnabled();
 	}
+	
+	/**
+	 * Method setMeetingData.
+	 * @param aMeetingData IMeetingData
+	 * @throws ResourceHandlingException 
+	 * @throws OutOfSyncException 
+	 */
+	public void setMeetingData(IMeetingData aMeetingData) throws ResourceHandlingException, OutOfSyncException {
+		if (null != aMeetingData) {
+			final R4EMeetingData coreMeetingData = R4EUIModelController.FModelExt.createR4EMeetingData(fReview);
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+			coreMeetingData.setId(aMeetingData.getCustomID());
+			coreMeetingData.setSubject(aMeetingData.getSubject());
+			coreMeetingData.setLocation(aMeetingData.getLocation());
+			coreMeetingData.setStartTime(aMeetingData.getStartTime().longValue());
+			coreMeetingData.setDuration(aMeetingData.getDuration().intValue());
+			coreMeetingData.setSentCount(coreMeetingData.getSentCount() + 1);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		}
+	}
+	
+	/**
+	 * Method refreshMeetingData.
+	 * @throws OutOfSyncException 
+	 * @throws ResourceHandlingException 
+	*/ 
+	public void refreshMeetingData() throws ResourceHandlingException, OutOfSyncException {
+		final NotificationsConnector mailConnector = R4EUIModelController.getMailConnector();
+		final R4EMeetingData coreMeetingData = fReview.getActiveMeeting();
+		if (null != coreMeetingData) {
+			IMeetingData meetingData = new IMeetingData() {	
+				public void incrementSentCounter() {
+					coreMeetingData.setSentCount(coreMeetingData.getSentCount() + 1);
+				}
+				public String getSubject() {
+					return coreMeetingData.getSubject();
+				}
+				public Long getStartTime() {
+					return Long.valueOf(coreMeetingData.getStartTime());
+				}
+				public int getSentCounter() {
+					return coreMeetingData.getSentCount();
+				}
+				public String getLocation() {
+					return coreMeetingData.getLocation();
+				}
+				public Integer getDuration() {
+					return Integer.valueOf(coreMeetingData.getDuration());
+				}
+				public String getCustomID() {
+					return coreMeetingData.getId();
+				}
+				public String getBody() {
+					return null;
+				}
+			};
+
+			if (null != mailConnector) {
+				meetingData = mailConnector.fetchSystemMeetingData(meetingData, fReview.getStartDate());
+				if (null != meetingData) {
+					setMeetingData(meetingData);
+				}
+			}
+		}
+	}
+
 	
 	//Hierarchy
 	

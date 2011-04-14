@@ -19,7 +19,9 @@
 package org.eclipse.mylyn.reviews.r4e.ui.commands;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -28,6 +30,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -37,6 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -63,7 +67,8 @@ public class RestoreElementHandler extends AbstractHandler {
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		if (!selection.isEmpty()) {
 			IR4EUIModelElement element = null;
-			R4EReview review = R4EUIModelController.getActiveReview().getReview();
+			final R4EReview review = R4EUIModelController.getActiveReview().getReview();
+			List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
 			for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
 				try {
 					element = (IR4EUIModelElement) iterator.next();
@@ -73,13 +78,11 @@ public class RestoreElementHandler extends AbstractHandler {
 					R4EUIModelController.getNavigatorView().getTreeViewer().refresh();  //TODO temporary fix to restore element properly
 					
 	    			if (element instanceof R4EUIReviewItem) {
-	    				//Send email notification if needed
-	    				if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-	    					if (((R4EFormalReview)review).getCurrent().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-	    						MailServicesProxy.sendItemsReadyNotification();
-	    					}
-	    				}
+	    				addedItems.add(((R4EUIReviewItem)element).getItem());
+	    			} else if (element instanceof R4EUISelection) {
+	    				addedItems.add(((R4EUISelection)element).getSelection());
 	    			}
+	    			
 				} catch (ResourceHandlingException e) {
 					UIUtils.displayResourceErrorDialog(e);
 				} catch (OutOfSyncException e) {
@@ -89,8 +92,18 @@ public class RestoreElementHandler extends AbstractHandler {
 			    	Activator.getDefault().logError("Exception: " + e.toString(), e);
 				} catch (ReviewVersionsException e) {
 					UIUtils.displayVersionErrorDialog(e);
-				} catch (CoreException e) {
-					UIUtils.displayCoreErrorDialog(e);
+				}
+			}
+			//Send email notification if needed
+			if (0 < addedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				if (((R4EFormalReview)review).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+					try {
+						MailServicesProxy.sendItemsAddedNotification(addedItems);
+					} catch (CoreException e) {
+						UIUtils.displayCoreErrorDialog(e);
+					} catch (ResourceHandlingException e) {
+						UIUtils.displayResourceErrorDialog(e);
+					}
 				}
 			}
 		}

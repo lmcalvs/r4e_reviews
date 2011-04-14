@@ -631,6 +631,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String SIMPLE_DATE_FORMAT = "yyyy-MMM-dd";
 	
 	/**
+	 * Field SIMPLE_DATE_FORMAT_MINUTES.
+	 * (value is ""yyyy/MM/dd hh:mm"")
+	 */
+	public static final String SIMPLE_DATE_FORMAT_MINUTES = "yyyy-MMM-dd hh:mm";
+	
+	/**
 	 * Field SPENT_TIME_COLUMN_HEADER.
 	 * (value is ""Time spent (minutes)"")
 	 */

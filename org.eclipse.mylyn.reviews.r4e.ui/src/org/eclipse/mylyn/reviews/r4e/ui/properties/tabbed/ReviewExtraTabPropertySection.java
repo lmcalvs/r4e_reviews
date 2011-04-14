@@ -17,16 +17,17 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jface.window.Window;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ScheduleMeetingInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
@@ -373,6 +374,8 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    meetingUpdateButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				try {
+		    		MailServicesProxy.sendMeetingRequest();
+					/* TODO: To migrate to connectors
 					R4EUIModelController.setDialogOpen(true);
 					final ScheduleMeetingInputDialog dialog = new ScheduleMeetingInputDialog(R4EUIModelController.getNavigatorView().
 							getSite().getWorkbenchWindow().getShell());
@@ -381,10 +384,13 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 					if (result == Window.OK) {
 						MailServicesProxy.sendMeetingRequest(dialog.getStartTime(), dialog.getDuration(), dialog.getLocation());
 					} //else Window.CANCEL
+					*/
 				} catch (ResourceHandlingException e1) {
 					UIUtils.displayResourceErrorDialog(e1);
 				} catch (CoreException e1) {
 					UIUtils.displayCoreErrorDialog(e1);
+				} catch (OutOfSyncException e1) {
+					UIUtils.displaySyncErrorDialog(e1);
 				} finally {
 					R4EUIModelController.setDialogOpen(false);
 				}
@@ -535,6 +541,15 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		fObjectivesText.setText(modelReview.getObjectives());
 		fReferenceMaterialText.setText(modelReview.getReferenceMaterial());
 
+		final R4EMeetingData meetingData = modelReview.getActiveMeeting();
+		if (null != meetingData) {
+			fMeetingSubjectLabel.setText(meetingData.getSubject());
+    		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT_MINUTES);	
+			fMeetingStartTimeLabel.setText(dateFormat.format(new Date(meetingData.getStartTime())));
+			fMeetingDurationLabel.setText(dateFormat.format(new Date(meetingData.getDuration())));
+			fMeetingLocationLabel.setText(meetingData.getLocation());
+		}
+		
 		fExitDecisionCombo.setItems(((R4EUIReviewBasic)fProperties.getElement()).getExitDecisionValues());
 		if (null != modelReview.getDecision()) fExitDecisionCombo.select((null == modelReview.getDecision().getValue()) ? 0 : 
 			modelReview.getDecision().getValue().getValue());

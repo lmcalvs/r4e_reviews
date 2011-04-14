@@ -267,7 +267,7 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		if (isEnabled() && null != ((R4EUIFileContext)getParent().getParent()).getTargetFile()) return true;
+		if (isEnabled() && null != ((R4EUIFileContext)getParent().getParent()).getTargetFileVersion()) return true;
 		return false;
 	}
 	

@@ -19,6 +19,7 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.commands;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,6 +43,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -256,13 +258,6 @@ public class AddReviewItemHandler extends AbstractHandler {
 			Activator.Ftracer.traceInfo("Added Review Item: Target = " + aTargetFileVersion.getName() + "_" +
 					aTargetFileVersion.getVersionID() + ((null != aBaseFileVersion) ? "Base = " + aBaseFileVersion.getName() + "_" +
 					aBaseFileVersion.getVersionID() : "") + " Position = " + aUIPosition.toString());
-			//Send email notification if needed
-			final R4EReview review = R4EUIModelController.getActiveReview().getReview();
-			if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-				if (((R4EFormalReview)review).getCurrent().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-					MailServicesProxy.sendItemsReadyNotification();
-				}
-			}
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
 			
@@ -299,9 +294,10 @@ public class AddReviewItemHandler extends AbstractHandler {
 	 * @param aUIPosition IR4EUIPosition
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
+	 * @throws CoreException 
 	 */
 	private void addReviewItemToNewFileContext(R4EFileVersion aBaseFileVersion, R4EFileVersion aTargetFileVersion, IR4EUIPosition aUIPosition) 
-		throws ResourceHandlingException, OutOfSyncException {
+		throws ResourceHandlingException, OutOfSyncException, CoreException {
 		
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
 		//TODO maybe change name here for review item?
@@ -323,5 +319,15 @@ public class AddReviewItemHandler extends AbstractHandler {
 			//Set focus to newly created selection
 			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiSelection, AbstractTreeViewer.ALL_LEVELS);
 			R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(new StructuredSelection(uiSelection), true);
+			
+		//Send email notification if needed
+		List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
+		addedItems.add(uiReviewItem.getItem());
+		final R4EReview review = uiReview.getReview();
+		if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+			if (((R4EFormalReview)review).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+				MailServicesProxy.sendItemsAddedNotification(addedItems);
+			}
+		}
 	}
 }

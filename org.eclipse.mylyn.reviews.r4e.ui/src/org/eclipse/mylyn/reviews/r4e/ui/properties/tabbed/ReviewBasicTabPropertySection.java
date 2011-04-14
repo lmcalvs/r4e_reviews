@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -39,7 +38,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.dialogs.ScheduleMeetingInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
@@ -237,8 +235,10 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    					if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 	    						((R4EUIReviewExtended)fProperties.getElement()).updatePhase(phase);
 	    						if (((R4EFormalReview)((R4EUIReviewExtended)fProperties.getElement()).getReview()).
-	    								getCurrent().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+	    								getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 	    							
+    					    		MailServicesProxy.sendMeetingRequest();
+	    							/* TODO: To migrate to connectors
 	    							R4EUIModelController.setDialogOpen(true);
 	    							final ScheduleMeetingInputDialog dialog = new ScheduleMeetingInputDialog(R4EUIModelController.getNavigatorView().
 	    									getSite().getWorkbenchWindow().getShell());
@@ -247,6 +247,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    					    	if (result == Window.OK) {
 	    					    		MailServicesProxy.sendMeetingRequest(dialog.getStartTime(), dialog.getDuration(), dialog.getLocation());
 	    					    	} //else Window.CANCEL
+	    					    	*/
 	    						}
 	    					} else {
 	    						((R4EUIReviewBasic)fProperties.getElement()).updatePhase(phase);
