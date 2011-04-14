@@ -143,14 +143,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	}
 	
 	/**
-	 * Method getBaseFile.
-	 * @return IFile
-	 */
-	public IFile getBaseFile() {
-		return null;
-	}
-	
-	/**
 	 * Method getTempBaseFile.
 	 * @return IFile
 	 */
@@ -714,7 +706,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		if (isEnabled() && null != getTargetFile()) return true;
+		if (isEnabled() && null != getTargetFileVersion()) return true;
 		return false;
 	}
 	

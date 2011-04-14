@@ -462,7 +462,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	@Override
 	public boolean isOpenEditorCmd() {
 		if (!(getParent() instanceof R4EUIFileContext)) return false;
-		if (isEnabled() && null != ((R4EUIFileContext)getParent().getParent()).getTargetFile()) return true;
+		if (isEnabled() && null != ((R4EUIFileContext)getParent().getParent()).getTargetFileVersion()) return true;
 		return false;
 	}
 	

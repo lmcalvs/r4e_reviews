@@ -547,15 +547,17 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @throws OutOfSyncException 
 	 */
 	public void setMeetingData(IMeetingData aMeetingData) throws ResourceHandlingException, OutOfSyncException {
-    	final R4EMeetingData coreMeetingData = R4EUIModelController.FModelExt.createR4EMeetingData(fReview);
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
-		coreMeetingData.setId(aMeetingData.getCustomID());
-		coreMeetingData.setSubject(aMeetingData.getSubject());
-		coreMeetingData.setLocation(aMeetingData.getLocation());
-		coreMeetingData.setStartTime(aMeetingData.getStartTime().longValue());
-		coreMeetingData.setDuration(aMeetingData.getDuration().intValue());
-		coreMeetingData.setSentCount(coreMeetingData.getSentCount() + 1);
-		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		if (null != aMeetingData) {
+			final R4EMeetingData coreMeetingData = R4EUIModelController.FModelExt.createR4EMeetingData(fReview);
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+			coreMeetingData.setId(aMeetingData.getCustomID());
+			coreMeetingData.setSubject(aMeetingData.getSubject());
+			coreMeetingData.setLocation(aMeetingData.getLocation());
+			coreMeetingData.setStartTime(aMeetingData.getStartTime().longValue());
+			coreMeetingData.setDuration(aMeetingData.getDuration().intValue());
+			coreMeetingData.setSentCount(coreMeetingData.getSentCount() + 1);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		}
 	}
 	
 	/**

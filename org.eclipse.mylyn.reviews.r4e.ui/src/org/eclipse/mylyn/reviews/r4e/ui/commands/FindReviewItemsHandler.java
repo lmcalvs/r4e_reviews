@@ -19,6 +19,9 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -37,6 +40,11 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
@@ -48,6 +56,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.mylyn.versions.core.Change;
@@ -207,6 +216,16 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				}
 			}
 
+			//Notify users if need be
+			List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
+			addedItems.add(uiReviewItem.getItem());
+			final R4EReview review = uiReview.getReview();
+			if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				if (((R4EFormalReview)review).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+					MailServicesProxy.sendItemsAddedNotification(addedItems);
+				}
+			}
+			
 		} catch (final ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
 		} catch (final ReviewsFileStorageException e) {

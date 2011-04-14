@@ -235,7 +235,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    					if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 	    						((R4EUIReviewExtended)fProperties.getElement()).updatePhase(phase);
 	    						if (((R4EFormalReview)((R4EUIReviewExtended)fProperties.getElement()).getReview()).
-	    								getCurrent().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+	    								getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 	    							
     					    		MailServicesProxy.sendMeetingRequest();
 	    							/* TODO: To migrate to connectors

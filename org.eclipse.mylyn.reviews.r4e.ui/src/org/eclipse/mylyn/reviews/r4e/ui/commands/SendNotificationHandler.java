@@ -71,10 +71,6 @@ public class SendNotificationHandler extends AbstractHandler {
 						//Send review items ready notification
 						MailServicesProxy.sendItemsReadyNotification();
 						break;
-					case R4EUIConstants.MESSAGE_TYPE_ITEMS_REMOVED:
-						//Send review items ready notification
-						MailServicesProxy.sendItemsRemovedNotification();
-						break;
 					case R4EUIConstants.MESSAGE_TYPE_PROGRESS:
 						//Send progress notification
 						MailServicesProxy.sendProgressNotification();

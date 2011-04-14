@@ -28,14 +28,16 @@ import java.util.TimeZone;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
-import org.eclipse.mylyn.reviews.notifications.core.NotificationsCore;
-import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -44,6 +46,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 
@@ -102,11 +105,19 @@ public class MailServicesProxy {
 		"Please review the included items prior to the meeting.";
 	
 	/**
+	 * Field ADDED_ITEMS_MSG_BODY.
+	 * (value is ""The following Review Item(s) and Files have been Added." + LINE_FEED_MSG_PART +
+		"Please Refresh your Review if it is currently Open"")
+	 */
+	private static final String ADDED_ELEMENTS_MSG_BODY = "The following Review Element(s) have been Added." + LINE_FEED_MSG_PART +
+		"Please Refresh your Review if it is currently Open";
+	
+	/**
 	 * Field REMOVED_ITEMS_MSG_BODY.
 	 * (value is ""The following Review Item(s) and Files have been Removed." + LINE_FEED_MSG_PART +
 		"Please Refresh your Review if it is currently Open"")
 	 */
-	private static final String REMOVED_ITEMS_MSG_BODY = "The following Review Item(s) and Files have been Removed." + LINE_FEED_MSG_PART +
+	private static final String REMOVED_ELEMENTS_MSG_BODY = "The following Element(s) have been Removed." + LINE_FEED_MSG_PART +
 		"Please Refresh your Review if it is currently Open";
 	
 	/**
@@ -163,15 +174,31 @@ public class MailServicesProxy {
     }
     
     /**
+     * Method sendItemsAddedNotification
+     * @throws CoreException
+     * @throws ResourceHandlingException
+     */
+    public static void sendItemsAddedNotification(List<R4EReviewComponent> aAddedElements) throws CoreException, ResourceHandlingException {
+    	if (null != R4EUIModelController.getMailConnector()) {
+    		final String[] messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_REVIEWER);
+    		final String messageSubject = createSubject() + " - Items Added for Review";
+    		final String messageBody = createUpdatedItemsNotificationMessage(aAddedElements, true);
+    		sendMessage(messageDestinations, messageSubject, messageBody);
+    	} else {
+    		showNoEmailConnectorDialog();
+    	}
+    }
+    
+    /**
      * Method sendItemsRemovedNotification
      * @throws CoreException
      * @throws ResourceHandlingException
      */
-    public static void sendItemsRemovedNotification() throws CoreException, ResourceHandlingException {
+    public static void sendItemsRemovedNotification(List<R4EReviewComponent> aRemovedElements) throws CoreException, ResourceHandlingException {
     	if (null != R4EUIModelController.getMailConnector()) {
     		final String[] messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_REVIEWER);
     		final String messageSubject = createSubject() + " - Items Removed from Review";
-    		final String messageBody = createRemovedItemsNotificationMessage();
+    		final String messageBody = createUpdatedItemsNotificationMessage(aRemovedElements, false);
     		sendMessage(messageDestinations, messageSubject, messageBody);
     	} else {
     		showNoEmailConnectorDialog();
@@ -302,17 +329,26 @@ public class MailServicesProxy {
     	}
     	final List<R4EUIReviewItem> items = R4EUIModelController.getActiveReview().getReviewItems();
     	for (R4EUIReviewItem item : items) {
-    		if (!item.isEnabled()) {
-    			msgBody.append("Review Item: " + item.getName() + LINE_FEED_MSG_PART);
-    			msgBody.append("Eclipse Project:File Path Relative to Eclipse Project" + LINE_FEED_MSG_PART);
+    		if (item.isEnabled()) {
+    			msgBody.append("Review Item -> " + item.getItem().getDescription() + LINE_FEED_MSG_PART);
+    			msgBody.append("Eclipse Project: File Path Relative to Eclipse Project[: Line range]" + LINE_FEED_MSG_PART);
     			R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
     			for (R4EUIFileContext context : contexts) {
-    				if (!context.isEnabled()) {
-    					msgBody.append(TAB_MSG_PART + context.getTargetFile().getProject() + ": " +
-    							context.getTargetFile().getProjectRelativePath() + LINE_FEED_MSG_PART);
-    					//TODO later add line ranges for selections
+    				if (context.isEnabled() && null != context.getTargetFileVersion()) {
+    					msgBody.append(TAB_MSG_PART + context.getTargetFileVersion().getResource().getProject() + ": " +
+    							context.getTargetFileVersion().getResource().getProjectRelativePath());
+    					if (null != context.getSelectionContainerElement()) {
+    						R4EUISelection[] selections = (R4EUISelection[]) context.getSelectionContainerElement().getChildren();
+    						msgBody.append(": ");
+    						for (R4EUISelection selection : selections) {
+    							msgBody.append(selection.getPosition().toString() + ", ");
+    						}
+    					} else {
+    						msgBody.append(LINE_FEED_MSG_PART);
+    					}
     				}
     			}
+    			msgBody.append(LINE_FEED_MSG_PART);
     		}
     	}
     	msgBody.append(createReviewInfoPart());
@@ -324,26 +360,48 @@ public class MailServicesProxy {
      * Method createRemovedItemsNotificationMessage
      * @return String
      */
-    private static String createRemovedItemsNotificationMessage() {
+    private static String createUpdatedItemsNotificationMessage(List<R4EReviewComponent> aElements, boolean aIsAdded) {
     	final StringBuilder msgBody = new StringBuilder();
     	
     	msgBody.append(createIntroPart());
-    	msgBody.append(REMOVED_ITEMS_MSG_BODY + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-
-    	final List<R4EUIReviewItem> items = R4EUIModelController.getActiveReview().getReviewItems();
-    	for (R4EUIReviewItem item : items) {
-    		if (item.isEnabled()) {
-    			msgBody.append("Review Item: " + item.getName() + LINE_FEED_MSG_PART);
-    			msgBody.append("Eclipse Project:File Path Relative to Eclipse Project" + LINE_FEED_MSG_PART);
-    			R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
-    			for (R4EUIFileContext context : contexts) {
-    				if (context.isEnabled()) {
-    					msgBody.append(TAB_MSG_PART + context.getTargetFile().getProject() + ": " +
-    							context.getTargetFile().getProjectRelativePath() + LINE_FEED_MSG_PART);
-    				}
-    			}
-    		}
+    	if (aIsAdded) {
+    		msgBody.append(ADDED_ELEMENTS_MSG_BODY + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+    	} else {
+        	msgBody.append(REMOVED_ELEMENTS_MSG_BODY + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
     	}
+    	boolean legendAppended = false;
+		for (R4EReviewComponent component : aElements) {
+			if (component instanceof R4EItem) {
+    			msgBody.append("Review Item -> " + ((R4EItem)component).getDescription() + LINE_FEED_MSG_PART);
+    			msgBody.append("Eclipse Project: File Path Relative to Eclipse Project[: Line range]" + LINE_FEED_MSG_PART);
+    			EList<R4EFileContext> contexts = ((R4EItem)component).getFileContextList();
+    			for (R4EFileContext context : contexts) {
+    				if (null != context.getTarget()) {
+    					msgBody.append(TAB_MSG_PART + context.getTarget().getResource().getProject() + ": " +
+    							context.getTarget().getResource().getProjectRelativePath());
+    					if (context.getDeltas().size() > 0) {
+    						msgBody.append(": ");
+    		    			EList<R4EDelta> deltas = context.getDeltas();
+    						for (R4EDelta delta : deltas) {
+    							msgBody.append(buildLineTag(delta) + ", ");
+    						}
+    					}
+    				}
+        			msgBody.append(LINE_FEED_MSG_PART);
+    			}
+    			msgBody.append(LINE_FEED_MSG_PART);
+    		} else if (component instanceof R4EDelta) {
+    			if (!legendAppended) {
+        			msgBody.append("Eclipse Project: File Path Relative to Eclipse Project[: Line range]" + LINE_FEED_MSG_PART);
+    				legendAppended = true;
+    			}
+    			R4EFileContext context = (R4EFileContext) ((R4EDelta)component).eContainer();
+    			msgBody.append(context.getTarget().getResource().getProject() + ": " +
+    					context.getTarget().getResource().getProjectRelativePath() + ": " +
+						buildLineTag((R4EDelta)component) + ", ");
+        	}
+			msgBody.append(LINE_FEED_MSG_PART);
+    	} 
 
     	msgBody.append(createReviewInfoPart());
 		msgBody.append(createOutroPart());
@@ -359,33 +417,31 @@ public class MailServicesProxy {
     	final StringBuilder msgBody = new StringBuilder();
     	
     	msgBody.append(createIntroPart());
-    	msgBody.append(aHeader + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+    	msgBody.append(aHeader + LINE_FEED_MSG_PART);
 
     	int numReviewedFiles = 0;
     	int numTotalFiles = 0;
+    	int numTotalAnomalies = 0;
     	final List<String> anomaliesStr = new ArrayList<String>();
     	final List<R4EUIReviewItem> items = R4EUIModelController.getActiveReview().getReviewItems();
     	for (R4EUIReviewItem item : items) {
-			R4EUIFileContext[] contexts = (R4EUIFileContext[])item.getChildren();
-			for (R4EUIFileContext context : contexts) {
-				if (context.isReviewed()) ++numReviewedFiles;
-				++numTotalFiles;
-				R4EUIAnomalyBasic[] anomalies = 
-					(R4EUIAnomalyBasic[]) ((R4EUIAnomalyContainer)context.getAnomalyContainerElement()).getChildren();
-				for (R4EUIAnomalyBasic anomaly : anomalies) {
-					if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
-						anomaliesStr.add(anomaly.getPosition().toString() + ": " + context.getTargetFile().getProject() +
-								context.getTargetFile().getProjectRelativePath() + LINE_FEED_MSG_PART +
-								TAB_MSG_PART + anomaly.getAnomaly().getTitle() + ": " + anomaly.getAnomaly().getDescription() +
-								LINE_FEED_MSG_PART);
-					}
-				}
-			}
+    		R4EUIFileContext[] contexts = (R4EUIFileContext[])item.getChildren();
+    		for (R4EUIFileContext context : contexts) {
+    			if (context.isReviewed()) ++numReviewedFiles;
+    			++numTotalFiles;
+    			if (null != (R4EUIAnomalyContainer)context.getAnomalyContainerElement()) {
+    				R4EUIAnomalyBasic[] anomalies = 
+    					(R4EUIAnomalyBasic[]) ((R4EUIAnomalyContainer)context.getAnomalyContainerElement()).getChildren();
+    				for (int i = 0; i < anomalies.length; i++) {
+    					++numTotalAnomalies;
+    				}
+    			}
+    		}
     	}
     	
     	//Add current review progress
-    	msgBody.append("Files Reviewed: " + numReviewedFiles);
-    	msgBody.append("Files Total: " + numTotalFiles);
+    	msgBody.append("Files Reviewed: " + numReviewedFiles + TAB_MSG_PART);
+    	msgBody.append("Files Total: " + numTotalFiles + TAB_MSG_PART);
     	final double progress = (numReviewedFiles / new Integer(numTotalFiles).doubleValue()) * 100;
 		final DecimalFormat fmt = new DecimalFormat("#");
     	msgBody.append("Progress: " + fmt.format(progress) + "%");
@@ -394,12 +450,33 @@ public class MailServicesProxy {
     	//Add anomalies created by current reviewer
     	msgBody.append("Anomalies Created by: " + R4EUIModelController.getReviewer() + LINE_FEED_MSG_PART);
     	msgBody.append("Count: " + anomaliesStr.size() + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-    	if (anomaliesStr.size() > 0) {
-    		msgBody.append(TAB_MSG_PART + "Line Range: Eclipse Project: File Path Relative to Eclipse Project" + LINE_FEED_MSG_PART);
-    		msgBody.append(TAB_MSG_PART + "Description" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+    	if (numTotalAnomalies > 0) {
+    		msgBody.append("FileContext: " + TAB_MSG_PART + "Eclipse Project: File Path Relative to Eclipse Project: " + LINE_FEED_MSG_PART);
+    		msgBody.append(TAB_MSG_PART + "Anomaly: " + TAB_MSG_PART + "Line Range: Title: Description" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
     	}
-    	for (String anomalyStr : anomaliesStr) {
-    		msgBody.append(anomalyStr);
+    	
+    	boolean titleWritten = false;
+    	for (R4EUIReviewItem item : items) {
+    		R4EUIFileContext[] contexts = (R4EUIFileContext[])item.getChildren();
+    		for (R4EUIFileContext context : contexts) {
+    			if (null != (R4EUIAnomalyContainer)context.getAnomalyContainerElement()) {
+    				R4EUIAnomalyBasic[] anomalies = 
+    					(R4EUIAnomalyBasic[]) ((R4EUIAnomalyContainer)context.getAnomalyContainerElement()).getChildren();
+    				titleWritten = false;
+    				for (R4EUIAnomalyBasic anomaly : anomalies) {
+    					if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
+    						if (!titleWritten) {
+    							msgBody.append(context.getTargetFileVersion().getResource().getProject() +
+    									": " + context.getTargetFileVersion().getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+    							titleWritten = true;
+    						}
+    						msgBody.append(TAB_MSG_PART + anomaly.getPosition().toString() +  ": " + 
+    								anomaly.getAnomaly().getTitle() + ": " + anomaly.getAnomaly().getDescription() +
+    								LINE_FEED_MSG_PART);
+    					}
+    				}
+    			}
+    		}
     	}
     	msgBody.append(LINE_FEED_MSG_PART);
 
@@ -418,30 +495,36 @@ public class MailServicesProxy {
     	msgBody.append(createIntroPart());
     	msgBody.append(QUESTION_MSG_BODY);
 
-    	if (aSource instanceof R4EUIAnomalyBasic) {
-    		final R4EFileVersion file = 
-    			((R4EAnomalyTextPosition)((R4EContent)((R4EUIAnomalyBasic)aSource).getAnomaly().getLocation().get(0)).getLocation()).getFile();
-    		msgBody.append("Anomaly :" + LINE_FEED_MSG_PART);
-    		msgBody.append("File: " + file.getName() + LINE_FEED_MSG_PART);
+    	if (aSource instanceof R4EUIReviewBasic) {
+    		msgBody.append("Review :" + LINE_FEED_MSG_PART);
+    	} else if (aSource instanceof R4EUIAnomalyBasic) {
+    		final R4EFileVersion file = ((R4EUIFileContext)((R4EUIAnomalyBasic)aSource).getParent().getParent()).getTargetFileVersion();
+    		msgBody.append("Anomaly :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+			msgBody.append("File: " + file.getResource().getProject() +
+					": " + file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
     		msgBody.append("Version: " + file.getVersionID()+ LINE_FEED_MSG_PART);
     		msgBody.append("Line(s): " + ((R4EUIAnomalyBasic)aSource).getPosition().toString()+ LINE_FEED_MSG_PART);
 			msgBody.append("Title: " + ((R4EUIAnomalyBasic)aSource).getAnomaly().getTitle()+ LINE_FEED_MSG_PART);
 			msgBody.append("Description: " + ((R4EUIAnomalyBasic)aSource).getAnomaly().getDescription()+ LINE_FEED_MSG_PART);
     	} else if (aSource instanceof R4EUIReviewItem) {
-    		msgBody.append("Review Item :" + LINE_FEED_MSG_PART);
-    		msgBody.append("Description: " + ((R4EUIReviewItem)aSource).getItem().getDescription());
+    		msgBody.append("Review Item :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+    		msgBody.append("Description: " + ((R4EUIReviewItem)aSource).getItem().getDescription() + LINE_FEED_MSG_PART);
     	} else if (aSource instanceof R4EUIFileContext) {
-    		msgBody.append("File Context:" + LINE_FEED_MSG_PART);
-    		msgBody.append("File: " + ((R4EUIFileContext)aSource).getFileContext().getTarget().getName() + LINE_FEED_MSG_PART);
+    		msgBody.append("File:" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+			msgBody.append("File: " + ((R4EUIFileContext)aSource).getTargetFileVersion().getResource().getProject() +
+					": " + ((R4EUIFileContext)aSource).getTargetFileVersion().getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
     		msgBody.append("Base Version: " + ((R4EUIFileContext)aSource).getFileContext().getBase().getVersionID() + LINE_FEED_MSG_PART);
     		msgBody.append("Target Version: " + ((R4EUIFileContext)aSource).getFileContext().getTarget().getVersionID() + LINE_FEED_MSG_PART);
     	} else if (aSource instanceof R4EUISelection) {
        		final R4EFileVersion file = 
     			((R4EUIFileContext)((R4EUISelection)aSource).getParent().getParent()).getTargetFileVersion();
-    		msgBody.append("Selection :" + LINE_FEED_MSG_PART);
-    		msgBody.append("File: " + file.getName() + LINE_FEED_MSG_PART);
+    		msgBody.append("Selection :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+			msgBody.append("File: " + file.getResource().getProject() + ": " + 
+					file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
     		msgBody.append("Version: " + file.getVersionID()+ LINE_FEED_MSG_PART);
     		msgBody.append("Line(s): " + ((R4EUISelection)aSource).getPosition().toString() + LINE_FEED_MSG_PART);
+    	} else {
+    		msgBody.append("Contents :" + LINE_FEED_MSG_PART);
     	}
     	msgBody.append(createReviewInfoPart());
 		msgBody.append(createOutroPart());
@@ -456,23 +539,26 @@ public class MailServicesProxy {
     	final StringBuilder msgReviewInfo = new StringBuilder();
     	
     	msgReviewInfo.append(LINE_FEED_MSG_PART);
-    	msgReviewInfo.append("Group: " + R4EUIModelController.getActiveReview().getParent().getName() +
+    	msgReviewInfo.append("Review Information");
+    	msgReviewInfo.append(LINE_FEED_MSG_PART);
+    	msgReviewInfo.append("Group: " + TAB_MSG_PART + TAB_MSG_PART + R4EUIModelController.getActiveReview().getParent().getName() +
     			LINE_FEED_MSG_PART);
-    	msgReviewInfo.append("Review: " + R4EUIModelController.getActiveReview().getReview().getName() +
+    	msgReviewInfo.append("Review: " + TAB_MSG_PART + R4EUIModelController.getActiveReview().getReview().getName() +
     			LINE_FEED_MSG_PART);
-    	msgReviewInfo.append("Components: " + LINE_FEED_MSG_PART);
+    	msgReviewInfo.append("Components: " + TAB_MSG_PART);
     	final List<String> components = R4EUIModelController.getActiveReview().getReview().getComponents();
     	for (String component : components) {
-    		msgReviewInfo.append(TAB_MSG_PART + component + LINE_FEED_MSG_PART);
+    		msgReviewInfo.append(component + ", ");
     	}
-    	msgReviewInfo.append("Project: " + R4EUIModelController.getActiveReview().getReview().getProject() +
-    			LINE_FEED_MSG_PART);
-    	msgReviewInfo.append("Participants: ");
     	msgReviewInfo.append(LINE_FEED_MSG_PART);
+    	msgReviewInfo.append("Project: " + TAB_MSG_PART + R4EUIModelController.getActiveReview().getReview().getProject() +
+    			LINE_FEED_MSG_PART);
+    	msgReviewInfo.append("Participants: " + TAB_MSG_PART);
     	final List<String> participants = R4EUIModelController.getActiveReview().getParticipantIDs();
     	for (String participant : participants) {
-    		msgReviewInfo.append(TAB_MSG_PART + participant + LINE_FEED_MSG_PART);
+    		msgReviewInfo.append(participant + ", ");
     	}
+    	msgReviewInfo.append(LINE_FEED_MSG_PART);
     	msgReviewInfo.append(LINE_FEED_MSG_PART);
     	
     	return msgReviewInfo.toString();
@@ -591,5 +677,24 @@ public class MailServicesProxy {
 				"Take note that no Automatic Email can be sent because no Mail Services Connector is Present",
 				new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, null, null), IStatus.WARNING);
 		dialog.open();
+    }
+    
+    /**
+     * Method buildLineTag
+     * @param aDelta R4EDelta
+     */
+    private static String buildLineTag(R4EDelta aDelta) {
+    	if (null != aDelta.getTarget() && null != aDelta.getTarget().getLocation()) {
+    		int startLine = ((R4ETextPosition)aDelta.getTarget().getLocation()).getStartLine();
+    		int endLineLine = ((R4ETextPosition)aDelta.getTarget().getLocation()).getEndLine();
+    		final StringBuilder buffer = new StringBuilder(R4EUIConstants.DEFAULT_LINE_TAG_LENGTH);
+    		if (startLine == endLineLine) {
+    			buffer.append(R4EUIConstants.LINE_TAG + startLine);
+    		} else {
+    			buffer.append(R4EUIConstants.LINES_TAG + startLine + "-" + endLineLine);
+    		}
+    		return buffer.toString();
+    	}
+    	return "";
     }
 }
