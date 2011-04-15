@@ -253,6 +253,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/startTime"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/duration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/sentCount"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/sender"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/receivers"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

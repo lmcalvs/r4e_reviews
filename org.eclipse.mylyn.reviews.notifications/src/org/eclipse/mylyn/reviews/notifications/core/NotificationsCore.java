@@ -232,20 +232,20 @@ public class NotificationsCore {
 	}
 
 	/**
-	 * Access factory method
-	 * 
 	 * @param aCustomId
 	 * @param aSubject
 	 * @param aBody
 	 * @param aLocation
 	 * @param aStartTimeMilli
 	 * @param aDuration
+	 * @param aSender
+	 * @param aReceivers
 	 * @return
 	 * @throws CoreException
 	 */
 	public static IMeetingData createMeetingData(String aCustomId, String aSubject, String aBody, String aLocation,
-			long aStartTimeMilli, int aDuration) throws CoreException {
-		return new MeetingData(aCustomId, aSubject, aBody, aLocation, aStartTimeMilli, aDuration);
+			long aStartTimeMilli, int aDuration, String aSender, String[] aReceivers) throws CoreException {
+		return new MeetingData(aCustomId, aSubject, aBody, aLocation, aStartTimeMilli, aDuration, aSender, aReceivers);
 	}
 
 }
