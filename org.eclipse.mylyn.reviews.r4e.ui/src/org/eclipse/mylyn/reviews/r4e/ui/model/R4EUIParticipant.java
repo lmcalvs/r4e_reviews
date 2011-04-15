@@ -248,11 +248,14 @@ public class R4EUIParticipant extends R4EUIModelElement {
     		try {
     			//Get detailed info from DB if available
     			final IQueryUser query = new QueryUserFactory().getInstance();
-    			final IUserInfo userInfo = query.searchByUserId(fParticipant.getId()).get(0);
-    			fParticipantDetails = UIUtils.buildUserDetailsString(userInfo);
-    			if (null == fParticipant.getEmail()) {
-    				fParticipant.setEmail(userInfo.getEmail());
-    			}				
+    			List<IUserInfo> info = query.searchByUserId(fParticipant.getId());
+    			if (info.size() > 0) {
+    				final IUserInfo userInfo = info.get(0);
+    				fParticipantDetails = UIUtils.buildUserDetailsString(userInfo);
+    				if (null == fParticipant.getEmail()) {
+    					fParticipant.setEmail(userInfo.getEmail());
+    				}			
+    			}
     		} catch (NamingException e) {
     			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
     			Activator.getDefault().logError("Exception: " + e.toString(), e);

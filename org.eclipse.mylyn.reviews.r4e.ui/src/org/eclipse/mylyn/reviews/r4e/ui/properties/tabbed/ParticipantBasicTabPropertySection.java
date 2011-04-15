@@ -214,7 +214,11 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 		fNumAnomaliesText.setText(String.valueOf(numAnomalies));
 		fNumCommentsText.setText(String.valueOf(numComments));
 		final String details = ((R4EUIParticipant)fProperties.getElement()).getParticipantDetails();
-		if (null != details) fDetailsText.setText(details);
+		if (null != details) {
+			fDetailsText.setText(details);
+		} else {
+			fDetailsText.setText("");
+		}
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}

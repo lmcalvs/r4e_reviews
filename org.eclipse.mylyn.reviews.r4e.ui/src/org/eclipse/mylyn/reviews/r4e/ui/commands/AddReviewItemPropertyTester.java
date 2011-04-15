@@ -49,17 +49,18 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 		//For formal reviews, review items can only be added by reveiwers in the planning and preparation pahse
 		final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 		if (null == activeReview) return false;
-		
-		R4EParticipant reviewer = null;
-		try {
-			reviewer = activeReview.getParticipant(R4EUIModelController.getReviewer(), false);
-		} catch (ResourceHandlingException e) {
-			UIUtils.displayResourceErrorDialog(e);
-			return false;
-		}
-		if (null == reviewer) return false;
 
 		if (activeReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+
+			R4EParticipant reviewer = null;
+			try {
+				reviewer = activeReview.getParticipant(R4EUIModelController.getReviewer(), false);
+			} catch (ResourceHandlingException e) {
+				UIUtils.displayResourceErrorDialog(e);
+				return false;
+			}
+			if (null == reviewer) return false;
+
 			if (((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
 				if (!(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)) || (reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR))) {
 					return false;

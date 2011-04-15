@@ -296,7 +296,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			if (aCreate) {
 				final List<R4EUserRole> role = new ArrayList<R4EUserRole>(1);
 				role.add(R4EUserRole.R4E_ROLE_REVIEWER);
-				participant = R4EUIModelController.FModelExt.createR4EParticipant(fReview, aParticipant, null);
+				participant = R4EUIModelController.FModelExt.createR4EParticipant(fReview, aParticipant, role);
 				fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer, participant));
 			}
 		}

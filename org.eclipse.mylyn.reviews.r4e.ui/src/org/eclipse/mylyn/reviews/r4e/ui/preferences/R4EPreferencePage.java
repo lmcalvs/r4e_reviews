@@ -430,8 +430,9 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
     	store.setValue(PreferenceConstants.P_REVIEWED_ITEMS_FILTER, fReviewedItemsFilterButton.getSelection());
     	store.setValue(PreferenceConstants.P_HIDE_RULE_SETS_FILTER, fHideRuleSetsFilterButton.getSelection());
 
-    	R4EUIModelController.getNavigatorView().applyDefaultFilters();
-    	
+    	if (null != R4EUIModelController.getNavigatorView()) {
+    		R4EUIModelController.getNavigatorView().applyDefaultFilters();
+    	}
     	if ("".equals(store.getString(PreferenceConstants.P_USER_EMAIL))) {
 			final String userId = store.getString(PreferenceConstants.P_USER_ID);
 

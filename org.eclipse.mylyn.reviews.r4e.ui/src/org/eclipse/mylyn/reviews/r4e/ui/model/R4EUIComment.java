@@ -78,10 +78,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	 * @param aComment R4EComment
 	 */
 	public R4EUIComment(IR4EUIModelElement aParent, R4EComment aComment) {
-		super(aParent, (aComment.getDescription().length() < R4EUIConstants.END_STRING_NAME_INDEX) ? 
-				new String(aComment.getDescription()).substring(R4EUIConstants.START_STRING_INDEX, aComment.getDescription().length()) + "..." :
-					new String(aComment.getDescription()).substring(R4EUIConstants.START_STRING_INDEX, R4EUIConstants.END_STRING_NAME_INDEX) + "...", 
-					aComment.getUser().getId() + ": " + aComment.getDescription());
+		super(aParent, aComment.getDescription(), aComment.getUser().getId() + ": " + aComment.getDescription());
 		fComment = aComment;
 		setImage(COMMENT_ICON_FILE);
 	}
