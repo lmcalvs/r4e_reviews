@@ -1055,6 +1055,10 @@
         <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/id"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_KukfMWFKEeCFVY01TT49FA"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_6ABQMGeJEeCyS4QRgXNGnA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/body"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_6ABQMWeJEeCyS4QRgXNGnA"/>
+      </children>
       <children xmi:type="notation:Node" xmi:id="_T699UGFKEeCFVY01TT49FA" type="2001">
         <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/subject"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_T699UWFKEeCFVY01TT49FA"/>
@@ -1096,7 +1100,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_EnkEsWFKEeCFVY01TT49FA" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EnkEsmFKEeCFVY01TT49FA" x="569" y="-108" width="154" height="171"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EnkEsmFKEeCFVY01TT49FA" x="569" y="-132" width="154" height="195"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_e47JAbX-Ed-Xj-3H8XK7WQ"/>
   <element xmi:type="ecore:EPackage" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#/"/>

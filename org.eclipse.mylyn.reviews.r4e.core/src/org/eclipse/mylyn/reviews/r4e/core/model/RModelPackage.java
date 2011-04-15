@@ -2679,13 +2679,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_MEETING_DATA__RECEIVERS = 7;
 
 	/**
+	 * The feature id for the '<em><b>Body</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_MEETING_DATA__BODY = 8;
+
+	/**
 	 * The number of structural features of the '<em>R4E Meeting Data</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_MEETING_DATA_FEATURE_COUNT = 8;
+	int R4E_MEETING_DATA_FEATURE_COUNT = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.
@@ -4640,6 +4649,17 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EMeetingData_Receivers();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getBody <em>Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Body</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getBody()
+	 * @see #getR4EMeetingData()
+	 * @generated
+	 */
+	EAttribute getR4EMeetingData_Body();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6192,6 +6212,14 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute R4E_MEETING_DATA__RECEIVERS = eINSTANCE.getR4EMeetingData_Receivers();
+
+		/**
+		 * The meta object literal for the '<em><b>Body</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_MEETING_DATA__BODY = eINSTANCE.getR4EMeetingData_Body();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.
