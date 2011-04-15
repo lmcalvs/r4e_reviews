@@ -46,6 +46,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
@@ -568,39 +569,322 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public void refreshMeetingData() throws ResourceHandlingException, OutOfSyncException {
 		final NotificationsConnector mailConnector = R4EUIModelController.getMailConnector();
 		final R4EMeetingData coreMeetingData = fReview.getActiveMeeting();
-		if (null != coreMeetingData) {
-			IMeetingData meetingData = new IMeetingData() {	
-				public void incrementSentCounter() {
-					coreMeetingData.setSentCount(coreMeetingData.getSentCount() + 1);
-				}
-				public String getSubject() {
-					return coreMeetingData.getSubject();
-				}
-				public Long getStartTime() {
-					return Long.valueOf(coreMeetingData.getStartTime());
-				}
-				public int getSentCounter() {
-					return coreMeetingData.getSentCount();
-				}
-				public String getLocation() {
-					return coreMeetingData.getLocation();
-				}
-				public Integer getDuration() {
-					return Integer.valueOf(coreMeetingData.getDuration());
-				}
-				public String getCustomID() {
-					return coreMeetingData.getId();
-				}
-				public String getBody() {
-					return null;
-				}
-			};
+		final ResourceUpdater resUpdater = R4EUIModelController.FResourceUpdater;
 
-			if (null != mailConnector) {
-				meetingData = mailConnector.fetchSystemMeetingData(meetingData, fReview.getStartDate());
-				if (null != meetingData) {
-					setMeetingData(meetingData);
+		if (null == coreMeetingData) {
+			return;
+		}
+
+		IMeetingData meetingData = new IMeetingData() {
+			public void incrementSentCounter() {
+				Long bookNum = null;
+				try {
+					bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
+				coreMeetingData.setSentCount(coreMeetingData.getSentCount() + 1);
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			public String getSubject() {
+				return coreMeetingData.getSubject();
+			}
+
+			public Long getStartTime() {
+				return Long.valueOf(coreMeetingData.getStartTime());
+			}
+
+			public int getSentCounter() {
+				return coreMeetingData.getSentCount();
+			}
+
+			public String getLocation() {
+				return coreMeetingData.getLocation();
+			}
+
+			public Integer getDuration() {
+				return Integer.valueOf(coreMeetingData.getDuration());
+			}
+
+			public String getCustomID() {
+				return coreMeetingData.getId();
+			}
+
+			public String getBody() {
+				return coreMeetingData.getBody();
+			}
+
+			public void setCustomID(String aId) {
+				Long bookNum = null;
+				try {
+					bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				coreMeetingData.setId(aId);
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			public void setSubject(String aSubject) {
+				Long bookNum = null;
+				try {
+					bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				coreMeetingData.setSubject(aSubject);
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			public void setBody(String aBody) {
+				Long bookNum = null;
+				try {
+					bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				coreMeetingData.setBody(aBody);
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			public void setLocation(String aLocation) {
+				Long bookNum = null;
+				try {
+					bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				coreMeetingData.setLocation(aLocation);
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			public void setStartTime(Long aStartTime) {
+				Long bookNum = null;
+				try {
+					bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				coreMeetingData.setStartTime(aStartTime);
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			public void setDuration(Integer aDuration) {
+				Long bookNum = null;
+				try {
+					bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				coreMeetingData.setDuration(aDuration);
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			public String getSender() {
+				return coreMeetingData.getSender();
+			}
+
+			public void setSender(String aSender) {
+				Long bookNum = null;
+				try {
+					bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				coreMeetingData.setSender(aSender);
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			public String[] getReceivers() {
+				EList<String> recieversL = coreMeetingData.getReceivers();
+				String[] receivers = recieversL.toArray(new String[recieversL.size()]);
+				return receivers;
+			}
+
+			public void clearReceivers() {
+				Long bookNum = null;
+				try {
+					bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				coreMeetingData.getReceivers().clear();
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			public void addReceiver(String aReceiver) {
+				Long bookNum = null;
+				try {
+					bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				coreMeetingData.getReceivers().add(aReceiver);
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			public void removeReceiver(String aReceiver) {
+				Long bookNum = null;
+				try {
+					if (bookNum != null) {
+						bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				coreMeetingData.getReceivers().remove(aReceiver);
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			public void clearSentCounter() {
+				Long bookNum = null;
+				try {
+					bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OutOfSyncException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				coreMeetingData.setSentCount(0);
+				try {
+					if (bookNum != null) {
+						resUpdater.checkIn(bookNum);
+					}
+				} catch (ResourceHandlingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+
+		if (null != mailConnector) {
+			meetingData = mailConnector.fetchSystemMeetingData(meetingData, fReview.getStartDate());
+			if (null != meetingData) {
+				setMeetingData(meetingData);
 			}
 		}
 	}

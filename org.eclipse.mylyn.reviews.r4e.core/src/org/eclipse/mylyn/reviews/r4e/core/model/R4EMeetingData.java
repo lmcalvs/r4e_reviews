@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSentCount <em>Sent Count</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSender <em>Sender</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getReceivers <em>Receivers</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getBody <em>Body</em>}</li>
  * </ul>
  * </p>
  *
@@ -238,5 +239,31 @@ public interface R4EMeetingData extends EObject {
 	 * @generated
 	 */
 	EList<String> getReceivers();
+
+	/**
+	 * Returns the value of the '<em><b>Body</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Body</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Body</em>' attribute.
+	 * @see #setBody(String)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EMeetingData_Body()
+	 * @model
+	 * @generated
+	 */
+	String getBody();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getBody <em>Body</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Body</em>' attribute.
+	 * @see #getBody()
+	 * @generated
+	 */
+	void setBody(String value);
 
 } // R4EMeetingData

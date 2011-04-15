@@ -42,6 +42,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSentCount <em>Sent Count</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSender <em>Sender</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getReceivers <em>Receivers</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getBody <em>Body</em>}</li>
  * </ul>
  * </p>
  *
@@ -197,6 +198,26 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	 * @ordered
 	 */
 	protected EList<String> receivers;
+
+	/**
+	 * The default value of the '{@link #getBody() <em>Body</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBody()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String BODY_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getBody() <em>Body</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBody()
+	 * @generated
+	 * @ordered
+	 */
+	protected String body = BODY_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -381,6 +402,27 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getBody() {
+		return body;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBody(String newBody) {
+		String oldBody = body;
+		body = newBody;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_MEETING_DATA__BODY, oldBody, body));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -400,6 +442,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 				return getSender();
 			case RModelPackage.R4E_MEETING_DATA__RECEIVERS:
 				return getReceivers();
+			case RModelPackage.R4E_MEETING_DATA__BODY:
+				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -438,6 +482,9 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 				getReceivers().clear();
 				getReceivers().addAll((Collection<? extends String>)newValue);
 				return;
+			case RModelPackage.R4E_MEETING_DATA__BODY:
+				setBody((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -474,6 +521,9 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 			case RModelPackage.R4E_MEETING_DATA__RECEIVERS:
 				getReceivers().clear();
 				return;
+			case RModelPackage.R4E_MEETING_DATA__BODY:
+				setBody(BODY_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -502,6 +552,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 				return SENDER_EDEFAULT == null ? sender != null : !SENDER_EDEFAULT.equals(sender);
 			case RModelPackage.R4E_MEETING_DATA__RECEIVERS:
 				return receivers != null && !receivers.isEmpty();
+			case RModelPackage.R4E_MEETING_DATA__BODY:
+				return BODY_EDEFAULT == null ? body != null : !BODY_EDEFAULT.equals(body);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -532,6 +584,8 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 		result.append(sender);
 		result.append(", receivers: ");
 		result.append(receivers);
+		result.append(", body: ");
+		result.append(body);
 		result.append(')');
 		return result.toString();
 	}
