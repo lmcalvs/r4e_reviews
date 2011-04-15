@@ -14,6 +14,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -30,6 +31,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getStartTime <em>Start Time</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getDuration <em>Duration</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSentCount <em>Sent Count</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSender <em>Sender</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getReceivers <em>Receivers</em>}</li>
  * </ul>
  * </p>
  *
@@ -193,5 +196,47 @@ public interface R4EMeetingData extends EObject {
 	 * @generated
 	 */
 	void setSentCount(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Sender</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Sender</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Sender</em>' attribute.
+	 * @see #setSender(String)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EMeetingData_Sender()
+	 * @model
+	 * @generated
+	 */
+	String getSender();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSender <em>Sender</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Sender</em>' attribute.
+	 * @see #getSender()
+	 * @generated
+	 */
+	void setSender(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Receivers</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Receivers</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Receivers</em>' attribute list.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EMeetingData_Receivers()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getReceivers();
 
 } // R4EMeetingData

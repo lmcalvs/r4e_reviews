@@ -1075,6 +1075,14 @@
         <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/sentCount"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_sPf4MWFKEeCFVY01TT49FA"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_5eF0YWd0EeCyS4QRgXNGnA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/sender"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_5eGbcGd0EeCyS4QRgXNGnA"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_ABNjIGd1EeCyS4QRgXNGnA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/receivers"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_ABNjIWd1EeCyS4QRgXNGnA"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_Enl54mFKEeCFVY01TT49FA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_Enl542FKEeCFVY01TT49FA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_Enl55GFKEeCFVY01TT49FA"/>

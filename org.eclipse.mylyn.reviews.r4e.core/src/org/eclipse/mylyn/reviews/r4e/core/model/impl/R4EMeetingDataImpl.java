@@ -14,13 +14,16 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
@@ -37,6 +40,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getStartTime <em>Start Time</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getDuration <em>Duration</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSentCount <em>Sent Count</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getSender <em>Sender</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EMeetingDataImpl#getReceivers <em>Receivers</em>}</li>
  * </ul>
  * </p>
  *
@@ -162,6 +167,36 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	 * @ordered
 	 */
 	protected int sentCount = SENT_COUNT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getSender() <em>Sender</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSender()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String SENDER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getSender() <em>Sender</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSender()
+	 * @generated
+	 * @ordered
+	 */
+	protected String sender = SENDER_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getReceivers() <em>Receivers</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReceivers()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> receivers;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -313,6 +348,39 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getSender() {
+		return sender;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSender(String newSender) {
+		String oldSender = sender;
+		sender = newSender;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_MEETING_DATA__SENDER, oldSender, sender));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getReceivers() {
+		if (receivers == null) {
+			receivers = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_MEETING_DATA__RECEIVERS);
+		}
+		return receivers;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -328,6 +396,10 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 				return getDuration();
 			case RModelPackage.R4E_MEETING_DATA__SENT_COUNT:
 				return getSentCount();
+			case RModelPackage.R4E_MEETING_DATA__SENDER:
+				return getSender();
+			case RModelPackage.R4E_MEETING_DATA__RECEIVERS:
+				return getReceivers();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -337,6 +409,7 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -357,6 +430,13 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 				return;
 			case RModelPackage.R4E_MEETING_DATA__SENT_COUNT:
 				setSentCount((Integer)newValue);
+				return;
+			case RModelPackage.R4E_MEETING_DATA__SENDER:
+				setSender((String)newValue);
+				return;
+			case RModelPackage.R4E_MEETING_DATA__RECEIVERS:
+				getReceivers().clear();
+				getReceivers().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -388,6 +468,12 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 			case RModelPackage.R4E_MEETING_DATA__SENT_COUNT:
 				setSentCount(SENT_COUNT_EDEFAULT);
 				return;
+			case RModelPackage.R4E_MEETING_DATA__SENDER:
+				setSender(SENDER_EDEFAULT);
+				return;
+			case RModelPackage.R4E_MEETING_DATA__RECEIVERS:
+				getReceivers().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -412,6 +498,10 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 				return duration != DURATION_EDEFAULT;
 			case RModelPackage.R4E_MEETING_DATA__SENT_COUNT:
 				return sentCount != SENT_COUNT_EDEFAULT;
+			case RModelPackage.R4E_MEETING_DATA__SENDER:
+				return SENDER_EDEFAULT == null ? sender != null : !SENDER_EDEFAULT.equals(sender);
+			case RModelPackage.R4E_MEETING_DATA__RECEIVERS:
+				return receivers != null && !receivers.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -438,6 +528,10 @@ public class R4EMeetingDataImpl extends EObjectImpl implements R4EMeetingData {
 		result.append(duration);
 		result.append(", sentCount: ");
 		result.append(sentCount);
+		result.append(", sender: ");
+		result.append(sender);
+		result.append(", receivers: ");
+		result.append(receivers);
 		result.append(')');
 		return result.toString();
 	}

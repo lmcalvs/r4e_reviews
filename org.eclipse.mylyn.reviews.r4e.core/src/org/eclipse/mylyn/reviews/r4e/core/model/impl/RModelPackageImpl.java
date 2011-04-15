@@ -1959,6 +1959,24 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getR4EMeetingData_Sender() {
+		return (EAttribute)r4EMeetingDataEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EMeetingData_Receivers() {
+		return (EAttribute)r4EMeetingDataEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getR4EAnomalyState() {
 		return r4EAnomalyStateEEnum;
 	}
@@ -2273,6 +2291,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__START_TIME);
 		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__DURATION);
 		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__SENT_COUNT);
+		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__SENDER);
+		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__RECEIVERS);
 
 		// Create enums
 		r4EAnomalyStateEEnum = createEEnum(R4E_ANOMALY_STATE);
@@ -2553,6 +2573,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EMeetingData_StartTime(), ecorePackage.getELong(), "startTime", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EMeetingData_Duration(), ecorePackage.getEInt(), "duration", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EMeetingData_SentCount(), ecorePackage.getEInt(), "sentCount", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EMeetingData_Sender(), ecorePackage.getEString(), "sender", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EMeetingData_Receivers(), ecorePackage.getEString(), "receivers", null, 0, -1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(r4EAnomalyStateEEnum, R4EAnomalyState.class, "R4EAnomalyState");

@@ -12,6 +12,9 @@
  */
 package org.eclipse.mylyn.reviews.notifications.internal.core;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 
@@ -40,6 +43,10 @@ public class MeetingData implements IMeetingData {
 
 	private int		fSentCounter	= 0;
 
+	private String		fSender;
+
+	private final Set<String>	fReceivers		= new HashSet<String>();
+
 	/**
 	 * @param aCustomId
 	 * @param aSubject
@@ -48,16 +55,25 @@ public class MeetingData implements IMeetingData {
 	 * @param aStartTimeMilli
 	 * @param aDuration
 	 *            - meeting duration in minutes
+	 * @param aSender
+	 * @param aReceivers
 	 * @throws CoreException
 	 */
 	public MeetingData(String aCustomId, String aSubject, String aBody, String aLocation, Long aStartTimeMilli,
-			Integer aDuration) throws CoreException {
+			Integer aDuration, String aSender, String[] aReceivers) throws CoreException {
 		fCcustomID = aCustomId;
 		fSubject = aSubject;
 		fBody = aBody;
 		fLocation = aLocation;
 		fSartTime = aStartTimeMilli;
 		fDuration = aDuration;
+		fSender = aSender;
+		if (aReceivers != null) {
+			for (int i = 0; i < aReceivers.length; i++) {
+				String receiver = aReceivers[i];
+				fReceivers.add(receiver);
+			}
+		}
 	}
 
 	/* (non-Javadoc)
@@ -118,6 +134,25 @@ public class MeetingData implements IMeetingData {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getSender()
+	 */
+	public String getSender() {
+		return fSender;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#getReceivers()
+	 */
+	public String[] getReceivers() {
+		String[] receivers = fReceivers.toArray(new String[fReceivers.size()]);
+		return receivers;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#incrementSentCounter()
 	 */
 	public void incrementSentCounter() {
@@ -133,4 +168,106 @@ public class MeetingData implements IMeetingData {
 		return fSubject + ", " + fLocation + ", " + fSartTime + ", " + fDuration + ", " + fBody;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#setCustomID(java.lang.String)
+	 */
+	public void setCustomID(String aId) {
+		fCcustomID = aId;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#setSubject(java.lang.String)
+	 */
+	public void setSubject(String aSubject) {
+		fSubject = aSubject;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#setBody(java.lang.String)
+	 */
+	public void setBody(String aBody) {
+		fBody = aBody;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#setLocation(java.lang.String)
+	 */
+	public void setLocation(String aLocation) {
+		fLocation = aLocation;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#setStartTime(java.lang.Long)
+	 */
+	public void setStartTime(Long aStartTime) {
+		fSartTime = aStartTime;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#setDuration(java.lang.Integer)
+	 */
+	public void setDuration(Integer aDuration) {
+		fDuration = aDuration;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#setSender(java.lang.String)
+	 */
+	public void setSender(String aSender) {
+		fSender = aSender;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#clearReceivers()
+	 */
+	public void clearReceivers() {
+		fReceivers.clear();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#addReceiver(java.lang.String)
+	 */
+	public void addReceiver(String aReceiver) {
+		if (aReceiver != null) {
+			fReceivers.add(aReceiver);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#removeReceiver(java.lang.String)
+	 */
+	public void removeReceiver(String aReceiver) {
+		if (aReceiver != null) {
+			fReceivers.remove(aReceiver);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.notifications.core.IMeetingData#clearSentCounter()
+	 */
+	public void clearSentCounter() {
+		fSentCounter = 0;
+	}
 }

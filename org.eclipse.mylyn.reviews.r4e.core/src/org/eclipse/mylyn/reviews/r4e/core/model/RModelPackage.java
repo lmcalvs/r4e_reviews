@@ -2661,13 +2661,31 @@ public interface RModelPackage extends EPackage {
 	int R4E_MEETING_DATA__SENT_COUNT = 5;
 
 	/**
+	 * The feature id for the '<em><b>Sender</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_MEETING_DATA__SENDER = 6;
+
+	/**
+	 * The feature id for the '<em><b>Receivers</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_MEETING_DATA__RECEIVERS = 7;
+
+	/**
 	 * The number of structural features of the '<em>R4E Meeting Data</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_MEETING_DATA_FEATURE_COUNT = 6;
+	int R4E_MEETING_DATA_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.
@@ -4600,6 +4618,28 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EMeetingData_SentCount();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSender <em>Sender</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Sender</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getSender()
+	 * @see #getR4EMeetingData()
+	 * @generated
+	 */
+	EAttribute getR4EMeetingData_Sender();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getReceivers <em>Receivers</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Receivers</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData#getReceivers()
+	 * @see #getR4EMeetingData()
+	 * @generated
+	 */
+	EAttribute getR4EMeetingData_Receivers();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6136,6 +6176,22 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute R4E_MEETING_DATA__SENT_COUNT = eINSTANCE.getR4EMeetingData_SentCount();
+
+		/**
+		 * The meta object literal for the '<em><b>Sender</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_MEETING_DATA__SENDER = eINSTANCE.getR4EMeetingData_Sender();
+
+		/**
+		 * The meta object literal for the '<em><b>Receivers</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_MEETING_DATA__RECEIVERS = eINSTANCE.getR4EMeetingData_Receivers();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.
