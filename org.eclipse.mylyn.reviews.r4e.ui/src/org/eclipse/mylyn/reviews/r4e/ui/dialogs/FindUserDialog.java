@@ -332,7 +332,7 @@ public class FindUserDialog extends FormDialog {
 	 */
 	private void createUserDetailsForm(Composite aParent, FormToolkit aToolkit) {
 
-		fUserDetailsForm = new Group(aParent, SWT.NONE);   //aToolkit.createComposite(aParent, SWT.BORDER);
+		fUserDetailsForm = new Group(aParent, SWT.NONE);
 		fUserDetailsForm.setText(USER_INFORMATION_LABEL);
 		fUserDetailsForm.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		final FormLayout layout = new FormLayout();
