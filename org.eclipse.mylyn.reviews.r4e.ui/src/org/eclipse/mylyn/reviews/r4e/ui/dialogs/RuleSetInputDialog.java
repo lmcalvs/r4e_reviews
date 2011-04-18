@@ -185,8 +185,8 @@ public class RuleSetInputDialog extends FormDialog {
 				return;
 			}
 			
-			validateResult = validateFileExists(fFolderInputTextField.getText() + "/" + fNameInputTextField.getText() + 
-					R4EUIConstants.RULE_SET_FILE_SUFFIX);  //TODO verify and change
+			validateResult = validateFileExists(fFolderInputTextField.getText() + System.getProperty("file.separator") + 
+					fNameInputTextField.getText() + R4EUIConstants.RULE_SET_FILE_SUFFIX);
 			if (null != validateResult) {
 				//Validate of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Rule Set file already exists",

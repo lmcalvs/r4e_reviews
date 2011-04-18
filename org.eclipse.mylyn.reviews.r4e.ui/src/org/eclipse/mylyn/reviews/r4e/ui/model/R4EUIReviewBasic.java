@@ -430,34 +430,26 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		if (null != items) {
 		
 			R4EUIReviewItem uiItem = null;
-			R4EFileVersion version = null;
-			CommitDescriptor descriptor = null;
 			
 			R4EUIModelController.mapAnomalies(fReview);
 			final int itemsSize = items.size();
 			R4EItem item = null;
 			for (int i = 0; i < itemsSize; i++) {
-				//TODO This is a temporary fix to be able to distinguish between various review item types
 				item = (R4EItem)items.get(i);
 				if (item.isEnabled() || Activator.getDefault().getPreferenceStore().
 						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					if (null == item.getFileContextList().get(0).getBase()) {
-						//Assume resource
-						version = item.getFileContextList().get(0).getTarget();
-						//TODO this is temporary to prevent a nast bug.  We need to find out why the FileVersion is not populated
-						//at review item creation to really fix this.
-						if (null != version) {
-							uiItem = new R4EUIReviewItem(this, item, R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE, item,
-									version.getName());
-						} else {
-							continue;
-						}
+					
+					if (null == item.getRepositoryRef() || "" == item.getRepositoryRef()) {
+						//Resource
+						String name = "Resource: " + item.getFileContextList().get(0).getTarget().getName();
+						uiItem = new R4EUIReviewItem(this, item, name, "");
 					} else {
-						//commit
-						descriptor = createChangeSetDescriptor(item);
-						uiItem = new R4EUIReviewItem(this, item, R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT, descriptor, null);
+						//Commit
+						String name = "Commit: " + item.getDescription().substring(R4EUIConstants.START_STRING_INDEX, 
+								R4EUIConstants.END_STRING_NAME_INDEX) + "...";
+						uiItem = new R4EUIReviewItem(this, item, name, item.getDescription());
 					}
-
+					
 					if (uiItem.isEnabled()) uiItem.open();
 					addChildren(uiItem);
 				}
@@ -472,45 +464,6 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		R4EUIModelController.setActiveReview(this);
 		fireReviewStateChanged(this);
 	}
-	
-	//TODO this will need to be removed when we migrate Git stuff into versions package
-	private CommitDescriptor createChangeSetDescriptor(final R4EItem item) {
-		final CommitDescriptor desc = new CommitDescriptor() {
-			public String getTitle() {
-				return item.getDescription();
-			}
-			
-			public String[] getParentIDs() {
-				return new String[0];
-			}
-			
-			public String getMessage() {
-				return item.getDescription();
-			}
-			
-			public String getId() {
-				return item.getRepositoryRef();
-			}
-			
-			public String getCommitter() {
-				return item.getAuthorRep();
-			}
-			
-			public Long getCommitDate() {
-				return Long.valueOf(item.getSubmitted().getTime());
-			}
-			
-			public String[] getChangeSet() {
-				return new String[0];
-			}
-			
-			public String getAuthor() {
-				return item.getAddedById();
-			}
-		};
-		return desc;
-	}
-
 
 	/**
 	 * Method setEnabled.
@@ -847,27 +800,46 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException 
 	 */
-	public R4EUIReviewItem createReviewItem(Object aItemInfo, String aFilename) throws ResourceHandlingException, OutOfSyncException  {
+	public R4EUIReviewItem createResourceReviewItem(String aFilename) throws ResourceHandlingException, OutOfSyncException  {
 	
 		//Create and set review item model element
 		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
 		final R4EItem reviewItem = R4EUIModelController.FModelExt.createR4EItem(participant);
 		
-		int type = R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE;
-		if (null != aItemInfo && aItemInfo instanceof ChangeSet) {
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem, R4EUIModelController.getReviewer());
-			final ChangeSet changeSet = (ChangeSet) aItemInfo;
-			reviewItem.setDescription(changeSet.getMessage());
-			reviewItem.setAuthorRep(changeSet.getAuthor().getId());
-			reviewItem.setRepositoryRef(changeSet.getId());
-			reviewItem.setSubmitted(changeSet.getDate());
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-			type = R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT;
-		}
+		String name = "Resource: " + aFilename;
 		
 		//Create and set UI model element
-		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, 
-				type, aItemInfo, aFilename);
+		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name, "");
+		addChildren(uiReviewItem);	
+		return uiReviewItem;
+	}
+	
+	/**
+	 * Method createCommitReviewItem
+	 * @param aItemInfo Object
+	 * @param aFilename String
+	 * @return R4EUIReviewItem
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException 
+	 */
+	public R4EUIReviewItem createCommitReviewItem(ChangeSet aChangeSet, String aFilename) throws ResourceHandlingException, OutOfSyncException  {
+	
+		//Create and set review item model element
+		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
+		final R4EItem reviewItem = R4EUIModelController.FModelExt.createR4EItem(participant);
+		
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem, R4EUIModelController.getReviewer());
+		reviewItem.setDescription(aChangeSet.getMessage());
+		reviewItem.setAuthorRep(aChangeSet.getAuthor().getId());
+		reviewItem.setRepositoryRef(aChangeSet.getId());
+		reviewItem.setSubmitted(aChangeSet.getDate());
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		
+		String name = "Commit: " + aChangeSet.getMessage().substring(R4EUIConstants.START_STRING_INDEX, 
+				R4EUIConstants.END_STRING_NAME_INDEX) + "...";
+		
+		//Create and set UI model element
+		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name, reviewItem.getDescription());
 		addChildren(uiReviewItem);	
 		return uiReviewItem;
 	}

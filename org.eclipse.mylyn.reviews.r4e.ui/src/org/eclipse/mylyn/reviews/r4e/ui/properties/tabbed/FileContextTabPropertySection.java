@@ -249,6 +249,8 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			fBaseFileVersionText.setText(baseVersion.getVersionID());
 		} else {
 			fBaseFileNameText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
+			fBaseFilePathText.setText("");
+			fBaseFileVersionText.setText("");
 		}
 
 		final R4EFileVersion targetVersion = modelFile.getTarget();

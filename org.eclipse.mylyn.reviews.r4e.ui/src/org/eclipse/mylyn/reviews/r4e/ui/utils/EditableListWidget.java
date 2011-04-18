@@ -289,7 +289,6 @@ public class EditableListWidget {
 				}
 				editableControl.addFocusListener(new FocusListener() {
 					public void focusLost(FocusEvent fe) {
-						// TODO Auto-generated method stub
 						((Control)fe.getSource()).dispose();
 						
 						//Send items updated notification

@@ -129,11 +129,9 @@ public class AddReviewItemHandler extends AbstractHandler {
 			addReviewItem(baseTempVersion, targetTempVersion, position);
 			
 		} catch (CoreException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			UIUtils.displayCoreErrorDialog(e);
 		} catch (ReviewsFileStorageException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			UIUtils.displayReviewsFileStorageErrorDialog(e);
 		}
 	}
 	
@@ -188,11 +186,9 @@ public class AddReviewItemHandler extends AbstractHandler {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (CoreException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			UIUtils.displayCoreErrorDialog(e);
 		} catch (ReviewsFileStorageException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			UIUtils.displayReviewsFileStorageErrorDialog(e);
 		}
 	}
 	
@@ -300,8 +296,7 @@ public class AddReviewItemHandler extends AbstractHandler {
 		throws ResourceHandlingException, OutOfSyncException, CoreException {
 		
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
-		//TODO maybe change name here for review item?
-		final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(null, aTargetFileVersion.getName());
+		final R4EUIReviewItem uiReviewItem = uiReview.createResourceReviewItem(aTargetFileVersion.getName());
 		if (null == uiReviewItem) return;
 		
 		final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(aBaseFileVersion, 

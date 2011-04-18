@@ -168,14 +168,12 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			// Add Review Item
 			final R4EUIReviewBasic uiReview = R4EUIModelController
 					.getActiveReview();
-			final R4EUIReviewItem uiReviewItem = uiReview.createReviewItem(
-					changeSet, null);
+			final R4EUIReviewItem uiReviewItem = uiReview.createCommitReviewItem(changeSet, null);
 			if (null == uiReviewItem) {
 				return;
 			}
 
 			for (final Change change : changeSet.getChanges()) {
-
 				final ScmArtifact baseArt = change.getBase();
 				final ScmArtifact targetArt = change.getTarget();
 				if (null == baseArt && null == targetArt) {

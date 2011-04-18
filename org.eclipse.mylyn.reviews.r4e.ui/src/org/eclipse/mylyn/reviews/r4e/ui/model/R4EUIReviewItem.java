@@ -31,15 +31,12 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.CommitDescriptor;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewItemProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
-import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -82,11 +79,6 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	private final R4EItem fItem;
 	
 	/**
-	 * Field fType.
-	 */
-	private final int fType;
-	
-	/**
 	 * Field fFileContexts.
 	 */
 	private final List<R4EUIFileContext> fFileContexts;
@@ -105,10 +97,9 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 * @param aFilename String
 
 	 */
-	public R4EUIReviewItem(IR4EUIModelElement aParent, R4EItem aItem, int aType, Object aItemInfo, String aFilename) {
-		super(aParent, getItemDisplayName(aType, aItemInfo, aFilename), getItemDisplayTooltip(aType, aItemInfo));
+	public R4EUIReviewItem(IR4EUIModelElement aParent, R4EItem aItem, String aName, String aTooltip) {
+		super(aParent, aName, aTooltip);
 		fItem = aItem;
-		fType = aType;
 		fFileContexts = new ArrayList<R4EUIFileContext>();
 		setImage(REVIEW_ITEM_ICON_FILE);
 	}
@@ -132,78 +123,6 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	}
 	
 	//Attributes
-	
-	/**
-	 * Method getType.
-	 * @return int
-	 */
-	public int getType() {
-		return fType;
-	}
-	
-	/**
-	 * Method getItemDisplayName.
-	 * @param aType int
-	 * @param aItemInfo Object
-	 * @param aFilename String
-	 * @return String
-	 */
-	private static String getItemDisplayName(int aType, Object aItemInfo, String aFilename) {
-		switch (aType) {
-			case R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE:
-			{
-				return "Resource: " + aFilename;
-			}
-			
-			case R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT:
-			{
-				String commitId = "";
-				if (aItemInfo instanceof CommitDescriptor) {
-					commitId = ((CommitDescriptor)aItemInfo).getTitle();
-				} else if (aItemInfo instanceof ChangeSet) {
-					commitId = ((ChangeSet)aItemInfo).getMessage().substring(R4EUIConstants.START_STRING_INDEX, 
-							R4EUIConstants.END_STRING_NAME_INDEX) + "...";
-				}
-				return "Commit: " + commitId;
-			}
-			
-			default:
-				return "";   //should never happen
-		}
-	}
-
-	/**
-	 * Method getItemDisplayTooltip.
-	 * @param aType int
-	 * @param aItemInfo Object
-	 * @return String
-	 */
-	private static String getItemDisplayTooltip(int aType, Object aItemInfo) {
-		String message = "";
-		switch (aType) {
-			case R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE:
-			{
-				if (null != aItemInfo) {
-					message = ((R4EItem)aItemInfo).getDescription();
-				}
-				
-				return "Description: " + message;
-			}
-			
-			case R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT:
-			{
-				if (aItemInfo instanceof CommitDescriptor) {
-					message = ((CommitDescriptor)aItemInfo).getMessage();
-				} else if (aItemInfo instanceof ChangeSet) {
-					message = ((ChangeSet)aItemInfo).getMessage();
-				}
-				return "Description: " + message;
-			}
-			
-			default:
-				return "";   //should never happen
-		}
-	}
 	
 	/**
 	 * Method setReviewed.

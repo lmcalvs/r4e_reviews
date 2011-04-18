@@ -693,10 +693,15 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * @return true/false
 	 */
 	public boolean isFileVersionsComparable() {
-		if (null != fFile.getBase()) {
-			return true;
+		//Do we have a base file to compare with?
+		if (null == fFile.getBase()) {
+			return false;
 		}
-		return false;
+		//Are the base and target file the same?
+		if (fFile.getBase().getLocalVersionID().equals(fFile.getTarget().getLocalVersionID())) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**

@@ -102,33 +102,10 @@ public class CommandUtils {
 			ReviewsFileStorageException {
 
 		// Get handle to local storage repository
-		final IRFSRegistry localRepository = RFSRegistryFactory
-				.getRegistry(R4EUIModelController.getActiveReview().getReview());
-		final String workspaceFileVersion = localRepository.blobIdFor(aFile
-				.getContents());
+		final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(
+				R4EUIModelController.getActiveReview().getReview());
 
-		// Get Remote repository file info
-		final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
-		if (null != connector) {
-
-			final ScmArtifact artifact = connector.getArtifact(aFile);
-			if (null != artifact) { // No remote file detected, just return the
-									// workspace file
-
-				// Check if the file in workspace if the same as the file in the
-				// remote repository
-				if (artifact.getId().equals(workspaceFileVersion)) {
-					// Files are different, so fetch file from remote repo and
-					// copy it to the temp work area
-					return copyRemoteFileToLocalRepository(localRepository, artifact);
-				}
-				// else Files are the same so we can copy the file in the
-				// workspace to the local repository, see below
-			}
-		} // else this is the case where files are not in source control
-
-		// The current file was modified by the user, so we need to copy the
-		// current file in the workspace to the work area
+		//The target file is always the file that is in the current workspace
 		return copyWorkspaceFileToLocalRepository(localRepository, aFile);
 	}
 
@@ -167,39 +144,20 @@ public class CommandUtils {
 	 * @throws ReviewsFileStorageException 
 	 */
 	public static R4EFileVersion updateBaseFile(IFile aFile) throws CoreException, ReviewsFileStorageException {
-		if (!isFileInSynch(aFile)) { 
 
-			// Get handle to local storage repository
-			final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview().getReview());
-
-			//Get Remote repository file info
-			final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
-			if (null != connector) {
-				final ScmArtifact artifact = connector.getArtifact(aFile);
-				if (null != artifact) {
-					//File was modified, so we need to fetch the base file from the versions repository and copy it to our own local repository
-					return copyRemoteFileToLocalRepository(localRepository, artifact);
-				}
+		//Get Remote repository file info
+		final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
+		if (null != connector) {
+			final ScmArtifact artifact = connector.getArtifact(aFile);
+			if (null != artifact) {
+				//File was modified, so we need to fetch the base file from the versions repository and copy it to our own local repository
+				final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview().getReview());
+				return copyRemoteFileToLocalRepository(localRepository, artifact);
 			}
-		}
+		} //else file not in source control
+		
 		//File was not modified, or No Version Control System or Remote File detected, so there is no base
 		return null;
-	}
-
-	/**
-	 * Method isFileInSynch.
-	 * @param aFile IFile
-	 * @return boolean 
-	 * @throws TeamException
-	 */
-	public static boolean isFileInSynch(IFile aFile) {
-		// TODO: Later optimization
-		// RepositoryProvider provider =
-		// RepositoryProvider.getProvider(aFile.getProject());
-		// Subscriber subscriber = provider.getSubscriber();
-		// SyncInfo info = subscriber.getSyncInfo(aFile);
-		// return SyncInfo.isInSync(info.getKind());
-		return false;
 	}
 	
 	/**

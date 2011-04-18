@@ -375,16 +375,6 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			public void widgetSelected(SelectionEvent e) {
 				try {
 		    		MailServicesProxy.sendMeetingRequest();
-					/* TODO: To migrate to connectors
-					R4EUIModelController.setDialogOpen(true);
-					final ScheduleMeetingInputDialog dialog = new ScheduleMeetingInputDialog(R4EUIModelController.getNavigatorView().
-							getSite().getWorkbenchWindow().getShell());
-					dialog.create();
-					final int result = dialog.open();
-					if (result == Window.OK) {
-						MailServicesProxy.sendMeetingRequest(dialog.getStartTime(), dialog.getDuration(), dialog.getLocation());
-					} //else Window.CANCEL
-					*/
 				} catch (ResourceHandlingException e1) {
 					UIUtils.displayResourceErrorDialog(e1);
 				} catch (CoreException e1) {
