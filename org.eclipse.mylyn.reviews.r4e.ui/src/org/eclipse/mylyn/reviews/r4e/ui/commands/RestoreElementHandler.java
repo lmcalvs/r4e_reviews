@@ -68,7 +68,7 @@ public class RestoreElementHandler extends AbstractHandler {
 		if (!selection.isEmpty()) {
 			IR4EUIModelElement element = null;
 			final R4EReview review = R4EUIModelController.getActiveReview().getReview();
-			List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
+			final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
 			for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
 				try {
 					element = (IR4EUIModelElement) iterator.next();

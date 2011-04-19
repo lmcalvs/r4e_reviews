@@ -175,6 +175,7 @@ public class MailServicesProxy {
     
     /**
      * Method sendItemsAddedNotification
+     * @param aAddedElements List<R4EReviewComponent>
      * @throws CoreException
      * @throws ResourceHandlingException
      */
@@ -191,6 +192,7 @@ public class MailServicesProxy {
     
     /**
      * Method sendItemsRemovedNotification
+     * @param aRemovedElements List<R4EReviewComponent>
      * @throws CoreException
      * @throws ResourceHandlingException
      */
@@ -268,7 +270,7 @@ public class MailServicesProxy {
      * @throws ResourceHandlingException
      */
     public static void sendMessage(String[] aDestinations, String aSubject, String aBody) throws CoreException, ResourceHandlingException {
-    	String originatorEmail = 
+    	final String originatorEmail = 
     		R4EUIModelController.getActiveReview().getParticipant(R4EUIModelController.getReviewer(), false).getEmail();
     	R4EUIModelController.getMailConnector().sendEmailGraphical(originatorEmail, aDestinations, aSubject, aBody, null, null);
     }
@@ -358,6 +360,8 @@ public class MailServicesProxy {
     
     /**
      * Method createRemovedItemsNotificationMessage
+     * @param aElements List<R4EReviewComponent>
+     * @param aIsAdded boolean
      * @return String
      */
     private static String createUpdatedItemsNotificationMessage(List<R4EReviewComponent> aElements, boolean aIsAdded) {
@@ -682,11 +686,12 @@ public class MailServicesProxy {
     /**
      * Method buildLineTag
      * @param aDelta R4EDelta
+     * @return String
      */
     private static String buildLineTag(R4EDelta aDelta) {
     	if (null != aDelta.getTarget() && null != aDelta.getTarget().getLocation()) {
-    		int startLine = ((R4ETextPosition)aDelta.getTarget().getLocation()).getStartLine();
-    		int endLineLine = ((R4ETextPosition)aDelta.getTarget().getLocation()).getEndLine();
+    		final int startLine = ((R4ETextPosition)aDelta.getTarget().getLocation()).getStartLine();
+    		final int endLineLine = ((R4ETextPosition)aDelta.getTarget().getLocation()).getEndLine();
     		final StringBuilder buffer = new StringBuilder(R4EUIConstants.DEFAULT_LINE_TAG_LENGTH);
     		if (startLine == endLineLine) {
     			buffer.append(R4EUIConstants.LINE_TAG + startLine);

@@ -215,7 +215,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			}
 
 			//Notify users if need be
-			List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
+			final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
 			addedItems.add(uiReviewItem.getItem());
 			final R4EReview review = uiReview.getReview();
 			if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {

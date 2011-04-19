@@ -92,10 +92,8 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 * Constructor for R4EUIReviewItem.
 	 * @param aParent IR4EUIModelElement
 	 * @param aItem R4EItem
-	 * @param aType int
-	 * @param aItemInfo Object
-	 * @param aFilename String
-
+	 * @param aName String
+	 * @param aTooltip String
 	 */
 	public R4EUIReviewItem(IR4EUIModelElement aParent, R4EItem aItem, String aName, String aTooltip) {
 		super(aParent, aName, aTooltip);

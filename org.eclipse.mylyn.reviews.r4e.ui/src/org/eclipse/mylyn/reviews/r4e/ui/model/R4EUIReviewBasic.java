@@ -32,7 +32,6 @@ import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
@@ -50,7 +49,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdat
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewsVersionsIF.CommitDescriptor;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
@@ -439,7 +437,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				if (item.isEnabled() || Activator.getDefault().getPreferenceStore().
 						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					
-					if (null == item.getRepositoryRef() || "" == item.getRepositoryRef()) {
+					if (null == item.getRepositoryRef() || "".equals(item.getRepositoryRef())) {
 						//Resource
 						String name = "Resource: " + item.getFileContextList().get(0).getTarget().getName();
 						uiItem = new R4EUIReviewItem(this, item, name, "");
@@ -541,7 +539,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			
 			public void incrementSentCounter() {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.setSentCount(coreMeetingData.getSentCount() + 1);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -553,7 +551,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 
 			public void clearSentCounter() {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.setSentCount(0);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -569,7 +567,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			
 			public void setCustomID(String aId) {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.setId(aId);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -585,7 +583,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			
 			public void setSubject(String aSubject) {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.setSubject(aSubject);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -601,7 +599,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			
 			public void setBody(String aBody) {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.setBody(aBody);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -617,7 +615,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			
 			public void setLocation(String aLocation) {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.setLocation(aLocation);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -633,7 +631,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			
 			public void setStartTime(Long aStartTime) {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.setStartTime(aStartTime.longValue());
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -649,7 +647,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			
 			public void setDuration(Integer aDuration) {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.setDuration(aDuration.intValue());
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -665,7 +663,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 
 			public void setSender(String aSender) {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.setSender(aSender);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -676,14 +674,14 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			}
 
 			public String[] getReceivers() {
-				EList<String> recieversL = coreMeetingData.getReceivers();
-				String[] receivers = recieversL.toArray(new String[recieversL.size()]);
+				final EList<String> recieversL = coreMeetingData.getReceivers();
+				final String[] receivers = recieversL.toArray(new String[recieversL.size()]);
 				return receivers;
 			}
 
 			public void clearReceivers() {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.getReceivers().clear();
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -695,7 +693,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 
 			public void addReceiver(String aReceiver) {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.getReceivers().add(aReceiver);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -707,7 +705,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 
 			public void removeReceiver(String aReceiver) {
 				try {
-					Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
+					final Long bookNum = resUpdater.checkOut(coreMeetingData, R4EUIModelController.getReviewer());
 					coreMeetingData.getReceivers().remove(aReceiver);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
@@ -794,19 +792,17 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	
 	/**
 	 * Method createReviewItem
-	 * @param aItemInfo Object
 	 * @param aFilename String
 	 * @return R4EUIReviewItem
 	 * @throws ResourceHandlingException
-	 * @throws OutOfSyncException 
 	 */
-	public R4EUIReviewItem createResourceReviewItem(String aFilename) throws ResourceHandlingException, OutOfSyncException  {
+	public R4EUIReviewItem createResourceReviewItem(String aFilename) throws ResourceHandlingException {
 	
 		//Create and set review item model element
 		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
 		final R4EItem reviewItem = R4EUIModelController.FModelExt.createR4EItem(participant);
 		
-		String name = "Resource: " + aFilename;
+		final String name = "Resource: " + aFilename;
 		
 		//Create and set UI model element
 		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name, "");
@@ -816,7 +812,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	
 	/**
 	 * Method createCommitReviewItem
-	 * @param aItemInfo Object
+	 * @param aChangeSet ChangeSet
 	 * @param aFilename String
 	 * @return R4EUIReviewItem
 	 * @throws ResourceHandlingException
@@ -835,7 +831,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		reviewItem.setSubmitted(aChangeSet.getDate());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		
-		String name = "Commit: " + aChangeSet.getMessage().substring(R4EUIConstants.START_STRING_INDEX, 
+		final String name = "Commit: " + aChangeSet.getMessage().substring(R4EUIConstants.START_STRING_INDEX, 
 				R4EUIConstants.END_STRING_NAME_INDEX) + "...";
 		
 		//Create and set UI model element

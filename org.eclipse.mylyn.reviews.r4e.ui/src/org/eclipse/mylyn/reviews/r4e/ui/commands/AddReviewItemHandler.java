@@ -316,7 +316,7 @@ public class AddReviewItemHandler extends AbstractHandler {
 			R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(new StructuredSelection(uiSelection), true);
 			
 		//Send email notification if needed
-		List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
+		final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
 		addedItems.add(uiReviewItem.getItem());
 		final R4EReview review = uiReview.getReview();
 		if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {

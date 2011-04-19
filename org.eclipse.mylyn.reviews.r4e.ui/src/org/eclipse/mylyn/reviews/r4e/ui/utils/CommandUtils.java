@@ -48,7 +48,6 @@ import org.eclipse.mylyn.versions.core.ChangeType;
 import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.mylyn.versions.core.ScmCore;
 import org.eclipse.mylyn.versions.core.spi.ScmConnector;
-import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;

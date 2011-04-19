@@ -248,7 +248,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
     		try {
     			//Get detailed info from DB if available
     			final IQueryUser query = new QueryUserFactory().getInstance();
-    			List<IUserInfo> info = query.searchByUserId(fParticipant.getId());
+    			final List<IUserInfo> info = query.searchByUserId(fParticipant.getId());
     			if (info.size() > 0) {
     				final IUserInfo userInfo = info.get(0);
     				fParticipantDetails = UIUtils.buildUserDetailsString(userInfo);

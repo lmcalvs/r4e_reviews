@@ -44,7 +44,6 @@ public class OpenEditorHandler extends AbstractHandler {
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
 	public Object execute(ExecutionEvent event) {
-
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		if (!selection.isEmpty()) {
 			EditorProxy.openEditor(R4EUIModelController.getNavigatorView().getSite().getPage(), selection, true);

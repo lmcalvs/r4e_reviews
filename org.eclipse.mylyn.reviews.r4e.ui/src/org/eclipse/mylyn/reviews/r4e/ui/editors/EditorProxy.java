@@ -18,9 +18,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.editors;
 
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 
 import org.eclipse.compare.CompareConfiguration;
@@ -28,10 +27,11 @@ import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ICompareNavigator;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -45,13 +45,14 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
-import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IEditorRegistry;
 import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 
@@ -82,6 +83,7 @@ public class EditorProxy {
 	 * @param aPage IWorkbenchPage - the current workbench page
 	 * @param aSelection ISelection - the currently selected model element
 	 * @param forceSingleEditor boolean - flag to force single editor
+	 * @throws CoreException 
 	 */
 	public static void openEditor(IWorkbenchPage aPage, ISelection aSelection, boolean forceSingleEditor) {
 
@@ -94,100 +96,70 @@ public class EditorProxy {
 		int selectionIndex = -1;
 		
 		R4EUIFileContext context = null;
-		IFile baseFile = null;
 		R4EFileVersion baseFileVersion = null;
-		IFile targetFile = null;
 		R4EFileVersion targetFileVersion = null;
 		
 		for (final Iterator<?> iterator = ((IStructuredSelection)aSelection).iterator(); iterator.hasNext();) {
 			element = (IR4EUIModelElement) iterator.next();
 
-			try {
-				//Depending on which element was selected in the tree, we make the target file editable
-				//The file is editable if it was opened from the anomaly or comment level, otherwise it is not
-				//Also check to get the position we should put the cursor on and the highlight range in the editor
-				if (element instanceof R4EUIAnomalyContainer) {
-					targetFileEditable = true;
-				} else if (element instanceof R4EUIAnomalyBasic) {
-					targetFileEditable = true;
-					position = ((R4EUIAnomalyBasic)element).getPosition();
-				} else if (element instanceof R4EUIComment) {
-					targetFileEditable = true;
-					position = ((R4EUIAnomalyBasic)element.getParent()).getPosition();
-				} else if (element instanceof R4EUISelection) {
-					position = ((R4EUISelection)element).getPosition();
-					container = (R4EUISelectionContainer) ((R4EUISelection)element).getParent();
-					selectionIndex = container.getSelectionList().indexOf(element);
-				}
+			//Depending on which element was selected in the tree, we make the target file editable
+			//The file is editable if it was opened from the anomaly or comment level, otherwise it is not
+			//Also check to get the position we should put the cursor on and the highlight range in the editor
+			if (element instanceof R4EUIAnomalyContainer) {
+				targetFileEditable = true;
+			} else if (element instanceof R4EUIAnomalyBasic) {
+				targetFileEditable = true;
+				position = ((R4EUIAnomalyBasic)element).getPosition();
+			} else if (element instanceof R4EUIComment) {
+				targetFileEditable = true;
+				position = ((R4EUIAnomalyBasic)element.getParent()).getPosition();
+			} else if (element instanceof R4EUISelection) {
+				position = ((R4EUISelection)element).getPosition();
+				container = (R4EUISelectionContainer) ((R4EUISelection)element).getParent();
+				selectionIndex = container.getSelectionList().indexOf(element);
+			}
 
-				//Find the parent FileContextElement
-				while (!(element instanceof R4EUIFileContext)) {
-					element = element.getParent();
-					if (null == element) return;
-				}
-				context = ((R4EUIFileContext) element);
-				
-				//Get file from FileContext
-				baseFile = context.getTempBaseFile();
-				baseFileVersion = context.getBaseFileVersion();
-				targetFile = context.getTempTargetFile();
-				targetFileVersion = context.getTargetFileVersion();
+			//Find the parent FileContextElement
+			while (!(element instanceof R4EUIFileContext)) {
+				element = element.getParent();
+				if (null == element) return;
+			}
+			context = ((R4EUIFileContext) element);
+			
+			//Get files from FileContext
+			baseFileVersion = context.getBaseFileVersion();
+			targetFileVersion = context.getTargetFileVersion();
 
-				//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
-				if (context.isFileVersionsComparable() && !forceSingleEditor) {
-					openCompareEditor(aPage, baseFile, baseFileVersion, targetFile, targetFileVersion,
-							targetFileEditable, selectionIndex);
+			//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
+			if (context.isFileVersionsComparable() && !forceSingleEditor) {
+				openCompareEditor(aPage, baseFileVersion, targetFileVersion,
+						targetFileEditable, selectionIndex);
+			} else {
+				if (null != targetFileVersion) {
+					openSingleEditor(aPage, targetFileVersion, position);
 				} else {
-					targetFile = context.getTempTargetFile();
-					if (null != targetFile) {
-						openSingleEditor(aPage, targetFile, position);
-					} else {
-						//This should never happen
-						Activator.Ftracer.traceError("Target file to open not found");
-					}
+					//This should never happen
+					Activator.Ftracer.traceError("Target file to open not found");
 				}
-			} catch (PartInitException e) {
-				traceException(e);
 			}
 		}
-	}
-
-	/**
-	 * Method traceException.
-	 * @param e
-	 */
-	private static void traceException(Exception e) {
-		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		Activator.getDefault().logError("Exception: " + e.toString(), e);
 	}
 	
 	/**
 	 * Method openSingleEditor.
 	 *  	Open the single-mode default editor for the file type
 	 * @param aPage IWorkbenchPage - the current workbench page
-	 * @param aPosition IR4EPosition - the position to go to in the file
-	 * @param aFile IFile
-	 * @throws PartInitException
-	 * @throws URISyntaxException
+	 * @param aFileVersion R4EFileVersion - the file version
+	 * @param aPosition IR4EUIPosition - the position to go to in the file
 	 */
-	private static void openSingleEditor(IWorkbenchPage aPage, IFile aFile, IR4EUIPosition aPosition) throws PartInitException {
-		
-		IEditorPart editor = null;
+	private static void openSingleEditor(IWorkbenchPage aPage, R4EFileVersion aFileVersion, IR4EUIPosition aPosition) {
 
-		//Check if file exists in workspace
-		if (null != aFile) {
-			//Open the editor on the target file
-			Activator.Ftracer.traceInfo("Open workspace file " + aFile.getName() + " with single-mode editor");
-			editor = IDE.openEditor(aPage, aFile);
-		/*} else {
-			// TODO this is not supported for now, it might not even be needed as for now we copy all files in the workspace
-			//File is not in workspace, try to open it as an external file
-			//Open the editor on the target file
-			Activator.Ftracer.traceInfo("Open external file " + aFile.toString() + " with single-mode editor");
-			editor = IDE.openEditor(aPage, aFile.getLocationURI(), 
-					PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(aFile.getName()).getId(), true); // $codepro.audit.disable methodChainLength
-		}
-		*/
+		try {
+			final FileRevisionEditorInput fileRevEditorInput = FileRevisionEditorInput.createEditorInputFor(aFileVersion.getFileRevision(), null);
+
+			final String id = getEditorId(fileRevEditorInput);
+			final IEditorPart editor = aPage.openEditor(fileRevEditorInput, id, OpenStrategy.activateOnOpen());
+
 			//Set highlighted selection and reset cursor if possible
 			if (editor instanceof ITextEditor && aPosition instanceof R4EUITextPosition) {
 				((ITextEditor) editor).setHighlightRange(((R4EUITextPosition)aPosition).getOffset(), 
@@ -196,6 +168,8 @@ public class EditorProxy {
 						((R4EUITextPosition)aPosition).getLength());
 				((ITextEditor) editor).getSelectionProvider().setSelection(selectedText);
 			}
+		} catch (CoreException e) {
+			UIUtils.displayCoreErrorDialog(e);
 		}
 	}
 	
@@ -203,19 +177,17 @@ public class EditorProxy {
 	 * Method openCompareEditor.
 	 *  	Open the compare-mode default editor for the file types
 	 * @param aPage IWorkbenchPage - the current workbench page
-	 * @param aBaseFile IFile - the base (or reference) file
-	 * @param aBaseFileVersion R4EFileVersion
-	 * @param aTargetFile IFile
+	 * @param aBaseFileVersion R4EFileVersion - the base (or reference) file version
 	 * @param aTargetFileVersion R4EFileVersion
 	 * @param aTargetFileEditable boolean - flag set whether the target file is editable or not
 	 * @param aSelectionIndex int - the index of the selection to go to in the target file
 	 */
-	private static void openCompareEditor(IWorkbenchPage aPage, IFile aBaseFile, R4EFileVersion aBaseFileVersion,
-			IFile aTargetFile, R4EFileVersion aTargetFileVersion, boolean aTargetFileEditable, int aSelectionIndex) {
+	private static void openCompareEditor(IWorkbenchPage aPage, R4EFileVersion aBaseFileVersion,
+			R4EFileVersion aTargetFileVersion, boolean aTargetFileEditable, int aSelectionIndex) {
 		
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;
-		final IEditorPart editor = findReusableCompareEditor(aPage, aBaseFile.getLocationURI(), aTargetFile.getLocationURI());
+		final IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileVersion.getName(), aTargetFileVersion.getName());
 		if (null != editor) {
 			//Simply provide focus to editor
 			aPage.activate(editor);
@@ -227,14 +199,14 @@ public class EditorProxy {
 			config.setProperty(CompareConfiguration.IGNORE_WHITESPACE, Boolean.valueOf(true));
 
 			final ITypedElement ancestor = null;   //Might be improved later
-			final ITypedElement left = getCompareItem(aTargetFile.getLocationURI());
-			final ITypedElement right = getCompareItem(aBaseFile.getLocationURI());
+			final ITypedElement target = new FileRevisionTypedElement(aTargetFileVersion.getFileRevision());
+			final ITypedElement base = new FileRevisionTypedElement(aBaseFileVersion.getFileRevision());
 
-		    input = new R4ECompareEditorInput(config, ancestor, left, aTargetFileVersion, right, aBaseFileVersion);
+		    input = new R4ECompareEditorInput(config, ancestor, target, aTargetFileVersion, base, aBaseFileVersion);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE);   // Adjust the compare title
 
-			Activator.Ftracer.traceInfo("Open compare editor on files " + left.getName() + " (Target) and "
-					+ right.getName() + " (Base)");
+			Activator.Ftracer.traceInfo("Open compare editor on files " + target.getName() + " (Target) and "
+					+ base.getName() + " (Base)");
 			CompareUI.openCompareEditor(input, true);
 		}
 		
@@ -252,17 +224,16 @@ public class EditorProxy {
 		}
 	}
 	
-	
 	/** 
 	 * Method findReusableCompareEditor.
 	 * 		Find the appropriate compare editor based on the file types
 	 * @param aPage IWorkbenchPage - the current workbench page
-	 * @param aBaseFileURI URI - the base (or reference) file URI
-	 * @param aTargetFileURI URI - the target file URI
+	 * @param aBaseFileName String - the base (or reference) file name
+	 * @param aTargetFileName String - the target file name
 	 * @return IEditorPart - the editor to use
 	 */
-	public static IEditorPart findReusableCompareEditor(IWorkbenchPage aPage, URI aBaseFileURI, 
-			URI aTargetFileURI) {
+	public static IEditorPart findReusableCompareEditor(IWorkbenchPage aPage, String aBaseFileName, 
+			String aTargetFileName) {
 		
 		final IEditorReference[] editorRefs = aPage.getEditorReferences();
 		IEditorPart part = null;
@@ -279,7 +250,7 @@ public class EditorProxy {
 						input = (R4ECompareEditorInput)part.getEditorInput();
 						nameLeft = input.getLeftElement().getName();
 						nameRight = input.getRightElement().getName();
-						if (nameLeft.equals(new File(aTargetFileURI).getName()) && nameRight.equals(new File(aBaseFileURI).getName())) {
+						if (nameLeft.equals(aTargetFileName) && nameRight.equals(aBaseFileName)) {
 							return part;
 						}
 					}
@@ -291,18 +262,78 @@ public class EditorProxy {
 	
 	
 	/**
-	 * Method getCompareItem.
-	 *  	Get a reference to an item that will be compared in the compare editor
-	 * @param aFileURI URI - the file URI to use
-	 * @return the ITypeElement corresponding to the compare item
+	 * Method getEditorId.
+	 * @param aEditorInput FileRevisionEditorInput
+	 * @return String
 	 */
-	private static ITypedElement getCompareItem(URI aFileURI) {
+	private static String getEditorId(FileRevisionEditorInput aEditorInput) {
+		final String id = getEditorId(aEditorInput.getFileRevision().getName(),
+				getContentType(aEditorInput));
+		return id;
+	}
 
-		if (ResourcesPlugin.getWorkspace().getRoot().exists(new Path(aFileURI.getPath()))) {
-			final IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(aFileURI.getPath()));
-			return SaveableCompareEditorInput.createFileElement(file);
+	/**
+	 * Method getEditorId.
+	 * @param aFileName String
+	 * @param aType IContentType
+	 * @return String
+	 */
+	private static String getEditorId(String aFileName, IContentType aType) {
+		final IEditorRegistry registry = PlatformUI.getWorkbench().getEditorRegistry();
+		final IEditorDescriptor descriptor = registry.getDefaultEditor(aFileName, aType);
+		String id = null;
+		if (null == descriptor || descriptor.isOpenExternal()) {
+			id = "org.eclipse.ui.DefaultTextEditor";
+		} else {
+			id = descriptor.getId();
 		}
-		// File do not exist in workspace, create a compare item (which will not be editable)
-		return new R4ECompareItem(aFileURI);
+		return id;
+	}
+
+	/**
+	 * Method getContentType.
+	 * @param aEditorInput FileRevisionEditorInput
+	 * @return IContentType
+	 */
+	private static IContentType getContentType(FileRevisionEditorInput aEditorInput) {
+		IContentType type = null;
+		try {
+			final InputStream contents = aEditorInput.getStorage().getContents();
+			try {
+				type = getContentType(aEditorInput.getFileRevision().getName(), contents);
+			} finally {
+				try {
+					contents.close();
+				} catch (IOException e) {
+					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+				}
+			}
+		} catch (CoreException e) {
+			UIUtils.displayCoreErrorDialog(e);
+		}
+		return type;
+	}
+
+	/**
+	 * Method getContentType.
+	 * @param aFileName String
+	 * @param aContents InputStream
+	 * @return IContentType
+	 */
+	private static IContentType getContentType(String aFileName, InputStream aContents) {
+		IContentType type = null;
+		if (null != aContents) {
+			try {
+				type = Platform.getContentTypeManager().findContentTypeFor(aContents, aFileName);
+			} catch (IOException e) {
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.getDefault().logError("Exception: " + e.toString(), e);
+			}
+		}
+		if (null == type) {
+			type = Platform.getContentTypeManager().findContentTypeFor(aFileName);
+		}
+		return type;
 	}
 }

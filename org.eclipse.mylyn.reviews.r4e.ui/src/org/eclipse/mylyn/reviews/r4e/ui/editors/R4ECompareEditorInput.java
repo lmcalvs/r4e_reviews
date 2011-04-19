@@ -24,7 +24,6 @@ import java.text.MessageFormat;
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.ResourceNode;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
@@ -147,8 +146,8 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		aMonitor.beginTask("R4E Compare", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
 		
 		// Set the label values for the compare editor
-		fConfig.setLeftLabel(fLeft.getName());
-		fConfig.setRightLabel(fRight.getName());
+		fConfig.setLeftLabel("Target: " + fLeftVersion.getName() + "_" + fLeftVersion.getVersionID());
+		fConfig.setRightLabel("Base: " + fRightVersion.getName() + "_" + fRightVersion.getVersionID());
 
 		// If the ancestor is not null, just put the file name as the workspace label
 		if (null != fAncestor) fConfig.setAncestorLabel(fAncestor.getName());
@@ -175,11 +174,11 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	public String getToolTipText() {
 		if (null != fLeft && null != fRight) {
 			String format = null;
-			final String leftLabel = getLabel(fLeft);
-			final String rightLabel = getLabel(fRight);		
+			final String leftLabel = fLeftVersion.getName() + "_" + fLeftVersion.getVersionID();
+			final String rightLabel = fRightVersion.getName() + "_" + fRightVersion.getVersionID();		
 			if (null != fAncestor) { 	
 				format = CompareUI.getResourceBundle().getString("ResourceCompare.threeWay.tooltip"); //$NON-NLS-1$
-				final String ancestorLabel = ((R4ECompareItem)fAncestor).getPath();
+				final String ancestorLabel = "";
 				return MessageFormat.format(format, new Object[] {ancestorLabel, leftLabel, rightLabel});
 		 	}
 			format = CompareUI.getResourceBundle().getString("ResourceCompare.twoWay.tooltip"); //$NON-NLS-1$
@@ -208,16 +207,6 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	@Override
 	protected void fireInputChange() { // $codepro.audit.disable emptyMethod
 		// Not implemented for now
-	}
-	
-	/**
-	 * Method getLabel.
-	 * @param aElement ITypedElement
-	 * @return String
-	 */
-	private String getLabel(ITypedElement aElement) {
-		if (aElement instanceof R4ECompareItem) return ((R4ECompareItem)aElement).getPath();
-	    return ((ResourceNode)aElement).getResource().getFullPath().toString();
 	}
 	
 	/**
