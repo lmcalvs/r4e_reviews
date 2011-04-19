@@ -443,8 +443,11 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						uiItem = new R4EUIReviewItem(this, item, name, "");
 					} else {
 						//Commit
-						String name = "Commit: " + item.getDescription().substring(R4EUIConstants.START_STRING_INDEX, 
-								R4EUIConstants.END_STRING_NAME_INDEX) + "...";
+						String description = item.getDescription();
+						int endIndex = description.length() > R4EUIConstants.END_STRING_NAME_INDEX ? R4EUIConstants.END_STRING_NAME_INDEX
+								: description.length();
+						String name = "Commit: " + description.substring(R4EUIConstants.START_STRING_INDEX, endIndex)
+								+ "...";
 						uiItem = new R4EUIReviewItem(this, item, name, item.getDescription());
 					}
 					
@@ -830,9 +833,11 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		reviewItem.setRepositoryRef(aChangeSet.getId());
 		reviewItem.setSubmitted(aChangeSet.getDate());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		String message = aChangeSet.getMessage();
+		int endIndex = message.length() > R4EUIConstants.END_STRING_NAME_INDEX ? R4EUIConstants.END_STRING_NAME_INDEX
+				: message.length();
 		
-		final String name = "Commit: " + aChangeSet.getMessage().substring(R4EUIConstants.START_STRING_INDEX, 
-				R4EUIConstants.END_STRING_NAME_INDEX) + "...";
+		final String name = "Commit: " + message.substring(R4EUIConstants.START_STRING_INDEX, endIndex) + "...";
 		
 		//Create and set UI model element
 		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name, reviewItem.getDescription());
