@@ -144,11 +144,14 @@ public class ResourceUtils {
 	 * Directly translate to serializable URI platform string. This utility method helps avoid importing EMF URI
 	 * dependencies to user applications
 	 * 
-	 * @param iResource
+	 * @param aResource
 	 * @return
 	 */
-	public static String toPlatformURIStr(IResource iResource) {
-		URI resUri = URI.createPlatformResourceURI(iResource.getFullPath().toString(), true);
+	public static String toPlatformURIStr(IResource aResource) {
+		if (aResource == null) {
+			return null;
+		}
+		URI resUri = URI.createPlatformResourceURI(aResource.getFullPath().toString(), true);
 		return resUri.toString();
 	}
 
