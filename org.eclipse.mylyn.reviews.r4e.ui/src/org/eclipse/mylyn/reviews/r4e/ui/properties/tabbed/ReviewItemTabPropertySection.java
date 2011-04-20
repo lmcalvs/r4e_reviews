@@ -20,15 +20,21 @@
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -56,7 +62,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	/**
 	 * Field FDescriptionText.
 	 */
-	private CLabel fDescriptionText = null;
+	protected Text fDescriptionText = null;
 
 	
 	// ------------------------------------------------------------------------
@@ -108,13 +114,34 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	    data.top = new FormAttachment(fProjectIdList, 0, SWT.CENTER);
 	    projectIdLabel.setLayoutData(data);
 
-	    //Description (read-only)
-	    fDescriptionText = widgetFactory.createCLabel(composite, "");
+	    //Description
+	    fDescriptionText = widgetFactory.createText(composite, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fProjectIdList, ITabbedPropertyConstants.VSPACE);
 	    fDescriptionText.setLayoutData(data);
+	    fDescriptionText.addFocusListener(new FocusListener() {		
+			public void focusLost(FocusEvent e) {
+	    		if (!fRefreshInProgress) {
+	    			try {
+	    				final String currentUser = R4EUIModelController.getReviewer();
+						final R4EItem modelItem = ((R4EUIReviewItem)fProperties.getElement()).getItem();
+	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelItem, currentUser);
+	    				modelItem.setDescription(fDescriptionText.getText());
+	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	    			} catch (ResourceHandlingException e1) {
+	    				UIUtils.displayResourceErrorDialog(e1);
+	    			} catch (OutOfSyncException e1) {
+	    				UIUtils.displaySyncErrorDialog(e1);
+	    			}
+	    		}
+			}
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
+				//Nothing to do
+			}
+		});
+	    UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
 
 	    final CLabel descriptionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DESCRIPTION_LABEL);
 	    data = new FormData();
@@ -134,7 +161,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		final R4EItem modelItem = ((R4EUIReviewItem)fProperties.getElement()).getItem();
 		fAuthorText.setText(modelItem.getAddedById());
 		fProjectIdList.setItems((String[]) modelItem.getProjectURIs().toArray());
-		fDescriptionText.setText(modelItem.getDescription());
+		if (null != modelItem.getDescription()) fDescriptionText.setText(modelItem.getDescription());
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}

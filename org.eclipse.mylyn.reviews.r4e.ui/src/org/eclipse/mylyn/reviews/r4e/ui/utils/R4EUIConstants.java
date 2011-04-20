@@ -1001,7 +1001,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field ANOMALIES_FILTER_NAME.
 	 * (value is ""Hide selections"")
 	 */
-	public static final String ANOMALIES_FILTER_NAME = "Hide Selections";
+	public static final String ANOMALIES_FILTER_NAME = "Show Anomalies Only";
 	
 	/**
 	 * Field ANOMALIES_FILTER_TOOLTIP.
@@ -1063,6 +1063,29 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final String HIDE_RULE_SETS_FILTER_MNEMONIC = "n";
 	
+	/**
+	 * Field SET_FOCUS_FILTER_COMMAND.
+	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"")
+	 */
+	public static final String SET_FOCUS_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus";
+	
+	/**
+	 * Field SET_FOCUS_FILTER_NAME.
+	 * (value is ""Set Focus"")
+	 */
+	public static final String SET_FOCUS_FILTER_NAME = "Set Focus";
+	
+	/**
+	 * Field SET_FOCUS_FILTER_TOOLTIP.
+	 * (value is ""Set Focus on Current Element"")
+	 */
+	public static final String SET_FOCUS_FILTER_TOOLTIP = "Set Focus on Current Element";
+	
+	/**
+	 * Field SET_FOCUS_FILTER_MNEMONIC.
+	 * (value is ""f"")
+	 */
+	public static final String SET_FOCUS_FILTER_MNEMONIC = "f";
 	
 	/**
 	 * Field REMOVE_ALL_FILTER_COMMAND.

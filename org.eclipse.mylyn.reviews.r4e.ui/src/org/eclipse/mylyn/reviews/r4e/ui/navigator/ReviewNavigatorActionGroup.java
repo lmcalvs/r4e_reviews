@@ -174,6 +174,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		runAnomaliesMyFilterCommand(false);
 		runReviewElemsFilterCommand(false);
 		runHideRuleSetsFilterCommand(false);
+		runFocusFilterCommand(false);
 	}
 	
 	/**
@@ -208,14 +209,6 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	public ViewerComparator getReviewTypeSorter() {
 		return fReviewTypeSorter;
-	}
-	
-	/**
-	 * Method getFocusFilter.
-	 * @return FocusFilter
-	 */
-	public FocusFilter getFocusFilter() {
-		return fFocusFilter;
 	}
 	
 	/**
@@ -478,6 +471,38 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		resetHideRuleSetsFilterCommand();
 		if (aApply) {
 				fHandlerService.executeCommand(R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND, null);
+		}
+	}
+	
+	/**
+	 * Method getFocusFilter.
+	 * @return FocusFilter
+	 */
+	public FocusFilter getFocusFilter() {
+		return fFocusFilter;
+	}
+	
+	/**
+	 * Method resetFocusFilterCommand.
+	 */
+	private void resetFocusFilterCommand() {
+		fView.getTreeViewer().removeFilter(fFocusFilter);
+        fCommandService.getCommand(R4EUIConstants.SET_FOCUS_FILTER_COMMAND).
+    		getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY).setValue(Boolean.valueOf(false));
+	}
+	
+	/**
+	 * Method runSetFocusFilterCommand.
+	 * @param aApply boolean
+	 * @throws NotHandledException 
+	 * @throws NotEnabledException 
+	 * @throws NotDefinedException 
+	 * @throws ExecutionException 
+	 */
+	public void runFocusFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException, NotEnabledException, NotHandledException {
+		resetFocusFilterCommand();
+		if (aApply) {
+				fHandlerService.executeCommand(R4EUIConstants.SET_FOCUS_FILTER_COMMAND, null);
 		}
 	}
 	

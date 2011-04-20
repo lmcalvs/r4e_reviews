@@ -8,8 +8,8 @@
  * 
  * Description:
  * 
- * This class implements the navigator view toolbar command to apply the 
- * anomalies filter
+ * This class implements the navigator view toolbar command set/unset the tree viewer input to
+ * the currently selected element
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -18,11 +18,15 @@
 package org.eclipse.mylyn.reviews.r4e.ui.commands.filters;
 
 import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.filters.AnomaliesOnlyFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.filters.FocusFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorActionGroup;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -31,7 +35,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AnomaliesFilterHandler extends AbstractHandler {
+public class SetFocusFilterHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -45,23 +49,37 @@ public class AnomaliesFilterHandler extends AbstractHandler {
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		
+
 		//We need to preserve the expansion state and restore it afterwards
 	    final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
-	    final AnomaliesOnlyFilter filter = 
-	    	((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).getAnomaliesFilter();
-		
-	    final Object[] elements =  viewer.getExpandedElements();
-	    boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());
-	    
+		final Object[] elements =  viewer.getExpandedElements();
+		final FocusFilter filter = 
+	    	((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).getFocusFilter();
+	
+		//Set current element as root level for the navigator tree
+		final Command command = event.getCommand(); 
+		boolean oldValue = HandlerUtil.toggleCommandState(command);
 		if (!oldValue) {
-			Activator.Ftracer.traceInfo("Apply anomalies filter to ReviewNavigator");
-			viewer.addFilter(filter);
+			final IStructuredSelection selection = 
+				(IStructuredSelection) viewer.getSelection();
+			if (null != selection) {
+				final IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
+				if (null != element) {
+					Activator.Ftracer.traceInfo("Setting focus on current element");
+					viewer.setInput(element.getParent());
+					viewer.addFilter(filter);
+					viewer.setExpandedElements(elements);
+				}
+			}
 		} else {
-			Activator.Ftracer.traceInfo("Remove anomalies filter from ReviewNavigator");
+			Activator.Ftracer.traceInfo("Removing focus");
 			viewer.removeFilter(filter);
+			viewer.setInput(R4EUIModelController.getRootElement());
+			if (0 < elements.length) {
+				viewer.expandToLevel(((IR4EUIModelElement)elements[0]).getParent(), AbstractTreeViewer.ALL_LEVELS);
+			}
 		}
-		R4EUIModelController.getNavigatorView().getTreeViewer().setExpandedElements(elements);
 		return null;
 	}
+
 }

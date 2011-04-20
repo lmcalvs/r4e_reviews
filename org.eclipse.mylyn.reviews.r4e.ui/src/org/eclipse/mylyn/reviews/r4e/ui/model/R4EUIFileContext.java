@@ -23,14 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
@@ -42,7 +38,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.FileContextProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -152,59 +147,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	public R4EFileVersion getTargetFileVersion() {
 		return fFile.getTarget();
-	}
-	
-	
-	/**
-	 * Method getBaseFileRevision.
-	 * @return IFileRevision
-	 */
-	public IFileRevision getBaseFileRevision() {
-		if (null != fFile.getBase()) {		
-			return getFileRevision(fFile.getBase());
-		}
-		return null;
-	}
-	
-	/**
-	 * Method getTargetFileRevision.
-	 * @return IFile
-	 */
-	public IFileRevision getTargetFileRevision() {
-		if (null != fFile.getTarget()) {
-			return getFileRevision(fFile.getTarget());
-		}
-		return null;
-	}
-	
-	/**
-	 * Method getFileRevision.
-	 * @param aVersion R4EFileVersion
-	 * @return IFileRevision
-	 */
-	private IFileRevision getFileRevision(R4EFileVersion aVersion) {
-		// Get handle to local storage repository. No need to continue in case of failure.
-		IRFSRegistry revRepo = null;
-		try {
-			revRepo = RFSRegistryFactory.getRegistry((R4EReview) ((R4EUIReviewItem)getParent()).getItem().getReview());
-		} catch (ReviewsFileStorageException e) {
-			Activator.Ftracer.traceWarning("Exception while obtaining handle to local repo: " + e.toString() + " ("
-					+ e.getMessage() + ")");
-			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-					"Error detected while adding File Context element."
-							+ " Cannot get to interface to the local reviews repository", new Status(
-							IStatus.WARNING, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.WARNING);
-			dialog.open();
-			return null;
-		}
-		
-		try {
-			return revRepo.getIFileRevision(null, aVersion);
-		} catch (ReviewsFileStorageException e) {
-			UIUtils.displayReviewsFileStorageErrorDialog(e);
-			return null;
-		}
 	}
 	
 	/**

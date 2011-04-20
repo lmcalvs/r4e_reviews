@@ -267,9 +267,9 @@
                tooltip="Collapse All Elements of the Review Navigator Tree">
          </command>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
                icon="icons/elcl16/focus_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
                label="Set Focus"
                mnemonic="f"
                style="toggle"
@@ -387,9 +387,9 @@
                tooltip="Collapse All Elements of the Review Navigator Tree">
          </command>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
                icon="icons/elcl16/focus_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
                label="Set Focus"
                mnemonic="f"
                style="toggle"
@@ -518,16 +518,6 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
-            description="Set Focus on Current Element"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"
-            name="Focus">
-         <state
-               class="org.eclipse.ui.handlers.RegistryToggleState:true"
-               id="org.eclipse.ui.commands.toggleState">
-         </state>
-      </command>
-      <command
-            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
             description="Link with Editor"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
             name="Link Editor">
@@ -551,6 +541,16 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
             name="R4E Navigator View Filters">
       </category>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
+            description="Set Focus on Current Element"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
+            name="SetFocus">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
             description="Show My Anomalies"
@@ -593,9 +593,9 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Hide Selections"
+            description="Show Anomalies Only"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies"
-            name="HideSelections">
+            name="Show Anomalies Only">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -789,15 +789,6 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocusHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus">
-         <enabledWhen>
-            <test
-                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-            </test>
-         </enabledWhen>
-      </handler>
-      <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditorHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor">
          <enabledWhen>
@@ -809,6 +800,15 @@
       <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkPropertiesHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocusFilterHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
@@ -843,7 +843,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesFilterHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesOnlyFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies">
          <enabledWhen>
             <test
