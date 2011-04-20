@@ -39,6 +39,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
@@ -67,13 +68,21 @@ public class RestoreElementHandler extends AbstractHandler {
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		if (!selection.isEmpty()) {
 			IR4EUIModelElement element = null;
-			final R4EReview review = R4EUIModelController.getActiveReview().getReview();
+			R4EReview review = null;
+			if (null != R4EUIModelController.getActiveReview()) {
+				review = R4EUIModelController.getActiveReview().getReview();
+			}
 			final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
 			for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
 				try {
 					element = (IR4EUIModelElement) iterator.next();
 					Activator.Ftracer.traceInfo("Restore element " + element.getName());
 					element.setEnabled(true);
+					if (element instanceof R4EUIReviewBasic) {
+						if (null != R4EUIModelController.getActiveReview()) {
+							R4EUIModelController.getActiveReview().close();  //Only one review open at any given time
+						}
+					}
 					element.open();
 					R4EUIModelController.getNavigatorView().getTreeViewer().refresh();  //TODO temporary fix to restore element properly
 					
@@ -95,14 +104,16 @@ public class RestoreElementHandler extends AbstractHandler {
 				}
 			}
 			//Send email notification if needed
-			if (0 < addedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-				if (((R4EFormalReview)review).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-					try {
-						MailServicesProxy.sendItemsAddedNotification(addedItems);
-					} catch (CoreException e) {
-						UIUtils.displayCoreErrorDialog(e);
-					} catch (ResourceHandlingException e) {
-						UIUtils.displayResourceErrorDialog(e);
+			if (null != review) {
+				if (0 < addedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+					if (((R4EFormalReview)review).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+						try {
+							MailServicesProxy.sendItemsAddedNotification(addedItems);
+						} catch (CoreException e) {
+							UIUtils.displayCoreErrorDialog(e);
+						} catch (ResourceHandlingException e) {
+							UIUtils.displayResourceErrorDialog(e);
+						}
 					}
 				}
 			}

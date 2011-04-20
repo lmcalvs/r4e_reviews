@@ -173,6 +173,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		runAnomaliesFilterCommand(false);
 		runAnomaliesMyFilterCommand(false);
 		runReviewElemsFilterCommand(false);
+		runHideRuleSetsFilterCommand(false);
 	}
 	
 	/**

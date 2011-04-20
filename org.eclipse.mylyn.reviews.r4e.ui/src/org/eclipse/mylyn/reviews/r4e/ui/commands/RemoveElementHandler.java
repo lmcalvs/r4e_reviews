@@ -68,7 +68,10 @@ public class RemoveElementHandler extends AbstractHandler {
 		if (!selection.isEmpty()) {
 			IR4EUIModelElement element = null;
 			MessageDialogWithToggle dialog = null;
-			final R4EReview review = R4EUIModelController.getActiveReview().getReview();
+			R4EReview review = null;
+			if (null != R4EUIModelController.getActiveReview()) {
+				review = R4EUIModelController.getActiveReview().getReview();
+			}
 			final List<R4EReviewComponent> removedItems = new ArrayList<R4EReviewComponent>();
 			for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
 			    element = (IR4EUIModelElement) iterator.next();
@@ -105,16 +108,18 @@ public class RemoveElementHandler extends AbstractHandler {
 					}
 		    	}
 			}
-			
+
 			//Send email notification if needed
-			if (0 < removedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-				if (((R4EFormalReview)review).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-					try {
-						MailServicesProxy.sendItemsRemovedNotification(removedItems);
-					} catch (CoreException e) {
-						UIUtils.displayCoreErrorDialog(e);
-					} catch (ResourceHandlingException e) {
-						UIUtils.displayResourceErrorDialog(e);
+			if (null != review) {
+				if (0 < removedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+					if (((R4EFormalReview)review).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+						try {
+							MailServicesProxy.sendItemsRemovedNotification(removedItems);
+						} catch (CoreException e) {
+							UIUtils.displayCoreErrorDialog(e);
+						} catch (ResourceHandlingException e) {
+							UIUtils.displayResourceErrorDialog(e);
+						}
 					}
 				}
 			}

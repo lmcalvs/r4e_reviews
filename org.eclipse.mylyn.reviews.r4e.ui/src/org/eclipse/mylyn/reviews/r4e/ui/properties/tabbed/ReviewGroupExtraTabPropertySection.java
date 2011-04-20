@@ -247,8 +247,8 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);
 					}
-					ruleSetLocations.add(uiRuleSet.getRuleSet().eResource().getURI().toFileString());
 				}
+				ruleSetLocations.add(uiRuleSet.getRuleSet().eResource().getURI().toFileString());
 			}
 		}
 		fRuleSetLocations.setEditableValues(ruleSetLocations.toArray(new String[ruleSetLocations.size()]));

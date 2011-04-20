@@ -20,6 +20,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.navigator;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +54,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.LinePositionComparator;
@@ -254,9 +256,9 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * Method resetInput.
 	 */
 	public void resetInput() {
-		R4EUIReviewGroup[] groups = (R4EUIReviewGroup[]) R4EUIModelController.getRootElement().getChildren();
+		IR4EUIModelElement[] groups = R4EUIModelController.getRootElement().getChildren();
 		final List<String> openGroupNames = new ArrayList<String>();
-		for (R4EUIReviewGroup group : groups) {
+		for (IR4EUIModelElement group : groups) {
 			if (group.isOpen()) {
 				group.close();
 				openGroupNames.add(group.getName());
@@ -265,14 +267,19 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		fReviewTreeViewer.setInput(getInitalInput());
 		
 		//Restore previously open groups
-		groups = (R4EUIReviewGroup[]) R4EUIModelController.getRootElement().getChildren();
+		groups = R4EUIModelController.getRootElement().getChildren();
 		for (String groupName : openGroupNames) {
-			for (R4EUIReviewGroup group : groups) {
+			for (IR4EUIModelElement group : groups) {
 				if (group.getName().equals(groupName)) {
 					try {
 						group.open();
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);
+					} catch (FileNotFoundException e) {
+				    	Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				    	Activator.getDefault().logError("Exception: " + e.toString(), e);
+					} catch (ReviewVersionsException e) {
+						UIUtils.displayVersionErrorDialog(e);
 					}
 					break;
 				}

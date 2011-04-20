@@ -72,8 +72,8 @@ public class RefreshHandler extends AbstractHandler  {
 				}		
 			} else {
 				//No selection refresh all open review groups
-				final R4EUIReviewGroup[] groups = (R4EUIReviewGroup[]) R4EUIModelController.getRootElement().getChildren();
-				for (R4EUIReviewGroup group : groups) {
+				final IR4EUIModelElement[] groups = R4EUIModelController.getRootElement().getChildren();
+				for (IR4EUIModelElement group : groups) {
 					if (group.isOpen()) {
 						group.close();
 						group.open();
@@ -82,7 +82,11 @@ public class RefreshHandler extends AbstractHandler  {
 			}
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
-
+		} catch (FileNotFoundException e) {
+	    	Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+	    	Activator.getDefault().logError("Exception: " + e.toString(), e);
+		} catch (ReviewVersionsException e) {
+			UIUtils.displayVersionErrorDialog(e);
 		}
 		return null;
 	}
