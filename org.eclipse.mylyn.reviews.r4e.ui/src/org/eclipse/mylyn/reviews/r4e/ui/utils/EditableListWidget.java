@@ -216,13 +216,12 @@ public class EditableListWidget {
         
 		fMainTable.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-				
 				//Send items updated notification
 				if (null != fListener) {
 					//If items are empty, do not consider them
 					final TableItem[] items = fMainTable.getItems();
 					for (int i = 0 ; i < items.length; i++) {
-						if (items[i].getText().trim().isEmpty()) {
+						if (items[i].getText().trim().length() < 1) {
 							fMainTable.remove(i);
 						}
 					}
@@ -303,7 +302,7 @@ public class EditableListWidget {
 							//If items are empty, do not consider them
 							final TableItem[] items = fMainTable.getItems();
 							for (int i = 0 ; i < items.length; i++) {
-								if (items[i].getText().trim().isEmpty()) {
+								if (items[i].getText().trim().length() < 1) {
 									fMainTable.remove(i);
 								}
 							}
