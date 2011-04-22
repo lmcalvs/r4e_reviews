@@ -7,6 +7,7 @@
  *
  * Contributors:
  * IBM Corporation - initial API and implementation
+ * Ericsson (Sebastien Dubois) - Adapted to use with R4E
  *******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.editors;
 
@@ -19,93 +20,104 @@ import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorInput;
 
 /**
- * An {@link ITypedElement} wrapper for {@link IFileRevision} for use with the
- * Compare framework.
+ * An {@link ITypedElement} wrapper for {@link IFileRevision} for use with R4E
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
 public class FileRevisionTypedElement extends StorageTypedElement {
 
+	// ------------------------------------------------------------------------
+	// Member variables
+	// ------------------------------------------------------------------------
+	
 	/**
-	 * Field fileRevision.
+	 * Field fFileVersion.
 	 */
-	private IFileRevision fileRevision;
+	private R4EFileVersion fFileVersion;
 
 	/**
 	 * Field author.
 	 */
-	private String author;
+	private String fAuthor;
 
+	
+	// ------------------------------------------------------------------------
+	// Constructors
+	// ------------------------------------------------------------------------
+	
 	/**
-	 * @param fileRevision
-	 *            the file revision
+	 * @param aFileVersion R4EFileVersion - the file revision
 	 */
-	public FileRevisionTypedElement(IFileRevision fileRevision) {
-		this(fileRevision, null);
+	public FileRevisionTypedElement(R4EFileVersion aFileVersion) {
+		this(aFileVersion, null);
 	}
 
 	/**
 	 * Method FileRevisionTypedElement
-	 * @param fileRevision
-	 *            the file revision
-	 * @param localEncoding
-	 *            the encoding of the local file that corresponds to the given
-	 *            file revision
+	 * @param aFileVersion R4EFileVersion - the file revision
+	 * @param aLocalEncoding String
+	 *            the encoding of the local file that corresponds to the given file revision
 	 */
-	public FileRevisionTypedElement(IFileRevision fileRevision, String localEncoding) {
-		super(localEncoding);
-		Assert.isNotNull(fileRevision);
-		this.fileRevision = fileRevision;
+	public FileRevisionTypedElement(R4EFileVersion aFileVersion, String aLocalEncoding) {
+		super(aLocalEncoding);
+		Assert.isNotNull(aFileVersion);
+		fFileVersion = aFileVersion;
 	}
 
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Method getFileVersion.	
+	 * @return R4EFileVersion
+	 */
+	public R4EFileVersion getFileVersion() {
+		return fFileVersion;
+	}
+	
 	/**
 	 * Method getName.
 	 * @return String
 	 * @see org.eclipse.compare.ITypedElement#getName()
 	 */
 	public String getName() {
-		return fileRevision.getName();
+		return fFileVersion.getName();
 	}
 
 	/**
 	 * Method fetchContents.
-	 * @param monitor IProgressMonitor
+	 * @param aMonitor IProgressMonitor
 	 * @return IStorage
 	 * @throws CoreException
 	 */
 	@Override
-	protected IStorage fetchContents(IProgressMonitor monitor)
+	protected IStorage fetchContents(IProgressMonitor aMonitor)
 			throws CoreException {
-		return fileRevision.getStorage(monitor);
+		return fFileVersion.getFileRevision().getStorage(aMonitor);
 
 	}
 
 	/**
-	
-	 * @return String the string contains a unique content id */
+	 * @return String the string contains a unique content id
+	 */
 	public String getContentIdentifier() {
-		return fileRevision.getContentIdentifier();
+		return fFileVersion.getFileRevision().getContentIdentifier();
 	}
 
 	/**
-	
-	 * @return the human readable timestamp of this element */
+	 * @return the human readable timestamp of this element
+	 */
 	public String getTimestamp() {
-		final long date = fileRevision.getTimestamp();
+		final long date = fFileVersion.getFileRevision().getTimestamp();
 		final Date dateFromLong = new Date(date);
 		return DateFormat.getDateTimeInstance().format(dateFromLong);
-	}
-
-	/**
-	 * Method getFileRevision
-	 * @return the file revision of this element
-	 */
-	public IFileRevision getFileRevision() {
-		return fileRevision;
 	}
 
 	/**
@@ -113,21 +125,21 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 	 * @return the human readable path of this element
 	 */
 	public String getPath() {
-		final URI uri = fileRevision.getURI();
+		final URI uri = fFileVersion.getFileRevision().getURI();
 		if (null != uri) return uri.getPath();
 		return getName();
 	}
 
 	/**
 	 * Method getDocumentKey.
-	 * @param element Object
+	 * @param aElement Object
 	 * @return IEditorInput
 	 */
 	@Override
-	public IEditorInput getDocumentKey(Object element) {
-		if (element.equals(this) && null != getBufferedStorage()) {
-			return new FileRevisionEditorInput(fileRevision,
-					getBufferedStorage(), getLocalEncoding());
+	public IEditorInput getDocumentKey(Object aElement) {
+		if (aElement.equals(this) && null != getBufferedStorage()) {
+			return new FileRevisionEditorInput(fFileVersion,
+				getBufferedStorage(), getLocalEncoding());
 		}
 		return null;
 	}
@@ -138,20 +150,20 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 	 */
 	@Override
 	public int hashCode() {
-		return fileRevision.hashCode();
+		return fFileVersion.getFileRevision().hashCode();
 	}
 
 	/**
 	 * Method equals.
-	 * @param obj Object
+	 * @param aObj Object
 	 * @return boolean
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) return true;
-		if (obj instanceof FileRevisionTypedElement) {
-			final FileRevisionTypedElement other = (FileRevisionTypedElement) obj;
-			return other.getFileRevision().equals(getFileRevision());
+	public boolean equals(Object aObj) {
+		if (aObj == this) return true;
+		if (aObj instanceof FileRevisionTypedElement) {
+			final FileRevisionTypedElement other = (FileRevisionTypedElement) aObj;
+			return other.getFileVersion().equals(getFileVersion());
 		}
 		return false;
 	}
@@ -159,38 +171,29 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 	/**
 	 * Method getAuthor.
 	 * @return the author
-	 * */
+	 */
 	public String getAuthor() {
-		if (null == author) author = fileRevision.getAuthor();
-		return author;
+		if (null == fAuthor) fAuthor = fFileVersion.getFileRevision().getAuthor();
+		return fAuthor;
 	}
 
 	/**
 	 * Method setAuthor.
-	 * @param author
-	 *            the author
+	 * @param aAuthor String - the author
 	 */
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setAuthor(String aAuthor) {
+		fAuthor = aAuthor;
 	}
 
 	/**
 	 * Method fetchAuthor.
-	 * @param monitor
+	 * @param aMonitor IProgressMonitor
 	 * @throws CoreException
 	 */
-	public void fetchAuthor(IProgressMonitor monitor) throws CoreException {
-		if (null == getAuthor() && fileRevision.isPropertyMissing()) {
-			final IFileRevision other = fileRevision.withAllProperties(monitor);
-			author = other.getAuthor();
+	public void fetchAuthor(IProgressMonitor aMonitor) throws CoreException {
+		if (null == getAuthor() && fFileVersion.getFileRevision().isPropertyMissing()) {
+			final IFileRevision other = fFileVersion.getFileRevision().withAllProperties(aMonitor);
+			fAuthor = other.getAuthor();
 		}
-	}
-
-	/**
-	 * Method getRevision.	
-	 * @return the revision
-	 */
-	public IFileRevision getRevision() {
-		return fileRevision;
 	}
 }

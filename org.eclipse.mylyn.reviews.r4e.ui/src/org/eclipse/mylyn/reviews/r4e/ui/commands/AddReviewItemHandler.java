@@ -63,6 +63,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -87,6 +89,10 @@ public class AddReviewItemHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
+		//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
+		final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+		shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+		
 		final ISelection selection = HandlerUtil.getCurrentSelection(event);
 
 		//Act differently depending on the type of selection we get
@@ -108,6 +114,7 @@ public class AddReviewItemHandler extends AbstractHandler {
 			}
 		}
 
+		shell.setCursor(null);
 		return null;
 	}
 
@@ -215,9 +222,10 @@ public class AddReviewItemHandler extends AbstractHandler {
 			for (R4EUIReviewItem reviewItem : reviewItems) {
 				R4EUIFileContext[] files = (R4EUIFileContext[]) reviewItem.getChildren();
 				for (R4EUIFileContext file : files) {
-					if (aTargetFileVersion.equals(file.getFileContext().getTarget().getLocalVersionID())) {
+					if (aTargetFileVersion.getLocalVersionID().equals(
+							file.getFileContext().getTarget().getLocalVersionID())) {
 						if (null == file.getFileContext().getBase() && "".equals(aBaseFileVersion.getVersionID()) ||
-								aBaseFileVersion.equals(file.getFileContext().getBase().getLocalVersionID())) {
+								aBaseFileVersion.getLocalVersionID().equals(file.getFileContext().getBase().getLocalVersionID())) {
 							//File already exists, check if selection also exists
 							R4EUISelectionContainer selectionContainer = (R4EUISelectionContainer) file.getSelectionContainerElement();
 							if (null != selectionContainer) {

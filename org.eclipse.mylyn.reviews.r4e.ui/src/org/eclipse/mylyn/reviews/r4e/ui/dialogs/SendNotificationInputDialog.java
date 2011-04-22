@@ -194,22 +194,29 @@ public class SendNotificationInputDialog extends FormDialog {
         
         //Email/Notification type radio button
         if (fSource instanceof R4EUIReviewBasic) {
-        	fItemsUpdatedButton = toolkit.createButton(basicSectionClient, 
-        			"Notify Participants of New/Removed/Updated Items Ready for Review", SWT.RADIO);
-        	fItemsUpdatedButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         	if (((R4EUIReviewBasic)fSource).isReviewed()) {
         		fCompletionButton = toolkit.createButton(basicSectionClient, 
         				"Notify Review Owner of Completion", SWT.RADIO);
+        		fCompletionButton.setSelection(true);
         		fCompletionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         	} else {
+            	fItemsUpdatedButton = toolkit.createButton(basicSectionClient, 
+            			"Notify Participants of New/Removed/Updated Items Ready for Review", SWT.RADIO);
+            	fItemsUpdatedButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+            	
             	fProgressButton = toolkit.createButton(basicSectionClient, 
             			"Notify review Owner of Progress", SWT.RADIO);
             	fProgressButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+        	
+                fQuestionButton = toolkit.createButton(basicSectionClient, 
+                		"Ask Question to Participant", SWT.RADIO);
+                fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         	}
+        } else {
+            fQuestionButton = toolkit.createButton(basicSectionClient, 
+            		"Ask Question to Participant", SWT.RADIO);
+            fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         }
-        fQuestionButton = toolkit.createButton(basicSectionClient, 
-        		"Ask Question to Participant", SWT.RADIO);
-        fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
     }
     
 	/**

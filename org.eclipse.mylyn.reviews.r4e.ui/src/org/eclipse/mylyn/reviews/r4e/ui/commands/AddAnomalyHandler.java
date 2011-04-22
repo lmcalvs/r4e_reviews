@@ -55,6 +55,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -79,6 +81,10 @@ public class AddAnomalyHandler extends AbstractHandler {
 	*/
 	public Object execute(ExecutionEvent event) {
 
+		//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
+		final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+		shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+		
 		final ISelection selection = HandlerUtil.getCurrentSelection(event);
 		
 		//Act differently depending on the type of selection we get
@@ -98,6 +104,8 @@ public class AddAnomalyHandler extends AbstractHandler {
 				addAnomalyFromTree(iterator.next());		
 			}
 		}
+		
+		shell.setCursor(null);
 		return null;
 	}
 

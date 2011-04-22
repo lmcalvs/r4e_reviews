@@ -41,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.FileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
@@ -59,6 +60,17 @@ import org.eclipse.ui.PlatformUI;
  */
 public class CommandUtils {
 
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Field NO_SOURCE_CONTROL_ID_TEXT.
+	 * (value is ""(Not in source control)"")
+	 */
+	private static final String NO_SOURCE_CONTROL_ID_TEXT = "(Not in source control)";
+	
+	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -83,6 +95,8 @@ public class CommandUtils {
 			//this means that the file we are acting on is already in the local repository
 			//in this case, we only need to provide the versionId of this file
 			return ((R4ECompareEditorInput)input).getLeftElementVersion();
+		} else if (input instanceof  FileRevisionEditorInput) {
+			return ((FileRevisionEditorInput)input).getFileVersion();
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, 
@@ -100,11 +114,33 @@ public class CommandUtils {
 	public static R4EFileVersion updateTargetFile(IFile aFile) throws CoreException,
 			ReviewsFileStorageException {
 
+		String remoteID = null;
+		String localID = null;
+		
 		// Get handle to local storage repository
 		final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(
 				R4EUIModelController.getActiveReview().getReview());
-
-		//The target file is always the file that is in the current workspace
+		
+		//Get Remote repository file info
+		final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
+		if (null != connector) {
+			final ScmArtifact artifact = connector.getArtifact(aFile);
+			if (null != artifact) {
+				//File found in remote repo.  
+				
+				//TODO:  This is a hack because the versions always return the latest file stored.
+				remoteID = artifact.getId();
+				localID = localRepository.blobIdFor(aFile.getContents());
+				if (localID.equals(remoteID)) {
+					//The files are the same. Copy from the remote repo
+					return copyRemoteFileToLocalRepository(localRepository, artifact);			
+				} else {
+					//The files are different.  This means the current user modified the file in his workspace
+					return copyWorkspaceFileToLocalRepository(localRepository, aFile);
+				}
+			}
+		}
+		//Else we copy the file that is in the current workspace
 		return copyWorkspaceFileToLocalRepository(localRepository, aFile);
 	}
 
@@ -128,6 +164,8 @@ public class CommandUtils {
 			//this means that the file we are acting on is already in the local repository
 			//in this case, we only need to provide the versionId of this file
 			return ((R4ECompareEditorInput)input).getRightElementVersion();
+		} else if (input instanceof  FileRevisionEditorInput) {
+			return ((FileRevisionEditorInput)input).getFileVersion();
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, 
@@ -168,12 +206,19 @@ public class CommandUtils {
 	 * @throws ReviewsFileStorageException 
 	 */
 	public static R4EFileVersion copyRemoteFileToLocalRepository(IRFSRegistry aLocalRepository, ScmArtifact aArtifact) 
-	throws CoreException, ReviewsFileStorageException {
+	throws ReviewsFileStorageException {
 
 		final IFileRevision fileRev = aArtifact.getFileRevision(null);
 		
 		// Pull file from the version control system
-		final InputStream iStream = fileRev.getStorage(null).getContents();
+		InputStream iStream = null;
+		try {
+			iStream = fileRev.getStorage(null).getContents();
+		} catch (CoreException e) {
+			Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logInfo("Exception: " + e.toString(), e);
+			return null;
+		}
 		
 		//Create and Set value in temporary File version
 		final R4EFileVersion tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
@@ -202,12 +247,12 @@ public class CommandUtils {
 
 		// Push a local copy to local review repository, and obtain the local id
 		tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(aFile.getContents()));
-		
+		tmpFileVersion.setVersionID(NO_SOURCE_CONTROL_ID_TEXT);
 		return tmpFileVersion;
 	}
 	
 	/**
-	 * Method copyWorkspaceFileToLocalRepository.
+	 * Method createTempFile.
 	 * @param aStream InputStream
 	 * @param aFilename String
 	 * @return IFile 

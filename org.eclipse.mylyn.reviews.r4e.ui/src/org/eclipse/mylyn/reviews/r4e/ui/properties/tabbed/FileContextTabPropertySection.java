@@ -244,7 +244,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			if (null != baseResource) {
 				fBaseFilePathText.setText(baseResource.getLocation().toOSString());
 			} else {
-				fBaseFilePathText.setText("");
+				fBaseFilePathText.setText("(Not in workspace)");
 			}
 			fBaseFileVersionText.setText(baseVersion.getVersionID());
 		} else {
@@ -254,15 +254,21 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		}
 
 		final R4EFileVersion targetVersion = modelFile.getTarget();
-		fTargetFileNameText.setText(targetVersion.getName());
-		final IResource targetResource = targetVersion.getResource();
-		//The properties shows the absolute path
-		if (null != targetResource) {
-			fTargetFilePathText.setText(targetResource.getLocation().toOSString());
+		if (null != targetVersion) {
+			fTargetFileNameText.setText(targetVersion.getName());
+			final IResource targetResource = targetVersion.getResource();
+			//The properties shows the absolute path
+			if (null != targetResource) {
+				fTargetFilePathText.setText(targetResource.getLocation().toOSString());
+			} else {
+				fTargetFilePathText.setText("");
+			}
+			fTargetFileVersionText.setText(targetVersion.getVersionID());
 		} else {
+			fTargetFileNameText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
 			fTargetFilePathText.setText("");
+			fTargetFileVersionText.setText("");
 		}
-		fTargetFileVersionText.setText(targetVersion.getVersionID());
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}

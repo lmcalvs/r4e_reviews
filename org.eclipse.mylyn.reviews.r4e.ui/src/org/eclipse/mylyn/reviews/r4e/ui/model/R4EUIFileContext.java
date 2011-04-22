@@ -202,7 +202,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
     public static String getNavigatorTooltip(R4EFileVersion aTarget, R4EFileVersion aBase) {
 		
     	//The tooltip shows the path relative to the workspace
-    	final String targetResourceStr = aTarget.getVersionID();
+    	final String targetResourceStr = (null != aTarget) ? aTarget.getVersionID() : aBase.getVersionID();
 		
     	if (null != aBase) {
     		final String baseResourceStr = aBase.getVersionID();	
@@ -453,12 +453,13 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			fSelectionContainer.open();
 		}
 		
-		fAnomalies = R4EUIModelController.getAnomaliesForFile(fFile.getTarget().getPlatformURI());
-		if (null != fAnomalies && fAnomalies.size() > 0) {
-			addChildren(new R4EUIAnomalyContainer(this, R4EUIConstants.ANOMALIES_LABEL_NAME));
-			fAnomalyContainer.open();
+		if (null != fFile.getTarget()) {
+			fAnomalies = R4EUIModelController.getAnomaliesForFile(fFile.getTarget().getPlatformURI());
+			if (null != fAnomalies && fAnomalies.size() > 0) {
+				addChildren(new R4EUIAnomalyContainer(this, R4EUIConstants.ANOMALIES_LABEL_NAME));
+				fAnomalyContainer.open();
+			}
 		}
-		
 		fOpen = true;
 	}
 	
@@ -562,7 +563,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	public boolean isFileVersionsComparable() {
 		//Do we have a base file to compare with?
-		if (null == fFile.getBase()) {
+		if (null == fFile.getBase() || null == fFile.getTarget()) {
 			return false;
 		}
 		//Are the base and target file the same?

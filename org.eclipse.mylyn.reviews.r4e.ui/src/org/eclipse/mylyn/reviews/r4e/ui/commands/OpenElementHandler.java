@@ -53,6 +53,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -73,7 +76,11 @@ public class OpenElementHandler extends AbstractHandler {
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
 	public Object execute(ExecutionEvent event) {
-
+		
+		//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
+		final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+		shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+		
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		if (!selection.isEmpty()) {
 			try {
@@ -103,6 +110,8 @@ public class OpenElementHandler extends AbstractHandler {
 				dialog.open();
 			}
 		}
+		
+		shell.setCursor(null);
 		return null;
 	}
 }

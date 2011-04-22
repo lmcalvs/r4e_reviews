@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ * Ericsson (Sebastien Dubois) - Adapted to use with R4E
  *******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.editors;
 
@@ -26,7 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.model.IWorkbenchAdapter;
@@ -39,139 +40,142 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 public class FileRevisionEditorInput extends PlatformObject implements
 		IWorkbenchAdapter, IStorageEditorInput {
 
-	/**
-	 * Field fileRevision.
-	 */
-	private final Object fileRevision;
-
+	// ------------------------------------------------------------------------
+	// Member variables
+	// ------------------------------------------------------------------------
+	
 	/**
 	 * Field storage.
 	 */
-	private final IStorage storage;
+	private final IStorage fStorage;
 
 	/**
-	 * @param revision IFileRevision - the file revision
-	 * @param monitor IProgressMonitor
-	 * @return a file revision editor input
-	 * @throws CoreException
+	 * Field fVersion
 	 */
-	public static FileRevisionEditorInput createEditorInputFor(
-			IFileRevision revision, IProgressMonitor monitor)
-			throws CoreException {
-		final IStorage storage = revision.getStorage(monitor);
-		return new FileRevisionEditorInput(revision, storage);
+	private final R4EFileVersion fFileVersion;
+	
+
+	// ------------------------------------------------------------------------
+	// Constructors
+	// ------------------------------------------------------------------------
+
+	/**
+	 * @param aFileVersion
+	 *            the R4E file version
+	 * @param aStorage
+	 *            the contents of the file revision
+	 */
+	public FileRevisionEditorInput(R4EFileVersion aFileVersion, IStorage aStorage) {
+		Assert.isNotNull(aFileVersion);
+		Assert.isNotNull(aStorage);
+		fFileVersion = aFileVersion;
+		fStorage = aStorage;
 	}
 
 	/**
+	 * @param aFileVersion R4EFileVersion
+	 * @param aStorage IStorage
+	 * @param aCharset String
+	 */
+	public FileRevisionEditorInput(R4EFileVersion aFileVersion, IStorage aStorage, String aCharset) {
+		this(aFileVersion, wrapStorage(aStorage, aCharset));
+	}
+
+	
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
+	
+	/**
 	 * Method wrapStorage.
-	 * @param storage IStorage
-	 * @param charset String
+	 * @param aStorage IStorage
+	 * @param aCharset String
 	 * @return IStorage
 	 */
-	private static IStorage wrapStorage(final IStorage storage,
-			final String charset) {
-		if (null == charset) return storage;
-		if (storage instanceof IFileState) {
+	private static IStorage wrapStorage(final IStorage aStorage, final String aCharset) {
+		if (null == aCharset) return aStorage;
+		if (aStorage instanceof IFileState) {
 			return new IFileState() {
-				public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
-					return storage.getAdapter(adapter);
+				public Object getAdapter(@SuppressWarnings("rawtypes") Class aAdapter) {
+					return aStorage.getAdapter(aAdapter);
 				}
 
 				public boolean isReadOnly() {
-					return storage.isReadOnly();
+					return aStorage.isReadOnly();
 				}
 
 				public String getName() {
-					return storage.getName();
+					return aStorage.getName();
 				}
 
 				public IPath getFullPath() {
-					return storage.getFullPath();
+					return aStorage.getFullPath();
 				}
 
 				public InputStream getContents() throws CoreException {
-					return storage.getContents();
+					return aStorage.getContents();
 				}
 
 				public String getCharset() {
-					return charset;
+					return aCharset;
 				}
 
 				public boolean exists() {
-					return ((IFileState) storage).exists();
+					return ((IFileState) aStorage).exists();
 				}
 
 				public long getModificationTime() {
-					return ((IFileState) storage).getModificationTime();
+					return ((IFileState) aStorage).getModificationTime();
 				}
 			};
 		}
 
 		return new IEncodedStorage() {
 			public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
-				return storage.getAdapter(adapter);
+				return aStorage.getAdapter(adapter);
 			}
 
 			public boolean isReadOnly() {
-				return storage.isReadOnly();
+				return aStorage.isReadOnly();
 			}
 
 			public String getName() {
-				return storage.getName();
+				return aStorage.getName();
 			}
 
 			public IPath getFullPath() {
-				return storage.getFullPath();
+				return aStorage.getFullPath();
 			}
 
 			public InputStream getContents() throws CoreException {
-				return storage.getContents();
+				return aStorage.getContents();
 			}
 
 			public String getCharset() {
-				return charset;
+				return aCharset;
 			}
 		};
 	}
-
+	
 	/**
-	 * @param revision
-	 *            the file revision
-	 * @param storage
-	 *            the contents of the file revision
+	 * @param aFileVersion R4EFileVersion - the file revision
+	 * @param aMonitor IProgressMonitor
+	 * @return a file revision editor input
+	 * @throws CoreException
 	 */
-	public FileRevisionEditorInput(Object revision, IStorage storage) {
-		Assert.isNotNull(revision);
-		Assert.isNotNull(storage);
-		this.fileRevision = revision;
-		this.storage = storage;
+	public static FileRevisionEditorInput createEditorInputFor(R4EFileVersion aFileVersion, IProgressMonitor aMonitor)
+			throws CoreException {
+		final IStorage storage = aFileVersion.getFileRevision().getStorage(aMonitor);
+		return new FileRevisionEditorInput(aFileVersion, storage);
 	}
-
-	/**
-	 * @param state
-	 *            the file state
-	 */
-	public FileRevisionEditorInput(IFileState state) {
-		this(state, state);
-	}
-
-	/**
-	 * @param revision
-	 * @param storage
-	 * @param charset
-	 */
-	public FileRevisionEditorInput(Object revision, IStorage storage,
-			String charset) {
-		this(revision, wrapStorage(storage, charset));
-	}
-
+	
 	/**
 	 * Method getStorage.
 	 * @return IStorage
 	 * @see org.eclipse.ui.IStorageEditorInput#getStorage()
 	 */
 	public IStorage getStorage() {
-		return storage;
+		return fStorage;
 	}
 
 	/**
@@ -202,7 +206,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 		if (null != state) {
 			return state.getName() + " " + DateFormat.getInstance().format(new Date(state.getModificationTime()));
 		}
-		return storage.getName();
+		return fStorage.getName();
 
 	}
 
@@ -212,8 +216,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 * @see org.eclipse.ui.IEditorInput#getPersistable()
 	 */
 	public IPersistableElement getPersistable() {
-		// can't persist
-		return null;
+		return null;   // can't persist
 	}
 
 	/**
@@ -222,86 +225,86 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 * @see org.eclipse.ui.IEditorInput#getToolTipText()
 	 */
 	public String getToolTipText() {
-		return storage.getFullPath().toString();
+		return fStorage.getFullPath().toString();
 	}
 
 	/**
 	 * Method getAdapter.
-	 * @param adapter Class
+	 * @param aAdapter Class
 	 * @return Object
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
 	@Override
-	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
-		if (IWorkbenchAdapter.class.equals(adapter)) return this;
-		if (IStorage.class.equals(adapter)) return storage;
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class aAdapter) {
+		if (IWorkbenchAdapter.class.equals(aAdapter)) return this;
+		if (IStorage.class.equals(aAdapter)) return fStorage;
 		
-		final Object object = super.getAdapter(adapter);
+		final Object object = super.getAdapter(aAdapter);
 		if (null != object) return object;
-		if (adapter.isInstance(fileRevision)) return fileRevision;
-		if (fileRevision instanceof IAdaptable) {
-			final Object adapted = ((IAdaptable) fileRevision).getAdapter(adapter);
-			if (adapter.isInstance(adapted)) return adapted;
+		if (aAdapter.isInstance(fFileVersion)) return fFileVersion;
+		if (fFileVersion instanceof IAdaptable) {
+			final Object adapted = ((IAdaptable) fFileVersion).getAdapter(aAdapter);
+			if (aAdapter.isInstance(adapted)) return adapted;
 		}
-		final Object adapted = Platform.getAdapterManager().getAdapter(fileRevision, adapter);
-		if (adapter.isInstance(adapted)) return adapted;
+		final Object adapted = Platform.getAdapterManager().getAdapter(fFileVersion, aAdapter);
+		if (aAdapter.isInstance(adapted)) return adapted;
 		return null;
 	}
 
 	/**
 	 * Method getChildren.
-	 * @param o Object
+	 * @param aObject Object
 	 * @return Object[]
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getChildren(Object)
 	 */
-	public Object[] getChildren(Object o) {
+	public Object[] getChildren(Object aObject) {
 		return new Object[0];
 	}
 
 	/**
 	 * Method getImageDescriptor.
-	 * @param object Object
+	 * @param aObject Object
 	 * @return ImageDescriptor
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getImageDescriptor(Object)
 	 */
-	public ImageDescriptor getImageDescriptor(Object object) {
+	public ImageDescriptor getImageDescriptor(Object aObject) {
 		return null;
 	}
 
 	/**
 	 * Method getLabel.
-	 * @param o Object
+	 * @param aObject Object
 	 * @return String
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getLabel(Object)
 	 */
-	public String getLabel(Object o) {
-		final IFileRevision rev = (IFileRevision) getAdapter(IFileRevision.class);
-		if (null != rev) return rev.getName();
-		return storage.getName();
+	public String getLabel(Object aObject) {
+		final R4EFileVersion fileVersion = (R4EFileVersion) getAdapter(R4EFileVersion.class);
+		if (null != fileVersion) return fileVersion.getFileRevision().getName();
+		return fStorage.getName();
 	}
 
 	/**
 	 * Method getParent.
-	 * @param o Object
+	 * @param aObject Object
 	 * @return Object
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getParent(Object)
 	 */
-	public Object getParent(Object o) {
+	public Object getParent(Object aObject) {
 		return null;
 	}
 
 	/**
 	 * Method equals.
-	 * @param obj Object
+	 * @param aObject Object
 	 * @return boolean
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) return true;
+	public boolean equals(Object aObject) {
+		if (aObject == this) return true;
 
-		if (obj instanceof FileRevisionEditorInput) {
-			final FileRevisionEditorInput other = (FileRevisionEditorInput) obj;
-			return other.fileRevision.equals(this.fileRevision);
+		if (aObject instanceof FileRevisionEditorInput) {
+			final FileRevisionEditorInput other = (FileRevisionEditorInput) aObject;
+			return other.fFileVersion.equals(this.fFileVersion);
 		}
 		return false;
 	}
@@ -312,27 +315,20 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 */
 	@Override
 	public int hashCode() {
-		return fileRevision.hashCode();
+		return fFileVersion.getFileRevision().hashCode();
 	}
 
 	/**
 	 * @return IFileRevision - the revision
 	 */
-	public IFileRevision getFileRevision() {
-		if (fileRevision instanceof IFileRevision) {
-			return (IFileRevision) fileRevision;
-		}
-		return null;
+	public R4EFileVersion getFileVersion() {
+		return fFileVersion;
 	}
 
 	/**
 	 * @return URI - the URI
 	 */
 	public URI getURI() {
-		if (fileRevision instanceof IFileRevision) {
-			final IFileRevision fr = (IFileRevision) fileRevision;
-			return fr.getURI();
-		}
-		return null;
+		return fFileVersion.getFileRevision().getURI();
 	}
 }

@@ -339,12 +339,15 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			}
 			
 			//Add ProjectURI to the review item
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
-			final String projPlatformURI = ResourceUtils.toPlatformURIStr(rfileBaseVersion.getResource().getProject());
-			if (!fItem.getProjectURIs().contains(projPlatformURI)) {
-				fItem.getProjectURIs().add(projPlatformURI);
-			}
+			//TODO:  temporary solution.  We need to have an Iproject member varaible in R4EFileVersion
+			if (null != rfileBaseVersion.getResource()) {
+				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
+				final String projPlatformURI = ResourceUtils.toPlatformURIStr(rfileBaseVersion.getResource().getProject());
+				if (!fItem.getProjectURIs().contains(projPlatformURI)) {
+					fItem.getProjectURIs().add(projPlatformURI);
+				}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+			}
 		}
 	
 		//Get Target version from Version control system and set core model data

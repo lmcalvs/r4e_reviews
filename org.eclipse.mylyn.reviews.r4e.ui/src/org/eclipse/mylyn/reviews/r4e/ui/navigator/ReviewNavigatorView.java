@@ -52,6 +52,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
@@ -360,8 +361,10 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 						if (null == element) return;
 						
 						//Get file reference
-						final IResource resource = ((R4EUIFileContext)element).getFileContext().getTarget().getResource();
-						
+						final R4EFileVersion fileVersion = ((R4EUIFileContext)element).getFileContext().getTarget();
+						if (null == fileVersion) return;
+					
+						final IResource resource = fileVersion.getResource();
 						if (resource instanceof IFile) {
 						
 							//Get open editors

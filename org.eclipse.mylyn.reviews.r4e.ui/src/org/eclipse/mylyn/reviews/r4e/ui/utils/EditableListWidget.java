@@ -220,7 +220,7 @@ public class EditableListWidget {
 				//Send items updated notification
 				if (null != fListener) {
 					//If items are empty, do not consider them
-					TableItem[] items = fMainTable.getItems();
+					final TableItem[] items = fMainTable.getItems();
 					for (int i = 0 ; i < items.length; i++) {
 						if (items[i].getText().trim().isEmpty()) {
 							fMainTable.remove(i);
@@ -301,7 +301,7 @@ public class EditableListWidget {
 						//Send items updated notification
 						if (null != fListener) {
 							//If items are empty, do not consider them
-							TableItem[] items = fMainTable.getItems();
+							final TableItem[] items = fMainTable.getItems();
 							for (int i = 0 ; i < items.length; i++) {
 								if (items[i].getText().trim().isEmpty()) {
 									fMainTable.remove(i);

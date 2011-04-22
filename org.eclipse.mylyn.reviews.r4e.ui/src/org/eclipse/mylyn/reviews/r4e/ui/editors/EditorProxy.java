@@ -138,8 +138,8 @@ public class EditorProxy {
 				if (null != targetFileVersion) {
 					openSingleEditor(aPage, targetFileVersion, position);
 				} else {
-					//This should never happen
-					Activator.Ftracer.traceError("Target file to open not found");
+					//File was removed, open the base then
+					openSingleEditor(aPage, baseFileVersion, position);
 				}
 			}
 		}
@@ -155,7 +155,7 @@ public class EditorProxy {
 	private static void openSingleEditor(IWorkbenchPage aPage, R4EFileVersion aFileVersion, IR4EUIPosition aPosition) {
 
 		try {
-			final FileRevisionEditorInput fileRevEditorInput = FileRevisionEditorInput.createEditorInputFor(aFileVersion.getFileRevision(), null);
+			final FileRevisionEditorInput fileRevEditorInput = FileRevisionEditorInput.createEditorInputFor(aFileVersion, null);
 
 			final String id = getEditorId(fileRevEditorInput);
 			final IEditorPart editor = aPage.openEditor(fileRevEditorInput, id, OpenStrategy.activateOnOpen());
@@ -199,8 +199,8 @@ public class EditorProxy {
 			config.setProperty(CompareConfiguration.IGNORE_WHITESPACE, Boolean.valueOf(true));
 
 			final ITypedElement ancestor = null;   //Might be improved later
-			final ITypedElement target = new FileRevisionTypedElement(aTargetFileVersion.getFileRevision());
-			final ITypedElement base = new FileRevisionTypedElement(aBaseFileVersion.getFileRevision());
+			final ITypedElement target = new FileRevisionTypedElement(aTargetFileVersion);
+			final ITypedElement base = new FileRevisionTypedElement(aBaseFileVersion);
 
 		    input = new R4ECompareEditorInput(config, ancestor, target, aTargetFileVersion, base, aBaseFileVersion);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE);   // Adjust the compare title
@@ -267,7 +267,7 @@ public class EditorProxy {
 	 * @return String
 	 */
 	private static String getEditorId(FileRevisionEditorInput aEditorInput) {
-		final String id = getEditorId(aEditorInput.getFileRevision().getName(),
+		final String id = getEditorId(aEditorInput.getFileVersion().getFileRevision().getName(),
 				getContentType(aEditorInput));
 		return id;
 	}
@@ -300,7 +300,7 @@ public class EditorProxy {
 		try {
 			final InputStream contents = aEditorInput.getStorage().getContents();
 			try {
-				type = getContentType(aEditorInput.getFileRevision().getName(), contents);
+				type = getContentType(aEditorInput.getFileVersion().getFileRevision().getName(), contents);
 			} finally {
 				try {
 					contents.close();
