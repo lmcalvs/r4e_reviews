@@ -24,10 +24,8 @@ import java.net.URISyntaxException;
 
 import org.eclipse.cdt.core.model.ICElement;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -251,34 +249,6 @@ public class CommandUtils {
 	}
 	
 	/**
-	 * Method createTempFile.
-	 * @param aStream InputStream
-	 * @param aFilename String
-	 * @return IFile 
-	 * @throws CoreException
-	 */
-	public static IFile createTempFile(InputStream aStream, String aFilename) throws CoreException {
-		
-		IFile file = null;
-		
-		//TODO For now we use a dummy project in the workspace to store the temp files.  This should be improved later
-		//IPath path = Activator.getDefault().getStateLocation().addTrailingSeparator().append("temp");
-		//IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
-		if (!project.exists()) project.create(null);
-		if (!project.isOpen()) project.open(null);
-		final IFolder folder = project.getFolder(R4EUIConstants.R4E_TEMP_FOLDER);
-		if (!folder.exists()) folder.create(IResource.NONE, true, null);
-		file = folder.getFile(aFilename);
-		
-		//Always start from fresh copy because we never know what the temp file version is
-		if (file.exists()) file.delete(true, null);
-		file.create(aStream, IResource.NONE, null);
-		
-		return file;
-	}
-	
-	/**
 	 * Method getPosition.
 	 * @param aSelection ITextSelection
 	 * @return TextPosition
@@ -416,5 +386,32 @@ public class CommandUtils {
 		aTargetFileVer.setRepositoryPath(aSrcFile.getLocation().toPortableString());
 		aTargetFileVer.setResource(aSrcFile);
 		aTargetFileVer.setPlatformURI(ResourceUtils.toPlatformURIStr(aSrcFile));
+	}
+	
+	/**
+	 * Method useWorkspaceResource.
+	 * @return boolean
+	 */
+	public static boolean useWorkspaceResource(R4EFileVersion aVersion) {
+		// Get handle to local storage repository
+		IRFSRegistry localRepository;
+		try {
+			localRepository = RFSRegistryFactory.getRegistry(
+					R4EUIModelController.getActiveReview().getReview());
+
+			//If resource is available in the workspace, use it.  Otherwise use the local repo version
+			if (null != aVersion.getResource()) {
+				String workspaceFileId = localRepository.blobIdFor(((IFile)aVersion.getResource()).getContents());
+				String repoFileId = aVersion.getLocalVersionID();
+				if (workspaceFileId.equals((repoFileId))) {
+					return true;
+				}
+			}
+		} catch (ReviewsFileStorageException e) {
+			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		} catch (CoreException e) {
+			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		}
+		return false;
 	}
 }

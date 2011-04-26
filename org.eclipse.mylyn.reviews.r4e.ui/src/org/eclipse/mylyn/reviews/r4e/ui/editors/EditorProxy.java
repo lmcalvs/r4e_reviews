@@ -156,7 +156,6 @@ public class EditorProxy {
 
 		try {
 			final FileRevisionEditorInput fileRevEditorInput = FileRevisionEditorInput.createEditorInputFor(aFileVersion, null);
-
 			final String id = getEditorId(fileRevEditorInput);
 			final IEditorPart editor = aPage.openEditor(fileRevEditorInput, id, OpenStrategy.activateOnOpen());
 

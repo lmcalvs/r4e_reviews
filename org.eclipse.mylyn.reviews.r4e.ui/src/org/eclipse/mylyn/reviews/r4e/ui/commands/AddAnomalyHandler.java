@@ -217,8 +217,8 @@ public class AddAnomalyHandler extends AbstractHandler {
 			for (R4EUIReviewItem reviewItem : reviewItems) {
 				R4EUIFileContext[] files = (R4EUIFileContext[]) reviewItem.getChildren();
 				for (R4EUIFileContext file : files) {
-					if (aTargetFileVersion.getLocalVersionID().equals(
-							file.getFileContext().getTarget().getLocalVersionID())) {
+					if (null != file.getFileContext().getTarget() && 
+							aTargetFileVersion.getLocalVersionID().equals(file.getFileContext().getTarget().getLocalVersionID())) {
 						
 						//File already exists, check if anomaly also exists
 						R4EUIAnomalyContainer anomalyContainer = (R4EUIAnomalyContainer) file.getAnomalyContainerElement();
