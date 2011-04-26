@@ -93,6 +93,8 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 			fPositionText.setText(((R4EUISelection)fProperties.getElement()).getPosition().toString());
 			setEnabledFields();
 			fRefreshInProgress = false;
+		} else {
+			fPositionText.setText("");
 		}
 	}
 	

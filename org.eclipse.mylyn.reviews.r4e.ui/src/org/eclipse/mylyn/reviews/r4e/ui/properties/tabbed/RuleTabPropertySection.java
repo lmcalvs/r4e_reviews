@@ -288,11 +288,19 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 			fClassCombo.setItems(UIUtils.getClasses());
 			if (null != modelRule.getClass()) {
 				fClassCombo.select(modelRule.getClass_().getValue());
+			} else {
+				fClassCombo.setText("");
 			}
 			fRankCombo.setItems(UIUtils.getRanks());
 			fRankCombo.select(modelRule.getRank().getValue());
 			setEnabledFields();
 			fRefreshInProgress = false;
+		} else {
+			fIdText.setText("");
+			fTitleText.setText("");
+			fDescriptionText.setText("");
+			fClassCombo.setText("");
+			fRankCombo.setText("");
 		}
 	}
 	

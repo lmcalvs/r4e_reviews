@@ -456,12 +456,16 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 		fClassCombo.setItems(UIUtils.getClasses());
 		if (null != modelAnomaly.getType() && null != ((R4ECommentType)modelAnomaly.getType()).getType()) {
 			fClassCombo.select(((R4ECommentType)modelAnomaly.getType()).getType().getValue());
+		} else {
+			fClassCombo.setText("");
 		}
 		fRankCombo.setItems(UIUtils.getRanks());
 		fRankCombo.select(modelAnomaly.getRank().getValue());
 		if (null != modelAnomaly.getDueDate()) {
     		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);	
     		fDateText.setText(dateFormat.format(modelAnomaly.getDueDate()));
+		} else {
+			fDateText.setText("");
 		}
 		fDecidedByCombo.setItems(participants.toArray(new String[participants.size()]));
 		fDecidedByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getDecidedByID()));
@@ -469,7 +473,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 		fFixedByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getFixedByID()));
 		fFollowUpByCombo.setItems(participants.toArray(new String[participants.size()]));
 		fFollowUpByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getFollowUpByID()));
-		if (null != modelAnomaly.getNotAcceptedReason()) fNotAcceptedReasonText.setText(modelAnomaly.getNotAcceptedReason());
+		if (null != modelAnomaly.getNotAcceptedReason()) {
+			fNotAcceptedReasonText.setText(modelAnomaly.getNotAcceptedReason());
+		} else {
+			fNotAcceptedReasonText.setText("");
+		}
 		setEnabledFields();
 		fRefreshInProgress = false;
 		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();

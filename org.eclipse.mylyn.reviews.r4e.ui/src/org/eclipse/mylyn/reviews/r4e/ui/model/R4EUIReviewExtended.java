@@ -287,7 +287,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	}
 	
 	/**
-	 * Method getAllowedPhases.
+	 * Method setOldPhaseData.
 	 * @param aNewPhase R4EReviewPhase
 	 * @param aOldPhaseInfo R4EReviewPhaseInfo
 	 */

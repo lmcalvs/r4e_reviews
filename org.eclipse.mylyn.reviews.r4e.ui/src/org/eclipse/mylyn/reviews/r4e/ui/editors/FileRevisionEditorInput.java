@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import org.eclipse.core.resources.IEncodedStorage;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.Assert;
@@ -28,6 +29,10 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.model.IWorkbenchAdapter;
@@ -43,11 +48,6 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
-	/**
-	 * Field storage.
-	 */
-	private final IStorage fStorage;
 
 	/**
 	 * Field fVersion
@@ -65,11 +65,9 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 * @param aStorage
 	 *            the contents of the file revision
 	 */
-	public FileRevisionEditorInput(R4EFileVersion aFileVersion, IStorage aStorage) {
+	public FileRevisionEditorInput(R4EFileVersion aFileVersion) {
 		Assert.isNotNull(aFileVersion);
-		Assert.isNotNull(aStorage);
 		fFileVersion = aFileVersion;
-		fStorage = aStorage;
 	}
 
 	/**
@@ -78,7 +76,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 * @param aCharset String
 	 */
 	public FileRevisionEditorInput(R4EFileVersion aFileVersion, IStorage aStorage, String aCharset) {
-		this(aFileVersion, wrapStorage(aStorage, aCharset));
+		this(aFileVersion/*, wrapStorage(aStorage, aCharset)*/);
 	}
 
 	
@@ -165,8 +163,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 */
 	public static FileRevisionEditorInput createEditorInputFor(R4EFileVersion aFileVersion, IProgressMonitor aMonitor)
 			throws CoreException {
-		final IStorage storage = aFileVersion.getFileRevision().getStorage(aMonitor);
-		return new FileRevisionEditorInput(aFileVersion, storage);
+		return new FileRevisionEditorInput(aFileVersion);
 	}
 	
 	/**
@@ -175,7 +172,16 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 * @see org.eclipse.ui.IStorageEditorInput#getStorage()
 	 */
 	public IStorage getStorage() {
-		return fStorage;
+		if (useWorkspaceResource()) {
+			return ((IFile)fFileVersion.getResource());
+		}
+		try {
+			return fFileVersion.getFileRevision().getStorage(null);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -202,12 +208,16 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 * @see org.eclipse.ui.IEditorInput#getName()
 	 */
 	public String getName() {
-		final IFileState state = (IFileState) getAdapter(IFileState.class);
-		if (null != state) {
-			return state.getName() + " " + DateFormat.getInstance().format(new Date(state.getModificationTime()));
+		if (useWorkspaceResource()) {
+			return fFileVersion.getResource().getName();
 		}
-		return fStorage.getName();
-
+		try {
+			return fFileVersion.getFileRevision().getStorage(null).getName();
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -225,7 +235,16 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 * @see org.eclipse.ui.IEditorInput#getToolTipText()
 	 */
 	public String getToolTipText() {
-		return fStorage.getFullPath().toString();
+		if (useWorkspaceResource()) {
+			return fFileVersion.getResource().getProjectRelativePath().toPortableString();
+		}
+		try {
+			return fFileVersion.getFileRevision().getStorage(null).getFullPath().toString();
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -237,8 +256,6 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class aAdapter) {
 		if (IWorkbenchAdapter.class.equals(aAdapter)) return this;
-		if (IStorage.class.equals(aAdapter)) return fStorage;
-		
 		final Object object = super.getAdapter(aAdapter);
 		if (null != object) return object;
 		if (aAdapter.isInstance(fFileVersion)) return fFileVersion;
@@ -248,6 +265,14 @@ public class FileRevisionEditorInput extends PlatformObject implements
 		}
 		final Object adapted = Platform.getAdapterManager().getAdapter(fFileVersion, aAdapter);
 		if (aAdapter.isInstance(adapted)) return adapted;
+		if (IStorage.class.equals(aAdapter)) {
+			try {
+				return fFileVersion.getFileRevision().getStorage(null);
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return null;
 	}
 
@@ -278,9 +303,7 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getLabel(Object)
 	 */
 	public String getLabel(Object aObject) {
-		final R4EFileVersion fileVersion = (R4EFileVersion) getAdapter(R4EFileVersion.class);
-		if (null != fileVersion) return fileVersion.getFileRevision().getName();
-		return fStorage.getName();
+		return getName();
 	}
 
 	/**
@@ -330,5 +353,34 @@ public class FileRevisionEditorInput extends PlatformObject implements
 	 */
 	public URI getURI() {
 		return fFileVersion.getFileRevision().getURI();
+	}
+
+	/**
+	 * Method useWorkspaceResource.
+	 * @return boolean
+	 */
+	private boolean useWorkspaceResource() {
+		// Get handle to local storage repository
+		IRFSRegistry localRepository;
+		try {
+			localRepository = RFSRegistryFactory.getRegistry(
+					R4EUIModelController.getActiveReview().getReview());
+
+			//If resource is available in the workspace, use it.  Otherwise use the local repo version
+			if (null != fFileVersion.getResource()) {
+				String workspaceFileId = localRepository.blobIdFor(((IFile)fFileVersion.getResource()).getContents());
+				String repoFileId = fFileVersion.getLocalVersionID();
+				if (workspaceFileId.equals((repoFileId))) {
+					return true;
+				}
+			}
+		} catch (ReviewsFileStorageException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();			
+		}
+		return false;
 	}
 }

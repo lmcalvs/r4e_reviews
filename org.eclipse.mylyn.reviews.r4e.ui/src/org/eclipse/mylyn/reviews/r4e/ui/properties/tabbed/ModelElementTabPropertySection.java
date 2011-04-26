@@ -115,8 +115,8 @@ public class ModelElementTabPropertySection extends AbstractPropertySection
 	 */
 	@Override
 	public void refresh() {
-		fRefreshInProgress = true;
 		//default implementation
+		fRefreshInProgress = true;
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}

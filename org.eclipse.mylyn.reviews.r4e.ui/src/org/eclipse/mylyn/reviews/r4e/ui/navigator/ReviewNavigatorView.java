@@ -457,7 +457,9 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 								for (IR4EUIModelElement item : review.getChildren()) {
 									for (IR4EUIModelElement navigatorFile : item.getChildren()) {
 										if (navigatorFile instanceof R4EUIFileContext) {
-											if (((IFile)((R4EUIFileContext) navigatorFile).getFileContext().getTarget().getResource()).equals(editorFile)) {								
+											R4EFileVersion version = ((R4EUIFileContext) navigatorFile).getFileContext().getTarget();
+											if (null != version && null != (IFile)version.getResource() && 
+													((IFile)version.getResource()).equals(editorFile)) {								
 
 												//We found the parent fileContext, now check if the selection is already within this branch
 												IR4EUIModelElement selectedElement = 

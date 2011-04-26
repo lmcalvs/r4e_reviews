@@ -161,9 +161,15 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 			if (null != ((R4EUIRuleSet)fProperties.getElement()).getRuleSet().eResource()) { 
 				fFilePathText.setText(((R4EUIRuleSet)fProperties.getElement()).getRuleSet().
 					eResource().getURI().toFileString());
+			} else {
+				fFilePathText.setText("");
 			}
 			setEnabledFields();
 			fRefreshInProgress = false;
+		} else {
+			fVersionText.setText("");
+			fNameText.setText("");
+			fFilePathText.setText("");
 		}
 	}
 	

@@ -407,7 +407,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				baseFileVersion.setResource(baseFile);
 			} catch (FileNotFoundException e) {
 				Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logInfo("Exception: " + e.toString(), e);
 				baseFileVersion.setResource(null);
 			}
 
@@ -418,7 +417,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 					baseFileVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
 					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					Activator.getDefault().logInfo("Exception: " + e.toString(), e);
 				}
 			}
 		}
@@ -430,8 +428,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				final IFile targetFile = ResourceUtils.toIFile(targetFileVersion.getPlatformURI());
 				targetFileVersion.setResource(targetFile);
 			} catch (FileNotFoundException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logError("Exception: " + e.toString(), e);
+				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				targetFileVersion.setResource(null);
 			}
 
@@ -442,7 +439,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 					targetFileVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
 					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					Activator.getDefault().logInfo("Exception: " + e.toString(), e);
 				}
 			}
 		}
@@ -562,13 +558,15 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * @return true/false
 	 */
 	public boolean isFileVersionsComparable() {
-		//Do we have a base file to compare with?
-		if (null == fFile.getBase() || null == fFile.getTarget()) {
-			return false;
-		}
-		//Are the base and target file the same?
-		if (fFile.getBase().getLocalVersionID().equals(fFile.getTarget().getLocalVersionID())) {
-			return false;
+		//Do we have at lease a file present?
+		if (null != fFile.getBase() || null != fFile.getTarget()) {
+		
+			//Are the base and target file the same?
+			if (null != fFile.getBase() && null != fFile.getTarget()) {
+				if (fFile.getBase().getLocalVersionID().equals(fFile.getTarget().getLocalVersionID())) {
+					return false;
+				}
+			}
 		}
 		return true;
 	}
@@ -580,7 +578,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		if (isEnabled() && null != getTargetFileVersion()) return true;
+		if (isEnabled() && (null != getTargetFileVersion() || null != getBaseFileVersion())) return true;
 		return false;
 	}
 	

@@ -119,6 +119,8 @@ public class RuleViolationTabPropertySection extends ModelElementTabPropertySect
 			fNameText.setText(((R4EUIRuleViolation)fProperties.getElement()).getViolation().getName());
 			setEnabledFields();
 			fRefreshInProgress = false;
+		} else {
+			fNameText.setText("");
 		}
 	}
 	

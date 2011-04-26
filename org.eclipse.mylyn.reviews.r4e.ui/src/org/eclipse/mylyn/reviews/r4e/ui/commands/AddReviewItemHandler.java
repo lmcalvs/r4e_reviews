@@ -222,8 +222,8 @@ public class AddReviewItemHandler extends AbstractHandler {
 			for (R4EUIReviewItem reviewItem : reviewItems) {
 				R4EUIFileContext[] files = (R4EUIFileContext[]) reviewItem.getChildren();
 				for (R4EUIFileContext file : files) {
-					if (aTargetFileVersion.getLocalVersionID().equals(
-							file.getFileContext().getTarget().getLocalVersionID())) {
+					if (null != file.getFileContext().getTarget() && 
+							aTargetFileVersion.getLocalVersionID().equals(file.getFileContext().getTarget().getLocalVersionID())) {
 						if (null == file.getFileContext().getBase() && "".equals(aBaseFileVersion.getVersionID()) ||
 								aBaseFileVersion.getLocalVersionID().equals(file.getFileContext().getBase().getLocalVersionID())) {
 							//File already exists, check if selection also exists

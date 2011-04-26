@@ -55,7 +55,7 @@ public class SetFocusFilterHandler extends AbstractHandler {
 		final Object[] elements =  viewer.getExpandedElements();
 		final FocusFilter filter = 
 	    	((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).getFocusFilter();
-	
+
 		//Set current element as root level for the navigator tree
 		final Command command = event.getCommand(); 
 		boolean oldValue = HandlerUtil.toggleCommandState(command);

@@ -187,7 +187,11 @@ public class EditorProxy {
 		
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;
-		final IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileVersion.getName(), aTargetFileVersion.getName());
+		
+		IEditorPart editor = null;
+		if (null != aBaseFileVersion && null != aTargetFileVersion) {
+			editor = findReusableCompareEditor(aPage, aBaseFileVersion.getName(), aTargetFileVersion.getName());
+		}
 		if (null != editor) {
 			//Simply provide focus to editor
 			aPage.activate(editor);
@@ -199,14 +203,16 @@ public class EditorProxy {
 			config.setProperty(CompareConfiguration.IGNORE_WHITESPACE, Boolean.valueOf(true));
 
 			final ITypedElement ancestor = null;   //Might be improved later
-			final ITypedElement target = new FileRevisionTypedElement(aTargetFileVersion);
-			final ITypedElement base = new FileRevisionTypedElement(aBaseFileVersion);
+			ITypedElement target = null;
+			if (null != aTargetFileVersion) target = new FileRevisionTypedElement(aTargetFileVersion);
+			ITypedElement base = null;
+			if (null != aBaseFileVersion) base =  new FileRevisionTypedElement(aBaseFileVersion);
 
 		    input = new R4ECompareEditorInput(config, ancestor, target, aTargetFileVersion, base, aBaseFileVersion);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE);   // Adjust the compare title
 
-			Activator.Ftracer.traceInfo("Open compare editor on files " + target.getName() + " (Target) and "
-					+ base.getName() + " (Base)");
+			Activator.Ftracer.traceInfo("Open compare editor on files " + (null != target ? target.getName(): "") + " (Target) and "
+					+ (null != base ? base.getName(): "") + " (Base)");
 			CompareUI.openCompareEditor(input, true);
 		}
 		

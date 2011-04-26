@@ -112,7 +112,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field FEntryCriteriaText.
 	 */
-	protected CLabel fEntryCriteriaText = null;
+	protected Text fEntryCriteriaText = null;
 	
 	/**
 	 * Field FObjectivesText.
@@ -239,7 +239,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    componentsLabel.setLayoutData(data);
 	    
 	    //Entry Criteria (read-only)
-	    fEntryCriteriaText = widgetFactory.createCLabel(mainForm, "");
+	    fEntryCriteriaText = widgetFactory.createText(mainForm, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -252,7 +252,28 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.right = new FormAttachment(fEntryCriteriaText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fEntryCriteriaText, 0, SWT.TOP);
 	    entryCriteriaLabel.setLayoutData(data);
-	
+	    fEntryCriteriaText.addFocusListener(new FocusListener() {		
+			public void focusLost(FocusEvent e) {
+	    		if (!fRefreshInProgress) {
+	    			try {
+	    				final String currentUser = R4EUIModelController.getReviewer();
+						final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
+	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+	    				modelReview.setEntryCriteria(fEntryCriteriaText.getText());
+	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	    			} catch (ResourceHandlingException e1) {
+	    				UIUtils.displayResourceErrorDialog(e1);
+	    			} catch (OutOfSyncException e1) {
+	    				UIUtils.displaySyncErrorDialog(e1);
+	    			}
+	    		}
+			}
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
+				//Nothing to do
+			}
+		});
+	    UIUtils.addTabbedPropertiesTextResizeListener(fEntryCriteriaText);
+	    
 	    //Objectives
 	    fObjectivesText = widgetFactory.createText(mainForm, "");
 	    data = new FormData();
@@ -536,19 +557,28 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			fMeetingSubjectLabel.setText(meetingData.getSubject());
     		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT_MINUTES);	
 			fMeetingStartTimeLabel.setText(dateFormat.format(new Date(meetingData.getStartTime())));
-			fMeetingDurationLabel.setText(dateFormat.format(new Date(meetingData.getDuration())));
+			fMeetingDurationLabel.setText(Integer.toString(meetingData.getDuration()));
 			fMeetingLocationLabel.setText(meetingData.getLocation());
+		} else {
+			fMeetingSubjectLabel.setText("");
+			fMeetingStartTimeLabel.setText("");
+			fMeetingDurationLabel.setText("");
+			fMeetingLocationLabel.setText("");
 		}
 		
 		fExitDecisionCombo.setItems(((R4EUIReviewBasic)fProperties.getElement()).getExitDecisionValues());
-		if (null != modelReview.getDecision()) fExitDecisionCombo.select((null == modelReview.getDecision().getValue()) ? 0 : 
-			modelReview.getDecision().getValue().getValue());
-		
+		if (null != modelReview.getDecision()) {
+			fExitDecisionCombo.select((null == modelReview.getDecision().getValue()) ? 0 : modelReview.getDecision().getValue().getValue());
+		} else {
+			fExitDecisionCombo.setText("");
+		}
+
 		if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 	    	final List<R4EParticipant> participants = ((R4EUIReviewBasic)fProperties.getElement()).getParticipants();
 	    	
 	    	item = null;
 	    	final int numParticipants = participants.size();
+	    	fDecisionUsersList.clearAll();
 			for (int i = 0; i < numParticipants; i++) {
 				if (participants.get(i).isIsPartOfDecision()) {
 					if (i >= fDecisionUsersList.getItemCount()) {
@@ -560,7 +590,11 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 					item.setText(participants.get(i).getId());
 				}
 			}
-			if (null != modelReview.getDecision()) fDecisionTimeSpentText.setText(Integer.valueOf(modelReview.getDecision().getSpentTime()).toString());
+			if (null != modelReview.getDecision()) {
+				fDecisionTimeSpentText.setText(Integer.valueOf(modelReview.getDecision().getSpentTime()).toString());
+			} else {
+				fDecisionTimeSpentText.setText("");
+			}
 		}
 		setEnabledFields();
 		fRefreshInProgress = false;
@@ -596,11 +630,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		} else {
 			fProjectCombo.setEnabled(true);
 			fComponents.setEnabled(true);
-			if (null != fEntryCriteriaText.getText() && !("".equals(fEntryCriteriaText.getText()))) {
-				fEntryCriteriaText.setEnabled(true);
-			} else {
-				fEntryCriteriaText.setEnabled(false);
-			}
+			fEntryCriteriaText.setEnabled(true);
 			fObjectivesText.setEnabled(true);
 			fReferenceMaterialText.setEnabled(true);
 			

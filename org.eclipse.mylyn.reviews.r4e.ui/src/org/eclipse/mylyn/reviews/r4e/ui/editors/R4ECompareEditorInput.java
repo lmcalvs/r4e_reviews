@@ -146,8 +146,8 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		aMonitor.beginTask("R4E Compare", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
 		
 		// Set the label values for the compare editor
-		fConfig.setLeftLabel("Target: " + fLeftVersion.getName() + "_" + fLeftVersion.getVersionID());
-		fConfig.setRightLabel("Base: " + fRightVersion.getName() + "_" + fRightVersion.getVersionID());
+		if (null != fLeftVersion) fConfig.setLeftLabel("Target: " + fLeftVersion.getName() + "_" + fLeftVersion.getVersionID());
+		if (null != fRightVersion) fConfig.setRightLabel("Base: " + fRightVersion.getName() + "_" + fRightVersion.getVersionID());
 
 		// If the ancestor is not null, just put the file name as the workspace label
 		if (null != fAncestor) fConfig.setAncestorLabel(fAncestor.getName());
@@ -174,8 +174,14 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	public String getToolTipText() {
 		if (null != fLeft && null != fRight) {
 			String format = null;
-			final String leftLabel = fLeftVersion.getName() + "_" + fLeftVersion.getVersionID();
-			final String rightLabel = fRightVersion.getName() + "_" + fRightVersion.getVersionID();		
+			String leftLabel = "";
+			if (null != fLeftVersion) {
+				leftLabel = fLeftVersion.getName() + "_" + fLeftVersion.getVersionID();
+			}
+			String rightLabel = "";
+			if (null != fRightVersion) {
+				rightLabel = fRightVersion.getName() + "_" + fRightVersion.getVersionID();		
+			}
 			if (null != fAncestor) { 	
 				format = CompareUI.getResourceBundle().getString("ResourceCompare.threeWay.tooltip"); //$NON-NLS-1$
 				final String ancestorLabel = "";

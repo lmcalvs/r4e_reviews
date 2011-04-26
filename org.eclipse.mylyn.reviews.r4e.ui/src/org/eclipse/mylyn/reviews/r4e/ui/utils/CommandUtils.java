@@ -216,7 +216,6 @@ public class CommandUtils {
 			iStream = fileRev.getStorage(null).getContents();
 		} catch (CoreException e) {
 			Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logInfo("Exception: " + e.toString(), e);
 			return null;
 		}
 		

@@ -161,7 +161,11 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		final R4EItem modelItem = ((R4EUIReviewItem)fProperties.getElement()).getItem();
 		fAuthorText.setText(modelItem.getAddedById());
 		fProjectIdList.setItems((String[]) modelItem.getProjectURIs().toArray());
-		if (null != modelItem.getDescription()) fDescriptionText.setText(modelItem.getDescription());
+		if (null != modelItem.getDescription()) {
+			fDescriptionText.setText(modelItem.getDescription());
+		} else {
+			fDescriptionText.setText("");
+		}
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}

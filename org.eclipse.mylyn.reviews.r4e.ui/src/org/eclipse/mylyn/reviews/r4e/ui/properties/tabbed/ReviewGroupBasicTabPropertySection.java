@@ -170,7 +170,11 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getReviewGroup();
 		fNameText.setText(modelGroup.getName());
 		fFolderText.setText(modelGroup.getFolder());
-		if (null != modelGroup.getDescription()) fDescriptionText.setText(modelGroup.getDescription());
+		if (null != modelGroup.getDescription()) {
+			fDescriptionText.setText(modelGroup.getDescription());
+		} else {
+			fDescriptionText.setText("");
+		}
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}

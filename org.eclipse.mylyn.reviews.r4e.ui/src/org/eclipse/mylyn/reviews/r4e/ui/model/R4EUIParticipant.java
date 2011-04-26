@@ -257,11 +257,9 @@ public class R4EUIParticipant extends R4EUIModelElement {
     				}			
     			}
     		} catch (NamingException e) {
-    			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-    			Activator.getDefault().logError("Exception: " + e.toString(), e);
+    			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
     		} catch (IOException e) {
-    			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-    			Activator.getDefault().logError("Exception: " + e.toString(), e);
+    			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
     		}
     	}
     }

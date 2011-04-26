@@ -448,10 +448,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
         			}
         		} catch (NamingException e) {
         			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-        			Activator.getDefault().logError("Exception: " + e.toString(), e);
         		} catch (IOException e) {
-        			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-        			Activator.getDefault().logError("Exception: " + e.toString(), e);
+        			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
         		}
         	}
     	}

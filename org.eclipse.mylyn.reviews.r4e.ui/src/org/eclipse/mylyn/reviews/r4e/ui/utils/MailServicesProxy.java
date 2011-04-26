@@ -336,7 +336,7 @@ public class MailServicesProxy {
     			msgBody.append("Eclipse Project: File Path Relative to Eclipse Project[: Line range]" + LINE_FEED_MSG_PART);
     			R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
     			for (R4EUIFileContext context : contexts) {
-    				if (context.isEnabled() && null != context.getTargetFileVersion()) {
+    				if (context.isEnabled() && null != context.getTargetFileVersion() && null != context.getTargetFileVersion().getResource()) {
     					msgBody.append(TAB_MSG_PART + context.getTargetFileVersion().getResource().getProject() + ": " +
     							context.getTargetFileVersion().getResource().getProjectRelativePath());
     					if (null != context.getSelectionContainerElement()) {
@@ -380,7 +380,7 @@ public class MailServicesProxy {
     			msgBody.append("Eclipse Project: File Path Relative to Eclipse Project[: Line range]" + LINE_FEED_MSG_PART);
     			EList<R4EFileContext> contexts = ((R4EItem)component).getFileContextList();
     			for (R4EFileContext context : contexts) {
-    				if (null != context.getTarget()) {
+    				if (null != context.getTarget() && null != context.getTarget().getResource()) {
     					msgBody.append(TAB_MSG_PART + context.getTarget().getResource().getProject() + ": " +
     							context.getTarget().getResource().getProjectRelativePath());
     					if (context.getDeltas().size() > 0) {
@@ -400,9 +400,11 @@ public class MailServicesProxy {
     				legendAppended = true;
     			}
     			R4EFileContext context = (R4EFileContext) ((R4EDelta)component).eContainer();
-    			msgBody.append(context.getTarget().getResource().getProject() + ": " +
-    					context.getTarget().getResource().getProjectRelativePath() + ": " +
-						buildLineTag((R4EDelta)component) + ", ");
+				if (null != context.getTarget() && null != context.getTarget().getResource()) {
+					msgBody.append(context.getTarget().getResource().getProject() + ": " +
+							context.getTarget().getResource().getProjectRelativePath() + ": " +
+							buildLineTag((R4EDelta)component) + ", ");
+				}
         	}
 			msgBody.append(LINE_FEED_MSG_PART);
     	} 

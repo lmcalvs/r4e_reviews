@@ -119,6 +119,8 @@ public class RuleAreaTabPropertySection extends ModelElementTabPropertySection {
 			fNameText.setText(((R4EUIRuleArea)fProperties.getElement()).getArea().getName());
 			setEnabledFields();
 			fRefreshInProgress = false;
+		} else {
+			fNameText.setText("");
 		}
 	}
 	

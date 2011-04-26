@@ -25,6 +25,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyExtended;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipantContainer;
@@ -60,11 +61,14 @@ public class AnomaliesMyFilter extends ViewerFilter  {
 		if (element instanceof R4EUIReviewBasic) {
 			if (!((R4EUIReviewBasic)element).isOpen()) return false;
 		}
-		//Only show anomalies
+		//Only show anomalies and comments
 		if (element instanceof R4EUISelectionContainer || element instanceof R4EUISelection || 
 				element instanceof R4EUIParticipantContainer || element instanceof R4EUIParticipant ||
 				element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea ||
 				element instanceof R4EUIRuleViolation || element instanceof R4EUIRule) return false;
+		
+		//always show comments
+		if (element instanceof R4EUIComment) return true;
 		
 		//For basic reviews, show all anomalies, For other review types, only show anomalies assigned to us
 		if (element instanceof R4EUIAnomalyExtended) {

@@ -316,7 +316,6 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			revRegistry = RFSRegistryFactory.getRegistry(((R4EUIReviewBasic) this.getParent()).getReview());
 		} catch (ReviewsFileStorageException e1) {
 			Activator.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
-			Activator.getDefault().logInfo("Exception: " + e1.toString(), e1);
 		}
 		
 		final R4EFileContext fileContext = R4EUIModelController.FModelExt.createR4EFileContext(fItem);			
@@ -334,7 +333,6 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 					rfileBaseVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
 					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					Activator.getDefault().logInfo("Exception: " + e.toString(), e);
 				}
 			}
 			
@@ -362,7 +360,6 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 					rfileTargetVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
 					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					Activator.getDefault().logInfo("Exception: " + e.toString(), e);
 				}
 			}
 			

@@ -241,7 +241,7 @@ public class EditableListWidget {
 		buttonsComposite.setLayoutData(new GridData(GridData.CENTER, GridData.CENTER, false, false));
 
         fAddButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_ADD_LABEL, SWT.NONE);
-		if (!aEditableWidgetClass.equals(Text.class)) {
+		if (aEditableWidgetClass.equals(CCombo.class)) {
 			if (null == fValues || 0 == fValues.length) fAddButton.setEnabled(false);	
 		}
         fRemoveButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_REMOVE_LABEL, SWT.NONE);
