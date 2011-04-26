@@ -10,7 +10,7 @@
          Tasktop Technologies - initial API and implementation
  -->
 <feature
-      id="org.eclipse.mylyn.reviews.r4e.feature"
+      id="org.eclipse.mylyn.reviews.r4e"
       label="%featureName"
       version="0.8.0.qualifier"
       provider-name="%providerName"
