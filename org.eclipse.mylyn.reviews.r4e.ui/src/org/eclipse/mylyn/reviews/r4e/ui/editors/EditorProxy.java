@@ -27,6 +27,7 @@ import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ICompareNavigator;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.ResourceNode;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentType;
@@ -45,12 +46,14 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IEditorRegistry;
 import org.eclipse.ui.IReusableEditor;
+import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
@@ -155,9 +158,18 @@ public class EditorProxy {
 	private static void openSingleEditor(IWorkbenchPage aPage, R4EFileVersion aFileVersion, IR4EUIPosition aPosition) {
 
 		try {
-			final FileRevisionEditorInput fileRevEditorInput = FileRevisionEditorInput.createEditorInputFor(aFileVersion, null);
-			final String id = getEditorId(fileRevEditorInput);
-			final IEditorPart editor = aPage.openEditor(fileRevEditorInput, id, OpenStrategy.activateOnOpen());
+			IStorageEditorInput editorInput = null;
+			
+			//NOTE:  We use the workspace file as input if it is in sync with the file to review,
+			//		 otherwise we use the file to review that is included in the review repository
+			if (CommandUtils.useWorkspaceResource(aFileVersion)) {
+				editorInput = new R4EFileEditorInput(aFileVersion);
+			} else {
+				editorInput = new R4EFileRevisionEditorInput(aFileVersion);
+			}
+			final String id = getEditorId(editorInput.getName(), getContentType(editorInput.getName(), 
+					editorInput.getStorage().getContents()));
+			final IEditorPart editor = aPage.openEditor(editorInput, id, OpenStrategy.activateOnOpen());
 
 			//Set highlighted selection and reset cursor if possible
 			if (editor instanceof ITextEditor && aPosition instanceof R4EUITextPosition) {
@@ -199,13 +211,27 @@ public class EditorProxy {
 			config.setRightEditable(false);
 			config.setProperty(CompareConfiguration.IGNORE_WHITESPACE, Boolean.valueOf(true));
 
-			final ITypedElement ancestor = null;   //Might be improved later
+			//NOTE:  We use the workspace file as input if it is in sync with the file to review,
+			//		 otherwise we use the file to review that is included in the review repository
+			final R4EFileRevisionTypedElement ancestor = null;   //Might be improved later
 			ITypedElement target = null;
-			if (null != aTargetFileVersion) target = new FileRevisionTypedElement(aTargetFileVersion);
+			if (null != aTargetFileVersion) {
+				if (CommandUtils.useWorkspaceResource(aTargetFileVersion)) {
+					target = new R4EFileTypedElement(aTargetFileVersion);
+				} else {
+					target = new R4EFileRevisionTypedElement(aTargetFileVersion);
+				}
+			}
 			ITypedElement base = null;
-			if (null != aBaseFileVersion) base =  new FileRevisionTypedElement(aBaseFileVersion);
+			if (null != aBaseFileVersion) {
+				if (CommandUtils.useWorkspaceResource(aBaseFileVersion)) {
+					base = new ResourceNode(aBaseFileVersion.getResource());
+				} else {
+					base =  new R4EFileRevisionTypedElement(aBaseFileVersion);
+				}
+			}
 
-		    input = new R4ECompareEditorInput(config, ancestor, target, aTargetFileVersion, base, aBaseFileVersion);
+		    input = new R4ECompareEditorInput(config, ancestor, target, base);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE);   // Adjust the compare title
 
 			Activator.Ftracer.traceInfo("Open compare editor on files " + (null != target ? target.getName(): "") + " (Target) and "
@@ -281,18 +307,6 @@ public class EditorProxy {
 		// no re-usable editor found
 		return null;
 	}
-	
-	
-	/**
-	 * Method getEditorId.
-	 * @param aEditorInput FileRevisionEditorInput
-	 * @return String
-	 */
-	private static String getEditorId(FileRevisionEditorInput aEditorInput) {
-		final String id = getEditorId(aEditorInput.getFileVersion().getFileRevision().getName(),
-				getContentType(aEditorInput));
-		return id;
-	}
 
 	/**
 	 * Method getEditorId.
@@ -310,31 +324,6 @@ public class EditorProxy {
 			id = descriptor.getId();
 		}
 		return id;
-	}
-
-	/**
-	 * Method getContentType.
-	 * @param aEditorInput FileRevisionEditorInput
-	 * @return IContentType
-	 */
-	private static IContentType getContentType(FileRevisionEditorInput aEditorInput) {
-		IContentType type = null;
-		try {
-			final InputStream contents = aEditorInput.getStorage().getContents();
-			try {
-				type = getContentType(aEditorInput.getFileVersion().getFileRevision().getName(), contents);
-			} finally {
-				try {
-					contents.close();
-				} catch (IOException e) {
-					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					Activator.getDefault().logWarning("Exception: " + e.toString(), e);
-				}
-			}
-		} catch (CoreException e) {
-			UIUtils.displayCoreErrorDialog(e);
-		}
-		return type;
 	}
 
 	/**

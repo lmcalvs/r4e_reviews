@@ -31,7 +31,7 @@ import org.eclipse.ui.IEditorInput;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class FileRevisionTypedElement extends StorageTypedElement {
+public class R4EFileRevisionTypedElement extends StorageTypedElement {
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -55,7 +55,7 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 	/**
 	 * @param aFileVersion R4EFileVersion - the file revision
 	 */
-	public FileRevisionTypedElement(R4EFileVersion aFileVersion) {
+	public R4EFileRevisionTypedElement(R4EFileVersion aFileVersion) {
 		this(aFileVersion, null);
 	}
 
@@ -65,7 +65,7 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 	 * @param aLocalEncoding String
 	 *            the encoding of the local file that corresponds to the given file revision
 	 */
-	public FileRevisionTypedElement(R4EFileVersion aFileVersion, String aLocalEncoding) {
+	public R4EFileRevisionTypedElement(R4EFileVersion aFileVersion, String aLocalEncoding) {
 		super(aLocalEncoding);
 		Assert.isNotNull(aFileVersion);
 		fFileVersion = aFileVersion;
@@ -141,7 +141,7 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 	@Override
 	public IEditorInput getDocumentKey(Object aElement) {
 		if (aElement.equals(this)) {
-			return new FileRevisionEditorInput(fFileVersion);
+			return new R4EFileRevisionEditorInput(fFileVersion);
 		}
 		return null;
 	}
@@ -166,8 +166,8 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 	@Override
 	public boolean equals(Object aObj) {
 		if (aObj == this) return true;
-		if (aObj instanceof FileRevisionTypedElement) {
-			final FileRevisionTypedElement other = (FileRevisionTypedElement) aObj;
+		if (aObj instanceof R4EFileRevisionTypedElement) {
+			final R4EFileRevisionTypedElement other = (R4EFileRevisionTypedElement) aObj;
 			return other.getFileVersion().equals(getFileVersion());
 		}
 		return false;

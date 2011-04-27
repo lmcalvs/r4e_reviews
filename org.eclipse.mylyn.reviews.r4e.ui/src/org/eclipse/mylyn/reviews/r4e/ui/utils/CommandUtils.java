@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 
 import org.eclipse.cdt.core.model.ICElement;
+import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -39,8 +40,11 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.editors.FileRevisionEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.versions.core.ChangeType;
@@ -64,11 +68,17 @@ public class CommandUtils {
 	
 	/**
 	 * Field NO_SOURCE_CONTROL_ID_TEXT.
-	 * (value is ""(Not in source control)"")
+	 * (value is ""(Version not in Source Control)"")
 	 */
-	private static final String NO_SOURCE_CONTROL_ID_TEXT = "(Not in source control)";
+	private static final String NO_SOURCE_CONTROL_ID_TEXT = "(Version not in Source Control)";
 	
+	/**
+	 * Field INVALID_PATH.
+	 * (value is ""/dev/null"")
+	 */
+	private static final String INVALID_PATH = "/dev/null";
 	
+		
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -92,9 +102,18 @@ public class CommandUtils {
 			//If we get here, this is because we are trying to act on the compare editor contents
 			//this means that the file we are acting on is already in the local repository
 			//in this case, we only need to provide the versionId of this file
-			return ((R4ECompareEditorInput)input).getLeftElementVersion();
-		} else if (input instanceof  FileRevisionEditorInput) {
-			return ((FileRevisionEditorInput)input).getFileVersion();
+			ITypedElement element = ((R4ECompareEditorInput) input).getLeftElement();
+			if (element instanceof R4EFileRevisionTypedElement) {
+				return ((R4EFileRevisionTypedElement)element).getFileVersion();
+			} else if (element instanceof R4EFileTypedElement) {
+				return ((R4EFileTypedElement)element).getFileVersion();
+			} else {
+				return null;
+			}
+		} else if (input instanceof  R4EFileRevisionEditorInput) {
+			return ((R4EFileRevisionEditorInput)input).getFileVersion();
+		} else if (input instanceof  R4EFileEditorInput) {
+			return ((R4EFileEditorInput)input).getFileVersion();
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, 
@@ -161,9 +180,18 @@ public class CommandUtils {
 			//If we get here, this is because we are trying to act on the compare editor contents
 			//this means that the file we are acting on is already in the local repository
 			//in this case, we only need to provide the versionId of this file
-			return ((R4ECompareEditorInput)input).getRightElementVersion();
-		} else if (input instanceof  FileRevisionEditorInput) {
-			return ((FileRevisionEditorInput)input).getFileVersion();
+			ITypedElement element = ((R4ECompareEditorInput) input).getRightElement();
+			if (element instanceof R4EFileRevisionTypedElement) {
+				return ((R4EFileRevisionTypedElement)element).getFileVersion();
+			} else if (element instanceof R4EFileTypedElement) {
+				return ((R4EFileTypedElement)element).getFileVersion();
+			} else {
+				return null;
+			}
+		} else if (input instanceof  R4EFileRevisionEditorInput) {
+			return ((R4EFileRevisionEditorInput)input).getFileVersion();
+		} else if (input instanceof  R4EFileEditorInput) {
+			return ((R4EFileEditorInput)input).getFileVersion();
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, 
@@ -205,6 +233,8 @@ public class CommandUtils {
 	 */
 	public static R4EFileVersion copyRemoteFileToLocalRepository(IRFSRegistry aLocalRepository, ScmArtifact aArtifact) 
 	throws ReviewsFileStorageException {
+
+		if (aArtifact.getPath().equals(INVALID_PATH)) return null;  //File not found in remote repository
 
 		final IFileRevision fileRev = aArtifact.getFileRevision(null);
 		
@@ -400,7 +430,7 @@ public class CommandUtils {
 					R4EUIModelController.getActiveReview().getReview());
 
 			//If resource is available in the workspace, use it.  Otherwise use the local repo version
-			if (null != aVersion.getResource()) {
+			if (null != aVersion && null != aVersion.getResource()) {
 				String workspaceFileId = localRepository.blobIdFor(((IFile)aVersion.getResource()).getContents());
 				String repoFileId = aVersion.getLocalVersionID();
 				if (workspaceFileId.equals((repoFileId))) {

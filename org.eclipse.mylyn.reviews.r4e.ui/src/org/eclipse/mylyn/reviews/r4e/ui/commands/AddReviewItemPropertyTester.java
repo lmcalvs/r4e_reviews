@@ -29,7 +29,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.editors.FileRevisionEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -69,8 +69,8 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 					final IWorkbenchPage page = window.getActivePage();
 					if (null != page) {
 						editorInput = page.getActiveEditor().getEditorInput();
-						if (editorInput instanceof FileRevisionEditorInput) {
-							if (null == ((FileRevisionEditorInput)editorInput).getFileVersion().getResource()) {
+						if (editorInput instanceof R4EFileRevisionEditorInput) {
+							if (null == ((R4EFileRevisionEditorInput)editorInput).getFileVersion().getResource()) {
 								return false;
 							}
 						}

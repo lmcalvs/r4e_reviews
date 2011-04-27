@@ -28,7 +28,6 @@ import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 
 
@@ -61,16 +60,6 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * Field fRight - the element that will appear on the right side of the compare editor
 	 */
 	private final ITypedElement fRight;
-
-	/**
-	 * Field fLeftVersion - the local version of the element that will appear on the left side of the compare editor
-	 */
-	private final R4EFileVersion fLeftVersion;
-	
-	/**
-	 * Field fRightVersion - the local version of the element that will appear on the right side of the compare editor
-	 */
-	private final R4EFileVersion fRightVersion;
 	
 	
 	// ------------------------------------------------------------------------
@@ -87,14 +76,12 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * @param aRightVersion R4EFileVersion
 	 */
 	public R4ECompareEditorInput(CompareConfiguration aConfig, ITypedElement aAncestor, ITypedElement aLeft, 
-			R4EFileVersion aLeftVersion, ITypedElement aRight, R4EFileVersion aRightVersion) {
+			ITypedElement aRight) {
 		super(aConfig, null);
 		fConfig = aConfig;
 		fAncestor = aAncestor;
 		fLeft = aLeft;
-		fLeftVersion = aLeftVersion;
 		fRight = aRight;
-		fRightVersion = aRightVersion;
 	}
 
 	
@@ -105,7 +92,7 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	
 	/**
 	 * Method getLeftElement.
-	 * @return ITypedElement
+	 * @return FileRevisionTypedElement
 	 */
 	public ITypedElement getLeftElement() {
 		return fLeft;
@@ -113,26 +100,10 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	
 	/**
 	 * Method getRightElement.
-	 * @return ITypedElement
+	 * @return FileRevisionTypedElement
 	 */
 	public ITypedElement getRightElement() {
 		return fRight;
-	}
-	
-	/**
-	 * Method getLeftElementVersion.
-	 * @return R4EFileVersion
-	 */
-	public R4EFileVersion getLeftElementVersion() {
-		return fLeftVersion;
-	}
-	
-	/**
-	 * Method getRightElementVersion.
-	 * @return R4EFileVersion
-	 */
-	public R4EFileVersion getRightElementVersion() {
-		return fRightVersion;
 	}
 	
 	/**
@@ -146,8 +117,20 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		aMonitor.beginTask("R4E Compare", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
 		
 		// Set the label values for the compare editor
-		if (null != fLeftVersion) fConfig.setLeftLabel("Target: " + fLeftVersion.getName() + "_" + fLeftVersion.getVersionID());
-		if (null != fRightVersion) fConfig.setRightLabel("Base: " + fRightVersion.getName() + "_" + fRightVersion.getVersionID());
+		if (null != fLeft) {
+			StringBuilder leftLabel = new StringBuilder("Target: " + fLeft.getName());
+			if (fLeft instanceof R4EFileRevisionTypedElement) {
+				leftLabel.append(" " + ((R4EFileRevisionTypedElement) fLeft).getFileVersion().getVersionID().substring(0, 7));
+			}
+			fConfig.setLeftLabel(leftLabel.toString());
+		}
+		if (null != fRight) {
+			StringBuilder rightLabel = new StringBuilder("Base: " + fRight.getName());
+			if (fRight instanceof R4EFileRevisionTypedElement) {
+				rightLabel.append("_" + ((R4EFileRevisionTypedElement) fRight).getFileVersion().getVersionID());
+			}
+			fConfig.setRightLabel(rightLabel.toString());
+		}
 
 		// If the ancestor is not null, just put the file name as the workspace label
 		if (null != fAncestor) fConfig.setAncestorLabel(fAncestor.getName());
@@ -174,14 +157,25 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	public String getToolTipText() {
 		if (null != fLeft && null != fRight) {
 			String format = null;
-			String leftLabel = "";
-			if (null != fLeftVersion) {
-				leftLabel = fLeftVersion.getName() + "_" + fLeftVersion.getVersionID();
+			
+			// Set the label values for the compare editor
+			StringBuilder leftLabel = null;
+			if (null != fLeft) {
+				leftLabel = new StringBuilder("Target: " + fLeft.getName());
+				if (fLeft instanceof R4EFileRevisionTypedElement) {
+					leftLabel.append("_" + ((R4EFileRevisionTypedElement) fLeft).getFileVersion().getVersionID());
+				}
+				fConfig.setLeftLabel(leftLabel.toString());
 			}
-			String rightLabel = "";
-			if (null != fRightVersion) {
-				rightLabel = fRightVersion.getName() + "_" + fRightVersion.getVersionID();		
+			StringBuilder rightLabel = null;
+			if (null != fRight) {
+				rightLabel = new StringBuilder("Base: " + fRight.getName());
+				if (fRight instanceof R4EFileRevisionTypedElement) {
+					rightLabel.append("_" + ((R4EFileRevisionTypedElement) fRight).getFileVersion().getVersionID());
+				}
+				fConfig.setRightLabel(rightLabel.toString());
 			}
+
 			if (null != fAncestor) { 	
 				format = CompareUI.getResourceBundle().getString("ResourceCompare.threeWay.tooltip"); //$NON-NLS-1$
 				final String ancestorLabel = "";

@@ -32,7 +32,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class FileRevisionEditorInput extends PlatformObject implements IStorageEditorInput {
+public class R4EFileRevisionEditorInput extends PlatformObject implements IStorageEditorInput {
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -54,7 +54,7 @@ public class FileRevisionEditorInput extends PlatformObject implements IStorageE
 	 * @param aStorage
 	 *            the contents of the file revision
 	 */
-	public FileRevisionEditorInput(R4EFileVersion aFileVersion) {
+	public R4EFileRevisionEditorInput(R4EFileVersion aFileVersion) {
 		Assert.isNotNull(aFileVersion);
 		fFileVersion = aFileVersion;
 	}
@@ -64,25 +64,11 @@ public class FileRevisionEditorInput extends PlatformObject implements IStorageE
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * @param aFileVersion R4EFileVersion - the file revision
-	 * @param aMonitor IProgressMonitor
-	 * @return a file revision editor input
-	 * @throws CoreException
-	 */
-	public static FileRevisionEditorInput createEditorInputFor(R4EFileVersion aFileVersion, IProgressMonitor aMonitor)
-			throws CoreException {
-		return new FileRevisionEditorInput(aFileVersion);
-	}
-	
-	/**
 	 * Method getStorage.
 	 * @return IStorage
 	 * @see org.eclipse.ui.IStorageEditorInput#getStorage()
 	 */
 	public IStorage getStorage() {
-		if (CommandUtils.useWorkspaceResource(fFileVersion)) {
-			return ((IFile)fFileVersion.getResource());
-		}
 		try {
 			return fFileVersion.getFileRevision().getStorage(null);
 		} catch (CoreException e) {
@@ -116,16 +102,7 @@ public class FileRevisionEditorInput extends PlatformObject implements IStorageE
 	 * @see org.eclipse.ui.IEditorInput#getName()
 	 */
 	public String getName() {
-		if (CommandUtils.useWorkspaceResource(fFileVersion)) {
-			return fFileVersion.getResource().getName();
-		}
-		try {
-			return fFileVersion.getFileRevision().getStorage(null).getName();
-		} catch (CoreException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
-		}
-		return null;
+		return fFileVersion.getName();
 	}
 
 	/**
@@ -143,9 +120,6 @@ public class FileRevisionEditorInput extends PlatformObject implements IStorageE
 	 * @see org.eclipse.ui.IEditorInput#getToolTipText()
 	 */
 	public String getToolTipText() {
-		if (CommandUtils.useWorkspaceResource(fFileVersion)) {
-			return fFileVersion.getResource().getFullPath().makeRelative().toString();
-		}
 		try {
 			return fFileVersion.getFileRevision().getStorage(null).getFullPath().toString();
 		} catch (CoreException e) {
@@ -164,11 +138,6 @@ public class FileRevisionEditorInput extends PlatformObject implements IStorageE
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class aAdapter) {
 		
-		if (IFile.class.equals(aAdapter)) {
-			if (CommandUtils.useWorkspaceResource(fFileVersion)) {
-				return fFileVersion.getResource();
-			}
-		}
 		if (IStorage.class.equals(aAdapter)) {
 			try {
 				return fFileVersion.getFileRevision().getStorage(null);
@@ -186,15 +155,15 @@ public class FileRevisionEditorInput extends PlatformObject implements IStorageE
 				}
 
 				public ImageDescriptor getImageDescriptor(Object object) {
-					return FileRevisionEditorInput.this.getImageDescriptor();
+					return R4EFileRevisionEditorInput.this.getImageDescriptor();
 				}
 
 				public String getLabel(Object o) {
-					return FileRevisionEditorInput.this.getName();
+					return R4EFileRevisionEditorInput.this.getName();
 				}
 
 				public Object getParent(Object o) {
-					return FileRevisionEditorInput.this.getFile().getParent();
+					return null;
 				}
 			};
 		}
@@ -210,8 +179,8 @@ public class FileRevisionEditorInput extends PlatformObject implements IStorageE
 	@Override
 	public boolean equals(Object aObject) {
 		if (aObject == this) return true;
-		if (aObject instanceof FileRevisionEditorInput) {
-			final FileRevisionEditorInput other = (FileRevisionEditorInput) aObject;
+		if (aObject instanceof R4EFileRevisionEditorInput) {
+			final R4EFileRevisionEditorInput other = (R4EFileRevisionEditorInput) aObject;
 			return other.fFileVersion.equals(this.fFileVersion);
 		}
 		return false;
@@ -223,9 +192,6 @@ public class FileRevisionEditorInput extends PlatformObject implements IStorageE
 	 */
 	@Override
 	public int hashCode() {
-		if (CommandUtils.useWorkspaceResource(fFileVersion)) {
-			return fFileVersion.getResource().hashCode();
-		}
 		return fFileVersion.getFileRevision().hashCode();
 	}
 
@@ -250,9 +216,6 @@ public class FileRevisionEditorInput extends PlatformObject implements IStorageE
 	 * @return IFile
 	 */
 	public IFile getFile() {
-		if (CommandUtils.useWorkspaceResource(fFileVersion)) {
-			return (IFile) fFileVersion.getResource();
-		}
 		return null;
 	}
 }
