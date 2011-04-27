@@ -187,10 +187,8 @@ public class EditorProxy {
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;
 		
-		IEditorPart editor = null;
-		if (null != aBaseFileVersion && null != aTargetFileVersion) {
-			editor = findReusableCompareEditor(aPage, aBaseFileVersion.getName(), aTargetFileVersion.getName());
-		}
+		IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileVersion, aTargetFileVersion);
+
 		if (null != editor) {
 			//Simply provide focus to editor
 			aPage.activate(editor);
@@ -237,14 +235,14 @@ public class EditorProxy {
 	 * @param aTargetFileName String - the target file name
 	 * @return IEditorPart - the editor to use
 	 */
-	public static IEditorPart findReusableCompareEditor(IWorkbenchPage aPage, String aBaseFileName, 
-			String aTargetFileName) {
+	public static IEditorPart findReusableCompareEditor(IWorkbenchPage aPage, R4EFileVersion aBaseFile,
+			R4EFileVersion aTargetFile) {
 		
 		final IEditorReference[] editorRefs = aPage.getEditorReferences();
 		IEditorPart part = null;
 		R4ECompareEditorInput input = null;
-		String nameLeft = null;
-		String nameRight = null;
+		ITypedElement left = null;
+		ITypedElement right = null;
 		// first loop looking for an editor with the same input
 		for (int i = 0; i < editorRefs.length; i++) {
 			part = editorRefs[i].getEditor(false);
@@ -253,12 +251,31 @@ public class EditorProxy {
 					if (R4ECompareEditorInput.class.isInstance(part.getEditorInput())) {
 						//Now check if the input files are the same as with the found editor
 						input = (R4ECompareEditorInput)part.getEditorInput();
-						nameLeft = input.getLeftElement().getName();
-						nameRight = input.getRightElement().getName();
-						if (nameLeft.equals(aTargetFileName) && nameRight.equals(aBaseFileName)) {
+					left = input.getLeftElement();
+					right = input.getRightElement();
+					
+					//Case:  No input in editor, that should never happen but guard here just in case
+					if (left == null && right == null) {
+						return null;
+					}
+
+					//Case:  No target file and base is the same
+					if (left == null && aTargetFile == null && right != null && aBaseFile != null && right.getName().equals(aBaseFile.getName())) {
+						return part;
+					}
+
+					//Case:  No base file and target is the same
+					if (right == null && aBaseFile == null && left != null && aTargetFile != null && left.getName().equals(aTargetFile.getName())) {
+						return part;
+					}
+					
+					//Case: Base and target are the same
+					if (left != null && right != null && aBaseFile != null && aTargetFile != null) {
+						if (left.getName().equals(aTargetFile.getName()) && right.getName().equals(aBaseFile.getName())) {
 							return part;
 						}
 					}
+				}
 			}
 		}
 		// no re-usable editor found

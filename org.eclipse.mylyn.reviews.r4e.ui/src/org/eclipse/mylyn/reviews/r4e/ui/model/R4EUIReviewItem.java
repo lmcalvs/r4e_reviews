@@ -364,12 +364,16 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			}
 			
 			//Add ProjectURI to the review item
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
-			final String projPlatformURI = ResourceUtils.toPlatformURIStr(rfileTargetVersion.getResource().getProject());
-			if (!fItem.getProjectURIs().contains(projPlatformURI)) {
-				fItem.getProjectURIs().add(projPlatformURI);
+			if (null != rfileTargetVersion.getResource()) {
+				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem,
+						R4EUIModelController.getReviewer());
+				final String projPlatformURI = ResourceUtils.toPlatformURIStr(rfileTargetVersion.getResource()
+						.getProject());
+				if (!fItem.getProjectURIs().contains(projPlatformURI)) {
+					fItem.getProjectURIs().add(projPlatformURI);
+				}
+				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 			}
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}
 		
 		final R4EUIFileContext uiFile = new R4EUIFileContext(this, fileContext);
