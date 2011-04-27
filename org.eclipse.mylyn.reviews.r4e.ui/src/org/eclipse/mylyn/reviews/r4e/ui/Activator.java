@@ -21,7 +21,6 @@ package org.eclipse.mylyn.reviews.r4e.ui;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
-
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -87,6 +86,7 @@ public class Activator extends AbstractUIPlugin {
 		super.start(aContext);
 		Fplugin = this;
 		Ftracer = new Tracer();
+		Ftracer.init(PLUGIN_ID);
 		Ftracer.traceDebug("plugin started");
 	}
 

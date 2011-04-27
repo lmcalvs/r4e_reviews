@@ -71,6 +71,7 @@ public class Activator extends AbstractUIPlugin {
 		super.start(aContext);
 		FPlugin = this;
 		FTracer = new Tracer();
+		FTracer.init(FPLUGIN_ID);
 		FTracer.traceDebug("plugin started: " + FPLUGIN_ID);
 	}
 

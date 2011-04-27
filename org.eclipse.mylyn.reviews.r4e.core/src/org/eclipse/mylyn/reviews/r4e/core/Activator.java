@@ -69,6 +69,7 @@ public class Activator extends Plugin {
 		// super.start(context);
 		Plugin = this;
 		fTracer = new Tracer();
+		fTracer.init(PLUGIN_ID);
 		fTracer.traceDebug("plugin started: " + PLUGIN_ID);
 	}
 
