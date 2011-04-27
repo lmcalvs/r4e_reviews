@@ -31,8 +31,11 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -118,12 +121,18 @@ public class AddAnomalyHandler extends AbstractHandler {
 		//the position of the selection within the file
 		try {
 			final R4EUITextPosition position = CommandUtils.getPosition(aSelection);
-			final R4EFileVersion baseTempVersion = CommandUtils.getBaseFileData();
-			final R4EFileVersion targetTempVersion = CommandUtils.getTargetFileData();
+			final R4EFileVersion baseVersion = CommandUtils.getBaseFileData();
+			final R4EFileVersion targetVersion = CommandUtils.getTargetFileData();
 			
 			//Add anomaly to model
-			addAnomaly(baseTempVersion, targetTempVersion, position);
-
+			if (null != targetVersion) {
+				addAnomaly(baseVersion, targetVersion, position);
+			} else {
+				Activator.Ftracer.traceWarning("Trying to add review item to base file");
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Add Anomaly Error",
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "No Target File present to Add Anomaly", null), IStatus.ERROR);
+				dialog.open();
+			}
 		} catch (CoreException e) {
 			UIUtils.displayCoreErrorDialog(e);
 		} catch (ReviewsFileStorageException e) {
@@ -174,11 +183,18 @@ public class AddAnomalyHandler extends AbstractHandler {
 			}
 			
 			//Add anomaly to model
-			final R4EFileVersion baseTempVersion = CommandUtils.updateBaseFile(workspaceFile);
-			final R4EFileVersion targetTempVersion = CommandUtils.updateTargetFile(workspaceFile);
+			final R4EFileVersion baseVersion = CommandUtils.updateBaseFile(workspaceFile);
+			final R4EFileVersion targetVersion = CommandUtils.updateTargetFile(workspaceFile);
 			
 			//Add anomaly to model
-			addAnomaly(baseTempVersion, targetTempVersion, position);
+			if (null != targetVersion) {
+				addAnomaly(baseVersion, targetVersion, position);
+			} else {
+				Activator.Ftracer.traceWarning("Trying to add review item to base file");
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Add Anomaly Error",
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "No Target File present to Add Anomaly", null), IStatus.ERROR);
+				dialog.open();
+			}
 			
 		} catch (JavaModelException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");

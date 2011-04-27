@@ -377,7 +377,7 @@ public class ReviewGroupInputDialog extends FormDialog {
         //Review Group Name
         Label label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_NAME_DIALOG_VALUE);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fGroupNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+        fGroupNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         fGroupNameInputTextField.setLayoutData(textGridData);
@@ -385,7 +385,7 @@ public class ReviewGroupInputDialog extends FormDialog {
         //Group Folder
         label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fGroupFolderInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+        fGroupFolderInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
         final GridData folderTextData = new GridData(GridData.FILL, GridData.BEGINNING, true, false);
         folderTextData.horizontalSpan = 2;
         fGroupFolderInputTextField.setLayoutData(folderTextData);
@@ -411,7 +411,8 @@ public class ReviewGroupInputDialog extends FormDialog {
         //Group Description
         label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_DESCRIPTION_DIALOG_VALUE);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fGroupDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
+        fGroupDescriptionInputTextField = toolkit.createText(basicSectionClient, "", 
+        		SWT.MULTI | SWT.V_SCROLL | SWT.BORDER | SWT.WRAP);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         textGridData.heightHint = fGroupNameInputTextField.getLineHeight() * 3;
@@ -454,7 +455,8 @@ public class ReviewGroupInputDialog extends FormDialog {
         // Default Entry Criteria
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fDefaultEntryCriteriaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
+        fDefaultEntryCriteriaTextField = toolkit.createText(extraSectionClient, "", 
+        		SWT.MULTI | SWT.V_SCROLL | SWT.BORDER | SWT.WRAP);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         textGridData.heightHint = fGroupNameInputTextField.getLineHeight() * 3;
@@ -466,7 +468,9 @@ public class ReviewGroupInputDialog extends FormDialog {
         final List<R4EUIRuleSet> uiRuleSets = fRootElement.getRuleSets();
         final List<String> ruleLocations = new ArrayList<String>();
         for (R4EUIRuleSet ruleSet : uiRuleSets) {
-        	ruleLocations.add(ruleSet.getRuleSet().eResource().getURI().toFileString());
+        	if (ruleSet.isOpen()) {
+        		ruleLocations.add(ruleSet.getRuleSet().eResource().getURI().toFileString());
+        	}
         }
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;

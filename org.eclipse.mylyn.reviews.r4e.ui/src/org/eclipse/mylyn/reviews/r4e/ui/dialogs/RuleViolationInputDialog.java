@@ -124,7 +124,7 @@ public class RuleViolationInputDialog extends FormDialog {
         if (buttonId == IDialogConstants.OK_ID) {
 	    	this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 	    	
-        	//Validate Version
+        	//Validate Name
         	final String validateResult = validateEmptyInput(fNameInputTextField);
         	if (null != validateResult) {
         		//Validation of input failed

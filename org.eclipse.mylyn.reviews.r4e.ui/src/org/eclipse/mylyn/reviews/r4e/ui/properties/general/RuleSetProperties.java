@@ -114,7 +114,9 @@ public class RuleSetProperties extends ModelElementProperties {
 			} else if (RULE_SET_NAME_ID.equals(aId)) {
 				return ((R4EUIRuleSet)getElement()).getName();
 			} else if (RULE_SET_FILEPATH_ID.equals(aId)) {
-				return ((R4EUIRuleSet)getElement()).getRuleSet().eResource().getURI().toFileString();
+				if (((R4EUIRuleSet)getElement()).isOpen()) {
+					return ((R4EUIRuleSet)getElement()).getRuleSet().eResource().getURI().toFileString();
+				}
 			}
 		}
 		return null;

@@ -196,6 +196,17 @@ public class RuleSetInputDialog extends FormDialog {
 				return;
 			}
 			fFolderValue = fFolderInputTextField.getText();
+			
+        	//Validate Name
+        	validateResult = validateEmptyInput(fNameInputTextField);
+        	if (null != validateResult) {
+        		//Validation of input failed
+    			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "No input given for Rule Set Name",
+        				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+    			dialog.open();
+    			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+    			return;
+        	}
 			fNameValue = fNameInputTextField.getText();
 
         } else {

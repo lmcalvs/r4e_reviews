@@ -103,7 +103,6 @@ public class AddRuleSetElementHandler extends AbstractHandler {
 			evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen");
 		} catch (ExecutionException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		}
 		return null;
 	}

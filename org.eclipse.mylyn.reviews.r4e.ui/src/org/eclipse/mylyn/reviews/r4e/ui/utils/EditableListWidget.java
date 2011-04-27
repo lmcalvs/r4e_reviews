@@ -29,6 +29,8 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -130,7 +132,7 @@ public class EditableListWidget {
 		fMainComposite = aToolkit.createComposite(aParent);
 		fMainComposite.setLayoutData(aLayoutData);
 		fMainComposite.setLayout(new GridLayout(4, false));
-		fMainTable = aToolkit.createTable(fMainComposite, SWT.FULL_SELECTION);
+		fMainTable = aToolkit.createTable(fMainComposite, SWT.FULL_SELECTION | SWT.BORDER);
         final GridData tableData = new GridData(GridData.FILL, GridData.FILL, true, true);
         if (aEditableWidgetClass.equals(Date.class)) {
         	tableData.horizontalSpan = 1;
@@ -251,13 +253,23 @@ public class EditableListWidget {
         fAddButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				final TableItem newItem = new TableItem(fMainTable, SWT.NONE);
-				
 				final Control editableControl;
 				if (aEditableWidgetClass.equals(Text.class)) {
-					editableControl = new Text(fMainTable, SWT.NONE);
+					editableControl = new Text(fMainTable, SWT.SINGLE | SWT.BORDER);
 					((Text)editableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
 							newItem.setText(((Text)editableControl).getText());
+						}
+					});
+					((Text)editableControl).addKeyListener(new KeyListener() {
+						
+						public void keyReleased(KeyEvent ke) {
+							if (ke.keyCode == SWT.CR) {
+								return;
+							}	
+						}
+						public void keyPressed(KeyEvent ke) {
+							// Nothing to do
 						}
 					});
 				} else if (aEditableWidgetClass.equals(CCombo.class)) {

@@ -129,11 +129,18 @@ public class AddReviewItemHandler extends AbstractHandler {
 		//the position of the selection within the file
 		try {
 			final IR4EUIPosition position = CommandUtils.getPosition(aSelection);
-			final R4EFileVersion baseTempVersion = CommandUtils.getBaseFileData();
-			final R4EFileVersion targetTempVersion = CommandUtils.getTargetFileData();
+			final R4EFileVersion baseVersion = CommandUtils.getBaseFileData();
+			final R4EFileVersion targetVersion = CommandUtils.getTargetFileData();
 			
 			//Add selection to model
-			addReviewItem(baseTempVersion, targetTempVersion, position);
+			if (null != targetVersion) {
+				addReviewItem(baseVersion, targetVersion, position);
+			} else {
+				Activator.Ftracer.traceWarning("Trying to add review item to base file");
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Add Review Item Error",
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "No Target File present to Add Review Item", null), IStatus.ERROR);
+				dialog.open();
+			}
 			
 		} catch (CoreException e) {
 			UIUtils.displayCoreErrorDialog(e);
@@ -182,10 +189,18 @@ public class AddReviewItemHandler extends AbstractHandler {
 			}
 			
 			//Add selection to model
-			final R4EFileVersion baseTempVersion = CommandUtils.updateBaseFile(workspaceFile);
-			final R4EFileVersion targetTempVersion = CommandUtils.updateTargetFile(workspaceFile);
-			addReviewItem(baseTempVersion, targetTempVersion, position);
+			final R4EFileVersion baseVersion = CommandUtils.updateBaseFile(workspaceFile);
+			final R4EFileVersion targetVersion = CommandUtils.updateTargetFile(workspaceFile);
 			
+			//Add selection to model
+			if (null != targetVersion) {
+				addReviewItem(baseVersion, targetVersion, position);
+			} else {
+				Activator.Ftracer.traceWarning("Trying to add review item to base file");
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Add Review Item Error",
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "No Target File present to Add Review Item", null), IStatus.ERROR);
+				dialog.open();
+			}	
 		} catch (JavaModelException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
@@ -222,10 +237,11 @@ public class AddReviewItemHandler extends AbstractHandler {
 			for (R4EUIReviewItem reviewItem : reviewItems) {
 				R4EUIFileContext[] files = (R4EUIFileContext[]) reviewItem.getChildren();
 				for (R4EUIFileContext file : files) {
-					if (null != file.getFileContext().getTarget() && 
+					if (null != file.getFileContext().getTarget() &&
 							aTargetFileVersion.getLocalVersionID().equals(file.getFileContext().getTarget().getLocalVersionID())) {
-						if (null == file.getFileContext().getBase() && "".equals(aBaseFileVersion.getVersionID()) ||
-								aBaseFileVersion.getLocalVersionID().equals(file.getFileContext().getBase().getLocalVersionID())) {
+						if ((null == file.getFileContext().getBase() && (null == aBaseFileVersion || "".equals(aBaseFileVersion.getVersionID()))) ||
+							(null != file.getFileContext().getBase() && null != aBaseFileVersion &&
+									aBaseFileVersion.getLocalVersionID().equals(file.getFileContext().getBase().getLocalVersionID()))) {
 							//File already exists, check if selection also exists
 							R4EUISelectionContainer selectionContainer = (R4EUISelectionContainer) file.getSelectionContainerElement();
 							if (null != selectionContainer) {
