@@ -124,9 +124,10 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		}
 
 		final ScmUiConnector uiConnector = ScmUi.getUiConnector(project);
+		ChangeSet changeSet = null;
 		if (null != uiConnector) {
-			ChangeSet changeSet = null;
 			try {
+				Activator.Ftracer.traceDebug("Resolved Scm Ui connector: " + uiConnector);
 				R4EUIModelController.setDialogOpen(true);
 				changeSet = uiConnector.getChangeSet(null, project, null);
 				R4EUIModelController.setDialogOpen(false);
@@ -136,15 +137,17 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				return null;
 			}
 			
-			
-			
 			//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
 			final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
 			shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 			createReviewItem(changeSet);
 			shell.setCursor(null);
+		} else {
+			// We could not find any version control system, thus no items
+			String strProject = (project == null ? "null" : project.getName());
+			Activator.Ftracer.traceDebug("No Scm Ui connector found for project: " + strProject);
 		}
-		// We could not find any version control system, thus no items
+
 		return null;
 	}
 
