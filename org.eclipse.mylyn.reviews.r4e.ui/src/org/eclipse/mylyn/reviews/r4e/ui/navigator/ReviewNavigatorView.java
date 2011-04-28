@@ -581,7 +581,54 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			if (groupsToLoad.size() > 0) {
 			    R4EUIModelController.loadReviewGroups(groupsToLoad);
 			}
+		} else if (event.getKey().equals(PreferenceConstants.P_RULE_SET_FILE_PATH)) {
+			//Check what is currently loaded vs. what is in the preferences.  Adjust input accordingly
+			final List<R4EUIRuleSet> ruleSetsLoaded = ((R4EUIRootElement)R4EUIModelController.getRootElement()).getRuleSets();
+			final List<String> ruleSetsPreferencesPaths = UIUtils.parseStringList((String) event.getNewValue());
 
+			//Convert the loaded rule set array to array of File Paths
+			final List<String> ruleSetsLoadedPaths = new ArrayList<String>();
+			for (IR4EUIModelElement ruleSet : ruleSetsLoaded) {
+				ruleSetsLoadedPaths.add(new File(((R4EUIRuleSet)ruleSet).getRuleSet().getFolder() + File.separator + 
+						ruleSet.getName() + R4EUIConstants.RULE_SET_FILE_SUFFIX).getPath());
+			}
+			
+			//Rule Sets that are in preferences, but not loaded should be loaded
+			final List<String> result = new ArrayList<String>();
+		    result.addAll(ruleSetsPreferencesPaths);
+		    result.removeAll(ruleSetsLoadedPaths);		
+			final List<String> ruleSetsToLoad = new ArrayList<String>();
+			for (String ruleSetToLoad : result) {
+				ruleSetsToLoad.add(ruleSetToLoad);
+			}
+			
+			//Rule Sets that are loaded, but not in preferences should be removed
+		    result.clear();
+		    result.addAll(ruleSetsLoadedPaths);
+		    result.removeAll(ruleSetsPreferencesPaths);
+		    final List<IR4EUIModelElement> ruleSetsToRemove = new ArrayList<IR4EUIModelElement>();
+			for (IR4EUIModelElement ruleSet : ruleSetsLoaded) {
+				for (String ruleSetPath : result) {
+					if (ruleSetPath.equals(new File(((R4EUIRuleSet)ruleSet).getRuleSet().getFolder() + File.separator + 
+							ruleSet.getName() + R4EUIConstants.RULE_SET_FILE_SUFFIX).getPath())) {
+						ruleSetsToRemove.add(ruleSet);
+					}
+				}
+			}
+			
+			//Adjust loaded groups
+			for (IR4EUIModelElement ruleSetToRemove : ruleSetsToRemove) {
+				try {
+					((R4EUIRootElement)R4EUIModelController.getRootElement()).removeChildrenFromUI(ruleSetToRemove);
+				} catch (ResourceHandlingException e) {
+					UIUtils.displayResourceErrorDialog(e);
+				} catch (OutOfSyncException e) {
+					UIUtils.displaySyncErrorDialog(e);
+				}
+			}
+			if (ruleSetsToLoad.size() > 0) {
+			    R4EUIModelController.loadRuleSets(ruleSetsToLoad);
+			}
 		} else if (event.getKey().equals(PreferenceConstants.P_SHOW_DISABLED)) {
 			resetInput();
 		}

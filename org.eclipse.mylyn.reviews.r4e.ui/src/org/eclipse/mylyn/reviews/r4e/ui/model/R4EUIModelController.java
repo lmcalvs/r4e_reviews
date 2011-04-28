@@ -279,6 +279,17 @@ public class R4EUIModelController {
 	}
 	
 	/**
+	 * Method peekRuleSet.
+	 * @param filePath String
+	 * @return R4EDesignRuleCollection
+	 * @throws ResourceHandlingException
+	 */
+	public static R4EDesignRuleCollection peekRuleSet(String filePath) throws ResourceHandlingException {
+		FModelExt = SerializeFactory.getModelExtension();
+		return FModelExt.openR4EDesignRuleCollection(URI.createFileURI(filePath));
+	}
+	
+	/**
 	 * Method loadModel.
 	 * 		Load data from Serialized Model
 	 */

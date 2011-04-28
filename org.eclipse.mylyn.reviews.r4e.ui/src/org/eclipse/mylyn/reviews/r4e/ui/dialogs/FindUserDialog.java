@@ -425,8 +425,8 @@ public class FindUserDialog extends FormDialog {
 		fUserCityInputTextField = aToolkit.createText(fUserDetailsForm, "", SWT.SINGLE | SWT.BORDER);
 		final FormData cityTextData = new FormData();
 		cityTextData.top = new FormAttachment(cityLabel, 0, SWT.TOP);
-		cityTextData.left = new FormAttachment(fUserIdInputTextField, 0, SWT.LEFT);
-		cityTextData.right = new FormAttachment(fUserIdInputTextField, 0, SWT.RIGHT);
+		cityTextData.left = new FormAttachment(fUserNameInputTextField, 0, SWT.LEFT);
+		cityTextData.right = new FormAttachment(fUserNameInputTextField, 0, SWT.RIGHT);
 		fUserCityInputTextField.setLayoutData(cityTextData);
 
 		// Country

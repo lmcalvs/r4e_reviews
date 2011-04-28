@@ -31,6 +31,7 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.FilePathEditor;
@@ -51,6 +52,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -73,34 +76,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private static final int PREFS_CONTAINER_DATA_SPAN = 1;
 	
 	/**
-	 * Field PREFS_CONTAINER_DATA_NUM_COLUMNS.
-	 * (value is 1)
-	 */
-	private static final int PREFS_CONTAINER_DATA_NUM_COLUMNS = 1;
-	
-	/**
 	 * Field R4E_PREFS_CONTAINER_DATA_SPAN.
 	 * (value is 2)
 	 */
-	private static final int R4E_PREFS_CONTAINER_DATA_SPAN = 2; // $codepro.audit.disable constantNamingConvention
-	
-	/**
-	 * Field R4E_PREFS_CONTAINER_DATA_NUM_COLUMNS.
-	 * (value is 2)
-	 */
-	private static final int R4E_PREFS_CONTAINER_DATA_NUM_COLUMNS = 2; // $codepro.audit.disable constantNamingConvention
-	
-	/**
-	 * Field R4E_GROUP_PREFS_CONTAINER_DATA_SPAN.
-	 * (value is 2)
-	 */
-	private static final int R4E_GROUP_PREFS_CONTAINER_DATA_SPAN = 2; // $codepro.audit.disable constantNamingConvention
-	
-	/**
-	 * Field R4E_GROUP_PREFS_CONTAINER_DATA_NUM_COLUMNS.
-	 * (value is 2)
-	 */
-	private static final int R4E_GROUP_PREFS_CONTAINER_DATA_NUM_COLUMNS = 2; // $codepro.audit.disable constantNamingConvention
+	private static final int GROUP_PREFS_CONTAINER_DATA_SPAN = 2; // $codepro.audit.disable constantNamingConvention
 	
 	
 	// ------------------------------------------------------------------------
@@ -116,6 +95,16 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * Field fGroupDescriptionText.
 	 */
 	private Text fGroupDescriptionText = null;
+	
+	/**
+	 * Field fRuleSetNameText.
+	 */
+	private Text fRuleSetNameText = null;
+	
+	/**
+	 * Field fGRuleSetVersionText.
+	 */
+	private Text fRuleSetVersionText = null;
 	
 	/**
 	 * Field fReviewShowDisabledButton.
@@ -181,39 +170,63 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	// Methods
 	// ------------------------------------------------------------------------
 	
+	
+	@Override
+	public void dispose() {
+		
+	}
+	
 	/**
 	 * Creates the field editors. Field editors are abstractions of
 	 * the common GUI blocks needed to manipulate various types
 	 * of preferences. Each field editor knows how to save and
 	 * restore itself.
 	 */
-	@SuppressWarnings("unused")
 	@Override
 	public void createFieldEditors() {
 
 		Activator.Ftracer.traceInfo("Build R4E Preference page");
-		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		
+
 		//The Main preferences composite
 		final Composite prefsContainer = new Composite(getFieldEditorParent(),SWT.NONE);
 		final GridData prefsContainerData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		prefsContainerData.horizontalSpan = PREFS_CONTAINER_DATA_SPAN;
 		prefsContainer.setLayoutData(prefsContainerData);
-		final GridLayout prefsLayout = new GridLayout(PREFS_CONTAINER_DATA_NUM_COLUMNS, false);
+		final GridLayout prefsLayout = new GridLayout(PREFS_CONTAINER_DATA_SPAN, false);
 		prefsContainer.setLayout(prefsLayout);
 		
+		final TabFolder tabFolder = new TabFolder(prefsContainer, SWT.TOP);
+		final GridData tabFolderData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		tabFolder.setLayoutData(tabFolderData);
+		
+		createUserPreferencesTab(tabFolder);
+		createGroupPreferencesTab(tabFolder);
+		createRuleSetsPreferencesTab(tabFolder);
+		createFiltersPreferencesTab(tabFolder);
+	}
+	
+	/**
+	 * Method createUserPreferencesTab.
+	 * @param aParent Composite
+	 */
+	private void createUserPreferencesTab(TabFolder aParent) {
+		
+		final TabItem tabItem = new TabItem(aParent, SWT.NONE);
+		tabItem.setText("User");
+		
 		// Create a Group to hold R4E user preferences
-		final Group r4EUserPrefsGroup = new Group(prefsContainer, SWT.BORDER_SOLID);
+		final Group r4EUserPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
+		tabItem.setControl(r4EUserPrefsGroup);
 		final GridData r4eUserPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, false);
-		r4eUserPrefsGroupData.horizontalSpan = R4E_PREFS_CONTAINER_DATA_SPAN;
+		r4eUserPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4EUserPrefsGroup.setText("User Preferences");
 		r4EUserPrefsGroup.setLayoutData(r4eUserPrefsGroupData);
-		r4EUserPrefsGroup.setLayout(new GridLayout(R4E_PREFS_CONTAINER_DATA_NUM_COLUMNS, false));
+		r4EUserPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
 		//dummy spacer label
 		final Label r4EUserPrefsSpacer = new Label(r4EUserPrefsGroup, SWT.FILL);
 		final GridData r4EUserPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
-		r4EUserPrefsSpacerData.horizontalSpan = R4E_PREFS_CONTAINER_DATA_SPAN;
+		r4EUserPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4EUserPrefsSpacer.setLayoutData(r4EUserPrefsSpacerData);
 		
 		final StringFieldEditor userIdFieldEditor = new StringFieldEditor(PreferenceConstants.P_USER_ID, PreferenceConstants.P_USER_ID_LABEL,
@@ -233,26 +246,34 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		} else {
 			userEmailFieldEditor.setEnabled(true, r4EUserPrefsGroup);
 		}
-		
-		//dummy spacer label
-		new Label(prefsContainer, SWT.FILL);
+	}
+
+	/**
+	 * Method createGroupPreferencesTab.
+	 * @param aParent Composite
+	 */
+	private void createGroupPreferencesTab(TabFolder aParent) {
+
+		final TabItem tabItem = new TabItem(aParent, SWT.NONE);
+		tabItem.setText("Groups");
 		
 		// Create a Group to hold R4E Group preferences
-		final Group r4EGroupPrefsGroup = new Group(prefsContainer, SWT.BORDER_SOLID);
+		final Group r4EGroupPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
+		tabItem.setControl(r4EGroupPrefsGroup);
 		final GridData r4EGroupPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, false);
-		r4EGroupPrefsGroupData.horizontalSpan = R4E_GROUP_PREFS_CONTAINER_DATA_SPAN;
+		r4EGroupPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4EGroupPrefsGroup.setText("Group Preferences");
 		r4EGroupPrefsGroup.setLayoutData(r4EGroupPrefsGroupData);
-		r4EGroupPrefsGroup.setLayout(new GridLayout(R4E_GROUP_PREFS_CONTAINER_DATA_NUM_COLUMNS, false));
+		r4EGroupPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
 		//dummy spacer label
 		Label r4EGroupPrefsSpacer = new Label(r4EGroupPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
 		final GridData r4EGroupPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
-		r4EGroupPrefsSpacerData.horizontalSpan = R4E_PREFS_CONTAINER_DATA_SPAN;
+		r4EGroupPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4EGroupPrefsSpacer.setLayoutData(r4EGroupPrefsSpacerData);
 		
-		// File Path Editor
-        final String[] extensions = { PreferenceConstants.P_R4E_FILE_EXT };
+		// File Path Editor for Review Groups
+        final String[] extensions = { PreferenceConstants.P_GROUP_FILE_EXT };
         final FilePathEditor groupFilesEditor = new FilePathEditor(PreferenceConstants.P_GROUP_FILE_PATH, PreferenceConstants.P_GROUP_FILE_PATH_LABEL, extensions, 
 				r4EGroupPrefsGroup);
 		addField(groupFilesEditor);
@@ -284,15 +305,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			}
 		});
 		
-		//dummy spacer label
-		r4EGroupPrefsSpacer = new Label(r4EGroupPrefsGroup, SWT.FILL);
-		r4EGroupPrefsSpacer.setLayoutData(r4EGroupPrefsSpacerData);
-		
 		//Group details
 		final Composite groupDetailsContainer = new Composite(r4EGroupPrefsGroup,SWT.NONE);
 		final GridData groupDetailsLayoutData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		groupDetailsContainer.setLayoutData(groupDetailsLayoutData);
-		groupDetailsContainer.setLayout(new GridLayout(R4E_GROUP_PREFS_CONTAINER_DATA_NUM_COLUMNS, false));
+		groupDetailsContainer.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 		
 		final Label groupNameLabel = new Label(groupDetailsContainer, SWT.FILL);
 		final GridData groupNameLabelData = new GridData(GridData.FILL, GridData.FILL, false, false);
@@ -315,24 +332,119 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fGroupDescriptionText.setEnabled(true);	
 		fGroupDescriptionText.setEditable(false);
 		fGroupDescriptionText.setLayoutData(groupDescriptionTextData);
+	}
+	
+	/**
+	 * Method createRuleSetsPreferencesTab.
+	 * @param aParent Composite
+	 */
+	private void createRuleSetsPreferencesTab(TabFolder aParent) {
 		
-		//dummy spacer label
-		new Label(prefsContainer, SWT.FILL);
+		final TabItem tabItem = new TabItem(aParent, SWT.NONE);
+		tabItem.setText("Rule Sets");
 		
-		// Create a Group to hold R4E Navigator view default filters
-		final Group r4EFilterPrefsGroup = new Group(prefsContainer, SWT.BORDER_SOLID);
-		final GridData r4EFilterPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, false);
-		r4EFilterPrefsGroupData.horizontalSpan = R4E_GROUP_PREFS_CONTAINER_DATA_SPAN;
-		r4EFilterPrefsGroup.setText("Default Filters");
-		r4EFilterPrefsGroup.setLayoutData(r4EGroupPrefsGroupData);
-		r4EFilterPrefsGroup.setLayout(new GridLayout(R4E_GROUP_PREFS_CONTAINER_DATA_NUM_COLUMNS, false));
+		// Create a Group to hold R4E Rule Set preferences
+		final Group r4ERuleSetPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
+		tabItem.setControl(r4ERuleSetPrefsGroup);
+		final GridData r4ERuleSetPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		r4ERuleSetPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
+		r4ERuleSetPrefsGroup.setText("Rule Sets Preferences");
+		r4ERuleSetPrefsGroup.setLayoutData(r4ERuleSetPrefsGroupData);
+		r4ERuleSetPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
 		//dummy spacer label
-		r4EGroupPrefsSpacer = new Label(r4EFilterPrefsGroup, SWT.FILL);
-		r4EGroupPrefsSpacer.setLayoutData(r4EGroupPrefsSpacerData);
+		Label r4ERuleSetPrefsSpacer = new Label(r4ERuleSetPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
+		final GridData r4ERuleSetPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		r4ERuleSetPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
+		r4ERuleSetPrefsSpacer.setLayoutData(r4ERuleSetPrefsSpacerData);
+		
+		// File Path Editor for Rule Sets
+        final String[] ruleSetsExtensions = { PreferenceConstants.P_RULE_SET_FILE_EXT };
+        final FilePathEditor ruleSetFilesEditor = new FilePathEditor(PreferenceConstants.P_RULE_SET_FILE_PATH, 
+        		PreferenceConstants.P_RULE_SET_FILE_PATH_LABEL, ruleSetsExtensions, r4ERuleSetPrefsGroup);
+		addField(ruleSetFilesEditor);
+		if (R4EUIModelController.isDialogOpen()) {
+			ruleSetFilesEditor.setEnabled(false, r4ERuleSetPrefsGroup);
+		} else { 
+			ruleSetFilesEditor.setEnabled(true, r4ERuleSetPrefsGroup);
+		}
+		final List ruleSetfilesList = ruleSetFilesEditor.getListControl(r4ERuleSetPrefsGroup);
+		ruleSetfilesList.addSelectionListener(new SelectionListener() {
+
+			@SuppressWarnings("synthetic-access")
+			public void widgetSelected(SelectionEvent aEvent) {
+				final String selectedRuleSetFile = ruleSetFilesEditor.getSelection();
+				try {
+					final R4EDesignRuleCollection ruleSet = R4EUIModelController.peekRuleSet(selectedRuleSetFile);
+					fRuleSetNameText.setText(ruleSet.getName());
+					fRuleSetVersionText.setText(ruleSet.getVersion());
+					R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(ruleSet);
+				} catch (ResourceHandlingException e) {
+	    			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+	    			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+				}
+			}
+			
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
+				//No implementation
+			}
+		});
+		
+		//Group details
+		final Composite ruleSetDetailsContainer = new Composite(r4ERuleSetPrefsGroup,SWT.NONE);
+		final GridData ruleSetDetailsLayoutData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		ruleSetDetailsContainer.setLayoutData(ruleSetDetailsLayoutData);
+		ruleSetDetailsContainer.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
+		
+		final Label ruleSetNameLabel = new Label(ruleSetDetailsContainer, SWT.FILL);
+		final GridData ruleSetNameLabelData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		ruleSetNameLabel.setText(R4EUIConstants.NAME_LABEL);
+		ruleSetNameLabel.setLayoutData(ruleSetNameLabelData);
+
+		fRuleSetNameText = new Text(ruleSetDetailsContainer, SWT.FILL);
+		final GridData ruleSetNameTextData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		fRuleSetNameText.setEnabled(true);	
+		fRuleSetNameText.setEditable(false);
+		fRuleSetNameText.setLayoutData(ruleSetNameTextData);
+		
+		final Label ruleSetVersionLabel = new Label(ruleSetDetailsContainer, SWT.NONE);
+		final GridData ruleSetVersionLabelData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		ruleSetVersionLabel.setText(R4EUIConstants.DESCRIPTION_LABEL);
+		ruleSetVersionLabel.setLayoutData(ruleSetVersionLabelData);
+
+		fRuleSetVersionText = new Text(ruleSetDetailsContainer, SWT.NONE);
+		final GridData ruleSetVersionTextData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		fRuleSetVersionText.setEnabled(true);	
+		fRuleSetVersionText.setEditable(false);
+		fRuleSetVersionText.setLayoutData(ruleSetVersionTextData);
+	}
+	
+	/**
+	 * Method createFiltersPreferencesTab.
+	 * @param aParent Composite
+	 */
+	private void createFiltersPreferencesTab(TabFolder aParent) {
+		
+		final TabItem tabItem = new TabItem(aParent, SWT.NONE);
+		tabItem.setText("Filters");
+		
+		// Create a Group to hold R4E Navigator view default filters
+		final Group r4EFilterPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
+		tabItem.setControl(r4EFilterPrefsGroup);
+		final GridData r4EFilterPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		r4EFilterPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
+		r4EFilterPrefsGroup.setText("Default Filters");
+		r4EFilterPrefsGroup.setLayoutData(r4EFilterPrefsGroupData);
+		r4EFilterPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
+
+		//dummy spacer label
+		Label r4ERuleSetPrefsSpacer = new Label(r4EFilterPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
+		final GridData r4ERuleSetPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		r4ERuleSetPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
+		r4ERuleSetPrefsSpacer.setLayoutData(r4ERuleSetPrefsSpacerData);
 		
 		//Filers checkboxes
-		
+		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		fReviewShowDisabledButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fReviewShowDisabledButton.setText(R4EUIConstants.SHOW_DISABLED_FILTER_NAME);
 		fReviewShowDisabledButton.setLayoutData(r4EFilterPrefsGroupData);
@@ -391,7 +503,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fHideRuleSetsFilterButton.setLayoutData(r4EFilterPrefsGroupData);
 		fHideRuleSetsFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_HIDE_RULE_SETS_FILTER));
 	}
-
+	
 	/**
 	 * Method init.
 	 * @param workbench IWorkbench

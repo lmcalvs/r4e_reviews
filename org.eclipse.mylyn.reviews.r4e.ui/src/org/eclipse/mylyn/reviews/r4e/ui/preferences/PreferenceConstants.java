@@ -55,24 +55,34 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_USER_EMAIL_LABEL =  "User Email:";
 	
 	/**
-	 * The file path preference name
+	 * The group file path preference name
 	 */
 	public static final String P_GROUP_FILE_PATH = "groupFilePathPreference";	
 	
 	/**
-	 * The FilePathEditor main label text
+	 * The group FilePathEditor main label text
 	 */
 	public static final String P_GROUP_FILE_PATH_LABEL =  "Review Group Files:";
 	
 	/**
-	 * The file path preference name
+	 * The review group file extension
+	 */
+	public static final String P_GROUP_FILE_EXT = "*_group_root.xrer";
+	
+	/**
+	 * The rule set file path preference name
 	 */
 	public static final String P_RULE_SET_FILE_PATH = "ruleSetFilePathPreference";	
 	
 	/**
-	 * The review group file extension
+	 * The rule set file path preference name
 	 */
-	public static final String P_R4E_FILE_EXT = "*.xrer";
+	public static final String P_RULE_SET_FILE_PATH_LABEL = "Rule Set Files:";	
+
+	/**
+	 * The rule set file extension
+	 */
+	public static final String P_RULE_SET_FILE_EXT = "*_rule_set.xrer";
 	
 	/**
 	 * Field P_SHOW_DISABLED.

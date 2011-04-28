@@ -36,7 +36,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
@@ -89,7 +91,8 @@ public class AddAnomalyHandler extends AbstractHandler {
 		shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 		
 		final ISelection selection = HandlerUtil.getCurrentSelection(event);
-		
+		final IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor(); // $codepro.audit.disable methodChainLength
+
 		//Act differently depending on the type of selection we get
 		if (selection instanceof ITextSelection) {
 			addAnomalyFromText((ITextSelection)selection);
@@ -97,7 +100,6 @@ public class AddAnomalyHandler extends AbstractHandler {
 		} else if (selection instanceof ITreeSelection) {
 			
 			//First remove any editor selection (if open) if we execute the command from the review navigator view
-			final IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor(); // $codepro.audit.disable methodChainLength
 			if (null != editorPart && editorPart instanceof ITextEditor) {
 				((ITextEditor)editorPart).getSelectionProvider().setSelection(null);
 			}
@@ -105,6 +107,18 @@ public class AddAnomalyHandler extends AbstractHandler {
 			//Then iterate through all selections	
 			for (final Iterator<?> iterator = ((ITreeSelection)selection).iterator(); iterator.hasNext();) {
 				addAnomalyFromTree(iterator.next());		
+			}
+		} else if (selection.isEmpty()) {
+			//Try to get the active editor highlighted range and set it as trhe editor's selection
+			if (null != editorPart) {
+				if (editorPart instanceof ITextEditor) {
+					IRegion region = ((ITextEditor)editorPart).getHighlightRange();
+					final TextSelection selectedText = new TextSelection(
+							((ITextEditor)editorPart).getDocumentProvider().getDocument(editorPart.getEditorInput()), 
+							region.getOffset(), region.getLength());
+					((ITextEditor)editorPart).getSelectionProvider().setSelection(selectedText);
+					addAnomalyFromText(selectedText);
+				}
 			}
 		}
 		

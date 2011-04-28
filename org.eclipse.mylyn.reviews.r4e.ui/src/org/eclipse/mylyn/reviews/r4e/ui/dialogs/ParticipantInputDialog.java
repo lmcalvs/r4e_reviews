@@ -18,8 +18,11 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.dialogs;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.naming.NamingException;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -32,8 +35,14 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
+import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
+import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -282,6 +291,25 @@ public class ParticipantInputDialog extends FormDialog {
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 2;
         fParticipantIdInputTextField.setLayoutData(textGridData);
+        fParticipantIdInputTextField.addFocusListener(new FocusListener() {
+			
+			public void focusLost(FocusEvent e) {
+		        if (R4EUIModelController.isUserQueryAvailable()) {
+		        	if (fParticipantIdInputTextField.getText().length() > 0) {
+		    	    	getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+        				getUserInfo();
+		    	    	getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+        			} else {
+        				fParticipantEmailInputTextField.setText("");
+        				fParticipantDetailsInputTextField.setText("");
+        			}
+
+		        }
+			}
+			public void focusGained(FocusEvent e) {
+				//Nothing to do
+			}
+		});
 
         //Find user button
         final Button findUserButton = toolkit.createButton(basicSectionClient, FIND_BUTTON_LABEL, SWT.NONE);
@@ -420,5 +448,27 @@ public class ParticipantInputDialog extends FormDialog {
      */
     private String validateEmptyInput(Text aText) {
         return fValidator.isValid(aText.getText());
+    }
+    
+    protected void getUserInfo() {
+		final IQueryUser query = new QueryUserFactory().getInstance();
+		try {
+			 List<IUserInfo> users = query.searchByUserId(fParticipantIdInputTextField.getText());
+			 
+			 //Fill info with first user
+			 for (IUserInfo user : users) {
+				 if (user.getUserId().equals(fParticipantIdInputTextField.getText())) {
+					 fParticipantEmailInputTextField.setText(user.getEmail());
+					 fParticipantDetailsInputTextField.setText(UIUtils.buildUserDetailsString(user));
+					 return;
+				 }
+			 }
+		} catch (NamingException e) {
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logError("Exception: " + e.toString(), e);
+		} catch (IOException e) {
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logError("Exception: " + e.toString(), e);
+		}
     }
 }
