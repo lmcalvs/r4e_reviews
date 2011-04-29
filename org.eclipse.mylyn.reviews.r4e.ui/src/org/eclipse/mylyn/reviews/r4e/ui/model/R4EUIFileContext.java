@@ -201,15 +201,23 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
     public static String getNavigatorTooltip(R4EFileVersion aTarget, R4EFileVersion aBase) {
 		
-    	//The tooltip shows the path relative to the workspace
-    	final String targetResourceStr = (null != aTarget) ? aTarget.getVersionID() : aBase.getVersionID();
+    	//The tooltip shows the file versions
+    	final StringBuilder tooltip = new StringBuilder();
 		
+    	tooltip.append("Base Version: ");
     	if (null != aBase) {
-    		final String baseResourceStr = aBase.getVersionID();	
-			return "Base Version: " + baseResourceStr + System.getProperty("line.separator") + "Target Version: " 
-				+ targetResourceStr;
+    		tooltip.append(aBase.getVersionID());
+		} else {
+			tooltip.append("(not present)");
 		}
-		return "Target Version: " + targetResourceStr;
+    	tooltip.append(System.getProperty("line.separator"));
+    	tooltip.append("Target Version: ");
+    	if (null != aTarget) {
+    		tooltip.append(aTarget.getVersionID());
+		} else {
+			tooltip.append("(not present)");
+		}
+		return tooltip.toString();
     }
 	
 	/**

@@ -68,7 +68,9 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 	 */
 	public IStorage getStorage() {
 		try {
-			return fFileVersion.getFileRevision().getStorage(null);
+			if (null != fFileVersion.getFileRevision()) {
+				return fFileVersion.getFileRevision().getStorage(null);
+			}
 		} catch (CoreException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
@@ -119,7 +121,9 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 	 */
 	public String getToolTipText() {
 		try {
-			return fFileVersion.getFileRevision().getStorage(null).getFullPath().toString();
+			if (null != fFileVersion.getFileRevision()) {
+				return fFileVersion.getFileRevision().getStorage(null).getFullPath().toString();
+			}
 		} catch (CoreException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
@@ -138,7 +142,9 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 		
 		if (IStorage.class.equals(aAdapter)) {
 			try {
-				return fFileVersion.getFileRevision().getStorage(null);
+				if (null != fFileVersion.getFileRevision()) {
+					return fFileVersion.getFileRevision().getStorage(null);
+				}
 			} catch (CoreException e) {
 				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
@@ -190,7 +196,10 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 	 */
 	@Override
 	public int hashCode() {
-		return fFileVersion.getFileRevision().hashCode();
+		if (null != fFileVersion.getFileRevision()) {
+			return fFileVersion.getFileRevision().hashCode();
+		}
+		return fFileVersion.hashCode();
 	}
 
 	/**
@@ -206,7 +215,10 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 	 * @return URI - the URI
 	 */
 	public URI getURI() {
-		return fFileVersion.getFileRevision().getURI();
+		if (null != fFileVersion.getFileRevision()) {
+			return fFileVersion.getFileRevision().getURI();
+		}
+		return null;
 	}
 
 	/**

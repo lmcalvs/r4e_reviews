@@ -128,15 +128,16 @@ public class FileVersionSourceProperties implements IPropertySource {
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
 	public Object getPropertyValue(Object aId) {
-		if (FILE_VERSION_NAME_ID.equals(aId)) { 
-			return fFileVersion.getName();
+		if (FILE_VERSION_NAME_ID.equals(aId)) {
+			if (null != fFileVersion) return fFileVersion.getName();
 		}  else if (FILE_VERSION_PATH_ID.equals(aId)) {
 	    	//The properties shows the absolute path
-			final IResource resource = fFileVersion.getResource();
-			if (null != resource) return resource.getLocation().toOSString();
-			return null;
+			if (null != fFileVersion) {
+				final IResource resource = fFileVersion.getResource();
+				if (null != resource) return resource.getLocation().toOSString();
+			}
 		} else if (FILE_VERSION_ID.equals(aId)) {
-			return fFileVersion.getVersionID();
+			if (null != fFileVersion) return fFileVersion.getVersionID();
 		}
 		return null;
 	}

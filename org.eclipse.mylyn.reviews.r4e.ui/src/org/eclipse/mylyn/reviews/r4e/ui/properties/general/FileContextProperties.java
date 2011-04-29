@@ -99,7 +99,10 @@ public class FileContextProperties extends ModelElementProperties {
 	@Override
 	public Object getPropertyValue(Object aId) {
 		if (FILE_TARGET_VERSION_ID.equals(aId)) {
-			return new FileVersionSourceProperties(((R4EUIFileContext)getElement()).getFileContext().getTarget());
+			if (null != ((R4EUIFileContext)getElement()).getFileContext().getTarget()) {
+				return new FileVersionSourceProperties(((R4EUIFileContext)getElement()).getFileContext().getTarget());
+			}
+			return R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE;
 		} else if (FILE_BASE_VERSION_ID.equals(aId)) {
 			if (null != ((R4EUIFileContext)getElement()).getFileContext().getBase()) {
 				return new FileVersionSourceProperties(((R4EUIFileContext)getElement()).getFileContext().getBase());

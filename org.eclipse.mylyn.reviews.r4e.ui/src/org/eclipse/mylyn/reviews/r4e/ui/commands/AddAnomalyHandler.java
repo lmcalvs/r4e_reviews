@@ -109,7 +109,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 				addAnomalyFromTree(iterator.next());		
 			}
 		} else if (selection.isEmpty()) {
-			//Try to get the active editor highlighted range and set it as trhe editor's selection
+			//Try to get the active editor highlighted range and set it as the editor's selection
 			if (null != editorPart) {
 				if (editorPart instanceof ITextEditor) {
 					IRegion region = ((ITextEditor)editorPart).getHighlightRange();

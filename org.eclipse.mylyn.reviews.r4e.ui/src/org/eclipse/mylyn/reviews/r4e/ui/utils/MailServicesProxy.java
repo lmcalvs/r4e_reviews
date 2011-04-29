@@ -19,11 +19,9 @@
 package org.eclipse.mylyn.reviews.r4e.ui.utils;
 
 import java.text.DecimalFormat;
-import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -32,7 +30,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
@@ -46,6 +45,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
@@ -53,6 +54,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 
 /**
@@ -569,16 +572,27 @@ public class MailServicesProxy {
 						((R4EUIFileContext)((R4EUISelection)aSource).getParent().getParent()).getName() + LINE_FEED_MSG_PART);
 			}
     		msgBody.append("Line(s): " + ((R4EUISelection)aSource).getPosition().toString() + LINE_FEED_MSG_PART);
-    	} else if (aSource instanceof AbstractSet){
-    		final Iterator<?> iterator = ((AbstractSet<?>)aSource).iterator();
-    		Object obj = iterator.next();
-			if (obj instanceof ITextSelection) {
-				msgBody.append("Contents: " + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-				msgBody.append("Position in File : " + CommandUtils.getPosition((ITextSelection)obj).toString() + LINE_FEED_MSG_PART);
-				msgBody.append("Contents :" + LINE_FEED_MSG_PART);
-				msgBody.append(((ITextSelection)obj).getText());
-			}
-    		
+    	} else if (aSource instanceof ITextEditor){
+    		//Get the information from the text editor
+			IRegion region = ((ITextEditor)aSource).getHighlightRange();
+			IEditorInput input = ((ITextEditor)aSource).getEditorInput();
+			final TextSelection selectedText = new TextSelection(
+					((ITextEditor)aSource).getDocumentProvider().getDocument(input), 
+					region.getOffset(), region.getLength());
+			((ITextEditor)aSource).getSelectionProvider().setSelection(selectedText);
+			R4EFileVersion file = null;
+			if (input instanceof R4EFileRevisionEditorInput) {
+				file = ((R4EFileRevisionEditorInput)input).getFileVersion();
+				msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+			} else if (input instanceof R4EFileEditorInput) {
+				file = ((R4EFileEditorInput)input).getFileVersion();
+				msgBody.append("File: " + file.getResource().getProject() +
+						": " + file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+			}   		
+			msgBody.append(LINE_FEED_MSG_PART);
+			msgBody.append("Position in File : " + CommandUtils.getPosition(selectedText).toString() + LINE_FEED_MSG_PART);
+			msgBody.append("Contents :" + LINE_FEED_MSG_PART);
+			msgBody.append(selectedText.getText());	
     	}
 		msgBody.append(LINE_FEED_MSG_PART);
     	msgBody.append(createReviewInfoPart());

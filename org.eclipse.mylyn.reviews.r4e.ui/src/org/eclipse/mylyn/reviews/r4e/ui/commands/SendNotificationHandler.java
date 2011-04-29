@@ -18,6 +18,8 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.commands;
 
+import java.util.AbstractSet;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -32,6 +34,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author lmcdubo
@@ -53,13 +58,30 @@ public class SendNotificationHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) {
 		
 		Object source = ((EvaluationContext)event.getApplicationContext()).getDefaultVariable();
+		Object obj = null;
 		if (source instanceof List) {
-			source = ((List<?>)source).get(0);  //If this is a list, get first element
+			if (((List<?>)source).size() > 0) {
+				source = ((List<?>)source).get(0);  //If this is a list, get first element
+				if (source instanceof AbstractSet){
+					final Iterator<?> iterator = ((AbstractSet<?>)source).iterator();
+					obj = iterator.next();
+				}
+			} else {
+				//empty selection, try to get active editor selection
+				final IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor(); // $codepro.audit.disable methodChainLength
+
+				//Try to get the active editor highlighted range and set it as the editor's selection
+				if (null != editorPart) {
+					if (editorPart instanceof ITextEditor) {
+						obj = editorPart;
+					}
+				}
+			}
 		}
 		R4EUIModelController.setDialogOpen(true);
 		//if the source is Review element, all options are available.  O(therwise, only ask questions is supported
 		final SendNotificationInputDialog dialog = new SendNotificationInputDialog(R4EUIModelController.getNavigatorView().
-				getSite().getWorkbenchWindow().getShell(), source);
+				getSite().getWorkbenchWindow().getShell(), obj);
 		dialog.create();
 		final int result = dialog.open();
 		if (result == Window.OK) {
@@ -81,7 +103,7 @@ public class SendNotificationHandler extends AbstractHandler {
 						break;
 					case R4EUIConstants.MESSAGE_TYPE_QUESTION:
 						//Send question
-						MailServicesProxy.sendQuestion(source);
+						MailServicesProxy.sendQuestion(obj);
 						break;
 					default:
 						//Do nothing, should never happen
