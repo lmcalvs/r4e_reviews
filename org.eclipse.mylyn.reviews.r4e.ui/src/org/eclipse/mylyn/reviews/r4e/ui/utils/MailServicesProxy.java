@@ -171,7 +171,7 @@ public class MailServicesProxy {
      */
     public static void sendItemsReadyNotification() throws CoreException, ResourceHandlingException {
     	if (null != R4EUIModelController.getMailConnector()) {
-    		final String[] messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_REVIEWER);
+    		final String[] messageDestinations = createItemsUpdatedDestinations();
     		final String messageSubject = createSubject() + " - Items Ready for Review";
     		final String messageBody = createItemsReadyNotificationMessage(false);
     		sendMessage(messageDestinations, messageSubject, messageBody);
@@ -188,7 +188,7 @@ public class MailServicesProxy {
      */
     public static void sendItemsAddedNotification(List<R4EReviewComponent> aAddedElements) throws CoreException, ResourceHandlingException {
     	if (null != R4EUIModelController.getMailConnector()) {
-    		final String[] messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_REVIEWER);
+    		final String[] messageDestinations = createItemsUpdatedDestinations();
     		final String messageSubject = createSubject() + " - Items Added for Review";
     		final String messageBody = createUpdatedItemsNotificationMessage(aAddedElements, true);
     		sendMessage(messageDestinations, messageSubject, messageBody);
@@ -205,7 +205,7 @@ public class MailServicesProxy {
      */
     public static void sendItemsRemovedNotification(List<R4EReviewComponent> aRemovedElements) throws CoreException, ResourceHandlingException {
     	if (null != R4EUIModelController.getMailConnector()) {
-    		final String[] messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_REVIEWER);
+    		final String[] messageDestinations = createItemsUpdatedDestinations();
     		final String messageSubject = createSubject() + " - Items Removed from Review";
     		final String messageBody = createUpdatedItemsNotificationMessage(aRemovedElements, false);
     		sendMessage(messageDestinations, messageSubject, messageBody);
@@ -221,7 +221,7 @@ public class MailServicesProxy {
      */
     public static void sendProgressNotification() throws CoreException, ResourceHandlingException {
     	if (null != R4EUIModelController.getMailConnector()) {
-    		final String[] messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_LEAD);
+    		final String[] messageDestinations = createProgressDestinations();
     		final String messageSubject = createSubject() + " - Participant Progress";
     		final String messageBody = createProgressNotification(PROGRESS_MESSAGE);
     		sendMessage(messageDestinations, messageSubject, messageBody);
@@ -237,7 +237,7 @@ public class MailServicesProxy {
      */
     public static void sendCompletionNotification() throws CoreException, ResourceHandlingException {
     	if (null != R4EUIModelController.getMailConnector()) {
-    		final String[] messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_LEAD);
+    		final String[] messageDestinations = createProgressDestinations();
     		final String messageSubject = createSubject() + " - Participant Progress (Completed)";
     		final String messageBody = createProgressNotification(COMPLETION_MESSAGE);
     		sendMessage(messageDestinations, messageSubject, messageBody);
@@ -258,7 +258,7 @@ public class MailServicesProxy {
     		if (aSource instanceof R4EUIAnomalyBasic) {
     			messageDestinations = createAnomalyCreatorDestination((R4EUIAnomalyBasic)aSource);
     		} else {
-    			messageDestinations = createDestinations(R4EUserRole.R4E_ROLE_AUTHOR);
+    			messageDestinations = createQuestionDestinations();
     		}
     		final String messageSubject = createSubject() + " - Question regarding review ";
     		final String messageBody = createQuestionMessage(aSource);
@@ -295,18 +295,64 @@ public class MailServicesProxy {
 	}
 	
     /**
-     * Method createReviewerDestinations
-     * @param aRole R4EUserRole
+     * Method createItemsUpdatedDestinations
      * @return String[]
      */
-	private static String[] createDestinations(R4EUserRole aRole) {
+	private static String[] createItemsUpdatedDestinations() {
 		final ArrayList<String> destinations = new ArrayList<String>();
 		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
 		for (R4EParticipant participant : participants) {
-			//If this is a formal review, only send mail if we have the proper role
-			if ((!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) ||
-					participant.getRoles().contains(aRole)) && null != participant.getEmail()) {
+			if (null != participant.getEmail()) {
+				//All participants should receive this email
 				destinations.add(participant.getEmail());
+			}
+		}
+		return destinations.toArray(new String[destinations.size()]);
+	}
+	
+    /**
+     * Method createProgressDestinations
+     * @return String[]
+     */
+	private static String[] createProgressDestinations() {
+		final ArrayList<String> destinations = new ArrayList<String>();
+		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
+		for (R4EParticipant participant : participants) {
+			if (null != participant.getEmail()) {
+				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL))) {
+					destinations.add(participant.getEmail());
+				} else {
+					//If this is a formal review, only send mail if we have the proper role
+					if (participant.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD) ||
+						participant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER) ||
+						participant.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR)) {
+						destinations.add(participant.getEmail());
+					}
+				}
+			}
+		}
+		return destinations.toArray(new String[destinations.size()]);
+	}
+	
+    /**
+     * Method createQuestionDestinations
+     * @return String[]
+     */
+	private static String[] createQuestionDestinations() {
+		final ArrayList<String> destinations = new ArrayList<String>();
+		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
+		for (R4EParticipant participant : participants) {
+			if (null != participant.getEmail()) {
+				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL))) {
+					destinations.add(participant.getEmail());
+				} else {
+					//If this is a formal review, only send mail if we have the proper role
+					if (participant.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD) ||
+						participant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER) ||
+						participant.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR)) {
+						destinations.add(participant.getEmail());
+					}
+				}
 			}
 		}
 		return destinations.toArray(new String[destinations.size()]);
@@ -340,7 +386,7 @@ public class MailServicesProxy {
     	final List<R4EUIReviewItem> items = R4EUIModelController.getActiveReview().getReviewItems();
     	for (R4EUIReviewItem item : items) {
     		if (item.isEnabled()) {
-    			msgBody.append("Review Item -> " + item.getItem().getDescription() + LINE_FEED_MSG_PART);
+				msgBody.append("Review Item -> " + item.getName() + LINE_FEED_MSG_PART);
     			msgBody.append("Eclipse Project: File Path Relative to Eclipse Project[: Line range]" + LINE_FEED_MSG_PART);
     			R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
     			for (R4EUIFileContext context : contexts) {
@@ -384,7 +430,9 @@ public class MailServicesProxy {
     	boolean legendAppended = false;
 		for (R4EReviewComponent component : aElements) {
 			if (component instanceof R4EItem) {
-    			msgBody.append("Review Item -> " + ((R4EItem)component).getDescription() + LINE_FEED_MSG_PART);
+				if (null != ((R4EItem)component).getDescription()) {
+					msgBody.append("Review Item -> " + ((R4EItem)component).getDescription() + LINE_FEED_MSG_PART);
+				}
     			msgBody.append("Eclipse Project: File Path Relative to Eclipse Project[: Line range]" + LINE_FEED_MSG_PART);
     			EList<R4EFileContext> contexts = ((R4EItem)component).getFileContextList();
     			for (R4EFileContext context : contexts) {
@@ -682,7 +730,7 @@ public class MailServicesProxy {
      */
     private static void sendMeetingRequest(Long aStartDate, Integer aDuration, String aLocation) throws CoreException, ResourceHandlingException, OutOfSyncException {
     	if (null != R4EUIModelController.getMailConnector()) {
-    		final String[] messageDestinations = createDestinations(null);
+    		final String[] messageDestinations = createItemsUpdatedDestinations();
     		String messageSubject = null;
     		if (null != R4EUIModelController.getActiveReview().getReview().getActiveMeeting()) {
     			messageSubject = createSubject() + " - Decision Meeting Request Updated";
@@ -691,8 +739,14 @@ public class MailServicesProxy {
     		}
     		final String messageBody = createItemsReadyNotificationMessage(true);
     		
-        	final IMeetingData meetingData = R4EUIModelController.getMailConnector().
-        		createMeetingRequest(messageSubject, messageBody, messageDestinations, aStartDate, aDuration);
+    		IMeetingData meetingData = null;
+    		try {
+    			meetingData = R4EUIModelController.getMailConnector().createMeetingRequest(
+    					messageSubject, messageBody, messageDestinations, aStartDate, aDuration);
+    		} catch (CoreException e) {
+    			UIUtils.displayCoreErrorDialog(e);
+    			return;
+    		}
         	R4EUIModelController.getActiveReview().setMeetingData(meetingData);
     	} else {
     		showNoEmailConnectorDialog();
