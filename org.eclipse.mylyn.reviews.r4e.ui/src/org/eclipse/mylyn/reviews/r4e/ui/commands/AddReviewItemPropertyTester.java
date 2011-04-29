@@ -118,7 +118,7 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 		final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (null != window) {
 			final IWorkbenchPage page = window.getActivePage();
-			if (null != page) {
+			if (null != page && null != page.getActiveEditor()) {
 				editorInput = page.getActiveEditor().getEditorInput();
 				//Single editor
 				if (editorInput instanceof R4EFileRevisionEditorInput) {

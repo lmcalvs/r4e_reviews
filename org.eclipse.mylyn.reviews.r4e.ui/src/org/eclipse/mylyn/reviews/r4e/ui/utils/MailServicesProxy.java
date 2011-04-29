@@ -477,9 +477,11 @@ public class MailServicesProxy {
     				for (R4EUIAnomalyBasic anomaly : anomalies) {
     					if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
     						if (!titleWritten) {
-    							msgBody.append(context.getTargetFileVersion().getResource().getProject() +
-    									": " + context.getTargetFileVersion().getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+    							if (null != context.getTargetFileVersion() && null != context.getTargetFileVersion().getResource()) {
+    								msgBody.append(context.getTargetFileVersion().getResource().getProject() +
+    										": " + context.getTargetFileVersion().getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
     							titleWritten = true;
+    							}
     						}
     						msgBody.append(TAB_MSG_PART + anomaly.getPosition().toString() +  ": " + 
     								anomaly.getAnomaly().getTitle() + ": " + anomaly.getAnomaly().getDescription() +
@@ -511,9 +513,18 @@ public class MailServicesProxy {
     	} else if (aSource instanceof R4EUIAnomalyBasic) {
     		final R4EFileVersion file = ((R4EUIFileContext)((R4EUIAnomalyBasic)aSource).getParent().getParent()).getTargetFileVersion();
     		msgBody.append("Anomaly :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-			msgBody.append("File: " + file.getResource().getProject() +
-					": " + file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
-    		msgBody.append("Version: " + file.getVersionID()+ LINE_FEED_MSG_PART);
+			if (null != file) {
+				if (null != file.getResource()) {
+					msgBody.append("File: " + file.getResource().getProject() +
+							": " + file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+				} else {
+					msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+				}
+				msgBody.append("Version: " + file.getVersionID()+ LINE_FEED_MSG_PART);
+			} else {
+				msgBody.append("File: " + 
+						((R4EUIFileContext)((R4EUIAnomalyBasic)aSource).getParent().getParent()).getName() + LINE_FEED_MSG_PART);
+			}
     		msgBody.append("Line(s): " + ((R4EUIAnomalyBasic)aSource).getPosition().toString()+ LINE_FEED_MSG_PART);
 			msgBody.append("Title: " + ((R4EUIAnomalyBasic)aSource).getAnomaly().getTitle()+ LINE_FEED_MSG_PART);
 			msgBody.append("Description: " + ((R4EUIAnomalyBasic)aSource).getAnomaly().getDescription()+ LINE_FEED_MSG_PART);
@@ -522,17 +533,41 @@ public class MailServicesProxy {
     		msgBody.append("Description: " + ((R4EUIReviewItem)aSource).getItem().getDescription() + LINE_FEED_MSG_PART);
     	} else if (aSource instanceof R4EUIFileContext) {
     		msgBody.append("File:" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-			msgBody.append("File: " + ((R4EUIFileContext)aSource).getTargetFileVersion().getResource().getProject() +
-					": " + ((R4EUIFileContext)aSource).getTargetFileVersion().getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
-    		msgBody.append("Base Version: " + ((R4EUIFileContext)aSource).getFileContext().getBase().getVersionID() + LINE_FEED_MSG_PART);
-    		msgBody.append("Target Version: " + ((R4EUIFileContext)aSource).getFileContext().getTarget().getVersionID() + LINE_FEED_MSG_PART);
-    	} else if (aSource instanceof R4EUISelection) {
+    		final R4EFileVersion targetFile = ((R4EUIFileContext)aSource).getTargetFileVersion();
+			if (null != targetFile) {
+				if (null != targetFile.getResource()) {
+					msgBody.append("Target File: " + targetFile.getResource().getProject() +
+							": " + targetFile.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+				} else {
+					msgBody.append("File: " + targetFile.getRepositoryPath() + LINE_FEED_MSG_PART);
+				}
+	    		msgBody.append("Target Version: " + targetFile.getVersionID() + LINE_FEED_MSG_PART);
+			} else {
+				msgBody.append("File: " + ((R4EUIFileContext)aSource).getName() + LINE_FEED_MSG_PART);
+	    		msgBody.append("Target Version: None" + LINE_FEED_MSG_PART);
+			}
+    		final R4EFileVersion baseFile = ((R4EUIFileContext)aSource).getBaseFileVersion();
+			if (null == baseFile) {
+				msgBody.append("Base Version: None" + LINE_FEED_MSG_PART);
+			} else {
+				msgBody.append("Base Version: " + baseFile.getVersionID() + LINE_FEED_MSG_PART);
+			}
+		} else if (aSource instanceof R4EUISelection) {
        		final R4EFileVersion file = 
     			((R4EUIFileContext)((R4EUISelection)aSource).getParent().getParent()).getTargetFileVersion();
     		msgBody.append("Selection :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-			msgBody.append("File: " + file.getResource().getProject() + ": " + 
-					file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
-    		msgBody.append("Version: " + file.getVersionID()+ LINE_FEED_MSG_PART);
+			if (null != file) {
+				if (null != file.getResource()) {
+					msgBody.append("File: " + file.getResource().getProject() +
+							": " + file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+				} else {
+					msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+				}
+	    		msgBody.append("Version: " + file.getVersionID()+ LINE_FEED_MSG_PART);
+			} else {
+				msgBody.append("File: " + 
+						((R4EUIFileContext)((R4EUISelection)aSource).getParent().getParent()).getName() + LINE_FEED_MSG_PART);
+			}
     		msgBody.append("Line(s): " + ((R4EUISelection)aSource).getPosition().toString() + LINE_FEED_MSG_PART);
     	} else if (aSource instanceof AbstractSet){
     		final Iterator<?> iterator = ((AbstractSet<?>)aSource).iterator();

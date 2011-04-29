@@ -111,7 +111,7 @@ public class AddAnomalyPropertyTester extends PropertyTester {
 		final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (null != window) {
 			final IWorkbenchPage page = window.getActivePage();
-			if (null != page) {
+			if (null != page && null != page.getActiveEditor()) {
 				editorInput = page.getActiveEditor().getEditorInput();
 				if (editorInput instanceof R4EFileRevisionEditorInput) {
 					if (null == ((R4EFileRevisionEditorInput)editorInput).getFileVersion().getResource()) {
