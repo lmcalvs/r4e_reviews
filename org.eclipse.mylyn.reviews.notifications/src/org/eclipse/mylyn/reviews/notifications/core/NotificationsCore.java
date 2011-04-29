@@ -125,6 +125,10 @@ public class NotificationsCore {
 			}
 		}
 
+		if (!result.isOK()) {
+			StatusHandler.log(result);
+		}
+
 		//Nothing found from the given list
 		//resolve the first enabled
 		connector = getFirstEnabled();
@@ -153,7 +157,8 @@ public class NotificationsCore {
 		for (IExtension extension : extensions) {
 			IConfigurationElement[] elements = extension.getConfigurationElements();
 			for (IConfigurationElement element : elements) {
-				configElements.put(element.getAttribute("id"), element);
+				String eid = element.getAttribute("id");
+				configElements.put(eid, element);
 			}
 		}
 		return configElements;
@@ -200,7 +205,8 @@ public class NotificationsCore {
 		for (IExtension extension : extensions) {
 			IConfigurationElement[] elements = extension.getConfigurationElements();
 			for (IConfigurationElement element : elements) {
-				if (id.equals(element.getAttribute("id"))) { //$NON-NLS-1$
+				String eid = element.getAttribute("id");
+				if (id.equals(eid)) { //$NON-NLS-1$
 					try {
 						Object object = element.createExecutableExtension("core"); //$NON-NLS-1$
 						if (object instanceof NotificationsConnector) {

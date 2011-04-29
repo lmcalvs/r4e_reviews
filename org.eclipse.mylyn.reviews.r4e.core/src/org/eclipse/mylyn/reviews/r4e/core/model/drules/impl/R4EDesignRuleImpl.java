@@ -15,13 +15,9 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.drules.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewComponentImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;

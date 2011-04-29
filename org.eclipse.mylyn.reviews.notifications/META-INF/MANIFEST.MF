@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Notifications
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.mylyn.reviews.notifications;singleton:=true
 Bundle-Version: 0.8.0.qualifier
 Require-Bundle: org.eclipse.ui,
@@ -11,3 +11,4 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.mylyn.reviews.notifications.core,
  org.eclipse.mylyn.reviews.notifications.internal.core;x-internal=true,
  org.eclipse.mylyn.reviews.notifications.spi
+Bundle-Vendor: %providerName
