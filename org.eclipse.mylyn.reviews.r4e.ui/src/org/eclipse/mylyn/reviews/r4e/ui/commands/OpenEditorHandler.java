@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
@@ -49,16 +50,17 @@ public class OpenEditorHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) {
 
 		if (R4EUIModelController.getNavigatorView().isEditorLinked()) {
-			//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
-			final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-			shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+			ISelection selection = HandlerUtil.getCurrentSelection(event);
+			if (selection instanceof IStructuredSelection) {
+				//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
+				final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+				shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 
-			final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
-			if (!selection.isEmpty()) {
-				EditorProxy.openEditor(R4EUIModelController.getNavigatorView().getSite().getPage(), selection, true);
+				if (!selection.isEmpty()) {
+					EditorProxy.openEditor(R4EUIModelController.getNavigatorView().getSite().getPage(), selection, true);
+				}
+				shell.setCursor(null);
 			}
-
-			shell.setCursor(null);
 		}
 		return null;
 	}

@@ -19,6 +19,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.dialogs;
 
+import java.io.FileNotFoundException;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -34,6 +36,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
@@ -378,13 +382,27 @@ public class AnomalyInputDialog extends FormDialog {
 					//If the current reveiw group contains a reference to this Rule Set, display it
 					if ((((R4EUIReviewGroup) R4EUIModelController.getActiveReview().getParent()).getRuleSets().
 							contains(parentRuleSetElement))) {
+						if (!parentRuleSetElement.isOpen()) {
+							try {
+								parentRuleSetElement.open();
+							} catch (FileNotFoundException e) {
+						    	Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						    	Activator.getDefault().logError("Exception: " + e.toString(), e);
+							} catch (ResourceHandlingException e) {
+						    	Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						    	Activator.getDefault().logError("Exception: " + e.toString(), e);
+							} catch (ReviewVersionsException e) {
+						    	Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						    	Activator.getDefault().logError("Exception: " + e.toString(), e);
+							}
+						}
 						return true;
 					}		
 				}
 				return false;
 			}
 		});
-		fRuleTreeViewer.collapseAll();
+		fRuleTreeViewer.expandAll();
 		fRuleTreeViewer.refresh();
 
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, true);

@@ -97,25 +97,25 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field SELECTIONS_LABEL_NAME.
 	 * (value is ""Selections"")
 	 */
-	public static final String SELECTIONS_LABEL_NAME = "Selections";
+	public static final String SELECTIONS_LABEL = "Selections";
 	
 	/**
 	 * Field ANOMALIES_LABEL_NAME.
 	 * (value is ""Anomalies"")
 	 */
-	public static final String ANOMALIES_LABEL_NAME = "Anomalies";
+	public static final String ANOMALIES_LABEL = "Anomalies";
 	
 	/**
 	 * Field GLOBAL_ANOMALIES_LABEL_NAME.
 	 * (value is ""Global Anomalies"")
 	 */
-	public static final String  GLOBAL_ANOMALIES_LABEL_NAME = "Global Anomalies";
+	public static final String  GLOBAL_ANOMALIES_LABEL = "Global Anomalies";
 	
 	/**
 	 * Field PARTICIPANTS_LABEL_NAME.
 	 * (value is ""Participants"")
 	 */
-	public static final String PARTICIPANTS_LABEL_NAME = "Participants";
+	public static final String PARTICIPANTS_LABEL = "Participants";
 	
 	/**
 	 * Field LINE_TAG.
@@ -354,6 +354,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String END_DATE_LABEL = "End Date: ";
 	
 	/**
+	 * Field MEETING_DECISION_LABEL.
+	 * (value is ""Meeting: "")
+	 */
+	public static final String DECISION_MEETING_LABEL = "Meeting: ";
+	
+	/**
 	 * Field DECISION_PARTICIPANTS_LABEL.
 	 * (value is ""Decision Participants: "")
 	 */
@@ -364,6 +370,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""Decision Time Spent: "")
 	 */
 	public static final String DECISION_TIME_SPENT_LABEL = "Decision Time Spent: ";
+	
+	/**
+	 * Field SUBJECT_LABEL.
+	 * (value is ""Subject: "")
+	 */
+	public static final String SUBJECT_LABEL = "Subject: ";
 	
 	/**
 	 * Field TIME_SPENT_LABEL.
@@ -409,6 +421,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String PHASE_LABEL = "Phase: ";
 	
 	/**
+	 * Field PHASE_INFO_LABEL.
+	 * (value is ""Phase Information: "")
+	 */
+	public static final String PHASE_INFO_LABEL = "Phase Information: ";
+	
+	/**
 	 * Field PHASE_MAP_LABEL.
 	 * (value is ""Phase Map: "")
 	 */
@@ -449,6 +467,18 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""COMPLETED"")
 	 */
 	public static final String PHASE_COMPLETED_LABEL = "COMPLETED";
+	
+	/**
+	 * Field DECISION_LABEL.
+	 * (value is ""Decision: "")
+	 */
+	public static final String DECISION_LABEL = "Decision: ";
+	
+	/**
+	 * Field DECISION_INFO_LABEL.
+	 * (value is ""Decision Information: "")
+	 */
+	public static final String DECISION_INFO_LABEL = "Decision Information: ";
 	
 	/**
 	 * Field START_TIME_LABEL.
@@ -587,6 +617,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""Rank: "")
 	 */
 	public static final String RANK_LABEL = "Rank: ";
+	
+	/**
+	 * Field RULE_ID_LABEL.
+	 * (value is ""Rule ID: "")
+	 */
+	public static final String RULE_ID_LABEL = "Rule ID: ";
 	
 	/**
 	 * Field NOT_ACCEPTED_REASON_LABEL.

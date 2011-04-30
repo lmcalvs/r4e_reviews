@@ -26,6 +26,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
@@ -47,7 +48,7 @@ public class RefreshHandler extends AbstractHandler  {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
 	 * @param event ExecutionEvent
@@ -57,40 +58,43 @@ public class RefreshHandler extends AbstractHandler  {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		try {
-			final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
-			if (!selection.isEmpty()) {
+		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		if (selection instanceof IStructuredSelection) {
+			try {
+				if (!selection.isEmpty()) {
 
-				final IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
-				if (element instanceof R4EUIReviewGroup) {
-					//Refresh whole Review Group
-					((R4EUIReviewGroup)element).close();
-					((R4EUIReviewGroup)element).open();
+					final IR4EUIModelElement element = 
+						(IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+					if (element instanceof R4EUIReviewGroup) {
+						//Refresh whole Review Group
+						((R4EUIReviewGroup)element).close();
+						((R4EUIReviewGroup)element).open();
+					} else {
+						//Refresh Review
+						refreshReview(element);
+					}		
 				} else {
-					//Refresh Review
-					refreshReview(element);
-				}		
-			} else {
-				//No selection refresh all open review groups
-				final IR4EUIModelElement[] groups = R4EUIModelController.getRootElement().getChildren();
-				for (IR4EUIModelElement group : groups) {
-					if (group.isOpen()) {
-						group.close();
-						group.open();
+					//No selection refresh all open review groups
+					final IR4EUIModelElement[] groups = R4EUIModelController.getRootElement().getChildren();
+					for (IR4EUIModelElement group : groups) {
+						if (group.isOpen()) {
+							group.close();
+							group.open();
+						}
 					}
 				}
+			} catch (ResourceHandlingException e) {
+				UIUtils.displayResourceErrorDialog(e);
+			} catch (FileNotFoundException e) {
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.getDefault().logError("Exception: " + e.toString(), e);
+			} catch (ReviewVersionsException e) {
+				UIUtils.displayVersionErrorDialog(e);
 			}
-		} catch (ResourceHandlingException e) {
-			UIUtils.displayResourceErrorDialog(e);
-		} catch (FileNotFoundException e) {
-	    	Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-	    	Activator.getDefault().logError("Exception: " + e.toString(), e);
-		} catch (ReviewVersionsException e) {
-			UIUtils.displayVersionErrorDialog(e);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Method refreshReview.
 	 * @param element IR4EUIModelElement

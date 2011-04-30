@@ -139,9 +139,9 @@ public class RuleProperties extends ModelElementProperties {
 			} else if (RULE_DESCRIPTION_ID.equals(aId)) { 
 				return ((R4EUIRule)getElement()).getRule().getDescription();
 			} else if (RULE_CLASS_ID.equals(aId)) { 
-				return ((R4EUIRule)getElement()).getRule().getClass();
+				return Integer.valueOf(((R4EUIRule)getElement()).getRule().getClass_().getValue());
 			} else if (RULE_RANK_ID.equals(aId)) { 
-				return ((R4EUIRule)getElement()).getRule().getRank();
+				return Integer.valueOf(((R4EUIRule)getElement()).getRule().getRank().getValue());
 			}
 		}
 		return null;

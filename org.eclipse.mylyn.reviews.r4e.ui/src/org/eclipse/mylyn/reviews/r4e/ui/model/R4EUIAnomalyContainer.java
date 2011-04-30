@@ -131,6 +131,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
     			tempCommentType.setType(rule.getClass_());
     			tempAnomaly.setType(tempCommentType);
     			tempAnomaly.setRank(rule.getRank());
+    			tempAnomaly.setRuleID(rule.getId());
     		}
     	}
     	// else Window.CANCEL
@@ -356,6 +357,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
         		commentType.setType(rule.getClass_());
         		anomaly.setType(commentType);
     			anomaly.setRank(rule.getRank());
+    			anomaly.setRuleID(rule.getId());
     		}
         	
         	//Set position data

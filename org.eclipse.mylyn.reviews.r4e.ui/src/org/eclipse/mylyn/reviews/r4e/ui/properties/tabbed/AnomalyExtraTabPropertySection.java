@@ -76,6 +76,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	protected CCombo fRankCombo = null;
 	
 	/**
+	 * Field fRuleId.
+	 */
+	protected CLabel fRuleId = null;
+	
+	/**
 	 * Field fDateText.
 	 */
 	protected Text fDateText = null;
@@ -243,12 +248,27 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.top = new FormAttachment(fRankCombo, 0, SWT.CENTER);
 	    rankLabel.setLayoutData(data);
 
+	    //RuleId (Read-only)
+	    fRuleId = widgetFactory.createCLabel(composite, "");
+	    data = new FormData();
+	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+	    data.top = new FormAttachment(fRankCombo, ITabbedPropertyConstants.VSPACE);
+	    fRuleId.setLayoutData(data);
+	    
+	    final CLabel ruleIdLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RULE_ID_LABEL);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, 0);
+	    data.right = new FormAttachment(fRuleId, -ITabbedPropertyConstants.HSPACE);
+	    data.top = new FormAttachment(fRuleId, 0, SWT.CENTER);
+	    ruleIdLabel.setLayoutData(data);
+	    
 	    //Due Date
 	    final Composite dateComposite = widgetFactory.createComposite(composite);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fRankCombo, ITabbedPropertyConstants.VSPACE);
+	    data.top = new FormAttachment(fRuleId, ITabbedPropertyConstants.VSPACE);
 	    dateComposite.setLayoutData(data);
 	    dateComposite.setLayout(new GridLayout(2, false));
 	    
@@ -461,6 +481,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 		}
 		fRankCombo.setItems(UIUtils.getRanks());
 		fRankCombo.select(modelAnomaly.getRank().getValue());
+		if (null != modelAnomaly.getRuleID()) fRuleId.setText(modelAnomaly.getRuleID());
 		if (null != modelAnomaly.getDueDate()) {
     		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);	
     		fDateText.setText(dateFormat.format(modelAnomaly.getDueDate()));

@@ -1303,7 +1303,7 @@
             sequence="Alt+R X">
       </key>
       <key
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+R Z">

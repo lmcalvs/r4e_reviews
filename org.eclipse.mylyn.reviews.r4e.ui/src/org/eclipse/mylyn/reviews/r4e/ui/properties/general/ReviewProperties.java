@@ -17,13 +17,11 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -34,7 +32,7 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewBasicProperties extends ModelElementProperties {
+public class ReviewProperties extends ModelElementProperties {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -50,17 +48,6 @@ public class ReviewBasicProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor REVIEW_NAME_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_NAME_ID, R4EUIConstants.NAME_LABEL);
-
-	/**
-	 * Field REVIEW_PHASE_ID. (value is ""reviewElement.phase"")
-	 */
-	protected static final String REVIEW_PHASE_ID = "reviewElement.phase";
-
-	/**
-	 * Field REVIEW_PHASE_PROPERTY_DESCRIPTOR.
-	 */
-	protected static final PropertyDescriptor REVIEW_PHASE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			REVIEW_PHASE_ID, R4EUIConstants.PHASE_LABEL);
 	
 	/**
 	 * Field REVIEW_START_DATE_ID. (value is ""reviewElement.startDate"")
@@ -151,14 +138,36 @@ public class ReviewBasicProperties extends ModelElementProperties {
 			REVIEW_REFERENCE_MATERIAL_ID, R4EUIConstants.REFERENCE_MATERIAL_LABEL);
 	
 	/**
+	 * Field REVIEW_PHASE_INFO_ID. (value is ""reviewElement.phaseInfo"")
+	 */
+	protected static final String REVIEW_PHASE_INFO_ID = "reviewElement.phase";
+
+	/**
+	 * Field REVIEW_PHASE_INFO_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor REVIEW_PHASE_INFO_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			REVIEW_PHASE_INFO_ID, R4EUIConstants.PHASE_INFO_LABEL);
+	
+	/**
+	 * Field REVIEW_DECISION_INFO_ID. (value is ""reviewElement.decisionInfo"")
+	 */
+	protected static final String REVIEW_DECISION_INFO_ID = "reviewElement.decisionInfo";
+
+	/**
+	 * Field REVIEW_DECISION_INFO_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor REVIEW_DECISION_INFO_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			REVIEW_DECISION_INFO_ID, R4EUIConstants.DECISION_INFO_LABEL);
+	
+	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { REVIEW_NAME_PROPERTY_DESCRIPTOR,  
-		REVIEW_PHASE_PROPERTY_DESCRIPTOR, REVIEW_START_DATE_PROPERTY_DESCRIPTOR,
-		REVIEW_END_DATE_PROPERTY_DESCRIPTOR, REVIEW_DESCRIPTION_PROPERTY_DESCRIPTOR,
-		REVIEW_PROJECT_PROPERTY_DESCRIPTOR, REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR,
-		REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR, REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR, 
-		REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR};
+		REVIEW_START_DATE_PROPERTY_DESCRIPTOR, REVIEW_END_DATE_PROPERTY_DESCRIPTOR, 
+		REVIEW_DESCRIPTION_PROPERTY_DESCRIPTOR, REVIEW_PROJECT_PROPERTY_DESCRIPTOR,
+		REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR, REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR,
+		REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR, REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR,
+		REVIEW_PHASE_INFO_PROPERTY_DESCRIPTOR, REVIEW_DECISION_INFO_PROPERTY_DESCRIPTOR };
 	
 	
 	// ------------------------------------------------------------------------
@@ -169,7 +178,7 @@ public class ReviewBasicProperties extends ModelElementProperties {
 	 * Constructor for ReviewGeneralProperties.
 	 * @param aElement R4EUIModelElement
 	 */
-	public ReviewBasicProperties(R4EUIModelElement aElement) {
+	public ReviewProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
@@ -200,13 +209,6 @@ public class ReviewBasicProperties extends ModelElementProperties {
 		if (null != getElement()) {
 			if (REVIEW_NAME_ID.equals(aId)) { 
 				return ((R4EUIReviewBasic)getElement()).getReview().getName();
-			} else if (REVIEW_PHASE_ID.equals(aId)) {
-				if (fElement instanceof R4EUIReviewExtended) {
-					return ((R4EUIReviewExtended)getElement()).getPhaseString(
-							((R4EReviewState)((R4EUIReviewExtended)getElement()).getReview().getState()).getState());
-				}
-				return ((R4EUIReviewBasic)getElement()).getPhaseString(
-						((R4EReviewState)((R4EUIReviewBasic)getElement()).getReview().getState()).getState());				
 			} else if (REVIEW_START_DATE_ID.equals(aId)) {
 				return ((R4EUIReviewBasic)getElement()).getReview().getStartDate().toString();
 			} else if (REVIEW_END_DATE_ID.equals(aId)) {
@@ -224,7 +226,11 @@ public class ReviewBasicProperties extends ModelElementProperties {
 				return ((R4EUIReviewBasic)getElement()).getReview().getObjectives();
 			} else if (REVIEW_REFERENCE_MATERIAL_ID.equals(aId)) {
 				return ((R4EUIReviewBasic)getElement()).getReview().getReferenceMaterial();
-			}
+			} else if (REVIEW_PHASE_INFO_ID.equals(aId)) {
+				return new ReviewPhaseProperties(getElement());
+	    	} else if (REVIEW_DECISION_INFO_ID.equals(aId)) {
+				return new ReviewDecisionProperties(getElement());
+	    	}
 		}
 		return null;
 	}

@@ -16,6 +16,7 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -57,6 +58,17 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 			ANOMALY_DUE_DATE_ID, R4EUIConstants.DUE_DATE_LABEL);
 	
 	/**
+	 * Field ANOMALY_CLASS_ID. (value is ""anomalyElement.class"")
+	 */
+	private static final String ANOMALY_CLASS_ID = "anomalyElement.class";
+
+	/**
+	 * Field ANOMALY_CLASS_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final ComboBoxPropertyDescriptor ANOMALY_CLASS_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
+			ANOMALY_CLASS_ID, R4EUIConstants.CLASS_LABEL, UIUtils.getRanks());
+	
+	/**
 	 * Field ANOMALY_RANK_ID. (value is ""anomalyElement.rank"")
 	 */
 	private static final String ANOMALY_RANK_ID = "anomalyElement.rank";
@@ -66,6 +78,17 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 */
 	protected static final ComboBoxPropertyDescriptor ANOMALY_RANK_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
 			ANOMALY_RANK_ID, R4EUIConstants.RANK_LABEL, UIUtils.getRanks());
+	
+	/**
+	 * Field ANOMALY_RULE_ID_ID. (value is ""anomalyElement.ruleId"")
+	 */
+	private static final String ANOMALY_RULE_ID_ID = "anomalyElement.ruleId";
+
+	/**
+	 * Field ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			ANOMALY_RULE_ID_ID, R4EUIConstants.RULE_ID_LABEL);
 	
 	/**
 	 * Field ANOMALY_NOT_ACCEPTED_REASON_ID. (value is ""anomalyElement.notAcceptedReason"")
@@ -118,8 +141,9 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 		ANOMALY_POSITION_PROPERTY_DESCRIPTOR, ANOMALY_AUTHOR_PROPERTY_DESCRIPTOR,  
 		ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR, ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR,
 		ANOMALY_STATE_PROPERTY_DESCRIPTOR, ANOMALY_DUE_DATE_PROPERTY_DESCRIPTOR,
-		ANOMALY_RANK_PROPERTY_DESCRIPTOR, ANOMALY_NOT_ACCEPTED_REASON_PROPERTY_DESCRIPTOR,
-		ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR, ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR,
+		ANOMALY_CLASS_PROPERTY_DESCRIPTOR, ANOMALY_RANK_PROPERTY_DESCRIPTOR,
+		ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR, ANOMALY_NOT_ACCEPTED_REASON_PROPERTY_DESCRIPTOR, 
+		ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR, ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR, 
 		ANOMALY_FOLLOWUP_BY_PROPERTY_DESCRIPTOR};
 	
 	
@@ -167,8 +191,13 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate()) {
 				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate().toString();
 			}
+		} else if (ANOMALY_CLASS_ID.equals(aId)) { 
+			return Integer.valueOf(((R4ECommentType)((R4EUIAnomalyExtended)getElement()).getAnomaly().
+					getType()).getType().getValue());
 		} else if (ANOMALY_RANK_ID.equals(aId)) { 
 			return Integer.valueOf(((R4EUIAnomalyExtended)getElement()).getAnomaly().getRank().getValue());
+		} else if (ANOMALY_RULE_ID_ID.equals(aId)) { 
+			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getRuleID();
 		} else if (ANOMALY_NOT_ACCEPTED_REASON_ID.equals(aId)) { 
 			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getNotAcceptedReason()) {
 				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getNotAcceptedReason();

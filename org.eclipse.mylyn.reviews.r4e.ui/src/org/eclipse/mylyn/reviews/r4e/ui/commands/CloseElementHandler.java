@@ -20,6 +20,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
@@ -46,21 +47,25 @@ public class CloseElementHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
-		if (!selection.isEmpty()) {
-			final IR4EUIModelElement element = (IR4EUIModelElement)selection.getFirstElement();
-			element.close();
-			for (IR4EUIModelElement childElement: element.getChildren()) {
-				if (null != childElement && childElement.isOpen()) {
-					childElement.close();
-					break;
+		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		if (selection instanceof IStructuredSelection) {
+			if (!selection.isEmpty()) {
+				final IR4EUIModelElement element = 
+					(IR4EUIModelElement)((IStructuredSelection) selection).getFirstElement();
+				element.close();
+				for (IR4EUIModelElement childElement: element.getChildren()) {
+					if (null != childElement && childElement.isOpen()) {
+						childElement.close();
+						break;
+					}
 				}
+				Activator.Ftracer.traceInfo("Closing element " + element.getName());
+
+				//The action is only performed on the first element, so select it
+				final StructuredSelection newSelection = 
+					new StructuredSelection(((IStructuredSelection) selection).getFirstElement());
+				R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
 			}
-			Activator.Ftracer.traceInfo("Closing element " + element.getName());
-			
-			//The action is only performed on the first element, so select it
-			final StructuredSelection newSelection = new StructuredSelection(selection.getFirstElement());
-			R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
 		}
 		return null;
 	}
