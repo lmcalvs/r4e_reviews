@@ -91,63 +91,63 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	public Object execute(final ExecutionEvent event) {
 
 		// Get project to use (use adapters if needed)
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
+		final ISelection selection = HandlerUtil.getCurrentSelection(event);
+		final Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
+		IProject project = null;
+		
+		// NOTE: The valadity testes are done if the ProjectPropertyTester class
+		if (selectedElement instanceof IProject) {
+			project = (IProject) selectedElement;
+		} else if (selectedElement instanceof IJavaProject) {
+			project = ((IJavaProject) selectedElement).getProject();
+		} else if (selectedElement instanceof ICProject) {
+			project = ((ICProject) selectedElement).getProject();
+		} else if (selectedElement instanceof IPackageFragment
+				|| selectedElement instanceof IPackageFragmentRoot) {
+			project = ((IJavaElement) selectedElement).getJavaProject().getProject();
+		} else if (selectedElement instanceof IFolder) {
+			project = ((IFolder) selectedElement).getProject();
+		} else if (selectedElement instanceof IAdaptable) {
+			final IAdaptable adaptableProject = (IAdaptable) selectedElement;
+			project = (IProject) adaptableProject.getAdapter(IProject.class);
+		} else {
+			// Should never happen
+			Activator.Ftracer.traceError("No project defined for selection of class "
+				+ selectedElement.getClass());
+			Activator.getDefault().logError("No project defined for selection of class "
+				+ selectedElement.getClass(), null);
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+					"Find Review Item Error", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+							"No project defined for selection", null),IStatus.ERROR);
+			dialog.open();
+			return null;
+		}
 
-			final Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
-			IProject project = null;
-
-			// NOTE: The valadity testes are done if the ProjectPropertyTester class
-			if (selectedElement instanceof IProject) {
-				project = (IProject) selectedElement;
-			} else if (selectedElement instanceof IJavaProject) {
-				project = ((IJavaProject) selectedElement).getProject();
-			} else if (selectedElement instanceof ICProject) {
-				project = ((ICProject) selectedElement).getProject();
-			} else if (selectedElement instanceof IPackageFragment
-					|| selectedElement instanceof IPackageFragmentRoot) {
-				project = ((IJavaElement) selectedElement).getJavaProject().getProject();
-			} else if (selectedElement instanceof IFolder) {
-				project = ((IFolder) selectedElement).getProject();
-			} else if (selectedElement instanceof IAdaptable) {
-				final IAdaptable adaptableProject = (IAdaptable) selectedElement;
-				project = (IProject) adaptableProject.getAdapter(IProject.class);
-			} else {
-				// Should never happen
-				Activator.Ftracer.traceError("No project defined for selection of class "
-						+ selectedElement.getClass());
-				Activator.getDefault().logError("No project defined for selection of class "
-						+ selectedElement.getClass(), null);
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Find Review Item Error", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
-								"No project defined for selection", null),IStatus.ERROR);
-				dialog.open();
+		final ScmUiConnector uiConnector = ScmUi.getUiConnector(project);
+		ChangeSet changeSet = null;
+		if (null != uiConnector) {
+			try {
+				Activator.Ftracer.traceDebug("Resolved Scm Ui connector: " + uiConnector);
+				R4EUIModelController.setDialogOpen(true);
+				changeSet = uiConnector.getChangeSet(null, project, null);
+				R4EUIModelController.setDialogOpen(false);
+			} catch (final CoreException e) {
+				Activator.Ftracer.traceError("Exception: " + e.getMessage());
+				Activator.getDefault().logError("Exception: " + e.toString(), e);
 				return null;
 			}
-
-			final ScmUiConnector uiConnector = ScmUi.getUiConnector(project);
-			if (null != uiConnector) {
-				ChangeSet changeSet = null;
-				try {
-					R4EUIModelController.setDialogOpen(true);
-					changeSet = uiConnector.getChangeSet(null, project, null);
-					R4EUIModelController.setDialogOpen(false);
-				} catch (final CoreException e) {
-					Activator.Ftracer.traceError("Exception: " + e.getMessage());
-					Activator.getDefault().logError("Exception: " + e.toString(), e);
-					return null;
-				}
-
-
-
-				//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
-				final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-				shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-				createReviewItem(changeSet);
-				shell.setCursor(null);
-			}
+			
+			//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
+			final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+			shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+			createReviewItem(changeSet);
+			shell.setCursor(null);
+		} else {
+			// We could not find any version control system, thus no items
+			String strProject = (project == null ? "null" : project.getName());
+			Activator.Ftracer.traceDebug("No Scm Ui connector found for project: " + strProject);
 		}
-		// We could not find any version control system, thus no items
+
 		return null;
 	}
 
