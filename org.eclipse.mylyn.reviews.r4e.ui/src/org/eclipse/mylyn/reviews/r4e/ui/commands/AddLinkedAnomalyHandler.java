@@ -22,6 +22,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -40,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author lmcdubo
@@ -59,35 +61,33 @@ public class AddLinkedAnomalyHandler extends AbstractHandler {
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
 	public Object execute(ExecutionEvent event) {
-		
-		//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
-		final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-		shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-		
-		//Add a linked anomaly to this selection
-		final IStructuredSelection selection = 
-			(IStructuredSelection) R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
-		if (!selection.isEmpty()) {
-			final IR4EUIModelElement element = ((IR4EUIModelElement)selection.getFirstElement());
-			if (element instanceof R4EUISelection) {
-				try {
-					Activator.Ftracer.traceInfo("Adding linked anomaly to element " + element.getName());
-					addLinkedAnomaly((R4EUISelection)element);
-					
-				} catch (ResourceHandlingException e) {
-					UIUtils.displayResourceErrorDialog(e);
 
-				} catch (OutOfSyncException e) {				
-					UIUtils.displaySyncErrorDialog(e);
+		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		if (selection instanceof IStructuredSelection) {
+			//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
+			final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+			shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 
+			//Add a linked anomaly to this selection
+			if (!selection.isEmpty()) {
+				final IR4EUIModelElement element = 
+					((IR4EUIModelElement)((IStructuredSelection) selection).getFirstElement());
+				if (element instanceof R4EUISelection) {
+					try {
+						Activator.Ftracer.traceInfo("Adding linked anomaly to element " + element.getName());
+						addLinkedAnomaly((R4EUISelection)element);
+					} catch (ResourceHandlingException e) {
+						UIUtils.displayResourceErrorDialog(e);
+					} catch (OutOfSyncException e) {				
+						UIUtils.displaySyncErrorDialog(e);
+					}
 				}
 			}
+			shell.setCursor(null);
 		}
-		
-		shell.setCursor(null);
 		return null;
 	}
-	
+
 	/**
 	 * Method addLinkedAnomaly.
 	 * @param aElement R4EUISelection
@@ -102,7 +102,7 @@ public class AddLinkedAnomalyHandler extends AbstractHandler {
 		R4EUIAnomalyContainer container = (R4EUIAnomalyContainer)(fileContext.getAnomalyContainerElement());
 		//Get data from user
 		if (null == container) {
-			container = new R4EUIAnomalyContainer(fileContext, R4EUIConstants.ANOMALIES_LABEL_NAME);
+			container = new R4EUIAnomalyContainer(fileContext, R4EUIConstants.ANOMALIES_LABEL);
 			fileContext.addChildren(container);
 		}
 		

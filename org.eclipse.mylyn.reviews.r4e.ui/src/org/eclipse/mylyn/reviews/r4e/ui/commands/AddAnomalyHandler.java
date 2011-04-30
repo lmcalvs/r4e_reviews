@@ -266,7 +266,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 								}
 							}
 						} else {
-							anomalyContainer = new R4EUIAnomalyContainer(file, R4EUIConstants.ANOMALIES_LABEL_NAME);
+							anomalyContainer = new R4EUIAnomalyContainer(file, R4EUIConstants.ANOMALIES_LABEL);
 							file.addChildren(anomalyContainer);
 						}
 						if (isNewAnomaly) {
@@ -357,7 +357,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 		}
 		
 		final R4EUIAnomalyContainer uiAnomalyContainer = new R4EUIAnomalyContainer(uiFileContext, 
-				R4EUIConstants.ANOMALIES_LABEL_NAME);
+				R4EUIConstants.ANOMALIES_LABEL);
 		uiFileContext.addChildren(uiAnomalyContainer);
 		
 		final R4EUIAnomalyBasic uiAnomaly = uiAnomalyContainer.createAnomaly(aTargetFileVersion,

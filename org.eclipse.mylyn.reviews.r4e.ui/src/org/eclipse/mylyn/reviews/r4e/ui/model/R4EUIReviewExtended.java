@@ -35,7 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewExtraProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -87,7 +87,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
 		if (IR4EUIModelElement.class.equals(adapter)) return this;
-		if (IPropertySource.class.equals(adapter)) return new ReviewExtraProperties(this);
+		if (IPropertySource.class.equals(adapter)) return new ReviewProperties(this);
 		return null;
 	}
 	
@@ -190,8 +190,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 * Method getPhases.
 	 * @return String[]
 	 */
-	@Override
-	public String[] getPhases() {
+	public static String[] getFormalPhases() {
 		return FORMAL_PHASE_VALUES;
 	}
 	

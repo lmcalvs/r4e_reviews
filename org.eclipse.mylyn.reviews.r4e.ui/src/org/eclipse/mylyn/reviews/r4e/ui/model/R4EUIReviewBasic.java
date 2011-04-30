@@ -52,7 +52,7 @@ import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewBasicProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.properties.general.ReviewProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.mylyn.versions.core.ChangeSet;
@@ -186,8 +186,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		super(aParent, getReviewDisplayName(aReview.getName(), aType), aReview.getExtraNotes());
 		fReview = aReview;
 		fReviewName = aReview.getName();
-		fParticipantsContainer = new R4EUIParticipantContainer(this, R4EUIConstants.PARTICIPANTS_LABEL_NAME);
-		fAnomalyContainer = new R4EUIAnomalyContainer(this, R4EUIConstants.GLOBAL_ANOMALIES_LABEL_NAME);
+		fParticipantsContainer = new R4EUIParticipantContainer(this, R4EUIConstants.PARTICIPANTS_LABEL);
+		fAnomalyContainer = new R4EUIAnomalyContainer(this, R4EUIConstants.GLOBAL_ANOMALIES_LABEL);
 		fItems = new ArrayList<R4EUIReviewItem>();
 		if (aOpen) {
 			//Open the new review and make it the active one (close any other that is open)
@@ -223,7 +223,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			return this;
 		}
 		if (IPropertySource.class.equals(adapter)) {
-			return new ReviewBasicProperties(this);
+			return new ReviewProperties(this);
 		}
 		return null;
 	}
@@ -278,6 +278,14 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	public R4EReview getReview() {
 		return fReview;
+	}
+	
+	/**
+	 * Method getAnomalyContainer.
+	 * @return R4EUIAnomalyContainer
+	 */
+	public R4EUIAnomalyContainer getAnomalyContainer() {
+		return fAnomalyContainer;
 	}
 	
 	/**
@@ -418,12 +426,14 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup)getParent()).getReviewGroup(), fReviewName);
 		
 		//Refresh meeting data (if any)
+		//TODO: Disablled for now to avoid using the mail connector at opening
+		/*
 		try {
 			refreshMeetingData();
 		} catch (OutOfSyncException e) {
 			UIUtils.displaySyncErrorDialog(e);
 		}
-		
+		*/
 		final EList<Item> items = fReview.getReviewItems();
 		if (null != items) {
 		
@@ -1254,7 +1264,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * Method getExitDecisionValues.
 	 * @return String[]
 	 */
-	public String[] getExitDecisionValues() {
+	public static String[] getExitDecisionValues() {
 		return DECISION_VALUES;
 	}
 	

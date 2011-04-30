@@ -105,12 +105,23 @@ public class ReviewGroupProperties extends ModelElementProperties {
 			GROUP_DEFAULT_ENTRY_CRITERIA_ID, R4EUIConstants.DEFAULT_ENTRY_CRITERIA_LABEL);
 	
 	/**
+	 * Field GROUP_APPLIED_RULE_SETS_ID. (value is ""reviewGroupElement.appliedRuleSets"")
+	 */
+	private static final String GROUP_APPLIED_RULE_SETS_ID = "reviewGroupElement.appliedRuleSets";
+
+	/**
+	 * Field GROUP_APPLIED_RULE_SETS_PROPERTY_DESCRIPTOR.
+	 */
+	private static final PropertyDescriptor GROUP_APPLIED_RULE_SETS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			GROUP_APPLIED_RULE_SETS_ID, R4EUIConstants.RULE_SETS_LABEL);
+	
+	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { GROUP_NAME_PROPERTY_DESCRIPTOR,  
 		GROUP_FOLDER_PROPERTY_DESCRIPTOR, GROUP_DESCRIPTION_PROPERTY_DESCRIPTOR,
 		GROUP_AVAILABLE_PROJECTS_PROPERTY_DESCRIPTOR, GROUP_AVAILABLE_COMPONENTS_PROPERTY_DESCRIPTOR,
-		GROUP_DEFAULT_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR };
+		GROUP_DEFAULT_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR, GROUP_APPLIED_RULE_SETS_PROPERTY_DESCRIPTOR };
 	
 	
 	// ------------------------------------------------------------------------
@@ -161,6 +172,8 @@ public class ReviewGroupProperties extends ModelElementProperties {
 				return ((R4EUIReviewGroup)getElement()).getGroup().getAvailableComponents().toString();
 			} else if (GROUP_DEFAULT_ENTRY_CRITERIA_ID.equals(aId)) {
 				return ((R4EUIReviewGroup)getElement()).getGroup().getDefaultEntryCriteria();
+			} else if (GROUP_APPLIED_RULE_SETS_ID.equals(aId)) {
+				return ((R4EUIReviewGroup)getElement()).getGroup().getDesignRuleLocations().toString();
 			}
 		}
 		return null;

@@ -252,7 +252,7 @@ public class AddReviewItemHandler extends AbstractHandler {
 									}
 								}
 							} else {
-								selectionContainer = new R4EUISelectionContainer(file, R4EUIConstants.SELECTIONS_LABEL_NAME);
+								selectionContainer = new R4EUISelectionContainer(file, R4EUIConstants.SELECTIONS_LABEL);
 								file.addChildren(selectionContainer);
 							}
 							if (newSelection) {
@@ -331,7 +331,7 @@ public class AddReviewItemHandler extends AbstractHandler {
 		}
 		
 		final R4EUISelectionContainer uiSelectionContainer = new R4EUISelectionContainer(
-				uiFileContext, R4EUIConstants.SELECTIONS_LABEL_NAME);
+				uiFileContext, R4EUIConstants.SELECTIONS_LABEL);
 		uiFileContext.addChildren(uiSelectionContainer);
 		
 		final R4EUISelection uiSelection = uiSelectionContainer.createSelection((R4EUITextPosition) aUIPosition);

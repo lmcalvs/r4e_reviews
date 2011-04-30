@@ -55,30 +55,32 @@ public class SelectPreviousHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
-		if (!selection.isEmpty()) {
-			final ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
-			
-			//Get the previous element
-			final IR4EUIModelElement previousElement = getPreviousElement((ReviewNavigatorTreeViewer) view.getTreeViewer());
-			
-			//If there is one, select it
-			if (null != previousElement) {
-			    Activator.Ftracer.traceInfo("Select previous element " + previousElement.getName());
-				final ISelection previousSelection = new StructuredSelection(previousElement);
-				view.getTreeViewer().setSelection(previousSelection);
-				
-			    //Open the editor on FileContexts, selections amd anomalies
-				if (previousElement instanceof R4EUIFileContext ||
-						previousElement instanceof R4EUISelection ||
-						previousElement instanceof R4EUIAnomalyBasic) {
-					EditorProxy.openEditor(view.getSite().getPage(), previousSelection, false);
-				}
-			}			
+		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		if (selection instanceof IStructuredSelection) {
+			if (!selection.isEmpty()) {
+				final ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
+
+				//Get the previous element
+				final IR4EUIModelElement previousElement = getPreviousElement((ReviewNavigatorTreeViewer) view.getTreeViewer());
+
+				//If there is one, select it
+				if (null != previousElement) {
+					Activator.Ftracer.traceInfo("Select previous element " + previousElement.getName());
+					final ISelection previousSelection = new StructuredSelection(previousElement);
+					view.getTreeViewer().setSelection(previousSelection);
+
+					//Open the editor on FileContexts, selections amd anomalies
+					if (previousElement instanceof R4EUIFileContext ||
+							previousElement instanceof R4EUISelection ||
+							previousElement instanceof R4EUIAnomalyBasic) {
+						EditorProxy.openEditor(view.getSite().getPage(), previousSelection, false);
+					}
+				}			
+			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Method getPreviousElement.
 	 * @param aTreeViewer ReviewNavigatorTreeViewer

@@ -484,7 +484,6 @@ public class MailServicesProxy {
     	int numReviewedFiles = 0;
     	int numTotalFiles = 0;
     	int numTotalAnomalies = 0;
-    	final List<String> anomaliesStr = new ArrayList<String>();
     	final List<R4EUIReviewItem> items = R4EUIModelController.getActiveReview().getReviewItems();
     	for (R4EUIReviewItem item : items) {
     		R4EUIFileContext[] contexts = (R4EUIFileContext[])item.getChildren();
@@ -511,7 +510,7 @@ public class MailServicesProxy {
 
     	//Add anomalies created by current reviewer
     	msgBody.append("Anomalies Created by: " + R4EUIModelController.getReviewer() + LINE_FEED_MSG_PART);
-    	msgBody.append("Count: " + anomaliesStr.size() + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+    	msgBody.append("Count: " + numTotalAnomalies + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
     	if (numTotalAnomalies > 0) {
     		msgBody.append("FileContext: " + TAB_MSG_PART + "Eclipse Project: File Path Relative to Eclipse Project: " + LINE_FEED_MSG_PART);
     		msgBody.append(TAB_MSG_PART + "Anomaly: " + TAB_MSG_PART + "Line Range: Title: Description" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
@@ -531,7 +530,7 @@ public class MailServicesProxy {
     							if (null != context.getTargetFileVersion() && null != context.getTargetFileVersion().getResource()) {
     								msgBody.append(context.getTargetFileVersion().getResource().getProject() +
     										": " + context.getTargetFileVersion().getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
-    							titleWritten = true;
+    								titleWritten = true;
     							}
     						}
     						msgBody.append(TAB_MSG_PART + anomaly.getPosition().toString() +  ": " + 
@@ -544,6 +543,19 @@ public class MailServicesProxy {
     	}
     	msgBody.append(LINE_FEED_MSG_PART);
 
+    	//Add global anomalies
+    	R4EUIAnomalyBasic[] anomalies = 
+    		(R4EUIAnomalyBasic[]) R4EUIModelController.getActiveReview().getAnomalyContainer().getChildren();
+    	if (anomalies.length > 0) {
+    		msgBody.append("Global Anomalies: " + LINE_FEED_MSG_PART);
+    	}
+    	for (R4EUIAnomalyBasic anomaly : anomalies) {
+			if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
+				msgBody.append(anomaly.getAnomaly().getTitle() + ": " + anomaly.getAnomaly().getDescription() +
+						LINE_FEED_MSG_PART);
+			}
+    	}
+    	
     	msgBody.append(createReviewInfoPart());
 		msgBody.append(createOutroPart());
     	return msgBody.toString();

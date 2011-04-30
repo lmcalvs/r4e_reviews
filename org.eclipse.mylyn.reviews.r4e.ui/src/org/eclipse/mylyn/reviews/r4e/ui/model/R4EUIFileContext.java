@@ -453,14 +453,14 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		
 		//Load child data
 		if (fFile.getDeltas().size() > 0) {
-			addChildren(new R4EUISelectionContainer(this, R4EUIConstants.SELECTIONS_LABEL_NAME));
+			addChildren(new R4EUISelectionContainer(this, R4EUIConstants.SELECTIONS_LABEL));
 			fSelectionContainer.open();
 		}
 		
 		if (null != fFile.getTarget()) {
 			fAnomalies = R4EUIModelController.getAnomaliesForFile(fFile.getTarget().getPlatformURI());
 			if (null != fAnomalies && fAnomalies.size() > 0) {
-				addChildren(new R4EUIAnomalyContainer(this, R4EUIConstants.ANOMALIES_LABEL_NAME));
+				addChildren(new R4EUIAnomalyContainer(this, R4EUIConstants.ANOMALIES_LABEL));
 				fAnomalyContainer.open();
 			}
 		}

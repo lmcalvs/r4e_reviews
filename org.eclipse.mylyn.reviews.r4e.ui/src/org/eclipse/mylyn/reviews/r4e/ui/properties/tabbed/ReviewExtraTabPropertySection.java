@@ -74,19 +74,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	 * Field DECISION_SECTION_LABEL.
 	 * (value is ""Decision information"")
 	 */
-	private static final String DECISION_SECTION_LABEL = "Decision information";
-	
-	/**
-	 * Field MEETING_DECISION_LABEL.
-	 * (value is ""Meeting: "")
-	 */
-	private static final String MEETING_DECISION_LABEL = "Meeting: ";
-	
-	/**
-	 * Field SUBJECT_LABEL.
-	 * (value is ""Subject: "")
-	 */
-	private static final String SUBJECT_LABEL = "Subject: ";
+	private static final String DECISION_SECTION_LABEL = "Decision Information";
 	
 	/**
 	 * Field UPDATE_LABEL.
@@ -371,7 +359,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
         decisionSection.setClient(decisionSectionClient);
         
 	    //Scheduled Meetings
-	    final CLabel meetingInfoLabel = widgetFactory.createCLabel(decisionSectionClient, MEETING_DECISION_LABEL);
+	    final CLabel meetingInfoLabel = widgetFactory.createCLabel(decisionSectionClient, R4EUIConstants.DECISION_MEETING_LABEL);
 	    meetingInfoLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 	    
 	    //Meeting composite
@@ -382,7 +370,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		meetingComposite.setLayout(new GridLayout(4, false));
 		
 		//Meeting Subject
-	    final CLabel meetingSubjectLabel = widgetFactory.createCLabel(meetingComposite, SUBJECT_LABEL);
+	    final CLabel meetingSubjectLabel = widgetFactory.createCLabel(meetingComposite, R4EUIConstants.SUBJECT_LABEL);
 	    meetingSubjectLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 	    fMeetingSubjectLabel = widgetFactory.createCLabel(meetingComposite, "");
 	    textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
@@ -566,7 +554,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			fMeetingLocationLabel.setText("");
 		}
 		
-		fExitDecisionCombo.setItems(((R4EUIReviewBasic)fProperties.getElement()).getExitDecisionValues());
+		fExitDecisionCombo.setItems(R4EUIReviewBasic.getExitDecisionValues());
 		if (null != modelReview.getDecision()) {
 			fExitDecisionCombo.select((null == modelReview.getDecision().getValue()) ? 0 : modelReview.getDecision().getValue().getValue());
 		} else {
