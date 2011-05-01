@@ -55,7 +55,7 @@ public class SelectPreviousHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		final ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			if (!selection.isEmpty()) {
 				final ReviewNavigatorView view = R4EUIModelController.getNavigatorView();

@@ -199,7 +199,7 @@ public class EditorProxy {
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;
 		
-		IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileVersion, aTargetFileVersion);
+		final IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileVersion, aTargetFileVersion);
 
 		if (null != editor) {
 			//Simply provide focus to editor
@@ -234,8 +234,8 @@ public class EditorProxy {
 		    input = new R4ECompareEditorInput(config, ancestor, target, base);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE);   // Adjust the compare title
 
-			Activator.Ftracer.traceInfo("Open compare editor on files " + (null != target ? target.getName(): "") + " (Target) and "
-					+ (null != base ? base.getName(): "") + " (Base)");
+			Activator.Ftracer.traceInfo("Open compare editor on files " + ((null != target) ? target.getName(): "") + " (Target) and "
+					+ ((null != base) ? base.getName(): "") + " (Base)");
 			CompareUI.openCompareEditor(input, true);
 		}
 		
@@ -257,8 +257,8 @@ public class EditorProxy {
 	 * Method findReusableCompareEditor.
 	 * 		Find the appropriate compare editor based on the file types
 	 * @param aPage IWorkbenchPage - the current workbench page
-	 * @param aBaseFileName String - the base (or reference) file name
-	 * @param aTargetFileName String - the target file name
+	 * @param aBaseFile R4EFileVersion - the base (or reference) file version
+	 * @param aTargetFile R4EFileVersion - the target file version
 	 * @return IEditorPart - the editor to use
 	 */
 	public static IEditorPart findReusableCompareEditor(IWorkbenchPage aPage, R4EFileVersion aBaseFile,
@@ -281,22 +281,22 @@ public class EditorProxy {
 					right = input.getRightElement();
 					
 					//Case:  No input in editor, that should never happen but guard here just in case
-					if (left == null && right == null) {
+					if (null == left && null == right) {
 						return null;
 					}
 
 					//Case:  No target file and base is the same
-					if (left == null && aTargetFile == null && right != null && aBaseFile != null && right.getName().equals(aBaseFile.getName())) {
+					if (null == left && null == aTargetFile && null != right && null != aBaseFile && right.getName().equals(aBaseFile.getName())) {
 						return part;
 					}
 
 					//Case:  No base file and target is the same
-					if (right == null && aBaseFile == null && left != null && aTargetFile != null && left.getName().equals(aTargetFile.getName())) {
+					if (null == right && null == aBaseFile && null != left && null != aTargetFile && left.getName().equals(aTargetFile.getName())) {
 						return part;
 					}
 					
 					//Case: Base and target are the same
-					if (left != null && right != null && aBaseFile != null && aTargetFile != null) {
+					if (null != left && null != right && null != aBaseFile && null != aTargetFile) {
 						if (left.getName().equals(aTargetFile.getName()) && right.getName().equals(aBaseFile.getName())) {
 							return part;
 						}

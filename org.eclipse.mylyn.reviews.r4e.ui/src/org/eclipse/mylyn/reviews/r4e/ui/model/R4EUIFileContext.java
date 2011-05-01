@@ -458,7 +458,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		}
 		
 		if (null != fFile.getTarget()) {
-			fAnomalies = R4EUIModelController.getAnomaliesForFile(fFile.getTarget().getPlatformURI());
+			fAnomalies = R4EUIModelController.getAnomaliesForFile(fFile.getTarget().getLocalVersionID());
 			if (null != fAnomalies && fAnomalies.size() > 0) {
 				addChildren(new R4EUIAnomalyContainer(this, R4EUIConstants.ANOMALIES_LABEL));
 				fAnomalyContainer.open();

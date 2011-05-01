@@ -102,7 +102,7 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	@Override
 	protected IStorage fetchContents(IProgressMonitor aMonitor) throws CoreException {
 		if (CommandUtils.useWorkspaceResource(fFileVersion)) {
-			return ((IFile)fFileVersion.getResource());
+			return (IFile)fFileVersion.getResource();
 		}
 		return fFileVersion.getFileRevision().getStorage(aMonitor);
 	}

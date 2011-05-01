@@ -450,10 +450,13 @@ public class ParticipantInputDialog extends FormDialog {
         return fValidator.isValid(aText.getText());
     }
     
+    /**
+     * Method getUserInfo.
+     */
     protected void getUserInfo() {
 		final IQueryUser query = new QueryUserFactory().getInstance();
 		try {
-			 List<IUserInfo> users = query.searchByUserId(fParticipantIdInputTextField.getText());
+			 final List<IUserInfo> users = query.searchByUserId(fParticipantIdInputTextField.getText());
 			 
 			 //Fill info with first user
 			 for (IUserInfo user : users) {

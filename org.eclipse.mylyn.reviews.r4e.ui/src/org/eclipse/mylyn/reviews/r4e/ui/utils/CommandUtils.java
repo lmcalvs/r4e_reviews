@@ -40,10 +40,10 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionTypedElement;
-import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
@@ -102,7 +102,7 @@ public class CommandUtils {
 			//If we get here, this is because we are trying to act on the compare editor contents
 			//this means that the file we are acting on is already in the local repository
 			//in this case, we only need to provide the versionId of this file
-			ITypedElement element = ((R4ECompareEditorInput) input).getLeftElement();
+			final ITypedElement element = ((R4ECompareEditorInput) input).getLeftElement();
 			if (element instanceof R4EFileRevisionTypedElement) {
 				return ((R4EFileRevisionTypedElement)element).getFileVersion();
 			} else if (element instanceof R4EFileTypedElement) {
@@ -151,10 +151,9 @@ public class CommandUtils {
 				if (localID.equals(remoteID)) {
 					//The files are the same. Copy from the remote repo
 					return copyRemoteFileToLocalRepository(localRepository, artifact);			
-				} else {
-					//The files are different.  This means the current user modified the file in his workspace
-					return copyWorkspaceFileToLocalRepository(localRepository, aFile);
 				}
+				//The files are different.  This means the current user modified the file in his workspace
+				return copyWorkspaceFileToLocalRepository(localRepository, aFile);
 			}
 		}
 		//Else we copy the file that is in the current workspace
@@ -180,7 +179,7 @@ public class CommandUtils {
 			//If we get here, this is because we are trying to act on the compare editor contents
 			//this means that the file we are acting on is already in the local repository
 			//in this case, we only need to provide the versionId of this file
-			ITypedElement element = ((R4ECompareEditorInput) input).getRightElement();
+			final ITypedElement element = ((R4ECompareEditorInput) input).getRightElement();
 			if (element instanceof R4EFileRevisionTypedElement) {
 				return ((R4EFileRevisionTypedElement)element).getFileVersion();
 			} else if (element instanceof R4EFileTypedElement) {
@@ -420,19 +419,20 @@ public class CommandUtils {
 	
 	/**
 	 * Method useWorkspaceResource.
+	 * @param aVersion R4EFileVersion
 	 * @return boolean
 	 */
 	public static boolean useWorkspaceResource(R4EFileVersion aVersion) {
 		// Get handle to local storage repository
-		IRFSRegistry localRepository;
+		final IRFSRegistry localRepository;
 		try {
 			localRepository = RFSRegistryFactory.getRegistry(
 					R4EUIModelController.getActiveReview().getReview());
 
 			//If resource is available in the workspace, use it.  Otherwise use the local repo version
 			if (null != aVersion && null != aVersion.getResource()) {
-				String workspaceFileId = localRepository.blobIdFor(((IFile)aVersion.getResource()).getContents());
-				String repoFileId = aVersion.getLocalVersionID();
+				final String workspaceFileId = localRepository.blobIdFor(((IFile)aVersion.getResource()).getContents());
+				final String repoFileId = aVersion.getLocalVersionID();
 				if (workspaceFileId.equals((repoFileId))) {
 					return true;
 				}

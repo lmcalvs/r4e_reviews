@@ -544,7 +544,7 @@ public class MailServicesProxy {
     	msgBody.append(LINE_FEED_MSG_PART);
 
     	//Add global anomalies
-    	R4EUIAnomalyBasic[] anomalies = 
+    	final R4EUIAnomalyBasic[] anomalies = 
     		(R4EUIAnomalyBasic[]) R4EUIModelController.getActiveReview().getAnomalyContainer().getChildren();
     	if (anomalies.length > 0) {
     		msgBody.append("Global Anomalies: " + LINE_FEED_MSG_PART);
@@ -634,8 +634,8 @@ public class MailServicesProxy {
     		msgBody.append("Line(s): " + ((R4EUISelection)aSource).getPosition().toString() + LINE_FEED_MSG_PART);
     	} else if (aSource instanceof ITextEditor){
     		//Get the information from the text editor
-			IRegion region = ((ITextEditor)aSource).getHighlightRange();
-			IEditorInput input = ((ITextEditor)aSource).getEditorInput();
+			final IRegion region = ((ITextEditor)aSource).getHighlightRange();
+			final IEditorInput input = ((ITextEditor)aSource).getEditorInput();
 			final TextSelection selectedText = new TextSelection(
 					((ITextEditor)aSource).getDocumentProvider().getDocument(input), 
 					region.getOffset(), region.getLength());
@@ -726,7 +726,7 @@ public class MailServicesProxy {
      * @throws ResourceHandlingException 
      * @throws CoreException 
     */ 
-    public static void sendMeetingRequest() throws CoreException, ResourceHandlingException, OutOfSyncException {
+    public static void sendMeetingRequest() throws ResourceHandlingException, OutOfSyncException {
     	sendMeetingRequest( getDefaultStartTime(), DEFAULT_MEETING_DURATION, DEFAULT_MEETING_LOCATION);
     }
     
@@ -740,7 +740,7 @@ public class MailServicesProxy {
      * @throws ResourceHandlingException
      * @throws OutOfSyncException 
      */
-    private static void sendMeetingRequest(Long aStartDate, Integer aDuration, String aLocation) throws CoreException, ResourceHandlingException, OutOfSyncException {
+    private static void sendMeetingRequest(Long aStartDate, Integer aDuration, String aLocation) throws ResourceHandlingException, OutOfSyncException {
     	if (null != R4EUIModelController.getMailConnector()) {
     		final String[] messageDestinations = createItemsUpdatedDestinations();
     		String messageSubject = null;

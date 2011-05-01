@@ -170,12 +170,6 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	// Methods
 	// ------------------------------------------------------------------------
 	
-	
-	@Override
-	public void dispose() {
-		
-	}
-	
 	/**
 	 * Creates the field editors. Field editors are abstractions of
 	 * the common GUI blocks needed to manipulate various types
@@ -267,7 +261,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4EGroupPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
 		//dummy spacer label
-		Label r4EGroupPrefsSpacer = new Label(r4EGroupPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
+		final Label r4EGroupPrefsSpacer = new Label(r4EGroupPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
 		final GridData r4EGroupPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		r4EGroupPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4EGroupPrefsSpacer.setLayoutData(r4EGroupPrefsSpacerData);
@@ -353,7 +347,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4ERuleSetPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
 		//dummy spacer label
-		Label r4ERuleSetPrefsSpacer = new Label(r4ERuleSetPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
+		final Label r4ERuleSetPrefsSpacer = new Label(r4ERuleSetPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
 		final GridData r4ERuleSetPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		r4ERuleSetPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4ERuleSetPrefsSpacer.setLayoutData(r4ERuleSetPrefsSpacerData);
@@ -438,7 +432,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4EFilterPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
 		//dummy spacer label
-		Label r4ERuleSetPrefsSpacer = new Label(r4EFilterPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
+		final Label r4ERuleSetPrefsSpacer = new Label(r4EFilterPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
 		final GridData r4ERuleSetPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		r4ERuleSetPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4ERuleSetPrefsSpacer.setLayoutData(r4ERuleSetPrefsSpacerData);

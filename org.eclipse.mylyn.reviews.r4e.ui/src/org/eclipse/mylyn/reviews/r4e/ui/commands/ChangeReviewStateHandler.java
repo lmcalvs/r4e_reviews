@@ -60,7 +60,7 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		final ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			if (!selection.isEmpty()) {
 				IR4EUIModelElement element = null;
@@ -99,6 +99,8 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 									UIUtils.displayCoreErrorDialog(e);
 								} catch (ResourceHandlingException e) {
 									UIUtils.displayResourceErrorDialog(e);
+								} finally {
+									R4EUIModelController.setDialogOpen(false);	
 								}
 							}
 							R4EUIModelController.setDialogOpen(false);	

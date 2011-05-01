@@ -78,7 +78,7 @@ public class OpenElementHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		final ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
 			final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();

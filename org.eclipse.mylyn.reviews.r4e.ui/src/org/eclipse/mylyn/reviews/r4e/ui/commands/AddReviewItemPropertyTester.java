@@ -70,19 +70,19 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 		if (receiver instanceof AbstractSet) {
 			final Iterator<?> iterator = ((AbstractSet<?>)receiver).iterator();
 			if (iterator.next() instanceof TextSelection) {
-				if (false == isR4EEditorInputAvailable()) return false;
+				if (!(isR4EEditorInputAvailable())) return false;
 			}
 		}
 		//This happens when the command is selected from the outline view on an external or workspace file
 		if (receiver instanceof AbstractList) {
 			final Iterator<?> iterator = ((AbstractList<?>)receiver).iterator();
 			if (!iterator.hasNext()) {
-				if (false == isR4EEditorInputAvailable()) return false;
+				if (!(isR4EEditorInputAvailable())) return false;
 			} else {
-				Object obj = iterator.next();
+				final Object obj = iterator.next();
 				if (obj instanceof org.eclipse.jdt.core.ISourceReference || 
 						obj instanceof org.eclipse.cdt.core.model.ISourceReference) {
-					if (false == isR4EEditorInputAvailable()) return false;
+					if (!(isR4EEditorInputAvailable())) return false;
 				}
 			}
 		}
@@ -125,29 +125,29 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 					if (null == ((R4EFileRevisionEditorInput)editorInput).getFileVersion().getResource()) {
 						return false;   //No valid target
 					}
-					R4EItem parentItem = 
+					final R4EItem parentItem = 
 						((R4EItem)((R4EFileRevisionEditorInput)editorInput).getFileVersion().eContainer().eContainer());
 					if (null != parentItem.getRepositoryRef()) {
 						return false;  //Cannot add review item on a commit
 					}
 				} else if (editorInput instanceof R4EFileEditorInput) {
-					R4EItem parentItem = 
+					final R4EItem parentItem = 
 						((R4EItem)((R4EFileEditorInput)editorInput).getFileVersion().eContainer().eContainer());
 					if (null != parentItem.getRepositoryRef()) {
 						return false;  //Cannot add review item on a commit
 					}
 					//Compare editor
 				} else if (editorInput instanceof R4ECompareEditorInput) {
-					ITypedElement targetElement = ((R4ECompareEditorInput)editorInput).getLeftElement();
+					final ITypedElement targetElement = ((R4ECompareEditorInput)editorInput).getLeftElement();
 					if (null != targetElement) {
 						if (targetElement instanceof R4EFileRevisionTypedElement) {
-							R4EItem parentItem = 
+							final R4EItem parentItem = 
 								((R4EItem)((R4EFileRevisionTypedElement)targetElement).getFileVersion().eContainer().eContainer());
 							if (null != parentItem.getRepositoryRef()) {
 								return false;  //Cannot add review item on a commit
 							}
 						} else if (targetElement instanceof R4EFileTypedElement) {
-							R4EItem parentItem = 
+							final R4EItem parentItem = 
 								((R4EItem)((R4EFileTypedElement)targetElement).getFileVersion().eContainer().eContainer());
 							if (null != parentItem.getRepositoryRef()) {
 								return false;  //Cannot add review item on a commit

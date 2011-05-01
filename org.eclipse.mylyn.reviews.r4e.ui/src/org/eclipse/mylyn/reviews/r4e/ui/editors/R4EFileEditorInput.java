@@ -49,10 +49,7 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 	// ------------------------------------------------------------------------
 
 	/**
-	 * @param aFileVersion
-	 *            the R4E file version
-	 * @param aStorage
-	 *            the contents of the file revision
+	 * @param aFileVersion - the R4E file version
 	 */
 	public R4EFileEditorInput(R4EFileVersion aFileVersion) {
 		Assert.isNotNull(aFileVersion);
@@ -70,7 +67,7 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 	 */
 	public IStorage getStorage() {
 		if (null != fFileVersion.getResource()) {
-			return ((IFile)fFileVersion.getResource());
+			return (IFile)fFileVersion.getResource();
 		}
 		return null;
 	}

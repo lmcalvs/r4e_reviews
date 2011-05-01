@@ -44,7 +44,7 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	/**
 	 * Field fFileVersion.
 	 */
-	private R4EFileVersion fFileVersion;
+	private final R4EFileVersion fFileVersion;
 
 	
 	// ------------------------------------------------------------------------
@@ -105,24 +105,44 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 		return false;
 	}
 
+	/**
+	 * Method getResource.
+	 * @return IResource
+	 */
 	public IResource getResource() {
 		return fFileVersion.getResource();
 	}
 
+	/**
+	 * Method getImage.
+	 * @return Image
+	 */
 	public Image getImage() {
 		return null;
 	}
 
+	/**
+	 * Method getType.
+	 * @return String
+	 */
 	public String getType() {
 		return ITypedElement.TEXT_TYPE;
 	}
 
-
+	/**
+	 * Method getContents.
+	 * @return InputStream
+	 * @throws CoreException
+	 */
 	public InputStream getContents() throws CoreException {
 		return ((IFile)fFileVersion.getResource()).getContents();
 	}
 
-
+	/**
+	 * Method getCharset.
+	 * @return String
+	 * @throws CoreException
+	 */
 	public String getCharset() throws CoreException {
 		return ((IFile)fFileVersion.getResource()).getCharset();
 	}

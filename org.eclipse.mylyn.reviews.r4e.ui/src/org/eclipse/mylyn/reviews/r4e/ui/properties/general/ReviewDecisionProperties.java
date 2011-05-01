@@ -132,8 +132,8 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 			if (REVIEW_DECISION_MEETING_ID.equals(aId)) {
 				return new ReviewMeetingProperties(getElement());
 			} else if (REVIEW_DECISION_PARTICIPANTS_ID.equals(aId)) {
-				List<R4EParticipant> participants = ((R4EUIReviewBasic)getElement()).getParticipants();
-				List<String> decisionParticipantIds = new ArrayList<String>();
+				final List<R4EParticipant> participants = ((R4EUIReviewBasic)getElement()).getParticipants();
+				final List<String> decisionParticipantIds = new ArrayList<String>();
 				for (R4EParticipant participant : participants) {
 					if (participant.isIsPartOfDecision()) {
 						decisionParticipantIds.add(participant.getId());
@@ -141,12 +141,12 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 				}
 				return decisionParticipantIds;
 			}  else if (REVIEW_EXIT_DECISION_ID.equals(aId)) {
-				R4EReviewDecision decision = ((R4EUIReviewBasic)getElement()).getReview().getDecision();
+				final R4EReviewDecision decision = ((R4EUIReviewBasic)getElement()).getReview().getDecision();
 				if (null != decision) {
 					return Integer.valueOf(decision.getValue().getValue());
 				}
 			} else if (REVIEW_DECISION_TIME_SPENT_ID.equals(aId)) {
-				R4EReviewDecision decision = ((R4EUIReviewBasic)getElement()).getReview().getDecision();
+				final R4EReviewDecision decision = ((R4EUIReviewBasic)getElement()).getReview().getDecision();
 				if (null != decision) {
 					return Integer.valueOf(decision.getSpentTime());
 				}

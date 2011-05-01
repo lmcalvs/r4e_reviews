@@ -91,7 +91,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	public Object execute(final ExecutionEvent event) {
 
 		// Get project to use (use adapters if needed)
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		final ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			final Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
 			IProject project = null;
@@ -135,6 +135,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				} catch (final CoreException e) {
 					Activator.Ftracer.traceError("Exception: " + e.getMessage());
 					Activator.getDefault().logError("Exception: " + e.toString(), e);
+					R4EUIModelController.setDialogOpen(false);
 					return null;
 				}
 
@@ -145,7 +146,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				shell.setCursor(null);
 			} else {
 				// We could not find any version control system, thus no items
-				String strProject = (project == null ? "null" : project.getName());
+				final String strProject = ((null == project) ? "null" : project.getName());
 				Activator.Ftracer.traceDebug("No Scm Ui connector found for project: " + strProject);
 			}
 		}

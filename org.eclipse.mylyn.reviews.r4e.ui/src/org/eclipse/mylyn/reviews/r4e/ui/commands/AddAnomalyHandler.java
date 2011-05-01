@@ -112,7 +112,7 @@ public class AddAnomalyHandler extends AbstractHandler {
 			//Try to get the active editor highlighted range and set it as the editor's selection
 			if (null != editorPart) {
 				if (editorPart instanceof ITextEditor) {
-					IRegion region = ((ITextEditor)editorPart).getHighlightRange();
+					final IRegion region = ((ITextEditor)editorPart).getHighlightRange();
 					final TextSelection selectedText = new TextSelection(
 							((ITextEditor)editorPart).getDocumentProvider().getDocument(editorPart.getEditorInput()), 
 							region.getOffset(), region.getLength());

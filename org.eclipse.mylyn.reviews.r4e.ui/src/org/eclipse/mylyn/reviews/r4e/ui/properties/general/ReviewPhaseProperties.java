@@ -94,6 +94,10 @@ public  class ReviewPhaseProperties extends ModelElementProperties {
 	// Constructors
 	// ------------------------------------------------------------------------
 
+	/**
+	 * Constructor for ReviewPhaseProperties.
+	 * @param aElement R4EUIModelElement
+	 */
 	public ReviewPhaseProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
@@ -127,23 +131,23 @@ public  class ReviewPhaseProperties extends ModelElementProperties {
 				if (getElement() instanceof R4EUIReviewExtended) {
 					return ((R4EUIReviewBasic)getElement()).getPhaseString(
 							((R4EFormalReview)((R4EUIReviewExtended)getElement()).
-							getReview()).getCurrent().getType());
+									getReview()).getCurrent().getType());
 				}
 				return ((R4EUIReviewBasic)getElement()).getPhaseString(
 						((R4EReviewState)((R4EUIReviewBasic)getElement()).getReview().getState()).getState());	
 			} else if (REVIEW_PHASE_OWNER_ID.equals(aId)) {
 				if (getElement() instanceof R4EUIReviewExtended) {
-					return (((R4EFormalReview)((R4EUIReviewExtended)getElement()).
-							getReview()).getCurrent().getPhaseOwnerID());
+					return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).
+							getReview()).getCurrent().getPhaseOwnerID();
 				}
 			} else if (REVIEW_PHASE_START_DATE_ID.equals(aId)) {
 				if (getElement() instanceof R4EUIReviewExtended) {
-					return (((R4EFormalReview)((R4EUIReviewExtended)getElement()).
-							getReview()).getCurrent().getStartDate());
+					return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).
+							getReview()).getCurrent().getStartDate();
 				}
 			} else if (REVIEW_PHASE_END_DATE_ID.equals(aId)) {
 				if (getElement() instanceof R4EUIReviewExtended) {
-					Date endDate = ((R4EFormalReview)((R4EUIReviewExtended)getElement()).
+					final Date endDate = ((R4EFormalReview)((R4EUIReviewExtended)getElement()).
 							getReview()).getCurrent().getEndDate();
 					if (null != endDate) {
 						return endDate;

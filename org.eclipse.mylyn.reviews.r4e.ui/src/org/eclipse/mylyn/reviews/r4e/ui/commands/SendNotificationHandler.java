@@ -112,6 +112,8 @@ public class SendNotificationHandler extends AbstractHandler {
 				UIUtils.displayCoreErrorDialog(e);
 			} catch (ResourceHandlingException e) {
 				UIUtils.displayResourceErrorDialog(e);
+			} finally {
+				R4EUIModelController.setDialogOpen(false);	
 			}
 		}  //else Window.CANCEL
 		R4EUIModelController.setDialogOpen(false);	

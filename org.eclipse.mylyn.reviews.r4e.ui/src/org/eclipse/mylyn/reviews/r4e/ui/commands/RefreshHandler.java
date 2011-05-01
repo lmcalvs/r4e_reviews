@@ -58,7 +58,7 @@ public class RefreshHandler extends AbstractHandler  {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		final ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			try {
 				if (!selection.isEmpty()) {

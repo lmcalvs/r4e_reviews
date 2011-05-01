@@ -47,10 +47,7 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 	// ------------------------------------------------------------------------
 
 	/**
-	 * @param aFileVersion
-	 *            the R4E file version
-	 * @param aStorage
-	 *            the contents of the file revision
+	 * @param aFileVersion - the R4E file version
 	 */
 	public R4EFileRevisionEditorInput(R4EFileVersion aFileVersion) {
 		Assert.isNotNull(aFileVersion);

@@ -123,7 +123,7 @@ public class R4EUIModelController {
 	
 	/**
 	 * Field fFileAnomalyMap.
-	 * 		Filname to Anomaly List map
+	 * 		File version to Anomaly List map
 	 */
 	private static final Map<String,List<R4EAnomaly>> FFileAnomalyMap = new HashMap<String,List<R4EAnomaly>>(32, 0.75f); // $codepro.audit.disable constantNamingConvention
 	
@@ -427,23 +427,24 @@ public class R4EUIModelController {
 		final EList<Topic> anomalies = aReview.getTopics();
 		Topic anomaly = null;
 		EList<Location> locations = null;
+		String targetFileVersion = null;
 		final int anomaliesSize = anomalies.size();
 		for (int i = 0; i < anomaliesSize; i++) {
 			anomaly = anomalies.get(i);
 			
 			locations = anomaly.getLocation();
 			for (Location location : locations) {
-				String targetFilePath = ((R4EAnomalyTextPosition)((R4EContent)location).getLocation()).getFile().getPlatformURI(); // $codepro.audit.disable variableDeclaredInLoop
-				if (FFileAnomalyMap.containsKey(targetFilePath)) {
-					//Add anomaly for this filename if not already present
-					List<R4EAnomaly> anomalyList = FFileAnomalyMap.get(targetFilePath); // $codepro.audit.disable variableDeclaredInLoop
+				targetFileVersion = ((R4EAnomalyTextPosition)((R4EContent)location).getLocation()).getFile().getLocalVersionID();
+				if (FFileAnomalyMap.containsKey(targetFileVersion)) {
+					//Add anomaly for this file version if not already present
+					List<R4EAnomaly> anomalyList = FFileAnomalyMap.get(targetFileVersion); // $codepro.audit.disable variableDeclaredInLoop
 					if (!(anomalyList.contains(anomaly))) {
 						anomalyList.add((R4EAnomaly)anomaly);
 					}
 				} else {
 					List<R4EAnomaly> anomalyList = new ArrayList<R4EAnomaly>(); // $codepro.audit.disable variableDeclaredInLoop
 					anomalyList.add((R4EAnomaly)anomaly);
-					FFileAnomalyMap.put(targetFilePath, anomalyList);
+					FFileAnomalyMap.put(targetFileVersion, anomalyList);
 				}
 			}
 

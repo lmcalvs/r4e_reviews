@@ -127,24 +127,24 @@ public class ReviewMeetingProperties extends ModelElementProperties {
 	public Object getPropertyValue(Object aId) {
 		if (null != getElement()) {
 			if (REVIEW_MEETING_SUBJECT_ID.equals(aId)) {
-				R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
+				final R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
 				if (null != meeting) {
-					return (meeting.getSubject());
+					return meeting.getSubject();
 				}
 			} else if (REVIEW_MEETING_DATE_ID.equals(aId)) {
-				R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
+				final R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
 				if (null != meeting) {
 					return new Date(meeting.getStartTime());
 				}
 			}  else if (REVIEW_MEETING_DURATION_ID.equals(aId)) {
-				R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
+				final R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
 				if (null != meeting) {
 					return Integer.valueOf(meeting.getDuration());
 				}
 			}  else if (REVIEW_MEETING_LOCATION_ID.equals(aId)) {
-				R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
+				final R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
 				if (null != meeting) {
-					return (meeting.getLocation());
+					return meeting.getLocation();
 				}
 			}
 		}

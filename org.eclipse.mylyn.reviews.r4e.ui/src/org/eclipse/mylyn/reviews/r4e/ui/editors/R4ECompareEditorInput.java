@@ -71,9 +71,7 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * @param aConfig CompareConfiguration
 	 * @param aAncestor ITypedElement
 	 * @param aLeft ITypedElement
-	 * @param aLeftVersion R4EFileVersion
 	 * @param aRight ITypedElement
-	 * @param aRightVersion R4EFileVersion
 	 */
 	public R4ECompareEditorInput(CompareConfiguration aConfig, ITypedElement aAncestor, ITypedElement aLeft, 
 			ITypedElement aRight) {
@@ -118,14 +116,14 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		
 		// Set the label values for the compare editor
 		if (null != fLeft) {
-			StringBuilder leftLabel = new StringBuilder("Target: " + fLeft.getName());
+			final StringBuilder leftLabel = new StringBuilder("Target: " + fLeft.getName());
 			if (fLeft instanceof R4EFileRevisionTypedElement) {
 				leftLabel.append(" " + ((R4EFileRevisionTypedElement) fLeft).getFileVersion().getVersionID().substring(0, 7));
 			}
 			fConfig.setLeftLabel(leftLabel.toString());
 		}
 		if (null != fRight) {
-			StringBuilder rightLabel = new StringBuilder("Base: " + fRight.getName());
+			final StringBuilder rightLabel = new StringBuilder("Base: " + fRight.getName());
 			if (fRight instanceof R4EFileRevisionTypedElement) {
 				rightLabel.append("_" + ((R4EFileRevisionTypedElement) fRight).getFileVersion().getVersionID());
 			}

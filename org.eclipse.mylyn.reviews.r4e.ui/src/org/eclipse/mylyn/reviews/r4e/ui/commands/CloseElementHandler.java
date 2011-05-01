@@ -47,7 +47,7 @@ public class CloseElementHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		final ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			if (!selection.isEmpty()) {
 				final IR4EUIModelElement element = 
