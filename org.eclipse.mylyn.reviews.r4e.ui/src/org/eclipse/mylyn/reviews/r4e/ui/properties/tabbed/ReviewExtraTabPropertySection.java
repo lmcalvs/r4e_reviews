@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -386,8 +385,6 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		    		MailServicesProxy.sendMeetingRequest();
 				} catch (ResourceHandlingException e1) {
 					UIUtils.displayResourceErrorDialog(e1);
-				} catch (CoreException e1) {
-					UIUtils.displayCoreErrorDialog(e1);
 				} catch (OutOfSyncException e1) {
 					UIUtils.displaySyncErrorDialog(e1);
 				} finally {

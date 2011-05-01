@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -246,8 +245,6 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    					UIUtils.displayResourceErrorDialog(e1);
 	    				} catch (OutOfSyncException e1) {
 	    					UIUtils.displaySyncErrorDialog(e1);
-	    				} catch (CoreException e1) {
-	    					UIUtils.displayCoreErrorDialog(e1);
 						} finally {
 							R4EUIModelController.setDialogOpen(false);
 						}
