@@ -1405,7 +1405,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final int END_STRING_NAME_INDEX = 10;
 	
-	//Tooltips
+	
+	//Tooltips for dialogs and property views
+	
 	public static final String ANOMALY_TITLE_TOOLTIP = "";
 	public static final String ANOMALY_DESCRIPTION_TOOLTIP = "";
 	public static final String ANOMALY_AUTHOR_TOOLTIP = "";
@@ -1502,18 +1504,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String USER_SEARCH_TOOLTIP = "";
 	public static final String USER_CLEAR_TOOLTIP = "";
 	public static final String USER_NUM_ENTRIES_TOOLTIP = "";
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	public static final String NOTIFICATION_COMPLETION_TOOLTIP = "";
 	public static final String NOTIFICATION_ITEMS_UPDATED_TOOLTIP = "";

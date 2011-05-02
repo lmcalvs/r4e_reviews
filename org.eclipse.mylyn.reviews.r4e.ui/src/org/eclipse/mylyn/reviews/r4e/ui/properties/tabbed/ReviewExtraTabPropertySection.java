@@ -25,6 +25,8 @@ import java.util.List;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
@@ -616,7 +618,8 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReviewBasic)fProperties.getElement()).isOpen()) ||
-				((R4EUIReviewBasic)fProperties.getElement()).isReviewed()) {
+				((R4EReviewState)((R4EUIReviewBasic)fProperties.getElement()).getReview().getState()).
+					getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			fProjectCombo.setEnabled(false);
 			fComponents.setEnabled(false);
 			fEntryCriteriaText.setEnabled(false);
