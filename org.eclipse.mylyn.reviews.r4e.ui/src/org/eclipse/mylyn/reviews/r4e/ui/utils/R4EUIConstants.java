@@ -1301,13 +1301,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field ADD_CHILD_ELEMENT_COMMAND_NAME.
 	 * (value is ""Add review group"")
 	 */
-	public static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Review Group";
+	public static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Child Element";
 	
 	/**
 	 * Field ADD_CHILD_ELEMENT_COMMAND_TOOLTIP.
 	 * (value is ""Add a new review group"")
 	 */
-	public static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Review Group";
+	public static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Child Element";
 	
 	/**
 	 * Field ADD_CHILD_ELEMENT_COMMAND_MNEMONIC.
@@ -1404,4 +1404,119 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is 10)
 	 */
 	public static final int END_STRING_NAME_INDEX = 10;
+	
+	//Tooltips
+	public static final String ANOMALY_TITLE_TOOLTIP = "";
+	public static final String ANOMALY_DESCRIPTION_TOOLTIP = "";
+	public static final String ANOMALY_AUTHOR_TOOLTIP = "";
+	public static final String ANOMALY_CREATION_DATE_TOOLTIP = "";
+	public static final String ANOMALY_POSITION_TOOLTIP = "";
+	public static final String ANOMALY_STATE_TOOLTIP = "";
+	public static final String ANOMALY_CLASS_TOOLTIP = "";
+	public static final String ANOMALY_RANK_TOOLTIP = "";
+	public static final String ANOMALY_RULE_ID_TOOLTIP = "";
+	public static final String ANOMALY_DUE_DATE_TOOLTIP = "";
+	public static final String ANOMALY_DECIDED_BY_TOOLTIP = "";
+	public static final String ANOMALY_FIXED_BY_TOOLTIP = "";
+	public static final String ANOMALY_FOLLOWUP_BY_TOOLTIP = "";
+	public static final String ANOMALY_NOT_ACCEPTED_REASON_TOOLTIP = "";
+
+	public static final String COMMENT_DESCRIPTION_TOOLTIP = "";
+	public static final String COMMENT_AUTHOR_TOOLTIP = "";
+	public static final String COMMENT_CREATION_DATE_TOOLTIP = "";
+	
+	public static final String FILECONTEXT_BASE_FILE_NAME_TOOLTIP = "";
+	public static final String FILECONTEXT_BASE_FILE_PATH_TOOLTIP = "";
+	public static final String FILECONTEXT_BASE_FILE_VERSION_TOOLTIP = "";
+	public static final String FILECONTEXT_TARGET_FILE_NAME_TOOLTIP = "";
+	public static final String FILECONTEXT_TARGET_FILE_PATH_TOOLTIP = "";
+	public static final String FILECONTEXT_TARGET_FILE_VERSION_TOOLTIP = "";
+	
+	public static final String PARTICIPANT_ID_TOOLTIP = "";
+	public static final String PARTICIPANT_FIND_USER_TOOLTIP = "";
+	public static final String PARTICIPANT_EMAIL_TOOLTIP = "";
+	public static final String PARTICIPANT_DETAILS_TOOLTIP = "";
+	public static final String PARTICIPANT_ROLES_TOOLTIP = "";
+	public static final String PARTICIPANT_FOCUS_AREA_TOOLTIP = "";
+	public static final String PARTICIPANT_NUM_ITEMS_TOOLTIP = "";
+	public static final String PARTICIPANT_NUM_ANOMALIES_TOOLTIP = "";
+	public static final String PARTICIPANT_NUM_COMMENTS_TOOLTIP = "";
+	public static final String PARTICIPANT_TIME_SPENT_TOOLTIP = "";
+
+	public static final String REVIEW_GROUP_NAME_TOOLTIP = "";
+	public static final String REVIEW_GROUP_FOLDER_TOOLTIP = "";
+	public static final String REVIEW_GROUP_DESCRIPTION_TOOLTIP = "";
+	public static final String REVIEW_GROUP_PROJECTS_TOOLTIP = "";
+	public static final String REVIEW_GROUP_COMPONENTS_TOOLTIP = "";
+	public static final String REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP = "";
+	public static final String REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP = "";
+	
+	public static final String REVIEW_TYPE_TOOLTIP = "";
+	public static final String REVIEW_NAME_TOOLTIP = "";
+	public static final String REVIEW_DESCRIPTION_TOOLTIP = "";
+	public static final String REVIEW_PROJECT_TOOLTIP = "";
+	public static final String REVIEW_COMPONENTS_TOOLTIP = "";
+	public static final String REVIEW_ENTRY_CRITERIA_TOOLTIP = "";
+	public static final String REVIEW_OBJECTIVES_TOOLTIP = "";
+	public static final String REVIEW_REFERENCE_MATERIAL_TOOLTIP = "";
+	public static final String REVIEW_PHASE_TOOLTIP = "";
+	public static final String REVIEW_START_DATE_TOOLTIP = "";
+	public static final String REVIEW_END_DATE_TOOLTIP = "";
+	public static final String REVIEW_PHASE_TABLE_TOOLTIP = "";
+	public static final String REVIEW_PHASE_OWNER_TOOLTIP = "";
+	public static final String REVIEW_MEETING_TOOLTIP = "";
+	public static final String REVIEW_MEETING_SUBJECT_TOOLTIP = "";
+	public static final String REVIEW_MEETING_UPDATE_TOOLTIP = "";
+	public static final String REVIEW_MEETING_TIME_TOOLTIP = "";
+	public static final String REVIEW_MEETING_DURATION_TOOLTIP = "";
+	public static final String REVIEW_MEETING_LOCATION_TOOLTIP = "";
+	public static final String REVIEW_EXIT_DECISION_TOOLTIP = "";
+	public static final String REVIEW_EXIT_DECISION_PARTICIPANTS_TOOLTIP = "";
+	public static final String REVIEW_EXIT_DECISION_TIME_SPENT_TOOLTIP = "";
+
+	public static final String REVIEW_ITEM_AUTHOR_TOOLTIP = "";
+	public static final String REVIEW_ITEM_PROJECT_IDS_TOOLTIP = "";
+	public static final String REVIEW_ITEM_DESCRIPTION_TOOLTIP = "";
+	
+	public static final String RULE_AREA_NAME_TOOLTIP = "";
+	public static final String RULE_ID_TOOLTIP = "";
+	public static final String RULE_TITLE_TOOLTIP = "";
+	public static final String RULE_DESCRIPTION_TOOLTIP = "";
+	public static final String RULE_CLASS_TOOLTIP = "";
+	public static final String RULE_RANK_TOOLTIP = "";
+	public static final String RULESET_VERSION_TOOLTIP = "";
+	public static final String RULESET_NAME_TOOLTIP = "";
+	public static final String RULESET_FOLDER_TOOLTIP = "";
+	public static final String RULESET_FILE_PATH_TOOLTIP = "";
+	public static final String RULE_VIOLATION_NAME_TOOLTIP = "";
+	
+	public static final String SELECTION_POSITION_TOOLTIP = "";
+
+	public static final String USER_ID_TOOLTIP = "";
+	public static final String USER_NAME_TOOLTIP = "";
+	public static final String USER_OFFICE_TOOLTIP = "";
+	public static final String USER_COMPANY_TOOLTIP = "";
+	public static final String USER_DEPARTMENT_TOOLTIP = "";
+	public static final String USER_CITY_TOOLTIP = "";
+	public static final String USER_COUNTRY_TOOLTIP = "";
+	public static final String USER_SEARCH_TOOLTIP = "";
+	public static final String USER_CLEAR_TOOLTIP = "";
+	public static final String USER_NUM_ENTRIES_TOOLTIP = "";
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static final String NOTIFICATION_COMPLETION_TOOLTIP = "";
+	public static final String NOTIFICATION_ITEMS_UPDATED_TOOLTIP = "";
+	public static final String NOTIFICATION_PROGRESS_TOOLTIP = "";
+	public static final String NOTIFICATION_QUESTION_TOOLTIP = "";
 }

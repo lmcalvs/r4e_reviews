@@ -101,12 +101,14 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(mainForm, ITabbedPropertyConstants.VSPACE);
 		fTimeSpentDetailedList = new EditableListWidget(widgetFactory, mainForm, data, this, 1, Date.class, null);
+		fTimeSpentDetailedList.setToolTipText(R4EUIConstants.PARTICIPANT_TIME_SPENT_TOOLTIP);
 
 	    final CLabel timeSpentDetailedLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.TIME_SPENT_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fTimeSpentDetailedList.getComposite(), -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fTimeSpentDetailedList.getComposite(), 0, SWT.CENTER);
+	    timeSpentDetailedLabel.setToolTipText(R4EUIConstants.PARTICIPANT_TIME_SPENT_TOOLTIP);
 	    timeSpentDetailedLabel.setLayoutData(data);
 	    
 	    //Roles
@@ -116,20 +118,23 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		data.top = new FormAttachment(fTimeSpentDetailedList.getComposite(), ITabbedPropertyConstants.VSPACE);
 		fRolesList = new EditableListWidget(widgetFactory, mainForm, data, this, 2, CCombo.class,
 				R4EUIConstants.PARTICIPANT_ROLES);
+		fRolesList.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
 
-	    final CLabel componentsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.ROLES_LABEL);
+	    final CLabel rolesLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.ROLES_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fRolesList.getComposite(), -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fRolesList.getComposite(), 0, SWT.TOP);
-	    componentsLabel.setLayoutData(data);
+		rolesLabel.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
+		rolesLabel.setLayoutData(data);
 	    
 	    //Focus Area
-	    fFocusAreaText = widgetFactory.createText(mainForm, "");
+	    fFocusAreaText = widgetFactory.createText(mainForm, "", SWT.BORDER);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fRolesList.getComposite(), ITabbedPropertyConstants.VSPACE);
+	    fFocusAreaText.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
 	    fFocusAreaText.setLayoutData(data);
 	    fFocusAreaText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -158,6 +163,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fFocusAreaText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fFocusAreaText, 0, SWT.CENTER);
+	    focusAreaLabel.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
 	    focusAreaLabel.setLayoutData(data);
 	}
 	

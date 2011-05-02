@@ -191,9 +191,11 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate()) {
 				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate().toString();
 			}
-		} else if (ANOMALY_CLASS_ID.equals(aId)) { 
-			return Integer.valueOf(((R4ECommentType)((R4EUIAnomalyExtended)getElement()).getAnomaly().
-					getType()).getType().getValue());
+		} else if (ANOMALY_CLASS_ID.equals(aId)) {
+			R4ECommentType type = (R4ECommentType)((R4EUIAnomalyExtended)getElement()).getAnomaly().getType();
+			if (null != type) {
+				return Integer.valueOf(type.getType().getValue());
+			}
 		} else if (ANOMALY_RANK_ID.equals(aId)) { 
 			return Integer.valueOf(((R4EUIAnomalyExtended)getElement()).getAnomaly().getRank().getValue());
 		} else if (ANOMALY_RULE_ID_ID.equals(aId)) { 

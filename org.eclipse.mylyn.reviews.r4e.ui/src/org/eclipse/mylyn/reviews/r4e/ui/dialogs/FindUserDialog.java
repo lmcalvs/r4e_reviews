@@ -350,6 +350,7 @@ public class FindUserDialog extends FormDialog {
 		final Label userIdLabel = aToolkit.createLabel(fUserDetailsForm, R4EUIConstants.ID_LABEL);
 		final FormData userIdLabelData = new FormData();
 		userIdLabelData.top = new FormAttachment(5, 0);
+		userIdLabel.setToolTipText(R4EUIConstants.USER_ID_TOOLTIP);
 		userIdLabel.setLayoutData(userIdLabelData);
 		
 		fUserIdInputTextField = aToolkit.createText(fUserDetailsForm, "", SWT.SINGLE | SWT.BORDER);
@@ -357,6 +358,7 @@ public class FindUserDialog extends FormDialog {
 		userIdTextData.top = new FormAttachment(userIdLabel, 0, SWT.TOP);
 		userIdTextData.left = new FormAttachment(userIdLabel, 60, SWT.RIGHT);
 		userIdTextData.width = TEXT_FIELD_WIDTH;
+		fUserIdInputTextField.setToolTipText(R4EUIConstants.USER_ID_TOOLTIP);
 		fUserIdInputTextField.setLayoutData(userIdTextData);
 
 		// Name
@@ -364,6 +366,7 @@ public class FindUserDialog extends FormDialog {
 		final FormData userNameLabelData = new FormData();
 		userNameLabelData.top = new FormAttachment(userIdLabel, 0, SWT.TOP);
 		userNameLabelData.left = new FormAttachment(fUserIdInputTextField, 40, SWT.RIGHT);
+		userNameLabel.setToolTipText(R4EUIConstants.USER_NAME_TOOLTIP);
 		userNameLabel.setLayoutData(userNameLabelData);
 
 		fUserNameInputTextField = aToolkit.createText(fUserDetailsForm, "", SWT.SINGLE | SWT.BORDER);
@@ -371,6 +374,7 @@ public class FindUserDialog extends FormDialog {
 		userNameTextData.top = new FormAttachment(userNameLabel, 0, SWT.TOP);
 		userNameTextData.left = new FormAttachment(userNameLabel, 25, SWT.RIGHT);
 		userNameTextData.width = TEXT_FIELD_WIDTH;
+		fUserNameInputTextField.setToolTipText(R4EUIConstants.USER_NAME_TOOLTIP);
 		fUserNameInputTextField.setLayoutData(userNameTextData);
 		
 		// Office
@@ -378,6 +382,7 @@ public class FindUserDialog extends FormDialog {
 		final FormData officeLabelData = new FormData();
 		officeLabelData.top = new FormAttachment(fUserIdInputTextField, 5, SWT.BOTTOM);
 		officeLabelData.left = new FormAttachment(userIdLabel, 0, SWT.LEFT);
+		officeLabel.setToolTipText(R4EUIConstants.USER_OFFICE_TOOLTIP);
 		officeLabel.setLayoutData(officeLabelData);
 
 		fUserOfficeInputTextField = aToolkit.createText(fUserDetailsForm, "", SWT.SINGLE | SWT.BORDER);
@@ -385,6 +390,7 @@ public class FindUserDialog extends FormDialog {
 		officeTextData.top = new FormAttachment(officeLabel, 0, SWT.TOP);
 		officeTextData.left = new FormAttachment(fUserIdInputTextField, 0, SWT.LEFT);
 		officeTextData.right = new FormAttachment(fUserIdInputTextField, 0, SWT.RIGHT);
+		fUserOfficeInputTextField.setToolTipText(R4EUIConstants.USER_OFFICE_TOOLTIP);
 		fUserOfficeInputTextField.setLayoutData(officeTextData);
 
 		// Company
@@ -392,6 +398,7 @@ public class FindUserDialog extends FormDialog {
 		final FormData companyLabelData = new FormData();
 		companyLabelData.top = new FormAttachment(officeLabel, 0, SWT.TOP);
 		companyLabelData.left = new FormAttachment(userNameLabel, 0, SWT.LEFT);
+		companyLabel.setToolTipText(R4EUIConstants.USER_COMPANY_TOOLTIP);
 		companyLabel.setLayoutData(companyLabelData);
 
 		fUserCompanyInputTextField = aToolkit.createText(fUserDetailsForm, "", SWT.SINGLE | SWT.BORDER);
@@ -399,6 +406,7 @@ public class FindUserDialog extends FormDialog {
 		companyTextData.top = new FormAttachment(officeLabel, 0, SWT.TOP);
 		companyTextData.left = new FormAttachment(fUserNameInputTextField, 0, SWT.LEFT);
 		companyTextData.right = new FormAttachment(fUserNameInputTextField, 0, SWT.RIGHT);
+		fUserCompanyInputTextField.setToolTipText(R4EUIConstants.USER_COMPANY_TOOLTIP);
 		fUserCompanyInputTextField.setLayoutData(companyTextData);
 
 		// Department
@@ -406,6 +414,7 @@ public class FindUserDialog extends FormDialog {
 		final FormData deptLabelData = new FormData();
 		deptLabelData.top = new FormAttachment(fUserOfficeInputTextField, 5, SWT.BOTTOM);
 		deptLabelData.left = new FormAttachment(userIdLabel, 0, SWT.LEFT);
+		deptLabel.setToolTipText(R4EUIConstants.USER_DEPARTMENT_TOOLTIP);
 		deptLabel.setLayoutData(deptLabelData);
 
 		fUserDepartmentInputTextField = aToolkit.createText(fUserDetailsForm, "", SWT.SINGLE | SWT.BORDER);
@@ -413,6 +422,7 @@ public class FindUserDialog extends FormDialog {
 		deptTextData.top = new FormAttachment(deptLabel, 0, SWT.TOP);
 		deptTextData.left = new FormAttachment(fUserIdInputTextField, 0, SWT.LEFT);
 		deptTextData.right = new FormAttachment(fUserIdInputTextField, 0, SWT.RIGHT);
+		fUserDepartmentInputTextField.setToolTipText(R4EUIConstants.USER_DEPARTMENT_TOOLTIP);
 		fUserDepartmentInputTextField.setLayoutData(deptTextData);
 
 		// City 
@@ -420,6 +430,7 @@ public class FindUserDialog extends FormDialog {
 		final FormData cityLabelData = new FormData();
 		cityLabelData.top = new FormAttachment(deptLabel, 0, SWT.TOP);
 		cityLabelData.left = new FormAttachment(userNameLabel, 0, SWT.LEFT);
+		cityLabel.setToolTipText(R4EUIConstants.USER_CITY_TOOLTIP);
 		cityLabel.setLayoutData(cityLabelData);
 
 		fUserCityInputTextField = aToolkit.createText(fUserDetailsForm, "", SWT.SINGLE | SWT.BORDER);
@@ -427,6 +438,7 @@ public class FindUserDialog extends FormDialog {
 		cityTextData.top = new FormAttachment(cityLabel, 0, SWT.TOP);
 		cityTextData.left = new FormAttachment(fUserNameInputTextField, 0, SWT.LEFT);
 		cityTextData.right = new FormAttachment(fUserNameInputTextField, 0, SWT.RIGHT);
+		fUserCityInputTextField.setToolTipText(R4EUIConstants.USER_CITY_TOOLTIP);
 		fUserCityInputTextField.setLayoutData(cityTextData);
 
 		// Country
@@ -434,6 +446,7 @@ public class FindUserDialog extends FormDialog {
 		final FormData countryLabelData = new FormData();
 		countryLabelData.top = new FormAttachment(fUserDepartmentInputTextField, 5, SWT.BOTTOM);
 		countryLabelData.left = new FormAttachment(userIdLabel, 0, SWT.LEFT);
+		countryLabel.setToolTipText(R4EUIConstants.USER_COUNTRY_TOOLTIP);
 		countryLabel.setLayoutData(countryLabelData);
 
 		fUserCountryInputTextField = aToolkit.createText(fUserDetailsForm, "", SWT.SINGLE | SWT.BORDER);
@@ -441,6 +454,7 @@ public class FindUserDialog extends FormDialog {
 		countryTextData.top = new FormAttachment(countryLabel, 0, SWT.TOP);
 		countryTextData.left = new FormAttachment(fUserIdInputTextField, 0, SWT.LEFT);
 		countryTextData.right = new FormAttachment(fUserIdInputTextField, 0, SWT.RIGHT);
+		fUserCountryInputTextField.setToolTipText(R4EUIConstants.USER_COUNTRY_TOOLTIP);
 		fUserCountryInputTextField.setLayoutData(countryTextData);
 
 		// Search button
@@ -448,6 +462,7 @@ public class FindUserDialog extends FormDialog {
 		final FormData searchButtonData = new FormData();
 		searchButtonData.top = new FormAttachment(countryLabel, 0, SWT.TOP);
 		searchButtonData.left = new FormAttachment(fUserNameInputTextField, 0, SWT.LEFT);
+		fSearchButton.setToolTipText(R4EUIConstants.USER_SEARCH_TOOLTIP);
 		fSearchButton.setLayoutData(searchButtonData);
 		fSearchButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
@@ -462,6 +477,7 @@ public class FindUserDialog extends FormDialog {
 		final FormData clearSearchButtonData = new FormData();
 		clearSearchButtonData.top = new FormAttachment(countryLabel, 0, SWT.TOP);
 		clearSearchButtonData.left = new FormAttachment(fSearchButton, 10, SWT.RIGHT);
+		fClearButton.setToolTipText(R4EUIConstants.USER_CLEAR_TOOLTIP);
 		fClearButton.setLayoutData(clearSearchButtonData);
 		fClearButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
@@ -498,6 +514,7 @@ public class FindUserDialog extends FormDialog {
 		final FormData numEntriesLabelData = new FormData();
 		numEntriesLabelData.top = new FormAttachment(fUserQueyResultsForm, 5, SWT.BOTTOM);
 		numEntriesLabelData.left = new FormAttachment(fUserQueyResultsForm, 0, SWT.LEFT);
+		numEntriesLabel.setToolTipText(R4EUIConstants.USER_NUM_ENTRIES_TOOLTIP);
 		numEntriesLabel.setLayoutData(numEntriesLabelData);
 
 		//Count Label
@@ -506,6 +523,7 @@ public class FindUserDialog extends FormDialog {
 		numEntriesValueData.top = new FormAttachment(numEntriesLabel, 0, SWT.TOP);
 		numEntriesValueData.left = new FormAttachment(numEntriesLabel, 10, SWT.RIGHT);
 		numEntriesValueData.width = 30;
+		fNumEntriesValue.setToolTipText(R4EUIConstants.USER_NUM_ENTRIES_TOOLTIP);
 		fNumEntriesValue.setLayoutData(numEntriesValueData);
 		fNumEntriesValue.setText("0");
 		

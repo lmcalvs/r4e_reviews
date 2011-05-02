@@ -184,6 +184,15 @@ public class ParticipantInputDialog extends FormDialog {
     			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
     			return;
         	}
+        	//Check if participant already exists
+        	if (R4EUIModelController.getActiveReview().getParticipantIDs().
+        			contains(fParticipantIdInputTextField.getText())) {
+    			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Cannot Add Participant",
+        				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "Participant already part of this Review", null), IStatus.ERROR);
+    			dialog.open();
+    			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+    			return;
+        	}
         	fParticipantIdValue = fParticipantIdInputTextField.getText();
 
         	//Validate Participant Email
@@ -286,10 +295,12 @@ public class ParticipantInputDialog extends FormDialog {
         
         //Participant Id
         Label label = toolkit.createLabel(basicSectionClient, R4EUIConstants.ID_LABEL);
+        label.setToolTipText(R4EUIConstants.PARTICIPANT_ID_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fParticipantIdInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+        fParticipantIdInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 2;
+        fParticipantIdInputTextField.setToolTipText(R4EUIConstants.PARTICIPANT_ID_TOOLTIP);
         fParticipantIdInputTextField.setLayoutData(textGridData);
         fParticipantIdInputTextField.addFocusListener(new FocusListener() {
 			
@@ -315,6 +326,7 @@ public class ParticipantInputDialog extends FormDialog {
         final Button findUserButton = toolkit.createButton(basicSectionClient, FIND_BUTTON_LABEL, SWT.NONE);
         final GridData buttonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
         buttonGridData.horizontalSpan = 1;
+        findUserButton.setToolTipText(R4EUIConstants.PARTICIPANT_FIND_USER_TOOLTIP);
         findUserButton.setLayoutData(buttonGridData);
         if (!R4EUIModelController.isUserQueryAvailable()) {
         	findUserButton.setEnabled(false);
@@ -338,19 +350,23 @@ public class ParticipantInputDialog extends FormDialog {
         
         //Participant Email
         label = toolkit.createLabel(basicSectionClient, R4EUIConstants.EMAIL_LABEL);
+        label.setToolTipText(R4EUIConstants.PARTICIPANT_EMAIL_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fParticipantEmailInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+        fParticipantEmailInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
+        fParticipantEmailInputTextField.setToolTipText(R4EUIConstants.PARTICIPANT_EMAIL_TOOLTIP);
         fParticipantEmailInputTextField.setLayoutData(textGridData);
         
         //User details
         label = toolkit.createLabel(basicSectionClient, R4EUIConstants.USER_DETAILS_LABEL);
+        label.setToolTipText(R4EUIConstants.PARTICIPANT_DETAILS_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fParticipantDetailsInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.READ_ONLY);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         textGridData.heightHint = fParticipantDetailsInputTextField.getLineHeight() << 3;
+        fParticipantDetailsInputTextField.setToolTipText(R4EUIConstants.PARTICIPANT_DETAILS_TOOLTIP);
         fParticipantDetailsInputTextField.setLayoutData(textGridData);
         
         //Extra parameters section
@@ -375,19 +391,23 @@ public class ParticipantInputDialog extends FormDialog {
 
 		//Roles
         label = toolkit.createLabel(extraSectionClient, R4EUIConstants.ROLES_LABEL);
+        label.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         fRoleTypes = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
         		R4EUIConstants.PARTICIPANT_ROLES);
+        fRoleTypes.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
 
         //Focus Area
         label = toolkit.createLabel(extraSectionClient, R4EUIConstants.FOCUS_AREA_LABEL);
+        label.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fFocusAreaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
+        fFocusAreaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.BORDER);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         textGridData.heightHint = fFocusAreaTextField.getLineHeight() * 3;
+        fFocusAreaTextField.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
         fFocusAreaTextField.setLayoutData(textGridData);
 	}
     

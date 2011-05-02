@@ -50,6 +50,12 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	// ------------------------------------------------------------------------
 	
 	/**
+	 * Field REVIEW_PHASE_REWORK.
+	 * (value is ""REWORK"")
+	 */
+	protected static final String REVIEW_PHASE_REWORK = "REWORK";
+	
+	/**
 	 * Field FFormalPhaseValues.
 	 */
 	private static final String[] FORMAL_PHASE_VALUES = { R4EUIConstants.PHASE_PLANNING_LABEL, R4EUIConstants.PHASE_PREPARATION_LABEL, 
@@ -396,24 +402,24 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 */
 	public boolean checkReworkStatus(AtomicReference<String> aErrorMessage) { // $codepro.audit.disable booleanMethodNamingConvention
 		if (null == fReview.getDecision() || null == fReview.getDecision().getValue()) {
-			aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
-			" as review decision information is missing");
+			aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_REWORK + 
+			" as review exit decision information is missing");
 			return false;
 		}
 		if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_NONE)) {
-			aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
-			" as review decision information is set to NONE");
+			aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_REWORK + 
+			" as review exit decision information is set to NONE");
 			return false;	
 		}
 		if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_REJECTED)) {
-			aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
-			" as review decision information is set to REJECTED");
+			aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_REWORK + 
+			" as review exit decision information is set to REJECTED");
 			return false;
 		}
 
 		//Check global anomalies state
 		if (!(fAnomalyContainer.checkReworkStatus())) {
-			aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
+			aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_REWORK + 
 			" as some global anomalies are in the wrong state");
 			return false;
 		}
@@ -424,7 +430,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 				R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
 				if (null != container) {
 					if (!(container.checkReworkStatus())) {
-						aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
+						aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_REWORK + 
 						" as some anomalies are in the wrong state");
 						return false;
 					}

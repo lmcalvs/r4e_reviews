@@ -101,6 +101,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+	    fIdText.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
 	    fIdText.setLayoutData(data);
 	    fIdText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -128,6 +129,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fIdText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fIdText, 0, SWT.CENTER);
+	    idLabel.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
 	    idLabel.setLayoutData(data);
 	    
 	    //Title
@@ -136,6 +138,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fIdText, ITabbedPropertyConstants.VSPACE);
+	    fTitleText.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
 	    fTitleText.setLayoutData(data);
 	    fTitleText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -163,14 +166,16 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fTitleText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fTitleText, 0, SWT.CENTER);
+	    titleLabel.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
 	    titleLabel.setLayoutData(data);
 	    
 	    //Description
-	    fDescriptionText = widgetFactory.createCLabel(composite, "");
+	    fDescriptionText = widgetFactory.createCLabel(composite, "", SWT.BORDER);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fTitleText, ITabbedPropertyConstants.VSPACE);
+	    fDescriptionText.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
 	    fDescriptionText.setLayoutData(data);
 	    fDescriptionText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -198,6 +203,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fDescriptionText, 0, SWT.CENTER);
+	    descriptionLabel.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
 	    descriptionLabel.setLayoutData(data);
 	    
 	    //Class
@@ -206,6 +212,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
+	    fClassCombo.setToolTipText(R4EUIConstants.RULE_CLASS_TOOLTIP);
 	    fClassCombo.setLayoutData(data);
 	    fClassCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -234,6 +241,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fClassCombo, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fClassCombo, 0, SWT.CENTER);
+	    classLabel.setToolTipText(R4EUIConstants.RULE_CLASS_TOOLTIP);
 	    classLabel.setLayoutData(data);
 	    
 	    //Rank
@@ -242,6 +250,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fClassCombo, ITabbedPropertyConstants.VSPACE);
+	    fRankCombo.setToolTipText(R4EUIConstants.RULE_RANK_TOOLTIP);
 	    fRankCombo.setLayoutData(data);
 	    fRankCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -270,6 +279,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fRankCombo, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fRankCombo, 0, SWT.CENTER);
+	    rankLabel.setToolTipText(R4EUIConstants.RULE_RANK_TOOLTIP);
 	    rankLabel.setLayoutData(data);
 	}
 

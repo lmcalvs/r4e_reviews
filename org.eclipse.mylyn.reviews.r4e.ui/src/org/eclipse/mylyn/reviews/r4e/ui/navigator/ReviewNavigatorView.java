@@ -532,7 +532,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			//Reset reviewer to current ID
 			final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 			R4EUIModelController.setReviewer(store.getString(PreferenceConstants.P_USER_ID));
-			
+			getTreeViewer().refresh();
 		} else if (event.getKey().equals(PreferenceConstants.P_GROUP_FILE_PATH)) {
 			//Check what is currently loaded vs. what is in the preferences.  Adjust input accordingly
 			final List<R4EUIReviewGroup> groupsLoaded = Arrays.asList(((R4EUIRootElement)R4EUIModelController.getRootElement()).getGroups());

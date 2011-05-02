@@ -122,12 +122,14 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
         fAvailableProjects = new EditableListWidget(widgetFactory, composite, data, this, 1, Text.class, null);
+        fAvailableProjects.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
 
 	    final CLabel projectsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AVAILABLE_PROJECTS_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fAvailableProjects.getComposite(), -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fAvailableProjects.getComposite(), 0, SWT.TOP);
+		projectsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
 	    projectsLabel.setLayoutData(data);
 	    
 	    //Components
@@ -136,20 +138,23 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fAvailableProjects.getComposite(), ITabbedPropertyConstants.VSPACE);
 	    fAvailableComponents = new EditableListWidget(widgetFactory, composite, data, this, 2, Text.class, null);
+	    fAvailableComponents.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
 
 	    final CLabel componentsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AVAILABLE_COMPONENTS_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fAvailableComponents.getComposite(), -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fAvailableComponents.getComposite(), 0, SWT.TOP);
+		componentsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
 	    componentsLabel.setLayoutData(data);
 	    
 	    //Entry Criteria
-	    fDefaultEntryCriteriaText = widgetFactory.createText(composite, "", SWT.MULTI);
+	    fDefaultEntryCriteriaText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fAvailableComponents.getComposite(), ITabbedPropertyConstants.VSPACE);
+		fDefaultEntryCriteriaText.setToolTipText(R4EUIConstants.REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP);
 		fDefaultEntryCriteriaText.setLayoutData(data);
 	    fDefaultEntryCriteriaText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -178,6 +183,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fDefaultEntryCriteriaText, -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fDefaultEntryCriteriaText, 0, SWT.TOP);
+		entryCriteriaLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP);
 		entryCriteriaLabel.setLayoutData(data);
 		
 		//Rule Sets
@@ -186,12 +192,14 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fDefaultEntryCriteriaText, ITabbedPropertyConstants.VSPACE);
 		fRuleSetLocations = new EditableListWidget(widgetFactory, composite, data, this, 3, CCombo.class, null);
-		
+		fRuleSetLocations.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
+
 	    final CLabel ruleSetsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RULE_SETS_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fRuleSetLocations.getComposite(), -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fRuleSetLocations.getComposite(), 0, SWT.TOP);
+	    ruleSetsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
 	    ruleSetsLabel.setLayoutData(data);
 	    
 

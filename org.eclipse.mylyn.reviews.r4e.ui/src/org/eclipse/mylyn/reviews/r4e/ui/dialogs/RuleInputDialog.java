@@ -294,46 +294,56 @@ public class RuleInputDialog extends FormDialog {
         
         //Rule Id
         Label label = toolkit.createLabel(basicSectionClient, ADD_RULE_ID_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fIdInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
+        fIdInputTextField.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
         fIdInputTextField.setLayoutData(textGridData);
         
         //Rule Title
         label = toolkit.createLabel(basicSectionClient, ADD_RULE_TITLE_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fTitleInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
+        fTitleInputTextField.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
         fTitleInputTextField.setLayoutData(textGridData);
         
         //Rule Description
         label = toolkit.createLabel(basicSectionClient, ADD_RULE_DESCRIPTION_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
+        fDescriptionInputTextField.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
         fDescriptionInputTextField.setLayoutData(textGridData);
         
 		//Rule Class
         label = toolkit.createLabel(basicSectionClient, ADD_RULE_CLASS_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.RULE_CLASS_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fClassCombo = new CCombo(basicSectionClient, SWT.BORDER | SWT.READ_ONLY);
         fClassCombo.setItems(UIUtils.getClasses());
         fClassCombo.select(0);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
+		fClassCombo.setToolTipText(R4EUIConstants.RULE_CLASS_TOOLTIP);
 		fClassCombo.setLayoutData(textGridData);
 		
 		//Rule Rank
         label = toolkit.createLabel(basicSectionClient, ADD_RULE_RANK_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.RULE_RANK_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fRankCombo = new CCombo(basicSectionClient, SWT.BORDER | SWT.READ_ONLY);
         fRankCombo.setItems(UIUtils.getRanks());
         fRankCombo.select(0);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
+		fRankCombo.setToolTipText(R4EUIConstants.RULE_RANK_TOOLTIP);
 		fRankCombo.setLayoutData(textGridData);
 		
 

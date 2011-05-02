@@ -99,6 +99,7 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fNameText.setToolTipText(R4EUIConstants.REVIEW_GROUP_NAME_TOOLTIP);
 		fNameText.setLayoutData(data);
 
 		final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.NAME_LABEL);
@@ -106,6 +107,7 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
+		nameLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_NAME_TOOLTIP);
 		nameLabel.setLayoutData(data);
 
 		//Group Folder (read-only)
@@ -114,6 +116,7 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+		fFolderText.setToolTipText(R4EUIConstants.REVIEW_GROUP_FOLDER_TOOLTIP);
 		fFolderText.setLayoutData(data);
 
 		final CLabel folderLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FOLDER_LABEL);
@@ -121,14 +124,16 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fFolderText, -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fFolderText, 0, SWT.CENTER);
+		folderLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_FOLDER_TOOLTIP);
 		folderLabel.setLayoutData(data);
 
 		//Group Description
-		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
+		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fFolderText, ITabbedPropertyConstants.VSPACE);
+		fDescriptionText.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
 		fDescriptionText.setLayoutData(data);
 		fDescriptionText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -157,6 +162,7 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fDescriptionText, 0, SWT.TOP);
+		descriptionLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
 		descriptionLabel.setLayoutData(data);
 	}
 	

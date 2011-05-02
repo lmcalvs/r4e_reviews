@@ -181,6 +181,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(mainForm, ITabbedPropertyConstants.VSPACE);
+	    fProjectCombo.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);
 	    fProjectCombo.setLayoutData(data);
 	    fProjectCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -209,6 +210,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fProjectCombo, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fProjectCombo, 0, SWT.TOP);
+	    projectLabel.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);
 	    projectLabel.setLayoutData(data);
 	    
 	    //Components (Read-only)
@@ -217,20 +219,23 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fProjectCombo, ITabbedPropertyConstants.VSPACE);
 		fComponents = new EditableListWidget(widgetFactory, mainForm, data, this, 1, CCombo.class, null);
-		
+		fComponents.setToolTipText(R4EUIConstants.REVIEW_COMPONENTS_TOOLTIP);
+
 	    final CLabel componentsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.COMPONENTS_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fComponents.getComposite(), -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fComponents.getComposite(), 0, SWT.TOP);
+	    componentsLabel.setToolTipText(R4EUIConstants.REVIEW_COMPONENTS_TOOLTIP);
 	    componentsLabel.setLayoutData(data);
 	    
-	    //Entry Criteria (read-only)
-	    fEntryCriteriaText = widgetFactory.createText(mainForm, "");
+	    //Entry Criteria
+	    fEntryCriteriaText = widgetFactory.createText(mainForm, "", SWT.BORDER);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fComponents.getComposite(), ITabbedPropertyConstants.VSPACE);
+	    fEntryCriteriaText.setToolTipText(R4EUIConstants.REVIEW_ENTRY_CRITERIA_TOOLTIP);
 	    fEntryCriteriaText.setLayoutData(data);
 
 	    final CLabel entryCriteriaLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.ENTRY_CRITERIA_LABEL);
@@ -238,6 +243,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fEntryCriteriaText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fEntryCriteriaText, 0, SWT.TOP);
+	    entryCriteriaLabel.setToolTipText(R4EUIConstants.REVIEW_ENTRY_CRITERIA_TOOLTIP);
 	    entryCriteriaLabel.setLayoutData(data);
 	    fEntryCriteriaText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -262,11 +268,12 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    UIUtils.addTabbedPropertiesTextResizeListener(fEntryCriteriaText);
 	    
 	    //Objectives
-	    fObjectivesText = widgetFactory.createText(mainForm, "");
+	    fObjectivesText = widgetFactory.createText(mainForm, "", SWT.BORDER);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fEntryCriteriaText, ITabbedPropertyConstants.VSPACE);
+	    fObjectivesText.setToolTipText(R4EUIConstants.REVIEW_OBJECTIVES_TOOLTIP);
 	    fObjectivesText.setLayoutData(data);
 	    fObjectivesText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -295,14 +302,16 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fObjectivesText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fObjectivesText, 0, SWT.TOP);
+	    objectivesLabel.setToolTipText(R4EUIConstants.REVIEW_OBJECTIVES_TOOLTIP);
 	    objectivesLabel.setLayoutData(data);
 	    
 	    //Reference Material
-	    fReferenceMaterialText = widgetFactory.createText(mainForm, "");
+	    fReferenceMaterialText = widgetFactory.createText(mainForm, "", SWT.BORDER);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fObjectivesText, ITabbedPropertyConstants.VSPACE);
+	    fReferenceMaterialText.setToolTipText(R4EUIConstants.REVIEW_REFERENCE_MATERIAL_TOOLTIP);
 	    fReferenceMaterialText.setLayoutData(data);
 	    fReferenceMaterialText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -331,6 +340,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fReferenceMaterialText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fReferenceMaterialText, 0, SWT.TOP);
+	    referenceMaterialLabel.setToolTipText(R4EUIConstants.REVIEW_REFERENCE_MATERIAL_TOOLTIP);
 	    referenceMaterialLabel.setLayoutData(data);
 	    
 	    //Decision section
@@ -359,6 +369,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
         
 	    //Scheduled Meetings
 	    final CLabel meetingInfoLabel = widgetFactory.createCLabel(decisionSectionClient, R4EUIConstants.DECISION_MEETING_LABEL);
+	    meetingInfoLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_TOOLTIP);
 	    meetingInfoLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 	    
 	    //Meeting composite
@@ -374,10 +385,12 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    fMeetingSubjectLabel = widgetFactory.createCLabel(meetingComposite, "");
 	    textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 	    textGridData.horizontalSpan = 2;
+	    fMeetingSubjectLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_SUBJECT_TOOLTIP);
 	    fMeetingSubjectLabel.setLayoutData(textGridData);
 		
 	    //Meeting update button
 	    final Button meetingUpdateButton = widgetFactory.createButton(meetingComposite, UPDATE_LABEL, SWT.PUSH);
+	    meetingUpdateButton.setToolTipText(R4EUIConstants.REVIEW_MEETING_UPDATE_TOOLTIP);
 	    meetingUpdateButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 	    meetingUpdateButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -398,38 +411,46 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    
 		//Meeting Start Time
 	    final CLabel meetingStartTimeLabel = widgetFactory.createCLabel(meetingComposite, R4EUIConstants.START_TIME_LABEL);
+	    meetingStartTimeLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_TIME_TOOLTIP);
 	    meetingStartTimeLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 	    fMeetingStartTimeLabel = widgetFactory.createCLabel(meetingComposite, "");
 	    textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 	    textGridData.horizontalSpan = 2;
+	    fMeetingStartTimeLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_TIME_TOOLTIP);
 	    fMeetingStartTimeLabel.setLayoutData(textGridData);
 	    widgetFactory.createCLabel(meetingComposite, "");  //dummy label for alignment purposes
 	    
 		//Meeting Duration
 	    final CLabel meetingDurationLabel = widgetFactory.createCLabel(meetingComposite, R4EUIConstants.DURATION_LABEL);
+	    meetingDurationLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_DURATION_TOOLTIP);
 	    meetingDurationLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 	    fMeetingDurationLabel = widgetFactory.createCLabel(meetingComposite, "");
 	    textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 	    textGridData.horizontalSpan = 2;
+	    fMeetingDurationLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_DURATION_TOOLTIP);
 	    fMeetingDurationLabel.setLayoutData(textGridData);
 	    widgetFactory.createCLabel(meetingComposite, "");  //dummy label for alignment purposes
 
 		//Meeting Location
 	    final CLabel meetingLocationLabel = widgetFactory.createCLabel(meetingComposite, R4EUIConstants.LOCATION_LABEL);
+	    meetingLocationLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_LOCATION_TOOLTIP);
 	    meetingLocationLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 	    fMeetingLocationLabel = widgetFactory.createCLabel(meetingComposite, "");
 	    textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 	    textGridData.horizontalSpan = 2;
+	    fMeetingLocationLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_LOCATION_TOOLTIP);
 	    fMeetingLocationLabel.setLayoutData(textGridData);
 	    widgetFactory.createCLabel(meetingComposite, "");  //dummy label for alignment purposes
 
 	    //Exit Decision
 	    final CLabel exitDecisionLabel = widgetFactory.createCLabel(decisionSectionClient, R4EUIConstants.EXIT_DECISION_LABEL);
+	    exitDecisionLabel.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_TOOLTIP);
 	    exitDecisionLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 	    
 	    fExitDecisionCombo = widgetFactory.createCCombo(decisionSectionClient, SWT.READ_ONLY);
 	    textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
+		fExitDecisionCombo.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_TOOLTIP);
 		fExitDecisionCombo.setLayoutData(textGridData);
 	    fExitDecisionCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -455,6 +476,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	    
 	    //Decision Participants
 	    fDecisionUsersListLabel = widgetFactory.createCLabel(decisionSectionClient, R4EUIConstants.DECISION_PARTICIPANTS_LABEL);
+	    fDecisionUsersListLabel.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_PARTICIPANTS_TOOLTIP);
 	    fDecisionUsersListLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 
 	    List<String> participants = null;
@@ -467,14 +489,17 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		textGridData.horizontalSpan = 3;
 	    fDecisionUsersList = new EditableListWidget(
 	    		widgetFactory, decisionSectionClient, textGridData, this, 2, CCombo.class, participants.toArray(new String[participants.size()]));
+	    fDecisionUsersList.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_PARTICIPANTS_TOOLTIP);
 
 	    //Decision Time Spent
 	    fDecisionTimeSpentLabel = widgetFactory.createCLabel(decisionSectionClient, R4EUIConstants.DECISION_TIME_SPENT_LABEL);
+	    fDecisionTimeSpentLabel.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_TIME_SPENT_TOOLTIP);
 	    fDecisionTimeSpentLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 	    
 	    fDecisionTimeSpentText = widgetFactory.createText(decisionSectionClient, "");
 	    textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
+		fDecisionTimeSpentText.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_TIME_SPENT_TOOLTIP);
 		fDecisionTimeSpentText.setLayoutData(textGridData);
 	    fDecisionTimeSpentText.addFocusListener(new FocusListener() {		
 	    	public void focusLost(FocusEvent e) {

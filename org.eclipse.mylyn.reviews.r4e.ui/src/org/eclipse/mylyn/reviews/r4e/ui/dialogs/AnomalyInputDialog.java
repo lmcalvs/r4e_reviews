@@ -288,19 +288,24 @@ public class AnomalyInputDialog extends FormDialog {
         
         //Anomaly Title
         Label label = toolkit.createLabel(basicSectionClient, ADD_ANOMALY_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.ANOMALY_TITLE_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fAnomalyTitleInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+        fAnomalyTitleInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
+        fAnomalyTitleInputTextField.setToolTipText(R4EUIConstants.ANOMALY_TITLE_TOOLTIP);
         fAnomalyTitleInputTextField.setLayoutData(textGridData);
         
         //Anomaly Description
         label = toolkit.createLabel(basicSectionClient, ADD_DESCRIPTION_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.ANOMALY_DESCRIPTION_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fAnomalyDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
+        fAnomalyDescriptionInputTextField = toolkit.createText(basicSectionClient, "", 
+        		SWT.MULTI | SWT.V_SCROLL | SWT.BORDER | SWT.WRAP);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         textGridData.heightHint = fAnomalyTitleInputTextField.getLineHeight() * 3;
+        fAnomalyDescriptionInputTextField.setToolTipText(R4EUIConstants.ANOMALY_DESCRIPTION_TOOLTIP);
         fAnomalyDescriptionInputTextField.setLayoutData(textGridData);
         
         //Extra parameters section

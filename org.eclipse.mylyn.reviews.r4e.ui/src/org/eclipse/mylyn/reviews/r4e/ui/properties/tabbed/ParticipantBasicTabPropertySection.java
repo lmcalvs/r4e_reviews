@@ -102,6 +102,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+	    fIdText.setToolTipText(R4EUIConstants.PARTICIPANT_ID_TOOLTIP);
 	    fIdText.setLayoutData(data);
 
 	    final CLabel idLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.ID_LABEL);
@@ -109,6 +110,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fIdText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fIdText, 0, SWT.CENTER);
+	    idLabel.setToolTipText(R4EUIConstants.PARTICIPANT_ID_TOOLTIP);
 	    idLabel.setLayoutData(data);
 	    
 	    //Email (read-only)
@@ -117,6 +119,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fIdText, ITabbedPropertyConstants.VSPACE);
+	    fEmailText.setToolTipText(R4EUIConstants.PARTICIPANT_EMAIL_TOOLTIP);
 	    fEmailText.setLayoutData(data);
 	    
 	    final CLabel emailLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.EMAIL_LABEL);
@@ -124,6 +127,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fEmailText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fEmailText, 0, SWT.CENTER);
+	    emailLabel.setToolTipText(R4EUIConstants.PARTICIPANT_EMAIL_TOOLTIP);
 	    emailLabel.setLayoutData(data);
 	    
 	    //Number of Review Items added (read-only)
@@ -133,6 +137,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fIdText, ITabbedPropertyConstants.VSPACE);
+	    fNumItemsText.setToolTipText(R4EUIConstants.PARTICIPANT_NUM_ITEMS_TOOLTIP);
 	    fNumItemsText.setLayoutData(data);
 	
 	    final CLabel numItemsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.NUM_ITEMS_LABEL);
@@ -140,6 +145,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fNumItemsText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fNumItemsText, 0, SWT.CENTER);
+	    numItemsLabel.setToolTipText(R4EUIConstants.PARTICIPANT_NUM_ITEMS_TOOLTIP);
 	    numItemsLabel.setLayoutData(data);
 	    
 	    //Number of Anomalies added (read-only)
@@ -148,6 +154,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fNumItemsText, ITabbedPropertyConstants.VSPACE);
+	    fNumAnomaliesText.setToolTipText(R4EUIConstants.PARTICIPANT_NUM_ANOMALIES_TOOLTIP);
 	    fNumAnomaliesText.setLayoutData(data);
 	
 	    final CLabel numAnomaliesLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.NUM_ANOMALIES_LABEL);
@@ -155,6 +162,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fNumAnomaliesText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fNumAnomaliesText, 0, SWT.CENTER);
+	    numAnomaliesLabel.setToolTipText(R4EUIConstants.PARTICIPANT_NUM_ANOMALIES_TOOLTIP);
 	    numAnomaliesLabel.setLayoutData(data);
 	    
 	    //Number of Comments added (read-only)
@@ -163,6 +171,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fNumAnomaliesText, ITabbedPropertyConstants.VSPACE);
+	    fNumCommentsText.setToolTipText(R4EUIConstants.PARTICIPANT_NUM_COMMENTS_TOOLTIP);
 	    fNumCommentsText.setLayoutData(data);
 	
 	    final CLabel numCommentsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.NUM_COMMENTS_LABEL);
@@ -170,6 +179,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fNumCommentsText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fNumCommentsText, 0, SWT.CENTER);
+	    numCommentsLabel.setToolTipText(R4EUIConstants.PARTICIPANT_NUM_COMMENTS_TOOLTIP);
 	    numCommentsLabel.setLayoutData(data);
 	    
 	    //Details (read-only)
@@ -178,6 +188,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fNumCommentsText, ITabbedPropertyConstants.VSPACE);
+	    fDetailsText.setToolTipText(R4EUIConstants.PARTICIPANT_DETAILS_TOOLTIP);
 	    fDetailsText.setLayoutData(data);
 	    
 	    final CLabel detailsLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.USER_DETAILS_LABEL);
@@ -185,6 +196,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fDetailsText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fDetailsText, 0, SWT.TOP);
+	    detailsLabel.setToolTipText(R4EUIConstants.PARTICIPANT_DETAILS_TOOLTIP);
 	    detailsLabel.setLayoutData(data);
 	}
 

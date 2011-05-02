@@ -465,4 +465,12 @@ public class EditableListWidget {
 			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 		}
 	}
+	
+	/**
+	 * Method setToolTipText.
+	 * @param aTooltip String
+	 */
+	public void setToolTipText(String aTooltip) {
+		fMainComposite.setToolTipText(aTooltip);
+	}
 }

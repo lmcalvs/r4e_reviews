@@ -193,10 +193,12 @@ public class RuleAreaInputDialog extends FormDialog {
         
         //Rule Area Name
         final Label label = toolkit.createLabel(basicSectionClient, ADD_RULE_AREA_NAME_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.RULE_AREA_NAME_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
+        fNameInputTextField.setToolTipText(R4EUIConstants.RULE_AREA_NAME_TOOLTIP);
         fNameInputTextField.setLayoutData(textGridData);
     }
     

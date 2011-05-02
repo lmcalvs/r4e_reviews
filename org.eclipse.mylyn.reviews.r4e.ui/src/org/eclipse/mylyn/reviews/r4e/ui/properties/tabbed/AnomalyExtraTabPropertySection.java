@@ -147,6 +147,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+	    fStateCombo.setToolTipText(R4EUIConstants.ANOMALY_STATE_TOOLTIP);
 	    fStateCombo.setLayoutData(data);
 	    fStateCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -172,6 +173,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fStateCombo, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fStateCombo, 0, SWT.CENTER);
+	    stateLabel.setToolTipText(R4EUIConstants.ANOMALY_STATE_TOOLTIP);
 	    stateLabel.setLayoutData(data);
 	    
 	    //Class
@@ -180,6 +182,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fStateCombo, ITabbedPropertyConstants.VSPACE);
+	    fClassCombo.setToolTipText(R4EUIConstants.ANOMALY_CLASS_TOOLTIP);
 	    fClassCombo.setLayoutData(data);
 	    fClassCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -210,6 +213,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fClassCombo, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fClassCombo, 0, SWT.CENTER);
+	    classLabel.setToolTipText(R4EUIConstants.ANOMALY_CLASS_TOOLTIP);
 	    classLabel.setLayoutData(data);
 	    
 	    //Rank
@@ -218,6 +222,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fClassCombo, ITabbedPropertyConstants.VSPACE);
+	    fRankCombo.setToolTipText(R4EUIConstants.ANOMALY_RANK_TOOLTIP);
 	    fRankCombo.setLayoutData(data);
 	    fRankCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -246,6 +251,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fRankCombo, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fRankCombo, 0, SWT.CENTER);
+	    rankLabel.setToolTipText(R4EUIConstants.ANOMALY_RANK_TOOLTIP);
 	    rankLabel.setLayoutData(data);
 
 	    //RuleId (Read-only)
@@ -254,6 +260,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fRankCombo, ITabbedPropertyConstants.VSPACE);
+	    fRuleId.setToolTipText(R4EUIConstants.ANOMALY_RULE_ID_TOOLTIP);
 	    fRuleId.setLayoutData(data);
 	    
 	    final CLabel ruleIdLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RULE_ID_LABEL);
@@ -261,6 +268,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fRuleId, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fRuleId, 0, SWT.CENTER);
+	    ruleIdLabel.setToolTipText(R4EUIConstants.ANOMALY_RULE_ID_TOOLTIP);
 	    ruleIdLabel.setLayoutData(data);
 	    
 	    //Due Date
@@ -269,6 +277,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fRuleId, ITabbedPropertyConstants.VSPACE);
+	    dateComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
 	    dateComposite.setLayoutData(data);
 	    dateComposite.setLayout(new GridLayout(2, false));
 	    
@@ -319,6 +328,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(dateComposite, ITabbedPropertyConstants.VSPACE);
+	    fDecidedByCombo.setToolTipText(R4EUIConstants.ANOMALY_DECIDED_BY_TOOLTIP);
 	    fDecidedByCombo.setLayoutData(data);
 	    fDecidedByCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -347,6 +357,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fDecidedByCombo, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fDecidedByCombo, 0, SWT.CENTER);
+	    decidedByLabel.setToolTipText(R4EUIConstants.ANOMALY_DECIDED_BY_TOOLTIP);
 	    decidedByLabel.setLayoutData(data);
 	    
 	    //Fixed by
@@ -355,6 +366,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fDecidedByCombo, ITabbedPropertyConstants.VSPACE);
+	    fFixedByCombo.setToolTipText(R4EUIConstants.ANOMALY_FIXED_BY_TOOLTIP);
 	    fFixedByCombo.setLayoutData(data);
 	    fFixedByCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -383,6 +395,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fFixedByCombo, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fFixedByCombo, 0, SWT.CENTER);
+	    fixedByLabel.setToolTipText(R4EUIConstants.ANOMALY_FIXED_BY_TOOLTIP);
 	    fixedByLabel.setLayoutData(data);
 	    
 	    //Folluw-up by
@@ -391,6 +404,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fFixedByCombo, ITabbedPropertyConstants.VSPACE);
+	    fFollowUpByCombo.setToolTipText(R4EUIConstants.ANOMALY_FOLLOWUP_BY_TOOLTIP);
 	    fFollowUpByCombo.setLayoutData(data);
 	    fFollowUpByCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -419,6 +433,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fFollowUpByCombo, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fFollowUpByCombo, 0, SWT.CENTER);
+	    followUpByLabel.setToolTipText(R4EUIConstants.ANOMALY_FOLLOWUP_BY_TOOLTIP);
 	    followUpByLabel.setLayoutData(data);
 	    
 	    //Not accepted reason
@@ -427,6 +442,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fFollowUpByCombo, ITabbedPropertyConstants.VSPACE);
+	    fNotAcceptedReasonText.setToolTipText(R4EUIConstants.ANOMALY_NOT_ACCEPTED_REASON_TOOLTIP);
 	    fNotAcceptedReasonText.setLayoutData(data);
 	    fNotAcceptedReasonText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -456,6 +472,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fNotAcceptedReasonText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fNotAcceptedReasonText, 0, SWT.CENTER);
+	    notAcceptedReasonLabel.setToolTipText(R4EUIConstants.ANOMALY_NOT_ACCEPTED_REASON_TOOLTIP);
 	    notAcceptedReasonLabel.setLayoutData(data);
 	}
 	

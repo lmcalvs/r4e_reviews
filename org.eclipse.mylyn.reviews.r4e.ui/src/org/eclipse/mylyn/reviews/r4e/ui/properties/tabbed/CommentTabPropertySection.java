@@ -98,6 +98,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+	    fAuthorText.setToolTipText(R4EUIConstants.COMMENT_AUTHOR_TOOLTIP);
 	    fAuthorText.setLayoutData(data);
 
 	    final CLabel authorLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AUTHOR_LABEL);
@@ -105,6 +106,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fAuthorText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fAuthorText, 0, SWT.CENTER);
+	    authorLabel.setToolTipText(R4EUIConstants.COMMENT_AUTHOR_TOOLTIP);
 	    authorLabel.setLayoutData(data);
 	    
 	    //Creation Date (read-only)
@@ -113,6 +115,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fAuthorText, ITabbedPropertyConstants.VSPACE);
+	    fCreationDateText.setToolTipText(R4EUIConstants.COMMENT_CREATION_DATE_TOOLTIP);
 	    fCreationDateText.setLayoutData(data);
 	
 	    final CLabel creationDateLabel = widgetFactory.createCLabel(composite, R4EUIConstants.CREATION_DATE_LABEL);
@@ -120,14 +123,16 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fCreationDateText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fCreationDateText, 0, SWT.CENTER);
+	    creationDateLabel.setToolTipText(R4EUIConstants.COMMENT_CREATION_DATE_TOOLTIP);
 	    creationDateLabel.setLayoutData(data);
 	
 	    //Description
-	    fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
+	    fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fCreationDateText, ITabbedPropertyConstants.VSPACE);
+	    fDescriptionText.setToolTipText(R4EUIConstants.COMMENT_DESCRIPTION_TOOLTIP);
 	    fDescriptionText.setLayoutData(data);
 	    fDescriptionText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -156,6 +161,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fDescriptionText, 0, SWT.TOP);
+	    descriptionLabel.setToolTipText(R4EUIConstants.COMMENT_DESCRIPTION_TOOLTIP);
 	    descriptionLabel.setLayoutData(data);
 	}
 

@@ -198,23 +198,28 @@ public class SendNotificationInputDialog extends FormDialog {
         		fCompletionButton = toolkit.createButton(basicSectionClient, 
         				"Notify Review Owner of Completion", SWT.RADIO);
         		fCompletionButton.setSelection(true);
+        		fCompletionButton.setToolTipText(R4EUIConstants.NOTIFICATION_COMPLETION_TOOLTIP);
         		fCompletionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         	} else {
             	fItemsUpdatedButton = toolkit.createButton(basicSectionClient, 
             			"Notify Participants of New/Removed/Updated Items Ready for Review", SWT.RADIO);
+            	fItemsUpdatedButton.setToolTipText(R4EUIConstants.NOTIFICATION_ITEMS_UPDATED_TOOLTIP);
             	fItemsUpdatedButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
             	
             	fProgressButton = toolkit.createButton(basicSectionClient, 
             			"Notify review Owner of Progress", SWT.RADIO);
+            	fProgressButton.setToolTipText(R4EUIConstants.NOTIFICATION_PROGRESS_TOOLTIP);
             	fProgressButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         	
                 fQuestionButton = toolkit.createButton(basicSectionClient, 
                 		"Ask Question to Participant", SWT.RADIO);
+                fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
                 fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         	}
         } else {
             fQuestionButton = toolkit.createButton(basicSectionClient, 
             		"Ask Question to Participant", SWT.RADIO);
+            fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
             fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         }
     }

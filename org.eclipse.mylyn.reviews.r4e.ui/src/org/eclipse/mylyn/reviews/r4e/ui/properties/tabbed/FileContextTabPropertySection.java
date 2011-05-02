@@ -134,6 +134,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(aParent, ITabbedPropertyConstants.VSPACE);
+	    fBaseFileNameText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_NAME_TOOLTIP);
 	    fBaseFileNameText.setLayoutData(data);
 	
 	    final CLabel fileNameLabel = aWidgetFactory.createCLabel(aParent, R4EUIConstants.NAME_LABEL);
@@ -141,6 +142,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fBaseFileNameText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fBaseFileNameText, 0, SWT.CENTER);
+	    fileNameLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_NAME_TOOLTIP);
 	    fileNameLabel.setLayoutData(data);
 	
 	    //File Path (read-only)
@@ -149,6 +151,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fBaseFileNameText, ITabbedPropertyConstants.VSPACE);
+	    fBaseFilePathText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_TOOLTIP);
 	    fBaseFilePathText.setLayoutData(data);
 
 	    final CLabel filePathLabel = aWidgetFactory.createCLabel(aParent, R4EUIConstants.PATH_LABEL);
@@ -156,6 +159,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fBaseFilePathText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fBaseFilePathText, 0, SWT.TOP);
+	    filePathLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_TOOLTIP);
 	    filePathLabel.setLayoutData(data);
 	    
 	    //File Version (read-only)
@@ -164,6 +168,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fBaseFilePathText, ITabbedPropertyConstants.VSPACE);
+	    fBaseFileVersionText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_VERSION_TOOLTIP);
 	    fBaseFileVersionText.setLayoutData(data);
 
 	    final CLabel fileVersionLabel = aWidgetFactory.createCLabel(aParent, R4EUIConstants.VERSION_LABEL);
@@ -171,6 +176,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fBaseFileVersionText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fBaseFileVersionText, 0, SWT.TOP);
+	    fileVersionLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_VERSION_TOOLTIP);
 	    fileVersionLabel.setLayoutData(data);
 	}
 	
@@ -188,6 +194,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(aParent, ITabbedPropertyConstants.VSPACE);
+	    fTargetFileNameText.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_NAME_TOOLTIP);
 	    fTargetFileNameText.setLayoutData(data);
 	
 	    final CLabel fileNameLabel = aWidgetFactory.createCLabel(aParent, R4EUIConstants.NAME_LABEL);
@@ -195,6 +202,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fTargetFileNameText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fTargetFileNameText, 0, SWT.CENTER);
+	    fileNameLabel.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_NAME_TOOLTIP);
 	    fileNameLabel.setLayoutData(data);
 	
 	    //File Path (read-only)
@@ -203,6 +211,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fTargetFileNameText, ITabbedPropertyConstants.VSPACE);
+	    fTargetFilePathText.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_PATH_TOOLTIP);
 	    fTargetFilePathText.setLayoutData(data);
 
 	    final CLabel filePathLabel = aWidgetFactory.createCLabel(aParent, R4EUIConstants.PATH_LABEL);
@@ -210,6 +219,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fTargetFilePathText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fTargetFilePathText, 0, SWT.TOP);
+	    filePathLabel.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_PATH_TOOLTIP);
 	    filePathLabel.setLayoutData(data);
 	    
 	    //File Version (read-only)
@@ -218,6 +228,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fTargetFilePathText, ITabbedPropertyConstants.VSPACE);
+	    fTargetFileVersionText.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_VERSION_TOOLTIP);
 	    fTargetFileVersionText.setLayoutData(data);
 
 	    final CLabel fileVersionLabel = aWidgetFactory.createCLabel(aParent, R4EUIConstants.VERSION_LABEL);
@@ -225,6 +236,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fTargetFileVersionText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fTargetFileVersionText, 0, SWT.TOP);
+	    fileVersionLabel.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_VERSION_TOOLTIP);
 	    fileVersionLabel.setLayoutData(data);
 	}
 

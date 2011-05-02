@@ -90,6 +90,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+	    fAuthorText.setToolTipText(R4EUIConstants.REVIEW_ITEM_AUTHOR_TOOLTIP);
 	    fAuthorText.setLayoutData(data);
 
 	    final CLabel authorLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AUTHOR_LABEL);
@@ -97,6 +98,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fAuthorText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fAuthorText, 0, SWT.CENTER);
+	    authorLabel.setToolTipText(R4EUIConstants.REVIEW_ITEM_AUTHOR_TOOLTIP);
 	    authorLabel.setLayoutData(data);
 	    
 	    //ProjectId (read-only)
@@ -105,6 +107,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fAuthorText, ITabbedPropertyConstants.VSPACE);
+	    fProjectIdList.setToolTipText(R4EUIConstants.REVIEW_ITEM_PROJECT_IDS_TOOLTIP);
 	    fProjectIdList.setLayoutData(data);
 
 	    final CLabel projectIdLabel = widgetFactory.createCLabel(composite, R4EUIConstants.PROJECT_LABEL);
@@ -112,14 +115,16 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fProjectIdList, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fProjectIdList, 0, SWT.CENTER);
+	    projectIdLabel.setToolTipText(R4EUIConstants.REVIEW_ITEM_PROJECT_IDS_TOOLTIP);
 	    projectIdLabel.setLayoutData(data);
 
 	    //Description
-	    fDescriptionText = widgetFactory.createText(composite, "");
+	    fDescriptionText = widgetFactory.createText(composite, "", SWT.BORDER);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fProjectIdList, ITabbedPropertyConstants.VSPACE);
+	    fDescriptionText.setToolTipText(R4EUIConstants.REVIEW_ITEM_DESCRIPTION_TOOLTIP);
 	    fDescriptionText.setLayoutData(data);
 	    fDescriptionText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -148,6 +153,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fDescriptionText, 0, SWT.CENTER);
+	    descriptionLabel.setToolTipText(R4EUIConstants.REVIEW_ITEM_DESCRIPTION_TOOLTIP);
 	    descriptionLabel.setLayoutData(data);
 	}
 

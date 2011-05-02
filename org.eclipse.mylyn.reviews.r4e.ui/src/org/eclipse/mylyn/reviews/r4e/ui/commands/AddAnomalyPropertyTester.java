@@ -83,7 +83,7 @@ public class AddAnomalyPropertyTester extends PropertyTester {
 			}
 		}
 		
-		//For formal reviews, anomalies can only be added by reviewers in the preparation phase
+		//For formal reviews, anomalies can only be added by reviewers in the preparation and decision phases
 		if (activeReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 			R4EParticipant reviewer = null;
 			try {
@@ -94,8 +94,9 @@ public class AddAnomalyPropertyTester extends PropertyTester {
 			}
 			if (null == reviewer) return false;
 
-			if (!reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_REVIEWER) || 
-					!((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+			if (reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR) || 
+					!(((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION) ||
+					 ((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION))) {
 				return false;
 			}
 		}

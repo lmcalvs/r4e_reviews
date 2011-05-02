@@ -361,6 +361,27 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	}
 	
 	/**
+	 * Method isReviewed.
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isReviewed()
+	 */
+	@Override
+	public boolean isReviewed() {
+		R4EParticipant participant;
+		try {
+			participant = getParticipant(R4EUIModelController.getReviewer(), false);
+			if (null != participant) {
+				return participant.isReviewCompleted();
+			}
+		} catch (ResourceHandlingException e) {
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			return fReviewed;
+		}
+		return fReviewed;
+	}
+	
+	/**
 	 * Method setReviewed.
 	 * @param aReviewed boolean
 	 * @throws ResourceHandlingException 
@@ -1213,17 +1234,17 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		if (!(fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC))) {
 			if (null == fReview.getDecision() || null == fReview.getDecision().getValue()) {
 				aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
-				" as review decision information is missing");
+				" as review exit decision information is missing");
 				return false;
 			}
 			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_NONE)) {
 				aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
-				" as review decision information is set to NONE");
+				" as review exit decision information is set to NONE");
 				return false;	
 			}
 			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_REJECTED)) {
 				aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED + 
-				" as review decision information is set to REJECTED");
+				" as review exit decision information is set to REJECTED");
 				return true;
 			}
 			

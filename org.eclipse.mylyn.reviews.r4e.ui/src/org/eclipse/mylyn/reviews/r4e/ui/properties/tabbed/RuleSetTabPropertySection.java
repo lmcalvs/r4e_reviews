@@ -88,6 +88,7 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+	    fVersionText.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
 	    fVersionText.setLayoutData(data);
 	    fVersionText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -115,14 +116,16 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fVersionText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fVersionText, 0, SWT.CENTER);
+	    versionLabel.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
 	    versionLabel.setLayoutData(data);
 	    
-	    //File Path (read-only)
+	    //Name
 	    fNameText = widgetFactory.createCLabel(composite, "");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fVersionText, ITabbedPropertyConstants.VSPACE);
+	    fNameText.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
 	    fNameText.setLayoutData(data);
 
 	    final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
@@ -130,6 +133,7 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
+	    nameLabel.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
 	    nameLabel.setLayoutData(data);
 	    
 	    //File Path (read-only)
@@ -138,6 +142,7 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+	    fFilePathText.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
 	    fFilePathText.setLayoutData(data);
 
 	    final CLabel filePathLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
@@ -145,6 +150,7 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fFilePathText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fFilePathText, 0, SWT.CENTER);
+	    filePathLabel.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
 	    filePathLabel.setLayoutData(data);
 	}
 

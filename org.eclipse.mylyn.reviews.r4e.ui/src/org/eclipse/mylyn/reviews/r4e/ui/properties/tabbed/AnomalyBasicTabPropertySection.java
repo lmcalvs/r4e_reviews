@@ -109,11 +109,12 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    FormData data = null;
 	   
 	    //Anomaly title
-	    fTitleText = widgetFactory.createText(composite, "", SWT.MULTI);
+	    fTitleText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+	    fTitleText.setToolTipText(R4EUIConstants.ANOMALY_TITLE_TOOLTIP);
 	    fTitleText.setLayoutData(data);
 	    fTitleText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -142,6 +143,7 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fTitleText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fTitleText, 0, SWT.CENTER);
+	    titleLabel.setToolTipText(R4EUIConstants.ANOMALY_TITLE_TOOLTIP);
 	    titleLabel.setLayoutData(data);
 	    
 	    //Anomaly Author (read-only)
@@ -150,6 +152,7 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fTitleText, ITabbedPropertyConstants.VSPACE);
+	    fAuthorText.setToolTipText(R4EUIConstants.ANOMALY_AUTHOR_TOOLTIP);
 	    fAuthorText.setLayoutData(data);
 	
 	    final CLabel authorLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AUTHOR_LABEL);
@@ -157,6 +160,7 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fAuthorText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fAuthorText, 0, SWT.CENTER);
+	    authorLabel.setToolTipText(R4EUIConstants.ANOMALY_AUTHOR_TOOLTIP);
 	    authorLabel.setLayoutData(data);
 	
 	    //Anomaly Creation Date (read-only)
@@ -165,6 +169,7 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fAuthorText, ITabbedPropertyConstants.VSPACE);
+	    fCreationDateText.setToolTipText(R4EUIConstants.ANOMALY_CREATION_DATE_TOOLTIP);
 	    fCreationDateText.setLayoutData(data);
 	
 	    final CLabel creationDateLabel = widgetFactory.createCLabel(composite, R4EUIConstants.CREATION_DATE_LABEL);
@@ -172,6 +177,7 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fCreationDateText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fCreationDateText, 0, SWT.CENTER);
+	    creationDateLabel.setToolTipText(R4EUIConstants.ANOMALY_CREATION_DATE_TOOLTIP);
 	    creationDateLabel.setLayoutData(data);
 	    
 	    //Anomaly position (read-only)
@@ -180,6 +186,7 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fCreationDateText, ITabbedPropertyConstants.VSPACE);
+	    fPositionText.setToolTipText(R4EUIConstants.ANOMALY_POSITION_TOOLTIP);
 	    fPositionText.setLayoutData(data);
 	
 	    final CLabel positionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.POSITION_LABEL);
@@ -187,15 +194,17 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fPositionText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fPositionText, 0, SWT.CENTER);
+	    positionLabel.setToolTipText(R4EUIConstants.ANOMALY_POSITION_TOOLTIP);
 	    positionLabel.setLayoutData(data);
 	    
 	    //Anomaly Description
-	    fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
+	    fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fPositionText, ITabbedPropertyConstants.VSPACE);
 	    fDescriptionText.setLayoutData(data);
+	    fDescriptionText.setToolTipText(R4EUIConstants.ANOMALY_DESCRIPTION_TOOLTIP);
 	    fDescriptionText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
 	    		if (!fRefreshInProgress) {
@@ -223,6 +232,7 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fDescriptionText, 0, SWT.TOP);
+	    descriptionLabel.setToolTipText(R4EUIConstants.ANOMALY_DESCRIPTION_TOOLTIP);
 	    descriptionLabel.setLayoutData(data);
 	}
 

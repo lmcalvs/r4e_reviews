@@ -22,6 +22,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -198,6 +199,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+	    fNameText.setToolTipText(R4EUIConstants.REVIEW_NAME_TOOLTIP);
 	    fNameText.setLayoutData(data);
 		
 	    final CLabel nameLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.NAME_LABEL);
@@ -205,6 +207,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fNameText, 0, SWT.TOP);
+	    nameLabel.setToolTipText(R4EUIConstants.REVIEW_NAME_TOOLTIP);
 	    nameLabel.setLayoutData(data);
 	    
     	//Phase
@@ -213,6 +216,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+	    fPhaseCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_TOOLTIP);
 	    fPhaseCombo.setLayoutData(data);
 	    fPhaseCombo.addSelectionListener(new SelectionListener() {
 	    	public void widgetSelected(SelectionEvent e) {
@@ -233,13 +237,21 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    				try {
 	    					if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 	    						((R4EUIReviewExtended)fProperties.getElement()).updatePhase(phase);
-	    						if (((R4EFormalReview)((R4EUIReviewExtended)fProperties.getElement()).getReview()).
-	    								getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-	    							
+	    						R4EFormalReview review = 
+	    							((R4EFormalReview)((R4EUIReviewExtended)fProperties.getElement()).getReview());
+	    						if (review.getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION) &&
+	    								null == review.getActiveMeeting()) {
     					    		MailServicesProxy.sendMeetingRequest();
 	    						}
 	    					} else {
 	    						((R4EUIReviewBasic)fProperties.getElement()).updatePhase(phase);
+	    					}
+	    					//Set end date when the review is completed
+	    					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+	    						R4EUIModelController.getActiveReview().getReview().setEndDate(
+	    								Calendar.getInstance().getTime());
+	    					} else {
+	    						R4EUIModelController.getActiveReview().getReview().setEndDate(null);
 	    					}
 	    				} catch (ResourceHandlingException e1) {
 	    					UIUtils.displayResourceErrorDialog(e1);
@@ -249,12 +261,12 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 							R4EUIModelController.setDialogOpen(false);
 						}
 	    			}
-	    			refresh();
 	    		} else {
-	    			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.REVIEW_NOT_COMPLETED_ERROR, "Review cannot be set to completed",
+	    			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.REVIEW_NOT_COMPLETED_ERROR, "Review phase cannot be changed",
 			    			new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, aResultMsg.get(), null), IStatus.ERROR);
 			    	dialog.open();
 	    		}
+    			refresh();
 	    	}
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				//No implementation needed
@@ -266,6 +278,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fPhaseCombo, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fPhaseCombo, 0, SWT.CENTER);
+	    phaseLabel.setToolTipText(R4EUIConstants.REVIEW_PHASE_TOOLTIP);
 	    phaseLabel.setLayoutData(data);
 	    
 	    //Review Start Date (read-only)
@@ -274,14 +287,16 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fPhaseCombo, ITabbedPropertyConstants.VSPACE);
+	    fStartDateText.setToolTipText(R4EUIConstants.REVIEW_START_DATE_TOOLTIP);
 	    fStartDateText.setLayoutData(data);
 
-	    final CLabel creationDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.START_DATE_LABEL);
+	    final CLabel startDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.START_DATE_LABEL);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fStartDateText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fStartDateText, 0, SWT.TOP);
-	    creationDateLabel.setLayoutData(data);
+	    startDateLabel.setToolTipText(R4EUIConstants.REVIEW_START_DATE_TOOLTIP);
+	    startDateLabel.setLayoutData(data);
 	
 	    //End Date (read-only)
 	    fEndDateText = widgetFactory.createCLabel(mainForm, "");
@@ -289,6 +304,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fStartDateText, ITabbedPropertyConstants.VSPACE);
+	    fEndDateText.setToolTipText(R4EUIConstants.REVIEW_END_DATE_TOOLTIP);
 	    fEndDateText.setLayoutData(data);
 
 	    final CLabel endDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.END_DATE_LABEL);
@@ -296,14 +312,16 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fEndDateText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fEndDateText, 0, SWT.TOP);
+	    endDateLabel.setToolTipText(R4EUIConstants.REVIEW_END_DATE_TOOLTIP);
 	    endDateLabel.setLayoutData(data);
 	    
 	    //Review Description
-	    fDescriptionText = widgetFactory.createText(mainForm, "", SWT.MULTI);
+	    fDescriptionText = widgetFactory.createText(mainForm, "", SWT.MULTI | SWT.BORDER);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fEndDateText, ITabbedPropertyConstants.VSPACE);
+	    fDescriptionText.setToolTipText(R4EUIConstants.REVIEW_DESCRIPTION_TOOLTIP);
 	    fDescriptionText.setLayoutData(data);
 	    fDescriptionText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -332,6 +350,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fDescriptionText, 0, SWT.TOP);
+	    descriptionLabel.setToolTipText(R4EUIConstants.REVIEW_DESCRIPTION_TOOLTIP);
 	    descriptionLabel.setLayoutData(data);
 	    
 	    //Review Phase Table (formal reviews only)
@@ -341,6 +360,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
 	    fPhaseTable.setHeaderVisible(true);
+	    fPhaseTable.setToolTipText(R4EUIConstants.REVIEW_PHASE_TABLE_TOOLTIP);
 	    fPhaseTable.setLayoutData(data);
 	    fPhaseTable.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -373,10 +393,12 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fPhaseTable, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fPhaseTable, 0, SWT.TOP);
+	    fPhaseMapLabel.setToolTipText(R4EUIConstants.REVIEW_PHASE_TABLE_TOOLTIP);
 	    fPhaseMapLabel.setLayoutData(data);
 	    
 	    //Add Control for planning phase owner
 	    fPlanningPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
+	    fPlanningPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
 		fPlanningPhaseOwnerCombo.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				//Nothing to do
@@ -407,6 +429,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 		
 	    //Add Controls for preparation phase owner
 	    fPreparationPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
+	    fPreparationPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
 		fPreparationPhaseOwnerCombo.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				//Nothing to do
@@ -437,6 +460,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 		
 	    //Add Controls for decision phase owner
 	    fDecisionPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
+	    fDecisionPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
 	    fDecisionPhaseOwnerCombo.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				//Nothing to do
@@ -467,6 +491,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 		
 	    //Add Controls for rework phase owner
 	    fReworkPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
+	    fReworkPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
 	    fReworkPhaseOwnerCombo.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				//Nothing to do

@@ -78,6 +78,7 @@ public class RuleViolationTabPropertySection extends ModelElementTabPropertySect
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+	    fNameText.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
 	    fNameText.setLayoutData(data);
 	    fNameText.addFocusListener(new FocusListener() {		
 			public void focusLost(FocusEvent e) {
@@ -105,6 +106,7 @@ public class RuleViolationTabPropertySection extends ModelElementTabPropertySect
 	    data.left = new FormAttachment(0, 0);
 	    data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
 	    data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
+	    nameLabel.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
 	    nameLabel.setLayoutData(data);
 	}
 

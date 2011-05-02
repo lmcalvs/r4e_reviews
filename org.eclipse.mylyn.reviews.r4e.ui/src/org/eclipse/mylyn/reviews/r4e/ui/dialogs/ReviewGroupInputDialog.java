@@ -376,23 +376,28 @@ public class ReviewGroupInputDialog extends FormDialog {
         
         //Review Group Name
         Label label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_NAME_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.REVIEW_GROUP_NAME_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fGroupNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
+        fGroupNameInputTextField.setToolTipText(R4EUIConstants.REVIEW_GROUP_NAME_TOOLTIP);
         fGroupNameInputTextField.setLayoutData(textGridData);
         
         //Group Folder
         label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.REVIEW_GROUP_FOLDER_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fGroupFolderInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
         final GridData folderTextData = new GridData(GridData.FILL, GridData.BEGINNING, true, false);
         folderTextData.horizontalSpan = 2;
+        fGroupFolderInputTextField.setToolTipText(R4EUIConstants.REVIEW_GROUP_FOLDER_TOOLTIP);
         fGroupFolderInputTextField.setLayoutData(folderTextData);
         final Button folderButton = toolkit.createButton(basicSectionClient, "", SWT.NONE);
         folderButton.setImage(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER).createImage()); // $codepro.audit.disable methodChainLength
         textGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
         textGridData.horizontalSpan = 1;
+        folderButton.setToolTipText(R4EUIConstants.REVIEW_GROUP_FOLDER_TOOLTIP);
         folderButton.setLayoutData(textGridData);
         folderButton.addSelectionListener(new SelectionAdapter() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 			@SuppressWarnings("synthetic-access")
@@ -410,12 +415,14 @@ public class ReviewGroupInputDialog extends FormDialog {
         
         //Group Description
         label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_DESCRIPTION_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fGroupDescriptionInputTextField = toolkit.createText(basicSectionClient, "", 
         		SWT.MULTI | SWT.V_SCROLL | SWT.BORDER | SWT.WRAP);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         textGridData.heightHint = fGroupNameInputTextField.getLineHeight() * 3;
+        fGroupDescriptionInputTextField.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
         fGroupDescriptionInputTextField.setLayoutData(textGridData);
         
         //Extra parameters section
@@ -440,30 +447,37 @@ public class ReviewGroupInputDialog extends FormDialog {
         
 		//Available Projects
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_GROUP_AVAILABLE_PROJECTS_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         fAvailableProjects = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, Text.class, null);
-        
+        fAvailableProjects.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
+
 		//Available Components
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_GROUP_AVAILABLE_COMPONENTS_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         fAvailableComponents = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, Text.class, null);
-        
+        fAvailableComponents.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
+
         // Default Entry Criteria
         label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_GROUP_ENTRY_CRITERIA_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fDefaultEntryCriteriaTextField = toolkit.createText(extraSectionClient, "", 
         		SWT.MULTI | SWT.V_SCROLL | SWT.BORDER | SWT.WRAP);
         textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         textGridData.horizontalSpan = 3;
         textGridData.heightHint = fGroupNameInputTextField.getLineHeight() * 3;
+        fDefaultEntryCriteriaTextField.setToolTipText(R4EUIConstants.REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP);
         fDefaultEntryCriteriaTextField.setLayoutData(textGridData);
         
         //RuleSet references
         label = toolkit.createLabel(extraSectionClient, ADD_RULE_SETS_DIALOG_VALUE);
+        label.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         final List<R4EUIRuleSet> uiRuleSets = fRootElement.getRuleSets();
         final List<String> ruleLocations = new ArrayList<String>();
@@ -476,7 +490,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fRuleSets = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
         		ruleLocations.toArray(new String[ruleLocations.size()]));
-		if (0 == ruleLocations.size()) fRuleSets.setEnabled(false);    
+		if (0 == ruleLocations.size()) fRuleSets.setEnabled(false);
+		fRuleSets.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
 	}
 	
     /**
