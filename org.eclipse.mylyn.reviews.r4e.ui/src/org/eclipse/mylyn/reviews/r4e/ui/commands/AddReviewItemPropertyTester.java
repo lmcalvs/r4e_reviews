@@ -99,7 +99,8 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 			if (null == reviewer) return false;
 
 			if (((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
-				if (!(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)) || (reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR))) {
+				if (!(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)) && !(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR)) && 
+						!(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER))) {
 					return false;
 				}
 			} else if (!((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {

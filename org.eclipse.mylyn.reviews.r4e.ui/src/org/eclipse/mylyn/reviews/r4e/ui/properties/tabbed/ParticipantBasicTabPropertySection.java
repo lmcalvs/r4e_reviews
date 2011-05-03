@@ -23,15 +23,21 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -54,7 +60,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	/**
 	 * Field fEmailText.
 	 */
-	private CLabel fEmailText = null;
+	protected Text fEmailText = null;
 	
 	/**
 	 * Field FNumItemsText.
@@ -113,14 +119,35 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	    idLabel.setToolTipText(R4EUIConstants.PARTICIPANT_ID_TOOLTIP);
 	    idLabel.setLayoutData(data);
 	    
-	    //Email (read-only)
-	    fEmailText = widgetFactory.createCLabel(mainForm, "");
+	    //Email
+	    fEmailText = widgetFactory.createText(mainForm, "", SWT.BORDER);
 	    data = new FormData();
 	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 	    data.top = new FormAttachment(fIdText, ITabbedPropertyConstants.VSPACE);
 	    fEmailText.setToolTipText(R4EUIConstants.PARTICIPANT_EMAIL_TOOLTIP);
 	    fEmailText.setLayoutData(data);
+	    fEmailText.addFocusListener(new FocusListener() {		
+			public void focusLost(FocusEvent e) {
+	    		if (!fRefreshInProgress) {
+	    			try {
+	    				final String currentUser = R4EUIModelController.getReviewer();
+						final R4EParticipant modelParticipant = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
+	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant, currentUser);
+	    				modelParticipant.setEmail(fEmailText.getText());
+	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	    			} catch (ResourceHandlingException e1) {
+	    				UIUtils.displayResourceErrorDialog(e1);
+	    			} catch (OutOfSyncException e1) {
+	    				UIUtils.displaySyncErrorDialog(e1);
+	    			}
+	    		}
+			}
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
+				//Nothing to do
+			}
+		});
+	    UIUtils.addTabbedPropertiesTextResizeListener(fEmailText);
 	    
 	    final CLabel emailLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.EMAIL_LABEL);
 	    data = new FormData();
