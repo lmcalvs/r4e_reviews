@@ -386,12 +386,12 @@ public class ReviewGroupInputDialog extends FormDialog {
         
         //Group Folder
         label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE);
-        label.setToolTipText(R4EUIConstants.REVIEW_GROUP_FOLDER_TOOLTIP);
+        label.setToolTipText(R4EUIConstants.REVIEW_GROUP_FILE_PATH_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fGroupFolderInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
         final GridData folderTextData = new GridData(GridData.FILL, GridData.BEGINNING, true, false);
         folderTextData.horizontalSpan = 2;
-        fGroupFolderInputTextField.setToolTipText(R4EUIConstants.REVIEW_GROUP_FOLDER_TOOLTIP);
+        fGroupFolderInputTextField.setToolTipText(R4EUIConstants.REVIEW_GROUP_FILE_PATH_TOOLTIP);
         fGroupFolderInputTextField.setLayoutData(folderTextData);
         final Button folderButton = toolkit.createButton(basicSectionClient, "", SWT.NONE);
         folderButton.setImage(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER).createImage()); // $codepro.audit.disable methodChainLength

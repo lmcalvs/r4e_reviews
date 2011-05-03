@@ -289,12 +289,12 @@ public class RuleSetInputDialog extends FormDialog {
         
         //Rule Set Folder
         label = toolkit.createLabel(basicSectionClient, ADD_RULE_SET_FOLDER_DIALOG_VALUE);
-        label.setToolTipText(R4EUIConstants.RULESET_FOLDER_TOOLTIP);
+        label.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
         label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
         fFolderInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
         final GridData folderTextData = new GridData(GridData.FILL, GridData.BEGINNING, true, false);
         folderTextData.horizontalSpan = 2;
-        fFolderInputTextField.setToolTipText(R4EUIConstants.RULESET_FOLDER_TOOLTIP);
+        fFolderInputTextField.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
         fFolderInputTextField.setLayoutData(folderTextData);
         final Button folderButton = toolkit.createButton(basicSectionClient, "", SWT.NONE);
         folderButton.setImage(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER).createImage()); // $codepro.audit.disable methodChainLength

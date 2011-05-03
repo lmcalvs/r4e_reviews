@@ -383,6 +383,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		
 		//Meeting Subject
 	    final CLabel meetingSubjectLabel = widgetFactory.createCLabel(meetingComposite, R4EUIConstants.SUBJECT_LABEL);
+	    meetingSubjectLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_SUBJECT_TOOLTIP);
 	    meetingSubjectLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 	    fMeetingSubjectLabel = widgetFactory.createCLabel(meetingComposite, "");
 	    textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);

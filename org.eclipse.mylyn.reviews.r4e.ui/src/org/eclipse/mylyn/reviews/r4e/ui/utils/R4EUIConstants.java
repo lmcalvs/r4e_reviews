@@ -1408,105 +1408,217 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	
 	//Tooltips for dialogs and property views
 	
-	public static final String ANOMALY_TITLE_TOOLTIP = "";
-	public static final String ANOMALY_DESCRIPTION_TOOLTIP = "";
-	public static final String ANOMALY_AUTHOR_TOOLTIP = "";
-	public static final String ANOMALY_CREATION_DATE_TOOLTIP = "";
-	public static final String ANOMALY_POSITION_TOOLTIP = "";
-	public static final String ANOMALY_STATE_TOOLTIP = "";
-	public static final String ANOMALY_CLASS_TOOLTIP = "";
-	public static final String ANOMALY_RANK_TOOLTIP = "";
-	public static final String ANOMALY_RULE_ID_TOOLTIP = "";
-	public static final String ANOMALY_DUE_DATE_TOOLTIP = "";
-	public static final String ANOMALY_DECIDED_BY_TOOLTIP = "";
-	public static final String ANOMALY_FIXED_BY_TOOLTIP = "";
-	public static final String ANOMALY_FOLLOWUP_BY_TOOLTIP = "";
-	public static final String ANOMALY_NOT_ACCEPTED_REASON_TOOLTIP = "";
+	public static final String ANOMALY_TITLE_TOOLTIP = 
+		"A Title that Identifies this Anomaly";
+	public static final String ANOMALY_DESCRIPTION_TOOLTIP = 
+		"A Detailed Description of the Anomaly";
+	public static final String ANOMALY_AUTHOR_TOOLTIP = 
+		"The Id of the Participant that created this Anomaly";
+	public static final String ANOMALY_CREATION_DATE_TOOLTIP = 
+		"The Creation Date for this Anomaly";
+	public static final String ANOMALY_POSITION_TOOLTIP = 
+		"The Position in the Parent File of the Contents for this Anomaly";
+	public static final String ANOMALY_STATE_TOOLTIP = 
+		"The Current State of the Anomaly";
+	public static final String ANOMALY_CLASS_TOOLTIP = 
+		"The Class of this Anomaly";
+	public static final String ANOMALY_RANK_TOOLTIP = 
+		"The Rank (or Severity) of this Anomaly";
+	public static final String ANOMALY_RULE_ID_TOOLTIP = 
+		"An Identifier for the Design Rule Violation reported by this Anomaly";
+	public static final String ANOMALY_DUE_DATE_TOOLTIP = 
+		"The Target Date to Address this Anomaly";
+	public static final String ANOMALY_DECIDED_BY_TOOLTIP = 
+		"The Participant that Analyzed this reported Anomaly";
+	public static final String ANOMALY_FIXED_BY_TOOLTIP = 
+		"The Participant that Fixed the Issue Reported in this Anomaly";
+	public static final String ANOMALY_FOLLOWUP_BY_TOOLTIP = 
+		"The Participant that Verified the Fix for the Issue Reported in this Anomaly";
+	public static final String ANOMALY_NOT_ACCEPTED_REASON_TOOLTIP = 
+		"The Reason why this Anomaly is Rejected";
 
-	public static final String COMMENT_DESCRIPTION_TOOLTIP = "";
-	public static final String COMMENT_AUTHOR_TOOLTIP = "";
-	public static final String COMMENT_CREATION_DATE_TOOLTIP = "";
+	public static final String COMMENT_DESCRIPTION_TOOLTIP = 
+		"The Comment Description";
+	public static final String COMMENT_AUTHOR_TOOLTIP = 
+		"The Participant that Adds this Comment";
+	public static final String COMMENT_CREATION_DATE_TOOLTIP = 
+		"The Creation Time of this Comment";
 	
-	public static final String FILECONTEXT_BASE_FILE_NAME_TOOLTIP = "";
-	public static final String FILECONTEXT_BASE_FILE_PATH_TOOLTIP = "";
-	public static final String FILECONTEXT_BASE_FILE_VERSION_TOOLTIP = "";
-	public static final String FILECONTEXT_TARGET_FILE_NAME_TOOLTIP = "";
-	public static final String FILECONTEXT_TARGET_FILE_PATH_TOOLTIP = "";
-	public static final String FILECONTEXT_TARGET_FILE_VERSION_TOOLTIP = "";
+	public static final String FILECONTEXT_BASE_FILE_NAME_TOOLTIP = 
+		"The base (or Reference File) Name for the File to Review";
+	public static final String FILECONTEXT_BASE_FILE_PATH_TOOLTIP = 
+		"The base (or Reference File) Path for the File to Review";
+	public static final String FILECONTEXT_BASE_FILE_VERSION_TOOLTIP = 
+		"The base (or Reference File) Version for the File to Review";
+	public static final String FILECONTEXT_TARGET_FILE_NAME_TOOLTIP = 
+		"The target (or current File) Name for the File to Review";
+	public static final String FILECONTEXT_TARGET_FILE_PATH_TOOLTIP = 
+		"The target (or current File) Path for the File to Review";
+	public static final String FILECONTEXT_TARGET_FILE_VERSION_TOOLTIP =
+		"The target (or current File) Version for the File to Review";
 	
-	public static final String PARTICIPANT_ID_TOOLTIP = "";
-	public static final String PARTICIPANT_FIND_USER_TOOLTIP = "";
-	public static final String PARTICIPANT_EMAIL_TOOLTIP = "";
-	public static final String PARTICIPANT_DETAILS_TOOLTIP = "";
-	public static final String PARTICIPANT_ROLES_TOOLTIP = "";
-	public static final String PARTICIPANT_FOCUS_AREA_TOOLTIP = "";
-	public static final String PARTICIPANT_NUM_ITEMS_TOOLTIP = "";
-	public static final String PARTICIPANT_NUM_ANOMALIES_TOOLTIP = "";
-	public static final String PARTICIPANT_NUM_COMMENTS_TOOLTIP = "";
-	public static final String PARTICIPANT_TIME_SPENT_TOOLTIP = "";
+	public static final String PARTICIPANT_ID_TOOLTIP =
+		"A Tag that Identifies this Participant";
+	public static final String PARTICIPANT_FIND_USER_TOOLTIP =
+		"Search for Users...";
+	public static final String PARTICIPANT_EMAIL_TOOLTIP = 
+		"The Email Address for the Participant";
+	public static final String PARTICIPANT_DETAILS_TOOLTIP = 
+		"Extra Information about this Participant";
+	public static final String PARTICIPANT_ROLES_TOOLTIP = 
+		"The Roles this Participant holds for the Current Review.  " +
+		"Roles are used to Manage the Actions the Participant can do";
+	public static final String PARTICIPANT_FOCUS_AREA_TOOLTIP = 
+		"The Focus Area for this Participant.  " +
+		"A Focus Area is Defined by Specific Aspects of the Review this Participant should Focus his Attention to";
+	public static final String PARTICIPANT_NUM_ITEMS_TOOLTIP = 
+		"Number of Review Items added by this Participant";
+	public static final String PARTICIPANT_NUM_ANOMALIES_TOOLTIP = 
+		"Number of Anomlaies added by this Participant";
+	public static final String PARTICIPANT_NUM_COMMENTS_TOOLTIP = 
+		"Number of Comments (other than Anomalies) added by this Participant";
+	public static final String PARTICIPANT_TIME_SPENT_TOOLTIP = 
+		"The time the Participant spent working on this Review";
 
-	public static final String REVIEW_GROUP_NAME_TOOLTIP = "";
-	public static final String REVIEW_GROUP_FOLDER_TOOLTIP = "";
-	public static final String REVIEW_GROUP_DESCRIPTION_TOOLTIP = "";
-	public static final String REVIEW_GROUP_PROJECTS_TOOLTIP = "";
-	public static final String REVIEW_GROUP_COMPONENTS_TOOLTIP = "";
-	public static final String REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP = "";
-	public static final String REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP = "";
+	public static final String REVIEW_GROUP_NAME_TOOLTIP = 
+		"The Name that Identifies the Review Group";
+	public static final String REVIEW_GROUP_FOLDER_TOOLTIP = 
+		"Browse Folders...";
+	public static final String REVIEW_GROUP_FILE_PATH_TOOLTIP =
+		"The Location (Folder) where the Review Group Information is Stored.  " +
+		"Review Group Information is stored in files that have a _group_root.xrer suffix";
+	public static final String REVIEW_GROUP_DESCRIPTION_TOOLTIP = 
+		"A Brief Description of ths REview Group";
+	public static final String REVIEW_GROUP_PROJECTS_TOOLTIP = 
+		"The Projects that are available for Review in this Review Group.  " +
+		"Take Note that these Project can have Arbitrary Names, not only Eclipse Project Names";
+	public static final String REVIEW_GROUP_COMPONENTS_TOOLTIP = 
+		"The Components (Subsystems, Sub-Projects etc.) that are available for Review in this Review Group.  " +
+		"These can have Arbitrary Names";
+	public static final String REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP = 
+		"The Entry Criteria that will be used for all Reviews created under this Review Group";
+	public static final String REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP = 
+		"The Location of the RuleSet definition Files that can be used for Reviews created under this Review Group";
 	
-	public static final String REVIEW_TYPE_TOOLTIP = "";
-	public static final String REVIEW_NAME_TOOLTIP = "";
-	public static final String REVIEW_DESCRIPTION_TOOLTIP = "";
-	public static final String REVIEW_PROJECT_TOOLTIP = "";
-	public static final String REVIEW_COMPONENTS_TOOLTIP = "";
-	public static final String REVIEW_ENTRY_CRITERIA_TOOLTIP = "";
-	public static final String REVIEW_OBJECTIVES_TOOLTIP = "";
-	public static final String REVIEW_REFERENCE_MATERIAL_TOOLTIP = "";
-	public static final String REVIEW_PHASE_TOOLTIP = "";
-	public static final String REVIEW_START_DATE_TOOLTIP = "";
-	public static final String REVIEW_END_DATE_TOOLTIP = "";
-	public static final String REVIEW_PHASE_TABLE_TOOLTIP = "";
-	public static final String REVIEW_PHASE_OWNER_TOOLTIP = "";
-	public static final String REVIEW_MEETING_TOOLTIP = "";
-	public static final String REVIEW_MEETING_SUBJECT_TOOLTIP = "";
-	public static final String REVIEW_MEETING_UPDATE_TOOLTIP = "";
-	public static final String REVIEW_MEETING_TIME_TOOLTIP = "";
-	public static final String REVIEW_MEETING_DURATION_TOOLTIP = "";
-	public static final String REVIEW_MEETING_LOCATION_TOOLTIP = "";
-	public static final String REVIEW_EXIT_DECISION_TOOLTIP = "";
-	public static final String REVIEW_EXIT_DECISION_PARTICIPANTS_TOOLTIP = "";
-	public static final String REVIEW_EXIT_DECISION_TIME_SPENT_TOOLTIP = "";
+	public static final String REVIEW_TYPE_TOOLTIP = 
+		"The type of the Review:  " +
+		"Basic Reviews are the Simplest and most Flexible ones.  " +
+		"Informal Reviews introduces State Tracking for Anomalies.  " +
+		"Formal Reviews are Structured Reviews that Conforms to the IEEE standard 1028";
+	public static final String REVIEW_NAME_TOOLTIP = 
+		"A Name that Identifies this Review";
+	public static final String REVIEW_DESCRIPTION_TOOLTIP = 
+		"A Description of the Review";
+	public static final String REVIEW_PROJECT_TOOLTIP = 
+		"The Project the Reviewed Code belongs to";
+	public static final String REVIEW_COMPONENTS_TOOLTIP = 
+		"The Components for the Elements being Reviewed";
+	public static final String REVIEW_ENTRY_CRITERIA_TOOLTIP = 
+		"The Entry Criteria for this Review.  " +
+		"This is automatically set to the Parent Review Group Default Value";
+	public static final String REVIEW_OBJECTIVES_TOOLTIP = 
+		"The Objectives of this Review";
+	public static final String REVIEW_REFERENCE_MATERIAL_TOOLTIP = 
+		"The Reference Materials to be used for This Review";
+	public static final String REVIEW_PHASE_TOOLTIP = 
+		"The Current Review Phase.  " +
+		"Review Phases are used mainly for Formal Reviews";
+	public static final String REVIEW_START_DATE_TOOLTIP = 
+		"The Start Date for this Review";
+	public static final String REVIEW_END_DATE_TOOLTIP = 
+		"The Closing Date for this Review";
+	public static final String REVIEW_PHASE_TABLE_TOOLTIP = 
+		"The Review Phase Map that show the Review Progression";
+	public static final String REVIEW_PHASE_OWNER_TOOLTIP = 
+		"The Owner of the Review Phase.  " +
+		"Only the Owner can Change the Current Review Phase";
+	public static final String REVIEW_MEETING_TOOLTIP = 
+		"The Review Decision Meeting Details, as sent in the Meeting Request Email";
+	public static final String REVIEW_MEETING_SUBJECT_TOOLTIP = 
+		"The Review Decision Meeting Subject, as sent in the Meeting Request Email";
+	public static final String REVIEW_MEETING_UPDATE_TOOLTIP = 
+		"Update Meeting Details and re-send the New Meeting Request Email";
+	public static final String REVIEW_MEETING_TIME_TOOLTIP = 
+		"The Review Decision Meeting Time, as sent in the Meeting Request Email";
+	public static final String REVIEW_MEETING_DURATION_TOOLTIP = 
+		"The Review Decision Meeting Duration, as sent in the Meeting Request Email";
+	public static final String REVIEW_MEETING_LOCATION_TOOLTIP = 
+		"The Review Decision Meeting Location, as sent in the Meeting Request Email";
+	public static final String REVIEW_EXIT_DECISION_TOOLTIP = 
+		"The Exit Decision for this Review";
+	public static final String REVIEW_EXIT_DECISION_PARTICIPANTS_TOOLTIP = 
+		"The Participants that were part of the Exit Decision";
+	public static final String REVIEW_EXIT_DECISION_TIME_SPENT_TOOLTIP = 
+		"The Time Spent for the Review Exit Decision";
 
-	public static final String REVIEW_ITEM_AUTHOR_TOOLTIP = "";
-	public static final String REVIEW_ITEM_PROJECT_IDS_TOOLTIP = "";
-	public static final String REVIEW_ITEM_DESCRIPTION_TOOLTIP = "";
+	public static final String REVIEW_ITEM_AUTHOR_TOOLTIP = 
+		"The Participant that Adds this Review Item";
+	public static final String REVIEW_ITEM_PROJECT_IDS_TOOLTIP = 
+		"The Projects the Children Files of this Review Items belong to";
+	public static final String REVIEW_ITEM_DESCRIPTION_TOOLTIP = 
+		"A Brief Dexcription of this Review Item.  " +
+		"This can be entered by the User or it could be coming from the Version Control System";
 	
-	public static final String RULE_AREA_NAME_TOOLTIP = "";
-	public static final String RULE_ID_TOOLTIP = "";
-	public static final String RULE_TITLE_TOOLTIP = "";
-	public static final String RULE_DESCRIPTION_TOOLTIP = "";
-	public static final String RULE_CLASS_TOOLTIP = "";
-	public static final String RULE_RANK_TOOLTIP = "";
-	public static final String RULESET_VERSION_TOOLTIP = "";
-	public static final String RULESET_NAME_TOOLTIP = "";
-	public static final String RULESET_FOLDER_TOOLTIP = "";
-	public static final String RULESET_FILE_PATH_TOOLTIP = "";
-	public static final String RULE_VIOLATION_NAME_TOOLTIP = "";
+	public static final String RULE_AREA_NAME_TOOLTIP = 
+		"The Area covered by the Children Design Rules (e.g. Java, C++ or any arbitrary division)";
 	
-	public static final String SELECTION_POSITION_TOOLTIP = "";
+	public static final String RULE_ID_TOOLTIP = 
+		"An Tag that Identifies this Design Rule";
+	public static final String RULE_TITLE_TOOLTIP = 
+		"The Design Rule Title";
+	public static final String RULE_DESCRIPTION_TOOLTIP = 
+		"A Description of the Design Rule";
+	public static final String RULE_CLASS_TOOLTIP = 
+		"The Class for this Design Rule.  " +
+		"It will be automatically set in Anomalies that refers to this Rule";
+	public static final String RULE_RANK_TOOLTIP =
+		"The Rank (or Severity) for this Design Rule.  " +
+		"It will be automatically set in Anomalies that refers to this Rule";
+	
+	public static final String RULESET_VERSION_TOOLTIP = 
+		"The Version for this Rule Set";
+	public static final String RULESET_NAME_TOOLTIP = 
+		"A Name that Identifies this Rule Set." +
+		"A Rule Set is a Collection of Related Design Rules bundled together";
+	public static final String RULESET_FOLDER_TOOLTIP = 
+		"Browse Folders...";
+	public static final String RULESET_FILE_PATH_TOOLTIP =
+		"The Location (Folder) where the Rule Set Information is Stored.  " +
+		"Rule Set Information is stored in files that have a _rule_set.xrer suffix";
+	
+	public static final String RULE_VIOLATION_NAME_TOOLTIP = 
+		"The Violation Highlighted by the Children Design Rules";
+	
+	public static final String SELECTION_POSITION_TOOLTIP = 
+		"The Position in the Parent File of the Selected Contents";
 
-	public static final String USER_ID_TOOLTIP = "";
-	public static final String USER_NAME_TOOLTIP = "";
-	public static final String USER_OFFICE_TOOLTIP = "";
-	public static final String USER_COMPANY_TOOLTIP = "";
-	public static final String USER_DEPARTMENT_TOOLTIP = "";
-	public static final String USER_CITY_TOOLTIP = "";
-	public static final String USER_COUNTRY_TOOLTIP = "";
-	public static final String USER_SEARCH_TOOLTIP = "";
-	public static final String USER_CLEAR_TOOLTIP = "";
-	public static final String USER_NUM_ENTRIES_TOOLTIP = "";
+	public static final String USER_ID_TOOLTIP = 
+		"A Tag that Identifies this User";
+	public static final String USER_NAME_TOOLTIP = 
+		"The Actual Name of this User";
+	public static final String USER_OFFICE_TOOLTIP = 
+		"The location of this User";
+	public static final String USER_COMPANY_TOOLTIP = 
+		"The Organization this User is Part of";
+	public static final String USER_DEPARTMENT_TOOLTIP = 
+		"The Department this User is Part of";
+	public static final String USER_CITY_TOOLTIP = 
+		"The City where the User's Organization is located";
+	public static final String USER_COUNTRY_TOOLTIP = 
+		"The Country where the User's Organization is located";
+	public static final String USER_SEARCH_TOOLTIP = 
+		"Search for Users matching the Criteria(s)";
+	public static final String USER_CLEAR_TOOLTIP = 
+		"Clear Serach Results";
+	public static final String USER_NUM_ENTRIES_TOOLTIP = 
+		"Number of Matches Found";
 	
-	public static final String NOTIFICATION_COMPLETION_TOOLTIP = "";
-	public static final String NOTIFICATION_ITEMS_UPDATED_TOOLTIP = "";
-	public static final String NOTIFICATION_PROGRESS_TOOLTIP = "";
-	public static final String NOTIFICATION_QUESTION_TOOLTIP = "";
+	public static final String NOTIFICATION_COMPLETION_TOOLTIP = 
+		"Send an Automatic Email to Report that we are done reviewing the Utems for the Current Review";
+	public static final String NOTIFICATION_ITEMS_UPDATED_TOOLTIP = 
+		"Send an Automatic Email to Report Modifications to the Items to Review for the Current Review";
+	public static final String NOTIFICATION_PROGRESS_TOOLTIP = 
+		"Send an Automatic Email to Report about our Progress Reviewing the Items for the Current Review";
+	public static final String NOTIFICATION_QUESTION_TOOLTIP =
+		"Send an Automatic Email to ask a Question about the Selected Element or Text";
 }

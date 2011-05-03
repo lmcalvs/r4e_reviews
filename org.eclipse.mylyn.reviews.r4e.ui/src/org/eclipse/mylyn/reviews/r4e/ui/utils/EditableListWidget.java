@@ -18,8 +18,10 @@ package org.eclipse.mylyn.reviews.r4e.ui.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.swt.SWT;
@@ -274,7 +276,18 @@ public class EditableListWidget {
 					});
 				} else if (aEditableWidgetClass.equals(CCombo.class)) {
 					editableControl = new CCombo(fMainTable, SWT.BORDER | SWT.READ_ONLY);
-					((CCombo)editableControl).setItems(fValues);
+					//Only add the values not already in the table in the CCombo box
+					List<String> currentValues = new ArrayList<String>();
+					for (String currentValue : fValues) {
+						currentValues.add(currentValue);
+					}
+					TableItem[] currentItems = fMainTable.getItems();
+					for (TableItem currentItem : currentItems) {
+						if (currentValues.contains(currentItem.getText())) {
+							currentValues.remove(currentItem.getText());
+						}
+					}
+					((CCombo)editableControl).setItems(currentValues.toArray(new String[currentValues.size()]));
 					((CCombo)editableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
 							newItem.setText(((CCombo)editableControl).getText());
