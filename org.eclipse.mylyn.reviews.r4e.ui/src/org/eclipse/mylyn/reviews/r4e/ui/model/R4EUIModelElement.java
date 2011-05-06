@@ -49,12 +49,12 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Field fReviewedOverlayFile.
+	 * Field REVIEWED_OVERLAY_ICON_FILE.
 	 */
 	private static final String REVIEWED_OVERLAY_ICON_FILE = "icons/ovr16/revovr_tsk.gif";
 
 	/**
-	 * Field fReviewedOverlayFile.
+	 * Field DISABLED_OVERLAY_ICON_FILE.
 	 */
 	private static final String DISABLED_OVERLAY_ICON_FILE = "icons/ovr16/dsbldovr_tsk.gif";
 	

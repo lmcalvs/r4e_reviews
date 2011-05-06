@@ -24,8 +24,10 @@ import org.eclipse.jface.viewers.IFontDecorator;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.OverlayImageIcon;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
@@ -82,16 +84,42 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * @return Image
 	 * @see org.eclipse.jface.viewers.ILabelDecorator#decorateImage(Image, Object)
 	 */
-	public Image decorateImage(Image aBaseImage, Object element) { // $codepro.audit.disable
-			 
-		if (!((IR4EUIModelElement)element).isEnabled()) {
-			final OverlayImageIcon overlayIcon = new OverlayImageIcon(aBaseImage, ((IR4EUIModelElement)element).getDisabledImage() , OverlayImageIcon.BOTTOM_RIGHT); 
-			return overlayIcon.getImage();	
-		} else if (((IR4EUIModelElement)element).isReviewed()) {
-			final OverlayImageIcon overlayIcon = new OverlayImageIcon(aBaseImage, ((IR4EUIModelElement)element).getReviewedImage() , OverlayImageIcon.BOTTOM_RIGHT); 
-			return overlayIcon.getImage();	
+	public Image decorateImage(Image aBaseImage, Object aElement) { // $codepro.audit.disable
+		
+		OverlayImageIcon overlayIcon = null;
+		//Disabled element decorator
+		if (!((IR4EUIModelElement)aElement).isEnabled()) {
+			overlayIcon = new OverlayImageIcon(aBaseImage, ((IR4EUIModelElement)aElement).getDisabledImage() , OverlayImageIcon.BOTTOM_RIGHT); 
+			return overlayIcon.getImage();  //No need to check for other decorators
 		}
-		return null;
+		
+		//Completed element decoraor
+		if (((IR4EUIModelElement)aElement).isReviewed()) {
+			overlayIcon = new OverlayImageIcon(aBaseImage, ((IR4EUIModelElement)aElement).getReviewedImage() , OverlayImageIcon.BOTTOM_RIGHT); 
+			//return overlayIcon.getImage();	
+		}
+		
+		//Added, Removed or Modified file
+		if (aElement instanceof R4EUIFileContext) {
+			if (null == ((R4EUIFileContext)aElement).getBaseFileVersion() && 
+					null != ((R4EUIFileContext)aElement).getTargetFileVersion()) {
+				//Only target present, file was added
+				if (null == overlayIcon) {
+					overlayIcon = new OverlayImageIcon(aBaseImage, ((R4EUIFileContext)aElement).getAddedImage() , OverlayImageIcon.BOTTOM_LEFT); 
+				} else {
+					overlayIcon = new OverlayImageIcon(overlayIcon.getImage(), ((R4EUIFileContext)aElement).getAddedImage() , OverlayImageIcon.BOTTOM_LEFT); 
+				}
+			} else if (null != ((R4EUIFileContext)aElement).getBaseFileVersion() && 
+						null == ((R4EUIFileContext)aElement).getTargetFileVersion()) {
+				//Only base present, file was removed
+				if (null == overlayIcon) {
+					overlayIcon = new OverlayImageIcon(aBaseImage, ((R4EUIFileContext)aElement).getRemovedImage() , OverlayImageIcon.BOTTOM_LEFT); 
+				} else {
+					overlayIcon = new OverlayImageIcon(overlayIcon.getImage(), ((R4EUIFileContext)aElement).getRemovedImage() , OverlayImageIcon.BOTTOM_LEFT); 
+				}
+			}  //else modified file
+		}
+		return (Image) ((null == overlayIcon) ? overlayIcon : overlayIcon.getImage());
 	}
 
 	/**
@@ -102,8 +130,11 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * @see org.eclipse.jface.viewers.ILabelDecorator#decorateText(String, Object)
 	 */
 	public String decorateText(String aText, Object aElement) {
-		if (isMyReview((IR4EUIModelElement)aElement) && aElement instanceof R4EUIReviewBasic) {
-			return "> " + aText;
+		if (aElement instanceof R4EUIFileContext) {
+			if (!CommandUtils.useWorkspaceResource(((R4EUIFileContext)aElement).getTargetFileVersion())) {
+				//File is not in sync with file present in workspace
+				return "> " + aText;
+			}
 		}
 		return null;
 	}
