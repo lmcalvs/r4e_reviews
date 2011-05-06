@@ -38,6 +38,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.properties.general.FileContextProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -57,6 +59,16 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * (value is ""icons/obj16/filectx_obj.gif"")
 	 */
 	private static final String FILE_CONTEXT_ICON_FILE = "icons/obj16/filectx_obj.gif";
+	
+	/**
+	 * Field REMOVED_OVERLAY_ICON_FILE.
+	 */
+	private static final String REMOVED_OVERLAY_ICON_FILE = "icons/ovr16/removr_tsk.png";
+	
+	/**
+	 * Field ADDED_OVERLAY_ICON_FILE.
+	 */
+	private static final String ADDED_OVERLAY_ICON_FILE = "icons/ovr16/addovr_tsk.png";
 	
 	
 	// ------------------------------------------------------------------------
@@ -147,6 +159,22 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	public R4EFileVersion getTargetFileVersion() {
 		return fFile.getTarget();
+	}
+	
+	/**
+	 * Method getRemovedImage.
+	 * @return Image
+	 */
+	public Image getRemovedImage() {
+		return UIUtils.loadIcon(REMOVED_OVERLAY_ICON_FILE);
+	}
+	
+	/**
+	 * Method getAddedImage.
+	 * @return Image
+	 */
+	public Image getAddedImage() {
+		return UIUtils.loadIcon(ADDED_OVERLAY_ICON_FILE);
 	}
 	
 	/**
