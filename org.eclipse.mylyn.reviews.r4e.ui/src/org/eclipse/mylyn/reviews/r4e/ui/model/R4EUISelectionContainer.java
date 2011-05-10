@@ -43,38 +43,37 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * Field SELECTION_CONTAINER_ICON_FILE.
-	 * (value is ""icons/obj16/selcont_obj.gif"")
+	 * Field SELECTION_CONTAINER_ICON_FILE. (value is ""icons/obj16/selcont_obj.gif"")
 	 */
 	private static final String SELECTION_CONTAINER_ICON_FILE = "icons/obj16/selcont_obj.gif";
-    
+
 	/**
-	 * Field DELTA_CONTAINER_ICON_FILE.
-	 * (value is ""icons/obj16/selcont_obj.gif"")
+	 * Field DELTA_CONTAINER_ICON_FILE. (value is ""icons/obj16/selcont_obj.gif"")
 	 */
 	private static final String DELTA_CONTAINER_ICON_FILE = "icons/obj16/deltacont_obj.gif";
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-    
+
 	/**
 	 * Field fSelections.
 	 */
 	private final List<R4EUISelection> fSelections;
 
-	
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for SelectionContainerElement.
-	 * @param aParent IR4EUIModelElement
-	 * @param aName String
+	 * 
+	 * @param aParent
+	 *            IR4EUIModelElement
+	 * @param aName
+	 *            String
 	 */
 	public R4EUISelectionContainer(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName, null);
@@ -86,15 +85,15 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 		}
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	//Hierarchy
-	
+
 	/**
 	 * Method getChildren.
+	 * 
 	 * @return IR4EUIModelElement[]
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getChildren()
 	 */
@@ -102,28 +101,32 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 	public IR4EUIModelElement[] getChildren() {
 		return fSelections.toArray(new R4EUISelection[fSelections.size()]);
 	}
-	
+
 	/**
 	 * Method getSelectionList.
+	 * 
 	 * @return List<SelectionElement>
 	 */
 	public List<R4EUISelection> getSelectionList() {
 		return fSelections;
 	}
-	
+
 	/**
 	 * Method hasChildren.
-	 * @return boolean 
+	 * 
+	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#hasChildren()
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (fSelections.size() > 0) return true;
-	    return false;
+		if (fSelections.size() > 0)
+			return true;
+		return false;
 	}
-	
+
 	/**
 	 * Close the model element (i.e. disable it)
+	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#close()
 	 */
 	@Override
@@ -132,7 +135,7 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 		R4EUISelection selection = null;
 		final int selectionsSize = fSelections.size();
 		for (int i = 0; i < selectionsSize; i++) {
-			
+
 			selection = fSelections.get(i);
 			selection.close();
 			//fireRemove(selection);
@@ -141,13 +144,13 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 		fOpen = false;
 		removeListeners();
 	}
-	
+
 	/**
 	 * Method open.
 	 */
 	@Override
 	public void open() {
-		final EList<R4EDelta> deltas = ((R4EUIFileContext)getParent()).getFileContext().getDeltas();
+		final EList<R4EDelta> deltas = ((R4EUIFileContext) getParent()).getFileContext().getDeltas();
 		if (null != deltas) {
 			R4EUITextPosition position = null;
 			R4EUISelection newSelection = null;
@@ -155,14 +158,14 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 			R4EDelta delta = null;
 			for (int i = 0; i < deltasSize; i++) {
 				delta = deltas.get(i);
-				if (delta.isEnabled() || Activator.getDefault().getPreferenceStore().
-						getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+				if (delta.isEnabled()
+						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					position = new R4EUITextPosition(deltas.get(i).getTarget().getLocation());
 					newSelection = new R4EUISelection(this, deltas.get(i), position);
 					addChildren(newSelection);
 				}
 			}
-			
+
 			try {
 				final R4EUIReviewBasic review = (R4EUIReviewBasic) getParent().getParent().getParent();
 				final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
@@ -173,7 +176,7 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 						if (user.getReviewedContent().contains(uiSelection.getSelection().getId())) {
 							uiSelection.setReviewed(true);
 						}
-					}			
+					}
 				}
 			} catch (ResourceHandlingException e) {
 				UIUtils.displayResourceErrorDialog(e);
@@ -185,9 +188,10 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 		}
 		fOpen = true;
 	}
-	
+
 	/**
 	 * Method isEnabled.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
 	 */
@@ -195,36 +199,43 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 	public boolean isEnabled() {
 		if (getParent().isEnabled()) {
 			for (R4EUISelection selection : fSelections) {
-				if (selection.isEnabled()) return true;
+				if (selection.isEnabled())
+					return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Method addChildren.
-	 * @param aChildToAdd IR4EUIModelElement
+	 * 
+	 * @param aChildToAdd
+	 *            IR4EUIModelElement
 	 */
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		fSelections.add((R4EUISelection) aChildToAdd);
-		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView().getTreeViewer().getContentProvider());
+		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
+				.getTreeViewer()
+				.getContentProvider());
 		fireAdd(aChildToAdd);
 	}
 
 	/**
 	 * Method createSelection
-	 * @param aUiPosition - the position of the anomaly to create
+	 * 
+	 * @param aUiPosition
+	 *            - the position of the anomaly to create
 	 * @return R4EUISelection
 	 * @throws ResourceHandlingException
-	 * @throws OutOfSyncException 
+	 * @throws OutOfSyncException
 	 */
-	public R4EUISelection createSelection(R4EUITextPosition aUiPosition) throws ResourceHandlingException, OutOfSyncException {
-		
+	public R4EUISelection createSelection(R4EUITextPosition aUiPosition) throws ResourceHandlingException,
+			OutOfSyncException {
+
 		//Create and set selection model element
-		final R4EDelta selection = R4EUIModelController.FModelExt.createR4EDelta(((R4EUIFileContext)getParent()).getFileContext());
-		final R4ETextPosition position = R4EUIModelController.FModelExt.createR4ETextPosition(
-				R4EUIModelController.FModelExt.createR4ETargetTextContent(selection));
+		final R4EDelta selection = R4EUIModelController.FModelExt.createR4EDelta(((R4EUIFileContext) getParent()).getFileContext());
+		final R4ETextPosition position = R4EUIModelController.FModelExt.createR4ETextPosition(R4EUIModelController.FModelExt.createR4ETargetTextContent(selection));
 		aUiPosition.setPositionInModel(position);
 
 		//Create and set UI model element
@@ -232,26 +243,31 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 		addChildren(uiSelection);
 		return uiSelection;
 	}
-	
+
 	/**
 	 * Method removeChildren.
-	 * @param aChildToRemove IR4EUIModelElement
-	 * @param aFileRemove - also remove from file (hard remove)
-	 * @throws OutOfSyncException 
-	 * @throws ResourceHandlingException 
+	 * 
+	 * @param aChildToRemove
+	 *            IR4EUIModelElement
+	 * @param aFileRemove
+	 *            - also remove from file (hard remove)
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
-	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
+			throws ResourceHandlingException, OutOfSyncException {
 		final R4EUISelection removedElement = fSelections.get(fSelections.indexOf(aChildToRemove));
 		/* TODO uncomment when core model supports hard-removing of elements
 		if (aFileRemove) removedElement.getSelection().remove());
 		else */
 		final R4EDelta modelSelection = removedElement.getSelection();
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelSelection, R4EUIModelController.getReviewer());
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelSelection,
+				R4EUIModelController.getReviewer());
 		modelSelection.setEnabled(false);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		
+
 		//Remove element from UI if the show disabled element option is off
 		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fSelections.remove(removedElement);
@@ -261,12 +277,14 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 		}
 	}
-	
+
 	/**
 	 * Method removeAllChildren.
-	 * @param aFileRemove boolean
-	 * @throws OutOfSyncException 
-	 * @throws ResourceHandlingException 
+	 * 
+	 * @param aFileRemove
+	 *            boolean
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override
@@ -276,12 +294,14 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 			removeChildren(selection, aFileRemove);
 		}
 	}
-	
+
 	//Listeners
 
 	/**
 	 * Method addListener.
-	 * @param aProvider ReviewNavigatorContentProvider
+	 * 
+	 * @param aProvider
+	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
 	 */
 	@Override
@@ -298,7 +318,9 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 
 	/**
 	 * Method removeListener.
-	 * @param aProvider ReviewNavigatorContentProvider
+	 * 
+	 * @param aProvider
+	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	@Override

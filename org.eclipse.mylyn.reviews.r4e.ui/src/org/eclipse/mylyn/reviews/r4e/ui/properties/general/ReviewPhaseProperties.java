@@ -32,7 +32,7 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public  class ReviewPhaseProperties extends ModelElementProperties {
+public class ReviewPhaseProperties extends ModelElementProperties {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -85,10 +85,9 @@ public  class ReviewPhaseProperties extends ModelElementProperties {
 	/**
 	 * Field DESCRIPTORS.
 	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = {
-		REVIEW_PHASE_PROPERTY_DESCRIPTOR, REVIEW_PHASE_OWNER_PROPERTY_DESCRIPTOR,
-		REVIEW_PHASE_START_DATE_PROPERTY_DESCRIPTOR, REVIEW_PHASE_END_DATE_PROPERTY_DESCRIPTOR};
-
+	private static final IPropertyDescriptor[] DESCRIPTORS = { REVIEW_PHASE_PROPERTY_DESCRIPTOR,
+			REVIEW_PHASE_OWNER_PROPERTY_DESCRIPTOR, REVIEW_PHASE_START_DATE_PROPERTY_DESCRIPTOR,
+			REVIEW_PHASE_END_DATE_PROPERTY_DESCRIPTOR };
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -96,12 +95,13 @@ public  class ReviewPhaseProperties extends ModelElementProperties {
 
 	/**
 	 * Constructor for ReviewPhaseProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public ReviewPhaseProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
-
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -109,6 +109,7 @@ public  class ReviewPhaseProperties extends ModelElementProperties {
 
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
@@ -120,7 +121,8 @@ public  class ReviewPhaseProperties extends ModelElementProperties {
 	/**
 	 * Method getPropertyValue.
 	 * 
-	 * @param aId Object
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
@@ -129,26 +131,25 @@ public  class ReviewPhaseProperties extends ModelElementProperties {
 		if (null != getElement()) {
 			if (REVIEW_PHASE_ID.equals(aId)) {
 				if (getElement() instanceof R4EUIReviewExtended) {
-					return ((R4EUIReviewBasic)getElement()).getPhaseString(
-							((R4EFormalReview)((R4EUIReviewExtended)getElement()).
-									getReview()).getCurrent().getType());
+					return ((R4EUIReviewBasic) getElement()).getPhaseString(((R4EFormalReview) ((R4EUIReviewExtended) getElement()).getReview()).getCurrent()
+							.getType());
 				}
-				return ((R4EUIReviewBasic)getElement()).getPhaseString(
-						((R4EReviewState)((R4EUIReviewBasic)getElement()).getReview().getState()).getState());	
+				return ((R4EUIReviewBasic) getElement()).getPhaseString(((R4EReviewState) ((R4EUIReviewBasic) getElement()).getReview()
+						.getState()).getState());
 			} else if (REVIEW_PHASE_OWNER_ID.equals(aId)) {
 				if (getElement() instanceof R4EUIReviewExtended) {
-					return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).
-							getReview()).getCurrent().getPhaseOwnerID();
+					return ((R4EFormalReview) ((R4EUIReviewExtended) getElement()).getReview()).getCurrent()
+							.getPhaseOwnerID();
 				}
 			} else if (REVIEW_PHASE_START_DATE_ID.equals(aId)) {
 				if (getElement() instanceof R4EUIReviewExtended) {
-					return ((R4EFormalReview)((R4EUIReviewExtended)getElement()).
-							getReview()).getCurrent().getStartDate();
+					return ((R4EFormalReview) ((R4EUIReviewExtended) getElement()).getReview()).getCurrent()
+							.getStartDate();
 				}
 			} else if (REVIEW_PHASE_END_DATE_ID.equals(aId)) {
 				if (getElement() instanceof R4EUIReviewExtended) {
-					final Date endDate = ((R4EFormalReview)((R4EUIReviewExtended)getElement()).
-							getReview()).getCurrent().getEndDate();
+					final Date endDate = ((R4EFormalReview) ((R4EUIReviewExtended) getElement()).getReview()).getCurrent()
+							.getEndDate();
 					if (null != endDate) {
 						return endDate;
 					}

@@ -35,7 +35,7 @@ public class FileVersionSourceProperties implements IPropertySource {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field FILE_VERSION_NAME_ID. (value is ""fileVersionElement.name"")
 	 */
@@ -46,7 +46,7 @@ public class FileVersionSourceProperties implements IPropertySource {
 	 */
 	private static final PropertyDescriptor FILE_VERSION_NAME_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			FILE_VERSION_NAME_ID, R4EUIConstants.NAME_LABEL);
-	
+
 	/**
 	 * Field FILE_VERSION_PATH_ID. (value is ""fileVersionElement.path"")
 	 */
@@ -57,7 +57,7 @@ public class FileVersionSourceProperties implements IPropertySource {
 	 */
 	private static final PropertyDescriptor FILE_VERSION_PATH_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			FILE_VERSION_PATH_ID, R4EUIConstants.PATH_LABEL);
-	
+
 	/**
 	 * Field FILE_VERSION_ID. (value is ""fileVersionElement.version"")
 	 */
@@ -66,45 +66,45 @@ public class FileVersionSourceProperties implements IPropertySource {
 	/**
 	 * Field FILE_VERSION_PROPERTY_DESCRIPTOR.
 	 */
-	private static final PropertyDescriptor FILE_VERSION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			FILE_VERSION_ID, R4EUIConstants.VERSION_LABEL);
-	
+	private static final PropertyDescriptor FILE_VERSION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(FILE_VERSION_ID,
+			R4EUIConstants.VERSION_LABEL);
+
 	/**
 	 * Field DESCRIPTORS.
 	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { FILE_VERSION_NAME_PROPERTY_DESCRIPTOR, 
-		FILE_VERSION_PATH_PROPERTY_DESCRIPTOR, FILE_VERSION_PROPERTY_DESCRIPTOR};
-	
-	
+	private static final IPropertyDescriptor[] DESCRIPTORS = { FILE_VERSION_NAME_PROPERTY_DESCRIPTOR,
+			FILE_VERSION_PATH_PROPERTY_DESCRIPTOR, FILE_VERSION_PROPERTY_DESCRIPTOR };
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fFileVersion.
 	 */
 	private final R4EFileVersion fFileVersion;
 
-	
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for R4EUIFileVersionSource.
-	 * @param aVersion R4EFileVersion
+	 * 
+	 * @param aVersion
+	 *            R4EFileVersion
 	 */
 	public FileVersionSourceProperties(R4EFileVersion aVersion) {
 		fFileVersion = aVersion;
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getEditableValue.
+	 * 
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getEditableValue()
 	 */
@@ -114,6 +114,7 @@ public class FileVersionSourceProperties implements IPropertySource {
 
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
@@ -123,28 +124,35 @@ public class FileVersionSourceProperties implements IPropertySource {
 
 	/**
 	 * Method getPropertyValue.
-	 * @param aId Object
+	 * 
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
 	public Object getPropertyValue(Object aId) {
 		if (FILE_VERSION_NAME_ID.equals(aId)) {
-			if (null != fFileVersion) return fFileVersion.getName();
-		}  else if (FILE_VERSION_PATH_ID.equals(aId)) {
-	    	//The properties shows the absolute path
+			if (null != fFileVersion)
+				return fFileVersion.getName();
+		} else if (FILE_VERSION_PATH_ID.equals(aId)) {
+			//The properties shows the absolute path
 			if (null != fFileVersion) {
 				final IResource resource = fFileVersion.getResource();
-				if (null != resource) return resource.getLocation().toOSString();
+				if (null != resource)
+					return resource.getLocation().toOSString();
 			}
 		} else if (FILE_VERSION_ID.equals(aId)) {
-			if (null != fFileVersion) return fFileVersion.getVersionID();
+			if (null != fFileVersion)
+				return fFileVersion.getVersionID();
 		}
 		return null;
 	}
 
 	/**
 	 * Method isPropertySet.
-	 * @param id Object
+	 * 
+	 * @param id
+	 *            Object
 	 * @return boolean
 	 * @see org.eclipse.ui.views.properties.IPropertySource#isPropertySet(Object)
 	 */
@@ -154,7 +162,9 @@ public class FileVersionSourceProperties implements IPropertySource {
 
 	/**
 	 * Method resetPropertyValue.
-	 * @param id Object
+	 * 
+	 * @param id
+	 *            Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#resetPropertyValue(Object)
 	 */
 	public void resetPropertyValue(Object id) { // $codepro.audit.disable emptyMethod
@@ -163,8 +173,11 @@ public class FileVersionSourceProperties implements IPropertySource {
 
 	/**
 	 * Method setPropertyValue.
-	 * @param id Object
-	 * @param value Object
+	 * 
+	 * @param id
+	 *            Object
+	 * @param value
+	 *            Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(Object, Object)
 	 */
 	public void setPropertyValue(Object id, Object value) { // $codepro.audit.disable emptyMethod

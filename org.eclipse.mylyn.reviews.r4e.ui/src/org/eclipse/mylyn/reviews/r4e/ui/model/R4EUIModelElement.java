@@ -47,7 +47,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field REVIEWED_OVERLAY_ICON_FILE.
 	 */
@@ -57,8 +57,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * Field DISABLED_OVERLAY_ICON_FILE.
 	 */
 	private static final String DISABLED_OVERLAY_ICON_FILE = "icons/ovr16/dsbldovr_tsk.gif";
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -82,7 +81,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * Field fDisabledImage.
 	 */
 	protected Image fDisabledImage;
-	
+
 	/**
 	 * Field fParent.
 	 */
@@ -103,7 +102,6 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	protected boolean fOpen = true;
 
-	
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -125,31 +123,34 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 		fOpen = true; // by default
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 
-	
 	/**
 	 * Method getAdapter.
-	 * @param adapter Class
+	 * 
+	 * @param adapter
+	 *            Class
 	 * @return Object
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
-	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter)) return this;
-		if (IPropertySource.class.equals(adapter)) return new ModelElementProperties(this);
+	public Object getAdapter(@SuppressWarnings("rawtypes")
+	Class adapter) {
+		if (IR4EUIModelElement.class.equals(adapter))
+			return this;
+		if (IPropertySource.class.equals(adapter))
+			return new ModelElementProperties(this);
 		return null;
 	}
-	
-	
+
 	// Attributes
 
 	/**
 	 * Method setName.
 	 * 
-	 * @param aName String
+	 * @param aName
+	 *            String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setName(String)
 	 */
 	public void setName(String aName) {
@@ -158,6 +159,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method getName.
+	 * 
 	 * @return String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getName()
 	 */
@@ -167,16 +169,19 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method getToolTip.
+	 * 
 	 * @return String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getToolTip()
 	 */
 	public String getToolTip() {
 		return fTooltip;
 	}
-	
+
 	/**
 	 * Method setToolTip.
-	 * @param aToolTip String
+	 * 
+	 * @param aToolTip
+	 *            String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setToolTip(String)
 	 */
 	public void setToolTip(String aToolTip) {
@@ -185,26 +190,31 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method getImage.
-	 * @return Image 
+	 * 
+	 * @return Image
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getImage()
 	 */
 	public Image getImage() {
-		if (isEnabled()) return fImage;
+		if (isEnabled())
+			return fImage;
 		return fDisabledImage;
 	}
-	
+
 	/**
 	 * Method setImage.
-	 * @param aLocation String
+	 * 
+	 * @param aLocation
+	 *            String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setImage(String)
 	 */
 	public final void setImage(String aLocation) {
 		fImage = UIUtils.loadIcon(aLocation);
 		fDisabledImage = new Image(null, fImage, SWT.IMAGE_DISABLE);
 	}
-	
+
 	/**
 	 * Method isReviewed.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isReviewed()
 	 */
@@ -214,15 +224,17 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method isEnabled.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
 	 */
 	public boolean isEnabled() {
-		return true;   //default implementation
+		return true; //default implementation
 	}
-	
+
 	/**
 	 * Close the model element (i.e. disable it)
+	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#close()
 	 */
 	public void close() {
@@ -232,9 +244,10 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Open the model element (i.e. enable it)
+	 * 
 	 * @throws ResourceHandlingException
-	 * @throws ReviewVersionsException 
-	 * @throws FileNotFoundException 
+	 * @throws ReviewVersionsException
+	 * @throws FileNotFoundException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#open()
 	 */
 	public void open() throws ResourceHandlingException, ReviewVersionsException, FileNotFoundException { // $codepro.audit.disable unnecessaryExceptions
@@ -243,6 +256,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Checks whether an element is open or close
+	 * 
 	 * @return true if open, false otherwise
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isOpen()
 	 */
@@ -252,6 +266,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method getReviewedImage.
+	 * 
 	 * @return Image
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getReviewedImage()
 	 */
@@ -261,19 +276,21 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method getDisabledImage.
+	 * 
 	 * @return Image
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getDisabledImage()
 	 */
 	public Image getDisabledImage() {
 		return UIUtils.loadIcon(DISABLED_OVERLAY_ICON_FILE);
 	}
-	
-	
+
 	/**
 	 * Method setReviewed.
-	 * @param aReviewed boolean
-	 * @throws ResourceHandlingException 
-	 * @throws OutOfSyncException 
+	 * 
+	 * @param aReviewed
+	 *            boolean
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
 	 */
 	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
@@ -282,9 +299,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method setEnabled.
-	 * @param aEnabled boolean
-	 * @throws ResourceHandlingException 
-	 * @throws OutOfSyncException 
+	 * 
+	 * @param aEnabled
+	 *            boolean
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
 	 */
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
@@ -293,9 +312,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method setChildrenReviewed.
-	 * @param aReviewed boolean
-	 * @throws ResourceHandlingException 
-	 * @throws OutOfSyncException 
+	 * 
+	 * @param aReviewed
+	 *            boolean
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setChildReviewed(boolean)
 	 */
 	public void setChildReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
@@ -304,8 +325,9 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method checkToSetReviewed.
-	 * @throws OutOfSyncException 
-	 * @throws ResourceHandlingException 
+	 * 
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#checkToSetReviewed()
 	 */
 	public void checkToSetReviewed() throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
@@ -314,38 +336,43 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Create a serialization model element object
+	 * 
 	 * @return the new serialization element object
-	 * @throws ResourceHandlingException 
+	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
-    public ReviewComponent createChildModelDataElement() {
-    	//default implementation
-    	return null;
-    }
-    
+	public ReviewComponent createChildModelDataElement() {
+		//default implementation
+		return null;
+	}
+
 	/**
 	 * Set serialization model data by copying it from the passed-in object
-	 * @param aModelComponent - a serialization model element to copy information from
-	 * @throws ResourceHandlingException 
+	 * 
+	 * @param aModelComponent
+	 *            - a serialization model element to copy information from
+	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
-    public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
-    	//default implementation
-    }
-    
+	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+		//default implementation
+	}
+
 	/**
 	 * Method setInput.
+	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setInput()
 	 */
 	public void setInput() { // $codepro.audit.disable emptyMethod
-    	//default empty implementation
+		//default empty implementation
 	}
-    
+
 	// Hierarchy
 
 	/**
 	 * Method getParent.
+	 * 
 	 * @return IR4EUIModelElement
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getParent()
 	 */
@@ -355,15 +382,17 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method getChildren.
-	 * @return IR4EUIModelElement[] 
+	 * 
+	 * @return IR4EUIModelElement[]
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getChildren()
 	 */
 	public IR4EUIModelElement[] getChildren() {
-		return new IR4EUIModelElement[0];   // $codepro.audit.disable $codepro.audit.disable reusableImmutables
+		return new IR4EUIModelElement[0]; // $codepro.audit.disable $codepro.audit.disable reusableImmutables
 	}
 
 	/**
 	 * Method hasChildren.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#hasChildren()
 	 */
@@ -373,20 +402,25 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method createChildren.
-	 * @param aModelComponent R4EReviewComponent
+	 * 
+	 * @param aModelComponent
+	 *            R4EReviewComponent
 	 * @return IR4EUIModelElement
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildren(R4EReviewComponent)
 	 */
-	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable unnecessaryExceptions
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
+			OutOfSyncException { // $codepro.audit.disable unnecessaryExceptions
 		return null;
 		// default implementation
 	}
 
 	/**
 	 * Add a children to the current model element
-	 * @param aChildToAdd - the child to add
+	 * 
+	 * @param aChildToAdd
+	 *            - the child to add
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#addChildren(IR4EUIModelElement)
 	 */
 	public void addChildren(IR4EUIModelElement aChildToAdd) { // $codepro.audit.disable emptyMethod
@@ -395,32 +429,40 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method removeChildren.
-	 * @param aChildToRemove IR4EUIModelElement
-	 * @param aFileRemove - also remove from file (hard remove)
-	 * @throws OutOfSyncException 
-	 * @throws ResourceHandlingException 
+	 * 
+	 * @param aChildToRemove
+	 *            IR4EUIModelElement
+	 * @param aFileRemove
+	 *            - also remove from file (hard remove)
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement, boolean)
 	 */
-	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
+			throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
 		// default implementation
 	}
 
 	/**
 	 * Method removeAllChildren.
-	 * @param aFileRemove boolean
-	 * @throws OutOfSyncException 
-	 * @throws ResourceHandlingException 
+	 * 
+	 * @param aFileRemove
+	 *            boolean
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod -->
 		//default implementation
 	}
-	
+
 	// Listeners
 
 	/**
 	 * Method addListener.
-	 * @param aProvider ReviewNavigatorContentProvider
+	 * 
+	 * @param aProvider
+	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
 	 */
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
@@ -429,7 +471,9 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method removeListener.
-	 * @param aProvider ReviewNavigatorContentProvider
+	 * 
+	 * @param aProvider
+	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	public void removeListener(ReviewNavigatorContentProvider aProvider) {
@@ -438,15 +482,18 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method removeListeners.
+	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListeners()
 	 */
 	public void removeListeners() {
 		fListeners.clear();
 	}
-	
+
 	/**
 	 * Method fireAdd.
-	 * @param aAdded Object
+	 * 
+	 * @param aAdded
+	 *            Object
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#fireAdd(Object)
 	 */
 	public void fireAdd(Object aAdded) {
@@ -457,7 +504,9 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method fireRemove.
-	 * @param aRemoved Object
+	 * 
+	 * @param aRemoved
+	 *            Object
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#fireRemove(Object)
 	 */
 	public void fireRemove(Object aRemoved) {
@@ -468,7 +517,9 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method fireReviewStateChanged.
-	 * @param aChanged Object
+	 * 
+	 * @param aChanged
+	 *            Object
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#fireReviewStateChanged(Object)
 	 */
 	public void fireReviewStateChanged(Object aChanged) {
@@ -477,123 +528,135 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 		}
 	}
 
-	
 	//Commands
-	
+
 	/**
 	 * Method isAddLinkedAnomalyCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isAddLinkedAnomalyCmd()
 	 */
 	public boolean isAddLinkedAnomalyCmd() {
-		return false;   //default implementation
+		return false; //default implementation
 	}
-	
+
 	/**
 	 * Method isOpenEditorCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isOpenEditorCmd()
 	 */
 	public boolean isOpenEditorCmd() {
-		return false;   //default implementation
+		return false; //default implementation
 	}
-	
+
 	/**
 	 * Method isChangeReviewStateCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeReviewStateCmd()
 	 */
 	public boolean isChangeReviewStateCmd() {
-		return false;   //default implementation
+		return false; //default implementation
 	}
-	
+
 	/**
 	 * Method isOpenElementCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isOpenElementCmd()
 	 */
 	public boolean isOpenElementCmd() {
-		return false;   //default implementation
+		return false; //default implementation
 	}
-	
+
 	/**
 	 * Method isCloseElementCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isCloseElementCmd()
 	 */
 	public boolean isCloseElementCmd() {
-		return false;   //default implementation
+		return false; //default implementation
 	}
-	
+
 	/**
 	 * Method isAddChildElementCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isAddChildElementCmd()
 	 */
 	public boolean isAddChildElementCmd() {
-		return false;   //default implementation
+		return false; //default implementation
 	}
-	
+
 	/**
 	 * Method getAddChildElementCmdName.
+	 * 
 	 * @return String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdName()
 	 */
 	public String getAddChildElementCmdName() {
-		return R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_NAME;   //default implementation
+		return R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_NAME; //default implementation
 	}
-	
+
 	/**
 	 * Method getAddChildElementCmdTooltip.
+	 * 
 	 * @return String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
 	 */
 	public String getAddChildElementCmdTooltip() {
-		return R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_TOOLTIP;   //default implementation
+		return R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_TOOLTIP; //default implementation
 	}
-	
+
 	/**
 	 * Method isRemoveElementCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isRemoveElementCmd()
 	 */
 	public boolean isRemoveElementCmd() {
-		return false;   //default implementation
+		return false; //default implementation
 	}
-	
+
 	/**
 	 * Method isRestoreElementCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#iisRestoreElementCmd()
 	 */
 	public boolean isRestoreElementCmd() {
-		return false;   //default implementation
+		return false; //default implementation
 	}
-	
+
 	/**
 	 * Method getRemoveElementCmdName.
+	 * 
 	 * @return String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdName()
 	 */
 	public String getRemoveElementCmdName() {
-		return R4EUIConstants.REMOVE_ELEMENT_COMMAND_NAME;   //default implementation
+		return R4EUIConstants.REMOVE_ELEMENT_COMMAND_NAME; //default implementation
 	}
-	
+
 	/**
 	 * Method getRemoveElementCmdTooltip.
+	 * 
 	 * @return String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdTooltip()
 	 */
 	public String getRemoveElementCmdTooltip() {
-		return R4EUIConstants.REMOVE_ELEMENT_COMMAND_TOOLTIP;   //default implementation
+		return R4EUIConstants.REMOVE_ELEMENT_COMMAND_TOOLTIP; //default implementation
 	}
-	
+
 	/**
 	 * Method isSendEmailCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isSendEmailCmd()
 	 */
 	public boolean isSendEmailCmd() {
-		return false;   //default implementation
+		return false; //default implementation
 	}
 }

@@ -32,7 +32,7 @@ public class RuleSetProperties extends ModelElementProperties {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field RULE_SET_VERSION. (value is ""ruleSetElement.version"")
 	 */
@@ -54,7 +54,7 @@ public class RuleSetProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor RULE_SET_NAME_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			RULE_SET_NAME_ID, R4EUIConstants.NAME_LABEL);
-	
+
 	/**
 	 * Field RULE_SET_FILEPATH. (value is ""ruleSetElement.filePath"")
 	 */
@@ -65,33 +65,34 @@ public class RuleSetProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor RULE_SET_FILEPATH_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			RULE_SET_FILEPATH_ID, R4EUIConstants.FILE_LABEL);
-		
+
 	/**
 	 * Field DESCRIPTORS.
 	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { RULE_SET_VERSION_PROPERTY_DESCRIPTOR,  
-		RULE_SET_NAME_PROPERTY_DESCRIPTOR, RULE_SET_FILEPATH_PROPERTY_DESCRIPTOR };
-	
-	
+	private static final IPropertyDescriptor[] DESCRIPTORS = { RULE_SET_VERSION_PROPERTY_DESCRIPTOR,
+			RULE_SET_NAME_PROPERTY_DESCRIPTOR, RULE_SET_FILEPATH_PROPERTY_DESCRIPTOR };
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for ReviewGroupProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public RuleSetProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
@@ -99,23 +100,25 @@ public class RuleSetProperties extends ModelElementProperties {
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		return DESCRIPTORS;
 	}
-	
+
 	/**
 	 * Method getPropertyValue.
-	 * @param aId Object
+	 * 
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
 	@Override
 	public Object getPropertyValue(Object aId) {
 		if (null != getElement()) {
-			if (RULE_SET_VERSION_ID.equals(aId)) { 
-				return ((R4EUIRuleSet)getElement()).getRuleSet().getVersion();
+			if (RULE_SET_VERSION_ID.equals(aId)) {
+				return ((R4EUIRuleSet) getElement()).getRuleSet().getVersion();
 			} else if (RULE_SET_NAME_ID.equals(aId)) {
-				return ((R4EUIRuleSet)getElement()).getName();
+				return ((R4EUIRuleSet) getElement()).getName();
 			} else if (RULE_SET_FILEPATH_ID.equals(aId)) {
-				if (((R4EUIRuleSet)getElement()).isOpen()) {
-					return ((R4EUIRuleSet)getElement()).getRuleSet().eResource().getURI().toFileString();
+				if (((R4EUIRuleSet) getElement()).isOpen()) {
+					return ((R4EUIRuleSet) getElement()).getRuleSet().eResource().getURI().toFileString();
 				}
 			}
 		}

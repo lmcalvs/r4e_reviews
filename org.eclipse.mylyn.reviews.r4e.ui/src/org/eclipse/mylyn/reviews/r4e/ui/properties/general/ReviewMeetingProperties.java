@@ -46,7 +46,7 @@ public class ReviewMeetingProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor REVIEW_MEETING_SUBJECT_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_MEETING_SUBJECT_ID, R4EUIConstants.SUBJECT_LABEL);
-	
+
 	/**
 	 * Field REVIEW_MEETING_DATE_ID. (value is ""reviewElement.meetingDate"")
 	 */
@@ -57,7 +57,7 @@ public class ReviewMeetingProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor REVIEW_MEETING_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_MEETING_DATE_ID, R4EUIConstants.START_DATE_LABEL);
-	
+
 	/**
 	 * Field REVIEW_MEETING_DURATION_ID. (value is ""reviewElement.meetingDuration"")
 	 */
@@ -68,7 +68,7 @@ public class ReviewMeetingProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor REVIEW_MEETING_DURATION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_MEETING_DURATION_ID, R4EUIConstants.DURATION_LABEL);
-	
+
 	/**
 	 * Field REVIEW_MEETING_LOCATION_ID. (value is ""reviewElement.meetingLocation"")
 	 */
@@ -79,47 +79,49 @@ public class ReviewMeetingProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor REVIEW_MEETING_LOCATION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_MEETING_LOCATION_ID, R4EUIConstants.LOCATION_LABEL);
-	
+
 	/**
 	 * Field DESCRIPTORS.
 	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { 
-		REVIEW_MEETING_SUBJECT_PROPERTY_DESCRIPTOR, REVIEW_MEETING_DATE_PROPERTY_DESCRIPTOR,
-		REVIEW_MEETING_DURATION_PROPERTY_DESCRIPTOR, REVIEW_MEETING_LOCATION_PROPERTY_DESCRIPTOR
-	};
-	
+	private static final IPropertyDescriptor[] DESCRIPTORS = { REVIEW_MEETING_SUBJECT_PROPERTY_DESCRIPTOR,
+			REVIEW_MEETING_DATE_PROPERTY_DESCRIPTOR, REVIEW_MEETING_DURATION_PROPERTY_DESCRIPTOR,
+			REVIEW_MEETING_LOCATION_PROPERTY_DESCRIPTOR };
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for ReviewExtraProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public ReviewMeetingProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
-	
+
 	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		return DESCRIPTORS;
 	}
-	
+
 	/**
 	 * Method getPropertyValue.
 	 * 
-	 * @param aId Object
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
@@ -127,22 +129,22 @@ public class ReviewMeetingProperties extends ModelElementProperties {
 	public Object getPropertyValue(Object aId) {
 		if (null != getElement()) {
 			if (REVIEW_MEETING_SUBJECT_ID.equals(aId)) {
-				final R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
+				final R4EMeetingData meeting = ((R4EUIReviewBasic) getElement()).getReview().getActiveMeeting();
 				if (null != meeting) {
 					return meeting.getSubject();
 				}
 			} else if (REVIEW_MEETING_DATE_ID.equals(aId)) {
-				final R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
+				final R4EMeetingData meeting = ((R4EUIReviewBasic) getElement()).getReview().getActiveMeeting();
 				if (null != meeting) {
 					return new Date(meeting.getStartTime());
 				}
-			}  else if (REVIEW_MEETING_DURATION_ID.equals(aId)) {
-				final R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
+			} else if (REVIEW_MEETING_DURATION_ID.equals(aId)) {
+				final R4EMeetingData meeting = ((R4EUIReviewBasic) getElement()).getReview().getActiveMeeting();
 				if (null != meeting) {
 					return Integer.valueOf(meeting.getDuration());
 				}
-			}  else if (REVIEW_MEETING_LOCATION_ID.equals(aId)) {
-				final R4EMeetingData meeting = ((R4EUIReviewBasic)getElement()).getReview().getActiveMeeting();
+			} else if (REVIEW_MEETING_LOCATION_ID.equals(aId)) {
+				final R4EMeetingData meeting = ((R4EUIReviewBasic) getElement()).getReview().getActiveMeeting();
 				if (null != meeting) {
 					return meeting.getLocation();
 				}

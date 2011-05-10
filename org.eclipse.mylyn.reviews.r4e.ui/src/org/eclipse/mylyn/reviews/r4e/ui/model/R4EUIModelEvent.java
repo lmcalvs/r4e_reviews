@@ -28,32 +28,33 @@ public class R4EUIModelEvent {
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fActedUpon.
 	 */
 	private final Object fActedUpon;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for ReviewModelEvent.
-	 * @param aReceiver Object
+	 * 
+	 * @param aReceiver
+	 *            Object
 	 */
 	public R4EUIModelEvent(Object aReceiver) {
 		fActedUpon = aReceiver;
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method receiver.
+	 * 
 	 * @return Object
 	 */
 	public Object receiver() {

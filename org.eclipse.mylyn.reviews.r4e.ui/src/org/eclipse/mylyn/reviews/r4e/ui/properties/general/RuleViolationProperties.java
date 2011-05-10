@@ -32,7 +32,7 @@ public class RuleViolationProperties extends ModelElementProperties {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field RULE_VIOLATION_NAME_ID. (value is ""ruleViolationElement.name"")
 	 */
@@ -43,32 +43,33 @@ public class RuleViolationProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor RULE_VIOLATION_NAME_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			RULE_VIOLATION_NAME_ID, R4EUIConstants.NAME_LABEL);
-		
+
 	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { RULE_VIOLATION_NAME_PROPERTY_DESCRIPTOR };
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for ReviewGroupProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public RuleViolationProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
@@ -76,18 +77,20 @@ public class RuleViolationProperties extends ModelElementProperties {
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		return DESCRIPTORS;
 	}
-	
+
 	/**
 	 * Method getPropertyValue.
-	 * @param aId Object
+	 * 
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
 	@Override
 	public Object getPropertyValue(Object aId) {
 		if (null != getElement()) {
-			if (RULE_VIOLATION_NAME_ID.equals(aId)) { 
-				return ((R4EUIRuleViolation)getElement()).getViolation().getName();
+			if (RULE_VIOLATION_NAME_ID.equals(aId)) {
+				return ((R4EUIRuleViolation) getElement()).getViolation().getName();
 			}
 		}
 		return null;

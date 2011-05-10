@@ -17,7 +17,6 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.commands.filters;
 
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -37,23 +36,25 @@ public class RemoveAllFiltersHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
+	 * 
+	 * @param event
+	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		
+
 		Activator.Ftracer.traceInfo("Remove all filters");
 
 		//We need to preserve the expansion state and restore it afterwards
-		final Object[] elements =  R4EUIModelController.getNavigatorView().getTreeViewer().getExpandedElements();
+		final Object[] elements = R4EUIModelController.getNavigatorView().getTreeViewer().getExpandedElements();
 		R4EUIModelController.getNavigatorView().getTreeViewer().setInput(R4EUIModelController.getRootElement());
 		try {
-			((ReviewNavigatorActionGroup)R4EUIModelController.getNavigatorView().getActionSet()).resetAllFilterActions();
+			((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).resetAllFilterActions();
 		} catch (NotDefinedException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);

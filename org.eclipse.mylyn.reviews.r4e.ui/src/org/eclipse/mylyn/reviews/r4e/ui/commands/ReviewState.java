@@ -36,27 +36,26 @@ public class ReviewState extends AbstractSourceProvider {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * Field REVIEW_CURRENT.
-	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCurrent"")
+	 * Field REVIEW_CURRENT. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCurrent"")
 	 */
 	public static final String REVIEW_CURRENT = "org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCurrent";
-	
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for ReviewState.
 	 */
 	public ReviewState() {
 		R4EUIModelController.setReviewCommandSourceProvider(this);
 	}
-	
+
 	/**
 	 * Method dispose.
+	 * 
 	 * @see org.eclipse.ui.ISourceProvider#dispose()
 	 */
 	public void dispose() { // $codepro.audit.disable emptyMethod
@@ -64,7 +63,8 @@ public class ReviewState extends AbstractSourceProvider {
 
 	/**
 	 * Method getCurrentState.
-	 * @return Map<String,ReviewElement> 
+	 * 
+	 * @return Map<String,ReviewElement>
 	 * @see org.eclipse.ui.ISourceProvider#getCurrentState()
 	 */
 	public Map<String, R4EUIReviewBasic> getCurrentState() {
@@ -75,16 +75,19 @@ public class ReviewState extends AbstractSourceProvider {
 
 	/**
 	 * Method getProvidedSourceNames.
-	 * @return String[] 
+	 * 
+	 * @return String[]
 	 * @see org.eclipse.ui.ISourceProvider#getProvidedSourceNames()
 	 */
 	public String[] getProvidedSourceNames() {
 		return new String[] { REVIEW_CURRENT };
 	}
-	
+
 	/**
 	 * Method setReview.
-	 * @param aOpenReview ReviewElement
+	 * 
+	 * @param aOpenReview
+	 *            ReviewElement
 	 */
 	public void setCurrentReview(R4EUIReviewBasic aOpenReview) {
 		fireSourceChanged(ISources.WORKBENCH, REVIEW_CURRENT, aOpenReview);

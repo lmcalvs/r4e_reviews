@@ -36,25 +36,27 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
  * @version $Revision: 1.0 $
  */
 public class SelectionTabPropertySection extends ModelElementTabPropertySection {
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field FPositionText.
 	 */
 	private CLabel fPositionText = null;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method createControls.
-	 * @param parent Composite
-	 * @param aTabbedPropertySheetPage TabbedPropertySheetPage
+	 * 
+	 * @param parent
+	 *            Composite
+	 * @param aTabbedPropertySheetPage
+	 *            TabbedPropertySheetPage
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(Composite, TabbedPropertySheetPage)
 	 */
 	@Override
@@ -64,42 +66,43 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 		//Tell element to build its own detailed tab layout
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
 		final Composite composite = widgetFactory.createFlatFormComposite(parent);
-	    FormData data = null;
-	   
-	    //Position (read-only)
-	    fPositionText = widgetFactory.createCLabel(composite, "");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-	    fPositionText.setToolTipText(R4EUIConstants.SELECTION_POSITION_TOOLTIP);
-	    fPositionText.setLayoutData(data);
+		FormData data = null;
 
-	    final CLabel positionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.POSITION_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fPositionText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fPositionText, 0, SWT.CENTER);
-	    positionLabel.setToolTipText(R4EUIConstants.SELECTION_POSITION_TOOLTIP);
-	    positionLabel.setLayoutData(data);
+		//Position (read-only)
+		fPositionText = widgetFactory.createCLabel(composite, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fPositionText.setToolTipText(R4EUIConstants.SELECTION_POSITION_TOOLTIP);
+		fPositionText.setLayoutData(data);
+
+		final CLabel positionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.POSITION_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fPositionText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fPositionText, 0, SWT.CENTER);
+		positionLabel.setToolTipText(R4EUIConstants.SELECTION_POSITION_TOOLTIP);
+		positionLabel.setLayoutData(data);
 	}
 
 	/**
 	 * Method refresh.
+	 * 
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#refresh()
 	 */
 	@Override
 	public void refresh() {
-		if (null != ((R4EUISelection)fProperties.getElement()).getPosition()) {
+		if (null != ((R4EUISelection) fProperties.getElement()).getPosition()) {
 			fRefreshInProgress = true;
-			fPositionText.setText(((R4EUISelection)fProperties.getElement()).getPosition().toString());
+			fPositionText.setText(((R4EUISelection) fProperties.getElement()).getPosition().toString());
 			setEnabledFields();
 			fRefreshInProgress = false;
 		} else {
 			fPositionText.setText("");
 		}
 	}
-	
+
 	/**
 	 * Method setEnabledFields.
 	 */

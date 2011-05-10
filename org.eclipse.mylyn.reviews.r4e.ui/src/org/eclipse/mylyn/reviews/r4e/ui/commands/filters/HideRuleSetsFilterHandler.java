@@ -36,24 +36,26 @@ public class HideRuleSetsFilterHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
+	 * 
+	 * @param event
+	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		
+
 		//We need to preserve the expansion state and restore it afterwards
-	    final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
-	    final HideRuleSetsFilter filter = 
-	    	((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).getHideRuleSetsFilter();
-		
-	    final Object[] elements =  viewer.getExpandedElements();
-	    boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());
-	    
+		final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
+		final HideRuleSetsFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
+				.getActionSet()).getHideRuleSetsFilter();
+
+		final Object[] elements = viewer.getExpandedElements();
+		boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());
+
 		if (!oldValue) {
 			Activator.Ftracer.traceInfo("Apply hide Rule Sets elements filter to ReviewNavigator");
 			viewer.addFilter(filter);

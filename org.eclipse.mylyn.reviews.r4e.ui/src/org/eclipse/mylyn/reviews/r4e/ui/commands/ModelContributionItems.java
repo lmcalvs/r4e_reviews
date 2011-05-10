@@ -41,6 +41,7 @@ public class ModelContributionItems extends CompoundContributionItem {
 
 	/**
 	 * Method getContributionItems.
+	 * 
 	 * @return IContributionItem[]
 	 */
 	@Override
@@ -48,106 +49,112 @@ public class ModelContributionItems extends CompoundContributionItem {
 
 		final List<IContributionItem> list = new ArrayList<IContributionItem>();
 		CommandContributionItemParameter params = null;
-		final IR4EUIModelElement element = 
-			(IR4EUIModelElement) ((IStructuredSelection)R4EUIModelController.getNavigatorView().getTreeViewer().getSelection()).getFirstElement();
+		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) R4EUIModelController.getNavigatorView()
+				.getTreeViewer()
+				.getSelection()).getFirstElement();
 
 		if (null != element) {
 			if (element.isOpenElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-						R4EUIConstants.OPEN_ELEMENT_COMMAND,
-						R4EUIConstants.OPEN_ELEMENT_COMMAND,
-						null, ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(R4EUIConstants.OPEN_ELEMENT_ICON_FILE)),
-						null, null, R4EUIConstants.OPEN_ELEMENT_COMMAND_NAME, R4EUIConstants.OPEN_ELEMENT_COMMAND_MNEMONIC,
+						R4EUIConstants.OPEN_ELEMENT_COMMAND, R4EUIConstants.OPEN_ELEMENT_COMMAND, null,
+						ImageDescriptor.createFromURL(Activator.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.OPEN_ELEMENT_ICON_FILE)), null, null,
+						R4EUIConstants.OPEN_ELEMENT_COMMAND_NAME, R4EUIConstants.OPEN_ELEMENT_COMMAND_MNEMONIC,
 						R4EUIConstants.OPEN_ELEMENT_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
 
 			if (element.isCloseElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-						R4EUIConstants.CLOSE_ELEMENT_COMMAND,
-						R4EUIConstants.CLOSE_ELEMENT_COMMAND,
-						null, ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(R4EUIConstants.CLOSE_ELEMENT_ICON_FILE)),
-						null, null, R4EUIConstants.CLOSE_ELEMENT_COMMAND_NAME, R4EUIConstants.CLOSE_ELEMENT_COMMAND_MNEMONIC,
+						R4EUIConstants.CLOSE_ELEMENT_COMMAND, R4EUIConstants.CLOSE_ELEMENT_COMMAND, null,
+						ImageDescriptor.createFromURL(Activator.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.CLOSE_ELEMENT_ICON_FILE)), null, null,
+						R4EUIConstants.CLOSE_ELEMENT_COMMAND_NAME, R4EUIConstants.CLOSE_ELEMENT_COMMAND_MNEMONIC,
 						R4EUIConstants.CLOSE_ELEMENT_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
-			
+
 			if (element.isAddChildElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-						R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND,
-						R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND,
-						null, PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD),
-						null, null, element.getAddChildElementCmdName(), R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_MNEMONIC,
-						element.getAddChildElementCmdTooltip(), CommandContributionItem.STYLE_PUSH, null, true);
+						R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND, R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND, null,
+						PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD),
+						null, null, element.getAddChildElementCmdName(),
+						R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_MNEMONIC, element.getAddChildElementCmdTooltip(),
+						CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
 
 			if (element.isRemoveElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-						R4EUIConstants.REMOVE_ELEMENT_COMMAND,
-						R4EUIConstants.REMOVE_ELEMENT_COMMAND,
-						null, PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE),
+						R4EUIConstants.REMOVE_ELEMENT_COMMAND, R4EUIConstants.REMOVE_ELEMENT_COMMAND, null,
+						PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE),
 						null, null, element.getRemoveElementCmdName(), R4EUIConstants.REMOVE_ELEMENT_COMMAND_MNEMONIC,
 						element.getRemoveElementCmdTooltip(), CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
-			
+
 			if (element.isAddLinkedAnomalyCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-						R4EUIConstants.ADD_LINKED_ANOMALY_COMMAND,
-						R4EUIConstants.ADD_LINKED_ANOMALY_COMMAND,
-						null, PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD),
+						R4EUIConstants.ADD_LINKED_ANOMALY_COMMAND, R4EUIConstants.ADD_LINKED_ANOMALY_COMMAND, null,
+						PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD),
 						null, null, R4EUIConstants.ADD_LINKED_ANOMALY_NAME, R4EUIConstants.ADD_LINKED_ANOMALY_MNEMONIC,
 						R4EUIConstants.ADD_LINKED_ANOMALY_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
 			if (element.isOpenEditorCmd() && R4EUIModelController.getNavigatorView().isEditorLinked()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-						R4EUIConstants.OPEN_EDITOR_COMMAND,
-						R4EUIConstants.OPEN_EDITOR_COMMAND,
-						null, ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(R4EUIConstants.OPEN_EDITOR_ICON_FILE)),
-						null, null, R4EUIConstants.OPEN_EDITOR_COMMAND_NAME, R4EUIConstants.OPEN_EDITOR_COMMAND_MNEMONIC,
+						R4EUIConstants.OPEN_EDITOR_COMMAND, R4EUIConstants.OPEN_EDITOR_COMMAND, null,
+						ImageDescriptor.createFromURL(Activator.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.OPEN_EDITOR_ICON_FILE)), null, null,
+						R4EUIConstants.OPEN_EDITOR_COMMAND_NAME, R4EUIConstants.OPEN_EDITOR_COMMAND_MNEMONIC,
 						R4EUIConstants.OPEN_EDITOR_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
 
 			if (element.isChangeReviewStateCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-						R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND,
-						R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND,
-						null, ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(R4EUIConstants.CHANGE_REVIEW_STATE_ICON_FILE)),
-						null, null, R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND_NAME, R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND_MNEMONIC,
-						R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
+						R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND, R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND, null,
+						ImageDescriptor.createFromURL(Activator.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.CHANGE_REVIEW_STATE_ICON_FILE)), null, null,
+						R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND_NAME,
+						R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND_MNEMONIC,
+						R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null,
+						true);
 				list.add(new CommandContributionItem(params));
 			}
-			
+
 			if (element.isRestoreElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-						R4EUIConstants.RESTORE_ELEMENT_COMMAND,
-						R4EUIConstants.RESTORE_ELEMENT_COMMAND,
-						null, PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_UNDO),
-						null, null, R4EUIConstants.RESTORE_ELEMENT_COMMAND_NAME, R4EUIConstants.RESTORE_ELEMENT_COMMAND_MNEMONIC,
+						R4EUIConstants.RESTORE_ELEMENT_COMMAND, R4EUIConstants.RESTORE_ELEMENT_COMMAND, null,
+						PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_UNDO),
+						null, null, R4EUIConstants.RESTORE_ELEMENT_COMMAND_NAME,
+						R4EUIConstants.RESTORE_ELEMENT_COMMAND_MNEMONIC,
 						R4EUIConstants.RESTORE_ELEMENT_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
-			
+
 			if (element.isSendEmailCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-						R4EUIConstants.SEND_EMAIL_COMMAND,
-						R4EUIConstants.SEND_EMAIL_COMMAND,
-						null, ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry(R4EUIConstants.SEND_EMAIL_ICON_FILE)),
-						null, null, R4EUIConstants.SEND_EMAIL_COMMAND_NAME, R4EUIConstants.SEND_EMAIL_COMMAND_MNEMONIC,
+						R4EUIConstants.SEND_EMAIL_COMMAND, R4EUIConstants.SEND_EMAIL_COMMAND, null,
+						ImageDescriptor.createFromURL(Activator.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.SEND_EMAIL_ICON_FILE)), null, null,
+						R4EUIConstants.SEND_EMAIL_COMMAND_NAME, R4EUIConstants.SEND_EMAIL_COMMAND_MNEMONIC,
 						R4EUIConstants.SEND_EMAIL_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
 		} else {
 			//When no element is selected, contribute add review group command
 			params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-					R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND,
-					R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND,
-					null, PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD),
-					null, null, R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_NAME, R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_MNEMONIC,
-					R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_NAME, CommandContributionItem.STYLE_PUSH, null, true);
+					R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND, R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND, null,
+					PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD), null,
+					null, R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_NAME,
+					R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_MNEMONIC, R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_NAME,
+					CommandContributionItem.STYLE_PUSH, null, true);
 			list.add(new CommandContributionItem(params));
 		}
 		return list.toArray(new IContributionItem[list.size()]);

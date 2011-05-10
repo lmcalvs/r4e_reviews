@@ -45,45 +45,47 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
  * @version $Revision: 1.0 $
  */
 public class RuleTabPropertySection extends ModelElementTabPropertySection {
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fIdText.
 	 */
 	protected CLabel fIdText = null;
-	
+
 	/**
 	 * Field fTitleText.
 	 */
 	protected CLabel fTitleText = null;
-	
+
 	/**
 	 * Field fDescriptionText.
 	 */
 	protected CLabel fDescriptionText = null;
-	
+
 	/**
 	 * Field fClassCombo.
 	 */
 	protected CCombo fClassCombo = null;
-	
+
 	/**
 	 * Field fRankCombo.
 	 */
 	protected CCombo fRankCombo = null;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method createControls.
-	 * @param parent Composite
-	 * @param aTabbedPropertySheetPage TabbedPropertySheetPage
+	 * 
+	 * @param parent
+	 *            Composite
+	 * @param aTabbedPropertySheetPage
+	 *            TabbedPropertySheetPage
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(Composite, TabbedPropertySheetPage)
 	 */
 	@Override
@@ -93,205 +95,211 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		//Tell element to build its own detailed tab layout
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
 		final Composite composite = widgetFactory.createFlatFormComposite(parent);
-	    FormData data = null;
-	   
-	    //ID
-	    fIdText = widgetFactory.createCLabel(composite, "");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-	    fIdText.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
-	    fIdText.setLayoutData(data);
-	    fIdText.addFocusListener(new FocusListener() {		
+		FormData data = null;
+
+		//ID
+		fIdText = widgetFactory.createCLabel(composite, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fIdText.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
+		fIdText.setLayoutData(data);
+		fIdText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EDesignRule modelRule = ((R4EUIRule)fProperties.getElement()).getRule();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-	    				modelRule.setId(fIdText.getText());
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
+						modelRule.setId(fIdText.getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
 			}
+
 			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
-	    
-	    final CLabel idLabel = widgetFactory.createCLabel(composite, R4EUIConstants.ID_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fIdText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fIdText, 0, SWT.CENTER);
-	    idLabel.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
-	    idLabel.setLayoutData(data);
-	    
-	    //Title
-	    fTitleText = widgetFactory.createCLabel(composite, "");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fIdText, ITabbedPropertyConstants.VSPACE);
-	    fTitleText.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
-	    fTitleText.setLayoutData(data);
-	    fTitleText.addFocusListener(new FocusListener() {		
+
+		final CLabel idLabel = widgetFactory.createCLabel(composite, R4EUIConstants.ID_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fIdText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fIdText, 0, SWT.CENTER);
+		idLabel.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
+		idLabel.setLayoutData(data);
+
+		//Title
+		fTitleText = widgetFactory.createCLabel(composite, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fIdText, ITabbedPropertyConstants.VSPACE);
+		fTitleText.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
+		fTitleText.setLayoutData(data);
+		fTitleText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EDesignRule modelRule = ((R4EUIRule)fProperties.getElement()).getRule();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-	    				modelRule.setTitle(fTitleText.getText());
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
+						modelRule.setTitle(fTitleText.getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
 			}
+
 			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
-	    
-	    final CLabel titleLabel = widgetFactory.createCLabel(composite, R4EUIConstants.TITLE_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fTitleText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fTitleText, 0, SWT.CENTER);
-	    titleLabel.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
-	    titleLabel.setLayoutData(data);
-	    
-	    //Description
-	    fDescriptionText = widgetFactory.createCLabel(composite, "", SWT.BORDER);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fTitleText, ITabbedPropertyConstants.VSPACE);
-	    fDescriptionText.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
-	    fDescriptionText.setLayoutData(data);
-	    fDescriptionText.addFocusListener(new FocusListener() {		
+
+		final CLabel titleLabel = widgetFactory.createCLabel(composite, R4EUIConstants.TITLE_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fTitleText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fTitleText, 0, SWT.CENTER);
+		titleLabel.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
+		titleLabel.setLayoutData(data);
+
+		//Description
+		fDescriptionText = widgetFactory.createCLabel(composite, "", SWT.BORDER);
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fTitleText, ITabbedPropertyConstants.VSPACE);
+		fDescriptionText.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
+		fDescriptionText.setLayoutData(data);
+		fDescriptionText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EDesignRule modelRule = ((R4EUIRule)fProperties.getElement()).getRule();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-	    				modelRule.setDescription(fDescriptionText.getText());
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
+						modelRule.setDescription(fDescriptionText.getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
 			}
+
 			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
-	    
-	    final CLabel descriptionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DESCRIPTION_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fDescriptionText, 0, SWT.CENTER);
-	    descriptionLabel.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
-	    descriptionLabel.setLayoutData(data);
-	    
-	    //Class
-	    fClassCombo = widgetFactory.createCCombo(composite, SWT.READ_ONLY);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
-	    fClassCombo.setToolTipText(R4EUIConstants.RULE_CLASS_TOOLTIP);
-	    fClassCombo.setLayoutData(data);
-	    fClassCombo.addSelectionListener(new SelectionListener() {
+
+		final CLabel descriptionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DESCRIPTION_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fDescriptionText, 0, SWT.CENTER);
+		descriptionLabel.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
+		descriptionLabel.setLayoutData(data);
+
+		//Class
+		fClassCombo = widgetFactory.createCCombo(composite, SWT.READ_ONLY);
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
+		fClassCombo.setToolTipText(R4EUIConstants.RULE_CLASS_TOOLTIP);
+		fClassCombo.setLayoutData(data);
+		fClassCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EDesignRule modelRule = ((R4EUIRule)fProperties.getElement()).getRule();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-	    				modelRule.setClass(UIUtils.getClassFromString(fClassCombo.getText()));
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
-    			refresh();
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
+						modelRule.setClass(UIUtils.getClassFromString(fClassCombo.getText()));
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
+				refresh();
 			}
+
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				//No implementation needed
 			}
 		});
-	    
-	    final CLabel classLabel = widgetFactory.createCLabel(composite, R4EUIConstants.CLASS_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fClassCombo, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fClassCombo, 0, SWT.CENTER);
-	    classLabel.setToolTipText(R4EUIConstants.RULE_CLASS_TOOLTIP);
-	    classLabel.setLayoutData(data);
-	    
-	    //Rank
-	    fRankCombo = widgetFactory.createCCombo(composite, SWT.READ_ONLY);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fClassCombo, ITabbedPropertyConstants.VSPACE);
-	    fRankCombo.setToolTipText(R4EUIConstants.RULE_RANK_TOOLTIP);
-	    fRankCombo.setLayoutData(data);
-	    fRankCombo.addSelectionListener(new SelectionListener() {
+
+		final CLabel classLabel = widgetFactory.createCLabel(composite, R4EUIConstants.CLASS_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fClassCombo, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fClassCombo, 0, SWT.CENTER);
+		classLabel.setToolTipText(R4EUIConstants.RULE_CLASS_TOOLTIP);
+		classLabel.setLayoutData(data);
+
+		//Rank
+		fRankCombo = widgetFactory.createCCombo(composite, SWT.READ_ONLY);
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fClassCombo, ITabbedPropertyConstants.VSPACE);
+		fRankCombo.setToolTipText(R4EUIConstants.RULE_RANK_TOOLTIP);
+		fRankCombo.setLayoutData(data);
+		fRankCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EDesignRule modelRule = ((R4EUIRule)fProperties.getElement()).getRule();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-	    				modelRule.setRank(UIUtils.getRankFromString(fRankCombo.getText()));
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}	
-    			refresh();
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
+						modelRule.setRank(UIUtils.getRankFromString(fRankCombo.getText()));
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
+				refresh();
 			}
+
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				//No implementation needed
 			}
 		});
-	    
-	    final CLabel rankLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RANK_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fRankCombo, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fRankCombo, 0, SWT.CENTER);
-	    rankLabel.setToolTipText(R4EUIConstants.RULE_RANK_TOOLTIP);
-	    rankLabel.setLayoutData(data);
+
+		final CLabel rankLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RANK_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fRankCombo, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fRankCombo, 0, SWT.CENTER);
+		rankLabel.setToolTipText(R4EUIConstants.RULE_RANK_TOOLTIP);
+		rankLabel.setLayoutData(data);
 	}
 
 	/**
 	 * Method refresh.
+	 * 
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#refresh()
 	 */
 	@Override
 	public void refresh() {
-		if (null != ((R4EUIRule)fProperties.getElement()).getRule()) {
+		if (null != ((R4EUIRule) fProperties.getElement()).getRule()) {
 			fRefreshInProgress = true;
-			final R4EDesignRule modelRule = ((R4EUIRule)fProperties.getElement()).getRule();
+			final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
 			fIdText.setText(modelRule.getId());
 			fTitleText.setText(modelRule.getTitle());
 			fDescriptionText.setText(modelRule.getDescription());
@@ -313,7 +321,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 			fRankCombo.setText("");
 		}
 	}
-	
+
 	/**
 	 * Method setEnabledFields.
 	 */

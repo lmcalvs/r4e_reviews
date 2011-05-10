@@ -24,6 +24,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 
 /**
  * Class used to initialize default preference values.
+ * 
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
@@ -32,9 +33,10 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method initializeDefaultPreferences.
+	 * 
 	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
 	 */
 	@Override

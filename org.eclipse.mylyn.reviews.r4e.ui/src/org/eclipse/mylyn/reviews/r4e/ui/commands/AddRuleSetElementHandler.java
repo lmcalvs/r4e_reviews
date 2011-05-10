@@ -44,11 +44,13 @@ public class AddRuleSetElementHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
-	 * @return Object 
+	 * 
+	 * @param event
+	 *            ExecutionEvent
+	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
@@ -60,18 +62,18 @@ public class AddRuleSetElementHandler extends AbstractHandler {
 
 		try {
 			//Get data from user
-				final ReviewComponent tempModelComponent = ((R4EUIRootElement)element).createRuleSetElement();
-				if (null != tempModelComponent) {
-					Activator.Ftracer.traceInfo("Adding Rule Set to the root element ");
+			final ReviewComponent tempModelComponent = ((R4EUIRootElement) element).createRuleSetElement();
+			if (null != tempModelComponent) {
+				Activator.Ftracer.traceInfo("Adding Rule Set to the root element ");
 
-					//Create actual model element
-					newElement = element.createChildren(tempModelComponent);	
-					if (null != newElement) {
-						//Set focus to newly created element and open it
-						viewer.expandToLevel(newElement, AbstractTreeViewer.ALL_LEVELS);
-						viewer.setSelection(new StructuredSelection(newElement), true);
-					}
+				//Create actual model element
+				newElement = element.createChildren(tempModelComponent);
+				if (null != newElement) {
+					//Set focus to newly created element and open it
+					viewer.expandToLevel(newElement, AbstractTreeViewer.ALL_LEVELS);
+					viewer.setSelection(new StructuredSelection(newElement), true);
 				}
+			}
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
 
@@ -94,12 +96,12 @@ public class AddRuleSetElementHandler extends AbstractHandler {
 				UIUtils.displayResourceErrorDialog(e1);
 			} catch (OutOfSyncException e1) {
 				UIUtils.displaySyncErrorDialog(e1);
-			}		
+			}
 		}
-		
+
 		try {
-			final IEvaluationService evService = 
-				(IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(event).getService(IEvaluationService.class);
+			final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(event)
+					.getService(IEvaluationService.class);
 			evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen");
 		} catch (ExecutionException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");

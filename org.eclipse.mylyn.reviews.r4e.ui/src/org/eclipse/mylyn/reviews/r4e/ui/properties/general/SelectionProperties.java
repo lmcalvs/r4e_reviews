@@ -32,7 +32,7 @@ public class SelectionProperties extends ModelElementProperties {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field SELECTION_POSITION_ID. (value is ""selectionElement.position"")
 	 */
@@ -43,50 +43,53 @@ public class SelectionProperties extends ModelElementProperties {
 	 */
 	private static final PropertyDescriptor SELECTION_POSITION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			SELECTION_POSITION_ID, R4EUIConstants.POSITION_LABEL);
-	
+
 	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { SELECTION_POSITION_PROPERTY_DESCRIPTOR };
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for SelectionProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public SelectionProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getPropertyDescriptors.
-	 * @return IPropertyDescriptor[] 
+	 * 
+	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
 	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		return DESCRIPTORS;
 	}
-	
+
 	/**
 	 * Method getPropertyValue.
-	 * @param aId Object
+	 * 
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
 	@Override
 	public Object getPropertyValue(Object aId) {
 		if (SELECTION_POSITION_ID.equals(aId)) {
-			return ((R4EUISelection)getElement()).getPosition().toString();
+			return ((R4EUISelection) getElement()).getPosition().toString();
 		}
 		return null;
 	}

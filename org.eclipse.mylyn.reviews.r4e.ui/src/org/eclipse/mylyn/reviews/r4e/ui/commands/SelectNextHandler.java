@@ -45,11 +45,13 @@ public class SelectNextHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
-	 * @return Object 
+	 * 
+	 * @param event
+	 *            ExecutionEvent
+	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
@@ -58,30 +60,31 @@ public class SelectNextHandler extends AbstractHandler {
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		if (!selection.isEmpty()) {
 			final ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
-			
+
 			//Get the previous element
 			final IR4EUIModelElement nextElement = getNextElement((ReviewNavigatorTreeViewer) view.getTreeViewer());
-		    
+
 			//If there is one, select it
 			if (null != nextElement) {
-			    Activator.Ftracer.traceInfo("Select next element " + nextElement.getName());
+				Activator.Ftracer.traceInfo("Select next element " + nextElement.getName());
 				final ISelection nextSelection = new StructuredSelection(nextElement);
 				view.getTreeViewer().setSelection(nextSelection);
-				
-			    //Open the editor on FileContexts, selections amd anomalies
-				if (nextElement instanceof R4EUIFileContext ||
-						nextElement instanceof R4EUISelection ||
-						nextElement instanceof R4EUIAnomalyBasic) {
+
+				//Open the editor on FileContexts, selections amd anomalies
+				if (nextElement instanceof R4EUIFileContext || nextElement instanceof R4EUISelection
+						|| nextElement instanceof R4EUIAnomalyBasic) {
 					EditorProxy.openEditor(view.getSite().getPage(), nextSelection, false);
 				}
-			}			
+			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Method getNextElement.
-	 * @param aTreeViewer ReviewNavigatorTreeViewer
+	 * 
+	 * @param aTreeViewer
+	 *            ReviewNavigatorTreeViewer
 	 * @return IR4EUIModelElement
 	 */
 	private IR4EUIModelElement getNextElement(ReviewNavigatorTreeViewer aTreeViewer) {

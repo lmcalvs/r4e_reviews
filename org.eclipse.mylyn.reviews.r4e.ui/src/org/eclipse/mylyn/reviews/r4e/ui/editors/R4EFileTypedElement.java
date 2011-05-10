@@ -32,6 +32,7 @@ import org.eclipse.team.core.history.IFileRevision;
 
 /**
  * An {@link ITypedElement} wrapper for {@link IFileRevision} for use with R4E
+ * 
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
@@ -40,40 +41,41 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fFileVersion.
 	 */
 	private final R4EFileVersion fFileVersion;
 
-	
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * @param aFileVersion R4EFileVersion - the file revision
+	 * @param aFileVersion
+	 *            R4EFileVersion - the file revision
 	 */
 	public R4EFileTypedElement(R4EFileVersion aFileVersion) {
 		Assert.isNotNull(aFileVersion);
 		fFileVersion = aFileVersion;
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * Method getFileVersion.	
+	 * Method getFileVersion.
+	 * 
 	 * @return R4EFileVersion
 	 */
 	public R4EFileVersion getFileVersion() {
 		return fFileVersion;
 	}
-	
+
 	/**
 	 * Method getName.
+	 * 
 	 * @return String
 	 * @see org.eclipse.compare.ITypedElement#getName()
 	 */
@@ -83,6 +85,7 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 
 	/**
 	 * Method hashCode.
+	 * 
 	 * @return int
 	 */
 	@Override
@@ -92,12 +95,15 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 
 	/**
 	 * Method equals.
-	 * @param aObj Object
+	 * 
+	 * @param aObj
+	 *            Object
 	 * @return boolean
 	 */
 	@Override
 	public boolean equals(Object aObj) {
-		if (aObj == this) return true;
+		if (aObj == this)
+			return true;
 		if (aObj instanceof R4EFileTypedElement) {
 			final R4EFileTypedElement other = (R4EFileTypedElement) aObj;
 			return other.getFileVersion().equals(getFileVersion());
@@ -107,6 +113,7 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 
 	/**
 	 * Method getResource.
+	 * 
 	 * @return IResource
 	 */
 	public IResource getResource() {
@@ -115,6 +122,7 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 
 	/**
 	 * Method getImage.
+	 * 
 	 * @return Image
 	 */
 	public Image getImage() {
@@ -123,6 +131,7 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 
 	/**
 	 * Method getType.
+	 * 
 	 * @return String
 	 */
 	public String getType() {
@@ -131,19 +140,21 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 
 	/**
 	 * Method getContents.
+	 * 
 	 * @return InputStream
 	 * @throws CoreException
 	 */
 	public InputStream getContents() throws CoreException {
-		return ((IFile)fFileVersion.getResource()).getContents();
+		return ((IFile) fFileVersion.getResource()).getContents();
 	}
 
 	/**
 	 * Method getCharset.
+	 * 
 	 * @return String
 	 * @throws CoreException
 	 */
 	public String getCharset() throws CoreException {
-		return ((IFile)fFileVersion.getResource()).getCharset();
+		return ((IFile) fFileVersion.getResource()).getCharset();
 	}
 }

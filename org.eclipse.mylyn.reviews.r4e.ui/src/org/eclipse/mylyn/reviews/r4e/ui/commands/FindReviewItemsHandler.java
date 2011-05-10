@@ -70,7 +70,7 @@ import org.eclipse.mylyn.versions.core.Change;
 import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.mylyn.versions.ui.ScmUi;
-import org.eclipse.mylyn.versions.ui.spi.ScmUiConnector;
+import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
@@ -111,8 +111,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				project = ((IJavaProject) selectedElement).getProject();
 			} else if (selectedElement instanceof ICProject) {
 				project = ((ICProject) selectedElement).getProject();
-			} else if (selectedElement instanceof IPackageFragment
-					|| selectedElement instanceof IPackageFragmentRoot) {
+			} else if (selectedElement instanceof IPackageFragment || selectedElement instanceof IPackageFragmentRoot) {
 				project = ((IJavaElement) selectedElement).getJavaProject().getProject();
 			} else if (selectedElement instanceof IFolder) {
 				project = ((IFolder) selectedElement).getProject();
@@ -121,18 +120,17 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				project = (IProject) adaptableProject.getAdapter(IProject.class);
 			} else {
 				// Should never happen
-				Activator.Ftracer.traceError("No project defined for selection of class "
-						+ selectedElement.getClass());
-				Activator.getDefault().logError("No project defined for selection of class "
-						+ selectedElement.getClass(), null);
+				Activator.Ftracer.traceError("No project defined for selection of class " + selectedElement.getClass());
+				Activator.getDefault().logError(
+						"No project defined for selection of class " + selectedElement.getClass(), null);
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 						"Find Review Item Error", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
-								"No project defined for selection", null),IStatus.ERROR);
+								"No project defined for selection", null), IStatus.ERROR);
 				dialog.open();
 				return null;
 			}
 
-			final ScmUiConnector uiConnector = ScmUi.getUiConnector(project);
+			final ScmConnectorUi uiConnector = ScmUi.getUiConnector(project);
 			ChangeSet changeSet = null;
 			if (null != uiConnector) {
 				try {
@@ -182,18 +180,19 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		try {
 			// Add Review Item
 			final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
-			
+
 			for (R4EUIReviewItem uiItem : uiReview.getReviewItems()) {
 				if (changeSet.getId().equals(uiItem.getItem().getRepositoryRef())) {
 					//The commit item already exists so ignore command
 					Activator.Ftracer.traceWarning("Review Item already exists.  Ignoring");
-					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING, "Cannot add Review Item",
-		    				new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, "Review Item already exists", null), IStatus.WARNING);
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
+							"Cannot add Review Item", new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0,
+									"Review Item already exists", null), IStatus.WARNING);
 					dialog.open();
 					return;
 				}
 			}
-			
+
 			final R4EUIReviewItem uiReviewItem = uiReview.createCommitReviewItem(changeSet, null);
 
 			for (final Change change : changeSet.getChanges()) {
@@ -201,47 +200,43 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				final ScmArtifact targetArt = change.getTarget();
 				if (null == baseArt && null == targetArt) {
 					Activator.Ftracer.traceDebug("Received a Change with no base and target in ChangeSet: "
-						+ changeSet.getId() + ", Date: " + changeSet.getDate().toString());
+							+ changeSet.getId() + ", Date: " + changeSet.getDate().toString());
 				}
 
 				// Get handle to local storage repository
-				final IRFSRegistry localRepository = RFSRegistryFactory
-						.getRegistry(R4EUIModelController.getActiveReview().getReview());
+				final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
+						.getReview());
 
 				R4EFileVersion baseLocalVersion = null;
 				R4EFileVersion targetLocalVersion = null;
 				// Copy remote files to the local repository
 				if (null != baseArt) {
-					baseLocalVersion = CommandUtils
-							.copyRemoteFileToLocalRepository(localRepository,baseArt);
+					baseLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository, baseArt);
 				}
 				if (null != targetArt) {
-					targetLocalVersion = CommandUtils
-							.copyRemoteFileToLocalRepository(localRepository,targetArt);
+					targetLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository, targetArt);
 				}
 
 				// Add File Context
-				final R4EUIFileContext uiFileContext = uiReviewItem
-						.createFileContext(baseLocalVersion, targetLocalVersion,
-								CommandUtils.adaptType(change.getChangeType()));
+				final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(baseLocalVersion,
+						targetLocalVersion, CommandUtils.adaptType(change.getChangeType()));
 				if (null == uiFileContext) {
 					uiReview.removeChildren(uiReviewItem, false);
 					return;
 				}
-				
+
 				//For now, in order to populate differences, we temporarly open the compare editor 
 				//and go through the differences
-				R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(
-						uiFileContext.getBaseFileVersion(), uiFileContext.getTargetFileVersion(), false);
+				R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(uiFileContext.getBaseFileVersion(),
+						uiFileContext.getTargetFileVersion(), false);
 				CompareUI.openCompareEditor(input, true);
 
 				//Get selection on the left pane of the compare editor
 				final ICompareNavigator navigator = input.getNavigator();
-				
+
 				do {
 					try {
-						((ReviewNavigatorActionGroup)R4EUIModelController.getNavigatorView().
-								getActionSet()).addReviewItemCommand();
+						((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).addReviewItemCommand();
 					} catch (ExecutionException e) {
 						Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 						Activator.getDefault().logError("Exception: " + e.toString(), e);
@@ -256,7 +251,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 						Activator.getDefault().logError("Exception: " + e.toString(), e);
 					}
 				} while (!navigator.selectChange(true));
-				
+
 				//Close the editor
 				IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				activePage.closeEditor(activePage.getActiveEditor(), false);
@@ -267,12 +262,13 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			addedItems.add(uiReviewItem.getItem());
 			final R4EReview review = uiReview.getReview();
 			if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-				if (((R4EFormalReview)review).getCurrent().getType().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+				if (((R4EFormalReview) review).getCurrent()
+						.getType()
+						.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 					MailServicesProxy.sendItemsAddedNotification(addedItems);
 				}
 			}
-			
+
 		} catch (final ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
 		} catch (final ReviewsFileStorageException e) {

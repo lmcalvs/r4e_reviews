@@ -55,107 +55,107 @@ public class RuleViolationInputDialog extends FormDialog {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * Field ADD_RULE_VIOLATION_DIALOG_TITLE.
-	 * (value is ""Enter Rule Violation Details"")
+	 * Field ADD_RULE_VIOLATION_DIALOG_TITLE. (value is ""Enter Rule Violation Details"")
 	 */
 	private static final String ADD_RULE_VIOLATION_DIALOG_TITLE = "Enter Rule Violation Details";
-	
+
 	/**
-	 * Field ADD_RULE_VIOLATION_NAME_DIALOG_VALUE.
-	 * (value is ""Rule Violation Name:"")
+	 * Field ADD_RULE_VIOLATION_NAME_DIALOG_VALUE. (value is ""Rule Violation Name:"")
 	 */
 	private static final String ADD_RULE_VIOLATION_NAME_DIALOG_VALUE = "Rule Violation Name:";
-	
+
 	/**
-	 * Field BASIC_PARAMS_HEADER_MSG.
-	 * (value is ""Enter the mandatory basic parameters for this Rule Violation"")
+	 * Field BASIC_PARAMS_HEADER_MSG. (value is ""Enter the mandatory basic parameters for this Rule Violation"")
 	 */
 	private static final String BASIC_PARAMS_HEADER_MSG = "Enter the mandatory basic parameters for this Rule Violation";
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-    
+
 	/**
 	 * Field fNameValue.
 	 */
-    private String fNameValue = "";
+	private String fNameValue = "";
 
 	/**
 	 * Field fVersionInputTextField.
 	 */
-    private Text fNameInputTextField;
-	
-    /**
-     * The input validator, or <code>null</code> if none.
-     */
-    private final IInputValidator fValidator;
-    
-    
+	private Text fNameInputTextField;
+
+	/**
+	 * The input validator, or <code>null</code> if none.
+	 */
+	private final IInputValidator fValidator;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-    
+
 	/**
 	 * Constructor for RuleViolationInputDialog.
-	 * @param aParentShell Shell
+	 * 
+	 * @param aParentShell
+	 *            Shell
 	 */
 	public RuleViolationInputDialog(Shell aParentShell) {
 		super(aParentShell);
 		setBlockOnOpen(true);
 		fValidator = new R4EInputValidator();
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 
-    /**
-     * Method buttonPressed.
-     * @param buttonId int
-     * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
-     */
-    @Override
-	protected void buttonPressed(int buttonId) {
-        if (buttonId == IDialogConstants.OK_ID) {
-	    	this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-	    	
-        	//Validate Name
-        	final String validateResult = validateEmptyInput(fNameInputTextField);
-        	if (null != validateResult) {
-        		//Validation of input failed
-    			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "No input given for Rule Violation Name",
-        				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
-    			dialog.open();
-    			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
-    			return;
-        	}
-        	fNameValue = fNameInputTextField.getText();
-        } else {
-        	fNameValue = null;
-        }
-		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
-        super.buttonPressed(buttonId);
-    }
-    
-    /**
-     * Method configureShell.
-     * @param shell Shell
-     * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
-     */
-    @Override
-	protected void configureShell(Shell shell) {
-        super.configureShell(shell);
-        shell.setText(ADD_RULE_VIOLATION_DIALOG_TITLE);
-    }
-    
 	/**
-	 * Configures the dialog form and creates form content. Clients should
-	 * override this method.
+	 * Method buttonPressed.
+	 * 
+	 * @param buttonId
+	 *            int
+	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
+	 */
+	@Override
+	protected void buttonPressed(int buttonId) {
+		if (buttonId == IDialogConstants.OK_ID) {
+			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+
+			//Validate Name
+			final String validateResult = validateEmptyInput(fNameInputTextField);
+			if (null != validateResult) {
+				//Validation of input failed
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+						"No input given for Rule Violation Name", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+								validateResult, null), IStatus.ERROR);
+				dialog.open();
+				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+				return;
+			}
+			fNameValue = fNameInputTextField.getText();
+		} else {
+			fNameValue = null;
+		}
+		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+		super.buttonPressed(buttonId);
+	}
+
+	/**
+	 * Method configureShell.
+	 * 
+	 * @param shell
+	 *            Shell
+	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
+	 */
+	@Override
+	protected void configureShell(Shell shell) {
+		super.configureShell(shell);
+		shell.setText(ADD_RULE_VIOLATION_DIALOG_TITLE);
+	}
+
+	/**
+	 * Configures the dialog form and creates form content. Clients should override this method.
 	 * 
 	 * @param mform
 	 *            the dialog form
@@ -169,65 +169,68 @@ public class RuleViolationInputDialog extends FormDialog {
 		final Composite composite = sform.getBody();
 		final GridLayout layout = new GridLayout(4, false);
 		composite.setLayout(layout);
-        GridData textGridData = null;
-        
+		GridData textGridData = null;
+
 		//Basic parameters section
-        final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
-        		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-        final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        basicSectionGridData.horizontalSpan = 4;
-        basicSection.setLayoutData(basicSectionGridData);
-        basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
-        basicSection.setDescription(BASIC_PARAMS_HEADER_MSG);
-        basicSection.addExpansionListener(new ExpansionAdapter()
-		{
+		final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION
+				| ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		basicSectionGridData.horizontalSpan = 4;
+		basicSection.setLayoutData(basicSectionGridData);
+		basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
+		basicSection.setDescription(BASIC_PARAMS_HEADER_MSG);
+		basicSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
-			public void expansionStateChanged(ExpansionEvent e){
+			public void expansionStateChanged(ExpansionEvent e) {
 				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
 			}
 		});
-        
-        final Composite basicSectionClient = toolkit.createComposite(basicSection);
-        basicSectionClient.setLayout(layout);
-        basicSection.setClient(basicSectionClient);
-        
-        //Rule Area Name
-        final Label label = toolkit.createLabel(basicSectionClient, ADD_RULE_VIOLATION_NAME_DIALOG_VALUE);
-        label.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
-        label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        fNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
-        textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        textGridData.horizontalSpan = 3;
-        fNameInputTextField.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
-        fNameInputTextField.setLayoutData(textGridData);
-    }
-    
+
+		final Composite basicSectionClient = toolkit.createComposite(basicSection);
+		basicSectionClient.setLayout(layout);
+		basicSection.setClient(basicSectionClient);
+
+		//Rule Area Name
+		final Label label = toolkit.createLabel(basicSectionClient, ADD_RULE_VIOLATION_NAME_DIALOG_VALUE);
+		label.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
+		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+		fNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		fNameInputTextField.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
+		fNameInputTextField.setLayoutData(textGridData);
+	}
+
 	/**
 	 * Method isResizable.
+	 * 
 	 * @return boolean
 	 */
 	@Override
 	protected boolean isResizable() {
 		return true;
 	}
-    
-    /**
-     * Returns the string typed into this input dialog.
-     * @return the version input string
-     */
-    public String getNameValue() {
-        return fNameValue;
-    }
-    
-    /**
-     * Method validateEmptyInput.
-     * @param aText Text
-     * @return String
-     */
-    private String validateEmptyInput(Text aText) {
-        if (null != fValidator) {
-            return fValidator.isValid(aText.getText());
-        }
-        return null;
-    }
+
+	/**
+	 * Returns the string typed into this input dialog.
+	 * 
+	 * @return the version input string
+	 */
+	public String getNameValue() {
+		return fNameValue;
+	}
+
+	/**
+	 * Method validateEmptyInput.
+	 * 
+	 * @param aText
+	 *            Text
+	 * @return String
+	 */
+	private String validateEmptyInput(Text aText) {
+		if (null != fValidator) {
+			return fValidator.isValid(aText.getText());
+		}
+		return null;
+	}
 }

@@ -24,45 +24,41 @@ import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-
 /**
  * The activator class controls the plug-in life cycle
+ * 
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
 public class Activator extends AbstractUIPlugin {
 
-    // ------------------------------------------------------------------------
-    // Constants
-    // ------------------------------------------------------------------------
-	
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+
 	/**
-	 * Field PLUGIN_ID.
-	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui"")
+	 * Field PLUGIN_ID. (value is ""org.eclipse.mylyn.reviews.r4e.ui"")
 	 */
 	public static final String PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.ui"; // The plug-in ID
 
-	
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field Plugin.
 	 */
-	private static Activator Fplugin; 	// The shared instance
-	
-	
+	private static Activator Fplugin; // The shared instance
+
 	/**
 	 * Field Tracer.
 	 */
 	public static Tracer Ftracer;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * The constructor
 	 */
@@ -70,14 +66,15 @@ public class Activator extends AbstractUIPlugin {
 		//Empty constructor
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method start.
-	 * @param aContext BundleContext
+	 * 
+	 * @param aContext
+	 *            BundleContext
 	 * @throws Exception
 	 * @see org.osgi.framework.BundleActivator#start(BundleContext)
 	 */
@@ -92,7 +89,9 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Method stop.
-	 * @param aContext BundleContext
+	 * 
+	 * @param aContext
+	 *            BundleContext
 	 * @throws Exception
 	 * @see org.osgi.framework.BundleActivator#stop(BundleContext)
 	 */
@@ -105,6 +104,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Gets the plugin
+	 * 
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
@@ -113,29 +113,38 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Method logError.
-	 * @param aMsg String
-	 * @param ae Exception
+	 * 
+	 * @param aMsg
+	 *            String
+	 * @param ae
+	 *            Exception
 	 */
 	public void logError(String aMsg, Exception ae) {
 		getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK, aMsg, ae));
 	}
-	
+
 	/**
 	 * Method logWarning.
-	 * @param aMsg String
-	 * @param ae Exception
+	 * 
+	 * @param aMsg
+	 *            String
+	 * @param ae
+	 *            Exception
 	 */
 	public void logWarning(String aMsg, Exception ae) {
 		getLog().log(new Status(IStatus.WARNING, PLUGIN_ID, IStatus.OK, aMsg, ae));
 	}
-	
+
 	/**
 	 * Method logInfo.
-	 * @param aMsg String
-	 * @param ae Exception
+	 * 
+	 * @param aMsg
+	 *            String
+	 * @param ae
+	 *            Exception
 	 */
 	public void logInfo(String aMsg, Exception ae) {
 		getLog().log(new Status(IStatus.INFO, PLUGIN_ID, IStatus.OK, aMsg, ae));
 	}
-	
+
 }

@@ -32,7 +32,7 @@ public class ReviewItemProperties extends ModelElementProperties {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field REVIEW_ITEM_AUTHOR_ID. (value is ""reviewItemElement.author"")
 	 */
@@ -43,7 +43,7 @@ public class ReviewItemProperties extends ModelElementProperties {
 	 */
 	private static final PropertyDescriptor REVIEW_ITEM_AUTHOR_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_ITEM_AUTHOR_ID, R4EUIConstants.AUTHOR_LABEL);
-	
+
 	/**
 	 * Field REVIEW_ITEM_PROJECT_ID. (value is ""reviewItemElement.project"")
 	 */
@@ -54,7 +54,7 @@ public class ReviewItemProperties extends ModelElementProperties {
 	 */
 	private static final PropertyDescriptor REVIEW_ITEM_PROJECT_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_ITEM_PROJECT_ID, R4EUIConstants.PROJECT_LABEL);
-	
+
 	/**
 	 * Field REVIEW_ITEM_DESCRIPTION_ID. (value is ""reviewItemElement.description"")
 	 */
@@ -65,33 +65,34 @@ public class ReviewItemProperties extends ModelElementProperties {
 	 */
 	private static final PropertyDescriptor REVIEW_ITEM_DESCRIPTION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_ITEM_DESCRIPTION_ID, R4EUIConstants.DESCRIPTION_LABEL);
-	
+
 	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { REVIEW_ITEM_AUTHOR_PROPERTY_DESCRIPTOR,
-		REVIEW_ITEM_PROJECT_PROPERTY_DESCRIPTOR, REVIEW_ITEM_DESCRIPTION_PROPERTY_DESCRIPTOR };
-	
-	
+			REVIEW_ITEM_PROJECT_PROPERTY_DESCRIPTOR, REVIEW_ITEM_DESCRIPTION_PROPERTY_DESCRIPTOR };
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for ReviewItemProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public ReviewItemProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------s
-	
+
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
@@ -99,21 +100,23 @@ public class ReviewItemProperties extends ModelElementProperties {
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		return DESCRIPTORS;
 	}
-	
+
 	/**
 	 * Method getPropertyValue.
-	 * @param aId Object
+	 * 
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
 	@Override
 	public Object getPropertyValue(Object aId) {
-		if (REVIEW_ITEM_AUTHOR_ID.equals(aId)) { 
-			return ((R4EUIReviewItem)getElement()).getItem().getAddedById();
+		if (REVIEW_ITEM_AUTHOR_ID.equals(aId)) {
+			return ((R4EUIReviewItem) getElement()).getItem().getAddedById();
 		} else if (REVIEW_ITEM_PROJECT_ID.equals(aId)) {
-			return ((R4EUIReviewItem)getElement()).getItem().getProjectURIs();
+			return ((R4EUIReviewItem) getElement()).getItem().getProjectURIs();
 		} else if (REVIEW_ITEM_DESCRIPTION_ID.equals(aId)) {
-			return ((R4EUIReviewItem)getElement()).getItem().getDescription();
+			return ((R4EUIReviewItem) getElement()).getItem().getDescription();
 		}
 		return null;
 	}

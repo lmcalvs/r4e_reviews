@@ -37,42 +37,46 @@ import org.eclipse.swt.widgets.TreeItem;
  * @version $Revision: 1.0 $
  */
 public class FindUsersTableViewerSorter extends ViewerSorter {
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fColumnIndex.
 	 */
 	private int fColumnIndex = 0;
 
-	
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor
-	 * @param aColumnIndex int
+	 * 
+	 * @param aColumnIndex
+	 *            int
 	 */
 	public FindUsersTableViewerSorter(int aColumnIndex) {
 		super();
 		fColumnIndex = aColumnIndex;
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method compare.
-	 * @param aViewer Viewer
-	 * @param aObj1 Object
-	 * @param aObj2 Object
-	
-	 * @return int */
+	 * 
+	 * @param aViewer
+	 *            Viewer
+	 * @param aObj1
+	 *            Object
+	 * @param aObj2
+	 *            Object
+	 * @return int
+	 */
 	@Override
 	public int compare(Viewer aViewer, Object aObj1, Object aObj2) {
 		if (aViewer instanceof TableViewer) {
@@ -93,7 +97,7 @@ public class FindUsersTableViewerSorter extends ViewerSorter {
 					break;
 				}
 			}
-			
+
 			int order = 0;
 			if (idx1 > -1 && idx2 > -1) {
 				final String str1 = tv.getTable().getItems()[idx1].getText(fColumnIndex);
@@ -143,7 +147,9 @@ public class FindUsersTableViewerSorter extends ViewerSorter {
 
 	/**
 	 * Bind Sorter to tableViewer.
-	 * @param aTableViewer TableViewer
+	 * 
+	 * @param aTableViewer
+	 *            TableViewer
 	 */
 	public static void bind(final TableViewer aTableViewer) {
 		final int numColumns = aTableViewer.getTable().getColumnCount();
@@ -170,7 +176,9 @@ public class FindUsersTableViewerSorter extends ViewerSorter {
 
 	/**
 	 * Bind Sorter to TreeViewer
-	 * @param aTreeViewer TreeViewer
+	 * 
+	 * @param aTreeViewer
+	 *            TreeViewer
 	 */
 	public static void bind(final TreeViewer aTreeViewer) {
 		final int numColumns = aTreeViewer.getTree().getColumnCount();
@@ -197,8 +205,11 @@ public class FindUsersTableViewerSorter extends ViewerSorter {
 
 	/**
 	 * table tree bind to Sorter with a specific column.
-	 * @param aTreeViewer TreeViewer
-	 * @param aColumnNum int
+	 * 
+	 * @param aTreeViewer
+	 *            TreeViewer
+	 * @param aColumnNum
+	 *            int
 	 */
 	public static void bind(final TreeViewer aTreeViewer, final int aColumnNum) {
 		final int maxColumn = aTreeViewer.getTree().getColumnCount();

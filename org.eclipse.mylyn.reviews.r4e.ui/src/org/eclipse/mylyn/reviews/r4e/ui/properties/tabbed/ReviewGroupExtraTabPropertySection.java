@@ -55,45 +55,48 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fAvailableProjects.
 	 */
 	protected EditableListWidget fAvailableProjects = null;
-	
+
 	/**
 	 * Field fAvailableComponents.
 	 */
 	protected EditableListWidget fAvailableComponents = null;
-	
+
 	/**
 	 * Field fDefaultEntryCriteriaText.
 	 */
 	protected Text fDefaultEntryCriteriaText = null;
-	
+
 	/**
 	 * Field fRuleSets.
 	 */
 	protected EditableListWidget fRuleSetLocations = null;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 
 	/**
 	 * Method dispose.
+	 * 
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#dispose()
 	 */
 	@Override
 	public void dispose() {
-		if (null != fAvailableProjects) fAvailableProjects.dispose();
-		if (null != fAvailableComponents)fAvailableComponents.dispose();
+		if (null != fAvailableProjects)
+			fAvailableProjects.dispose();
+		if (null != fAvailableComponents)
+			fAvailableComponents.dispose();
 		super.dispose();
 	}
-	
+
 	/**
 	 * Method shouldUseExtraSpace.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#shouldUseExtraSpace()
 	 */
@@ -101,11 +104,14 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 	public boolean shouldUseExtraSpace() {
 		return true;
 	}
-	
+
 	/**
 	 * Method createControls.
-	 * @param parent Composite
-	 * @param aTabbedPropertySheetPage TabbedPropertySheetPage
+	 * 
+	 * @param parent
+	 *            Composite
+	 * @param aTabbedPropertySheetPage
+	 *            TabbedPropertySheetPage
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(Composite, TabbedPropertySheetPage)
 	 */
 	@Override
@@ -113,55 +119,55 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		super.createControls(parent.getParent(), aTabbedPropertySheetPage);
 
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
-	    final Composite composite = widgetFactory.createFlatFormComposite(parent);
+		final Composite composite = widgetFactory.createFlatFormComposite(parent);
 		FormData data = null;
-		
-	    //Projects
+
+		//Projects
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-        fAvailableProjects = new EditableListWidget(widgetFactory, composite, data, this, 1, Text.class, null);
-        fAvailableProjects.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
+		fAvailableProjects = new EditableListWidget(widgetFactory, composite, data, this, 1, Text.class, null);
+		fAvailableProjects.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
 
-	    final CLabel projectsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AVAILABLE_PROJECTS_LABEL);
+		final CLabel projectsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AVAILABLE_PROJECTS_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fAvailableProjects.getComposite(), -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fAvailableProjects.getComposite(), 0, SWT.TOP);
 		projectsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
-	    projectsLabel.setLayoutData(data);
-	    
-	    //Components
+		projectsLabel.setLayoutData(data);
+
+		//Components
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fAvailableProjects.getComposite(), ITabbedPropertyConstants.VSPACE);
-	    fAvailableComponents = new EditableListWidget(widgetFactory, composite, data, this, 2, Text.class, null);
-	    fAvailableComponents.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
+		fAvailableComponents = new EditableListWidget(widgetFactory, composite, data, this, 2, Text.class, null);
+		fAvailableComponents.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
 
-	    final CLabel componentsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AVAILABLE_COMPONENTS_LABEL);
+		final CLabel componentsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AVAILABLE_COMPONENTS_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fAvailableComponents.getComposite(), -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fAvailableComponents.getComposite(), 0, SWT.TOP);
 		componentsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
-	    componentsLabel.setLayoutData(data);
-	    
-	    //Entry Criteria
-	    fDefaultEntryCriteriaText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
+		componentsLabel.setLayoutData(data);
+
+		//Entry Criteria
+		fDefaultEntryCriteriaText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fAvailableComponents.getComposite(), ITabbedPropertyConstants.VSPACE);
 		fDefaultEntryCriteriaText.setToolTipText(R4EUIConstants.REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP);
 		fDefaultEntryCriteriaText.setLayoutData(data);
-	    fDefaultEntryCriteriaText.addFocusListener(new FocusListener() {		
+		fDefaultEntryCriteriaText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getReviewGroup();
+						final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
 						modelGroup.setDefaultEntryCriteria(fDefaultEntryCriteriaText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -172,20 +178,22 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 					}
 				}
 			}
+
 			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
-	    UIUtils.addTabbedPropertiesTextResizeListener(fDefaultEntryCriteriaText);
-	    
-	    final CLabel entryCriteriaLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DEFAULT_ENTRY_CRITERIA_LABEL);
+		UIUtils.addTabbedPropertiesTextResizeListener(fDefaultEntryCriteriaText);
+
+		final CLabel entryCriteriaLabel = widgetFactory.createCLabel(composite,
+				R4EUIConstants.DEFAULT_ENTRY_CRITERIA_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fDefaultEntryCriteriaText, -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fDefaultEntryCriteriaText, 0, SWT.TOP);
 		entryCriteriaLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP);
 		entryCriteriaLabel.setLayoutData(data);
-		
+
 		//Rule Sets
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
@@ -194,58 +202,60 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		fRuleSetLocations = new EditableListWidget(widgetFactory, composite, data, this, 3, CCombo.class, null);
 		fRuleSetLocations.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
 
-	    final CLabel ruleSetsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RULE_SETS_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fRuleSetLocations.getComposite(), -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fRuleSetLocations.getComposite(), 0, SWT.TOP);
-	    ruleSetsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
-	    ruleSetsLabel.setLayoutData(data);
-	    
+		final CLabel ruleSetsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RULE_SETS_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fRuleSetLocations.getComposite(), -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fRuleSetLocations.getComposite(), 0, SWT.TOP);
+		ruleSetsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
+		ruleSetsLabel.setLayoutData(data);
 
 	}
-	
+
 	/**
 	 * Method refresh.
+	 * 
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#refresh()
 	 */
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getGroup();
-	
+		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getGroup();
+
 		final String[] projects = (String[]) modelGroup.getAvailableProjects().toArray();
 		fAvailableProjects.clearAll();
 		Item item = null;
 		String project = null;
-		
+
 		for (int i = 0; i < projects.length; i++) {
 			project = projects[i];
 			if (i >= fAvailableProjects.getItemCount()) {
-				item = fAvailableProjects.addItem(); 
+				item = fAvailableProjects.addItem();
 			} else {
 				item = fAvailableProjects.getItem(i);
-				if (null == item) item = fAvailableProjects.addItem(); 
+				if (null == item)
+					item = fAvailableProjects.addItem();
 			}
 			item.setText(project);
 		}
-		
+
 		final String[] components = (String[]) modelGroup.getAvailableComponents().toArray();
 		fAvailableComponents.clearAll();
 		String component = null;
 		for (int i = 0; i < components.length; i++) {
-		    component = components[i];
+			component = components[i];
 			if (i >= fAvailableComponents.getItemCount()) {
 				item = fAvailableComponents.addItem();
 			} else {
 				item = fAvailableComponents.getItem(i);
-				if (null == item) item = fAvailableComponents.addItem();
+				if (null == item)
+					item = fAvailableComponents.addItem();
 			}
 			item.setText(component);
 		}
 		fDefaultEntryCriteriaText.setText(modelGroup.getDefaultEntryCriteria());
-		
-		final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement)((R4EUIReviewGroup)fProperties.getElement()).getParent()).getRuleSets();
+
+		final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement) ((R4EUIReviewGroup) fProperties.getElement()).getParent()).getRuleSets();
 		final List<String> ruleSetLocations = new ArrayList<String>();
 		for (R4EUIRuleSet uiRuleSet : uiRuleSets) {
 			if (uiRuleSet.isEnabled()) {
@@ -270,7 +280,8 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 				item = fRuleSetLocations.addItem();
 			} else {
 				item = fRuleSetLocations.getItem(i);
-				if (null == item) item = fRuleSetLocations.addItem();
+				if (null == item)
+					item = fRuleSetLocations.addItem();
 			}
 			item.setText(ruleSet);
 		}
@@ -278,13 +289,13 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
-	
+
 	/**
 	 * Method setEnabledFields.
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReviewGroup)fProperties.getElement()).isOpen())) {
+		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReviewGroup) fProperties.getElement()).isOpen())) {
 			fAvailableProjects.setEnabled(false);
 			fAvailableComponents.setEnabled(false);
 			fDefaultEntryCriteriaText.setEnabled(false);
@@ -299,8 +310,11 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 
 	/**
 	 * Method itemsUpdated.
-	 * @param aItems Item[]
-	 * @param aInstanceId int
+	 * 
+	 * @param aItems
+	 *            Item[]
+	 * @param aInstanceId
+	 *            int
 	 * @see org.eclipse.ui.utils.IEditableListListener#itemsUpdated(Item[] aItems)
 	 */
 	public void itemsUpdated(Item[] aItems, int aInstanceId) {
@@ -308,7 +322,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		try {
 			if (!fRefreshInProgress) {
 				final String currentUser = R4EUIModelController.getReviewer();
-				final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getReviewGroup();
+				final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
 				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
 				if (1 == aInstanceId) {
 					//First widget: available projects
@@ -328,21 +342,19 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 					//Third widget: applied Rule Sets
 					final EList<String> ruleSetLocations = modelGroup.getDesignRuleLocations();
 					ruleSetLocations.clear();
-					((R4EUIReviewGroup)fProperties.getElement()).getRuleSets().clear();
+					((R4EUIReviewGroup) fProperties.getElement()).getRuleSets().clear();
 					for (Item item : aItems) {
 						ruleSetLocations.add(item.getText());
 						//Update references in R4EUIReviewGroup
-						for (R4EUIRuleSet ruleSet : ((R4EUIRootElement)((R4EUIReviewGroup)fProperties.getElement()).getParent()).getRuleSets())
-						{
+						for (R4EUIRuleSet ruleSet : ((R4EUIRootElement) ((R4EUIReviewGroup) fProperties.getElement()).getParent()).getRuleSets()) {
 							if ((ruleSet.getRuleSet().eResource().getURI().toFileString()).equals(item.getText())) {
 								ruleSet.close();
 								ruleSet.open();
-								((R4EUIReviewGroup)fProperties.getElement()).getRuleSets().add(ruleSet);
+								((R4EUIReviewGroup) fProperties.getElement()).getRuleSets().add(ruleSet);
 								break;
 							}
 						}
 					}
-					
 
 				}
 				R4EUIModelController.FResourceUpdater.checkIn(bookNum);

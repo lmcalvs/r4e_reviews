@@ -59,11 +59,13 @@ public class RestoreElementHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
-	 * @return Object 
+	 * 
+	 * @param event
+	 *            ExecutionEvent
+	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
@@ -83,24 +85,23 @@ public class RestoreElementHandler extends AbstractHandler {
 					review = R4EUIModelController.getActiveReview().getReview();
 				}
 				final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
-				for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator();
-					 iterator.hasNext();) {
+				for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
 					try {
 						element = (IR4EUIModelElement) iterator.next();
 						Activator.Ftracer.traceInfo("Restore element " + element.getName());
 						element.setEnabled(true);
 						if (element instanceof R4EUIReviewBasic) {
 							if (null != R4EUIModelController.getActiveReview()) {
-								R4EUIModelController.getActiveReview().close();  //Only one review open at any given time
+								R4EUIModelController.getActiveReview().close(); //Only one review open at any given time
 							}
 						}
 						element.open();
-						R4EUIModelController.getNavigatorView().getTreeViewer().refresh();  //TODO temporary fix to restore element properly
+						R4EUIModelController.getNavigatorView().getTreeViewer().refresh(); //TODO temporary fix to restore element properly
 
 						if (element instanceof R4EUIReviewItem) {
-							addedItems.add(((R4EUIReviewItem)element).getItem());
+							addedItems.add(((R4EUIReviewItem) element).getItem());
 						} else if (element instanceof R4EUISelection) {
-							addedItems.add(((R4EUISelection)element).getSelection());
+							addedItems.add(((R4EUISelection) element).getSelection());
 						}
 
 					} catch (ResourceHandlingException e) {
@@ -117,7 +118,9 @@ public class RestoreElementHandler extends AbstractHandler {
 				//Send email notification if needed
 				if (null != review) {
 					if (0 < addedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-						if (((R4EFormalReview)review).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+						if (((R4EFormalReview) review).getCurrent()
+								.getType()
+								.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 							try {
 								MailServicesProxy.sendItemsAddedNotification(addedItems);
 							} catch (CoreException e) {

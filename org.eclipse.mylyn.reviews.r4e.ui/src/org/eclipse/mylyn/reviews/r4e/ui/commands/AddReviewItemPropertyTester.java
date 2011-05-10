@@ -51,10 +51,15 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 
 	/**
 	 * Method test.
-	 * @param receiver Object
-	 * @param property String
-	 * @param args Object[]
-	 * @param expectedValue Object
+	 * 
+	 * @param receiver
+	 *            Object
+	 * @param property
+	 *            String
+	 * @param args
+	 *            Object[]
+	 * @param expectedValue
+	 *            Object
 	 * @return boolean
 	 * @see org.eclipse.core.expressions.IPropertyTester#test(Object, String, Object[], Object)
 	 */
@@ -62,29 +67,33 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 
 		//Command is disabled if the review is completed
 		final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
-		if (null == activeReview || activeReview.isReviewed()) return false;
+		if (null == activeReview || activeReview.isReviewed())
+			return false;
 
 		//Check if command is enabled based on input
 		if (receiver instanceof AbstractSet) {
-			final Iterator<?> iterator = ((AbstractSet<?>)receiver).iterator();
+			final Iterator<?> iterator = ((AbstractSet<?>) receiver).iterator();
 			if (iterator.next() instanceof TextSelection) {
-				if (!(isR4EEditorInputAvailable())) return false;
+				if (!(isR4EEditorInputAvailable()))
+					return false;
 			}
 		}
 		//This happens when the command is selected from the outline view on an external or workspace file
 		if (receiver instanceof AbstractList) {
-			final Iterator<?> iterator = ((AbstractList<?>)receiver).iterator();
+			final Iterator<?> iterator = ((AbstractList<?>) receiver).iterator();
 			if (!iterator.hasNext()) {
-				if (!(isR4EEditorInputAvailable())) return false;
+				if (!(isR4EEditorInputAvailable()))
+					return false;
 			} else {
 				final Object obj = iterator.next();
-				if (obj instanceof org.eclipse.jdt.core.ISourceReference || 
-						obj instanceof org.eclipse.cdt.core.model.ISourceReference) {
-					if (!(isR4EEditorInputAvailable())) return false;
+				if (obj instanceof org.eclipse.jdt.core.ISourceReference
+						|| obj instanceof org.eclipse.cdt.core.model.ISourceReference) {
+					if (!(isR4EEditorInputAvailable()))
+						return false;
 				}
 			}
 		}
-		
+
 		//For formal reviews, review items can only be added by reveiwers in the planning and preparation phase
 		if (activeReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 			R4EParticipant reviewer = null;
@@ -94,22 +103,27 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 				UIUtils.displayResourceErrorDialog(e);
 				return false;
 			}
-			if (null == reviewer) return false;
+			if (null == reviewer)
+				return false;
 
-			if (((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
-				if (!(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)) && !(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR)) && 
-						!(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER))) {
+			if (((R4EReviewState) activeReview.getReview().getState()).getState().equals(
+					R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
+				if (!(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD))
+						&& !(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR))
+						&& !(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER))) {
 					return false;
 				}
-			} else if (!((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+			} else if (!((R4EReviewState) activeReview.getReview().getState()).getState().equals(
+					R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Method isR4EEditorInputAvailable.
+	 * 
 	 * @return boolean
 	 */
 	private boolean isR4EEditorInputAvailable() {
@@ -121,23 +135,25 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 				editorInput = page.getActiveEditor().getEditorInput();
 				//Single editor
 				if (editorInput instanceof R4EFileRevisionEditorInput) {
-					if (null == ((R4EFileRevisionEditorInput)editorInput).getFileVersion().getResource()) {
-						return false;   //No valid target
+					if (null == ((R4EFileRevisionEditorInput) editorInput).getFileVersion().getResource()) {
+						return false; //No valid target
 					}
-					final R4EItem parentItem = 
-						((R4EItem)((R4EFileRevisionEditorInput)editorInput).getFileVersion().eContainer().eContainer());
+					final R4EItem parentItem = ((R4EItem) ((R4EFileRevisionEditorInput) editorInput).getFileVersion()
+							.eContainer()
+							.eContainer());
 					if (null != parentItem.getRepositoryRef()) {
-						return false;  //Cannot add review item on a commit
+						return false; //Cannot add review item on a commit
 					}
 				} else if (editorInput instanceof R4EFileEditorInput) {
-					final R4EItem parentItem = 
-						((R4EItem)((R4EFileEditorInput)editorInput).getFileVersion().eContainer().eContainer());
+					final R4EItem parentItem = ((R4EItem) ((R4EFileEditorInput) editorInput).getFileVersion()
+							.eContainer()
+							.eContainer());
 					if (null != parentItem.getRepositoryRef()) {
-						return false;  //Cannot add review item on a commit
+						return false; //Cannot add review item on a commit
 					}
 					//Compare editor
 				} else if (editorInput instanceof R4ECompareEditorInput) {
-					final ITypedElement targetElement = ((R4ECompareEditorInput)editorInput).getLeftElement();
+					final ITypedElement targetElement = ((R4ECompareEditorInput) editorInput).getLeftElement();
 					if (null == targetElement) {
 						return false;
 					}

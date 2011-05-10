@@ -34,7 +34,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-		
+
 	/**
 	 * Field ANOMALY_STATE_ID. (value is ""anomalyElement.state"")
 	 */
@@ -45,7 +45,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 */
 	protected static final ComboBoxPropertyDescriptor ANOMALY_STATE_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
 			ANOMALY_STATE_ID, R4EUIConstants.STATE_LABEL, R4EUIAnomalyExtended.getStates());
-	
+
 	/**
 	 * Field ANOMALY_DUE_DATE_ID. (value is ""anomalyElement.dueDate"")
 	 */
@@ -56,7 +56,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 */
 	protected static final PropertyDescriptor ANOMALY_DUE_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_DUE_DATE_ID, R4EUIConstants.DUE_DATE_LABEL);
-	
+
 	/**
 	 * Field ANOMALY_CLASS_ID. (value is ""anomalyElement.class"")
 	 */
@@ -67,7 +67,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 */
 	protected static final ComboBoxPropertyDescriptor ANOMALY_CLASS_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
 			ANOMALY_CLASS_ID, R4EUIConstants.CLASS_LABEL, UIUtils.getRanks());
-	
+
 	/**
 	 * Field ANOMALY_RANK_ID. (value is ""anomalyElement.rank"")
 	 */
@@ -78,7 +78,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 */
 	protected static final ComboBoxPropertyDescriptor ANOMALY_RANK_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
 			ANOMALY_RANK_ID, R4EUIConstants.RANK_LABEL, UIUtils.getRanks());
-	
+
 	/**
 	 * Field ANOMALY_RULE_ID_ID. (value is ""anomalyElement.ruleId"")
 	 */
@@ -89,7 +89,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 */
 	protected static final PropertyDescriptor ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_RULE_ID_ID, R4EUIConstants.RULE_ID_LABEL);
-	
+
 	/**
 	 * Field ANOMALY_NOT_ACCEPTED_REASON_ID. (value is ""anomalyElement.notAcceptedReason"")
 	 */
@@ -100,7 +100,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 */
 	protected static final PropertyDescriptor ANOMALY_NOT_ACCEPTED_REASON_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_NOT_ACCEPTED_REASON_ID, R4EUIConstants.NOT_ACCEPTED_REASON_LABEL);
-	
+
 	/**
 	 * Field ANOMALY_DECIDED_BY_ID. (value is ""anomalyElement.decidedBy"")
 	 */
@@ -111,7 +111,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 */
 	protected static final PropertyDescriptor ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_DECIDED_BY_ID, R4EUIConstants.DECIDED_BY_LABEL);
-	
+
 	/**
 	 * Field ANOMALY_FIXED_BY_ID. (value is ""anomalyElement.fixedBy"")
 	 */
@@ -122,7 +122,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 */
 	protected static final PropertyDescriptor ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_FIXED_BY_ID, R4EUIConstants.FIXED_BY_LABEL);
-	
+
 	/**
 	 * Field ANOMALY_FOLLOWUP_BY_ID. (value is ""anomalyElement.followupBy"")
 	 */
@@ -133,39 +133,39 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 */
 	protected static final PropertyDescriptor ANOMALY_FOLLOWUP_BY_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_FOLLOWUP_BY_ID, R4EUIConstants.FOLLOWUP_BY_LABEL);
-	
+
 	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { ANOMALY_TITLE_PROPERTY_DESCRIPTOR,
-		ANOMALY_POSITION_PROPERTY_DESCRIPTOR, ANOMALY_AUTHOR_PROPERTY_DESCRIPTOR,  
-		ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR, ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR,
-		ANOMALY_STATE_PROPERTY_DESCRIPTOR, ANOMALY_DUE_DATE_PROPERTY_DESCRIPTOR,
-		ANOMALY_CLASS_PROPERTY_DESCRIPTOR, ANOMALY_RANK_PROPERTY_DESCRIPTOR,
-		ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR, ANOMALY_NOT_ACCEPTED_REASON_PROPERTY_DESCRIPTOR, 
-		ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR, ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR, 
-		ANOMALY_FOLLOWUP_BY_PROPERTY_DESCRIPTOR};
-	
-	
+			ANOMALY_POSITION_PROPERTY_DESCRIPTOR, ANOMALY_AUTHOR_PROPERTY_DESCRIPTOR,
+			ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR, ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR,
+			ANOMALY_STATE_PROPERTY_DESCRIPTOR, ANOMALY_DUE_DATE_PROPERTY_DESCRIPTOR, ANOMALY_CLASS_PROPERTY_DESCRIPTOR,
+			ANOMALY_RANK_PROPERTY_DESCRIPTOR, ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR,
+			ANOMALY_NOT_ACCEPTED_REASON_PROPERTY_DESCRIPTOR, ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR,
+			ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR, ANOMALY_FOLLOWUP_BY_PROPERTY_DESCRIPTOR };
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for AnomalyProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public AnomalyExtraProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
@@ -173,51 +173,53 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		return DESCRIPTORS;
 	}
-	
+
 	/**
 	 * Method getPropertyValue.
 	 * 
-	 * @param aId Object
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
 	@Override
 	public Object getPropertyValue(Object aId) {
 		final Object result = super.getPropertyValue(aId);
-		if (null != result) return result;
-		if (ANOMALY_STATE_ID.equals(aId)) { 
-			return Integer.valueOf(((R4EUIAnomalyExtended)getElement()).getAnomaly().getState().getValue());
-		} else if (ANOMALY_DUE_DATE_ID.equals(aId)) { 
-			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate()) {
-				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDueDate().toString();
+		if (null != result)
+			return result;
+		if (ANOMALY_STATE_ID.equals(aId)) {
+			return Integer.valueOf(((R4EUIAnomalyExtended) getElement()).getAnomaly().getState().getValue());
+		} else if (ANOMALY_DUE_DATE_ID.equals(aId)) {
+			if (null != ((R4EUIAnomalyExtended) getElement()).getAnomaly().getDueDate()) {
+				return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getDueDate().toString();
 			}
 		} else if (ANOMALY_CLASS_ID.equals(aId)) {
-			R4ECommentType type = (R4ECommentType)((R4EUIAnomalyExtended)getElement()).getAnomaly().getType();
+			R4ECommentType type = (R4ECommentType) ((R4EUIAnomalyExtended) getElement()).getAnomaly().getType();
 			if (null != type) {
 				return Integer.valueOf(type.getType().getValue());
 			}
-		} else if (ANOMALY_RANK_ID.equals(aId)) { 
-			return Integer.valueOf(((R4EUIAnomalyExtended)getElement()).getAnomaly().getRank().getValue());
-		} else if (ANOMALY_RULE_ID_ID.equals(aId)) { 
-			return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getRuleID();
-		} else if (ANOMALY_NOT_ACCEPTED_REASON_ID.equals(aId)) { 
-			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getNotAcceptedReason()) {
-				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getNotAcceptedReason();
+		} else if (ANOMALY_RANK_ID.equals(aId)) {
+			return Integer.valueOf(((R4EUIAnomalyExtended) getElement()).getAnomaly().getRank().getValue());
+		} else if (ANOMALY_RULE_ID_ID.equals(aId)) {
+			return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getRuleID();
+		} else if (ANOMALY_NOT_ACCEPTED_REASON_ID.equals(aId)) {
+			if (null != ((R4EUIAnomalyExtended) getElement()).getAnomaly().getNotAcceptedReason()) {
+				return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getNotAcceptedReason();
 			}
 			return "";
 		} else if (ANOMALY_DECIDED_BY_ID.equals(aId)) {
-			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDecidedByID()) {
-				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getDecidedByID();
+			if (null != ((R4EUIAnomalyExtended) getElement()).getAnomaly().getDecidedByID()) {
+				return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getDecidedByID();
 			}
 			return "";
 		} else if (ANOMALY_FIXED_BY_ID.equals(aId)) {
-			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFixedByID()) {
-				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFixedByID();
+			if (null != ((R4EUIAnomalyExtended) getElement()).getAnomaly().getFixedByID()) {
+				return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getFixedByID();
 			}
 			return "";
-		} else if (ANOMALY_FOLLOWUP_BY_ID.equals(aId)) { 
-			if (null != ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFollowUpByID()) {	
-				return ((R4EUIAnomalyExtended)getElement()).getAnomaly().getFollowUpByID();
+		} else if (ANOMALY_FOLLOWUP_BY_ID.equals(aId)) {
+			if (null != ((R4EUIAnomalyExtended) getElement()).getAnomaly().getFollowUpByID()) {
+				return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getFollowUpByID();
 			}
 			return "";
 		}

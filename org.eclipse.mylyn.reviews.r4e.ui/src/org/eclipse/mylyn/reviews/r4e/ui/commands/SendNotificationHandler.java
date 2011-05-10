@@ -47,28 +47,33 @@ public class SendNotificationHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
-	 * @return Object 
+	 * 
+	 * @param event
+	 *            ExecutionEvent
+	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
 	public Object execute(ExecutionEvent event) {
-		
-		Object source = ((EvaluationContext)event.getApplicationContext()).getDefaultVariable();
+
+		Object source = ((EvaluationContext) event.getApplicationContext()).getDefaultVariable();
 		Object obj = null;
 		if (source instanceof List) {
-			if (((List<?>)source).size() > 0) {
-				source = ((List<?>)source).get(0);  //If this is a list, get first element
-				if (source instanceof AbstractSet){
-					final Iterator<?> iterator = ((AbstractSet<?>)source).iterator();
+			if (((List<?>) source).size() > 0) {
+				source = ((List<?>) source).get(0); //If this is a list, get first element
+				if (source instanceof AbstractSet) {
+					final Iterator<?> iterator = ((AbstractSet<?>) source).iterator();
 					obj = iterator.next();
 				}
 			} else {
 				//empty selection, try to get active editor selection
-				final IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor(); // $codepro.audit.disable methodChainLength
+				final IEditorPart editorPart = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow()
+						.getActivePage()
+						.getActiveEditor(); // $codepro.audit.disable methodChainLength
 
 				//Try to get the active editor highlighted range and set it as the editor's selection
 				if (null != editorPart) {
@@ -80,8 +85,8 @@ public class SendNotificationHandler extends AbstractHandler {
 		}
 		R4EUIModelController.setDialogOpen(true);
 		//if the source is Review element, all options are available.  O(therwise, only ask questions is supported
-		final SendNotificationInputDialog dialog = new SendNotificationInputDialog(R4EUIModelController.getNavigatorView().
-				getSite().getWorkbenchWindow().getShell(), obj);
+		final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
+				R4EUIModelController.getNavigatorView().getSite().getWorkbenchWindow().getShell(), obj);
 		dialog.create();
 		final int result = dialog.open();
 		if (result == Window.OK) {
@@ -89,34 +94,34 @@ public class SendNotificationHandler extends AbstractHandler {
 
 			try {
 				switch (messageType) {
-					case R4EUIConstants.MESSAGE_TYPE_ITEMS_READY:
-						//Send review items ready notification
-						MailServicesProxy.sendItemsReadyNotification();
-						break;
-					case R4EUIConstants.MESSAGE_TYPE_PROGRESS:
-						//Send progress notification
-						MailServicesProxy.sendProgressNotification();
-						break;
-					case R4EUIConstants.MESSAGE_TYPE_COMPLETION:
-						//Send completion notification
-						MailServicesProxy.sendCompletionNotification();
-						break;
-					case R4EUIConstants.MESSAGE_TYPE_QUESTION:
-						//Send question
-						MailServicesProxy.sendQuestion(obj);
-						break;
-					default:
-						//Do nothing, should never happen
+				case R4EUIConstants.MESSAGE_TYPE_ITEMS_READY:
+					//Send review items ready notification
+					MailServicesProxy.sendItemsReadyNotification();
+					break;
+				case R4EUIConstants.MESSAGE_TYPE_PROGRESS:
+					//Send progress notification
+					MailServicesProxy.sendProgressNotification();
+					break;
+				case R4EUIConstants.MESSAGE_TYPE_COMPLETION:
+					//Send completion notification
+					MailServicesProxy.sendCompletionNotification();
+					break;
+				case R4EUIConstants.MESSAGE_TYPE_QUESTION:
+					//Send question
+					MailServicesProxy.sendQuestion(obj);
+					break;
+				default:
+					//Do nothing, should never happen
 				}
 			} catch (CoreException e) {
 				UIUtils.displayCoreErrorDialog(e);
 			} catch (ResourceHandlingException e) {
 				UIUtils.displayResourceErrorDialog(e);
 			} finally {
-				R4EUIModelController.setDialogOpen(false);	
+				R4EUIModelController.setDialogOpen(false);
 			}
-		}  //else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);	
+		} //else Window.CANCEL
+		R4EUIModelController.setDialogOpen(false);
 		return null;
 	}
 }

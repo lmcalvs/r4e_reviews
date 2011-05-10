@@ -47,11 +47,13 @@ public class AddChildElementHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
-	 * @return Object 
+	 * 
+	 * @param event
+	 *            ExecutionEvent
+	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
@@ -69,7 +71,7 @@ public class AddChildElementHandler extends AbstractHandler {
 					Activator.Ftracer.traceInfo("Adding child to element " + element.getName());
 
 					//Create actual model element
-					newElement = element.createChildren(tempModelComponent);	
+					newElement = element.createChildren(tempModelComponent);
 					if (null != newElement) {
 						//Set focus to newly created element and open it
 						viewer.expandToLevel(newElement, AbstractTreeViewer.ALL_LEVELS);
@@ -79,7 +81,7 @@ public class AddChildElementHandler extends AbstractHandler {
 			}
 		} catch (ResourceHandlingException e) {
 			UIUtils.displayResourceErrorDialog(e);
-			
+
 			//Remove object if partially created
 			try {
 				element.removeChildren(newElement, true);
@@ -88,7 +90,7 @@ public class AddChildElementHandler extends AbstractHandler {
 			} catch (OutOfSyncException e1) {
 				UIUtils.displaySyncErrorDialog(e1);
 			}
-			
+
 		} catch (OutOfSyncException e) {
 			UIUtils.displaySyncErrorDialog(e);
 
@@ -99,36 +101,38 @@ public class AddChildElementHandler extends AbstractHandler {
 				UIUtils.displayResourceErrorDialog(e1);
 			} catch (OutOfSyncException e1) {
 				UIUtils.displaySyncErrorDialog(e1);
-			}		
+			}
 		}
-		
+
 		try {
-			final IEvaluationService evService = 
-				(IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(event).getService(IEvaluationService.class);
+			final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(event)
+					.getService(IEvaluationService.class);
 			evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen");
 		} catch (ExecutionException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Method getParentElement.
-	 * @param event ExecutionEvent
-	 * @return IR4EUIModelElement 
+	 * 
+	 * @param event
+	 *            ExecutionEvent
+	 * @return IR4EUIModelElement
 	 */
 	private IR4EUIModelElement getParentElement(ExecutionEvent event) {
-		
-		final Widget triggerObject = ((Event)event.getTrigger()).widget;
+
+		final Widget triggerObject = ((Event) event.getTrigger()).widget;
 		IR4EUIModelElement element = null;
-		
+
 		if (triggerObject instanceof ToolItem) {
 			//Add element to the root of the tree
 			element = R4EUIModelController.getRootElement();
 		} else {
 			final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 			if (!selection.isEmpty()) {
-			    element = (IR4EUIModelElement)selection.getFirstElement();
+				element = (IR4EUIModelElement) selection.getFirstElement();
 			} else {
 				//Add element to the root of the tree
 				element = R4EUIModelController.getRootElement();

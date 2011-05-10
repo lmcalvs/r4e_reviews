@@ -40,10 +40,12 @@ public class SetFocusFilterHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
+	 * 
+	 * @param event
+	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
@@ -51,17 +53,15 @@ public class SetFocusFilterHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		//We need to preserve the expansion state and restore it afterwards
-	    final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
-		final Object[] elements =  viewer.getExpandedElements();
-		final FocusFilter filter = 
-	    	((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).getFocusFilter();
+		final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
+		final Object[] elements = viewer.getExpandedElements();
+		final FocusFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).getFocusFilter();
 
 		//Set current element as root level for the navigator tree
-		final Command command = event.getCommand(); 
+		final Command command = event.getCommand();
 		boolean oldValue = HandlerUtil.toggleCommandState(command);
 		if (!oldValue) {
-			final IStructuredSelection selection = 
-				(IStructuredSelection) viewer.getSelection();
+			final IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
 			if (null != selection) {
 				final IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
 				if (null != element) {
@@ -76,7 +76,7 @@ public class SetFocusFilterHandler extends AbstractHandler {
 			viewer.removeFilter(filter);
 			viewer.setInput(R4EUIModelController.getRootElement());
 			if (0 < elements.length) {
-				viewer.expandToLevel(((IR4EUIModelElement)elements[0]).getParent(), AbstractTreeViewer.ALL_LEVELS);
+				viewer.expandToLevel(((IR4EUIModelElement) elements[0]).getParent(), AbstractTreeViewer.ALL_LEVELS);
 			}
 		}
 		return null;

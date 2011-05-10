@@ -52,11 +52,13 @@ public class AddLinkedAnomalyHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
-	 * @return Object 
+	 * 
+	 * @param event
+	 *            ExecutionEvent
+	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
@@ -70,15 +72,14 @@ public class AddLinkedAnomalyHandler extends AbstractHandler {
 
 			//Add a linked anomaly to this selection
 			if (!selection.isEmpty()) {
-				final IR4EUIModelElement element = 
-					((IR4EUIModelElement)((IStructuredSelection) selection).getFirstElement());
+				final IR4EUIModelElement element = ((IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement());
 				if (element instanceof R4EUISelection) {
 					try {
 						Activator.Ftracer.traceInfo("Adding linked anomaly to element " + element.getName());
-						addLinkedAnomaly((R4EUISelection)element);
+						addLinkedAnomaly((R4EUISelection) element);
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);
-					} catch (OutOfSyncException e) {				
+					} catch (OutOfSyncException e) {
 						UIUtils.displaySyncErrorDialog(e);
 					}
 				}
@@ -90,28 +91,33 @@ public class AddLinkedAnomalyHandler extends AbstractHandler {
 
 	/**
 	 * Method addLinkedAnomaly.
-	 * @param aElement R4EUISelection
+	 * 
+	 * @param aElement
+	 *            R4EUISelection
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @throws ReviewVersionsException 
+	 * @throws ReviewVersionsException
 	 */
-	private void addLinkedAnomaly(R4EUISelection aElement) throws ResourceHandlingException, 
-			OutOfSyncException {
-		
-		final R4EUIFileContext fileContext = (R4EUIFileContext)aElement.getParent().getParent();
-		R4EUIAnomalyContainer container = (R4EUIAnomalyContainer)(fileContext.getAnomalyContainerElement());
+	private void addLinkedAnomaly(R4EUISelection aElement) throws ResourceHandlingException, OutOfSyncException {
+
+		final R4EUIFileContext fileContext = (R4EUIFileContext) aElement.getParent().getParent();
+		R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) (fileContext.getAnomalyContainerElement());
 		//Get data from user
 		if (null == container) {
 			container = new R4EUIAnomalyContainer(fileContext, R4EUIConstants.ANOMALIES_LABEL);
 			fileContext.addChildren(container);
 		}
-		
-		final R4EUIAnomalyBasic uiAnomaly = container.createAnomaly(fileContext.getTargetFileVersion(), 
+
+		final R4EUIAnomalyBasic uiAnomaly = container.createAnomaly(fileContext.getTargetFileVersion(),
 				(R4EUITextPosition) aElement.getPosition());
 		if (null != uiAnomaly) {
 			//Set focus to newly created anomaly comment
-			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
-			R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(new StructuredSelection(uiAnomaly), true);
-		}	
+			R4EUIModelController.getNavigatorView()
+					.getTreeViewer()
+					.expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
+			R4EUIModelController.getNavigatorView()
+					.getTreeViewer()
+					.setSelection(new StructuredSelection(uiAnomaly), true);
+		}
 	}
 }

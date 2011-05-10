@@ -36,124 +36,130 @@ public class FilePathEditor extends ListEditor {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Invalid List index
 	 */
 	public static final int INVALID_INDEX = -1;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
-    /**
-     * The last file path, or <code>null if none.
-     */
-    private String fLastFilePath;
-    
-    /**
-     * The files extensions for the file filter, 
-     * or <code>null if none.
-     */
-    private String[] fFileExtensions;
-    
- 
+
+	/**
+	 * The last file path, or <code>null if none.
+	 */
+	private String fLastFilePath;
+
+	/**
+	 * The files extensions for the file filter, or <code>null if none.
+	 */
+	private String[] fFileExtensions;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-    
-    /**
-     * Creates a new file path field editor 
-     */
-    protected FilePathEditor() { // $codepro.audit.disable emptyMethod
-		//Empty constructor
-    }
 
-    /**
-     * Creates a file path field editor.
-     * @param aName - the name of the preference this field editor works on
-     * @param aLabelText - the label text of the field editor
-     * @param aFileExtensions  - the allowable files extensions to use in filter
-     * @param aParent - the parent of the field editor's control
-     */
-	public FilePathEditor(String aName, String aLabelText, String[] aFileExtensions, Composite aParent) {
-        init(aName, aLabelText);
-        fFileExtensions = aFileExtensions.clone();
-        createControl(aParent);
+	/**
+	 * Creates a new file path field editor
+	 */
+	protected FilePathEditor() { // $codepro.audit.disable emptyMethod
+		//Empty constructor
 	}
 
-	
+	/**
+	 * Creates a file path field editor.
+	 * 
+	 * @param aName
+	 *            - the name of the preference this field editor works on
+	 * @param aLabelText
+	 *            - the label text of the field editor
+	 * @param aFileExtensions
+	 *            - the allowable files extensions to use in filter
+	 * @param aParent
+	 *            - the parent of the field editor's control
+	 */
+	public FilePathEditor(String aName, String aLabelText, String[] aFileExtensions, Composite aParent) {
+		init(aName, aLabelText);
+		fFileExtensions = aFileExtensions.clone();
+		createControl(aParent);
+	}
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
-	/**
-	 * Creates a single string from the given array by separating each
-     * string with the appropriate OS-specific path separator.
-     * @param aItems String[]
-     * @return String
-     */
-    @Override
-	protected String createList(String[] aItems) {
-        final StringBuffer path = new StringBuffer("");
 
-        for (String item : aItems) {
-            path.append(item);
-            path.append(File.pathSeparator);
-        }
-        return path.toString();
+	/**
+	 * Creates a single string from the given array by separating each string with the appropriate OS-specific path
+	 * separator.
+	 * 
+	 * @param aItems
+	 *            String[]
+	 * @return String
+	 */
+	@Override
+	protected String createList(String[] aItems) {
+		final StringBuffer path = new StringBuffer("");
+
+		for (String item : aItems) {
+			path.append(item);
+			path.append(File.pathSeparator);
+		}
+		return path.toString();
 	}
 
 	/**
 	 * Creates a new file path element by means of a file dialog.
-     * @return String
-     */
-    @Override
+	 * 
+	 * @return String
+	 */
+	@Override
 	protected String getNewInputObject() {
-        final FileDialog dialog = new FileDialog(getShell());        
-        dialog.setFilterExtensions(fFileExtensions);
+		final FileDialog dialog = new FileDialog(getShell());
+		dialog.setFilterExtensions(fFileExtensions);
 
-        if (null != fLastFilePath) {
-            if (new File(fLastFilePath).exists()) {
+		if (null != fLastFilePath) {
+			if (new File(fLastFilePath).exists()) {
 				dialog.setFilterPath(fLastFilePath);
 			}
-        }
-        String file = dialog.open();
-        if (null != file) {
-        	file = file.trim();
-            if (0 == file.length()) {
+		}
+		String file = dialog.open();
+		if (null != file) {
+			file = file.trim();
+			if (0 == file.length()) {
 				return null;
+			} else if (getList().indexOf(file) != INVALID_INDEX) {
+				return null; //duplicate entries
 			}
-            else if (getList().indexOf(file) != INVALID_INDEX) {
-            	return null;   //duplicate entries
-            }
-            fLastFilePath = file;
-        }
-        return file;
+			fLastFilePath = file;
+		}
+		return file;
 	}
 
 	/**
-     * Method parseString.
-     * @param aStringList String
-     * @return String[]
-     */
-    @Override
+	 * Method parseString.
+	 * 
+	 * @param aStringList
+	 *            String
+	 * @return String[]
+	 */
+	@Override
 	protected String[] parseString(String aStringList) {
-        final StringTokenizer st = new StringTokenizer(aStringList, File.pathSeparator + 
-        		System.getProperty("line.separator"));
-        final ArrayList<String> stringArray = new ArrayList<String>();
-        while (st.hasMoreElements()) {
-        	stringArray.add((String) st.nextElement());
-        }
-        return stringArray.toArray(new String[stringArray.size()]);
-	}  
+		final StringTokenizer st = new StringTokenizer(aStringList, File.pathSeparator
+				+ System.getProperty("line.separator"));
+		final ArrayList<String> stringArray = new ArrayList<String>();
+		while (st.hasMoreElements()) {
+			stringArray.add((String) st.nextElement());
+		}
+		return stringArray.toArray(new String[stringArray.size()]);
+	}
 
-    /**
-     * Method getSelection.
-     * @return String
-     */
-    public String getSelection() {
-    	return getList().getSelection()[0];
-    }
+	/**
+	 * Method getSelection.
+	 * 
+	 * @return String
+	 */
+	public String getSelection() {
+		return getList().getSelection()[0];
+	}
 }

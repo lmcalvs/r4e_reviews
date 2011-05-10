@@ -43,7 +43,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class RefreshHandler extends AbstractHandler  {
+public class RefreshHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -51,7 +51,9 @@ public class RefreshHandler extends AbstractHandler  {
 
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
+	 * 
+	 * @param event
+	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
@@ -63,16 +65,15 @@ public class RefreshHandler extends AbstractHandler  {
 			try {
 				if (!selection.isEmpty()) {
 
-					final IR4EUIModelElement element = 
-						(IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+					final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
 					if (element instanceof R4EUIReviewGroup) {
 						//Refresh whole Review Group
-						((R4EUIReviewGroup)element).close();
-						((R4EUIReviewGroup)element).open();
+						((R4EUIReviewGroup) element).close();
+						((R4EUIReviewGroup) element).open();
 					} else {
 						//Refresh Review
 						refreshReview(element);
-					}		
+					}
 				} else {
 					//No selection refresh all open review groups
 					final IR4EUIModelElement[] groups = R4EUIModelController.getRootElement().getChildren();
@@ -97,16 +98,18 @@ public class RefreshHandler extends AbstractHandler  {
 
 	/**
 	 * Method refreshReview.
-	 * @param element IR4EUIModelElement
+	 * 
+	 * @param element
+	 *            IR4EUIModelElement
 	 */
 	private void refreshReview(IR4EUIModelElement element) {
 		IR4EUIModelElement refreshElement = element;
-		
+
 		try {
 			while (null != refreshElement && !(refreshElement instanceof R4EUIReviewBasic)) {
 				refreshElement = refreshElement.getParent();
 			}
-			
+
 			if (null != refreshElement && refreshElement.isOpen()) {
 				refreshElement.close();
 				refreshElement.open();
@@ -120,8 +123,9 @@ public class RefreshHandler extends AbstractHandler  {
 		} catch (FileNotFoundException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "File not found error detected while refreshing review item ",
-    				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+					"File not found error detected while refreshing review item ", new Status(IStatus.ERROR,
+							Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 			dialog.open();
 		}
 	}

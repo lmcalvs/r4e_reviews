@@ -69,107 +69,113 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
  * @version $Revision: 1.0 $
  */
 public class ReviewBasicTabPropertySection extends ModelElementTabPropertySection {
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fNameText.
 	 */
 	private CLabel fNameText = null;
-	
+
 	/**
 	 * Field fPhaseCombo.
 	 */
 	protected CCombo fPhaseCombo = null;
-	
+
 	/**
 	 * Field fStartDateText.
 	 */
 	private CLabel fStartDateText = null;
-	
+
 	/**
 	 * Field fEndDateText.
 	 */
 	private CLabel fEndDateText = null;
-	
+
 	/**
 	 * Field fDescriptionText.
 	 */
 	protected Text fDescriptionText = null;
-	
+
 	/**
 	 * Field fColumnPhase.
 	 */
 	protected TableColumn fColumnPhase = null;
+
 	/**
 	 * Field fColumnOwner.
 	 */
 	protected TableColumn fColumnOwner = null;
+
 	/**
 	 * Field fColumnStartDate.
 	 */
 	protected TableColumn fColumnStartDate = null;
+
 	/**
 	 * Field fColumnEndDate.
 	 */
 	protected TableColumn fColumnEndDate = null;
-	
+
 	/**
 	 * Field fDescriptionText.
 	 */
 	protected Table fPhaseTable = null;
-	
+
 	/**
 	 * Field fPhaseMapLabel.
 	 */
 	private CLabel fPhaseMapLabel = null;
-	
+
 	/**
 	 * Field fPhasePlanning.
 	 */
 	private TableItem fPhasePlanning = null;
-	
+
 	/**
 	 * Field fPhasePreparation.
 	 */
 	private TableItem fPhasePreparation = null;
-	
+
 	/**
 	 * Field fPhaseDecision.
 	 */
 	private TableItem fPhaseDecision = null;
-	
+
 	/**
 	 * Field fPhaseRework.
 	 */
 	private TableItem fPhaseRework = null;
-	
+
 	/**
 	 * Field fPlanningPhaseOwnerCombo.
 	 */
 	protected CCombo fPlanningPhaseOwnerCombo = null;
+
 	/**
 	 * Field fPreparationPhaseOwnerCombo.
 	 */
 	protected CCombo fPreparationPhaseOwnerCombo = null;
+
 	/**
 	 * Field fDecisionPhaseOwnerCombo.
 	 */
 	protected CCombo fDecisionPhaseOwnerCombo = null;
+
 	/**
 	 * Field fReworkPhaseOwnerCombo.
 	 */
 	protected CCombo fReworkPhaseOwnerCombo = null;
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method shouldUseExtraSpace.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#shouldUseExtraSpace()
 	 */
@@ -177,11 +183,14 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	public boolean shouldUseExtraSpace() {
 		return true;
 	}
-	
+
 	/**
 	 * Method createControls.
-	 * @param parent Composite
-	 * @param aTabbedPropertySheetPage TabbedPropertySheetPage
+	 * 
+	 * @param parent
+	 *            Composite
+	 * @param aTabbedPropertySheetPage
+	 *            TabbedPropertySheetPage
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(Composite, TabbedPropertySheetPage)
 	 */
 	@Override
@@ -191,186 +200,190 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 		//Tell element to build its own detailed tab layout
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
 		final Composite mainForm = widgetFactory.createFlatFormComposite(parent);
-	    FormData data = null;
-	   
-	    //Review Name (read-only for now)
-	    fNameText = widgetFactory.createCLabel(mainForm, "");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-	    fNameText.setToolTipText(R4EUIConstants.REVIEW_NAME_TOOLTIP);
-	    fNameText.setLayoutData(data);
-		
-	    final CLabel nameLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.NAME_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fNameText, 0, SWT.TOP);
-	    nameLabel.setToolTipText(R4EUIConstants.REVIEW_NAME_TOOLTIP);
-	    nameLabel.setLayoutData(data);
-	    
-    	//Phase
-	    fPhaseCombo = widgetFactory.createCCombo(mainForm, SWT.READ_ONLY);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
-	    fPhaseCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_TOOLTIP);
-	    fPhaseCombo.setLayoutData(data);
-	    fPhaseCombo.addSelectionListener(new SelectionListener() {
-	    	public void widgetSelected(SelectionEvent e) {
+		FormData data = null;
+
+		//Review Name (read-only for now)
+		fNameText = widgetFactory.createCLabel(mainForm, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fNameText.setToolTipText(R4EUIConstants.REVIEW_NAME_TOOLTIP);
+		fNameText.setLayoutData(data);
+
+		final CLabel nameLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.NAME_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fNameText, 0, SWT.TOP);
+		nameLabel.setToolTipText(R4EUIConstants.REVIEW_NAME_TOOLTIP);
+		nameLabel.setLayoutData(data);
+
+		//Phase
+		fPhaseCombo = widgetFactory.createCCombo(mainForm, SWT.READ_ONLY);
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+		fPhaseCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_TOOLTIP);
+		fPhaseCombo.setLayoutData(data);
+		fPhaseCombo.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
 				final AtomicReference<String> aResultMsg = new AtomicReference<String>(null);
 				R4EReviewPhase phase = null;
 				if (fProperties.getElement() instanceof R4EUIReviewExtended) {
-					phase = ((R4EUIReviewExtended)fProperties.getElement()).getPhaseFromString(fPhaseCombo.getText());
+					phase = ((R4EUIReviewExtended) fProperties.getElement()).getPhaseFromString(fPhaseCombo.getText());
 				} else {
-					phase = ((R4EUIReviewBasic)fProperties.getElement()).getPhaseFromString(fPhaseCombo.getText());
+					phase = ((R4EUIReviewBasic) fProperties.getElement()).getPhaseFromString(fPhaseCombo.getText());
 				}
-				if (((R4EUIReviewBasic)fProperties.getElement()).validatePhaseChange(phase, aResultMsg)) {
-	    			if (!fRefreshInProgress) {
-	    				if (null != aResultMsg.get()) {
-	    					final ErrorDialog dialog = new ErrorDialog(null, "Warning", aResultMsg.get(),
-				    			new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, null, null), IStatus.WARNING);
-	    					dialog.open();
-	    				}
-	    				try {
-	    					if (fProperties.getElement() instanceof R4EUIReviewExtended) {
-	    						((R4EUIReviewExtended)fProperties.getElement()).updatePhase(phase);
-	    						R4EFormalReview review = 
-	    							((R4EFormalReview)((R4EUIReviewExtended)fProperties.getElement()).getReview());
-	    						if (review.getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION) &&
-	    								null == review.getActiveMeeting()) {
-    					    		MailServicesProxy.sendMeetingRequest();
-	    						}
-	    					} else {
-	    						((R4EUIReviewBasic)fProperties.getElement()).updatePhase(phase);
-	    					}
-	    					//Set end date when the review is completed
-	    					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-	    						R4EUIModelController.getActiveReview().getReview().setEndDate(
-	    								Calendar.getInstance().getTime());
-	    					} else {
-	    						R4EUIModelController.getActiveReview().getReview().setEndDate(null);
-	    					}
-	    				} catch (ResourceHandlingException e1) {
-	    					UIUtils.displayResourceErrorDialog(e1);
-	    				} catch (OutOfSyncException e1) {
-	    					UIUtils.displaySyncErrorDialog(e1);
+				if (((R4EUIReviewBasic) fProperties.getElement()).validatePhaseChange(phase, aResultMsg)) {
+					if (!fRefreshInProgress) {
+						if (null != aResultMsg.get()) {
+							final ErrorDialog dialog = new ErrorDialog(null, "Warning", aResultMsg.get(), new Status(
+									IStatus.WARNING, Activator.PLUGIN_ID, 0, null, null), IStatus.WARNING);
+							dialog.open();
+						}
+						try {
+							if (fProperties.getElement() instanceof R4EUIReviewExtended) {
+								((R4EUIReviewExtended) fProperties.getElement()).updatePhase(phase);
+								R4EFormalReview review = ((R4EFormalReview) ((R4EUIReviewExtended) fProperties.getElement()).getReview());
+								if (review.getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
+										&& null == review.getActiveMeeting()) {
+									MailServicesProxy.sendMeetingRequest();
+								}
+							} else {
+								((R4EUIReviewBasic) fProperties.getElement()).updatePhase(phase);
+							}
+							//Set end date when the review is completed
+							if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+								R4EUIModelController.getActiveReview()
+										.getReview()
+										.setEndDate(Calendar.getInstance().getTime());
+							} else {
+								R4EUIModelController.getActiveReview().getReview().setEndDate(null);
+							}
+						} catch (ResourceHandlingException e1) {
+							UIUtils.displayResourceErrorDialog(e1);
+						} catch (OutOfSyncException e1) {
+							UIUtils.displaySyncErrorDialog(e1);
 						} finally {
 							R4EUIModelController.setDialogOpen(false);
 						}
-	    			}
-	    		} else {
-	    			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.REVIEW_NOT_COMPLETED_ERROR, "Review phase cannot be changed",
-			    			new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, aResultMsg.get(), null), IStatus.ERROR);
-			    	dialog.open();
-	    		}
-    			refresh();
-	    	}
+					}
+				} else {
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.REVIEW_NOT_COMPLETED_ERROR,
+							"Review phase cannot be changed", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+									aResultMsg.get(), null), IStatus.ERROR);
+					dialog.open();
+				}
+				refresh();
+			}
+
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 				//No implementation needed
 			}
 		});
-	    
-	    final CLabel phaseLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.PHASE_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fPhaseCombo, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fPhaseCombo, 0, SWT.CENTER);
-	    phaseLabel.setToolTipText(R4EUIConstants.REVIEW_PHASE_TOOLTIP);
-	    phaseLabel.setLayoutData(data);
-	    
-	    //Review Start Date (read-only)
-	    fStartDateText = widgetFactory.createCLabel(mainForm, "");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fPhaseCombo, ITabbedPropertyConstants.VSPACE);
-	    fStartDateText.setToolTipText(R4EUIConstants.REVIEW_START_DATE_TOOLTIP);
-	    fStartDateText.setLayoutData(data);
 
-	    final CLabel startDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.START_DATE_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fStartDateText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fStartDateText, 0, SWT.TOP);
-	    startDateLabel.setToolTipText(R4EUIConstants.REVIEW_START_DATE_TOOLTIP);
-	    startDateLabel.setLayoutData(data);
-	
-	    //End Date (read-only)
-	    fEndDateText = widgetFactory.createCLabel(mainForm, "");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fStartDateText, ITabbedPropertyConstants.VSPACE);
-	    fEndDateText.setToolTipText(R4EUIConstants.REVIEW_END_DATE_TOOLTIP);
-	    fEndDateText.setLayoutData(data);
+		final CLabel phaseLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.PHASE_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fPhaseCombo, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fPhaseCombo, 0, SWT.CENTER);
+		phaseLabel.setToolTipText(R4EUIConstants.REVIEW_PHASE_TOOLTIP);
+		phaseLabel.setLayoutData(data);
 
-	    final CLabel endDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.END_DATE_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fEndDateText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fEndDateText, 0, SWT.TOP);
-	    endDateLabel.setToolTipText(R4EUIConstants.REVIEW_END_DATE_TOOLTIP);
-	    endDateLabel.setLayoutData(data);
-	    
-	    //Review Description
-	    fDescriptionText = widgetFactory.createText(mainForm, "", SWT.MULTI | SWT.BORDER);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fEndDateText, ITabbedPropertyConstants.VSPACE);
-	    fDescriptionText.setToolTipText(R4EUIConstants.REVIEW_DESCRIPTION_TOOLTIP);
-	    fDescriptionText.setLayoutData(data);
-	    fDescriptionText.addFocusListener(new FocusListener() {		
+		//Review Start Date (read-only)
+		fStartDateText = widgetFactory.createCLabel(mainForm, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fPhaseCombo, ITabbedPropertyConstants.VSPACE);
+		fStartDateText.setToolTipText(R4EUIConstants.REVIEW_START_DATE_TOOLTIP);
+		fStartDateText.setLayoutData(data);
+
+		final CLabel startDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.START_DATE_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fStartDateText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fStartDateText, 0, SWT.TOP);
+		startDateLabel.setToolTipText(R4EUIConstants.REVIEW_START_DATE_TOOLTIP);
+		startDateLabel.setLayoutData(data);
+
+		//End Date (read-only)
+		fEndDateText = widgetFactory.createCLabel(mainForm, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fStartDateText, ITabbedPropertyConstants.VSPACE);
+		fEndDateText.setToolTipText(R4EUIConstants.REVIEW_END_DATE_TOOLTIP);
+		fEndDateText.setLayoutData(data);
+
+		final CLabel endDateLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.END_DATE_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fEndDateText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fEndDateText, 0, SWT.TOP);
+		endDateLabel.setToolTipText(R4EUIConstants.REVIEW_END_DATE_TOOLTIP);
+		endDateLabel.setLayoutData(data);
+
+		//Review Description
+		fDescriptionText = widgetFactory.createText(mainForm, "", SWT.MULTI | SWT.BORDER);
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fEndDateText, ITabbedPropertyConstants.VSPACE);
+		fDescriptionText.setToolTipText(R4EUIConstants.REVIEW_DESCRIPTION_TOOLTIP);
+		fDescriptionText.setLayoutData(data);
+		fDescriptionText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EReview modelReview = ((R4EUIReviewBasic)fProperties.getElement()).getReview();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-	    				modelReview.setExtraNotes(fDescriptionText.getText());
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+						modelReview.setExtraNotes(fDescriptionText.getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
 			}
+
 			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
-	    UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
+		UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
 
-	    final CLabel descriptionLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.DESCRIPTION_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fDescriptionText, 0, SWT.TOP);
-	    descriptionLabel.setToolTipText(R4EUIConstants.REVIEW_DESCRIPTION_TOOLTIP);
-	    descriptionLabel.setLayoutData(data);
-	    
-	    //Review Phase Table (formal reviews only)
-	    fPhaseTable = widgetFactory.createTable(mainForm, SWT.HIDE_SELECTION);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
-	    fPhaseTable.setHeaderVisible(true);
-	    fPhaseTable.setToolTipText(R4EUIConstants.REVIEW_PHASE_TABLE_TOOLTIP);
-	    fPhaseTable.setLayoutData(data);
-	    fPhaseTable.addSelectionListener(new SelectionListener() {
+		final CLabel descriptionLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.DESCRIPTION_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fDescriptionText, 0, SWT.TOP);
+		descriptionLabel.setToolTipText(R4EUIConstants.REVIEW_DESCRIPTION_TOOLTIP);
+		descriptionLabel.setLayoutData(data);
+
+		//Review Phase Table (formal reviews only)
+		fPhaseTable = widgetFactory.createTable(mainForm, SWT.HIDE_SELECTION);
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
+		fPhaseTable.setHeaderVisible(true);
+		fPhaseTable.setToolTipText(R4EUIConstants.REVIEW_PHASE_TABLE_TOOLTIP);
+		fPhaseTable.setLayoutData(data);
+		fPhaseTable.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				fPhaseTable.deselectAll();
 			}
+
 			public void widgetDefaultSelected(SelectionEvent e) {
 				//Nothing to do
 			}
 		});
-		
+
 		fColumnPhase = new TableColumn(fPhaseTable, SWT.LEFT, 0);
 		fColumnOwner = new TableColumn(fPhaseTable, SWT.LEFT, 1);
 		fColumnStartDate = new TableColumn(fPhaseTable, SWT.LEFT, 2);
@@ -387,132 +400,132 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 		fPhasePreparation.setText(0, R4EUIConstants.PHASE_PREPARATION_LABEL);
 		fPhaseDecision.setText(0, R4EUIConstants.PHASE_DECISION_LABEL);
 		fPhaseRework.setText(0, R4EUIConstants.PHASE_REWORK_LABEL);
-		
-	    fPhaseMapLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.PHASE_MAP_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fPhaseTable, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fPhaseTable, 0, SWT.TOP);
-	    fPhaseMapLabel.setToolTipText(R4EUIConstants.REVIEW_PHASE_TABLE_TOOLTIP);
-	    fPhaseMapLabel.setLayoutData(data);
-	    
-	    //Add Control for planning phase owner
-	    fPlanningPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
-	    fPlanningPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
+
+		fPhaseMapLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.PHASE_MAP_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fPhaseTable, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fPhaseTable, 0, SWT.TOP);
+		fPhaseMapLabel.setToolTipText(R4EUIConstants.REVIEW_PHASE_TABLE_TOOLTIP);
+		fPhaseMapLabel.setLayoutData(data);
+
+		//Add Control for planning phase owner
+		fPlanningPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
+		fPlanningPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
 		fPlanningPhaseOwnerCombo.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				//Nothing to do
 			}
 
 			public void focusLost(FocusEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-	    				final R4EReview modelReview = ((R4EUIReviewExtended)fProperties.getElement()).getReview();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-	    				((R4EFormalReview)modelReview).getCurrent().setPhaseOwnerID(
-	    						(fPlanningPhaseOwnerCombo).getText());
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
-	    		refresh();
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EReview modelReview = ((R4EUIReviewExtended) fProperties.getElement()).getReview();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+						((R4EFormalReview) modelReview).getCurrent().setPhaseOwnerID(
+								(fPlanningPhaseOwnerCombo).getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
+				refresh();
 			}
 		});
 		final TableEditor planningEditor = new TableEditor(fPhaseTable);
 		planningEditor.grabHorizontal = true;
 		planningEditor.grabVertical = true;
 		planningEditor.setEditor(fPlanningPhaseOwnerCombo, fPhasePlanning, 1);
-		
-	    //Add Controls for preparation phase owner
-	    fPreparationPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
-	    fPreparationPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
+
+		//Add Controls for preparation phase owner
+		fPreparationPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
+		fPreparationPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
 		fPreparationPhaseOwnerCombo.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				//Nothing to do
 			}
 
 			public void focusLost(FocusEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-	    				final R4EReview modelReview = ((R4EUIReviewExtended)fProperties.getElement()).getReview();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-	    				((R4EFormalReview)modelReview).getCurrent().setPhaseOwnerID(
-	    						(fPreparationPhaseOwnerCombo).getText());
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
-	    		refresh();
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EReview modelReview = ((R4EUIReviewExtended) fProperties.getElement()).getReview();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+						((R4EFormalReview) modelReview).getCurrent().setPhaseOwnerID(
+								(fPreparationPhaseOwnerCombo).getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
+				refresh();
 			}
 		});
 		final TableEditor preparationEditor = new TableEditor(fPhaseTable);
 		preparationEditor.grabHorizontal = true;
 		preparationEditor.grabVertical = true;
 		preparationEditor.setEditor(fPreparationPhaseOwnerCombo, fPhasePreparation, 1);
-		
-	    //Add Controls for decision phase owner
-	    fDecisionPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
-	    fDecisionPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
-	    fDecisionPhaseOwnerCombo.addFocusListener(new FocusListener() {
+
+		//Add Controls for decision phase owner
+		fDecisionPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
+		fDecisionPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
+		fDecisionPhaseOwnerCombo.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				//Nothing to do
 			}
 
 			public void focusLost(FocusEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-	    				final R4EReview modelReview = ((R4EUIReviewExtended)fProperties.getElement()).getReview();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-	    				((R4EFormalReview)modelReview).getCurrent().setPhaseOwnerID(
-	    						(fDecisionPhaseOwnerCombo).getText());
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
-	    		refresh();
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EReview modelReview = ((R4EUIReviewExtended) fProperties.getElement()).getReview();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+						((R4EFormalReview) modelReview).getCurrent().setPhaseOwnerID(
+								(fDecisionPhaseOwnerCombo).getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
+				refresh();
 			}
 		});
 		final TableEditor decisionEditor = new TableEditor(fPhaseTable);
 		decisionEditor.grabHorizontal = true;
 		decisionEditor.grabVertical = true;
 		decisionEditor.setEditor(fDecisionPhaseOwnerCombo, fPhaseDecision, 1);
-		
-	    //Add Controls for rework phase owner
-	    fReworkPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
-	    fReworkPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
-	    fReworkPhaseOwnerCombo.addFocusListener(new FocusListener() {
+
+		//Add Controls for rework phase owner
+		fReworkPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
+		fReworkPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
+		fReworkPhaseOwnerCombo.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				//Nothing to do
 			}
 
 			public void focusLost(FocusEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-	    				final R4EReview modelReview = ((R4EUIReviewExtended)fProperties.getElement()).getReview();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-	    				((R4EFormalReview)modelReview).getCurrent().setPhaseOwnerID(
-	    						(fReworkPhaseOwnerCombo).getText());
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
-	    		refresh();
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EReview modelReview = ((R4EUIReviewExtended) fProperties.getElement()).getReview();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+						((R4EFormalReview) modelReview).getCurrent()
+								.setPhaseOwnerID((fReworkPhaseOwnerCombo).getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
+				refresh();
 			}
 		});
 		final TableEditor reworkEditor = new TableEditor(fPhaseTable);
@@ -520,9 +533,10 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 		reworkEditor.grabVertical = true;
 		reworkEditor.setEditor(fReworkPhaseOwnerCombo, fPhaseRework, 1);
 	}
-	
+
 	/**
 	 * Method refresh.
+	 * 
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#refresh()
 	 */
 	@Override
@@ -530,10 +544,10 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 		fRefreshInProgress = true;
 		final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
 		if (fProperties.getElement() instanceof R4EUIReviewExtended) {
-			final R4EUIReviewExtended uiReview = (R4EUIReviewExtended)fProperties.getElement();
+			final R4EUIReviewExtended uiReview = (R4EUIReviewExtended) fProperties.getElement();
 			final R4EFormalReview modelReview = (R4EFormalReview) uiReview.getReview();
 			fPhaseCombo.setItems(uiReview.getAvailablePhases());
-			fPhaseCombo.select(uiReview.mapPhaseToIndex(((R4EReviewState)modelReview.getState()).getState()));
+			fPhaseCombo.select(uiReview.mapPhaseToIndex(((R4EReviewState) modelReview.getState()).getState()));
 			fNameText.setText(modelReview.getName());
 			fStartDateText.setText(dateFormat.format(modelReview.getStartDate()));
 			if (null == modelReview.getEndDate()) {
@@ -542,25 +556,28 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 				fEndDateText.setText(dateFormat.format(modelReview.getEndDate()));
 			}
 			fDescriptionText.setText(modelReview.getExtraNotes());
-			final int columnWidth = fPhaseTable.getClientArea().width/fPhaseTable.getColumnCount();
+			final int columnWidth = fPhaseTable.getClientArea().width / fPhaseTable.getColumnCount();
 			fColumnPhase.setWidth(columnWidth);
 			fColumnOwner.setWidth(columnWidth);
 			fColumnStartDate.setWidth(columnWidth);
 			fColumnEndDate.setWidth(columnWidth);
-			
-	    	final List<R4EParticipant> participants = ((R4EUIReviewBasic)fProperties.getElement()).getParticipants();
-	    	final List<String> participantsList = new ArrayList<String>();
-	    	for (R4EParticipant participant : participants) {
-	    		participantsList.add(participant.getId());
-	    	}
+
+			final List<R4EParticipant> participants = ((R4EUIReviewBasic) fProperties.getElement()).getParticipants();
+			final List<String> participantsList = new ArrayList<String>();
+			for (R4EParticipant participant : participants) {
+				participantsList.add(participant.getId());
+			}
 			final String[] participantsStr = participantsList.toArray(new String[participantsList.size()]);
-			
+
 			R4EReviewPhaseInfo phaseInfo = uiReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
 			final R4EReviewPhaseInfo currentPhaseInfo = modelReview.getCurrent();
 			if (null != phaseInfo) {
 				fPhasePlanning.setText(1, phaseInfo.getPhaseOwnerID());
-				fPhasePlanning.setText(2, (null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
-				fPhasePlanning.setText(3, (null != phaseInfo.getEndDate()) ? dateFormat.format(phaseInfo.getEndDate()) : "");
+				fPhasePlanning.setText(2,
+						(null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
+				fPhasePlanning.setText(3, (null != phaseInfo.getEndDate())
+						? dateFormat.format(phaseInfo.getEndDate())
+						: "");
 				if (currentPhaseInfo.getType().equals(phaseInfo.getType())) {
 					fPhasePlanning.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN));
 					fPhasePreparation.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
@@ -571,14 +588,17 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 					fDecisionPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 					fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 					fPlanningPhaseOwnerCombo.setItems(participantsStr);
-					fPlanningPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex((modelReview).getCurrent().getPhaseOwnerID()));
+					fPlanningPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex((modelReview).getCurrent()
+							.getPhaseOwnerID()));
 				}
 			}
 			phaseInfo = uiReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
 			if (null != phaseInfo) {
 				fPhasePreparation.setText(1, phaseInfo.getPhaseOwnerID());
-				fPhasePreparation.setText(2, (null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
-				fPhasePreparation.setText(3, (null != phaseInfo.getEndDate()) ? dateFormat.format(phaseInfo.getEndDate()) : "");
+				fPhasePreparation.setText(2,
+						(null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
+				fPhasePreparation.setText(3,
+						(null != phaseInfo.getEndDate()) ? dateFormat.format(phaseInfo.getEndDate()) : "");
 				if (currentPhaseInfo.getType().equals(phaseInfo.getType())) {
 					fPhasePlanning.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
 					fPhasePreparation.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN));
@@ -589,14 +609,18 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 					fDecisionPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 					fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 					fPreparationPhaseOwnerCombo.setItems(participantsStr);
-					fPreparationPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex((modelReview).getCurrent().getPhaseOwnerID()));
+					fPreparationPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex((modelReview).getCurrent()
+							.getPhaseOwnerID()));
 				}
 			}
 			phaseInfo = uiReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
 			if (null != phaseInfo) {
 				fPhaseDecision.setText(1, phaseInfo.getPhaseOwnerID());
-				fPhaseDecision.setText(2, (null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
-				fPhaseDecision.setText(3, (null != phaseInfo.getEndDate()) ? dateFormat.format(phaseInfo.getEndDate()) : "");
+				fPhaseDecision.setText(2,
+						(null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
+				fPhaseDecision.setText(3, (null != phaseInfo.getEndDate())
+						? dateFormat.format(phaseInfo.getEndDate())
+						: "");
 				if (currentPhaseInfo.getType().equals(phaseInfo.getType())) {
 					fPhasePlanning.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
 					fPhasePreparation.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
@@ -607,14 +631,18 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 					fDecisionPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN));
 					fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 					fDecisionPhaseOwnerCombo.setItems(participantsStr);
-					fDecisionPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex((modelReview).getCurrent().getPhaseOwnerID()));
+					fDecisionPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex((modelReview).getCurrent()
+							.getPhaseOwnerID()));
 				}
 			}
 			phaseInfo = uiReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
 			if (null != phaseInfo) {
 				fPhaseRework.setText(1, phaseInfo.getPhaseOwnerID());
-				fPhaseRework.setText(2, (null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
-				fPhaseRework.setText(3, (null != phaseInfo.getEndDate()) ? dateFormat.format(phaseInfo.getEndDate()) : "");
+				fPhaseRework.setText(2,
+						(null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
+				fPhaseRework.setText(3, (null != phaseInfo.getEndDate())
+						? dateFormat.format(phaseInfo.getEndDate())
+						: "");
 				if (currentPhaseInfo.getType().equals(phaseInfo.getType())) {
 					fPhasePlanning.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
 					fPhasePreparation.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
@@ -625,7 +653,8 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 					fDecisionPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
 					fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN));
 					fReworkPhaseOwnerCombo.setItems(participantsStr);
-					fReworkPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex((modelReview).getCurrent().getPhaseOwnerID()));
+					fReworkPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex((modelReview).getCurrent()
+							.getPhaseOwnerID()));
 				}
 			}
 			phaseInfo = uiReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
@@ -641,13 +670,12 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 					fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
 				}
 			}
-			
-			
+
 		} else {
-			final R4EUIReviewBasic uiReview = (R4EUIReviewBasic)fProperties.getElement();
+			final R4EUIReviewBasic uiReview = (R4EUIReviewBasic) fProperties.getElement();
 			final R4EReview modelReview = uiReview.getReview();
 			fPhaseCombo.setItems(uiReview.getAvailablePhases());
-			fPhaseCombo.select(uiReview.mapPhaseToIndex(((R4EReviewState)modelReview.getState()).getState()));
+			fPhaseCombo.select(uiReview.mapPhaseToIndex(((R4EReviewState) modelReview.getState()).getState()));
 			fNameText.setText(modelReview.getName());
 			fStartDateText.setText(dateFormat.format(modelReview.getStartDate()));
 			if (null == modelReview.getEndDate()) {
@@ -668,13 +696,13 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReviewBasic)fProperties.getElement()).isOpen())) {
+		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReviewBasic) fProperties.getElement()).isOpen())) {
 			fNameText.setEnabled(false);
 			fPhaseCombo.setEnabled(false);
 			fDescriptionText.setEnabled(false);
 			fStartDateText.setEnabled(false);
 			fEndDateText.setEnabled(false);
-			
+
 			if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 				fPhaseTable.setEnabled(false);
 				fPlanningPhaseOwnerCombo.setEnabled(false);
@@ -687,7 +715,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 				fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
 				fPhaseTable.setVisible(true);
 				fPhaseMapLabel.setVisible(true);
-				setPhaseControlVisibility();	
+				setPhaseControlVisibility();
 			} else {
 				fPhaseTable.setVisible(false);
 				fPhaseMapLabel.setVisible(false);
@@ -721,51 +749,51 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 			}
 		}
 	}
-	
+
 	/**
 	 * Method setPhaseControlVisibility.
 	 */
 	private void setPhaseControlVisibility() {
-		final R4EReviewPhase currentPhase = ((R4EFormalReview)((R4EUIReviewExtended)fProperties.getElement()).
-				getReview()).getCurrent().getType();
+		final R4EReviewPhase currentPhase = ((R4EFormalReview) ((R4EUIReviewExtended) fProperties.getElement()).getReview()).getCurrent()
+				.getType();
 		switch (currentPhase.getValue()) {
-			case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:
-				fPlanningPhaseOwnerCombo.setVisible(true);
-				fPreparationPhaseOwnerCombo.setVisible(false);
-				fDecisionPhaseOwnerCombo.setVisible(false);
-				fReworkPhaseOwnerCombo.setVisible(false);
-				break;
+		case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:
+			fPlanningPhaseOwnerCombo.setVisible(true);
+			fPreparationPhaseOwnerCombo.setVisible(false);
+			fDecisionPhaseOwnerCombo.setVisible(false);
+			fReworkPhaseOwnerCombo.setVisible(false);
+			break;
 
-			case R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION_VALUE:
-				fPreparationPhaseOwnerCombo.setVisible(true);
-				fPlanningPhaseOwnerCombo.setVisible(false);
-				fDecisionPhaseOwnerCombo.setVisible(false);
-				fReworkPhaseOwnerCombo.setVisible(false);
-				break;
+		case R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION_VALUE:
+			fPreparationPhaseOwnerCombo.setVisible(true);
+			fPlanningPhaseOwnerCombo.setVisible(false);
+			fDecisionPhaseOwnerCombo.setVisible(false);
+			fReworkPhaseOwnerCombo.setVisible(false);
+			break;
 
-			case R4EReviewPhase.R4E_REVIEW_PHASE_DECISION_VALUE:
-				fDecisionPhaseOwnerCombo.setVisible(true);
-				fPlanningPhaseOwnerCombo.setVisible(false);
-				fPreparationPhaseOwnerCombo.setVisible(false);
-				fReworkPhaseOwnerCombo.setVisible(false);
-				break;
+		case R4EReviewPhase.R4E_REVIEW_PHASE_DECISION_VALUE:
+			fDecisionPhaseOwnerCombo.setVisible(true);
+			fPlanningPhaseOwnerCombo.setVisible(false);
+			fPreparationPhaseOwnerCombo.setVisible(false);
+			fReworkPhaseOwnerCombo.setVisible(false);
+			break;
 
-			case R4EReviewPhase.R4E_REVIEW_PHASE_REWORK_VALUE:
-				fReworkPhaseOwnerCombo.setVisible(true);
-				fPlanningPhaseOwnerCombo.setVisible(false);
-				fPreparationPhaseOwnerCombo.setVisible(false);
-				fDecisionPhaseOwnerCombo.setVisible(false);
-				break;
+		case R4EReviewPhase.R4E_REVIEW_PHASE_REWORK_VALUE:
+			fReworkPhaseOwnerCombo.setVisible(true);
+			fPlanningPhaseOwnerCombo.setVisible(false);
+			fPreparationPhaseOwnerCombo.setVisible(false);
+			fDecisionPhaseOwnerCombo.setVisible(false);
+			break;
 
-			case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
-				fPlanningPhaseOwnerCombo.setVisible(false);
-				fPreparationPhaseOwnerCombo.setVisible(false);
-				fDecisionPhaseOwnerCombo.setVisible(false);
-				fReworkPhaseOwnerCombo.setVisible(false);
-				break;
+		case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
+			fPlanningPhaseOwnerCombo.setVisible(false);
+			fPreparationPhaseOwnerCombo.setVisible(false);
+			fDecisionPhaseOwnerCombo.setVisible(false);
+			fReworkPhaseOwnerCombo.setVisible(false);
+			break;
 
-			default:
-				//should never happen
+		default:
+			//should never happen
 		}
 	}
 }

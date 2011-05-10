@@ -30,32 +30,33 @@ public class ModelElementProperties implements IPropertySource {
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fElement.
 	 */
 	protected final R4EUIModelElement fElement;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for ModelElementProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public ModelElementProperties(R4EUIModelElement aElement) {
 		fElement = aElement;
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getElement.
+	 * 
 	 * @return R4EUIModelElement
 	 */
 	public R4EUIModelElement getElement() {
@@ -64,55 +65,66 @@ public class ModelElementProperties implements IPropertySource {
 
 	/**
 	 * Method getEditableValue.
+	 * 
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getEditableValue()
 	 */
 	public Object getEditableValue() {
-		return null;  //default implementation
+		return null; //default implementation
 	}
 
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
 	public IPropertyDescriptor[] getPropertyDescriptors() {
-		return new IPropertyDescriptor[0];  //default implementation <!-- // $codepro.audit.disable reusableImmutables -->
+		return new IPropertyDescriptor[0]; //default implementation <!-- // $codepro.audit.disable reusableImmutables -->
 	}
 
 	/**
 	 * Method getPropertyValue.
-	 * @param aId Object
+	 * 
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
 	public Object getPropertyValue(Object aId) {
-		return null;  //default implementation
+		return null; //default implementation
 	}
 
 	/**
 	 * Method resetPropertyValue.
-	 * @param id Object
-	 * @see org.eclipse.ui.views.properties.IPropertySource#resetPropertyValue(Object) 
+	 * 
+	 * @param id
+	 *            Object
+	 * @see org.eclipse.ui.views.properties.IPropertySource#resetPropertyValue(Object)
 	 */
 	public void resetPropertyValue(Object id) { // $codepro.audit.disable emptyMethod
-			//default implementation, no properties are resettable
+		//default implementation, no properties are resettable
 	}
 
 	/**
 	 * Method setPropertyValue.
-	 * @param id Object
-	 * @param value Object
+	 * 
+	 * @param id
+	 *            Object
+	 * @param value
+	 *            Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(Object, Object)
 	 */
 	public void setPropertyValue(Object id, Object value) { // $codepro.audit.disable emptyMethod
-		  //default implementation
+		//default implementation
 	}
 
 	/**
 	 * Method isPropertySet.
-	 * @param id Object
-	 * @return boolean 
+	 * 
+	 * @param id
+	 *            Object
+	 * @return boolean
 	 * @see org.eclipse.ui.views.properties.IPropertySource#isPropertySet(Object)
 	 */
 	public boolean isPropertySet(Object id) {

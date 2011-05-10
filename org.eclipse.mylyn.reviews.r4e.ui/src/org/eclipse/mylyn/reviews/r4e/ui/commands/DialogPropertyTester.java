@@ -31,14 +31,18 @@ public class DialogPropertyTester extends PropertyTester {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
-	
+
 	/**
 	 * Method test.
-	 * @param receiver Object
-	 * @param property String
-	 * @param args Object[]
-	 * @param expectedValue Object
+	 * 
+	 * @param receiver
+	 *            Object
+	 * @param property
+	 *            String
+	 * @param args
+	 *            Object[]
+	 * @param expectedValue
+	 *            Object
 	 * @return boolean
 	 * @see org.eclipse.core.expressions.IPropertyTester#test(Object, String, Object[], Object)
 	 */

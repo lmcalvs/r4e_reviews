@@ -37,10 +37,12 @@ public class CloseElementHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
+	 * 
+	 * @param event
+	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
@@ -50,10 +52,9 @@ public class CloseElementHandler extends AbstractHandler {
 		final ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			if (!selection.isEmpty()) {
-				final IR4EUIModelElement element = 
-					(IR4EUIModelElement)((IStructuredSelection) selection).getFirstElement();
+				final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
 				element.close();
-				for (IR4EUIModelElement childElement: element.getChildren()) {
+				for (IR4EUIModelElement childElement : element.getChildren()) {
 					if (null != childElement && childElement.isOpen()) {
 						childElement.close();
 						break;
@@ -62,8 +63,8 @@ public class CloseElementHandler extends AbstractHandler {
 				Activator.Ftracer.traceInfo("Closing element " + element.getName());
 
 				//The action is only performed on the first element, so select it
-				final StructuredSelection newSelection = 
-					new StructuredSelection(((IStructuredSelection) selection).getFirstElement());
+				final StructuredSelection newSelection = new StructuredSelection(
+						((IStructuredSelection) selection).getFirstElement());
 				R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
 			}
 		}

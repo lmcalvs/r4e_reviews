@@ -42,25 +42,27 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
  * @version $Revision: 1.0 $
  */
 public class RuleViolationTabPropertySection extends ModelElementTabPropertySection {
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fNameText.
 	 */
 	protected CLabel fNameText = null;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method createControls.
-	 * @param parent Composite
-	 * @param aTabbedPropertySheetPage TabbedPropertySheetPage
+	 * 
+	 * @param parent
+	 *            Composite
+	 * @param aTabbedPropertySheetPage
+	 *            TabbedPropertySheetPage
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(Composite, TabbedPropertySheetPage)
 	 */
 	@Override
@@ -70,62 +72,64 @@ public class RuleViolationTabPropertySection extends ModelElementTabPropertySect
 		//Tell element to build its own detailed tab layout
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
 		final Composite composite = widgetFactory.createFlatFormComposite(parent);
-	    FormData data = null;
-	   
-	    //Name
-	    fNameText = widgetFactory.createCLabel(composite, "");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-	    fNameText.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
-	    fNameText.setLayoutData(data);
-	    fNameText.addFocusListener(new FocusListener() {		
+		FormData data = null;
+
+		//Name
+		fNameText = widgetFactory.createCLabel(composite, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fNameText.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
+		fNameText.setLayoutData(data);
+		fNameText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EDesignRuleViolation modelViolation = ((R4EUIRuleViolation)fProperties.getElement()).getViolation();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelViolation, currentUser);
-	    				modelViolation.setName(fNameText.getText());
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EDesignRuleViolation modelViolation = ((R4EUIRuleViolation) fProperties.getElement()).getViolation();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelViolation, currentUser);
+						modelViolation.setName(fNameText.getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
 			}
+
 			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
-	    
-	    final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.NAME_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
-	    nameLabel.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
-	    nameLabel.setLayoutData(data);
+
+		final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.NAME_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
+		nameLabel.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
+		nameLabel.setLayoutData(data);
 	}
 
 	/**
 	 * Method refresh.
+	 * 
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#refresh()
 	 */
 	@Override
 	public void refresh() {
-		if (null != ((R4EUIRuleViolation)fProperties.getElement()).getViolation()) {
+		if (null != ((R4EUIRuleViolation) fProperties.getElement()).getViolation()) {
 			fRefreshInProgress = true;
-			fNameText.setText(((R4EUIRuleViolation)fProperties.getElement()).getViolation().getName());
+			fNameText.setText(((R4EUIRuleViolation) fProperties.getElement()).getViolation().getName());
 			setEnabledFields();
 			fRefreshInProgress = false;
 		} else {
 			fNameText.setText("");
 		}
 	}
-	
+
 	/**
 	 * Method setEnabledFields.
 	 */

@@ -49,7 +49,7 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor REVIEW_DECISION_MEETING_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_DECISION_MEETING_ID, R4EUIConstants.DECISION_MEETING_LABEL);
-	
+
 	/**
 	 * Field REVIEW_DECISION_PARTICIPANTS_ID. (value is ""reviewElement.decisionParticipants"")
 	 */
@@ -60,7 +60,7 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor REVIEW_DECISION_PARTICIPANTS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_DECISION_PARTICIPANTS_ID, R4EUIConstants.PARTICIPANTS_LABEL);
-	
+
 	/**
 	 * Field REVIEW_EXIT_DECISION_ID. (value is ""reviewElement.exitDecision"")
 	 */
@@ -71,7 +71,7 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 	 */
 	protected static final ComboBoxPropertyDescriptor REVIEW_EXIT_DECISION_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
 			REVIEW_EXIT_DECISION_ID, R4EUIConstants.EXIT_DECISION_LABEL, R4EUIReviewBasic.getExitDecisionValues());
-	
+
 	/**
 	 * Field REVIEW_DECISION_TIME_SPENT_ID. (value is ""reviewElement.decisionTimeSpent"")
 	 */
@@ -82,47 +82,49 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor REVIEW_DECISION_TIME_SPENT_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_DECISION_TIME_SPENT_ID, R4EUIConstants.TIME_SPENT_LABEL);
-	
+
 	/**
 	 * Field DESCRIPTORS.
 	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { 
-		REVIEW_DECISION_MEETING_PROPERTY_DESCRIPTOR, REVIEW_DECISION_PARTICIPANTS_PROPERTY_DESCRIPTOR,
-		REVIEW_EXIT_DECISION_PROPERTY_DESCRIPTOR, REVIEW_DECISION_TIME_SPENT_PROPERTY_DESCRIPTOR
-	};
-	
+	private static final IPropertyDescriptor[] DESCRIPTORS = { REVIEW_DECISION_MEETING_PROPERTY_DESCRIPTOR,
+			REVIEW_DECISION_PARTICIPANTS_PROPERTY_DESCRIPTOR, REVIEW_EXIT_DECISION_PROPERTY_DESCRIPTOR,
+			REVIEW_DECISION_TIME_SPENT_PROPERTY_DESCRIPTOR };
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for ReviewExtraProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public ReviewDecisionProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
-	
+
 	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		return DESCRIPTORS;
 	}
-	
+
 	/**
 	 * Method getPropertyValue.
 	 * 
-	 * @param aId Object
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
@@ -132,7 +134,7 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 			if (REVIEW_DECISION_MEETING_ID.equals(aId)) {
 				return new ReviewMeetingProperties(getElement());
 			} else if (REVIEW_DECISION_PARTICIPANTS_ID.equals(aId)) {
-				final List<R4EParticipant> participants = ((R4EUIReviewBasic)getElement()).getParticipants();
+				final List<R4EParticipant> participants = ((R4EUIReviewBasic) getElement()).getParticipants();
 				final List<String> decisionParticipantIds = new ArrayList<String>();
 				for (R4EParticipant participant : participants) {
 					if (participant.isIsPartOfDecision()) {
@@ -140,13 +142,13 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 					}
 				}
 				return decisionParticipantIds;
-			}  else if (REVIEW_EXIT_DECISION_ID.equals(aId)) {
-				final R4EReviewDecision decision = ((R4EUIReviewBasic)getElement()).getReview().getDecision();
+			} else if (REVIEW_EXIT_DECISION_ID.equals(aId)) {
+				final R4EReviewDecision decision = ((R4EUIReviewBasic) getElement()).getReview().getDecision();
 				if (null != decision) {
 					return Integer.valueOf(decision.getValue().getValue());
 				}
 			} else if (REVIEW_DECISION_TIME_SPENT_ID.equals(aId)) {
-				final R4EReviewDecision decision = ((R4EUIReviewBasic)getElement()).getReview().getDecision();
+				final R4EReviewDecision decision = ((R4EUIReviewBasic) getElement()).getReview().getDecision();
 				if (null != decision) {
 					return Integer.valueOf(decision.getSpentTime());
 				}

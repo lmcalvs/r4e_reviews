@@ -28,22 +28,27 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewsOnlyFilter extends ViewerFilter  {
-	
+public class ReviewsOnlyFilter extends ViewerFilter {
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method select.
-	 * @param viewer Viewer
-	 * @param parentElement Object
-	 * @param element Object
+	 * 
+	 * @param viewer
+	 *            Viewer
+	 * @param parentElement
+	 *            Object
+	 * @param element
+	 *            Object
 	 * @return boolean
 	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (element instanceof R4EUIReviewBasic || element instanceof R4EUIReviewGroup) return true;
+		if (element instanceof R4EUIReviewBasic || element instanceof R4EUIReviewGroup)
+			return true;
 		return false;
 	}
 }

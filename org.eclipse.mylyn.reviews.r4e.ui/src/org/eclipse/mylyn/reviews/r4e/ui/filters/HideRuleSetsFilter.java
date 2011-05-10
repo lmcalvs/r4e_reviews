@@ -26,29 +26,33 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleArea;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleViolation;
 
-
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class HideRuleSetsFilter extends ViewerFilter  {
-	
+public class HideRuleSetsFilter extends ViewerFilter {
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method select.
-	 * @param viewer Viewer
-	 * @param parentElement Object
-	 * @param element Object
+	 * 
+	 * @param viewer
+	 *            Viewer
+	 * @param parentElement
+	 *            Object
+	 * @param element
+	 *            Object
 	 * @return boolean
 	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		
-		if (element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea ||
-				element instanceof R4EUIRuleViolation || element instanceof R4EUIRule) return false;
+
+		if (element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea
+				|| element instanceof R4EUIRuleViolation || element instanceof R4EUIRule)
+			return false;
 		return true;
 	}
 }

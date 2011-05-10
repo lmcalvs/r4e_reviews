@@ -55,11 +55,13 @@ public class RemoveElementHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
-	 * @return Object 
+	 * 
+	 * @param event
+	 *            ExecutionEvent
+	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
@@ -75,28 +77,23 @@ public class RemoveElementHandler extends AbstractHandler {
 					review = R4EUIModelController.getActiveReview().getReview();
 				}
 				final List<R4EReviewComponent> removedItems = new ArrayList<R4EReviewComponent>();
-				for (final Iterator<?> iterator = ((IStructuredSelection)selection).iterator(); 
-					 iterator.hasNext();) {
+				for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
 					element = (IR4EUIModelElement) iterator.next();
 					Activator.Ftracer.traceInfo("Disable element " + element.getName());
-					dialog = MessageDialogWithToggle.openOkCancelConfirm(null,
-							"Disable element",
-							"Do you really want to disable this element?",
-							"Also delete from file (not supported yet)",
-							false,
-							null,
-							null);
+					dialog = MessageDialogWithToggle.openOkCancelConfirm(null, "Disable element",
+							"Do you really want to disable this element?", "Also delete from file (not supported yet)",
+							false, null, null);
 					if (dialog.getReturnCode() == Window.OK) {
 						try {
 							if (element instanceof R4EUIReviewItem) {
-								removedItems.add(((R4EUIReviewItem)element).getItem());
+								removedItems.add(((R4EUIReviewItem) element).getItem());
 							} else if (element instanceof R4EUISelection) {
-								removedItems.add(((R4EUISelection)element).getSelection());
+								removedItems.add(((R4EUISelection) element).getSelection());
 							}
 
 							if (element.isOpen()) {
 								element.close();
-								for (IR4EUIModelElement childElement: element.getChildren()) {
+								for (IR4EUIModelElement childElement : element.getChildren()) {
 									if (null != childElement && childElement.isOpen()) {
 										childElement.close();
 										break;
@@ -115,7 +112,9 @@ public class RemoveElementHandler extends AbstractHandler {
 				//Send email notification if needed
 				if (null != review) {
 					if (0 < removedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-						if (((R4EFormalReview)review).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+						if (((R4EFormalReview) review).getCurrent()
+								.getType()
+								.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 							try {
 								MailServicesProxy.sendItemsRemovedNotification(removedItems);
 							} catch (CoreException e) {

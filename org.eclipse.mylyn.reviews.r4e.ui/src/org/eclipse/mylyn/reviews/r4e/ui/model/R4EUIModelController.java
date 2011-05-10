@@ -64,48 +64,47 @@ import org.eclipse.ui.IPropertyListener;
  */
 public class R4EUIModelController {
 
-	
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field MAIL_CONNECTOR_IDS.
 	 */
 	private static final String[] MAIL_CONNECTOR_IDS = { "reviews.r4e.mail.outlook.connector" };
+
 	//private static final String[] MAIL_CONNECTOR_IDS = { "reviews.r4e.mail.smtp.connector" };
 	//TODO outlook lookup is temporary.  Will be replaced by generic later
 
-	
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fRootElement.
 	 */
 	private static R4EUIRootElement FRootElement = null;
-	
+
 	/**
 	 * Field FIsDialogOpen.
 	 */
 	private static boolean FIsDialogOpen = false;
-	
+
 	/**
 	 * Field fActiveReview.
 	 */
 	private static R4EUIReviewBasic FActiveReview = null;
-	
+
 	/**
 	 * Field FReviewSourceProvider.
 	 */
 	private static ReviewState FReviewSourceProvider = null;
-	
+
 	/**
 	 * Field fView.
 	 */
 	private static ReviewNavigatorView FView = null;
-	
+
 	/**
 	 * Field FReviewer.
 	 */
@@ -114,85 +113,96 @@ public class R4EUIModelController {
 	/**
 	 * Field modelExt.
 	 */
-	public static RModelFactoryExt FModelExt;  	//Reference to the EMF serialization model
-	
+	public static RModelFactoryExt FModelExt; //Reference to the EMF serialization model
+
 	/**
 	 * Field resourceUpdater.
 	 */
-	public static ResourceUpdater FResourceUpdater;  	//Reference to the EMF serialization model
-	
+	public static ResourceUpdater FResourceUpdater; //Reference to the EMF serialization model
+
 	/**
-	 * Field fFileAnomalyMap.
-	 * 		File version to Anomaly List map
+	 * Field fFileAnomalyMap. File version to Anomaly List map
 	 */
-	private static final Map<String,List<R4EAnomaly>> FFileAnomalyMap = new HashMap<String,List<R4EAnomaly>>(32, 0.75f); // $codepro.audit.disable constantNamingConvention
-	
+	private static final Map<String, List<R4EAnomaly>> FFileAnomalyMap = new HashMap<String, List<R4EAnomaly>>(32,
+			0.75f); // $codepro.audit.disable constantNamingConvention
+
 	/**
 	 * Field FElementStateListenerList.
 	 */
 	private static final List<IPropertyListener> FElementStateListenerList = new ArrayList<IPropertyListener>(); // $codepro.audit.disable constantNamingConvention
-	
+
 	/**
 	 * Field FMailConnector.
 	 */
 	private static NotificationsConnector FMailConnector = null;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method addElementStateListener.
-	 * @param aListener IPropertyListener
+	 * 
+	 * @param aListener
+	 *            IPropertyListener
 	 */
 	public static void addElementStateListener(IPropertyListener aListener) {
 		FElementStateListenerList.add(aListener);
 	}
-	
+
 	/**
 	 * Method removeElementStateListener.
-	 * @param aListener IPropertyListener
+	 * 
+	 * @param aListener
+	 *            IPropertyListener
 	 */
 	public static void removeElementStateListener(IPropertyListener aListener) {
 		FElementStateListenerList.remove(aListener);
 	}
-	
+
 	/**
 	 * Method setNavigatorView.
-	 * @param aView ReviewNavigatorView
+	 * 
+	 * @param aView
+	 *            ReviewNavigatorView
 	 */
 	public static void setNavigatorView(ReviewNavigatorView aView) {
 		FView = aView;
 	}
-	
+
 	/**
 	 * Method getNavigatorView.
+	 * 
 	 * @return ReviewNavigatorView
 	 */
 	public static ReviewNavigatorView getNavigatorView() {
 		return FView;
 	}
-	
+
 	/**
 	 * Method setReviewCommandSourceProvider.
-	 * @param aSourceProvider ReviewState
+	 * 
+	 * @param aSourceProvider
+	 *            ReviewState
 	 */
 	public static void setReviewCommandSourceProvider(ReviewState aSourceProvider) {
 		FReviewSourceProvider = aSourceProvider;
 	}
-	
+
 	/**
 	 * Get the model root element
+	 * 
 	 * @return the root R4E element
 	 */
 	public static IR4EUIModelElement getRootElement() {
 		return FRootElement;
 	}
-	
+
 	/**
 	 * Set the currently active review
-	 * @param aActiveReview ReviewElement - the currently open ReviewElement
+	 * 
+	 * @param aActiveReview
+	 *            ReviewElement - the currently open ReviewElement
 	 */
 	public static void setActiveReview(R4EUIReviewBasic aActiveReview) {
 		FActiveReview = aActiveReview;
@@ -201,9 +211,10 @@ public class R4EUIModelController {
 		}
 		//check to apply filters
 		try {
-			final ReviewNavigatorActionGroup actionGroup = (ReviewNavigatorActionGroup)FView.getActionSet();
-			if (actionGroup.isMyReviewFilterSet()) actionGroup.runReviewsMyFilterCommand(true);
-			if (actionGroup.isParticipantFilterSet()) { 
+			final ReviewNavigatorActionGroup actionGroup = (ReviewNavigatorActionGroup) FView.getActionSet();
+			if (actionGroup.isMyReviewFilterSet())
+				actionGroup.runReviewsMyFilterCommand(true);
+			if (actionGroup.isParticipantFilterSet()) {
 				actionGroup.runReviewsParticipantFilterCommand(actionGroup.getFilterParticipant());
 			}
 		} catch (ExecutionException e) {
@@ -220,10 +231,12 @@ public class R4EUIModelController {
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
 		}
 	}
-	
+
 	/**
 	 * Set properties state based on the current dialog state
-	 * @param aIsDialogOpen boolean
+	 * 
+	 * @param aIsDialogOpen
+	 *            boolean
 	 */
 	public static void setDialogOpen(boolean aIsDialogOpen) {
 		FIsDialogOpen = aIsDialogOpen;
@@ -231,45 +244,51 @@ public class R4EUIModelController {
 			listener.propertyChanged(null, 0);
 		}
 	}
-	
+
 	/**
 	 * Set properties state based on the selected element
-	 * @param aSelection the selected element
+	 * 
+	 * @param aSelection
+	 *            the selected element
 	 */
 	public static void selectionChanged(IStructuredSelection aSelection) {
 		for (IPropertyListener listener : FElementStateListenerList) {
-			listener.propertyChanged(null, 0);  //TODO this is temporary and should be refined later
+			listener.propertyChanged(null, 0); //TODO this is temporary and should be refined later
 		}
 	}
-	
+
 	/**
 	 * Refresh properties
 	 */
 	public static void propertyChanged() {
 		for (IPropertyListener listener : FElementStateListenerList) {
-			listener.propertyChanged(null, 0);  //TODO this is temporary and should be refined later
+			listener.propertyChanged(null, 0); //TODO this is temporary and should be refined later
 		}
 	}
-	
+
 	/**
 	 * Get the currently active review
+	 * 
 	 * @return the currently open ReviewElement
 	 */
 	public static R4EUIReviewBasic getActiveReview() {
 		return FActiveReview;
 	}
-	
+
 	/**
 	 * Get the current dialog state
+	 * 
 	 * @return the current dialog state
 	 */
 	public static boolean isDialogOpen() {
 		return FIsDialogOpen;
 	}
-	
+
 	/**
 	 * Method peekReviewGroup.
-	 * @param filePath String
+	 * 
+	 * @param filePath
+	 *            String
 	 * @return R4EReviewGroup
 	 * @throws ResourceHandlingException
 	 */
@@ -277,10 +296,12 @@ public class R4EUIModelController {
 		FModelExt = SerializeFactory.getModelExtension();
 		return FModelExt.openR4EReviewGroup(URI.createFileURI(filePath));
 	}
-	
+
 	/**
 	 * Method peekRuleSet.
-	 * @param filePath String
+	 * 
+	 * @param filePath
+	 *            String
 	 * @return R4EDesignRuleCollection
 	 * @throws ResourceHandlingException
 	 */
@@ -288,21 +309,20 @@ public class R4EUIModelController {
 		FModelExt = SerializeFactory.getModelExtension();
 		return FModelExt.openR4EDesignRuleCollection(URI.createFileURI(filePath));
 	}
-	
+
 	/**
-	 * Method loadModel.
-	 * 		Load data from Serialized Model
+	 * Method loadModel. Load data from Serialized Model
 	 */
 	public static void loadModel() {
 		FModelExt = SerializeFactory.getModelExtension();
 		FResourceUpdater = SerializeFactory.getResourceUpdater();
-		
-        //Set current user as reviewer
-        setReviewer(Activator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_USER_ID));
-        
+
+		//Set current user as reviewer
+		setReviewer(Activator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_USER_ID));
+
 		//Add root for Review Navigator
 		FRootElement = new R4EUIRootElement(null, "R4E");
-		
+
 		//Load Review Groups
 		final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 		final String groupPaths = preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH);
@@ -311,117 +331,123 @@ public class R4EUIModelController {
 		final String ruleSetPaths = preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH);
 		final List<String> ruleSetPathsList = UIUtils.parseStringList(ruleSetPaths);
 		loadRuleSets(ruleSetPathsList);
-		
+
 		//Verify Mail Connectivity
 		FMailConnector = NotificationsCore.getFirstEnabled(MAIL_CONNECTOR_IDS);
 	}
-	
+
 	/**
 	 * Method loadReviewGroups.
-	 * @param aGroupPaths List<String>
+	 * 
+	 * @param aGroupPaths
+	 *            List<String>
 	 */
 	public static void loadReviewGroups(List<String> aGroupPaths) {
-		
+
 		boolean changePrefsPaths = false;
 		R4EReviewGroup reviewGroup = null;
 		final List<String> newGroupPaths = new ArrayList<String>();
 		newGroupPaths.addAll(aGroupPaths);
-		
-        for (String groupPath : aGroupPaths) {
-        	reviewGroup = null;
-        	
-        	//First try to open the review group file as entrered in the preferences
-        	//If it fails, then create it
-        	try {
-        		reviewGroup = FModelExt.openR4EReviewGroup(URI.createFileURI(groupPath));
-    			FRootElement.loadReviewGroup(reviewGroup);
-        	} catch (ResourceHandlingException e) {
-    			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 
-        		//Review Group not found, ask user for review group creation
-        		MessageDialog dialog = new MessageDialog( // $codepro.audit.disable variableDeclaredInLoop
-        				null, "Missing Review Group", null, "Review Group file at location " + groupPath + 
-        					" not found, remove it from Preferences?",
-        				MessageDialog.WARNING,
-        				new String[] {"Yes", "No"},
-        				R4EUIConstants.DIALOG_NO); // no is the default
-        		int result = dialog.open(); // $codepro.audit.disable variableDeclaredInLoop
+		for (String groupPath : aGroupPaths) {
+			reviewGroup = null;
 
-        		if (result == R4EUIConstants.DIALOG_YES) {
-        			changePrefsPaths = true;
-        			newGroupPaths.remove(groupPath);
-        		}      			
-        	}
-        }
-        
-        //Adjust review group paths in preferences
-        if (changePrefsPaths) {
-        	Activator.getDefault().getPreferenceStore().setValue(PreferenceConstants.P_GROUP_FILE_PATH, buildReviewGroupsStr(newGroupPaths));
-        }
+			//First try to open the review group file as entrered in the preferences
+			//If it fails, then create it
+			try {
+				reviewGroup = FModelExt.openR4EReviewGroup(URI.createFileURI(groupPath));
+				FRootElement.loadReviewGroup(reviewGroup);
+			} catch (ResourceHandlingException e) {
+				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+
+				//Review Group not found, ask user for review group creation
+				MessageDialog dialog = new MessageDialog( // $codepro.audit.disable variableDeclaredInLoop
+						null, "Missing Review Group", null, "Review Group file at location " + groupPath
+								+ " not found, remove it from Preferences?", MessageDialog.WARNING, new String[] {
+								"Yes", "No" }, R4EUIConstants.DIALOG_NO); // no is the default
+				int result = dialog.open(); // $codepro.audit.disable variableDeclaredInLoop
+
+				if (result == R4EUIConstants.DIALOG_YES) {
+					changePrefsPaths = true;
+					newGroupPaths.remove(groupPath);
+				}
+			}
+		}
+
+		//Adjust review group paths in preferences
+		if (changePrefsPaths) {
+			Activator.getDefault()
+					.getPreferenceStore()
+					.setValue(PreferenceConstants.P_GROUP_FILE_PATH, buildReviewGroupsStr(newGroupPaths));
+		}
 	}
-	
+
 	/**
 	 * Method loadReviewGroups.
-	 * @param aRuleSetPaths List<String>
+	 * 
+	 * @param aRuleSetPaths
+	 *            List<String>
 	 */
 	public static void loadRuleSets(List<String> aRuleSetPaths) {
-		
+
 		boolean changePrefsPaths = false;
 		R4EDesignRuleCollection ruleSet = null;
 		final List<String> newRuleSetPaths = new ArrayList<String>();
 		newRuleSetPaths.addAll(aRuleSetPaths);
-		
-        for (String ruleSetPath : aRuleSetPaths) {
-        	ruleSet = null;
-        	
-        	//First try to open the review group file as entrered in the preferences
-        	//If it fails, then create it
-        	try {
-        		ruleSet = FModelExt.openR4EDesignRuleCollection(URI.createFileURI(ruleSetPath));
-    			FRootElement.loadRuleSet(ruleSet);
-        	} catch (ResourceHandlingException e) {
-    			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 
-        		//Review Group not found, ask user for review group creation
-        		MessageDialog dialog = new MessageDialog( // $codepro.audit.disable variableDeclaredInLoop
-        				null, "Missing Rule Set", null, "Rule Set file at location " + ruleSetPath + 
-        					" not found",
-        				MessageDialog.WARNING,
-        				new String[] {"Ok"},
-        				R4EUIConstants.DIALOG_YES); // no is the default
-        		int result = dialog.open(); // $codepro.audit.disable variableDeclaredInLoop
+		for (String ruleSetPath : aRuleSetPaths) {
+			ruleSet = null;
 
-        		if (result == R4EUIConstants.DIALOG_YES) {
-        			changePrefsPaths = true;
-        			newRuleSetPaths.remove(ruleSetPath);
-        		}      			
-        	}
-        }
-        
-        //Adjust review group paths in preferences
-        if (changePrefsPaths) {
-        	Activator.getDefault().getPreferenceStore().setValue(PreferenceConstants.
-        			P_RULE_SET_FILE_PATH, buildReviewGroupsStr(newRuleSetPaths));
-        }
+			//First try to open the review group file as entrered in the preferences
+			//If it fails, then create it
+			try {
+				ruleSet = FModelExt.openR4EDesignRuleCollection(URI.createFileURI(ruleSetPath));
+				FRootElement.loadRuleSet(ruleSet);
+			} catch (ResourceHandlingException e) {
+				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+
+				//Review Group not found, ask user for review group creation
+				MessageDialog dialog = new MessageDialog(
+						// $codepro.audit.disable variableDeclaredInLoop
+						null, "Missing Rule Set", null, "Rule Set file at location " + ruleSetPath + " not found",
+						MessageDialog.WARNING, new String[] { "Ok" }, R4EUIConstants.DIALOG_YES); // no is the default
+				int result = dialog.open(); // $codepro.audit.disable variableDeclaredInLoop
+
+				if (result == R4EUIConstants.DIALOG_YES) {
+					changePrefsPaths = true;
+					newRuleSetPaths.remove(ruleSetPath);
+				}
+			}
+		}
+
+		//Adjust review group paths in preferences
+		if (changePrefsPaths) {
+			Activator.getDefault()
+					.getPreferenceStore()
+					.setValue(PreferenceConstants.P_RULE_SET_FILE_PATH, buildReviewGroupsStr(newRuleSetPaths));
+		}
 	}
-	
+
 	/**
 	 * Method buildReviewGroupsStr.
-	 * @param aReviewGroups String[]
+	 * 
+	 * @param aReviewGroups
+	 *            String[]
 	 * @return String
 	 */
 	private static String buildReviewGroupsStr(List<String> aReviewGroups) {
 		final StringBuffer newPathsStr = new StringBuffer(R4EUIConstants.REVIEW_GROUP_PATHS_LENGTH);
-        for (String group : aReviewGroups) {
-        		newPathsStr.append(group + System.getProperty("line.separator"));
-        }
-        return newPathsStr.toString();
+		for (String group : aReviewGroups) {
+			newPathsStr.append(group + System.getProperty("line.separator"));
+		}
+		return newPathsStr.toString();
 	}
-	
+
 	/**
-	 * Method mapAnomalies.
-	 * 		Map anomalies to the files in which they are located
-	 * @param aReview R4EReview
+	 * Method mapAnomalies. Map anomalies to the files in which they are located
+	 * 
+	 * @param aReview
+	 *            R4EReview
 	 */
 	public static void mapAnomalies(R4EReview aReview) {
 		final EList<Topic> anomalies = aReview.getTopics();
@@ -431,59 +457,64 @@ public class R4EUIModelController {
 		final int anomaliesSize = anomalies.size();
 		for (int i = 0; i < anomaliesSize; i++) {
 			anomaly = anomalies.get(i);
-			
+
 			locations = anomaly.getLocation();
 			for (Location location : locations) {
-				targetFileVersion = ((R4EAnomalyTextPosition)((R4EContent)location).getLocation()).getFile().getLocalVersionID();
+				targetFileVersion = ((R4EAnomalyTextPosition) ((R4EContent) location).getLocation()).getFile()
+						.getLocalVersionID();
 				if (FFileAnomalyMap.containsKey(targetFileVersion)) {
 					//Add anomaly for this file version if not already present
 					List<R4EAnomaly> anomalyList = FFileAnomalyMap.get(targetFileVersion); // $codepro.audit.disable variableDeclaredInLoop
 					if (!(anomalyList.contains(anomaly))) {
-						anomalyList.add((R4EAnomaly)anomaly);
+						anomalyList.add((R4EAnomaly) anomaly);
 					}
 				} else {
 					List<R4EAnomaly> anomalyList = new ArrayList<R4EAnomaly>(); // $codepro.audit.disable variableDeclaredInLoop
-					anomalyList.add((R4EAnomaly)anomaly);
+					anomalyList.add((R4EAnomaly) anomaly);
 					FFileAnomalyMap.put(targetFileVersion, anomalyList);
 				}
 			}
 
 		}
 	}
-	
+
 	/**
 	 * Method clearAnomalyMap.
 	 */
 	public static void clearAnomalyMap() {
 		final Set<String> keys = FFileAnomalyMap.keySet();
-		for (String key: keys) {
+		for (String key : keys) {
 			List<R4EAnomaly> anomaliesList = FFileAnomalyMap.get(key);
 			anomaliesList.clear();
 		}
 		FFileAnomalyMap.clear();
 	}
-	
+
 	/**
-	 * Method getAnomaliesForFile.
-	 * 		Get list of anomalies for a given file
-	 * @param aFilePath String
+	 * Method getAnomaliesForFile. Get list of anomalies for a given file
+	 * 
+	 * @param aFilePath
+	 *            String
 	 * @return List<R4EAnomaly>
 	 */
 	public static List<R4EAnomaly> getAnomaliesForFile(String aFilePath) {
 		return FFileAnomalyMap.get(aFilePath);
 	}
-	
+
 	/**
 	 * Method getReviewer.
+	 * 
 	 * @return R4EParticipant
 	 */
 	public static String getReviewer() {
 		return FReviewer;
 	}
-	
+
 	/**
 	 * Method setReviewer.
-	 * @param aReviewer R4EParticipant
+	 * 
+	 * @param aReviewer
+	 *            R4EParticipant
 	 */
 	public static void setReviewer(String aReviewer) {
 		FReviewer = aReviewer;
@@ -491,16 +522,19 @@ public class R4EUIModelController {
 
 	/**
 	 * Method isUserQueryAvailable.
+	 * 
 	 * @return boolean\
 	 */
 	public static boolean isUserQueryAvailable() {
 		//Verify if the LDAP bundle is available
-		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.ldap")) return true;
+		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.ldap"))
+			return true;
 		return false;
 	}
-	
+
 	/**
 	 * Method getMailConnector.
+	 * 
 	 * @return NotificationsConnector
 	 */
 	public static NotificationsConnector getMailConnector() {

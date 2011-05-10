@@ -29,36 +29,33 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
-
-
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ModelElementTabPropertySection extends AbstractPropertySection
-		implements IPropertyListener {
+public class ModelElementTabPropertySection extends AbstractPropertySection implements IPropertyListener {
 
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fReviewProps.
 	 */
 	protected ModelElementProperties fProperties;
-	
+
 	/**
 	 * Field fRefreshInProgress.
 	 */
 	protected boolean fRefreshInProgress = false;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method dispose.
+	 * 
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#dispose()
 	 */
 	@Override
@@ -66,11 +63,14 @@ public class ModelElementTabPropertySection extends AbstractPropertySection
 		super.dispose();
 		R4EUIModelController.removeElementStateListener(this);
 	}
-	
+
 	/**
 	 * Method createControls.
-	 * @param parent Composite
-	 * @param aTabbedPropertySheetPage TabbedPropertySheetPage
+	 * 
+	 * @param parent
+	 *            Composite
+	 * @param aTabbedPropertySheetPage
+	 *            TabbedPropertySheetPage
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(Composite, TabbedPropertySheetPage)
 	 */
 	@Override
@@ -78,31 +78,38 @@ public class ModelElementTabPropertySection extends AbstractPropertySection
 		super.createControls(parent, aTabbedPropertySheetPage);
 		R4EUIModelController.addElementStateListener(this);
 	}
-	
+
 	/**
 	 * Method setInput.
-	 * @param part IWorkbenchPart
-	 * @param aSelection ISelection
+	 * 
+	 * @param part
+	 *            IWorkbenchPart
+	 * @param aSelection
+	 *            ISelection
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#setInput(IWorkbenchPart, ISelection)
 	 */
 	@Override
 	public void setInput(IWorkbenchPart part, ISelection aSelection) {
-		
+
 		//Get current selection.
-		if (null == aSelection || aSelection.isEmpty()) return;
-		
+		if (null == aSelection || aSelection.isEmpty())
+			return;
+
 		//Get model element selected
-		final IR4EUIModelElement element = (IR4EUIModelElement) ((StructuredSelection)aSelection).getFirstElement();
+		final IR4EUIModelElement element = (IR4EUIModelElement) ((StructuredSelection) aSelection).getFirstElement();
 		if (null != element) {
-			fProperties = (ModelElementProperties) ((R4EUIModelElement)element).getAdapter(IPropertySource.class);
+			fProperties = (ModelElementProperties) ((R4EUIModelElement) element).getAdapter(IPropertySource.class);
 			refresh();
 		}
 	}
 
 	/**
 	 * Method propertyChanged.
-	 * @param source Object
-	 * @param propId int
+	 * 
+	 * @param source
+	 *            Object
+	 * @param propId
+	 *            int
 	 * @see org.eclipse.ui.IPropertyListener#propertyChanged(Object, int)
 	 */
 	public void propertyChanged(Object source, int propId) {
@@ -111,6 +118,7 @@ public class ModelElementTabPropertySection extends AbstractPropertySection
 
 	/**
 	 * Method refresh.
+	 * 
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#refresh()
 	 */
 	@Override
@@ -120,7 +128,7 @@ public class ModelElementTabPropertySection extends AbstractPropertySection
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
-	
+
 	/**
 	 * Method setEnabledFields.
 	 */

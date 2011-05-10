@@ -42,34 +42,44 @@ public class ProjectPropertyTester extends PropertyTester {
 
 	/**
 	 * Method test.
-	 * @param receiver Object
-	 * @param property String
-	 * @param args Object[]
-	 * @param expectedValue Object
+	 * 
+	 * @param receiver
+	 *            Object
+	 * @param property
+	 *            String
+	 * @param args
+	 *            Object[]
+	 * @param expectedValue
+	 *            Object
 	 * @return boolean
 	 * @see org.eclipse.core.expressions.IPropertyTester#test(Object, String, Object[], Object)
 	 */
-	public boolean test(Object receiver, String property, Object[] args,
-			Object expectedValue) {
+	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 		final Object selectedElement = getSelection();
-		if (selectedElement instanceof IProject) { 
+		if (selectedElement instanceof IProject) {
 			return true;
 		} else if (selectedElement instanceof IJavaProject) {
-			if (null != ((IJavaProject)selectedElement).getProject()) return true;
+			if (null != ((IJavaProject) selectedElement).getProject())
+				return true;
 		} else if (selectedElement instanceof ICProject) {
-			if (null != ((ICProject)selectedElement).getProject()) return true;
+			if (null != ((ICProject) selectedElement).getProject())
+				return true;
 		} else if (selectedElement instanceof IPackageFragment || selectedElement instanceof IPackageFragmentRoot) {
-			if (null != ((IJavaElement)selectedElement).getJavaProject().getProject()) return true;
+			if (null != ((IJavaElement) selectedElement).getJavaProject().getProject())
+				return true;
 		} else if (selectedElement instanceof IFolder) {
-			if (null != ((IFolder)selectedElement).getProject()) return true;
+			if (null != ((IFolder) selectedElement).getProject())
+				return true;
 		} else if (selectedElement instanceof IAdaptable) {
-			if (null != ((IAdaptable)selectedElement).getAdapter(IProject.class)) return true;
+			if (null != ((IAdaptable) selectedElement).getAdapter(IProject.class))
+				return true;
 		}
 		return false;
 	}
 
 	/**
 	 * Method getSelection.
+	 * 
 	 * @return Object
 	 */
 	private Object getSelection() {

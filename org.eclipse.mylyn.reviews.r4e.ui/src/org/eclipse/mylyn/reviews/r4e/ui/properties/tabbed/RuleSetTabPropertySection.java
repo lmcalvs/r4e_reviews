@@ -42,35 +42,37 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
  * @version $Revision: 1.0 $
  */
 public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fVersionText.
 	 */
 	protected CLabel fVersionText = null;
-	
+
 	/**
 	 * Field fNameText.
 	 */
 	private CLabel fNameText = null;
-	
+
 	/**
 	 * Field fFilePathText.
 	 */
 	private CLabel fFilePathText = null;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method createControls.
-	 * @param parent Composite
-	 * @param aTabbedPropertySheetPage TabbedPropertySheetPage
+	 * 
+	 * @param parent
+	 *            Composite
+	 * @param aTabbedPropertySheetPage
+	 *            TabbedPropertySheetPage
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(Composite, TabbedPropertySheetPage)
 	 */
 	@Override
@@ -80,93 +82,97 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 		//Tell element to build its own detailed tab layout
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
 		final Composite composite = widgetFactory.createFlatFormComposite(parent);
-	    FormData data = null;
-	   
-	    //Version
-	    fVersionText = widgetFactory.createCLabel(composite, "");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-	    fVersionText.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
-	    fVersionText.setLayoutData(data);
-	    fVersionText.addFocusListener(new FocusListener() {		
+		FormData data = null;
+
+		//Version
+		fVersionText = widgetFactory.createCLabel(composite, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fVersionText.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
+		fVersionText.setLayoutData(data);
+		fVersionText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EDesignRuleCollection modelRuleSet = ((R4EUIRuleSet)fProperties.getElement()).getRuleSet();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRuleSet, currentUser);
-	    				modelRuleSet.setVersion(fVersionText.getText());
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EDesignRuleCollection modelRuleSet = ((R4EUIRuleSet) fProperties.getElement()).getRuleSet();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRuleSet, currentUser);
+						modelRuleSet.setVersion(fVersionText.getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
 			}
+
 			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
-	    
-	    final CLabel versionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.VERSION_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fVersionText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fVersionText, 0, SWT.CENTER);
-	    versionLabel.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
-	    versionLabel.setLayoutData(data);
-	    
-	    //Name
-	    fNameText = widgetFactory.createCLabel(composite, "");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fVersionText, ITabbedPropertyConstants.VSPACE);
-	    fNameText.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
-	    fNameText.setLayoutData(data);
 
-	    final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
-	    nameLabel.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
-	    nameLabel.setLayoutData(data);
-	    
-	    //File Path (read-only)
-	    fFilePathText = widgetFactory.createCLabel(composite, "");
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
-	    fFilePathText.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
-	    fFilePathText.setLayoutData(data);
+		final CLabel versionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.VERSION_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fVersionText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fVersionText, 0, SWT.CENTER);
+		versionLabel.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
+		versionLabel.setLayoutData(data);
 
-	    final CLabel filePathLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fFilePathText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fFilePathText, 0, SWT.CENTER);
-	    filePathLabel.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
-	    filePathLabel.setLayoutData(data);
+		//Name
+		fNameText = widgetFactory.createCLabel(composite, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fVersionText, ITabbedPropertyConstants.VSPACE);
+		fNameText.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
+		fNameText.setLayoutData(data);
+
+		final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
+		nameLabel.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
+		nameLabel.setLayoutData(data);
+
+		//File Path (read-only)
+		fFilePathText = widgetFactory.createCLabel(composite, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+		fFilePathText.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
+		fFilePathText.setLayoutData(data);
+
+		final CLabel filePathLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fFilePathText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fFilePathText, 0, SWT.CENTER);
+		filePathLabel.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
+		filePathLabel.setLayoutData(data);
 	}
 
 	/**
 	 * Method refresh.
+	 * 
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#refresh()
 	 */
 	@Override
 	public void refresh() {
-		if (null != ((R4EUIRuleSet)fProperties.getElement()).getRuleSet()) {
+		if (null != ((R4EUIRuleSet) fProperties.getElement()).getRuleSet()) {
 			fRefreshInProgress = true;
-			fVersionText.setText(((R4EUIRuleSet)fProperties.getElement()).getRuleSet().getVersion());
-			fNameText.setText(((R4EUIRuleSet)fProperties.getElement()).getRuleSet().getName());
-			if (null != ((R4EUIRuleSet)fProperties.getElement()).getRuleSet().eResource()) { 
-				fFilePathText.setText(((R4EUIRuleSet)fProperties.getElement()).getRuleSet().
-					eResource().getURI().toFileString());
+			fVersionText.setText(((R4EUIRuleSet) fProperties.getElement()).getRuleSet().getVersion());
+			fNameText.setText(((R4EUIRuleSet) fProperties.getElement()).getRuleSet().getName());
+			if (null != ((R4EUIRuleSet) fProperties.getElement()).getRuleSet().eResource()) {
+				fFilePathText.setText(((R4EUIRuleSet) fProperties.getElement()).getRuleSet()
+						.eResource()
+						.getURI()
+						.toFileString());
 			} else {
 				fFilePathText.setText("");
 			}
@@ -178,7 +184,7 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 			fFilePathText.setText("");
 		}
 	}
-	
+
 	/**
 	 * Method setEnabledFields.
 	 */

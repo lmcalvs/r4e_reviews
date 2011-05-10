@@ -42,44 +42,42 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * Field fSelectionContainerFile.
-	 * (value is ""icons/obj16/partcont_obj.png"")
+	 * Field fSelectionContainerFile. (value is ""icons/obj16/partcont_obj.png"")
 	 */
 	private static final String PARTICIPANT_CONTAINER_ICON_FILE = "icons/obj16/partcont_obj.png";
-    
+
 	/**
-	 * Field ADD_ELEMENT_ACTION_NAME.
-	 * (value is ""Add Participant"")
+	 * Field ADD_ELEMENT_ACTION_NAME. (value is ""Add Participant"")
 	 */
 	private static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Participant";
-	
-    /**
-     * Field ADD_ELEMENT_ACTION_TOOLTIP.
-     * (value is ""Add a New Participant to the Current Review"")
-     */
-    private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Participant to the Current Review";
 
-    
+	/**
+	 * Field ADD_ELEMENT_ACTION_TOOLTIP. (value is ""Add a New Participant to the Current Review"")
+	 */
+	private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Participant to the Current Review";
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-    
+
 	/**
 	 * Field fSelections.
 	 */
 	private final List<R4EUIParticipant> fParticipants;
 
-	
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for R4EUIParticipantContainer.
-	 * @param aParent IR4EUIModelElement
-	 * @param aName String
+	 * 
+	 * @param aParent
+	 *            IR4EUIModelElement
+	 * @param aName
+	 *            String
 	 */
 	public R4EUIParticipantContainer(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName, null);
@@ -87,15 +85,15 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		setImage(PARTICIPANT_CONTAINER_ICON_FILE);
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	//Attributes
-	
+
 	/**
 	 * Create a serialization model element object
+	 * 
 	 * @return the new serialization element object
 	 */
 	@Override
@@ -104,25 +102,27 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		R4EParticipant tempParticipant = null;
 		R4EUIModelController.setDialogOpen(true);
 		final ParticipantInputDialog dialog = new ParticipantInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite().getWorkbenchWindow().getShell());
-    	final int result = dialog.open();
-    	if (result == Window.OK) {
-    		tempParticipant = RModelFactory.eINSTANCE.createR4EParticipant();
-    		tempParticipant.setId(dialog.getParticipantIdValue());
-    		tempParticipant.setEmail(dialog.getParticipantEmailValue());
-    		tempParticipant.getRoles().addAll(dialog.getParticipantRolesValue());
-    		tempParticipant.setFocusArea(dialog.getFocusAreaValue());
-    	}
-    	// else Window.CANCEL
+				getSite()
+				.getWorkbenchWindow()
+				.getShell());
+		final int result = dialog.open();
+		if (result == Window.OK) {
+			tempParticipant = RModelFactory.eINSTANCE.createR4EParticipant();
+			tempParticipant.setId(dialog.getParticipantIdValue());
+			tempParticipant.setEmail(dialog.getParticipantEmailValue());
+			tempParticipant.getRoles().addAll(dialog.getParticipantRolesValue());
+			tempParticipant.setFocusArea(dialog.getFocusAreaValue());
+		}
+		// else Window.CANCEL
 		R4EUIModelController.setDialogOpen(false);
-    	return tempParticipant;
+		return tempParticipant;
 	}
-	
-	
+
 	//Hierarchy
-	
+
 	/**
 	 * Method getChildren.
+	 * 
 	 * @return IR4EUIModelElement[]
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getChildren()
 	 */
@@ -130,28 +130,32 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	public IR4EUIModelElement[] getChildren() {
 		return fParticipants.toArray(new R4EUIParticipant[fParticipants.size()]);
 	}
-	
+
 	/**
 	 * Method getSelectionList.
+	 * 
 	 * @return List<R4EUIParticipant>
 	 */
 	public List<R4EUIParticipant> getParticipantList() {
 		return fParticipants;
 	}
-	
+
 	/**
 	 * Method hasChildren.
-	 * @return boolean 
+	 * 
+	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#hasChildren()
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (fParticipants.size() > 0) return true;
-	    return false;
+		if (fParticipants.size() > 0)
+			return true;
+		return false;
 	}
-	
+
 	/**
 	 * Close the model element (i.e. disable it)
+	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#close()
 	 */
 	@Override
@@ -160,7 +164,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		R4EUIParticipant participant = null;
 		final int participantsSize = fParticipants.size();
 		for (int i = 0; i < participantsSize; i++) {
-			
+
 			participant = fParticipants.get(i);
 			participant.close();
 		}
@@ -168,13 +172,13 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		fOpen = false;
 		removeListeners();
 	}
-	
+
 	/**
 	 * Method open.
 	 */
 	@Override
 	public void open() {
-		final List<R4EParticipant> participants = ((R4EUIReviewBasic)getParent()).getParticipants();
+		final List<R4EParticipant> participants = ((R4EUIReviewBasic) getParent()).getParticipants();
 		if (null != participants) {
 			final int participantsSize = participants.size();
 			for (int i = 0; i < participantsSize; i++) {
@@ -183,9 +187,10 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		}
 		fOpen = true;
 	}
-	
+
 	/**
 	 * Method isEnabled.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
 	 */
@@ -193,57 +198,70 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	public boolean isEnabled() {
 		return getParent().isEnabled();
 	}
-	
+
 	/**
 	 * Method addChildren.
-	 * @param aChildToAdd IR4EUIModelElement
+	 * 
+	 * @param aChildToAdd
+	 *            IR4EUIModelElement
 	 */
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		fParticipants.add((R4EUIParticipant) aChildToAdd);
-		((R4EUIParticipant)aChildToAdd).setParticipantDetails();
-		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView().getTreeViewer().getContentProvider());
+		((R4EUIParticipant) aChildToAdd).setParticipantDetails();
+		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
+				.getTreeViewer()
+				.getContentProvider());
 		fireAdd(aChildToAdd);
 	}
 
 	/**
 	 * Method createChildren
-	 * @param aModelComponent - the serialization model component object
+	 * 
+	 * @param aModelComponent
+	 *            - the serialization model component object
 	 * @return IR4EUIModelElement
 	 * @throws ResourceHandlingException
-	 * @throws OutOfSyncException 
+	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#createChildren(ReviewNavigatorContentProvider)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
+			OutOfSyncException {
 		final R4EParticipant participant = R4EUIModelController.FModelExt.createR4EParticipant(
-				((R4EUIReviewBasic)getParent()).getReview(), ((R4EParticipant)aModelComponent).getId(), ((R4EParticipant)aModelComponent).getRoles());
+				((R4EUIReviewBasic) getParent()).getReview(), ((R4EParticipant) aModelComponent).getId(),
+				((R4EParticipant) aModelComponent).getRoles());
 		final R4EUIParticipant addedChild = new R4EUIParticipant(this, participant);
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
 		return addedChild;
 	}
-	
+
 	/**
 	 * Method removeChildren.
-	 * @param aChildToRemove IR4EUIModelElement
-	 * @param aFileRemove - also remove from file (hard remove)
-	 * @throws OutOfSyncException 
-	 * @throws ResourceHandlingException 
+	 * 
+	 * @param aChildToRemove
+	 *            IR4EUIModelElement
+	 * @param aFileRemove
+	 *            - also remove from file (hard remove)
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
-	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
-		
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
+			throws ResourceHandlingException, OutOfSyncException {
+
 		final R4EUIParticipant removedElement = fParticipants.get(fParticipants.indexOf(aChildToRemove));
 		/* TODO uncomment when core model supports hard-removing of elements
 		if (aFileRemove) removedElement.getParticipant().remove());
 		else */
 		final R4EParticipant modelParticipant = removedElement.getParticipant();
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant, R4EUIModelController.getReviewer());
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant,
+				R4EUIModelController.getReviewer());
 		modelParticipant.setEnabled(false);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		
+
 		//Remove element from UI if the show disabled element option is off
 		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fParticipants.remove(removedElement);
@@ -253,12 +271,14 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 		}
 	}
-	
+
 	/**
 	 * Method removeAllChildren.
-	 * @param aFileRemove boolean
-	 * @throws OutOfSyncException 
-	 * @throws ResourceHandlingException 
+	 * 
+	 * @param aFileRemove
+	 *            boolean
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override
@@ -268,12 +288,14 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 			removeChildren(participant, aFileRemove);
 		}
 	}
-	
+
 	//Listeners
 
 	/**
 	 * Method addListener.
-	 * @param aProvider ReviewNavigatorContentProvider
+	 * 
+	 * @param aProvider
+	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
 	 */
 	@Override
@@ -290,7 +312,9 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 
 	/**
 	 * Method removeListener.
-	 * @param aProvider ReviewNavigatorContentProvider
+	 * 
+	 * @param aProvider
+	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#removeListener()
 	 */
 	@Override
@@ -304,22 +328,25 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 			}
 		}
 	}
-	
+
 	//Commands
-	
+
 	/**
 	 * Method isAddChildElementCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isAddChildElementCmd()
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) return true;
+		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed()))
+			return true;
 		return false;
 	}
-	
+
 	/**
 	 * Method getAddChildElementCmdName.
+	 * 
 	 * @return String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdName()
 	 */
@@ -327,14 +354,15 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	public String getAddChildElementCmdName() {
 		return ADD_CHILD_ELEMENT_COMMAND_NAME;
 	}
-	
+
 	/**
 	 * Method getAddChildElementCmdTooltip.
+	 * 
 	 * @return String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
 	 */
 	@Override
 	public String getAddChildElementCmdTooltip() {
-		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP; 
+		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP;
 	}
 }

@@ -32,7 +32,7 @@ public class FileContextProperties extends ModelElementProperties {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field FILE_BASE_VERSION_ID. (value is ""fileContextElement.baseVersion"")
 	 */
@@ -43,7 +43,7 @@ public class FileContextProperties extends ModelElementProperties {
 	 */
 	private static final PropertyDescriptor FILE_BASE_VERSION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			FILE_BASE_VERSION_ID, "Base file");
-	
+
 	/**
 	 * Field FILE_TARGET_VERSION_ID. (value is ""fileContextElement.targetVersion"")
 	 */
@@ -54,33 +54,34 @@ public class FileContextProperties extends ModelElementProperties {
 	 */
 	private static final PropertyDescriptor FILE_TARGET_VERSION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			FILE_TARGET_VERSION_ID, "Target file");
-	
+
 	/**
 	 * Field DESCRIPTORS.
 	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { FILE_BASE_VERSION_PROPERTY_DESCRIPTOR, 
-		FILE_TARGET_VERSION_PROPERTY_DESCRIPTOR};
-	
-	
+	private static final IPropertyDescriptor[] DESCRIPTORS = { FILE_BASE_VERSION_PROPERTY_DESCRIPTOR,
+			FILE_TARGET_VERSION_PROPERTY_DESCRIPTOR };
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for FileContextProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public FileContextProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
@@ -88,24 +89,25 @@ public class FileContextProperties extends ModelElementProperties {
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		return DESCRIPTORS;
 	}
-	
+
 	/**
 	 * Method getPropertyValue.
 	 * 
-	 * @param aId Object
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
 	@Override
 	public Object getPropertyValue(Object aId) {
 		if (FILE_TARGET_VERSION_ID.equals(aId)) {
-			if (null != ((R4EUIFileContext)getElement()).getFileContext().getTarget()) {
-				return new FileVersionSourceProperties(((R4EUIFileContext)getElement()).getFileContext().getTarget());
+			if (null != ((R4EUIFileContext) getElement()).getFileContext().getTarget()) {
+				return new FileVersionSourceProperties(((R4EUIFileContext) getElement()).getFileContext().getTarget());
 			}
 			return R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE;
 		} else if (FILE_BASE_VERSION_ID.equals(aId)) {
-			if (null != ((R4EUIFileContext)getElement()).getFileContext().getBase()) {
-				return new FileVersionSourceProperties(((R4EUIFileContext)getElement()).getFileContext().getBase());
+			if (null != ((R4EUIFileContext) getElement()).getFileContext().getBase()) {
+				return new FileVersionSourceProperties(((R4EUIFileContext) getElement()).getFileContext().getBase());
 			}
 			return R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE;
 		}

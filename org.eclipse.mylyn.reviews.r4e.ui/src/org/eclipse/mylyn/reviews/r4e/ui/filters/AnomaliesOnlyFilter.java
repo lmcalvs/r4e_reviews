@@ -38,55 +38,64 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AnomaliesOnlyFilter extends ViewerFilter  {
-	
+public class AnomaliesOnlyFilter extends ViewerFilter {
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method select.
-	 * @param viewer Viewer
-	 * @param parentElement Object
-	 * @param element Object
+	 * 
+	 * @param viewer
+	 *            Viewer
+	 * @param parentElement
+	 *            Object
+	 * @param element
+	 *            Object
 	 * @return boolean
 	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 		//if (element instanceof R4EUISelection || element instanceof R4EUISelectionContainer) return false;
 		//return true;
-		
+
 		//Only show currently open review
 		if (element instanceof R4EUIReviewBasic) {
-			if (!((R4EUIReviewBasic)element).isOpen()) return false;
+			if (!((R4EUIReviewBasic) element).isOpen())
+				return false;
 		}
 		//Only show anomalies
-		if (element instanceof R4EUISelectionContainer || element instanceof R4EUISelection || 
-				element instanceof R4EUIParticipantContainer || element instanceof R4EUIParticipant ||
-				element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea ||
-				element instanceof R4EUIRuleViolation || element instanceof R4EUIRule) return false;
-		
+		if (element instanceof R4EUISelectionContainer || element instanceof R4EUISelection
+				|| element instanceof R4EUIParticipantContainer || element instanceof R4EUIParticipant
+				|| element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea
+				|| element instanceof R4EUIRuleViolation || element instanceof R4EUIRule)
+			return false;
+
 		//If these this is an anomaly, show it
 		if (element instanceof R4EUIAnomalyBasic) {
 			return true;
 		}
 		//For other elements, we only show the if they are a parent of one of our anomalies
-		return isChildrenAnomaly((IR4EUIModelElement) element);		
+		return isChildrenAnomaly((IR4EUIModelElement) element);
 	}
-	
+
 	/**
 	 * Checks if the child element is an anomaly
-	 * @param aCurrentElement - the element to filter on
+	 * 
+	 * @param aCurrentElement
+	 *            - the element to filter on
 	 * @return true/false
 	 */
 	private boolean isChildrenAnomaly(IR4EUIModelElement aCurrentElement) {
-		
+
 		//If the current element is the anomaly container, check if any child anomaly is ours.  If so, we show this parent
 		if (aCurrentElement instanceof R4EUIAnomalyContainer) {
 			final int length = aCurrentElement.getChildren().length;
-			if (length > 0) return true;
-		} else if (aCurrentElement instanceof R4EUIAnomalyBasic) {
+			if (length > 0)
 				return true;
+		} else if (aCurrentElement instanceof R4EUIAnomalyBasic) {
+			return true;
 		} else {
 			final int length = aCurrentElement.getChildren().length;
 			for (int i = 0; i < length; i++) {

@@ -45,11 +45,13 @@ public class SelectPreviousHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
-	 * @return Object 
+	 * 
+	 * @param event
+	 *            ExecutionEvent
+	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
@@ -70,12 +72,11 @@ public class SelectPreviousHandler extends AbstractHandler {
 					view.getTreeViewer().setSelection(previousSelection);
 
 					//Open the editor on FileContexts, selections amd anomalies
-					if (previousElement instanceof R4EUIFileContext ||
-							previousElement instanceof R4EUISelection ||
-							previousElement instanceof R4EUIAnomalyBasic) {
+					if (previousElement instanceof R4EUIFileContext || previousElement instanceof R4EUISelection
+							|| previousElement instanceof R4EUIAnomalyBasic) {
 						EditorProxy.openEditor(view.getSite().getPage(), previousSelection, false);
 					}
-				}			
+				}
 			}
 		}
 		return null;
@@ -83,7 +84,9 @@ public class SelectPreviousHandler extends AbstractHandler {
 
 	/**
 	 * Method getPreviousElement.
-	 * @param aTreeViewer ReviewNavigatorTreeViewer
+	 * 
+	 * @param aTreeViewer
+	 *            ReviewNavigatorTreeViewer
 	 * @return IR4EUIModelElement
 	 */
 	private IR4EUIModelElement getPreviousElement(ReviewNavigatorTreeViewer aTreeViewer) {

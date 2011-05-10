@@ -35,103 +35,112 @@ public class R4EUIRule extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * Field fSelectionFile.
-	 * (value is ""icons/obj16/rule_obj.gif"")
+	 * Field fSelectionFile. (value is ""icons/obj16/rule_obj.gif"")
 	 */
 	private static final String RULE_ICON_FILE = "icons/obj16/rule_obj.gif";
-	
+
 	/**
-	 * Field REMOVE_ELEMENT_ACTION_NAME.
-	 * (value is ""Disable Rule"")
+	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Disable Rule"")
 	 */
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Rule";
-	
-    /**
-     * Field REMOVE_ELEMENT_ACTION_TOOLTIP.
-     * (value is ""Disable (and Optionally Remove) this Rule from its parent Rule Violation"")
-     */
-    private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Rule" +
-    		" from its parent Rule Violation";
 
+	/**
+	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable (and Optionally Remove) this Rule from its parent Rule
+	 * Violation"")
+	 */
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Rule"
+			+ " from its parent Rule Violation";
 
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
-    /**
-     * Field fDelta.
-     */
-    private final R4EDesignRule fRule;
-	
-	
+
+	/**
+	 * Field fDelta.
+	 */
+	private final R4EDesignRule fRule;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for R4EUISelection.
-	 * @param aParent IR4EUIModelElement
-	 * @param aRule R4EDesignRule
+	 * 
+	 * @param aParent
+	 *            IR4EUIModelElement
+	 * @param aRule
+	 *            R4EDesignRule
 	 */
 	public R4EUIRule(IR4EUIModelElement aParent, R4EDesignRule aRule) {
 		super(aParent, aRule.getId(), aRule.getTitle());
 		fRule = aRule;
 		setImage(RULE_ICON_FILE);
 	}
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getAdapter.
-	 * @param adapter Class
+	 * 
+	 * @param adapter
+	 *            Class
 	 * @return Object
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
 	@Override
-	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter)) return this;
-		if (IPropertySource.class.equals(adapter)) return new RuleProperties(this);
+	public Object getAdapter(@SuppressWarnings("rawtypes")
+	Class adapter) {
+		if (IR4EUIModelElement.class.equals(adapter))
+			return this;
+		if (IPropertySource.class.equals(adapter))
+			return new RuleProperties(this);
 		return null;
 	}
-	
+
 	//Attributes
-	
+
 	/**
 	 * Method getSelection.
+	 * 
 	 * @return R4EDelta
 	 */
 	public R4EDesignRule getRule() {
 		return fRule;
 	}
-	
+
 	/**
 	 * Set serialization model data by copying it from the passed-in object
-	 * @param aModelComponent - a serialization model element to copy information from
+	 * 
+	 * @param aModelComponent
+	 *            - a serialization model element to copy information from
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
 	@Override
 	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
-    	//Set data in model element
+		//Set data in model element
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRule, R4EUIModelController.getReviewer());
-		fRule.setId(((R4EDesignRule)aModelComponent).getId());
-		fRule.setTitle(((R4EDesignRule)aModelComponent).getTitle());
-		fRule.setDescription(((R4EDesignRule)aModelComponent).getDescription());
-		fRule.setClass(((R4EDesignRule)aModelComponent).getClass_());
-		fRule.setRank(((R4EDesignRule)aModelComponent).getRank());
+		fRule.setId(((R4EDesignRule) aModelComponent).getId());
+		fRule.setTitle(((R4EDesignRule) aModelComponent).getTitle());
+		fRule.setDescription(((R4EDesignRule) aModelComponent).getDescription());
+		fRule.setClass(((R4EDesignRule) aModelComponent).getClass_());
+		fRule.setRank(((R4EDesignRule) aModelComponent).getRank());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-    }
-	
+	}
+
 	/**
 	 * Method setEnabled.
-	 * @param aEnabled boolean
-	 * @throws ResourceHandlingException 
-	 * @throws OutOfSyncException 
+	 * 
+	 * @param aEnabled
+	 *            boolean
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
 	 */
 	@Override
@@ -141,9 +150,10 @@ public class R4EUIRule extends R4EUIModelElement {
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
-	
+
 	/**
 	 * Method isEnabled.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isEnabled()
 	 */
@@ -151,34 +161,38 @@ public class R4EUIRule extends R4EUIModelElement {
 	public boolean isEnabled() {
 		return fRule.isEnabled();
 	}
-	
-	
+
 	//Commands
-	
+
 	/**
 	 * Method isRemoveElementCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isRemoveElementCmd()
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (isEnabled()) return true;
+		if (isEnabled())
+			return true;
 		return false;
 	}
-	
+
 	/**
 	 * Method isRestoreElementCmd.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#iisRestoreElementCmd()
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isEnabled()) return false;
+		if (isEnabled())
+			return false;
 		return true;
 	}
-	
+
 	/**
 	 * Method getRemoveElementCmdName.
+	 * 
 	 * @return String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdName()
 	 */
@@ -186,9 +200,10 @@ public class R4EUIRule extends R4EUIModelElement {
 	public String getRemoveElementCmdName() {
 		return REMOVE_ELEMENT_COMMAND_NAME;
 	}
-	
+
 	/**
 	 * Method getRemoveElementCmdTooltip.
+	 * 
 	 * @return String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getRemoveElementCmdTooltip()
 	 */

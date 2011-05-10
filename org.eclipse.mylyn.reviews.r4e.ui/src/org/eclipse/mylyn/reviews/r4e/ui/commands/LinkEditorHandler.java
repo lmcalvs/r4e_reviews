@@ -34,10 +34,12 @@ public class LinkEditorHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
+	 * 
+	 * @param event
+	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
@@ -45,10 +47,10 @@ public class LinkEditorHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		//We need to preserve the expansion state and restore it afterwards
-		final Object[] elements =  R4EUIModelController.getNavigatorView().getTreeViewer().getExpandedElements();
-	    final Command command = event.getCommand(); 
-	    boolean oldValue = HandlerUtil.toggleCommandState(command);
-	     
+		final Object[] elements = R4EUIModelController.getNavigatorView().getTreeViewer().getExpandedElements();
+		final Command command = event.getCommand();
+		boolean oldValue = HandlerUtil.toggleCommandState(command);
+
 		if (!oldValue) {
 			Activator.Ftracer.traceInfo("Linking Editor with ReviewNavigator");
 		} else {

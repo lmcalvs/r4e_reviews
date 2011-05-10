@@ -37,7 +37,7 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field ANOMALY_TITLE_ID. (value is ""anomalyElement.title"")
 	 */
@@ -48,7 +48,7 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 	 */
 	protected static final TextPropertyDescriptor ANOMALY_TITLE_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
 			ANOMALY_TITLE_ID, R4EUIConstants.TITLE_LABEL);
-	
+
 	/**
 	 * Field ANOMALY_POSITION_ID. (value is ""anomalyElement.position"")
 	 */
@@ -59,7 +59,7 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor ANOMALY_POSITION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_POSITION_ID, R4EUIConstants.POSITION_LABEL);
-	
+
 	/**
 	 * Field ANOMALY_AUTHOR_ID. (value is ""anomalyElement.author"")
 	 */
@@ -81,7 +81,7 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_CREATION_DATE_ID, R4EUIConstants.CREATION_DATE_LABEL);
-	
+
 	/**
 	 * Field ANOMALY_DESCRIPTION_ID. (value is ""anomalyElement.description"")
 	 */
@@ -92,34 +92,35 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 	 */
 	protected static final TextPropertyDescriptor ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
 			ANOMALY_DESCRIPTION_ID, R4EUIConstants.DESCRIPTION_LABEL);
-	
+
 	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { ANOMALY_TITLE_PROPERTY_DESCRIPTOR,
-		ANOMALY_POSITION_PROPERTY_DESCRIPTOR, ANOMALY_AUTHOR_PROPERTY_DESCRIPTOR,  
-		ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR, ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR };
-	
-	
+			ANOMALY_POSITION_PROPERTY_DESCRIPTOR, ANOMALY_AUTHOR_PROPERTY_DESCRIPTOR,
+			ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR, ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR };
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for AnomalyProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public AnomalyBasicProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
@@ -127,37 +128,41 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		return DESCRIPTORS;
 	}
-	
+
 	/**
 	 * Method getPropertyValue.
 	 * 
-	 * @param aId Object
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
 	@Override
 	public Object getPropertyValue(Object aId) {
-		if (ANOMALY_TITLE_ID.equals(aId)) { 
-			return ((R4EUIAnomalyBasic)getElement()).getAnomaly().getTitle();
+		if (ANOMALY_TITLE_ID.equals(aId)) {
+			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getTitle();
 		} else if (ANOMALY_POSITION_ID.equals(aId)) {
-			if (null == ((R4EUIAnomalyBasic)getElement()).getPosition()) {
+			if (null == ((R4EUIAnomalyBasic) getElement()).getPosition()) {
 				return R4EUIConstants.GLOBAL_ANOMALY_PROPERTY_VALUE;
 			}
-			return ((R4EUIAnomalyBasic)getElement()).getPosition().toString();
-		} else if (ANOMALY_AUTHOR_ID.equals(aId)) { 
-			return ((R4EUIAnomalyBasic)getElement()).getAnomaly().getUser().getId();
+			return ((R4EUIAnomalyBasic) getElement()).getPosition().toString();
+		} else if (ANOMALY_AUTHOR_ID.equals(aId)) {
+			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getUser().getId();
 		} else if (ANOMALY_CREATION_DATE_ID.equals(aId)) {
-			return ((R4EUIAnomalyBasic)getElement()).getAnomaly().getCreatedOn().toString();
+			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getCreatedOn().toString();
 		} else if (ANOMALY_DESCRIPTION_ID.equals(aId)) {
-			return ((R4EUIAnomalyBasic)getElement()).getAnomaly().getDescription();
+			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getDescription();
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Method setPropertyValue.
-	 * @param aId Object
-	 * @param aValue Object
+	 * 
+	 * @param aId
+	 *            Object
+	 * @param aValue
+	 *            Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(Object, Object)
 	 */
 	@Override
@@ -165,15 +170,17 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 		if (!(R4EUIModelController.isDialogOpen())) {
 			try {
 				final String currentUser = R4EUIModelController.getReviewer();
-				if (((R4EUIAnomalyBasic)getElement()).getAnomaly().getUser().getId().equals(currentUser)) {
+				if (((R4EUIAnomalyBasic) getElement()).getAnomaly().getUser().getId().equals(currentUser)) {
 					if (ANOMALY_TITLE_ID.equals(aId)) {
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(((R4EUIAnomalyBasic)getElement()).getAnomaly(), currentUser);
-						((R4EUIAnomalyBasic)getElement()).getAnomaly().setTitle((String) aValue);
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(
+								((R4EUIAnomalyBasic) getElement()).getAnomaly(), currentUser);
+						((R4EUIAnomalyBasic) getElement()).getAnomaly().setTitle((String) aValue);
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-					} else if (ANOMALY_DESCRIPTION_ID.equals(aId)) { 
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(((R4EUIAnomalyBasic)getElement()).getAnomaly(), currentUser);
-						((R4EUIAnomalyBasic)getElement()).getAnomaly().setDescription((String) aValue);
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);	
+					} else if (ANOMALY_DESCRIPTION_ID.equals(aId)) {
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(
+								((R4EUIAnomalyBasic) getElement()).getAnomaly(), currentUser);
+						((R4EUIAnomalyBasic) getElement()).getAnomaly().setDescription((String) aValue);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 					}
 				}
 			} catch (ResourceHandlingException e) {

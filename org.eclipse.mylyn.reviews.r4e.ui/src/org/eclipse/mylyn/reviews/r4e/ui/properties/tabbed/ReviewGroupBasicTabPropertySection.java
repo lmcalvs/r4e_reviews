@@ -43,33 +43,33 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
  * @version $Revision: 1.0 $
  */
 public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertySection {
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fNameText.
 	 */
 	private CLabel fNameText = null;
-	
+
 	/**
 	 * Field fFolderText.
 	 */
 	private CLabel fFolderText = null;
-	
+
 	/**
 	 * Field fDescriptionText.
 	 */
 	protected Text fDescriptionText = null;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method shouldUseExtraSpace.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#shouldUseExtraSpace()
 	 */
@@ -77,11 +77,14 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 	public boolean shouldUseExtraSpace() {
 		return true;
 	}
-	
+
 	/**
 	 * Method createControls.
-	 * @param parent Composite
-	 * @param aTabbedPropertySheetPage TabbedPropertySheetPage
+	 * 
+	 * @param parent
+	 *            Composite
+	 * @param aTabbedPropertySheetPage
+	 *            TabbedPropertySheetPage
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(Composite, TabbedPropertySheetPage)
 	 */
 	@Override
@@ -135,12 +138,12 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		data.top = new FormAttachment(fFolderText, ITabbedPropertyConstants.VSPACE);
 		fDescriptionText.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
 		fDescriptionText.setLayoutData(data);
-		fDescriptionText.addFocusListener(new FocusListener() {		
+		fDescriptionText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getReviewGroup();
+						final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
 						modelGroup.setDescription(fDescriptionText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -151,12 +154,13 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 					}
 				}
 			}
+
 			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
-	    UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
-	    
+		UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
+
 		final CLabel descriptionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DESCRIPTION_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
@@ -165,15 +169,16 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		descriptionLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
 		descriptionLabel.setLayoutData(data);
 	}
-	
+
 	/**
 	 * Method refresh.
+	 * 
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#refresh()
 	 */
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup)fProperties.getElement()).getReviewGroup();
+		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
 		fNameText.setText(modelGroup.getName());
 		fFolderText.setText(modelGroup.getFolder());
 		if (null != modelGroup.getDescription()) {
@@ -184,13 +189,13 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
-	
+
 	/**
 	 * Method setEnabledFields.
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen() || !((R4EUIReviewGroup)fProperties.getElement()).isOpen()) {
+		if (R4EUIModelController.isDialogOpen() || !((R4EUIReviewGroup) fProperties.getElement()).isOpen()) {
 			fNameText.setEnabled(false);
 			fFolderText.setEnabled(false);
 			fDescriptionText.setEnabled(false);

@@ -53,8 +53,10 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
-	 * @return Object 
+	 * 
+	 * @param event
+	 *            ExecutionEvent
+	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
@@ -64,8 +66,7 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 		if (selection instanceof IStructuredSelection) {
 			if (!selection.isEmpty()) {
 				IR4EUIModelElement element = null;
-				for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator();
-					 iterator.hasNext();) {
+				for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
 					try {
 						element = (IR4EUIModelElement) iterator.next();
 						Activator.Ftracer.traceInfo("Changing review state for element " + element.getName());
@@ -74,14 +75,15 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 						//If we just completed the review, prompt user for mail sending
 						if (element instanceof R4EUIReviewBasic && element.isReviewed()) {
 
-							Object source = ((EvaluationContext)event.getApplicationContext()).getDefaultVariable();
+							Object source = ((EvaluationContext) event.getApplicationContext()).getDefaultVariable();
 							if (source instanceof List) {
-								source = ((List<?>)source).get(0);  //If this is a list, get first element
+								source = ((List<?>) source).get(0); //If this is a list, get first element
 							}
 							R4EUIModelController.setDialogOpen(true);
 
-							final SendNotificationInputDialog dialog = new SendNotificationInputDialog(R4EUIModelController.getNavigatorView().
-									getSite().getWorkbenchWindow().getShell(), source);
+							final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
+									R4EUIModelController.getNavigatorView().getSite().getWorkbenchWindow().getShell(),
+									source);
 							dialog.create();
 							final int result = dialog.open();
 							if (result == Window.OK) {
@@ -100,10 +102,10 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 								} catch (ResourceHandlingException e) {
 									UIUtils.displayResourceErrorDialog(e);
 								} finally {
-									R4EUIModelController.setDialogOpen(false);	
+									R4EUIModelController.setDialogOpen(false);
 								}
 							}
-							R4EUIModelController.setDialogOpen(false);	
+							R4EUIModelController.setDialogOpen(false);
 						}
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);

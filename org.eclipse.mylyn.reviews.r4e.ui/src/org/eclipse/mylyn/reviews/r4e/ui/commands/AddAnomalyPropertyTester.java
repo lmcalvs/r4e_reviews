@@ -49,40 +49,49 @@ public class AddAnomalyPropertyTester extends PropertyTester {
 
 	/**
 	 * Method test.
-	 * @param receiver Object
-	 * @param property String
-	 * @param args Object[]
-	 * @param expectedValue Object
+	 * 
+	 * @param receiver
+	 *            Object
+	 * @param property
+	 *            String
+	 * @param args
+	 *            Object[]
+	 * @param expectedValue
+	 *            Object
 	 * @return boolean
 	 * @see org.eclipse.core.expressions.IPropertyTester#test(Object, String, Object[], Object)
 	 */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		
+
 		//Command is disabled if the review is completed
 		final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
-		if (null == activeReview || activeReview.isReviewed()) return false;
+		if (null == activeReview || activeReview.isReviewed())
+			return false;
 
 		//If the file opened is an R4E File that does not have a valid target version, the command is disabled
 		if (receiver instanceof AbstractSet) {
-			final Iterator<?> iterator = ((AbstractSet<?>)receiver).iterator();
+			final Iterator<?> iterator = ((AbstractSet<?>) receiver).iterator();
 			if (iterator.next() instanceof TextSelection) {
-				if (!(isR4EEditorInputAvailable())) return false;
+				if (!(isR4EEditorInputAvailable()))
+					return false;
 			}
 		}
 		//This happens when the command is selected from the outline view on an external or workspace file
 		if (receiver instanceof AbstractList) {
-			final Iterator<?> iterator = ((AbstractList<?>)receiver).iterator();
+			final Iterator<?> iterator = ((AbstractList<?>) receiver).iterator();
 			if (!iterator.hasNext()) {
-				if (!(isR4EEditorInputAvailable())) return false;
+				if (!(isR4EEditorInputAvailable()))
+					return false;
 			} else {
 				final Object obj = iterator.next();
-				if (obj instanceof org.eclipse.jdt.core.ISourceReference || 
-						obj instanceof org.eclipse.cdt.core.model.ISourceReference) {
-					if (!(isR4EEditorInputAvailable())) return false;
+				if (obj instanceof org.eclipse.jdt.core.ISourceReference
+						|| obj instanceof org.eclipse.cdt.core.model.ISourceReference) {
+					if (!(isR4EEditorInputAvailable()))
+						return false;
 				}
 			}
 		}
-		
+
 		//For formal reviews, anomalies can only be added by reviewers in the preparation and decision phases
 		if (activeReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 			R4EParticipant reviewer = null;
@@ -92,19 +101,22 @@ public class AddAnomalyPropertyTester extends PropertyTester {
 				UIUtils.displayResourceErrorDialog(e);
 				return false;
 			}
-			if (null == reviewer) return false;
+			if (null == reviewer)
+				return false;
 
-			if (reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR) || 
-					!(((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION) ||
-					 ((R4EReviewState)activeReview.getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION))) {
+			if (reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR)
+					|| !(((R4EReviewState) activeReview.getReview().getState()).getState().equals(
+							R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION) || ((R4EReviewState) activeReview.getReview()
+							.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION))) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Method isR4EEditorInputAvailable.
+	 * 
 	 * @return boolean
 	 */
 	private boolean isR4EEditorInputAvailable() {
@@ -115,14 +127,14 @@ public class AddAnomalyPropertyTester extends PropertyTester {
 			if (null != page && null != page.getActiveEditor()) {
 				editorInput = page.getActiveEditor().getEditorInput();
 				if (editorInput instanceof R4EFileRevisionEditorInput) {
-					if (null == ((R4EFileRevisionEditorInput)editorInput).getFileVersion().getResource()) {
+					if (null == ((R4EFileRevisionEditorInput) editorInput).getFileVersion().getResource()) {
 						return false;
-					}						
+					}
 					//Compare editor
 				} else if (editorInput instanceof R4ECompareEditorInput) {
-					final ITypedElement targetElement = ((R4ECompareEditorInput)editorInput).getLeftElement();
+					final ITypedElement targetElement = ((R4ECompareEditorInput) editorInput).getLeftElement();
 					if (null == targetElement) {
-						return false;  
+						return false;
 					}
 				}
 			}

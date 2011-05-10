@@ -29,6 +29,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 
 /**
  * An Editor input for file revisions
+ * 
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
@@ -42,14 +43,14 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 	 * Field fVersion
 	 */
 	private final R4EFileVersion fFileVersion;
-	
 
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
 
 	/**
-	 * @param aFileVersion - the R4E file version
+	 * @param aFileVersion
+	 *            - the R4E file version
 	 */
 	public R4EFileEditorInput(R4EFileVersion aFileVersion) {
 		Assert.isNotNull(aFileVersion);
@@ -59,21 +60,23 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getStorage.
+	 * 
 	 * @return IStorage
 	 * @see org.eclipse.ui.IStorageEditorInput#getStorage()
 	 */
 	public IStorage getStorage() {
 		if (null != fFileVersion.getResource()) {
-			return (IFile)fFileVersion.getResource();
+			return (IFile) fFileVersion.getResource();
 		}
 		return null;
 	}
 
 	/**
 	 * Method exists.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.ui.IEditorInput#exists()
 	 */
@@ -83,6 +86,7 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 
 	/**
 	 * Method getImageDescriptor.
+	 * 
 	 * @return ImageDescriptor
 	 * @see org.eclipse.ui.IEditorInput#getImageDescriptor()
 	 */
@@ -92,6 +96,7 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 
 	/**
 	 * Method getName.
+	 * 
 	 * @return String
 	 * @see org.eclipse.ui.IEditorInput#getName()
 	 */
@@ -104,15 +109,17 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 
 	/**
 	 * Method getPersistable.
+	 * 
 	 * @return IPersistableElement
 	 * @see org.eclipse.ui.IEditorInput#getPersistable()
 	 */
 	public IPersistableElement getPersistable() {
-		return null;   // can't persist
+		return null; // can't persist
 	}
 
 	/**
 	 * Method getToolTipText.
+	 * 
 	 * @return String
 	 * @see org.eclipse.ui.IEditorInput#getToolTipText()
 	 */
@@ -125,13 +132,16 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 
 	/**
 	 * Method getAdapter.
-	 * @param aAdapter Class
+	 * 
+	 * @param aAdapter
+	 *            Class
 	 * @return Object
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
 	@Override
-	public Object getAdapter(@SuppressWarnings("rawtypes") Class aAdapter) {
-		
+	public Object getAdapter(@SuppressWarnings("rawtypes")
+	Class aAdapter) {
+
 		if (IFile.class.equals(aAdapter)) {
 			if (null != fFileVersion.getResource()) {
 				return fFileVersion.getResource();
@@ -162,12 +172,15 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 
 	/**
 	 * Method equals.
-	 * @param aObject Object
+	 * 
+	 * @param aObject
+	 *            Object
 	 * @return boolean
 	 */
 	@Override
 	public boolean equals(Object aObject) {
-		if (aObject == this) return true;
+		if (aObject == this)
+			return true;
 		if (aObject instanceof R4EFileEditorInput) {
 			final R4EFileEditorInput other = (R4EFileEditorInput) aObject;
 			return other.fFileVersion.equals(this.fFileVersion);
@@ -177,6 +190,7 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 
 	/**
 	 * Method hashCode.
+	 * 
 	 * @return int
 	 */
 	@Override
@@ -189,6 +203,7 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 
 	/**
 	 * Method getFileVersion.
+	 * 
 	 * @return IFileRevision - the revision
 	 */
 	public R4EFileVersion getFileVersion() {
@@ -197,6 +212,7 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 
 	/**
 	 * Method getFile.
+	 * 
 	 * @return IFile
 	 */
 	public IFile getFile() {

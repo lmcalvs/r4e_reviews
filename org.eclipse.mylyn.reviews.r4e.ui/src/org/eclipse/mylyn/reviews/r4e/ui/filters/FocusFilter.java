@@ -29,32 +29,40 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class FocusFilter extends ViewerFilter  {
-	
+public class FocusFilter extends ViewerFilter {
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method select.
-	 * @param viewer Viewer
-	 * @param parentElement Object
-	 * @param element Object
+	 * 
+	 * @param viewer
+	 *            Viewer
+	 * @param parentElement
+	 *            Object
+	 * @param element
+	 *            Object
 	 * @return boolean
 	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		
-		final IStructuredSelection selection = 
-			(IStructuredSelection) R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
-		if (null == selection) return true;
+
+		final IStructuredSelection selection = (IStructuredSelection) R4EUIModelController.getNavigatorView()
+				.getTreeViewer()
+				.getSelection();
+		if (null == selection)
+			return true;
 		final IR4EUIModelElement selectedElement = (IR4EUIModelElement) selection.getFirstElement();
-		if (null == selectedElement) return true;
-		
+		if (null == selectedElement)
+			return true;
+
 		//Display the current element if itself or one of its ancestors is the selected element
 		IR4EUIModelElement currentElement = (IR4EUIModelElement) element;
 		do {
-			if (currentElement.equals(selectedElement)) return true;
+			if (currentElement.equals(selectedElement))
+				return true;
 			currentElement = (currentElement).getParent();
 		} while (null != currentElement);
 		return false;

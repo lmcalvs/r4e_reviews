@@ -28,6 +28,7 @@ import org.eclipse.ui.IEditorInput;
 
 /**
  * An {@link ITypedElement} wrapper for {@link IFileRevision} for use with R4E
+ * 
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
@@ -36,7 +37,7 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fFileVersion.
 	 */
@@ -47,13 +48,13 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	 */
 	private String fAuthor;
 
-	
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * @param aFileVersion R4EFileVersion - the file revision
+	 * @param aFileVersion
+	 *            R4EFileVersion - the file revision
 	 */
 	public R4EFileRevisionTypedElement(R4EFileVersion aFileVersion) {
 		this(aFileVersion, null);
@@ -61,9 +62,11 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 
 	/**
 	 * Method FileRevisionTypedElement
-	 * @param aFileVersion R4EFileVersion - the file revision
-	 * @param aLocalEncoding String
-	 *            the encoding of the local file that corresponds to the given file revision
+	 * 
+	 * @param aFileVersion
+	 *            R4EFileVersion - the file revision
+	 * @param aLocalEncoding
+	 *            String the encoding of the local file that corresponds to the given file revision
 	 */
 	public R4EFileRevisionTypedElement(R4EFileVersion aFileVersion, String aLocalEncoding) {
 		super(aLocalEncoding);
@@ -71,21 +74,22 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 		fFileVersion = aFileVersion;
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * Method getFileVersion.	
+	 * Method getFileVersion.
+	 * 
 	 * @return R4EFileVersion
 	 */
 	public R4EFileVersion getFileVersion() {
 		return fFileVersion;
 	}
-	
+
 	/**
 	 * Method getName.
+	 * 
 	 * @return String
 	 * @see org.eclipse.compare.ITypedElement#getName()
 	 */
@@ -95,14 +99,16 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 
 	/**
 	 * Method fetchContents.
-	 * @param aMonitor IProgressMonitor
+	 * 
+	 * @param aMonitor
+	 *            IProgressMonitor
 	 * @return IStorage
 	 * @throws CoreException
 	 */
 	@Override
 	protected IStorage fetchContents(IProgressMonitor aMonitor) throws CoreException {
 		if (CommandUtils.useWorkspaceResource(fFileVersion)) {
-			return (IFile)fFileVersion.getResource();
+			return (IFile) fFileVersion.getResource();
 		}
 		return fFileVersion.getFileRevision().getStorage(aMonitor);
 	}
@@ -125,17 +131,21 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 
 	/**
 	 * Method getPath
+	 * 
 	 * @return the human readable path of this element
 	 */
 	public String getPath() {
 		final URI uri = fFileVersion.getFileRevision().getURI();
-		if (null != uri) return uri.getPath();
+		if (null != uri)
+			return uri.getPath();
 		return getName();
 	}
 
 	/**
 	 * Method getDocumentKey.
-	 * @param aElement Object
+	 * 
+	 * @param aElement
+	 *            Object
 	 * @return IEditorInput
 	 */
 	@Override
@@ -148,6 +158,7 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 
 	/**
 	 * Method hashCode.
+	 * 
 	 * @return int
 	 */
 	@Override
@@ -160,12 +171,15 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 
 	/**
 	 * Method equals.
-	 * @param aObj Object
+	 * 
+	 * @param aObj
+	 *            Object
 	 * @return boolean
 	 */
 	@Override
 	public boolean equals(Object aObj) {
-		if (aObj == this) return true;
+		if (aObj == this)
+			return true;
 		if (aObj instanceof R4EFileRevisionTypedElement) {
 			final R4EFileRevisionTypedElement other = (R4EFileRevisionTypedElement) aObj;
 			return other.getFileVersion().equals(getFileVersion());
@@ -175,16 +189,20 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 
 	/**
 	 * Method getAuthor.
+	 * 
 	 * @return the author
 	 */
 	public String getAuthor() {
-		if (null == fAuthor) fAuthor = fFileVersion.getFileRevision().getAuthor();
+		if (null == fAuthor)
+			fAuthor = fFileVersion.getFileRevision().getAuthor();
 		return fAuthor;
 	}
 
 	/**
 	 * Method setAuthor.
-	 * @param aAuthor String - the author
+	 * 
+	 * @param aAuthor
+	 *            String - the author
 	 */
 	public void setAuthor(String aAuthor) {
 		fAuthor = aAuthor;
@@ -192,7 +210,9 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 
 	/**
 	 * Method fetchAuthor.
-	 * @param aMonitor IProgressMonitor
+	 * 
+	 * @param aMonitor
+	 *            IProgressMonitor
 	 * @throws CoreException
 	 */
 	public void fetchAuthor(IProgressMonitor aMonitor) throws CoreException {

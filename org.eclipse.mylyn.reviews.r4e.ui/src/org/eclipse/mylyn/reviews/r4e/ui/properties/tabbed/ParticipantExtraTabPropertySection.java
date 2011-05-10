@@ -60,31 +60,33 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fTimeSpentDetailedList.
 	 */
 	protected EditableListWidget fTimeSpentDetailedList = null;
-	
+
 	/**
 	 * Field fRolesList.
 	 */
 	private EditableListWidget fRolesList = null;
-	
+
 	/**
 	 * Field fFocusAreaText.
 	 */
 	protected Text fFocusAreaText = null;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method createControls.
-	 * @param parent Composite
-	 * @param aTabbedPropertySheetPage TabbedPropertySheetPage
+	 * 
+	 * @param parent
+	 *            Composite
+	 * @param aTabbedPropertySheetPage
+	 *            TabbedPropertySheetPage
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(Composite, TabbedPropertySheetPage)
 	 */
 	@Override
@@ -92,10 +94,10 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		super.createControls(parent, aTabbedPropertySheetPage);
 
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
-	    FormData data = null;
-	    final Composite mainForm = widgetFactory.createFlatFormComposite(parent);
-	    
-	    //Time Spent (detailed)
+		FormData data = null;
+		final Composite mainForm = widgetFactory.createFlatFormComposite(parent);
+
+		//Time Spent (detailed)
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -103,15 +105,15 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		fTimeSpentDetailedList = new EditableListWidget(widgetFactory, mainForm, data, this, 1, Date.class, null);
 		fTimeSpentDetailedList.setToolTipText(R4EUIConstants.PARTICIPANT_TIME_SPENT_TOOLTIP);
 
-	    final CLabel timeSpentDetailedLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.TIME_SPENT_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fTimeSpentDetailedList.getComposite(), -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fTimeSpentDetailedList.getComposite(), 0, SWT.CENTER);
-	    timeSpentDetailedLabel.setToolTipText(R4EUIConstants.PARTICIPANT_TIME_SPENT_TOOLTIP);
-	    timeSpentDetailedLabel.setLayoutData(data);
-	    
-	    //Roles
+		final CLabel timeSpentDetailedLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.TIME_SPENT_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fTimeSpentDetailedList.getComposite(), -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fTimeSpentDetailedList.getComposite(), 0, SWT.CENTER);
+		timeSpentDetailedLabel.setToolTipText(R4EUIConstants.PARTICIPANT_TIME_SPENT_TOOLTIP);
+		timeSpentDetailedLabel.setLayoutData(data);
+
+		//Roles
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -120,102 +122,107 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 				R4EUIConstants.PARTICIPANT_ROLES);
 		fRolesList.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
 
-	    final CLabel rolesLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.ROLES_LABEL);
+		final CLabel rolesLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.ROLES_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fRolesList.getComposite(), -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fRolesList.getComposite(), 0, SWT.TOP);
 		rolesLabel.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
 		rolesLabel.setLayoutData(data);
-	    
-	    //Focus Area
-	    fFocusAreaText = widgetFactory.createText(mainForm, "", SWT.BORDER);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-	    data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-	    data.top = new FormAttachment(fRolesList.getComposite(), ITabbedPropertyConstants.VSPACE);
-	    fFocusAreaText.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
-	    fFocusAreaText.setLayoutData(data);
-	    fFocusAreaText.addFocusListener(new FocusListener() {		
+
+		//Focus Area
+		fFocusAreaText = widgetFactory.createText(mainForm, "", SWT.BORDER);
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fRolesList.getComposite(), ITabbedPropertyConstants.VSPACE);
+		fFocusAreaText.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
+		fFocusAreaText.setLayoutData(data);
+		fFocusAreaText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-	    		if (!fRefreshInProgress) {
-	    			try {
-	    				final String currentUser = R4EUIModelController.getReviewer();
-						final R4EParticipant modelReview = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
-	    				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-	    				modelReview.setFocusArea(fFocusAreaText.getText());
-	    				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	    			} catch (ResourceHandlingException e1) {
-	    				UIUtils.displayResourceErrorDialog(e1);
-	    			} catch (OutOfSyncException e1) {
-	    				UIUtils.displaySyncErrorDialog(e1);
-	    			}
-	    		}
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EParticipant modelReview = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+						modelReview.setFocusArea(fFocusAreaText.getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
 			}
+
 			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
 				//Nothing to do
 			}
 		});
-	    UIUtils.addTabbedPropertiesTextResizeListener(fFocusAreaText);
-	    
-	    final CLabel focusAreaLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.FOCUS_AREA_LABEL);
-	    data = new FormData();
-	    data.left = new FormAttachment(0, 0);
-	    data.right = new FormAttachment(fFocusAreaText, -ITabbedPropertyConstants.HSPACE);
-	    data.top = new FormAttachment(fFocusAreaText, 0, SWT.CENTER);
-	    focusAreaLabel.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
-	    focusAreaLabel.setLayoutData(data);
+		UIUtils.addTabbedPropertiesTextResizeListener(fFocusAreaText);
+
+		final CLabel focusAreaLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.FOCUS_AREA_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fFocusAreaText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fFocusAreaText, 0, SWT.CENTER);
+		focusAreaLabel.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
+		focusAreaLabel.setLayoutData(data);
 	}
-	
+
 	/**
 	 * Method refresh.
+	 * 
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#refresh()
 	 */
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EParticipant modelUser = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
+		final R4EParticipant modelUser = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
 		final int numTimeEntries = modelUser.getTimeLog().size();
 		fTimeSpentDetailedList.clearAll();
 		int totalTimeSpent = 0;
 		Item item = null;
 		Entry<Date, Integer> timeEntry = null;
-		
-		final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);	
-		
+
+		final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
+
 		for (int i = 0; i < numTimeEntries; i++) {
 			timeEntry = modelUser.getTimeLog().get(i);
 			if (i >= fTimeSpentDetailedList.getItemCount()) {
-				item = fTimeSpentDetailedList.addItem(); 
+				item = fTimeSpentDetailedList.addItem();
 			} else {
 				item = fTimeSpentDetailedList.getItem(i);
-				if (null == item) item = fTimeSpentDetailedList.addItem(); 
+				if (null == item)
+					item = fTimeSpentDetailedList.addItem();
 			}
 			String[] data = { timeEntry.getValue().toString(), dateFormat.format(timeEntry.getKey()) };
-			((TableItem)item).setText(data);
-			totalTimeSpent +=timeEntry.getValue().intValue();
+			((TableItem) item).setText(data);
+			totalTimeSpent += timeEntry.getValue().intValue();
 		}
 		fTimeSpentDetailedList.setTableHeader(0, "Time Spent: " + Integer.toString(totalTimeSpent) + " minutes");
-		
-		final String[] roles = ((R4EUIParticipant)fProperties.getElement()).getRoles(modelUser.getRoles());
+
+		final String[] roles = ((R4EUIParticipant) fProperties.getElement()).getRoles(modelUser.getRoles());
 		fRolesList.clearAll();
-		String role  = null;
+		String role = null;
 		for (int i = 0; i < roles.length; i++) {
-			role  = roles[i];
+			role = roles[i];
 			if (i >= fRolesList.getItemCount()) {
 				item = fRolesList.addItem();
 			} else {
 				item = fRolesList.getItem(i);
-				if (null == item) item = fRolesList.addItem();
+				if (null == item)
+					item = fRolesList.addItem();
 			}
 			item.setText(role);
 		}
 
-		if (null != modelUser.getFocusArea()) fFocusAreaText.setText(modelUser.getFocusArea());
+		if (null != modelUser.getFocusArea())
+			fFocusAreaText.setText(modelUser.getFocusArea());
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
-	
+
 	/**
 	 * Method setEnabledFields.
 	 */
@@ -226,15 +233,15 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 			fRolesList.setEnabled(false);
 			fFocusAreaText.setEnabled(false);
 		} else {
-		    if (R4EUIModelController.getActiveReview() instanceof R4EUIReviewExtended) {
-				final R4EUIReviewExtended uiReview = (R4EUIReviewExtended)R4EUIModelController.getActiveReview(); 
-			
+			if (R4EUIModelController.getActiveReview() instanceof R4EUIReviewExtended) {
+				final R4EUIReviewExtended uiReview = (R4EUIReviewExtended) R4EUIModelController.getActiveReview();
+
 				if (uiReview.isParticipantTimeSpentEnabled()) {
 					fTimeSpentDetailedList.setEnabled(true);
 				} else {
 					fTimeSpentDetailedList.setEnabled(false);
 				}
-				
+
 				if (uiReview.isParticipantExtraDetailsEnabled()) {
 					fRolesList.setEnabled(true);
 					fFocusAreaText.setEnabled(true);
@@ -242,23 +249,26 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 					fRolesList.setEnabled(false);
 					fFocusAreaText.setEnabled(false);
 				}
-		    } else {
+			} else {
 				fTimeSpentDetailedList.setEnabled(true);
 				fRolesList.setEnabled(true);
 				fFocusAreaText.setEnabled(true);
-		    }
+			}
 		}
 	}
 
 	/**
 	 * Method itemsUpdated.
-	 * @param aItems Item[]
-	 * @param aInstanceId int
+	 * 
+	 * @param aItems
+	 *            Item[]
+	 * @param aInstanceId
+	 *            int
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.utils.IEditableListListener#itemsUpdated(Item[], int)
 	 */
-	public void itemsUpdated(Item[] aItems, int aInstanceId) {		
+	public void itemsUpdated(Item[] aItems, int aInstanceId) {
 		try {
-			final R4EParticipant modelParticipant = ((R4EUIParticipant)fProperties.getElement()).getParticipant();
+			final R4EParticipant modelParticipant = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
 			final String currentUser = R4EUIModelController.getReviewer();
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant, currentUser);
 
@@ -269,9 +279,9 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 				timeMap.clear();
 				for (Item item : aItems) {
 					try {
-						if (!((TableItem)item).getText(1).equals("")) {
-							timeMap.put(dateFormat.parse(((TableItem)item).getText(1)), 
-									Integer.valueOf(((TableItem)item).getText(0)));
+						if (!((TableItem) item).getText(1).equals("")) {
+							timeMap.put(dateFormat.parse(((TableItem) item).getText(1)),
+									Integer.valueOf(((TableItem) item).getText(0)));
 						}
 					} catch (NumberFormatException e) {
 						//skip this entry
@@ -289,8 +299,9 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 				//Update roles
 				modelParticipant.getRoles().clear();
 				for (Item item : aItems) {
-					R4EUserRole role = ((R4EUIParticipant)fProperties.getElement()).mapStringToRole(item.getText());
-					if (null != role) modelParticipant.getRoles().add(role);
+					R4EUserRole role = ((R4EUIParticipant) fProperties.getElement()).mapStringToRole(item.getText());
+					if (null != role)
+						modelParticipant.getRoles().add(role);
 				}
 			}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);

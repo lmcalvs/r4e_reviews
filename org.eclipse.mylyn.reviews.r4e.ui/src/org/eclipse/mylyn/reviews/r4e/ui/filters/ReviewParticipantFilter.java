@@ -30,55 +30,64 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
  * @version $Revision: 1.0 $
  */
 public class ReviewParticipantFilter extends ViewerFilter {
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fParticipant.
 	 */
 	private String fParticipant = "";
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Sets the current participant to filter on
+	 * 
 	 * @param aParticipant
 	 */
 	public void setParticipant(String aParticipant) {
 		fParticipant = aParticipant;
 	}
-	
+
 	/**
 	 * Gets the currently selected particiant
+	 * 
 	 * @return String
 	 */
 	public String getParticipant() {
 		return fParticipant;
 	}
-	
+
 	/**
 	 * Method select.
-	 * @param viewer Viewer
-	 * @param parentElement Object
-	 * @param element Object
+	 * 
+	 * @param viewer
+	 *            Viewer
+	 * @param parentElement
+	 *            Object
+	 * @param element
+	 *            Object
 	 * @return boolean
 	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-	
-		if (element instanceof R4EUIReviewGroup && !((R4EUIReviewGroup) element).isOpen()) return true;
-		if (isParentReviewParticipant((IR4EUIModelElement)element)) return true;
-		return isChildrenReviewParticipant((IR4EUIModelElement)element);
+
+		if (element instanceof R4EUIReviewGroup && !((R4EUIReviewGroup) element).isOpen())
+			return true;
+		if (isParentReviewParticipant((IR4EUIModelElement) element))
+			return true;
+		return isChildrenReviewParticipant((IR4EUIModelElement) element);
 	}
-	
+
 	/**
 	 * Checks if the children element contains the current participant
-	 * @param aCurrentElement - the element to filter on
+	 * 
+	 * @param aCurrentElement
+	 *            - the element to filter on
 	 * @return true/false
 	 */
 	private boolean isChildrenReviewParticipant(IR4EUIModelElement aCurrentElement) {
@@ -86,28 +95,34 @@ public class ReviewParticipantFilter extends ViewerFilter {
 		IR4EUIModelElement element = null;
 		for (int i = 0; i < length; i++) {
 			element = aCurrentElement.getChildren()[i];
-			if (!(element instanceof R4EUIReviewBasic)) return false;
-			if (((R4EUIReviewBasic)element).isParticipant(fParticipant)) return true;
+			if (!(element instanceof R4EUIReviewBasic))
+				return false;
+			if (((R4EUIReviewBasic) element).isParticipant(fParticipant))
+				return true;
 		}
 		return false;
 	}
 
 	/**
 	 * Checks if the parent element contains the current participant
-	 * @param aCurrentElement - the element to filter on
+	 * 
+	 * @param aCurrentElement
+	 *            - the element to filter on
 	 * @return true/false
 	 */
 	private boolean isParentReviewParticipant(IR4EUIModelElement aCurrentElement) {
-		
+
 		//Get Review parent
 		IR4EUIModelElement reviewParentElement = aCurrentElement;
 		while (!(reviewParentElement instanceof R4EUIReviewBasic)) {
 			reviewParentElement = reviewParentElement.getParent();
-			if (null == reviewParentElement) return false;
+			if (null == reviewParentElement)
+				return false;
 		}
-	
+
 		//Check if we are a participant for this review
-		if (((R4EUIReviewBasic)reviewParentElement).isParticipant(fParticipant)) return true;
+		if (((R4EUIReviewBasic) reviewParentElement).isParticipant(fParticipant))
+			return true;
 		return false;
 	}
 }

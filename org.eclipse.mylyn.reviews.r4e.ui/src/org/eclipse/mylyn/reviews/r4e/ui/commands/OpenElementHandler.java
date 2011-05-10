@@ -17,6 +17,7 @@
  *   
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.commands;
+
 /*******************************************************************************
  * Copyright (c) 2011 Ericsson Research Canada
  * 
@@ -68,10 +69,12 @@ public class OpenElementHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method execute.
-	 * @param event ExecutionEvent
+	 * 
+	 * @param event
+	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
@@ -86,19 +89,19 @@ public class OpenElementHandler extends AbstractHandler {
 
 			if (!selection.isEmpty()) {
 				try {
-					final IR4EUIModelElement element = 
-						(IR4EUIModelElement)((IStructuredSelection) selection).getFirstElement();
+					final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
 
-					if (element instanceof R4EUIReviewBasic) {					
+					if (element instanceof R4EUIReviewBasic) {
 						Activator.Ftracer.traceInfo("Opening element " + element.getName());
 						final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
-						if (null != activeReview ) activeReview.close();
+						if (null != activeReview)
+							activeReview.close();
 					}
 					element.open();
 
 					//The action is only performed on the first element, so select it
-					final StructuredSelection newSelection = 
-						new StructuredSelection(((IStructuredSelection) selection).getFirstElement());
+					final StructuredSelection newSelection = new StructuredSelection(
+							((IStructuredSelection) selection).getFirstElement());
 					R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
 				} catch (ResourceHandlingException e) {
 					UIUtils.displayResourceErrorDialog(e);
@@ -109,8 +112,9 @@ public class OpenElementHandler extends AbstractHandler {
 				} catch (FileNotFoundException e) {
 					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 					Activator.getDefault().logError("Exception: " + e.toString(), e);
-					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "File not found error detected while opening element",
-							new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+							"File not found error detected while opening element", new Status(IStatus.ERROR,
+									Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 					dialog.open();
 				}
 			}

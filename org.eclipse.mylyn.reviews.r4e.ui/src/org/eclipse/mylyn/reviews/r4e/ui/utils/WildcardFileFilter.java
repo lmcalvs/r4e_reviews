@@ -31,28 +31,31 @@ public class WildcardFileFilter implements FileFilter {
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fPattern.
 	 */
 	private final String fPattern;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for WildcardFileFilter.
-	 * @param pattern String
+	 * 
+	 * @param pattern
+	 *            String
 	 */
 	public WildcardFileFilter(String pattern) {
 		fPattern = pattern.replace("*", ".*").replace("?", ".");
 	}
-	 
+
 	/**
 	 * Method accept.
-	 * @param file File
+	 * 
+	 * @param file
+	 *            File
 	 * @return boolean
 	 * @see java.io.FileFilter#accept(File)
 	 */

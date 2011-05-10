@@ -27,27 +27,32 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
  */
 public class LineViewerSorter extends ViewerSorter {
 
-    /**
+	/**
 	 * Method getCommitTitleList.
-	 * @param viewer Viewer
-	 * @param e1 Object
-	 * @param e2 Object
+	 * 
+	 * @param viewer
+	 *            Viewer
+	 * @param e1
+	 *            Object
+	 * @param e2
+	 *            Object
 	 * @return int
-     * @see org.eclipse.jface.viewers.ViewerComparator#compare(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)
-     */
-    @SuppressWarnings("unchecked")
+	 * @see org.eclipse.jface.viewers.ViewerComparator#compare(org.eclipse.jface.viewers.Viewer, java.lang.Object,
+	 *      java.lang.Object)
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {
 
-    	if (e1 instanceof R4EUIAnomalyBasic && e2 instanceof R4EUIAnomalyBasic) {
-    		if (null != ((R4EUIAnomalyBasic)e1).getPosition()) {
-    			return ((R4EUITextPosition)((R4EUIAnomalyBasic)e1).getPosition()).getStartLine() -
-    					((R4EUITextPosition)((R4EUIAnomalyBasic)e2).getPosition()).getStartLine();
-    		}
-    		//Global anomalies return alphabetically
-    	    // use the comparator to compare the strings
-    	    return getComparator().compare(((R4EUIAnomalyBasic)e1).getName(), ((R4EUIAnomalyBasic)e2).getName());
-    	}
-    	return 0;
-    }
+		if (e1 instanceof R4EUIAnomalyBasic && e2 instanceof R4EUIAnomalyBasic) {
+			if (null != ((R4EUIAnomalyBasic) e1).getPosition()) {
+				return ((R4EUITextPosition) ((R4EUIAnomalyBasic) e1).getPosition()).getStartLine()
+						- ((R4EUITextPosition) ((R4EUIAnomalyBasic) e2).getPosition()).getStartLine();
+			}
+			//Global anomalies return alphabetically
+			// use the comparator to compare the strings
+			return getComparator().compare(((R4EUIAnomalyBasic) e1).getName(), ((R4EUIAnomalyBasic) e2).getName());
+		}
+		return 0;
+	}
 }

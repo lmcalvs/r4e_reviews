@@ -31,35 +31,44 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for ReviewNavigatorTreeViewer.
-	 * @param parent Composite
-	 * @param style int
+	 * 
+	 * @param parent
+	 *            Composite
+	 * @param style
+	 *            int
 	 */
 	public ReviewNavigatorTreeViewer(Composite parent, int style) {
 		super(parent, style);
 	}
-	
+
 	/**
 	 * Method getPrevious.
-	 * @param aItem TreeItem
+	 * 
+	 * @param aItem
+	 *            TreeItem
 	 * @return TreeItem
 	 */
 	public TreeItem getPrevious(TreeItem aItem) {
 		final TreeItem newItem = (TreeItem) getPreviousItem(aItem);
-		if (null == newItem) return aItem;
+		if (null == newItem)
+			return aItem;
 		return newItem;
 	}
 
 	/**
 	 * Method getNext.
-	 * @param aItem TreeItem
+	 * 
+	 * @param aItem
+	 *            TreeItem
 	 * @return TreeItem
 	 */
 	public TreeItem getNext(TreeItem aItem) {
 		final TreeItem newItem = (TreeItem) getNextItem(aItem, true);
-		if (null == newItem) return aItem;
+		if (null == newItem)
+			return aItem;
 		return newItem;
 	}
 }

@@ -35,37 +35,46 @@ public class NavigatorElementComparator extends ViewerComparator {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
-    /**
-     * Method compare.
-     * @param viewer Viewer
-     * @param e1 Object
-     * @param e2 Object
-     * @return int
-     */
-    @SuppressWarnings("unchecked")
+
+	/**
+	 * Method compare.
+	 * 
+	 * @param viewer
+	 *            Viewer
+	 * @param e1
+	 *            Object
+	 * @param e2
+	 *            Object
+	 * @return int
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {
-        
-    	final int cat1 = category(e1);
-        final int cat2 = category(e2);
-        if (cat1 != cat2) return cat1 - cat2;
 
-        //If the compared objects are CommentElements, leave them alone
-        if (e1 instanceof R4EUIComment) return 0;
-        
-        //Otherwise sort them alphabetically
-        final ILabelProvider prov = (ILabelProvider) ((ContentViewer) viewer).getLabelProvider();
-        String name1 = prov.getText(e1);
-        String name2 = prov.getText(e2);
-        
-        if (null == name1 || null == name2) return 0;  //Ignore invalid strings
-        
-        //Remove the decorator characters form the text label
-        if (name1.startsWith("> ")) name1 = name1.substring(2); // $codepro.audit.disable numericLiterals
-        if (name2.startsWith("> ")) name2 = name2.substring(2); // $codepro.audit.disable numericLiterals
+		final int cat1 = category(e1);
+		final int cat2 = category(e2);
+		if (cat1 != cat2)
+			return cat1 - cat2;
 
-        // use the comparator to compare the strings
-        return getComparator().compare(name1, name2);
-    }
+		//If the compared objects are CommentElements, leave them alone
+		if (e1 instanceof R4EUIComment)
+			return 0;
+
+		//Otherwise sort them alphabetically
+		final ILabelProvider prov = (ILabelProvider) ((ContentViewer) viewer).getLabelProvider();
+		String name1 = prov.getText(e1);
+		String name2 = prov.getText(e2);
+
+		if (null == name1 || null == name2)
+			return 0; //Ignore invalid strings
+
+		//Remove the decorator characters form the text label
+		if (name1.startsWith("> "))
+			name1 = name1.substring(2); // $codepro.audit.disable numericLiterals
+		if (name2.startsWith("> "))
+			name2 = name2.substring(2); // $codepro.audit.disable numericLiterals
+
+		// use the comparator to compare the strings
+		return getComparator().compare(name1, name2);
+	}
 }

@@ -31,29 +31,31 @@ public interface IR4EUIPosition {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * Method toString.
-	 * 		Returns the position as a readable string
+	 * Method toString. Returns the position as a readable string
+	 * 
 	 * @return String
 	 */
 	@Override
 	String toString();
-	
+
 	/**
-	 * Method isSameAs.
-	 * 		Compares 2 positions to see if they are the same (value-wise)
-	 * @param aPosition IR4EPosition
+	 * Method isSameAs. Compares 2 positions to see if they are the same (value-wise)
+	 * 
+	 * @param aPosition
+	 *            IR4EPosition
 	 * @return boolean
 	 */
 	boolean isSameAs(IR4EUIPosition aPosition);
-	
+
 	/**
-	 * Method setPositionInModel.
-	 * 		Set the position in serialization model
-	 * @param aModelPosition R4EPosition
-	 * @throws OutOfSyncException 
-	 * @throws ResourceHandlingException 
+	 * Method setPositionInModel. Set the position in serialization model
+	 * 
+	 * @param aModelPosition
+	 *            R4EPosition
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
 	 */
 	void setPositionInModel(R4EPosition aModelPosition) throws ResourceHandlingException, OutOfSyncException;
 }

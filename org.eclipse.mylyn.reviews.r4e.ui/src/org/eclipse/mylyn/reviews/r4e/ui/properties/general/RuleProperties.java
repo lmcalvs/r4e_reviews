@@ -32,7 +32,7 @@ public class RuleProperties extends ModelElementProperties {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field RULE_ID_ID. (value is ""ruleElement.id"")
 	 */
@@ -41,9 +41,9 @@ public class RuleProperties extends ModelElementProperties {
 	/**
 	 * Field RULE_ID_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final PropertyDescriptor RULE_ID_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			RULE_ID_ID, R4EUIConstants.ID_LABEL);
-		
+	protected static final PropertyDescriptor RULE_ID_PROPERTY_DESCRIPTOR = new PropertyDescriptor(RULE_ID_ID,
+			R4EUIConstants.ID_LABEL);
+
 	/**
 	 * Field RULE_TITLE_ID. (value is ""ruleElement.title"")
 	 */
@@ -52,9 +52,9 @@ public class RuleProperties extends ModelElementProperties {
 	/**
 	 * Field RULE_TITLE_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final PropertyDescriptor RULE_TITLE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			RULE_TITLE_ID, R4EUIConstants.TITLE_LABEL);
-	
+	protected static final PropertyDescriptor RULE_TITLE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(RULE_TITLE_ID,
+			R4EUIConstants.TITLE_LABEL);
+
 	/**
 	 * Field RULE_DESCRIPTION_ID. (value is ""ruleElement.description"")
 	 */
@@ -65,7 +65,7 @@ public class RuleProperties extends ModelElementProperties {
 	 */
 	protected static final PropertyDescriptor RULE_DESCRIPTION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			RULE_DESCRIPTION_ID, R4EUIConstants.DESCRIPTION_LABEL);
-	
+
 	/**
 	 * Field RULE_CLASS_ID. (value is ""ruleElement.class"")
 	 */
@@ -74,9 +74,9 @@ public class RuleProperties extends ModelElementProperties {
 	/**
 	 * Field RULE_CLASS_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final PropertyDescriptor RULE_CLASS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			RULE_CLASS_ID, R4EUIConstants.CLASS_LABEL);
-	
+	protected static final PropertyDescriptor RULE_CLASS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(RULE_CLASS_ID,
+			R4EUIConstants.CLASS_LABEL);
+
 	/**
 	 * Field RULE_RANK_ID. (value is ""ruleElement.rank"")
 	 */
@@ -85,36 +85,37 @@ public class RuleProperties extends ModelElementProperties {
 	/**
 	 * Field RULE_RANK_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final PropertyDescriptor RULE_RANK_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			RULE_RANK_ID, R4EUIConstants.RANK_LABEL);
-	
+	protected static final PropertyDescriptor RULE_RANK_PROPERTY_DESCRIPTOR = new PropertyDescriptor(RULE_RANK_ID,
+			R4EUIConstants.RANK_LABEL);
+
 	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { RULE_ID_PROPERTY_DESCRIPTOR,
-		RULE_TITLE_PROPERTY_DESCRIPTOR, RULE_DESCRIPTION_PROPERTY_DESCRIPTOR,
-		RULE_CLASS_PROPERTY_DESCRIPTOR, RULE_RANK_PROPERTY_DESCRIPTOR};
-	
-	
+			RULE_TITLE_PROPERTY_DESCRIPTOR, RULE_DESCRIPTION_PROPERTY_DESCRIPTOR, RULE_CLASS_PROPERTY_DESCRIPTOR,
+			RULE_RANK_PROPERTY_DESCRIPTOR };
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Constructor for ReviewGroupProperties.
-	 * @param aElement R4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
 	 */
 	public RuleProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
-	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getPropertyDescriptors.
+	 * 
 	 * @return IPropertyDescriptor[]
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
@@ -122,26 +123,28 @@ public class RuleProperties extends ModelElementProperties {
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		return DESCRIPTORS;
 	}
-	
+
 	/**
 	 * Method getPropertyValue.
-	 * @param aId Object
+	 * 
+	 * @param aId
+	 *            Object
 	 * @return Object
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(Object)
 	 */
 	@Override
 	public Object getPropertyValue(Object aId) {
 		if (null != getElement()) {
-			if (RULE_ID_ID.equals(aId)) { 
-				return ((R4EUIRule)getElement()).getRule().getId();
-			} else if (RULE_TITLE_ID.equals(aId)) { 
-				return ((R4EUIRule)getElement()).getRule().getTitle();
-			} else if (RULE_DESCRIPTION_ID.equals(aId)) { 
-				return ((R4EUIRule)getElement()).getRule().getDescription();
-			} else if (RULE_CLASS_ID.equals(aId)) { 
-				return Integer.valueOf(((R4EUIRule)getElement()).getRule().getClass_().getValue());
-			} else if (RULE_RANK_ID.equals(aId)) { 
-				return Integer.valueOf(((R4EUIRule)getElement()).getRule().getRank().getValue());
+			if (RULE_ID_ID.equals(aId)) {
+				return ((R4EUIRule) getElement()).getRule().getId();
+			} else if (RULE_TITLE_ID.equals(aId)) {
+				return ((R4EUIRule) getElement()).getRule().getTitle();
+			} else if (RULE_DESCRIPTION_ID.equals(aId)) {
+				return ((R4EUIRule) getElement()).getRule().getDescription();
+			} else if (RULE_CLASS_ID.equals(aId)) {
+				return Integer.valueOf(((R4EUIRule) getElement()).getRule().getClass_().getValue());
+			} else if (RULE_RANK_ID.equals(aId)) {
+				return Integer.valueOf(((R4EUIRule) getElement()).getRule().getRank().getValue());
 			}
 		}
 		return null;

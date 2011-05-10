@@ -61,170 +61,176 @@ public class EditableListWidget {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * Field MAX_COLUMN_WIDTH.
-	 * (value is 600)
+	 * Field MAX_COLUMN_WIDTH. (value is 600)
 	 */
 	private static final int DEFAULT_TABLE_WIDTH = 200;
-	
+
 	/**
-	 * Field MAX_COLUMN_HALF_WIDTH.
-	 * (value is 300)
+	 * Field MAX_COLUMN_HALF_WIDTH. (value is 300)
 	 */
 	private static final int DEFAULT_TABLE_HEIGHT = 200;
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Field fMainComposite.
 	 */
 	protected Composite fMainComposite = null;
-	
+
 	/**
 	 * Field fMainTable.
 	 */
 	protected Table fMainTable = null;
-	
+
 	/**
 	 * Field fAddButton.
 	 */
 	protected Button fAddButton = null;
-	
+
 	/**
 	 * Field fRemoveButton.
 	 */
 	protected Button fRemoveButton = null;
-	
+
 	/**
 	 * Field fListener.
 	 */
 	protected IEditableListListener fListener = null;
-	
+
 	/**
 	 * Field fInstanceId.
 	 */
 	protected int fInstanceId = 0;
-	
+
 	/**
 	 * Field fValues.
 	 */
 	protected String[] fValues = null;
-	
+
 	// ------------------------------------------------------------------------
 	// Constructor
 	// ------------------------------------------------------------------------
-	
+
 	//TODO:  This should be made more generic to accept various tables.  Right now it is very hard-coded to our stuff...
 	/**
 	 * Constructor for EditableListWidget.
-     * @param aToolkit - FormToolkit
-     * @param aParent - Composite
-     * @param aLayoutData - Object
-     * @param aListener - IEditableListListener
-     * @param aInstanceId - int
-     * @param aEditableWidgetClass - Class<?>
-     * @param aEditableValues - String[]
+	 * 
+	 * @param aToolkit
+	 *            - FormToolkit
+	 * @param aParent
+	 *            - Composite
+	 * @param aLayoutData
+	 *            - Object
+	 * @param aListener
+	 *            - IEditableListListener
+	 * @param aInstanceId
+	 *            - int
+	 * @param aEditableWidgetClass
+	 *            - Class<?>
+	 * @param aEditableValues
+	 *            - String[]
 	 */
-	public EditableListWidget(FormToolkit aToolkit, Composite aParent, Object aLayoutData, 
+	public EditableListWidget(FormToolkit aToolkit, Composite aParent, Object aLayoutData,
 			IEditableListListener aListener, int aInstanceId, Class<?> aEditableWidgetClass, String[] aEditableValues) {
 		fMainComposite = aToolkit.createComposite(aParent);
 		fMainComposite.setLayoutData(aLayoutData);
 		fMainComposite.setLayout(new GridLayout(4, false));
 		fMainTable = aToolkit.createTable(fMainComposite, SWT.FULL_SELECTION | SWT.BORDER);
-        final GridData tableData = new GridData(GridData.FILL, GridData.FILL, true, true);
-        if (aEditableWidgetClass.equals(Date.class)) {
-        	tableData.horizontalSpan = 1;
-        } else {
-        	tableData.horizontalSpan = 2;
-        }
+		final GridData tableData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		if (aEditableWidgetClass.equals(Date.class)) {
+			tableData.horizontalSpan = 1;
+		} else {
+			tableData.horizontalSpan = 2;
+		}
 		fMainTable.setLayoutData(tableData);
 		fMainTable.setLinesVisible(true);
 		fListener = aListener;
 		fInstanceId = aInstanceId;
 		fValues = aEditableValues;
 		createEditableListFromTable(aToolkit, aEditableWidgetClass);
-		fMainTable.setSize(DEFAULT_TABLE_WIDTH, DEFAULT_TABLE_HEIGHT);   //default table size
+		fMainTable.setSize(DEFAULT_TABLE_WIDTH, DEFAULT_TABLE_HEIGHT); //default table size
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method dispose.
 	 */
 	public void dispose() {
 		fMainComposite.dispose();
 	}
-	
-    /**
-     * Method createEditableListFromTable.
-     * 		Builds the editable list in the provided table
-     * @param aToolkit - FormToolkit
-     * @param aEditableWidgetClass - Class<?>
-     */
+
+	/**
+	 * Method createEditableListFromTable. Builds the editable list in the provided table
+	 * 
+	 * @param aToolkit
+	 *            - FormToolkit
+	 * @param aEditableWidgetClass
+	 *            - Class<?>
+	 */
 	public void createEditableListFromTable(FormToolkit aToolkit, final Class<?> aEditableWidgetClass) {
 
 		final TableColumn tableColumn = new TableColumn(fMainTable, SWT.LEFT, 0);
 		final TableColumn tableColumn2 = new TableColumn(fMainTable, SWT.RIGHT, 1);
-		
+
 		if (aEditableWidgetClass.equals(Date.class)) {
 			fMainTable.setHeaderVisible(true);
 			tableColumn.setText(R4EUIConstants.SPENT_TIME_COLUMN_HEADER);
 			tableColumn2.setText(R4EUIConstants.ENTRY_TIME_COLUMN_HEADER);
 		}
 
-		fMainComposite.addControlListener(new ControlAdapter() { 
+		fMainComposite.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
-				
-                final Rectangle area = fMainTable.getClientArea();
-                final Point size = fMainTable.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-                final ScrollBar vBar = fMainTable.getVerticalBar();
-                int width = area.width - fMainTable.computeTrim(0,0,0,0).width - vBar.getSize().x;
-                if (size.y > area.height + fMainTable.getHeaderHeight()) {
-                	// Subtract the scrollbar width from the total column width
-                	// if a vertical scrollbar will be required
-                	final Point vBarSize = vBar.getSize();
-                	width -= vBarSize.x;
-                }
-                final Point oldSize = fMainTable.getSize();
-                if (oldSize.x > area.width) {
-                    // table is getting smaller so make the columns smaller first and then resize the table to
-                    // match the client area width
-                	if (aEditableWidgetClass.equals(Date.class)) {
-                    	tableColumn.setWidth(width/3);
-                    	tableColumn2.setWidth(width - tableColumn.getWidth());
-                	} else {
-                		tableColumn.setWidth(width);
-                	}
-                    fMainTable.setSize(area.width, area.height);
-                } else {
-                    // table is getting bigger so make the table bigger first and then make the columns wider
-                    // to match the client area width
-                	fMainTable.setSize(area.width, area.height);
-                	if (aEditableWidgetClass.equals(Date.class)) {
-                    	tableColumn.setWidth(width/3);
-                    	tableColumn2.setWidth(width - tableColumn.getWidth());
-                	} else {
-                    	tableColumn.setWidth(width);
-                	}
-                }
+
+				final Rectangle area = fMainTable.getClientArea();
+				final Point size = fMainTable.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				final ScrollBar vBar = fMainTable.getVerticalBar();
+				int width = area.width - fMainTable.computeTrim(0, 0, 0, 0).width - vBar.getSize().x;
+				if (size.y > area.height + fMainTable.getHeaderHeight()) {
+					// Subtract the scrollbar width from the total column width
+					// if a vertical scrollbar will be required
+					final Point vBarSize = vBar.getSize();
+					width -= vBarSize.x;
+				}
+				final Point oldSize = fMainTable.getSize();
+				if (oldSize.x > area.width) {
+					// table is getting smaller so make the columns smaller first and then resize the table to
+					// match the client area width
+					if (aEditableWidgetClass.equals(Date.class)) {
+						tableColumn.setWidth(width / 3);
+						tableColumn2.setWidth(width - tableColumn.getWidth());
+					} else {
+						tableColumn.setWidth(width);
+					}
+					fMainTable.setSize(area.width, area.height);
+				} else {
+					// table is getting bigger so make the table bigger first and then make the columns wider
+					// to match the client area width
+					fMainTable.setSize(area.width, area.height);
+					if (aEditableWidgetClass.equals(Date.class)) {
+						tableColumn.setWidth(width / 3);
+						tableColumn2.setWidth(width - tableColumn.getWidth());
+					} else {
+						tableColumn.setWidth(width);
+					}
+				}
 			}
 		});
-        
+
 		fMainTable.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
 				//Send items updated notification
 				if (null != fListener) {
 					//If items are empty, do not consider them
 					final TableItem[] items = fMainTable.getItems();
-					for (int i = 0 ; i < items.length; i++) {
+					for (int i = 0; i < items.length; i++) {
 						if (items[i].getText().trim().length() < 1) {
 							fMainTable.remove(i);
 						}
@@ -232,6 +238,7 @@ public class EditableListWidget {
 					fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
 				}
 			}
+
 			public void focusGained(FocusEvent e) {
 				//Send items updated notification
 				if (null != fListener) {
@@ -239,37 +246,40 @@ public class EditableListWidget {
 				}
 			}
 		});
-		
+
 		final Composite buttonsComposite = aToolkit.createComposite(fMainComposite);
 		buttonsComposite.setLayout(new GridLayout());
 		buttonsComposite.setLayoutData(new GridData(GridData.CENTER, GridData.CENTER, false, false));
 
-        fAddButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_ADD_LABEL, SWT.NONE);
+		fAddButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_ADD_LABEL, SWT.NONE);
 		if (aEditableWidgetClass.equals(CCombo.class)) {
-			if (null == fValues || 0 == fValues.length) fAddButton.setEnabled(false);	
+			if (null == fValues || 0 == fValues.length)
+				fAddButton.setEnabled(false);
 		}
-        fRemoveButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_REMOVE_LABEL, SWT.NONE);
-		if (0 == fMainTable.getItemCount()) fRemoveButton.setEnabled(false);	
+		fRemoveButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_REMOVE_LABEL, SWT.NONE);
+		if (0 == fMainTable.getItemCount())
+			fRemoveButton.setEnabled(false);
 
-        fAddButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
-        fAddButton.addSelectionListener(new SelectionListener() {
+		fAddButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		fAddButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				final TableItem newItem = new TableItem(fMainTable, SWT.NONE);
 				final Control editableControl;
 				if (aEditableWidgetClass.equals(Text.class)) {
 					editableControl = new Text(fMainTable, SWT.SINGLE | SWT.BORDER);
-					((Text)editableControl).addModifyListener(new ModifyListener() {
+					((Text) editableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
-							newItem.setText(((Text)editableControl).getText());
+							newItem.setText(((Text) editableControl).getText());
 						}
 					});
-					((Text)editableControl).addKeyListener(new KeyListener() {
-						
+					((Text) editableControl).addKeyListener(new KeyListener() {
+
 						public void keyReleased(KeyEvent ke) {
 							if (ke.keyCode == SWT.CR) {
 								return;
-							}	
+							}
 						}
+
 						public void keyPressed(KeyEvent ke) {
 							// Nothing to do
 						}
@@ -287,46 +297,46 @@ public class EditableListWidget {
 							currentValues.remove(currentItem.getText());
 						}
 					}
-					((CCombo)editableControl).setItems(currentValues.toArray(new String[currentValues.size()]));
-					((CCombo)editableControl).addModifyListener(new ModifyListener() {
+					((CCombo) editableControl).setItems(currentValues.toArray(new String[currentValues.size()]));
+					((CCombo) editableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
-							newItem.setText(((CCombo)editableControl).getText());
+							newItem.setText(((CCombo) editableControl).getText());
 						}
 					});
-				} else if (aEditableWidgetClass.equals(Date.class)) {					
+				} else if (aEditableWidgetClass.equals(Date.class)) {
 					editableControl = new Text(fMainTable, SWT.NONE);
 					final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
-					final String[] data = { ((Text)editableControl).getText(), 
+					final String[] data = { ((Text) editableControl).getText(),
 							dateFormat.format(Calendar.getInstance().getTime()) };
 					newItem.setText(data);
-					((Text)editableControl).addModifyListener(new ModifyListener() {
+					((Text) editableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
 							//Only accept numbers
-							String newText = ((Text)editableControl).getText();
+							String newText = ((Text) editableControl).getText();
 							try {
 								Integer.valueOf(newText);
 							} catch (NumberFormatException nfe) {
 								if (newText.length() > 0) {
 									newText = newText.substring(0, newText.length() - 1);
-									((Text)editableControl).setText(newText);
-									((Text)editableControl).setSelection(newText.length());
+									((Text) editableControl).setText(newText);
+									((Text) editableControl).setSelection(newText.length());
 								}
 							}
 							newItem.setText(0, newText);
 						}
-					});	
+					});
 				} else {
 					return;
 				}
 				editableControl.addFocusListener(new FocusListener() {
 					public void focusLost(FocusEvent fe) {
-						((Control)fe.getSource()).dispose();
-						
+						((Control) fe.getSource()).dispose();
+
 						//Send items updated notification
 						if (null != fListener) {
 							//If items are empty, do not consider them
 							final TableItem[] items = fMainTable.getItems();
-							for (int i = 0 ; i < items.length; i++) {
+							for (int i = 0; i < items.length; i++) {
 								if (items[i].getText().trim().length() < 1) {
 									fMainTable.remove(i);
 								}
@@ -334,45 +344,49 @@ public class EditableListWidget {
 							fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
 						}
 					}
+
 					public void focusGained(FocusEvent fe) {
 						//Nothing to do
 					}
 				});
-				
+
 				editableControl.setFocus();
-				final TableEditor editor = new TableEditor (fMainTable);
+				final TableEditor editor = new TableEditor(fMainTable);
 				editor.grabHorizontal = true;
 				editor.grabVertical = true;
 				editor.setEditor(editableControl, newItem, 0);
 				fRemoveButton.setEnabled(true);
 				fMainTable.redraw();
 			}
+
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 			}
 		});
-        fRemoveButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));	
-        fRemoveButton.addSelectionListener(new SelectionListener() {
+		fRemoveButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		fRemoveButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				final int numItems = fMainTable.getItemCount();
 				if (numItems > 0) {
 					//Find the table index for the first control
 					final Control[] controls = fMainTable.getChildren();
 					final int firstControlIndex = numItems - controls.length;
-						
+
 					//Currently selected item
 					int tableItemIndex = fMainTable.getSelectionIndex();
-					if ( R4EUIConstants.INVALID_VALUE == tableItemIndex) {
+					if (R4EUIConstants.INVALID_VALUE == tableItemIndex) {
 						//Remove the selected element (and control if there is one) or the last one if noe is selected
 						tableItemIndex = numItems - 1;
 					}
-					if (tableItemIndex >=  firstControlIndex ) {
+					if (tableItemIndex >= firstControlIndex) {
 						controls[tableItemIndex - firstControlIndex].dispose();
 					}
 					fMainTable.getItem(tableItemIndex).dispose();
 				}
-				if (0 == fMainTable.getItemCount()) fRemoveButton.setEnabled(false);	
+				if (0 == fMainTable.getItemCount())
+					fRemoveButton.setEnabled(false);
 				fMainTable.redraw();
 			}
+
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
 			}
 		});
@@ -384,52 +398,61 @@ public class EditableListWidget {
 	public void clearAll() {
 		fMainTable.clearAll();
 	}
-	
+
 	/**
 	 * Method addItem.
+	 * 
 	 * @return Item
 	 */
 	public Item addItem() {
-		 return new TableItem (fMainTable, SWT.NONE);
+		return new TableItem(fMainTable, SWT.NONE);
 	}
-	
+
 	/**
 	 * Method getItem.
-	 * @param aIndex - int
+	 * 
+	 * @param aIndex
+	 *            - int
 	 * @return Item
 	 */
 	public Item getItem(int aIndex) {
 		return fMainTable.getItem(aIndex);
 	}
-	
+
 	/**
 	 * Method getItems.
+	 * 
 	 * @return Item[]
 	 */
 	public Item[] getItems() {
 		return fMainTable.getItems();
 	}
-	
+
 	/**
 	 * Method getItemCount.
+	 * 
 	 * @return int
 	 */
 	public int getItemCount() {
 		return fMainTable.getItemCount();
 	}
-	
+
 	/**
 	 * Method setEnabled.
-	 * @param aEnabled - boolean
+	 * 
+	 * @param aEnabled
+	 *            - boolean
 	 */
 	public void setEnabled(boolean aEnabled) {
 		fMainComposite.setEnabled(aEnabled);
 		fMainTable.setEnabled(aEnabled);
 	}
-	
+
 	/**
 	 * Method setVisible.
-	 * @param aVisible - boolean
+	 * 
+	 * @param aVisible
+	 *            - boolean
 	 */
 	public void setVisible(boolean aVisible) {
 		fMainComposite.setVisible(aVisible);
@@ -437,37 +460,43 @@ public class EditableListWidget {
 		fAddButton.setVisible(aVisible);
 		fRemoveButton.setVisible(aVisible);
 	}
-	
+
 	/**
 	 * Method getComposite.
+	 * 
 	 * @return Composite
 	 */
 	public Composite getComposite() {
 		return fMainComposite;
 	}
-	
+
 	/**
 	 * Method setEditableValues.
-	 * @param aValues - String[]
+	 * 
+	 * @param aValues
+	 *            - String[]
 	 */
 	public void setEditableValues(String[] aValues) {
 		fValues = aValues;
 		if (null == fValues || 0 == fValues.length) {
-			fAddButton.setEnabled(false);	
+			fAddButton.setEnabled(false);
 		} else {
 			fAddButton.setEnabled(true);
 		}
 		if (0 == fMainTable.getItemCount()) {
-			fRemoveButton.setEnabled(false);	
+			fRemoveButton.setEnabled(false);
 		} else {
 			fRemoveButton.setEnabled(true);
 		}
 	}
-	
+
 	/**
 	 * Method setTableHeader.
-	 * @param aIndex int
-	 * @param aText String
+	 * 
+	 * @param aIndex
+	 *            int
+	 * @param aText
+	 *            String
 	 */
 	public void setTableHeader(int aIndex, String aText) {
 		try {
@@ -478,10 +507,12 @@ public class EditableListWidget {
 			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
 		}
 	}
-	
+
 	/**
 	 * Method setToolTipText.
-	 * @param aTooltip String
+	 * 
+	 * @param aTooltip
+	 *            String
 	 */
 	public void setToolTipText(String aTooltip) {
 		fMainComposite.setToolTipText(aTooltip);

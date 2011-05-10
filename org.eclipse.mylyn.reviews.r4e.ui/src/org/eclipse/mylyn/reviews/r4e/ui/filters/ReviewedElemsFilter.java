@@ -23,27 +23,31 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 
-
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewedElemsFilter extends ViewerFilter  {
-	
+public class ReviewedElemsFilter extends ViewerFilter {
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method select.
-	 * @param viewer Viewer
-	 * @param parentElement Object
-	 * @param element Object
+	 * 
+	 * @param viewer
+	 *            Viewer
+	 * @param parentElement
+	 *            Object
+	 * @param element
+	 *            Object
 	 * @return boolean
 	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (((IR4EUIModelElement)element).isReviewed()) return false;
+		if (((IR4EUIModelElement) element).isReviewed())
+			return false;
 		return true;
 	}
 }

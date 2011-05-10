@@ -32,11 +32,11 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 
 /**
  * Abstract Storage-based element
+ * 
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-abstract class StorageTypedElement implements ITypedElement,
-		IEncodedStreamContentAccessor, IAdaptable {
+abstract class StorageTypedElement implements ITypedElement, IEncodedStreamContentAccessor, IAdaptable {
 
 	/**
 	 * Field bufferedContents.
@@ -62,6 +62,7 @@ abstract class StorageTypedElement implements ITypedElement,
 
 	/**
 	 * Method getContents.
+	 * 
 	 * @return InputStream
 	 * @throws CoreException
 	 * @see org.eclipse.compare.IStreamContentAccessor#getContents()
@@ -77,10 +78,9 @@ abstract class StorageTypedElement implements ITypedElement,
 	}
 
 	/**
-	 * Cache the contents for the remote resource in a local buffer. This method
-	 * should be invoked before {@link #getContents()} to ensure that a round
-	 * trip is not made in that method.
-	 *
+	 * Cache the contents for the remote resource in a local buffer. This method should be invoked before
+	 * {@link #getContents()} to ensure that a round trip is not made in that method.
+	 * 
 	 * @param monitor
 	 *            a progress monitor.
 	 * @throws CoreException
@@ -95,8 +95,7 @@ abstract class StorageTypedElement implements ITypedElement,
 	 * @throws CoreException
 	 * @throws TeamException
 	 */
-	protected abstract IStorage fetchContents(IProgressMonitor monitor)
-			throws CoreException;
+	protected abstract IStorage fetchContents(IProgressMonitor monitor) throws CoreException;
 
 	/**
 	 * @return the {@link IStorage} that has been buffered for this element\
@@ -107,6 +106,7 @@ abstract class StorageTypedElement implements ITypedElement,
 
 	/**
 	 * Method getImage.
+	 * 
 	 * @return Image
 	 * @see org.eclipse.compare.ITypedElement#getImage()
 	 */
@@ -116,6 +116,7 @@ abstract class StorageTypedElement implements ITypedElement,
 
 	/**
 	 * Method getType.
+	 * 
 	 * @return String
 	 * @see org.eclipse.compare.ITypedElement#getType()
 	 */
@@ -123,8 +124,10 @@ abstract class StorageTypedElement implements ITypedElement,
 		final String name = getName();
 		if (null != name) {
 			final int index = name.lastIndexOf('.');
-			if (index == -1) return "";
-			if (index == (name.length() - 1)) return "";
+			if (index == -1)
+				return "";
+			if (index == (name.length() - 1))
+				return "";
 			return name.substring(index + 1);
 		}
 		return ITypedElement.FOLDER_TYPE;
@@ -132,12 +135,14 @@ abstract class StorageTypedElement implements ITypedElement,
 
 	/**
 	 * Method getCharset.
+	 * 
 	 * @return String
 	 * @throws CoreException
 	 * @see org.eclipse.compare.IEncodedStreamContentAccessor#getCharset()
 	 */
 	public String getCharset() throws CoreException {
-		if (null != localEncoding) return localEncoding;
+		if (null != localEncoding)
+			return localEncoding;
 		if (null == bufferedContents) {
 			cacheContents(new NullProgressMonitor());
 		}
@@ -150,24 +155,25 @@ abstract class StorageTypedElement implements ITypedElement,
 
 	/**
 	 * Method getAdapter.
-	 * @param adapter Class
+	 * 
+	 * @param adapter
+	 *            Class
 	 * @return Object
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
-	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
+	public Object getAdapter(@SuppressWarnings("rawtypes")
+	Class adapter) {
 		if (ISharedDocumentAdapter.class.equals(adapter)) {
 			synchronized (this) {
 				if (null == sharedDocumentAdapter) {
 					sharedDocumentAdapter = new SharedDocumentAdapter() {
 						@Override
 						public IEditorInput getDocumentKey(Object element) {
-							return StorageTypedElement.this
-									.getDocumentKey(element);
+							return StorageTypedElement.this.getDocumentKey(element);
 						}
 
-						public void flushDocument(IDocumentProvider provider,
-								IEditorInput documentKey, IDocument document,
-								boolean overwrite) {
+						public void flushDocument(IDocumentProvider provider, IEditorInput documentKey,
+								IDocument document, boolean overwrite) {
 							// The document is read-only
 						}
 					};
@@ -180,7 +186,7 @@ abstract class StorageTypedElement implements ITypedElement,
 
 	/**
 	 * Method called from the shared document adapter to get the document key.
-	 *
+	 * 
 	 * @param element
 	 *            the element
 	 * @return the document key
@@ -189,6 +195,7 @@ abstract class StorageTypedElement implements ITypedElement,
 
 	/**
 	 * Method getLocalEncoding.
+	 * 
 	 * @return the encoding
 	 */
 	public String getLocalEncoding() {

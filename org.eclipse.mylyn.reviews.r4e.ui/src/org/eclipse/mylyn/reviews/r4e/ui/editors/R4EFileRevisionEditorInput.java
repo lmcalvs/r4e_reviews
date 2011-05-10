@@ -27,6 +27,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 
 /**
  * An Editor input for file revisions
+ * 
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
@@ -40,14 +41,14 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 	 * Field fVersion
 	 */
 	private final R4EFileVersion fFileVersion;
-	
 
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
 
 	/**
-	 * @param aFileVersion - the R4E file version
+	 * @param aFileVersion
+	 *            - the R4E file version
 	 */
 	public R4EFileRevisionEditorInput(R4EFileVersion aFileVersion) {
 		Assert.isNotNull(aFileVersion);
@@ -57,9 +58,10 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getStorage.
+	 * 
 	 * @return IStorage
 	 * @see org.eclipse.ui.IStorageEditorInput#getStorage()
 	 */
@@ -77,6 +79,7 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 
 	/**
 	 * Method exists.
+	 * 
 	 * @return boolean
 	 * @see org.eclipse.ui.IEditorInput#exists()
 	 */
@@ -86,6 +89,7 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 
 	/**
 	 * Method getImageDescriptor.
+	 * 
 	 * @return ImageDescriptor
 	 * @see org.eclipse.ui.IEditorInput#getImageDescriptor()
 	 */
@@ -95,6 +99,7 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 
 	/**
 	 * Method getName.
+	 * 
 	 * @return String
 	 * @see org.eclipse.ui.IEditorInput#getName()
 	 */
@@ -104,15 +109,17 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 
 	/**
 	 * Method getPersistable.
+	 * 
 	 * @return IPersistableElement
 	 * @see org.eclipse.ui.IEditorInput#getPersistable()
 	 */
 	public IPersistableElement getPersistable() {
-		return null;   // can't persist
+		return null; // can't persist
 	}
 
 	/**
 	 * Method getToolTipText.
+	 * 
 	 * @return String
 	 * @see org.eclipse.ui.IEditorInput#getToolTipText()
 	 */
@@ -130,13 +137,16 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 
 	/**
 	 * Method getAdapter.
-	 * @param aAdapter Class
+	 * 
+	 * @param aAdapter
+	 *            Class
 	 * @return Object
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
 	@Override
-	public Object getAdapter(@SuppressWarnings("rawtypes") Class aAdapter) {
-		
+	public Object getAdapter(@SuppressWarnings("rawtypes")
+	Class aAdapter) {
+
 		if (IStorage.class.equals(aAdapter)) {
 			try {
 				if (null != fFileVersion.getFileRevision()) {
@@ -147,7 +157,7 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
 			}
 		}
-		
+
 		if (IWorkbenchAdapter.class.equals(aAdapter)) {
 			return new IWorkbenchAdapter() {
 
@@ -168,18 +178,21 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 				}
 			};
 		}
-		
+
 		return super.getAdapter(aAdapter);
 	}
 
 	/**
 	 * Method equals.
-	 * @param aObject Object
+	 * 
+	 * @param aObject
+	 *            Object
 	 * @return boolean
 	 */
 	@Override
 	public boolean equals(Object aObject) {
-		if (aObject == this) return true;
+		if (aObject == this)
+			return true;
 		if (aObject instanceof R4EFileRevisionEditorInput) {
 			final R4EFileRevisionEditorInput other = (R4EFileRevisionEditorInput) aObject;
 			return other.fFileVersion.equals(this.fFileVersion);
@@ -189,6 +202,7 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 
 	/**
 	 * Method hashCode.
+	 * 
 	 * @return int
 	 */
 	@Override
@@ -201,6 +215,7 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 
 	/**
 	 * Method getFileVersion.
+	 * 
 	 * @return IFileRevision - the revision
 	 */
 	public R4EFileVersion getFileVersion() {
@@ -209,6 +224,7 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 
 	/**
 	 * Method getURI.
+	 * 
 	 * @return URI - the URI
 	 */
 	public URI getURI() {
@@ -220,6 +236,7 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 
 	/**
 	 * Method getFile.
+	 * 
 	 * @return IFile
 	 */
 	public IFile getFile() {

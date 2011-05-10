@@ -49,20 +49,17 @@ public class SendNotificationInputDialog extends FormDialog {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	
+
 	/**
-	 * Field SEND_MAIL_DIALOG_TITLE.
-	 * (value is ""Send Email/Notification"")
+	 * Field SEND_MAIL_DIALOG_TITLE. (value is ""Send Email/Notification"")
 	 */
 	private static final String SEND_MAIL_DIALOG_TITLE = "Send Email/Notification";
 
 	/**
-	 * Field BASIC_PARAMS_HEADER_MSG.
-	 * (value is ""Which Email type do you want to send?"")
+	 * Field BASIC_PARAMS_HEADER_MSG. (value is ""Which Email type do you want to send?"")
 	 */
 	private static final String BASIC_PARAMS_HEADER_MSG = "Which Email type do you want to send?";
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -71,93 +68,97 @@ public class SendNotificationInputDialog extends FormDialog {
 	 * Field fSource.
 	 */
 	private Object fSource = null;
-	
+
 	/**
 	 * Field fMessageType.
 	 */
-    private int fMessageType;
-    
+	private int fMessageType;
+
 	/**
 	 * Field fItemsReadyButton.
 	 */
-    private Button fItemsUpdatedButton = null;
-    
+	private Button fItemsUpdatedButton = null;
+
 	/**
 	 * Field fProgressButton.
 	 */
-    private Button fProgressButton = null;
-    
+	private Button fProgressButton = null;
+
 	/**
 	 * Field fCompletionButton.
 	 */
-    private Button fCompletionButton = null;
-    
+	private Button fCompletionButton = null;
+
 	/**
 	 * Field fQuestionButton.
 	 */
-    private Button fQuestionButton = null;
-    
-    
+	private Button fQuestionButton = null;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-    
+
 	/**
 	 * Constructor for R4ECommentInputDialog.
-	 * @param aParentShell Shell
-	 * @param aSource Object
+	 * 
+	 * @param aParentShell
+	 *            Shell
+	 * @param aSource
+	 *            Object
 	 */
 	public SendNotificationInputDialog(Shell aParentShell, Object aSource) {
 		super(aParentShell);
 		setBlockOnOpen(true);
 		fSource = aSource;
 	}
-	
-	
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 
-    /**
-     * Method buttonPressed.
-     * @param buttonId int
-     * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
-     */
-    @Override
-	protected void buttonPressed(int buttonId) {
-        if (buttonId == IDialogConstants.OK_ID) {
-        	fMessageType = R4EUIConstants.INVALID_VALUE;
-	    	this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-	    	if (null != fItemsUpdatedButton && fItemsUpdatedButton.getSelection()) {
-	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_ITEMS_READY;
-	    	} else if (null != fProgressButton && fProgressButton.getSelection()) {
-	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_PROGRESS;
-	    	} else if (null != fCompletionButton && fCompletionButton.getSelection()) {
-	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_COMPLETION;
-	    	} else if (fQuestionButton.getSelection()) {
-	    		fMessageType = R4EUIConstants.MESSAGE_TYPE_QUESTION;
-	    	}
-        } else {
-        	fMessageType = R4EUIConstants.INVALID_VALUE;
-        }
-		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
-        super.buttonPressed(buttonId);
-    }
-    
-    /**
-     * Method configureShell.
-     * @param shell Shell
-     * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
-     */
-    @Override
-	protected void configureShell(Shell shell) {
-        super.configureShell(shell);
-        shell.setText(SEND_MAIL_DIALOG_TITLE);
-    }
-    
 	/**
-	 * Configures the dialog form and creates form content. Clients should
-	 * override this method.
+	 * Method buttonPressed.
+	 * 
+	 * @param buttonId
+	 *            int
+	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
+	 */
+	@Override
+	protected void buttonPressed(int buttonId) {
+		if (buttonId == IDialogConstants.OK_ID) {
+			fMessageType = R4EUIConstants.INVALID_VALUE;
+			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+			if (null != fItemsUpdatedButton && fItemsUpdatedButton.getSelection()) {
+				fMessageType = R4EUIConstants.MESSAGE_TYPE_ITEMS_READY;
+			} else if (null != fProgressButton && fProgressButton.getSelection()) {
+				fMessageType = R4EUIConstants.MESSAGE_TYPE_PROGRESS;
+			} else if (null != fCompletionButton && fCompletionButton.getSelection()) {
+				fMessageType = R4EUIConstants.MESSAGE_TYPE_COMPLETION;
+			} else if (fQuestionButton.getSelection()) {
+				fMessageType = R4EUIConstants.MESSAGE_TYPE_QUESTION;
+			}
+		} else {
+			fMessageType = R4EUIConstants.INVALID_VALUE;
+		}
+		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+		super.buttonPressed(buttonId);
+	}
+
+	/**
+	 * Method configureShell.
+	 * 
+	 * @param shell
+	 *            Shell
+	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
+	 */
+	@Override
+	protected void configureShell(Shell shell) {
+		super.configureShell(shell);
+		shell.setText(SEND_MAIL_DIALOG_TITLE);
+	}
+
+	/**
+	 * Configures the dialog form and creates form content. Clients should override this method.
 	 * 
 	 * @param mform
 	 *            the dialog form
@@ -171,73 +172,71 @@ public class SendNotificationInputDialog extends FormDialog {
 		final Composite composite = sform.getBody();
 		final GridLayout layout = new GridLayout(1, false);
 		composite.setLayout(layout);
-        
+
 		//Basic parameters section
-        final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION | ExpandableComposite.TITLE_BAR |
-        		  ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-        final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-        basicSectionGridData.horizontalSpan = 4;
-        basicSection.setLayoutData(basicSectionGridData);
-        basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
-        basicSection.setDescription(BASIC_PARAMS_HEADER_MSG);
-        basicSection.addExpansionListener(new ExpansionAdapter()
-		{
+		final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION
+				| ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		basicSectionGridData.horizontalSpan = 4;
+		basicSection.setLayoutData(basicSectionGridData);
+		basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
+		basicSection.setDescription(BASIC_PARAMS_HEADER_MSG);
+		basicSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
-			public void expansionStateChanged(ExpansionEvent e){
+			public void expansionStateChanged(ExpansionEvent e) {
 				getShell().setSize(getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT));
 			}
 		});
-        
-        final Composite basicSectionClient = toolkit.createComposite(basicSection);
-        basicSectionClient.setLayout(layout);
-        basicSection.setClient(basicSectionClient);
-        
-        //Email/Notification type radio button
-        if (fSource instanceof R4EUIReviewBasic) {
-        	if (((R4EUIReviewBasic)fSource).isReviewed()) {
-        		fCompletionButton = toolkit.createButton(basicSectionClient, 
-        				"Notify Review Owner of Completion", SWT.RADIO);
-        		fCompletionButton.setSelection(true);
-        		fCompletionButton.setToolTipText(R4EUIConstants.NOTIFICATION_COMPLETION_TOOLTIP);
-        		fCompletionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        	} else {
-            	fItemsUpdatedButton = toolkit.createButton(basicSectionClient, 
-            			"Notify Participants of New/Removed/Updated Items Ready for Review", SWT.RADIO);
-            	fItemsUpdatedButton.setToolTipText(R4EUIConstants.NOTIFICATION_ITEMS_UPDATED_TOOLTIP);
-            	fItemsUpdatedButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-            	
-            	fProgressButton = toolkit.createButton(basicSectionClient, 
-            			"Notify review Owner of Progress", SWT.RADIO);
-            	fProgressButton.setToolTipText(R4EUIConstants.NOTIFICATION_PROGRESS_TOOLTIP);
-            	fProgressButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        	
-                fQuestionButton = toolkit.createButton(basicSectionClient, 
-                		"Ask Question to Participant", SWT.RADIO);
-                fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
-                fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        	}
-        } else {
-            fQuestionButton = toolkit.createButton(basicSectionClient, 
-            		"Ask Question to Participant", SWT.RADIO);
-            fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
-            fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-        }
-    }
-    
+
+		final Composite basicSectionClient = toolkit.createComposite(basicSection);
+		basicSectionClient.setLayout(layout);
+		basicSection.setClient(basicSectionClient);
+
+		//Email/Notification type radio button
+		if (fSource instanceof R4EUIReviewBasic) {
+			if (((R4EUIReviewBasic) fSource).isReviewed()) {
+				fCompletionButton = toolkit.createButton(basicSectionClient, "Notify Review Owner of Completion",
+						SWT.RADIO);
+				fCompletionButton.setSelection(true);
+				fCompletionButton.setToolTipText(R4EUIConstants.NOTIFICATION_COMPLETION_TOOLTIP);
+				fCompletionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+			} else {
+				fItemsUpdatedButton = toolkit.createButton(basicSectionClient,
+						"Notify Participants of New/Removed/Updated Items Ready for Review", SWT.RADIO);
+				fItemsUpdatedButton.setToolTipText(R4EUIConstants.NOTIFICATION_ITEMS_UPDATED_TOOLTIP);
+				fItemsUpdatedButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+
+				fProgressButton = toolkit.createButton(basicSectionClient, "Notify review Owner of Progress", SWT.RADIO);
+				fProgressButton.setToolTipText(R4EUIConstants.NOTIFICATION_PROGRESS_TOOLTIP);
+				fProgressButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+
+				fQuestionButton = toolkit.createButton(basicSectionClient, "Ask Question to Participant", SWT.RADIO);
+				fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
+				fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+			}
+		} else {
+			fQuestionButton = toolkit.createButton(basicSectionClient, "Ask Question to Participant", SWT.RADIO);
+			fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
+			fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+		}
+	}
+
 	/**
 	 * Method isResizable.
+	 * 
 	 * @return boolean
 	 */
 	@Override
 	protected boolean isResizable() {
 		return true;
 	}
-    
-    /**
-     * Method getMessageTypeValue
-     * @return the message type value
-     */
-    public int getMessageTypeValue() {
-        return fMessageType;
-    }
+
+	/**
+	 * Method getMessageTypeValue
+	 * 
+	 * @return the message type value
+	 */
+	public int getMessageTypeValue() {
+		return fMessageType;
+	}
 }

@@ -24,11 +24,14 @@ import org.eclipse.swt.widgets.Item;
  * @version $Revision: 1.0 $
  */
 public interface IEditableListListener {
-	
+
 	/**
 	 * Method itemAdded.
-	 * @param aItems Item[]
-	 * @param aInstanceId int
+	 * 
+	 * @param aItems
+	 *            Item[]
+	 * @param aInstanceId
+	 *            int
 	 */
 	void itemsUpdated(Item[] aItems, int aInstanceId);
 }

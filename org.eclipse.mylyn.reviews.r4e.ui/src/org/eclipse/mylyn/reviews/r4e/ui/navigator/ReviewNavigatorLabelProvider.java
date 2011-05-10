@@ -35,20 +35,24 @@ public class ReviewNavigatorLabelProvider extends ColumnLabelProvider {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method getToolTipText.
-	 * @param element Object
+	 * 
+	 * @param element
+	 *            Object
 	 * @return String
 	 */
 	@Override
 	public String getToolTipText(Object element) {
-		return ((IR4EUIModelElement)element).getToolTip();
+		return ((IR4EUIModelElement) element).getToolTip();
 	}
 
 	/**
 	 * Method getToolTipShift.
-	 * @param object Object
+	 * 
+	 * @param object
+	 *            Object
 	 * @return Point
 	 */
 	@Override
@@ -58,7 +62,9 @@ public class ReviewNavigatorLabelProvider extends ColumnLabelProvider {
 
 	/**
 	 * Method getToolTipDisplayDelayTime.
-	 * @param object Object
+	 * 
+	 * @param object
+	 *            Object
 	 * @return int
 	 */
 	@Override
@@ -68,27 +74,33 @@ public class ReviewNavigatorLabelProvider extends ColumnLabelProvider {
 
 	/**
 	 * Method getToolTipTimeDisplayed.
-	 * @param object Object
+	 * 
+	 * @param object
+	 *            Object
 	 * @return int
 	 */
 	@Override
 	public int getToolTipTimeDisplayed(Object object) {
 		return R4EUIConstants.TOOLTIP_DISPLAY_TIME;
 	}
-	
+
 	/**
 	 * Method update.
-	 * @param cell ViewerCell
+	 * 
+	 * @param cell
+	 *            ViewerCell
 	 */
 	@Override
 	public void update(ViewerCell cell) {
-		cell.setText(((IR4EUIModelElement)cell.getElement()).getName());
-		cell.setImage(((IR4EUIModelElement)cell.getElement()).getImage());	
+		cell.setText(((IR4EUIModelElement) cell.getElement()).getName());
+		cell.setImage(((IR4EUIModelElement) cell.getElement()).getImage());
 	}
-	
+
 	/**
 	 * Method addListener.
-	 * @param listener ILabelProviderListener
+	 * 
+	 * @param listener
+	 *            ILabelProviderListener
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(ILabelProviderListener)
 	 */
 	@Override
@@ -97,6 +109,7 @@ public class ReviewNavigatorLabelProvider extends ColumnLabelProvider {
 
 	/**
 	 * Method dispose.
+	 * 
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
 	 */
 	@Override
@@ -106,8 +119,11 @@ public class ReviewNavigatorLabelProvider extends ColumnLabelProvider {
 
 	/**
 	 * Method isLabelProperty.
-	 * @param element Object
-	 * @param property String
+	 * 
+	 * @param element
+	 *            Object
+	 * @param property
+	 *            String
 	 * @return boolean
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(Object, String)
 	 */
@@ -118,7 +134,9 @@ public class ReviewNavigatorLabelProvider extends ColumnLabelProvider {
 
 	/**
 	 * Method removeListener.
-	 * @param listener ILabelProviderListener
+	 * 
+	 * @param listener
+	 *            ILabelProviderListener
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(ILabelProviderListener)
 	 */
 	@Override
@@ -127,23 +145,27 @@ public class ReviewNavigatorLabelProvider extends ColumnLabelProvider {
 
 	/**
 	 * Method getText.
-	 * @param element Object
+	 * 
+	 * @param element
+	 *            Object
 	 * @return String
 	 * @see org.eclipse.jface.viewers.ILabelProvider#getText(Object)
 	 */
 	@Override
-	public String getText(Object element) {		
-		return ((IR4EUIModelElement)element).getName();
+	public String getText(Object element) {
+		return ((IR4EUIModelElement) element).getName();
 	}
-	
+
 	/**
 	 * Method getImage.
-	 * @param element Object
+	 * 
+	 * @param element
+	 *            Object
 	 * @return Image
-	 * @see org.eclipse.jface.viewers.ILabelProvider#getImage(Object) 
+	 * @see org.eclipse.jface.viewers.ILabelProvider#getImage(Object)
 	 */
 	@Override
 	public Image getImage(Object element) {
-		return ((IR4EUIModelElement)element).getImage();	
+		return ((IR4EUIModelElement) element).getImage();
 	}
 }
