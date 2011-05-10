@@ -23,7 +23,9 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 
 import org.eclipse.cdt.core.model.ICElement;
+import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.ResourceNode;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -443,5 +445,35 @@ public class CommandUtils {
 			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		}
 		return false;
+	}
+	
+	public static R4ECompareEditorInput createCompareEditorInput(R4EFileVersion aBaseFileVersion,
+			R4EFileVersion aTargetFileVersion, boolean aTargetFileEditable) {
+		
+		final CompareConfiguration config = new CompareConfiguration();
+		config.setLeftEditable(aTargetFileEditable);
+		config.setRightEditable(false);
+		config.setProperty(CompareConfiguration.IGNORE_WHITESPACE, Boolean.valueOf(true));
+		
+		//NOTE:  We use the workspace file as input if it is in sync with the file to review,
+		//		 otherwise we use the file to review that is included in the review repository
+		final R4EFileRevisionTypedElement ancestor = null;   //Might be improved later
+		ITypedElement target = null;
+		if (null != aTargetFileVersion) {
+			if (CommandUtils.useWorkspaceResource(aTargetFileVersion)) {
+				target = new R4EFileTypedElement(aTargetFileVersion);
+			} else {
+				target = new R4EFileRevisionTypedElement(aTargetFileVersion);
+			}
+		}
+		ITypedElement base = null;
+		if (null != aBaseFileVersion) {
+			if (CommandUtils.useWorkspaceResource(aBaseFileVersion)) {
+				base = new ResourceNode(aBaseFileVersion.getResource());
+			} else {
+				base =  new R4EFileRevisionTypedElement(aBaseFileVersion);
+			}
+		}
+		return new R4ECompareEditorInput(config, ancestor, target, base);
 	}
 }

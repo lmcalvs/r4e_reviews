@@ -35,8 +35,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionEditorInput;
-import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionTypedElement;
-import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -140,7 +138,12 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 					//Compare editor
 				} else if (editorInput instanceof R4ECompareEditorInput) {
 					final ITypedElement targetElement = ((R4ECompareEditorInput)editorInput).getLeftElement();
+					if (null == targetElement) {
+						return false;
+					}
+					/*
 					if (null != targetElement) {
+						return true;
 						if (targetElement instanceof R4EFileRevisionTypedElement) {
 							final R4EItem parentItem = 
 								((R4EItem)((R4EFileRevisionTypedElement)targetElement).getFileVersion().eContainer().eContainer());
@@ -154,9 +157,8 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 								return false;  //Cannot add review item on a commit
 							}
 						} 
-					} else {
-						return false;  
 					}
+					*/
 				}
 			}
 		}

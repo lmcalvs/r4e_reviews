@@ -22,12 +22,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
-import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
-import org.eclipse.compare.ICompareNavigator;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.ResourceNode;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentType;
@@ -198,7 +195,6 @@ public class EditorProxy {
 		
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;
-		
 		final IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileVersion, aTargetFileVersion);
 
 		if (null != editor) {
@@ -206,50 +202,14 @@ public class EditorProxy {
 			aPage.activate(editor);
 			input = (R4ECompareEditorInput) editor.getEditorInput();
 		} else {
-			final CompareConfiguration config = new CompareConfiguration();
-			config.setLeftEditable(aTargetFileEditable);
-			config.setRightEditable(false);
-			config.setProperty(CompareConfiguration.IGNORE_WHITESPACE, Boolean.valueOf(true));
-
-			//NOTE:  We use the workspace file as input if it is in sync with the file to review,
-			//		 otherwise we use the file to review that is included in the review repository
-			final R4EFileRevisionTypedElement ancestor = null;   //Might be improved later
-			ITypedElement target = null;
-			if (null != aTargetFileVersion) {
-				if (CommandUtils.useWorkspaceResource(aTargetFileVersion)) {
-					target = new R4EFileTypedElement(aTargetFileVersion);
-				} else {
-					target = new R4EFileRevisionTypedElement(aTargetFileVersion);
-				}
-			}
-			ITypedElement base = null;
-			if (null != aBaseFileVersion) {
-				if (CommandUtils.useWorkspaceResource(aBaseFileVersion)) {
-					base = new ResourceNode(aBaseFileVersion.getResource());
-				} else {
-					base =  new R4EFileRevisionTypedElement(aBaseFileVersion);
-				}
-			}
-
-		    input = new R4ECompareEditorInput(config, ancestor, target, base);
+		    input = CommandUtils.createCompareEditorInput(aBaseFileVersion, aTargetFileVersion, 
+		    		aTargetFileEditable);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE);   // Adjust the compare title
 
-			Activator.Ftracer.traceInfo("Open compare editor on files " + ((null != target) ? target.getName(): "") + " (Target) and "
-					+ ((null != base) ? base.getName(): "") + " (Base)");
+			Activator.Ftracer.traceInfo("Open compare editor on files " + ((null != aTargetFileVersion) ? 
+					aTargetFileVersion.getName(): "") + " (Target) and "
+					+ ((null != aBaseFileVersion) ? aBaseFileVersion.getName(): "") + " (Base)");
 			CompareUI.openCompareEditor(input, true);
-		}
-		
-		if (aSelectionIndex != -1) {
-			//Set the correct difference, based on the selection index, in the compare editor
-			final ICompareNavigator navigator = input.getNavigator();
-		
-			while (!(navigator.selectChange(false))) { // $codepro.audit.disable emptyWhileStatement, methodInvocationInLoopCondition
-				//Reset position to the first difference
-			}
-			
-			for (int i = 0; i < aSelectionIndex; i++) {
-				navigator.selectChange(true);   //get the difference that corresponds to the right selection
-			}
 		}
 	}
 	

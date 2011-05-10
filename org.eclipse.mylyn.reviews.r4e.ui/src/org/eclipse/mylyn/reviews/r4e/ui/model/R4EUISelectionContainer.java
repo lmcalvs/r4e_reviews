@@ -31,6 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 
 /**
@@ -44,11 +45,17 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Field fSelectionContainerFile.
+	 * Field SELECTION_CONTAINER_ICON_FILE.
 	 * (value is ""icons/obj16/selcont_obj.gif"")
 	 */
 	private static final String SELECTION_CONTAINER_ICON_FILE = "icons/obj16/selcont_obj.gif";
     
+	/**
+	 * Field DELTA_CONTAINER_ICON_FILE.
+	 * (value is ""icons/obj16/selcont_obj.gif"")
+	 */
+	private static final String DELTA_CONTAINER_ICON_FILE = "icons/obj16/deltacont_obj.gif";
+	
 	
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -72,7 +79,11 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 	public R4EUISelectionContainer(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName, null);
 		fSelections = new ArrayList<R4EUISelection>();
-		setImage(SELECTION_CONTAINER_ICON_FILE);
+		if (R4EUIConstants.SELECTIONS_LABEL.equals(aName)) {
+			setImage(SELECTION_CONTAINER_ICON_FILE);
+		} else {
+			setImage(DELTA_CONTAINER_ICON_FILE);
+		}
 	}
 
 	

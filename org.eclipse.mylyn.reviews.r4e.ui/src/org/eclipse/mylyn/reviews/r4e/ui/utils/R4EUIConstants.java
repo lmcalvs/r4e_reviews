@@ -94,10 +94,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final int INVALID_VALUE = -1;
 	
 	/**
-	 * Field SELECTIONS_LABEL_NAME.
+	 * Field SELECTIONS_LABEL.
 	 * (value is ""Selections"")
 	 */
 	public static final String SELECTIONS_LABEL = "Selections";
+	
+	/**
+	 * Field DELTAS_LABEL.
+	 * (value is ""Deltas"")
+	 */
+	public static final String DELTAS_LABEL = "Deltas";
 	
 	/**
 	 * Field ANOMALIES_LABEL_NAME.
@@ -1392,6 +1398,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * (value is ""r"")
 	 */
 	public static final String SEND_EMAIL_COMMAND_MNEMONIC = "N";
+	
+	/**
+	 * Field ADD_REVIEW_ITEM_COMMAND.
+	 * (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem"")
+	 */
+	public static final String ADD_REVIEW_ITEM_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem";
 	
 	/**
 	 * Field START_STRING_INDEX.

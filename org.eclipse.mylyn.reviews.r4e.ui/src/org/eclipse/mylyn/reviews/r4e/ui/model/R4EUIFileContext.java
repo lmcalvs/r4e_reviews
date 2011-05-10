@@ -481,7 +481,12 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		
 		//Load child data
 		if (fFile.getDeltas().size() > 0) {
-			addChildren(new R4EUISelectionContainer(this, R4EUIConstants.SELECTIONS_LABEL));
+			if (null == ((R4EUIReviewItem)getParent()).getItem().getRepositoryRef() || 
+					"".equals(((R4EUIReviewItem)getParent()).getItem().getRepositoryRef())) {
+				addChildren(new R4EUISelectionContainer(this, R4EUIConstants.SELECTIONS_LABEL));
+			} else {
+				addChildren(new R4EUISelectionContainer(this, R4EUIConstants.DELTAS_LABEL));
+			}
 			fSelectionContainer.open();
 		}
 		

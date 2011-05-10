@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.eclipse.cdt.core.model.CModelException;
 import org.eclipse.cdt.core.model.ICElement;
+import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -42,6 +43,7 @@ import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -51,6 +53,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionTypedElement;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
@@ -65,7 +70,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.texteditor.ITextEditor;
@@ -89,35 +97,77 @@ public class AddReviewItemHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
-		final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-		shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-		
-		final ISelection selection = HandlerUtil.getCurrentSelection(event);
+		if (null != event.getTrigger() && isInputCommitItem()) {
+			//Cannot add review item manually on a commit
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+					"Cannot Add Review Item",
+					new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "A Review Item cannot be added " +
+							"manually on an already exisiting Review Item", null), IStatus.ERROR);
+			dialog.open();
+		} else {
+			//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
+			final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+			shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 
-		//Act differently depending on the type of selection we get
-		if (selection instanceof ITextSelection) {
-			addReviewItemFromText((ITextSelection) selection);
+			final ISelection selection = HandlerUtil.getCurrentSelection(event);
 
-		} else if (selection instanceof ITreeSelection) {
+			//Act differently depending on the type of selection we get
+			if (selection instanceof ITextSelection) {
+				addReviewItemFromText((ITextSelection) selection);
 
-			//First remove any editor selection (if open) if we execute the command from the review navigator view
-			final IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow(). // $codepro.audit.disable methodChainLength
-			getActivePage().getActiveEditor();
-			if (null != editorPart && editorPart instanceof ITextEditor) {
-				((ITextEditor)editorPart).getSelectionProvider().setSelection(null);
+			} else if (selection instanceof ITreeSelection) {
+
+				//First remove any editor selection (if open) if we execute the command from the review navigator view
+				final IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow(). // $codepro.audit.disable methodChainLength
+				getActivePage().getActiveEditor();
+				if (null != editorPart && editorPart instanceof ITextEditor) {
+					((ITextEditor)editorPart).getSelectionProvider().setSelection(null);
+				}
+
+				//Then iterate through all selections
+				for (final Iterator<?> iterator = ((ITreeSelection)selection).iterator(); iterator.hasNext();) {
+					addReviewItemFromTree(iterator.next());
+				}
 			}
 
-			//Then iterate through all selections
-			for (final Iterator<?> iterator = ((ITreeSelection)selection).iterator(); iterator.hasNext();) {
-				addReviewItemFromTree(iterator.next());
-			}
+			shell.setCursor(null);
 		}
-
-		shell.setCursor(null);
 		return null;
 	}
 
+	/**
+	 * Method isInputCommitItem.
+	 * @return boolean
+	 */
+	private boolean isInputCommitItem() {
+		IEditorInput editorInput = null;
+		final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if (null != window) {
+			final IWorkbenchPage page = window.getActivePage();
+			if (null != page && null != page.getActiveEditor()) {
+				editorInput = page.getActiveEditor().getEditorInput();
+				if (editorInput instanceof R4ECompareEditorInput) {
+					final ITypedElement targetElement = ((R4ECompareEditorInput)editorInput).getLeftElement();
+					if (null != targetElement) {
+						if (targetElement instanceof R4EFileRevisionTypedElement) {
+							final R4EItem parentItem = 
+								((R4EItem)((R4EFileRevisionTypedElement)targetElement).getFileVersion().eContainer().eContainer());
+							if (null != parentItem.getRepositoryRef()) {
+								return true;  
+							}
+						} else if (targetElement instanceof R4EFileTypedElement) {
+							final R4EItem parentItem = 
+								((R4EItem)((R4EFileTypedElement)targetElement).getFileVersion().eContainer().eContainer());
+							if (null != parentItem.getRepositoryRef()) {
+								return true;
+							}
+						} 
+					}
+				}
+			}
+		}
+		return false;
+	}
 	
 	/**
 	 * Method addReviewItemFromText.

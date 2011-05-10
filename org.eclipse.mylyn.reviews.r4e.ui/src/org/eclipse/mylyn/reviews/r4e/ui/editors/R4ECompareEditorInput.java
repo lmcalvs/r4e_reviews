@@ -24,7 +24,6 @@ import java.text.MessageFormat;
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -112,7 +111,9 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	@Override
 	protected Object prepareInput(IProgressMonitor aMonitor) {
 		
-		aMonitor.beginTask("R4E Compare", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+		if (null != aMonitor) {
+			aMonitor.beginTask("R4E Compare", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+		}
 		
 		// Set the label values for the compare editor
 		if (null != fLeft) {
@@ -133,8 +134,11 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		// If the ancestor is not null, just put the file name as the workspace label
 		if (null != fAncestor) fConfig.setAncestorLabel(fAncestor.getName());
 
-		// Build the diff node to compare the files
-		final DiffNode node = new DiffNode(Differencer.CHANGE, fAncestor, fLeft, fRight);
+		// Build the diff node to compare the files		
+		Differencer differencer = new Differencer();
+		
+		//Store the differences here, we might need them later
+		Object differences = differencer.findDifferences(false, aMonitor, null, fAncestor, fLeft, fRight);
 		/* We might want to do something here in the future
 		node.addCompareInputChangeListener(new ICompareInputChangeListener() {
 			
@@ -143,8 +147,9 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 			}
 		});
 		*/
-		return node;
+		return differences;
 	}
+
 	
 	/**
 	 * Method getToolTipText.

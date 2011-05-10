@@ -41,10 +41,16 @@ public class R4EUISelection extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Field fSelectionFile.
+	 * Field SELECTION_ICON_FILE.
 	 * (value is ""icons/obj16/sel_obj.gif"")
 	 */
 	private static final String SELECTION_ICON_FILE = "icons/obj16/sel_obj.gif";
+	
+	/**
+	 * Field DELTA_ICON_FILE.
+	 * (value is ""icons/obj16/sel_obj.gif"")
+	 */
+	private static final String DELTA_ICON_FILE = "icons/obj16/delta_obj.gif";
 	
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME.
@@ -90,7 +96,11 @@ public class R4EUISelection extends R4EUIModelElement {
 				((R4EItem)aDelta.eContainer().eContainer()).getAddedBy().getId()); // $codepro.audit.disable methodChainLength
 		fDelta = aDelta;
 		fPosition = aPosition;
-		setImage(SELECTION_ICON_FILE);
+		if (R4EUIConstants.SELECTIONS_LABEL.equals(getParent().getName())) {
+			setImage(SELECTION_ICON_FILE);
+		} else {
+			setImage(DELTA_ICON_FILE);
+		}
 	}
 	
 	// ------------------------------------------------------------------------

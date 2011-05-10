@@ -41,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.actions.ActionGroup;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerActivation;
 import org.eclipse.ui.handlers.IHandlerService;
 
 /**
@@ -526,5 +527,23 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	public void closeElementCommand() throws ExecutionException, NotDefinedException, NotEnabledException, NotHandledException {
 		fHandlerService.executeCommand(R4EUIConstants.CLOSE_ELEMENT_COMMAND, null);
+	}
+	
+	/**
+	 * Method addReviewItemCommand.
+	 * @throws NotHandledException 
+	 * @throws NotEnabledException 
+	 * @throws NotDefinedException 
+	 * @throws ExecutionException 
+	 */
+	public void addReviewItemCommand() throws ExecutionException, NotDefinedException, NotEnabledException, NotHandledException {
+		boolean commandActive = 
+			fCommandService.getCommand(R4EUIConstants.ADD_REVIEW_ITEM_COMMAND).getHandler().isEnabled();
+		IHandlerActivation activationToken = fHandlerService.activateHandler(R4EUIConstants.ADD_REVIEW_ITEM_COMMAND, 
+				fCommandService.getCommand(R4EUIConstants.ADD_REVIEW_ITEM_COMMAND).getHandler());
+		fHandlerService.executeCommand(R4EUIConstants.ADD_REVIEW_ITEM_COMMAND, null);
+		if (!commandActive) {
+			fHandlerService.deactivateHandler(activationToken);
+		}
 	}
 }
