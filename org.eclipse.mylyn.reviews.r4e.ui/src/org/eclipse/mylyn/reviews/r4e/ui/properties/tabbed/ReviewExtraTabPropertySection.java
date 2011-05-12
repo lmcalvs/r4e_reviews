@@ -135,6 +135,16 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	protected CLabel fDecisionTimeSpentLabel = null;
 
 	/**
+	 * Field fMeetingComposite.
+	 */
+	private Composite fMeetingComposite = null;
+
+	/**
+	 * Field fMeetingUpdateButton.
+	 */
+	private Button fMeetingUpdateButton = null;
+
+	/**
 	 * Field fMeetingSubjectLabel.
 	 */
 	protected CLabel fMeetingSubjectLabel = null;
@@ -378,27 +388,27 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		meetingInfoLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 
 		//Meeting composite
-		final Composite meetingComposite = widgetFactory.createComposite(decisionSectionClient, SWT.BORDER);
+		fMeetingComposite = widgetFactory.createComposite(decisionSectionClient, SWT.BORDER);
 		GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		textGridData.horizontalSpan = 3;
-		meetingComposite.setLayoutData(textGridData);
-		meetingComposite.setLayout(new GridLayout(4, false));
+		fMeetingComposite.setLayoutData(textGridData);
+		fMeetingComposite.setLayout(new GridLayout(4, false));
 
 		//Meeting Subject
-		final CLabel meetingSubjectLabel = widgetFactory.createCLabel(meetingComposite, R4EUIConstants.SUBJECT_LABEL);
+		final CLabel meetingSubjectLabel = widgetFactory.createCLabel(fMeetingComposite, R4EUIConstants.SUBJECT_LABEL);
 		meetingSubjectLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_SUBJECT_TOOLTIP);
 		meetingSubjectLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fMeetingSubjectLabel = widgetFactory.createCLabel(meetingComposite, "");
+		fMeetingSubjectLabel = widgetFactory.createCLabel(fMeetingComposite, null);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		textGridData.horizontalSpan = 2;
 		fMeetingSubjectLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_SUBJECT_TOOLTIP);
 		fMeetingSubjectLabel.setLayoutData(textGridData);
 
 		//Meeting update button
-		final Button meetingUpdateButton = widgetFactory.createButton(meetingComposite, UPDATE_LABEL, SWT.PUSH);
-		meetingUpdateButton.setToolTipText(R4EUIConstants.REVIEW_MEETING_UPDATE_TOOLTIP);
-		meetingUpdateButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		meetingUpdateButton.addSelectionListener(new SelectionListener() {
+		fMeetingUpdateButton = widgetFactory.createButton(fMeetingComposite, UPDATE_LABEL, SWT.PUSH);
+		fMeetingUpdateButton.setToolTipText(R4EUIConstants.REVIEW_MEETING_UPDATE_TOOLTIP);
+		fMeetingUpdateButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+		fMeetingUpdateButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					MailServicesProxy.sendMeetingRequest();
@@ -417,38 +427,38 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		});
 
 		//Meeting Start Time
-		final CLabel meetingStartTimeLabel = widgetFactory.createCLabel(meetingComposite,
+		final CLabel meetingStartTimeLabel = widgetFactory.createCLabel(fMeetingComposite,
 				R4EUIConstants.START_TIME_LABEL);
 		meetingStartTimeLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_TIME_TOOLTIP);
 		meetingStartTimeLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fMeetingStartTimeLabel = widgetFactory.createCLabel(meetingComposite, "");
+		fMeetingStartTimeLabel = widgetFactory.createCLabel(fMeetingComposite, "");
 		textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		textGridData.horizontalSpan = 2;
 		fMeetingStartTimeLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_TIME_TOOLTIP);
 		fMeetingStartTimeLabel.setLayoutData(textGridData);
-		widgetFactory.createCLabel(meetingComposite, ""); //dummy label for alignment purposes
+		widgetFactory.createCLabel(fMeetingComposite, ""); //dummy label for alignment purposes
 
 		//Meeting Duration
-		final CLabel meetingDurationLabel = widgetFactory.createCLabel(meetingComposite, R4EUIConstants.DURATION_LABEL);
+		final CLabel meetingDurationLabel = widgetFactory.createCLabel(fMeetingComposite, R4EUIConstants.DURATION_LABEL);
 		meetingDurationLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_DURATION_TOOLTIP);
 		meetingDurationLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fMeetingDurationLabel = widgetFactory.createCLabel(meetingComposite, "");
+		fMeetingDurationLabel = widgetFactory.createCLabel(fMeetingComposite, "");
 		textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		textGridData.horizontalSpan = 2;
 		fMeetingDurationLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_DURATION_TOOLTIP);
 		fMeetingDurationLabel.setLayoutData(textGridData);
-		widgetFactory.createCLabel(meetingComposite, ""); //dummy label for alignment purposes
+		widgetFactory.createCLabel(fMeetingComposite, ""); //dummy label for alignment purposes
 
 		//Meeting Location
-		final CLabel meetingLocationLabel = widgetFactory.createCLabel(meetingComposite, R4EUIConstants.LOCATION_LABEL);
+		final CLabel meetingLocationLabel = widgetFactory.createCLabel(fMeetingComposite, R4EUIConstants.LOCATION_LABEL);
 		meetingLocationLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_LOCATION_TOOLTIP);
 		meetingLocationLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fMeetingLocationLabel = widgetFactory.createCLabel(meetingComposite, "");
+		fMeetingLocationLabel = widgetFactory.createCLabel(fMeetingComposite, "");
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 2;
 		fMeetingLocationLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_LOCATION_TOOLTIP);
 		fMeetingLocationLabel.setLayoutData(textGridData);
-		widgetFactory.createCLabel(meetingComposite, ""); //dummy label for alignment purposes
+		widgetFactory.createCLabel(fMeetingComposite, ""); //dummy label for alignment purposes
 
 		//Exit Decision
 		final CLabel exitDecisionLabel = widgetFactory.createCLabel(decisionSectionClient,
@@ -571,8 +581,9 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 				item = fComponents.addItem();
 			} else {
 				item = fComponents.getItem(i);
-				if (null == item)
+				if (null == item) {
 					item = fComponents.addItem();
+				}
 			}
 			item.setText(component);
 		}
@@ -616,8 +627,9 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 						item = fDecisionUsersList.addItem();
 					} else {
 						item = fDecisionUsersList.getItem(i);
-						if (null == item)
+						if (null == item) {
 							item = fDecisionUsersList.addItem();
+						}
 					}
 					item.setText(participants.get(i).getId());
 				}
@@ -647,6 +659,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			fObjectivesText.setEnabled(false);
 			fReferenceMaterialText.setEnabled(false);
 			fExitDecisionCombo.setEnabled(false);
+			fMeetingUpdateButton.setEnabled(false);
 
 			if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 				fDecisionUsersList.setEnabled(false);
@@ -667,6 +680,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			fEntryCriteriaText.setEnabled(true);
 			fObjectivesText.setEnabled(true);
 			fReferenceMaterialText.setEnabled(true);
+			fMeetingUpdateButton.setEnabled(true);
 
 			if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 				final R4EUIReviewExtended uiReview = (R4EUIReviewExtended) fProperties.getElement();
@@ -723,8 +737,9 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			} else { //aInstanceId == 2
 				for (Item item : aItems) {
 					R4EParticipant participant = (R4EParticipant) modelReview.getUsersMap().get(item.getText());
-					if (null != participant)
+					if (null != participant) {
 						participant.setIsPartOfDecision(true);
+					}
 				}
 			}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);

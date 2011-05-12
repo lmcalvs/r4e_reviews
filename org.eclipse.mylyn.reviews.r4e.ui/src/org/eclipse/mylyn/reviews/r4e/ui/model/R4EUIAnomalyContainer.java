@@ -160,8 +160,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (fAnomalies.size() > 0)
+		if (fAnomalies.size() > 0) {
 			return true;
+		}
 		return false;
 	}
 
@@ -225,14 +226,16 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 								}
 
 								addChildren(uiAnomaly);
-								if (uiAnomaly.isEnabled())
+								if (uiAnomaly.isEnabled()) {
 									uiAnomaly.open();
+								}
 							}
 						} else {
 							uiAnomaly = new R4EUIAnomalyBasic(this, anomalies.get(i), null);
 							addChildren(uiAnomaly);
-							if (uiAnomaly.isEnabled())
+							if (uiAnomaly.isEnabled()) {
 								uiAnomaly.open();
+							}
 						}
 					}
 				}
@@ -262,8 +265,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 										+ uiAnomaly.getName());
 							}
 							addChildren(uiAnomaly);
-							if (uiAnomaly.isEnabled())
+							if (uiAnomaly.isEnabled()) {
 								uiAnomaly.open();
+							}
 						}
 					}
 				}
@@ -282,11 +286,13 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	@Override
 	public boolean isEnabled() {
 		if (getParent().isEnabled()) {
-			if (0 == fAnomalies.size())
+			if (0 == fAnomalies.size()) {
 				return true;
+			}
 			for (R4EUIAnomalyBasic anomaly : fAnomalies) {
-				if (anomaly.isEnabled())
+				if (anomaly.isEnabled()) {
 					return true;
+				}
 			}
 		}
 		return false;
@@ -530,8 +536,11 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				return false;
 			}
 		}
-		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed()))
-			return true;
+		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) {
+			if (getParent() instanceof R4EUIReviewBasic) {
+				return true;
+			}
+		}
 		return false;
 	}
 

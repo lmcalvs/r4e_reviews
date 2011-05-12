@@ -99,7 +99,7 @@ public class AddReviewItemHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		if (null != event.getTrigger() && isInputCommitItem()) {
+		if (isInputCommitItem()) {
 			//Cannot add review item manually on a commit
 			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 					"Cannot Add Review Item", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
@@ -168,6 +168,8 @@ public class AddReviewItemHandler extends AbstractHandler {
 								return true;
 							}
 						}
+					} else {
+						return true;
 					}
 				}
 			}
@@ -404,8 +406,9 @@ public class AddReviewItemHandler extends AbstractHandler {
 
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
 		final R4EUIReviewItem uiReviewItem = uiReview.createResourceReviewItem(aTargetFileVersion.getName());
-		if (null == uiReviewItem)
+		if (null == uiReviewItem) {
 			return;
+		}
 
 		final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(aBaseFileVersion, aTargetFileVersion,
 				null);

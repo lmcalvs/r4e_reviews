@@ -194,7 +194,7 @@ public class RuleViolationInputDialog extends FormDialog {
 		final Label label = toolkit.createLabel(basicSectionClient, ADD_RULE_VIOLATION_NAME_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+		fNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fNameInputTextField.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);

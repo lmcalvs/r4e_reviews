@@ -22,7 +22,6 @@ import java.util.AbstractList;
 import java.util.AbstractSet;
 import java.util.Iterator;
 
-import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
@@ -32,7 +31,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
@@ -67,29 +65,33 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 
 		//Command is disabled if the review is completed
 		final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
-		if (null == activeReview || activeReview.isReviewed())
+		if (null == activeReview || activeReview.isReviewed()) {
 			return false;
+		}
 
 		//Check if command is enabled based on input
 		if (receiver instanceof AbstractSet) {
 			final Iterator<?> iterator = ((AbstractSet<?>) receiver).iterator();
 			if (iterator.next() instanceof TextSelection) {
-				if (!(isR4EEditorInputAvailable()))
+				if (!(isR4EEditorInputAvailable())) {
 					return false;
+				}
 			}
 		}
 		//This happens when the command is selected from the outline view on an external or workspace file
 		if (receiver instanceof AbstractList) {
 			final Iterator<?> iterator = ((AbstractList<?>) receiver).iterator();
 			if (!iterator.hasNext()) {
-				if (!(isR4EEditorInputAvailable()))
+				if (!(isR4EEditorInputAvailable())) {
 					return false;
+				}
 			} else {
 				final Object obj = iterator.next();
 				if (obj instanceof org.eclipse.jdt.core.ISourceReference
 						|| obj instanceof org.eclipse.cdt.core.model.ISourceReference) {
-					if (!(isR4EEditorInputAvailable()))
+					if (!(isR4EEditorInputAvailable())) {
 						return false;
+					}
 				}
 			}
 		}
@@ -103,8 +105,9 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 				UIUtils.displayResourceErrorDialog(e);
 				return false;
 			}
-			if (null == reviewer)
+			if (null == reviewer) {
 				return false;
+			}
 
 			if (((R4EReviewState) activeReview.getReview().getState()).getState().equals(
 					R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
@@ -151,30 +154,6 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 					if (null != parentItem.getRepositoryRef()) {
 						return false; //Cannot add review item on a commit
 					}
-					//Compare editor
-				} else if (editorInput instanceof R4ECompareEditorInput) {
-					final ITypedElement targetElement = ((R4ECompareEditorInput) editorInput).getLeftElement();
-					if (null == targetElement) {
-						return false;
-					}
-					/*
-					if (null != targetElement) {
-						return true;
-						if (targetElement instanceof R4EFileRevisionTypedElement) {
-							final R4EItem parentItem = 
-								((R4EItem)((R4EFileRevisionTypedElement)targetElement).getFileVersion().eContainer().eContainer());
-							if (null != parentItem.getRepositoryRef()) {
-								return false;  //Cannot add review item on a commit
-							}
-						} else if (targetElement instanceof R4EFileTypedElement) {
-							final R4EItem parentItem = 
-								((R4EItem)((R4EFileTypedElement)targetElement).getFileVersion().eContainer().eContainer());
-							if (null != parentItem.getRepositoryRef()) {
-								return false;  //Cannot add review item on a commit
-							}
-						} 
-					}
-					*/
 				}
 			}
 		}

@@ -293,7 +293,7 @@ public class RuleInputDialog extends FormDialog {
 		Label label = toolkit.createLabel(basicSectionClient, ADD_RULE_ID_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fIdInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+		fIdInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fIdInputTextField.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
@@ -303,7 +303,7 @@ public class RuleInputDialog extends FormDialog {
 		label = toolkit.createLabel(basicSectionClient, ADD_RULE_TITLE_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fTitleInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+		fTitleInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fTitleInputTextField.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
@@ -313,9 +313,11 @@ public class RuleInputDialog extends FormDialog {
 		label = toolkit.createLabel(basicSectionClient, ADD_RULE_DESCRIPTION_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+		fDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.BORDER
+				| SWT.WRAP);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
+		textGridData.heightHint = fDescriptionInputTextField.getLineHeight() * 3;
 		fDescriptionInputTextField.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
 		fDescriptionInputTextField.setLayoutData(textGridData);
 

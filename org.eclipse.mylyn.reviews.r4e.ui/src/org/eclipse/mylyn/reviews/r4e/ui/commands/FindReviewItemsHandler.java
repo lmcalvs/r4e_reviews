@@ -28,9 +28,6 @@ import org.eclipse.compare.ICompareNavigator;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.NotEnabledException;
-import org.eclipse.core.commands.NotHandledException;
-import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -42,6 +39,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -57,11 +55,13 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
-import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorActionGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -73,9 +73,13 @@ import org.eclipse.mylyn.versions.ui.ScmUi;
 import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.texteditor.AbstractTextEditor;
+import org.eclipse.ui.texteditor.ITextEditorExtension3;
 
 /**
  * @author lmcdubo
@@ -231,32 +235,48 @@ public class FindReviewItemsHandler extends AbstractHandler {
 						uiFileContext.getTargetFileVersion(), false);
 				CompareUI.openCompareEditor(input, true);
 
-				//Get selection on the left pane of the compare editor
-				final ICompareNavigator navigator = input.getNavigator();
+				//Do not create deltas for removed files
+				if (null != targetLocalVersion) {
+					//Create Delta Container
 
-				do {
-					try {
-						((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).addReviewItemCommand();
-					} catch (ExecutionException e) {
-						Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						Activator.getDefault().logError("Exception: " + e.toString(), e);
-					} catch (NotDefinedException e) {
-						Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						Activator.getDefault().logError("Exception: " + e.toString(), e);
-					} catch (NotEnabledException e) {
-						Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						Activator.getDefault().logError("Exception: " + e.toString(), e);
-					} catch (NotHandledException e) {
-						Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						Activator.getDefault().logError("Exception: " + e.toString(), e);
+					final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+					if (null != window) {
+						final IWorkbenchPage page = window.getActivePage();
+						if (null != page) {
+							IEditorPart part = page.getActiveEditor();
+							if (null != part) {
+								//Get selections on the left pane of the compare editor
+								final ICompareNavigator navigator = input.getNavigator();
+								do {
+									ITextEditorExtension3 ext = (ITextEditorExtension3) part.getAdapter(ITextEditorExtension3.class);
+
+									if (ext instanceof AbstractTextEditor) {
+										AbstractTextEditor editor = (AbstractTextEditor) ext;
+										ISelection selection = editor.getSelectionProvider().getSelection();
+										IR4EUIPosition position = CommandUtils.getPosition((ITextSelection) selection);
+
+										//Lazily create the Delta container if not already done
+										R4EUISelectionContainer deltaContainer = (R4EUISelectionContainer) uiFileContext.getSelectionContainerElement();
+										if (null == deltaContainer) {
+											deltaContainer = new R4EUISelectionContainer(uiFileContext,
+													R4EUIConstants.DELTAS_LABEL);
+											uiFileContext.addChildren(deltaContainer);
+										}
+										deltaContainer.createSelection((R4EUITextPosition) position);
+									} else {
+										//No delta can be created for this Change, so move on
+										break;
+									}
+								} while (!navigator.selectChange(true));
+							}
+						}
 					}
-				} while (!navigator.selectChange(true));
 
-				//Close the editor
-				IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				activePage.closeEditor(activePage.getActiveEditor(), false);
+					//Close the editor
+					IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					activePage.closeEditor(activePage.getActiveEditor(), false);
+				}
 			}
-
 			//Notify users if need be
 			final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
 			addedItems.add(uiReviewItem.getItem());

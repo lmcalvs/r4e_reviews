@@ -271,7 +271,7 @@ public class RuleSetInputDialog extends FormDialog {
 		Label label = toolkit.createLabel(basicSectionClient, ADD_RULE_SET_VERSION_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fVersionInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+		fVersionInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fVersionInputTextField.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
@@ -281,7 +281,7 @@ public class RuleSetInputDialog extends FormDialog {
 		label = toolkit.createLabel(basicSectionClient, ADD_RULE_SET_NAME_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+		fNameInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fNameInputTextField.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
@@ -291,7 +291,7 @@ public class RuleSetInputDialog extends FormDialog {
 		label = toolkit.createLabel(basicSectionClient, ADD_RULE_SET_FOLDER_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fFolderInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE);
+		fFolderInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
 		final GridData folderTextData = new GridData(GridData.FILL, GridData.BEGINNING, true, false);
 		folderTextData.horizontalSpan = 2;
 		fFolderInputTextField.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
