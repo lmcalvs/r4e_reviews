@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.SendNotificationInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -67,6 +68,8 @@ public class SendNotificationHandler extends AbstractHandler {
 				if (source instanceof AbstractSet) {
 					final Iterator<?> iterator = ((AbstractSet<?>) source).iterator();
 					obj = iterator.next();
+				} else if (source instanceof IR4EUIModelElement) {
+					obj = source;
 				}
 			} else {
 				//empty selection, try to get active editor selection

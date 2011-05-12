@@ -455,9 +455,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fReviewMyFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_REVIEWS_MY_FILTER));
 
 		fParticipantFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fParticipantFilterButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		fParticipantFilterButton.setText(R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_NAME);
-		fParticipantIdText = new Text(r4EFilterPrefsGroup, SWT.NONE);
-		fParticipantIdText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		fParticipantIdText = new Text(r4EFilterPrefsGroup, SWT.BORDER);
+		fParticipantIdText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		if (store.getString(PreferenceConstants.P_PARTICIPANT_FILTER).equals("")) {
 			fParticipantFilterButton.setSelection(false);
 			fParticipantFilterButton.setEnabled(false);

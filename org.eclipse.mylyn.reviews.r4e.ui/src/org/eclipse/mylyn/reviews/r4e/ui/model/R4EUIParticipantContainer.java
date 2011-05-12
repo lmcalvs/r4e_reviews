@@ -148,8 +148,9 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (fParticipants.size() > 0)
+		if (fParticipants.size() > 0) {
 			return true;
+		}
 		return false;
 	}
 
@@ -182,7 +183,10 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		if (null != participants) {
 			final int participantsSize = participants.size();
 			for (int i = 0; i < participantsSize; i++) {
-				addChildren(new R4EUIParticipant(this, participants.get(i)));
+				if (participants.get(i).isEnabled()
+						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+					addChildren(new R4EUIParticipant(this, participants.get(i)));
+				}
 			}
 		}
 		fOpen = true;
@@ -339,8 +343,9 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed()))
+		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) {
 			return true;
+		}
 		return false;
 	}
 

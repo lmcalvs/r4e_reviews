@@ -143,10 +143,12 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter))
+		if (IR4EUIModelElement.class.equals(adapter)) {
 			return this;
-		if (IPropertySource.class.equals(adapter))
+		}
+		if (IPropertySource.class.equals(adapter)) {
 			return new RuleSetProperties(this);
+		}
 		return null;
 	}
 
@@ -233,8 +235,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (fAreas.size() > 0)
+		if (fAreas.size() > 0) {
 			return true;
+		}
 		return false;
 	}
 
@@ -273,10 +276,14 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 			R4EUIRuleArea uiArea = null;
 			final int areaSize = areas.size();
 			for (int i = 0; i < areaSize; i++) {
-				uiArea = new R4EUIRuleArea(this, areas.get(i));
-				addChildren(uiArea);
-				if (uiArea.isEnabled())
-					uiArea.open();
+				if (areas.get(i).isEnabled()
+						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+					uiArea = new R4EUIRuleArea(this, areas.get(i));
+					addChildren(uiArea);
+					if (uiArea.isEnabled()) {
+						uiArea.open();
+					}
+				}
 			}
 		}
 		fOpen = true;
@@ -454,8 +461,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenElementCmd() {
-		if (!isEnabled() || isOpen())
+		if (!isEnabled() || isOpen()) {
 			return false;
+		}
 		return true;
 	}
 
@@ -467,8 +475,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isCloseElementCmd() {
-		if (isEnabled() && isOpen())
+		if (isEnabled() && isOpen()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -480,8 +489,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (isEnabled() && isOpen())
+		if (isEnabled() && isOpen()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -515,8 +525,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (!isOpen() && isEnabled())
+		if (!isOpen() && isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -528,8 +539,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isEnabled())
+		if (isEnabled()) {
 			return false;
+		}
 		return true;
 	}
 

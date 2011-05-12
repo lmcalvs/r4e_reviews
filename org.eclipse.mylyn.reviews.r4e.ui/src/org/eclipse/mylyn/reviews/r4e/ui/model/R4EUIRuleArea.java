@@ -121,10 +121,12 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter))
+		if (IR4EUIModelElement.class.equals(adapter)) {
 			return this;
-		if (IPropertySource.class.equals(adapter))
+		}
+		if (IPropertySource.class.equals(adapter)) {
 			return new RuleAreaProperties(this);
+		}
 		return null;
 	}
 
@@ -193,8 +195,9 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (fViolations.size() > 0)
+		if (fViolations.size() > 0) {
 			return true;
+		}
 		return false;
 	}
 
@@ -228,10 +231,14 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 			R4EUIRuleViolation uiViolation = null;
 			final int violationSize = violations.size();
 			for (int i = 0; i < violationSize; i++) {
-				uiViolation = new R4EUIRuleViolation(this, violations.get(i));
-				addChildren(uiViolation);
-				if (uiViolation.isEnabled())
-					uiViolation.open();
+				if (violations.get(i).isEnabled()
+						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+					uiViolation = new R4EUIRuleViolation(this, violations.get(i));
+					addChildren(uiViolation);
+					if (uiViolation.isEnabled()) {
+						uiViolation.open();
+					}
+				}
 			}
 		}
 		fOpen = true;
@@ -405,8 +412,9 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (getParent().isEnabled())
+		if (getParent().isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -440,8 +448,9 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (isEnabled())
+		if (isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -453,8 +462,9 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isEnabled())
+		if (isEnabled()) {
 			return false;
+		}
 		return true;
 	}
 
