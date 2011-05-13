@@ -70,10 +70,10 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 					try {
 						element = (IR4EUIModelElement) iterator.next();
 						Activator.Ftracer.traceInfo("Changing review state for element " + element.getName());
-						element.setReviewed(!(element.isReviewed()));
+						element.setUserReviewed(!(element.isUserReviewed()));
 
 						//If we just completed the review, prompt user for mail sending
-						if (element instanceof R4EUIReviewBasic && element.isReviewed()) {
+						if (element instanceof R4EUIReviewBasic && element.isUserReviewed()) {
 
 							Object source = ((EvaluationContext) event.getApplicationContext()).getDefaultVariable();
 							if (source instanceof List) {

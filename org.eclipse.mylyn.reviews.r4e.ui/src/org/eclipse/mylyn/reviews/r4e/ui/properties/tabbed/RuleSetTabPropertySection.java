@@ -131,7 +131,7 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 		fNameText.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
 		fNameText.setLayoutData(data);
 
-		final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
+		final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.NAME_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);

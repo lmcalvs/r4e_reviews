@@ -223,7 +223,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
@@ -514,7 +514,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed()))
+		if (isEnabled() && !(R4EUIModelController.getActiveReview().isUserReviewed()))
 			return true;
 		return false;
 	}

@@ -80,6 +80,16 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	private static final String UPDATE_LABEL = "Update";
 
+	/**
+	 * Field REFRESH_LABEL. (value is ""Refresh"")
+	 */
+	private static final String REFRESH_LABEL = "Refresh";
+
+	/**
+	 * Field REVIEW_MEETING_REFRESH_TOOLTIP. (value is ""Refresh meetinmg information for mail server"")
+	 */
+	private static final String REVIEW_MEETING_REFRESH_TOOLTIP = "Refresh meetinmg information for mail server";
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -143,6 +153,11 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	 * Field fMeetingUpdateButton.
 	 */
 	private Button fMeetingUpdateButton = null;
+
+	/**
+	 * Field fMeetingRefreshButton.
+	 */
+	private Button fMeetingRefreshButton = null;
 
 	/**
 	 * Field fMeetingSubjectLabel.
@@ -436,7 +451,26 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		textGridData.horizontalSpan = 2;
 		fMeetingStartTimeLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_TIME_TOOLTIP);
 		fMeetingStartTimeLabel.setLayoutData(textGridData);
-		widgetFactory.createCLabel(fMeetingComposite, ""); //dummy label for alignment purposes
+
+		//Meeting refresh button
+		fMeetingRefreshButton = widgetFactory.createButton(fMeetingComposite, REFRESH_LABEL, SWT.PUSH);
+		fMeetingRefreshButton.setToolTipText(REVIEW_MEETING_REFRESH_TOOLTIP);
+		fMeetingRefreshButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+		fMeetingRefreshButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					((R4EUIReviewBasic) fProperties.getElement()).refreshMeetingData();
+				} catch (OutOfSyncException ex) {
+					UIUtils.displaySyncErrorDialog(ex);
+				} catch (ResourceHandlingException ex) {
+					UIUtils.displayResourceErrorDialog(ex);
+				}
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				//Nothing to do
+			}
+		});
 
 		//Meeting Duration
 		final CLabel meetingDurationLabel = widgetFactory.createCLabel(fMeetingComposite, R4EUIConstants.DURATION_LABEL);
@@ -660,6 +694,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			fReferenceMaterialText.setEnabled(false);
 			fExitDecisionCombo.setEnabled(false);
 			fMeetingUpdateButton.setEnabled(false);
+			fMeetingRefreshButton.setEnabled(false);
 
 			if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 				fDecisionUsersList.setEnabled(false);
@@ -681,6 +716,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 			fObjectivesText.setEnabled(true);
 			fReferenceMaterialText.setEnabled(true);
 			fMeetingUpdateButton.setEnabled(true);
+			fMeetingRefreshButton.setEnabled(true);
 
 			if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 				final R4EUIReviewExtended uiReview = (R4EUIReviewExtended) fProperties.getElement();

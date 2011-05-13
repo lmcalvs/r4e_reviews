@@ -536,7 +536,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				return false;
 			}
 		}
-		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) {
+		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isUserReviewed())) {
 			if (getParent() instanceof R4EUIReviewBasic) {
 				return true;
 			}

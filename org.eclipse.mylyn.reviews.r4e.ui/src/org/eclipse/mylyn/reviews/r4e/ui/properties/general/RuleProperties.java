@@ -20,6 +20,8 @@ package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRule;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
+import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 
@@ -74,8 +76,8 @@ public class RuleProperties extends ModelElementProperties {
 	/**
 	 * Field RULE_CLASS_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final PropertyDescriptor RULE_CLASS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(RULE_CLASS_ID,
-			R4EUIConstants.CLASS_LABEL);
+	protected static final ComboBoxPropertyDescriptor RULE_CLASS_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
+			RULE_CLASS_ID, R4EUIConstants.CLASS_LABEL, UIUtils.getClasses());
 
 	/**
 	 * Field RULE_RANK_ID. (value is ""ruleElement.rank"")
@@ -85,8 +87,8 @@ public class RuleProperties extends ModelElementProperties {
 	/**
 	 * Field RULE_RANK_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final PropertyDescriptor RULE_RANK_PROPERTY_DESCRIPTOR = new PropertyDescriptor(RULE_RANK_ID,
-			R4EUIConstants.RANK_LABEL);
+	protected static final ComboBoxPropertyDescriptor RULE_RANK_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
+			RULE_RANK_ID, R4EUIConstants.RANK_LABEL, UIUtils.getRanks());
 
 	/**
 	 * Field DESCRIPTORS.

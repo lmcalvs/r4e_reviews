@@ -401,7 +401,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 		final Label ruleSetVersionLabel = new Label(ruleSetDetailsContainer, SWT.NONE);
 		final GridData ruleSetVersionLabelData = new GridData(GridData.FILL, GridData.FILL, false, false);
-		ruleSetVersionLabel.setText(R4EUIConstants.DESCRIPTION_LABEL);
+		ruleSetVersionLabel.setText(R4EUIConstants.VERSION_LABEL);
 		ruleSetVersionLabel.setLayoutData(ruleSetVersionLabelData);
 
 		fRuleSetVersionText = new Text(ruleSetDetailsContainer, SWT.NONE);

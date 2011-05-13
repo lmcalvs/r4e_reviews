@@ -93,9 +93,9 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	protected List<IR4EUIModelListener> fListeners = new ArrayList<IR4EUIModelListener>();
 
 	/**
-	 * Field fReviewed.
+	 * Field fUserReviewed.
 	 */
-	protected boolean fReviewed = false;
+	protected boolean fUserReviewed = false;
 
 	/**
 	 * Field fOpen.
@@ -137,10 +137,12 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter))
+		if (IR4EUIModelElement.class.equals(adapter)) {
 			return this;
-		if (IPropertySource.class.equals(adapter))
+		}
+		if (IPropertySource.class.equals(adapter)) {
 			return new ModelElementProperties(this);
+		}
 		return null;
 	}
 
@@ -195,8 +197,9 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getImage()
 	 */
 	public Image getImage() {
-		if (isEnabled())
+		if (isEnabled()) {
 			return fImage;
+		}
 		return fDisabledImage;
 	}
 
@@ -213,13 +216,13 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
-	 * Method isReviewed.
+	 * Method isUserReviewed.
 	 * 
 	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isReviewed()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isUserReviewed()
 	 */
-	public boolean isReviewed() {
-		return fReviewed;
+	public boolean isUserReviewed() {
+		return fUserReviewed;
 	}
 
 	/**
@@ -265,12 +268,12 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
-	 * Method getReviewedImage.
+	 * Method getUserReviewedImage.
 	 * 
 	 * @return Image
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getReviewedImage()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getUserReviewedImage()
 	 */
-	public Image getReviewedImage() {
+	public Image getUserReviewedImage() {
 		return UIUtils.loadIcon(REVIEWED_OVERLAY_ICON_FILE);
 	}
 
@@ -285,15 +288,15 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
-	 * Method setReviewed.
+	 * Method setUserReviewed.
 	 * 
 	 * @param aReviewed
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
-	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+	public void setUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
 		//default implementation
 	}
 
@@ -304,33 +307,33 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
 		//default implementation
 	}
 
 	/**
-	 * Method setChildrenReviewed.
+	 * Method setChildUserReviewed.
 	 * 
 	 * @param aReviewed
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setChildReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setChildUserReviewed(boolean)
 	 */
-	public void setChildReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+	public void setChildUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
 		// default implementation
 	}
 
 	/**
-	 * Method checkToSetReviewed.
+	 * Method checkToSetUserReviewed.
 	 * 
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#checkToSetReviewed()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#checkToSetUserReviewed()
 	 */
-	public void checkToSetReviewed() throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
+	public void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
 		// default implementation
 	}
 
@@ -516,13 +519,13 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
-	 * Method fireReviewStateChanged.
+	 * Method fireUserReviewStateChanged.
 	 * 
 	 * @param aChanged
 	 *            Object
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#fireReviewStateChanged(Object)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#fireUserReviewStateChanged(Object)
 	 */
-	public void fireReviewStateChanged(Object aChanged) {
+	public void fireUserReviewStateChanged(Object aChanged) {
 		for (IR4EUIModelListener listener : fListeners) {
 			listener.changedEvent(new R4EUIModelEvent(aChanged));
 		}
@@ -551,12 +554,12 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
-	 * Method isChangeReviewStateCmd.
+	 * Method isChangeUserReviewStateCmd.
 	 * 
 	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeReviewStateCmd()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeUserReviewStateCmd()
 	 */
-	public boolean isChangeReviewStateCmd() {
+	public boolean isChangeUserReviewStateCmd() {
 		return false; //default implementation
 	}
 

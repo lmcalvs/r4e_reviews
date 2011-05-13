@@ -138,8 +138,9 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		}
 
 		// If the ancestor is not null, just put the file name as the workspace label
-		if (null != fAncestor)
+		if (null != fAncestor) {
 			fConfig.setAncestorLabel(fAncestor.getName());
+		}
 
 		// Build the diff node to compare the files		
 		Differencer differencer = new Differencer();

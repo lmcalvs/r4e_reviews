@@ -66,7 +66,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 * Field ANOMALY_CLASS_PROPERTY_DESCRIPTOR.
 	 */
 	protected static final ComboBoxPropertyDescriptor ANOMALY_CLASS_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_CLASS_ID, R4EUIConstants.CLASS_LABEL, UIUtils.getRanks());
+			ANOMALY_CLASS_ID, R4EUIConstants.CLASS_LABEL, UIUtils.getClasses());
 
 	/**
 	 * Field ANOMALY_RANK_ID. (value is ""anomalyElement.rank"")
@@ -185,8 +185,9 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	@Override
 	public Object getPropertyValue(Object aId) {
 		final Object result = super.getPropertyValue(aId);
-		if (null != result)
+		if (null != result) {
 			return result;
+		}
 		if (ANOMALY_STATE_ID.equals(aId)) {
 			return Integer.valueOf(((R4EUIAnomalyExtended) getElement()).getAnomaly().getState().getValue());
 		} else if (ANOMALY_DUE_DATE_ID.equals(aId)) {

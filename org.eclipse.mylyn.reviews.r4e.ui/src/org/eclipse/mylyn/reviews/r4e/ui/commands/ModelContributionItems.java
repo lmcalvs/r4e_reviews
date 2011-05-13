@@ -114,7 +114,7 @@ public class ModelContributionItems extends CompoundContributionItem {
 				list.add(new CommandContributionItem(params));
 			}
 
-			if (element.isChangeReviewStateCmd()) {
+			if (element.isChangeUserReviewStateCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND, R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND, null,
 						ImageDescriptor.createFromURL(Activator.getDefault()

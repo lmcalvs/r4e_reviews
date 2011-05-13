@@ -65,29 +65,33 @@ public class AddAnomalyPropertyTester extends PropertyTester {
 
 		//Command is disabled if the review is completed
 		final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
-		if (null == activeReview || activeReview.isReviewed())
+		if (null == activeReview) {
 			return false;
+		}
 
 		//If the file opened is an R4E File that does not have a valid target version, the command is disabled
 		if (receiver instanceof AbstractSet) {
 			final Iterator<?> iterator = ((AbstractSet<?>) receiver).iterator();
 			if (iterator.next() instanceof TextSelection) {
-				if (!(isR4EEditorInputAvailable()))
+				if (!(isR4EEditorInputAvailable())) {
 					return false;
+				}
 			}
 		}
 		//This happens when the command is selected from the outline view on an external or workspace file
 		if (receiver instanceof AbstractList) {
 			final Iterator<?> iterator = ((AbstractList<?>) receiver).iterator();
 			if (!iterator.hasNext()) {
-				if (!(isR4EEditorInputAvailable()))
+				if (!(isR4EEditorInputAvailable())) {
 					return false;
+				}
 			} else {
 				final Object obj = iterator.next();
 				if (obj instanceof org.eclipse.jdt.core.ISourceReference
 						|| obj instanceof org.eclipse.cdt.core.model.ISourceReference) {
-					if (!(isR4EEditorInputAvailable()))
+					if (!(isR4EEditorInputAvailable())) {
 						return false;
+					}
 				}
 			}
 		}
@@ -101,8 +105,9 @@ public class AddAnomalyPropertyTester extends PropertyTester {
 				UIUtils.displayResourceErrorDialog(e);
 				return false;
 			}
-			if (null == reviewer)
+			if (null == reviewer) {
 				return false;
+			}
 
 			if (reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR)
 					|| !(((R4EReviewState) activeReview.getReview().getState()).getState().equals(

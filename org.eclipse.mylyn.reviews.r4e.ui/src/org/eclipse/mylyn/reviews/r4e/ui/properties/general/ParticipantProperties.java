@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -39,6 +40,26 @@ public class ParticipantProperties extends ModelElementProperties {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Field AUTHOR. (value is ""AUTHOR"")
+	 */
+	private static final String AUTHOR = "AUTHOR";
+
+	/**
+	 * Field LEAD. (value is ""LEAD"")
+	 */
+	private static final String LEAD = "LEAD";
+
+	/**
+	 * Field ORGANIZER. (value is ""ORGANIZER"")
+	 */
+	private static final String ORGANIZER = "ORGANIZER";
+
+	/**
+	 * Field REVIEWER. (value is ""REVIEWER"")
+	 */
+	private static final String REVIEWER = "REVIEWER";
 
 	/**
 	 * Field PARTICIPANT_ID_ID. (value is ""participantElement.id"")
@@ -177,6 +198,23 @@ public class ParticipantProperties extends ModelElementProperties {
 		return DESCRIPTORS;
 	}
 
+	private String mapUserRole(R4EUserRole aRole) {
+		if (aRole.equals(R4EUserRole.R4E_ROLE_AUTHOR)) {
+			return AUTHOR;
+		}
+		if (aRole.equals(R4EUserRole.R4E_ROLE_LEAD)) {
+			return LEAD;
+		}
+		if (aRole.equals(R4EUserRole.R4E_ROLE_ORGANIZER)) {
+			return ORGANIZER;
+		}
+		if (aRole.equals(R4EUserRole.R4E_ROLE_REVIEWER)) {
+			return REVIEWER;
+		} else {
+			return "";
+		}
+	}
+
 	/**
 	 * Method getPropertyValue.
 	 * 
@@ -227,7 +265,12 @@ public class ParticipantProperties extends ModelElementProperties {
 			}
 			return Integer.toString(totalTimeSpent);
 		} else if (PARTICIPANT_ROLES_ID.equals(aId)) {
-			return ((R4EUIParticipant) getElement()).getParticipant().getRoles();
+			EList<R4EUserRole> roles = ((R4EUIParticipant) getElement()).getParticipant().getRoles();
+			StringBuilder rolesStr = new StringBuilder();
+			for (R4EUserRole role : roles) {
+				rolesStr.append(mapUserRole(role) + ", ");
+			}
+			return rolesStr.toString().substring(0, rolesStr.length() - 2);
 		} else if (PARTICIPANT_FOCUS_AREA_ID.equals(aId)) {
 			if (null != ((R4EUIParticipant) getElement()).getParticipant().getFocusArea()) {
 				return ((R4EUIParticipant) getElement()).getParticipant().getFocusArea();

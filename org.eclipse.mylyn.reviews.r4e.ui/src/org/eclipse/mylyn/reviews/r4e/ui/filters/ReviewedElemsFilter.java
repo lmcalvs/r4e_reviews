@@ -46,7 +46,7 @@ public class ReviewedElemsFilter extends ViewerFilter {
 	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (((IR4EUIModelElement) element).isReviewed())
+		if (((IR4EUIModelElement) element).isUserReviewed())
 			return false;
 		return true;
 	}

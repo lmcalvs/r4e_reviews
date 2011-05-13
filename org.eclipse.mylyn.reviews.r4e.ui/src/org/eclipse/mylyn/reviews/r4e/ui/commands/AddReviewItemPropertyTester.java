@@ -65,7 +65,7 @@ public class AddReviewItemPropertyTester extends PropertyTester {
 
 		//Command is disabled if the review is completed
 		final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
-		if (null == activeReview || activeReview.isReviewed()) {
+		if (null == activeReview || activeReview.isUserReviewed()) {
 			return false;
 		}
 

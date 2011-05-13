@@ -79,6 +79,16 @@ public class FindUserDialog extends FormDialog {
 	private static final int TEXT_FIELD_WIDTH = 300;
 
 	/**
+	 * Field DIALOG_MIN_WIDTH. (value is "800")
+	 */
+	private static final int DIALOG_MIN_WIDTH = 800;
+
+	/**
+	 * Field DIALOG_MIN_HEIGTH. (value is "400")
+	 */
+	private static final int DIALOG_MIN_HEIGHT = 450;
+
+	/**
 	 * Field FIND_USER_DIALOG_TITLE. (value is ""Find User"")
 	 */
 	private static final String FIND_USER_DIALOG_TITLE = "Find User";
@@ -312,7 +322,6 @@ public class FindUserDialog extends FormDialog {
 		layout.marginWidth = 7;
 		layout.marginHeight = 3;
 		composite.setLayout(layout);
-
 		createUserDetailsForm(composite, toolkit);
 		createUsersTableForm(composite, toolkit);
 	}
@@ -337,8 +346,8 @@ public class FindUserDialog extends FormDialog {
 
 		final FormData userDetailsFormData = new FormData();
 		userDetailsFormData.top = new FormAttachment(0, 0);
-		userDetailsFormData.left = new FormAttachment(0);
-		userDetailsFormData.right = new FormAttachment(100);
+		userDetailsFormData.left = new FormAttachment(0, 0);
+		userDetailsFormData.right = new FormAttachment(100, 0);
 		fUserDetailsForm.setLayoutData(userDetailsFormData);
 
 		// Id
@@ -464,8 +473,6 @@ public class FindUserDialog extends FormDialog {
 				searchUser();
 			}
 		});
-		// Set the search button as the default button
-		fUserDetailsForm.getShell().setDefaultButton(fSearchButton);
 
 		// Clear search button
 		fClearButton = aToolkit.createButton(fUserDetailsForm, CLEAR_BUTTON_TEXT, SWT.PUSH);
@@ -531,10 +538,10 @@ public class FindUserDialog extends FormDialog {
 		// Define the layout and columns in the table
 		final String[] columnId = UserInformationFactory.getInstance().getAttributeTypes();
 		TableColumn nameColumn = null;
-		for (int i = 0; i < columnId.length; i++) {
+		for (String element : columnId) {
 			// Create a new column
 			nameColumn = new TableColumn(fUsersTableViewer.getTable(), SWT.LEFT);
-			nameColumn.setText(columnId[i]);
+			nameColumn.setText(element);
 			nameColumn.setWidth(USER_TABLE_COLUMN_WIDTH);
 			nameColumn.setMoveable(true);
 		}
@@ -717,5 +724,14 @@ public class FindUserDialog extends FormDialog {
 	 */
 	public String getUserDetailsValue() {
 		return fUserDetailsValue;
+	}
+
+	/**
+	 * Method setFocus.
+	 */
+	public void setDialogsDefaults() {
+		// Set the search button as the default button
+		getShell().setDefaultButton(fSearchButton);
+		getShell().setMinimumSize(DIALOG_MIN_HEIGHT, DIALOG_MIN_HEIGHT);
 	}
 }

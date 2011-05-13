@@ -174,7 +174,7 @@ public class R4EUISelectionContainer extends R4EUIModelElement {
 					//Check if the file contexts are part of the reviewed content
 					for (R4EUISelection uiSelection : fSelections) {
 						if (user.getReviewedContent().contains(uiSelection.getSelection().getId())) {
-							uiSelection.setReviewed(true);
+							uiSelection.setUserReviewed(true);
 						}
 					}
 				}

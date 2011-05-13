@@ -106,7 +106,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * Field ADD_RULE_DIALOG_VALUE. (value is ""Rule: "")
 	 */
 	private static final String ADD_RULE_DIALOG_VALUE = "Rule Tree "
-			+ "(Take note that the Anomaly will be created with the Design Rule default values)";
+			+ "(Take note that the Anomaly will be created with values taken from the selected Design Rule)";
 
 	/**
 	 * Field DEFAULT_ELEMENT_COLUMN_WIDTH. (value is "150")
@@ -375,8 +375,9 @@ public class AnomalyInputDialog extends FormDialog {
 					//Get parent RuleSet
 					IR4EUIModelElement parentRuleSetElement = (IR4EUIModelElement) element;
 					while (!(parentRuleSetElement instanceof R4EUIRuleSet) && null != parentRuleSetElement.getParent()) {
-						if (!parentRuleSetElement.isEnabled())
+						if (!parentRuleSetElement.isEnabled()) {
 							return false;
+						}
 						parentRuleSetElement = parentRuleSetElement.getParent();
 					}
 					//If the current reveiw group contains a reference to this Rule Set, display it
@@ -412,8 +413,9 @@ public class AnomalyInputDialog extends FormDialog {
 			public void selectionChanged(SelectionChangedEvent event) {
 				//Only Rules are selectable
 				if (event.getSelection() instanceof IStructuredSelection) {
-					if (null == ((IStructuredSelection) event.getSelection()).getFirstElement())
+					if (null == ((IStructuredSelection) event.getSelection()).getFirstElement()) {
 						return;
+					}
 					if (((IStructuredSelection) event.getSelection()).getFirstElement() instanceof R4EUIRule) {
 						final R4EUIRule rule = (R4EUIRule) ((IStructuredSelection) event.getSelection()).getFirstElement();
 						fAnomalyTitleInputTextField.setText(rule.getRule().getTitle());
@@ -507,8 +509,9 @@ public class AnomalyInputDialog extends FormDialog {
 		final Shell sh = getShell();
 		final Display disp = sh.getDisplay();
 		while (!sh.isDisposed()) { // $codepro.audit.disable methodInvocationInLoopCondition
-			if (!disp.readAndDispatch())
+			if (!disp.readAndDispatch()) {
 				disp.sleep();
+			}
 		}
 		disp.update();
 	}
@@ -548,7 +551,8 @@ public class AnomalyInputDialog extends FormDialog {
 			return R4EUIConstants.ANOMALY_RANK_MINOR;
 		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_MAJOR)) {
 			return R4EUIConstants.ANOMALY_RANK_MAJOR;
-		} else
+		} else {
 			return null; //should never happen
+		}
 	}
 }

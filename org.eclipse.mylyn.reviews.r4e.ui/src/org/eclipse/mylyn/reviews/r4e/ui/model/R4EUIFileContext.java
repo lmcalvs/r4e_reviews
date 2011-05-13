@@ -130,10 +130,12 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter))
+		if (IR4EUIModelElement.class.equals(adapter)) {
 			return this;
-		if (IPropertySource.class.equals(adapter))
+		}
+		if (IPropertySource.class.equals(adapter)) {
 			return new FileContextProperties(this);
+		}
 		return null;
 	}
 
@@ -200,13 +202,13 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
-	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
-		if (fReviewed != aReviewed) { //Reviewed state is changed
-			fReviewed = aReviewed;
-			if (fReviewed) {
+	public void setUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
+		if (fUserReviewed != aReviewed) { //Reviewed state is changed
+			fUserReviewed = aReviewed;
+			if (fUserReviewed) {
 				//Add delta to the reviewedContent for this user
 				addContentReviewed();
 
@@ -214,20 +216,20 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				if (null != fSelectionContainer) {
 					final int length = fSelectionContainer.getChildren().length;
 					for (int i = 0; i < length; i++) {
-						fSelectionContainer.getChildren()[i].setChildReviewed(aReviewed);
+						fSelectionContainer.getChildren()[i].setChildUserReviewed(aReviewed);
 					}
 				}
 
 				//Check to see if we should mark the parent reviewed as well
-				getParent().checkToSetReviewed();
+				getParent().checkToSetUserReviewed();
 			} else {
 				//Remove delta from the reviewedContent for this user
 				removeContentReviewed();
 
 				//Remove check on parent, since at least one children is not set anymore
-				getParent().setReviewed(fReviewed);
+				getParent().setUserReviewed(fUserReviewed);
 			}
-			fireReviewStateChanged(this);
+			fireUserReviewStateChanged(this);
 		}
 	}
 
@@ -268,12 +270,12 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setChildReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setChildUserReviewed(boolean)
 	 */
 	@Override
-	public void setChildReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
-		if (fReviewed != aReviewed) { //Reviewed state is changed
-			fReviewed = aReviewed;
+	public void setChildUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
+		if (fUserReviewed != aReviewed) { //Reviewed state is changed
+			fUserReviewed = aReviewed;
 			if (aReviewed) {
 				//Add delta to the reviewedContent for this user
 				addContentReviewed();
@@ -282,15 +284,15 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				if (null != fSelectionContainer) {
 					final int length = fSelectionContainer.getChildren().length;
 					for (int i = 0; i < length; i++) {
-						fSelectionContainer.getChildren()[i].setChildReviewed(aReviewed);
+						fSelectionContainer.getChildren()[i].setChildUserReviewed(aReviewed);
 					}
 				}
 			} else {
 				//Remove delta from the reviewedContent for this user
 				removeContentReviewed();
 			}
-			fReviewed = aReviewed;
-			fireReviewStateChanged(this);
+			fUserReviewed = aReviewed;
+			fireUserReviewStateChanged(this);
 		}
 	}
 
@@ -299,24 +301,25 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * 
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#checkToSetReviewed()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#checkToSetUserReviewed()
 	 */
 	@Override
-	public void checkToSetReviewed() throws ResourceHandlingException, OutOfSyncException {
+	public void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException {
 		boolean allChildrenReviewed = true;
 		if (null != fSelectionContainer) {
 			final int length = fSelectionContainer.getChildren().length;
 			for (int i = 0; i < length; i++) {
-				if (!(fSelectionContainer.getChildren()[i].isReviewed()))
+				if (!(fSelectionContainer.getChildren()[i].isUserReviewed())) {
 					allChildrenReviewed = false;
+				}
 			}
 		}
 		//If all children are reviewed, mark the parent as reviewed as well
 		if (allChildrenReviewed) {
-			fReviewed = true;
+			fUserReviewed = true;
 			addContentReviewed();
-			getParent().checkToSetReviewed();
-			fireReviewStateChanged(this);
+			getParent().checkToSetUserReviewed();
+			fireUserReviewStateChanged(this);
 		}
 	}
 
@@ -363,7 +366,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
@@ -395,10 +398,12 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public IR4EUIModelElement[] getChildren() {
 		final List<IR4EUIModelElement> newList = new ArrayList<IR4EUIModelElement>();
-		if (null != fSelectionContainer)
+		if (null != fSelectionContainer) {
 			newList.add(fSelectionContainer);
-		if (null != fAnomalyContainer)
+		}
+		if (null != fAnomalyContainer) {
 			newList.add(fAnomalyContainer);
+		}
 		return newList.toArray(new IR4EUIModelElement[newList.size()]);
 	}
 
@@ -441,11 +446,13 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public void close() {
-		if (null != fSelectionContainer)
+		if (null != fSelectionContainer) {
 			fSelectionContainer.close();
+		}
 		fSelectionContainer = null;
-		if (null != fAnomalyContainer)
+		if (null != fAnomalyContainer) {
 			fAnomalyContainer.close();
+		}
 		fAnomalyContainer = null;
 		fOpen = false;
 		removeListeners();
@@ -615,10 +622,12 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
 		super.addListener(aProvider);
-		if (null != fSelectionContainer)
+		if (null != fSelectionContainer) {
 			fSelectionContainer.addListener(aProvider);
-		if (null != fAnomalyContainer)
+		}
+		if (null != fAnomalyContainer) {
 			fAnomalyContainer.addListener(aProvider);
+		}
 	}
 
 	/**
@@ -631,10 +640,12 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void removeListener(ReviewNavigatorContentProvider aProvider) {
 		super.removeListener(aProvider);
-		if (null != fSelectionContainer)
+		if (null != fSelectionContainer) {
 			fSelectionContainer.removeListener(aProvider);
-		if (null != fAnomalyContainer)
+		}
+		if (null != fAnomalyContainer) {
 			fAnomalyContainer.removeListener(aProvider);
+		}
 	}
 
 	//Commands
@@ -666,8 +677,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		if (isEnabled() && (null != getTargetFileVersion() || null != getBaseFileVersion()))
+		if (isEnabled() && (null != getTargetFileVersion() || null != getBaseFileVersion())) {
 			return true;
+		}
 		return false;
 	}
 
@@ -675,12 +687,13 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * Method isChangeReviewStateCmd.
 	 * 
 	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeReviewStateCmd()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeUserReviewStateCmd()
 	 */
 	@Override
-	public boolean isChangeReviewStateCmd() {
-		if (isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed()))
+	public boolean isChangeUserReviewStateCmd() {
+		if (isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 

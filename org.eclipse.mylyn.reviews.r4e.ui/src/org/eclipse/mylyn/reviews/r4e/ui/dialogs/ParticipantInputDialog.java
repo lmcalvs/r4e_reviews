@@ -340,7 +340,9 @@ public class ParticipantInputDialog extends FormDialog {
 						.getWorkbenchWindow()
 						.getShell());
 				dialog.create();
+				dialog.setDialogsDefaults();
 				final int result = dialog.open();
+
 				if (result == Window.OK) {
 					fParticipantIdInputTextField.setText(dialog.getUserIdValue());
 					fParticipantEmailInputTextField.setText(dialog.getUserEmailValue());

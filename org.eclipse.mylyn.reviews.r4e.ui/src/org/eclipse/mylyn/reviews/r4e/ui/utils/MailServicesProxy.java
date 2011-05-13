@@ -510,7 +510,7 @@ public class MailServicesProxy {
 		for (R4EUIReviewItem item : items) {
 			R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
 			for (R4EUIFileContext context : contexts) {
-				if (context.isReviewed())
+				if (context.isUserReviewed())
 					++numReviewedFiles;
 				++numTotalFiles;
 				if (null != (R4EUIAnomalyContainer) context.getAnomalyContainerElement()) {

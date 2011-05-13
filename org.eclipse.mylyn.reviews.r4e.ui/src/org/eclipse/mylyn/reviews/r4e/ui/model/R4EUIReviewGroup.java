@@ -269,7 +269,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		fOpen = false;
 		R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup); //Notify model
 		fImage = UIUtils.loadIcon(REVIEW_GROUP_CLOSED_ICON_FILE);
-		fireReviewStateChanged(this);
+		fireUserReviewStateChanged(this);
 	}
 
 	/**
@@ -305,7 +305,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 					//Check if this review is completed
 					if (((R4EReviewState) review.getState()).getState() == R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) {
 						try {
-							uiReview.setReviewed(true);
+							uiReview.setUserReviewed(true);
 						} catch (OutOfSyncException e) {
 							UIUtils.displaySyncErrorDialog(e);
 						}
@@ -330,7 +330,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 
 		fOpen = true;
 		fImage = UIUtils.loadIcon(REVIEW_GROUP_ICON_FILE);
-		fireReviewStateChanged(this);
+		fireUserReviewStateChanged(this);
 	}
 
 	/**
@@ -349,7 +349,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {

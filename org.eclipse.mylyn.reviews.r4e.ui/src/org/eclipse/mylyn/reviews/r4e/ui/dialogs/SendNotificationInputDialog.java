@@ -194,7 +194,7 @@ public class SendNotificationInputDialog extends FormDialog {
 
 		//Email/Notification type radio button
 		if (fSource instanceof R4EUIReviewBasic) {
-			if (((R4EUIReviewBasic) fSource).isReviewed()) {
+			if (((R4EUIReviewBasic) fSource).isUserReviewed()) {
 				fCompletionButton = toolkit.createButton(basicSectionClient, "Notify Review Owner of Completion",
 						SWT.RADIO);
 				fCompletionButton.setSelection(true);

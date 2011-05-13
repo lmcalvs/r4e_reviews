@@ -253,12 +253,14 @@ public class EditableListWidget {
 
 		fAddButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_ADD_LABEL, SWT.NONE);
 		if (aEditableWidgetClass.equals(CCombo.class)) {
-			if (null == fValues || 0 == fValues.length)
+			if (null == fValues || 0 == fValues.length) {
 				fAddButton.setEnabled(false);
+			}
 		}
 		fRemoveButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_REMOVE_LABEL, SWT.NONE);
-		if (0 == fMainTable.getItemCount())
+		if (0 == fMainTable.getItemCount()) {
 			fRemoveButton.setEnabled(false);
+		}
 
 		fAddButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 		fAddButton.addSelectionListener(new SelectionListener() {
@@ -356,6 +358,7 @@ public class EditableListWidget {
 				editor.grabVertical = true;
 				editor.setEditor(editableControl, newItem, 0);
 				fRemoveButton.setEnabled(true);
+				fMainTable.showItem(newItem);
 				fMainTable.redraw();
 			}
 
@@ -382,8 +385,9 @@ public class EditableListWidget {
 					}
 					fMainTable.getItem(tableItemIndex).dispose();
 				}
-				if (0 == fMainTable.getItemCount())
+				if (0 == fMainTable.getItemCount()) {
 					fRemoveButton.setEnabled(false);
+				}
 				fMainTable.redraw();
 			}
 

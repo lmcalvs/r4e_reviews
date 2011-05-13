@@ -195,8 +195,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					R4EUIModelController.getReviewer(), role);
 			fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer, participant));
 			final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
-			if (null != activeReview)
+			if (null != activeReview) {
 				activeReview.close();
+			}
 			R4EUIModelController.setActiveReview(this);
 		} else {
 			setImage(REVIEW_CLOSED_ICON_FILE);
@@ -307,6 +308,14 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		R4EParticipant participant = null;
 		if (isParticipant(aParticipant)) {
 			participant = (R4EParticipant) fReview.getUsersMap().get(aParticipant);
+			if (aCreate && !participant.isEnabled()) {
+				try {
+					fParticipantsContainer.getParticipant(participant).setEnabled(true);
+				} catch (OutOfSyncException e) {
+					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					Activator.getDefault().logError("Exception: " + e.toString(), e);
+				}
+			}
 		} else {
 			if (aCreate) {
 				final List<R4EUserRole> role = new ArrayList<R4EUserRole>(1);
@@ -335,8 +344,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				final R4EUserReviews userReviews = ((R4EUIReviewGroup) getParent()).getReviewGroup()
 						.getUserReviews()
 						.get(aParticipant);
-				if (null != userReviews && userReviews.getInvitedToMap().containsKey(fReview.getName()))
+				if (null != userReviews && userReviews.getInvitedToMap().containsKey(fReview.getName())) {
 					return true;
+				}
 			}
 		}
 		return false;
@@ -378,10 +388,10 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * Method isReviewed.
 	 * 
 	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isReviewed()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isUserReviewed()
 	 */
 	@Override
-	public boolean isReviewed() {
+	public boolean isUserReviewed() {
 		R4EParticipant participant;
 		try {
 			participant = getParticipant(R4EUIModelController.getReviewer(), false);
@@ -391,9 +401,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		} catch (ResourceHandlingException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);
-			return fReviewed;
+			return fUserReviewed;
 		}
-		return fReviewed;
+		return fUserReviewed;
 	}
 
 	/**
@@ -403,10 +413,10 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
-	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+	public void setUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
 		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
 		if (null != participant) {
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview,
@@ -414,16 +424,16 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			participant.setReviewCompleted(aReviewed);
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}
-		fReviewed = aReviewed;
+		fUserReviewed = aReviewed;
 
-		if (fReviewed) {
+		if (fUserReviewed) {
 			//Also set the children
 			final int length = fItems.size();
 			for (int i = 0; i < length; i++) {
-				fItems.get(i).setReviewed(aReviewed);
+				fItems.get(i).setUserReviewed(aReviewed);
 			}
 		}
-		fireReviewStateChanged(this);
+		fireUserReviewStateChanged(this);
 		R4EUIModelController.propertyChanged();
 	}
 
@@ -451,7 +461,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		R4EUIModelController.clearAnomalyMap();
 		fImage = UIUtils.loadIcon(REVIEW_CLOSED_ICON_FILE);
 		R4EUIModelController.setActiveReview(null);
-		fireReviewStateChanged(this);
+		fireUserReviewStateChanged(this);
 	}
 
 	/**
@@ -467,15 +477,6 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup) getParent()).getReviewGroup(),
 				fReviewName);
 
-		//Refresh meeting data (if any)
-		//TODO: Disablled for now to avoid using the mail connector at opening
-		/*
-		try {
-			refreshMeetingData();
-		} catch (OutOfSyncException e) {
-			UIUtils.displaySyncErrorDialog(e);
-		}
-		*/
 		final EList<Item> items = fReview.getReviewItems();
 		if (null != items) {
 
@@ -504,8 +505,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						uiItem = new R4EUIReviewItem(this, item, name, item.getDescription());
 					}
 
-					if (uiItem.isEnabled())
+					if (uiItem.isEnabled()) {
 						uiItem.open();
+					}
 					addChildren(uiItem);
 				}
 			}
@@ -517,7 +519,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fOpen = true;
 		fImage = UIUtils.loadIcon(REVIEW_ICON_FILE);
 		R4EUIModelController.setActiveReview(this);
-		fireReviewStateChanged(this);
+		fireUserReviewStateChanged(this);
 	}
 
 	/**
@@ -527,7 +529,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
@@ -800,8 +802,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	@Override
 	public boolean hasChildren() {
 		if (isOpen()) {
-			if (fItems.size() > 0 || null != fAnomalyContainer || null != fParticipantsContainer)
+			if (fItems.size() > 0 || null != fAnomalyContainer || null != fParticipantsContainer) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -1014,10 +1017,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				element.addListener(aProvider);
 			}
 		}
-		if (null != fAnomalyContainer)
+		if (null != fAnomalyContainer) {
 			fAnomalyContainer.addListener(aProvider);
-		if (null != fParticipantsContainer)
+		}
+		if (null != fParticipantsContainer) {
 			fParticipantsContainer.addListener(aProvider);
+		}
 	}
 
 	/**
@@ -1037,10 +1042,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				element.removeListener(aProvider);
 			}
 		}
-		if (null != fAnomalyContainer)
+		if (null != fAnomalyContainer) {
 			fAnomalyContainer.removeListener(aProvider);
-		if (null != fParticipantsContainer)
+		}
+		if (null != fParticipantsContainer) {
 			fParticipantsContainer.removeListener(aProvider);
+		}
 	}
 
 	//Commands
@@ -1049,12 +1056,13 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * Method isChangeReviewStateCmd.
 	 * 
 	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeReviewStateCmd()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeUserReviewStateCmd()
 	 */
 	@Override
-	public boolean isChangeReviewStateCmd() {
-		if (isEnabled() && isOpen())
+	public boolean isChangeUserReviewStateCmd() {
+		if (isEnabled() && isOpen()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -1066,8 +1074,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenElementCmd() {
-		if (!isEnabled() || isOpen())
+		if (!isEnabled() || isOpen()) {
 			return false;
+		}
 		return true;
 	}
 
@@ -1079,8 +1088,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isCloseElementCmd() {
-		if (isOpen())
+		if (isOpen()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -1092,8 +1102,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (!isOpen() && isEnabled())
+		if (!isOpen() && isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -1105,10 +1116,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (!(getParent().isEnabled()))
+		if (!(getParent().isEnabled())) {
 			return false;
-		if (isOpen() || isEnabled())
+		}
+		if (isOpen() || isEnabled()) {
 			return false;
+		}
 		return true;
 	}
 
@@ -1142,8 +1155,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isSendEmailCmd() {
-		if (isOpen())
+		if (isOpen()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -1202,8 +1216,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			return REVIEW_PHASE_STARTED;
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return REVIEW_PHASE_COMPLETED;
-		} else
+		} else {
 			return "";
+		}
 	}
 
 	/**
@@ -1218,8 +1233,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			return R4EReviewPhase.R4E_REVIEW_PHASE_STARTED;
 		} else if (aNewPhase.equals(REVIEW_PHASE_COMPLETED)) {
 			return R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED;
-		} else
+		} else {
 			return null; //should never happen
+		}
 	}
 
 	/**
@@ -1257,8 +1273,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		//Peek state machine to get available states
 		final R4EReviewPhase[] phases = getAllowedPhases(((R4EReviewState) getReview().getState()).getState());
 		for (int i = 0; i < phases.length; i++) {
-			if (phases[i].getValue() == aPhase.getValue())
+			if (phases[i].getValue() == aPhase.getValue()) {
 				return i;
+			}
 		}
 		return R4EUIConstants.INVALID_VALUE; //should never happen
 	}

@@ -116,10 +116,12 @@ public class R4EUISelection extends R4EUIModelElement {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter))
+		if (IR4EUIModelElement.class.equals(adapter)) {
 			return this;
-		if (IPropertySource.class.equals(adapter))
+		}
+		if (IPropertySource.class.equals(adapter)) {
 			return new SelectionProperties(this);
+		}
 		return null;
 	}
 
@@ -150,26 +152,26 @@ public class R4EUISelection extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
-	public void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
-		if (fReviewed != aReviewed) { //Reviewed state is changed
-			fReviewed = aReviewed;
-			if (fReviewed) {
+	public void setUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
+		if (fUserReviewed != aReviewed) { //Reviewed state is changed
+			fUserReviewed = aReviewed;
+			if (fUserReviewed) {
 				//Add delta to the reviewedContent for this user
 				addContentReviewed();
 
 				//Check to see if we should mark the parent reviewed as well
-				getParent().getParent().checkToSetReviewed();
+				getParent().getParent().checkToSetUserReviewed();
 			} else {
 				//Remove delta from the reviewedContent for this user
 				removeContentReviewed();
 
 				//Remove check on parent, since at least one children is not set anymore
-				getParent().getParent().setReviewed(fReviewed);
+				getParent().getParent().setUserReviewed(fUserReviewed);
 			}
-			fireReviewStateChanged(this);
+			fireUserReviewStateChanged(this);
 		}
 	}
 
@@ -180,12 +182,12 @@ public class R4EUISelection extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setChildReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setChildUserReviewed(boolean)
 	 */
 	@Override
-	public void setChildReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
-		if (fReviewed != aReviewed) { //Reviewed state is changed
-			fReviewed = aReviewed;
+	public void setChildUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
+		if (fUserReviewed != aReviewed) { //Reviewed state is changed
+			fUserReviewed = aReviewed;
 			if (aReviewed) {
 				//Add delta to the reviewedContent for this user
 				addContentReviewed();
@@ -193,8 +195,8 @@ public class R4EUISelection extends R4EUIModelElement {
 				//Remove delta from the reviewedContent for this user
 				removeContentReviewed();
 			}
-			fReviewed = aReviewed;
-			fireReviewStateChanged(this);
+			fUserReviewed = aReviewed;
+			fireUserReviewStateChanged(this);
 		}
 	}
 
@@ -241,7 +243,7 @@ public class R4EUISelection extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
@@ -272,16 +274,18 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddLinkedAnomalyCmd() {
-		//If this is a formal review, we need to be in the preparation phase
+		//If this is a formal review, we need to be in the preparation or decision phase
 		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			if (!((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
-					.getType()
-					.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+			R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
+					.getType();
+			if (!phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
+					&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
 				return false;
 			}
 		}
-		if (isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed()))
+		if (isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -293,8 +297,9 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		if (isEnabled() && null != ((R4EUIFileContext) getParent().getParent()).getTargetFileVersion())
+		if (isEnabled() && null != ((R4EUIFileContext) getParent().getParent()).getTargetFileVersion()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -302,12 +307,13 @@ public class R4EUISelection extends R4EUIModelElement {
 	 * Method isChangeReviewStateCmd.
 	 * 
 	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeReviewStateCmd()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#isChangeUserReviewStateCmd()
 	 */
 	@Override
-	public boolean isChangeReviewStateCmd() {
-		if (isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed()))
+	public boolean isChangeUserReviewStateCmd() {
+		if (isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -319,8 +325,9 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (isEnabled())
+		if (isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -332,10 +339,12 @@ public class R4EUISelection extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (!(getParent().getParent().isEnabled()))
+		if (!(getParent().getParent().isEnabled())) {
 			return false;
-		if (isEnabled())
+		}
+		if (isEnabled()) {
 			return false;
+		}
 		return true;
 	}
 

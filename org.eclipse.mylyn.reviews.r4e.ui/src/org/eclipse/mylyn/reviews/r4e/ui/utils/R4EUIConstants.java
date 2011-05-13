@@ -1027,9 +1027,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String CHANGE_REVIEW_STATE_ICON_FILE = "icons/obj16/done_tsk.gif";
 
 	/**
-	 * Field CHANGE_REVIEW_STATE_COMMAND_NAME. (value is ""Mark/Unmark as completed"")
+	 * Field CHANGE_REVIEW_STATE_COMMAND_NAME. (value is ""Mark/Unmark as User Reviewed"")
 	 */
-	public static final String CHANGE_REVIEW_STATE_COMMAND_NAME = "Mark/Unmark as Completed";
+	public static final String CHANGE_REVIEW_STATE_COMMAND_NAME = "Mark/Unmark as User Reviewed";
 
 	/**
 	 * Field CHANGE_REVIEW_STATE_COMMAND_TOOLTIP. (value is ""Mark/Unmark this element as reviewed"")

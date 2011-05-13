@@ -24,7 +24,10 @@ import java.util.List;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -138,6 +141,22 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	public List<R4EUIParticipant> getParticipantList() {
 		return fParticipants;
+	}
+
+	/**
+	 * Method getSelectionList.
+	 * 
+	 * @param aParticipant
+	 *            R4EParticipant
+	 * @return R4EUIParticipant
+	 */
+	public R4EUIParticipant getParticipant(R4EParticipant aParticipant) {
+		for (R4EUIParticipant participant : fParticipants) {
+			if (participant.getParticipant().equals(aParticipant)) {
+				return participant;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -343,7 +362,17 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isReviewed())) {
+		//If this is a formal review, we need to be in the planning, preparation or decision phase
+		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+			R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
+					.getType();
+			if (!phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)
+					&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
+					&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+				return false;
+			}
+		}
+		if (getParent().isEnabled()) {
 			return true;
 		}
 		return false;

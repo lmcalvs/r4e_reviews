@@ -38,6 +38,11 @@ public class FilePathEditor extends ListEditor {
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field ADD_BUTTON_REPL_LABEL. (value is ""Add"")
+	 */
+	private static final String ADD_BUTTON_REPL_LABEL = "Add";
+
+	/**
 	 * Invalid List index
 	 */
 	public static final int INVALID_INDEX = -1;
@@ -83,6 +88,7 @@ public class FilePathEditor extends ListEditor {
 		init(aName, aLabelText);
 		fFileExtensions = aFileExtensions.clone();
 		createControl(aParent);
+		getAddButton().setText(ADD_BUTTON_REPL_LABEL);
 	}
 
 	// ------------------------------------------------------------------------

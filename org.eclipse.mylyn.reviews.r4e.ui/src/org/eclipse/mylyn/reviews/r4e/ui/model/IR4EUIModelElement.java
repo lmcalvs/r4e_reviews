@@ -90,7 +90,7 @@ public interface IR4EUIModelElement {
 	 * 
 	 * @return Image
 	 */
-	Image getReviewedImage();
+	Image getUserReviewedImage();
 
 	/**
 	 * Gets the overlay image that indicate that the element is disabled
@@ -104,7 +104,7 @@ public interface IR4EUIModelElement {
 	 * 
 	 * @return true/false
 	 */
-	boolean isReviewed();
+	boolean isUserReviewed();
 
 	/**
 	 * Checks if the corresponding model element is enabled or disabled
@@ -121,7 +121,7 @@ public interface IR4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	void setReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException;
+	void setUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException;
 
 	/**
 	 * Sets the enabled flag. Take note that this is not applicable to all model elements
@@ -141,7 +141,7 @@ public interface IR4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	void setChildReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException;
+	void setChildUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException;
 
 	/**
 	 * Checks if all the children of this parent are set as reviewed
@@ -149,7 +149,7 @@ public interface IR4EUIModelElement {
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
 	 */
-	void checkToSetReviewed() throws ResourceHandlingException, OutOfSyncException;
+	void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException;
 
 	/**
 	 * Open the model element (i.e. enable it)
@@ -308,7 +308,7 @@ public interface IR4EUIModelElement {
 	 * @param aChanged
 	 *            - the changed object
 	 */
-	void fireReviewStateChanged(Object aChanged);
+	void fireUserReviewStateChanged(Object aChanged);
 
 	//Commands
 
@@ -331,7 +331,7 @@ public interface IR4EUIModelElement {
 	 * 
 	 * @return boolean
 	 */
-	boolean isChangeReviewStateCmd();
+	boolean isChangeUserReviewStateCmd();
 
 	/**
 	 * Method isOpenElementCmd.

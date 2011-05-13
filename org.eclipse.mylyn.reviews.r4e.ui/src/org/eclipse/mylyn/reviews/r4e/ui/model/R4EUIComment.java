@@ -95,10 +95,12 @@ public class R4EUIComment extends R4EUIModelElement {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter))
+		if (IR4EUIModelElement.class.equals(adapter)) {
 			return this;
-		if (IPropertySource.class.equals(adapter))
+		}
+		if (IPropertySource.class.equals(adapter)) {
 			return new CommentProperties(this);
+		}
 		return null;
 	}
 
@@ -138,7 +140,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
@@ -170,8 +172,13 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		if (isEnabled() && null != ((R4EUIFileContext) getParent().getParent().getParent()).getTargetFileVersion())
+		IR4EUIModelElement ancestorElement = getParent().getParent().getParent();
+		if (!(ancestorElement instanceof R4EUIFileContext)) {
+			return false;
+		}
+		if (isEnabled() && null != ((R4EUIFileContext) ancestorElement).getTargetFileVersion()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -183,8 +190,9 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (isEnabled())
+		if (isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -196,10 +204,12 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (!(getParent().isEnabled()))
+		if (!(getParent().isEnabled())) {
 			return false;
-		if (isEnabled())
+		}
+		if (isEnabled()) {
 			return false;
+		}
 		return true;
 	}
 
