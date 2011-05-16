@@ -32,6 +32,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.AnomaliesMyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.AnomaliesOnlyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.FocusFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.filters.HideDeltasFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.HideRuleSetsFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.NavigatorElementComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.ReviewParticipantFilter;
@@ -119,6 +120,11 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	private final HideRuleSetsFilter fHideRuleSetsFilter;
 
+	/**
+	 * Field fHideDeltasFilter.
+	 */
+	private final HideDeltasFilter fHideDeltasFilter;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -150,6 +156,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		fAnomaliesFilter = new AnomaliesOnlyFilter();
 		fReviewedElemsFilter = new ReviewedElemsFilter();
 		fHideRuleSetsFilter = new HideRuleSetsFilter();
+		fHideDeltasFilter = new HideDeltasFilter();
 
 		final ReviewParticipantFilter filter = new ReviewParticipantFilter();
 		filter.setParticipant(R4EUIModelController.getReviewer());
@@ -176,6 +183,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		runAnomaliesMyFilterCommand(false);
 		runReviewElemsFilterCommand(false);
 		runHideRuleSetsFilterCommand(false);
+		runHideDeltasFilterCommand(false);
 		runFocusFilterCommand(false);
 	}
 
@@ -516,6 +524,43 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		resetHideRuleSetsFilterCommand();
 		if (aApply) {
 			fHandlerService.executeCommand(R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND, null);
+		}
+	}
+
+	/**
+	 * Method getHideDeltasFilter.
+	 * 
+	 * @return HideDeltasFilter
+	 */
+	public HideDeltasFilter getHideDeltasFilter() {
+		return fHideDeltasFilter;
+	}
+
+	/**
+	 * Method resetHideDeltasFilterCommand.
+	 */
+	private void resetHideDeltasFilterCommand() {
+		fView.getTreeViewer().removeFilter(fHideDeltasFilter);
+		fCommandService.getCommand(R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND)
+				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+				.setValue(Boolean.valueOf(false));
+	}
+
+	/**
+	 * Method runHideDeltasFilterCommand.
+	 * 
+	 * @param aApply
+	 *            boolean
+	 * @throws NotHandledException
+	 * @throws NotEnabledException
+	 * @throws NotDefinedException
+	 * @throws ExecutionException
+	 */
+	public void runHideDeltasFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
+			NotEnabledException, NotHandledException {
+		resetHideDeltasFilterCommand();
+		if (aApply) {
+			fHandlerService.executeCommand(R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND, null);
 		}
 	}
 

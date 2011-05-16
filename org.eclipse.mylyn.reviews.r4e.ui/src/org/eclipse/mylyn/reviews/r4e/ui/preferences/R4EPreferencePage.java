@@ -83,6 +83,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field fUseDeltasButton.
+	 */
+	private Button fUseDeltasButton = null;
+
+	/**
 	 * Field fGroupNameText.
 	 */
 	private Text fGroupNameText = null;
@@ -141,6 +146,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * Field fHideRuleSetsFilterButton.
 	 */
 	private Button fHideRuleSetsFilterButton = null;
+
+	/**
+	 * Field fHideDeltasFilterButton.
+	 */
+	private Button fHideDeltasFilterButton = null;
 
 	/**
 	 * Field fParticipantIdText.
@@ -212,8 +222,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4EUserPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
 		//dummy spacer label
-		final Label r4EUserPrefsSpacer = new Label(r4EUserPrefsGroup, SWT.FILL);
-		final GridData r4EUserPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		Label r4EUserPrefsSpacer = new Label(r4EUserPrefsGroup, SWT.FILL);
+		GridData r4EUserPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		r4EUserPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4EUserPrefsSpacer.setLayoutData(r4EUserPrefsSpacerData);
 
@@ -234,6 +244,19 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		} else {
 			userEmailFieldEditor.setEnabled(true, r4EUserPrefsGroup);
 		}
+
+		//dummy spacer label
+		r4EUserPrefsSpacer = new Label(r4EUserPrefsGroup, SWT.FILL);
+		r4EUserPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		r4EUserPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
+		r4EUserPrefsSpacer.setLayoutData(r4EUserPrefsSpacerData);
+
+		//Use deltas for commit items?
+		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		fUseDeltasButton = new Button(r4EUserPrefsGroup, SWT.CHECK);
+		fUseDeltasButton.setText(PreferenceConstants.P_USE_DELTAS_LABEL);
+		fUseDeltasButton.setLayoutData(r4eUserPrefsGroupData);
+		fUseDeltasButton.setSelection(store.getBoolean(PreferenceConstants.P_USE_DELTAS));
 	}
 
 	/**
@@ -497,6 +520,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fHideRuleSetsFilterButton.setText(R4EUIConstants.HIDE_RULE_SETS_FILTER_NAME);
 		fHideRuleSetsFilterButton.setLayoutData(r4EFilterPrefsGroupData);
 		fHideRuleSetsFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_HIDE_RULE_SETS_FILTER));
+
+		fHideDeltasFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fHideDeltasFilterButton.setText(R4EUIConstants.HIDE_DELTAS_FILTER_NAME);
+		fHideDeltasFilterButton.setLayoutData(r4EFilterPrefsGroupData);
+		fHideDeltasFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_HIDE_DELTAS_FILTER));
 	}
 
 	/**
@@ -539,10 +567,13 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		store.setValue(PreferenceConstants.P_ANOMALIES_ALL_FILTER, fAnomaliesFilterButton.getSelection());
 		store.setValue(PreferenceConstants.P_REVIEWED_ITEMS_FILTER, fReviewedItemsFilterButton.getSelection());
 		store.setValue(PreferenceConstants.P_HIDE_RULE_SETS_FILTER, fHideRuleSetsFilterButton.getSelection());
+		store.setValue(PreferenceConstants.P_HIDE_DELTAS_FILTER, fHideDeltasFilterButton.getSelection());
 
 		if (null != R4EUIModelController.getNavigatorView()) {
 			R4EUIModelController.getNavigatorView().applyDefaultFilters();
 		}
+
+		store.setValue(PreferenceConstants.P_USE_DELTAS, fUseDeltasButton.getSelection());
 		if ("".equals(store.getString(PreferenceConstants.P_USER_EMAIL))) {
 			final String userId = store.getString(PreferenceConstants.P_USER_ID);
 

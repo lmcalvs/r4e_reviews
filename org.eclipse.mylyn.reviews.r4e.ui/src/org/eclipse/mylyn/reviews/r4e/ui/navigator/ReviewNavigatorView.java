@@ -200,12 +200,15 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 */
 	@Override
 	public void dispose() {
-		if (null != fPartListener)
+		if (null != fPartListener) {
 			getSite().getPage().removePartListener(fPartListener);
-		if (null != fContextMenu && !fContextMenu.isDisposed())
+		}
+		if (null != fContextMenu && !fContextMenu.isDisposed()) {
 			fContextMenu.dispose();
-		if (null != fActionSet)
+		}
+		if (null != fActionSet) {
 			fActionSet.dispose();
+		}
 		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
 		if (project.exists()) {
 			try {
@@ -379,13 +382,15 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 						while (null != element && !(element instanceof R4EUIFileContext)) {
 							element = element.getParent();
 						}
-						if (null == element)
+						if (null == element) {
 							return;
+						}
 
 						//Get file reference
 						final R4EFileVersion fileVersion = ((R4EUIFileContext) element).getFileContext().getTarget();
-						if (null == fileVersion)
+						if (null == fileVersion) {
 							return;
+						}
 
 						final IResource resource = fileVersion.getResource();
 						if (resource instanceof IFile) {
@@ -500,8 +505,9 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 													fileContextElement = fileContextElement.getParent();
 												}
 												if (null != fileContextElement) {
-													if (fileContextElement.equals(navigatorFile))
+													if (fileContextElement.equals(navigatorFile)) {
 														return; //Correct selection already set
+													}
 												}
 												//selection to the file context corresponding to the editor input
 												fReviewTreeViewer.setSelection(new StructuredSelection(navigatorFile),
@@ -708,6 +714,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			((ReviewNavigatorActionGroup) fActionSet).runAnomaliesMyFilterCommand(store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runReviewElemsFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runHideRuleSetsFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_RULE_SETS_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runHideDeltasFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_DELTAS_FILTER));
 		} catch (ExecutionException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);

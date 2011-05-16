@@ -8,7 +8,7 @@
  * 
  * Description:
  * 
- * This class encapsulates the properties for the Selection UI model element
+ * This class encapsulates the properties for the Contetns UI model element
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -17,8 +17,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.properties.general;
 
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -27,39 +27,39 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class SelectionProperties extends ModelElementProperties {
+public class ContentsProperties extends ModelElementProperties {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field SELECTION_POSITION_ID. (value is ""selectionElement.position"")
+	 * Field CONTENTS_POSITION_ID. (value is ""contentsElement.position"")
 	 */
-	private static final String SELECTION_POSITION_ID = "selectionElement.position";
+	private static final String CONTENTS_POSITION_ID = "contentsElement.position";
 
 	/**
-	 * Field SELECTION_POSITION_PROPERTY_DESCRIPTOR.
+	 * Field CONTENTS_POSITION_PROPERTY_DESCRIPTOR.
 	 */
-	private static final PropertyDescriptor SELECTION_POSITION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			SELECTION_POSITION_ID, R4EUIConstants.POSITION_LABEL);
+	private static final PropertyDescriptor CONTENTS_POSITION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			CONTENTS_POSITION_ID, R4EUIConstants.POSITION_LABEL);
 
 	/**
 	 * Field DESCRIPTORS.
 	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { SELECTION_POSITION_PROPERTY_DESCRIPTOR };
+	private static final IPropertyDescriptor[] DESCRIPTORS = { CONTENTS_POSITION_PROPERTY_DESCRIPTOR };
 
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for SelectionProperties.
+	 * Constructor for ContentsProperties.
 	 * 
 	 * @param aElement
 	 *            R4EUIModelElement
 	 */
-	public SelectionProperties(R4EUIModelElement aElement) {
+	public ContentsProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
@@ -88,8 +88,8 @@ public class SelectionProperties extends ModelElementProperties {
 	 */
 	@Override
 	public Object getPropertyValue(Object aId) {
-		if (SELECTION_POSITION_ID.equals(aId)) {
-			return ((R4EUISelection) getElement()).getPosition().toString();
+		if (CONTENTS_POSITION_ID.equals(aId)) {
+			return ((R4EUIContent) getElement()).getPosition().toString();
 		}
 		return null;
 	}

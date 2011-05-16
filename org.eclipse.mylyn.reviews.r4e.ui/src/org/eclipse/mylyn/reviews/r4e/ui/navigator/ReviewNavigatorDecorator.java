@@ -108,7 +108,6 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 		if (((IR4EUIModelElement) aElement).isUserReviewed()) {
 			overlayIcon = new OverlayImageIcon(aBaseImage, ((IR4EUIModelElement) aElement).getUserReviewedImage(),
 					OverlayImageIcon.BOTTOM_RIGHT);
-			//return overlayIcon.getImage();	
 		}
 
 		//Added, Removed or Modified file

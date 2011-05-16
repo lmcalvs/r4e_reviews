@@ -56,6 +56,17 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_USER_EMAIL_LABEL = "User Email:";
 
 	/**
+	 * Flag that state whether deltas are crerated for commit review items
+	 */
+	public static final String P_USE_DELTAS = "useDeltasPreferences";
+
+	/**
+	 * Label for Use Deltas option
+	 */
+	public static final String P_USE_DELTAS_LABEL = "Create Delta Elements to track changes for Version-Controlled"
+			+ " Review Items";
+
+	/**
 	 * The group file path preference name
 	 */
 	public static final String P_GROUP_FILE_PATH = "groupFilePathPreference";
@@ -124,5 +135,10 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	 * Field P_HIDE_RULE_SETS_FILTER. (value is ""hideRuleSetsFilter"")
 	 */
 	public static final String P_HIDE_RULE_SETS_FILTER = "hideRuleSetsFilter";
+
+	/**
+	 * Field P_HIDE_DELTAS_FILTER. (value is ""hideDeltasFilter"")
+	 */
+	public static final String P_HIDE_DELTAS_FILTER = "hideDeltasFilter";
 
 }

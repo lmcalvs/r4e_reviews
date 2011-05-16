@@ -25,6 +25,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipantContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
@@ -32,8 +34,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRule;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleArea;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleViolation;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
 
 /**
  * @author lmcdubo
@@ -58,8 +58,6 @@ public class AnomaliesOnlyFilter extends ViewerFilter {
 	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		//if (element instanceof R4EUISelection || element instanceof R4EUISelectionContainer) return false;
-		//return true;
 
 		//Only show currently open review
 		if (element instanceof R4EUIReviewBasic) {
@@ -68,7 +66,7 @@ public class AnomaliesOnlyFilter extends ViewerFilter {
 			}
 		}
 		//Only show anomalies
-		if (element instanceof R4EUISelectionContainer || element instanceof R4EUISelection
+		if (element instanceof R4EUIContentsContainer || element instanceof R4EUIContent
 				|| element instanceof R4EUIParticipantContainer || element instanceof R4EUIParticipant
 				|| element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea
 				|| element instanceof R4EUIRuleViolation || element instanceof R4EUIRule) {

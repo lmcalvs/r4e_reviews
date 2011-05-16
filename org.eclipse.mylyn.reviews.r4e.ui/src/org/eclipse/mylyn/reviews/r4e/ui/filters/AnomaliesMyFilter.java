@@ -26,6 +26,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipantContainer;
@@ -34,8 +36,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRule;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleArea;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleViolation;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
 
 /**
  * @author lmcdubo
@@ -63,24 +63,28 @@ public class AnomaliesMyFilter extends ViewerFilter {
 
 		//Only show currently open review
 		if (element instanceof R4EUIReviewBasic) {
-			if (!((R4EUIReviewBasic) element).isOpen())
+			if (!((R4EUIReviewBasic) element).isOpen()) {
 				return false;
+			}
 		}
 		//Only show anomalies and comments
-		if (element instanceof R4EUISelectionContainer || element instanceof R4EUISelection
+		if (element instanceof R4EUIContentsContainer || element instanceof R4EUIContent
 				|| element instanceof R4EUIParticipantContainer || element instanceof R4EUIParticipant
 				|| element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea
-				|| element instanceof R4EUIRuleViolation || element instanceof R4EUIRule)
+				|| element instanceof R4EUIRuleViolation || element instanceof R4EUIRule) {
 			return false;
+		}
 
 		//always show comments
-		if (element instanceof R4EUIComment)
+		if (element instanceof R4EUIComment) {
 			return true;
+		}
 
 		//For basic reviews, show all anomalies, For other review types, only show anomalies assigned to us
 		if (element instanceof R4EUIAnomalyExtended) {
-			if (!(((R4EUIAnomalyBasic) element).getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())))
+			if (!(((R4EUIAnomalyBasic) element).getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer()))) {
 				return false;
+			}
 		} else if (element instanceof R4EUIAnomalyBasic) {
 			return true;
 		} else {
@@ -106,8 +110,9 @@ public class AnomaliesMyFilter extends ViewerFilter {
 				if (((R4EUIAnomalyBasic) aCurrentElement.getChildren()[i]).getAnomaly()
 						.getUser()
 						.getId()
-						.equals(R4EUIModelController.getReviewer()))
+						.equals(R4EUIModelController.getReviewer())) {
 					return true;
+				}
 			}
 			return false;
 		} else if (aCurrentElement instanceof R4EUIAnomalyBasic) {

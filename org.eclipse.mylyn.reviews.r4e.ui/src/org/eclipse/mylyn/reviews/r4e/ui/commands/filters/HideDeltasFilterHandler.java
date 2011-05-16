@@ -8,8 +8,8 @@
  * 
  * Description:
  * 
- * This class implements the navigator view toolbar command set/unset the tree viewer input to
- * the currently selected element
+ * This class implements the navigator view toolbar command to apply the 
+ * hide Rule Sets filter
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -18,14 +18,11 @@
 package org.eclipse.mylyn.reviews.r4e.ui.commands.filters;
 
 import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
-import org.eclipse.mylyn.reviews.r4e.ui.filters.FocusFilter;
-import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.filters.HideDeltasFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorActionGroup;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -34,7 +31,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class SetFocusFilterHandler extends AbstractHandler {
+public class HideDeltasFilterHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -53,36 +50,20 @@ public class SetFocusFilterHandler extends AbstractHandler {
 
 		//We need to preserve the expansion state and restore it afterwards
 		final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
-		final Object[] elements = viewer.getVisibleExpandedElements();
-		final FocusFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).getFocusFilter();
+		final HideDeltasFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
+				.getActionSet()).getHideDeltasFilter();
 
-		//Set current element as root level for the navigator tree
-		final Command command = event.getCommand();
-		boolean oldValue = HandlerUtil.toggleCommandState(command);
+		final Object[] elements = viewer.getExpandedElements();
+		boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());
+
 		if (!oldValue) {
-			final IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-			if (null != selection) {
-				final IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
-				if (null != element) {
-					Activator.Ftracer.traceInfo("Setting focus on current element");
-					R4EUIModelController.setCurrentFocusElement(element);
-					viewer.setInput(element.getParent());
-					viewer.addFilter(filter);
-					viewer.setExpandedElements(elements);
-				}
-			}
+			Activator.Ftracer.traceInfo("Apply hide Deltas elements filter to ReviewNavigator");
+			viewer.addFilter(filter);
 		} else {
-			Activator.Ftracer.traceInfo("Removing focus");
+			Activator.Ftracer.traceInfo("Remove hide Deltas elements filter from ReviewNavigator");
 			viewer.removeFilter(filter);
-			R4EUIModelController.setCurrentFocusElement(R4EUIModelController.getRootElement());
-			viewer.setInput(R4EUIModelController.getRootElement());
-			if (0 < elements.length) {
-				for (Object element : elements) {
-					viewer.expandToLevel((element), 1);
-				}
-			}
 		}
+		R4EUIModelController.getNavigatorView().getTreeViewer().setExpandedElements(elements);
 		return null;
 	}
-
 }

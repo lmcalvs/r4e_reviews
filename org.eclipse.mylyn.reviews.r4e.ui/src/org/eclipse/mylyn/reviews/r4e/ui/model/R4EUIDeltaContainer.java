@@ -9,7 +9,7 @@
  * 
  * Description:
  * 
- * This class implements the Selection Container element of the UI model
+ * This class implements the Delta Container element of the UI model
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -32,32 +32,32 @@ import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EUISelectionContainer extends R4EUIContentsContainer {
+public class R4EUIDeltaContainer extends R4EUIContentsContainer {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field SELECTION_CONTAINER_ICON_FILE. (value is ""icons/obj16/selcont_obj.gif"")
+	 * Field DELTA_CONTAINER_ICON_FILE. (value is ""icons/obj16/selcont_obj.gif"")
 	 */
-	private static final String SELECTION_CONTAINER_ICON_FILE = "icons/obj16/selcont_obj.gif";
+	private static final String DELTA_CONTAINER_ICON_FILE = "icons/obj16/deltacont_obj.gif";
 
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for SelectionContainerElement.
+	 * Constructor for R4EUIDeltaContainer.
 	 * 
 	 * @param aParent
 	 *            IR4EUIModelElement
 	 * @param aName
 	 *            String
 	 */
-	public R4EUISelectionContainer(IR4EUIModelElement aParent, String aName) {
+	public R4EUIDeltaContainer(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName);
-		setImage(SELECTION_CONTAINER_ICON_FILE);
+		setImage(DELTA_CONTAINER_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
@@ -65,26 +65,25 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Method createSelection
+	 * Method createDelta
 	 * 
 	 * @param aUiPosition
 	 *            - the position of the anomaly to create
-	 * @return R4EUISelection
+	 * @return R4EUIDelta
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	public R4EUISelection createSelection(R4EUITextPosition aUiPosition) throws ResourceHandlingException,
-			OutOfSyncException {
+	public R4EUIDelta createDelta(R4EUITextPosition aUiPosition) throws ResourceHandlingException, OutOfSyncException {
 
 		//Create and set content model element
-		final R4EDelta selection = R4EUIModelController.FModelExt.createR4EDelta(((R4EUIFileContext) getParent()).getFileContext());
-		final R4ETextPosition position = R4EUIModelController.FModelExt.createR4ETextPosition(R4EUIModelController.FModelExt.createR4ETargetTextContent(selection));
+		final R4EDelta delta = R4EUIModelController.FModelExt.createR4EDelta(((R4EUIFileContext) getParent()).getFileContext());
+		final R4ETextPosition position = R4EUIModelController.FModelExt.createR4ETextPosition(R4EUIModelController.FModelExt.createR4ETargetTextContent(delta));
 		aUiPosition.setPositionInModel(position);
 
 		//Create and set UI model element
-		final R4EUISelection uiSelection = new R4EUISelection(this, selection, aUiPosition);
-		addChildren(uiSelection);
-		return uiSelection;
+		final R4EUIDelta uiDelta = new R4EUIDelta(this, delta, aUiPosition);
+		addChildren(uiDelta);
+		return uiDelta;
 	}
 
 	// ------------------------------------------------------------------------
@@ -96,19 +95,19 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 	 */
 	@Override
 	public void open() {
-		final EList<R4EDelta> selections = ((R4EUIFileContext) getParent()).getFileContext().getDeltas();
-		if (null != selections) {
+		final EList<R4EDelta> deltas = ((R4EUIFileContext) getParent()).getFileContext().getDeltas();
+		if (null != deltas) {
 			R4EUITextPosition position = null;
-			R4EUISelection newSelection = null;
-			final int selectionsSize = selections.size();
-			R4EDelta selection = null;
-			for (int i = 0; i < selectionsSize; i++) {
-				selection = selections.get(i);
-				if (selection.isEnabled()
+			R4EUIDelta newDelta = null;
+			final int deltaSize = deltas.size();
+			R4EDelta delta = null;
+			for (int i = 0; i < deltaSize; i++) {
+				delta = deltas.get(i);
+				if (delta.isEnabled()
 						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					position = new R4EUITextPosition(selections.get(i).getTarget().getLocation());
-					newSelection = new R4EUISelection(this, selections.get(i), position);
-					addChildren(newSelection);
+					position = new R4EUITextPosition(deltas.get(i).getTarget().getLocation());
+					newDelta = new R4EUIDelta(this, deltas.get(i), position);
+					addChildren(newDelta);
 				}
 			}
 
@@ -118,9 +117,9 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 
 				if (null != user) {
 					//Check if the file contexts are part of the reviewed content
-					for (R4EUIContent uiSelection : fContents) {
-						if (user.getReviewedContent().contains(uiSelection.getContent().getId())) {
-							uiSelection.setUserReviewed(true);
+					for (R4EUIContent uiDelta : fContents) {
+						if (user.getReviewedContent().contains(uiDelta.getContent().getId())) {
+							uiDelta.setUserReviewed(true);
 						}
 					}
 				}
@@ -129,7 +128,6 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 
 			} catch (OutOfSyncException e) {
 				UIUtils.displaySyncErrorDialog(e);
-
 			}
 		}
 		fOpen = true;

@@ -916,7 +916,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String HIDE_RULE_SETS_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideRuleSets";
 
 	/**
-	 * Field HIDE_RULE_SETS_FILTER_NAME. (value is ""Hide Rule Sets"")
+	 * Field HIDE_RULE_SETS_FILTER_NAME. (value is ""HideRuleSets"")
 	 */
 	public static final String HIDE_RULE_SETS_FILTER_NAME = "Hide Rule Sets";
 
@@ -929,6 +929,26 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field HIDE_RULE_SETS_FILTER_MNEMONIC. (value is ""n"")
 	 */
 	public static final String HIDE_RULE_SETS_FILTER_MNEMONIC = "n";
+
+	/**
+	 * Field HIDE_DELTAS_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideDeltas"")
+	 */
+	public static final String HIDE_DELTAS_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideDeltas";
+
+	/**
+	 * Field HIDE_DELTAS_FILTER_NAME. (value is ""HideDeltas"")
+	 */
+	public static final String HIDE_DELTAS_FILTER_NAME = "Hide Deltas";
+
+	/**
+	 * Field HIDE_DELTAS_FILTER_TOOLTIP. (value is ""Hide Deltas"")
+	 */
+	public static final String HIDE_DELTAS_FILTER_TOOLTIP = "Hide Deltas";
+
+	/**
+	 * Field HIDE_DELTAS_FILTER_MNEMONIC. (value is ""d"")
+	 */
+	public static final String HIDE_DELTAS_FILTER_MNEMONIC = "d";
 
 	/**
 	 * Field SET_FOCUS_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"")
@@ -1363,7 +1383,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 
 	public static final String RULE_VIOLATION_NAME_TOOLTIP = "The Violation Highlighted by the Children Design Rules";
 
-	public static final String SELECTION_POSITION_TOOLTIP = "The Position in the Parent File of the Selected Contents";
+	public static final String CONTENTS_POSITION_TOOLTIP = "The Position in the Parent File of the Selected Contents";
 
 	public static final String USER_ID_TOOLTIP = "A Tag that Identifies this User";
 

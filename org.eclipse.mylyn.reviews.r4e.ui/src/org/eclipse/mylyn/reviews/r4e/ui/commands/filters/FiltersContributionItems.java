@@ -50,6 +50,7 @@ public class FiltersContributionItems extends CompoundContributionItem {
 				R4EUIConstants.REVIEWS_ONLY_FILTER_NAME, R4EUIConstants.REVIEWS_ONLY_FILTER_MNEMONIC,
 				R4EUIConstants.REVIEWS_ONLY_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
 		list.add(new CommandContributionItem(params));
+
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 				R4EUIConstants.REVIEWS_MY_FILTER_COMMAND, R4EUIConstants.REVIEWS_MY_FILTER_COMMAND, null, null, null,
 				null, R4EUIConstants.REVIEWS_MY_FILTER_NAME, R4EUIConstants.REVIEWS_MY_FILTER_MNEMONIC,
@@ -87,6 +88,12 @@ public class FiltersContributionItems extends CompoundContributionItem {
 				R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND, R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND, null, null,
 				null, null, R4EUIConstants.HIDE_RULE_SETS_FILTER_NAME, R4EUIConstants.HIDE_RULE_SETS_FILTER_MNEMONIC,
 				R4EUIConstants.HIDE_RULE_SETS_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
+		list.add(new CommandContributionItem(params));
+
+		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+				R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND, R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND, null, null, null,
+				null, R4EUIConstants.HIDE_DELTAS_FILTER_NAME, R4EUIConstants.HIDE_DELTAS_FILTER_MNEMONIC,
+				R4EUIConstants.HIDE_DELTAS_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
 		list.add(new CommandContributionItem(params));
 
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),

@@ -33,6 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
@@ -78,9 +79,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	private final R4EFileContext fFile;
 
 	/**
-	 * Field fSelectionContainer.
+	 * Field fContentsContainer.
 	 */
-	private R4EUISelectionContainer fSelectionContainer = null;
+	private R4EUIContentsContainer fContentsContainer = null;
 
 	/**
 	 * Field fAnomalyContainer.
@@ -213,10 +214,10 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				addContentReviewed();
 
 				//Also set the children
-				if (null != fSelectionContainer) {
-					final int length = fSelectionContainer.getChildren().length;
+				if (null != fContentsContainer) {
+					final int length = fContentsContainer.getChildren().length;
 					for (int i = 0; i < length; i++) {
-						fSelectionContainer.getChildren()[i].setChildUserReviewed(aReviewed);
+						fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
 					}
 				}
 
@@ -281,10 +282,10 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				addContentReviewed();
 
 				//Also set the children
-				if (null != fSelectionContainer) {
-					final int length = fSelectionContainer.getChildren().length;
+				if (null != fContentsContainer) {
+					final int length = fContentsContainer.getChildren().length;
 					for (int i = 0; i < length; i++) {
-						fSelectionContainer.getChildren()[i].setChildUserReviewed(aReviewed);
+						fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
 					}
 				}
 			} else {
@@ -306,10 +307,10 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException {
 		boolean allChildrenReviewed = true;
-		if (null != fSelectionContainer) {
-			final int length = fSelectionContainer.getChildren().length;
+		if (null != fContentsContainer) {
+			final int length = fContentsContainer.getChildren().length;
 			for (int i = 0; i < length; i++) {
-				if (!(fSelectionContainer.getChildren()[i].isUserReviewed())) {
+				if (!(fContentsContainer.getChildren()[i].isUserReviewed())) {
 					allChildrenReviewed = false;
 				}
 			}
@@ -334,7 +335,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		final R4EUIReviewBasic review = (R4EUIReviewBasic) getParent().getParent();
 		final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), true);
 
-		//Add this selection to the reviewed content for this user
+		//Add this content to the reviewed contents for this user
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(user, user.getId());
 		user.getReviewedContent().add(fFile.getId());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -352,7 +353,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
 
 		if (null != user) {
-			//Remove this selection from the reviewed content for this user
+			//Remove this content from the reviewed contents for this user
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(user, user.getId());
 			user.getReviewedContent().remove(fFile.getId());
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -398,8 +399,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public IR4EUIModelElement[] getChildren() {
 		final List<IR4EUIModelElement> newList = new ArrayList<IR4EUIModelElement>();
-		if (null != fSelectionContainer) {
-			newList.add(fSelectionContainer);
+		if (null != fContentsContainer) {
+			newList.add(fContentsContainer);
 		}
 		if (null != fAnomalyContainer) {
 			newList.add(fAnomalyContainer);
@@ -408,12 +409,12 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	}
 
 	/**
-	 * Method getSelectionContainerElement.
+	 * Method getContenssContainerElement.
 	 * 
 	 * @return IR4EUIModelElement
 	 */
-	public IR4EUIModelElement getSelectionContainerElement() {
-		return fSelectionContainer;
+	public IR4EUIModelElement getContentsContainerElement() {
+		return fContentsContainer;
 	}
 
 	/**
@@ -433,7 +434,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (null == fSelectionContainer && null == fAnomalyContainer) {
+		if (null == fContentsContainer && null == fAnomalyContainer) {
 			return false;
 		}
 		return true;
@@ -446,10 +447,10 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public void close() {
-		if (null != fSelectionContainer) {
-			fSelectionContainer.close();
+		if (null != fContentsContainer) {
+			fContentsContainer.close();
 		}
-		fSelectionContainer = null;
+		fContentsContainer = null;
 		if (null != fAnomalyContainer) {
 			fAnomalyContainer.close();
 		}
@@ -523,9 +524,18 @@ public class R4EUIFileContext extends R4EUIModelElement {
 					|| "".equals(((R4EUIReviewItem) getParent()).getItem().getRepositoryRef())) {
 				addChildren(new R4EUISelectionContainer(this, R4EUIConstants.SELECTIONS_LABEL));
 			} else {
-				addChildren(new R4EUISelectionContainer(this, R4EUIConstants.DELTAS_LABEL));
+				addChildren(new R4EUIDeltaContainer(this, R4EUIConstants.DELTAS_LABEL));
 			}
-			fSelectionContainer.open();
+			try {
+				fContentsContainer.open();
+			} catch (FileNotFoundException e) {
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				Activator.getDefault().logError("Exception: " + e.toString(), e);
+			} catch (ResourceHandlingException e) {
+				UIUtils.displayResourceErrorDialog(e);
+			} catch (ReviewVersionsException e) {
+				UIUtils.displayVersionErrorDialog(e);
+			}
 		}
 
 		if (null != fFile.getTarget()) {
@@ -548,7 +558,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		if (aChildToAdd instanceof R4EUISelectionContainer) {
-			fSelectionContainer = (R4EUISelectionContainer) aChildToAdd;
+			fContentsContainer = (R4EUISelectionContainer) aChildToAdd;
+		} else if (aChildToAdd instanceof R4EUIDeltaContainer) {
+			fContentsContainer = (R4EUIDeltaContainer) aChildToAdd;
 		} else if (aChildToAdd instanceof R4EUIAnomalyContainer) {
 			fAnomalyContainer = (R4EUIAnomalyContainer) aChildToAdd;
 		} else {
@@ -574,10 +586,10 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
 			throws ResourceHandlingException, OutOfSyncException {
-		if (aChildToRemove instanceof R4EUISelectionContainer) {
-			fSelectionContainer.removeAllChildren(aFileRemove);
+		if (aChildToRemove instanceof R4EUIContentsContainer) {
+			fContentsContainer.removeAllChildren(aFileRemove);
 			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
-				fSelectionContainer = null;
+				fContentsContainer = null;
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
 			} else {
@@ -606,7 +618,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
-		removeChildren(fSelectionContainer, aFileRemove);
+		removeChildren(fContentsContainer, aFileRemove);
 		removeChildren(fAnomalyContainer, aFileRemove);
 	}
 
@@ -622,8 +634,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
 		super.addListener(aProvider);
-		if (null != fSelectionContainer) {
-			fSelectionContainer.addListener(aProvider);
+		if (null != fContentsContainer) {
+			fContentsContainer.addListener(aProvider);
 		}
 		if (null != fAnomalyContainer) {
 			fAnomalyContainer.addListener(aProvider);
@@ -640,8 +652,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void removeListener(ReviewNavigatorContentProvider aProvider) {
 		super.removeListener(aProvider);
-		if (null != fSelectionContainer) {
-			fSelectionContainer.removeListener(aProvider);
+		if (null != fContentsContainer) {
+			fContentsContainer.removeListener(aProvider);
 		}
 		if (null != fAnomalyContainer) {
 			fAnomalyContainer.removeListener(aProvider);

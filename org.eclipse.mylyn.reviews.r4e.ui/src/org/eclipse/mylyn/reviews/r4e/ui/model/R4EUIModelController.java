@@ -136,6 +136,11 @@ public class R4EUIModelController {
 	 */
 	private static NotificationsConnector FMailConnector = null;
 
+	/**
+	 * Field fFocusElement.
+	 */
+	private static IR4EUIModelElement fFocusElement = null;
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -212,8 +217,9 @@ public class R4EUIModelController {
 		//check to apply filters
 		try {
 			final ReviewNavigatorActionGroup actionGroup = (ReviewNavigatorActionGroup) FView.getActionSet();
-			if (actionGroup.isMyReviewFilterSet())
+			if (actionGroup.isMyReviewFilterSet()) {
 				actionGroup.runReviewsMyFilterCommand(true);
+			}
 			if (actionGroup.isParticipantFilterSet()) {
 				actionGroup.runReviewsParticipantFilterCommand(actionGroup.getFilterParticipant());
 			}
@@ -527,8 +533,9 @@ public class R4EUIModelController {
 	 */
 	public static boolean isUserQueryAvailable() {
 		//Verify if the LDAP bundle is available
-		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.ldap"))
+		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.ldap")) {
 			return true;
+		}
 		return false;
 	}
 
@@ -539,5 +546,24 @@ public class R4EUIModelController {
 	 */
 	public static NotificationsConnector getMailConnector() {
 		return FMailConnector;
+	}
+
+	/**
+	 * Method setCurrentFocusElement.
+	 * 
+	 * @param aElement
+	 *            IR4EUIModelElement
+	 */
+	public static void setCurrentFocusElement(IR4EUIModelElement aElement) {
+		fFocusElement = aElement;
+	}
+
+	/**
+	 * Method getCurrentFocusElement.
+	 * 
+	 * @return IR4EUIModelElement
+	 */
+	public static IR4EUIModelElement getCurrentFocusElement() {
+		return fFocusElement;
 	}
 }

@@ -56,12 +56,13 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIDeltaContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
+import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -229,52 +230,56 @@ public class FindReviewItemsHandler extends AbstractHandler {
 					return;
 				}
 
-				//For now, in order to populate differences, we temporarly open the compare editor 
-				//and go through the differences
-				R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(uiFileContext.getBaseFileVersion(),
-						uiFileContext.getTargetFileVersion(), false);
-				CompareUI.openCompareEditor(input, true);
+				if (Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_USE_DELTAS)) {
+					//For now, in order to populate differences, we temporarly open the compare editor 
+					//and go through the differences
+					R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(
+							uiFileContext.getBaseFileVersion(), uiFileContext.getTargetFileVersion(), false);
+					CompareUI.openCompareEditor(input, true);
 
-				//Do not create deltas for removed files
-				if (null != targetLocalVersion) {
-					//Create Delta Container
+					//Do not create deltas for removed files
+					if (null != targetLocalVersion) {
+						//Create Delta Container
 
-					final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-					if (null != window) {
-						final IWorkbenchPage page = window.getActivePage();
-						if (null != page) {
-							IEditorPart part = page.getActiveEditor();
-							if (null != part) {
-								//Get selections on the left pane of the compare editor
-								final ICompareNavigator navigator = input.getNavigator();
-								do {
-									ITextEditorExtension3 ext = (ITextEditorExtension3) part.getAdapter(ITextEditorExtension3.class);
+						final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+						if (null != window) {
+							final IWorkbenchPage page = window.getActivePage();
+							if (null != page) {
+								IEditorPart part = page.getActiveEditor();
+								if (null != part) {
+									//Get selections on the left pane of the compare editor
+									final ICompareNavigator navigator = input.getNavigator();
+									do {
+										ITextEditorExtension3 ext = (ITextEditorExtension3) part.getAdapter(ITextEditorExtension3.class);
 
-									if (ext instanceof AbstractTextEditor) {
-										AbstractTextEditor editor = (AbstractTextEditor) ext;
-										ISelection selection = editor.getSelectionProvider().getSelection();
-										IR4EUIPosition position = CommandUtils.getPosition((ITextSelection) selection);
+										if (ext instanceof AbstractTextEditor) {
+											AbstractTextEditor editor = (AbstractTextEditor) ext;
+											ISelection selection = editor.getSelectionProvider().getSelection();
+											IR4EUIPosition position = CommandUtils.getPosition((ITextSelection) selection);
 
-										//Lazily create the Delta container if not already done
-										R4EUISelectionContainer deltaContainer = (R4EUISelectionContainer) uiFileContext.getSelectionContainerElement();
-										if (null == deltaContainer) {
-											deltaContainer = new R4EUISelectionContainer(uiFileContext,
-													R4EUIConstants.DELTAS_LABEL);
-											uiFileContext.addChildren(deltaContainer);
+											//Lazily create the Delta container if not already done
+											R4EUIDeltaContainer deltaContainer = (R4EUIDeltaContainer) uiFileContext.getContentsContainerElement();
+											if (null == deltaContainer) {
+												deltaContainer = new R4EUIDeltaContainer(uiFileContext,
+														R4EUIConstants.DELTAS_LABEL);
+												uiFileContext.addChildren(deltaContainer);
+											}
+											deltaContainer.createDelta((R4EUITextPosition) position);
+										} else {
+											//No delta can be created for this Change, so move on
+											break;
 										}
-										deltaContainer.createSelection((R4EUITextPosition) position);
-									} else {
-										//No delta can be created for this Change, so move on
-										break;
-									}
-								} while (!navigator.selectChange(true));
+									} while (!navigator.selectChange(true));
+								}
 							}
 						}
-					}
 
-					//Close the editor
-					IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-					activePage.closeEditor(activePage.getActiveEditor(), false);
+						//Close the editor
+						IWorkbenchPage activePage = PlatformUI.getWorkbench()
+								.getActiveWorkbenchWindow()
+								.getActivePage();
+						activePage.closeEditor(activePage.getActiveEditor(), false);
+					}
 				}
 			}
 			//Notify users if need be

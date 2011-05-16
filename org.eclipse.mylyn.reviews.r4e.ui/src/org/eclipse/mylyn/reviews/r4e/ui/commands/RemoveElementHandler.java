@@ -39,9 +39,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -87,8 +87,8 @@ public class RemoveElementHandler extends AbstractHandler {
 						try {
 							if (element instanceof R4EUIReviewItem) {
 								removedItems.add(((R4EUIReviewItem) element).getItem());
-							} else if (element instanceof R4EUISelection) {
-								removedItems.add(((R4EUISelection) element).getSelection());
+							} else if (element instanceof R4EUIContent) {
+								removedItems.add(((R4EUIContent) element).getContent());
 							}
 
 							if (element.isOpen()) {

@@ -39,9 +39,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelectionContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -87,13 +88,14 @@ public class EditorProxy {
 	 */
 	public static void openEditor(IWorkbenchPage aPage, ISelection aSelection, boolean forceSingleEditor) {
 
-		if (aSelection.isEmpty() || !(aSelection instanceof IStructuredSelection))
+		if (aSelection.isEmpty() || !(aSelection instanceof IStructuredSelection)) {
 			return;
+		}
 
 		IR4EUIModelElement element = null;
 		boolean targetFileEditable = false;
 		IR4EUIPosition position = null;
-		R4EUISelectionContainer container = null;
+		R4EUIContentsContainer container = null;
 		int selectionIndex = -1;
 
 		R4EUIFileContext context = null;
@@ -116,15 +118,16 @@ public class EditorProxy {
 				position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
 			} else if (element instanceof R4EUISelection) {
 				position = ((R4EUISelection) element).getPosition();
-				container = (R4EUISelectionContainer) ((R4EUISelection) element).getParent();
-				selectionIndex = container.getSelectionList().indexOf(element);
+				container = (R4EUIContentsContainer) ((R4EUIContent) element).getParent();
+				selectionIndex = container.getContentsList().indexOf(element);
 			}
 
 			//Find the parent FileContextElement
 			while (!(element instanceof R4EUIFileContext)) {
 				element = element.getParent();
-				if (null == element)
+				if (null == element) {
 					return;
+				}
 			}
 			context = ((R4EUIFileContext) element);
 
@@ -241,8 +244,8 @@ public class EditorProxy {
 		ITypedElement left = null;
 		ITypedElement right = null;
 		// first loop looking for an editor with the same input
-		for (int i = 0; i < editorRefs.length; i++) {
-			part = editorRefs[i].getEditor(false);
+		for (IEditorReference editorRef : editorRefs) {
+			part = editorRef.getEditor(false);
 			if (null != part && part instanceof IReusableEditor) {
 				// check if the editor input type complies with the types given by the caller
 				if (R4ECompareEditorInput.class.isInstance(part.getEditorInput())) {

@@ -9,7 +9,7 @@
  * 
  * Description:
  * 
- * This class implements the Selection element of the UI model
+ * This class implements the Delta element of the UI model
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -24,23 +24,23 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EUISelection extends R4EUIContent {
+public class R4EUIDelta extends R4EUIContent {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field SELECTION_ICON_FILE. (value is ""icons/obj16/sel_obj.gif"")
+	 * Field DELTA_ICON_FILE. (value is ""icons/obj16/sel_obj.gif"")
 	 */
-	private static final String SELECTION_ICON_FILE = "icons/obj16/sel_obj.gif";
+	private static final String DELTA_ICON_FILE = "icons/obj16/delta_obj.gif";
 
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for R4EUISelection.
+	 * Constructor for R4EUIDelta.
 	 * 
 	 * @param aParent
 	 *            IR4EUIModelElement
@@ -49,8 +49,8 @@ public class R4EUISelection extends R4EUIContent {
 	 * @param aPosition
 	 *            IR4EUIPosition
 	 */
-	public R4EUISelection(IR4EUIModelElement aParent, R4EDelta aDelta, IR4EUIPosition aPosition) {
+	public R4EUIDelta(IR4EUIModelElement aParent, R4EDelta aDelta, IR4EUIPosition aPosition) {
 		super(aParent, aDelta, aPosition);
-		super.setImage(SELECTION_ICON_FILE);
+		super.setImage(DELTA_ICON_FILE);
 	}
 }

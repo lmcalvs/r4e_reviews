@@ -19,7 +19,6 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.filters;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
@@ -47,24 +46,19 @@ public class FocusFilter extends ViewerFilter {
 	 * @return boolean
 	 */
 	@Override
-	public boolean select(Viewer viewer, Object parentElement, Object element) {
+	public boolean select(Viewer aViewer, Object aParentElement, Object aElement) {
 
-		final IStructuredSelection selection = (IStructuredSelection) R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.getSelection();
-		if (null == selection)
-			return true;
-		final IR4EUIModelElement selectedElement = (IR4EUIModelElement) selection.getFirstElement();
-		if (null == selectedElement)
-			return true;
-
-		//Display the current element if itself or one of its ancestors is the selected element
-		IR4EUIModelElement currentElement = (IR4EUIModelElement) element;
-		do {
-			if (currentElement.equals(selectedElement))
+		//The input of the tree is already set to the parent of the focus element, so just check if the 
+		//current element is a child of the focus element
+		IR4EUIModelElement focusElement = R4EUIModelController.getCurrentFocusElement();
+		IR4EUIModelElement focusElementParent = focusElement.getParent();
+		if ((null == aParentElement && null == focusElementParent)
+				|| (null != aParentElement && aParentElement.equals(focusElementParent))) {
+			if (aElement.equals(focusElement)) {
 				return true;
-			currentElement = (currentElement).getParent();
-		} while (null != currentElement);
-		return false;
+			}
+			return false;
+		}
+		return true;
 	}
 }

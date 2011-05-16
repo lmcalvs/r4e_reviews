@@ -39,10 +39,10 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -100,8 +100,8 @@ public class RestoreElementHandler extends AbstractHandler {
 
 						if (element instanceof R4EUIReviewItem) {
 							addedItems.add(((R4EUIReviewItem) element).getItem());
-						} else if (element instanceof R4EUISelection) {
-							addedItems.add(((R4EUISelection) element).getSelection());
+						} else if (element instanceof R4EUIContent) {
+							addedItems.add(((R4EUIContent) element).getContent());
 						}
 
 					} catch (ResourceHandlingException e) {

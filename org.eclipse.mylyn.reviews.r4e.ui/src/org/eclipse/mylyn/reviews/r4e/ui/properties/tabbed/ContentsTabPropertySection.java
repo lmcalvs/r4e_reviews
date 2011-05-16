@@ -19,8 +19,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed;
 
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -35,7 +35,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class SelectionTabPropertySection extends ModelElementTabPropertySection {
+public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -74,7 +74,7 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-		fPositionText.setToolTipText(R4EUIConstants.SELECTION_POSITION_TOOLTIP);
+		fPositionText.setToolTipText(R4EUIConstants.CONTENTS_POSITION_TOOLTIP);
 		fPositionText.setLayoutData(data);
 
 		final CLabel positionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.POSITION_LABEL);
@@ -82,7 +82,7 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fPositionText, -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fPositionText, 0, SWT.CENTER);
-		positionLabel.setToolTipText(R4EUIConstants.SELECTION_POSITION_TOOLTIP);
+		positionLabel.setToolTipText(R4EUIConstants.CONTENTS_POSITION_TOOLTIP);
 		positionLabel.setLayoutData(data);
 	}
 
@@ -93,9 +93,9 @@ public class SelectionTabPropertySection extends ModelElementTabPropertySection 
 	 */
 	@Override
 	public void refresh() {
-		if (null != ((R4EUISelection) fProperties.getElement()).getPosition()) {
+		if (null != ((R4EUIContent) fProperties.getElement()).getPosition()) {
 			fRefreshInProgress = true;
-			fPositionText.setText(((R4EUISelection) fProperties.getElement()).getPosition().toString());
+			fPositionText.setText(((R4EUIContent) fProperties.getElement()).getPosition().toString());
 			setEnabledFields();
 			fRefreshInProgress = false;
 		} else {

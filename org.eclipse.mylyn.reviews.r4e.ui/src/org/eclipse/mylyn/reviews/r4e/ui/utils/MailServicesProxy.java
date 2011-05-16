@@ -407,8 +407,8 @@ public class MailServicesProxy {
 							&& null != context.getTargetFileVersion().getResource()) {
 						msgBody.append(TAB_MSG_PART + context.getTargetFileVersion().getResource().getProject() + ": "
 								+ context.getTargetFileVersion().getResource().getProjectRelativePath());
-						if (null != context.getSelectionContainerElement()) {
-							R4EUISelection[] selections = (R4EUISelection[]) context.getSelectionContainerElement()
+						if (null != context.getContentsContainerElement()) {
+							R4EUISelection[] selections = (R4EUISelection[]) context.getContentsContainerElement()
 									.getChildren();
 							msgBody.append(": ");
 							for (R4EUISelection selection : selections) {
@@ -510,12 +510,13 @@ public class MailServicesProxy {
 		for (R4EUIReviewItem item : items) {
 			R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
 			for (R4EUIFileContext context : contexts) {
-				if (context.isUserReviewed())
+				if (context.isUserReviewed()) {
 					++numReviewedFiles;
+				}
 				++numTotalFiles;
 				if (null != (R4EUIAnomalyContainer) context.getAnomalyContainerElement()) {
 					R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) ((R4EUIAnomalyContainer) context.getAnomalyContainerElement()).getChildren();
-					for (int i = 0; i < anomalies.length; i++) {
+					for (R4EUIAnomalyBasic anomalie : anomalies) {
 						++numTotalAnomalies;
 					}
 				}

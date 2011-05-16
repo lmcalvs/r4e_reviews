@@ -621,6 +621,16 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
+      <command
+      	categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
+        description="Hide Deltas"
+        id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideDeltas"
+        name="HideDeltas">
+        <state
+            class="org.eclipse.ui.handlers.RegistryToggleState:false"
+            id="org.eclipse.ui.commands.toggleState">
+        </state>
+      </command>
       <category
             description="R4E Navigator View Popup Commands"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
@@ -888,6 +898,15 @@
          </enabledWhen>
       </handler>
       <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideDeltasFilterHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideDeltas">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSortHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort">
          <enabledWhen>
@@ -1129,11 +1148,11 @@
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.SelectionTabPropertySection"
-               id="org.eclipse.mylyn.reviews.r4e.ui.properties.SelectionSection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ContentsTabPropertySection"
+               id="org.eclipse.mylyn.reviews.r4e.ui.properties.ContentsSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent">
             </input>
          </propertySection>
          <propertySection

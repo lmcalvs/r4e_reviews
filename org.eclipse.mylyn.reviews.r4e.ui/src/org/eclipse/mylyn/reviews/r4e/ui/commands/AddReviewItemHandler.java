@@ -57,6 +57,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
@@ -312,20 +313,20 @@ public class AddReviewItemHandler extends AbstractHandler {
 								|| (null != file.getFileContext().getBase() && null != aBaseFileVersion && aBaseFileVersion.getLocalVersionID()
 										.equals(file.getFileContext().getBase().getLocalVersionID()))) {
 							//File already exists, check if selection also exists
-							R4EUISelectionContainer selectionContainer = (R4EUISelectionContainer) file.getSelectionContainerElement();
-							if (null != selectionContainer) {
-								R4EUISelection[] selectionElements = (R4EUISelection[]) selectionContainer.getChildren();
-								for (R4EUISelection selectionElement : selectionElements) {
-									if (selectionElement.getPosition().isSameAs(aUIPosition)) {
+							R4EUISelectionContainer contentContainer = (R4EUISelectionContainer) file.getContentsContainerElement();
+							if (null != contentContainer) {
+								R4EUIContent[] contentElements = (R4EUIContent[]) contentContainer.getChildren();
+								for (R4EUIContent contentElement : contentElements) {
+									if (contentElement.getPosition().isSameAs(aUIPosition)) {
 										newSelection = false;
 									}
 								}
 							} else {
-								selectionContainer = new R4EUISelectionContainer(file, R4EUIConstants.SELECTIONS_LABEL);
-								file.addChildren(selectionContainer);
+								contentContainer = new R4EUISelectionContainer(file, R4EUIConstants.SELECTIONS_LABEL);
+								file.addChildren(contentContainer);
 							}
 							if (newSelection) {
-								addReviewItemToExistingFileContext(selectionContainer, aUIPosition);
+								addReviewItemToExistingFileContext(contentContainer, aUIPosition);
 								Activator.Ftracer.traceInfo("Added review item: Target = "
 										+ file.getFileContext().getTarget().getName()
 										+ ((null != file.getFileContext().getBase()) ? "Base = "
