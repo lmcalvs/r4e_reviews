@@ -45,6 +45,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
@@ -55,6 +56,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -602,6 +605,7 @@ public class MailServicesProxy {
 
 		if (aSource instanceof R4EUIReviewBasic) {
 			msgBody.append("Review :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+
 		} else if (aSource instanceof R4EUIAnomalyBasic) {
 			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIAnomalyBasic) aSource).getParent().getParent()).getTargetFileVersion();
 			msgBody.append("Anomaly :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
@@ -622,10 +626,12 @@ public class MailServicesProxy {
 			msgBody.append("Title: " + ((R4EUIAnomalyBasic) aSource).getAnomaly().getTitle() + LINE_FEED_MSG_PART);
 			msgBody.append("Description: " + ((R4EUIAnomalyBasic) aSource).getAnomaly().getDescription()
 					+ LINE_FEED_MSG_PART);
+
 		} else if (aSource instanceof R4EUIReviewItem) {
 			msgBody.append("Review Item :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
 			msgBody.append("Description: " + ((R4EUIReviewItem) aSource).getItem().getDescription()
 					+ LINE_FEED_MSG_PART);
+
 		} else if (aSource instanceof R4EUIFileContext) {
 			msgBody.append("File:" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
 			final R4EFileVersion targetFile = ((R4EUIFileContext) aSource).getTargetFileVersion();
@@ -647,6 +653,7 @@ public class MailServicesProxy {
 			} else {
 				msgBody.append("Base Version: " + baseFile.getVersionID() + LINE_FEED_MSG_PART);
 			}
+
 		} else if (aSource instanceof R4EUISelection) {
 			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUISelection) aSource).getParent().getParent()).getTargetFileVersion();
 			msgBody.append("Selection :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
@@ -664,6 +671,7 @@ public class MailServicesProxy {
 						+ LINE_FEED_MSG_PART);
 			}
 			msgBody.append("Line(s): " + ((R4EUISelection) aSource).getPosition().toString() + LINE_FEED_MSG_PART);
+
 		} else if (aSource instanceof ITextEditor) {
 			//Get the information from the text editor
 			final IRegion region = ((ITextEditor) aSource).getHighlightRange();
@@ -682,7 +690,33 @@ public class MailServicesProxy {
 			}
 			msgBody.append(LINE_FEED_MSG_PART);
 			msgBody.append("Position in File : " + CommandUtils.getPosition(selectedText).toString()
-					+ LINE_FEED_MSG_PART);
+					+ LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+			msgBody.append("Contents :" + LINE_FEED_MSG_PART);
+			msgBody.append(selectedText.getText());
+
+		} else if (aSource instanceof TextSelection) {
+			final IEditorPart editorPart = PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow()
+					.getActivePage()
+					.getActiveEditor();
+			final IEditorInput input = editorPart.getEditorInput();
+			String filename = null;
+			R4EFileVersion file = null;
+			if (input instanceof R4ECompareEditorInput) {
+				filename = ((R4ECompareEditorInput) input).getLeftElement().getName();
+				msgBody.append("File: " + filename + LINE_FEED_MSG_PART);
+			} else if (input instanceof R4EFileRevisionEditorInput) {
+				file = ((R4EFileRevisionEditorInput) input).getFileVersion();
+				msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+			} else if (input instanceof R4EFileEditorInput) {
+				file = ((R4EFileEditorInput) input).getFileVersion();
+				msgBody.append("File: " + file.getResource().getProject() + ": "
+						+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+			}
+			final TextSelection selectedText = (TextSelection) aSource;
+			msgBody.append(LINE_FEED_MSG_PART);
+			msgBody.append("Position in File : " + CommandUtils.getPosition(selectedText).toString()
+					+ LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
 			msgBody.append("Contents :" + LINE_FEED_MSG_PART);
 			msgBody.append(selectedText.getText());
 		}

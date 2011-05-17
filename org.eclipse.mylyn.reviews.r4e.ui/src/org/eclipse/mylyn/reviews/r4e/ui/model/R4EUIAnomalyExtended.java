@@ -113,6 +113,23 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Method buildAnomalyName.
+	 * 
+	 * @param aAnomaly
+	 *            - the anomaly to use
+	 * @return String - the new name
+	 */
+	public static String buildAnomalyName(R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
+		StringBuilder sb = new StringBuilder(getStateString(aAnomaly.getState()) + ": ");
+		if (null == aPosition) {
+			sb.append(aAnomaly.getTitle());
+		} else {
+			sb.append(aPosition.toString() + "->" + aAnomaly.getTitle());
+		}
+		return sb.toString();
+	}
+
+	/**
 	 * Method getAdapter.
 	 * 
 	 * @param adapter
@@ -123,10 +140,12 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter))
+		if (IR4EUIModelElement.class.equals(adapter)) {
 			return this;
-		if (IPropertySource.class.equals(adapter))
+		}
+		if (IPropertySource.class.equals(adapter)) {
 			return new AnomalyExtraProperties(this);
+		}
 		return null;
 	}
 
@@ -218,8 +237,9 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 			return ANOMALY_STATE_FIXED;
 		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
 			return ANOMALY_STATE_VERIFIED;
-		} else
+		} else {
 			return "";
+		}
 	}
 
 	/**
@@ -246,8 +266,9 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 			return R4EAnomalyState.R4E_ANOMALY_STATE_FIXED;
 		} else if (aNewState.equals(ANOMALY_STATE_VERIFIED)) {
 			return R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED;
-		} else
+		} else {
 			return null; //should never happen
+		}
 	}
 
 	/**
@@ -285,8 +306,9 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		//Peek state machine to get available states
 		final R4EAnomalyState[] states = getAllowedStates(getAnomaly().getState());
 		for (int i = 0; i < states.length; i++) {
-			if (states[i].getValue() == aState.getValue())
+			if (states[i].getValue() == aState.getValue()) {
 				return i;
+			}
 		}
 		return R4EUIConstants.INVALID_VALUE; //should never happen
 	}

@@ -76,16 +76,6 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	private static final String DECISION_SECTION_LABEL = "Decision Information";
 
 	/**
-	 * Field UPDATE_LABEL. (value is ""Update"")
-	 */
-	private static final String UPDATE_LABEL = "Update";
-
-	/**
-	 * Field REFRESH_LABEL. (value is ""Refresh"")
-	 */
-	private static final String REFRESH_LABEL = "Refresh";
-
-	/**
 	 * Field REVIEW_MEETING_REFRESH_TOOLTIP. (value is ""Refresh meetinmg information for mail server"")
 	 */
 	private static final String REVIEW_MEETING_REFRESH_TOOLTIP = "Refresh meetinmg information for mail server";
@@ -420,7 +410,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		fMeetingSubjectLabel.setLayoutData(textGridData);
 
 		//Meeting update button
-		fMeetingUpdateButton = widgetFactory.createButton(fMeetingComposite, UPDATE_LABEL, SWT.PUSH);
+		fMeetingUpdateButton = widgetFactory.createButton(fMeetingComposite, R4EUIConstants.UPDATE_LABEL, SWT.PUSH);
 		fMeetingUpdateButton.setToolTipText(R4EUIConstants.REVIEW_MEETING_UPDATE_TOOLTIP);
 		fMeetingUpdateButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fMeetingUpdateButton.addSelectionListener(new SelectionListener() {
@@ -453,7 +443,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		fMeetingStartTimeLabel.setLayoutData(textGridData);
 
 		//Meeting refresh button
-		fMeetingRefreshButton = widgetFactory.createButton(fMeetingComposite, REFRESH_LABEL, SWT.PUSH);
+		fMeetingRefreshButton = widgetFactory.createButton(fMeetingComposite, R4EUIConstants.REFRESH_LABEL, SWT.PUSH);
 		fMeetingRefreshButton.setToolTipText(REVIEW_MEETING_REFRESH_TOOLTIP);
 		fMeetingRefreshButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fMeetingRefreshButton.addSelectionListener(new SelectionListener() {

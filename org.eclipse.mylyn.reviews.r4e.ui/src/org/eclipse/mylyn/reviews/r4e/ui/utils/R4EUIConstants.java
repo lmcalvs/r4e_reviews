@@ -108,6 +108,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String PARTICIPANTS_LABEL = "Participants";
 
 	/**
+	 * Field UPDATE_LABEL. (value is ""Update"")
+	 */
+	public static final String UPDATE_LABEL = "Update";
+
+	/**
+	 * Field REFRESH_LABEL. (value is ""Refresh"")
+	 */
+	public static final String REFRESH_LABEL = "Refresh";
+
+	/**
 	 * Field LINE_TAG. (value is ""Line "")
 	 */
 	public static final String LINE_TAG = "Line ";
@@ -1352,7 +1362,13 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 
 	public static final String REVIEW_ITEM_AUTHOR_TOOLTIP = "The Participant that Adds this Review Item";
 
+	public static final String REVIEW_ITEM_AUTHOR_REP_TOOLTIP = "The Email of the Participant that Created the Change";
+
 	public static final String REVIEW_ITEM_PROJECT_IDS_TOOLTIP = "The Projects the Children Files of this Review Items belong to";
+
+	public static final String REVIEW_ITEM_CHANGE_ID_TOOLTIP = "The Change ID for this Change, as tagged by the Revision Control System (if applicable)";
+
+	public static final String REVIEW_ITEM_DATE_SUBMITTED_TOOLTIP = "The Date this Change was put under Source Control  (if applicable)";
 
 	public static final String REVIEW_ITEM_DESCRIPTION_TOOLTIP = "A Brief Dexcription of this Review Item.  "
 			+ "This can be entered by the User or it could be coming from the Version Control System";

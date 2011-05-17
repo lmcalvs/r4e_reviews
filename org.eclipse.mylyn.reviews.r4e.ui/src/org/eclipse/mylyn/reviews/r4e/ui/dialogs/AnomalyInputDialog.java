@@ -555,4 +555,12 @@ public class AnomalyInputDialog extends FormDialog {
 			return null; //should never happen
 		}
 	}
+
+	public void setTitle(String aTitle) {
+		fAnomalyTitleInputTextField.setText(aTitle);
+	}
+
+	public void setDescription(String aDescription) {
+		fAnomalyDescriptionInputTextField.setText(aDescription);
+	}
 }

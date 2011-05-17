@@ -23,6 +23,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -123,17 +124,31 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 			public void focusLost(FocusEvent e) {
 				if (!fRefreshInProgress) {
 					try {
+						//Set new model data
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 						modelAnomaly.setTitle(fTitleText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+						//Set new UI display
+						if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
+							fProperties.getElement().setName(
+									R4EUIAnomalyExtended.buildAnomalyName(modelAnomaly,
+											((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
+						} else {
+							fProperties.getElement().setName(
+									R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
+											((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+				refresh();
 			}
 
 			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
@@ -213,17 +228,22 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 			public void focusLost(FocusEvent e) {
 				if (!fRefreshInProgress) {
 					try {
+						//Set new model data
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 						modelAnomaly.setDescription(fDescriptionText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+						//Set new UI display
+						fProperties.getElement().setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(modelAnomaly));
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
+				refresh();
 			}
 
 			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod

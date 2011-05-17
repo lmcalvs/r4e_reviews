@@ -24,10 +24,14 @@ import java.util.List;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
+import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.dialogs.AnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.dialogs.CalendarDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -78,7 +82,12 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	/**
 	 * Field fRuleId.
 	 */
-	protected CLabel fRuleId = null;
+	protected Text fRuleId = null;
+
+	/**
+	 * Field fRuleButton.
+	 */
+	protected Button fRuleButton = null;
 
 	/**
 	 * Field fDateText.
@@ -259,19 +268,83 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 		rankLabel.setLayoutData(data);
 
 		//RuleId (Read-only)
-		fRuleId = widgetFactory.createCLabel(composite, "");
+		final Composite ruleComposite = widgetFactory.createComposite(composite);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fRankCombo, ITabbedPropertyConstants.VSPACE);
-		fRuleId.setToolTipText(R4EUIConstants.ANOMALY_RULE_ID_TOOLTIP);
-		fRuleId.setLayoutData(data);
+		ruleComposite.setToolTipText(R4EUIConstants.ANOMALY_RULE_ID_TOOLTIP);
+		ruleComposite.setLayoutData(data);
+		ruleComposite.setLayout(new GridLayout(2, false));
+
+		fRuleId = widgetFactory.createText(ruleComposite, "", SWT.READ_ONLY);
+		fRuleId.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		fRuleId.setEditable(false);
+		fRuleButton = widgetFactory.createButton(ruleComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
+		fRuleButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		fRuleButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				//Modify anomaly
+				final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
+				final AnomalyInputDialog dialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+						getSite()
+						.getWorkbenchWindow()
+						.getShell());
+				dialog.create();
+				dialog.setTitle(modelAnomaly.getTitle());
+				dialog.setDescription(modelAnomaly.getDescription());
+				final int result = dialog.open();
+				if (result == Window.OK) {
+					if (null != dialog.getRuleReferenceValue()) {
+						if (!fRefreshInProgress) {
+							try {
+								//Set new model data
+								final String currentUser = R4EUIModelController.getReviewer();
+								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
+										currentUser);
+								final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
+								modelAnomaly.setTitle(dialog.getAnomalyTitleValue());
+								modelAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
+								final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
+								commentType.setType(rule.getClass_());
+								modelAnomaly.setType(commentType);
+								modelAnomaly.setRank(rule.getRank());
+								modelAnomaly.setRuleID(rule.getId());
+								R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+								//Set new UI display
+								if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
+									fProperties.getElement().setName(
+											R4EUIAnomalyExtended.buildAnomalyName(modelAnomaly,
+													((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
+								} else {
+									fProperties.getElement().setName(
+											R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
+													((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
+								}
+								fProperties.getElement()
+										.setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(modelAnomaly));
+							} catch (ResourceHandlingException e1) {
+								UIUtils.displayResourceErrorDialog(e1);
+							} catch (OutOfSyncException e1) {
+								UIUtils.displaySyncErrorDialog(e1);
+							}
+						}
+						refresh();
+					}
+				}
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// No implementation needed
+			}
+		});
 
 		final CLabel ruleIdLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RULE_ID_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(fRuleId, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fRuleId, 0, SWT.CENTER);
+		data.right = new FormAttachment(ruleComposite, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(ruleComposite, 0, SWT.CENTER);
 		ruleIdLabel.setToolTipText(R4EUIConstants.ANOMALY_RULE_ID_TOOLTIP);
 		ruleIdLabel.setLayoutData(data);
 
@@ -280,7 +353,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fRuleId, ITabbedPropertyConstants.VSPACE);
+		data.top = new FormAttachment(ruleComposite, ITabbedPropertyConstants.VSPACE);
 		dateComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
 		dateComposite.setLayoutData(data);
 		dateComposite.setLayout(new GridLayout(2, false));
@@ -510,8 +583,9 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 		}
 		fRankCombo.setItems(UIUtils.getRanks());
 		fRankCombo.select(modelAnomaly.getRank().getValue());
-		if (null != modelAnomaly.getRuleID())
+		if (null != modelAnomaly.getRuleID()) {
 			fRuleId.setText(modelAnomaly.getRuleID());
+		}
 		if (null != modelAnomaly.getDueDate()) {
 			final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
 			fDateText.setText(dateFormat.format(modelAnomaly.getDueDate()));

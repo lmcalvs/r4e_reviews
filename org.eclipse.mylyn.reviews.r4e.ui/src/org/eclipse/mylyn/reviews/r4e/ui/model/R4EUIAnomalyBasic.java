@@ -109,8 +109,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 *            IR4EUIPosition
 	 */
 	public R4EUIAnomalyBasic(IR4EUIModelElement aParent, R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
-		super(aParent, ((null == aPosition) ? aAnomaly.getTitle() : aPosition.toString() + "->" + aAnomaly.getTitle()),
-				buildAnomalyToolTip(aAnomaly));
+		super(aParent, buildAnomalyName(aAnomaly, aPosition), buildAnomalyToolTip(aAnomaly));
 		fAnomaly = aAnomaly;
 		fComments = new ArrayList<R4EUIComment>();
 		setImage(ANOMALY_ICON_FILE);
@@ -132,10 +131,12 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter))
+		if (IR4EUIModelElement.class.equals(adapter)) {
 			return this;
-		if (IPropertySource.class.equals(adapter))
+		}
+		if (IPropertySource.class.equals(adapter)) {
 			return new AnomalyBasicProperties(this);
+		}
 		return null;
 	}
 
@@ -206,6 +207,17 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method buildAnomalyName.
+	 * 
+	 * @param aAnomaly
+	 *            - the anomaly to use
+	 * @return String - the new name
+	 */
+	public static String buildAnomalyName(R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
+		return ((null == aPosition) ? aAnomaly.getTitle() : aPosition.toString() + "->" + aAnomaly.getTitle());
+	}
+
+	/**
 	 * Method buildAnomalyToolTip.
 	 * 
 	 * @param aAnomaly
@@ -266,8 +278,9 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (fComments.size() > 0)
+		if (fComments.size() > 0) {
 			return true;
+		}
 		return false;
 	}
 
@@ -499,10 +512,12 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		if (!(getParent() instanceof R4EUIFileContext))
+		if (!(getParent() instanceof R4EUIFileContext)) {
 			return false;
-		if (isEnabled() && null != ((R4EUIFileContext) getParent().getParent()).getTargetFileVersion())
+		}
+		if (isEnabled() && null != ((R4EUIFileContext) getParent().getParent()).getTargetFileVersion()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -514,8 +529,9 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (isEnabled() && !(R4EUIModelController.getActiveReview().isUserReviewed()))
+		if (isEnabled() && !(R4EUIModelController.getActiveReview().isUserReviewed())) {
 			return true;
+		}
 		return false;
 	}
 
@@ -549,8 +565,9 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (isEnabled())
+		if (isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -562,10 +579,12 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (!(getParent().getParent().isEnabled()))
+		if (!(getParent().getParent().isEnabled())) {
 			return false;
-		if (isEnabled())
+		}
+		if (isEnabled()) {
 			return false;
+		}
 		return true;
 	}
 

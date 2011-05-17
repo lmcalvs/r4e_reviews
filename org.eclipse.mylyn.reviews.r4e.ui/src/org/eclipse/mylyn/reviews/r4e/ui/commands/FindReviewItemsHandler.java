@@ -159,6 +159,10 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				// We could not find any version control system, thus no items
 				final String strProject = ((null == project) ? "null" : project.getName());
 				Activator.Ftracer.traceDebug("No Scm Ui connector found for project: " + strProject);
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
+						"Cannot find new Review Items", new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0,
+								"No SCM Connector detected for Project " + project.getName(), null), IStatus.WARNING);
+				dialog.open();
 			}
 		}
 		return null;

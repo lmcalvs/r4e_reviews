@@ -85,6 +85,9 @@ public class SendNotificationHandler extends AbstractHandler {
 					}
 				}
 			}
+		} else if (source instanceof AbstractSet) {
+			final Iterator<?> iterator = ((AbstractSet<?>) source).iterator();
+			obj = iterator.next();
 		}
 		R4EUIModelController.setDialogOpen(true);
 		//if the source is Review element, all options are available.  O(therwise, only ask questions is supported
