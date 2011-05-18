@@ -32,9 +32,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.UIUtils;
@@ -73,10 +73,10 @@ public class AddLinkedAnomalyHandler extends AbstractHandler {
 			//Add a linked anomaly to this selection
 			if (!selection.isEmpty()) {
 				final IR4EUIModelElement element = ((IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement());
-				if (element instanceof R4EUISelection) {
+				if (element instanceof R4EUIContent) {
 					try {
 						Activator.Ftracer.traceInfo("Adding linked anomaly to element " + element.getName());
-						addLinkedAnomaly((R4EUISelection) element);
+						addLinkedAnomaly((R4EUIContent) element);
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);
 					} catch (OutOfSyncException e) {
@@ -98,7 +98,7 @@ public class AddLinkedAnomalyHandler extends AbstractHandler {
 	 * @throws OutOfSyncException
 	 * @throws ReviewVersionsException
 	 */
-	private void addLinkedAnomaly(R4EUISelection aElement) throws ResourceHandlingException, OutOfSyncException {
+	private void addLinkedAnomaly(R4EUIContent aElement) throws ResourceHandlingException, OutOfSyncException {
 
 		final R4EUIFileContext fileContext = (R4EUIFileContext) aElement.getParent().getParent();
 		R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) (fileContext.getAnomalyContainerElement());

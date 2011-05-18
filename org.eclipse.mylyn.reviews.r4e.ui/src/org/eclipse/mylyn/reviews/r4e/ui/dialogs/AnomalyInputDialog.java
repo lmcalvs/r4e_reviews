@@ -27,13 +27,16 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.window.ToolTip;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -51,6 +54,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorLabelProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorTreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -332,14 +336,69 @@ public class AnomalyInputDialog extends FormDialog {
 				| SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL);
 		fRuleTreeViewer.setContentProvider(new ReviewNavigatorContentProvider());
 		fRuleTreeViewer.getTree().setHeaderVisible(true);
+		ColumnViewerToolTipSupport.enableFor(fRuleTreeViewer, ToolTip.NO_RECREATE);
 
 		final TreeViewerColumn elementColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
 		elementColumn.getColumn().setText("Rule Tree");
 		elementColumn.getColumn().setWidth(DEFAULT_ELEMENT_COLUMN_WIDTH);
-		elementColumn.setLabelProvider(new ReviewNavigatorLabelProvider());
+		elementColumn.setLabelProvider(new ReviewNavigatorLabelProvider() {
+			@Override
+			public String getToolTipText(Object element) {
+				if (element instanceof R4EUIRule) {
+					return ((R4EUIRule) element).getRule().getDescription();
+				}
+				return null;
+			}
+		});
+
+		final TreeViewerColumn titleColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
+		titleColumn.getColumn().setText(R4EUIConstants.TITLE_LABEL);
+		titleColumn.getColumn().setWidth(DEFAULT_TREE_COLUMN_WIDTH);
+		titleColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof R4EUIRule) {
+					return ((R4EUIRule) element).getRule().getTitle();
+				}
+				return null;
+			}
+
+			@Override
+			public String getToolTipText(Object element) {
+				if (element instanceof R4EUIRule) {
+					return ((R4EUIRule) element).getRule().getDescription();
+				}
+				return null;
+			}
+
+			@Override
+			public Point getToolTipShift(Object object) {
+				return new Point(R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_X, R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_Y);
+			}
+
+			@Override
+			public int getToolTipDisplayDelayTime(Object object) {
+				return R4EUIConstants.TOOLTIP_DISPLAY_DELAY;
+			}
+
+			@Override
+			public int getToolTipTimeDisplayed(Object object) {
+				return R4EUIConstants.TOOLTIP_DISPLAY_TIME;
+			}
+
+			@Override
+			public void update(ViewerCell cell) {
+				Object element = cell.getElement();
+				if (element instanceof R4EUIRule) {
+					cell.setText(((R4EUIRule) element).getRule().getTitle());
+				} else {
+					cell.setText(null);
+				}
+			}
+		});
 
 		final TreeViewerColumn classColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
-		classColumn.getColumn().setText("Rule Class");
+		classColumn.getColumn().setText(R4EUIConstants.CLASS_LABEL);
 		classColumn.getColumn().setWidth(DEFAULT_TREE_COLUMN_WIDTH);
 		classColumn.setLabelProvider(new ColumnLabelProvider() {
 			@Override
@@ -349,10 +408,43 @@ public class AnomalyInputDialog extends FormDialog {
 				}
 				return null;
 			}
+
+			@Override
+			public String getToolTipText(Object element) {
+				if (element instanceof R4EUIRule) {
+					return ((R4EUIRule) element).getRule().getDescription();
+				}
+				return null;
+			}
+
+			@Override
+			public Point getToolTipShift(Object object) {
+				return new Point(R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_X, R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_Y);
+			}
+
+			@Override
+			public int getToolTipDisplayDelayTime(Object object) {
+				return R4EUIConstants.TOOLTIP_DISPLAY_DELAY;
+			}
+
+			@Override
+			public int getToolTipTimeDisplayed(Object object) {
+				return R4EUIConstants.TOOLTIP_DISPLAY_TIME;
+			}
+
+			@Override
+			public void update(ViewerCell cell) {
+				Object element = cell.getElement();
+				if (element instanceof R4EUIRule) {
+					cell.setText(getClassStr(((R4EUIRule) element).getRule().getClass_()));
+				} else {
+					cell.setText(null);
+				}
+			}
 		});
 
 		final TreeViewerColumn rankColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
-		rankColumn.getColumn().setText("Rule Rank");
+		rankColumn.getColumn().setText(R4EUIConstants.RANK_LABEL);
 		rankColumn.getColumn().setWidth(DEFAULT_TREE_COLUMN_WIDTH);
 		rankColumn.setLabelProvider(new ColumnLabelProvider() {
 			@Override
@@ -361,6 +453,39 @@ public class AnomalyInputDialog extends FormDialog {
 					return getRankStr(((R4EUIRule) element).getRule().getRank());
 				}
 				return null;
+			}
+
+			@Override
+			public String getToolTipText(Object element) {
+				if (element instanceof R4EUIRule) {
+					return ((R4EUIRule) element).getRule().getDescription();
+				}
+				return null;
+			}
+
+			@Override
+			public Point getToolTipShift(Object object) {
+				return new Point(R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_X, R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_Y);
+			}
+
+			@Override
+			public int getToolTipDisplayDelayTime(Object object) {
+				return R4EUIConstants.TOOLTIP_DISPLAY_DELAY;
+			}
+
+			@Override
+			public int getToolTipTimeDisplayed(Object object) {
+				return R4EUIConstants.TOOLTIP_DISPLAY_TIME;
+			}
+
+			@Override
+			public void update(ViewerCell cell) {
+				Object element = cell.getElement();
+				if (element instanceof R4EUIRule) {
+					cell.setText(getRankStr(((R4EUIRule) element).getRule().getRank()));
+				} else {
+					cell.setText(null);
+				}
 			}
 		});
 

@@ -41,7 +41,7 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	/**
 	 * Field fFileVersion.
 	 */
-	private R4EFileVersion fFileVersion;
+	private final R4EFileVersion fFileVersion;
 
 	/**
 	 * Field author.
@@ -136,8 +136,9 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	 */
 	public String getPath() {
 		final URI uri = fFileVersion.getFileRevision().getURI();
-		if (null != uri)
+		if (null != uri) {
 			return uri.getPath();
+		}
 		return getName();
 	}
 
@@ -163,9 +164,6 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	 */
 	@Override
 	public int hashCode() {
-		if (CommandUtils.useWorkspaceResource(fFileVersion)) {
-			return fFileVersion.getResource().hashCode();
-		}
 		return fFileVersion.getFileRevision().hashCode();
 	}
 
@@ -178,8 +176,9 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	 */
 	@Override
 	public boolean equals(Object aObj) {
-		if (aObj == this)
+		if (aObj == this) {
 			return true;
+		}
 		if (aObj instanceof R4EFileRevisionTypedElement) {
 			final R4EFileRevisionTypedElement other = (R4EFileRevisionTypedElement) aObj;
 			return other.getFileVersion().equals(getFileVersion());
@@ -193,8 +192,9 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	 * @return the author
 	 */
 	public String getAuthor() {
-		if (null == fAuthor)
+		if (null == fAuthor) {
 			fAuthor = fFileVersion.getFileRevision().getAuthor();
+		}
 		return fAuthor;
 	}
 

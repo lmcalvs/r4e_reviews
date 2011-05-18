@@ -38,6 +38,10 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
  */
 abstract class StorageTypedElement implements ITypedElement, IEncodedStreamContentAccessor, IAdaptable {
 
+	// ------------------------------------------------------------------------
+	// Member variables
+	// ------------------------------------------------------------------------
+
 	/**
 	 * Field bufferedContents.
 	 */
@@ -53,12 +57,20 @@ abstract class StorageTypedElement implements ITypedElement, IEncodedStreamConte
 	 */
 	private ISharedDocumentAdapter sharedDocumentAdapter;
 
+	// ------------------------------------------------------------------------
+	// Constructors
+	// ------------------------------------------------------------------------
+
 	/**
 	 * @param localEncoding
 	 */
 	protected StorageTypedElement(String localEncoding) {
 		this.localEncoding = localEncoding;
 	}
+
+	// ------------------------------------------------------------------------
+	// Methods
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Method getContents.
@@ -124,13 +136,15 @@ abstract class StorageTypedElement implements ITypedElement, IEncodedStreamConte
 		final String name = getName();
 		if (null != name) {
 			final int index = name.lastIndexOf('.');
-			if (index == -1)
+			if (index == -1) {
 				return "";
-			if (index == (name.length() - 1))
+			}
+			if (index == (name.length() - 1)) {
 				return "";
+			}
 			return name.substring(index + 1);
 		}
-		return ITypedElement.FOLDER_TYPE;
+		return ITypedElement.TEXT_TYPE;
 	}
 
 	/**
@@ -141,8 +155,9 @@ abstract class StorageTypedElement implements ITypedElement, IEncodedStreamConte
 	 * @see org.eclipse.compare.IEncodedStreamContentAccessor#getCharset()
 	 */
 	public String getCharset() throws CoreException {
-		if (null != localEncoding)
+		if (null != localEncoding) {
 			return localEncoding;
+		}
 		if (null == bufferedContents) {
 			cacheContents(new NullProgressMonitor());
 		}

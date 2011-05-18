@@ -21,14 +21,21 @@ import java.io.InputStream;
 
 import org.eclipse.compare.IEncodedStreamContentAccessor;
 import org.eclipse.compare.IResourceProvider;
+import org.eclipse.compare.ISharedDocumentAdapter;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.SharedDocumentAdapter;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 
 /**
  * An {@link ITypedElement} wrapper for {@link IFileRevision} for use with R4E
@@ -36,7 +43,7 @@ import org.eclipse.team.core.history.IFileRevision;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IEncodedStreamContentAccessor {
+public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IEncodedStreamContentAccessor, IAdaptable {
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -46,6 +53,11 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	 * Field fFileVersion.
 	 */
 	private final R4EFileVersion fFileVersion;
+
+	/**
+	 * Field sharedDocumentAdapter.
+	 */
+	private ISharedDocumentAdapter sharedDocumentAdapter;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -63,6 +75,37 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getAdapter.
+	 * 
+	 * @param adapter
+	 *            Class
+	 * @return Object
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
+	 */
+	public Object getAdapter(@SuppressWarnings("rawtypes")
+	Class adapter) {
+		if (ISharedDocumentAdapter.class.equals(adapter)) {
+			synchronized (this) {
+				if (null == sharedDocumentAdapter) {
+					sharedDocumentAdapter = new SharedDocumentAdapter() {
+						@Override
+						public IEditorInput getDocumentKey(Object element) {
+							return R4EFileTypedElement.this.getDocumentKey(element);
+						}
+
+						public void flushDocument(IDocumentProvider provider, IEditorInput documentKey,
+								IDocument document, boolean overwrite) {
+							// The document is read-only
+						}
+					};
+				}
+				return sharedDocumentAdapter;
+			}
+		}
+		return Platform.getAdapterManager().getAdapter(this, adapter);
+	}
 
 	/**
 	 * Method getFileVersion.
@@ -102,8 +145,9 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	 */
 	@Override
 	public boolean equals(Object aObj) {
-		if (aObj == this)
+		if (aObj == this) {
 			return true;
+		}
 		if (aObj instanceof R4EFileTypedElement) {
 			final R4EFileTypedElement other = (R4EFileTypedElement) aObj;
 			return other.getFileVersion().equals(getFileVersion());
@@ -135,6 +179,17 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	 * @return String
 	 */
 	public String getType() {
+		final String name = getName();
+		if (null != name) {
+			final int index = name.lastIndexOf('.');
+			if (index == -1) {
+				return "";
+			}
+			if (index == (name.length() - 1)) {
+				return "";
+			}
+			return name.substring(index + 1);
+		}
 		return ITypedElement.TEXT_TYPE;
 	}
 
@@ -156,5 +211,19 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	 */
 	public String getCharset() throws CoreException {
 		return ((IFile) fFileVersion.getResource()).getCharset();
+	}
+
+	/**
+	 * Method getDocumentKey.
+	 * 
+	 * @param aElement
+	 *            Object
+	 * @return IEditorInput
+	 */
+	public IEditorInput getDocumentKey(Object aElement) {
+		if (aElement.equals(this)) {
+			return new R4EFileEditorInput(fFileVersion);
+		}
+		return null;
 	}
 }

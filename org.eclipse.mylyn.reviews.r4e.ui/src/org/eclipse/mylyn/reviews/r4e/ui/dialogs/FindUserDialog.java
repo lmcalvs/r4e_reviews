@@ -81,7 +81,7 @@ public class FindUserDialog extends FormDialog {
 	/**
 	 * Field DIALOG_MIN_WIDTH. (value is "800")
 	 */
-	private static final int DIALOG_MIN_WIDTH = 800;
+	private static final int DIALOG_MIN_WIDTH = 860;
 
 	/**
 	 * Field DIALOG_MIN_HEIGTH. (value is "400")
@@ -151,7 +151,7 @@ public class FindUserDialog extends FormDialog {
 	/**
 	 * Field USER_TABLE_COLUMN_WIDTH. (value is 100)
 	 */
-	private static final int USER_TABLE_COLUMN_WIDTH = 100;
+	private static final int USER_TABLE_COLUMN_WIDTH = 90;
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -532,8 +532,7 @@ public class FindUserDialog extends FormDialog {
 		fNumEntriesValue.setLayoutData(numEntriesValueData);
 		fNumEntriesValue.setText("0");
 
-		fUsersTableViewer = new TableViewer(fUserQueyResultsForm, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL
-				| SWT.FULL_SELECTION | SWT.BORDER);
+		fUsersTableViewer = new TableViewer(fUserQueyResultsForm, SWT.SINGLE | SWT.FULL_SELECTION);
 
 		// Define the layout and columns in the table
 		final String[] columnId = UserInformationFactory.getInstance().getAttributeTypes();
@@ -542,8 +541,9 @@ public class FindUserDialog extends FormDialog {
 			// Create a new column
 			nameColumn = new TableColumn(fUsersTableViewer.getTable(), SWT.LEFT);
 			nameColumn.setText(element);
-			nameColumn.setWidth(USER_TABLE_COLUMN_WIDTH);
+			//nameColumn.setWidth(USER_TABLE_COLUMN_WIDTH);
 			nameColumn.setMoveable(true);
+			nameColumn.pack();
 		}
 		fUsersTableViewer.getTable().setHeaderVisible(true);
 		fUsersTableViewer.getTable().setLinesVisible(true);
@@ -732,6 +732,6 @@ public class FindUserDialog extends FormDialog {
 	public void setDialogsDefaults() {
 		// Set the search button as the default button
 		getShell().setDefaultButton(fSearchButton);
-		getShell().setMinimumSize(DIALOG_MIN_HEIGHT, DIALOG_MIN_HEIGHT);
+		getShell().setMinimumSize(DIALOG_MIN_WIDTH, DIALOG_MIN_HEIGHT);
 	}
 }
