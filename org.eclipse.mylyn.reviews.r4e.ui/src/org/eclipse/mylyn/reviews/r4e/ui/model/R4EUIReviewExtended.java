@@ -98,10 +98,12 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter))
+		if (IR4EUIModelElement.class.equals(adapter)) {
 			return this;
-		if (IPropertySource.class.equals(adapter))
+		}
+		if (IPropertySource.class.equals(adapter)) {
 			return new ReviewProperties(this);
+		}
 		return null;
 	}
 
@@ -181,8 +183,9 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 			return R4EUIConstants.PHASE_REWORK_LABEL;
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return REVIEW_PHASE_COMPLETED;
-		} else
+		} else {
 			return "";
+		}
 	}
 
 	/**
@@ -204,8 +207,9 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 			return R4EReviewPhase.R4E_REVIEW_PHASE_REWORK;
 		} else if (aNewPhase.equals(REVIEW_PHASE_COMPLETED)) {
 			return R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED;
-		} else
+		} else {
 			return null; //should never happen
+		}
 	}
 
 	/**
@@ -245,8 +249,9 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 		//Peek state machine to get available states
 		final R4EReviewPhase[] phases = getAllowedPhases(((R4EReviewState) getReview().getState()).getState());
 		for (int i = 0; i < phases.length; i++) {
-			if (phases[i].getValue() == aPhase.getValue())
+			if (phases[i].getValue() == aPhase.getValue()) {
 				return i;
+			}
 		}
 		return R4EUIConstants.INVALID_VALUE; //should never happen
 	}
@@ -260,8 +265,9 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 */
 	public R4EReviewPhaseInfo getPhaseInfo(R4EReviewPhase aPhase) {
 		for (R4EReviewPhaseInfo phase : ((R4EFormalReview) fReview).getPhases()) {
-			if (phase.getType().equals(aPhase))
+			if (phase.getType().equals(aPhase)) {
 				return phase;
+			}
 		}
 		return null;
 	}
@@ -451,10 +457,14 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 		}
 
 		//Check global anomalies state
-		if (!(fAnomalyContainer.checkReworkStatus())) {
-			aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_REWORK
-					+ " as some global anomalies are in the wrong state");
-			return false;
+		final AtomicReference<String> resultMsg = new AtomicReference<String>(null);
+		boolean resultOk = true;
+		StringBuilder sb = new StringBuilder();
+		if (!(fAnomalyContainer.checkReworkStatus(resultMsg))) {
+			sb.append("Phase cannot be changed to " + REVIEW_PHASE_REWORK
+					+ " as some anomalies are in the wrong state:" + System.getProperty("line.separator"));
+			sb.append(resultMsg);
+			resultOk = false;
 		}
 
 		for (R4EUIReviewItem item : fItems) {
@@ -462,13 +472,23 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 			for (R4EUIFileContext context : contexts) {
 				R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
 				if (null != container) {
-					if (!(container.checkReworkStatus())) {
-						aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_REWORK
-								+ " as some anomalies are in the wrong state");
-						return false;
+					if (!(container.checkReworkStatus(resultMsg))) {
+						if (resultOk) {
+							sb.append("Phase cannot be changed to " + REVIEW_PHASE_REWORK
+									+ " as some anomalies are in the wrong state:"
+									+ System.getProperty("line.separator"));
+							resultOk = false;
+						}
+						if (null != resultMsg) {
+							sb.append(resultMsg);
+						}
 					}
 				}
 			}
+		}
+		if (!resultOk) {
+			aErrorMessage.set(sb.toString());
+			return false;
 		}
 		return true;
 	}

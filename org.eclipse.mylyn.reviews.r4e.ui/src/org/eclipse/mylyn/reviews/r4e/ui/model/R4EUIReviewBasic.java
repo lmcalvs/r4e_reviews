@@ -1358,22 +1358,36 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			}
 
 			//Check global anomalies state
-			if (!(fAnomalyContainer.checkCompletionStatus())) {
-				aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED
-						+ " as some global anomalies are in the wrong state");
-				return false;
+			final AtomicReference<String> resultMsg = new AtomicReference<String>(null);
+			StringBuilder sb = new StringBuilder();
+			boolean resultOk = true;
+			if (!(fAnomalyContainer.checkCompletionStatus(resultMsg))) {
+				sb.append("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED
+						+ " as some anomalies are in the wrong state:" + System.getProperty("line.separator"));
+				sb.append(resultMsg);
+				resultOk = false;
 			}
 
 			for (R4EUIReviewItem item : fItems) {
 				R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
 				for (R4EUIFileContext context : contexts) {
 					R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
-					if (null != container && !(container.checkCompletionStatus())) {
-						aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED
-								+ " as some anomalies are in the wrong state");
-						return false;
+					if (null != container && !(container.checkCompletionStatus(resultMsg))) {
+						if (resultOk) {
+							sb.append("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED
+									+ " as some anomalies are in the wrong state:"
+									+ System.getProperty("line.separator"));
+							resultOk = false;
+						}
+						if (null != resultMsg) {
+							sb.append(resultMsg);
+						}
 					}
 				}
+			}
+			if (!resultOk) {
+				aErrorMessage.set(sb.toString());
+				return false;
 			}
 		}
 		return true;

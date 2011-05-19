@@ -62,13 +62,13 @@ import org.eclipse.mylyn.reviews.r4e.ui.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.filters.LinePositionComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleSet;
-import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.utils.R4EUIConstants;
@@ -527,8 +527,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 						R4EUITextPosition position = null;
 						if (selection.getFirstElement() instanceof R4EUIAnomalyBasic) {
 							position = (R4EUITextPosition) ((R4EUIAnomalyBasic) selection.getFirstElement()).getPosition();
-						} else if (selection.getFirstElement() instanceof R4EUISelection) {
-							position = (R4EUITextPosition) ((R4EUISelection) selection.getFirstElement()).getPosition();
+						} else if (selection.getFirstElement() instanceof R4EUIContent) {
+							position = (R4EUITextPosition) ((R4EUIContent) selection.getFirstElement()).getPosition();
 						}
 
 						if (null != position) {

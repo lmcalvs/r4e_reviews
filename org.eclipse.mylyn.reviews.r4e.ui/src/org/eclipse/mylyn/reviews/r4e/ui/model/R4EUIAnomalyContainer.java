@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.window.Window;
@@ -571,29 +572,49 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * 
 	 * @return boolean
 	 */
-	public boolean checkCompletionStatus() { // $codepro.audit.disable booleanMethodNamingConvention
+	public boolean checkCompletionStatus(AtomicReference<String> aMessage) { // $codepro.audit.disable booleanMethodNamingConvention
+		StringBuilder sb = new StringBuilder();
+		boolean resultOk = true;
 		for (R4EUIAnomalyBasic anomaly : fAnomalies) {
-			if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)
-					|| anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)
-					|| anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
-				return false;
+			if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
+				sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state CREATED"
+						+ System.getProperty("line.separator"));
+				resultOk = false;
+			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
+				sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state ASSIGNED"
+						+ System.getProperty("line.separator"));
+				resultOk = false;
+			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
+				sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state ACCEPTED"
+						+ System.getProperty("line.separator"));
+				resultOk = false;
 			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
 				if (null == anomaly.getAnomaly().getFixedByID() || ("").equals(anomaly.getAnomaly().getFixedByID())) {
-					return false;
+					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") does not have a fixer"
+							+ System.getProperty("line.separator"));
+					resultOk = false;
 				}
 				if (R4EUIModelController.getActiveReview()
 						.getReview()
 						.getDecision()
 						.getValue()
 						.equals(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP)) {
-					return false;
+					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state FIXED, but Review"
+							+ " Decision is set to Accepted with Followup" + System.getProperty("line.separator"));
+					resultOk = false;
 				}
 			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
 				if (null == anomaly.getAnomaly().getFollowUpByID()
 						|| ("").equals(anomaly.getAnomaly().getFollowUpByID())) {
-					return false;
+					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state VERIFIED and "
+							+ "does not have a follower" + System.getProperty("line.separator"));
+					resultOk = false;
 				}
 			}
+		}
+		if (!resultOk) {
+			aMessage.set(sb.toString());
+			return false;
 		}
 		return true;
 	}
@@ -603,14 +624,24 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * 
 	 * @return boolean
 	 */
-	public boolean checkReworkStatus() { // $codepro.audit.disable booleanMethodNamingConvention
+	public boolean checkReworkStatus(AtomicReference<String> aMessage) {
+		StringBuilder sb = new StringBuilder();
+		boolean resultOk = true;
 		for (R4EUIAnomalyBasic anomaly : fAnomalies) {
 			if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
-				return false;
+				sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state CREATED"
+						+ System.getProperty("line.separator"));
+				resultOk = false;
+			} else if (null == anomaly.getAnomaly().getDecidedByID()
+					|| ("").equals(anomaly.getAnomaly().getDecidedByID())) {
+				sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") does not have a decider"
+						+ System.getProperty("line.separator"));
+				resultOk = false;
 			}
-			if (null == anomaly.getAnomaly().getDecidedByID() || ("").equals(anomaly.getAnomaly().getDecidedByID())) {
-				return false;
-			}
+		}
+		if (!resultOk) {
+			aMessage.set(sb.toString());
+			return false;
 		}
 		return true;
 	}
