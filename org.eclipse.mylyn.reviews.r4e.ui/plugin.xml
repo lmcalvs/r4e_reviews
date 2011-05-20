@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="org.eclipse.mylyn.reviews.r4e.ui.preferences.R4EPreferencePage"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.R4EPreferencePage"
             id="org.eclipse.mylyn.reviews.r4e.ui.preferences.R4EPreferencePage"
             name="R4E">
       </page>
@@ -12,7 +12,7 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="org.eclipse.mylyn.reviews.r4e.ui.preferences.PreferenceInitializer">
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceInitializer">
       </initializer>
    </extension>
    <extension
@@ -20,7 +20,7 @@
       <view
             allowMultiple="false"
             category="org.eclipse.mylyn.reviews.r4e.ui.navigatorViewCategory"
-            class="org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorView"
             icon="icons/view16/revnav_misc.gif"
             id="org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView"
             name="Review Navigator"
@@ -33,7 +33,7 @@
       <view
             allowMultiple="false"
             category="org.eclipse.mylyn.reviews.r4e.ui.navigatorViewCategory"
-            class="org.eclipse.mylyn.reviews.r4e.ui.properties.general.R4EPropertiesView"            
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.R4EPropertiesView"            
             icon="icons/elcl16/lnkprop_menu.gif"
             id="org.eclipse.mylyn.reviews.r4e.ui.properties.R4EPropertiesView"
             name="R4E Properties"
@@ -312,7 +312,7 @@
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.menu"
                label="Sort by">
             <dynamic
-                  class="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.SortersContributionItems"
+                  class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.SortersContributionItems"
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.items">
             </dynamic>
          </menu>
@@ -320,7 +320,7 @@
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.filter.menu"
                label="Filters">
             <dynamic
-                  class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.FiltersContributionItems"
+                  class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.FiltersContributionItems"
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.items">
             </dynamic>
          </menu>
@@ -433,7 +433,7 @@
             allPopups="true"
             locationURI="popup:org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView?after=additions">
          <dynamic
-               class="org.eclipse.mylyn.reviews.r4e.ui.commands.ModelContributionItems"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ModelContributionItems"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.model.items">
          </dynamic>
       </menuContribution>
@@ -713,7 +713,7 @@
    <extension
          point="org.eclipse.ui.services">
       <sourceProvider
-            provider="org.eclipse.mylyn.reviews.r4e.ui.commands.ReviewState">
+            provider="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ReviewState">
          <variable
                name="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCurrent"
                priorityLevel="workbench">
@@ -736,7 +736,7 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNextHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.SelectNextHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext">
          <enabledWhen>
             <test
@@ -745,7 +745,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectPreviousHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.SelectPreviousHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectPrevious">
          <enabledWhen>
             <test
@@ -754,7 +754,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.RefreshHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.RefreshHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh">
          <enabledWhen>
             <test
@@ -763,7 +763,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAllHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ExpandAllHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll">
          <enabledWhen>
             <test
@@ -772,7 +772,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAllHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.CollapseAllHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll">
          <enabledWhen>
             <test
@@ -781,7 +781,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditorHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.LinkEditorHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor">
          <enabledWhen>
             <test
@@ -790,7 +790,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkPropertiesHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.LinkPropertiesHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties">
          <enabledWhen>
             <test
@@ -799,7 +799,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.GoIntoFilterHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.GoIntoFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.GoInto">
          <enabledWhen>
             <test
@@ -808,7 +808,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.RemoveAllFiltersHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.RemoveAllFiltersHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.RemoveAll">
          <enabledWhen>
             <test
@@ -817,7 +817,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesMyFilterHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AnomaliesMyFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesMy">
          <enabledWhen>
             <test
@@ -826,7 +826,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsOnlyFilterHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewsOnlyFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsOnly">
          <enabledWhen>
             <test
@@ -835,7 +835,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesOnlyFilterHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AnomaliesOnlyFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies">
          <enabledWhen>
             <test
@@ -844,7 +844,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewedElemsFilterHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewedElemsFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewedElems">
          <enabledWhen>
             <test
@@ -853,7 +853,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsMyFilterHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewsMyFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsMy">
          <enabledWhen>
             <test
@@ -862,7 +862,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsParticipantFilterHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewsParticipantFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsParticipant">
          <enabledWhen>
             <test
@@ -871,7 +871,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideRuleSetsFilterHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.HideRuleSetsFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideRuleSets">
          <enabledWhen>
             <test
@@ -880,7 +880,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideDeltasFilterHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.HideDeltasFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideDeltas">
          <enabledWhen>
             <test
@@ -889,7 +889,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSortHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.AlphaSortHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort">
          <enabledWhen>
             <test
@@ -898,7 +898,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSortHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.ReviewTypeSortHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort">
          <enabledWhen>
             <test
@@ -907,7 +907,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomalyHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.NewLinkedAnomalyHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly">
          <enabledWhen>
             <test
@@ -916,7 +916,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.OpenEditorHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.OpenEditorHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.openEditor">
          <enabledWhen>
             <test
@@ -925,7 +925,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.ChangeReviewStateHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ChangeReviewStateHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState">
          <enabledWhen>
             <test
@@ -934,7 +934,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.OpenElementHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.OpenElementHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.openElement">
          <enabledWhen>
             <test
@@ -943,7 +943,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.CloseElementHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.CloseElementHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.closeElement">
          <enabledWhen>
             <test
@@ -952,7 +952,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElementHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.NewChildElementHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement">
          <enabledWhen>
             <test
@@ -961,7 +961,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElementHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.NewRuleSetElementHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement">
          <enabledWhen>
             <test
@@ -970,7 +970,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.RemoveElementHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.RemoveElementHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.removeElement">
          <enabledWhen>
             <test
@@ -979,7 +979,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.RestoreElementHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.RestoreElementHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.restoreElement">
          <enabledWhen>
             <test
@@ -988,7 +988,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItemsHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.FindReviewItemsHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems">
          <enabledWhen>
             <and>
@@ -1003,7 +1003,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomalyHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.NewAnomalyHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly">
          <enabledWhen>
             <test
@@ -1012,7 +1012,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItemHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.NewReviewItemHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem">
          <enabledWhen>
             <test
@@ -1021,7 +1021,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.SendNotificationHandler"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.SendNotificationHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification">
          <enabledWhen>
             <test
@@ -1066,131 +1066,131 @@
       <propertySections
             contributorId="org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView">
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ReviewGroupBasicTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.ReviewGroupBasicTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewGroupGeneralSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ReviewGroupExtraTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.ReviewGroupExtraTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewGroupExtraSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyExtraTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewGroup">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ReviewBasicTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.ReviewBasicTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewGeneralSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ReviewExtraTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.ReviewExtraTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewExtraSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyExtraTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewBasic">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ParticipantBasicTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.ParticipantBasicTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ParticipantGeneralSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipant">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ParticipantExtraTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.ParticipantExtraTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ParticipantExtraSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyExtraTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIParticipant">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ReviewItemTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.ReviewItemTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ReviewItemSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIReviewItem">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.FileContextTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.FileContextTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.FileContextSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIFileContext">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.ContentsTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.ContentsTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.ContentsSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIContent">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.AnomalyBasicTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.AnomalyBasicTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.AnomalyGeneralSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyBasic">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.AnomalyExtraTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.AnomalyExtraTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.AnomalyExtraSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyExtraTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIAnomalyExtended">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.CommentTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.CommentTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.CommentSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIComment">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.RuleSetTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.RuleSetTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.RuleSetSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleSet">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.RuleAreaTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.RuleAreaTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.RuleAreaSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleArea">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleArea">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.RuleViolationTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.RuleViolationTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.RuleViolationSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRuleViolation">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleViolation">
             </input>
          </propertySection>
          <propertySection
-               class="org.eclipse.mylyn.reviews.r4e.ui.properties.tabbed.RuleTabPropertySection"
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.RuleTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.RuleSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.R4EUIRule">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule">
             </input>
          </propertySection>
          <propertySection
@@ -1198,7 +1198,7 @@
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyClassicSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyClassicTab">
             <input
-                  type="org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement">
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement">
             </input>
          </propertySection>
       </propertySections>
@@ -1206,35 +1206,35 @@
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.DialogPropertyTester"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.DialogPropertyTester"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpenPropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog"
             properties="dialogOpen"
             type="java.lang.Object">
       </propertyTester>
       <propertyTester
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.CompletedPropertyTester"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.CompletedPropertyTester"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.completedPropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.review"
             properties="completed"
             type="java.lang.Object">
       </propertyTester>
       <propertyTester
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomalyPropertyTester"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.NewAnomalyPropertyTester"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomalyPropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.anomaly"
             properties="anomaly"
             type="java.lang.Object">
       </propertyTester>
       <propertyTester
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItemPropertyTester"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.NewReviewItemPropertyTester"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItemPropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewItem"
             properties="reviewItem"
             type="java.lang.Object">
       </propertyTester>
       <propertyTester
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.ProjectPropertyTester"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ProjectPropertyTester"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.projectPropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.project"
             properties="project"
