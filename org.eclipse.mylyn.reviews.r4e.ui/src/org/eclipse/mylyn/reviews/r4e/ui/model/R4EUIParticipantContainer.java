@@ -52,14 +52,14 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	private static final String PARTICIPANT_CONTAINER_ICON_FILE = "icons/obj16/partcont_obj.png";
 
 	/**
-	 * Field ADD_ELEMENT_ACTION_NAME. (value is ""Add Participant"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Participant"")
 	 */
-	private static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Participant";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Participant";
 
 	/**
-	 * Field ADD_ELEMENT_ACTION_TOOLTIP. (value is ""Add a New Participant to the Current Review"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Participant to the Current Review"")
 	 */
-	private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Participant to the Current Review";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Participant to the Current Review";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -386,7 +386,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public String getAddChildElementCmdName() {
-		return ADD_CHILD_ELEMENT_COMMAND_NAME;
+		return NEW_CHILD_ELEMENT_COMMAND_NAME;
 	}
 
 	/**
@@ -397,6 +397,6 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public String getAddChildElementCmdTooltip() {
-		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP;
+		return NEW_CHILD_ELEMENT_COMMAND_TOOLTIP;
 	}
 }

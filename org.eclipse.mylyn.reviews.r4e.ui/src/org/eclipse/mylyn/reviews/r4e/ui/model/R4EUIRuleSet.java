@@ -61,14 +61,14 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	private static final String RULE_SET_CLOSED_ICON_FILE = "icons/obj16/rulesetclsd_obj.gif";
 
 	/**
-	 * Field ADD_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add Rule Area"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Rule Area"")
 	 */
-	private static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Rule Area";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Rule Area";
 
 	/**
-	 * Field ADD_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Rule Area to the Current Rule Set"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Rule Area to the Current Rule Set"")
 	 */
-	private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Rule Area to the Current Rule Set";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Rule Area to the Current Rule Set";
 
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Disable Rule Set"")
@@ -503,7 +503,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public String getAddChildElementCmdName() {
-		return ADD_CHILD_ELEMENT_COMMAND_NAME;
+		return NEW_CHILD_ELEMENT_COMMAND_NAME;
 	}
 
 	/**
@@ -514,7 +514,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public String getAddChildElementCmdTooltip() {
-		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP;
+		return NEW_CHILD_ELEMENT_COMMAND_TOOLTIP;
 	}
 
 	/**

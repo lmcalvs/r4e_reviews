@@ -42,7 +42,7 @@ import org.eclipse.ui.services.IEvaluationService;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AddChildElementHandler extends AbstractHandler {
+public class NewChildElementHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
 	// Methods

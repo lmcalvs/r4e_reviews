@@ -152,6 +152,7 @@ public class CommentInputDialog extends FormDialog {
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(ADD_COMMENT_DIALOG_TITLE);
+		shell.setMinimumSize(R4EUIConstants.DIALOG_DEFAULT_WIDTH, R4EUIConstants.DIALOG_DEFAULT_HEIGHT);
 	}
 
 	/**
@@ -174,7 +175,7 @@ public class CommentInputDialog extends FormDialog {
 		//Basic parameters section
 		final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION
 				| ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
-		final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		basicSectionGridData.horizontalSpan = 4;
 		basicSection.setLayoutData(basicSectionGridData);
 		basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
@@ -196,7 +197,7 @@ public class CommentInputDialog extends FormDialog {
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fCommentInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.BORDER
 				| SWT.WRAP);
-		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fCommentInputTextField.getLineHeight() * 3;
 		fCommentInputTextField.setToolTipText(R4EUIConstants.COMMENT_DESCRIPTION_TOOLTIP);
@@ -268,8 +269,9 @@ public class CommentInputDialog extends FormDialog {
 		final Shell sh = getShell();
 		final Display disp = sh.getDisplay();
 		while (!sh.isDisposed()) { // $codepro.audit.disable methodInvocationInLoopCondition
-			if (!disp.readAndDispatch())
+			if (!disp.readAndDispatch()) {
 				disp.sleep();
+			}
 		}
 		disp.update();
 	}

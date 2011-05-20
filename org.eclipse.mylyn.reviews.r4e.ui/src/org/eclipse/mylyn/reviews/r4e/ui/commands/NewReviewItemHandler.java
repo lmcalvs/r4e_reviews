@@ -83,7 +83,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AddReviewItemHandler extends AbstractHandler {
+public class NewReviewItemHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
 	// Methods

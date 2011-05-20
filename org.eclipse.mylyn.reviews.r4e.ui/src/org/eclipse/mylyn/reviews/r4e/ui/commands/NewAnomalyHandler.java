@@ -71,7 +71,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AddAnomalyHandler extends AbstractHandler {
+public class NewAnomalyHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
 	// Methods

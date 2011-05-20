@@ -47,7 +47,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AddLinkedAnomalyHandler extends AbstractHandler {
+public class NewLinkedAnomalyHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
 	// Methods

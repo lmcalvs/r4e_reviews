@@ -45,7 +45,7 @@ import org.eclipse.ui.PlatformUI;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AddReviewItemPropertyTester extends PropertyTester {
+public class NewReviewItemPropertyTester extends PropertyTester {
 
 	/**
 	 * Method test.

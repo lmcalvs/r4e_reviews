@@ -155,6 +155,7 @@ public class SendNotificationInputDialog extends FormDialog {
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(SEND_MAIL_DIALOG_TITLE);
+		shell.setMinimumSize(R4EUIConstants.DIALOG_DEFAULT_WIDTH, R4EUIConstants.DIALOG_DEFAULT_HEIGHT);
 	}
 
 	/**

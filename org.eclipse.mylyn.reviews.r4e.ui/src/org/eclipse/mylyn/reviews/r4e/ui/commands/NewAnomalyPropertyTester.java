@@ -45,7 +45,7 @@ import org.eclipse.ui.PlatformUI;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AddAnomalyPropertyTester extends PropertyTester {
+public class NewAnomalyPropertyTester extends PropertyTester {
 
 	/**
 	 * Method test.

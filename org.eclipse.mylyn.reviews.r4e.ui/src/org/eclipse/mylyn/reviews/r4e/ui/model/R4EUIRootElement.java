@@ -543,7 +543,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	@Override
 	public String getAddChildElementCmdName() {
-		return R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_NAME;
+		return R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_NAME;
 	}
 
 	/**
@@ -554,6 +554,6 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	@Override
 	public String getAddChildElementCmdTooltip() {
-		return R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_TOOLTIP;
+		return R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_TOOLTIP;
 	}
 }

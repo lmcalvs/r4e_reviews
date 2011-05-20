@@ -65,14 +65,14 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	private static final String ANOMALY_CONTAINER_ICON_FILE = "icons/obj16/anmlycont_obj.gif";
 
 	/**
-	 * Field ADD_ELEMENT_ACTION_NAME. (value is ""Add Anomaly"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Anomaly"")
 	 */
-	private static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Anomaly";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Anomaly";
 
 	/**
-	 * Field ADD_ELEMENT_ACTION_TOOLTIP. (value is ""Add a new global anomaly to the current review item"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Global Anomaly to the Current Review Item"")
 	 */
-	private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Global Anomaly to the Current Review Item";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Global Anomaly to the Current Review Item";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -553,7 +553,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public String getAddChildElementCmdName() {
-		return ADD_CHILD_ELEMENT_COMMAND_NAME;
+		return NEW_CHILD_ELEMENT_COMMAND_NAME;
 	}
 
 	/**
@@ -564,7 +564,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public String getAddChildElementCmdTooltip() {
-		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP;
+		return NEW_CHILD_ELEMENT_COMMAND_TOOLTIP;
 	}
 
 	/**

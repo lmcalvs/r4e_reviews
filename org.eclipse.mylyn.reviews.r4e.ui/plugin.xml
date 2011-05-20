@@ -89,13 +89,13 @@
                </visibleWhen>
             </command>
             <command
-                  commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem"
+                  commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem"
                   icon="icons/view16/newitm_tsk.gif"
-                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem"
-                  label="Add Review Item"
+                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem"
+                  label="New Review Item"
                   mnemonic="I"
                   style="push"
-                  tooltip="Add a Review Item to the Current Review">
+                  tooltip="Add a New Review Item to the Current Review">
                <visibleWhen
                      checkEnabled="false">
                   <or>
@@ -125,13 +125,13 @@
                </visibleWhen>
             </command>
             <command
-                  commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomaly"
+                  commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly"
                   icon="icons/view16/newanmly_tsk.gif"
-                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomaly"
-                  label="Add Anomaly"
+                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly"
+                  label="New Anomaly"
                   mnemonic="A"
                   style="push"
-                  tooltip="Add an Anomaly to the Current Review">
+                  tooltip="Add a New Anomaly to the Current Review">
                <visibleWhen
                      checkEnabled="false">
                   <or>
@@ -213,40 +213,22 @@
             allPopups="false"
             locationURI="toolbar:org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView?after=additions">
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement"
                icon="icons/obj16/revgrp_obj.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
-               label="Add Review Group"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement"
+               label="New Review Group"
                mnemonic="g"
                style="push"
                tooltip="Add a New Review Group">
          </command>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement"
                icon="icons/obj16/ruleset_obj.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
-               label="Add Rule Set"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement"
+               label="New Rule Set"
                mnemonic="a"
                style="push"
                tooltip="Add a New Rule Set">
-         </command>
-         <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort"
-               icon="icons/elcl16/alphasort_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort"
-               label="Sort by Element Name"
-               mnemonic="s"
-               style="toggle"
-               tooltip="Sort by Element Name Alphabetically ">
-         </command>
-         <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort"
-               icon="icons/elcl16/revtypesort_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort"
-               label="Sort by Review Type"
-               mnemonic="t"
-               style="toggle"
-               tooltip="Sort Reviews by Review Type">
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
@@ -267,13 +249,13 @@
                tooltip="Collapse All Elements of the Review Navigator Tree">
          </command>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.GoInto"
                icon="icons/elcl16/focus_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
-               label="Set Focus"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.GoInto"
+               label="Go Into"
                mnemonic="f"
                style="toggle"
-               tooltip="Set Focus on Current Element">
+               tooltip="Go Into and Set Focus on Current Element">
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext"
@@ -347,19 +329,19 @@
                visible="true">
          </separator>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement"
                icon="icons/obj16/revgrp_obj.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
-               label="Add Review Group"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement"
+               label="New Review Group"
                mnemonic="g"
                style="push"
                tooltip="Add a New Review Group">
          </command>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement"
                icon="icons/obj16/ruleset_obj.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
-               label="Add Rule Set"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement"
+               label="New Rule Set"
                mnemonic="a"
                style="push"
                tooltip="Add a New Rule Set">
@@ -387,13 +369,13 @@
                tooltip="Collapse All Elements of the Review Navigator Tree">
          </command>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.GoInto"
                icon="icons/elcl16/focus_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
-               label="Set Focus"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Go Into"
+               label="Go Into"
                mnemonic="f"
                style="toggle"
-               tooltip="Set Focus on Current Element">
+               tooltip="Go Into and Set Focus on Current Element">
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext"
@@ -465,15 +447,15 @@
       </category>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
-            description="Add a Review Item to the Current Review"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem"
-            name="Add Review Item">
+            description="Add a New Review Item to the Current Review"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem"
+            name="New Review Item">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
-            description="Add an Anomaly to the Current Review"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomaly"
-            name="Add Anomaly">
+            description="Add a New Anomaly to the Current Review"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly"
+            name="New Anomaly">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
@@ -543,9 +525,9 @@
       </category>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Set Focus on Current Element"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
-            name="SetFocus">
+            description="Go Into and set Focus on Current Element"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.GoInto"
+            name="GoInto">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -638,9 +620,9 @@
       </category>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Add Linked Anomaly"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.addLinkedAnomaly"
-            name="Add Linked Anomaly">
+            description="Add a New Linked Anomaly"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly"
+            name="New Linked Anomaly">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
@@ -668,15 +650,15 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Add Child Element"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"
-            name="Add Child Element">
+            description="Add a New Child Element"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement"
+            name="New Child Element">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
-            description="Add Rule Set Element"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement"
-            name="Add Rule Set Element">
+            description="Add a New Rule Set Element"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement"
+            name="New Rule Set Element">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
@@ -817,8 +799,8 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocusFilterHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus">
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.GoIntoFilterHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.GoInto">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
@@ -925,8 +907,8 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddLinkedAnomalyHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addLinkedAnomaly">
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomalyHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
@@ -970,8 +952,8 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddChildElementHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement">
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElementHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
@@ -979,8 +961,8 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddRuleSetElementHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addRuleSetElement">
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElementHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
@@ -1021,8 +1003,8 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomalyHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomaly">
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomalyHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.anomaly.anomaly">
@@ -1030,8 +1012,8 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItemHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem">
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItemHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewItem.reviewItem">
@@ -1238,15 +1220,15 @@
             type="java.lang.Object">
       </propertyTester>
       <propertyTester
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomalyPropertyTester"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.addAnomalyPropertyTester"
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomalyPropertyTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomalyPropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.anomaly"
             properties="anomaly"
             type="java.lang.Object">
       </propertyTester>
       <propertyTester
-            class="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItemPropertyTester"
-            id="org.eclipse.mylyn.reviews.r4e.ui.commands.addReviewItemPropertyTester"
+            class="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItemPropertyTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItemPropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewItem"
             properties="reviewItem"
             type="java.lang.Object">
@@ -1268,13 +1250,13 @@
             sequence="Alt+R F">
       </key>
       <key
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem"
             contextId="org.eclipse.ui.textEditorScope"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+R I">
       </key>
       <key
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.AddAnomaly"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly"
             contextId="org.eclipse.ui.textEditorScope"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+R A">
@@ -1310,7 +1292,7 @@
             sequence="Alt+R O">
       </key>
       <key
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.addLinkedAnomaly"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+R L">

@@ -249,7 +249,7 @@ public class EditableListWidget {
 
 		final Composite buttonsComposite = aToolkit.createComposite(fMainComposite);
 		buttonsComposite.setLayout(new GridLayout());
-		buttonsComposite.setLayoutData(new GridData(GridData.CENTER, GridData.CENTER, false, false));
+		buttonsComposite.setLayoutData(new GridData(GridData.CENTER, SWT.TOP, false, false));
 
 		fAddButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_ADD_LABEL, SWT.NONE);
 		if (aEditableWidgetClass.equals(CCombo.class)) {

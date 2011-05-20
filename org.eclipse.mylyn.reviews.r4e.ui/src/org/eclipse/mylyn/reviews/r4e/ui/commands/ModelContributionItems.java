@@ -78,10 +78,10 @@ public class ModelContributionItems extends CompoundContributionItem {
 
 			if (element.isAddChildElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-						R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND, R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND, null,
+						R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND, R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND, null,
 						PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD),
 						null, null, element.getAddChildElementCmdName(),
-						R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_MNEMONIC, element.getAddChildElementCmdTooltip(),
+						R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_MNEMONIC, element.getAddChildElementCmdTooltip(),
 						CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
@@ -97,10 +97,10 @@ public class ModelContributionItems extends CompoundContributionItem {
 
 			if (element.isAddLinkedAnomalyCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-						R4EUIConstants.ADD_LINKED_ANOMALY_COMMAND, R4EUIConstants.ADD_LINKED_ANOMALY_COMMAND, null,
+						R4EUIConstants.NEW_LINKED_ANOMALY_COMMAND, R4EUIConstants.NEW_LINKED_ANOMALY_COMMAND, null,
 						PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD),
-						null, null, R4EUIConstants.ADD_LINKED_ANOMALY_NAME, R4EUIConstants.ADD_LINKED_ANOMALY_MNEMONIC,
-						R4EUIConstants.ADD_LINKED_ANOMALY_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
+						null, null, R4EUIConstants.NEW_LINKED_ANOMALY_NAME, R4EUIConstants.NEW_LINKED_ANOMALY_MNEMONIC,
+						R4EUIConstants.NEW_LINKED_ANOMALY_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
 			if (element.isOpenEditorCmd() && R4EUIModelController.getNavigatorView().isEditorLinked()) {
@@ -150,10 +150,10 @@ public class ModelContributionItems extends CompoundContributionItem {
 		} else {
 			//When no element is selected, contribute add review group command
 			params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-					R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND, R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND, null,
+					R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND, R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND, null,
 					PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD), null,
-					null, R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_NAME,
-					R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_MNEMONIC, R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_NAME,
+					null, R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_NAME,
+					R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_MNEMONIC, R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_NAME,
 					CommandContributionItem.STYLE_PUSH, null, true);
 			list.add(new CommandContributionItem(params));
 		}

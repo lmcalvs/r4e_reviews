@@ -69,14 +69,14 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	private static final String REVIEW_GROUP_CLOSED_ICON_FILE = "icons/obj16/revgrpclsd_obj.gif";
 
 	/**
-	 * Field ADD_ELEMENT_ACTION_NAME. (value is ""Add Review"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Review"")
 	 */
-	private static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Review";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Review";
 
 	/**
-	 * Field ADD_ELEMENT_ACTION_TOOLTIP. (value is ""Add a new review to the current review group"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a new review to the current review group"")
 	 */
-	private static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Review to the Current Review Group";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Review to the Current Review Group";
 
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Delete Review Group"")
@@ -156,10 +156,12 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter))
+		if (IR4EUIModelElement.class.equals(adapter)) {
 			return this;
-		if (IPropertySource.class.equals(adapter))
+		}
+		if (IPropertySource.class.equals(adapter)) {
 			return new ReviewGroupProperties(this);
+		}
 		return null;
 	}
 
@@ -258,8 +260,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		for (int i = 0; i < reviewsSize; i++) {
 
 			review = fReviews.get(i);
-			if (!review.isOpen())
+			if (!review.isOpen()) {
 				continue; //skip reviews that are already closed
+			}
 			review.close();
 			review.removeListeners();
 			fireRemove(review);
@@ -318,8 +321,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		final List<String> ruleSetlocations = fGroup.getDesignRuleLocations();
 		for (String ruleSetlocation : ruleSetlocations) {
 			for (R4EUIRuleSet ruleSet : ((R4EUIRootElement) getParent()).getRuleSets()) {
-				if (!ruleSet.isOpen())
+				if (!ruleSet.isOpen()) {
 					ruleSet.open();
+				}
 				if (ruleSet.getRuleSet().eResource().getURI().toFileString().equals(ruleSetlocation)) {
 					fRuleSets.add(ruleSet);
 					break;
@@ -395,8 +399,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public boolean hasChildren() {
 		if (isOpen()) {
-			if (fReviews.size() > 0)
+			if (fReviews.size() > 0) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -475,8 +480,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
 			throws ResourceHandlingException, OutOfSyncException {
 		//This was the current review, so tell the controller that no review is now active
-		if (((R4EUIReviewBasic) aChildToRemove).isOpen())
+		if (((R4EUIReviewBasic) aChildToRemove).isOpen()) {
 			R4EUIModelController.setActiveReview(null);
+		}
 
 		final R4EUIReviewBasic removedElement = fReviews.get(fReviews.indexOf(aChildToRemove));
 
@@ -563,8 +569,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenElementCmd() {
-		if (!isEnabled() || isOpen())
+		if (!isEnabled() || isOpen()) {
 			return false;
+		}
 		return true;
 	}
 
@@ -576,8 +583,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isCloseElementCmd() {
-		if (isEnabled() && isOpen())
+		if (isEnabled() && isOpen()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -589,8 +597,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (isEnabled() && isOpen())
+		if (isEnabled() && isOpen()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -602,7 +611,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public String getAddChildElementCmdName() {
-		return ADD_CHILD_ELEMENT_COMMAND_NAME;
+		return NEW_CHILD_ELEMENT_COMMAND_NAME;
 	}
 
 	/**
@@ -613,7 +622,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public String getAddChildElementCmdTooltip() {
-		return ADD_CHILD_ELEMENT_COMMAND_TOOLTIP;
+		return NEW_CHILD_ELEMENT_COMMAND_TOOLTIP;
 	}
 
 	/**
@@ -624,8 +633,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (!isOpen() && isEnabled())
+		if (!isOpen() && isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -637,8 +647,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isOpen() || isEnabled())
+		if (isOpen() || isEnabled()) {
 			return false;
+		}
 		return true;
 	}
 

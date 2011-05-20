@@ -256,6 +256,7 @@ public class ParticipantInputDialog extends FormDialog {
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(ADD_PARTICIPANT_DIALOG_TITLE);
+		shell.setMinimumSize(R4EUIConstants.DIALOG_DEFAULT_WIDTH, R4EUIConstants.DIALOG_DEFAULT_HEIGHT);
 	}
 
 	/**

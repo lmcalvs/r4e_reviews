@@ -330,6 +330,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(ADD_REVIEW_GROUP_DIALOG_TITLE);
+		shell.setMinimumSize(R4EUIConstants.DIALOG_DEFAULT_WIDTH, R4EUIConstants.DIALOG_DEFAULT_HEIGHT);
+
 	}
 
 	/**
@@ -485,8 +487,9 @@ public class ReviewGroupInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fRuleSets = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
 				ruleLocations.toArray(new String[ruleLocations.size()]));
-		if (0 == ruleLocations.size())
+		if (0 == ruleLocations.size()) {
 			fRuleSets.setEnabled(false);
+		}
 		fRuleSets.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
 	}
 

@@ -160,12 +160,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	/**
 	 * Field DIALOG_DEFAULT_HEIGHT. (value is 500)
 	 */
-	public static final int DIALOG_DEFAULT_HEIGHT = 600;
+	public static final int DIALOG_DEFAULT_HEIGHT = 300;
 
 	/**
 	 * Field DIALOG_DEFAULT_WIDTH. (value is 500)
 	 */
-	public static final int DIALOG_DEFAULT_WIDTH = 500;
+	public static final int DIALOG_DEFAULT_WIDTH = 400;
 
 	//Tooltips
 
@@ -961,24 +961,24 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String HIDE_DELTAS_FILTER_MNEMONIC = "d";
 
 	/**
-	 * Field SET_FOCUS_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.SetFocus"")
+	 * Field GO_INTO_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.GoInto"")
 	 */
-	public static final String SET_FOCUS_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus";
+	public static final String GO_INTO_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.GoInto";
 
 	/**
-	 * Field SET_FOCUS_FILTER_NAME. (value is ""Set Focus"")
+	 * Field GO_INTO_FILTER_NAME. (value is ""Go Into"")
 	 */
-	public static final String SET_FOCUS_FILTER_NAME = "Set Focus";
+	public static final String GO_INTO_FILTER_NAME = "Go Into";
 
 	/**
-	 * Field SET_FOCUS_FILTER_TOOLTIP. (value is ""Set Focus on Current Element"")
+	 * Field GO_INTO_FILTER_TOOLTIP. (value is ""Go Into and Set Focus on Current Element"")
 	 */
-	public static final String SET_FOCUS_FILTER_TOOLTIP = "Set Focus on Current Element";
+	public static final String GO_INTO_FILTER_TOOLTIP = "Go Into and Set Focus on Current Element";
 
 	/**
-	 * Field SET_FOCUS_FILTER_MNEMONIC. (value is ""f"")
+	 * Field GO_INTO_FILTER_MNEMONIC. (value is ""f"")
 	 */
-	public static final String SET_FOCUS_FILTER_MNEMONIC = "f";
+	public static final String GO_INTO_FILTER_MNEMONIC = "f";
 
 	/**
 	 * Field REMOVE_ALL_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.RemoveAll"")
@@ -1001,24 +1001,24 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REMOVE_ALL_FILTER_MNEMONIC = "r";
 
 	/**
-	 * Field ADD_LINKED_ANOMALY_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.addLinkedAnomaly"")
+	 * Field NEW_LINKED_ANOMALY_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly"")
 	 */
-	public static final String ADD_LINKED_ANOMALY_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.addLinkedAnomaly";
+	public static final String NEW_LINKED_ANOMALY_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly";
 
 	/**
-	 * Field ADD_LINKED_ANOMALY_NAME. (value is ""Add linked anomaly"")
+	 * Field NEW_LINKED_ANOMALY_NAME. (value is ""New linked anomaly"")
 	 */
-	public static final String ADD_LINKED_ANOMALY_NAME = "Add Linked Anomaly";
+	public static final String NEW_LINKED_ANOMALY_NAME = "New Linked Anomaly";
 
 	/**
-	 * Field ADD_LINKED_ANOMALY_TOOLTIP. (value is ""Add a new anomaly that is linked to this selection"")
+	 * Field NEW_LINKED_ANOMALY_TOOLTIP. (value is ""Add a new anomaly that is linked to this selection"")
 	 */
-	public static final String ADD_LINKED_ANOMALY_TOOLTIP = "Add a New Anomaly that is Linked to this Selection";
+	public static final String NEW_LINKED_ANOMALY_TOOLTIP = "Add a New Anomaly that is Linked to this Selection";
 
 	/**
-	 * Field ADD_LINKED_ANOMALY_MNEMONIC. (value is ""l"")
+	 * Field NEW_LINKED_ANOMALY_MNEMONIC. (value is ""l"")
 	 */
-	public static final String ADD_LINKED_ANOMALY_MNEMONIC = "l";
+	public static final String NEW_LINKED_ANOMALY_MNEMONIC = "l";
 
 	/**
 	 * Field OPEN_EDITOR_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.openEditor"")
@@ -1122,24 +1122,24 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String CLOSE_ELEMENT_COMMAND_MNEMONIC = "c";
 
 	/**
-	 * Field ADD_CHILD_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"")
 	 */
-	public static final String ADD_CHILD_ELEMENT_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement";
+	public static final String NEW_CHILD_ELEMENT_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement";
 
 	/**
-	 * Field ADD_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add review group"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""New Child Element"")
 	 */
-	public static final String ADD_CHILD_ELEMENT_COMMAND_NAME = "Add Child Element";
+	public static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Child Element";
 
 	/**
-	 * Field ADD_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a new review group"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Child Element"")
 	 */
-	public static final String ADD_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Child Element";
+	public static final String NEW_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Child Element";
 
 	/**
-	 * Field ADD_CHILD_ELEMENT_COMMAND_MNEMONIC. (value is ""a"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_MNEMONIC. (value is ""a"")
 	 */
-	public static final String ADD_CHILD_ELEMENT_COMMAND_MNEMONIC = "a";
+	public static final String NEW_CHILD_ELEMENT_COMMAND_MNEMONIC = "a";
 
 	/**
 	 * Field REMOVE_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.removeElement"")
@@ -1207,9 +1207,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String SEND_EMAIL_COMMAND_MNEMONIC = "N";
 
 	/**
-	 * Field ADD_REVIEW_ITEM_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem"")
+	 * Field NEW_REVIEW_ITEM_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem"")
 	 */
-	public static final String ADD_REVIEW_ITEM_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.AddReviewItem";
+	public static final String NEW_REVIEW_ITEM_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem";
 
 	/**
 	 * Field START_STRING_INDEX. (value is 0)

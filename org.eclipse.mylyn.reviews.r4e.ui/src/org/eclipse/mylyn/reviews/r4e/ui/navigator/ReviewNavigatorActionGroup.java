@@ -578,7 +578,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	private void resetFocusFilterCommand() {
 		fView.getTreeViewer().removeFilter(fFocusFilter);
-		fCommandService.getCommand(R4EUIConstants.SET_FOCUS_FILTER_COMMAND)
+		fCommandService.getCommand(R4EUIConstants.GO_INTO_FILTER_COMMAND)
 				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
 				.setValue(Boolean.valueOf(false));
 	}
@@ -597,7 +597,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 			NotEnabledException, NotHandledException {
 		resetFocusFilterCommand();
 		if (aApply) {
-			fHandlerService.executeCommand(R4EUIConstants.SET_FOCUS_FILTER_COMMAND, null);
+			fHandlerService.executeCommand(R4EUIConstants.GO_INTO_FILTER_COMMAND, null);
 		}
 	}
 
@@ -637,12 +637,12 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	public void addReviewItemCommand() throws ExecutionException, NotDefinedException, NotEnabledException,
 			NotHandledException {
-		boolean commandActive = fCommandService.getCommand(R4EUIConstants.ADD_REVIEW_ITEM_COMMAND)
+		boolean commandActive = fCommandService.getCommand(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND)
 				.getHandler()
 				.isEnabled();
-		IHandlerActivation activationToken = fHandlerService.activateHandler(R4EUIConstants.ADD_REVIEW_ITEM_COMMAND,
-				fCommandService.getCommand(R4EUIConstants.ADD_REVIEW_ITEM_COMMAND).getHandler());
-		fHandlerService.executeCommand(R4EUIConstants.ADD_REVIEW_ITEM_COMMAND, null);
+		IHandlerActivation activationToken = fHandlerService.activateHandler(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND,
+				fCommandService.getCommand(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND).getHandler());
+		fHandlerService.executeCommand(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND, null);
 		if (!commandActive) {
 			fHandlerService.deactivateHandler(activationToken);
 		}

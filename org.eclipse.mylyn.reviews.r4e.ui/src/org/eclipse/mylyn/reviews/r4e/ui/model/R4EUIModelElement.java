@@ -600,7 +600,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdName()
 	 */
 	public String getAddChildElementCmdName() {
-		return R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_NAME; //default implementation
+		return R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_NAME; //default implementation
 	}
 
 	/**
@@ -610,7 +610,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
 	 */
 	public String getAddChildElementCmdTooltip() {
-		return R4EUIConstants.ADD_CHILD_ELEMENT_COMMAND_TOOLTIP; //default implementation
+		return R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_TOOLTIP; //default implementation
 	}
 
 	/**

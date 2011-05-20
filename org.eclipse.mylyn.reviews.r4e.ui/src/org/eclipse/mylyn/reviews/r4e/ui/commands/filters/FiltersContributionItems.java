@@ -97,9 +97,9 @@ public class FiltersContributionItems extends CompoundContributionItem {
 		list.add(new CommandContributionItem(params));
 
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-				R4EUIConstants.SET_FOCUS_FILTER_COMMAND, R4EUIConstants.SET_FOCUS_FILTER_COMMAND, null, null, null,
-				null, R4EUIConstants.SET_FOCUS_FILTER_NAME, R4EUIConstants.SET_FOCUS_FILTER_MNEMONIC,
-				R4EUIConstants.SET_FOCUS_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
+				R4EUIConstants.GO_INTO_FILTER_COMMAND, R4EUIConstants.GO_INTO_FILTER_COMMAND, null, null, null,
+				null, R4EUIConstants.GO_INTO_FILTER_NAME, R4EUIConstants.GO_INTO_FILTER_MNEMONIC,
+				R4EUIConstants.GO_INTO_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
 		list.add(new CommandContributionItem(params));
 
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),

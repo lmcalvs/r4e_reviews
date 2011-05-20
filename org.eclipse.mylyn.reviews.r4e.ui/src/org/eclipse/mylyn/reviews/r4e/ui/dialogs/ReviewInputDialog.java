@@ -338,6 +338,7 @@ public class ReviewInputDialog extends FormDialog {
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(ADD_REVIEW_DIALOG_TITLE);
+		shell.setMinimumSize(R4EUIConstants.DIALOG_DEFAULT_WIDTH, R4EUIConstants.DIALOG_DEFAULT_HEIGHT);
 	}
 
 	/**
@@ -435,8 +436,9 @@ public class ReviewInputDialog extends FormDialog {
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fProjectsCombo = new CCombo(extraSectionClient, SWT.BORDER | SWT.READ_ONLY);
 		final String[] projects = (String[]) fReviewGroup.getReviewGroup().getAvailableProjects().toArray();
-		if (0 == projects.length)
+		if (0 == projects.length) {
 			fProjectsCombo.setEnabled(false);
+		}
 		fProjectsCombo.setItems(projects);
 		final GridData data1 = new GridData(GridData.FILL, GridData.FILL, true, false);
 		data1.horizontalSpan = 3;
@@ -452,8 +454,9 @@ public class ReviewInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fComponents = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
 				components);
-		if (0 == components.length)
+		if (0 == components.length) {
 			fComponents.setEnabled(false);
+		}
 		fComponents.setToolTipText(R4EUIConstants.REVIEW_COMPONENTS_TOOLTIP);
 
 		//Entry Criteria
