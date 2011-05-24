@@ -260,6 +260,8 @@ public class EditableListWidget {
 		fRemoveButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_REMOVE_LABEL, SWT.NONE);
 		if (0 == fMainTable.getItemCount()) {
 			fRemoveButton.setEnabled(false);
+		} else {
+			fRemoveButton.setEnabled(true);
 		}
 
 		fAddButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
@@ -387,7 +389,10 @@ public class EditableListWidget {
 				}
 				if (0 == fMainTable.getItemCount()) {
 					fRemoveButton.setEnabled(false);
+				} else {
+					fRemoveButton.setEnabled(true);
 				}
+				fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
 				fMainTable.redraw();
 			}
 
@@ -520,5 +525,16 @@ public class EditableListWidget {
 	 */
 	public void setToolTipText(String aTooltip) {
 		fMainComposite.setToolTipText(aTooltip);
+	}
+
+	/**
+	 * Method updateButtons.
+	 */
+	public void updateButtons() {
+		if (0 == fMainTable.getItemCount()) {
+			fRemoveButton.setEnabled(false);
+		} else {
+			fRemoveButton.setEnabled(true);
+		}
 	}
 }

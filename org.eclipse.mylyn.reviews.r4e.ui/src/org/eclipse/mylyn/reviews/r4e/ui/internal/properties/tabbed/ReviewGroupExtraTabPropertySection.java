@@ -87,10 +87,12 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 	 */
 	@Override
 	public void dispose() {
-		if (null != fAvailableProjects)
+		if (null != fAvailableProjects) {
 			fAvailableProjects.dispose();
-		if (null != fAvailableComponents)
+		}
+		if (null != fAvailableComponents) {
 			fAvailableComponents.dispose();
+		}
 		super.dispose();
 	}
 
@@ -233,11 +235,13 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 				item = fAvailableProjects.addItem();
 			} else {
 				item = fAvailableProjects.getItem(i);
-				if (null == item)
+				if (null == item) {
 					item = fAvailableProjects.addItem();
+				}
 			}
 			item.setText(project);
 		}
+		fAvailableProjects.updateButtons();
 
 		final String[] components = (String[]) modelGroup.getAvailableComponents().toArray();
 		fAvailableComponents.clearAll();
@@ -248,8 +252,9 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 				item = fAvailableComponents.addItem();
 			} else {
 				item = fAvailableComponents.getItem(i);
-				if (null == item)
+				if (null == item) {
 					item = fAvailableComponents.addItem();
+				}
 			}
 			item.setText(component);
 		}
@@ -280,8 +285,9 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 				item = fRuleSetLocations.addItem();
 			} else {
 				item = fRuleSetLocations.getItem(i);
-				if (null == item)
+				if (null == item) {
 					item = fRuleSetLocations.addItem();
+				}
 			}
 			item.setText(ruleSet);
 		}
