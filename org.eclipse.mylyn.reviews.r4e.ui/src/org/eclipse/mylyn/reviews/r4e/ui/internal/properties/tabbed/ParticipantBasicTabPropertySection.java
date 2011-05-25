@@ -241,7 +241,9 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 		fRefreshInProgress = true;
 		final R4EParticipant modelUser = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
 		fIdText.setText(modelUser.getId());
-		fEmailText.setText(modelUser.getEmail());
+		if (null != modelUser.getEmail()) {
+			fEmailText.setText(modelUser.getEmail());
+		}
 		fNumItemsText.setText(String.valueOf(modelUser.getAddedItems().size()));
 
 		int numAnomalies = 0;

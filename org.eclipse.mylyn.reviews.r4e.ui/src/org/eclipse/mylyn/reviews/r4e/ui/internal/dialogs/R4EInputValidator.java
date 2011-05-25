@@ -59,6 +59,12 @@ public class R4EInputValidator implements IInputValidator {
 	 */
 	private static final String FILE_EXISTS_VALIDATION_ERROR_MESSAGE = "File already exists";
 
+	//TODO:  Bug 347176: This is a temporary fix that should be removed later
+	/**
+	 * Field INVALID_CHARACTER_VALIDATION_ERROR_MESSAGE. (value is ""Invalid Character detected in Path"")
+	 */
+	private static final String INVALID_CHARACTER_VALIDATION_ERROR_MESSAGE = "Invalid Character detected in Path";
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -72,11 +78,17 @@ public class R4EInputValidator implements IInputValidator {
 	 * @see org.eclipse.jface.dialogs.IInputValidator#isValid(String)
 	 */
 	public String isFolderValid(String newText) { // $codepro.audit.disable booleanMethodNamingConvention
-		if (null == newText || 0 == newText.length())
+		if (null == newText || 0 == newText.length()) {
 			return FOLDER_VALIDATION_ERROR_MESSAGE;
+		}
+		//TODO:  Bug 347176: This is a temporary fix that should be removed later
+		if (newText.contains(" ") || newText.contains("#") || newText.contains("?")) {
+			return INVALID_CHARACTER_VALIDATION_ERROR_MESSAGE;
+		}
 		final File folder = new File(newText);
-		if (folder.exists())
+		if (folder.exists()) {
 			return null;
+		}
 		return FOLDER_VALIDATION_ERROR_MESSAGE;
 	}
 
@@ -91,8 +103,9 @@ public class R4EInputValidator implements IInputValidator {
 		final File dir = new File(newText);
 		final File[] files = dir.listFiles(new WildcardFileFilter(GROUP_WILDCARD_NAME));
 
-		if (files.length > 0)
+		if (files.length > 0) {
 			return FOLDER_GROUP_EXISTS_VALIDATION_ERROR_MESSAGE;
+		}
 		return null;
 	}
 
@@ -105,8 +118,9 @@ public class R4EInputValidator implements IInputValidator {
 	 */
 	public String isFileExists(String newText) { // $codepro.audit.disable booleanMethodNamingConvention
 		final File file = new File(newText);
-		if (file.exists())
+		if (file.exists()) {
 			return FILE_EXISTS_VALIDATION_ERROR_MESSAGE;
+		}
 		return null;
 	}
 
@@ -118,8 +132,9 @@ public class R4EInputValidator implements IInputValidator {
 	 * @return String
 	 */
 	public String isValid(String newText) { // $codepro.audit.disable booleanMethodNamingConvention
-		if (null == newText || 0 == newText.length())
+		if (null == newText || 0 == newText.length()) {
 			return EMPTY_VALIDATION_ERROR_MESSAGE;
+		}
 		return null;
 	}
 
