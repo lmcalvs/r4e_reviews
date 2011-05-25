@@ -208,7 +208,7 @@ public class R4EReviewGroupTest extends TestCase {
 		assertEquals(fUser1, participant.getId());
 
 		// Clean up
-		File folder = new File(fGroupPath.devicePath());
+		File folder = new File(URI.decode(fGroupPath.devicePath()));
 		try {
 			FileUtils.deleteDirectory(folder);
 		} catch (IOException e) {
@@ -508,7 +508,7 @@ public class R4EReviewGroupTest extends TestCase {
 		String toReplace = TstGeneral.GROUP_PATH_STR;
 		String forReplace = toReplace + "Y";
 
-		String path = groupFileUri.devicePath();
+		String path = URI.decode(groupFileUri.devicePath());
 		// modify to destination folder
 		path = path.replace(toReplace, forReplace);
 		File destFile = new File(path);

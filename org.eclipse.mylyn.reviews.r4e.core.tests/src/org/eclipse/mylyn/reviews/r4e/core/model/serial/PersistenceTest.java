@@ -79,7 +79,7 @@ public class PersistenceTest extends TestCase {
 
 		// Resolve golden group storage dir
 		String rootFile = fGoldenGroup.lastSegment();
-		File goldenDir = new File(fGoldenGroup.trimSegments(1).devicePath());
+		File goldenDir = new File(URI.decode(fGoldenGroup.trimSegments(1).devicePath()));
 
 		// Take the directory name to be used as copy destination
 		String testDir = fRootTestDir.toString() + "OutL1" + fSep + "OutL2" + fSep + goldenDir.getName();

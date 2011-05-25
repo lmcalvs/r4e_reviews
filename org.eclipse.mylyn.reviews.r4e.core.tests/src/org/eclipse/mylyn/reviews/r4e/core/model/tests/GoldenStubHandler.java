@@ -127,8 +127,8 @@ public class GoldenStubHandler extends TestCase {
 		}
 
 		// Check against published golden directory
-		boolean same = TstGeneral.compareDirectories(new File(GoldenStubHandler.fGroupPath.devicePath()),
-				new File(TstGeneral.GOLDEN_GROUP_DIR.devicePath()));
+		boolean same = TstGeneral.compareDirectories(new File(URI.decode(GoldenStubHandler.fGroupPath.devicePath())),
+				new File(URI.decode(TstGeneral.GOLDEN_GROUP_DIR.devicePath())));
 
 		assertTrue("Contents differ from base directory", same);
 
@@ -140,7 +140,7 @@ public class GoldenStubHandler extends TestCase {
 		if (fGroupPath == null) {
 			init();
 		}
-		String groupPath = fGroupPath.devicePath();
+		String groupPath = URI.decode(fGroupPath.devicePath());
 		String groupName = "Golden Group";
 
 		// Serialize

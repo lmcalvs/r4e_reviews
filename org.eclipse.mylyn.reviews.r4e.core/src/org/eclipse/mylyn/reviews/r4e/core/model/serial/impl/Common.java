@@ -305,7 +305,7 @@ public class Common {
 	private List<URI> selectFiles(URI aFolder, Pattern pattern) {
 		Matcher matcher = null;
 		List<URI> filesRes = new ArrayList<URI>();
-		String path = aFolder.devicePath();
+		String path = URI.decode(aFolder.devicePath());
 		File folder = new File(path);
 
 		if (folder.exists()) {

@@ -115,7 +115,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	public R4EUIRuleSet(IR4EUIModelElement aParent, R4EDesignRuleCollection aRuleSet, boolean aOpen) {
 		super(aParent, aRuleSet.getName(), R4EUIConstants.FILE_LOCATION_LABEL
-				+ aRuleSet.eResource().getURI().devicePath());
+				+ URI.decode(aRuleSet.eResource().getURI().devicePath()));
 		fRuleSet = aRuleSet;
 		fRuleSetFileURI = aRuleSet.eResource().getURI();
 		fAreas = new ArrayList<R4EUIRuleArea>();

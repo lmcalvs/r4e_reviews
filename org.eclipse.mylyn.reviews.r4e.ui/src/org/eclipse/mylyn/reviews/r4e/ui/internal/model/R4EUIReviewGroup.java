@@ -127,7 +127,8 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 *            boolean
 	 */
 	public R4EUIReviewGroup(IR4EUIModelElement aParent, R4EReviewGroup aGroup, boolean aOpen) {
-		super(aParent, aGroup.getName(), R4EUIConstants.FILE_LOCATION_LABEL + aGroup.eResource().getURI().devicePath());
+		super(aParent, aGroup.getName(), R4EUIConstants.FILE_LOCATION_LABEL
+				+ URI.decode(aGroup.eResource().getURI().devicePath()));
 		fGroup = aGroup;
 		fGroupFileURI = aGroup.eResource().getURI();
 		fReviews = new ArrayList<R4EUIReviewBasic>();

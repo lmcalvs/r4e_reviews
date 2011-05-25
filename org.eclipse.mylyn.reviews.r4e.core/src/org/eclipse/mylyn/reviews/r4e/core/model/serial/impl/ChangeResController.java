@@ -180,7 +180,8 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		}
 
 		URI resUri = aResource.getURI();
-		File file = new File(resUri.devicePath());
+		File file = new File(URI.decode(resUri.devicePath()));
+		
 		if (!file.exists()) {
 			throw new ResourceHandlingException("Not able to lock file: " + file.getAbsolutePath().toString()
 					+ ". file does not exist");
@@ -311,7 +312,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		}
 
 		URI resUri = aResource.getURI();
-		File file = new File(resUri.devicePath());
+		File file = new File(URI.decode(resUri.devicePath()));
 		if (!file.exists()) {
 			throw new ResourceHandlingException("Not able to unlock Resource file: "
 					+ file.getAbsolutePath().toString() + ". File does not exist");

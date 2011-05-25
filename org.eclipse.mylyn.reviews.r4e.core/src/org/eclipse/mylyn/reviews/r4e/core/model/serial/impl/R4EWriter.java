@@ -222,7 +222,7 @@ public class R4EWriter extends Common {
 		boolean newFolder = !folder.exists();
 		
 		// Mark new file creation
-		File file = new File(resUri.devicePath());
+		File file = new File(URI.decode(resUri.devicePath()));
 		boolean newFile = !file.exists();
 
 		// When change tracking is implemented, restrict save to resources marked as modified

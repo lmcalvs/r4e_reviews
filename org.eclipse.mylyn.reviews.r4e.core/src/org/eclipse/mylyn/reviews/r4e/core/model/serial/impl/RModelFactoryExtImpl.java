@@ -93,13 +93,15 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		Resource resource = fWriter.createResourceSetWithResource(fileGroupURI);
 		R4EReviewGroup group = RModelFactory.eINSTANCE.createR4EReviewGroup();
 		resource.getContents().add(group);
+
+		URI uri = group.eResource().getURI().trimSegments(1);
 		// Update the resource
 		group.setName(aGroupName);
-		group.setFolder(group.eResource().getURI().trimSegments(1).devicePath().toString());
+		group.setFolder(URI.decode(uri.devicePath().toString()));
 		fWriter.saveResource(resource);
 
 		// Make sure a local review repository exist in this location
-		File groupFolder = new File(aFolderPath.devicePath());
+		File groupFolder = new File(URI.decode(aFolderPath.devicePath()));
 		try {
 			checkOrCreateRepo(groupFolder);
 		} catch (ReviewsFileStorageException e) {
@@ -147,10 +149,12 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			group.getAnomalyTypeKeyToReference().put(r4eAnomalyType.getType(), r4eAnomalyType);
 		}
 
+		URI resUri = group.eResource().getURI().trimSegments(1);
+
 		// update the transient value of folder
-		group.setFolder(group.eResource().getURI().trimSegments(1).devicePath().toString());
+		group.setFolder(URI.decode(resUri.devicePath().toString()));
 		// Make sure a local review repository exist in this location
-		File groupFolder = new File(folder.devicePath());
+		File groupFolder = new File(URI.decode(folder.devicePath()));
 		try {
 			checkOrCreateRepo(groupFolder);
 		} catch (ReviewsFileStorageException e) {
@@ -1383,7 +1387,9 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		
 		// Update the resource
 		ruleSet.setName(aRuleCollectionName);
-		ruleSet.setFolder(ruleSet.eResource().getURI().trimSegments(1).devicePath().toString());
+
+		URI uri = ruleSet.eResource().getURI().trimSegments(1);
+		ruleSet.setFolder(URI.decode(uri.devicePath().toString()));
 		fWriter.saveResource(resource);
 
 		return ruleSet;
@@ -1399,8 +1405,9 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 	public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException {
 		R4EDesignRuleCollection ruleSet = fReader.deserializeTopElement(aResourcePath, R4EDesignRuleCollection.class);
 
+		URI resUri = ruleSet.eResource().getURI().trimSegments(1);
 		// update the transient value of folder
-		ruleSet.setFolder(ruleSet.eResource().getURI().trimSegments(1).devicePath().toString());
+		ruleSet.setFolder(URI.decode(resUri.devicePath().toString()));
 		
 		return ruleSet;
 	}
