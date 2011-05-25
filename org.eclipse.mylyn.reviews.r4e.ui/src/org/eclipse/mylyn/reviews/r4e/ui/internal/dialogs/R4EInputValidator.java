@@ -59,12 +59,6 @@ public class R4EInputValidator implements IInputValidator {
 	 */
 	private static final String FILE_EXISTS_VALIDATION_ERROR_MESSAGE = "File already exists";
 
-	//TODO:  Bug 347176: This is a temporary fix that should be removed later
-	/**
-	 * Field INVALID_CHARACTER_VALIDATION_ERROR_MESSAGE. (value is ""Invalid Character detected in Path"")
-	 */
-	private static final String INVALID_CHARACTER_VALIDATION_ERROR_MESSAGE = "Invalid Character detected in Path";
-
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -81,10 +75,7 @@ public class R4EInputValidator implements IInputValidator {
 		if (null == newText || 0 == newText.length()) {
 			return FOLDER_VALIDATION_ERROR_MESSAGE;
 		}
-		//TODO:  Bug 347176: This is a temporary fix that should be removed later
-		if (newText.contains(" ") || newText.contains("#") || newText.contains("?")) {
-			return INVALID_CHARACTER_VALIDATION_ERROR_MESSAGE;
-		}
+
 		final File folder = new File(newText);
 		if (folder.exists()) {
 			return null;
