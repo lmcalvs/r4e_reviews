@@ -93,7 +93,7 @@ public class ReviewsVersionsIFTst extends GitTestCase {
 		CommitOperation commitOperation = new CommitOperation(null, null, null, TestUtils.AUTHOR, TestUtils.COMMITTER,
 				"first commit");
 		commitOperation.setCommitAll(true);
-		commitOperation.setRepository(repo);
+		commitOperation.setRepos(new Repository[] { repo });
 		commitOperation.execute(null);
 		fIProject.refreshLocal(IProject.DEPTH_INFINITE, null);
 	}
