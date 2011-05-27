@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="reviews.r4e.mail.smtp"
+         name="%Bundle-Name"
+         point="org.eclipse.mylyn.reviews.notifications.connectors">
+      <connector
+            core="org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.Smtp"
+            id="mylyn.reviews.r4e.mail.smtp.connector">
+      </connector>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.mylyn.reviews.r4e.ui.preferences.R4EPreferencePage"
+            class="org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.preferences.SmtpHostPreferencePage"
+            id="org.eclipse.mylyn.reviews.r4e.mail.smtp.page1"
+            name="SMTP Host">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>
