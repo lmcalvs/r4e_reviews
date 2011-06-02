@@ -138,17 +138,8 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			final ScmConnectorUi uiConnector = ScmUi.getUiConnector(project);
 			ChangeSet changeSet = null;
 			if (null != uiConnector) {
-				try {
-					Activator.Ftracer.traceDebug("Resolved Scm Ui connector: " + uiConnector);
-					R4EUIModelController.setDialogOpen(true);
-					changeSet = uiConnector.getChangeSet(null, project, null);
-					R4EUIModelController.setDialogOpen(false);
-				} catch (final CoreException e) {
-					Activator.Ftracer.traceError("Exception: " + e.getMessage());
-					Activator.getDefault().logError("Exception: " + e.toString(), e);
-					R4EUIModelController.setDialogOpen(false);
-					return null;
-				}
+				Activator.Ftracer.traceDebug("Resolved Scm Ui connector: " + uiConnector);
+				changeSet = uiConnector.getChangeSet(null, project);
 
 				//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
 				final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
