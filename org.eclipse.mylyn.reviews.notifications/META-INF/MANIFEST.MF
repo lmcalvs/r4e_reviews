@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.eclipse.mylyn.reviews.notifications;singleton:=true
 Bundle-Version: 0.8.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.mylyn.commons.core;bundle-version="3.0.0"
+ org.eclipse.mylyn.commons.core;bundle-version="3.3.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.mylyn.reviews.notifications.core,

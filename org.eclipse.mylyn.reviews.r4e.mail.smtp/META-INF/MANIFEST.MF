@@ -6,8 +6,8 @@ Bundle-Version: 0.8.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.mylyn.reviews.notifications;bundle-version="0.8.0",
- org.eclipse.mylyn.reviews.VCalendar;bundle-version="0.1.0",
- org.eclipse.mylyn.commons.core;bundle-version="3.5.0",
+ org.eclipse.mylyn.reviews.VCalendar;bundle-version="0.8.0",
+ org.eclipse.mylyn.commons.core;bundle-version="3.3.0",
  javax.activation;bundle-version="1.1.0",
  javax.mail;bundle-version="1.4.0"
 Bundle-ActivationPolicy: lazy
