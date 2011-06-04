@@ -43,7 +43,6 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
                id="org.eclipse.mylyn.reviews.r4e.ui.editors.r4eMenu"
@@ -210,7 +209,6 @@
          </menu>
       </menuContribution>
       <menuContribution
-            allPopups="false"
             locationURI="toolbar:org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView?after=additions">
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement"
@@ -306,7 +304,6 @@
          </command>
       </menuContribution>
       <menuContribution
-            allPopups="false"
             locationURI="menu:org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView">
          <menu
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.menu"
@@ -430,7 +427,6 @@
          </command>
       </menuContribution>
       <menuContribution
-            allPopups="true"
             locationURI="popup:org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView?after=additions">
          <dynamic
                class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ModelContributionItems"
