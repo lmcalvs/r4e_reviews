@@ -89,7 +89,7 @@
             </command>
             <command
                   commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem"
-                  icon="icons/view16/newitm_tsk.gif"
+                  icon="icons/view16/newitm_tsk.png"
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem"
                   label="New Review Item"
                   mnemonic="I"
@@ -125,7 +125,7 @@
             </command>
             <command
                   commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly"
-                  icon="icons/view16/newanmly_tsk.gif"
+                  icon="icons/view16/newanmly_tsk.png"
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly"
                   label="New Anomaly"
                   mnemonic="A"
@@ -1243,67 +1243,67 @@
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+R F">
+            sequence="Alt+4 F">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem"
             contextId="org.eclipse.ui.textEditorScope"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+R I">
+            sequence="Alt+4 I">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly"
             contextId="org.eclipse.ui.textEditorScope"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+R A">
+            sequence="Alt+4 A">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+R R">
+            sequence="Alt+4 R">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+R E">
+            sequence="Alt+4 E">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+R C">
+            sequence="Alt+4 C">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+R S">
+            sequence="Alt+4 S">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.openEditor"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+R O">
+            sequence="Alt+4 O">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+R L">
+            sequence="Alt+4 L">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.removeElement"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+R X">
+            sequence="Alt+4 X">
       </key>
       <key
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.SetFocus"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.GoInto"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+R Z">
+            sequence="Alt+4 Z">
       </key>
    </extension>
 </plugin>

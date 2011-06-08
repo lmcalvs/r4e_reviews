@@ -305,15 +305,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 						uiReview = new R4EUIReviewBasic(this, review, review.getType(), false);
 					}
 					addChildren(uiReview);
-
-					//Check if this review is completed
-					if (((R4EReviewState) review.getState()).getState() == R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) {
-						try {
-							uiReview.setUserReviewed(true);
-						} catch (OutOfSyncException e) {
-							UIUtils.displaySyncErrorDialog(e);
-						}
-					}
 				}
 			}
 		}

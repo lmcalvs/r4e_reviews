@@ -50,11 +50,11 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUISelection;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -411,11 +411,11 @@ public class MailServicesProxy {
 						msgBody.append(TAB_MSG_PART + context.getTargetFileVersion().getResource().getProject() + ": "
 								+ context.getTargetFileVersion().getResource().getProjectRelativePath());
 						if (null != context.getContentsContainerElement()) {
-							R4EUISelection[] selections = (R4EUISelection[]) context.getContentsContainerElement()
+							R4EUIContent[] contents = (R4EUIContent[]) context.getContentsContainerElement()
 									.getChildren();
 							msgBody.append(": ");
-							for (R4EUISelection selection : selections) {
-								msgBody.append(selection.getPosition().toString() + ", ");
+							for (R4EUIContent content : contents) {
+								msgBody.append(content.getPosition().toString() + ", ");
 							}
 						} else {
 							msgBody.append(LINE_FEED_MSG_PART);
@@ -654,8 +654,8 @@ public class MailServicesProxy {
 				msgBody.append("Base Version: " + baseFile.getVersionID() + LINE_FEED_MSG_PART);
 			}
 
-		} else if (aSource instanceof R4EUISelection) {
-			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUISelection) aSource).getParent().getParent()).getTargetFileVersion();
+		} else if (aSource instanceof R4EUIContent) {
+			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIContent) aSource).getParent().getParent()).getTargetFileVersion();
 			msgBody.append("Selection :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
 			if (null != file) {
 				if (null != file.getResource()) {
@@ -667,10 +667,10 @@ public class MailServicesProxy {
 				msgBody.append("Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
 				msgBody.append("File: "
-						+ ((R4EUIFileContext) ((R4EUISelection) aSource).getParent().getParent()).getName()
+						+ ((R4EUIFileContext) ((R4EUIContent) aSource).getParent().getParent()).getName()
 						+ LINE_FEED_MSG_PART);
 			}
-			msgBody.append("Line(s): " + ((R4EUISelection) aSource).getPosition().toString() + LINE_FEED_MSG_PART);
+			msgBody.append("Line(s): " + ((R4EUIContent) aSource).getPosition().toString() + LINE_FEED_MSG_PART);
 
 		} else if (aSource instanceof ITextEditor) {
 			//Get the information from the text editor

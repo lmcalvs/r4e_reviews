@@ -529,7 +529,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (isEnabled() && !(R4EUIModelController.getActiveReview().isUserReviewed())) {
+		if (isEnabled()) {
 			return true;
 		}
 		return false;

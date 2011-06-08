@@ -572,6 +572,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 		fRefreshInProgress = true;
 		final R4EUIAnomalyExtended uiModelAnomaly = (R4EUIAnomalyExtended) fProperties.getElement();
 		final R4EAnomaly modelAnomaly = uiModelAnomaly.getAnomaly();
+		//TODO null pointer exception generated on line below when no active review is present
 		final List<String> participants = R4EUIModelController.getActiveReview().getParticipantIDs();
 		fStateCombo.setItems(uiModelAnomaly.getAvailableStates());
 		fStateCombo.select(uiModelAnomaly.mapStateToIndex(modelAnomaly.getState()));
