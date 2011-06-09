@@ -259,21 +259,35 @@ public class EditorProxy {
 						return null;
 					}
 
+					//Get the file versions
+					R4EFileVersion leftVersion = null;
+					R4EFileVersion rightVersion = null;
+					if (left instanceof R4EFileRevisionTypedElement) {
+						leftVersion = ((R4EFileRevisionTypedElement) left).getFileVersion();
+					} else if (left instanceof R4EFileTypedElement) {
+						leftVersion = ((R4EFileTypedElement) left).getFileVersion();
+					}
+					if (right instanceof R4EFileRevisionTypedElement) {
+						rightVersion = ((R4EFileRevisionTypedElement) right).getFileVersion();
+					} else if (left instanceof R4EFileTypedElement) {
+						rightVersion = ((R4EFileTypedElement) right).getFileVersion();
+					}
+
 					//Case:  No target file and base is the same
-					if (null == left && null == aTargetFile && null != right && null != aBaseFile
-							&& right.getName().equals(aBaseFile.getName())) {
+					if (null == leftVersion && null == aTargetFile && null != rightVersion && null != aBaseFile
+							&& rightVersion.equals(aBaseFile)) {
 						return part;
 					}
 
 					//Case:  No base file and target is the same
-					if (null == right && null == aBaseFile && null != left && null != aTargetFile
-							&& left.getName().equals(aTargetFile.getName())) {
+					if (null == rightVersion && null == aBaseFile && null != leftVersion && null != aTargetFile
+							&& leftVersion.equals(aTargetFile)) {
 						return part;
 					}
 
 					//Case: Base and target are the same
-					if (null != left && null != right && null != aBaseFile && null != aTargetFile) {
-						if (left.getName().equals(aTargetFile.getName()) && right.getName().equals(aBaseFile.getName())) {
+					if (null != leftVersion && null != rightVersion && null != aBaseFile && null != aTargetFile) {
+						if (leftVersion.equals(aTargetFile) && rightVersion.equals(aBaseFile)) {
 							return part;
 						}
 					}
