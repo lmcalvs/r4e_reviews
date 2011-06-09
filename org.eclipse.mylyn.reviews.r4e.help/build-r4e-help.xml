@@ -19,10 +19,10 @@
 	<property name="r4e.ug.title" value="R4E User Guide" />
 	<property name="help.doc.url.base" value="http://wiki.eclipse.org" />
 
-	<setproxy proxyhost="proxy server" proxyport="xxxx"/>
+	<setproxy proxyhost="www-proxy.lmc.ericsson.se" proxyport="8080"/>
 
 	<path id="wikitext.tasks.classpath">
-		<fileset dir="C:\eclipse3.6.1\eclipse\plugins">
+		<fileset dir="C:\IBM\Common\plugins">
 			<include name="org.eclipse.mylyn.wikitext.*core*.jar" />
 		</fileset>
 	</path>
