@@ -354,7 +354,10 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		//Get Base version from Version control system and set core model data
 		if (null != aBaseTempFileVersion) {
 			final R4EFileVersion rfileBaseVersion = R4EUIModelController.FModelExt.createR4EBaseFileVersion(fileContext);
+			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(rfileBaseVersion,
+					R4EUIModelController.getReviewer());
 			CommandUtils.copyFileVersionData(rfileBaseVersion, aBaseTempFileVersion);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 			//Add IFileRevision info
 			if (null != revRegistry) {
@@ -369,8 +372,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			//Add ProjectURI to the review item
 			//TODO:  temporary solution.  We need to have an Iproject member varaible in R4EFileVersion
 			if (null != rfileBaseVersion.getResource()) {
-				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem,
-						R4EUIModelController.getReviewer());
+				bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
 				final String projPlatformURI = ResourceUtils.toPlatformURIStr(rfileBaseVersion.getResource()
 						.getProject());
 				if (!fItem.getProjectURIs().contains(projPlatformURI)) {
@@ -383,7 +385,10 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		//Get Target version from Version control system and set core model data
 		if (null != aTargetTempFileVersion) {
 			final R4EFileVersion rfileTargetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
+			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(rfileTargetVersion,
+					R4EUIModelController.getReviewer());
 			CommandUtils.copyFileVersionData(rfileTargetVersion, aTargetTempFileVersion);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 			//Add IFileRevision info
 			if (null != revRegistry) {
@@ -397,8 +402,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 
 			//Add ProjectURI to the review item
 			if (null != rfileTargetVersion.getResource()) {
-				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem,
-						R4EUIModelController.getReviewer());
+				bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
 				final String projPlatformURI = ResourceUtils.toPlatformURIStr(rfileTargetVersion.getResource()
 						.getProject());
 				if (!fItem.getProjectURIs().contains(projPlatformURI)) {
