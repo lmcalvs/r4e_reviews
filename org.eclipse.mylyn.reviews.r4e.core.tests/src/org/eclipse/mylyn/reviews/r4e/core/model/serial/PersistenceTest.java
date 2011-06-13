@@ -62,7 +62,7 @@ public class PersistenceTest extends TestCase {
 	private final String			fSep			= File.separator;
 
 	// ------------------------------------------------------------------------
-	// Common
+	// RWCommon
 	// ------------------------------------------------------------------------
 
 	/**

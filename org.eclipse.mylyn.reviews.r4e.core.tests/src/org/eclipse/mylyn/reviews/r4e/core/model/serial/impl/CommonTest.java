@@ -23,11 +23,14 @@ import junit.framework.TestCase;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.Common.ResourceType;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelReader;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.IRWUserBasedRes.ResourceType;
+import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 
 /**
  * The class <code>CommonTest</code> contains tests for the class {@link
- * <code>Common</code>}
+ * <code>RWCommon</code>}
  *
  * @pattern JUnit Test Case
  *
@@ -39,7 +42,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.Common.ResourceType;
  */
 public class CommonTest extends TestCase {
 
-	R4EWriter	fixture	= SerializeFactory.getWriter();
+	IModelWriter	fixture	= SerializeFactory.getWriter();
 	String		fTmpDir	= null;
 	String		fSep	= null;
 
@@ -87,7 +90,7 @@ public class CommonTest extends TestCase {
 		String file = "file.ext";
 		URI urib = URI.createFileURI(fTmpDir + folder + fSep + file);
 
-		URI urit = fixture.getFolderPath(urib);
+		URI urit = ResourceUtils.getFolderPath(urib);
 		int endIndex = urib.toString().length() - file.length() - 1;
 		assertEquals(urib.toString().subSequence(0, endIndex), urit.toString());
 	}
@@ -153,7 +156,7 @@ public class CommonTest extends TestCase {
 		}
 
 		// Execute
-		R4EReader fReader = new R4EReader();
+		IModelReader fReader = new R4EReader();
 		URI aFolder = URI.createFileURI(path);
 		List<URI> result = fReader.selectUsrReviewGroupRes(aFolder);
 
@@ -191,7 +194,7 @@ public class CommonTest extends TestCase {
 		}
 
 		// Execute
-		R4EReader fReader = new R4EReader();
+		IModelReader fReader = new R4EReader();
 		URI aFileUri = URI.createFileURI(fileList.get(0).toString());
 		Boolean result = fReader.isGroupResourceUri(aFileUri);
 		assertEquals(false, result.booleanValue());
@@ -233,5 +236,5 @@ public class CommonTest extends TestCase {
  * package.sourceFolder = org.eclipse.mylyn.reviews.r4e.core.tests/src
  * superclassType = junit.framework.TestCase
  * testCase = CommonTest
- * testClassType = org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.Common
+ * testClassType = org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.RWCommon
  */

@@ -30,9 +30,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelReader;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.R4EReader;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.R4EWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.junit.Test;
@@ -50,8 +50,8 @@ public class R4EReviewGroupTest extends TestCase {
 	 * @generated
 	 */
 	protected R4EReviewGroup		fixture			= null;
-	private final R4EReader			fReader			= SerializeFactory.getReader();
-	private final R4EWriter			fWriter			= SerializeFactory.getWriter();
+	private final IModelReader		fReader			= SerializeFactory.getReader();
+	private final IModelWriter		fWriter			= SerializeFactory.getWriter();
 
 	private final RModelFactoryExt	fFactory		= SerializeFactory.getModelExtension();
 

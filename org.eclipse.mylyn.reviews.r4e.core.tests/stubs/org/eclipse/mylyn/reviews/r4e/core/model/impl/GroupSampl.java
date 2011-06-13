@@ -109,7 +109,7 @@ public class GroupSampl {
 			// for Serialization
 			fgroup.getAvailableAnomalyTypes().add(anomalyTypeTemplate);
 
-			// Common reference used when creating anomalies
+			// RWCommon reference used when creating anomalies
 			anomalyTypeMap.put(type, anomalyTypeReference);
 		}
 
