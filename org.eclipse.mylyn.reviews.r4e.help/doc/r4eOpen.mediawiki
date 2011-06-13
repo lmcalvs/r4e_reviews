@@ -1,0 +1,1624 @@
+= Getting Started  =
+
+== Overview  ==
+
+&nbsp; &nbsp;Review for Eclipse (R4E) is a set of Eclipse plugins that provide eclipse-integrated code and text review functionality. R4E supports reviewing files associated to Eclipse projects and optionally included under a Version Control System. Three review workflows are included (Basic, Informal and IEEE standard 1028-compatible Formal reviews). 
+
+The main purpose of R4E is to review Source Code, especially Java and C/C++ Source code. Eventually, support for reviewing Data Models (based on EMF) will be included. R4E also aims to support multiple Version Control Systems (via Eclipse Team Providers). Git (implemented in Eclipse through EGit/JGit) is the only one supported in the initial version. 
+
+The R4E User Interface includes three main components: '''R4E Review Navigator View''', '''R4E Properties View''' and '''R4E Context Menus''' 
+
+<br> [[Image:R4E main.png]] 
+
+<br> 
+
+&nbsp; &nbsp;The '''R4E Review Navigator View''' is the main interface to R4E. It shows all the R4E elements in a hierarchical tree structure The '''R4E Properties view''' presents the properties and attributes attached to each R4E element represented in the Review Navigator view. Some elements values can be altered after creation, and some other or read-only and settable at creation time. The '''R4E Context Menu''' appears in Eclipse Context menus whenever it is possible to use R4E command is this particular context. Please refer to [section] below for more information. 
+
+<br> 
+
+== Installing R4E  ==
+
+R4E interacts with the follwing features/plugins: 
+
+*Version Control System connector: EGit/JGit, Mylyn Versions 
+*C/C++ Language support: CDT 
+*Java Language support: JDT 
+*LDAP Connector: R4E LDAP plugin 
+*Email support: R4E SMTP connector 
+*Meeting support: R4E VCalendar connector 
+*General: EMF, Apache Common packages<br>
+
+To enable full functionality, make sure these features/plugins are included in your current Eclipse installation 
+
+=== Starting R4E  ===
+
+R4E uses Eclipse Capabilities to manage its functionalities.  In order to use R4E, its capabilities must be enabled.  This can be done be enabling R4E in the Eclipse Preferences->General->Capabilities preference page.
+
+[[Image:R4E capabilities.png]]
+
+Then to start up R4E, show the Review Navigator View using the Eclipse Show View menu: 
+
+[[Image:R4E show view.png]] 
+
+<br> 
+
+== R4E Configuration  ==
+
+The R4E Configuration can be entered by accessing the R4E Preferences Pages, which are part of the Eclipse Global Preferences. There are three R4E Preference Pages: '''R4E General Preferences''', '''R4E LDAP Settings''', and '''SMTP Hosts Definitions'''. 
+
+=== R4E General Preferences  ===
+
+R4E General Preferences page is split up into four tab sections.<br> 
+
+*User Tab
+
+[[Image:R4E preferences general user.png]] 
+
+<br> 
+
+&nbsp; &nbsp;This is used to enter the current user details. The User ID is set by default to the login ID of the current session and can be modified to any String that can be used to identify the user. The User Email should be set to a valid email for the user. The E-mail address is used to notify the user informations about the reviews he is currently part of by Email, as configured in the SMTP Hosts Definitions section. Take note that if the LDAP Preferences are filled-in (see below) and a corresponding LDAP database can be resolved, then this field will be automatically be set based on the User ID entered.<br> 
+
+<br> 
+
+*'''Groups Tab'''
+
+[[Image:R4E preferences general groups.png]] 
+
+<br> 
+
+&nbsp; &nbsp;This is used to specify the location of the data files that contain Review Group information. See below for more information on Review Groups. The Name and Description fields show additional information attached to the selected Review Group file. Typically, all R4E data files will be located on a shared network drive. Users can add one or multiple references to Group files to their workspace as needed using the ''Add ''button. Files can be removed from the workspace by pressing the ''Remove ''button. Files can be moved up or down in the list by clicking the corresponding button. This will affect the order in which the Groups are displayed in the Review Navigator. 
+
+<br> 
+
+*'''Rule Sets Tab'''
+
+[[Image:R4E preferences general ruleSets.png]] 
+
+<br> 
+
+&nbsp; &nbsp;This is used to specify the location of the data files that contain Rule Set information. See below for more information on Rule Sets. The Name and Version fields show additional information attached to the selected Rule Set file. Typically, all R4E data files will be located on a shared network drive. Users can add one or multiple referecnes to Rule Set files to their workspace as needed using the ''Add ''button. Files can be removed from the workspace by pressing the ''Remove'' button. Files can be moved up or down in the list by clicking the corresponding button. This will affect the order in which the Rule Sets are displayed in the Review Navigator. 
+
+<br> 
+
+*'''Filter Tabs'''
+
+[[Image:R4E preferences general filters.png]] 
+
+<br> 
+
+&nbsp; &nbsp;This is used to set-up default filters that will be applied to the Review Navigator view. See the Filters section below for the various filters descriptions. 
+
+<br> 
+
+=== R4E LDAP Settings  ===
+
+[[Image:R4E preferences ldap.png]] 
+
+<br> 
+
+&nbsp; &nbsp;This is used the specify configuration for an available LDAP database server that contains information about the users. The Server Information part contains LDAP server information (Host, Port, DN (Distinguished Name), and Login User Name and Password) to use. The Mandatory Parameters part contains mapping values for LDAP attributes that maps the User Id, Name and E-Mail parameters The Optional Parameters part contains mapping values for LDAP attributes that maps optional parameters that could exists in the database. 
+
+This is optional. If no information is entered, LDAP functionality will be unavailable, but will not affect R4E otherwise 
+
+<br> 
+
+=== SMTP Hosts Definitions  ===
+
+[[Image:R4E preferences smtp.png]] 
+
+<br> 
+
+&nbsp; &nbsp;This is used to specify the mail server(s) that will be used to send manual and automatic email notifications to the users. More than one server can be specified. Users can add one or multiple servers to their workspace as needed using the ''Add ''button. Servers can be removed from the workspace by pressing the ''Remove ''button. Servers can be moved up or down in the list by clicking the corresponding button. The primary server should always be the first on the list. 
+
+<br> 
+
+== Eclipse Project Configuration  ==
+
+*R4E can be used to create reviews that include files present in given Eclipse Projects.
+
+*While R4E can operate on stand-alone Eclipse projects (i.e. outside of any Version Control System), it is recommended that it is used in conjuction with projects that are held within Revision Control. Currently, R4E only supports Version-Controlled projects that are associated with Egit as team provider, The [http://wiki.eclipse.org/EGit/User_Guide "EGit/User Guide"] is the best place to find the information on how to create new git repositories, work with existing git repositories and importing Eclipse projects under and existing git repository into the Eclipse workspace.<br>
+
+*Once the project is associated/connected to the Egit team provider the project will display the project name and associated branch between brackets.
+
+[[Image:ProjectWithTeamProvider.jpg]] 
+
+<br> 
+
+== Tutorials  ==
+
+To familiarize yourself with how R4E operates, three tutorials are provided, which focus on the different review types and their respective workflows. As we progress in doing the tutorials, more common functionalities are introduced (such as Notifications, Meeting Requests, Setting reviewed state, Disabling elements etc.). 
+
+==== Configuration and Set-up  ====
+
+Before doing any of the tutorials, we will set-up R4E and configure it to do reviews. 
+
+*Open the R4E Review Navigator view by going to the ''Window-&gt;Show View-&gt;Other...'' dialog.
+
+[[Image:TutorialShowView.png]] 
+
+<br> 
+
+*Select the ''R4E-&gt;Review Navigator'' view. An empty Review Navigator view should now be visible
+
+<br> 
+
+[[Image:TutorialShowViewDialog.png]] 
+
+<br> 
+
+*Typically, users will use Review Groups and (optionally) Rule Sets already created. For now we will assume none is present and we will create one group.
+
+*Go to the Review Navigator toolbar and click on the ''New Review Group'' icon. This should open the New Review Group dialog.
+
+<br> 
+
+[[Image:TutorialAddNewGroup.png]] 
+
+<br> 
+
+*Add information for the new Group. The folder should normally be set to a shared drive that will be accessible to all users. For this tutorial, we will set it to our local drive.
+
+<br> 
+
+[[Image:TutorialAddNewGroupDialog.png]] 
+
+<br> 
+
+*Once the Group is created it should show in the Review Navigator View tree. It will automatically be added to your tracking groups in the R4E preferences so that it will appear again next time you open Eclipse to use R4E.
+
+*You can now open the Review Group by right-clicking on it and selecting the ''Open Element'' command. The Group icon should change from a grayed out icon to a multi-colored one.
+
+*Go to the Eclipse R4E preferences and make sure your user identity is set correctly.
+
+<br> 
+
+[[Image:TutorialUserPreferences.png]] 
+
+<br> 
+
+*We will now create some Design rules that can be used during reviews. First create a new Rule Set by slecting the ''New Rule Set'' icon in the Review Navigato toolbar. This should open the New Rule Set dialog.
+
+<br> 
+
+[[Image:TutorialNewRuleSet.png]] 
+
+<br> 
+
+*Add information for the new Rule Set. The folder should normally be set to a shared drive that will be accessible to all users. For this tutorial, we will set it to our local drive
+
+<br> 
+
+[[Image:NewRuleSetDialog.png]] 
+
+<br> 
+
+*Now let's create a Rule Area for this rule set by right-clicking on the Rule Set we just created and selecting the ''New Rule Area'' from the context menu.
+
+<br> 
+
+[[Image:TutorialNewRuleArea.png]] 
+
+<br> 
+
+*In the dialog shown, set the Area Name
+
+<br> 
+
+[[Image:NewRuleAreaDialog.png]] 
+
+<br> 
+
+*New create a Rule Violation under the Rule Are we just created
+
+<br> 
+
+[[Image:TutorialNewRuleViolation.png]] 
+
+<br> 
+
+*In the dialog shown, set the Violation Name
+
+<br> 
+
+[[Image:NewRuleViolationDialog.png]] 
+
+<br> 
+
+*Finally, create a new Rule under this Rule Violation
+
+<br> 
+
+[[Image:TutorialNewRule.png]] 
+
+<br> 
+
+*In the dialog shown, set the Rule values as follows:
+
+<br> 
+
+[[Image:NewRuleDialog.png]] 
+
+<br> 
+
+We are now ready to proceed to the tutorials. 
+
+<br> 
+
+<br> 
+
+=== Tutorial 1: Performing a Basic Review  ===
+
+This tutorial shows how to use R4E by going through a very simple Basic Review. It also introduces how to add Review Items from a Commit to the Version Contro System. 
+
+*Using the setup created above, create a new Basic Review by right-clicking on the Group we created and selecting the ''New Review'' command.
+
+<br> 
+
+[[Image:TutorialAddNewReview.png]] 
+
+<br> 
+
+*This will show the New Review dialog
+
+<br> 
+
+[[Image:TutorialAddNewReviewDialog.png]] 
+
+<br> 
+
+*Once the Review is created, you will notice that new elements were added to the Navigator tree: The review itself, the global anomaly container, and the current user as a new participant to the review.
+
+*You can now browse through the R4E property view, which will appear as soon as you select a new element in the Navigator tree (unless the Link Properties View command is toggled off in the Review Navigator toolbar, in which case you should toggle it on). You will notice that the current participant roles in the Participant Extra Properties tab are set to '''Organizer '''and '''Lead'''. This is the default and it can be changed if needed. You will also notice that the General Properties tab for the review has the start date property set to when the review was created and that the end date property is set to ''(In Progress)'' to indicates that the review is still going on.
+
+*It is now time to add contents to be reviewed. Contents can be added by selecting whole resources (e.g. files directly) or by using the ''Find Review Items'' command on Eclipse project if the project is connected to a Version Control System. Here we will assume that the Eclipse projects are connected to Git (using EGit) and we will use the ''Find Review Items'' command for the R4E context menu on a given project. Select a project connected to Git and right-click on it to use the ''R4E-&gt;FindReviewItems'' command.
+
+<br> 
+
+[[Image:TutorialFindReviewItems.png]] 
+
+<br> 
+
+*This should show the Find Review Items dialog for Git
+
+<br> 
+
+[[Image:TutorialFindReviewItemsDialog.png]] 
+
+<br> 
+
+*We will now pick the current Commit and add it to the review. The Review Navigator view should now show a new Commit Review Item, its children files and their deltas (changes)
+
+<br> 
+
+[[Image:TutorialNavigatorView1.png]] 
+
+<br> 
+
+*Let's say we are now done adding review items. At this point we could add new reviewers to the review and notify them that the items are ready for reviews. However, since this is a simple tutorial, we will pretend that we are also the reviewer for this review.
+
+*To open the compare editor and perform the review, we can double-click on any of the file of delta element. Let's pick the first delta of the first file. That should open the compare editor.
+
+*Let's now create a new anomaly on the selected text. To do this, right-click on the selected text and use the ''R4E-&gt;New Anomaly'' command
+
+<br> 
+
+[[Image:TutorialNewAnomaly.png]] 
+
+<br> 
+
+*This should trigger the New Anomaly dialog
+
+<br> 
+
+[[Image:TutorialNewAnomalyDialog.png]] 
+
+<br> 
+
+*Now, let's pretend we are done and the anomaly that the anomaly we highlighted is dealt with. We can now mark this review as completed. To do this, select the Review Element and, in the R4E Properties view, set the ''Exit Decision'' property in the Extra tab to ''Accepted''. Next set the ''Phase'' property in the General tab to ''Completed''.
+
+*The review is now completed and we are done with this tutorial.
+
+<br> 
+
+=== Tutorial 2: Performing an Informal Review  ===
+
+This tutorial shows how to use R4E by going through a very simple Informal Review. It also introduces how to add Review Items manually, how to remove obsolete items from the Review Navigator view, and how to use Email notifications. 
+
+*Using the setup created above, create a new Informal Review by right-clicking on the Group we created and selecting the ''New Review'' command.
+
+*This will show the New Review dialog
+
+<br> 
+
+[[Image:TutorialAddNewReviewInformalDialog.png]] 
+
+<br> 
+
+*As in the basic Review tutorial above, the Review Navigator tree is updated with the new elements.
+
+*It is now time to add contents to be reviews. In the previous tutorial, we showed how to add a Commit Review Item from a project under revision control. Here we will show how to add a Resource Review Item. Let's say you have a brand new file, not necessarily under revision control, that you want to be reviewed.
+
+*Assume we use a Java project. Open the Package Explorer view, right-click on a file within the target project and trigger the ''Add Review Item'' command from the R4E context menu.
+
+<br> 
+
+[[Image:TutorialAddReviewItem.png]] 
+
+<br> 
+
+The Review Navigator view should now show a new Resource Review Item, its children file and the selection, which in this case will span the whole file from the first to the last lines. 
+
+*Now let's add another reviewer to this review by right-clicking on the participants container icon in the review navigator and selecting the ''New Participant'' command from the context menu
+
+<br> 
+
+[[Image:TutorialAddParticipant.png]] 
+
+<br> 
+
+*This will show the New Participant dialog.
+
+<br> 
+
+[[Image:TutorialAddParticipantDialog.png]] 
+
+<br> 
+
+*Note that we added this Participant as a reviewer only. We also set to optional focus area.
+
+*Let's say we are now done adding review items. We will now notify the new Participant we added that the items are ready for review. To do this, right-click on the current review and choose the ''Send Email/Notification'' command. When the subsequent dialog appears, select the ''Notify Particpants of New Items ready for Review''.
+
+<br> 
+
+[[Image:TutorialSendEmail.png]] 
+
+<br> 
+
+[[Image:TutorialSendEmailDialog.png]] 
+
+<br> 
+
+*This will trigger the Email Client dialog. You can review the contents of the message, modify it as you see fit, and press the ''OK ''button to send it. Of course, the destination email address(es) need to be valid for the email to actually be sent.
+
+<br> 
+
+[[Image:TutorialSendEmailClient.png]] 
+
+<br> 
+
+*Once this is done, the reviewer should receive the email and can start reviewing the code. So, let's say we are now the reviewer and we want to log a general anomaly on the review. We right-click on the Global anomaly container icon in the Review Navigator view and we select the ''New Anomaly'' command from the context menu
+
+<br> 
+
+[[Image:TutorialAddGlobalAnomaly.png]] 
+
+<br> 
+
+*This will trigger the New Anomaly dialog.
+
+<br> 
+
+[[Image:TutorialNewAnomalyInformal.png]] 
+
+<br> 
+
+*Now we should see that the Anomaly was added to the Review Navigator view, prepended with the Anomaly state (which is ''ASSIGNED ''at this point). If we do not have any other anomalies to enter, we can indicate that we are done reviewing by setting the review as reviewed by us. To do so, right-click on the Review icon in the Review Navigator and use the ''Mark as User Reviewed'' command.
+
+<br> 
+
+[[Image:TutorialMarkUserReviewed.png]] 
+
+<br> 
+
+*Since we are done reviewing, a popup dialog appears to ask us to send a Completion Notification to the Review Owner (Lead). Click OK and send the notification email out. The Review Navigator view should now look like this:
+
+<br> 
+
+[[Image:TutorialNavigatorViewInformal1.png]] 
+
+<br> 
+
+*Now, in order to complete the review, we need to resolve the anomaly that was raised. Select the anomaly icon in the Review Navigator view and look at the R4E Properties view extra tab. We should see he following:
+
+<br> 
+
+[[Image:TutorialAnomalyProperties1.png]] 
+
+<br> 
+
+*We see that the optional class and rank are not set for this anomaly, we could have set them after creation, or we can set them here if we want. In order to resolve the anomaly, the author of the code should be notified and the reviewer, lead and author should work together in resolving the issue. Let's pretend that the anomaly is resolved and add a comment to it saying so. Right-click on the Anomaly icon on the Review Navigator view and add a Comment by using the ''New Comment'' command from the context menu.
+
+<br> 
+
+[[Image:TutorialNewComment.png]] 
+
+<br> 
+
+*This will trigger the New Comment dialog.
+
+<br> 
+
+[[Image:TutorialNewCommentDialog.png]] 
+
+<br> 
+
+*Once we've entered a comment, we can now the set Anomaly state to ''FIXED'' by changing the ''State ''combo box value in the R4E Properties view. Note that the ''Fixed by'' filed gets automatically set to the current user. This can be changed to any of the participants if needed.
+
+*We can now complete the review as we've done in the previous tutorial, by setting the ''Exit Decision'' field in the Review R4E Properties view-&gt;Extra tab to ''Accepted'' and the Phase field in the Review R4E Properties view-&gt;Basic tab to ''COMPLETED''.
+
+*To remove this completed review from the Review Navigator tree so that is does not clutters the view, we can Disable it. To do that, first close the review by right-clicking on the Review element from the Review Navigator view and selecting the ''Close Element'' command form the context menu. Then, once the review element is closed, disable it by selecting the Disable element command in the same fashion.
+
+<br> 
+
+[[Image:TutorialDisableReview.png]] 
+
+<br> 
+
+*We are now done with this tutorial.
+
+<br> 
+
+=== Tutorial 3: Performing a Formal Review  ===
+
+This tutorial shows how to use R4E by going through a very simple Formal Review. It also introduces how to work with Linked Anomalies, Design Rules, optional review parameters, review time tracking, and how to use Meetings Notifications. 
+
+*First we will add default porjects and components to our review group. Select the Review Group icon in the Review Navigator view and go to the Group extra properties tab in the R4E Properties view. Add Projects and Components to the Group by clicking on the ''Add'' buttons for the ''Available Projects'' and ''Available Components'' tables and typing in some values. We will also add a reference to the Rule Set we created in the setup.
+
+<br> 
+
+[[Image:TutorialReviewGroupProperties.png]] 
+
+<br> 
+
+*Using the setup created above, create a new Formal Review by right-clicking on the Group we created and selecting the ''New Review'' command.
+
+*This will show the New Review dialog. In this case we will populate the Review optional elements as shown
+
+<br> 
+
+[[Image:TutorialNewReviewFormalDialog.png]] 
+
+<br> 
+
+*As in the other Review tutorials above, the Review Navigator tree is updated with the new elements.
+
+*If you look at the Review Properties General tab, you will notice that is display a ''Phase Map'' table. The phase map is only displayed for formal reviews and is used to track the progress of the review. At review creation, the ''PLANNING ''phase is the active one.
+
+*It is now time to add contents to be reviewed. As in the basic tutorial review, we will add a Commit Review Item using the ''Find Review Items'' command.
+
+<br> 
+
+[[Image:TutorialFindReviewItems.png]] 
+
+<br> 
+
+*This should show the Find Review Items dialog for Git
+
+<br> 
+
+[[Image:TutorialFindReviewItemsDialog.png]] 
+
+<br> 
+
+*We will now pick the current Commit and add it to the review. The Review Navigator view should now show a new Commit Review Item, its children files and their deltas (changes)
+
+<br> 
+
+[[Image:TutorialNavigatorView1.png]] 
+
+<br> 
+
+*Now, as in the Informal review tutorial, let's add another reviewer to this review by right-clicking on the participants container icon in the review navigator and selecting the ''New Participant'' command from the context menu
+
+<br> 
+
+[[Image:TutorialAddParticipant.png]] 
+
+<br> 
+
+*This will show the New Participant dialog.
+
+<br> 
+
+[[Image:TutorialAddParticipantDialog.png]] 
+
+<br> 
+
+*Note that we added this Participant as a reviewer only. We also set to optional focus area.
+
+*Let's say that we are done adding new items and participants for this review, we can now transition the review phase from ''PLANNING ''to ''PREPARATION ''by selecting the Phase combo box in the R4E Properties to the Review. Note that phases can only be changed if we are the phase owner, which we are in this case. We will now automatically be asked to set up a decision meeting by entering meeting details.
+
+<br> 
+
+[[Image:TutorialMeetingDialog.png]] 
+
+<br> 
+
+*Once the details are entered, the Email client dialog is shown, and upon clicking the ''OK ''button, a new notification of items ready for review, bundled with a meeting invitation will be sent to all participants.
+
+*Now, in ''PREPARATION ''phase, the users can review the included items. Reviewers can send progress notification or ask questions to other participant by right-clicking on a Review Navigator element and using the ''Send Email/Notification'' command. Anybody can also add new Review Items to the review, which will automatically notify other particpants with a ''New Item Ready for Review'' notification.
+
+*Let's say we found that part of the modified code is not correct, we can select the Delta in the Review Navigatorc and directly writen an Anomaly on it by right-click on the Delta and using the ''New Linked Anomaly'' command.
+
+<br> 
+
+[[Image:TutorialNewLinkedAnomaly.png]] 
+
+<br> 
+
+*This will show the ''New Anomaly'' dialog. For this anomaly, we will refer to an existing design rule. Expand the Extra parameters section and select the first design rule from the tree. Note that the text fields are set to the value of the anomaly selected.
+
+<br> 
+
+[[Image:TutorialNewFormalAnomalyDialog.png]] 
+
+<br> 
+
+*We are finished reviewing the files and we will now add the time we spent reviewing the files. We do this by selecting the participant element in the Review Navigator and going to its R4E Properties view Extra tab. In the ''Time Spent'' table, add the time we spent.
+
+<br> 
+
+[[Image:TutorialParticipantProperties.png]] 
+
+<br> 
+
+*As in the informal review tutorial, we now mark the review as User completed, which will trigger the sending of the completion notification to the review lead.
+
+*The review lead can now move the Review Phase to ''DECISION ''in the same way the previous transition was done.
+
+*In the decision phase, it is time to assess anomalies and if necessary assign them to particpants so that they can be handled and fixed. Let's set our Anomaly to ''ACCEPTED ''and assign it to a participant. We do this by setting the appropriate values the the R4E Properties Extra tab for the selected anomaly.
+
+<br> 
+
+[[Image:TutorialAnomalyProperties.png]] 
+
+<br> 
+
+*We are now done with all anomalies so we will set the review decision properties. In the Review element R4E Properties, let set the values as follows
+
+<br> 
+
+[[Image:TutorialReviewProperties.png]] 
+
+<br> 
+
+*We set the ''Exit decision'' to ''Accepted with follow-up'', since some anomalies need to be fixed. We also enter the decision participants and decision time spent values.
+
+*Once the anomaly is fixed, we can change its state to ''FIXED'' in the R4E Properties. The fix can now be reviewed by the reviewer, who can set it to ''VERIFIED''. Its properties should now look like this:
+
+<br> 
+
+[[Image:TutorialAnomalyProperties2.png]] 
+
+<br> 
+
+*At this point all anomalies are covered and we can complete the review by setting its phase to ''COMPLETED''.
+
+*We are now done with this tutorial.
+
+<br> 
+
+= Concepts  =
+
+== Basic and Informal Reviews workflows  ==
+
+R4E basic and informal reviews use a lightweight review process and can help to save time while performing reviews involving a small number of participants. It is also recommended to use them when using an agile methodology as development process. 
+
+The main difference between Basic and Informal Reviews is that there is no Anomaly state tracking in Basic reviews, while anomalies in Informal review are stateful and need to be closed in one way of another before the review can be completed. 
+
+The main differences of Basic and Informal compared to Formal reviews are: 
+
+*There are no review phases. Reviews are either Active or Completed. 
+*Anomalies can be created as long as the review is Active. For example, the author can create anomalies as soon as the review is created. 
+*The decision meeting is not mandatory. 
+*It is possible to notify the author/lead of progress in logging anomalies several times in a review. The author/lead can then start fixing some anomalies before the end of the review. 
+*Anomalies are assigned to the author by default on a per review basis.
+
+There are several ways to perform basic and informal reviews since there are no formal review phases. The below picture describes a typical review that will be described in more detail. Dashed elements in the picture represent optional steps in this scenario. 
+
+<br> 
+
+[[Image:BasicInformalReview.png]] 
+
+<br> 
+
+=== Create new review  ===
+
+In this scenario, the organizer wants artifacts to be reviewed by one colleague. The author first needs to create the review in R4E. As in formal reviews, this step involves naming the review, identifying participants/roles and identifying relevant input documentation. During the creation of the review, the organizer needs to specify that the review type is basic or informal. 
+
+=== Identify what needs to be reviewed  ===
+
+The organizer uses R4E to specify what needs to be reviewed. This step is performed like for formal reviews using R4E tools to automatically find artifact changes or by manually specifying portions of artifacts that need to be reviewed. The result is a collection of review items. 
+
+=== Items ready for review  ===
+
+The author notifies the reviewer that items are ready to be reviewed. This is done via an email notification that is generated from R4E. In this scenario, no formal meeting is scheduled. 
+
+=== Review item examination, anomaly/time logging  ===
+
+The reviewer examines review items and logs anomalies. The time spent doing this activity can be logged in R4E in an iterative way (e.g. every day). 
+
+=== Progress notification  ===
+
+In this scenario, the reviewer has completed a significant portion of the review (for example, a module/subsystem/feature) and wants to immediately inform the author about it. R4E is used to send a progress notification via an email containing the progress details to the author. Several progress notifications can be sent in a given review. 
+
+=== Examine and fix/reject anomalies  ===
+
+The author relies on the progress notification information to start the anomaly examination. As a result, anomalies can either be accepted or rejected. Accepted anomalies can then be fixed. 
+
+=== Completion notification  ===
+
+When the reviewer has completed the review item examination, R4E is used to send a completion notification via email. 
+
+=== Examine and fix/reject anomalies  ===
+
+The author relies on the completion notification information to complete the anomaly examination. As a result, anomalies can either be accepted or rejected. Accepted anomalies can then be fixed. 
+
+=== Mark review completed  ===
+
+When all anomalies have been fixed, the author can specify the exit decision and mark the review as completed. 
+
+== Formal Review workflow  ==
+
+R4E uses the IEEE Standard for Software Reviews (IEEE Std 1028-1997) for formal reviews. The process is broken down into four phases. 
+
+This process can be adapted to your organization. It is possible to use R4E to perform large reviews with several participants and formal meetings. It is also possible to use R4E for smaller one-on-one reviews with no formal meetings. 
+
+=== Planning Phase  ===
+
+[[Image:FormalReviewPlanning.png]] 
+
+During the Planning phase, the review organizer, lead and author(s) define the scope of the review. Together, they specify the list of review items. The review lead also takes care of the overall review scope and planning by specifying aspects like the participants, their roles, the review schedule, etc... 
+
+<br> 
+
+=== Preparation Phase  ===
+
+[[Image:FormalReviewPreparation.png]] 
+
+<br> 
+
+During the Preparation phase, reviewers individually examine review items and record detected anomalies. This activity needs to be performed as preparation for the Decision phase. 
+
+<br> 
+
+=== Decision Phase  ===
+
+[[Image:FormalReviewDecision.png]] 
+
+<br> 
+
+During the Decision phase, review participants meet and analyse all submitted anomalies. Together they agree on which anomalies should be accepted and fixed in this particular phase of the project. Anomalies can be rejected because they are invalid or duplicated. They can also be postponed to another project. All accepted anomalies are assigned to the relevant authors for the Rework phase. 
+
+<br> 
+
+=== Rework Phase  ===
+
+[[Image:FormalReviewRework.png]] 
+
+<br> 
+
+During the Rework phase, authors fix all accepted anomalies assigned to them during the Decision phase. 
+
+<br> 
+
+== Author  ==
+
+An Author is an R4E Participant that wrote the code being reviewed. Typically, authors are involved in fixing raised Anomalies. 
+
+== Anomaly  ==
+
+An Anomaly is any condition that deviates from expectations based on requirements specifications, design documents, user documents, standards, etc., or from someone's perceptions of experiences. R4E Anomalies are typically created by reviewers during the review. They can also be found during test, analysis, compilation, or by users of software products or applicable documentation. 
+
+== Comment  ==
+
+In the context of R4E, Comments are user commentaries that are associated to Anomalies as follow-up, or to provide complementary information. 
+
+== Commit Review Item  ==
+
+A Commit Review Item is a review item that represents the file versions included together in a commit to a Version-Controlled Repository. A commit review item includes the ancestor version (base) and committed version (target) of the files. Commit Review Items are added to a review by Using the ''R4E Find Review Items'' command on an Eclipse project. 
+
+== Delta  ==
+
+A Delta represents a single difference in a File Context between the base and target versions. A Delta can refer to content that was modified, added or removed within the file and can span one or multiple lines. 
+
+== File Context  ==
+
+A File Context represents a File included in the review. A file context includes references to the base (ancestor) and target (current) versions of the affected file. 
+
+== Global Anomaly  ==
+
+In the context of R4E, Global Anomalies are Anomalies that do not tie to a specific file or part of a file, but are rather applicable to the whole review or are general comments. 
+
+== Lead  ==
+
+A Lead is an R4E Participant that is responsible to monitor the progress of the review is coordinate the wok of the various participants. It should also be the person that has the final say on the closure of the review. 
+
+== Organizer  ==
+
+An Organizer is an R4E Participant that create the review and puts together the Review contents. Most of the time, the lead and the organizer are the same person. 
+
+== Participant  ==
+
+A Participant is a user that is part at any given point of a review. A Participant can have one or more roles within the review. Possible roles includes Author, Lead, Organizer, or Reviewer 
+
+== Resource Review Item  ==
+
+A Resource Review Item is a review item that represents a single Eclipse resource (typically a File). Resource Review Items are added to a review by manually selecting the affected file in the workspace 
+
+== Reviewer  ==
+
+A Reviewer is an R4E Participant that reviews the code under review. Typically, reviewers are involved in raising Anomalies and following up on their resolution. 
+
+== Review Group  ==
+
+A Review Group is a set of Reviews bundled together under the same directory and that have common factor(s) as determined by the user (e.g. Same Project, Product, Design Team, Organization, Time Span, etc.) 
+
+== Review  ==
+
+A Review is a collection of Review Items that are to be reviewed together, by the same reviewers, within a given time period. 
+
+== Review Item  ==
+
+A Review Item is a collection of file versions that will be reviewed as part of the current review. There are two types of Review Items currently supported: Commit Review Items and Resource Review Items. 
+
+== Rule  ==
+
+A Rule represents a Design Rule that is to be enforced in the code. Design Rules should be enforced by the reviewers at review time. When a Rule is used in creating an anomaly, its values become the default values for the anomaly. 
+
+== Rule Set  ==
+
+A Rule Set is a collection of Design Rules that are bundled together as a unit. Rule Sets are associated to the Review Group in which they can be used 
+
+== Rule Area  ==
+
+A Rule Area is a container for Design Rules related to the same area. E.g. Java, C++, Testing etc. 
+
+== Rule Violation  ==
+
+A Rule Violation is a Container for the multiple design rules associated to a category. E.g. Format, Performance, Syntax, etc. 
+
+== Selection  ==
+
+A Selection represents the part of a File that was manually added to a review. A Selection can span one or multiple lines within a file, or could refer to the whole file itself. 
+
+<br> 
+
+= Tasks =
+
+== Working with the Navigator View  ==
+
+The R4E Navigator View is the main component of R4E. It shows all the information that is available to the user and it is also the place where most user commands are available. The Review Navigator information is organized in a hierarchical tree structure and is presented in a Navigator panel. Commands are available in the view toolbar and in context menus that appear when right-clicking the navigator elements. 
+
+<br> 
+
+[[Image:ReviewNavigatorView.png]] 
+
+<br> 
+
+=== Disabling and Restoring Elements  ===
+
+When Review Navigator elements are not relevant anymore (e.g. completed reviews), they can be removed from the view by using the ''Disable ''command from the element's context menu. 
+
+<br> 
+
+[[Image:DisableElement.png]] 
+
+<br> 
+
+Disabled elements data is kept, but they will not appear in the navigator view anymore. Take note that currently it is not possible to completely remove references to an element once it is created. 
+
+To see disabled elements in the Navigator view, go to the R4E Preferences Filter Tab and select the ''Show Disabled Elements'' checkbox and apply the preferences. The disabled elements will show in the Navigator grayed out and with the little disabled decorator icon [[Image:Dsbldovr tsk.gif]] 
+
+Ideally, disabled elements should never be shown, but there could be a need to restore mistakenly disabled elements. To do so, select the ''Restore ''command from the disabled element context menu 
+
+<br> 
+
+[[Image:RestoreElement.png]] 
+
+<br> 
+
+=== Sorting Review Navigator Elements  ===
+
+The Navigator elements can currently be sorted alphabetically or by review type, by selecting the appropriate sorter in the Review Navigator Toolbar menu. 
+
+<br> 
+
+[[Image:Sorters.png]] 
+
+<br> 
+
+=== Filtering Review Navigator Elements  ===
+
+The Navigator view provides different filters that can be used to limit the visibility of elements within the navigator tree. Filters are available in the Review Navigator Toolbar menu. 
+
+<br> 
+
+[[Image:Filters.png]] 
+
+<br> 
+
+The filters available are: 
+
+*''Show Reviews Only'': Show only Review Groups and Review elements 
+*''Show My Reviews'': Show only Review Groups and Review elements in which the current user is a Participant 
+*''Show Reviews for Participant...'': Opens a dialog box where a User ID can be specified. The Navigator will then show only Review Groups and Review elements in which this User is a Participant 
+*''Show Anomalies Only'': Only show the Anomalies for the currently open Review and their parent containers 
+*''Show My Anomalies'': Only show the Anomalies for the currently open Review that the current User created and their parent containers 
+*''Hide Reviewed Elements'': This filter will hide all elements that have been marked as Review by the current User 
+*''Hide Rule Sets'': This filter will hide all Rule Sets elements and their children 
+*''Hide Deltas'': This filter will hide all Selection and Delta elements. 
+*''Go Into'': This filter is a special filter that will take the selected element of the Navigator and put it at the root of the Navigator tree. This is useful to focus on a particular element and its children. It is also possible to set up this filter directly from the View toolbar using the [[Image:Focus menu.gif]] icon. 
+*''Remove All Filters'': Remove all currently applied filters and restores the full display of all enabled elements in the Navigator tree.
+
+<br> 
+
+=== Setting Elements Reviewed State  ===
+
+To help Users to keep track of the content that was reviewed it is possible to mark relevant Review Navigator elements as reviewed using the context menu Mark/Unmark as User Reviewed command. This will put a little done decorator [[Image:Revovr tsk.gif]] icon. The marking can be removed by using the same command to toggle the state. 
+
+<br> 
+
+=== Other Review Navigator Commands  ===
+
+These other commands are also available from the Navigator view toolbar: 
+
+*''Collapse Navigator tree'' [[Image:Clpseall menu.gif]]: Collapse the current Navigator tree 
+*''Expand Navigator tree'' [[Image:Expndall menu.gif]]: Expand the current Navigator tree to the lowest level. 
+*''Select and Open Next Element'' [[Image:Nxtelem menu.gif]]: Move the selection to the next (lower) element in the tree and opens it in an editor if possible (for File Contexts elements and children) 
+*''Select and Open Previous Element'' [[Image:Prvelem menu.gif]]: Move the selection to the previous (higher) element in the tree and opens it in an editor if possible (for File Contexts elements and children) 
+*''Refresh Navigator Data'' [[Image:Refrsh menu.gif]]: Fetches data from disk and rebuilds the Navigator tree. This will also show new data that has been added by other users. 
+*''Link Navigator with Editor'' [[Image:Lnked menu.gif]]: Links the Navigator view with the Editor functionality so that Files can be open from the Navigator by double-clicking on them 
+*''Link Navigator with R4E Properties'' [[Image:Lnkprop menu.gif]]: Links the Navigator view with the R4E Properties view so that the view is shown for a given element when it is selected in the Navigator view.
+<div><br></div> 
+<br> 
+
+== Handling Review Groups and Reviews  ==
+
+=== Creating a Review Group  ===
+
+When using R4E for the first time, the first thing to do is to create Review Groups that will hold the R4E review data. Typically, Review Groups include common settings that will be used for multiple reviews. For instance, one can create a Review Group for a design organization, for a given project or task etc. 
+
+A given Review Groups is created only once, typically by a "super-user" selected among people that are part of the group. 
+
+In order to create the Group, select the ''New Group'' icon in the Review Navigator Toolbar. 
+
+<br> 
+
+[[Image:NewReviewGroup.png]] 
+
+<br> 
+
+This opens the New Review Group dialog. 
+
+<br> 
+
+[[Image:NewReviewGroupDialog.png]] 
+
+<br> 
+
+*Add the Review Group Name and (optionally) a brief description in the appropriate text fields. 
+*Select a shared folder location where team members have access and write permissions (i.e. Review Group shared folder) 
+*Under the Extra Parameters section, more information can optionally be entered to further caracterize the Group: Default Project, Default Components and Default Entry Criteria values will be available for all Reviews created under this Review Group. Rule Sets defines the available Rule Sets for Review created under this Review Group (see Rule Sets below).
+
+<br> 
+
+=== Opening an Existing Review Group  ===
+
+When you create a new Review Group, its references are automatically included in your workspace. To add other Review Group references, open the R4E Preference Group Tab 
+
+<br> 
+
+[[Image:R4E preferences general groups.png]] 
+
+<br> 
+
+*Add a new Review Group reference file by clicking the ''Add ''button and select the appropriate Group File. Take note that all Review Group filename end with "_group_root.xrer" suffix. 
+*The Review Group Name and Description are also shown in the Preferences Group tab.
+
+<br> 
+
+=== Creating a Review  ===
+
+The Review is the main element of R4E. It is used to group together file that are to be reviewed. There are three type of reviews, Basic, Informal and Formal review (See concepts section for an explanation of the different types of reviews). 
+
+To create a new Review, right-click on the parent Review Group under which you want to create the review and select the ''New Review'' Command from the R4E Context Menu. 
+
+<br> 
+
+[[Image:NewReview.png]] 
+
+<br> 
+
+This opens the New Review dialog. 
+
+<br> 
+
+[[Image:NewReviewDialog.png]] 
+
+<br> 
+
+*Add the Review Name and a brief description in the appropriate text fields. 
+*Under the Extra Parameters section, more information can optionally be entered to further caracterize the Review: 
+**Project and Components values can be selected from the values entered in the parent Review Group Default Projects and Default Components respectively 
+**Entry Criteria is taken by default from the parent Review Group value 
+**Objectives and Reference Materials can be set by the Review creator
+
+<br> 
+
+=== Opening and Closing of Review Groups and Reviews  ===
+
+In order to be able to see the Review Group child Reviews, a Review Group must be open. Close Review Group are recognized because of the hollow Group icon they show. You can open a closed Review Group by right-clickindgon it and selecting the ''Open Element'' command, or simply by double-clicking on it. &nbsp;Closing unused Review Group make navigation easier and free up memory and resources, so the Groups should be closed when they are unused. 
+
+Likewise, reviews can also be open and closed using the same mecanism. The only difference is that only one review (called the Active Review) can be open at any given time. Opening another Review closes the currently open one. 
+
+Take note that Review Groups and Reviews are automatically open after they are first created. 
+
+<br> 
+
+=== Adding Participants to a Review  ===
+
+Participants are automatically added to the current Review as soon as they add review items to it or create an anomaly. It is also possible to add participants manually. 
+
+To do so, right click on the parent review and select the ''New Participant'' Command from the R4E Context Menu. 
+
+<br> 
+
+[[Image:NewParticipant.png]] 
+
+<br> 
+
+This opens the New Participant dialog. 
+
+<br> 
+
+[[Image:NewParticipantDialog.png]] 
+
+<br> 
+
+*Add the Participant Id and E-mail address and optionally User Details in the appropriate text fields. 
+*Under the Extra Parameters section, more information can optionally be entered to further caracterize the Participant: 
+**Roles can be assigned to the participant to restrict actions that can be taken. Take note that Roles are mandatory for Formal Review and Optional for Basic and Informal Review types 
+**Focus Area value can be entered to specify a specific areas this Participant should focus on for this Review
+
+<br> 
+
+If an LDAP database if configured and connected, the user information could be searched and filled-in automatically using the Find User Dialog 
+
+<br> 
+
+[[Image:FindUserDialog.png]] 
+
+<br> 
+
+Any field can be entered in the User Information section and by clicking the Search button, an LDAP query will be sent to the database. If any matches are found, the results will be displayed in the Query Results section. 
+
+<br> 
+
+=== Creating a Review Item  ===
+
+In R4E, Review Items are a collection of one or more files, or parts of files, that are to be reviewed. There are two types of Review Items that exist: Commit Review Items and Resource Review Items. 
+
+<br> 
+
+==== Creating a Resource Review Item  ====
+
+This item type is created by manually selecting a workspace resource (i.e. File) or a portion of a resource (i.e. line ranges within a given file). 
+
+*To create Resource review items for a whole file, right-click a File on a Package Explorer, Navigator or Project View and select the ''Add Review Item'' command from the R4E context menu.
+
+<br> 
+
+[[Image:AddResourceReviewItemFile.png]] 
+
+<br> 
+
+*To create Resource review items for a portion of a file, right click a line range selection in an editor or compare editor, or on an element of the outline view and select the ''Add Review Item'' command from the R4E context menu.
+
+<br> 
+
+[[Image:AddResourceReviewItemRange.png]] 
+
+<br> 
+
+Once a Resource Review Item is created, it will be shown in the Review Navigator. If you expand the Review Item, you will see the child elements: The file on which the Review Item is applied and the line range selection that is part of the item. 
+
+<br> 
+
+[[Image:ResourceReviewItem.png]] 
+
+<br> 
+
+==== Creating a Commit Review Item  ====
+
+This item type is created by selecting files that were committed to a Version Control System repository. Currently, the only Version Control System supported is Git. 
+
+To create a Commit Review Item, right click on a project attached to the Egit team provider (see Project Configuration) and select the ''Find Review Items'' command from the R4E Context menu. 
+
+<br> 
+
+[[Image:FindReviewItems.png]] 
+
+<br> 
+
+This will show the Git connector Commit dialog. 
+
+<br> 
+
+[[Image:FindReviewItemsDialog.png]] 
+
+<br> 
+
+Use the ''Available Commits'' combo box to browse through all available commits and select one. For the selected commit, the commit information and affected files appear in the Commit Information and Committed Components sections respectively. 
+
+Once a Commit Review Item is created, it will be shown in the Review Navigator. If you expand the Review Item, you will see the child elements: The file on which the Review Item is applied and, optionally if the option is selected in the preferences, the line ranges for the Deltas (or differences between the committed file and its direct ancestor) that are part of the Item. 
+
+<br> 
+
+[[Image:CommitReviewItem.png]] 
+
+<br> 
+
+The icons for the files that are new and were added in the commit will be shown decorated with a little [[Image:Addovr tsk.png]] icon The icons for the files that were removed in the commit will be shown decorated with a little [[Image:Removr tsk.png]] icon Files in the commit that are out of sync i.e. for which the version to review and the version present in the users workspace differ will be shown with the &gt; sign prepended to the filename. Such files can be reviewed, but to use the full navigatability provided by the editors, it is stongly recommended that the files be in sync with the workspace whenever possible. 
+
+<br> 
+
+=== Creating an Anomaly  ===
+
+R4E Anomalies are raised by reviewers to flag problems or add comments on specific parts of the contents as part of the review process. 
+
+Anomalies are added in a similar way Resource Review Items are, either from a selected Resource or from a portion/range of a resource, by selecting the ''Add Anomaly'' command from the R4E context menu. 
+
+<br> 
+
+[[Image:NewAnomaly.png]] 
+
+<br> 
+
+Anomalies that are directly tied to a specific selection/delta range can also be created by selecting the ''Add Linked Anomaly'' command from the context menu of the affected selection/delta in the Review Navigation View 
+
+<br> 
+
+[[Image:NewLinkedAnomaly.png]] 
+
+<br> 
+
+Anomalies can also be created at the review level. This is useful to flag problems that are not specifically tied to a given file or file part. To do this, use the ''Add Anomaly'' Command from the context menu of the Global Anomalies element in the Review Navigator view. 
+
+<br> 
+
+[[Image:NewGlobalAnomaly.png]] 
+
+<br> 
+
+This opens the New Anomaly dialog. 
+
+<br> 
+
+[[Image:NewAnomalyDialog.png]] 
+
+<br> 
+
+*Add the Anomaly Title and Description in the appropriate text fields. 
+*Under the Extra Parameters section, if Rule Sets are associated to the parent Review Group, the Rule Sets hierarchy will be shown and, optionally, a design rule can be selected and applied to this anomaly. This will set the Anomaly values with the selected rule values.
+
+<br> 
+
+=== Creating Comments on an existing Anomaly  ===
+
+It is possible to add comments to an existing anomaly. This could be useful in discussing the anomaly or for tracking purposes. To create a Comment, use the ''Add Comment'' command on the context menu on the selected Anomaly. 
+
+<br> 
+
+[[Image:NewComment.png]] 
+
+<br> 
+
+This opens the New Comment dialog, where the comment can be added. 
+
+<br> 
+
+[[Image:NewCommentDialog.png]] 
+
+<br> 
+
+== Handling Design Rules  ==
+
+=== Creating a Rule Set  ===
+
+R4E support the use of Design Rules, to help reviewers enforce consistent design conventions and rules. A Rule Set is a container that includes multiple related Rule. Rule Sets are independently defined and can be shared among multiple Review Groups. Take note that the use of Design Rules is completely optional. 
+
+To create a new Rule Set, select the New Group icon in the Review Navigator Toolbar. 
+
+<br> 
+
+[[Image:NewRuleSet.png]] 
+
+<br> 
+
+This opens the New Rule Set dialog. 
+
+<br> 
+
+[[Image:NewRuleSetDialog.png]] 
+
+<br> 
+
+*Add the Rule Set Version and Name in the appropriate text fields. 
+*Select a shared folder location where team members have access and write permissions (i.e. Rule Set shared folder)
+
+<br> 
+
+=== Opening an Existing Rule Set  ===
+
+When you create a new Rule Set, its references are automatically included in your workspace. To add other Rule Set references, open the R4E Preference Rule Sets Tab 
+
+<br> 
+
+[[Image:R4E preferences general ruleSets.png]] 
+
+<br> 
+
+*Add a new Rule Set reference file by clicking the ''Add ''button and select the appropriate Rule Set File. Take note that all Review Group filename end with "_rule_set.xrer" suffix. 
+*The Rule Set Version and Name are also shown in the Preferences Group tab.
+
+<br> 
+
+=== Creating a Rule Area  ===
+
+In order to create Design Rules, a Rule Area et a Rule Violation containers first need to be created. 
+
+Rule Areas represent a logical grouping of Rule Violations. They can, for instance refer to a specific language of element of the architecture. To create a Rule Area, right-click on the parent Rule Set and select the ''New Rule Area'' command. 
+
+<br> 
+
+[[Image:NewRuleArea.png]] 
+
+This opens the New Rule Area dialog. 
+
+[[Image:NewRuleAreaDialog.png]] 
+
+<br> 
+
+*Add the Rule Area Name in the appropriate text field.
+
+<br> 
+
+=== Creating a Rule Violation  ===
+
+Rule Areas contain Rule Violation. A Rule Violation is a logical grouping and Design Rules. They refer to a specific problem highlighted by the Rule e.g. Syntax Error, Bad Naming Convention etc. 
+
+To create a New Rule Violation, right-click on the parent Rule Area and select the ''New Rule Violation'' command. 
+
+<br> 
+
+[[Image:NewRuleViolation.png]] 
+
+<br> 
+
+This opens the New Rule Violation dialog. 
+
+<br> 
+
+[[Image:NewRuleViolationDialog.png]] 
+
+<br> 
+
+*Add the Rule Violation Name in the appropriate text field.
+
+<br> 
+
+=== Creating a Rule  ===
+
+A Rule is the smallest unit in the Design Rule hierarchy. It refers to a specific code convention that is to be followed. The values of the rules are automatically set in anomalies that are created using the Rule as a reference. This can speed up and put some consistency in the review process. 
+
+To create a New Rule, right-click on the parent Rule Violation and select the ''New Rule'' command. 
+
+<br> 
+
+[[Image:NewRule.png]] 
+
+<br> 
+
+This opens the New Rule dialog. 
+
+<br> 
+
+[[Image:NewRuleDialog.png]] 
+
+<br> 
+
+*Add the Rule Violation Id, Title and Description in the appropriate text fields. 
+*Select the Rule Class and Rank in the appropriate combo boxes.
+
+<br> 
+
+== Working with Editors  ==
+
+Once the Navigator view is open and Review Items are present. The items can be reviewed. Files are reviewed using various editor views to browse the content. Currently R4E is fully integrated with the Java JDT and C/C++ CDT editors and will take advantage of the special featrues these editors provide. &nbsp; 
+
+Files can be open in editors by double-clicking on them or their children in the Review Navigator. By default, files belonging to resource review items will be open in single-file editors, whereas files belonging to commit review items will be open in a compare editor. If the file is open using the child Selection/Delta/Anomaly element, then the cursor will automatically be positionned to the start of the line range that corresponds to the element. Files and also be open in the single-file editor by using the ''Open File in Editor'' command from the selected element context menu. 
+
+<br> 
+
+[[Image:OpenFile.png]] 
+
+<br> 
+
+Once the file is open, anomalies can be added on the contents by selecting a range in the file and using the Add Anomaly command in the R4E context menu. 
+
+<br> 
+
+== Working with R4E Properties  ==
+
+Updates to any review elements are performed via the R4E Properties View. If the R4E properties view is linked to the Review Navigator View, it will show up when any Review Navigator element is selected and will show the properties that are associated with this element. 
+
+The R4E Properties View is a tab properties viw that consists of three tab. 
+
+*The ''General Tab'' show properties that are mandatory and common to all review types 
+*The ''Extra Tab'' show properties that are either optional or specific to one review type. Take note that the properties that do not apply to the current review type will not be shown. 
+*The ''All Tab'' displays all properties at a glance, using the default Eclipse properties layout. Take note that some properties that are editable in the General and Extra tabs will be read-only in this tab.
+
+Editable properties can be changed directly in the properties view. Take note that some properties can only be set when the element is created, while others could be editable only under specific circumbstances (e.g. a specific element state or review phase for Formal Reviews). 
+
+A more detailed description of the properties for each element is shown below. 
+
+=== Working with Review Groups Properties  ===
+
+==== General Properties  ====
+
+[[Image:ReviewGroupGeneralProperties.png]] 
+
+General Properties for the Review Group Element includes: 
+
+*The Group name 
+*The location of the root folder where the information is stored on disk 
+*The Group description<br>
+
+<br> 
+
+==== Extra Properties  ====
+
+[[Image:ReviewGroupExtraProperties.png]] 
+
+Extra Properties for the Review Group Element includes 
+
+*The Available Projects that can be used in child reviews 
+*The Available Components that can be used in child reviews 
+*The Default Entry Criteria that will be set when creating chil reviews 
+*The Applied Rule Sets that specify Design Rules that can be used when creating anomalies in child reviews
+
+<br> 
+
+=== Working with Reviews Properties  ===
+
+==== General Properties  ====
+
+[[Image:ReviewGeneralProperties.png]] 
+
+General Properties for the Review Element includes: 
+
+*The Review name. 
+*The current Review phase. Basic and Informal reviews can have only 2 phases, ''Started ''and ''Completed''. Formal reviews have multiple phase. Refer to the formal review section for more information. 
+*The review start (or creation) date. 
+*The review end (or completion) date. If the review is not completed, this will show as ''In Progress''. 
+*A brief description of the review. 
+*For formal reviews only, a phase map that show all phases and the progress of the review. Completed phases are highlighted in green and the current phase is highlighted in cyan. It also show the state and end date for the phase as well as the participant that is the phase owner. Only the phase owner can change the current phase and can thus update progress on the review.
+
+<br> 
+
+==== Extra Properties  ====
+
+[[Image:ReviewExtraProperties.png]] 
+
+Extra Properties for the Review Element includes: 
+
+*Project Id. The value is taken for the list of possible values from the parent Review Group 
+*Components. The values are taken for the list of possible values from the parent Review Group 
+*The Entry Criteria that has to be met for the review to start. The default value is taken from the parent Review Group but can be modified here. 
+*The Objectives for the review. 
+*The Reference Materials (documents etc.) that ca n be used during the review 
+*A Decision Information section that includes: 
+**Meeting data for the decision meeting (Subject, Time, Duration, Location). This can be updated at any time using the ''Update ''button. The data can be fetched using the ''Refresh'' button 
+**The Exit Decision that tell whether the review is accepted or if some rework has to be done 
+**Participants that were part of the exit decision 
+**The Total Time spent in the decision meeting.
+
+<br> 
+
+=== Working with Review Items Properties  ===
+
+[[Image:ReviewItemProperties.png]] 
+
+Properties for the Review Item Element includes: 
+
+*The Participant Id of the participant that added the Item 
+*The Email address of the participant that added the Item 
+*The Project(s) Id(s) the file(s) included in this Item belong to 
+*The Id of the change e.g. he commit Id. This is only applicable for Commit Review Items. 
+*The date the change was included e.g. the commit date. This is only applicable for Commit Review Items. 
+*A brief description of the changes. For Commit Review Items, this is set to the commit message.
+
+<br> 
+
+=== Working with File Contexts Properties  ===
+
+[[Image:FileContextProperties.png]] 
+
+Properties for the File Context Element include a section for the base (predecessor) and target (current) files. Each section contains: 
+
+*The Name of the file 
+*The Path to the file 
+*The Version tag or Id for the file.
+
+<br> 
+
+=== Working with Selections and Deltas Properties  ===
+
+[[Image:ContentsProperties.png]] 
+
+Properties for the Selection and Delta Elements only include the Position (i.e. the line range) where the selection or delta is located within the parent file. 
+
+<br> 
+
+=== Working with Anomalies Properties  ===
+
+==== General Properties  ====
+
+[[Image:AnomalyGeneralProperties.png]] 
+
+General Properties for the Anomaly Element includes: 
+
+*The Anomaly title. If this anomaly includes a design rule, this will be set to the title of the design rule by default. 
+*The Id of the participant that added this Anomaly 
+*The Creation Date for this Anomaly 
+*The Position (i.e the line range) where this Anomaly is located within its parent file. This is not applicable for Global Anomalies 
+*The Description of the Anomaly. If this anomaly includes a design rule, this will be set to the description of the design rule by default.
+
+<br> 
+
+==== Extra Properties  ====
+
+[[Image:AnomalyExtraProperties.png]] 
+
+Take note that the Extra Properties for the Anomaly Element do not exist for basic reviews. They include: 
+
+*The Anomaly current state. 
+*The Anomaly Class. The class describes the type of problem that is highlighted by this Anomaly 
+*The Anomal rank. The rank sets the seriousness of the problem highlighted by this Anomaly 
+*The Rule ID that Anomaly uses, if any 
+*The Due Date for this anomaly to be resolved or addressed. 
+*The Id of the participant that decided how to handle this Anomaly 
+*The Id of the participant that fixed this Anomaly 
+*The Id of the participant that does the follow-up of this Anomaly 
+*The Reason for Rejection. &nbsp;This is only applicable for anomaly that are rejected,&nbsp;
+
+<br> 
+
+=== Working with Comments Properties  ===
+
+[[Image:CommentProperties.png]] 
+
+Properties for the Comment Element includes: 
+
+*The Participant Id of the participant that added the Comment 
+*The Time when the Comment was created 
+*The Comment contents
+
+<br> 
+
+=== Working with Participant Properties  ===
+
+==== General Properties  ====
+
+[[Image:ParticipantGeneralProperties.png]] 
+
+General Properties for the Participant Element includes: 
+
+*The Participant Id 
+*The Participant Email address 
+*The nNumber of anomalies that were added by this Participant 
+*The Number of comments to anomalies that were added by this Participant 
+*Extra User details. This will show the raw information returned by a query to the LDAP database, if one is configured.
+
+<br> 
+
+==== Extra Properties  ====
+
+[[Image:ParticipantExtraProperties.png]] 
+
+Extra Properties for the Participant Element includes: 
+
+*A table that tracks the Time Spent by the participant reviewing the file. Entries can be added (or removed) by the participant at any time by using the ''Add ''(or ''Remove'') button. The table will also show the cumulative time spent in its header 
+*The Participant roles for the current review. A participant can have more than one role concurrently. 
+*The Focus Area for the Participant for this review.<br>
+
+<br> 
+
+=== Working with Rule Sets Properties  ===
+
+[[Image:RuleSetProperties.png]] 
+
+Properties for the Rule Set Element includes: 
+
+*The Rule Set version 
+*The Rule Set name 
+*The Path to the file that contains the Rule Set data
+
+<br> 
+
+=== Working with Rule Areas and Rule Violations Properties  ===
+
+[[Image:RuleAreaProperties.png]] 
+
+Properties for the Rule Are and Rule Violation Elements only include the name of the Area or Violation. 
+
+<br> 
+
+=== Working with Rules Properties  ===
+
+[[Image:RuleProperties.png]] 
+
+Properties for the Rule Element includes: 
+
+*An Identifier that uniquely identifies this Rule. 
+*The Title. The Anomaly that include this rule will have its title set to this by default. 
+*The Description. The Anomaly that include this rule will have its description set to this by default. 
+*The Class. The Anomaly that include this rule will have its class set to this by default. 
+*The Rank. The Anomaly that include this rule will have its rank set to this by default.
+
+<br> 
+
+== Using Notifications  ==
+
+R4E support sending Meeting and E-mail notifications directly from the Eclipse workbench. Notification send are pre-filled with all the relevant information, making it easy to have standardized communication between the Review participants. 
+
+Meeting notifications also can be used to schedule various meetings (e.g. decision meetings) automatically. 
+
+<br> 
+
+=== Using Key Bindings and Hotkeys  ===
+
+==== Keys  ====
+
+Eclipse allows you to customise your keyboard using ''General&gt;Keys'' preference page. Within Eclipse, key strokes and key sequences are assigned to invoke a command. 
+
+==== Bindings  ====
+
+R4E defines some keys as accelerator keys to help the user to perform reviews. Each command starts with ALT +R as below: 
+
+[[Image:DefaultKeyBindings.png]] 
+
+
+
+*ALT +R A&nbsp;: Add Review Anomaly. Available from any editor View. There must be a selection in the editor to create a new Anomaly. 
+*ALT +R C&nbsp;: Collapses the Review Navigator View tree. 
+*ALT +R E&nbsp;: Expand all elements of the Review Navigator View tree. 
+*ALT +R F&nbsp;: Opens a dialog used with the Version Control System connector to Find new Review Items. A Project needs to be selected first before using this shortcut. 
+*ALT +R I&nbsp;: Add Review Item. Available from any editor View. There must be a selection in the editor to create a new Review Item. 
+*ALT +R L&nbsp;: Add a new Linked Anomaly to the selected Review Navigator Selection/Delta element, if any. 
+*ALT +R O&nbsp;: Open the default editor on the selected Review Navigator element, if any. 
+*ALT +R R&nbsp;: Refresh the Review Navigator View. 
+*ALT +R S&nbsp;: Mark/Unmark the selected Review Navigator element as Reviewed, if any. 
+*ALT +R X&nbsp;: Remove (disable) the selected Review Navigator element, if any.
+
+When selecting the accelerator key ALT + R, if the user waits before selecting the next accelerator key, a commands list like the one shown above will be displayed at the bottom right corner of the Eclipse window. 
+
+=== Using Email Notifications  ===
+
+E-mail notification can be sent on Review Navigator elements by using the ''Send Email/Notification'' command from the selected element context menu. 
+
+<br> 
+
+[[Image:SendEmail.png]] 
+
+<br> 
+
+Once the command is triggered, a dialog appears asking the kind of notification to be sent. Take note that not all the options are available depending on the element selected, the review type and other factors. 
+
+<br> 
+
+[[Image:SendEmailDialog.png]] 
+
+<br> 
+
+Selecting one option and closing the dialog will show up a simple email client pre-filled with all the relevant information. The user is free to modify the information as he sees fit and send the email by clicking the ''OK ''button. 
+
+<br> 
+
+[[Image:SendEmailClientForm.png]]<br> 
+
+<br> 
+
+=== Using Meeting Notifications  ===
+
+Meeting can also be scheduled directly in the workbench using R4E. Meeting data generated is in a VCalendar format that is attached to the Email that will be sent. Meeting data for decision meeting is mandatory for Formal Reviews and optional for other review types. 
+
+To add meeting data, use the ''Update ''button in the Extra property tab, under the Decision Information section, for the selected Review element. This will open the Meeting Information dialog. 
+
+<br> 
+
+[[Image:MeetingInfoDialog.png]] 
+
+<br> 
+
+The meeting information to enter include the time of the meeting, the duration and location where the meeting will take place. To make the time entry easier, you can use the date selector button (the ''"..."'' button on the right side of the ''Starts'' text field). 
+
+<br> 
+
+[[Image:MeetingInfoDate.png]] 
+
+The meeting info stored in the system can be retrive at all time by using the ''Refresh ''button in the Extra property tab, under the Decision Information section, for the selected Review element. 
+
+<br> 
+
+== Performing Reviews  ==
+
+=== Performing Basic Reviews  ===
+
+In R4E, basic reviews are the simplest form of reviews available. Basic reviews are stateless and the anomalies that are raised are also stateless. This means the the participants must track progress of the Review and of the raised Anomaly externally. 
+
+Typically, the workflow of a basic review will go as follows: 
+
+#Review is created 
+#Review Items are added, either by manually selecting reources or by automatically selecting files committed using the Find Review Items commmand on the target project 
+#Organizer/Lead notifies reviewers that the items are ready for review. his can be done externally or by using the Email notification functionality provided by R4E 
+#Reviewers review the items and raise anomalies as they encounter them. 
+#At any time there could be communication between the reviewers and the authors of the code under review. Since there is no anomaly state tracking, they will have to agree on how to handle the anomalies raised. 
+#Once all the reviewers are done and the anomalies are fixed, the review can be set as completed.
+
+<br> 
+
+=== Performing Informal Reviews  ===
+
+Informal Review workflow is pretty much the same as the Basic Review workflow, so the steps described above still apply. However, the main difference is the fact that anomalies are now stateful and they need to be addressed/resolved before the review can be closed. 
+
+The state diagram for the anomaly workflow is as follows: 
+
+[[Image:InformalAnomalyStates.png]] 
+
+*Assigned: This is the state set when the anomalies are created. This is the only non-terminal state 
+*Deferred: The Anomaly will is valid but will not be fixed now, but at a later time 
+*Duplicated: The Anomaly is a duplicate of another one 
+*Rejected: The Anomaly is invalid and will not be fixed 
+*Fixed: The Anomaly is valid and was fixed. This is normally a terminal state, unless the Revew Exit Decision is set to Accepted with Follow-up, in which case the Verified state is the terminal one. 
+*Verified: The Anomaly was fixed and verified by the participant that raised it. This state is normally optional, but all Anomalies that are fixed should be subsequently set to verified is the Review Exit Decision is set to Accepted with Follow-up.
+
+<br> 
+
+Once all the Anomalies are in a terminal state, the review can then be closed as it is done the a Basic Review. 
+
+<br> 
+
+=== Performing Formal Reviews  ===
+
+Formal Review follow the IEEE 1028-1997 standard. They are stateful and divided into Review Phases. As in Informal Reviews, anomalies created are also stateful. 
+
+The state diagram for Formal review workflow is as follows: 
+
+[[Image:FormalReviewStates.png]] 
+
+==== Planning Phase  ====
+
+The Planning phase is the active phase when the review is initially created. In this phase, the Review Organizer and/or Lead adds the contents that is to be reviewed, either manually or by selecting items from the Version Control System and adds participant that will be part of the review. At the nend of this phase, a notification is sent to the participant that the items are ready to be reviewed, and an invitation to a decision meeting set-up by the Organizer/Lead. Once this phase is completed, it is impossible to go back to it. 
+
+==== Preparation Phase  ====
+
+The Preparation phase is the phase where participants review the items included in the review and potentially raise anomalies. Once all reviewers have completed their tasks (and notified the Organozer/Lead), then the review can progress to the next phase. 
+
+==== Decision Phase  ====
+
+The Decision phase is where all the anomalies that were logged are analyzed and a decision is made on each of them on how to handle them. Potential outcomes include fixing the problem flagged by the anomaly, deferring it, or rejecting it if it is not valid. Once all the Anomalies are examined, a decision can be taken on how to close the review. The possible outcomes for the review at this stage is that it could be rejected and more reviewing/rework is necessary, it could be accepted as is, or it could be conditionnaly accepted, provided that the outstanding anomalies are fixed. 
+
+==== Rework Phase  ====
+
+The Rework phase is an optional phase, only used when a review is conditionally accepted, in which valid anomalies are fixed. Once the fixed are included, the anomalies will need to be re-checked to verify that the fixes are acceptable. When all the fixes are verified, the Review can be completed. 
+
+==== Other Considerations  ====
+
+Take note that there is a slight difference between the anomaly states in Informal Reviews and the ones used in Formal Reviews, as it can be seen below: 
+
+[[Image:FormalAnomalyStates.png]] 
+
+A new Anomaly in a Formal Review is set to ''CREATED ''by default. During the decision phase, it could be set to the same values as in Informal Reviews, and it can also be set to ''ACCEPTED'', which means that the anomaly is deemed valid and will be handled and fixed. There is no ''ASSIGNED ''state for Anomalies in Formal Reviews. The rest of the anomaly flow is essentially the same as with Informal Reviews.
+

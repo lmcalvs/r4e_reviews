@@ -1306,4 +1306,26 @@
             sequence="Alt+4 Z">
       </key>
    </extension>
+   <extension
+         point="org.eclipse.ui.activities">
+      <category
+            description="Reviewing code using Mylyn Reviews R4E"
+            id="org.eclipse.mylyn.reviews.r4e.ui.r4eCategory"
+            name="R4E">
+      </category>
+      <activity
+            description="Reviewing code using Mylyn Reviews R4E"
+            id="org.eclipse.mylyn.reviews.r4e.ui.r4eActivity"
+            name="R4E UI">
+      </activity>
+      <categoryActivityBinding
+            activityId="org.eclipse.mylyn.reviews.r4e.ui.r4eActivity"
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.r4eCategory">
+      </categoryActivityBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.mylyn.reviews.r4e.ui.r4eActivity"
+            isEqualityPattern="false"
+            pattern="org\.eclipse\.mylyn.reviews\.r4e\..*/.*">
+      </activityPatternBinding>
+   </extension>
 </plugin>
