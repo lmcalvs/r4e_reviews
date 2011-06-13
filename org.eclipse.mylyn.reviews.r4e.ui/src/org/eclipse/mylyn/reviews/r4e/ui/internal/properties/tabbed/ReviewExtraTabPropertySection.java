@@ -550,12 +550,18 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		fDecisionTimeSpentText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
 				if (!fRefreshInProgress) {
+					Integer timeSpent;
+					try {
+						timeSpent = Integer.valueOf(fDecisionTimeSpentText.getText());
+					} catch (NumberFormatException e1) {
+						//Set field to 0
+						timeSpent = 0;
+					}
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewExtended) fProperties.getElement()).getReview();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						modelReview.getDecision().setSpentTime(
-								Integer.valueOf(fDecisionTimeSpentText.getText()).intValue());
+						modelReview.getDecision().setSpentTime(timeSpent.intValue());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
