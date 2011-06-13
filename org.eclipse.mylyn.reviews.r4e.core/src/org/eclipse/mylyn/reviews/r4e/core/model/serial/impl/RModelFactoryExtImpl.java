@@ -59,23 +59,27 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelReader;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.IRWUserBasedRes.ResourceType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.ReviewsRFSProxy;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
+import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.UserPermission;
 
 /**
  * @author lmcalvs
  *
  */
-public class RModelFactoryExtImpl extends Common implements Persistence.RModelFactoryExt {
+public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 
 	// ------------------------------------------------------------------------
 	// Fields
 	// ------------------------------------------------------------------------
 
-	R4EWriter	fWriter	= SerializeFactory.getWriter();
-	R4EReader	fReader	= SerializeFactory.getReader();
+	IModelWriter	fWriter	= SerializeFactory.getWriter();
+	IModelReader	fReader	= SerializeFactory.getReader();
 
 	// ------------------------------------------------------------------------
 	// GROUP Resource Methods
@@ -136,7 +140,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		R4EReviewGroup group = fReader.deserializeTopElement(aResourcePath, R4EReviewGroup.class);
 
 		// Load resources from all participants
-		URI folder = getFolderPath(aResourcePath);
+		URI folder = ResourceUtils.getFolderPath(aResourcePath);
 
 		List<URI> usrGroupFiles = fReader.selectUsrReviewGroupRes(folder);
 		for (URI uri : usrGroupFiles) {
@@ -263,7 +267,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		Resource groupResource = createReviewInputCheck(aReviewGroup, aReviewName);
 		ResourceSet resSet = groupResource.getResourceSet();
 		URI groupFilePath = groupResource.getURI();
-		groupFilePath = fWriter.getFolderPath(groupFilePath); /* To directory */
+		groupFilePath = ResourceUtils.getFolderPath(groupFilePath); /* To directory */
 
 		// CREATE REVIEW - and associate it to a resource
 		review.setName(aReviewName);
@@ -393,7 +397,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		R4EReviewGroup aReviewGroup = (R4EReviewGroup) review.eContainer();
 		String aCreatedByUser = participant.getId();
 		ResourceSet resSet = review.eResource().getResourceSet();
-		URI groupFilePath = fWriter.getFolderPath(aReviewGroup.eResource().getURI());
+		URI groupFilePath = ResourceUtils.getFolderPath(aReviewGroup.eResource().getURI());
 
 		// CREATE USER GROUP RESOURCE if not already created
 		R4EUserReviews uReviews = aReviewGroup.getUserReviews().get(participant.getId());
@@ -439,7 +443,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 			Activator.fTracer.traceDebug(sb.toString());
 		}
 
-		URI folder = getFolderPath(review.eResource().getURI());
+		URI folder = ResourceUtils.getFolderPath(review.eResource().getURI());
 		// Load resources from all participants
 		List<URI> usrFiles = fReader.selectUsrCommentsRes(folder);
 		for (URI uri : usrFiles) {
@@ -688,7 +692,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		if (itemResource == null) {
 			// crate item resource
 			URI usrURI = usrResource.getURI();
-			URI reviewFolderURI = fWriter.getFolderPath(usrURI);
+			URI reviewFolderURI = ResourceUtils.getFolderPath(usrURI);
 			// create a uri for the new participant, the user is serialized within the comments resource
 			URI itemURI = fWriter.createResourceURI(aParticipant.getId(), reviewFolderURI, ResourceType.USER_ITEM);
 			// create a Resource for the Participant
@@ -1075,7 +1079,7 @@ public class RModelFactoryExtImpl extends Common implements Persistence.RModelFa
 		// find the review file uri to create the resource for the new participant
 		URI folderPath = containerResource.getURI();
 		// convert to folder
-		folderPath = fWriter.getFolderPath(folderPath);
+		folderPath = ResourceUtils.getFolderPath(folderPath);
 		// define the participants file URI
 		URI participantURI = fWriter.createResourceURI(aUserId, folderPath, ResourceType.USER_COMMENT);
 		// create a Resource for the Participant

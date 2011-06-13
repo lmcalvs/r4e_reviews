@@ -261,5 +261,20 @@ public class ResourceUtils {
 		}
 		return (IFile[]) existentFiles.toArray(new IFile[existentFiles.size()]);
 	}
+
+	/**
+	 * From a file path e.g. file://c:/dir/demo.xml return the folder path i.e. file://c:/dir
+	 * 
+	 * @param uri
+	 * @return
+	 */
+	public static URI getFolderPath(URI uri) {
+		URI retURI = null;
+		if (uri != null) {
+			retURI = uri.trimSegments(1);
+		}
+		return retURI;
+	}
+
 }
 	
