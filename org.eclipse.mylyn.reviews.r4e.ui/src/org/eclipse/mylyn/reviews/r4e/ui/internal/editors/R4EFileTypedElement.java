@@ -17,25 +17,23 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.editors;
 
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 
+import org.eclipse.compare.BufferedContent;
+import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.IEncodedStreamContentAccessor;
 import org.eclipse.compare.IResourceProvider;
-import org.eclipse.compare.ISharedDocumentAdapter;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.SharedDocumentAdapter;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceStatus;
+import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.texteditor.IDocumentProvider;
 
 /**
  * An {@link ITypedElement} wrapper for {@link IFileRevision} for use with R4E
@@ -43,7 +41,8 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IEncodedStreamContentAccessor, IAdaptable {
+public class R4EFileTypedElement extends BufferedContent implements ITypedElement, IResourceProvider,
+		IEncodedStreamContentAccessor {
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -53,11 +52,6 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	 * Field fFileVersion.
 	 */
 	private final R4EFileVersion fFileVersion;
-
-	/**
-	 * Field sharedDocumentAdapter.
-	 */
-	private ISharedDocumentAdapter sharedDocumentAdapter;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -77,37 +71,6 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Method getAdapter.
-	 * 
-	 * @param adapter
-	 *            Class
-	 * @return Object
-	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
-	 */
-	public Object getAdapter(@SuppressWarnings("rawtypes")
-	Class adapter) {
-		if (ISharedDocumentAdapter.class.equals(adapter)) {
-			synchronized (this) {
-				if (null == sharedDocumentAdapter) {
-					sharedDocumentAdapter = new SharedDocumentAdapter() {
-						@Override
-						public IEditorInput getDocumentKey(Object element) {
-							return R4EFileTypedElement.this.getDocumentKey(element);
-						}
-
-						public void flushDocument(IDocumentProvider provider, IEditorInput documentKey,
-								IDocument document, boolean overwrite) {
-							// The document is read-only
-						}
-					};
-				}
-				return sharedDocumentAdapter;
-			}
-		}
-		return Platform.getAdapterManager().getAdapter(this, adapter);
-	}
-
-	/**
 	 * Method getFileVersion.
 	 * 
 	 * @return R4EFileVersion
@@ -123,7 +86,10 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	 * @see org.eclipse.compare.ITypedElement#getName()
 	 */
 	public String getName() {
-		return fFileVersion.getResource().getName();
+		if (fFileVersion.getResource() != null) {
+			return fFileVersion.getResource().getName();
+		}
+		return null;
 	}
 
 	/**
@@ -133,7 +99,7 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	 */
 	@Override
 	public int hashCode() {
-		return fFileVersion.getResource().hashCode();
+		return getName().hashCode();
 	}
 
 	/**
@@ -150,7 +116,7 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 		}
 		if (aObj instanceof R4EFileTypedElement) {
 			final R4EFileTypedElement other = (R4EFileTypedElement) aObj;
-			return other.getFileVersion().equals(getFileVersion());
+			return other.getFileVersion().getResource().equals(getFileVersion().getResource());
 		}
 		return false;
 	}
@@ -170,7 +136,7 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	 * @return Image
 	 */
 	public Image getImage() {
-		return null;
+		return CompareUI.getImage(fFileVersion.getResource());
 	}
 
 	/**
@@ -179,18 +145,13 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	 * @return String
 	 */
 	public String getType() {
-		final String name = getName();
-		if (null != name) {
-			final int index = name.lastIndexOf('.');
-			if (index == -1) {
-				return "";
+		if (fFileVersion.getResource() != null) {
+			String s = fFileVersion.getResource().getFileExtension();
+			if (s != null) {
+				return s;
 			}
-			if (index == (name.length() - 1)) {
-				return "";
-			}
-			return name.substring(index + 1);
 		}
-		return ITypedElement.TEXT_TYPE;
+		return ITypedElement.UNKNOWN_TYPE;
 	}
 
 	/**
@@ -199,8 +160,12 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 	 * @return InputStream
 	 * @throws CoreException
 	 */
+	@Override
 	public InputStream getContents() throws CoreException {
-		return ((IFile) fFileVersion.getResource()).getContents();
+		if (fFileVersion.getResource() instanceof IStorage) {
+			return super.getContents();
+		}
+		return null;
 	}
 
 	/**
@@ -213,16 +178,31 @@ public class R4EFileTypedElement implements ITypedElement, IResourceProvider, IE
 		return ((IFile) fFileVersion.getResource()).getCharset();
 	}
 
+	@Override
 	/**
-	 * Method getDocumentKey.
-	 * 
-	 * @param aElement
-	 *            Object
-	 * @return IEditorInput
+	 * Returns an open stream if the corresponding resource implements the
+	 * <code>IStorage</code> interface. Otherwise the value <code>null</code> is returned.
+	 *
+	 * @return a buffered input stream containing the contents of this storage
+	 * @exception CoreException if the contents of this storage could not be accessed
 	 */
-	public IEditorInput getDocumentKey(Object aElement) {
-		if (aElement.equals(this)) {
-			return new R4EFileEditorInput(fFileVersion);
+	protected InputStream createStream() throws CoreException {
+		if (fFileVersion.getResource() instanceof IStorage) {
+			InputStream is = null;
+			IStorage storage = (IStorage) fFileVersion.getResource();
+			try {
+				is = storage.getContents();
+			} catch (CoreException e) {
+				if (e.getStatus().getCode() == IResourceStatus.OUT_OF_SYNC_LOCAL) {
+					fFileVersion.getResource().refreshLocal(IResource.DEPTH_INFINITE, null);
+					is = storage.getContents();
+				} else {
+					throw e;
+				}
+			}
+			if (is != null) {
+				return new BufferedInputStream(is);
+			}
 		}
 		return null;
 	}

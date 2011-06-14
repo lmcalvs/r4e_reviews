@@ -68,10 +68,7 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 	 * @see org.eclipse.ui.IStorageEditorInput#getStorage()
 	 */
 	public IStorage getStorage() {
-		if (null != fFileVersion.getResource()) {
-			return (IFile) fFileVersion.getResource();
-		}
-		return null;
+		return (IFile) fFileVersion.getResource();
 	}
 
 	/**
@@ -124,10 +121,7 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 	 * @see org.eclipse.ui.IEditorInput#getToolTipText()
 	 */
 	public String getToolTipText() {
-		if (null != fFileVersion.getResource()) {
-			return fFileVersion.getResource().getFullPath().makeRelative().toString();
-		}
-		return null;
+		return fFileVersion.getResource().getFullPath().makeRelative().toString();
 	}
 
 	/**
@@ -179,11 +173,12 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 	 */
 	@Override
 	public boolean equals(Object aObject) {
-		if (aObject == this)
+		if (aObject == this) {
 			return true;
+		}
 		if (aObject instanceof R4EFileEditorInput) {
 			final R4EFileEditorInput other = (R4EFileEditorInput) aObject;
-			return other.fFileVersion.equals(this.fFileVersion);
+			return other.fFileVersion.getResource().equals(this.fFileVersion.getResource());
 		}
 		return false;
 	}
@@ -195,10 +190,7 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 	 */
 	@Override
 	public int hashCode() {
-		if (null != fFileVersion.getResource()) {
-			return fFileVersion.getResource().hashCode();
-		}
-		return fFileVersion.getFileRevision().hashCode();
+		return fFileVersion.getResource().hashCode();
 	}
 
 	/**
@@ -216,9 +208,6 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 	 * @return IFile
 	 */
 	public IFile getFile() {
-		if (null != fFileVersion.getResource()) {
-			return (IFile) fFileVersion.getResource();
-		}
-		return null;
+		return (IFile) fFileVersion.getResource();
 	}
 }

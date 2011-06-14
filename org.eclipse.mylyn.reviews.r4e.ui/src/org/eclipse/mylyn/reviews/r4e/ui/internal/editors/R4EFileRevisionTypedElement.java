@@ -16,13 +16,11 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorInput;
 
@@ -107,9 +105,6 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	 */
 	@Override
 	protected IStorage fetchContents(IProgressMonitor aMonitor) throws CoreException {
-		if (CommandUtils.useWorkspaceResource(fFileVersion)) {
-			return (IFile) fFileVersion.getResource();
-		}
 		return fFileVersion.getFileRevision().getStorage(aMonitor);
 	}
 
@@ -164,7 +159,7 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	 */
 	@Override
 	public int hashCode() {
-		return fFileVersion.getFileRevision().hashCode();
+		return fFileVersion.getFileRevision().getName().hashCode();
 	}
 
 	/**

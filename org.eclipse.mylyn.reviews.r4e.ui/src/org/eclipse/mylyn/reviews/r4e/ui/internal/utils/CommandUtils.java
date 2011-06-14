@@ -25,7 +25,6 @@ import java.net.URISyntaxException;
 import org.eclipse.cdt.core.model.ICElement;
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.ResourceNode;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -249,8 +248,9 @@ public class CommandUtils {
 	public static R4EFileVersion copyRemoteFileToLocalRepository(IRFSRegistry aLocalRepository, ScmArtifact aArtifact)
 			throws ReviewsFileStorageException {
 
-		if (aArtifact.getPath().equals(INVALID_PATH))
+		if (aArtifact.getPath().equals(INVALID_PATH)) {
 			return null; //File not found in remote repository
+		}
 
 		final IFileRevision fileRev = aArtifact.getFileRevision(null);
 
@@ -506,7 +506,7 @@ public class CommandUtils {
 		ITypedElement base = null;
 		if (null != aBaseFileVersion) {
 			if (CommandUtils.useWorkspaceResource(aBaseFileVersion)) {
-				base = new ResourceNode(aBaseFileVersion.getResource());
+				base = new R4EFileTypedElement(aBaseFileVersion);
 			} else {
 				base = new R4EFileRevisionTypedElement(aBaseFileVersion);
 			}

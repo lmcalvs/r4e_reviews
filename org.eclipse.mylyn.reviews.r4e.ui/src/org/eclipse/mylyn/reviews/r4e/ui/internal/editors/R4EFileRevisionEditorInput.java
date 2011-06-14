@@ -191,8 +191,9 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 	 */
 	@Override
 	public boolean equals(Object aObject) {
-		if (aObject == this)
+		if (aObject == this) {
 			return true;
+		}
 		if (aObject instanceof R4EFileRevisionEditorInput) {
 			final R4EFileRevisionEditorInput other = (R4EFileRevisionEditorInput) aObject;
 			return other.fFileVersion.equals(this.fFileVersion);
@@ -208,9 +209,9 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 	@Override
 	public int hashCode() {
 		if (null != fFileVersion.getFileRevision()) {
-			return fFileVersion.getFileRevision().hashCode();
+			return fFileVersion.getFileRevision().getName().hashCode();
 		}
-		return fFileVersion.hashCode();
+		return fFileVersion.getName().hashCode();
 	}
 
 	/**
