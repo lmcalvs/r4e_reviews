@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<toc label="R4E Documentation" topic="help/Reviews/R4E/User_Guide/User-Guide.html">
+<toc topic="help/Reviews/R4E/User_Guide/User-Guide.html" label="R4E Documentation">
 	<topic href="help/Reviews/R4E/User_Guide/User-Guide.html" label="R4E User Guide">
 		<topic href="help/Reviews/R4E/User_Guide/User-Guide.html" label="Getting Started">
 			<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Overview" label="Overview"></topic>
@@ -134,5 +134,4 @@
 		</topic>
 		<topic href="help/Reviews/R4E/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
- <anchor id="r4emain"/>
 </toc>
