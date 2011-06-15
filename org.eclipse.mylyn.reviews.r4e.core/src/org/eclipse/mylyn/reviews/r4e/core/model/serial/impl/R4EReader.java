@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelReader;
@@ -143,6 +145,7 @@ public class R4EReader extends RWCommon implements IModelReader {
 	private EList<EObject> getObjects(URI resourcePath, Resource resource) throws ResourceHandlingException {
 		// Load resources
 		try {
+			Registry reg = EPackage.Registry.INSTANCE;
 			resource.load(null);
 		} catch (IOException e) {
 			String message = new StringBuffer("Unable to load resource at URI: " + resourcePath.toString()).toString();

@@ -15,7 +15,7 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://org.eclipse.mylyn.reviews.r4e.core.model/1.0"
+            uri="http://org.eclipse.mylyn.reviews.r4e.core.model/"
             class="org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage"
             genModel="model/r4e.genmodel"/>
    </extension>

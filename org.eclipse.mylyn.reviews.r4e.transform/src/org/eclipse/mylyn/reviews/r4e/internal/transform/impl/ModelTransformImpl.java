@@ -11,13 +11,18 @@
 
 package org.eclipse.mylyn.reviews.r4e.internal.transform.impl;
 
+import java.io.File;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -167,14 +172,15 @@ public class ModelTransformImpl implements ModelTransform {
 			destReviewResource = existingReviews.get(0).eResource();
 		}
 
+		//Add the review to the ReviewGroup
+		destGroup.getReviewsRes().add(destReview);
+
 		//Make sure the new destination review is associated to a valid resource
 		destReviewResource.getContents().add(destReview);
 		adaptReview(origReview, destReview, destGroup);
 
 		//save the review resource
-		Resource reviewResource = destReview.eResource();
-		fWriter.saveResource(reviewResource);
-
+		fWriter.saveResources(destGroup.eResource().getResourceSet());
 		return destReview;
 	}
 
@@ -182,44 +188,105 @@ public class ModelTransformImpl implements ModelTransform {
 		//Adapt values and references
 		Collection<R4EUser> origUsersList = origReview.getUsersMap().values();
 
-		EList<R4EUser> users = destReview.getUsersRes();
 		ResourceSet resSet = destReview.eResource().getResourceSet();
+
+		//adapt values
+		EList<R4EUser> users = destReview.getUsersRes();
+		copyReviewData(origReview, destReview);
 
 		//Destination review folder
 		URI containerPath = destReview.eResource().getURI().trimSegments(1);
-		//Create the user resource if it does not exist already
+		URI destAnomaliesURI = fWriter.createResourceURI(ANOMALIES_RES_NAME, containerPath, ResourceType.USER_COMMENT);
+		URI destItemsURI = fWriter.createResourceURI(ITEMS_RES_NAME, containerPath, ResourceType.USER_ITEM);
+
 		Resource destAnomaliesResource = null;
-		if (users == null || users.size() == 0) {
-			URI destAnomaliesURI = fWriter.createResourceURI(ANOMALIES_RES_NAME, containerPath,
-					ResourceType.USER_COMMENT);
-			destAnomaliesResource = resSet.createResource(destAnomaliesURI);
+		Resource destItemsResource = null;
+
+		//Resolve the Anomalies resource 
+		File file = new File(destAnomaliesURI.devicePath());
+		if (file.exists()) {
+			destAnomaliesResource = resSet.getResource(destAnomaliesURI, true);
 		} else {
-			//User resource exists already
-			destAnomaliesResource = users.get(0).eResource();
+			destAnomaliesResource = resSet.createResource(destAnomaliesURI);
 		}
 
-		//Move each user to the destination resources
-		for (Object element : origUsersList) {
-			R4EUser user = (R4EUser) element;
-			//Move the user to a new destination serialisation resource
-			destAnomaliesResource.getContents().add(user);
+		//Resolve the Items resource
+		file = new File(destItemsURI.devicePath());
+		if (file.exists()) {
+			destItemsResource = resSet.getResource(destItemsURI, true);
+		} else {
+			destItemsResource = resSet.createResource(destItemsURI);
+		}
+
+		//Move all users to new destination resource, this will make sure that back reference from children to any user will point to the updated resource
+		for (R4EUser user : origUsersList) {
 			//move the user to the destination review
 			users.add(user);
+			user.setReviewInstance(destReview);
+			//Move the user to a new destination serialisation resource
+			destAnomaliesResource.getContents().add(user);
+		}
+
+		//Move user's content to the destination resources
+		for (R4EUser user : origUsersList) {
+			//Move anomalies to a different resource
+			EList<R4EComment> comments = user.getAddedComments();
+			for (R4EComment comment : comments) {
+				//Move the item to the destination resource
+				switchResources(destAnomaliesResource, comment);
+			}
 
 			//Move Items to a different resource
 			EList<R4EItem> items = user.getAddedItems();
-			Resource destItemsResource = null;
-			if (items == null || items.size() == 0) {
-				URI destItemsURI = fWriter.createResourceURI(ITEMS_RES_NAME, containerPath, ResourceType.USER_ITEM);
-				destItemsResource = resSet.createResource(destItemsURI);
-			} else {
-				destItemsResource = items.get(0).eResource();
-			}
-
 			for (R4EItem item : items) {
 				//Move the item to the destination resource
-				destItemsResource.getContents().add(item);
+				switchResources(destItemsResource, item);
+				item.setReview(destReview);
+				//TODO: Investigate why this reference is not updated by EMF
+				String addedBy = item.getAddedById();
+				item.setAddedBy(origReview.getUsersMap().get(addedBy));
 			}
 		}
+	}
+
+	/**
+	 * @param destResource
+	 * @param eObject
+	 */
+	private void switchResources(Resource destResource, EObject eObject) {
+		//Migrate the object itself
+		destResource.getContents().add(eObject);
+		//Migrate the direct contents as well
+		for (Iterator iterator = EcoreUtil.getAllContents(eObject, true); iterator.hasNext();) {
+			Object child = iterator.next();
+			if (child instanceof EObject) {
+				EObject eobject = (EObject) child;
+				destResource.getContents().add(eobject);
+			}
+		}
+	}
+
+	/**
+	 * @param origReview
+	 * @param destReview
+	 */
+	private void copyReviewData(R4EReview origReview, ReviewRes destReview) {
+		destReview.setActiveMeeting(origReview.getActiveMeeting());
+		destReview.setAnomalyTemplate(origReview.getAnomalyTemplate());
+		destReview.setCreatedBy(origReview.getCreatedBy());
+		destReview.setDecision(origReview.getDecision());
+		destReview.setEnabled(origReview.isEnabled());
+		destReview.setEndDate(origReview.getEndDate());
+		destReview.setEntryCriteria(origReview.getEntryCriteria());
+		destReview.setExtraNotes(origReview.getExtraNotes());
+		destReview.setName(origReview.getName());
+		destReview.setObjectives(origReview.getObjectives());
+		destReview.setProject(origReview.getProject());
+		destReview.setReferenceMaterial(origReview.getReferenceMaterial());
+		destReview.setReviewTask(origReview.getReviewTask());
+		destReview.setStartDate(origReview.getStartDate());
+		destReview.setState(origReview.getState());
+		destReview.setType(origReview.getType());
+		destReview.setXmlVersion(origReview.getXmlVersion());
 	}
 }

@@ -11,5 +11,13 @@
         Ericsson AB - initial API and implementation
  -->
 <plugin>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackage"
+            genModel="model/org.eclipse.mylyn.reviews.r4e.restypes.genmodel"
+            uri="http://org.eclipse.mylyn.reviews.r4e.model.transform/1.0">
+      </package>
+   </extension>
 
 </plugin>
