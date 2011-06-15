@@ -13,7 +13,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.editors;
 
 import java.net.URI;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
@@ -31,7 +30,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EFileRevisionEditorInput extends PlatformObject implements IStorageEditorInput {
+public class R4EFileRevisionEditorInput extends PlatformObject implements IWorkbenchAdapter, IStorageEditorInput {
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -147,38 +146,17 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class aAdapter) {
 
+		if (IWorkbenchAdapter.class.equals(aAdapter)) {
+			return this;
+		}
 		if (IStorage.class.equals(aAdapter)) {
 			try {
-				if (null != fFileVersion.getFileRevision()) {
-					return fFileVersion.getFileRevision().getStorage(null);
-				}
+				return fFileVersion.getFileRevision().getStorage(null);
 			} catch (CoreException e) {
 				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				Activator.getDefault().logError("Exception: " + e.toString(), e);
 			}
 		}
-
-		if (IWorkbenchAdapter.class.equals(aAdapter)) {
-			return new IWorkbenchAdapter() {
-
-				public Object[] getChildren(Object o) {
-					return new Object[0];
-				}
-
-				public ImageDescriptor getImageDescriptor(Object object) {
-					return R4EFileRevisionEditorInput.this.getImageDescriptor();
-				}
-
-				public String getLabel(Object o) {
-					return R4EFileRevisionEditorInput.this.getName();
-				}
-
-				public Object getParent(Object o) {
-					return null;
-				}
-			};
-		}
-
 		return super.getAdapter(aAdapter);
 	}
 
@@ -209,9 +187,9 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 	@Override
 	public int hashCode() {
 		if (null != fFileVersion.getFileRevision()) {
-			return fFileVersion.getFileRevision().getName().hashCode();
+			return fFileVersion.getFileRevision().hashCode();
 		}
-		return fFileVersion.getName().hashCode();
+		return fFileVersion.hashCode();
 	}
 
 	/**
@@ -235,12 +213,19 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IStora
 		return null;
 	}
 
-	/**
-	 * Method getFile.
-	 * 
-	 * @return IFile
-	 */
-	public IFile getFile() {
+	public Object[] getChildren(Object o) {
+		return new Object[0];
+	}
+
+	public ImageDescriptor getImageDescriptor(Object object) {
+		return null;
+	}
+
+	public String getLabel(Object o) {
+		return fFileVersion.getFileRevision().getName();
+	}
+
+	public Object getParent(Object o) {
 		return null;
 	}
 }

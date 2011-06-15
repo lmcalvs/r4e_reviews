@@ -146,9 +146,11 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	 */
 	@Override
 	public IEditorInput getDocumentKey(Object aElement) {
-		if (aElement.equals(this)) {
-			return new R4EFileRevisionEditorInput(fFileVersion);
-		}
+		//The following lines were removed because it caused the document to become dirty
+		//when open at the same time in a single editor
+		//if (aElement == this && getBufferedStorage() != null) {
+		//	return new R4EFileRevisionEditorInput(fFileVersion);
+		//}
 		return null;
 	}
 
@@ -159,7 +161,7 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	 */
 	@Override
 	public int hashCode() {
-		return fFileVersion.getFileRevision().getName().hashCode();
+		return fFileVersion.getFileRevision().hashCode();
 	}
 
 	/**
