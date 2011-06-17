@@ -19,13 +19,17 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.editors;
 
+import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
+import org.eclipse.compare.structuremergeviewer.IDiffElement;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 
@@ -106,56 +110,12 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		return fRight;
 	}
 
-	/**
-	 * Method prepareInput.
-	 * 
-	 * @param aMonitor
-	 *            IProgressMonitor
-	 * @return Object
-	 */
-	@Override
-	protected Object prepareInput(IProgressMonitor aMonitor) {
+	private ICompareInput createCompareInput() {
+		return compare(fLeft, fRight);
+	}
 
-		if (null != aMonitor) {
-			aMonitor.beginTask("R4E Compare", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
-		}
-
-		// Set the label values for the compare editor
-		if (null != fLeft) {
-			final StringBuilder leftLabel = new StringBuilder("Target: " + fLeft.getName());
-			if (fLeft instanceof R4EFileRevisionTypedElement) {
-				leftLabel.append(" "
-						+ ((R4EFileRevisionTypedElement) fLeft).getFileVersion().getVersionID().substring(0, 7));
-			}
-			fConfig.setLeftLabel(leftLabel.toString());
-		}
-		if (null != fRight) {
-			final StringBuilder rightLabel = new StringBuilder("Base: " + fRight.getName());
-			if (fRight instanceof R4EFileRevisionTypedElement) {
-				rightLabel.append("_" + ((R4EFileRevisionTypedElement) fRight).getFileVersion().getVersionID());
-			}
-			fConfig.setRightLabel(rightLabel.toString());
-		}
-
-		// If the ancestor is not null, just put the file name as the workspace label
-		if (null != fAncestor) {
-			fConfig.setAncestorLabel(fAncestor.getName());
-		}
-
-		// Build the diff node to compare the files		
-		Differencer differencer = new Differencer();
-
-		//Store the differences here, we might need them later
-		Object differences = differencer.findDifferences(false, aMonitor, null, fAncestor, fLeft, fRight);
-		/* We might want to do something here in the future
-		node.addCompareInputChangeListener(new ICompareInputChangeListener() {
-			
-			@Override
-			public void compareInputChanged(ICompareInput source) {
-			}
-		});
-		*/
-		return differences;
+	private DiffNode compare(ITypedElement actLeft, ITypedElement actRight) {
+		return new DiffNode(actLeft, actRight);
 	}
 
 	/**
@@ -199,17 +159,19 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		return super.getToolTipText();
 	}
 
-	/**
-	 * Method prepareCompareInput.
-	 * 
-	 * @param monitor
-	 *            IProgressMonitor
-	 * @return ICompareInput
+	/* (non-Javadoc)
+	 * @see org.eclipse.compare.CompareEditorInput#getAdapter(java.lang.Class)
 	 */
 	@Override
-	protected ICompareInput prepareCompareInput(IProgressMonitor monitor) {
-		// Nothing to do for now
-		return null;
+	public Object getAdapter(@SuppressWarnings("rawtypes")
+	Class adapter) {
+		if (adapter == IFile.class) {
+			if (getWorkspaceElement() != null) {
+				return getWorkspaceElement().getResource();
+			}
+			return null;
+		}
+		return super.getAdapter(adapter);
 	}
 
 	/**
@@ -220,13 +182,63 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		// Not implemented for now
 	}
 
-	/**
-	 * Method canRunAsJob.
-	 * 
-	 * @return boolean
-	 */
+	private R4EFileTypedElement getWorkspaceElement() {
+		if (fLeft instanceof R4EFileTypedElement) {
+			return (R4EFileTypedElement) fLeft;
+		}
+		return null;
+	}
+
 	@Override
-	public boolean canRunAsJob() {
-		return false;
+	protected ICompareInput prepareCompareInput(IProgressMonitor monitor) throws InvocationTargetException,
+			InterruptedException {
+		ICompareInput input = createCompareInput();
+		initLabels();
+
+		// The compare editor (Structure Compare) will show the diff filenames
+		// with their project relative path. So, no need to also show directory entries.
+		DiffNode flatDiffNode = new DiffNode(null, Differencer.CHANGE, null, fLeft, fRight);
+		flatDiffView(flatDiffNode, (DiffNode) input);
+		return flatDiffNode;
+	}
+
+	private void flatDiffView(DiffNode rootNode, DiffNode currentNode) {
+		if (currentNode != null) {
+			IDiffElement[] dElems = currentNode.getChildren();
+			if (dElems != null) {
+				for (IDiffElement dElem : dElems) {
+					DiffNode dNode = (DiffNode) dElem;
+					if (dNode.getChildren() != null && dNode.getChildren().length > 0) {
+						flatDiffView(rootNode, dNode);
+					} else {
+						rootNode.add(dNode);
+					}
+				}
+			}
+		}
+	}
+
+	private void initLabels() {
+		// Set the label values for the compare editor
+		if (null != fLeft) {
+			final StringBuilder leftLabel = new StringBuilder("Target: " + fLeft.getName());
+			if (fLeft instanceof R4EFileRevisionTypedElement) {
+				leftLabel.append(" "
+						+ ((R4EFileRevisionTypedElement) fLeft).getFileVersion().getVersionID().substring(0, 7));
+			}
+			fConfig.setLeftLabel(leftLabel.toString());
+		}
+		if (null != fRight) {
+			final StringBuilder rightLabel = new StringBuilder("Base: " + fRight.getName());
+			if (fRight instanceof R4EFileRevisionTypedElement) {
+				rightLabel.append("_" + ((R4EFileRevisionTypedElement) fRight).getFileVersion().getVersionID());
+			}
+			fConfig.setRightLabel(rightLabel.toString());
+		}
+
+		// If the ancestor is not null, just put the file name as the workspace label
+		if (null != fAncestor) {
+			fConfig.setAncestorLabel(fAncestor.getName());
+		}
 	}
 }

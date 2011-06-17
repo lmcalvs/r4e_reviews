@@ -246,7 +246,7 @@ public class CommandUtils {
 	 * @throws ReviewsFileStorageException
 	 */
 	public static R4EFileVersion copyRemoteFileToLocalRepository(IRFSRegistry aLocalRepository, ScmArtifact aArtifact)
-			throws ReviewsFileStorageException {
+			throws ReviewsFileStorageException, CoreException {
 
 		if (aArtifact.getPath().equals(INVALID_PATH)) {
 			return null; //File not found in remote repository
@@ -415,12 +415,16 @@ public class CommandUtils {
 	 *            R4EFileVersion
 	 * @param aScmArt
 	 *            ScmArtifact
+	 * @throws CoreException
 	 */
-	public static void updateFileVersion(R4EFileVersion aTargetFileVer, ScmArtifact aScmArt) {
+	public static void updateFileVersion(R4EFileVersion aTargetFileVer, ScmArtifact aScmArt) throws CoreException {
 
 		aTargetFileVer.setName(aScmArt.getFileRevision(null).getName());
 		aTargetFileVer.setVersionID(aScmArt.getId());
-		aTargetFileVer.setRepositoryPath(aScmArt.getPath());
+		aTargetFileVer.setRepositoryPath(aScmArt.getFileRevision(null)
+				.getStorage(null)
+				.getFullPath()
+				.toPortableString());
 
 		final String fileRelPath = aScmArt.getProjectRelativePath();
 		if (null == fileRelPath) {

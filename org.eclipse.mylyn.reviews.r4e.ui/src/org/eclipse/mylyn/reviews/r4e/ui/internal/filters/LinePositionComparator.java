@@ -24,7 +24,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUISelection;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 
 /**
@@ -53,16 +53,17 @@ public class LinePositionComparator extends ViewerComparator {
 
 		final int cat1 = category(e1);
 		final int cat2 = category(e2);
-		if (cat1 != cat2)
+		if (cat1 != cat2) {
 			return cat1 - cat2;
+		}
 
 		IR4EUIPosition position1 = null;
 		IR4EUIPosition position2 = null;
 
 		//Only sort Selection and Anomaly elements
-		if (e1 instanceof R4EUISelection) {
-			position1 = ((R4EUISelection) e1).getPosition();
-			position2 = ((R4EUISelection) e2).getPosition();
+		if (e1 instanceof R4EUIContent) {
+			position1 = ((R4EUIContent) e1).getPosition();
+			position2 = ((R4EUIContent) e2).getPosition();
 		} else if (e1 instanceof R4EUIAnomalyBasic) {
 			position1 = ((R4EUIAnomalyBasic) e1).getPosition();
 			position2 = ((R4EUIAnomalyBasic) e2).getPosition();

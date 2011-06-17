@@ -42,7 +42,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -116,8 +115,8 @@ public class EditorProxy {
 			} else if (element instanceof R4EUIComment) {
 				targetFileEditable = true;
 				position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
-			} else if (element instanceof R4EUISelection) {
-				position = ((R4EUISelection) element).getPosition();
+			} else if (element instanceof R4EUIContent) {
+				position = ((R4EUIContent) element).getPosition();
 				container = (R4EUIContentsContainer) ((R4EUIContent) element).getParent();
 				selectionIndex = container.getContentsList().indexOf(element);
 			}

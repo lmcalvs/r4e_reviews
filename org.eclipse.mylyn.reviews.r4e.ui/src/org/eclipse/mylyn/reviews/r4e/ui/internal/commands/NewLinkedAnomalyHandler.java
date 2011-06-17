@@ -93,7 +93,7 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 	 * Method addLinkedAnomaly.
 	 * 
 	 * @param aElement
-	 *            R4EUISelection
+	 *            R4EUIContent
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 * @throws ReviewVersionsException

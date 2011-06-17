@@ -148,9 +148,9 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	public IEditorInput getDocumentKey(Object aElement) {
 		//The following lines were removed because it caused the document to become dirty
 		//when open at the same time in a single editor
-		//if (aElement == this && getBufferedStorage() != null) {
-		//	return new R4EFileRevisionEditorInput(fFileVersion);
-		//}
+		if (aElement == this && getBufferedStorage() != null) {
+			return new R4EFileRevisionEditorInput(fFileVersion);
+		}
 		return null;
 	}
 

@@ -28,9 +28,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorTreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorView;
 import org.eclipse.swt.widgets.TreeItem;
@@ -70,8 +70,8 @@ public class SelectNextHandler extends AbstractHandler {
 				final ISelection nextSelection = new StructuredSelection(nextElement);
 				view.getTreeViewer().setSelection(nextSelection);
 
-				//Open the editor on FileContexts, selections amd anomalies
-				if (nextElement instanceof R4EUIFileContext || nextElement instanceof R4EUISelection
+				//Open the editor on FileContexts, selections/deltas amd anomalies
+				if (nextElement instanceof R4EUIFileContext || nextElement instanceof R4EUIContent
 						|| nextElement instanceof R4EUIAnomalyBasic) {
 					EditorProxy.openEditor(view.getSite().getPage(), nextSelection, false);
 				}
