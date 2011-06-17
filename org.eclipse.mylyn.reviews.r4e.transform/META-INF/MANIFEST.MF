@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.mylyn.reviews.r4e.core;bundle-version="0.8.0",
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.mylyn.reviews.r4e.internal.transform.Activator
 Export-Package: org.eclipse.mylyn.reviews.r4e.internal.transform;x-friends="org.eclipse.mylyn.reviews.r4e.core.tests",
- org.eclipse.mylyn.reviews.r4e.internal.transform.api;x-friends="org.eclipse.mylyn.reviews.r4e.core.tests",
+ org.eclipse.mylyn.reviews.r4e.internal.transform;x-friends="org.eclipse.mylyn.reviews.r4e.core.tests",
  org.eclipse.mylyn.reviews.r4e.internal.transform.impl;x-friends="org.eclipse.mylyn.reviews.r4e.core.tests",
  org.eclipse.mylyn.reviews.r4e.internal.transform.resources;x-friends="org.eclipse.mylyn.reviews.r4e.core.tests",
  org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl;x-friends="org.eclipse.mylyn.reviews.r4e.core.tests",

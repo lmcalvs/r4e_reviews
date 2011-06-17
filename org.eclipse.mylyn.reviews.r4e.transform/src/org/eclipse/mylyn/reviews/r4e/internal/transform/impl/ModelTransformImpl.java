@@ -35,7 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.Activator;
-import org.eclipse.mylyn.reviews.r4e.internal.transform.api.ModelTransform;
+import org.eclipse.mylyn.reviews.r4e.internal.transform.ModelTransform;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResFactory;
@@ -46,11 +46,11 @@ import org.eclipse.mylyn.reviews.r4e.internal.transform.serial.impl.TResSerializ
  */
 public class ModelTransformImpl implements ModelTransform {
 
-	private static final String REVIEWS_RES_NAME = "reviews";
-
-	private static final String ANOMALIES_RES_NAME = "anomalies";
-
-	private static final String ITEMS_RES_NAME = "items";
+//	private static final String REVIEWS_RES_NAME = "Merged";
+//
+//	private static final String ANOMALIES_RES_NAME = "Merged";
+//
+//	private static final String ITEMS_RES_NAME = "Merged";
 
 	IModelWriter fWriter = TResSerializeFactory.getWriter();
 
@@ -63,8 +63,9 @@ public class ModelTransformImpl implements ModelTransform {
 	/**
 	 * @throws ResourceHandlingException
 	 */
-	public ReviewGroupRes createReviewGroupRes(URI aFolderPath, String aGroupName) throws ResourceHandlingException {
-		URI fileGroupURI = fWriter.createResourceURI(aGroupName, aFolderPath, ResourceType.GROUP);
+	public ReviewGroupRes createReviewGroupRes(URI aFolderPath, String aGroupName, String aFilePrefix)
+			throws ResourceHandlingException {
+		URI fileGroupURI = fWriter.createResourceURI(aFilePrefix, aFolderPath, ResourceType.GROUP);
 		// create a new ResourceSet and resource for the given group
 		Resource resource = fWriter.createResourceSetWithResource(fileGroupURI);
 		ReviewGroupRes group = TransResFactory.eINSTANCE.createReviewGroupRes();
@@ -73,6 +74,7 @@ public class ModelTransformImpl implements ModelTransform {
 		URI uri = group.eResource().getURI().trimSegments(1);
 		// Update the resource
 		group.setName(aGroupName);
+		group.setFilesPrefix(aFilePrefix);
 		group.setFolder(URI.decode(uri.devicePath().toString()));
 		fWriter.saveResource(resource);
 
@@ -135,7 +137,10 @@ public class ModelTransformImpl implements ModelTransform {
 	 * 
 	 * @throws ResourceHandlingException
 	 */
-	public ReviewRes reviewTransform(URI origReviewGroup, URI destReviewGroup, String origReviewName)
+	/**
+	 *
+	 */
+	public ReviewRes transformReview(URI origReviewGroup, URI destReviewGroup, String origReviewName)
 			throws ResourceHandlingException {
 		//Open original model
 		R4EReviewGroup origGroup = RModelFactoryExt.eINSTANCE.openR4EReviewGroup(origReviewGroup);
@@ -147,6 +152,9 @@ public class ModelTransformImpl implements ModelTransform {
 		//Open destination group
 		ReviewGroupRes destGroup = openReviewGroupRes(destReviewGroup);
 		ResourceSet destResSet = destGroup.eResource().getResourceSet();
+
+		//Retrieve the file prefix, selected for the group
+		String filePrefix = destGroup.getFilesPrefix();
 
 		//Make sure a review with this name does not already exists
 		EList<ReviewRes> existingReviews = destGroup.getReviewsRes();
@@ -166,7 +174,7 @@ public class ModelTransformImpl implements ModelTransform {
 		Resource destReviewResource = null;
 		if (existingReviews == null || existingReviews.size() == 0) {
 			URI containerPath = destGroup.eResource().getURI().trimSegments(1);
-			URI destReviewURI = fWriter.createResourceURI(REVIEWS_RES_NAME, containerPath, ResourceType.REVIEW);
+			URI destReviewURI = fWriter.createResourceURI(filePrefix, containerPath, ResourceType.REVIEW);
 			destReviewResource = destResSet.createResource(destReviewURI);
 		} else {
 			destReviewResource = existingReviews.get(0).eResource();
@@ -185,19 +193,19 @@ public class ModelTransformImpl implements ModelTransform {
 	}
 
 	private void adaptReview(R4EReview origReview, ReviewRes destReview, ReviewGroupRes destGroup) {
-		//Adapt values and references
-		Collection<R4EUser> origUsersList = origReview.getUsersMap().values();
 
+		Collection<R4EUser> origUsersList = origReview.getUsersMap().values();
 		ResourceSet resSet = destReview.eResource().getResourceSet();
 
-		//adapt values
+		//copy review values
 		EList<R4EUser> users = destReview.getUsersRes();
 		copyReviewData(origReview, destReview);
 
 		//Destination review folder
+		String filePrefix = destGroup.getFilesPrefix();
 		URI containerPath = destReview.eResource().getURI().trimSegments(1);
-		URI destAnomaliesURI = fWriter.createResourceURI(ANOMALIES_RES_NAME, containerPath, ResourceType.USER_COMMENT);
-		URI destItemsURI = fWriter.createResourceURI(ITEMS_RES_NAME, containerPath, ResourceType.USER_ITEM);
+		URI destAnomaliesURI = fWriter.createResourceURI(filePrefix, containerPath, ResourceType.USER_COMMENT);
+		URI destItemsURI = fWriter.createResourceURI(filePrefix, containerPath, ResourceType.USER_ITEM);
 
 		Resource destAnomaliesResource = null;
 		Resource destItemsResource = null;
@@ -227,7 +235,7 @@ public class ModelTransformImpl implements ModelTransform {
 			destAnomaliesResource.getContents().add(user);
 		}
 
-		//Move user's content to the destination resources
+		//First user pass: Move user's content to the destination resources
 		for (R4EUser user : origUsersList) {
 			//Move anomalies to a different resource
 			EList<R4EComment> comments = user.getAddedComments();
@@ -247,6 +255,28 @@ public class ModelTransformImpl implements ModelTransform {
 				item.setAddedBy(origReview.getUsersMap().get(addedBy));
 			}
 		}
+
+//		//Second user pass: Adjust reviewed content references which have just been moved in the item level for all users above
+//		for (R4EUser user : origUsersList) {
+//			if (user instanceof R4EParticipant) {
+//				List<EObject> IdsCached = new ArrayList<EObject>();
+//				EList<R4EID> reviewed = ((R4EParticipant) user).getReviewedContent();
+//
+//				//cach
+//				for (R4EID r4eid : reviewed) {
+//					IdsCached.add(r4eid);
+//				}
+//
+//				//clear
+//				reviewed.clear();
+//
+//				//refresh
+//				for (Object element : IdsCached) {
+//					R4EID r4eid = (R4EID) element;
+//					reviewed.add(r4eid);
+//				}
+//			}
+//		}
 	}
 
 	/**
@@ -271,6 +301,30 @@ public class ModelTransformImpl implements ModelTransform {
 	 * @param destReview
 	 */
 	private void copyReviewData(R4EReview origReview, ReviewRes destReview) {
+//		Resource res = destReview.eResource();
+//
+//		//Move references 
+//		if (origReview.getActiveMeeting() != null) {
+//			switchResources(res, origReview.getActiveMeeting());
+//		}
+//
+//		if (origReview.getAnomalyTemplate() != null) {
+//			switchResources(res, origReview.getAnomalyTemplate());
+//		}
+//
+//		if (origReview.getDecision() != null) {
+//			switchResources(res, origReview.getDecision());
+//		}
+//
+//		if (origReview.getReviewTask() != null) {
+//			switchResources(res, origReview.getReviewTask());
+//		}
+//
+//		if (origReview.getState() != null) {
+//			switchResources(res, origReview.getState());
+//		}
+
+		//Update references and values in the destination review
 		destReview.setActiveMeeting(origReview.getActiveMeeting());
 		destReview.setAnomalyTemplate(origReview.getAnomalyTemplate());
 		destReview.setCreatedBy(origReview.getCreatedBy());

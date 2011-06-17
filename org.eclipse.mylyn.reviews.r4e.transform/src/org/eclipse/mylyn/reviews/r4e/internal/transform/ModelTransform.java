@@ -6,10 +6,10 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Ericsson AB - initial API and implementation
+ *     Ericsson AB - initial API
  *******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.internal.transform.api;
+package org.eclipse.mylyn.reviews.r4e.internal.transform;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -31,10 +31,13 @@ public interface ModelTransform {
 	 *            - folder URI location where the resource group file shall be created e.g. file://c:\folder
 	 * @param aGroupName
 	 *            - The name of the group
+	 * @param aFilePrefix
+	 *            - a common file prefix used in all generated serialisation resource files
 	 * @return
 	 * @throws ResourceHandlingException
 	 */
-	public ReviewGroupRes createReviewGroupRes(URI aFolderPath, String aGroupName) throws ResourceHandlingException;
+	public ReviewGroupRes createReviewGroupRes(URI aFolderPath, String aGroupName, String aFilePrefix)
+			throws ResourceHandlingException;
 
 	/**
 	 * @param aResourcePath
@@ -59,6 +62,6 @@ public interface ModelTransform {
 	 * @return - Resulting transformed review or null if not able to transform
 	 * @throws ResourceHandlingException
 	 */
-	public ReviewRes reviewTransform(URI origReviewGroup, URI destReviewGroup, String origReviewName)
+	public ReviewRes transformReview(URI origReviewGroup, URI destReviewGroup, String origReviewName)
 			throws ResourceHandlingException;
 }

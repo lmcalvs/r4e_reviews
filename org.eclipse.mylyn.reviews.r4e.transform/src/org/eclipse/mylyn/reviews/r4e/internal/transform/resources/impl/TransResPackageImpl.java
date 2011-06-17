@@ -11,6 +11,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -132,6 +133,15 @@ public class TransResPackageImpl extends EPackageImpl implements TransResPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getReviewGroupRes_FilesPrefix() {
+		return (EAttribute)reviewGroupResEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getReviewRes() {
 		return reviewResEClass;
 	}
@@ -175,6 +185,7 @@ public class TransResPackageImpl extends EPackageImpl implements TransResPackage
 		// Create classes and their features
 		reviewGroupResEClass = createEClass(REVIEW_GROUP_RES);
 		createEReference(reviewGroupResEClass, REVIEW_GROUP_RES__REVIEWS_RES);
+		createEAttribute(reviewGroupResEClass, REVIEW_GROUP_RES__FILES_PREFIX);
 
 		reviewResEClass = createEClass(REVIEW_RES);
 		createEReference(reviewResEClass, REVIEW_RES__USERS_RES);
@@ -217,6 +228,7 @@ public class TransResPackageImpl extends EPackageImpl implements TransResPackage
 		// Initialize classes and features; add operations and parameters
 		initEClass(reviewGroupResEClass, ReviewGroupRes.class, "ReviewGroupRes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getReviewGroupRes_ReviewsRes(), this.getReviewRes(), null, "reviewsRes", null, 0, -1, ReviewGroupRes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getReviewGroupRes_FilesPrefix(), ecorePackage.getEString(), "filesPrefix", null, 0, 1, ReviewGroupRes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(reviewResEClass, ReviewRes.class, "ReviewRes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getReviewRes_UsersRes(), theRModelPackage.getR4EUser(), null, "usersRes", null, 0, -1, ReviewRes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

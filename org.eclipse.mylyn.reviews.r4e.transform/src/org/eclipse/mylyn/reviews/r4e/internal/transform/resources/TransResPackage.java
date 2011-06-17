@@ -11,6 +11,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.internal.transform.resources;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -47,7 +48,7 @@ public interface TransResPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://org.eclipse.mylyn.reviews.r4e.model.transform/";
+	String eNS_URI = "http://org.eclipse.mylyn.reviews.r4e.model.transform/1.0";
 
 	/**
 	 * The package namespace name.
@@ -220,13 +221,22 @@ public interface TransResPackage extends EPackage {
 	int REVIEW_GROUP_RES__REVIEWS_RES = RModelPackage.R4E_REVIEW_GROUP_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Files Prefix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_GROUP_RES__FILES_PREFIX = RModelPackage.R4E_REVIEW_GROUP_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Review Group Res</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_GROUP_RES_FEATURE_COUNT = RModelPackage.R4E_REVIEW_GROUP_FEATURE_COUNT + 1;
+	int REVIEW_GROUP_RES_FEATURE_COUNT = RModelPackage.R4E_REVIEW_GROUP_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewResImpl <em>Review Res</em>}' class.
@@ -477,6 +487,17 @@ public interface TransResPackage extends EPackage {
 	EReference getReviewGroupRes_ReviewsRes();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes#getFilesPrefix <em>Files Prefix</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Files Prefix</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes#getFilesPrefix()
+	 * @see #getReviewGroupRes()
+	 * @generated
+	 */
+	EAttribute getReviewGroupRes_FilesPrefix();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes <em>Review Res</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -536,6 +557,14 @@ public interface TransResPackage extends EPackage {
 		 * @generated
 		 */
 		EReference REVIEW_GROUP_RES__REVIEWS_RES = eINSTANCE.getReviewGroupRes_ReviewsRes();
+
+		/**
+		 * The meta object literal for the '<em><b>Files Prefix</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REVIEW_GROUP_RES__FILES_PREFIX = eINSTANCE.getReviewGroupRes_FilesPrefix();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewResImpl <em>Review Res</em>}' class.

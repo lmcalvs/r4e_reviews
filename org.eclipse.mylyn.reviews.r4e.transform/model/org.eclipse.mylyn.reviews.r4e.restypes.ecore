@@ -6,6 +6,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ReviewGroupRes" eSuperTypes="../../org.eclipse.mylyn.reviews.r4e.core/model/org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup">
     <eStructuralFeatures xsi:type="ecore:EReference" name="reviewsRes" upperBound="-1"
         eType="#//ReviewRes" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="filesPrefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReviewRes" eSuperTypes="../../org.eclipse.mylyn.reviews.r4e.core/model/org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview">
     <eStructuralFeatures xsi:type="ecore:EReference" name="usersRes" upperBound="-1"

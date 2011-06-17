@@ -26,7 +26,7 @@ public class Activator extends Plugin {
 	// Constants
 	// ------------------------------------------------------------------------
 
-	public static final String PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.transform"; // The plug-in ID
+	public static final String PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.transform"; // The plug-in ID //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -71,7 +71,7 @@ public class Activator extends Plugin {
 		Plugin = this;
 		fTracer = new Tracer();
 		fTracer.init(PLUGIN_ID);
-		fTracer.traceDebug("plugin started: " + PLUGIN_ID);
+		fTracer.traceDebug("plugin started: " + PLUGIN_ID); //$NON-NLS-1$
 	}
 
 	/**
@@ -86,7 +86,8 @@ public class Activator extends Plugin {
 	public void stop(BundleContext context) throws Exception {
 		Plugin = null;
 		// super.stop(context);
-		fTracer.traceDebug("plugin stopped" + PLUGIN_ID);
+		fTracer.traceDebug("plugin stopped" + PLUGIN_ID); //$NON-NLS-1$
+		fTracer.closeLogfile();
 	}
 
 	/**

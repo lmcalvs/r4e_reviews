@@ -10,10 +10,10 @@
       resource="XML" disposableProviderFactory="true" ecorePackage="org.eclipse.mylyn.reviews.r4e.restypes.ecore#/">
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.restypes.ecore#//ReviewGroupRes">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.restypes.ecore#//ReviewGroupRes/reviewsRes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.restypes.ecore#//ReviewGroupRes/filesPrefix"/>
     </genClasses>
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.restypes.ecore#//ReviewRes">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.restypes.ecore#//ReviewRes/usersRes"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.restypes.ecore#//UserRes"/>
   </genPackages>
 </genmodel:GenModel>

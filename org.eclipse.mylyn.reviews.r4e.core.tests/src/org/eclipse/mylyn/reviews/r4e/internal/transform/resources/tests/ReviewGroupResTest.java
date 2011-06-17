@@ -22,13 +22,12 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelReader;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.tests.GoldenStubHandler;
-import org.eclipse.mylyn.reviews.r4e.internal.transform.api.ModelTransform;
+import org.eclipse.mylyn.reviews.r4e.internal.transform.ModelTransform;
+import org.eclipse.mylyn.reviews.r4e.internal.transform.impl.ModelTransformImpl;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes;
 import org.junit.Test;
 
@@ -46,19 +45,20 @@ public class ReviewGroupResTest extends TestCase {
 	 * @generated
 	 */
 	protected ReviewGroupRes		fixture			= null;
-	private final IModelReader		fReader			= SerializeFactory.getReader();
-	private final IModelWriter		fWriter			= SerializeFactory.getWriter();
+	// private final IModelReader fReader = SerializeFactory.getReader();
+	// private final IModelWriter fWriter = SerializeFactory.getWriter();
 
 	private final RModelFactoryExt	fFactory		= SerializeFactory.getModelExtension();
 
-	private static final String		fGroupPathStr	= "outGroupX";
-	private static URI				fGroupPath		= null;
+	// private static final String fGroupPathStr = "outGroupX";
+	// private static URI fGroupPath = null;
 
-	private static final String		GROUP_NAME		= "Group One";
-	private static final String		REVIEW_NAME1	= "Alpha 1";
+	// private static final String GROUP_NAME = "Group One";
+	// private static final String REVIEW_NAME1 = "Alpha 1";
 
-	private static final String		fUser1			= "au 1";
-	private File					fRootTestDir	= null;
+	// private static final String fUser1 = "au 1";
+
+	// private File fRootTestDir = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -112,8 +112,8 @@ public class ReviewGroupResTest extends TestCase {
 		if (!baseDir.endsWith(File.separator)) {
 			baseDir = baseDir + File.separator;
 		}
-		fRootTestDir = new File(baseDir + fGroupPathStr + File.separator);
-		fGroupPath = URI.createFileURI(fRootTestDir.getAbsolutePath());
+		// fRootTestDir = new File(baseDir + fGroupPathStr + File.separator);
+		// fGroupPath = URI.createFileURI(fRootTestDir.getAbsolutePath());
 
 	}
 
@@ -149,10 +149,11 @@ public class ReviewGroupResTest extends TestCase {
 		URI origURI = loadedGroup.eResource().getURI();
 		// Open Original Serialised model
 		URI destFolderURI = origURI.trimSegments(1).appendSegment("transformations");
-		String destGroupName = "TransformedGrp";
+		String filePrefix = "Merged";
 		ReviewGroupRes destGroup = null;
 		try {
-			destGroup = ModelTransform.instance.createReviewGroupRes(destFolderURI, destGroupName);
+			// Use same group name as the orginal one
+			destGroup = ModelTransform.instance.createReviewGroupRes(destFolderURI, loadedGroup.getName(), filePrefix);
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			fail("Exception");
@@ -160,16 +161,15 @@ public class ReviewGroupResTest extends TestCase {
 
 		assertNotNull("Failed to create transformation group", destGroup);
 
-		R4EReview oReview = null;
 		R4EReview dReview = null;
 		Set<String> reviewNames = loadedGroup.getReviewsMap().keySet();
 		URI destURI = destGroup.eResource().getURI();
-		for (Iterator iterator = reviewNames.iterator(); iterator.hasNext();) {
-			String reviewName = (String) iterator.next();
+		for (Iterator<String> iterator = reviewNames.iterator(); iterator.hasNext();) {
+			String reviewName = iterator.next();
 			// Open the review
 			try {
-				oReview = fFactory.openR4EReview(loadedGroup, reviewName);
-				dReview = ModelTransform.instance.reviewTransform(origURI, destURI, reviewName);
+				fFactory.openR4EReview(loadedGroup, reviewName);
+				dReview = ModelTransform.instance.transformReview(origURI, destURI, reviewName);
 			} catch (ResourceHandlingException e) {
 				e.printStackTrace();
 				fail("Exception");
@@ -178,7 +178,62 @@ public class ReviewGroupResTest extends TestCase {
 			// Transform
 			assertNotNull("Transformed Review is null", dReview);
 		}
+
+		//release resources (memory)
+		ModelTransformImpl.instance.closeReviewGroupRes(destGroup);
 		System.out.println("test case finished");
 	}
+
+	// @Test
+	// public void testTransformReal() {
+	// // From Objects to Disk
+	// R4EReviewGroup loadedGroup = null;
+	// URI origURI = URI.createFileURI("C:/Users/lmcalvs/OpenReviews/openTest/Various_group_root.xrer");
+	//
+	// try {
+	// loadedGroup = fFactory.openR4EReviewGroup(origURI);
+	// // loadedGroup = GoldenStubHandler.serializeStub();
+	// } catch (ResourceHandlingException e) {
+	// e.printStackTrace();
+	// fail("Exception");
+	// }
+	//
+	// // URI origURI = loadedGroup.eResource().getURI();
+	//
+	// // Open Original Serialised model
+	// URI destFolderURI = origURI.trimSegments(1).appendSegment("transformations");
+	// String filePrefix = "Merged";
+	// ReviewGroupRes destGroup = null;
+	// try {
+	// destGroup = ModelTransform.instance.createReviewGroupRes(destFolderURI, loadedGroup.getName(), filePrefix);
+	// } catch (ResourceHandlingException e) {
+	// e.printStackTrace();
+	// fail("Exception");
+	// }
+	//
+	// assertNotNull("Failed to create transformation group", destGroup);
+	//
+	// R4EReview dReview = null;
+	// Set<String> reviewNames = loadedGroup.getReviewsMap().keySet();
+	// URI destURI = destGroup.eResource().getURI();
+	// for (Iterator<String> iterator = reviewNames.iterator(); iterator.hasNext();) {
+	// String reviewName = iterator.next();
+	// // Open the review
+	// try {
+	// fFactory.openR4EReview(loadedGroup, reviewName);
+	// dReview = ModelTransform.instance.transformReview(origURI, destURI, reviewName);
+	// } catch (ResourceHandlingException e) {
+	// e.printStackTrace();
+	// fail("Exception");
+	// }
+	//
+	// // Transform
+	// assertNotNull("Transformed Review is null", dReview);
+	// }
+	//
+	// //release resources (memory)
+	// // ModelTransformImpl.instance.closeReviewGroupRes(destGroup);
+	// System.out.println("test case finished");
+	// }
 
 } //ReviewGroupResTest

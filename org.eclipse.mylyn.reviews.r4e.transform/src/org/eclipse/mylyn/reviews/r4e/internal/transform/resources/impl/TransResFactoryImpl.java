@@ -36,7 +36,7 @@ public class TransResFactoryImpl extends EFactoryImpl implements TransResFactory
 	 */
 	public static TransResFactory init() {
 		try {
-			TransResFactory theTransResFactory = (TransResFactory)EPackage.Registry.INSTANCE.getEFactory("http://org.eclipse.mylyn.reviews.r4e.model.transform/"); 
+			TransResFactory theTransResFactory = (TransResFactory)EPackage.Registry.INSTANCE.getEFactory("http://org.eclipse.mylyn.reviews.r4e.model.transform/1.0"); 
 			if (theTransResFactory != null) {
 				return theTransResFactory;
 			}

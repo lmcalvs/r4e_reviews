@@ -13,6 +13,7 @@ package org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -20,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -37,6 +39,7 @@ import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackag
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewGroupResImpl#getReviewsRes <em>Reviews Res</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewGroupResImpl#getFilesPrefix <em>Files Prefix</em>}</li>
  * </ul>
  * </p>
  *
@@ -52,6 +55,25 @@ public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGrou
 	 * @ordered
 	 */
 	protected EList<ReviewRes> reviewsRes;
+
+	/**
+	 * The default value of the '{@link #getFilesPrefix() <em>Files Prefix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFilesPrefix()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String FILES_PREFIX_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getFilesPrefix() <em>Files Prefix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFilesPrefix()
+	 * @generated
+	 * @ordered
+	 */
+	protected String filesPrefix = FILES_PREFIX_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -89,6 +111,27 @@ public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGrou
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getFilesPrefix() {
+		return filesPrefix;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFilesPrefix(String newFilesPrefix) {
+		String oldFilesPrefix = filesPrefix;
+		filesPrefix = newFilesPrefix;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX, oldFilesPrefix, filesPrefix));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -108,6 +151,8 @@ public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGrou
 		switch (featureID) {
 			case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
 				return getReviewsRes();
+			case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
+				return getFilesPrefix();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -125,6 +170,9 @@ public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGrou
 				getReviewsRes().clear();
 				getReviewsRes().addAll((Collection<? extends ReviewRes>)newValue);
 				return;
+			case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
+				setFilesPrefix((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -140,6 +188,9 @@ public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGrou
 			case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
 				getReviewsRes().clear();
 				return;
+			case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
+				setFilesPrefix(FILES_PREFIX_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -154,8 +205,26 @@ public class ReviewGroupResImpl extends R4EReviewGroupImpl implements ReviewGrou
 		switch (featureID) {
 			case TransResPackage.REVIEW_GROUP_RES__REVIEWS_RES:
 				return reviewsRes != null && !reviewsRes.isEmpty();
+			case TransResPackage.REVIEW_GROUP_RES__FILES_PREFIX:
+				return FILES_PREFIX_EDEFAULT == null ? filesPrefix != null : !FILES_PREFIX_EDEFAULT.equals(filesPrefix);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (filesPrefix: ");
+		result.append(filesPrefix);
+		result.append(')');
+		return result.toString();
 	}
 
 } //ReviewGroupResImpl

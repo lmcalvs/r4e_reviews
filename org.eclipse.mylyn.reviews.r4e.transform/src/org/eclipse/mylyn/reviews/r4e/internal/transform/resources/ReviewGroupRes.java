@@ -24,6 +24,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes#getReviewsRes <em>Reviews Res</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes#getFilesPrefix <em>Files Prefix</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,5 +48,31 @@ public interface ReviewGroupRes extends R4EReviewGroup {
 	 * @generated
 	 */
 	EList<ReviewRes> getReviewsRes();
+
+	/**
+	 * Returns the value of the '<em><b>Files Prefix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Files Prefix</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Files Prefix</em>' attribute.
+	 * @see #setFilesPrefix(String)
+	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackage#getReviewGroupRes_FilesPrefix()
+	 * @model
+	 * @generated
+	 */
+	String getFilesPrefix();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes#getFilesPrefix <em>Files Prefix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Files Prefix</em>' attribute.
+	 * @see #getFilesPrefix()
+	 * @generated
+	 */
+	void setFilesPrefix(String value);
 
 } // ReviewGroupRes
