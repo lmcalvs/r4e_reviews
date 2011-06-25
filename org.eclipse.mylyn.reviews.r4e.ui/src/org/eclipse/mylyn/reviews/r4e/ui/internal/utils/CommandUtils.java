@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -310,6 +311,19 @@ public class CommandUtils {
 	}
 
 	/**
+	 * Method getPosition. Get position based on position in Document
+	 * 
+	 * @param aSelectedElement
+	 *            IFile
+	 * @return TextPosition
+	 * @throws CoreException
+	 */
+	public static R4EUITextPosition getPosition(int aOffset, int aLength, IDocument aDoc) throws CoreException { // $codepro.audit.disable overloadedMethods
+		final R4EUITextPosition position = new R4EUITextPosition(aOffset, aLength, aDoc);
+		return position;
+	}
+
+	/**
 	 * Method getPosition. Get position for generic workspace files
 	 * 
 	 * @param aSelectedElement
@@ -489,30 +503,34 @@ public class CommandUtils {
 	}
 
 	public static R4ECompareEditorInput createCompareEditorInput(R4EFileVersion aBaseFileVersion,
-			R4EFileVersion aTargetFileVersion, boolean aTargetFileEditable) {
+			R4EFileVersion aTargetFileVersion) {
 
 		final CompareConfiguration config = new CompareConfiguration();
-		config.setLeftEditable(aTargetFileEditable);
 		config.setRightEditable(false);
 		config.setProperty(CompareConfiguration.IGNORE_WHITESPACE, Boolean.valueOf(true));
 
 		//NOTE:  We use the workspace file as input if it is in sync with the file to review,
-		//		 otherwise we use the file to review that is included in the review repository
+		//		 otherwise we use the file to review that is included in the review repository.
+		//		 Only workspace files are editable.
 		final R4EFileRevisionTypedElement ancestor = null; //Might be improved later
 		ITypedElement target = null;
 		if (null != aTargetFileVersion) {
 			if (CommandUtils.useWorkspaceResource(aTargetFileVersion)) {
 				target = new R4EFileTypedElement(aTargetFileVersion);
+				config.setLeftEditable(true);
 			} else {
 				target = new R4EFileRevisionTypedElement(aTargetFileVersion);
+				config.setLeftEditable(false);
 			}
 		}
 		ITypedElement base = null;
 		if (null != aBaseFileVersion) {
 			if (CommandUtils.useWorkspaceResource(aBaseFileVersion)) {
 				base = new R4EFileTypedElement(aBaseFileVersion);
+				config.setRightEditable(true);
 			} else {
 				base = new R4EFileRevisionTypedElement(aBaseFileVersion);
+				config.setRightEditable(false);
 			}
 		}
 		return new R4ECompareEditorInput(config, ancestor, target, base);

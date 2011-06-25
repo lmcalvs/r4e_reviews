@@ -1221,6 +1221,21 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final int END_STRING_NAME_INDEX = 10;
 
+	/**
+	 * Field ANCESTOR_CONTRIBUTOR. (value is 'A')
+	 */
+	public static final char ANCESTOR_CONTRIBUTOR = 'A';
+
+	/**
+	 * Field RIGHT_CONTRIBUTOR. (value is 'R')
+	 */
+	public static final char RIGHT_CONTRIBUTOR = 'R';
+
+	/**
+	 * Field LEFT_CONTRIBUTOR. (value is 'L')
+	 */
+	public static final char LEFT_CONTRIBUTOR = 'L';
+
 	//Tooltips for dialogs and property views
 
 	public static final String ANOMALY_TITLE_TOOLTIP = "A Title that Identifies this Anomaly";

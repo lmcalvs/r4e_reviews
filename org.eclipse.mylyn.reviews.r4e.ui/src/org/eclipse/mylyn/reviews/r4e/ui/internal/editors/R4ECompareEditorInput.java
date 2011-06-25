@@ -25,12 +25,13 @@ import java.text.MessageFormat;
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
-import org.eclipse.compare.structuremergeviewer.IDiffElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 
 /**
@@ -93,9 +94,18 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Method getAncestorElement.
+	 * 
+	 * @return ITypedElement
+	 */
+	public ITypedElement getAncestorElement() {
+		return fAncestor;
+	}
+
+	/**
 	 * Method getLeftElement.
 	 * 
-	 * @return FileRevisionTypedElement
+	 * @return ITypedElement
 	 */
 	public ITypedElement getLeftElement() {
 		return fLeft;
@@ -104,18 +114,17 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	/**
 	 * Method getRightElement.
 	 * 
-	 * @return FileRevisionTypedElement
+	 * @return ITypedElement
 	 */
 	public ITypedElement getRightElement() {
 		return fRight;
 	}
 
-	private ICompareInput createCompareInput() {
-		return compare(fLeft, fRight);
-	}
-
-	private DiffNode compare(ITypedElement actLeft, ITypedElement actRight) {
-		return new DiffNode(actLeft, actRight);
+	/**
+	 * Method prepareCompareInputNoEditor.
+	 */
+	public void prepareCompareInputNoEditor() throws InvocationTargetException, InterruptedException {
+		prepareCompareInput(null);
 	}
 
 	/**
@@ -159,7 +168,12 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		return super.getToolTipText();
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * Method getAdapter.
+	 * 
+	 * @param adapter
+	 *            Class
+	 * @return Object
 	 * @see org.eclipse.compare.CompareEditorInput#getAdapter(java.lang.Class)
 	 */
 	@Override
@@ -182,6 +196,11 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		// Not implemented for now
 	}
 
+	/**
+	 * Method getWorkspaceElement.
+	 * 
+	 * @return R4EFileTypedElement
+	 */
 	private R4EFileTypedElement getWorkspaceElement() {
 		if (fLeft instanceof R4EFileTypedElement) {
 			return (R4EFileTypedElement) fLeft;
@@ -189,35 +208,46 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		return null;
 	}
 
+	/**
+	 * Method prepareCompareInput.
+	 * 
+	 * @param aMonitor
+	 *            IProgressMonitor
+	 * @return ICompareInput
+	 * @throws InvocationTargetException
+	 * @throws InterruptedException
+	 * @see org.eclipse.compare.CompareEditorInput#prepareCompareInput(IProgressMonitor)
+	 */
 	@Override
-	protected ICompareInput prepareCompareInput(IProgressMonitor monitor) throws InvocationTargetException,
+	protected ICompareInput prepareCompareInput(IProgressMonitor aMonitor) throws InvocationTargetException,
 			InterruptedException {
-		ICompareInput input = createCompareInput();
+
+		if (null != aMonitor) {
+			aMonitor.beginTask("R4E Compare", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+		}
+
+		// Set the label values for the compare editor
 		initLabels();
 
-		// The compare editor (Structure Compare) will show the diff filenames
-		// with their project relative path. So, no need to also show directory entries.
-		DiffNode flatDiffNode = new DiffNode(null, Differencer.CHANGE, null, fLeft, fRight);
-		flatDiffView(flatDiffNode, (DiffNode) input);
-		return flatDiffNode;
-	}
+		// Build the diff node to compare the files		
+		Differencer differencer = new Differencer();
 
-	private void flatDiffView(DiffNode rootNode, DiffNode currentNode) {
-		if (currentNode != null) {
-			IDiffElement[] dElems = currentNode.getChildren();
-			if (dElems != null) {
-				for (IDiffElement dElem : dElems) {
-					DiffNode dNode = (DiffNode) dElem;
-					if (dNode.getChildren() != null && dNode.getChildren().length > 0) {
-						flatDiffView(rootNode, dNode);
-					} else {
-						rootNode.add(dNode);
-					}
-				}
+		//Store the differences here, we might need them later
+		Object differences = differencer.findDifferences(false, aMonitor, null, fAncestor, fLeft, fRight);
+
+		/* We might want to do something here in the future
+		node.addCompareInputChangeListener(new ICompareInputChangeListener() {
+			@Override
+			public void compareInputChanged(ICompareInput source) {
 			}
-		}
+		});
+		*/
+		return (ICompareInput) differences;
 	}
 
+	/**
+	 * Method initLabels.
+	 */
 	private void initLabels() {
 		// Set the label values for the compare editor
 		if (null != fLeft) {
@@ -240,5 +270,22 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		if (null != fAncestor) {
 			fConfig.setAncestorLabel(fAncestor.getName());
 		}
+	}
+
+	/**
+	 * Method createContents.
+	 * 
+	 * @param aParent
+	 *            Composite
+	 * @return Control
+	 * @see org.eclipse.compare.CompareEditorInput#createContents(Composite)
+	 */
+	@Override
+	public Control createContents(Composite aParent) {
+		Control control = super.createContents(aParent);
+
+		//Go to the correct element in the compare editor
+		UIUtils.selectElementInEditor(this);
+		return control;
 	}
 }

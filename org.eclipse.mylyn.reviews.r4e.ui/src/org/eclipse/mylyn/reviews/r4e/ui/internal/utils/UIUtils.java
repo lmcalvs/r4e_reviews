@@ -19,16 +19,25 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.eclipse.compare.ICompareNavigator;
+import org.eclipse.compare.contentmergeviewer.TextMergeViewer;
+import org.eclipse.compare.internal.CompareContentViewerSwitchingPane;
+import org.eclipse.compare.internal.CompareEditorInputNavigator;
+import org.eclipse.compare.internal.MergeSourceViewer;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
@@ -37,7 +46,14 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -46,12 +62,34 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
 public class UIUtils {
+
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+
+	//NOTE:  THese values are used in the hack to change cursor position in compare editor.
+
+	/**
+	 * Field COMPARE_EDITOR_TEXT_CLASS_NAME. (value is ""org.eclipse.compare.contentmergeviewer.TextMergeViewer"")
+	 */
+	private static final String COMPARE_EDITOR_TEXT_CLASS_NAME = "org.eclipse.compare.contentmergeviewer.TextMergeViewer";
+
+	/**
+	 * Field COMPARE_EDITOR_TEXT_FIELD_LEFT. (value is ""fLeft"")
+	 */
+	private static final String COMPARE_EDITOR_TEXT_FIELD_LEFT = "fLeft";
+
+	/**
+	 * Field DEFAULT_OBJECT_CLASS_NAME. (value is ""Object"")
+	 */
+	private static final String DEFAULT_OBJECT_CLASS_NAME = "Object";
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -159,8 +197,9 @@ public class UIUtils {
 	 * @return boolean
 	 */
 	public static boolean isFilterPreferenceSet(Object aFilterSet) {
-		if (null != aFilterSet && aFilterSet.toString().equals(R4EUIConstants.VALUE_TRUE_STR))
+		if (null != aFilterSet && aFilterSet.toString().equals(R4EUIConstants.VALUE_TRUE_STR)) {
 			return true;
+		}
 		return false;
 	}
 
@@ -233,13 +272,15 @@ public class UIUtils {
 	 * @return int
 	 */
 	public static int mapParticipantToIndex(String aParticipant) {
-		if (null == R4EUIModelController.getActiveReview())
+		if (null == R4EUIModelController.getActiveReview()) {
 			return 0;
+		}
 		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
 		final int numParticipants = participants.size();
 		for (int i = 0; i < numParticipants; i++) {
-			if (participants.get(i).getId().equals(aParticipant))
+			if (participants.get(i).getId().equals(aParticipant)) {
 				return i;
+			}
 		}
 		return R4EUIConstants.INVALID_VALUE; //should never happen
 	}
@@ -260,8 +301,9 @@ public class UIUtils {
 			return R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT;
 		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_QUESTION)) {
 			return R4EDesignRuleClass.R4E_CLASS_QUESTION;
-		} else
+		} else {
 			return null; //should never happen
+		}
 	}
 
 	/**
@@ -278,8 +320,9 @@ public class UIUtils {
 			return R4EDesignRuleRank.R4E_RANK_MINOR;
 		} else if (aRank.equals(R4EUIConstants.ANOMALY_RANK_MAJOR)) {
 			return R4EDesignRuleRank.R4E_RANK_MAJOR;
-		} else
+		} else {
 			return null; //should never happen
+		}
 	}
 
 	/**
@@ -315,5 +358,67 @@ public class UIUtils {
 					+ System.getProperty("line.separator"));
 		}
 		return tempStr.toString();
+	}
+
+	/**
+	 * Method selectElementInEditor.
+	 * 
+	 * @param aInput
+	 *            R4ECompareEditorInput
+	 */
+	public static void selectElementInEditor(R4ECompareEditorInput aInput) {
+		//NOTE:  This is a dirty hack that involves accessing class and field we shouldn't, but that's
+		//       the only way to select the current position in the compare editor.  Hopefully this code can
+		//		 be removed later when the Eclipse compare editor allows this.
+		ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+		IR4EUIPosition position = null;
+
+		if (element instanceof R4EUIAnomalyBasic) {
+			position = ((R4EUIAnomalyBasic) element).getPosition();
+		} else if (element instanceof R4EUIComment) {
+			position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
+		} else if (element instanceof R4EUIContent) {
+			position = ((R4EUIContent) element).getPosition();
+		}
+
+		ICompareNavigator navigator = aInput.getNavigator();
+		if (navigator instanceof CompareEditorInputNavigator) {
+			Object[] panes = ((CompareEditorInputNavigator) navigator).getPanes();
+			for (Object pane : panes) {
+				if (pane instanceof CompareContentViewerSwitchingPane) {
+					Viewer viewer = ((CompareContentViewerSwitchingPane) pane).getViewer();
+					if (viewer instanceof TextMergeViewer) {
+						TextMergeViewer textViewer = (TextMergeViewer) viewer;
+						Class textViewerClass = textViewer.getClass();
+						if (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME)) {
+							do {
+								textViewerClass = textViewerClass.getSuperclass();
+								if (textViewerClass.getName().equals(DEFAULT_OBJECT_CLASS_NAME)) {
+									break;
+								}
+							} while (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME));
+						}
+						Field field;
+						try {
+							field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_LEFT);
+							field.setAccessible(true);
+							MergeSourceViewer sourceViewer = (MergeSourceViewer) field.get(textViewer);
+							ITextEditor adapter = (ITextEditor) sourceViewer.getAdapter(ITextEditor.class);
+							adapter.selectAndReveal(((R4EUITextPosition) position).getOffset(),
+									((R4EUITextPosition) position).getLength());
+						} catch (SecurityException e) {
+							//just continue
+						} catch (NoSuchFieldException e) {
+							//just continue
+						} catch (IllegalArgumentException e) {
+							//just continue
+						} catch (IllegalAccessException e) {
+							//just continue
+						}
+					}
+				}
+			}
+		}
 	}
 }

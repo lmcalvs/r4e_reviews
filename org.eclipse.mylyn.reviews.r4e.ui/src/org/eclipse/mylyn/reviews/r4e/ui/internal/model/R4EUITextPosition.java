@@ -89,7 +89,22 @@ public class R4EUITextPosition implements IR4EUIPosition {
 	 * @throws CoreException
 	 */
 	public R4EUITextPosition(int aOffset, int aLength, IFile aSourceFile) throws CoreException {
-		setPositionValues(aOffset, aLength, aSourceFile);
+		setPositionValues(aOffset, aLength, getDocument(aSourceFile));
+	}
+
+	/**
+	 * Constructor for TextPosition.
+	 * 
+	 * @param aOffset
+	 *            int
+	 * @param aLength
+	 *            int
+	 * @param aSourceFile
+	 *            IFile
+	 * @throws CoreException
+	 */
+	public R4EUITextPosition(int aOffset, int aLength, IDocument aDocument) throws CoreException {
+		setPositionValues(aOffset, aLength, aDocument);
 	}
 
 	/**
@@ -157,6 +172,20 @@ public class R4EUITextPosition implements IR4EUIPosition {
 	}
 
 	/**
+	 * Method getDocument.
+	 * 
+	 * @param aSourceFile
+	 *            IFile
+	 * @return IDocument
+	 * @throws CoreException
+	 */
+	private IDocument getDocument(IFile aSourceFile) throws CoreException {
+		final IDocumentProvider provider = new TextFileDocumentProvider();
+		provider.connect(aSourceFile);
+		return provider.getDocument(aSourceFile);
+	}
+
+	/**
 	 * Method setPositionValues.
 	 * 
 	 * @param aOffset
@@ -167,26 +196,23 @@ public class R4EUITextPosition implements IR4EUIPosition {
 	 *            IFile
 	 * @throws CoreException
 	 */
-	private void setPositionValues(int aOffset, int aLength, IFile aSourceFile) throws CoreException {
+	private void setPositionValues(int aOffset, int aLength, IDocument aDocument) throws CoreException {
 		try {
-
-			final IDocumentProvider provider = new TextFileDocumentProvider();
-			provider.connect(aSourceFile);
-			final IDocument document = provider.getDocument(aSourceFile);
-			if (null != document) {
+			if (null != aDocument) {
 				fOffset = aOffset;
 				if (aLength != R4EUIConstants.INVALID_VALUE) {
 					fLength = aLength;
 				} else {
-					fLength = document.getLength();
+					fLength = aDocument.getLength();
 				}
 
-				fStartLine = document.getLineOfOffset(fOffset) + R4EUIConstants.LINE_OFFSET;
+				fStartLine = aDocument.getLineOfOffset(fOffset) + R4EUIConstants.LINE_OFFSET;
 
 				int endOffset = fOffset + fLength;
-				if (0 != fLength)
+				if (0 != fLength) {
 					endOffset--;
-				fEndLine = document.getLineOfOffset(endOffset) + R4EUIConstants.LINE_OFFSET;
+				}
+				fEndLine = aDocument.getLineOfOffset(endOffset) + R4EUIConstants.LINE_OFFSET;
 				return;
 			}
 		} catch (BadLocationException e) {
@@ -283,8 +309,9 @@ public class R4EUITextPosition implements IR4EUIPosition {
 	 */
 	public boolean isSameAs(IR4EUIPosition aPosition) {
 		if (fOffset == ((R4EUITextPosition) aPosition).getOffset()
-				&& fLength == ((R4EUITextPosition) aPosition).getLength())
+				&& fLength == ((R4EUITextPosition) aPosition).getLength()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -302,8 +329,9 @@ public class R4EUITextPosition implements IR4EUIPosition {
 		} else {
 			buffer.append(R4EUIConstants.LINES_TAG + fStartLine + "-" + fEndLine);
 		}
-		if (null != fName)
+		if (null != fName) {
 			buffer.append(" (" + fName + ")");
+		}
 		return buffer.toString();
 	}
 }

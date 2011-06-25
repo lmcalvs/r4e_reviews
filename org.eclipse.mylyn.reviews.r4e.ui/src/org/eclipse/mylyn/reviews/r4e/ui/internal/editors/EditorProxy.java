@@ -37,10 +37,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
@@ -68,7 +66,12 @@ public class EditorProxy {
 	/**
 	 * Field R4E_COMPARE_EDITOR_TITLE. (value is ""R4E Compare"")
 	 */
-	private static final String R4E_COMPARE_EDITOR_TITLE = "R4E Compare"; //$NON-NLS-1$ // $codepro.audit.disable constantNamingConvention
+	private static final String R4E_COMPARE_EDITOR_TITLE = "R4E Compare";
+
+	/**
+	 * Field DEFAULT_EDITOR_NAME. (value is ""org.eclipse.ui.DefaultTextEditor"")
+	 */
+	private static final String DEFAULT_EDITOR_NAME = "org.eclipse.ui.DefaultTextEditor";
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -92,10 +95,7 @@ public class EditorProxy {
 		}
 
 		IR4EUIModelElement element = null;
-		boolean targetFileEditable = false;
 		IR4EUIPosition position = null;
-		R4EUIContentsContainer container = null;
-		int selectionIndex = -1;
 
 		R4EUIFileContext context = null;
 		R4EFileVersion baseFileVersion = null;
@@ -107,18 +107,12 @@ public class EditorProxy {
 			//Depending on which element was selected in the tree, we make the target file editable
 			//The file is editable if it was opened from the anomaly or comment level, otherwise it is not
 			//Also check to get the position we should put the cursor on and the highlight range in the editor
-			if (element instanceof R4EUIAnomalyContainer) {
-				targetFileEditable = true;
-			} else if (element instanceof R4EUIAnomalyBasic) {
-				targetFileEditable = true;
+			if (element instanceof R4EUIAnomalyBasic) {
 				position = ((R4EUIAnomalyBasic) element).getPosition();
 			} else if (element instanceof R4EUIComment) {
-				targetFileEditable = true;
 				position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
 			} else if (element instanceof R4EUIContent) {
 				position = ((R4EUIContent) element).getPosition();
-				container = (R4EUIContentsContainer) ((R4EUIContent) element).getParent();
-				selectionIndex = container.getContentsList().indexOf(element);
 			}
 
 			//Find the parent FileContextElement
@@ -136,7 +130,7 @@ public class EditorProxy {
 
 			//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
 			if (context.isFileVersionsComparable() && !forceSingleEditor) {
-				openCompareEditor(aPage, baseFileVersion, targetFileVersion, targetFileEditable, selectionIndex);
+				openCompareEditor(aPage, baseFileVersion, targetFileVersion, position);
 			} else {
 				if (null != targetFileVersion) {
 					openSingleEditor(aPage, targetFileVersion, position);
@@ -202,24 +196,26 @@ public class EditorProxy {
 	 *            int - the index of the selection to go to in the target file
 	 */
 	private static void openCompareEditor(IWorkbenchPage aPage, R4EFileVersion aBaseFileVersion,
-			R4EFileVersion aTargetFileVersion, boolean aTargetFileEditable, int aSelectionIndex) {
+			R4EFileVersion aTargetFileVersion, IR4EUIPosition aPosition) {
 
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;
 		final IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileVersion, aTargetFileVersion);
 
 		if (null != editor) {
-			//Simply provide focus to editor
-			aPage.activate(editor);
-			input = (R4ECompareEditorInput) editor.getEditorInput();
+			aPage.activate(editor); //Simply provide focus to editor
+
+			//Go to the correct element in the compare editor
+			UIUtils.selectElementInEditor((R4ECompareEditorInput) editor.getEditorInput());
 		} else {
-			input = CommandUtils.createCompareEditorInput(aBaseFileVersion, aTargetFileVersion, aTargetFileEditable);
+			input = CommandUtils.createCompareEditorInput(aBaseFileVersion, aTargetFileVersion);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE); // Adjust the compare title
 
 			Activator.Ftracer.traceInfo("Open compare editor on files "
 					+ ((null != aTargetFileVersion) ? aTargetFileVersion.getName() : "") + " (Target) and "
 					+ ((null != aBaseFileVersion) ? aBaseFileVersion.getName() : "") + " (Base)");
 			CompareUI.openCompareEditor(input, true);
+			//NOTE:  The position is set in editor in R4ECompareEditorInput#createContents
 		}
 	}
 
@@ -268,7 +264,7 @@ public class EditorProxy {
 					}
 					if (right instanceof R4EFileRevisionTypedElement) {
 						rightVersion = ((R4EFileRevisionTypedElement) right).getFileVersion();
-					} else if (left instanceof R4EFileTypedElement) {
+					} else if (right instanceof R4EFileTypedElement) {
 						rightVersion = ((R4EFileTypedElement) right).getFileVersion();
 					}
 
@@ -311,7 +307,7 @@ public class EditorProxy {
 		final IEditorDescriptor descriptor = registry.getDefaultEditor(aFileName, aType);
 		String id = null;
 		if (null == descriptor || descriptor.isOpenExternal()) {
-			id = "org.eclipse.ui.DefaultTextEditor";
+			id = DEFAULT_EDITOR_NAME;
 		} else {
 			id = descriptor.getId();
 		}

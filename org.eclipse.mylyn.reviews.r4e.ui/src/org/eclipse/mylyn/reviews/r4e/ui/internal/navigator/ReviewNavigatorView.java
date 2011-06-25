@@ -58,18 +58,14 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.LinePositionComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -92,8 +88,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionContext;
 import org.eclipse.ui.actions.ActionGroup;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.ui.texteditor.AbstractTextEditor;
-import org.eclipse.ui.texteditor.ITextEditorExtension3;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
@@ -517,26 +511,6 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 										}
 									}
 								}
-							}
-						}
-					} else if (input instanceof R4ECompareEditorInput) {
-						//Go to the correct position in the compare editor and select range
-						IStructuredSelection selection = (IStructuredSelection) R4EUIModelController.getNavigatorView()
-								.getTreeViewer()
-								.getSelection();
-						R4EUITextPosition position = null;
-						if (selection.getFirstElement() instanceof R4EUIAnomalyBasic) {
-							position = (R4EUITextPosition) ((R4EUIAnomalyBasic) selection.getFirstElement()).getPosition();
-						} else if (selection.getFirstElement() instanceof R4EUIContent) {
-							position = (R4EUITextPosition) ((R4EUIContent) selection.getFirstElement()).getPosition();
-						}
-
-						if (null != position) {
-							ITextEditorExtension3 ext = (ITextEditorExtension3) part.getAdapter(ITextEditorExtension3.class);
-
-							if (ext instanceof AbstractTextEditor) {
-								AbstractTextEditor editor = (AbstractTextEditor) ext;
-								editor.selectAndReveal(position.getOffset(), position.getLength());
 							}
 						}
 					}
