@@ -1305,4 +1305,15 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 		return factoryExtension.createR4EDesignRule(aViolation);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ModelAdapter#copyR4EReview(org.eclipse.emf.common
+	 * .util.URI, org.eclipse.emf.common.util.URI, java.lang.String, java.lang.String)
+	 */
+	public R4EReview copyR4EReview(URI origGroup, URI destGroup, String origReviewName, String destReviewName) {
+		return factoryExtension.copyR4EReview(origGroup, destGroup, origReviewName, destReviewName);
+	}
+
 } //RModelFactoryImpl

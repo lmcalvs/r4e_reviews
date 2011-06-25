@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011 Ericsson AB and others.&#xD;&#xA; &#xD;&#xA;All rights reserved. This program and the accompanying materials are&#xD;&#xA;made available under the terms of the Eclipse Public License v1.0 which&#xD;&#xA;accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Ericsson AB"
+    modelDirectory="/org.eclipse.mylyn.reviews.r4e.transform/src" modelPluginID="org.eclipse.mylyn.reviews.r4e.transform"
+    modelName="Org.eclipse.mylyn.reviews.r4e" importerID="org.eclipse.emf.importer.ecore"
+    containmentProxies="true" complianceLevel="5.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.mylyn.reviews.frame.core/model/framework.genmodel#//model ../../org.eclipse.mylyn.reviews.r4e.core/model/r4e.drules.genmodel#//drules ../../org.eclipse.mylyn.reviews.r4e.core/model/r4e.genmodel#//model">
+  <foreignModel>org.eclipse.mylyn.reviews.r4e.restypes.ecore</foreignModel>
+  <genPackages prefix="TransRes" basePackage="org.eclipse.mylyn.reviews.r4e.internal.transform"
+      resource="XML" disposableProviderFactory="true" ecorePackage="org.eclipse.mylyn.reviews.r4e.restypes.ecore#/">
+    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.restypes.ecore#//ReviewGroupRes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.restypes.ecore#//ReviewGroupRes/reviewsRes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.restypes.ecore#//ReviewGroupRes/filesPrefix"/>
+    </genClasses>
+    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.restypes.ecore#//ReviewRes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.restypes.ecore#//ReviewRes/usersRes"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -83,7 +83,7 @@ public class MVersionsAPITest extends GitTestCase {
 		CommitOperation commitOperation = new CommitOperation(null, null, null, TestUtils.AUTHOR, TestUtils.COMMITTER,
 				"first commit");
 		commitOperation.setCommitAll(true);
-		commitOperation.setRepos(new Repository[] { repo });
+		commitOperation.setRepository(repo);
 		commitOperation.execute(null);
 
 		// Second Commit:
@@ -92,7 +92,7 @@ public class MVersionsAPITest extends GitTestCase {
 		new AddToIndexOperation(resources).execute(null);
 		commitOperation = new CommitOperation(null, null, null, TestUtils.AUTHOR, TestUtils.COMMITTER, "Second commit");
 		commitOperation.setCommitAll(true);
-		commitOperation.setRepos(new Repository[] { repo });
+		commitOperation.setRepository(repo);
 		commitOperation.execute(null);
 
 		fIProject.refreshLocal(IProject.DEPTH_INFINITE, null);

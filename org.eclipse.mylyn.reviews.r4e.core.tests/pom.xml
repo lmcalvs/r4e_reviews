@@ -5,10 +5,10 @@
   <parent>
     <artifactId>mylyn-reviews-r4e-parent</artifactId>
     <groupId>org.eclipse.mylyn.reviews</groupId>
-    <version>0.8.0-SNAPSHOT</version>
+    <version>0.9.0-SNAPSHOT</version>
   </parent>
   <artifactId>org.eclipse.mylyn.reviews.r4e.core.tests</artifactId>
-  <version>0.8.0-SNAPSHOT</version>
+  <version>0.9.0-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
   <properties>
     <mylyn-reviews-skip-test>${maven.test.skip}</mylyn-reviews-skip-test>
@@ -16,8 +16,8 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.sonatype.tycho</groupId>
-        <artifactId>maven-osgi-test-plugin</artifactId>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-surefire-plugin</artifactId>
         <version>${tycho-version}</version>
         <configuration>
 		  <skip>${mylyn-reviews-skip-test}</skip>
@@ -37,8 +37,8 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.sonatype.tycho</groupId>
-        <artifactId>maven-osgi-source-plugin</artifactId>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-source-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

@@ -31,7 +31,7 @@ public class ResourceHandlingException extends Exception {
 	/**
 	 * @param message
 	 */
-	ResourceHandlingException(String message) {
+	public ResourceHandlingException(String message) {
 		super(message);
 	}
 
@@ -40,7 +40,7 @@ public class ResourceHandlingException extends Exception {
 	 * @param chainedExc
 	 *            - Original chained Exception
 	 */
-	ResourceHandlingException(String message, Throwable chainedExc) {
+	public ResourceHandlingException(String message, Throwable chainedExc) {
 		super(message, chainedExc);
 	}
 

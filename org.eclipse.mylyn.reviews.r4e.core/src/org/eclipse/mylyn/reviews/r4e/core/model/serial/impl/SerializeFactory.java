@@ -14,11 +14,13 @@
 
 package org.eclipse.mylyn.reviews.r4e.core.model.serial.impl;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelReader;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
 
 /**
- * @author lmcalvs
+ * @author Alvaro Sanchez-Leon
  * 
  */
 public class SerializeFactory {
@@ -43,7 +45,7 @@ public class SerializeFactory {
 	/**
 	 * @return
 	 */
-	public static R4EReader getReader() {
+	public static IModelReader getReader() {
 		if (reader == null) {
 			reader = new R4EReader();
 		}
@@ -53,7 +55,7 @@ public class SerializeFactory {
 	/**
 	 * @return
 	 */
-	public static R4EWriter getWriter() {
+	public static IModelWriter getWriter() {
 		if (writer == null) {
 			writer = new R4EWriter();
 		}

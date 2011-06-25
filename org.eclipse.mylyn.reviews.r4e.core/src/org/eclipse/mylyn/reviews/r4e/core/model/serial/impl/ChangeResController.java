@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.Activator;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.FileSupportCommandFactory;
 
@@ -61,7 +62,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 	/**
 	 * Field fWriter.
 	 */
-	protected R4EWriter							fWriter			= SerializeFactory.getWriter();
+	protected IModelWriter							fWriter			= SerializeFactory.getWriter();
 
 	// protected Persistence fPersistence = SerializeFactory.get
 

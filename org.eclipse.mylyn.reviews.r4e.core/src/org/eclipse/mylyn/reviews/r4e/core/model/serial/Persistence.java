@@ -457,6 +457,21 @@ public interface Persistence {
 		public R4EDesignRule createR4EDesignRule(R4EDesignRuleViolation aViolation) throws ResourceHandlingException;
 
 	}
+
+	public interface ModelAdapter {
+		/**
+		 * Create a new Review with exact same information and hierarchy but associated to the resources of the
+		 * destination group
+		 * 
+		 * @param origGroup
+		 * @param destGroup
+		 * @param origReviewName
+		 * @param destReviewName
+		 * @return
+		 */
+		public R4EReview copyR4EReview(URI origGroup, URI destGroup, String origReviewName, String destReviewName);
+	}
+
 	/**
 	 * Limit visibility to the methods related to construction for Persistence
 	 * 
@@ -464,7 +479,8 @@ public interface Persistence {
 	 * 
 	 */
 	public interface RModelFactoryExt extends Persistence, Persistence.GroupResFactory, Persistence.ReviewResFactory,
-			Persistence.UserItemResFactory, Persistence.UserCommentResFactory, Persistence.DRulesFactory {
+			Persistence.UserItemResFactory, Persistence.UserCommentResFactory, Persistence.DRulesFactory,
+			Persistence.ModelAdapter {
 		RModelFactory	eINSTANCE	= org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelFactoryImpl.init();
 	}
 
