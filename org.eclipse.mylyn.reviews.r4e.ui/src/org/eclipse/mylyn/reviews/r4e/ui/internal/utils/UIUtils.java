@@ -380,6 +380,8 @@ public class UIUtils {
 			position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
 		} else if (element instanceof R4EUIContent) {
 			position = ((R4EUIContent) element).getPosition();
+		} else {
+			return; //Do nothing if any other element is selected
 		}
 
 		ICompareNavigator navigator = aInput.getNavigator();
