@@ -255,7 +255,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__ENABLED = RModelPackage.R4E_REVIEW__ENABLED;
+	int REVIEW_RES__ENABLED = RModelPackage.R4E_FORMAL_REVIEW__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Topics</b></em>' reference list.
@@ -264,7 +264,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__TOPICS = RModelPackage.R4E_REVIEW__TOPICS;
+	int REVIEW_RES__TOPICS = RModelPackage.R4E_FORMAL_REVIEW__TOPICS;
 
 	/**
 	 * The feature id for the '<em><b>Review Items</b></em>' reference list.
@@ -273,7 +273,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__REVIEW_ITEMS = RModelPackage.R4E_REVIEW__REVIEW_ITEMS;
+	int REVIEW_RES__REVIEW_ITEMS = RModelPackage.R4E_FORMAL_REVIEW__REVIEW_ITEMS;
 
 	/**
 	 * The feature id for the '<em><b>Review Task</b></em>' containment reference.
@@ -282,7 +282,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__REVIEW_TASK = RModelPackage.R4E_REVIEW__REVIEW_TASK;
+	int REVIEW_RES__REVIEW_TASK = RModelPackage.R4E_FORMAL_REVIEW__REVIEW_TASK;
 
 	/**
 	 * The feature id for the '<em><b>State</b></em>' containment reference.
@@ -291,7 +291,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__STATE = RModelPackage.R4E_REVIEW__STATE;
+	int REVIEW_RES__STATE = RModelPackage.R4E_FORMAL_REVIEW__STATE;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -300,7 +300,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__NAME = RModelPackage.R4E_REVIEW__NAME;
+	int REVIEW_RES__NAME = RModelPackage.R4E_FORMAL_REVIEW__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Project</b></em>' attribute.
@@ -309,7 +309,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__PROJECT = RModelPackage.R4E_REVIEW__PROJECT;
+	int REVIEW_RES__PROJECT = RModelPackage.R4E_FORMAL_REVIEW__PROJECT;
 
 	/**
 	 * The feature id for the '<em><b>Components</b></em>' attribute list.
@@ -318,7 +318,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__COMPONENTS = RModelPackage.R4E_REVIEW__COMPONENTS;
+	int REVIEW_RES__COMPONENTS = RModelPackage.R4E_FORMAL_REVIEW__COMPONENTS;
 
 	/**
 	 * The feature id for the '<em><b>Entry Criteria</b></em>' attribute.
@@ -327,7 +327,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__ENTRY_CRITERIA = RModelPackage.R4E_REVIEW__ENTRY_CRITERIA;
+	int REVIEW_RES__ENTRY_CRITERIA = RModelPackage.R4E_FORMAL_REVIEW__ENTRY_CRITERIA;
 
 	/**
 	 * The feature id for the '<em><b>Extra Notes</b></em>' attribute.
@@ -336,7 +336,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__EXTRA_NOTES = RModelPackage.R4E_REVIEW__EXTRA_NOTES;
+	int REVIEW_RES__EXTRA_NOTES = RModelPackage.R4E_FORMAL_REVIEW__EXTRA_NOTES;
 
 	/**
 	 * The feature id for the '<em><b>Objectives</b></em>' attribute.
@@ -345,7 +345,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__OBJECTIVES = RModelPackage.R4E_REVIEW__OBJECTIVES;
+	int REVIEW_RES__OBJECTIVES = RModelPackage.R4E_FORMAL_REVIEW__OBJECTIVES;
 
 	/**
 	 * The feature id for the '<em><b>Reference Material</b></em>' attribute.
@@ -354,7 +354,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__REFERENCE_MATERIAL = RModelPackage.R4E_REVIEW__REFERENCE_MATERIAL;
+	int REVIEW_RES__REFERENCE_MATERIAL = RModelPackage.R4E_FORMAL_REVIEW__REFERENCE_MATERIAL;
 
 	/**
 	 * The feature id for the '<em><b>Decision</b></em>' containment reference.
@@ -363,7 +363,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__DECISION = RModelPackage.R4E_REVIEW__DECISION;
+	int REVIEW_RES__DECISION = RModelPackage.R4E_FORMAL_REVIEW__DECISION;
 
 	/**
 	 * The feature id for the '<em><b>Start Date</b></em>' attribute.
@@ -372,7 +372,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__START_DATE = RModelPackage.R4E_REVIEW__START_DATE;
+	int REVIEW_RES__START_DATE = RModelPackage.R4E_FORMAL_REVIEW__START_DATE;
 
 	/**
 	 * The feature id for the '<em><b>End Date</b></em>' attribute.
@@ -381,7 +381,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__END_DATE = RModelPackage.R4E_REVIEW__END_DATE;
+	int REVIEW_RES__END_DATE = RModelPackage.R4E_FORMAL_REVIEW__END_DATE;
 
 	/**
 	 * The feature id for the '<em><b>Xml Version</b></em>' attribute.
@@ -390,7 +390,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__XML_VERSION = RModelPackage.R4E_REVIEW__XML_VERSION;
+	int REVIEW_RES__XML_VERSION = RModelPackage.R4E_FORMAL_REVIEW__XML_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Anomaly Template</b></em>' containment reference.
@@ -399,7 +399,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__ANOMALY_TEMPLATE = RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE;
+	int REVIEW_RES__ANOMALY_TEMPLATE = RModelPackage.R4E_FORMAL_REVIEW__ANOMALY_TEMPLATE;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -408,7 +408,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__TYPE = RModelPackage.R4E_REVIEW__TYPE;
+	int REVIEW_RES__TYPE = RModelPackage.R4E_FORMAL_REVIEW__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Users Map</b></em>' map.
@@ -417,7 +417,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__USERS_MAP = RModelPackage.R4E_REVIEW__USERS_MAP;
+	int REVIEW_RES__USERS_MAP = RModelPackage.R4E_FORMAL_REVIEW__USERS_MAP;
 
 	/**
 	 * The feature id for the '<em><b>Created By</b></em>' reference.
@@ -426,7 +426,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__CREATED_BY = RModelPackage.R4E_REVIEW__CREATED_BY;
+	int REVIEW_RES__CREATED_BY = RModelPackage.R4E_FORMAL_REVIEW__CREATED_BY;
 
 	/**
 	 * The feature id for the '<em><b>Ids Map</b></em>' map.
@@ -435,7 +435,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__IDS_MAP = RModelPackage.R4E_REVIEW__IDS_MAP;
+	int REVIEW_RES__IDS_MAP = RModelPackage.R4E_FORMAL_REVIEW__IDS_MAP;
 
 	/**
 	 * The feature id for the '<em><b>Active Meeting</b></em>' containment reference.
@@ -444,7 +444,34 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__ACTIVE_MEETING = RModelPackage.R4E_REVIEW__ACTIVE_MEETING;
+	int REVIEW_RES__ACTIVE_MEETING = RModelPackage.R4E_FORMAL_REVIEW__ACTIVE_MEETING;
+
+	/**
+	 * The feature id for the '<em><b>Phase Owner</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_RES__PHASE_OWNER = RModelPackage.R4E_FORMAL_REVIEW__PHASE_OWNER;
+
+	/**
+	 * The feature id for the '<em><b>Phases</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_RES__PHASES = RModelPackage.R4E_FORMAL_REVIEW__PHASES;
+
+	/**
+	 * The feature id for the '<em><b>Current</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_RES__CURRENT = RModelPackage.R4E_FORMAL_REVIEW__CURRENT;
 
 	/**
 	 * The feature id for the '<em><b>Users Res</b></em>' containment reference list.
@@ -453,7 +480,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__USERS_RES = RModelPackage.R4E_REVIEW_FEATURE_COUNT + 0;
+	int REVIEW_RES__USERS_RES = RModelPackage.R4E_FORMAL_REVIEW_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Review Res</em>' class.
@@ -462,7 +489,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES_FEATURE_COUNT = RModelPackage.R4E_REVIEW_FEATURE_COUNT + 1;
+	int REVIEW_RES_FEATURE_COUNT = RModelPackage.R4E_FORMAL_REVIEW_FEATURE_COUNT + 1;
 
 
 	/**

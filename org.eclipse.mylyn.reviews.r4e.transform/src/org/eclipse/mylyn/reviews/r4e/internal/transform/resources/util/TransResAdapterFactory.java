@@ -22,6 +22,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.Review;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -115,6 +116,10 @@ public class TransResAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseR4EReview(R4EReview object) {
 				return createR4EReviewAdapter();
+			}
+			@Override
+			public Adapter caseR4EFormalReview(R4EFormalReview object) {
+				return createR4EFormalReviewAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -245,6 +250,20 @@ public class TransResAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createR4EReviewAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview <em>R4E Formal Review</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview
+	 * @generated
+	 */
+	public Adapter createR4EFormalReviewAdapter() {
 		return null;
 	}
 

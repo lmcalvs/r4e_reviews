@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -342,5 +343,16 @@ public class ModelTransformImpl implements ModelTransform {
 		destReview.setState(origReview.getState());
 		destReview.setType(origReview.getType());
 		destReview.setXmlVersion(origReview.getXmlVersion());
+		//copy review components
+		EList<String> components = origReview.getComponents();
+		for (Object element : components) {
+			String component = (String) element;
+			destReview.getComponents().add(component);
+		}
+
+		if (origReview instanceof R4EFormalReview) {
+//			R4EFormalReview formalRevOrig = (R4EFormalReview); 
+		}
+
 	}
 }

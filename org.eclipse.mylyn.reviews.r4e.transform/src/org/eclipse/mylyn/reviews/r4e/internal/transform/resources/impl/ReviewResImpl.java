@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl;
 
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes;
@@ -43,7 +44,7 @@ import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackag
  *
  * @generated
  */
-public class ReviewResImpl extends R4EReviewImpl implements ReviewRes {
+public class ReviewResImpl extends R4EFormalReviewImpl implements ReviewRes {
 	/**
 	 * The cached value of the '{@link #getUsersRes() <em>Users Res</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

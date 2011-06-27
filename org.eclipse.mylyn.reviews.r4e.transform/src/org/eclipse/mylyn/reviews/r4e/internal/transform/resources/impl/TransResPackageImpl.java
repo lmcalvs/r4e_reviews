@@ -223,7 +223,7 @@ public class TransResPackageImpl extends EPackageImpl implements TransResPackage
 
 		// Add supertypes to classes
 		reviewGroupResEClass.getESuperTypes().add(theRModelPackage.getR4EReviewGroup());
-		reviewResEClass.getESuperTypes().add(theRModelPackage.getR4EReview());
+		reviewResEClass.getESuperTypes().add(theRModelPackage.getR4EFormalReview());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(reviewGroupResEClass, ReviewGroupRes.class, "ReviewGroupRes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

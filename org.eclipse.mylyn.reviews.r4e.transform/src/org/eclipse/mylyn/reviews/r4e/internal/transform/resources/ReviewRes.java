@@ -13,6 +13,7 @@ package org.eclipse.mylyn.reviews.r4e.internal.transform.resources;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 
@@ -32,7 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
  * @model
  * @generated
  */
-public interface ReviewRes extends R4EReview {
+public interface ReviewRes extends R4EFormalReview {
 	/**
 	 * Returns the value of the '<em><b>Users Res</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser}.
