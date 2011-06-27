@@ -21,6 +21,11 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
+import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorInput;
 
@@ -105,7 +110,15 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	 */
 	@Override
 	protected IStorage fetchContents(IProgressMonitor aMonitor) throws CoreException {
-		return fFileVersion.getFileRevision().getStorage(aMonitor);
+		//Fetch contents from the local repository
+		try {
+			final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
+					.getReview());
+			return localRepository.getIStorage(null, fFileVersion);
+		} catch (ReviewsFileStorageException e) {
+			UIUtils.displayReviewsFileStorageErrorDialog(e);
+		}
+		return null;
 	}
 
 	/**

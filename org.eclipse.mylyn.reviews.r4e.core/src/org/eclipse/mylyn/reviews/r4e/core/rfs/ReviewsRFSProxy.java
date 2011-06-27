@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
@@ -54,7 +55,8 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 
 	private static final String	repoName	= "ReviewsRepo.git";
 	private ObjectInserter		fInserter	= null;
-	private Repository			fRepository	= null;
+	protected Repository			fRepository	= null;
+	protected final RepositoryUtil fRepositoryUtil;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -77,8 +79,8 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 			// permissions must have been already set
 			fRepository = openRepository(repoLoc);
 		}
-
 		fInserter = fRepository.newObjectInserter();
+		fRepositoryUtil = org.eclipse.egit.core.Activator.getDefault().getRepositoryUtil();
 	}
 
 	// ------------------------------------------------------------------------
@@ -307,7 +309,10 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 			}
 
 			public IPath getFullPath() {
-				return path;
+				//bug349739:  Here we first need to prepend the repository name to the artifact path to get the full path to the artifact
+				IPath repoPath = new Path(fRepositoryUtil.getRepositoryName(fRepository));
+				String pathString = path.toPortableString();
+				return repoPath.append(Path.fromPortableString(pathString));
 			}
 
 			public InputStream getContents() throws CoreException {
