@@ -42,11 +42,9 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	@Override
 	public void initializeDefaultPreferences() {
 		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+
 		//Set default User ID if none already stored in preferences
 		final String defaultUserId = System.getProperty("user.name");
 		store.setDefault(PreferenceConstants.P_USER_ID, defaultUserId);
-		if (store.getString(PreferenceConstants.P_USER_ID).equals("")) {
-			store.setValue(PreferenceConstants.P_USER_ID, defaultUserId);
-		}
 	}
 }

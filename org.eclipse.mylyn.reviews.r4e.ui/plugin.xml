@@ -1308,6 +1308,9 @@
    </extension>
    <extension
          point="org.eclipse.ui.activities">
+      <defaultEnablement
+            id="org.eclipse.mylyn.reviews.r4e.ui.r4eActivity">
+      </defaultEnablement>
       <category
             description="Reviewing code using Mylyn Reviews R4E"
             id="org.eclipse.mylyn.reviews.r4e.ui.r4eCategory"

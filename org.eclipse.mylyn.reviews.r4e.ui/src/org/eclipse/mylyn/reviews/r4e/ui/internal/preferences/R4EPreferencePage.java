@@ -118,9 +118,9 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private Button fReviewsOnlyFilterButton = null;
 
 	/**
-	 * Field fReviewCurrentFilterButton.
+	 * Field fAnomaliesMyFilterButton.
 	 */
-	private Button fReviewCurrentFilterButton = null;
+	private Button fAnomaliesMyFilterButton = null;
 
 	/**
 	 * Field fReviewMyFilterButton.
@@ -506,10 +506,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fAnomaliesFilterButton.setLayoutData(r4EFilterPrefsGroupData);
 		fAnomaliesFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_ANOMALIES_ALL_FILTER));
 
-		fReviewCurrentFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
-		fReviewCurrentFilterButton.setText(R4EUIConstants.ANOMALIES_MY_FILTER_NAME);
-		fReviewCurrentFilterButton.setLayoutData(r4EFilterPrefsGroupData);
-		fReviewCurrentFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
+		fAnomaliesMyFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fAnomaliesMyFilterButton.setText(R4EUIConstants.ANOMALIES_MY_FILTER_NAME);
+		fAnomaliesMyFilterButton.setLayoutData(r4EFilterPrefsGroupData);
+		fAnomaliesMyFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
 
 		fReviewedItemsFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fReviewedItemsFilterButton.setText(R4EUIConstants.REVIEWED_ELEMS_FILTER_NAME);
@@ -544,13 +544,69 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * @see org.eclipse.jface.preference.IPreferencePage#performOk()
 	 */
 	@Override
+	protected void performDefaults() {
+		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+
+		//If no email preferences are set, try to retrieve it from the external DB
+		String userId = store.getDefaultString(PreferenceConstants.P_USER_ID);
+
+		if (R4EUIModelController.isUserQueryAvailable()) {
+			try {
+				//Get detailed info from DB if available
+				final IQueryUser query = new QueryUserFactory().getInstance();
+				final java.util.List<IUserInfo> userInfos = query.searchByUserId(userId);
+				if (userInfos.size() > 0) {
+					store.setDefault(PreferenceConstants.P_USER_EMAIL, userInfos.get(0).getEmail());
+				}
+			} catch (NamingException e) {
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			} catch (IOException e) {
+				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			}
+		}
+
+		store.setValue(PreferenceConstants.P_USE_DELTAS, true);
+		fUseDeltasButton.setSelection(true);
+
+		//Remove all Filters
+		store.setValue(PreferenceConstants.P_SHOW_DISABLED, false);
+		fReviewShowDisabledButton.setSelection(false);
+		store.setValue(PreferenceConstants.P_REVIEWS_ONLY_FILTER, false);
+		fReviewsOnlyFilterButton.setSelection(false);
+		store.setValue(PreferenceConstants.P_ANOMALIES_MY_FILTER, false);
+		fAnomaliesMyFilterButton.setSelection(false);
+		store.setValue(PreferenceConstants.P_REVIEWS_MY_FILTER, false);
+		fReviewMyFilterButton.setSelection(false);
+		store.setValue(PreferenceConstants.P_PARTICIPANT_FILTER, "");
+		fParticipantFilterButton.setSelection(false);
+		fParticipantIdText.setText("");
+		store.setValue(PreferenceConstants.P_ANOMALIES_ALL_FILTER, false);
+		fAnomaliesFilterButton.setSelection(false);
+		store.setValue(PreferenceConstants.P_REVIEWED_ITEMS_FILTER, false);
+		fReviewedItemsFilterButton.setSelection(false);
+		store.setValue(PreferenceConstants.P_HIDE_RULE_SETS_FILTER, false);
+		fHideRuleSetsFilterButton.setSelection(false);
+		store.setValue(PreferenceConstants.P_HIDE_DELTAS_FILTER, false);
+		fHideDeltasFilterButton.setSelection(false);
+
+		//For field editors
+		super.performDefaults();
+	}
+
+	/**
+	 * Method performOk.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.jface.preference.IPreferencePage#performOk()
+	 */
+	@Override
 	public boolean performOk() {
 		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 
 		//Set preferences for default filters and apply them
 		store.setValue(PreferenceConstants.P_SHOW_DISABLED, fReviewShowDisabledButton.getSelection());
 		store.setValue(PreferenceConstants.P_REVIEWS_ONLY_FILTER, fReviewsOnlyFilterButton.getSelection());
-		store.setValue(PreferenceConstants.P_ANOMALIES_MY_FILTER, fReviewCurrentFilterButton.getSelection());
+		store.setValue(PreferenceConstants.P_ANOMALIES_MY_FILTER, fAnomaliesMyFilterButton.getSelection());
 		store.setValue(PreferenceConstants.P_REVIEWS_MY_FILTER, fReviewMyFilterButton.getSelection());
 		if (fParticipantFilterButton.getSelection()) {
 			final String filterUserId = fParticipantIdText.getText();
@@ -577,7 +633,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		if ("".equals(store.getString(PreferenceConstants.P_USER_EMAIL))) {
 			final String userId = store.getString(PreferenceConstants.P_USER_ID);
 
-			//If not email preferences are set, try to retrieve it from the external DB
+			//If no email preferences are set, try to retrieve it from the external DB
 			if (null != userId && R4EUIModelController.isUserQueryAvailable()) {
 				try {
 					//Get detailed info from DB if available
@@ -585,7 +641,6 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 					final java.util.List<IUserInfo> userInfos = query.searchByUserId(userId);
 					if (userInfos.size() > 0) {
 						store.setValue(PreferenceConstants.P_USER_EMAIL, userInfos.get(0).getEmail());
-						//TODO:  Why is this not setting the preferences correctly???
 					}
 				} catch (NamingException e) {
 					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
