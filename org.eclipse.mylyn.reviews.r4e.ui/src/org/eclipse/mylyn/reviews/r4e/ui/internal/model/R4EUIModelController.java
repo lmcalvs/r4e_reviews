@@ -297,7 +297,13 @@ public class R4EUIModelController {
 	 */
 	public static R4EReviewGroup peekReviewGroup(String filePath) throws ResourceHandlingException {
 		FModelExt = SerializeFactory.getModelExtension();
-		return FModelExt.openR4EReviewGroup(URI.createFileURI(filePath));
+		R4EReviewGroup group = null;
+		try {
+			group = FModelExt.openR4EReviewGroup(URI.createFileURI(filePath));
+		} catch (ResourceHandlingException e) {
+			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		}
+		return group;
 	}
 
 	/**
@@ -363,6 +369,8 @@ public class R4EUIModelController {
 			} catch (ResourceHandlingException e) {
 				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 
+				//Bug 347780:  Remove this code for now.  Later we will implement to validate the group files
+				/*
 				//Review Group not found, ask user for review group creation
 				MessageDialog dialog = new MessageDialog( // $codepro.audit.disable variableDeclaredInLoop
 						null, "Missing Review Group", null, "Review Group file at location " + groupPath
@@ -374,6 +382,7 @@ public class R4EUIModelController {
 					changePrefsPaths = true;
 					newGroupPaths.remove(groupPath);
 				}
+				*/
 			}
 		}
 

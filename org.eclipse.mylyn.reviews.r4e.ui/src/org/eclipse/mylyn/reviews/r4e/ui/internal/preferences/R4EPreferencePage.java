@@ -78,6 +78,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 */
 	private static final int GROUP_PREFS_CONTAINER_DATA_SPAN = 2; // $codepro.audit.disable constantNamingConvention
 
+	/**
+	 * Field INVALID_FILE_STR. (value is ""<File not found>"")
+	 */
+	private static final String INVALID_FILE_STR = "<File not found>";
+
 	// ------------------------------------------------------------------------
 	// Member Variables
 	// ------------------------------------------------------------------------
@@ -303,9 +308,13 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 				final String selectedGroupFile = groupFilesEditor.getSelection();
 				try {
 					final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
-					fGroupNameText.setText(group.getName());
-					fGroupDescriptionText.setText(group.getDescription());
-					R4EUIModelController.FModelExt.closeR4EReviewGroup(group);
+					if (null != group) {
+						fGroupNameText.setText(group.getName());
+						fGroupDescriptionText.setText(group.getDescription());
+						R4EUIModelController.FModelExt.closeR4EReviewGroup(group);
+					} else {
+						fGroupNameText.setText(INVALID_FILE_STR);
+					}
 
 				} catch (ResourceHandlingException e) {
 					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
