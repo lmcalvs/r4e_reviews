@@ -76,7 +76,7 @@ public class DiffUtils {
 		CompareConfiguration config = input.getCompareConfiguration();
 
 		if (lDoc == null || rDoc == null) {
-			return null; //Nothing to compare
+			return changeDiffs; //Nothing to compare
 		}
 
 		IDocument aDoc = null; //No ancestor by default
@@ -136,7 +136,7 @@ public class DiffUtils {
 
 			allDiffs = new ArrayList<Diff>();
 			allDiffs.add(diff);
-			return null;
+			return changeDiffs;
 		}
 
 		if (isCapped(sa, sl, sr)) {
@@ -209,18 +209,29 @@ public class DiffUtils {
 
 	private IDocument getDocument(ITypedElement aElement) throws CoreException {
 
-		ISharedDocumentAdapter adapter;
-		IEditorInput editorInput;
+		ISharedDocumentAdapter adapter = null;
+		IEditorInput editorInput = null;
 		if (aElement instanceof R4EFileTypedElement) {
 			adapter = (ISharedDocumentAdapter) ((R4EFileTypedElement) aElement).getAdapter(ISharedDocumentAdapter.class);
-			editorInput = adapter.getDocumentKey(aElement);
+			if (null != adapter) {
+				editorInput = adapter.getDocumentKey(aElement);
+			}
 		} else if (aElement instanceof R4EFileRevisionTypedElement) {
 			adapter = (ISharedDocumentAdapter) ((R4EFileRevisionTypedElement) aElement).getAdapter(ISharedDocumentAdapter.class);
-			editorInput = adapter.getDocumentKey(aElement);
+			if (null != adapter) {
+				editorInput = adapter.getDocumentKey(aElement);
+			}
 		} else {
 			return null; //Wrong input type
 		}
+		if (null == adapter || null == editorInput) {
+			return null; //Cannot find editor input
+		}
 		IDocumentProvider provider = SharedDocumentAdapter.getDocumentProvider(editorInput);
+		if (null == provider) {
+			return null; //Cannot find document provider
+		}
+
 		adapter.connect(provider, editorInput);
 		return provider.getDocument(editorInput);
 	}
