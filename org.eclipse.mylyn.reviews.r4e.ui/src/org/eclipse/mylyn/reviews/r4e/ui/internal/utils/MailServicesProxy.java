@@ -311,7 +311,7 @@ public class MailServicesProxy {
 		final ArrayList<String> destinations = new ArrayList<String>();
 		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
 		for (R4EParticipant participant : participants) {
-			if (null != participant.getEmail()) {
+			if (null != participant.getEmail() && !R4EUIModelController.getReviewer().equals(participant.getId())) {
 				//All participants should receive this email
 				destinations.add(participant.getEmail());
 			}
@@ -330,12 +330,15 @@ public class MailServicesProxy {
 		for (R4EParticipant participant : participants) {
 			if (null != participant.getEmail()) {
 				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL))) {
-					destinations.add(participant.getEmail());
+					if (!R4EUIModelController.getReviewer().equals(participant.getId())) {
+						destinations.add(participant.getEmail());
+					}
 				} else {
 					//If this is a formal review, only send mail if we have the proper role
-					if (participant.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)
-							|| participant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER)
-							|| participant.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR)) {
+					if ((participant.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)
+							|| participant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER) || participant.getRoles()
+							.contains(R4EUserRole.R4E_ROLE_AUTHOR))
+							&& !R4EUIModelController.getReviewer().equals(participant.getId())) {
 						destinations.add(participant.getEmail());
 					}
 				}
@@ -355,12 +358,15 @@ public class MailServicesProxy {
 		for (R4EParticipant participant : participants) {
 			if (null != participant.getEmail()) {
 				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL))) {
-					destinations.add(participant.getEmail());
+					if (!R4EUIModelController.getReviewer().equals(participant.getId())) {
+						destinations.add(participant.getEmail());
+					}
 				} else {
 					//If this is a formal review, only send mail if we have the proper role
-					if (participant.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)
-							|| participant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER)
-							|| participant.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR)) {
+					if ((participant.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)
+							|| participant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER) || participant.getRoles()
+							.contains(R4EUserRole.R4E_ROLE_AUTHOR))
+							&& !R4EUIModelController.getReviewer().equals(participant.getId())) {
 						destinations.add(participant.getEmail());
 					}
 				}
@@ -378,7 +384,9 @@ public class MailServicesProxy {
 	 */
 	private static String[] createAnomalyCreatorDestination(R4EUIAnomalyBasic aAnomaly) {
 		final ArrayList<String> destinations = new ArrayList<String>();
-		destinations.add(aAnomaly.getAnomaly().getUser().getEmail());
+		if (!R4EUIModelController.getReviewer().equals(aAnomaly.getAnomaly().getUser().getId())) {
+			destinations.add(aAnomaly.getAnomaly().getUser().getEmail());
+		}
 		return destinations.toArray(new String[destinations.size()]);
 	}
 
