@@ -56,7 +56,7 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 	/**
 	 * Field fFolderText.
 	 */
-	private CLabel fFolderText = null;
+	private CLabel fFilePathText = null;
 
 	/**
 	 * Field fDescriptionText.
@@ -114,20 +114,20 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		nameLabel.setLayoutData(data);
 
 		//Group Folder (read-only)
-		fFolderText = widgetFactory.createCLabel(composite, "");
+		fFilePathText = widgetFactory.createCLabel(composite, "");
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
-		fFolderText.setToolTipText(R4EUIConstants.REVIEW_GROUP_FOLDER_TOOLTIP);
-		fFolderText.setLayoutData(data);
+		fFilePathText.setToolTipText(R4EUIConstants.REVIEW_GROUP_FILE_PATH_TOOLTIP);
+		fFilePathText.setLayoutData(data);
 
-		final CLabel folderLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FOLDER_LABEL);
+		final CLabel folderLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(fFolderText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fFolderText, 0, SWT.CENTER);
-		folderLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_FOLDER_TOOLTIP);
+		data.right = new FormAttachment(fFilePathText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fFilePathText, 0, SWT.CENTER);
+		folderLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_FILE_PATH_TOOLTIP);
 		folderLabel.setLayoutData(data);
 
 		//Group Description
@@ -135,7 +135,7 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fFolderText, ITabbedPropertyConstants.VSPACE);
+		data.top = new FormAttachment(fFilePathText, ITabbedPropertyConstants.VSPACE);
 		fDescriptionText.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
 		fDescriptionText.setLayoutData(data);
 		fDescriptionText.addFocusListener(new FocusListener() {
@@ -180,7 +180,14 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 		fRefreshInProgress = true;
 		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
 		fNameText.setText(modelGroup.getName());
-		fFolderText.setText(modelGroup.getFolder());
+		if (null != ((R4EUIReviewGroup) fProperties.getElement()).getGroup().eResource()) {
+			fFilePathText.setText(((R4EUIReviewGroup) fProperties.getElement()).getGroup()
+					.eResource()
+					.getURI()
+					.toFileString());
+		} else {
+			fFilePathText.setText("");
+		}
 		if (null != modelGroup.getDescription()) {
 			fDescriptionText.setText(modelGroup.getDescription());
 		} else {
@@ -197,11 +204,11 @@ public class ReviewGroupBasicTabPropertySection extends ModelElementTabPropertyS
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isDialogOpen() || !((R4EUIReviewGroup) fProperties.getElement()).isOpen()) {
 			fNameText.setEnabled(false);
-			fFolderText.setEnabled(false);
+			fFilePathText.setEnabled(false);
 			fDescriptionText.setEnabled(false);
 		} else {
 			fNameText.setEnabled(true);
-			fFolderText.setEnabled(true);
+			fFilePathText.setEnabled(true);
 			fDescriptionText.setEnabled(true);
 		}
 	}

@@ -19,6 +19,7 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -84,12 +85,46 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 		final Composite composite = widgetFactory.createFlatFormComposite(parent);
 		FormData data = null;
 
+		//Name
+		fNameText = widgetFactory.createCLabel(composite, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fNameText.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
+		fNameText.setLayoutData(data);
+
+		final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.NAME_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
+		nameLabel.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
+		nameLabel.setLayoutData(data);
+
+		//File Path (read-only)
+		fFilePathText = widgetFactory.createCLabel(composite, "");
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+		fFilePathText.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
+		fFilePathText.setLayoutData(data);
+
+		final CLabel filePathLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fFilePathText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fFilePathText, 0, SWT.CENTER);
+		filePathLabel.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
+		filePathLabel.setLayoutData(data);
+
 		//Version
 		fVersionText = widgetFactory.createCLabel(composite, "");
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		data.top = new FormAttachment(fFilePathText, ITabbedPropertyConstants.VSPACE);
 		fVersionText.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
 		fVersionText.setLayoutData(data);
 		fVersionText.addFocusListener(new FocusListener() {
@@ -121,40 +156,6 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 		data.top = new FormAttachment(fVersionText, 0, SWT.CENTER);
 		versionLabel.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
 		versionLabel.setLayoutData(data);
-
-		//Name
-		fNameText = widgetFactory.createCLabel(composite, "");
-		data = new FormData();
-		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fVersionText, ITabbedPropertyConstants.VSPACE);
-		fNameText.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
-		fNameText.setLayoutData(data);
-
-		final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.NAME_LABEL);
-		data = new FormData();
-		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
-		nameLabel.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
-		nameLabel.setLayoutData(data);
-
-		//File Path (read-only)
-		fFilePathText = widgetFactory.createCLabel(composite, "");
-		data = new FormData();
-		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
-		fFilePathText.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
-		fFilePathText.setLayoutData(data);
-
-		final CLabel filePathLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
-		data = new FormData();
-		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(fFilePathText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fFilePathText, 0, SWT.CENTER);
-		filePathLabel.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
-		filePathLabel.setLayoutData(data);
 	}
 
 	/**
@@ -168,14 +169,7 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 			fRefreshInProgress = true;
 			fVersionText.setText(((R4EUIRuleSet) fProperties.getElement()).getRuleSet().getVersion());
 			fNameText.setText(((R4EUIRuleSet) fProperties.getElement()).getRuleSet().getName());
-			if (null != ((R4EUIRuleSet) fProperties.getElement()).getRuleSet().eResource()) {
-				fFilePathText.setText(((R4EUIRuleSet) fProperties.getElement()).getRuleSet()
-						.eResource()
-						.getURI()
-						.toFileString());
-			} else {
-				fFilePathText.setText("");
-			}
+			fFilePathText.setText(URI.decode(((R4EUIRuleSet) fProperties.getElement()).getRuleSetFileURI().devicePath()));
 			setEnabledFields();
 			fRefreshInProgress = false;
 		} else {

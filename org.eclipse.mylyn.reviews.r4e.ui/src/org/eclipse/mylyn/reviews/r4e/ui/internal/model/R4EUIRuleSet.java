@@ -164,6 +164,15 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method getRuleSetFileURI.
+	 * 
+	 * @return URI
+	 */
+	public URI getRuleSetFileURI() {
+		return fRuleSetFileURI;
+	}
+
+	/**
 	 * Set serialization model data by copying it from the passed-in object
 	 * 
 	 * @param aModelComponent
