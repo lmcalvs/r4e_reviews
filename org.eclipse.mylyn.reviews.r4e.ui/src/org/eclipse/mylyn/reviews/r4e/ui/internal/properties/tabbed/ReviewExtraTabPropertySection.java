@@ -410,7 +410,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 		fMeetingSubjectLabel.setLayoutData(textGridData);
 
 		//Meeting update button
-		fMeetingUpdateButton = widgetFactory.createButton(fMeetingComposite, R4EUIConstants.UPDATE_LABEL, SWT.PUSH);
+		fMeetingUpdateButton = widgetFactory.createButton(fMeetingComposite, R4EUIConstants.CREATE_LABEL, SWT.PUSH);
 		fMeetingUpdateButton.setToolTipText(R4EUIConstants.REVIEW_MEETING_UPDATE_TOOLTIP);
 		fMeetingUpdateButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fMeetingUpdateButton.addSelectionListener(new SelectionListener() {
@@ -624,12 +624,14 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 
 		final R4EMeetingData meetingData = modelReview.getActiveMeeting();
 		if (null != meetingData) {
+			fMeetingUpdateButton.setText(R4EUIConstants.UPDATE_LABEL);
 			fMeetingSubjectLabel.setText(meetingData.getSubject());
 			final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT_MINUTES);
 			fMeetingStartTimeLabel.setText(dateFormat.format(new Date(meetingData.getStartTime())));
 			fMeetingDurationLabel.setText(Integer.toString(meetingData.getDuration()));
 			fMeetingLocationLabel.setText(meetingData.getLocation());
 		} else {
+			fMeetingUpdateButton.setText(R4EUIConstants.CREATE_LABEL);
 			fMeetingSubjectLabel.setText("");
 			fMeetingStartTimeLabel.setText("");
 			fMeetingDurationLabel.setText("");

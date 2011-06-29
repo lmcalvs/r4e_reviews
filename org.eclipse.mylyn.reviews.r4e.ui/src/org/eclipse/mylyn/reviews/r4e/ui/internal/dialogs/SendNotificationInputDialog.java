@@ -51,14 +51,14 @@ public class SendNotificationInputDialog extends FormDialog {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field SEND_MAIL_DIALOG_TITLE. (value is ""Send Email/Notification"")
+	 * Field SEND_MAIL_DIALOG_TITLE. (value is ""Send Notification"")
 	 */
-	private static final String SEND_MAIL_DIALOG_TITLE = "Send Email/Notification";
+	private static final String SEND_MAIL_DIALOG_TITLE = "Send Notification";
 
 	/**
-	 * Field BASIC_PARAMS_HEADER_MSG. (value is ""Which Email type do you want to send?"")
+	 * Field BASIC_PARAMS_HEADER_MSG. (value is ""Which notification type do you want to send?"")
 	 */
-	private static final String BASIC_PARAMS_HEADER_MSG = "Which Email type do you want to send?";
+	private static final String BASIC_PARAMS_HEADER_MSG = "Which notification type do you want to send?";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -93,6 +93,11 @@ public class SendNotificationInputDialog extends FormDialog {
 	 * Field fQuestionButton.
 	 */
 	private Button fQuestionButton = null;
+
+	/**
+	 * Field fMeetingButton.
+	 */
+	private Button fMeetingButton = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -136,6 +141,8 @@ public class SendNotificationInputDialog extends FormDialog {
 				fMessageType = R4EUIConstants.MESSAGE_TYPE_COMPLETION;
 			} else if (fQuestionButton.getSelection()) {
 				fMessageType = R4EUIConstants.MESSAGE_TYPE_QUESTION;
+			} else if (fMeetingButton.getSelection()) {
+				fMessageType = R4EUIConstants.MESSAGE_TYPE_MEETING;
 			}
 		} else {
 			fMessageType = R4EUIConstants.INVALID_VALUE;
@@ -214,6 +221,10 @@ public class SendNotificationInputDialog extends FormDialog {
 				fQuestionButton = toolkit.createButton(basicSectionClient, "Ask Question to Participant", SWT.RADIO);
 				fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
 				fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+
+				fMeetingButton = toolkit.createButton(basicSectionClient, "Send Meeting Request", SWT.RADIO);
+				fMeetingButton.setToolTipText(R4EUIConstants.MEETING_REQUEST_TOOLTIP);
+				fMeetingButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 			}
 		} else {
 			fQuestionButton = toolkit.createButton(basicSectionClient, "Ask Question to Participant", SWT.RADIO);

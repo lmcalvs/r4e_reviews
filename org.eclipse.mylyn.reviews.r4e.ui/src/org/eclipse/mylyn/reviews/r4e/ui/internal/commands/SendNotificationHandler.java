@@ -28,6 +28,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.window.Window;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.SendNotificationInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
@@ -116,6 +117,10 @@ public class SendNotificationHandler extends AbstractHandler {
 					//Send question
 					MailServicesProxy.sendQuestion(obj);
 					break;
+				case R4EUIConstants.MESSAGE_TYPE_MEETING:
+					//Send question
+					MailServicesProxy.sendMeetingRequest();
+					break;
 				default:
 					//Do nothing, should never happen
 				}
@@ -123,6 +128,8 @@ public class SendNotificationHandler extends AbstractHandler {
 				UIUtils.displayCoreErrorDialog(e);
 			} catch (ResourceHandlingException e) {
 				UIUtils.displayResourceErrorDialog(e);
+			} catch (OutOfSyncException e) {
+				UIUtils.displaySyncErrorDialog(e);
 			} finally {
 				R4EUIModelController.setDialogOpen(false);
 			}

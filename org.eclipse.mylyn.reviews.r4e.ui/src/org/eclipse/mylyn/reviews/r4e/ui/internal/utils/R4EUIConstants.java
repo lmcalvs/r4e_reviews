@@ -108,6 +108,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String PARTICIPANTS_LABEL = "Participants";
 
 	/**
+	 * Field CREATE_LABEL. (value is ""Create"")
+	 */
+	public static final String CREATE_LABEL = "Create";
+
+	/**
 	 * Field UPDATE_LABEL. (value is ""Update"")
 	 */
 	public static final String UPDATE_LABEL = "Update";
@@ -711,24 +716,29 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final int MESSAGE_TYPE_ITEMS_READY = 0;
 
 	/**
-	 * Field MESSAGE_TYPE_ITEMS_READY. (value is "1")
+	 * Field MESSAGE_TYPE_ITEMS_REMOVED. (value is "1")
 	 */
 	public static final int MESSAGE_TYPE_ITEMS_REMOVED = 1;
 
 	/**
-	 * Field MESSAGE_TYPE_ITEMS_READY. (value is "2")
+	 * Field MESSAGE_TYPE_PROGRESS. (value is "2")
 	 */
 	public static final int MESSAGE_TYPE_PROGRESS = 2;
 
 	/**
-	 * Field MESSAGE_TYPE_ITEMS_READY. (value is "3")
+	 * Field MESSAGE_TYPE_COMPLETION. (value is "3")
 	 */
 	public static final int MESSAGE_TYPE_COMPLETION = 3;
 
 	/**
-	 * Field MESSAGE_TYPE_ITEMS_READY. (value is "4")
+	 * Field MESSAGE_TYPE_QUESTION. (value is "4")
 	 */
 	public static final int MESSAGE_TYPE_QUESTION = 4;
+
+	/**
+	 * Field MESSAGE_TYPE_MEETING. (value is "5")
+	 */
+	public static final int MESSAGE_TYPE_MEETING = 5;
 
 	//Commands
 
@@ -1443,4 +1453,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String NOTIFICATION_PROGRESS_TOOLTIP = "Send an Automatic Email to Report about our Progress Reviewing the Items for the Current Review";
 
 	public static final String NOTIFICATION_QUESTION_TOOLTIP = "Send an Automatic Email to ask a Question about the Selected Element or Text";
+
+	public static final String MEETING_REQUEST_TOOLTIP = "Send a new Meeting Request Notification";
 }
