@@ -21,12 +21,17 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.mylyn.reviews.frame.core.model.Location;
+import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelReader;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
@@ -238,16 +243,68 @@ public class ModelTransformImpl implements ModelTransform {
 
 		//First user pass: Move user's content to the destination resources
 		for (R4EUser user : origUsersList) {
+			//Make sure proxy resolution is not longer used
+			R4EID[] idsArr = null;
+			if (user instanceof R4EParticipant) {
+				R4EParticipant participant = (R4EParticipant) user;
+				EList<R4EID> reviewedIds = participant.getReviewedContent();
+				idsArr = reviewedIds.toArray(new R4EID[0]);
+				reviewedIds.clear();
+				for (R4EID id : idsArr) {
+					reviewedIds.add(id);
+				}
+			}
+
 			//Move anomalies to a different resource
 			EList<R4EComment> comments = user.getAddedComments();
 			for (R4EComment comment : comments) {
 				//Move the item to the destination resource
 				switchResources(destAnomaliesResource, comment);
+
+				//refresh the references to the locations
+				if (comment instanceof Topic) {
+					Topic topic = (Topic) comment;
+					EList<Location> locations = topic.getLocation();
+					//Save the iterable references
+					Location[] locationsRefs = locations.toArray(new Location[0]);
+					topic.getLocation().clear();
+					//refresh
+					for (Location location : locationsRefs) {
+						topic.getLocation().add(location);
+					}
+				}
 			}
 
 			//Move Items to a different resource
 			EList<R4EItem> items = user.getAddedItems();
 			for (R4EItem item : items) {
+				//workaround to resolve proxy
+//				EList<R4EFileContext> contexts = item.getFileContextList();
+//				R4EFileVersion base = null;
+//				R4EFileVersion target = null;
+//				Set<String> names = new HashSet<String>();
+//				for (Object element : contexts) {
+//					R4EFileContext dContext = (R4EFileContext) element;
+//					base = dContext.getBase();
+//					target = dContext.getTarget();
+//
+//					if (base != null) {
+//						names.add(base.getName());
+//					}
+//					if (target != null) {
+//						names.add(target.getName());
+//					}
+//
+//					target = dContext.getTarget();
+//					dContext.setBase(null);
+//					dContext.setTarget(null);
+//					Activator.getDefault();
+//					//refresh with updated references
+//					Activator.fTracer.traceDebug("Refreshing context: " + dContext.getBase() + dContext.getTarget());
+//					dContext.setBase(base);
+//					dContext.setTarget(target);
+//				}
+
 				//Move the item to the destination resource
 				switchResources(destItemsResource, item);
 				item.setReview(destReview);
@@ -257,27 +314,35 @@ public class ModelTransformImpl implements ModelTransform {
 			}
 		}
 
-//		//Second user pass: Adjust reviewed content references which have just been moved in the item level for all users above
-//		for (R4EUser user : origUsersList) {
-//			if (user instanceof R4EParticipant) {
-//				List<EObject> IdsCached = new ArrayList<EObject>();
-//				EList<R4EID> reviewed = ((R4EParticipant) user).getReviewedContent();
-//
-//				//cach
-//				for (R4EID r4eid : reviewed) {
-//					IdsCached.add(r4eid);
-//				}
-//
-//				//clear
-//				reviewed.clear();
-//
-//				//refresh
-//				for (Object element : IdsCached) {
-//					R4EID r4eid = (R4EID) element;
-//					reviewed.add(r4eid);
-//				}
-//			}
-//		}
+		//Second user pass: Adjust reviewed content references which have just been moved in the item level for all users above
+		for (R4EUser user : origUsersList) {
+			EList<R4EComment> comments = user.getAddedComments();
+			for (R4EComment comment : comments) {
+				//refresh the references to the locations
+				if (comment instanceof Topic) {
+					Topic topic = (Topic) comment;
+					EList<Location> locations = topic.getLocation();
+					//Save the iterable references
+					Location[] locationsRefs = locations.toArray(new Location[0]);
+					topic.getLocation().clear();
+					//refresh
+					for (Location location : locationsRefs) {
+						topic.getLocation().add(location);
+					}
+				}
+			}
+
+			//refresh the reviewed ids of a participant
+			if (user instanceof R4EParticipant) {
+				R4EParticipant participant = (R4EParticipant) user;
+				EList<R4EID> reviewedIds = participant.getReviewedContent();
+				R4EID[] idsArr = reviewedIds.toArray(new R4EID[0]);
+				reviewedIds.clear();
+				for (R4EID id : idsArr) {
+					reviewedIds.add(id);
+				}
+			}
+		}
 	}
 
 	/**
@@ -302,28 +367,28 @@ public class ModelTransformImpl implements ModelTransform {
 	 * @param destReview
 	 */
 	private void copyReviewData(R4EReview origReview, ReviewRes destReview) {
-//		Resource res = destReview.eResource();
-//
-//		//Move references 
-//		if (origReview.getActiveMeeting() != null) {
-//			switchResources(res, origReview.getActiveMeeting());
-//		}
-//
-//		if (origReview.getAnomalyTemplate() != null) {
-//			switchResources(res, origReview.getAnomalyTemplate());
-//		}
-//
-//		if (origReview.getDecision() != null) {
-//			switchResources(res, origReview.getDecision());
-//		}
-//
-//		if (origReview.getReviewTask() != null) {
-//			switchResources(res, origReview.getReviewTask());
-//		}
-//
-//		if (origReview.getState() != null) {
-//			switchResources(res, origReview.getState());
-//		}
+		Resource res = destReview.eResource();
+
+		//Move references 
+		if (origReview.getActiveMeeting() != null) {
+			switchResources(res, origReview.getActiveMeeting());
+		}
+
+		if (origReview.getAnomalyTemplate() != null) {
+			switchResources(res, origReview.getAnomalyTemplate());
+		}
+
+		if (origReview.getDecision() != null) {
+			switchResources(res, origReview.getDecision());
+		}
+
+		if (origReview.getReviewTask() != null) {
+			switchResources(res, origReview.getReviewTask());
+		}
+
+		if (origReview.getState() != null) {
+			switchResources(res, origReview.getState());
+		}
 
 		//Update references and values in the destination review
 		destReview.setActiveMeeting(origReview.getActiveMeeting());
@@ -351,8 +416,17 @@ public class ModelTransformImpl implements ModelTransform {
 		}
 
 		if (origReview instanceof R4EFormalReview) {
-//			R4EFormalReview formalRevOrig = (R4EFormalReview); 
-		}
+			R4EFormalReview formalRevOrig = (R4EFormalReview) origReview;
+			EList<R4EReviewPhaseInfo> phases = formalRevOrig.getPhases();
+			if (phases != null) {
+				R4EReviewPhaseInfo[] movingPhases = phases.toArray(new R4EReviewPhaseInfo[0]);
+				for (R4EReviewPhaseInfo phaseInfo : movingPhases) {
+					switchResources(res, phaseInfo);
+					destReview.getPhases().add(phaseInfo);
+				}
+			}
 
+			destReview.setCurrent(formalRevOrig.getCurrent());
+		}
 	}
 }
