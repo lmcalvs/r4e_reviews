@@ -23,7 +23,6 @@ import java.io.InputStream;
 
 import org.eclipse.compare.ISharedDocumentAdapter;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.ResourceNode;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -32,6 +31,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
 import org.eclipse.ui.IEditorInput;
 
 /**
@@ -40,7 +40,7 @@ import org.eclipse.ui.IEditorInput;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EFileTypedElement extends ResourceNode implements IAdaptable {
+public class R4EFileTypedElement extends LocalResourceTypedElement implements IAdaptable {
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -107,6 +107,7 @@ public class R4EFileTypedElement extends ResourceNode implements IAdaptable {
 	 *            a progress monitor
 	 * @throws CoreException
 	 */
+	@Override
 	public void commit(IProgressMonitor monitor) throws CoreException {
 		if (isDirty()) {
 			if (isConnected()) {
@@ -148,6 +149,7 @@ public class R4EFileTypedElement extends ResourceNode implements IAdaptable {
 		return null;
 	}
 
+	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
 		if (adapter == ISharedDocumentAdapter.class) {
@@ -214,6 +216,7 @@ public class R4EFileTypedElement extends ResourceNode implements IAdaptable {
 	 *         When connected, the element can be saved using {@link #saveDocument(boolean, IProgressMonitor)}.
 	 *         Otherwise, {@link #commit(IProgressMonitor)} should be used to save the buffered contents.
 	 */
+	@Override
 	public boolean isConnected() {
 		return sharedDocumentAdapter != null && sharedDocumentAdapter.isConnected();
 	}
@@ -228,6 +231,7 @@ public class R4EFileTypedElement extends ResourceNode implements IAdaptable {
 	 *         connected, <code>false</code> is returned (see {@link #isConnected()}).
 	 * @throws CoreException
 	 */
+	@Override
 	public boolean saveDocument(boolean overwrite, IProgressMonitor monitor) throws CoreException {
 		if (isConnected()) {
 			IEditorInput input = sharedDocumentAdapter.getDocumentKey(this);
@@ -288,6 +292,7 @@ public class R4EFileTypedElement extends ResourceNode implements IAdaptable {
 	 * change event. It is not necessarily the case that the {@link #isSynchronized()} will return <code>true</code>
 	 * after this call.
 	 */
+	@Override
 	public void update() {
 		exists = getResource().exists();
 	}
@@ -297,6 +302,7 @@ public class R4EFileTypedElement extends ResourceNode implements IAdaptable {
 	 *         Sill return <code>false</code> if the file has been changed externally since the last time the contents
 	 *         were obtained or saved through this element.
 	 */
+	@Override
 	public boolean isSynchronized() {
 		long current = getResource().getLocalTimeStamp();
 		return current == getTimestamp();
@@ -305,6 +311,7 @@ public class R4EFileTypedElement extends ResourceNode implements IAdaptable {
 	/**
 	 * @return whether the resource of this element existed at the last time the typed element was updated
 	 */
+	@Override
 	public boolean exists() {
 		return exists;
 	}
@@ -325,6 +332,7 @@ public class R4EFileTypedElement extends ResourceNode implements IAdaptable {
 	/**
 	 * @return whether this element can use a shared document
 	 */
+	@Override
 	public boolean isSharedDocumentsEnable() {
 		return useSharedDocument && getResource().getType() == IResource.FILE && exists;
 	}
@@ -334,6 +342,7 @@ public class R4EFileTypedElement extends ResourceNode implements IAdaptable {
 	 *            whether this element can use shared documents <br>
 	 *            This will only apply to files (i.e. shared documents never apply to folders).
 	 */
+	@Override
 	public void enableSharedDocument(boolean enablement) {
 		this.useSharedDocument = enablement;
 	}
@@ -346,6 +355,7 @@ public class R4EFileTypedElement extends ResourceNode implements IAdaptable {
 	 * @see #saveDocument(boolean, IProgressMonitor)
 	 * @see #discardBuffer()
 	 */
+	@Override
 	public boolean isDirty() {
 		return fDirty || (sharedDocumentAdapter != null && sharedDocumentAdapter.hasBufferedContents());
 	}
