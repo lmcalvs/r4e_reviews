@@ -30,17 +30,34 @@ import org.eclipse.jface.text.IRegion;
  * <p>
  * A <code>DocLineComparator</code> doesn't know anything about line separators because its notion of lines is solely
  * defined in the underlying <code>IDocument</code>.
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
  */
 public class DocLineComparator implements ITokenComparator {
 
+	/**
+	 * Field fDocument.
+	 */
 	private final IDocument fDocument;
 
+	/**
+	 * Field fLineOffset.
+	 */
 	private int fLineOffset;
 
+	/**
+	 * Field fLineCount.
+	 */
 	private int fLineCount;
 
+	/**
+	 * Field fLength.
+	 */
 	private int fLength;
 
+	/**
+	 * Field fIgnoreWhiteSpace.
+	 */
 	private final boolean fIgnoreWhiteSpace;
 
 	/**
@@ -59,16 +76,16 @@ public class DocLineComparator implements ITokenComparator {
 		fIgnoreWhiteSpace = ignoreWhiteSpace;
 
 		fLineOffset = 0;
-		if (region != null) {
+		if (null != region) {
 			fLength = region.getLength();
-			int start = region.getOffset();
+			final int start = region.getOffset();
 			try {
 				fLineOffset = fDocument.getLineOfOffset(start);
 			} catch (BadLocationException ex) {
 				// silently ignored
 			}
 
-			if (fLength == 0) {
+			if (0 == fLength) {
 				// optimization, empty documents have one line
 				fLineCount = 1;
 			} else {
@@ -89,7 +106,8 @@ public class DocLineComparator implements ITokenComparator {
 	/**
 	 * Returns the number of lines in the document.
 	 * 
-	 * @return number of lines
+	
+	 * @return number of lines * @see org.eclipse.compare.rangedifferencer.IRangeComparator#getRangeCount()
 	 */
 	public int getRangeCount() {
 		return fLineCount;
@@ -98,9 +116,15 @@ public class DocLineComparator implements ITokenComparator {
 	/* (non Javadoc)
 	 * see ITokenComparator.getTokenStart
 	 */
+	/**
+	 * Method getTokenStart.
+	 * @param line int
+	 * @return int
+	 * @see org.eclipse.compare.contentmergeviewer.ITokenComparator#getTokenStart(int)
+	 */
 	public int getTokenStart(int line) {
 		try {
-			IRegion r = fDocument.getLineInformation(fLineOffset + line);
+			final IRegion r = fDocument.getLineInformation(fLineOffset + line);
 			return r.getOffset();
 		} catch (BadLocationException ex) {
 			return fDocument.getLength();
@@ -110,6 +134,12 @@ public class DocLineComparator implements ITokenComparator {
 	/* (non Javadoc)
 	 * Returns the length of the given line.
 	 * see ITokenComparator.getTokenLength
+	 */
+	/**
+	 * Method getTokenLength.
+	 * @param line int
+	 * @return int
+	 * @see org.eclipse.compare.contentmergeviewer.ITokenComparator#getTokenLength(int)
 	 */
 	public int getTokenLength(int line) {
 		return getTokenStart(line + 1) - getTokenStart(line);
@@ -125,25 +155,26 @@ public class DocLineComparator implements ITokenComparator {
 	 *            the range comparator to compare this with
 	 * @param otherIndex
 	 *            the number of the line within the other comparator
-	 * @return <code>true</code> if the lines are equal
+	
+	 * @return <code>true</code> if the lines are equal * @see org.eclipse.compare.rangedifferencer.IRangeComparator#rangesEqual(int, IRangeComparator, int)
 	 */
 	public boolean rangesEqual(int thisIndex, IRangeComparator otherComparator, int otherIndex) {
 
-		if (otherComparator != null && otherComparator.getClass() == getClass()) {
-			DocLineComparator other = (DocLineComparator) otherComparator;
+		if (null != otherComparator && otherComparator.getClass().equals(getClass())) {
+			final DocLineComparator other = (DocLineComparator) otherComparator;
 
 			if (fIgnoreWhiteSpace) {
-				String s1 = extract(thisIndex);
-				String s2 = other.extract(otherIndex);
+				final String s1 = extract(thisIndex);
+				final String s2 = other.extract(otherIndex);
 				//return s1.trim().equals(s2.trim());
 				return compare(s1, s2);
 			}
 
-			int tlen = getTokenLength(thisIndex);
-			int olen = other.getTokenLength(otherIndex);
+			final int tlen = getTokenLength(thisIndex);
+			final int olen = other.getTokenLength(otherIndex);
 			if (tlen == olen) {
-				String s1 = extract(thisIndex);
-				String s2 = other.extract(otherIndex);
+				final String s1 = extract(thisIndex);
+				final String s2 = other.extract(otherIndex);
 				return s1.equals(s2);
 			}
 		}
@@ -159,7 +190,8 @@ public class DocLineComparator implements ITokenComparator {
 	 *            another number on which to base the decision whether to return <code>true</code> or <code>false</code>
 	 * @param other
 	 *            the other <code>IRangeComparator</code> to compare with
-	 * @return <code>true</code> to avoid a too lengthy range comparison
+	
+	 * @return <code>true</code> to avoid a too lengthy range comparison * @see org.eclipse.compare.rangedifferencer.IRangeComparator#skipRangeComparison(int, int, IRangeComparator)
 	 */
 	public boolean skipRangeComparison(int length, int maxLength, IRangeComparator other) {
 		return false;
@@ -172,12 +204,12 @@ public class DocLineComparator implements ITokenComparator {
 	 * 
 	 * @param line
 	 *            the number of the line to extract
-	 * @return the contents of the line as a String
-	 */
+	
+	 * @return the contents of the line as a String */
 	private String extract(int line) {
 		if (line < fLineCount) {
 			try {
-				IRegion r = fDocument.getLineInformation(fLineOffset + line);
+				final IRegion r = fDocument.getLineInformation(fLineOffset + line);
 				return fDocument.get(r.getOffset(), r.getLength());
 			} catch (BadLocationException e) {
 				// silently ignored
@@ -186,9 +218,15 @@ public class DocLineComparator implements ITokenComparator {
 		return ""; //$NON-NLS-1$
 	}
 
+	/**
+	 * Method compare.
+	 * @param s1 String
+	 * @param s2 String
+	 * @return boolean
+	 */
 	private boolean compare(String s1, String s2) {
-		int l1 = s1.length();
-		int l2 = s2.length();
+		final int l1 = s1.length();
+		final int l2 = s2.length();
 		int c1 = 0, c2 = 0;
 		int i1 = 0, i2 = 0;
 

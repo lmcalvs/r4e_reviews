@@ -148,11 +148,6 @@ public class FindUserDialog extends FormDialog {
 	 */
 	protected static final IUserInfo[] NONE = new IUserInfo[] {};
 
-	/**
-	 * Field USER_TABLE_COLUMN_WIDTH. (value is 100)
-	 */
-	private static final int USER_TABLE_COLUMN_WIDTH = 90;
-
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------

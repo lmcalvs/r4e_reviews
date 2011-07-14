@@ -99,11 +99,11 @@ public class R4EUITextPosition implements IR4EUIPosition {
 	 *            int
 	 * @param aLength
 	 *            int
-	 * @param aSourceFile
-	 *            IFile
+	 * @param aDocument
+	 *            IDocument
 	 * @throws CoreException
 	 */
-	public R4EUITextPosition(int aOffset, int aLength, IDocument aDocument) throws CoreException {
+	public R4EUITextPosition(int aOffset, int aLength, IDocument aDocument) {
 		setPositionValues(aOffset, aLength, aDocument);
 	}
 
@@ -192,11 +192,11 @@ public class R4EUITextPosition implements IR4EUIPosition {
 	 *            int
 	 * @param aLength
 	 *            int
-	 * @param aSourceFile
-	 *            IFile
+	 * @param aDocument
+	 *            IDocument
 	 * @throws CoreException
 	 */
-	private void setPositionValues(int aOffset, int aLength, IDocument aDocument) throws CoreException {
+	private void setPositionValues(int aOffset, int aLength, IDocument aDocument) {
 		try {
 			if (null != aDocument) {
 				fOffset = aOffset;

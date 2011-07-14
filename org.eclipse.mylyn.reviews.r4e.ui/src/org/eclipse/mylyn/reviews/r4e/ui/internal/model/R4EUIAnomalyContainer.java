@@ -48,6 +48,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.AnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 
 /**
  * @author lmcdubo
@@ -189,7 +190,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	}
 
 	/**
-	 * // $codepro.audit.disable blockDepth Method loadModelData. Load the serialization model data into UI model
+	 * Method open. Load the serialization model data into UI model
 	 */
 	@Override
 	public void open() {
@@ -205,6 +206,11 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			R4EAnomaly anomaly = null;
 			for (int i = 0; i < anomaliesSize; i++) {
 				anomaly = anomalies.get(i);
+				if (null != anomaly.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
+					//This is a postponed anomaly, so we ignore it
+					continue;
+				}
+
 				if (anomaly.isEnabled()
 						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					//Do not set position for global EList<E>lies
@@ -384,12 +390,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(), true);
 			final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
 
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly,
-					R4EUIModelController.getReviewer());
+			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, R4EUIModelController.getReviewer());
 			anomaly.setTitle(dialog.getAnomalyTitleValue());
 			anomaly.setDescription(dialog.getAnomalyDescriptionValue());
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
 			if (null != dialog.getRuleReferenceValue()) {
 				final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
 				final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
@@ -398,13 +401,17 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				anomaly.setRank(rule.getRank());
 				anomaly.setRuleID(rule.getId());
 			}
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 			//Set position data
 			final R4EAnomalyTextPosition position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(R4EUIModelController.FModelExt.createR4ETextContent(anomaly));
 
 			//Set File version data
 			final R4EFileVersion anomalyFileVersion = R4EUIModelController.FModelExt.createR4EFileVersion(position);
+			bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomalyFileVersion,
+					R4EUIModelController.getReviewer());
 			CommandUtils.copyFileVersionData(anomalyFileVersion, aAnomalyTempFileVersion);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 			//Create and set UI model element
 			if (uiReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
@@ -570,10 +577,12 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	/**
 	 * Method checkCompletionStatus.
 	 * 
+	 * @param aMessage
+	 *            AtomicReference<String>
 	 * @return boolean
 	 */
 	public boolean checkCompletionStatus(AtomicReference<String> aMessage) { // $codepro.audit.disable booleanMethodNamingConvention
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		boolean resultOk = true;
 		for (R4EUIAnomalyBasic anomaly : fAnomalies) {
 			if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
@@ -622,10 +631,12 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	/**
 	 * Method checkCompletionStatus.
 	 * 
+	 * @param aMessage
+	 *            AtomicReference<String>
 	 * @return boolean
 	 */
 	public boolean checkReworkStatus(AtomicReference<String> aMessage) {
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		boolean resultOk = true;
 		for (R4EUIAnomalyBasic anomaly : fAnomalies) {
 			if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {

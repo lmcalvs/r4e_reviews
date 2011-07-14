@@ -19,7 +19,6 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -270,20 +269,6 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			UIUtils.displaySyncErrorDialog(e);
 		} catch (final CoreException e) {
 			UIUtils.displayCoreErrorDialog(e);
-		} catch (InvocationTargetException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-					"Eclipse Invocation Target Error Detected", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
-							e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
-		} catch (InterruptedException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-					"Eclipse Interrupted Error Detected", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
-							e.getMessage(), e), IStatus.ERROR);
-			dialog.open();
 		}
 	}
 }

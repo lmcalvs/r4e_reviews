@@ -93,6 +93,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private Button fUseDeltasButton = null;
 
 	/**
+	 * Field fAutoImportPostponedButton.
+	 */
+	private Button fAutoImportPostponedButton = null;
+
+	/**
 	 * Field fGroupNameText.
 	 */
 	private Text fGroupNameText = null;
@@ -214,6 +219,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 */
 	private void createUserPreferencesTab(TabFolder aParent) {
 
+		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+
 		final TabItem tabItem = new TabItem(aParent, SWT.NONE);
 		tabItem.setText("User");
 
@@ -257,11 +264,16 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4EUserPrefsSpacer.setLayoutData(r4EUserPrefsSpacerData);
 
 		//Use deltas for commit items?
-		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		fUseDeltasButton = new Button(r4EUserPrefsGroup, SWT.CHECK);
 		fUseDeltasButton.setText(PreferenceConstants.P_USE_DELTAS_LABEL);
 		fUseDeltasButton.setLayoutData(r4eUserPrefsGroupData);
 		fUseDeltasButton.setSelection(store.getBoolean(PreferenceConstants.P_USE_DELTAS));
+
+		//Automatically import/update postponed anomalies?
+		fAutoImportPostponedButton = new Button(r4EUserPrefsGroup, SWT.CHECK);
+		fAutoImportPostponedButton.setText(PreferenceConstants.P_AUTO_IMPORT_POSTPONED_LABEL);
+		fAutoImportPostponedButton.setLayoutData(r4eUserPrefsGroupData);
+		fAutoImportPostponedButton.setSelection(store.getBoolean(PreferenceConstants.P_AUTO_IMPORT_POSTPONED));
 	}
 
 	/**
@@ -306,19 +318,13 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			@SuppressWarnings("synthetic-access")
 			public void widgetSelected(SelectionEvent aEvent) {
 				final String selectedGroupFile = groupFilesEditor.getSelection();
-				try {
-					final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
-					if (null != group) {
-						fGroupNameText.setText(group.getName());
-						fGroupDescriptionText.setText(group.getDescription());
-						R4EUIModelController.FModelExt.closeR4EReviewGroup(group);
-					} else {
-						fGroupNameText.setText(INVALID_FILE_STR);
-					}
-
-				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+				final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
+				if (null != group) {
+					fGroupNameText.setText(group.getName());
+					fGroupDescriptionText.setText(group.getDescription());
+					R4EUIModelController.FModelExt.closeR4EReviewGroup(group);
+				} else {
+					fGroupNameText.setText(INVALID_FILE_STR);
 				}
 			}
 
@@ -547,9 +553,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	}
 
 	/**
-	 * Method performOk.
+	 * Method performDefaults.
 	 * 
-	 * @return boolean
 	 * @see org.eclipse.jface.preference.IPreferencePage#performOk()
 	 */
 	@Override
@@ -557,7 +562,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 
 		//If no email preferences are set, try to retrieve it from the external DB
-		String userId = store.getDefaultString(PreferenceConstants.P_USER_ID);
+		final String userId = store.getDefaultString(PreferenceConstants.P_USER_ID);
 
 		if (R4EUIModelController.isUserQueryAvailable()) {
 			try {
@@ -576,6 +581,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 		store.setValue(PreferenceConstants.P_USE_DELTAS, true);
 		fUseDeltasButton.setSelection(true);
+		fAutoImportPostponedButton.setSelection(false);
 
 		//Remove all Filters
 		store.setValue(PreferenceConstants.P_SHOW_DISABLED, false);
@@ -639,6 +645,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		}
 
 		store.setValue(PreferenceConstants.P_USE_DELTAS, fUseDeltasButton.getSelection());
+		store.setValue(PreferenceConstants.P_AUTO_IMPORT_POSTPONED, fAutoImportPostponedButton.getSelection());
 		if ("".equals(store.getString(PreferenceConstants.P_USER_EMAIL))) {
 			final String userId = store.getString(PreferenceConstants.P_USER_ID);
 

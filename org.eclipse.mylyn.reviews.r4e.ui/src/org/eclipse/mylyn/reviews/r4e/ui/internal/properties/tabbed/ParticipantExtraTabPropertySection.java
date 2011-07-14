@@ -193,8 +193,9 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 				item = fTimeSpentDetailedList.addItem();
 			} else {
 				item = fTimeSpentDetailedList.getItem(i);
-				if (null == item)
+				if (null == item) {
 					item = fTimeSpentDetailedList.addItem();
+				}
 			}
 			String[] data = { timeEntry.getValue().toString(), dateFormat.format(timeEntry.getKey()) };
 			((TableItem) item).setText(data);
@@ -211,14 +212,16 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 				item = fRolesList.addItem();
 			} else {
 				item = fRolesList.getItem(i);
-				if (null == item)
+				if (null == item) {
 					item = fRolesList.addItem();
+				}
 			}
 			item.setText(role);
 		}
 
-		if (null != modelUser.getFocusArea())
+		if (null != modelUser.getFocusArea()) {
 			fFocusAreaText.setText(modelUser.getFocusArea());
+		}
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -300,8 +303,9 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 				modelParticipant.getRoles().clear();
 				for (Item item : aItems) {
 					R4EUserRole role = ((R4EUIParticipant) fProperties.getElement()).mapStringToRole(item.getText());
-					if (null != role)
+					if (null != role) {
 						modelParticipant.getRoles().add(role);
+					}
 				}
 			}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);

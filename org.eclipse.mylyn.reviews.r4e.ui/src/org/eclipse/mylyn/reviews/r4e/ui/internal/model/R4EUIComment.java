@@ -172,7 +172,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		IR4EUIModelElement ancestorElement = getParent().getParent().getParent();
+		final IR4EUIModelElement ancestorElement = getParent().getParent().getParent();
 		if (!(ancestorElement instanceof R4EUIFileContext)) {
 			return false;
 		}

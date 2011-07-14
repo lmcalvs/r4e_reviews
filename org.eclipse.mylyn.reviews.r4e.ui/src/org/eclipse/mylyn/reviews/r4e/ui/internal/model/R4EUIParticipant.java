@@ -134,10 +134,12 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (IR4EUIModelElement.class.equals(adapter))
+		if (IR4EUIModelElement.class.equals(adapter)) {
 			return this;
-		if (IPropertySource.class.equals(adapter))
+		}
+		if (IPropertySource.class.equals(adapter)) {
 			return new ParticipantProperties(this);
+		}
 		return null;
 	}
 
@@ -285,8 +287,9 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (isEnabled())
+		if (isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -298,10 +301,12 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (!(getParent().getParent().isEnabled()))
+		if (!(getParent().getParent().isEnabled())) {
 			return false;
-		if (isEnabled())
+		}
+		if (isEnabled()) {
 			return false;
+		}
 		return true;
 	}
 

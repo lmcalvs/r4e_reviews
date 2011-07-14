@@ -364,7 +364,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	public boolean isAddChildElementCmd() {
 		//If this is a formal review, we need to be in the planning, preparation or decision phase
 		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
+			final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
 					.getType();
 			if (!phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)
 					&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)

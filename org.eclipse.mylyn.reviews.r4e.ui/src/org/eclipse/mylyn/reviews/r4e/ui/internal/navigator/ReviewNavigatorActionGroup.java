@@ -640,7 +640,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		boolean commandActive = fCommandService.getCommand(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND)
 				.getHandler()
 				.isEnabled();
-		IHandlerActivation activationToken = fHandlerService.activateHandler(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND,
+		final IHandlerActivation activationToken = fHandlerService.activateHandler(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND,
 				fCommandService.getCommand(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND).getHandler());
 		fHandlerService.executeCommand(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND, null);
 		if (!commandActive) {

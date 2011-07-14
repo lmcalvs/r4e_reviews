@@ -34,6 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.CalendarDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -165,6 +166,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 				if (!fRefreshInProgress) {
 					try {
 						((R4EUIAnomalyExtended) fProperties.getElement()).updateState(R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText()));
+
+						//If this is a postponed anomaly, update original one as well
+						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -206,6 +212,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 						type.setType(UIUtils.getClassFromString(fClassCombo.getText()));
 						modelAnomaly.setType(type);
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+						//If this is a postponed anomaly, update original one as well
+						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -245,6 +256,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 						modelAnomaly.setRank(UIUtils.getRankFromString(fRankCombo.getText()));
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+						//If this is a postponed anomaly, update original one as well
+						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -267,7 +283,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 		rankLabel.setToolTipText(R4EUIConstants.ANOMALY_RANK_TOOLTIP);
 		rankLabel.setLayoutData(data);
 
-		//RuleId (Read-only)
+		//RuleId
 		final Composite ruleComposite = widgetFactory.createComposite(composite);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
@@ -315,7 +331,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 								//Set new UI display
 								if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
 									fProperties.getElement().setName(
-											R4EUIAnomalyExtended.buildAnomalyName(modelAnomaly,
+											R4EUIAnomalyExtended.buildAnomalyExtName(modelAnomaly,
 													((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
 								} else {
 									fProperties.getElement().setName(
@@ -324,6 +340,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 								}
 								fProperties.getElement()
 										.setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(modelAnomaly));
+
+								//If this is a postponed anomaly, update original one as well
+								if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+									((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+								}
 							} catch (ResourceHandlingException e1) {
 								UIUtils.displayResourceErrorDialog(e1);
 							} catch (OutOfSyncException e1) {
@@ -381,6 +402,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 									currentUser);
 							modelAnomaly.setDueDate(dialog.getDate());
 							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+							//If this is a postponed anomaly, update original one as well
+							if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							}
 						} catch (ResourceHandlingException e1) {
 							UIUtils.displayResourceErrorDialog(e1);
 						} catch (OutOfSyncException e1) {
@@ -420,6 +446,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 						modelAnomaly.setDecidedByID(fDecidedByCombo.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+						//If this is a postponed anomaly, update original one as well
+						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -459,6 +490,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 						modelAnomaly.setFixedByID(fFixedByCombo.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+						//If this is a postponed anomaly, update original one as well
+						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -498,6 +534,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 						modelAnomaly.setFollowUpByID(fFollowUpByCombo.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+						//If this is a postponed anomaly, update original one as well
+						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -537,6 +578,11 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 						modelAnomaly.setNotAcceptedReason(fNotAcceptedReasonText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+						//If this is a postponed anomaly, update original one as well
+						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -591,7 +637,6 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 		} else {
 			fDateText.setText("");
 		}
-		//TODO null pointer exception generated on line below when no active review is present
 		if (null != R4EUIModelController.getActiveReview()) {
 			final List<String> participants = R4EUIModelController.getActiveReview().getParticipantIDs();
 			fDecidedByCombo.setItems(participants.toArray(new String[participants.size()]));

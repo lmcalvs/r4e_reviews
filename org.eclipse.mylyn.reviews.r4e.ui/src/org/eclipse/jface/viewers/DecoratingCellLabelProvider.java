@@ -262,14 +262,14 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements IL
 		if (oldDecorator != decorator) { // $codepro.audit.disable useEquals
 			final Object[] listenerList = listeners.getListeners();
 			if (null != oldDecorator) {
-				for (int i = 0; i < listenerList.length; i++) {
-					oldDecorator.removeListener((ILabelProviderListener) listenerList[i]);
+				for (Object element : listenerList) {
+					oldDecorator.removeListener((ILabelProviderListener) element);
 				}
 			}
 			this.decorator = decorator;
 			if (null != decorator) {
-				for (int i = 0; i < listenerList.length; i++) {
-					decorator.addListener((ILabelProviderListener) listenerList[i]);
+				for (Object element : listenerList) {
+					decorator.addListener((ILabelProviderListener) element);
 				}
 			}
 			fireLabelProviderChanged(new LabelProviderChangedEvent(this));
@@ -329,17 +329,20 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements IL
 		if (decorator instanceof IColorDecorator) {
 			final IColorDecorator colorDecorator = (IColorDecorator) decorator;
 			Color color = colorDecorator.decorateBackground(element);
-			if (null != color)
+			if (null != color) {
 				settings.setBackground(color);
+			}
 			color = colorDecorator.decorateForeground(element);
-			if (null != color)
+			if (null != color) {
 				settings.setForeground(color);
+			}
 		}
 
 		if (decorator instanceof IFontDecorator) {
 			final Font font = ((IFontDecorator) decorator).decorateFont(element);
-			if (null != font)
+			if (null != font) {
 				settings.setFont(font);
+			}
 		}
 
 	}
@@ -618,34 +621,41 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements IL
 			if (decorator instanceof LabelDecorator) {
 				final LabelDecorator labelDecorator = (LabelDecorator) decorator;
 				final String text = labelDecorator.decorateText(settings.getText(), element, getDecorationContext());
-				if (null != text && text.length() > 0)
+				if (null != text && text.length() > 0) {
 					settings.setText(text);
+				}
 				final Image image = labelDecorator.decorateImage(settings.getImage(), element, getDecorationContext());
-				if (null != image)
+				if (null != image) {
 					settings.setImage(image);
+				}
 
 			} else {
 				final String text = decorator.decorateText(settings.getText(), element);
-				if (null != text && text.length() > 0)
+				if (null != text && text.length() > 0) {
 					settings.setText(text);
+				}
 				final Image image = decorator.decorateImage(settings.getImage(), element);
-				if (null != image)
+				if (null != image) {
 					settings.setImage(image);
+				}
 			}
 			if (decorator instanceof IColorDecorator) {
 				final IColorDecorator colorDecorator = (IColorDecorator) decorator;
 				final Color background = colorDecorator.decorateBackground(element);
-				if (null != background)
+				if (null != background) {
 					settings.setBackground(background);
+				}
 				final Color foreground = colorDecorator.decorateForeground(element);
-				if (null != foreground)
+				if (null != foreground) {
 					settings.setForeground(foreground);
+				}
 			}
 
 			if (decorator instanceof IFontDecorator) {
 				final Font font = ((IFontDecorator) decorator).decorateFont(element);
-				if (null != font)
+				if (null != font) {
 					settings.setFont(font);
+				}
 			}
 		}
 	}
@@ -672,10 +682,12 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements IL
 		cell.setForeground(label.getForeground());
 		cell.setFont(label.getFont());
 
-		if (label.hasNewText())
+		if (label.hasNewText()) {
 			cell.setText(label.getText());
+		}
 
-		if (label.hasNewImage())
+		if (label.hasNewImage()) {
 			cell.setImage(label.getImage());
+		}
 	}
 }

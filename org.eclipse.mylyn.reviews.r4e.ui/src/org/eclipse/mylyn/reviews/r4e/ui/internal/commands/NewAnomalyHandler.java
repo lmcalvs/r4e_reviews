@@ -380,9 +380,9 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
 		final R4EUIReviewItem uiReviewItem = uiReview.createResourceReviewItem(aTargetFileVersion.getName());
-		if (null == uiReviewItem)
+		if (null == uiReviewItem) {
 			return;
-
+		}
 		final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(aBaseFileVersion, aTargetFileVersion,
 				null);
 		if (null == uiFileContext) {

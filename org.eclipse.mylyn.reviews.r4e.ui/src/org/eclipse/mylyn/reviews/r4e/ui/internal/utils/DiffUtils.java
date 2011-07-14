@@ -20,6 +20,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ISharedDocumentAdapter;
@@ -46,41 +47,61 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class DiffUtils {
 
+	/**
+	 * Field TOO_LONG. (value is 1.0E7)
+	 */
 	public static final double TOO_LONG = 10000000.0; // the value of N*M when to start binding the run time
 
+	/**
+	 * Field DIFF_RANGE_CATEGORY. (value is "Activator.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"")
+	 */
 	private static final String DIFF_RANGE_CATEGORY = Activator.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"; //$NON-NLS-1$
 
 	/** Selects between smartTokenDiff and mergingTokenDiff */
 	private static final boolean USE_MERGING_TOKEN_DIFF = false;
 
+	/**
+	 * Field OPTIMIZED_ALGORITHM_USED. (value is ""OPTIMIZED_ALGORITHM_USED"")
+	 */
 	public static final String OPTIMIZED_ALGORITHM_USED = "OPTIMIZED_ALGORITHM_USED"; //$NON-NLS-1$
 
 	/**
 	 * Perform a two level 2- or 3-way diff. The first level is based on line comparison, the second level on token
 	 * comparison.
 	 * 
+	 * @param aIsThreeWay
+	 *            boolean
+	 * @param aIgnoreWhitespace
+	 *            boolean
+	 * @param input
+	 *            R4ECompareEditorInput
+	 * @return List<Diff>
 	 * @throws CoreException
 	 */
-	public ArrayList<Diff> doDiff(boolean aIsThreeWay, boolean aIgnoreWhitespace, R4ECompareEditorInput input)
+	public List<Diff> doDiff(boolean aIsThreeWay, boolean aIgnoreWhitespace, R4ECompareEditorInput input)
 			throws CoreException {
 
 		//THese structures will be used to hold found differences
-		ArrayList<Diff> changeDiffs = new ArrayList<Diff>();
-		ArrayList<Diff> allDiffs;
+		List<Diff> changeDiffs = new ArrayList<Diff>();
+		List<Diff> allDiffs = null;
 
 		//Get documents to compare form input
-		IDocument lDoc = getDocument(input.getLeftElement());
-		IDocument rDoc = getDocument(input.getRightElement());
-		CompareConfiguration config = input.getCompareConfiguration();
+		final IDocument lDoc = getDocument(input.getLeftElement());
+		final IDocument rDoc = getDocument(input.getRightElement());
+		final CompareConfiguration config = input.getCompareConfiguration();
 
-		if (lDoc == null || rDoc == null) {
+		if (null == lDoc || null == rDoc) {
 			return changeDiffs; //Nothing to compare
 		}
 
 		IDocument aDoc = null; //No ancestor by default
-		Position aRegion = null; //We will compare whole files only
+		final Position aRegion = null; //We will compare whole files only
 		if (aIsThreeWay && null != input.getAncestorElement()) {
 			aDoc = getDocument(input.getAncestorElement());
 		}
@@ -89,18 +110,18 @@ public class DiffUtils {
 		resetPositions(rDoc);
 		resetPositions(aDoc);
 
-		boolean ignoreWhiteSpace = aIgnoreWhitespace;
+		final boolean ignoreWhiteSpace = aIgnoreWhitespace;
 
-		DocLineComparator sright = new DocLineComparator(rDoc, null, ignoreWhiteSpace);
-		DocLineComparator sleft = new DocLineComparator(lDoc, null, ignoreWhiteSpace);
+		final DocLineComparator sright = new DocLineComparator(rDoc, null, ignoreWhiteSpace);
+		final DocLineComparator sleft = new DocLineComparator(lDoc, null, ignoreWhiteSpace);
 		DocLineComparator sancestor = null;
-		if (aDoc != null) {
+		if (null != aDoc) {
 			sancestor = new DocLineComparator(aDoc, null, ignoreWhiteSpace);
 		}
 
 		final Object[] result = new Object[1];
 		final DocLineComparator sa = sancestor, sl = sleft, sr = sright;
-		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+		final IRunnableWithProgress runnable = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InterruptedException, InvocationTargetException {
 				monitor.beginTask("Computing differences...", maxWork(sa, sl, sr)); //$NON-NLS-1$
 				try {
@@ -122,8 +143,9 @@ public class DiffUtils {
 			e = (RangeDifference[]) result[0];
 		} catch (InvocationTargetException ex) {
 			// we create a NOCHANGE range for the whole document
-			Diff diff = new Diff(null, RangeDifference.NOCHANGE, aDoc, aRegion, 0, aDoc != null ? aDoc.getLength() : 0,
-					lDoc, null, 0, lDoc.getLength(), rDoc, null, 0, rDoc.getLength(), aIsThreeWay, config);
+			final Diff diff = new Diff(null, RangeDifference.NOCHANGE, aDoc, aRegion, 0, (null != aDoc)
+					? aDoc.getLength()
+					: 0, lDoc, null, 0, lDoc.getLength(), rDoc, null, 0, rDoc.getLength(), aIsThreeWay, config);
 
 			allDiffs = new ArrayList<Diff>();
 			allDiffs.add(diff);
@@ -131,8 +153,9 @@ public class DiffUtils {
 					ex.getTargetException()));
 		} catch (InterruptedException ex) {
 			// we create a NOCHANGE range for the whole document
-			Diff diff = new Diff(null, RangeDifference.NOCHANGE, aDoc, aRegion, 0, aDoc != null ? aDoc.getLength() : 0,
-					lDoc, null, 0, lDoc.getLength(), rDoc, null, 0, rDoc.getLength(), aIsThreeWay, config);
+			final Diff diff = new Diff(null, RangeDifference.NOCHANGE, aDoc, aRegion, 0, (null != aDoc)
+					? aDoc.getLength()
+					: 0, lDoc, null, 0, lDoc.getLength(), rDoc, null, 0, rDoc.getLength(), aIsThreeWay, config);
 
 			allDiffs = new ArrayList<Diff>();
 			allDiffs.add(diff);
@@ -145,11 +168,11 @@ public class DiffUtils {
 			config.setProperty(OPTIMIZED_ALGORITHM_USED, new Boolean(false));
 		}
 
-		ArrayList<Diff> newAllDiffs = new ArrayList<Diff>();
+		final List<Diff> newAllDiffs = new ArrayList<Diff>();
 		for (RangeDifference es : e) {
 			int ancestorStart = 0;
 			int ancestorEnd = 0;
-			if (sancestor != null) {
+			if (null != sancestor) {
 				ancestorStart = sancestor.getTokenStart(es.ancestorStart());
 				ancestorEnd = getTokenEnd2(sancestor, es.ancestorStart(), es.ancestorLength());
 			}
@@ -174,15 +197,15 @@ public class DiffUtils {
 
 					// Extract the string for each contributor.
 					String a = null;
-					if (sancestor != null) {
+					if (null != sancestor) {
 						a = extract2(aDoc, sancestor, es.ancestorStart(), es.ancestorLength());
 					}
 					String s = extract2(lDoc, sleft, es.leftStart(), es.leftLength());
 					String d = extract2(rDoc, sright, es.rightStart(), es.rightLength());
 
 					// Indicate whether all contributors are whitespace
-					if (ignoreWhiteSpace && (a == null || a.trim().length() == 0) && s.trim().length() == 0
-							&& d.trim().length() == 0) {
+					if (ignoreWhiteSpace && (null == a || 0 == a.trim().length()) && 0 == s.trim().length()
+							&& 0 == d.trim().length()) {
 						diff.fIsWhitespace = true;
 					}
 
@@ -190,7 +213,7 @@ public class DiffUtils {
 					if (useChange(diff, config)) {
 						recordChangeDiff(diff, changeDiffs);
 						if (s.length() > 0 && d.length() > 0) {
-							if (a == null && sancestor != null) {
+							if (null == a && null != sancestor) {
 								a = extract2(aDoc, sancestor, es.ancestorStart(), es.ancestorLength());
 							}
 							if (USE_MERGING_TOKEN_DIFF) {
@@ -207,6 +230,14 @@ public class DiffUtils {
 		return changeDiffs;
 	}
 
+	/**
+	 * Method getDocument.
+	 * 
+	 * @param aElement
+	 *            ITypedElement
+	 * @return IDocument
+	 * @throws CoreException
+	 */
 	private IDocument getDocument(ITypedElement aElement) throws CoreException {
 
 		ISharedDocumentAdapter adapter = null;
@@ -227,7 +258,7 @@ public class DiffUtils {
 		if (null == adapter || null == editorInput) {
 			return null; //Cannot find editor input
 		}
-		IDocumentProvider provider = SharedDocumentAdapter.getDocumentProvider(editorInput);
+		final IDocumentProvider provider = SharedDocumentAdapter.getDocumentProvider(editorInput);
 		if (null == provider) {
 			return null; //Cannot find document provider
 		}
@@ -236,8 +267,14 @@ public class DiffUtils {
 		return provider.getDocument(editorInput);
 	}
 
+	/**
+	 * Method resetPositions.
+	 * 
+	 * @param doc
+	 *            IDocument
+	 */
 	private void resetPositions(IDocument doc) {
-		if (doc == null) {
+		if (null == doc) {
 			return;
 		}
 		try {
@@ -248,20 +285,42 @@ public class DiffUtils {
 		doc.addPositionCategory(DIFF_RANGE_CATEGORY);
 	}
 
+	/**
+	 * Method maxWork.
+	 * 
+	 * @param a
+	 *            IRangeComparator
+	 * @param l
+	 *            IRangeComparator
+	 * @param r
+	 *            IRangeComparator
+	 * @return int
+	 */
 	private static int maxWork(IRangeComparator a, IRangeComparator l, IRangeComparator r) {
-		int ln = l.getRangeCount();
-		int rn = r.getRangeCount();
-		if (a != null) {
-			int an = a.getRangeCount();
+		final int ln = l.getRangeCount();
+		final int rn = r.getRangeCount();
+		if (null != a) {
+			final int an = a.getRangeCount();
 			return (2 * Math.max(an, ln)) + (2 * Math.max(an, rn));
 		}
 		return 2 * Math.max(ln, rn);
 	}
 
+	/**
+	 * Method isCapped.
+	 * 
+	 * @param ancestor
+	 *            DocLineComparator
+	 * @param left
+	 *            DocLineComparator
+	 * @param right
+	 *            DocLineComparator
+	 * @return boolean
+	 */
 	private boolean isCapped(DocLineComparator ancestor, DocLineComparator left, DocLineComparator right) {
-		int aLength = ancestor == null ? 0 : ancestor.getRangeCount();
-		int lLength = left.getRangeCount();
-		int rLength = right.getRangeCount();
+		final int aLength = (null == ancestor) ? 0 : ancestor.getRangeCount();
+		final int lLength = left.getRangeCount();
+		final int rLength = right.getRangeCount();
 		if ((double) aLength * (double) lLength > TOO_LONG || (double) aLength * (double) rLength > TOO_LONG
 				|| (double) lLength * (double) rLength > TOO_LONG) {
 			return true;
@@ -269,6 +328,17 @@ public class DiffUtils {
 		return false;
 	}
 
+	/**
+	 * Method getTokenEnd2.
+	 * 
+	 * @param tc
+	 *            ITokenComparator
+	 * @param start
+	 *            int
+	 * @param length
+	 *            int
+	 * @return int
+	 */
 	private static int getTokenEnd2(ITokenComparator tc, int start, int length) {
 		return tc.getTokenStart(start + length);
 	}
@@ -282,15 +352,16 @@ public class DiffUtils {
 	 *            index of first line
 	 * @param length
 	 *            number of lines
+	 * @param tc
+	 *            ITokenComparator
 	 * @return the contents of the specified line range as a String
 	 */
 	private String extract2(IDocument doc, ITokenComparator tc, int start, int length) {
-		int count = tc.getRangeCount();
+		final int count = tc.getRangeCount();
 		if (length > 0 && count > 0) {
-			int startPos = tc.getTokenStart(start);
+			final int startPos = tc.getTokenStart(start);
 			int endPos;
-
-			if (length == 1) {
+			if (1 == length) {
 				endPos = startPos + tc.getTokenLength(start);
 			} else {
 				endPos = tc.getTokenStart(start + length);
@@ -306,12 +377,26 @@ public class DiffUtils {
 		return ""; //$NON-NLS-1$
 	}
 
+	/**
+	 * Method isPatchHunk.
+	 * 
+	 * @return boolean
+	 */
 	private boolean isPatchHunk() {
 		return false;
 	}
 
 	/*
 	 * Returns true if kind of change should be shown.
+	 */
+	/**
+	 * Method useChange.
+	 * 
+	 * @param diff
+	 *            Diff
+	 * @param aConfig
+	 *            CompareConfiguration
+	 * @return boolean
 	 */
 	public boolean useChange(Diff diff, CompareConfiguration aConfig) {
 		if (diff.fIsWhitespace) {
@@ -321,6 +406,15 @@ public class DiffUtils {
 		return useChange(kind, aConfig);
 	}
 
+	/**
+	 * Method useChange.
+	 * 
+	 * @param kind
+	 *            int
+	 * @param aConfig
+	 *            CompareConfiguration
+	 * @return boolean
+	 */
 	private boolean useChange(int kind, CompareConfiguration aConfig) {
 		if (kind == RangeDifference.NOCHANGE) {
 			return false;
@@ -334,7 +428,15 @@ public class DiffUtils {
 		return true;
 	}
 
-	private void recordChangeDiff(Diff diff, ArrayList<Diff> aChangeDiffs) {
+	/**
+	 * Method recordChangeDiff.
+	 * 
+	 * @param diff
+	 *            Diff
+	 * @param aChangeDiffs
+	 *            List<Diff>
+	 */
+	private void recordChangeDiff(Diff diff, List<Diff> aChangeDiffs) {
 		aChangeDiffs.add(diff); // here we remember only the real diffs
 	}
 
@@ -342,11 +444,33 @@ public class DiffUtils {
 	 * Performs a "smart" token based 3-way diff on the character range specified by the given baseDiff.
 	 * It is "smart" because it tries to minimize the number of token diffs by merging them.
 	 */
+	/**
+	 * Method mergingTokenDiff.
+	 * 
+	 * @param baseDiff
+	 *            Diff
+	 * @param ancestorDoc
+	 *            IDocument
+	 * @param a
+	 *            String
+	 * @param rightDoc
+	 *            IDocument
+	 * @param d
+	 *            String
+	 * @param leftDoc
+	 *            IDocument
+	 * @param s
+	 *            String
+	 * @param aIsThreeWay
+	 *            boolean
+	 * @param aConfig
+	 *            CompareConfiguration
+	 */
 	private void mergingTokenDiff(Diff baseDiff, IDocument ancestorDoc, String a, IDocument rightDoc, String d,
 			IDocument leftDoc, String s, boolean aIsThreeWay, CompareConfiguration aConfig) {
 		ITokenComparator sa = null;
 		int ancestorStart = 0;
-		if (ancestorDoc != null) {
+		if (null != ancestorDoc) {
 			sa = createTokenComparator(a);
 			ancestorStart = baseDiff.fAncestorPos.getOffset();
 		}
@@ -406,11 +530,11 @@ public class DiffUtils {
 				}
 			}
 
-			if (first != null && last != null) {
+			if (null != first && null != last) {
 
 				int ancestorStart2 = 0;
 				int ancestorEnd2 = 0;
-				if (ancestorDoc != null && null != sa) {
+				if (null != ancestorDoc && null != sa) {
 					ancestorStart2 = ancestorStart + sa.getTokenStart(first.ancestorStart());
 					ancestorEnd2 = ancestorStart + getTokenEnd(sa, last.ancestorStart(), last.ancestorLength());
 				}
@@ -431,12 +555,34 @@ public class DiffUtils {
 	/*
 	 * Performs a token based 3-way diff on the character range specified by the given baseDiff.
 	 */
+	/**
+	 * Method simpleTokenDiff.
+	 * 
+	 * @param baseDiff
+	 *            Diff
+	 * @param ancestorDoc
+	 *            IDocument
+	 * @param a
+	 *            String
+	 * @param rightDoc
+	 *            IDocument
+	 * @param d
+	 *            String
+	 * @param leftDoc
+	 *            IDocument
+	 * @param s
+	 *            String
+	 * @param aIsThreeWay
+	 *            boolean
+	 * @param aConfig
+	 *            CompareConfiguration
+	 */
 	private void simpleTokenDiff(final Diff baseDiff, IDocument ancestorDoc, String a, IDocument rightDoc, String d,
 			IDocument leftDoc, String s, boolean aIsThreeWay, CompareConfiguration aConfig) {
 
 		int ancestorStart = 0;
 		ITokenComparator sa = null;
-		if (ancestorDoc != null) {
+		if (null != ancestorDoc) {
 			ancestorStart = baseDiff.fAncestorPos.getOffset();
 			sa = createTokenComparator(a);
 		}
@@ -454,7 +600,7 @@ public class DiffUtils {
 
 				int ancestorStart2 = ancestorStart;
 				int ancestorEnd2 = ancestorStart;
-				if (ancestorDoc != null && null != sa) {
+				if (null != ancestorDoc && null != sa) {
 					ancestorStart2 += sa.getTokenStart(es.ancestorStart());
 					ancestorEnd2 += getTokenEnd(sa, es.ancestorStart(), es.ancestorLength());
 				}
@@ -482,10 +628,28 @@ public class DiffUtils {
 		}
 	}
 
+	/**
+	 * Method createTokenComparator.
+	 * 
+	 * @param s
+	 *            String
+	 * @return ITokenComparator
+	 */
 	private ITokenComparator createTokenComparator(String s) {
 		return new TokenComparator(s);
 	}
 
+	/**
+	 * Method getTokenEnd.
+	 * 
+	 * @param tc
+	 *            ITokenComparator
+	 * @param start
+	 *            int
+	 * @param count
+	 *            int
+	 * @return int
+	 */
 	private int getTokenEnd(ITokenComparator tc, int start, int count) {
 		if (count <= 0) {
 			return tc.getTokenStart(start);

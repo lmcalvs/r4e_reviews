@@ -53,27 +53,31 @@ public class NavigatorElementComparator extends ViewerComparator {
 
 		final int cat1 = category(e1);
 		final int cat2 = category(e2);
-		if (cat1 != cat2)
+		if (cat1 != cat2) {
 			return cat1 - cat2;
+		}
 
 		//If the compared objects are CommentElements, leave them alone
-		if (e1 instanceof R4EUIComment)
+		if (e1 instanceof R4EUIComment) {
 			return 0;
+		}
 
 		//Otherwise sort them alphabetically
 		final ILabelProvider prov = (ILabelProvider) ((ContentViewer) viewer).getLabelProvider();
 		String name1 = prov.getText(e1);
 		String name2 = prov.getText(e2);
 
-		if (null == name1 || null == name2)
+		if (null == name1 || null == name2) {
 			return 0; //Ignore invalid strings
+		}
 
 		//Remove the decorator characters form the text label
-		if (name1.startsWith("> "))
+		if (name1.startsWith("> ")) {
 			name1 = name1.substring(2); // $codepro.audit.disable numericLiterals
-		if (name2.startsWith("> "))
+		}
+		if (name2.startsWith("> ")) {
 			name2 = name2.substring(2); // $codepro.audit.disable numericLiterals
-
+		}
 		// use the comparator to compare the strings
 		return getComparator().compare(name1, name2);
 	}

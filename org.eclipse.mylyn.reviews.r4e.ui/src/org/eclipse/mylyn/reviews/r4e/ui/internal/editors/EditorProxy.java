@@ -128,6 +128,12 @@ public class EditorProxy {
 			baseFileVersion = context.getBaseFileVersion();
 			targetFileVersion = context.getTargetFileVersion();
 
+			//If the files are the same (or do not exist), open the single editor
+			if (null == baseFileVersion || null == targetFileVersion
+					|| baseFileVersion.getVersionID().equals(targetFileVersion.getVersionID())) {
+				forceSingleEditor = true;
+			}
+
 			//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
 			if (context.isFileVersionsComparable() && !forceSingleEditor) {
 				openCompareEditor(aPage, baseFileVersion, targetFileVersion, position);
@@ -189,11 +195,9 @@ public class EditorProxy {
 	 * @param aBaseFileVersion
 	 *            R4EFileVersion - the base (or reference) file version
 	 * @param aTargetFileVersion
-	 *            R4EFileVersion
-	 * @param aTargetFileEditable
-	 *            boolean - flag set whether the target file is editable or not
-	 * @param aSelectionIndex
-	 *            int - the index of the selection to go to in the target file
+	 *            R4EFileVersion - the target (or current) file version
+	 * @param aPosition
+	 *            IR4EUIPosition
 	 */
 	private static void openCompareEditor(IWorkbenchPage aPage, R4EFileVersion aBaseFileVersion,
 			R4EFileVersion aTargetFileVersion, IR4EUIPosition aPosition) {

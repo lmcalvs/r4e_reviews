@@ -459,7 +459,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 		//Check global anomalies state
 		final AtomicReference<String> resultMsg = new AtomicReference<String>(null);
 		boolean resultOk = true;
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		if (!(fAnomalyContainer.checkReworkStatus(resultMsg))) {
 			sb.append("Phase cannot be changed to " + REVIEW_PHASE_REWORK
 					+ " as some anomalies are in the wrong state:" + System.getProperty("line.separator"));

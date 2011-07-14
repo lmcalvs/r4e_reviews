@@ -291,11 +291,11 @@ public class EditableListWidget {
 				} else if (aEditableWidgetClass.equals(CCombo.class)) {
 					editableControl = new CCombo(fMainTable, SWT.BORDER | SWT.READ_ONLY);
 					//Only add the values not already in the table in the CCombo box
-					List<String> currentValues = new ArrayList<String>();
+					final List<String> currentValues = new ArrayList<String>();
 					for (String currentValue : fValues) {
 						currentValues.add(currentValue);
 					}
-					TableItem[] currentItems = fMainTable.getItems();
+					final TableItem[] currentItems = fMainTable.getItems();
 					for (TableItem currentItem : currentItems) {
 						if (currentValues.contains(currentItem.getText())) {
 							currentValues.remove(currentItem.getText());

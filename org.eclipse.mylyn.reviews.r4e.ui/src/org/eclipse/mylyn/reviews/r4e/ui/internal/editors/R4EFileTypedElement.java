@@ -51,16 +51,34 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 	 */
 	private final R4EFileVersion fFileVersion;
 
+	/**
+	 * Field fDirty.
+	 */
 	private boolean fDirty = false;
 
+	/**
+	 * Field sharedDocumentAdapter.
+	 */
 	private EditableSharedDocumentAdapter sharedDocumentAdapter;
 
+	/**
+	 * Field timestamp.
+	 */
 	private long timestamp;
 
+	/**
+	 * Field exists.
+	 */
 	private boolean exists;
 
+	/**
+	 * Field useSharedDocument.
+	 */
 	private boolean useSharedDocument = true;
 
+	/**
+	 * Field sharedDocumentListener.
+	 */
 	private EditableSharedDocumentAdapter.ISharedDocumentAdapterListener sharedDocumentListener;
 
 	// ------------------------------------------------------------------------
@@ -90,6 +108,13 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 		return fFileVersion;
 	}
 
+	/**
+	 * Method setContent.
+	 * 
+	 * @param contents
+	 *            byte[]
+	 * @see org.eclipse.compare.IEditableContent#setContent(byte[])
+	 */
 	@Override
 	public void setContent(byte[] contents) {
 		fDirty = true;
@@ -113,12 +138,12 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 			if (isConnected()) {
 				saveDocument(true, monitor);
 			} else {
-				IResource resource = getResource();
+				final IResource resource = getResource();
 				if (resource instanceof IFile) {
 					ByteArrayInputStream is = null;
 					try {
 						is = new ByteArrayInputStream(getContent());
-						IFile file = (IFile) resource;
+						final IFile file = (IFile) resource;
 						if (file.exists()) {
 							file.setContents(is, false, true, monitor);
 						} else {
@@ -127,7 +152,7 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 						fDirty = false;
 					} finally {
 						fireContentChanged();
-						if (is != null) {
+						if (null != is) {
 							try {
 								is.close();
 							} catch (IOException ex) {
@@ -141,6 +166,13 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 		}
 	}
 
+	/**
+	 * Method getContents.
+	 * 
+	 * @return InputStream
+	 * @throws CoreException
+	 * @see org.eclipse.compare.IStreamContentAccessor#getContents()
+	 */
 	@Override
 	public InputStream getContents() throws CoreException {
 		if (exists) {
@@ -149,10 +181,18 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 		return null;
 	}
 
+	/**
+	 * Method getAdapter.
+	 * 
+	 * @param adapter
+	 *            Class
+	 * @return Object
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
+	 */
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (adapter == ISharedDocumentAdapter.class) {
+		if (ISharedDocumentAdapter.class.equals(adapter)) {
 			if (isSharedDocumentsEnable()) {
 				return getSharedDocumentAdapter();
 			} else {
@@ -162,40 +202,45 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}
 
+	/**
+	 * Method getSharedDocumentAdapter.
+	 * 
+	 * @return ISharedDocumentAdapter
+	 */
 	private synchronized ISharedDocumentAdapter getSharedDocumentAdapter() {
-		if (sharedDocumentAdapter == null) {
+		if (null == sharedDocumentAdapter) {
 			sharedDocumentAdapter = new EditableSharedDocumentAdapter(
 					new EditableSharedDocumentAdapter.ISharedDocumentAdapterListener() {
 						public void handleDocumentConnected() {
 							R4EFileTypedElement.this.updateTimestamp();
-							if (sharedDocumentListener != null) {
+							if (null != sharedDocumentListener) {
 								sharedDocumentListener.handleDocumentConnected();
 							}
 						}
 
 						public void handleDocumentFlushed() {
 							R4EFileTypedElement.this.fireContentChanged();
-							if (sharedDocumentListener != null) {
+							if (null != sharedDocumentListener) {
 								sharedDocumentListener.handleDocumentFlushed();
 							}
 						}
 
 						public void handleDocumentDeleted() {
 							R4EFileTypedElement.this.update();
-							if (sharedDocumentListener != null) {
+							if (null != sharedDocumentListener) {
 								sharedDocumentListener.handleDocumentDeleted();
 							}
 						}
 
 						public void handleDocumentSaved() {
 							R4EFileTypedElement.this.updateTimestamp();
-							if (sharedDocumentListener != null) {
+							if (null != sharedDocumentListener) {
 								sharedDocumentListener.handleDocumentSaved();
 							}
 						}
 
 						public void handleDocumentDisconnected() {
-							if (sharedDocumentListener != null) {
+							if (null != sharedDocumentListener) {
 								sharedDocumentListener.handleDocumentDisconnected();
 							}
 						}
@@ -204,10 +249,16 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 		return sharedDocumentAdapter;
 	}
 
+	/**
+	 * Method isEditable.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.compare.IEditableContent#isEditable()
+	 */
 	@Override
 	public boolean isEditable() {
 		// Do not allow non-existent files to be edited
-		IResource resource = getResource();
+		final IResource resource = getResource();
 		return resource.getType() == IResource.FILE && exists;
 	}
 
@@ -218,7 +269,7 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 	 */
 	@Override
 	public boolean isConnected() {
-		return sharedDocumentAdapter != null && sharedDocumentAdapter.isConnected();
+		return null != sharedDocumentAdapter && sharedDocumentAdapter.isConnected();
 	}
 
 	/**
@@ -234,7 +285,7 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 	@Override
 	public boolean saveDocument(boolean overwrite, IProgressMonitor monitor) throws CoreException {
 		if (isConnected()) {
-			IEditorInput input = sharedDocumentAdapter.getDocumentKey(this);
+			final IEditorInput input = sharedDocumentAdapter.getDocumentKey(this);
 			sharedDocumentAdapter.saveDocument(input, overwrite, monitor);
 			updateTimestamp();
 			return true;
@@ -242,9 +293,15 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 		return false;
 	}
 
+	/**
+	 * Method createStream.
+	 * 
+	 * @return InputStream
+	 * @throws CoreException
+	 */
 	@Override
 	protected InputStream createStream() throws CoreException {
-		InputStream inputStream = super.createStream();
+		final InputStream inputStream = super.createStream();
 		updateTimestamp();
 		return inputStream;
 	}
@@ -267,6 +324,11 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 		return timestamp;
 	}
 
+	/**
+	 * Method hashCode.
+	 * 
+	 * @return int
+	 */
 	@Override
 	public int hashCode() {
 		return getResource().hashCode();
@@ -274,6 +336,11 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 
 	/**
 	 * Does not consider the content of the resources
+	 * 
+	 * @param obj
+	 *            Object
+	 * @return boolean
+	 * @see org.eclipse.compare.structuremergeviewer.IStructureComparator#equals(Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -281,7 +348,7 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 			return true;
 		}
 		if (obj instanceof R4EFileTypedElement) {
-			R4EFileTypedElement otherElement = (R4EFileTypedElement) obj;
+			final R4EFileTypedElement otherElement = (R4EFileTypedElement) obj;
 			return otherElement.getResource().equals(getResource()) && exists == otherElement.exists;
 		}
 		return false;
@@ -304,7 +371,7 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 	 */
 	@Override
 	public boolean isSynchronized() {
-		long current = getResource().getLocalTimeStamp();
+		final long current = getResource().getLocalTimeStamp();
 		return current == getTimestamp();
 	}
 
@@ -323,7 +390,7 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 	 */
 	@Override
 	public void discardBuffer() {
-		if (sharedDocumentAdapter != null) {
+		if (null != sharedDocumentAdapter) {
 			sharedDocumentAdapter.releaseBuffer();
 		}
 		super.discardBuffer();
@@ -344,20 +411,18 @@ public class R4EFileTypedElement extends LocalResourceTypedElement implements IA
 	 */
 	@Override
 	public void enableSharedDocument(boolean enablement) {
-		this.useSharedDocument = enablement;
+		useSharedDocument = enablement;
 	}
 
 	/**
 	 * @return whether this element is dirty <br>
 	 *         The element is dirty if a merge viewer has flushed it's contents to the element and the contents have not
-	 *         been saved.
-	 * @see #commit(IProgressMonitor)
-	 * @see #saveDocument(boolean, IProgressMonitor)
-	 * @see #discardBuffer()
+	 *         been saved. * @see #commit(IProgressMonitor) * @see #saveDocument(boolean, IProgressMonitor) * @see
+	 *         #discardBuffer()
 	 */
 	@Override
 	public boolean isDirty() {
-		return fDirty || (sharedDocumentAdapter != null && sharedDocumentAdapter.hasBufferedContents());
+		return fDirty || (null != sharedDocumentAdapter && sharedDocumentAdapter.hasBufferedContents());
 	}
 
 	/**

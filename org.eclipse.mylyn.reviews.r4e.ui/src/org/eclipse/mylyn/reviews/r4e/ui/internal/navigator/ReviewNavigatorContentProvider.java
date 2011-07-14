@@ -168,8 +168,9 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelListener#changedEvent(R4EUIModelEvent)
 	 */
 	public void changedEvent(R4EUIModelEvent aEvent) {
-		if (null == fViewer)
+		if (null == fViewer) {
 			return;
+		}
 		final IR4EUIModelElement affectedObject = (IR4EUIModelElement) aEvent.receiver();
 		Activator.Ftracer.traceInfo("Changed event received for element " + affectedObject.getName());
 		if (affectedObject instanceof R4EUIReviewGroup || affectedObject instanceof R4EUIReviewBasic

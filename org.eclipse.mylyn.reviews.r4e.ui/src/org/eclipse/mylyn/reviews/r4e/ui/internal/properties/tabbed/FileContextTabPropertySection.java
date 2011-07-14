@@ -24,6 +24,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -298,6 +299,13 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	@Override
 	protected void setEnabledFields() {
+		//Since it is a subclass of this classe we need this here.  This should be improved later
+		//Do not show FileContext elements for the Postponed file.
+		if (fProperties.getElement() instanceof R4EUIPostponedFile) {
+			fBaseFileNameText.getParent().getParent().setVisible(false);
+			return;
+		}
+
 		if (R4EUIModelController.isDialogOpen()) {
 			fBaseFileNameText.setEnabled(false);
 			fBaseFilePathText.setEnabled(false);

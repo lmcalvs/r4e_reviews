@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
@@ -50,9 +51,11 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ImportPostponedHandler;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ReviewProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.versions.core.ChangeSet;
@@ -152,12 +155,17 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	/**
 	 * Field fParticipantsContainer.
 	 */
-	protected R4EUIParticipantContainer fParticipantsContainer;
+	protected R4EUIParticipantContainer fParticipantsContainer = null;
 
 	/**
 	 * Field fAnomalyContainer.
 	 */
 	protected R4EUIAnomalyContainer fAnomalyContainer = null;
+
+	/**
+	 * Field fPostponedContainer.
+	 */
+	protected R4EUIPostponedContainer fPostponedContainer = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -295,6 +303,15 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method getPostponedContainer.
+	 * 
+	 * @return R4EUIPostponedContainer
+	 */
+	public R4EUIPostponedContainer getPostponedContainer() {
+		return fPostponedContainer;
+	}
+
+	/**
 	 * Add a new participant
 	 * 
 	 * @param aParticipant
@@ -392,9 +409,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isUserReviewed() {
-		R4EParticipant participant;
 		try {
-			participant = getParticipant(R4EUIModelController.getReviewer(), false);
+			final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), false);
 			if (null != participant) {
 				return participant.isReviewCompleted();
 			}
@@ -454,6 +470,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		}
 		fParticipantsContainer.close();
 		fAnomalyContainer.close();
+		if (null != fPostponedContainer) {
+			fPostponedContainer.close();
+		}
 
 		fItems.clear();
 		fOpen = false;
@@ -473,14 +492,14 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#open()
 	 */
 	@Override
-	public void open() throws ResourceHandlingException {
+	public void open() throws ResourceHandlingException, FileNotFoundException, ReviewVersionsException {
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup) getParent()).getReviewGroup(),
 				fReviewName);
 
 		final EList<Item> items = fReview.getReviewItems();
 		if (null != items) {
 
-			R4EUIReviewItem uiItem = null;
+			IR4EUIModelElement uiItem = null;
 
 			R4EUIModelController.mapAnomalies(fReview);
 			final int itemsSize = items.size();
@@ -490,7 +509,10 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				if (item.isEnabled()
 						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 
-					if (null == item.getRepositoryRef() || "".equals(item.getRepositoryRef())) {
+					if (R4EUIConstants.TRUE_ATTR_VALUE_STR.equals(item.getInfoAtt().get(
+							R4EUIConstants.POSTPONED_ATTR_STR))) {
+						uiItem = new R4EUIPostponedContainer(this, item, R4EUIConstants.POSTPONED_ELEMENTS_LABEL_NAME);
+					} else if (null == item.getRepositoryRef() || "".equals(item.getRepositoryRef())) {
 						//Resource
 						String name = "Resource: " + item.getFileContextList().get(0).getTarget().getName();
 						uiItem = new R4EUIReviewItem(this, item, name, "");
@@ -516,10 +538,23 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fAnomalyContainer.open();
 		fParticipantsContainer.open();
 
+		//Check if we should show the postponed elements
+		try {
+			CommandUtils.showPostponedElements(this);
+		} catch (OutOfSyncException e) {
+			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			Activator.getDefault().logError("Exception: " + e.toString(), e);
+		}
+
 		fOpen = true;
 		fImage = UIUtils.loadIcon(REVIEW_ICON_FILE);
 		R4EUIModelController.setActiveReview(this);
 		fireUserReviewStateChanged(this);
+
+		//Automatically import postponed anomalies if set in preferences
+		if (Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_AUTO_IMPORT_POSTPONED)) {
+			ImportPostponedHandler.importPostponedElements();
+		}
 	}
 
 	/**
@@ -802,7 +837,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	@Override
 	public boolean hasChildren() {
 		if (isOpen()) {
-			if (fItems.size() > 0 || null != fAnomalyContainer || null != fParticipantsContainer) {
+			if (fItems.size() > 0 || null != fAnomalyContainer || null != fParticipantsContainer
+					|| null != fPostponedContainer) {
 				return true;
 			}
 		}
@@ -821,6 +857,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		newList.addAll(fItems);
 		newList.add(fAnomalyContainer);
 		newList.add(fParticipantsContainer);
+		if (null != fPostponedContainer) {
+			newList.add(fPostponedContainer);
+		}
 		return newList.toArray(new IR4EUIModelElement[newList.size()]);
 	}
 
@@ -850,13 +889,16 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
-		if (aChildToAdd instanceof R4EUIReviewItem) {
+		if (aChildToAdd instanceof R4EUIPostponedContainer) {
+			fPostponedContainer = (R4EUIPostponedContainer) aChildToAdd;
+		} else if (aChildToAdd instanceof R4EUIReviewItem) {
 			fItems.add((R4EUIReviewItem) aChildToAdd);
 		} else if (aChildToAdd instanceof R4EUIAnomalyContainer) {
 			fAnomalyContainer = (R4EUIAnomalyContainer) aChildToAdd;
 		} else if (aChildToAdd instanceof R4EUIParticipantContainer) {
 			fParticipantsContainer = (R4EUIParticipantContainer) aChildToAdd;
 		}
+
 		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
 				.getTreeViewer()
 				.getContentProvider());
@@ -864,7 +906,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	}
 
 	/**
-	 * Method createReviewItem
+	 * Method createResourceReviewItem
 	 * 
 	 * @param aFilename
 	 *            String
@@ -924,6 +966,32 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method createPostponedContainer
+	 * 
+	 * @return R4EUIPostponedContainer
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 */
+	public R4EUIPostponedContainer createPostponedContainer() throws ResourceHandlingException, OutOfSyncException {
+
+		//Create and set postponed container model element.  We use the R4EItem as placeholder
+		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
+		final R4EItem reviewItem = R4EUIModelController.FModelExt.createR4EItem(participant);
+
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem,
+				R4EUIModelController.getReviewer());
+		final EMap<String, String> info = reviewItem.getInfoAtt(); //We use the R4EItem attribute map to mark this as postponed
+		info.put(R4EUIConstants.POSTPONED_ATTR_STR, R4EUIConstants.TRUE_ATTR_VALUE_STR);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+		//Create and set UI model element
+		fPostponedContainer = new R4EUIPostponedContainer(this, reviewItem,
+				R4EUIConstants.POSTPONED_ELEMENTS_LABEL_NAME);
+		addChildren(fPostponedContainer);
+		return fPostponedContainer;
+	}
+
+	/**
 	 * Method removeChildren.
 	 * 
 	 * @param aChildToRemove
@@ -937,7 +1005,30 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
 			throws ResourceHandlingException, OutOfSyncException {
-		if (aChildToRemove instanceof R4EUIReviewItem) {
+		if (aChildToRemove instanceof R4EUIPostponedContainer) {
+			final R4EUIPostponedContainer removedElement = (R4EUIPostponedContainer) aChildToRemove;
+
+			//Also recursively remove all children 
+			removedElement.removeAllChildren(aFileRemove);
+
+			/* TODO uncomment when core model supports hard-removing of elements
+			if (aFileRemove) removedElement.getItem().remove());
+			else */
+			final R4EItem modelItem = removedElement.getItem();
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelItem,
+					R4EUIModelController.getReviewer());
+			modelItem.setEnabled(false);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+			//Remove element from UI if the show disabled element option is off
+			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+				fPostponedContainer = null;
+				aChildToRemove.removeListeners();
+				fireRemove(aChildToRemove);
+			} else {
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+			}
+		} else if (aChildToRemove instanceof R4EUIReviewItem) {
 			final R4EUIReviewItem removedElement = fItems.get(fItems.indexOf(aChildToRemove));
 
 			//Also recursively remove all children 
@@ -1023,6 +1114,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		if (null != fParticipantsContainer) {
 			fParticipantsContainer.addListener(aProvider);
 		}
+		if (null != fPostponedContainer) {
+			fPostponedContainer.addListener(aProvider);
+		}
 	}
 
 	/**
@@ -1047,6 +1141,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		}
 		if (null != fParticipantsContainer) {
 			fParticipantsContainer.removeListener(aProvider);
+		}
+		if (null != fPostponedContainer) {
+			fPostponedContainer.removeListener(aProvider);
 		}
 	}
 
@@ -1161,6 +1258,20 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		return false;
 	}
 
+	/**
+	 * Method isImportPostponedCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isImportPostponedCmd()
+	 */
+	@Override
+	public boolean isImportPostponedCmd() {
+		if ((!getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) && isOpen()) {
+			return true;
+		}
+		return false;
+	}
+
 	//Phase Management
 
 	/**
@@ -1185,7 +1296,6 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		} else {
 			fReview.setEndDate(null);
 		}
-
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
 
@@ -1359,7 +1469,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 
 			//Check global anomalies state
 			final AtomicReference<String> resultMsg = new AtomicReference<String>(null);
-			StringBuilder sb = new StringBuilder();
+			final StringBuilder sb = new StringBuilder();
 			boolean resultOk = true;
 			if (!(fAnomalyContainer.checkCompletionStatus(resultMsg))) {
 				sb.append("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED

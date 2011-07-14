@@ -53,6 +53,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.ui.IEditorInput;
@@ -527,9 +528,7 @@ public class MailServicesProxy {
 				++numTotalFiles;
 				if (null != (R4EUIAnomalyContainer) context.getAnomalyContainerElement()) {
 					R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) ((R4EUIAnomalyContainer) context.getAnomalyContainerElement()).getChildren();
-					for (R4EUIAnomalyBasic anomalie : anomalies) {
-						++numTotalAnomalies;
-					}
+					numTotalAnomalies += anomalies.length;
 				}
 			}
 		}
@@ -613,7 +612,26 @@ public class MailServicesProxy {
 
 		if (aSource instanceof R4EUIReviewBasic) {
 			msgBody.append("Review :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-
+		} else if (aSource instanceof R4EUIPostponedAnomaly) {
+			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIPostponedAnomaly) aSource).getParent()).getTargetFileVersion();
+			msgBody.append("Anomaly :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+			if (null != file) {
+				if (null != file.getResource()) {
+					msgBody.append("File: " + file.getResource().getProject() + ": "
+							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+				} else {
+					msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+				}
+				msgBody.append("Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
+			} else {
+				msgBody.append("File: " + ((R4EUIFileContext) ((R4EUIPostponedAnomaly) aSource).getParent()).getName()
+						+ LINE_FEED_MSG_PART);
+			}
+			msgBody.append("Line(s): " + ((R4EUIPostponedAnomaly) aSource).getPosition().toString()
+					+ LINE_FEED_MSG_PART);
+			msgBody.append("Title: " + ((R4EUIPostponedAnomaly) aSource).getAnomaly().getTitle() + LINE_FEED_MSG_PART);
+			msgBody.append("Description: " + ((R4EUIPostponedAnomaly) aSource).getAnomaly().getDescription()
+					+ LINE_FEED_MSG_PART);
 		} else if (aSource instanceof R4EUIAnomalyBasic) {
 			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIAnomalyBasic) aSource).getParent().getParent()).getTargetFileVersion();
 			msgBody.append("Anomaly :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);

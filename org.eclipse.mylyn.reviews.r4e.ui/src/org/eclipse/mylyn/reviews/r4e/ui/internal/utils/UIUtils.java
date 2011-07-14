@@ -370,8 +370,8 @@ public class UIUtils {
 		//NOTE:  This is a dirty hack that involves accessing class and field we shouldn't, but that's
 		//       the only way to select the current position in the compare editor.  Hopefully this code can
 		//		 be removed later when the Eclipse compare editor allows this.
-		ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
-		IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
 		IR4EUIPosition position = null;
 
 		if (element instanceof R4EUIAnomalyBasic) {
@@ -384,9 +384,9 @@ public class UIUtils {
 			return; //Do nothing if any other element is selected
 		}
 
-		ICompareNavigator navigator = aInput.getNavigator();
+		final ICompareNavigator navigator = aInput.getNavigator();
 		if (navigator instanceof CompareEditorInputNavigator) {
-			Object[] panes = ((CompareEditorInputNavigator) navigator).getPanes();
+			final Object[] panes = ((CompareEditorInputNavigator) navigator).getPanes();
 			for (Object pane : panes) {
 				if (pane instanceof CompareContentViewerSwitchingPane) {
 					Viewer viewer = ((CompareContentViewerSwitchingPane) pane).getViewer();
@@ -401,9 +401,8 @@ public class UIUtils {
 								}
 							} while (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME));
 						}
-						Field field;
 						try {
-							field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_LEFT);
+							Field field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_LEFT);
 							field.setAccessible(true);
 							MergeSourceViewer sourceViewer = (MergeSourceViewer) field.get(textViewer);
 							ITextEditor adapter = (ITextEditor) sourceViewer.getAdapter(ITextEditor.class);

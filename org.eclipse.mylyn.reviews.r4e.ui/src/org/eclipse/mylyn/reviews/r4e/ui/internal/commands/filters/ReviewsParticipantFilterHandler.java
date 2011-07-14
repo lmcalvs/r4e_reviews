@@ -58,8 +58,9 @@ public class ReviewsParticipantFilterHandler extends AbstractHandler {
 
 		if (filter.getParticipant().equals("")) {
 			final String participant = getParticipantDialog();
-			if (participant.equals(""))
+			if (participant.equals("")) {
 				return null;
+			}
 			filter.setParticipant(participant);
 		}
 

@@ -1347,6 +1347,15 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getR4EComment_InfoAtt() {
+		return (EReference)r4ECommentEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getR4EReviewComponent() {
 		return r4EReviewComponentEClass;
 	}
@@ -2213,6 +2222,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		r4ECommentEClass = createEClass(R4E_COMMENT);
 		createEAttribute(r4ECommentEClass, R4E_COMMENT__CREATED_ON);
 		createEReference(r4ECommentEClass, R4E_COMMENT__ANOMALY);
+		createEReference(r4ECommentEClass, R4E_COMMENT__INFO_ATT);
 
 		r4EReviewComponentEClass = createEClass(R4E_REVIEW_COMPONENT);
 
@@ -2496,6 +2506,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEClass(r4ECommentEClass, R4EComment.class, "R4EComment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4EComment_CreatedOn(), ecorePackage.getEDate(), "createdOn", null, 0, 1, R4EComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EComment_Anomaly(), this.getR4EAnomaly(), null, "anomaly", null, 1, 1, R4EComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EComment_InfoAtt(), this.getMapKeyToInfoAttributes(), null, "infoAtt", null, 0, -1, R4EComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EReviewComponentEClass, R4EReviewComponent.class, "R4EReviewComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -53,8 +53,9 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	 */
 	public TreeItem getPrevious(TreeItem aItem) {
 		final TreeItem newItem = (TreeItem) getPreviousItem(aItem);
-		if (null == newItem)
+		if (null == newItem) {
 			return aItem;
+		}
 		return newItem;
 	}
 
@@ -67,8 +68,9 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	 */
 	public TreeItem getNext(TreeItem aItem) {
 		final TreeItem newItem = (TreeItem) getNextItem(aItem, true);
-		if (null == newItem)
+		if (null == newItem) {
 			return aItem;
+		}
 		return newItem;
 	}
 }

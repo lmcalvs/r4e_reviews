@@ -705,6 +705,12 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification"
             name="Send Email/Notification">
       </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
+            description="Import Anomalies that were set to Postponed in previous Reviews for the current Files "
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.importPostponed"
+            name="Import Postponed Elements">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.services">
@@ -1025,6 +1031,15 @@
             </test>
          </enabledWhen>
       </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ImportPostponedHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.importPostponed">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
@@ -1123,6 +1138,14 @@
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
             <input
                   type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext">
+            </input>
+         </propertySection>
+         <propertySection
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.PostponedFileTabPropertySection"
+               id="org.eclipse.mylyn.reviews.r4e.ui.properties.PostponedFileSection"
+               tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
+            <input
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile">
             </input>
          </propertySection>
          <propertySection

@@ -51,8 +51,9 @@ public class HideRuleSetsFilter extends ViewerFilter {
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 
 		if (element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea
-				|| element instanceof R4EUIRuleViolation || element instanceof R4EUIRule)
+				|| element instanceof R4EUIRuleViolation || element instanceof R4EUIRule) {
 			return false;
+		}
 		return true;
 	}
 }

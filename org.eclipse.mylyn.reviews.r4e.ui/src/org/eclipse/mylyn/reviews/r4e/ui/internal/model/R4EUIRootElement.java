@@ -164,8 +164,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 		for (int i = 0; i < reviewGroupsSize; i++) {
 
 			reviewGroup = fReviewGroups.get(i);
-			if (!reviewGroup.isOpen())
+			if (!reviewGroup.isOpen()) {
 				continue; //skip reviews groups that are already closed
+			}
 			reviewGroup.close();
 			reviewGroup.removeListeners();
 			fireRemove(reviewGroup);
@@ -177,8 +178,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 		for (int i = 0; i < ruleSetSize; i++) {
 
 			ruleSet = fRuleSets.get(i);
-			if (!ruleSet.isOpen())
+			if (!ruleSet.isOpen()) {
 				continue; //skip rule sets that are already closed
+			}
 			ruleSet.close();
 			ruleSet.removeListeners();
 			fireRemove(ruleSet);
@@ -233,8 +235,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (0 == fReviewGroups.size() && 0 == fRuleSets.size())
+		if (0 == fReviewGroups.size() && 0 == fRuleSets.size()) {
 			return false;
+		}
 		return true;
 	}
 
@@ -530,8 +533,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddChildElementCmd() {
-		if (isEnabled())
+		if (isEnabled()) {
 			return true;
+		}
 		return false;
 	}
 

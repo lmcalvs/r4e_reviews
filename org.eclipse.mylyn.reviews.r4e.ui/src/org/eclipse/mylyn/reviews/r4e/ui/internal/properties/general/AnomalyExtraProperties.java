@@ -195,7 +195,7 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 				return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getDueDate().toString();
 			}
 		} else if (ANOMALY_CLASS_ID.equals(aId)) {
-			R4ECommentType type = (R4ECommentType) ((R4EUIAnomalyExtended) getElement()).getAnomaly().getType();
+			final R4ECommentType type = (R4ECommentType) ((R4EUIAnomalyExtended) getElement()).getAnomaly().getType();
 			if (null != type) {
 				return Integer.valueOf(type.getType().getValue());
 			}

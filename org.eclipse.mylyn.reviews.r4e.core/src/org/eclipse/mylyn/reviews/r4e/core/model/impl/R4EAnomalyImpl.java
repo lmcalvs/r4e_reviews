@@ -18,9 +18,13 @@ import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.mylyn.reviews.frame.core.model.User;
 import org.eclipse.mylyn.reviews.frame.core.model.impl.TopicImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
@@ -45,6 +49,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getCreatedOn <em>Created On</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getAnomaly <em>Anomaly</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getInfoAtt <em>Info Att</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getState <em>State</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getUserAssigned <em>User Assigned</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getUserFollowUp <em>User Follow Up</em>}</li>
@@ -107,6 +112,16 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	 * @ordered
 	 */
 	protected R4EAnomaly anomaly;
+
+	/**
+	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInfoAtt()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> infoAtt;
 
 	/**
 	 * The default value of the '{@link #getState() <em>State</em>}' attribute.
@@ -444,6 +459,18 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 		anomaly = newAnomaly;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__ANOMALY, oldAnomaly, anomaly));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, String> getInfoAtt() {
+		if (infoAtt == null) {
+			infoAtt = new EcoreEMap<String,String>(RModelPackage.Literals.MAP_KEY_TO_INFO_ATTRIBUTES, MapKeyToInfoAttributesImpl.class, this, RModelPackage.R4E_ANOMALY__INFO_ATT);
+		}
+		return infoAtt;
 	}
 
 	/**
@@ -1015,6 +1042,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 		switch (featureID) {
 			case RModelPackage.R4E_ANOMALY__ID:
 				return basicSetId(null, msgs);
+			case RModelPackage.R4E_ANOMALY__INFO_ATT:
+				return ((InternalEList<?>)getInfoAtt()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -1035,6 +1064,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 			case RModelPackage.R4E_ANOMALY__ANOMALY:
 				if (resolve) return getAnomaly();
 				return basicGetAnomaly();
+			case RModelPackage.R4E_ANOMALY__INFO_ATT:
+				if (coreType) return getInfoAtt();
+				else return getInfoAtt().map();
 			case RModelPackage.R4E_ANOMALY__STATE:
 				return getState();
 			case RModelPackage.R4E_ANOMALY__USER_ASSIGNED:
@@ -1097,6 +1129,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 				return;
 			case RModelPackage.R4E_ANOMALY__ANOMALY:
 				setAnomaly((R4EAnomaly)newValue);
+				return;
+			case RModelPackage.R4E_ANOMALY__INFO_ATT:
+				((EStructuralFeature.Setting)getInfoAtt()).set(newValue);
 				return;
 			case RModelPackage.R4E_ANOMALY__STATE:
 				setState((R4EAnomalyState)newValue);
@@ -1170,6 +1205,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 			case RModelPackage.R4E_ANOMALY__ANOMALY:
 				setAnomaly((R4EAnomaly)null);
 				return;
+			case RModelPackage.R4E_ANOMALY__INFO_ATT:
+				getInfoAtt().clear();
+				return;
 			case RModelPackage.R4E_ANOMALY__STATE:
 				setState(STATE_EDEFAULT);
 				return;
@@ -1239,6 +1277,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 				return CREATED_ON_EDEFAULT == null ? createdOn != null : !CREATED_ON_EDEFAULT.equals(createdOn);
 			case RModelPackage.R4E_ANOMALY__ANOMALY:
 				return anomaly != null;
+			case RModelPackage.R4E_ANOMALY__INFO_ATT:
+				return infoAtt != null && !infoAtt.isEmpty();
 			case RModelPackage.R4E_ANOMALY__STATE:
 				return state != STATE_EDEFAULT;
 			case RModelPackage.R4E_ANOMALY__USER_ASSIGNED:
@@ -1299,6 +1339,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 			switch (derivedFeatureID) {
 				case RModelPackage.R4E_ANOMALY__CREATED_ON: return RModelPackage.R4E_COMMENT__CREATED_ON;
 				case RModelPackage.R4E_ANOMALY__ANOMALY: return RModelPackage.R4E_COMMENT__ANOMALY;
+				case RModelPackage.R4E_ANOMALY__INFO_ATT: return RModelPackage.R4E_COMMENT__INFO_ATT;
 				default: return -1;
 			}
 		}
@@ -1327,6 +1368,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 			switch (baseFeatureID) {
 				case RModelPackage.R4E_COMMENT__CREATED_ON: return RModelPackage.R4E_ANOMALY__CREATED_ON;
 				case RModelPackage.R4E_COMMENT__ANOMALY: return RModelPackage.R4E_ANOMALY__ANOMALY;
+				case RModelPackage.R4E_COMMENT__INFO_ATT: return RModelPackage.R4E_ANOMALY__INFO_ATT;
 				default: return -1;
 			}
 		}

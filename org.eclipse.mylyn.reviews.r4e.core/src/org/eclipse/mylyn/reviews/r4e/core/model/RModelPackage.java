@@ -560,13 +560,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_ANOMALY__ANOMALY = ModelPackage.TOPIC_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Info Att</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ANOMALY__INFO_ATT = ModelPackage.TOPIC_FEATURE_COUNT + 3;
+
+	/**
 	 * The feature id for the '<em><b>State</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__STATE = ModelPackage.TOPIC_FEATURE_COUNT + 3;
+	int R4E_ANOMALY__STATE = ModelPackage.TOPIC_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>User Assigned</b></em>' reference.
@@ -575,7 +584,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__USER_ASSIGNED = ModelPackage.TOPIC_FEATURE_COUNT + 4;
+	int R4E_ANOMALY__USER_ASSIGNED = ModelPackage.TOPIC_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>User Follow Up</b></em>' reference.
@@ -584,7 +593,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__USER_FOLLOW_UP = ModelPackage.TOPIC_FEATURE_COUNT + 5;
+	int R4E_ANOMALY__USER_FOLLOW_UP = ModelPackage.TOPIC_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>User Decision</b></em>' reference.
@@ -593,7 +602,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__USER_DECISION = ModelPackage.TOPIC_FEATURE_COUNT + 6;
+	int R4E_ANOMALY__USER_DECISION = ModelPackage.TOPIC_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Due Date</b></em>' attribute.
@@ -602,7 +611,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__DUE_DATE = ModelPackage.TOPIC_FEATURE_COUNT + 7;
+	int R4E_ANOMALY__DUE_DATE = ModelPackage.TOPIC_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Rank</b></em>' attribute.
@@ -611,7 +620,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__RANK = ModelPackage.TOPIC_FEATURE_COUNT + 8;
+	int R4E_ANOMALY__RANK = ModelPackage.TOPIC_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' reference.
@@ -620,7 +629,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__RULE = ModelPackage.TOPIC_FEATURE_COUNT + 9;
+	int R4E_ANOMALY__RULE = ModelPackage.TOPIC_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Decided By</b></em>' reference.
@@ -629,7 +638,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__DECIDED_BY = ModelPackage.TOPIC_FEATURE_COUNT + 10;
+	int R4E_ANOMALY__DECIDED_BY = ModelPackage.TOPIC_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Fixed By</b></em>' reference.
@@ -638,7 +647,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FIXED_BY = ModelPackage.TOPIC_FEATURE_COUNT + 11;
+	int R4E_ANOMALY__FIXED_BY = ModelPackage.TOPIC_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Followup By</b></em>' reference.
@@ -647,7 +656,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FOLLOWUP_BY = ModelPackage.TOPIC_FEATURE_COUNT + 12;
+	int R4E_ANOMALY__FOLLOWUP_BY = ModelPackage.TOPIC_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Not Accepted Reason</b></em>' attribute.
@@ -656,7 +665,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__NOT_ACCEPTED_REASON = ModelPackage.TOPIC_FEATURE_COUNT + 13;
+	int R4E_ANOMALY__NOT_ACCEPTED_REASON = ModelPackage.TOPIC_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Is Imported</b></em>' attribute.
@@ -665,7 +674,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__IS_IMPORTED = ModelPackage.TOPIC_FEATURE_COUNT + 14;
+	int R4E_ANOMALY__IS_IMPORTED = ModelPackage.TOPIC_FEATURE_COUNT + 15;
 
 	/**
 	 * The feature id for the '<em><b>Fixed In Version</b></em>' reference.
@@ -674,7 +683,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FIXED_IN_VERSION = ModelPackage.TOPIC_FEATURE_COUNT + 15;
+	int R4E_ANOMALY__FIXED_IN_VERSION = ModelPackage.TOPIC_FEATURE_COUNT + 16;
 
 	/**
 	 * The feature id for the '<em><b>Rule ID</b></em>' attribute.
@@ -683,7 +692,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__RULE_ID = ModelPackage.TOPIC_FEATURE_COUNT + 16;
+	int R4E_ANOMALY__RULE_ID = ModelPackage.TOPIC_FEATURE_COUNT + 17;
 
 	/**
 	 * The feature id for the '<em><b>Decided By ID</b></em>' attribute.
@@ -692,7 +701,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__DECIDED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 17;
+	int R4E_ANOMALY__DECIDED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 18;
 
 	/**
 	 * The feature id for the '<em><b>Fixed By ID</b></em>' attribute.
@@ -701,7 +710,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FIXED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 18;
+	int R4E_ANOMALY__FIXED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 19;
 
 	/**
 	 * The feature id for the '<em><b>Follow Up By ID</b></em>' attribute.
@@ -710,7 +719,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FOLLOW_UP_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 19;
+	int R4E_ANOMALY__FOLLOW_UP_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 20;
 
 	/**
 	 * The number of structural features of the '<em>R4E Anomaly</em>' class.
@@ -719,7 +728,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY_FEATURE_COUNT = ModelPackage.TOPIC_FEATURE_COUNT + 20;
+	int R4E_ANOMALY_FEATURE_COUNT = ModelPackage.TOPIC_FEATURE_COUNT + 21;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl <em>R4E Formal Review</em>}' class.
@@ -1890,13 +1899,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_COMMENT__ANOMALY = ModelPackage.COMMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Info Att</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_COMMENT__INFO_ATT = ModelPackage.COMMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>R4E Comment</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_COMMENT_FEATURE_COUNT = ModelPackage.COMMENT_FEATURE_COUNT + 3;
+	int R4E_COMMENT_FEATURE_COUNT = ModelPackage.COMMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl <em>R4E File Context</em>}' class.
@@ -3884,6 +3902,17 @@ public interface RModelPackage extends EPackage {
 	EReference getR4EComment_Anomaly();
 
 	/**
+	 * Returns the meta object for the map '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EComment#getInfoAtt <em>Info Att</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Info Att</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EComment#getInfoAtt()
+	 * @see #getR4EComment()
+	 * @generated
+	 */
+	EReference getR4EComment_InfoAtt();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent <em>R4E Review Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5614,6 +5643,14 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference R4E_COMMENT__ANOMALY = eINSTANCE.getR4EComment_Anomaly();
+
+		/**
+		 * The meta object literal for the '<em><b>Info Att</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference R4E_COMMENT__INFO_ATT = eINSTANCE.getR4EComment_InfoAtt();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewComponentImpl <em>R4E Review Component</em>}' class.

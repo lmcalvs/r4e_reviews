@@ -21,6 +21,8 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.cdt.core.model.ICElement;
 import org.eclipse.compare.CompareConfiguration;
@@ -31,12 +33,25 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.mylyn.reviews.frame.core.model.Location;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
@@ -47,7 +62,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.versions.core.ChangeType;
 import org.eclipse.mylyn.versions.core.ScmArtifact;
@@ -313,12 +331,15 @@ public class CommandUtils {
 	/**
 	 * Method getPosition. Get position based on position in Document
 	 * 
-	 * @param aSelectedElement
-	 *            IFile
-	 * @return TextPosition
-	 * @throws CoreException
+	 * @param aOffset
+	 *            int
+	 * @param aLength
+	 *            int
+	 * @param aDoc
+	 *            IDocument
+	 * @return R4EUITextPosition
 	 */
-	public static R4EUITextPosition getPosition(int aOffset, int aLength, IDocument aDoc) throws CoreException { // $codepro.audit.disable overloadedMethods
+	public static R4EUITextPosition getPosition(int aOffset, int aLength, IDocument aDoc) { // $codepro.audit.disable overloadedMethods
 		final R4EUITextPosition position = new R4EUITextPosition(aOffset, aLength, aDoc);
 		return position;
 	}
@@ -482,9 +503,9 @@ public class CommandUtils {
 	 */
 	public static boolean useWorkspaceResource(R4EFileVersion aVersion) {
 		// Get handle to local storage repository
-		final IRFSRegistry localRepository;
 		try {
-			localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview().getReview());
+			final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
+					.getReview());
 
 			//If resource is available in the workspace, use it.  Otherwise use the local repo version
 			if (null != aVersion && null != aVersion.getResource()) {
@@ -502,6 +523,15 @@ public class CommandUtils {
 		return false;
 	}
 
+	/**
+	 * Method createCompareEditorInput.
+	 * 
+	 * @param aBaseFileVersion
+	 *            R4EFileVersion
+	 * @param aTargetFileVersion
+	 *            R4EFileVersion
+	 * @return R4ECompareEditorInput
+	 */
 	public static R4ECompareEditorInput createCompareEditorInput(R4EFileVersion aBaseFileVersion,
 			R4EFileVersion aTargetFileVersion) {
 
@@ -534,5 +564,163 @@ public class CommandUtils {
 			}
 		}
 		return new R4ECompareEditorInput(config, ancestor, target, base);
+	}
+
+	/**
+	 * Method getAnomalyPosition.
+	 * 
+	 * @param aAnomaly
+	 *            R4EAnomaly
+	 * @return R4EAnomalyTextPosition
+	 */
+	public static R4EAnomalyTextPosition getAnomalyPosition(R4EAnomaly aAnomaly) {
+		final EList<Location> location = aAnomaly.getLocation();
+		if (location.size() > 0) {
+			final R4EContent content = (R4EContent) location.get(0); //look at first location only
+			final R4EAnomalyTextPosition position = (R4EAnomalyTextPosition) content.getLocation();
+			return position;
+		}
+		return null;
+	}
+
+	/**
+	 * Method getAnomalyParentFile.
+	 * 
+	 * @param aAnomaly
+	 *            R4EAnomaly
+	 * @return R4EFileVersion
+	 */
+	public static R4EFileVersion getAnomalyParentFile(R4EAnomaly aAnomaly) {
+		final EList<Location> location = aAnomaly.getLocation();
+		if (location.size() > 0) {
+			final R4EContent content = (R4EContent) location.get(0); //look at first location only
+			final R4EAnomalyTextPosition position = (R4EAnomalyTextPosition) content.getLocation();
+			return position.getFile();
+		}
+		return null;
+	}
+
+	/**
+	 * Method copyAnomalyData.
+	 * 
+	 * @param aTargetAnomaly
+	 *            R4EAnomaly
+	 * @param aSourceAnomaly
+	 *            R4EAnomaly
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 */
+	public static void copyAnomalyData(R4EAnomaly aTargetAnomaly, R4EAnomaly aSourceAnomaly)
+			throws ResourceHandlingException, OutOfSyncException {
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(aTargetAnomaly,
+				R4EUIModelController.getReviewer());
+		aTargetAnomaly.setCreatedOn(aSourceAnomaly.getCreatedOn());
+		aTargetAnomaly.setDecidedBy(aSourceAnomaly.getDecidedBy());
+		aTargetAnomaly.setDescription(aSourceAnomaly.getDescription());
+		aTargetAnomaly.setDueDate(aSourceAnomaly.getDueDate());
+		aTargetAnomaly.setFixedBy(aSourceAnomaly.getFixedBy());
+		aTargetAnomaly.setFixedInVersion(aSourceAnomaly.getFixedInVersion());
+		aTargetAnomaly.setFollowupBy(aSourceAnomaly.getFollowupBy());
+		aTargetAnomaly.setNotAcceptedReason(aSourceAnomaly.getNotAcceptedReason());
+		aTargetAnomaly.setRank(aSourceAnomaly.getRank());
+		aTargetAnomaly.setState(aSourceAnomaly.getState());
+		aTargetAnomaly.setTitle(aSourceAnomaly.getTitle());
+
+		if (null != aSourceAnomaly.getType()) {
+			final R4ECommentType oldCommentType = (R4ECommentType) aSourceAnomaly.getType();
+			R4ECommentType commentType = (R4ECommentType) aTargetAnomaly.getType();
+			if (null == commentType) {
+				commentType = RModelFactory.eINSTANCE.createR4ECommentType();
+				commentType.setType(oldCommentType.getType());
+				aTargetAnomaly.setType(commentType);
+			} else {
+				commentType.setType(oldCommentType.getType());
+			}
+		}
+		if (null != aSourceAnomaly.getRule()) {
+			aTargetAnomaly.setRule(aSourceAnomaly.getRule());
+		}
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	}
+
+	/**
+	 * Method showPostponedElements.
+	 * 
+	 * @param aReview
+	 *            R4EUIReviewBasic
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 */
+	public static void showPostponedElements(R4EUIReviewBasic aReview) throws ResourceHandlingException,
+			OutOfSyncException {
+		final R4EUIPostponedContainer container = aReview.getPostponedContainer();
+		if (null != container) {
+			boolean containerEnabled = false;
+			for (IR4EUIModelElement file : container.getChildren()) {
+				for (IR4EUIModelElement anomaly : file.getChildren()) {
+					if (!anomaly.isEnabled()) {
+						file.removeChildren(anomaly, false);
+					}
+				}
+				if (!file.hasChildren()) {
+					file.close();
+				} else {
+					containerEnabled = true; //At least one file contains postponed anomaly(ies)
+				}
+			}
+			if (!containerEnabled) {
+				container.close();
+				aReview.removeChildren(container, false);
+			}
+		}
+	}
+
+	/**
+	 * Method getOriginalAnomaly.
+	 * 
+	 * @param aOriginalReview
+	 *            R4EReview
+	 * @param aCurrentAnomaly
+	 *            R4EAnomaly
+	 * @return R4EAnomaly
+	 */
+	public static R4EAnomaly getOriginalAnomaly(R4EReview aOriginalReview, R4EAnomaly aCurrentAnomaly) {
+		//Loop through all anomalies and find the one whose R4EID is the same as the currently imported one
+		final String[] origIdTokens = aCurrentAnomaly.getInfoAtt()
+				.get(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)
+				.split(R4EUIConstants.SEPARATOR); //First token is user name, second token is sequence number
+		final R4EUser origUser = aOriginalReview.getUsersMap().get(origIdTokens[0]);
+		if (null != origUser) {
+			for (R4EComment anomaly : origUser.getAddedComments()) {
+				if (anomaly instanceof R4EAnomaly
+						&& Integer.valueOf(origIdTokens[1]).intValue() == anomaly.getId().getSequenceID()) {
+					return (R4EAnomaly) anomaly;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Method getParticipantForReview.
+	 * 
+	 * @param aReview
+	 *            R4EReview
+	 * @param aParticipantId
+	 *            String
+	 * @return R4EParticipant
+	 * @throws ResourceHandlingException
+	 */
+	public static R4EParticipant getParticipantForReview(R4EReview aReview, String aParticipantId)
+			throws ResourceHandlingException {
+		R4EParticipant participant = (R4EParticipant) aReview.getUsersMap().get(aParticipantId);
+		if (null == participant) {
+			//Add the participant
+			final List<R4EUserRole> role = new ArrayList<R4EUserRole>(1);
+			role.add(R4EUserRole.R4E_ROLE_REVIEWER);
+			participant = R4EUIModelController.FModelExt.createR4EParticipant(aReview, aParticipantId, role);
+		}
+		return participant;
+
 	}
 }

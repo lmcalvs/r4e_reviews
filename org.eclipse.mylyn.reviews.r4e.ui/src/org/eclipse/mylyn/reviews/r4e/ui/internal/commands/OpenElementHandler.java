@@ -94,8 +94,9 @@ public class OpenElementHandler extends AbstractHandler {
 					if (element instanceof R4EUIReviewBasic) {
 						Activator.Ftracer.traceInfo("Opening element " + element.getName());
 						final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
-						if (null != activeReview)
+						if (null != activeReview) {
 							activeReview.close();
+						}
 					}
 					element.open();
 

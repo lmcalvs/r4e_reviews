@@ -174,7 +174,7 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IWorkb
 		}
 		if (aObject instanceof R4EFileRevisionEditorInput) {
 			final R4EFileRevisionEditorInput other = (R4EFileRevisionEditorInput) aObject;
-			return other.fFileVersion.equals(this.fFileVersion);
+			return other.fFileVersion.equals(fFileVersion);
 		}
 		return false;
 	}
@@ -213,18 +213,46 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IWorkb
 		return null;
 	}
 
+	/**
+	 * Method getChildren.
+	 * 
+	 * @param o
+	 *            Object
+	 * @return Object[]
+	 */
 	public Object[] getChildren(Object o) {
 		return new Object[0];
 	}
 
+	/**
+	 * Method getImageDescriptor.
+	 * 
+	 * @param object
+	 *            Object
+	 * @return ImageDescriptor
+	 */
 	public ImageDescriptor getImageDescriptor(Object object) {
 		return null;
 	}
 
+	/**
+	 * Method getLabel.
+	 * 
+	 * @param o
+	 *            Object
+	 * @return String
+	 */
 	public String getLabel(Object o) {
 		return fFileVersion.getFileRevision().getName();
 	}
 
+	/**
+	 * Method getParent.
+	 * 
+	 * @param o
+	 *            Object
+	 * @return Object
+	 */
 	public Object getParent(Object o) {
 		return null;
 	}

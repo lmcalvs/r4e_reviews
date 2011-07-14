@@ -18,6 +18,7 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,6 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
@@ -76,12 +78,12 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	/**
 	 * Field fItem.
 	 */
-	private final R4EItem fItem;
+	protected final R4EItem fItem;
 
 	/**
 	 * Field fFileContexts.
 	 */
-	private final List<R4EUIFileContext> fFileContexts;
+	protected final List<R4EUIFileContext> fFileContexts;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -186,6 +188,16 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method getFileContexts.
+	 * 
+	 * @return List<R4EUIFileContext>
+	 */
+	public List<R4EUIFileContext> getFileContexts() {
+		return fFileContexts;
+
+	}
+
+	/**
 	 * Method setEnabled.
 	 * 
 	 * @param aEnabled
@@ -244,7 +256,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	}
 
 	/**
-	 * Close the model element (i.e. disable it)
+	 * Close the model element
 	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#close()
 	 */
@@ -265,6 +277,10 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 
 	/**
 	 * Method open.
+	 * 
+	 * @throws ReviewVersionsException
+	 * @throws ResourceHandlingException
+	 * @throws FileNotFoundException
 	 */
 	@Override
 	public void open() {
@@ -589,6 +605,9 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isSendEmailCmd() {
-		return true;
+		if (isEnabled()) {
+			return true;
+		}
+		return false;
 	}
 }

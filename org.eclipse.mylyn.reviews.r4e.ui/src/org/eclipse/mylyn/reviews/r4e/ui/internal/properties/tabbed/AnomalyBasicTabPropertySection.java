@@ -25,6 +25,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -141,6 +142,11 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 									R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
 											((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
 						}
+
+						//If this is a postponed anomaly, update original one as well
+						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -237,6 +243,11 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 
 						//Set new UI display
 						fProperties.getElement().setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(modelAnomaly));
+
+						//If this is a postponed anomaly, update original one as well
+						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {

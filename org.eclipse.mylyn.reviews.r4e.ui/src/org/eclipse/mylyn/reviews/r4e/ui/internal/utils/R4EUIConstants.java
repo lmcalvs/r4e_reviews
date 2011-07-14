@@ -28,6 +28,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field SEPARATOR. (value is ""/"")
+	 */
+	public static final String SEPARATOR = "/";
+
+	/**
 	 * Field R4E_TEMP_PROJECT. (value is ""R4ETemp"")
 	 */
 	public static final String R4E_TEMP_PROJECT = "R4ETemp";
@@ -101,6 +106,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field GLOBAL_ANOMALIES_LABEL_NAME. (value is ""Global Anomalies"")
 	 */
 	public static final String GLOBAL_ANOMALIES_LABEL = "Global Anomalies";
+
+	/**
+	 * Field POSTPONED_ELEMENTS_LABEL_NAME. (value is ""Postponed Elements"")
+	 */
+	public static final String POSTPONED_ELEMENTS_LABEL_NAME = "Postponed Elements";
 
 	/**
 	 * Field PARTICIPANTS_LABEL_NAME. (value is ""Participants"")
@@ -504,6 +514,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String TITLE_LABEL = "Title: ";
 
 	/**
+	 * Field PARENT_REVIEW_LABEL. (value is ""Parent Review: "")
+	 */
+	public static final String PARENT_REVIEW_LABEL = "Parent Review: ";
+
+	/**
+	 * Field PARENT_ITEM_DESCRIPTION_LABEL. (value is ""Parent Item: "")
+	 */
+	public static final String PARENT_ITEM_DESCRIPTION_LABEL = "Parent Item: ";
+
+	/**
 	 * Field GLOBAL_ANOMALY_PROPERTY_VALUE. (value is ""(Global review anomaly)"")
 	 */
 	public static final String GLOBAL_ANOMALY_PROPERTY_VALUE = "(Global Review Anomaly)";
@@ -739,6 +759,31 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field MESSAGE_TYPE_MEETING. (value is "5")
 	 */
 	public static final int MESSAGE_TYPE_MEETING = 5;
+
+	/**
+	 * Field POSTPONED_ATTR_STR. (value is ""isPostponed"")
+	 */
+	public static final String POSTPONED_ATTR_STR = "isPostponed";
+
+	/**
+	 * Field TRUE_ATTR_VALUE_STR. (value is ""true"")
+	 */
+	public static final String TRUE_ATTR_VALUE_STR = "true";
+
+	/**
+	 * Field POSTPONED_ATTR_ORIG_REVIEW_NAME. (value is ""originalReviewName"")
+	 */
+	public static final String POSTPONED_ATTR_ORIG_REVIEW_NAME = "originalReviewName";
+
+	/**
+	 * Field POSTPONED_ATTR_ORIG_ANOMALY_ID. (value is ""originalAnomalyId"")
+	 */
+	public static final String POSTPONED_ATTR_ORIG_ANOMALY_ID = "originalAnomalyId";
+
+	/**
+	 * Field POSTPONED_ATTR_ORIG_COMMENT_ID. (value is ""originalCommentId"")
+	 */
+	public static final String POSTPONED_ATTR_ORIG_COMMENT_ID = "originalCommentId";
 
 	//Commands
 
@@ -1207,7 +1252,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String SEND_EMAIL_COMMAND_NAME = "Send Email/Notification";
 
 	/**
-	 * Field SEND_EMAIL_COMMAND_TOOLTIP. (value is ""Restore this disabled element"")
+	 * Field SEND_EMAIL_COMMAND_TOOLTIP. (value is ""Send Email or Notification"")
 	 */
 	public static final String SEND_EMAIL_COMMAND_TOOLTIP = "Send Email or Notification";
 
@@ -1215,6 +1260,32 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field SEND_EMAIL_COMMAND_MNEMONIC. (value is ""r"")
 	 */
 	public static final String SEND_EMAIL_COMMAND_MNEMONIC = "N";
+
+	/**
+	 * Field IMPORT_POSTPONED_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.importPostponed"")
+	 */
+	public static final String IMPORT_POSTPONED_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.importPostponed";
+
+	/**
+	 * Field IMPORT_POSTPONED_ICON_FILE. (value is ""icons/view16/importpost_tsk.gif"")
+	 */
+	public static final String IMPORT_POSTPONED_ICON_FILE = "icons/view16/importpost_tsk.gif";
+
+	/**
+	 * Field IMPORT_POSTPONED_COMMAND_NAME. (value is ""Import Postponed Elements"")
+	 */
+	public static final String IMPORT_POSTPONED_COMMAND_NAME = "Import Postponed Elements";
+
+	/**
+	 * Field IMPORT_POSTPONED_COMMAND_TOOLTIP. (value is ""Import Anomalies that were set to Postponed in previous
+	 * Reviews for the current Files "")
+	 */
+	public static final String IMPORT_POSTPONED_COMMAND_TOOLTIP = "Import Anomalies that were set to Postponed in previous Reviews for the current Files ";
+
+	/**
+	 * Field IMPORT_POSTPONED_COMMAND_MNEMONIC. (value is ""I"")
+	 */
+	public static final String IMPORT_POSTPONED_COMMAND_MNEMONIC = "I";
 
 	/**
 	 * Field NEW_REVIEW_ITEM_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem"")
@@ -1248,211 +1319,635 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 
 	//Tooltips for dialogs and property views
 
+	/**
+	 * Field ANOMALY_TITLE_TOOLTIP.
+	 * (value is ""A Title that Identifies this Anomaly"")
+	 */
 	public static final String ANOMALY_TITLE_TOOLTIP = "A Title that Identifies this Anomaly";
 
+	/**
+	 * Field ANOMALY_DESCRIPTION_TOOLTIP.
+	 * (value is ""A Detailed Description of the Anomaly"")
+	 */
 	public static final String ANOMALY_DESCRIPTION_TOOLTIP = "A Detailed Description of the Anomaly";
 
+	/**
+	 * Field ANOMALY_AUTHOR_TOOLTIP.
+	 * (value is ""The Id of the Participant that created this Anomaly"")
+	 */
 	public static final String ANOMALY_AUTHOR_TOOLTIP = "The Id of the Participant that created this Anomaly";
 
+	/**
+	 * Field ANOMALY_CREATION_DATE_TOOLTIP.
+	 * (value is ""The Creation Date for this Anomaly"")
+	 */
 	public static final String ANOMALY_CREATION_DATE_TOOLTIP = "The Creation Date for this Anomaly";
 
+	/**
+	 * Field ANOMALY_POSITION_TOOLTIP.
+	 * (value is ""The Position in the Parent File of the Contents for this Anomaly"")
+	 */
 	public static final String ANOMALY_POSITION_TOOLTIP = "The Position in the Parent File of the Contents for this Anomaly";
 
+	/**
+	 * Field ANOMALY_STATE_TOOLTIP.
+	 * (value is ""The Current State of the Anomaly"")
+	 */
 	public static final String ANOMALY_STATE_TOOLTIP = "The Current State of the Anomaly";
 
+	/**
+	 * Field ANOMALY_CLASS_TOOLTIP.
+	 * (value is ""The Class of this Anomaly"")
+	 */
 	public static final String ANOMALY_CLASS_TOOLTIP = "The Class of this Anomaly";
 
+	/**
+	 * Field ANOMALY_RANK_TOOLTIP.
+	 * (value is ""The Rank (or Severity) of this Anomaly"")
+	 */
 	public static final String ANOMALY_RANK_TOOLTIP = "The Rank (or Severity) of this Anomaly";
 
+	/**
+	 * Field ANOMALY_RULE_ID_TOOLTIP.
+	 * (value is ""An Identifier for the Design Rule Violation reported by this Anomaly"")
+	 */
 	public static final String ANOMALY_RULE_ID_TOOLTIP = "An Identifier for the Design Rule Violation reported by this Anomaly";
 
+	/**
+	 * Field ANOMALY_DUE_DATE_TOOLTIP.
+	 * (value is ""The Target Date to Address this Anomaly"")
+	 */
 	public static final String ANOMALY_DUE_DATE_TOOLTIP = "The Target Date to Address this Anomaly";
 
+	/**
+	 * Field ANOMALY_DECIDED_BY_TOOLTIP.
+	 * (value is ""The Participant that Analyzed this reported Anomaly"")
+	 */
 	public static final String ANOMALY_DECIDED_BY_TOOLTIP = "The Participant that Analyzed this reported Anomaly";
 
+	/**
+	 * Field ANOMALY_FIXED_BY_TOOLTIP.
+	 * (value is ""The Participant that Fixed the Issue Reported in this Anomaly"")
+	 */
 	public static final String ANOMALY_FIXED_BY_TOOLTIP = "The Participant that Fixed the Issue Reported in this Anomaly";
 
+	/**
+	 * Field ANOMALY_FOLLOWUP_BY_TOOLTIP.
+	 * (value is ""The Participant that Verified the Fix for the Issue Reported in this Anomaly"")
+	 */
 	public static final String ANOMALY_FOLLOWUP_BY_TOOLTIP = "The Participant that Verified the Fix for the Issue Reported in this Anomaly";
 
+	/**
+	 * Field ANOMALY_NOT_ACCEPTED_REASON_TOOLTIP.
+	 * (value is ""The Reason why this Anomaly is Rejected"")
+	 */
 	public static final String ANOMALY_NOT_ACCEPTED_REASON_TOOLTIP = "The Reason why this Anomaly is Rejected";
 
+	/**
+	 * Field COMMENT_DESCRIPTION_TOOLTIP.
+	 * (value is ""The Comment Description"")
+	 */
 	public static final String COMMENT_DESCRIPTION_TOOLTIP = "The Comment Description";
 
+	/**
+	 * Field COMMENT_AUTHOR_TOOLTIP.
+	 * (value is ""The Participant that Adds this Comment"")
+	 */
 	public static final String COMMENT_AUTHOR_TOOLTIP = "The Participant that Adds this Comment";
 
+	/**
+	 * Field COMMENT_CREATION_DATE_TOOLTIP.
+	 * (value is ""The Creation Time of this Comment"")
+	 */
 	public static final String COMMENT_CREATION_DATE_TOOLTIP = "The Creation Time of this Comment";
 
+	/**
+	 * Field FILECONTEXT_BASE_FILE_NAME_TOOLTIP.
+	 * (value is ""The base (or Reference File) Name for the File to Review"")
+	 */
 	public static final String FILECONTEXT_BASE_FILE_NAME_TOOLTIP = "The base (or Reference File) Name for the File to Review";
 
+	/**
+	 * Field FILECONTEXT_BASE_FILE_PATH_TOOLTIP.
+	 * (value is ""The base (or Reference File) Path for the File to Review"")
+	 */
 	public static final String FILECONTEXT_BASE_FILE_PATH_TOOLTIP = "The base (or Reference File) Path for the File to Review";
 
+	/**
+	 * Field FILECONTEXT_BASE_FILE_VERSION_TOOLTIP.
+	 * (value is ""The base (or Reference File) Version for the File to Review"")
+	 */
 	public static final String FILECONTEXT_BASE_FILE_VERSION_TOOLTIP = "The base (or Reference File) Version for the File to Review";
 
+	/**
+	 * Field FILECONTEXT_TARGET_FILE_NAME_TOOLTIP.
+	 * (value is ""The target (or current File) Name for the File to Review"")
+	 */
 	public static final String FILECONTEXT_TARGET_FILE_NAME_TOOLTIP = "The target (or current File) Name for the File to Review";
 
+	/**
+	 * Field FILECONTEXT_TARGET_FILE_PATH_TOOLTIP.
+	 * (value is ""The target (or current File) Path for the File to Review"")
+	 */
 	public static final String FILECONTEXT_TARGET_FILE_PATH_TOOLTIP = "The target (or current File) Path for the File to Review";
 
+	/**
+	 * Field FILECONTEXT_TARGET_FILE_VERSION_TOOLTIP.
+	 * (value is ""The target (or current File) Version for the File to Review"")
+	 */
 	public static final String FILECONTEXT_TARGET_FILE_VERSION_TOOLTIP = "The target (or current File) Version for the File to Review";
 
+	/**
+	 * Field PARTICIPANT_ID_TOOLTIP.
+	 * (value is ""A Tag that Identifies this Participant"")
+	 */
 	public static final String PARTICIPANT_ID_TOOLTIP = "A Tag that Identifies this Participant";
 
+	/**
+	 * Field PARTICIPANT_FIND_USER_TOOLTIP.
+	 * (value is ""Search for Users..."")
+	 */
 	public static final String PARTICIPANT_FIND_USER_TOOLTIP = "Search for Users...";
 
+	/**
+	 * Field PARTICIPANT_EMAIL_TOOLTIP.
+	 * (value is ""The Email Address for the Participant"")
+	 */
 	public static final String PARTICIPANT_EMAIL_TOOLTIP = "The Email Address for the Participant";
 
+	/**
+	 * Field PARTICIPANT_DETAILS_TOOLTIP.
+	 * (value is ""Extra Information about this Participant"")
+	 */
 	public static final String PARTICIPANT_DETAILS_TOOLTIP = "Extra Information about this Participant";
 
+	/**
+	 * Field PARTICIPANT_ROLES_TOOLTIP.
+	 * (value is ""The Roles this Participant holds for the Current Review.  "
+			+ "Roles are used to Manage the Actions the Participant can do"")
+	 */
 	public static final String PARTICIPANT_ROLES_TOOLTIP = "The Roles this Participant holds for the Current Review.  "
 			+ "Roles are used to Manage the Actions the Participant can do";
 
+	/**
+	 * Field PARTICIPANT_FOCUS_AREA_TOOLTIP.
+	 * (value is ""The Focus Area for this Participant.  "
+			+ "A Focus Area is Defined by Specific Aspects of the Review this Participant should Focus his Attention to"")
+	 */
 	public static final String PARTICIPANT_FOCUS_AREA_TOOLTIP = "The Focus Area for this Participant.  "
 			+ "A Focus Area is Defined by Specific Aspects of the Review this Participant should Focus his Attention to";
 
+	/**
+	 * Field PARTICIPANT_NUM_ITEMS_TOOLTIP.
+	 * (value is ""Number of Review Items added by this Participant"")
+	 */
 	public static final String PARTICIPANT_NUM_ITEMS_TOOLTIP = "Number of Review Items added by this Participant";
 
+	/**
+	 * Field PARTICIPANT_NUM_ANOMALIES_TOOLTIP.
+	 * (value is ""Number of Anomlaies added by this Participant"")
+	 */
 	public static final String PARTICIPANT_NUM_ANOMALIES_TOOLTIP = "Number of Anomlaies added by this Participant";
 
+	/**
+	 * Field PARTICIPANT_NUM_COMMENTS_TOOLTIP.
+	 * (value is ""Number of Comments (other than Anomalies) added by this Participant"")
+	 */
 	public static final String PARTICIPANT_NUM_COMMENTS_TOOLTIP = "Number of Comments (other than Anomalies) added by this Participant";
 
+	/**
+	 * Field PARTICIPANT_TIME_SPENT_TOOLTIP.
+	 * (value is ""The time the Participant spent working on this Review"")
+	 */
 	public static final String PARTICIPANT_TIME_SPENT_TOOLTIP = "The time the Participant spent working on this Review";
 
+	/**
+	 * Field REVIEW_GROUP_NAME_TOOLTIP.
+	 * (value is ""The Name that Identifies the Review Group"")
+	 */
 	public static final String REVIEW_GROUP_NAME_TOOLTIP = "The Name that Identifies the Review Group";
 
+	/**
+	 * Field REVIEW_GROUP_FOLDER_TOOLTIP.
+	 * (value is ""Browse Folders..."")
+	 */
 	public static final String REVIEW_GROUP_FOLDER_TOOLTIP = "Browse Folders...";
 
+	/**
+	 * Field REVIEW_GROUP_FILE_PATH_TOOLTIP.
+	 * (value is ""The Location (Folder) where the Review Group Information is Stored.  "
+			+ "Review Group Information is stored in files that have a _group_root.xrer suffix"")
+	 */
 	public static final String REVIEW_GROUP_FILE_PATH_TOOLTIP = "The Location (Folder) where the Review Group Information is Stored.  "
 			+ "Review Group Information is stored in files that have a _group_root.xrer suffix";
 
+	/**
+	 * Field REVIEW_GROUP_DESCRIPTION_TOOLTIP.
+	 * (value is ""A Brief Description of ths REview Group"")
+	 */
 	public static final String REVIEW_GROUP_DESCRIPTION_TOOLTIP = "A Brief Description of ths REview Group";
 
+	/**
+	 * Field REVIEW_GROUP_PROJECTS_TOOLTIP.
+	 * (value is ""The Projects that are available for Review in this Review Group.  "
+			+ "Take Note that these Project can have Arbitrary Names, not only Eclipse Project Names"")
+	 */
 	public static final String REVIEW_GROUP_PROJECTS_TOOLTIP = "The Projects that are available for Review in this Review Group.  "
 			+ "Take Note that these Project can have Arbitrary Names, not only Eclipse Project Names";
 
+	/**
+	 * Field REVIEW_GROUP_COMPONENTS_TOOLTIP.
+	 * (value is ""The Components (Subsystems, Sub-Projects etc.) that are available for Review in this Review Group.  "
+			+ "These can have Arbitrary Names"")
+	 */
 	public static final String REVIEW_GROUP_COMPONENTS_TOOLTIP = "The Components (Subsystems, Sub-Projects etc.) that are available for Review in this Review Group.  "
 			+ "These can have Arbitrary Names";
 
+	/**
+	 * Field REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP.
+	 * (value is ""The Entry Criteria that will be used for all Reviews created under this Review Group"")
+	 */
 	public static final String REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP = "The Entry Criteria that will be used for all Reviews created under this Review Group";
 
+	/**
+	 * Field REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP.
+	 * (value is ""The Location of the RuleSet definition Files that can be used for Reviews created under this Review Group"")
+	 */
 	public static final String REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP = "The Location of the RuleSet definition Files that can be used for Reviews created under this Review Group";
 
+	/**
+	 * Field REVIEW_TYPE_TOOLTIP.
+	 * (value is ""The type of the Review:  "
+			+ "Basic Reviews are the Simplest and most Flexible ones.  "
+			+ "Informal Reviews introduces State Tracking for Anomalies.  "
+			+ "Formal Reviews are Structured Reviews that Conforms to the IEEE standard 1028"")
+	 */
 	public static final String REVIEW_TYPE_TOOLTIP = "The type of the Review:  "
 			+ "Basic Reviews are the Simplest and most Flexible ones.  "
 			+ "Informal Reviews introduces State Tracking for Anomalies.  "
 			+ "Formal Reviews are Structured Reviews that Conforms to the IEEE standard 1028";
 
+	/**
+	 * Field REVIEW_NAME_TOOLTIP.
+	 * (value is ""A Name that Identifies this Review"")
+	 */
 	public static final String REVIEW_NAME_TOOLTIP = "A Name that Identifies this Review";
 
+	/**
+	 * Field REVIEW_DESCRIPTION_TOOLTIP.
+	 * (value is ""A Description of the Review"")
+	 */
 	public static final String REVIEW_DESCRIPTION_TOOLTIP = "A Description of the Review";
 
+	/**
+	 * Field REVIEW_PROJECT_TOOLTIP.
+	 * (value is ""The Project the Reviewed Code belongs to"")
+	 */
 	public static final String REVIEW_PROJECT_TOOLTIP = "The Project the Reviewed Code belongs to";
 
+	/**
+	 * Field REVIEW_COMPONENTS_TOOLTIP.
+	 * (value is ""The Components for the Elements being Reviewed"")
+	 */
 	public static final String REVIEW_COMPONENTS_TOOLTIP = "The Components for the Elements being Reviewed";
 
+	/**
+	 * Field REVIEW_ENTRY_CRITERIA_TOOLTIP.
+	 * (value is ""The Entry Criteria for this Review.  "
+			+ "This is automatically set to the Parent Review Group Default Value"")
+	 */
 	public static final String REVIEW_ENTRY_CRITERIA_TOOLTIP = "The Entry Criteria for this Review.  "
 			+ "This is automatically set to the Parent Review Group Default Value";
 
+	/**
+	 * Field REVIEW_OBJECTIVES_TOOLTIP.
+	 * (value is ""The Objectives of this Review"")
+	 */
 	public static final String REVIEW_OBJECTIVES_TOOLTIP = "The Objectives of this Review";
 
+	/**
+	 * Field REVIEW_REFERENCE_MATERIAL_TOOLTIP.
+	 * (value is ""The Reference Materials to be used for This Review"")
+	 */
 	public static final String REVIEW_REFERENCE_MATERIAL_TOOLTIP = "The Reference Materials to be used for This Review";
 
+	/**
+	 * Field REVIEW_PHASE_TOOLTIP.
+	 * (value is ""The Current Review Phase.  "
+			+ "Review Phases are used mainly for Formal Reviews"")
+	 */
 	public static final String REVIEW_PHASE_TOOLTIP = "The Current Review Phase.  "
 			+ "Review Phases are used mainly for Formal Reviews";
 
+	/**
+	 * Field REVIEW_START_DATE_TOOLTIP.
+	 * (value is ""The Start Date for this Review"")
+	 */
 	public static final String REVIEW_START_DATE_TOOLTIP = "The Start Date for this Review";
 
+	/**
+	 * Field REVIEW_END_DATE_TOOLTIP.
+	 * (value is ""The Closing Date for this Review"")
+	 */
 	public static final String REVIEW_END_DATE_TOOLTIP = "The Closing Date for this Review";
 
+	/**
+	 * Field REVIEW_PHASE_TABLE_TOOLTIP.
+	 * (value is ""The Review Phase Map that show the Review Progression"")
+	 */
 	public static final String REVIEW_PHASE_TABLE_TOOLTIP = "The Review Phase Map that show the Review Progression";
 
+	/**
+	 * Field REVIEW_PHASE_OWNER_TOOLTIP.
+	 * (value is ""The Owner of the Review Phase.  "
+			+ "Only the Owner can Change the Current Review Phase"")
+	 */
 	public static final String REVIEW_PHASE_OWNER_TOOLTIP = "The Owner of the Review Phase.  "
 			+ "Only the Owner can Change the Current Review Phase";
 
+	/**
+	 * Field REVIEW_MEETING_TOOLTIP.
+	 * (value is ""The Review Decision Meeting Details, as sent in the Meeting Request Email"")
+	 */
 	public static final String REVIEW_MEETING_TOOLTIP = "The Review Decision Meeting Details, as sent in the Meeting Request Email";
 
+	/**
+	 * Field REVIEW_MEETING_SUBJECT_TOOLTIP.
+	 * (value is ""The Review Decision Meeting Subject, as sent in the Meeting Request Email"")
+	 */
 	public static final String REVIEW_MEETING_SUBJECT_TOOLTIP = "The Review Decision Meeting Subject, as sent in the Meeting Request Email";
 
+	/**
+	 * Field REVIEW_MEETING_UPDATE_TOOLTIP.
+	 * (value is ""Update Meeting Details and re-send the New Meeting Request Email"")
+	 */
 	public static final String REVIEW_MEETING_UPDATE_TOOLTIP = "Update Meeting Details and re-send the New Meeting Request Email";
 
+	/**
+	 * Field REVIEW_MEETING_TIME_TOOLTIP.
+	 * (value is ""The Review Decision Meeting Time, as sent in the Meeting Request Email"")
+	 */
 	public static final String REVIEW_MEETING_TIME_TOOLTIP = "The Review Decision Meeting Time, as sent in the Meeting Request Email";
 
+	/**
+	 * Field REVIEW_MEETING_DURATION_TOOLTIP.
+	 * (value is ""The Review Decision Meeting Duration, as sent in the Meeting Request Email"")
+	 */
 	public static final String REVIEW_MEETING_DURATION_TOOLTIP = "The Review Decision Meeting Duration, as sent in the Meeting Request Email";
 
+	/**
+	 * Field REVIEW_MEETING_LOCATION_TOOLTIP.
+	 * (value is ""The Review Decision Meeting Location, as sent in the Meeting Request Email"")
+	 */
 	public static final String REVIEW_MEETING_LOCATION_TOOLTIP = "The Review Decision Meeting Location, as sent in the Meeting Request Email";
 
+	/**
+	 * Field REVIEW_EXIT_DECISION_TOOLTIP.
+	 * (value is ""The Exit Decision for this Review"")
+	 */
 	public static final String REVIEW_EXIT_DECISION_TOOLTIP = "The Exit Decision for this Review";
 
+	/**
+	 * Field REVIEW_EXIT_DECISION_PARTICIPANTS_TOOLTIP.
+	 * (value is ""The Participants that were part of the Exit Decision"")
+	 */
 	public static final String REVIEW_EXIT_DECISION_PARTICIPANTS_TOOLTIP = "The Participants that were part of the Exit Decision";
 
+	/**
+	 * Field REVIEW_EXIT_DECISION_TIME_SPENT_TOOLTIP.
+	 * (value is ""The Time Spent for the Review Exit Decision"")
+	 */
 	public static final String REVIEW_EXIT_DECISION_TIME_SPENT_TOOLTIP = "The Time Spent for the Review Exit Decision";
 
+	/**
+	 * Field REVIEW_ITEM_AUTHOR_TOOLTIP.
+	 * (value is ""The Participant that Adds this Review Item"")
+	 */
 	public static final String REVIEW_ITEM_AUTHOR_TOOLTIP = "The Participant that Adds this Review Item";
 
+	/**
+	 * Field REVIEW_ITEM_AUTHOR_REP_TOOLTIP.
+	 * (value is ""The Email of the Participant that Created the Change"")
+	 */
 	public static final String REVIEW_ITEM_AUTHOR_REP_TOOLTIP = "The Email of the Participant that Created the Change";
 
+	/**
+	 * Field REVIEW_ITEM_PROJECT_IDS_TOOLTIP.
+	 * (value is ""The Projects the Children Files of this Review Items belong to"")
+	 */
 	public static final String REVIEW_ITEM_PROJECT_IDS_TOOLTIP = "The Projects the Children Files of this Review Items belong to";
 
+	/**
+	 * Field REVIEW_ITEM_CHANGE_ID_TOOLTIP.
+	 * (value is ""The Change ID for this Change, as tagged by the Revision Control System (if applicable)"")
+	 */
 	public static final String REVIEW_ITEM_CHANGE_ID_TOOLTIP = "The Change ID for this Change, as tagged by the Revision Control System (if applicable)";
 
+	/**
+	 * Field REVIEW_ITEM_DATE_SUBMITTED_TOOLTIP.
+	 * (value is ""The Date this Change was put under Source Control  (if applicable)"")
+	 */
 	public static final String REVIEW_ITEM_DATE_SUBMITTED_TOOLTIP = "The Date this Change was put under Source Control  (if applicable)";
 
+	/**
+	 * Field REVIEW_ITEM_DESCRIPTION_TOOLTIP.
+	 * (value is ""A Brief Dexcription of this Review Item.  "
+			+ "This can be entered by the User or it could be coming from the Version Control System"")
+	 */
 	public static final String REVIEW_ITEM_DESCRIPTION_TOOLTIP = "A Brief Dexcription of this Review Item.  "
 			+ "This can be entered by the User or it could be coming from the Version Control System";
 
+	/**
+	 * Field RULE_AREA_NAME_TOOLTIP.
+	 * (value is ""The Area covered by the Children Design Rules (e.g. Java, C++ or any arbitrary division)"")
+	 */
 	public static final String RULE_AREA_NAME_TOOLTIP = "The Area covered by the Children Design Rules (e.g. Java, C++ or any arbitrary division)";
 
+	/**
+	 * Field RULE_ID_TOOLTIP.
+	 * (value is ""An Tag that Identifies this Design Rule"")
+	 */
 	public static final String RULE_ID_TOOLTIP = "An Tag that Identifies this Design Rule";
 
+	/**
+	 * Field RULE_TITLE_TOOLTIP.
+	 * (value is ""The Design Rule Title"")
+	 */
 	public static final String RULE_TITLE_TOOLTIP = "The Design Rule Title";
 
+	/**
+	 * Field RULE_DESCRIPTION_TOOLTIP.
+	 * (value is ""A Description of the Design Rule"")
+	 */
 	public static final String RULE_DESCRIPTION_TOOLTIP = "A Description of the Design Rule";
 
+	/**
+	 * Field RULE_CLASS_TOOLTIP.
+	 * (value is ""The Class for this Design Rule.  "
+			+ "It will be automatically set in Anomalies that refers to this Rule"")
+	 */
 	public static final String RULE_CLASS_TOOLTIP = "The Class for this Design Rule.  "
 			+ "It will be automatically set in Anomalies that refers to this Rule";
 
+	/**
+	 * Field RULE_RANK_TOOLTIP.
+	 * (value is ""The Rank (or Severity) for this Design Rule.  "
+			+ "It will be automatically set in Anomalies that refers to this Rule"")
+	 */
 	public static final String RULE_RANK_TOOLTIP = "The Rank (or Severity) for this Design Rule.  "
 			+ "It will be automatically set in Anomalies that refers to this Rule";
 
+	/**
+	 * Field RULESET_VERSION_TOOLTIP.
+	 * (value is ""The Version for this Rule Set"")
+	 */
 	public static final String RULESET_VERSION_TOOLTIP = "The Version for this Rule Set";
 
+	/**
+	 * Field RULESET_NAME_TOOLTIP.
+	 * (value is ""A Name that Identifies this Rule Set."
+			+ "A Rule Set is a Collection of Related Design Rules bundled together"")
+	 */
 	public static final String RULESET_NAME_TOOLTIP = "A Name that Identifies this Rule Set."
 			+ "A Rule Set is a Collection of Related Design Rules bundled together";
 
+	/**
+	 * Field RULESET_FOLDER_TOOLTIP.
+	 * (value is ""Browse Folders..."")
+	 */
 	public static final String RULESET_FOLDER_TOOLTIP = "Browse Folders...";
 
+	/**
+	 * Field RULESET_FILE_PATH_TOOLTIP.
+	 * (value is ""The Location (Folder) where the Rule Set Information is Stored.  "
+			+ "Rule Set Information is stored in files that have a _rule_set.xrer suffix"")
+	 */
 	public static final String RULESET_FILE_PATH_TOOLTIP = "The Location (Folder) where the Rule Set Information is Stored.  "
 			+ "Rule Set Information is stored in files that have a _rule_set.xrer suffix";
 
+	/**
+	 * Field RULE_VIOLATION_NAME_TOOLTIP.
+	 * (value is ""The Violation Highlighted by the Children Design Rules"")
+	 */
 	public static final String RULE_VIOLATION_NAME_TOOLTIP = "The Violation Highlighted by the Children Design Rules";
 
+	/**
+	 * Field CONTENTS_POSITION_TOOLTIP.
+	 * (value is ""The Position in the Parent File of the Selected Contents"")
+	 */
 	public static final String CONTENTS_POSITION_TOOLTIP = "The Position in the Parent File of the Selected Contents";
 
+	/**
+	 * Field USER_ID_TOOLTIP.
+	 * (value is ""A Tag that Identifies this User"")
+	 */
 	public static final String USER_ID_TOOLTIP = "A Tag that Identifies this User";
 
+	/**
+	 * Field USER_NAME_TOOLTIP.
+	 * (value is ""The Actual Name of this User"")
+	 */
 	public static final String USER_NAME_TOOLTIP = "The Actual Name of this User";
 
+	/**
+	 * Field USER_OFFICE_TOOLTIP.
+	 * (value is ""The location of this User"")
+	 */
 	public static final String USER_OFFICE_TOOLTIP = "The location of this User";
 
+	/**
+	 * Field USER_COMPANY_TOOLTIP.
+	 * (value is ""The Organization this User is Part of"")
+	 */
 	public static final String USER_COMPANY_TOOLTIP = "The Organization this User is Part of";
 
+	/**
+	 * Field USER_DEPARTMENT_TOOLTIP.
+	 * (value is ""The Department this User is Part of"")
+	 */
 	public static final String USER_DEPARTMENT_TOOLTIP = "The Department this User is Part of";
 
+	/**
+	 * Field USER_CITY_TOOLTIP.
+	 * (value is ""The City where the User's Organization is located"")
+	 */
 	public static final String USER_CITY_TOOLTIP = "The City where the User's Organization is located";
 
+	/**
+	 * Field USER_COUNTRY_TOOLTIP.
+	 * (value is ""The Country where the User's Organization is located"")
+	 */
 	public static final String USER_COUNTRY_TOOLTIP = "The Country where the User's Organization is located";
 
+	/**
+	 * Field USER_SEARCH_TOOLTIP.
+	 * (value is ""Search for Users matching the Criteria(s)"")
+	 */
 	public static final String USER_SEARCH_TOOLTIP = "Search for Users matching the Criteria(s)";
 
+	/**
+	 * Field USER_CLEAR_TOOLTIP.
+	 * (value is ""Clear Serach Results"")
+	 */
 	public static final String USER_CLEAR_TOOLTIP = "Clear Serach Results";
 
+	/**
+	 * Field USER_NUM_ENTRIES_TOOLTIP.
+	 * (value is ""Number of Matches Found"")
+	 */
 	public static final String USER_NUM_ENTRIES_TOOLTIP = "Number of Matches Found";
 
+	/**
+	 * Field NOTIFICATION_COMPLETION_TOOLTIP.
+	 * (value is ""Send an Automatic Email to Report that we are done reviewing the Utems for the Current Review"")
+	 */
 	public static final String NOTIFICATION_COMPLETION_TOOLTIP = "Send an Automatic Email to Report that we are done reviewing the Utems for the Current Review";
 
+	/**
+	 * Field NOTIFICATION_ITEMS_UPDATED_TOOLTIP.
+	 * (value is ""Send an Automatic Email to Report Modifications to the Items to Review for the Current Review"")
+	 */
 	public static final String NOTIFICATION_ITEMS_UPDATED_TOOLTIP = "Send an Automatic Email to Report Modifications to the Items to Review for the Current Review";
 
+	/**
+	 * Field NOTIFICATION_PROGRESS_TOOLTIP.
+	 * (value is ""Send an Automatic Email to Report about our Progress Reviewing the Items for the Current Review"")
+	 */
 	public static final String NOTIFICATION_PROGRESS_TOOLTIP = "Send an Automatic Email to Report about our Progress Reviewing the Items for the Current Review";
 
+	/**
+	 * Field NOTIFICATION_QUESTION_TOOLTIP.
+	 * (value is ""Send an Automatic Email to ask a Question about the Selected Element or Text"")
+	 */
 	public static final String NOTIFICATION_QUESTION_TOOLTIP = "Send an Automatic Email to ask a Question about the Selected Element or Text";
 
+	/**
+	 * Field MEETING_REQUEST_TOOLTIP.
+	 * (value is ""Send a new Meeting Request Notification"")
+	 */
 	public static final String MEETING_REQUEST_TOOLTIP = "Send a new Meeting Request Notification";
+
+	/**
+	 * Field PARENT_REVIEW_TOOLTIP.
+	 * (value is ""The name of the review where the original postponed anomaly was raised"")
+	 */
+	public static final String PARENT_REVIEW_TOOLTIP = "The name of the review where the original postponed anomaly was raised";
+
+	/**
+	 * Field POSTPONED_FILE_FILE_NAME_TOOLTIP.
+	 * (value is ""The Name of the file where the original postponed anomaly was raised"")
+	 */
+	public static final String POSTPONED_FILE_FILE_NAME_TOOLTIP = "The Name of the file where the original postponed anomaly was raised";
+
+	/**
+	 * Field POSTPONED_FILE_FILE_PATH_TOOLTIP.
+	 * (value is ""The Path to the file where the original postponed anomaly was raised"")
+	 */
+	public static final String POSTPONED_FILE_FILE_PATH_TOOLTIP = "The Path to the file where the original postponed anomaly was raised";
+
+	/**
+	 * Field POSTPONED_FILE_FILE_VERSION_TOOLTIP.
+	 * (value is ""The Version of the file where the original postponed anomaly was raised"")
+	 */
+	public static final String POSTPONED_FILE_FILE_VERSION_TOOLTIP = "The Version of the file where the original postponed anomaly was raised";
 }

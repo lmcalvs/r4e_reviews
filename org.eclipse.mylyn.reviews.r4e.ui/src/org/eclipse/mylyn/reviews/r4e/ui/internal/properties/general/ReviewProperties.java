@@ -215,8 +215,9 @@ public class ReviewProperties extends ModelElementProperties {
 			} else if (REVIEW_START_DATE_ID.equals(aId)) {
 				return ((R4EUIReviewBasic) getElement()).getReview().getStartDate().toString();
 			} else if (REVIEW_END_DATE_ID.equals(aId)) {
-				if (null == ((R4EUIReviewBasic) getElement()).getReview().getEndDate())
+				if (null == ((R4EUIReviewBasic) getElement()).getReview().getEndDate()) {
 					return R4EUIConstants.IN_PROGRESS_MSG;
+				}
 				return ((R4EUIReviewBasic) getElement()).getReview().getEndDate().toString();
 			} else if (REVIEW_DESCRIPTION_ID.equals(aId)) {
 				return ((R4EUIReviewBasic) getElement()).getReview().getExtraNotes();

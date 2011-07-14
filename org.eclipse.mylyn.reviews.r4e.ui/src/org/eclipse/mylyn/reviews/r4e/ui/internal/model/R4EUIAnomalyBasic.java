@@ -211,10 +211,12 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * 
 	 * @param aAnomaly
 	 *            - the anomaly to use
+	 * @param aPosition
+	 *            IR4EUIPosition
 	 * @return String - the new name
 	 */
 	public static String buildAnomalyName(R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
-		return ((null == aPosition) ? aAnomaly.getTitle() : aPosition.toString() + "->" + aAnomaly.getTitle());
+		return (null == aPosition) ? aAnomaly.getTitle() : aPosition.toString() + "->" + aAnomaly.getTitle();
 	}
 
 	/**
@@ -321,6 +323,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 				}
 			}
 		}
+		fOpen = true;
 	}
 
 	/**
@@ -512,7 +515,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		if (!(getParent() instanceof R4EUIFileContext)) {
+		if (!(getParent().getParent() instanceof R4EUIFileContext)) {
 			return false;
 		}
 		if (isEnabled() && null != ((R4EUIFileContext) getParent().getParent()).getTargetFileVersion()) {

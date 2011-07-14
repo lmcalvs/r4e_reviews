@@ -19,9 +19,13 @@ import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.mylyn.reviews.frame.core.model.impl.CommentImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
@@ -40,6 +44,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentImpl#getCreatedOn <em>Created On</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentImpl#getAnomaly <em>Anomaly</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ECommentImpl#getInfoAtt <em>Info Att</em>}</li>
  * </ul>
  * </p>
  *
@@ -82,6 +87,16 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	 * @ordered
 	 */
 	protected R4EAnomaly anomaly;
+
+	/**
+	 * The cached value of the '{@link #getInfoAtt() <em>Info Att</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInfoAtt()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> infoAtt;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -166,6 +181,18 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EMap<String, String> getInfoAtt() {
+		if (infoAtt == null) {
+			infoAtt = new EcoreEMap<String,String>(RModelPackage.Literals.MAP_KEY_TO_INFO_ATTRIBUTES, MapKeyToInfoAttributesImpl.class, this, RModelPackage.R4E_COMMENT__INFO_ATT);
+		}
+		return infoAtt;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public R4EID getId() {
 		if (id != null && id.eIsProxy()) {
 			InternalEObject oldId = (InternalEObject)id;
@@ -237,6 +264,8 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 		switch (featureID) {
 			case RModelPackage.R4E_COMMENT__ID:
 				return basicSetId(null, msgs);
+			case RModelPackage.R4E_COMMENT__INFO_ATT:
+				return ((InternalEList<?>)getInfoAtt()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -257,6 +286,9 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 			case RModelPackage.R4E_COMMENT__ANOMALY:
 				if (resolve) return getAnomaly();
 				return basicGetAnomaly();
+			case RModelPackage.R4E_COMMENT__INFO_ATT:
+				if (coreType) return getInfoAtt();
+				else return getInfoAtt().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -277,6 +309,9 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 				return;
 			case RModelPackage.R4E_COMMENT__ANOMALY:
 				setAnomaly((R4EAnomaly)newValue);
+				return;
+			case RModelPackage.R4E_COMMENT__INFO_ATT:
+				((EStructuralFeature.Setting)getInfoAtt()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -299,6 +334,9 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 			case RModelPackage.R4E_COMMENT__ANOMALY:
 				setAnomaly((R4EAnomaly)null);
 				return;
+			case RModelPackage.R4E_COMMENT__INFO_ATT:
+				getInfoAtt().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -317,6 +355,8 @@ public class R4ECommentImpl extends CommentImpl implements R4EComment {
 				return CREATED_ON_EDEFAULT == null ? createdOn != null : !CREATED_ON_EDEFAULT.equals(createdOn);
 			case RModelPackage.R4E_COMMENT__ANOMALY:
 				return anomaly != null;
+			case RModelPackage.R4E_COMMENT__INFO_ATT:
+				return infoAtt != null && !infoAtt.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -51,7 +51,7 @@ public class CompletedPropertyTester extends PropertyTester {
 		if (null == R4EUIModelController.getActiveReview()) {
 			return false;
 		}
-		R4EReviewPhase phase = ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState();
+		final R4EReviewPhase phase = ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState();
 		return !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
 	}
 }

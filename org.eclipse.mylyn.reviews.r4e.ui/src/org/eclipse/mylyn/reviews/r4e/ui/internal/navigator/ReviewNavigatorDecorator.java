@@ -89,7 +89,7 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * 
 	 * @param aBaseImage
 	 *            Image
-	 * @param element
+	 * @param aElement
 	 *            Object
 	 * @return Image
 	 * @see org.eclipse.jface.viewers.ILabelDecorator#decorateImage(Image, Object)

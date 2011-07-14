@@ -17,13 +17,9 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general;
 
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
@@ -154,40 +150,5 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getDescription();
 		}
 		return null;
-	}
-
-	/**
-	 * Method setPropertyValue.
-	 * 
-	 * @param aId
-	 *            Object
-	 * @param aValue
-	 *            Object
-	 * @see org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(Object, Object)
-	 */
-	@Override
-	public void setPropertyValue(Object aId, Object aValue) { // $codepro.audit.disable emptyMethod
-		if (!(R4EUIModelController.isDialogOpen())) {
-			try {
-				final String currentUser = R4EUIModelController.getReviewer();
-				if (((R4EUIAnomalyBasic) getElement()).getAnomaly().getUser().getId().equals(currentUser)) {
-					if (ANOMALY_TITLE_ID.equals(aId)) {
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(
-								((R4EUIAnomalyBasic) getElement()).getAnomaly(), currentUser);
-						((R4EUIAnomalyBasic) getElement()).getAnomaly().setTitle((String) aValue);
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-					} else if (ANOMALY_DESCRIPTION_ID.equals(aId)) {
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(
-								((R4EUIAnomalyBasic) getElement()).getAnomaly(), currentUser);
-						((R4EUIAnomalyBasic) getElement()).getAnomaly().setDescription((String) aValue);
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-					}
-				}
-			} catch (ResourceHandlingException e) {
-				UIUtils.displayResourceErrorDialog(e);
-			} catch (OutOfSyncException e) {
-				UIUtils.displaySyncErrorDialog(e);
-			}
-		}
 	}
 }

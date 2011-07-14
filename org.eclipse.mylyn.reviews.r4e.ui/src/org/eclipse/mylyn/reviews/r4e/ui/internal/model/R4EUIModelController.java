@@ -136,7 +136,7 @@ public class R4EUIModelController {
 	/**
 	 * Field fFocusElement.
 	 */
-	private static IR4EUIModelElement fFocusElement = null;
+	private static IR4EUIModelElement FFocusElement = null;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -295,7 +295,7 @@ public class R4EUIModelController {
 	 * @return R4EReviewGroup
 	 * @throws ResourceHandlingException
 	 */
-	public static R4EReviewGroup peekReviewGroup(String filePath) throws ResourceHandlingException {
+	public static R4EReviewGroup peekReviewGroup(String filePath) {
 		FModelExt = SerializeFactory.getModelExtension();
 		R4EReviewGroup group = null;
 		try {
@@ -353,7 +353,7 @@ public class R4EUIModelController {
 	 */
 	public static void loadReviewGroups(List<String> aGroupPaths) {
 
-		boolean changePrefsPaths = false;
+		final boolean changePrefsPaths = false;
 		R4EReviewGroup reviewGroup = null;
 		final List<String> newGroupPaths = new ArrayList<String>();
 		newGroupPaths.addAll(aGroupPaths);
@@ -561,7 +561,7 @@ public class R4EUIModelController {
 	 *            IR4EUIModelElement
 	 */
 	public static void setCurrentFocusElement(IR4EUIModelElement aElement) {
-		fFocusElement = aElement;
+		FFocusElement = aElement;
 	}
 
 	/**
@@ -570,6 +570,6 @@ public class R4EUIModelController {
 	 * @return IR4EUIModelElement
 	 */
 	public static IR4EUIModelElement getCurrentFocusElement() {
-		return fFocusElement;
+		return FFocusElement;
 	}
 }

@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model"
-    nsURI="http://org.eclipse.mylyn.reviews.r4e.core.model/1.0" nsPrefix="r4ecore">
+    nsURI="http://org.eclipse.mylyn.reviews.r4e.core.model/" nsPrefix="r4ecore">
   <eClassifiers xsi:type="ecore:EClass" name="R4EReviewGroup" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewGroup #//R4EReviewComponent">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="R4EReviewGroup"/>
@@ -193,6 +193,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="createdOn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="anomaly" lowerBound="1"
         eType="#//R4EAnomaly"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="infoAtt" upperBound="-1"
+        eType="#//MapKeyToInfoAttributes" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EReviewComponent" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewComponent"/>
   <eClassifiers xsi:type="ecore:EClass" name="R4EFileContext" eSuperTypes="#//R4EIDComponent">

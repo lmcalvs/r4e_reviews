@@ -76,7 +76,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	/**
 	 * Field fFile.
 	 */
-	private final R4EFileContext fFile;
+	protected final R4EFileContext fFile;
 
 	/**
 	 * Field fContentsContainer.
@@ -91,7 +91,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	/**
 	 * Field fAnomalies.
 	 */
-	private List<R4EAnomaly> fAnomalies = null; //Used to cache anomalies for this file context (used at startup)
+	protected List<R4EAnomaly> fAnomalies = null; //Used to cache anomalies for this file context (used at startup)
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -460,7 +460,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	}
 
 	/**
-	 * Method open.
+	 * Method open. Load the serialization model data into UI model
 	 */
 	@Override
 	public void open() {

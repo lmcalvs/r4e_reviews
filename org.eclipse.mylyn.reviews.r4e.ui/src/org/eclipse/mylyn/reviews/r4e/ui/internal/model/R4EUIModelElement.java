@@ -439,7 +439,8 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 *            - also remove from file (hard remove)
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement, boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement,
+	 *      boolean)
 	 */
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
 			throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
@@ -660,6 +661,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isSendEmailCmd()
 	 */
 	public boolean isSendEmailCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method isImportPostponedCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isImportPostponedCmd()
+	 */
+	public boolean isImportPostponedCmd() {
 		return false; //default implementation
 	}
 }

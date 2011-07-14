@@ -109,7 +109,7 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	 * @throws CoreException
 	 */
 	@Override
-	protected IStorage fetchContents(IProgressMonitor aMonitor) throws CoreException {
+	protected IStorage fetchContents(IProgressMonitor aMonitor) {
 		//Fetch contents from the local repository
 		try {
 			final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
@@ -161,7 +161,7 @@ public class R4EFileRevisionTypedElement extends StorageTypedElement {
 	public IEditorInput getDocumentKey(Object aElement) {
 		//The following lines were removed because it caused the document to become dirty
 		//when open at the same time in a single editor
-		if (aElement == this && getBufferedStorage() != null) {
+		if (aElement.equals(this) && null != getBufferedStorage()) {
 			return new R4EFileRevisionEditorInput(fFileVersion);
 		}
 		return null;

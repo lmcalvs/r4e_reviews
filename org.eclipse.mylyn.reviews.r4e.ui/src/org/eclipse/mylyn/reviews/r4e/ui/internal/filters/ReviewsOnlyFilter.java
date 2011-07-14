@@ -47,8 +47,9 @@ public class ReviewsOnlyFilter extends ViewerFilter {
 	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (element instanceof R4EUIReviewBasic || element instanceof R4EUIReviewGroup)
+		if (element instanceof R4EUIReviewBasic || element instanceof R4EUIReviewGroup) {
 			return true;
+		}
 		return false;
 	}
 }

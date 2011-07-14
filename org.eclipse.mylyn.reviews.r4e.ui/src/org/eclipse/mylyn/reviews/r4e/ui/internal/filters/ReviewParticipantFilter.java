@@ -76,10 +76,12 @@ public class ReviewParticipantFilter extends ViewerFilter {
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 
-		if (element instanceof R4EUIReviewGroup && !((R4EUIReviewGroup) element).isOpen())
+		if (element instanceof R4EUIReviewGroup && !((R4EUIReviewGroup) element).isOpen()) {
 			return true;
-		if (isParentReviewParticipant((IR4EUIModelElement) element))
+		}
+		if (isParentReviewParticipant((IR4EUIModelElement) element)) {
 			return true;
+		}
 		return isChildrenReviewParticipant((IR4EUIModelElement) element);
 	}
 
@@ -95,10 +97,12 @@ public class ReviewParticipantFilter extends ViewerFilter {
 		IR4EUIModelElement element = null;
 		for (int i = 0; i < length; i++) {
 			element = aCurrentElement.getChildren()[i];
-			if (!(element instanceof R4EUIReviewBasic))
+			if (!(element instanceof R4EUIReviewBasic)) {
 				return false;
-			if (((R4EUIReviewBasic) element).isParticipant(fParticipant))
+			}
+			if (((R4EUIReviewBasic) element).isParticipant(fParticipant)) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -116,13 +120,15 @@ public class ReviewParticipantFilter extends ViewerFilter {
 		IR4EUIModelElement reviewParentElement = aCurrentElement;
 		while (!(reviewParentElement instanceof R4EUIReviewBasic)) {
 			reviewParentElement = reviewParentElement.getParent();
-			if (null == reviewParentElement)
+			if (null == reviewParentElement) {
 				return false;
+			}
 		}
 
 		//Check if we are a participant for this review
-		if (((R4EUIReviewBasic) reviewParentElement).isParticipant(fParticipant))
+		if (((R4EUIReviewBasic) reviewParentElement).isParticipant(fParticipant)) {
 			return true;
+		}
 		return false;
 	}
 }

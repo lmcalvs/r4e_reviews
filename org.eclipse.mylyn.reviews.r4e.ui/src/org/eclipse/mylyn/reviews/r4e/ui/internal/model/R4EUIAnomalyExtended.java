@@ -69,9 +69,9 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	private static final String ANOMALY_STATE_REJECTED = "REJECTED";
 
 	/**
-	 * Field ANOMALY_STATE_DEFERRED. (value is ""DEFERRED"")
+	 * Field ANOMALY_STATE_POSTPONED. (value is ""POSTPONED"")
 	 */
-	private static final String ANOMALY_STATE_DEFERRED = "DEFERRED";
+	private static final String ANOMALY_STATE_POSTPONED = "POSTPONED";
 
 	/**
 	 * Field ANOMALY_STATE_FIXED. (value is ""FIXED"")
@@ -87,7 +87,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * Field FStateValues.
 	 */
 	private static final String[] STATE_VALUES = { ANOMALY_STATE_ACCEPTED, ANOMALY_STATE_DUPLICATED,
-			ANOMALY_STATE_REJECTED, ANOMALY_STATE_DEFERRED, ANOMALY_STATE_ASSIGNED, ANOMALY_STATE_CREATED,
+			ANOMALY_STATE_REJECTED, ANOMALY_STATE_POSTPONED, ANOMALY_STATE_ASSIGNED, ANOMALY_STATE_CREATED,
 			ANOMALY_STATE_VERIFIED, ANOMALY_STATE_FIXED }; //NOTE: This has to match R4EAnomalyState in R4E core plugin
 
 	// ------------------------------------------------------------------------
@@ -113,14 +113,16 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Method buildAnomalyName.
+	 * Method buildAnomalyExtName.
 	 * 
 	 * @param aAnomaly
 	 *            - the anomaly to use
+	 * @param aPosition
+	 *            IR4EUIPosition
 	 * @return String - the new name
 	 */
-	public static String buildAnomalyName(R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
-		StringBuilder sb = new StringBuilder(getStateString(aAnomaly.getState()) + ": ");
+	public static String buildAnomalyExtName(R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
+		final StringBuilder sb = new StringBuilder(getStateString(aAnomaly.getState()) + ": ");
 		if (null == aPosition) {
 			sb.append(aAnomaly.getTitle());
 		} else {
@@ -183,6 +185,14 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly,
 				R4EUIModelController.getReviewer());
 		fAnomaly.setState(aNewState);
+		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)
+				|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
+			if (getParent().getParent() instanceof R4EUIFileContext) {
+				fAnomaly.setFixedInVersion(((R4EUIFileContext) getParent().getParent()).getTargetFileVersion());
+			} else if (getParent() instanceof R4EUIPostponedFile) {
+				fAnomaly.setFixedInVersion(((R4EUIPostponedFile) getParent()).getTargetFileVersion());
+			}
+		}
 		updateDecider(aNewState);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		String nameLabel = null;
@@ -232,7 +242,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)) {
 			return ANOMALY_STATE_REJECTED;
 		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)) {
-			return ANOMALY_STATE_DEFERRED;
+			return ANOMALY_STATE_POSTPONED;
 		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
 			return ANOMALY_STATE_FIXED;
 		} else if (aNewState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
@@ -260,7 +270,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 			return R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED;
 		} else if (aNewState.equals(ANOMALY_STATE_REJECTED)) {
 			return R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED;
-		} else if (aNewState.equals(ANOMALY_STATE_DEFERRED)) {
+		} else if (aNewState.equals(ANOMALY_STATE_POSTPONED)) {
 			return R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED;
 		} else if (aNewState.equals(ANOMALY_STATE_FIXED)) {
 			return R4EAnomalyState.R4E_ANOMALY_STATE_FIXED;
@@ -321,16 +331,21 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * @return boolean
 	 */
 	public boolean isClassEnabled() {
-		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
-			if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
-				return true;
-			}
-		} else if (R4EUIModelController.getActiveReview()
-				.getReview()
-				.getType()
-				.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
-				return true;
+		if (null != R4EUIModelController.getActiveReview()) {
+			if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+				if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
+					return true;
+				}
+			} else if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -342,16 +357,22 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * @return boolean
 	 */
 	public boolean isRankEnabled() {
-		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
-			if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
-				return true;
-			}
-		} else if (R4EUIModelController.getActiveReview()
-				.getReview()
-				.getType()
-				.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
-				return true;
+		if (null != R4EUIModelController.getActiveReview()) {
+
+			if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+				if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
+					return true;
+				}
+			} else if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -363,16 +384,21 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * @return boolean
 	 */
 	public boolean isDueDateEnabled() {
-		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
-			if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
-				return true;
-			}
-		} else if (R4EUIModelController.getActiveReview()
-				.getReview()
-				.getType()
-				.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
-				return true;
+		if (null != R4EUIModelController.getActiveReview()) {
+			if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+				if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
+					return true;
+				}
+			} else if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -384,27 +410,32 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * @return boolean
 	 */
 	public boolean isDecidedByEnabled() {
-		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
-			if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)
-					|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED)
-					|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)
-					|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)
-					|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
-				return true;
-			}
-		} else { //R4EReviewType.R4E_REVIEW_TYPE_FORMAL
-			final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
-					.getType();
-			if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+		if (null != R4EUIModelController.getActiveReview()) {
+			if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
 				if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)
 						|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED)
 						|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)
-						|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
+						|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)
+						|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
 					return true;
-				} else if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
-					if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)
-							|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
+				}
+			} else { //R4EReviewType.R4E_REVIEW_TYPE_FORMAL
+				final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
+						.getType();
+				if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+					if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)
+							|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED)
+							|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)
+							|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
 						return true;
+					} else if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+						if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)
+								|| fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
+							return true;
+						}
 					}
 				}
 			}
@@ -458,124 +489,151 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	private R4EAnomalyState[] getAllowedStates(R4EAnomalyState aCurrentState) {
 		final List<R4EAnomalyState> states = new ArrayList<R4EAnomalyState>();
 
-		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
-			switch (aCurrentState.getValue()) {
-			case R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED_VALUE:
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
-				break;
-
-			case R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED_VALUE:
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-				break;
-
-			case R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED_VALUE:
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-				break;
-
-			case R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED_VALUE:
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-				break;
-
-			case R4EAnomalyState.R4E_ANOMALY_STATE_FIXED_VALUE:
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
-				break;
-
-			case R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED_VALUE:
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
-				break;
-
-			default:
-				//should never happen
-			}
-		} else { //R4EReviewType.R4E_REVIEW_TYPE_FORMAL
-			final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
-					.getType();
-			switch (aCurrentState.getValue()) {
-			case R4EAnomalyState.R4E_ANOMALY_STATE_CREATED_VALUE:
-				if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
+		if (null != R4EUIModelController.getActiveReview()) {
+			if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+				switch (aCurrentState.getValue()) {
+				case R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED_VALUE:
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
+					if (getParent() instanceof R4EUIPostponedFile
+							|| getParent().getParent() instanceof R4EUIFileContext) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
+					}
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-				} else {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
-				}
-				break;
-
-			case R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED_VALUE:
-				if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-				} else {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-				}
-				break;
-
-			case R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED_VALUE:
-				if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-				} else {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-				}
-				break;
-
-			case R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED_VALUE:
-				if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-				} else {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-				}
-				break;
-
-			case R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED_VALUE:
-				if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-				} else if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
-				} else {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-				}
-				break;
+					break;
 
-			case R4EAnomalyState.R4E_ANOMALY_STATE_FIXED_VALUE:
-				if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+				case R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED_VALUE:
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED_VALUE:
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
+					if (getParent() instanceof R4EUIPostponedFile
+							|| getParent().getParent() instanceof R4EUIFileContext) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
+					}
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED_VALUE:
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
+					if (getParent() instanceof R4EUIPostponedFile
+							|| getParent().getParent() instanceof R4EUIFileContext) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
+					}
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_FIXED_VALUE:
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
-				} else {
-					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED_VALUE:
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
+					break;
+
+				default:
+					//should never happen
 				}
-				break;
+			} else { //R4EReviewType.R4E_REVIEW_TYPE_FORMAL
+				final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
+						.getType();
+				switch (aCurrentState.getValue()) {
+				case R4EAnomalyState.R4E_ANOMALY_STATE_CREATED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+						if (getParent() instanceof R4EUIPostponedFile
+								|| getParent().getParent() instanceof R4EUIFileContext) {
+							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
+						}
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					} else {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+					}
+					break;
 
-			case R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED_VALUE:
-				states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
-				break;
+				case R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
+					} else {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
+					}
+					break;
 
-			default:
-				//should never happen
+				case R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+						if (getParent() instanceof R4EUIPostponedFile
+								|| getParent().getParent() instanceof R4EUIFileContext) {
+							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
+						}
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+					} else {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+					}
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+						if (getParent() instanceof R4EUIPostponedFile
+								|| getParent().getParent() instanceof R4EUIFileContext) {
+							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
+						}
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					} else {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					}
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+						if (getParent() instanceof R4EUIPostponedFile
+								|| getParent().getParent() instanceof R4EUIFileContext) {
+							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
+						}
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					} else if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
+					} else {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+					}
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_FIXED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
+					} else {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
+					}
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED_VALUE:
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
+					break;
+
+				default:
+					//should never happen
+				}
 			}
 		}
 		return states.toArray(new R4EAnomalyState[states.size()]);

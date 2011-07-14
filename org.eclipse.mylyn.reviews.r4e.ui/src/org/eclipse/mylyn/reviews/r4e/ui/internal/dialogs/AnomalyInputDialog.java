@@ -389,7 +389,7 @@ public class AnomalyInputDialog extends FormDialog {
 
 			@Override
 			public void update(ViewerCell cell) {
-				Object element = cell.getElement();
+				final Object element = cell.getElement();
 				if (element instanceof R4EUIRule) {
 					cell.setText(((R4EUIRule) element).getRule().getTitle());
 				} else {
@@ -435,7 +435,7 @@ public class AnomalyInputDialog extends FormDialog {
 
 			@Override
 			public void update(ViewerCell cell) {
-				Object element = cell.getElement();
+				final Object element = cell.getElement();
 				if (element instanceof R4EUIRule) {
 					cell.setText(getClassStr(((R4EUIRule) element).getRule().getClass_()));
 				} else {
@@ -481,7 +481,7 @@ public class AnomalyInputDialog extends FormDialog {
 
 			@Override
 			public void update(ViewerCell cell) {
-				Object element = cell.getElement();
+				final Object element = cell.getElement();
 				if (element instanceof R4EUIRule) {
 					cell.setText(getRankStr(((R4EUIRule) element).getRule().getRank()));
 				} else {
@@ -682,10 +682,22 @@ public class AnomalyInputDialog extends FormDialog {
 		}
 	}
 
+	/**
+	 * Method setTitle.
+	 * 
+	 * @param aTitle
+	 *            String
+	 */
 	public void setTitle(String aTitle) {
 		fAnomalyTitleInputTextField.setText(aTitle);
 	}
 
+	/**
+	 * Method setDescription.
+	 * 
+	 * @param aDescription
+	 *            String
+	 */
 	public void setDescription(String aDescription) {
 		fAnomalyDescriptionInputTextField.setText(aDescription);
 	}

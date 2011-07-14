@@ -34,30 +34,65 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class Diff {
 
+	/**
+	 * Field CHANGE_TYPE_ADDITION.
+	 * (value is ""addition"")
+	 */
 	public static final String CHANGE_TYPE_ADDITION = "addition"; //$NON-NLS-1$
 
+	/**
+	 * Field CHANGE_TYPE_DELETION.
+	 * (value is ""deletion"")
+	 */
 	public static final String CHANGE_TYPE_DELETION = "deletion"; //$NON-NLS-1$
 
+	/**
+	 * Field CHANGE_TYPE_CHANGE.
+	 * (value is ""change"")
+	 */
 	public static final String CHANGE_TYPE_CHANGE = "change"; //$NON-NLS-1$
 
+	/**
+	 * Field DIFF_RANGE_CATEGORY.
+	 * (value is "Activator.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"")
+	 */
 	private static final String DIFF_RANGE_CATEGORY = Activator.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"; //$NON-NLS-1$
 
+	/**
+	 * Field fConfig.
+	 */
 	CompareConfiguration fConfig;
 
+	/**
+	 * Field fIsThreeWay.
+	 */
 	boolean fIsThreeWay;
 
+	/**
+	 * Field fAncestorDoc.
+	 */
 	IDocument fAncestorDoc;
 
 	/** character range in ancestor document */
 	Position fAncestorPos;
 
+	/**
+	 * Field fLeftDoc.
+	 */
 	IDocument fLeftDoc;
 
 	/** character range in left document */
 	Position fLeftPos;
 
+	/**
+	 * Field fRightDoc.
+	 */
 	IDocument fRightDoc;
 
 	/** character range in right document */
@@ -69,22 +104,50 @@ public class Diff {
 	/** if Diff has been resolved */
 	boolean fResolved;
 
+	/**
+	 * Field fDirection.
+	 */
 	int fDirection;
 
+	/**
+	 * Field fIsToken.
+	 */
 	boolean fIsToken = false;
 
 	/** child token diffs */
-	ArrayList<Diff> fDiffs;
+	List<Diff> fDiffs;
 
+	/**
+	 * Field fIsWhitespace.
+	 */
 	boolean fIsWhitespace = false;
 
 	/*
 	 * Create Diff from two ranges and an optional parent diff.
 	 */
+	/**
+	 * Constructor for Diff.
+	 * @param parent Diff
+	 * @param dir int
+	 * @param ancestorDoc IDocument
+	 * @param aRange Position
+	 * @param ancestorStart int
+	 * @param ancestorEnd int
+	 * @param leftDoc IDocument
+	 * @param lRange Position
+	 * @param leftStart int
+	 * @param leftEnd int
+	 * @param rightDoc IDocument
+	 * @param rRange Position
+	 * @param rightStart int
+	 * @param rightEnd int
+	 * @param aThreeWay boolean
+	 * @param aConfig CompareConfiguration
+	 */
 	Diff(Diff parent, int dir, IDocument ancestorDoc, Position aRange, int ancestorStart, int ancestorEnd,
 			IDocument leftDoc, Position lRange, int leftStart, int leftEnd, IDocument rightDoc, Position rRange,
 			int rightStart, int rightEnd, boolean aThreeWay, CompareConfiguration aConfig) {
-		fParent = parent != null ? parent : this;
+		fParent = (null != parent) ? parent : this;
 		fDirection = dir;
 
 		fAncestorDoc = ancestorDoc;
@@ -95,11 +158,16 @@ public class Diff {
 
 		fLeftPos = createPosition(leftDoc, lRange, leftStart, leftEnd);
 		fRightPos = createPosition(rightDoc, rRange, rightStart, rightEnd);
-		if (ancestorDoc != null) {
+		if (null != ancestorDoc) {
 			fAncestorPos = createPosition(ancestorDoc, aRange, ancestorStart, ancestorEnd);
 		}
 	}
 
+	/**
+	 * Method getPosition.
+	 * @param type char
+	 * @return Position
+	 */
 	public Position getPosition(char type) {
 		switch (type) {
 		case R4EUIConstants.ANCESTOR_CONTRIBUTOR:
@@ -108,10 +176,16 @@ public class Diff {
 			return fLeftPos;
 		case R4EUIConstants.RIGHT_CONTRIBUTOR:
 			return fRightPos;
+		default:
+			return null;
 		}
-		return null;
 	}
 
+	/**
+	 * Method getDocument.
+	 * @param type char
+	 * @return IDocument
+	 */
 	public IDocument getDocument(char type) {
 		switch (type) {
 		case R4EUIConstants.ANCESTOR_CONTRIBUTOR:
@@ -120,18 +194,30 @@ public class Diff {
 			return fLeftDoc;
 		case R4EUIConstants.RIGHT_CONTRIBUTOR:
 			return fRightDoc;
+		default:
+			return null;
+
 		}
-		return null;
 	}
 
+	/**
+	 * Method isInRange.
+	 * @param type char
+	 * @param pos int
+	 * @return boolean
+	 */
 	boolean isInRange(char type, int pos) {
-		Position p = getPosition(type);
+		final Position p = getPosition(type);
 		return (pos >= p.offset) && (pos < (p.offset + p.length));
 	}
 
+	/**
+	 * Method changeType.
+	 * @return String
+	 */
 	public String changeType() {
-		boolean leftEmpty = fLeftPos.length == 0;
-		boolean rightEmpty = fRightPos.length == 0;
+		boolean leftEmpty = 0 == fLeftPos.length;
+		boolean rightEmpty = 0 == fRightPos.length;
 
 		if (fDirection == RangeDifference.LEFT) {
 			if (!leftEmpty && rightEmpty) {
@@ -151,6 +237,10 @@ public class Diff {
 		return CHANGE_TYPE_CHANGE;
 	}
 
+	/**
+	 * Method getImage.
+	 * @return Image
+	 */
 	public Image getImage() {
 		int code = Differencer.CHANGE;
 		switch (fDirection) {
@@ -164,23 +254,32 @@ public class Diff {
 		case RangeDifference.CONFLICT:
 			code += Differencer.CONFLICTING;
 			break;
+		default:
 		}
-		if (code != 0) {
+		if (0 != code) {
 			return fConfig.getImage(code);
 		}
 		return null;
 	}
 
+	/**
+	 * Method createPosition.
+	 * @param doc IDocument
+	 * @param range Position
+	 * @param start int
+	 * @param end int
+	 * @return Position
+	 */
 	Position createPosition(IDocument doc, Position range, int start, int end) {
 		try {
 			int l = end - start;
-			if (range != null) {
-				int dl = range.length;
+			if (null != range) {
+				final int dl = range.length;
 				if (l > dl) {
 					l = dl;
 				}
 			} else {
-				int dl = doc.getLength();
+				final int dl = doc.getLength();
 				if (start + l > dl) {
 					l = dl - start;
 				}
@@ -205,20 +304,32 @@ public class Diff {
 		return null;
 	}
 
+	/**
+	 * Method add.
+	 * @param d Diff
+	 */
 	void add(Diff d) {
-		if (fDiffs == null) {
+		if (null == fDiffs) {
 			fDiffs = new ArrayList<Diff>();
 		}
 		fDiffs.add(d);
 	}
 
+	/**
+	 * Method isDeleted.
+	 * @return boolean
+	 */
 	public boolean isDeleted() {
-		if (fAncestorPos != null && fAncestorPos.isDeleted()) {
+		if (null != fAncestorPos && fAncestorPos.isDeleted()) {
 			return true;
 		}
 		return fLeftPos.isDeleted() || fRightPos.isDeleted();
 	}
 
+	/**
+	 * Method setResolved.
+	 * @param r boolean
+	 */
 	void setResolved(boolean r) {
 		fResolved = r;
 		if (r) {
@@ -226,9 +337,13 @@ public class Diff {
 		}
 	}
 
+	/**
+	 * Method isResolved.
+	 * @return boolean
+	 */
 	public boolean isResolved() {
-		if (!fResolved && fDiffs != null) {
-			Iterator<Diff> e = fDiffs.iterator();
+		if (!fResolved && null != fDiffs) {
+			final Iterator<Diff> e = fDiffs.iterator();
 			while (e.hasNext()) {
 				Diff d = e.next();
 				if (!d.isResolved()) {
@@ -240,6 +355,11 @@ public class Diff {
 		return fResolved;
 	}
 
+	/**
+	 * Method getPosition.
+	 * @param contributor int
+	 * @return Position
+	 */
 	Position getPosition(int contributor) {
 		if (contributor == R4EUIConstants.LEFT_CONTRIBUTOR) {
 			return fLeftPos;
@@ -256,11 +376,19 @@ public class Diff {
 	/*
 	 * Returns true if given character range overlaps with this Diff.
 	 */
+	/**
+	 * Method overlaps.
+	 * @param contributor int
+	 * @param start int
+	 * @param end int
+	 * @param docLength int
+	 * @return boolean
+	 */
 	public boolean overlaps(int contributor, int start, int end, int docLength) {
-		Position h = getPosition(contributor);
-		if (h != null) {
-			int ds = h.getOffset();
-			int de = ds + h.getLength();
+		final Position h = getPosition(contributor);
+		if (null != h) {
+			final int ds = h.getOffset();
+			final int de = ds + h.getLength();
 			if ((start < de) && (end >= ds)) {
 				return true;
 			}
@@ -271,8 +399,12 @@ public class Diff {
 		return false;
 	}
 
+	/**
+	 * Method getMaxDiffHeight.
+	 * @return int
+	 */
 	public int getMaxDiffHeight() {
-		Point region = new Point(0, 0);
+		final Point region = new Point(0, 0);
 		int h = getLineRange(fLeftDoc, fLeftPos, region).y;
 		if (fIsThreeWay) {
 			h = Math.max(h, getLineRange(fAncestorDoc, fAncestorPos, region).y);
@@ -280,24 +412,42 @@ public class Diff {
 		return Math.max(h, getLineRange(fRightDoc, fRightPos, region).y);
 	}
 
+	/**
+	 * Method getAncestorHeight.
+	 * @return int
+	 */
 	public int getAncestorHeight() {
-		Point region = new Point(0, 0);
+		final Point region = new Point(0, 0);
 		return getLineRange(fAncestorDoc, fAncestorPos, region).y;
 	}
 
+	/**
+	 * Method getLeftHeight.
+	 * @return int
+	 */
 	public int getLeftHeight() {
-		Point region = new Point(0, 0);
+		final Point region = new Point(0, 0);
 		return getLineRange(fLeftDoc, fLeftPos, region).y;
 	}
 
+	/**
+	 * Method getRightHeight.
+	 * @return int
+	 */
 	public int getRightHeight() {
-		Point region = new Point(0, 0);
+		final Point region = new Point(0, 0);
 		return getLineRange(fRightDoc, fRightPos, region).y;
 	}
 
+	/**
+	 * Method getChangeDiffs.
+	 * @param contributor int
+	 * @param region IRegion
+	 * @return Diff[]
+	 */
 	public Diff[] getChangeDiffs(int contributor, IRegion region) {
-		if (fDiffs != null && intersectsRegion(contributor, region)) {
-			List<Diff> result = new ArrayList<Diff>();
+		if (null != fDiffs && intersectsRegion(contributor, region)) {
+			final List<Diff> result = new ArrayList<Diff>();
 			for (Diff diff2 : fDiffs) {
 				Diff diff = diff2;
 				if (diff.intersectsRegion(contributor, region)) {
@@ -309,32 +459,58 @@ public class Diff {
 		return new Diff[0];
 	}
 
+	/**
+	 * Method intersectsRegion.
+	 * @param contributor int
+	 * @param region IRegion
+	 * @return boolean
+	 */
 	private boolean intersectsRegion(int contributor, IRegion region) {
-		Position p = getPosition(contributor);
-		if (p != null) {
+		final Position p = getPosition(contributor);
+		if (null != p) {
 			return p.overlapsWith(region.getOffset(), region.getLength());
 		}
 		return false;
 	}
 
+	/**
+	 * Method hasChildren.
+	 * @return boolean
+	 */
 	public boolean hasChildren() {
-		return fDiffs != null && !fDiffs.isEmpty();
+		return null != fDiffs && !fDiffs.isEmpty();
 	}
 
+	/**
+	 * Method getKind.
+	 * @return int
+	 */
 	public int getKind() {
 		return fDirection;
 	}
 
+	/**
+	 * Method isToken.
+	 * @return boolean
+	 */
 	public boolean isToken() {
 		return fIsToken;
 	}
 
+	/**
+	 * Method getParent.
+	 * @return Diff
+	 */
 	public Diff getParent() {
 		return fParent;
 	}
 
+	/**
+	 * Method childIterator.
+	 * @return Iterator<Diff>
+	 */
 	public Iterator<Diff> childIterator() {
-		if (fDiffs == null) {
+		if (null == fDiffs) {
 			return new ArrayList<Diff>().iterator();
 		}
 		return fDiffs.iterator();
@@ -344,16 +520,23 @@ public class Diff {
 	 * Returns the start line and the number of lines which correspond to the given position.
 	 * Starting line number is 0 based.
 	 */
+	/**
+	 * Method getLineRange.
+	 * @param doc IDocument
+	 * @param p Position
+	 * @param region Point
+	 * @return Point
+	 */
 	protected Point getLineRange(IDocument doc, Position p, Point region) {
 
-		if (p == null || doc == null) {
+		if (null == p || null == doc) {
 			region.x = 0;
 			region.y = 0;
 			return region;
 		}
 
-		int start = p.getOffset();
-		int length = p.getLength();
+		final int start = p.getOffset();
+		final int length = p.getLength();
 
 		int startLine = 0;
 		try {
@@ -364,17 +547,7 @@ public class Diff {
 
 		int lineCount = 0;
 
-		if (length == 0) {
-//			// if range length is 0 and if range starts a new line
-//			try {
-//				if (start == doc.getLineStartOffset(startLine)) {
-//					lines--;
-//				}
-//			} catch (BadLocationException e) {
-//				lines--;
-//			}
-
-		} else {
+		if (0 != length) {
 			int endLine = 0;
 			try {
 				endLine = doc.getLineOfOffset(start + length - 1); // why -1?

@@ -123,7 +123,7 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	/**
 	 * Method prepareCompareInputNoEditor.
 	 */
-	public void prepareCompareInputNoEditor() throws InvocationTargetException, InterruptedException {
+	public void prepareCompareInputNoEditor() {
 		prepareCompareInput(null);
 	}
 
@@ -179,8 +179,8 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
-		if (adapter == IFile.class) {
-			if (getWorkspaceElement() != null) {
+		if (IFile.class.equals(adapter)) {
+			if (null != getWorkspaceElement()) {
 				return getWorkspaceElement().getResource();
 			}
 			return null;
@@ -219,8 +219,7 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * @see org.eclipse.compare.CompareEditorInput#prepareCompareInput(IProgressMonitor)
 	 */
 	@Override
-	protected ICompareInput prepareCompareInput(IProgressMonitor aMonitor) throws InvocationTargetException,
-			InterruptedException {
+	protected ICompareInput prepareCompareInput(IProgressMonitor aMonitor) {
 
 		if (null != aMonitor) {
 			aMonitor.beginTask("R4E Compare", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
@@ -230,10 +229,10 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		initLabels();
 
 		// Build the diff node to compare the files		
-		Differencer differencer = new Differencer();
+		final Differencer differencer = new Differencer();
 
 		//Store the differences here, we might need them later
-		Object differences = differencer.findDifferences(false, aMonitor, null, fAncestor, fLeft, fRight);
+		final Object differences = differencer.findDifferences(false, aMonitor, null, fAncestor, fLeft, fRight);
 
 		/* We might want to do something here in the future
 		node.addCompareInputChangeListener(new ICompareInputChangeListener() {
@@ -282,7 +281,7 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 */
 	@Override
 	public Control createContents(Composite aParent) {
-		Control control = super.createContents(aParent);
+		final Control control = super.createContents(aParent);
 
 		//Go to the correct element in the compare editor
 		UIUtils.selectElementInEditor(this);

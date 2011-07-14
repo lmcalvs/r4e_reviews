@@ -37,11 +37,11 @@ public class FocusFilter extends ViewerFilter {
 	/**
 	 * Method select.
 	 * 
-	 * @param viewer
+	 * @param aViewer
 	 *            Viewer
-	 * @param parentElement
+	 * @param aParentElement
 	 *            Object
-	 * @param element
+	 * @param aElement
 	 *            Object
 	 * @return boolean
 	 */
@@ -50,8 +50,8 @@ public class FocusFilter extends ViewerFilter {
 
 		//The input of the tree is already set to the parent of the focus element, so just check if the 
 		//current element is a child of the focus element
-		IR4EUIModelElement focusElement = R4EUIModelController.getCurrentFocusElement();
-		IR4EUIModelElement focusElementParent = focusElement.getParent();
+		final IR4EUIModelElement focusElement = R4EUIModelController.getCurrentFocusElement();
+		final IR4EUIModelElement focusElementParent = focusElement.getParent();
 		if ((null == aParentElement && null == focusElementParent)
 				|| (null != aParentElement && aParentElement.equals(focusElementParent))) {
 			if (aElement.equals(focusElement)) {

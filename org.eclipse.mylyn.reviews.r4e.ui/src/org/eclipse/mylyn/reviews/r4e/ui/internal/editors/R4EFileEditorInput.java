@@ -178,7 +178,7 @@ public class R4EFileEditorInput extends PlatformObject implements IFileEditorInp
 		}
 		if (aObject instanceof R4EFileEditorInput) {
 			final R4EFileEditorInput other = (R4EFileEditorInput) aObject;
-			return other.fFileVersion.getResource().equals(this.fFileVersion.getResource());
+			return other.fFileVersion.getResource().equals(fFileVersion.getResource());
 		}
 		return false;
 	}

@@ -98,11 +98,6 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	 */
 	protected Text fDescriptionText = null;
 
-	/**
-	 * Field fDetailsText.
-	 */
-	private final CLabel fDetailsText = null;
-
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -257,6 +252,9 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	 */
 	@Override
 	public void refresh() {
+		if (null == fProperties) {
+			return; //R4EUIPostponedContainer (subclass of R4EUIReviewItem) does not have any properties
+		}
 		fRefreshInProgress = true;
 		final R4EItem modelItem = ((R4EUIReviewItem) fProperties.getElement()).getItem();
 		fAuthorText.setText(modelItem.getAddedById());
@@ -264,7 +262,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 			fAuthorRepText.setText(modelItem.getAuthorRep());
 		} else {
 			try {
-				R4EParticipant participant = R4EUIModelController.getActiveReview().getParticipant(
+				final R4EParticipant participant = R4EUIModelController.getActiveReview().getParticipant(
 						modelItem.getAddedById(), false);
 				if (null != participant) {
 					fAuthorRepText.setText(participant.getEmail());

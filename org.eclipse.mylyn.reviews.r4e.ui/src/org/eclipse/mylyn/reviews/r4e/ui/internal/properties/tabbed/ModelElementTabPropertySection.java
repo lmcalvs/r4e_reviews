@@ -92,8 +92,9 @@ public class ModelElementTabPropertySection extends AbstractPropertySection impl
 	public void setInput(IWorkbenchPart part, ISelection aSelection) {
 
 		//Get current selection.
-		if (null == aSelection || aSelection.isEmpty())
+		if (null == aSelection || aSelection.isEmpty()) {
 			return;
+		}
 
 		//Get model element selected
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((StructuredSelection) aSelection).getFirstElement();

@@ -198,6 +198,13 @@ public class ParticipantProperties extends ModelElementProperties {
 		return DESCRIPTORS;
 	}
 
+	/**
+	 * Method mapUserRole.
+	 * 
+	 * @param aRole
+	 *            R4EUserRole
+	 * @return String
+	 */
 	private String mapUserRole(R4EUserRole aRole) {
 		if (aRole.equals(R4EUserRole.R4E_ROLE_AUTHOR)) {
 			return AUTHOR;
@@ -265,8 +272,8 @@ public class ParticipantProperties extends ModelElementProperties {
 			}
 			return Integer.toString(totalTimeSpent);
 		} else if (PARTICIPANT_ROLES_ID.equals(aId)) {
-			EList<R4EUserRole> roles = ((R4EUIParticipant) getElement()).getParticipant().getRoles();
-			StringBuilder rolesStr = new StringBuilder();
+			final EList<R4EUserRole> roles = ((R4EUIParticipant) getElement()).getParticipant().getRoles();
+			final StringBuilder rolesStr = new StringBuilder();
 			for (R4EUserRole role : roles) {
 				rolesStr.append(mapUserRole(role) + ", ");
 			}

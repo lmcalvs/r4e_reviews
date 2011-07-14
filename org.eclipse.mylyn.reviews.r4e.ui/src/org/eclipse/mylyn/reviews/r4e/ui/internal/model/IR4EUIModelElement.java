@@ -402,4 +402,11 @@ public interface IR4EUIModelElement {
 	 * @return boolean
 	 */
 	boolean isSendEmailCmd();
+
+	/**
+	 * Method isImportPostponedCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isImportPostponedCmd();
 }

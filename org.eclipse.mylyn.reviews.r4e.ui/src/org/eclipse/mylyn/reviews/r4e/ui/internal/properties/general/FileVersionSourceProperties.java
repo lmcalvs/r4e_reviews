@@ -132,18 +132,21 @@ public class FileVersionSourceProperties implements IPropertySource {
 	 */
 	public Object getPropertyValue(Object aId) {
 		if (FILE_VERSION_NAME_ID.equals(aId)) {
-			if (null != fFileVersion)
+			if (null != fFileVersion) {
 				return fFileVersion.getName();
+			}
 		} else if (FILE_VERSION_PATH_ID.equals(aId)) {
 			//The properties shows the absolute path
 			if (null != fFileVersion) {
 				final IResource resource = fFileVersion.getResource();
-				if (null != resource)
+				if (null != resource) {
 					return resource.getLocation().toOSString();
+				}
 			}
 		} else if (FILE_VERSION_ID.equals(aId)) {
-			if (null != fFileVersion)
+			if (null != fFileVersion) {
 				return fFileVersion.getVersionID();
+			}
 		}
 		return null;
 	}

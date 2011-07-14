@@ -80,7 +80,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	 * @param aPosition
 	 *            IR4EUIPosition
 	 */
-	public R4EUIContent(IR4EUIModelElement aParent, R4EDelta aDelta, IR4EUIPosition aPosition) {
+	protected R4EUIContent(IR4EUIModelElement aParent, R4EDelta aDelta, IR4EUIPosition aPosition) {
 		super(aParent, aPosition.toString(), R4EUIConstants.AUTHOR_LABEL
 				+ ((R4EItem) aDelta.eContainer().eContainer()).getAddedBy().getId()); // $codepro.audit.disable methodChainLength
 		fContent = aDelta;
@@ -263,7 +263,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	public boolean isAddLinkedAnomalyCmd() {
 		//If this is a formal review, we need to be in the preparation or decision phase
 		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
+			final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
 					.getType();
 			if (!phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
 					&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {

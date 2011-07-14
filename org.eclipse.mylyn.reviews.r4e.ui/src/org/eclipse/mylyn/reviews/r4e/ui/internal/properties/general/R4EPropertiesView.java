@@ -40,8 +40,9 @@ public class R4EPropertiesView extends PropertySheet {
 	 */
 	@Override
 	protected boolean isImportant(IWorkbenchPart part) {
-		if (part.getSite().getId().equals("org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView"))
+		if (part.getSite().getId().equals("org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView")) {
 			return true;
+		}
 		return false;
 	}
 }

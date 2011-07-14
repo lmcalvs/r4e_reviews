@@ -59,20 +59,25 @@ public class ProjectPropertyTester extends PropertyTester {
 		if (selectedElement instanceof IProject) {
 			return true;
 		} else if (selectedElement instanceof IJavaProject) {
-			if (null != ((IJavaProject) selectedElement).getProject())
+			if (null != ((IJavaProject) selectedElement).getProject()) {
 				return true;
+			}
 		} else if (selectedElement instanceof ICProject) {
-			if (null != ((ICProject) selectedElement).getProject())
+			if (null != ((ICProject) selectedElement).getProject()) {
 				return true;
+			}
 		} else if (selectedElement instanceof IPackageFragment || selectedElement instanceof IPackageFragmentRoot) {
-			if (null != ((IJavaElement) selectedElement).getJavaProject().getProject())
+			if (null != ((IJavaElement) selectedElement).getJavaProject().getProject()) {
 				return true;
+			}
 		} else if (selectedElement instanceof IFolder) {
-			if (null != ((IFolder) selectedElement).getProject())
+			if (null != ((IFolder) selectedElement).getProject()) {
 				return true;
+			}
 		} else if (selectedElement instanceof IAdaptable) {
-			if (null != ((IAdaptable) selectedElement).getAdapter(IProject.class))
+			if (null != ((IAdaptable) selectedElement).getAdapter(IProject.class)) {
 				return true;
+			}
 		}
 		return false;
 	}
