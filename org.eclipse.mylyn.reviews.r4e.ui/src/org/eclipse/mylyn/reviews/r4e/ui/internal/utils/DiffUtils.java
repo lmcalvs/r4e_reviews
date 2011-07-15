@@ -18,7 +18,6 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,14 +27,9 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.SharedDocumentAdapter;
 import org.eclipse.compare.contentmergeviewer.ITokenComparator;
 import org.eclipse.compare.contentmergeviewer.TokenComparator;
-import org.eclipse.compare.rangedifferencer.IRangeComparator;
 import org.eclipse.compare.rangedifferencer.RangeDifference;
 import org.eclipse.compare.rangedifferencer.RangeDifferencer;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.IDocument;
@@ -89,7 +83,6 @@ public class DiffUtils {
 
 		//THese structures will be used to hold found differences
 		List<Diff> changeDiffs = new ArrayList<Diff>();
-		List<Diff> allDiffs = null;
 
 		//Get documents to compare form input
 		final IDocument lDoc = getDocument(input.getLeftElement());
@@ -119,55 +112,8 @@ public class DiffUtils {
 			sancestor = new DocLineComparator(aDoc, null, ignoreWhiteSpace);
 		}
 
-		final Object[] result = new Object[1];
 		final DocLineComparator sa = sancestor, sl = sleft, sr = sright;
-		final IRunnableWithProgress runnable = new IRunnableWithProgress() {
-			public void run(IProgressMonitor monitor) throws InterruptedException, InvocationTargetException {
-				monitor.beginTask("Computing differences...", maxWork(sa, sl, sr)); //$NON-NLS-1$
-				try {
-					result[0] = RangeDifferencer.findRanges(monitor, sa, sl, sr);
-				} catch (OutOfMemoryError ex) {
-					System.gc();
-					throw new InvocationTargetException(ex);
-				}
-				if (monitor.isCanceled()) { // canceled
-					throw new InterruptedException();
-				}
-				monitor.done();
-			}
-		};
-
-		RangeDifference[] e = null;
-		try {
-			config.getContainer().run(true, true, runnable);
-			e = (RangeDifference[]) result[0];
-		} catch (InvocationTargetException ex) {
-			// we create a NOCHANGE range for the whole document
-			final Diff diff = new Diff(null, RangeDifference.NOCHANGE, aDoc, aRegion, 0, (null != aDoc)
-					? aDoc.getLength()
-					: 0, lDoc, null, 0, lDoc.getLength(), rDoc, null, 0, rDoc.getLength(), aIsThreeWay, config);
-
-			allDiffs = new ArrayList<Diff>();
-			allDiffs.add(diff);
-			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "Too many differences found", //$NON-NLS-1$
-					ex.getTargetException()));
-		} catch (InterruptedException ex) {
-			// we create a NOCHANGE range for the whole document
-			final Diff diff = new Diff(null, RangeDifference.NOCHANGE, aDoc, aRegion, 0, (null != aDoc)
-					? aDoc.getLength()
-					: 0, lDoc, null, 0, lDoc.getLength(), rDoc, null, 0, rDoc.getLength(), aIsThreeWay, config);
-
-			allDiffs = new ArrayList<Diff>();
-			allDiffs.add(diff);
-			return changeDiffs;
-		}
-
-		if (isCapped(sa, sl, sr)) {
-			config.setProperty(OPTIMIZED_ALGORITHM_USED, new Boolean(true));
-		} else {
-			config.setProperty(OPTIMIZED_ALGORITHM_USED, new Boolean(false));
-		}
-
+		final RangeDifference[] e = RangeDifferencer.findRanges(null, sa, sl, sr);
 		final List<Diff> newAllDiffs = new ArrayList<Diff>();
 		for (RangeDifference es : e) {
 			int ancestorStart = 0;
@@ -286,49 +232,6 @@ public class DiffUtils {
 	}
 
 	/**
-	 * Method maxWork.
-	 * 
-	 * @param a
-	 *            IRangeComparator
-	 * @param l
-	 *            IRangeComparator
-	 * @param r
-	 *            IRangeComparator
-	 * @return int
-	 */
-	private static int maxWork(IRangeComparator a, IRangeComparator l, IRangeComparator r) {
-		final int ln = l.getRangeCount();
-		final int rn = r.getRangeCount();
-		if (null != a) {
-			final int an = a.getRangeCount();
-			return (2 * Math.max(an, ln)) + (2 * Math.max(an, rn));
-		}
-		return 2 * Math.max(ln, rn);
-	}
-
-	/**
-	 * Method isCapped.
-	 * 
-	 * @param ancestor
-	 *            DocLineComparator
-	 * @param left
-	 *            DocLineComparator
-	 * @param right
-	 *            DocLineComparator
-	 * @return boolean
-	 */
-	private boolean isCapped(DocLineComparator ancestor, DocLineComparator left, DocLineComparator right) {
-		final int aLength = (null == ancestor) ? 0 : ancestor.getRangeCount();
-		final int lLength = left.getRangeCount();
-		final int rLength = right.getRangeCount();
-		if ((double) aLength * (double) lLength > TOO_LONG || (double) aLength * (double) rLength > TOO_LONG
-				|| (double) lLength * (double) rLength > TOO_LONG) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Method getTokenEnd2.
 	 * 
 	 * @param tc
@@ -402,7 +305,7 @@ public class DiffUtils {
 		if (diff.fIsWhitespace) {
 			return false;
 		}
-		int kind = diff.getKind();
+		final int kind = diff.getKind();
 		return useChange(kind, aConfig);
 	}
 
@@ -475,13 +378,13 @@ public class DiffUtils {
 			ancestorStart = baseDiff.fAncestorPos.getOffset();
 		}
 
-		int rightStart = baseDiff.fRightPos.getOffset();
-		ITokenComparator sm = createTokenComparator(d);
+		final int rightStart = baseDiff.fRightPos.getOffset();
+		final ITokenComparator sm = createTokenComparator(d);
 
-		int leftStart = baseDiff.fLeftPos.getOffset();
-		ITokenComparator sy = createTokenComparator(s);
+		final int leftStart = baseDiff.fLeftPos.getOffset();
+		final ITokenComparator sy = createTokenComparator(s);
 
-		RangeDifference[] r = RangeDifferencer.findRanges(sa, sy, sm);
+		final RangeDifference[] r = RangeDifferencer.findRanges(sa, sy, sm);
 		for (int i = 0; i < r.length; i++) {
 			RangeDifference es = r[i];
 			// determine range of diffs in one line
@@ -587,13 +490,13 @@ public class DiffUtils {
 			sa = createTokenComparator(a);
 		}
 
-		int rightStart = baseDiff.fRightPos.getOffset();
-		ITokenComparator sm = createTokenComparator(d);
+		final int rightStart = baseDiff.fRightPos.getOffset();
+		final ITokenComparator sm = createTokenComparator(d);
 
-		int leftStart = baseDiff.fLeftPos.getOffset();
-		ITokenComparator sy = createTokenComparator(s);
+		final int leftStart = baseDiff.fLeftPos.getOffset();
+		final ITokenComparator sy = createTokenComparator(s);
 
-		RangeDifference[] e = RangeDifferencer.findRanges(sa, sy, sm);
+		final RangeDifference[] e = RangeDifferencer.findRanges(sa, sy, sm);
 		for (RangeDifference es : e) {
 			int kind = es.kind();
 			if (kind != RangeDifference.NOCHANGE) {
@@ -654,7 +557,7 @@ public class DiffUtils {
 		if (count <= 0) {
 			return tc.getTokenStart(start);
 		}
-		int index = start + count - 1;
+		final int index = start + count - 1;
 		return tc.getTokenStart(index) + tc.getTokenLength(index);
 	}
 }

@@ -20,8 +20,12 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -44,9 +48,17 @@ public class ExpandAllHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		//Expand tree (all levels)
-		Activator.Ftracer.traceInfo("Expanding whole tree");
-		R4EUIModelController.getNavigatorView().getTreeViewer().expandAll();
+		final UIJob job = new UIJob("Expanding All Elements...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				//Expand tree (all levels)
+				Activator.Ftracer.traceInfo("Expanding whole tree");
+				R4EUIModelController.getNavigatorView().getTreeViewer().expandAll();
+				return Status.OK_STATUS;
+			}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 

@@ -21,14 +21,15 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -49,21 +50,25 @@ public class OpenEditorHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		if (R4EUIModelController.getNavigatorView().isEditorLinked()) {
-			final ISelection selection = HandlerUtil.getCurrentSelection(event);
-			if (selection instanceof IStructuredSelection) {
-				//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
-				final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-				shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-
-				if (!selection.isEmpty()) {
-					EditorProxy.openEditor(R4EUIModelController.getNavigatorView().getSite().getPage(), selection, true);
+		final UIJob job = new UIJob("Opening Editor...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				if (R4EUIModelController.getNavigatorView().isEditorLinked()) {
+					final ISelection selection = HandlerUtil.getCurrentSelection(event);
+					if (selection instanceof IStructuredSelection) {
+						if (!selection.isEmpty()) {
+							EditorProxy.openEditor(R4EUIModelController.getNavigatorView().getSite().getPage(),
+									selection, true);
+						}
+					}
 				}
-				shell.setCursor(null);
+				return Status.OK_STATUS;
 			}
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 }

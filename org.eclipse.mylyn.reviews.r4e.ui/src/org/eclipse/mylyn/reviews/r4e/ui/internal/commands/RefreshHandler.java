@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -38,6 +39,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -58,41 +60,49 @@ public class RefreshHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		final ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			try {
-				if (!selection.isEmpty()) {
+		final UIJob job = new UIJob("Refreshing View...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				final ISelection selection = HandlerUtil.getCurrentSelection(event);
+				if (selection instanceof IStructuredSelection) {
+					try {
+						if (!selection.isEmpty()) {
 
-					final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
-					if (element instanceof R4EUIReviewGroup) {
-						//Refresh whole Review Group
-						((R4EUIReviewGroup) element).close();
-						((R4EUIReviewGroup) element).open();
-					} else {
-						//Refresh Review
-						refreshReview(element);
-					}
-				} else {
-					//No selection refresh all open review groups
-					final IR4EUIModelElement[] groups = R4EUIModelController.getRootElement().getChildren();
-					for (IR4EUIModelElement group : groups) {
-						if (group.isOpen()) {
-							group.close();
-							group.open();
+							final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+							if (element instanceof R4EUIReviewGroup) {
+								//Refresh whole Review Group
+								((R4EUIReviewGroup) element).close();
+								((R4EUIReviewGroup) element).open();
+							} else {
+								//Refresh Review
+								refreshReview(element);
+							}
+						} else {
+							//No selection refresh all open review groups
+							final IR4EUIModelElement[] groups = R4EUIModelController.getRootElement().getChildren();
+							for (IR4EUIModelElement group : groups) {
+								if (group.isOpen()) {
+									group.close();
+									group.open();
+								}
+							}
 						}
+					} catch (ResourceHandlingException e) {
+						UIUtils.displayResourceErrorDialog(e);
+					} catch (FileNotFoundException e) {
+						Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						Activator.getDefault().logError("Exception: " + e.toString(), e);
+					} catch (ReviewVersionsException e) {
+						UIUtils.displayVersionErrorDialog(e);
 					}
 				}
-			} catch (ResourceHandlingException e) {
-				UIUtils.displayResourceErrorDialog(e);
-			} catch (FileNotFoundException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logError("Exception: " + e.toString(), e);
-			} catch (ReviewVersionsException e) {
-				UIUtils.displayVersionErrorDialog(e);
+				return Status.OK_STATUS;
 			}
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 

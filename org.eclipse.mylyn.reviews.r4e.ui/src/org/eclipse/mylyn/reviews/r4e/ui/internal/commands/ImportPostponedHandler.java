@@ -23,6 +23,9 @@ import java.util.List;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.frame.core.model.Comment;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
@@ -48,6 +51,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -70,8 +74,15 @@ public class ImportPostponedHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		//TODO: This is a long-running operation. Later we want to start a job here
-		importPostponedElements();
+		final UIJob job = new UIJob("Importing Postponed elements...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				importPostponedElements();
+				return Status.OK_STATUS;
+			}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 

@@ -20,6 +20,9 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -27,6 +30,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -47,27 +51,35 @@ public class CloseElementHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		final ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			if (!selection.isEmpty()) {
-				final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
-				element.close();
-				for (IR4EUIModelElement childElement : element.getChildren()) {
-					if (null != childElement && childElement.isOpen()) {
-						childElement.close();
-						break;
+		final UIJob job = new UIJob("Closing Element...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				final ISelection selection = HandlerUtil.getCurrentSelection(event);
+				if (selection instanceof IStructuredSelection) {
+					if (!selection.isEmpty()) {
+						final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+						element.close();
+						for (IR4EUIModelElement childElement : element.getChildren()) {
+							if (null != childElement && childElement.isOpen()) {
+								childElement.close();
+								break;
+							}
+						}
+						Activator.Ftracer.traceInfo("Closing element " + element.getName());
+
+						//The action is only performed on the first element, so select it
+						final StructuredSelection newSelection = new StructuredSelection(
+								((IStructuredSelection) selection).getFirstElement());
+						R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
 					}
 				}
-				Activator.Ftracer.traceInfo("Closing element " + element.getName());
-
-				//The action is only performed on the first element, so select it
-				final StructuredSelection newSelection = new StructuredSelection(
-						((IStructuredSelection) selection).getFirstElement());
-				R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
+				return Status.OK_STATUS;
 			}
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 }

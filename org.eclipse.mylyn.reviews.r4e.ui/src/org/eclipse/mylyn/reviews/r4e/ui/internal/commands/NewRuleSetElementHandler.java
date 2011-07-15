@@ -21,6 +21,9 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -33,6 +36,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.services.IEvaluationService;
 
 /**
@@ -54,58 +58,67 @@ public class NewRuleSetElementHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
-		final IR4EUIModelElement element = R4EUIModelController.getRootElement();
-		IR4EUIModelElement newElement = null;
+		final UIJob job = new UIJob("Adding New Rule Set...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
+				final IR4EUIModelElement element = R4EUIModelController.getRootElement();
+				IR4EUIModelElement newElement = null;
 
-		try {
-			//Get data from user
-			final ReviewComponent tempModelComponent = ((R4EUIRootElement) element).createRuleSetElement();
-			if (null != tempModelComponent) {
-				Activator.Ftracer.traceInfo("Adding Rule Set to the root element ");
+				try {
+					//Get data from user
+					final ReviewComponent tempModelComponent = ((R4EUIRootElement) element).createRuleSetElement();
+					if (null != tempModelComponent) {
+						Activator.Ftracer.traceInfo("Adding Rule Set to the root element ");
 
-				//Create actual model element
-				newElement = element.createChildren(tempModelComponent);
-				if (null != newElement) {
-					//Set focus to newly created element and open it
-					viewer.expandToLevel(newElement, AbstractTreeViewer.ALL_LEVELS);
-					viewer.setSelection(new StructuredSelection(newElement), true);
+						//Create actual model element
+						newElement = element.createChildren(tempModelComponent);
+						if (null != newElement) {
+							//Set focus to newly created element and open it
+							viewer.expandToLevel(newElement, AbstractTreeViewer.ALL_LEVELS);
+							viewer.setSelection(new StructuredSelection(newElement), true);
+						}
+					}
+				} catch (ResourceHandlingException e) {
+					UIUtils.displayResourceErrorDialog(e);
+
+					//Remove object if partially created
+					try {
+						element.removeChildren(newElement, true);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+
+				} catch (OutOfSyncException e) {
+					UIUtils.displaySyncErrorDialog(e);
+
+					//Remove object if partially created
+					try {
+						element.removeChildren(newElement, true);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
 				}
+
+				try {
+					final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
+							event)
+							.getService(IEvaluationService.class);
+					evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen");
+				} catch (ExecutionException e) {
+					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				}
+				return Status.OK_STATUS;
 			}
-		} catch (ResourceHandlingException e) {
-			UIUtils.displayResourceErrorDialog(e);
-
-			//Remove object if partially created
-			try {
-				element.removeChildren(newElement, true);
-			} catch (ResourceHandlingException e1) {
-				UIUtils.displayResourceErrorDialog(e1);
-			} catch (OutOfSyncException e1) {
-				UIUtils.displaySyncErrorDialog(e1);
-			}
-
-		} catch (OutOfSyncException e) {
-			UIUtils.displaySyncErrorDialog(e);
-
-			//Remove object if partially created
-			try {
-				element.removeChildren(newElement, true);
-			} catch (ResourceHandlingException e1) {
-				UIUtils.displayResourceErrorDialog(e1);
-			} catch (OutOfSyncException e1) {
-				UIUtils.displaySyncErrorDialog(e1);
-			}
-		}
-
-		try {
-			final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(event)
-					.getService(IEvaluationService.class);
-			evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen");
-		} catch (ExecutionException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 }

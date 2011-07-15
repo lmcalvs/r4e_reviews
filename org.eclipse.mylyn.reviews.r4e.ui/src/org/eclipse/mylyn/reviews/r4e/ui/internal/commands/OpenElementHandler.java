@@ -41,6 +41,7 @@ import java.io.FileNotFoundException;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -55,10 +56,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -79,48 +78,51 @@ public class OpenElementHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		final ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
-			final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-			shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+		final UIJob job = new UIJob("Opening Element...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				final ISelection selection = HandlerUtil.getCurrentSelection(event);
+				if (selection instanceof IStructuredSelection) {
+					if (!selection.isEmpty()) {
+						try {
+							final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
 
-			if (!selection.isEmpty()) {
-				try {
-					final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+							if (element instanceof R4EUIReviewBasic) {
+								Activator.Ftracer.traceInfo("Opening element " + element.getName());
+								final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
+								if (null != activeReview) {
+									activeReview.close();
+								}
+							}
+							element.open();
 
-					if (element instanceof R4EUIReviewBasic) {
-						Activator.Ftracer.traceInfo("Opening element " + element.getName());
-						final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
-						if (null != activeReview) {
-							activeReview.close();
+							//The action is only performed on the first element, so select it
+							final StructuredSelection newSelection = new StructuredSelection(
+									((IStructuredSelection) selection).getFirstElement());
+							R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
+						} catch (ResourceHandlingException e) {
+							UIUtils.displayResourceErrorDialog(e);
+
+						} catch (ReviewVersionsException e) {
+							UIUtils.displayVersionErrorDialog(e);
+
+						} catch (FileNotFoundException e) {
+							Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+							Activator.getDefault().logError("Exception: " + e.toString(), e);
+							final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+									"File not found error detected while opening element", new Status(IStatus.ERROR,
+											Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+							dialog.open();
 						}
 					}
-					element.open();
-
-					//The action is only performed on the first element, so select it
-					final StructuredSelection newSelection = new StructuredSelection(
-							((IStructuredSelection) selection).getFirstElement());
-					R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
-				} catch (ResourceHandlingException e) {
-					UIUtils.displayResourceErrorDialog(e);
-
-				} catch (ReviewVersionsException e) {
-					UIUtils.displayVersionErrorDialog(e);
-
-				} catch (FileNotFoundException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					Activator.getDefault().logError("Exception: " + e.toString(), e);
-					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-							"File not found error detected while opening element", new Status(IStatus.ERROR,
-									Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-					dialog.open();
 				}
+				return Status.OK_STATUS;
 			}
-			shell.setCursor(null);
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 }

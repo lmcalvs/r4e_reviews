@@ -21,6 +21,9 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -35,6 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorTreeVi
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorView;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -55,28 +59,36 @@ public class SelectNextHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
-		if (!selection.isEmpty()) {
-			final ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
+		final UIJob job = new UIJob("Selecting Next Element...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
+				if (!selection.isEmpty()) {
+					final ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
 
-			//Get the previous element
-			final IR4EUIModelElement nextElement = getNextElement((ReviewNavigatorTreeViewer) view.getTreeViewer());
+					//Get the previous element
+					final IR4EUIModelElement nextElement = getNextElement((ReviewNavigatorTreeViewer) view.getTreeViewer());
 
-			//If there is one, select it
-			if (null != nextElement) {
-				Activator.Ftracer.traceInfo("Select next element " + nextElement.getName());
-				final ISelection nextSelection = new StructuredSelection(nextElement);
-				view.getTreeViewer().setSelection(nextSelection);
+					//If there is one, select it
+					if (null != nextElement) {
+						Activator.Ftracer.traceInfo("Select next element " + nextElement.getName());
+						final ISelection nextSelection = new StructuredSelection(nextElement);
+						view.getTreeViewer().setSelection(nextSelection);
 
-				//Open the editor on FileContexts, selections/deltas amd anomalies
-				if (nextElement instanceof R4EUIFileContext || nextElement instanceof R4EUIContent
-						|| nextElement instanceof R4EUIAnomalyBasic) {
-					EditorProxy.openEditor(view.getSite().getPage(), nextSelection, false);
+						//Open the editor on FileContexts, selections/deltas amd anomalies
+						if (nextElement instanceof R4EUIFileContext || nextElement instanceof R4EUIContent
+								|| nextElement instanceof R4EUIAnomalyBasic) {
+							EditorProxy.openEditor(view.getSite().getPage(), nextSelection, false);
+						}
+					}
 				}
+				return Status.OK_STATUS;
 			}
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 

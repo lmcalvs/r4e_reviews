@@ -26,6 +26,9 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -45,6 +48,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -65,68 +69,77 @@ public class RemoveElementHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		final ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			if (!selection.isEmpty()) {
-				IR4EUIModelElement element = null;
-				MessageDialogWithToggle dialog = null;
-				R4EReview review = null;
-				if (null != R4EUIModelController.getActiveReview()) {
-					review = R4EUIModelController.getActiveReview().getReview();
-				}
-				final List<R4EReviewComponent> removedItems = new ArrayList<R4EReviewComponent>();
-				for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
-					element = (IR4EUIModelElement) iterator.next();
-					Activator.Ftracer.traceInfo("Disable element " + element.getName());
-					dialog = MessageDialogWithToggle.openOkCancelConfirm(null, "Disable element",
-							"Do you really want to disable this element?", "Also delete from file (not supported yet)",
-							false, null, null);
-					if (dialog.getReturnCode() == Window.OK) {
-						try {
-							if (element instanceof R4EUIReviewItem) {
-								removedItems.add(((R4EUIReviewItem) element).getItem());
-							} else if (element instanceof R4EUIContent) {
-								removedItems.add(((R4EUIContent) element).getContent());
+		final UIJob job = new UIJob("Removing Element...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				final ISelection selection = HandlerUtil.getCurrentSelection(event);
+				if (selection instanceof IStructuredSelection) {
+					if (!selection.isEmpty()) {
+						IR4EUIModelElement element = null;
+						MessageDialogWithToggle dialog = null;
+						R4EReview review = null;
+						if (null != R4EUIModelController.getActiveReview()) {
+							review = R4EUIModelController.getActiveReview().getReview();
+						}
+						final List<R4EReviewComponent> removedItems = new ArrayList<R4EReviewComponent>();
+						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
+							element = (IR4EUIModelElement) iterator.next();
+							Activator.Ftracer.traceInfo("Disable element " + element.getName());
+							dialog = MessageDialogWithToggle.openOkCancelConfirm(null, "Disable element",
+									"Do you really want to disable this element?",
+									"Also delete from file (not supported yet)", false, null, null);
+							if (dialog.getReturnCode() == Window.OK) {
+								try {
+									if (element instanceof R4EUIReviewItem) {
+										removedItems.add(((R4EUIReviewItem) element).getItem());
+									} else if (element instanceof R4EUIContent) {
+										removedItems.add(((R4EUIContent) element).getContent());
+									}
+
+									if (element.isOpen()) {
+										element.close();
+										for (IR4EUIModelElement childElement : element.getChildren()) {
+											if (null != childElement && childElement.isOpen()) {
+												childElement.close();
+												break;
+											}
+										}
+									}
+									element.getParent().removeChildren(element, dialog.getToggleState());
+								} catch (ResourceHandlingException e) {
+									UIUtils.displayResourceErrorDialog(e);
+								} catch (OutOfSyncException e) {
+									UIUtils.displaySyncErrorDialog(e);
+								}
 							}
+						}
 
-							if (element.isOpen()) {
-								element.close();
-								for (IR4EUIModelElement childElement : element.getChildren()) {
-									if (null != childElement && childElement.isOpen()) {
-										childElement.close();
-										break;
+						//Send email notification if needed
+						if (null != review) {
+							if (0 < removedItems.size()
+									&& review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+								if (((R4EFormalReview) review).getCurrent()
+										.getType()
+										.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+									try {
+										MailServicesProxy.sendItemsRemovedNotification(removedItems);
+									} catch (CoreException e) {
+										UIUtils.displayCoreErrorDialog(e);
+									} catch (ResourceHandlingException e) {
+										UIUtils.displayResourceErrorDialog(e);
 									}
 								}
 							}
-							element.getParent().removeChildren(element, dialog.getToggleState());
-						} catch (ResourceHandlingException e) {
-							UIUtils.displayResourceErrorDialog(e);
-						} catch (OutOfSyncException e) {
-							UIUtils.displaySyncErrorDialog(e);
 						}
 					}
 				}
-
-				//Send email notification if needed
-				if (null != review) {
-					if (0 < removedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-						if (((R4EFormalReview) review).getCurrent()
-								.getType()
-								.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-							try {
-								MailServicesProxy.sendItemsRemovedNotification(removedItems);
-							} catch (CoreException e) {
-								UIUtils.displayCoreErrorDialog(e);
-							} catch (ResourceHandlingException e) {
-								UIUtils.displayResourceErrorDialog(e);
-							}
-						}
-					}
-				}
+				return Status.OK_STATUS;
 			}
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 }

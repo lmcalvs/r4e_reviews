@@ -31,6 +31,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IJavaElement;
@@ -69,14 +70,13 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -98,44 +98,46 @@ public class NewReviewItemHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		if (isInputCommitItem()) {
-			//Cannot add review item manually on a commit
-			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-					"Cannot Add Review Item", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
-							"A Review Item cannot be added " + "manually on an already exisiting Review Item", null),
-					IStatus.ERROR);
-			dialog.open();
-		} else {
-			//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
-			final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-			shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+		final UIJob job = new UIJob("Adding New Review Item...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				if (isInputCommitItem()) {
+					//Cannot add review item manually on a commit
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+							"Cannot Add Review Item", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+									"A Review Item cannot be added " + "manually on an already exisiting Review Item",
+									null), IStatus.ERROR);
+					dialog.open();
+				} else {
+					final ISelection selection = HandlerUtil.getCurrentSelection(event);
 
-			final ISelection selection = HandlerUtil.getCurrentSelection(event);
+					//Act differently depending on the type of selection we get
+					if (selection instanceof ITextSelection) {
+						addReviewItemFromText((ITextSelection) selection);
 
-			//Act differently depending on the type of selection we get
-			if (selection instanceof ITextSelection) {
-				addReviewItemFromText((ITextSelection) selection);
+					} else if (selection instanceof ITreeSelection) {
 
-			} else if (selection instanceof ITreeSelection) {
+						//First remove any editor selection (if open) if we execute the command from the review navigator view
+						final IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow(). // $codepro.audit.disable methodChainLength
+								getActivePage()
+								.getActiveEditor();
+						if (null != editorPart && editorPart instanceof ITextEditor) {
+							((ITextEditor) editorPart).getSelectionProvider().setSelection(null);
+						}
 
-				//First remove any editor selection (if open) if we execute the command from the review navigator view
-				final IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow(). // $codepro.audit.disable methodChainLength
-						getActivePage()
-						.getActiveEditor();
-				if (null != editorPart && editorPart instanceof ITextEditor) {
-					((ITextEditor) editorPart).getSelectionProvider().setSelection(null);
+						//Then iterate through all selections
+						for (final Iterator<?> iterator = ((ITreeSelection) selection).iterator(); iterator.hasNext();) {
+							addReviewItemFromTree(iterator.next());
+						}
+					}
 				}
-
-				//Then iterate through all selections
-				for (final Iterator<?> iterator = ((ITreeSelection) selection).iterator(); iterator.hasNext();) {
-					addReviewItemFromTree(iterator.next());
-				}
+				return Status.OK_STATUS;
 			}
-
-			shell.setCursor(null);
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 

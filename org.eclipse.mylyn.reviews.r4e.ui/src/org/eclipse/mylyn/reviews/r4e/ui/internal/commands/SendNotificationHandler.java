@@ -27,6 +27,9 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -38,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -59,82 +63,90 @@ public class SendNotificationHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		Object source = ((EvaluationContext) event.getApplicationContext()).getDefaultVariable();
-		Object obj = null;
-		if (source instanceof List) {
-			if (((List<?>) source).size() > 0) {
-				source = ((List<?>) source).get(0); //If this is a list, get first element
-				if (source instanceof AbstractSet) {
+		final UIJob job = new UIJob("Sending Notification...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				Object source = ((EvaluationContext) event.getApplicationContext()).getDefaultVariable();
+				Object obj = null;
+				if (source instanceof List) {
+					if (((List<?>) source).size() > 0) {
+						source = ((List<?>) source).get(0); //If this is a list, get first element
+						if (source instanceof AbstractSet) {
+							final Iterator<?> iterator = ((AbstractSet<?>) source).iterator();
+							obj = iterator.next();
+						} else if (source instanceof IR4EUIModelElement) {
+							obj = source;
+						}
+					} else {
+						//empty selection, try to get active editor selection
+						final IEditorPart editorPart = PlatformUI.getWorkbench()
+								.getActiveWorkbenchWindow()
+								.getActivePage()
+								.getActiveEditor(); // $codepro.audit.disable methodChainLength
+
+						//Try to get the active editor highlighted range and set it as the editor's selection
+						if (null != editorPart) {
+							if (editorPart instanceof ITextEditor) {
+								obj = editorPart;
+							}
+						}
+					}
+				} else if (source instanceof AbstractSet) {
 					final Iterator<?> iterator = ((AbstractSet<?>) source).iterator();
 					obj = iterator.next();
-				} else if (source instanceof IR4EUIModelElement) {
-					obj = source;
 				}
-			} else {
-				//empty selection, try to get active editor selection
-				final IEditorPart editorPart = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow()
-						.getActivePage()
-						.getActiveEditor(); // $codepro.audit.disable methodChainLength
+				R4EUIModelController.setDialogOpen(true);
+				//if the source is Review element, all options are available.  O(therwise, only ask questions is supported
+				final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
+						R4EUIModelController.getNavigatorView().getSite().getWorkbenchWindow().getShell(), obj);
+				dialog.create();
+				final int result = dialog.open();
+				if (result == Window.OK) {
+					final int messageType = dialog.getMessageTypeValue();
 
-				//Try to get the active editor highlighted range and set it as the editor's selection
-				if (null != editorPart) {
-					if (editorPart instanceof ITextEditor) {
-						obj = editorPart;
+					try {
+						switch (messageType) {
+						case R4EUIConstants.MESSAGE_TYPE_ITEMS_READY:
+							//Send review items ready notification
+							MailServicesProxy.sendItemsReadyNotification();
+							break;
+						case R4EUIConstants.MESSAGE_TYPE_PROGRESS:
+							//Send progress notification
+							MailServicesProxy.sendProgressNotification();
+							break;
+						case R4EUIConstants.MESSAGE_TYPE_COMPLETION:
+							//Send completion notification
+							MailServicesProxy.sendCompletionNotification();
+							break;
+						case R4EUIConstants.MESSAGE_TYPE_QUESTION:
+							//Send question
+							MailServicesProxy.sendQuestion(obj);
+							break;
+						case R4EUIConstants.MESSAGE_TYPE_MEETING:
+							//Send question
+							MailServicesProxy.sendMeetingRequest();
+							break;
+						default:
+							//Do nothing, should never happen
+						}
+					} catch (CoreException e) {
+						UIUtils.displayCoreErrorDialog(e);
+					} catch (ResourceHandlingException e) {
+						UIUtils.displayResourceErrorDialog(e);
+					} catch (OutOfSyncException e) {
+						UIUtils.displaySyncErrorDialog(e);
+					} finally {
+						R4EUIModelController.setDialogOpen(false);
 					}
-				}
-			}
-		} else if (source instanceof AbstractSet) {
-			final Iterator<?> iterator = ((AbstractSet<?>) source).iterator();
-			obj = iterator.next();
-		}
-		R4EUIModelController.setDialogOpen(true);
-		//if the source is Review element, all options are available.  O(therwise, only ask questions is supported
-		final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
-				R4EUIModelController.getNavigatorView().getSite().getWorkbenchWindow().getShell(), obj);
-		dialog.create();
-		final int result = dialog.open();
-		if (result == Window.OK) {
-			final int messageType = dialog.getMessageTypeValue();
-
-			try {
-				switch (messageType) {
-				case R4EUIConstants.MESSAGE_TYPE_ITEMS_READY:
-					//Send review items ready notification
-					MailServicesProxy.sendItemsReadyNotification();
-					break;
-				case R4EUIConstants.MESSAGE_TYPE_PROGRESS:
-					//Send progress notification
-					MailServicesProxy.sendProgressNotification();
-					break;
-				case R4EUIConstants.MESSAGE_TYPE_COMPLETION:
-					//Send completion notification
-					MailServicesProxy.sendCompletionNotification();
-					break;
-				case R4EUIConstants.MESSAGE_TYPE_QUESTION:
-					//Send question
-					MailServicesProxy.sendQuestion(obj);
-					break;
-				case R4EUIConstants.MESSAGE_TYPE_MEETING:
-					//Send question
-					MailServicesProxy.sendMeetingRequest();
-					break;
-				default:
-					//Do nothing, should never happen
-				}
-			} catch (CoreException e) {
-				UIUtils.displayCoreErrorDialog(e);
-			} catch (ResourceHandlingException e) {
-				UIUtils.displayResourceErrorDialog(e);
-			} catch (OutOfSyncException e) {
-				UIUtils.displaySyncErrorDialog(e);
-			} finally {
+				} //else Window.CANCEL
 				R4EUIModelController.setDialogOpen(false);
+				return Status.OK_STATUS;
 			}
-		} //else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 }

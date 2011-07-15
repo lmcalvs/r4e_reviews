@@ -20,6 +20,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.cdt.core.model.ICProject;
@@ -31,8 +32,10 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
@@ -40,6 +43,7 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -72,9 +76,8 @@ import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.mylyn.versions.ui.ScmUi;
 import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -134,12 +137,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			if (null != uiConnector) {
 				Activator.Ftracer.traceDebug("Resolved Scm Ui connector: " + uiConnector);
 				final ChangeSet changeSet = uiConnector.getChangeSet(null, project);
-
-				//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
-				final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-				shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-				createReviewItem(changeSet);
-				shell.setCursor(null);
+				createReviewItem(event, changeSet);
 			} else {
 				// We could not find any version control system, thus no items
 				final String strProject = ((null == project) ? "null" : project.getName());
@@ -157,8 +155,10 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	 * Create and serialize the changeset in a Review Item
 	 * 
 	 * @param changeSet
+	 * @param event
+	 *            ExecutionEvent
 	 */
-	private void createReviewItem(final ChangeSet changeSet) {
+	private void createReviewItem(final ExecutionEvent event, final ChangeSet changeSet) {
 
 		if (null == changeSet) {
 			Activator.Ftracer.traceInfo("Received null ChangeSet");
@@ -171,104 +171,281 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			return; // nothing to add
 		}
 
+		//Check if Review Item already exists
+		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
+		for (R4EUIReviewItem uiItem : uiReview.getReviewItems()) {
+			if (changeSet.getId().equals(uiItem.getItem().getRepositoryRef())) {
+				//The commit item already exists so ignore command
+				Activator.Ftracer.traceWarning("Review Item already exists.  Ignoring");
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
+						"Cannot add Review Item", new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0,
+								"Review Item already exists", null), IStatus.WARNING);
+				dialog.open();
+				return;
+			}
+		}
+
+		final IRFSRegistry localRepository;
 		try {
-			// Add Review Item
-			final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
+			// Get handle to local storage repository
+			localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview().getReview());
 
-			for (R4EUIReviewItem uiItem : uiReview.getReviewItems()) {
-				if (changeSet.getId().equals(uiItem.getItem().getRepositoryRef())) {
-					//The commit item already exists so ignore command
-					Activator.Ftracer.traceWarning("Review Item already exists.  Ignoring");
-					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
-							"Cannot add Review Item", new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0,
-									"Review Item already exists", null), IStatus.WARNING);
-					dialog.open();
-					return;
-				}
-			}
+			//Create Synchronized list that will temporarly hold the elements to be added
+			final List<TempFileContext> filesToAddlist = Collections.synchronizedList(new ArrayList());
 
-			final R4EUIReviewItem uiReviewItem = uiReview.createCommitReviewItem(changeSet, null);
+			final Job job = new Job("Importing Files and Calculating Changes...") {
+				@Override
+				public IStatus run(IProgressMonitor monitor) {
 
-			for (final Change change : changeSet.getChanges()) {
-				final ScmArtifact baseArt = change.getBase();
-				final ScmArtifact targetArt = change.getTarget();
-				if (null == baseArt && null == targetArt) {
-					Activator.Ftracer.traceDebug("Received a Change with no base and target in ChangeSet: "
-							+ changeSet.getId() + ", Date: " + changeSet.getDate().toString());
-				}
+					monitor.beginTask("Importing Files and Calculating Changes...", changeSet.getChanges().size());
+					//Since importing files and calculating delta can take a while, we run this in a parallel job.  When it completes
+					//We update the UI with the new elements
+					for (final Change change : changeSet.getChanges()) {
+						try {
+							//If the task is cancelled, we break here and set currently imported elements
+							if (monitor.isCanceled()) {
+								monitor.done();
+								return Status.CANCEL_STATUS;
+							}
 
-				// Get handle to local storage repository
-				final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
-						.getReview());
+							final ScmArtifact baseArt = change.getBase();
+							final ScmArtifact targetArt = change.getTarget();
+							if (null == baseArt && null == targetArt) {
+								Activator.Ftracer.traceDebug("Received a Change with no base and target in ChangeSet: "
+										+ changeSet.getId() + ", Date: " + changeSet.getDate().toString());
+							}
 
-				R4EFileVersion baseLocalVersion = null;
-				R4EFileVersion targetLocalVersion = null;
-				// Copy remote files to the local repository
-				if (null != baseArt) {
-					baseLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository, baseArt);
-				}
-				if (null != targetArt) {
-					targetLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository, targetArt);
-				}
+							// Copy remote files to the local repository
+							R4EFileVersion baseLocalVersion = null;
+							R4EFileVersion targetLocalVersion = null;
+							if (null != baseArt) {
+								baseLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository,
+										baseArt);
+							}
+							if (null != targetArt) {
+								targetLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository,
+										targetArt);
+							}
 
-				// Add File Context
-				final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(baseLocalVersion,
-						targetLocalVersion, CommandUtils.adaptType(change.getChangeType()));
-				if (null == uiFileContext) {
-					uiReview.removeChildren(uiReviewItem, false);
-					return;
-				}
+							// Add File Context to the list to be added
+							TempFileContext file = new TempFileContext(localRepository, baseLocalVersion,
+									targetLocalVersion, CommandUtils.adaptType(change.getChangeType()));
 
-				if (Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_USE_DELTAS)) {
-					//Find all differecences between Base and Target files
-					R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(
-							uiFileContext.getBaseFileVersion(), uiFileContext.getTargetFileVersion());
-					input.prepareCompareInputNoEditor();
-
-					DiffUtils diffUtils = new DiffUtils();
-					List<Diff> diffs = diffUtils.doDiff(false, true, input);
-
-					//Create Deltas from the list of differences
-					for (Diff diff : diffs) {
-						IR4EUIPosition position = CommandUtils.getPosition(
-								diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR).getOffset(),
-								diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR).getLength(),
-								diff.getDocument(R4EUIConstants.LEFT_CONTRIBUTOR));
-
-						if (null == position || RangeDifference.NOCHANGE == diff.getKind()) {
-							continue; //Cannot resolve position for this delta or no change
+							//If configured, get deltas for this file
+							if (Activator.getDefault()
+									.getPreferenceStore()
+									.getBoolean(PreferenceConstants.P_USE_DELTAS)) {
+								updateFilesWithDeltas(file);
+							}
+							filesToAddlist.add(file);
+							monitor.worked(1);
+						} catch (final ReviewsFileStorageException e) {
+							Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+							Activator.getDefault().logError("Exception: " + e.toString(), e);
+						} catch (final CoreException e) {
+							Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+							Activator.getDefault().logError("Exception: " + e.toString(), e);
 						}
-
-						//Lazily create the Delta container if not already done
-						R4EUIDeltaContainer deltaContainer = (R4EUIDeltaContainer) uiFileContext.getContentsContainerElement();
-						if (null == deltaContainer) {
-							deltaContainer = new R4EUIDeltaContainer(uiFileContext, R4EUIConstants.DELTAS_LABEL);
-							uiFileContext.addChildren(deltaContainer);
-						}
-						deltaContainer.createDelta((R4EUITextPosition) position);
 					}
+					Display.getDefault().asyncExec(new Runnable() {
+						public void run() {
+							//Now add elements to the UI model if there are any elements to add
+							synchronized (filesToAddlist) {
+								try {
+									final R4EUIReviewItem uiReviewItem;
+									if (filesToAddlist.size() > 0) {
+										uiReviewItem = uiReview.createCommitReviewItem(changeSet, null);
+									} else {
+										return;
+									}
+
+									for (TempFileContext file : filesToAddlist) {
+										try {
+											final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(
+													file.getBase(), file.getTarget(), file.getType());
+
+											for (IR4EUIPosition position : file.getPositions()) {
+												//Lazily create the Delta container if not already done
+												R4EUIDeltaContainer deltaContainer = (R4EUIDeltaContainer) uiFileContext.getContentsContainerElement();
+												if (null == deltaContainer) {
+													deltaContainer = new R4EUIDeltaContainer(uiFileContext,
+															R4EUIConstants.DELTAS_LABEL);
+													uiFileContext.addChildren(deltaContainer);
+												}
+												deltaContainer.createDelta((R4EUITextPosition) position);
+											}
+										} catch (OutOfSyncException e) {
+											Activator.Ftracer.traceError("Exception: " + e.toString() + " ("
+													+ e.getMessage() + ")");
+											Activator.getDefault().logError("Exception: " + e.toString(), e);
+										} catch (ResourceHandlingException e) {
+											Activator.Ftracer.traceError("Exception: " + e.toString() + " ("
+													+ e.getMessage() + ")");
+											Activator.getDefault().logError("Exception: " + e.toString(), e);
+										}
+									}
+
+									//Notify users if need be
+									final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
+									addedItems.add(uiReviewItem.getItem());
+									final R4EReview review = uiReview.getReview();
+									if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+										if (((R4EFormalReview) review).getCurrent()
+												.getType()
+												.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+											MailServicesProxy.sendItemsAddedNotification(addedItems);
+
+										}
+									}
+								} catch (CoreException e) {
+									UIUtils.displayCoreErrorDialog(e);
+								} catch (ResourceHandlingException e) {
+									UIUtils.displayResourceErrorDialog(e);
+								} catch (OutOfSyncException e) {
+									UIUtils.displaySyncErrorDialog(e);
+								}
+							}
+						}
+					});
+					monitor.done();
+					return Status.OK_STATUS;
 				}
+			};
+			job.setUser(true);
+			job.schedule();
+		} catch (ReviewsFileStorageException e) {
+			UIUtils.displayReviewsFileStorageErrorDialog(e);
+		}
+	}
+
+	/**
+	 * Method updateFilesWithDeltas.
+	 * 
+	 * @param aFile
+	 *            TempFileContext
+	 * @throws CoreException
+	 */
+	private void updateFilesWithDeltas(final TempFileContext aFile) throws CoreException {
+
+		//Find all differecences between Base and Target files
+		final R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(aFile.getBase(), aFile.getTarget());
+		input.prepareCompareInputNoEditor();
+
+		final DiffUtils diffUtils = new DiffUtils();
+		final List<Diff> diffs;
+
+		diffs = diffUtils.doDiff(false, true, input);
+
+		//Add Deltas from the list of differences
+		for (Diff diff : diffs) {
+			IR4EUIPosition position = CommandUtils.getPosition(diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR)
+					.getOffset(), diff.getPosition(R4EUIConstants.LEFT_CONTRIBUTOR).getLength(),
+					diff.getDocument(R4EUIConstants.LEFT_CONTRIBUTOR));
+
+			if (null == position || RangeDifference.NOCHANGE == diff.getKind()) {
+				continue; //Cannot resolve position for this delta or no change
 			}
-			//Notify users if need be
-			final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
-			addedItems.add(uiReviewItem.getItem());
-			final R4EReview review = uiReview.getReview();
-			if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-				if (((R4EFormalReview) review).getCurrent()
-						.getType()
-						.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-					MailServicesProxy.sendItemsAddedNotification(addedItems);
+			aFile.getPositions().add(position);
+		}
+	}
+
+	/**
+	 * @author lmcdubo
+	 */
+	private static class TempFileContext {
+		/**
+		 * Field base.
+		 */
+		private final R4EFileVersion base;
+
+		/**
+		 * Field target.
+		 */
+		private final R4EFileVersion target;
+
+		/**
+		 * Field type.
+		 */
+		private final R4EContextType type;
+
+		/**
+		 * Field positions.
+		 */
+		private final List<IR4EUIPosition> positions;
+
+		/**
+		 * Constructor for TempFileContext.
+		 * 
+		 * @param aRepository
+		 *            IRFSRegistry
+		 * @param aBase
+		 *            R4EFileVersion
+		 * @param aTarget
+		 *            R4EFileVersion
+		 * @param aType
+		 *            R4EContextType
+		 */
+		TempFileContext(IRFSRegistry aRepository, R4EFileVersion aBase, R4EFileVersion aTarget, R4EContextType aType) {
+			base = aBase;
+			//Add IFileRevision info
+			if (null != base && null != aRepository) {
+				try {
+					final IFileRevision fileRev = aRepository.getIFileRevision(null, base);
+					base.setFileRevision(fileRev);
+				} catch (ReviewsFileStorageException e) {
+					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
-		} catch (final ResourceHandlingException e) {
-			UIUtils.displayResourceErrorDialog(e);
-		} catch (final ReviewsFileStorageException e) {
-			UIUtils.displayReviewsFileStorageErrorDialog(e);
-		} catch (final OutOfSyncException e) {
-			UIUtils.displaySyncErrorDialog(e);
-		} catch (final CoreException e) {
-			UIUtils.displayCoreErrorDialog(e);
+			target = aTarget;
+			//Add IFileRevision info
+			if (null != target && null != aRepository) {
+				try {
+					final IFileRevision fileRev = aRepository.getIFileRevision(null, target);
+					target.setFileRevision(fileRev);
+				} catch (ReviewsFileStorageException e) {
+					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				}
+			}
+
+			type = aType;
+			positions = new ArrayList<IR4EUIPosition>();
+		}
+
+		/**
+		 * Method getBase.
+		 * 
+		 * @return R4EFileVersion
+		 */
+		public R4EFileVersion getBase() {
+			return base;
+		}
+
+		/**
+		 * Method getTarget.
+		 * 
+		 * @return R4EFileVersion
+		 */
+		public R4EFileVersion getTarget() {
+			return target;
+		}
+
+		/**
+		 * Method getType.
+		 * 
+		 * @return R4EContextType
+		 */
+		public R4EContextType getType() {
+			return type;
+		}
+
+		/**
+		 * Method getPositions.
+		 * 
+		 * @return List<IR4EUIPosition>
+		 */
+		public List<IR4EUIPosition> getPositions() {
+			return positions;
 		}
 	}
 }

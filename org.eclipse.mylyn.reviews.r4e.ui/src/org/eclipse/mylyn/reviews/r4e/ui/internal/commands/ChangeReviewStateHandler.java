@@ -26,6 +26,9 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -40,6 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -60,61 +64,71 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		final ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			if (!selection.isEmpty()) {
-				IR4EUIModelElement element = null;
-				for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
-					try {
-						element = (IR4EUIModelElement) iterator.next();
-						Activator.Ftracer.traceInfo("Changing review state for element " + element.getName());
-						element.setUserReviewed(!(element.isUserReviewed()));
+		final UIJob job = new UIJob("Changing Reviewed State...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				final ISelection selection = HandlerUtil.getCurrentSelection(event);
+				if (selection instanceof IStructuredSelection) {
+					if (!selection.isEmpty()) {
+						IR4EUIModelElement element = null;
+						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
+							try {
+								element = (IR4EUIModelElement) iterator.next();
+								Activator.Ftracer.traceInfo("Changing review state for element " + element.getName());
+								element.setUserReviewed(!(element.isUserReviewed()));
 
-						//If we just completed the review, prompt user for mail sending
-						if (element instanceof R4EUIReviewBasic && element.isUserReviewed()) {
+								//If we just completed the review, prompt user for mail sending
+								if (element instanceof R4EUIReviewBasic && element.isUserReviewed()) {
 
-							Object source = ((EvaluationContext) event.getApplicationContext()).getDefaultVariable();
-							if (source instanceof List) {
-								source = ((List<?>) source).get(0); //If this is a list, get first element
-							}
-							R4EUIModelController.setDialogOpen(true);
-
-							final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
-									R4EUIModelController.getNavigatorView().getSite().getWorkbenchWindow().getShell(),
-									source);
-							dialog.create();
-							final int result = dialog.open();
-							if (result == Window.OK) {
-								final int messageType = dialog.getMessageTypeValue();
-								try {
-									switch (messageType) {
-									case R4EUIConstants.MESSAGE_TYPE_COMPLETION:
-										//Send completion notification
-										MailServicesProxy.sendCompletionNotification();
-										break;
-									default:
-										//Do nothing, should never happen
+									Object source = ((EvaluationContext) event.getApplicationContext()).getDefaultVariable();
+									if (source instanceof List) {
+										source = ((List<?>) source).get(0); //If this is a list, get first element
 									}
-								} catch (CoreException e) {
-									UIUtils.displayCoreErrorDialog(e);
-								} catch (ResourceHandlingException e) {
-									UIUtils.displayResourceErrorDialog(e);
-								} finally {
+									R4EUIModelController.setDialogOpen(true);
+
+									final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
+											R4EUIModelController.getNavigatorView()
+													.getSite()
+													.getWorkbenchWindow()
+													.getShell(), source);
+									dialog.create();
+									final int result = dialog.open();
+									if (result == Window.OK) {
+										final int messageType = dialog.getMessageTypeValue();
+										try {
+											switch (messageType) {
+											case R4EUIConstants.MESSAGE_TYPE_COMPLETION:
+												//Send completion notification
+												MailServicesProxy.sendCompletionNotification();
+												break;
+											default:
+												//Do nothing, should never happen
+											}
+										} catch (CoreException e) {
+											UIUtils.displayCoreErrorDialog(e);
+										} catch (ResourceHandlingException e) {
+											UIUtils.displayResourceErrorDialog(e);
+										} finally {
+											R4EUIModelController.setDialogOpen(false);
+										}
+									}
 									R4EUIModelController.setDialogOpen(false);
 								}
+							} catch (ResourceHandlingException e) {
+								UIUtils.displayResourceErrorDialog(e);
+							} catch (OutOfSyncException e) {
+								UIUtils.displaySyncErrorDialog(e);
 							}
-							R4EUIModelController.setDialogOpen(false);
 						}
-					} catch (ResourceHandlingException e) {
-						UIUtils.displayResourceErrorDialog(e);
-					} catch (OutOfSyncException e) {
-						UIUtils.displaySyncErrorDialog(e);
 					}
 				}
+				return Status.OK_STATUS;
 			}
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 }

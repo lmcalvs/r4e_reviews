@@ -21,6 +21,9 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -38,10 +41,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -62,30 +63,33 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) {
+	public Object execute(final ExecutionEvent event) {
 
-		final ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			//TODO: This is a long-running operation.  For now set cursor.  Later we want to start a job here
-			final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-			shell.setCursor(shell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-
-			//Add a linked anomaly to this selection
-			if (!selection.isEmpty()) {
-				final IR4EUIModelElement element = ((IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement());
-				if (element instanceof R4EUIContent) {
-					try {
-						Activator.Ftracer.traceInfo("Adding linked anomaly to element " + element.getName());
-						addLinkedAnomaly((R4EUIContent) element);
-					} catch (ResourceHandlingException e) {
-						UIUtils.displayResourceErrorDialog(e);
-					} catch (OutOfSyncException e) {
-						UIUtils.displaySyncErrorDialog(e);
+		final UIJob job = new UIJob("Adding New Linked Anomaly...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				final ISelection selection = HandlerUtil.getCurrentSelection(event);
+				if (selection instanceof IStructuredSelection) {
+					//Add a linked anomaly to this selection
+					if (!selection.isEmpty()) {
+						final IR4EUIModelElement element = ((IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement());
+						if (element instanceof R4EUIContent) {
+							try {
+								Activator.Ftracer.traceInfo("Adding linked anomaly to element " + element.getName());
+								addLinkedAnomaly((R4EUIContent) element);
+							} catch (ResourceHandlingException e) {
+								UIUtils.displayResourceErrorDialog(e);
+							} catch (OutOfSyncException e) {
+								UIUtils.displaySyncErrorDialog(e);
+							}
+						}
 					}
 				}
+				return Status.OK_STATUS;
 			}
-			shell.setCursor(null);
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 

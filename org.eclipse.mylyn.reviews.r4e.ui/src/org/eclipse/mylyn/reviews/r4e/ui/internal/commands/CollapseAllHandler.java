@@ -21,8 +21,12 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -45,9 +49,17 @@ public class CollapseAllHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		//Collapse tree (all levels)
-		Activator.Ftracer.traceInfo("Collapsing whole tree");
-		R4EUIModelController.getNavigatorView().getTreeViewer().collapseAll();
+		final UIJob job = new UIJob("Collapsing All Elements...") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				//Collapse tree (all levels)
+				Activator.Ftracer.traceInfo("Collapsing whole tree");
+				R4EUIModelController.getNavigatorView().getTreeViewer().collapseAll();
+				return Status.OK_STATUS;
+			}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 
