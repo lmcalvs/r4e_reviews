@@ -1225,7 +1225,7 @@
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.DialogPropertyTester"
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.JobInProgressPropertyTester"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpenPropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog"
             properties="dialogOpen"

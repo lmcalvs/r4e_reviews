@@ -199,7 +199,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EDesignRuleArea tempArea = null;
-		R4EUIModelController.setDialogOpen(true);
+		R4EUIModelController.setJobInProgress(true);
 		final RuleAreaInputDialog dialog = new RuleAreaInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite()
 				.getWorkbenchWindow()
@@ -210,7 +210,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 			tempArea.setName(dialog.getNameValue());
 		}
 		// else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);
+		R4EUIModelController.setJobInProgress(false);
 		return tempArea;
 	}
 

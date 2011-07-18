@@ -184,7 +184,7 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			fVersionText.setEnabled(false);
 			fNameText.setEnabled(false);
 			fFilePathText.setEnabled(false);

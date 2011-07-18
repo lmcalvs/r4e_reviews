@@ -422,7 +422,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 				} catch (OutOfSyncException e1) {
 					UIUtils.displaySyncErrorDialog(e1);
 				} finally {
-					R4EUIModelController.setDialogOpen(false);
+					R4EUIModelController.setJobInProgress(false);
 				}
 			}
 
@@ -681,7 +681,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen()
+		if (R4EUIModelController.isJobInProgress()
 				|| (!((R4EUIReviewBasic) fProperties.getElement()).isOpen())
 				|| ((R4EReviewState) ((R4EUIReviewBasic) fProperties.getElement()).getReview().getState()).getState()
 						.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {

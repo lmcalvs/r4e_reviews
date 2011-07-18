@@ -301,7 +301,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReviewGroup) fProperties.getElement()).isOpen())) {
+		if (R4EUIModelController.isJobInProgress() || (!((R4EUIReviewGroup) fProperties.getElement()).isOpen())) {
 			fAvailableProjects.setEnabled(false);
 			fAvailableComponents.setEnabled(false);
 			fDefaultEntryCriteriaText.setEnabled(false);

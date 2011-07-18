@@ -241,8 +241,9 @@ public class R4EUIModelController {
 	 * @param aIsDialogOpen
 	 *            boolean
 	 */
-	public static void setDialogOpen(boolean aIsDialogOpen) {
+	public static void setJobInProgress(boolean aIsDialogOpen) {
 		FIsDialogOpen = aIsDialogOpen;
+		FView.getTreeViewer().getTree().setEnabled(!aIsDialogOpen); //Also disable operations on UI Tree
 		for (IPropertyListener listener : FElementStateListenerList) {
 			listener.propertyChanged(null, 0);
 		}
@@ -283,7 +284,7 @@ public class R4EUIModelController {
 	 * 
 	 * @return the current dialog state
 	 */
-	public static boolean isDialogOpen() {
+	public static boolean isJobInProgress() {
 		return FIsDialogOpen;
 	}
 

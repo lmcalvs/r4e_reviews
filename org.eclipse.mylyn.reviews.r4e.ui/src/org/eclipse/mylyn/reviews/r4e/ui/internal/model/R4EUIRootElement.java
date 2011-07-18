@@ -95,7 +95,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EReviewGroup tempReviewGroup = null;
-		R4EUIModelController.setDialogOpen(true);
+		R4EUIModelController.setJobInProgress(true);
 		final ReviewGroupInputDialog dialog = new ReviewGroupInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite()
 				.getWorkbenchWindow()
@@ -119,7 +119,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			tempReviewGroup.setDefaultEntryCriteria(dialog.getDefaultEntryCriteriaValue());
 		}
 		//else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);
+		R4EUIModelController.setJobInProgress(false);
 		return tempReviewGroup;
 	}
 
@@ -133,7 +133,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	public ReviewComponent createRuleSetElement() {
 		//Get comment from user and set it in model data
 		R4EDesignRuleCollection tempRuleSet = null;
-		R4EUIModelController.setDialogOpen(true);
+		R4EUIModelController.setJobInProgress(true);
 		final RuleSetInputDialog dialog = new RuleSetInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite()
 				.getWorkbenchWindow()
@@ -147,7 +147,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			tempRuleSet.setName(dialog.getNameValue());
 		}
 		//else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);
+		R4EUIModelController.setJobInProgress(false);
 		return tempRuleSet;
 	}
 

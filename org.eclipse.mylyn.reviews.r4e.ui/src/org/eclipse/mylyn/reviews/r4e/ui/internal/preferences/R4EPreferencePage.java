@@ -242,7 +242,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		final StringFieldEditor userIdFieldEditor = new StringFieldEditor(PreferenceConstants.P_USER_ID,
 				PreferenceConstants.P_USER_ID_LABEL, StringFieldEditor.UNLIMITED, r4EUserPrefsGroup);
 		addField(userIdFieldEditor);
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			userIdFieldEditor.setEnabled(false, r4EUserPrefsGroup);
 		} else {
 			userIdFieldEditor.setEnabled(true, r4EUserPrefsGroup);
@@ -251,7 +251,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		final StringFieldEditor userEmailFieldEditor = new StringFieldEditor(PreferenceConstants.P_USER_EMAIL,
 				PreferenceConstants.P_USER_EMAIL_LABEL, StringFieldEditor.UNLIMITED, r4EUserPrefsGroup);
 		addField(userEmailFieldEditor);
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			userEmailFieldEditor.setEnabled(false, r4EUserPrefsGroup);
 		} else {
 			userEmailFieldEditor.setEnabled(true, r4EUserPrefsGroup);
@@ -307,7 +307,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		final FilePathEditor groupFilesEditor = new FilePathEditor(PreferenceConstants.P_GROUP_FILE_PATH,
 				PreferenceConstants.P_GROUP_FILE_PATH_LABEL, extensions, r4EGroupPrefsGroup);
 		addField(groupFilesEditor);
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			groupFilesEditor.setEnabled(false, r4EGroupPrefsGroup);
 		} else {
 			groupFilesEditor.setEnabled(true, r4EGroupPrefsGroup);
@@ -393,7 +393,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		final FilePathEditor ruleSetFilesEditor = new FilePathEditor(PreferenceConstants.P_RULE_SET_FILE_PATH,
 				PreferenceConstants.P_RULE_SET_FILE_PATH_LABEL, ruleSetsExtensions, r4ERuleSetPrefsGroup);
 		addField(ruleSetFilesEditor);
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			ruleSetFilesEditor.setEnabled(false, r4ERuleSetPrefsGroup);
 		} else {
 			ruleSetFilesEditor.setEnabled(true, r4ERuleSetPrefsGroup);

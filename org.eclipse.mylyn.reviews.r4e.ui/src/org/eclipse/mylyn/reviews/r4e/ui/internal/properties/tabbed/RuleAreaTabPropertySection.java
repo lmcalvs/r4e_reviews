@@ -135,7 +135,7 @@ public class RuleAreaTabPropertySection extends ModelElementTabPropertySection {
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			fNameText.setEnabled(false);
 		} else {
 			fNameText.setEnabled(true);

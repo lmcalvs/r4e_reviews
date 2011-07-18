@@ -190,7 +190,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			fAuthorText.setEnabled(false);
 			fCreationDateText.setEnabled(false);
 			fDescriptionText.setEnabled(false);

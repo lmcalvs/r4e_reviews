@@ -231,7 +231,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			fTimeSpentDetailedList.setEnabled(false);
 			fRolesList.setEnabled(false);
 			fFocusAreaText.setEnabled(false);

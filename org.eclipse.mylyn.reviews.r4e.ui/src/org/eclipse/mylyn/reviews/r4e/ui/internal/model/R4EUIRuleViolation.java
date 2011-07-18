@@ -150,7 +150,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EDesignRule tempRule = null;
-		R4EUIModelController.setDialogOpen(true);
+		R4EUIModelController.setJobInProgress(true);
 		final RuleInputDialog dialog = new RuleInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite()
 				.getWorkbenchWindow()
@@ -165,7 +165,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 			tempRule.setClass(dialog.getClassValue());
 		}
 		// else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);
+		R4EUIModelController.setJobInProgress(false);
 		return tempRule;
 	}
 

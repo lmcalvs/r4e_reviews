@@ -216,7 +216,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EReview tempReview = null;
-		R4EUIModelController.setDialogOpen(true);
+		R4EUIModelController.setJobInProgress(true);
 		final ReviewInputDialog dialog = new ReviewInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite()
 				.getWorkbenchWindow()
@@ -244,7 +244,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			tempReview.setReferenceMaterial(dialog.getReferenceMaterialValue());
 		}
 		//else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);
+		R4EUIModelController.setJobInProgress(false);
 		return tempReview;
 	}
 

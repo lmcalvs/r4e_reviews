@@ -300,7 +300,7 @@ public class AnomalyBasicTabPropertySection extends ModelElementTabPropertySecti
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			fTitleText.setEnabled(false);
 			fAuthorText.setEnabled(false);
 			fCreationDateText.setEnabled(false);

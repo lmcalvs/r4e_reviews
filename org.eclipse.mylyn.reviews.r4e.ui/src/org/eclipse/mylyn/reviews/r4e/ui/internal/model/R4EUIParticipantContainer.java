@@ -103,7 +103,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EParticipant tempParticipant = null;
-		R4EUIModelController.setDialogOpen(true);
+		R4EUIModelController.setJobInProgress(true);
 		final ParticipantInputDialog dialog = new ParticipantInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite()
 				.getWorkbenchWindow()
@@ -117,7 +117,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 			tempParticipant.setFocusArea(dialog.getFocusAreaValue());
 		}
 		// else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);
+		R4EUIModelController.setJobInProgress(false);
 		return tempParticipant;
 	}
 

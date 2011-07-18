@@ -136,6 +136,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			final ScmConnectorUi uiConnector = ScmUi.getUiConnector(project);
 			if (null != uiConnector) {
 				Activator.Ftracer.traceDebug("Resolved Scm Ui connector: " + uiConnector);
+				R4EUIModelController.setJobInProgress(true); //Disable operations on UI
 				final ChangeSet changeSet = uiConnector.getChangeSet(null, project);
 				createReviewItem(event, changeSet);
 			} else {
@@ -181,6 +182,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 						"Cannot add Review Item", new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0,
 								"Review Item already exists", null), IStatus.WARNING);
 				dialog.open();
+				R4EUIModelController.setJobInProgress(false);
 				return;
 			}
 		}
@@ -303,6 +305,8 @@ public class FindReviewItemsHandler extends AbstractHandler {
 									UIUtils.displayResourceErrorDialog(e);
 								} catch (OutOfSyncException e) {
 									UIUtils.displaySyncErrorDialog(e);
+								} finally {
+									R4EUIModelController.setJobInProgress(false); //Enable UI operations now
 								}
 							}
 						}
@@ -315,6 +319,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			job.schedule();
 		} catch (ReviewsFileStorageException e) {
 			UIUtils.displayReviewsFileStorageErrorDialog(e);
+			R4EUIModelController.setJobInProgress(false);
 		}
 	}
 

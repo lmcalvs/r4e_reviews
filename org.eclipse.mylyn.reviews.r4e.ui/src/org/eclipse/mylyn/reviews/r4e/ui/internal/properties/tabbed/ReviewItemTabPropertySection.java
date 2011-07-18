@@ -296,7 +296,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			fAuthorText.setEnabled(false);
 			fAuthorRepText.setEnabled(false);
 			fProjectIdList.setEnabled(false);

@@ -97,7 +97,7 @@ public class SendNotificationHandler extends AbstractHandler {
 					final Iterator<?> iterator = ((AbstractSet<?>) source).iterator();
 					obj = iterator.next();
 				}
-				R4EUIModelController.setDialogOpen(true);
+				R4EUIModelController.setJobInProgress(true);
 				//if the source is Review element, all options are available.  O(therwise, only ask questions is supported
 				final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
 						R4EUIModelController.getNavigatorView().getSite().getWorkbenchWindow().getShell(), obj);
@@ -138,10 +138,10 @@ public class SendNotificationHandler extends AbstractHandler {
 					} catch (OutOfSyncException e) {
 						UIUtils.displaySyncErrorDialog(e);
 					} finally {
-						R4EUIModelController.setDialogOpen(false);
+						R4EUIModelController.setJobInProgress(false);
 					}
 				} //else Window.CANCEL
-				R4EUIModelController.setDialogOpen(false);
+				R4EUIModelController.setJobInProgress(false);
 				return Status.OK_STATUS;
 			}
 		};

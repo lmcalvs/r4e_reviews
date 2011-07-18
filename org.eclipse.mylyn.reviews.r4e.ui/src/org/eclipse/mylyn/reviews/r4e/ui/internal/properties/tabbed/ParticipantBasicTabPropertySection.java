@@ -274,7 +274,7 @@ public class ParticipantBasicTabPropertySection extends ModelElementTabPropertyS
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			fIdText.setEnabled(false);
 			fNumItemsText.setEnabled(false);
 			fNumAnomaliesText.setEnabled(false);

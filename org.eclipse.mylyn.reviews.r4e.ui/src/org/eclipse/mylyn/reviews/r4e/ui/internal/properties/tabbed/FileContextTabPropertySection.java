@@ -306,7 +306,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			return;
 		}
 
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			fBaseFileNameText.setEnabled(false);
 			fBaseFilePathText.setEnabled(false);
 			fBaseFileVersionText.setEnabled(false);

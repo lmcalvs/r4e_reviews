@@ -137,7 +137,7 @@ public class CommentProperties extends ModelElementProperties {
 	 */
 	@Override
 	public void setPropertyValue(Object aId, Object aValue) { // $codepro.audit.disable emptyMethod
-		if (!(R4EUIModelController.isDialogOpen())) {
+		if (!(R4EUIModelController.isJobInProgress())) {
 			try {
 				if (COMMENT_DESCRIPTION_ID.equals(aId)) {
 					final String currentUser = R4EUIModelController.getReviewer();

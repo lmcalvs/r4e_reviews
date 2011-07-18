@@ -117,7 +117,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EAnomaly tempAnomaly = null;
-		R4EUIModelController.setDialogOpen(true);
+		R4EUIModelController.setJobInProgress(true);
 		final AnomalyInputDialog dialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite()
 				.getWorkbenchWindow()
@@ -137,7 +137,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			}
 		}
 		// else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);
+		R4EUIModelController.setJobInProgress(false);
 		return tempAnomaly;
 	}
 
@@ -376,7 +376,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		R4EUIAnomalyBasic uiAnomaly = null;
 
 		//Get anomaliy details from user
-		R4EUIModelController.setDialogOpen(true);
+		R4EUIModelController.setJobInProgress(true);
 		final AnomalyInputDialog dialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite()
 				.getWorkbenchWindow()
@@ -429,7 +429,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			addChildren(uiAnomaly);
 		}
 		// else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);
+		R4EUIModelController.setJobInProgress(false);
 		return uiAnomaly;
 	}
 

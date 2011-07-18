@@ -26,7 +26,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class DialogPropertyTester extends PropertyTester {
+public class JobInProgressPropertyTester extends PropertyTester {
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -47,6 +47,6 @@ public class DialogPropertyTester extends PropertyTester {
 	 * @see org.eclipse.core.expressions.IPropertyTester#test(Object, String, Object[], Object)
 	 */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		return !(R4EUIModelController.isDialogOpen());
+		return !(R4EUIModelController.isJobInProgress());
 	}
 }

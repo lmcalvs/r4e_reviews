@@ -217,7 +217,7 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			fReviewNameText.setEnabled(false);
 			fOriginalFileNameText.setEnabled(false);
 			fOriginalFilePathText.setEnabled(false);

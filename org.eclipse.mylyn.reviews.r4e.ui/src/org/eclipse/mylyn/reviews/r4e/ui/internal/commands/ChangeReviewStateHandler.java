@@ -86,7 +86,7 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 									if (source instanceof List) {
 										source = ((List<?>) source).get(0); //If this is a list, get first element
 									}
-									R4EUIModelController.setDialogOpen(true);
+									R4EUIModelController.setJobInProgress(true);
 
 									final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
 											R4EUIModelController.getNavigatorView()
@@ -111,10 +111,10 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 										} catch (ResourceHandlingException e) {
 											UIUtils.displayResourceErrorDialog(e);
 										} finally {
-											R4EUIModelController.setDialogOpen(false);
+											R4EUIModelController.setJobInProgress(false);
 										}
 									}
-									R4EUIModelController.setDialogOpen(false);
+									R4EUIModelController.setJobInProgress(false);
 								}
 							} catch (ResourceHandlingException e) {
 								UIUtils.displayResourceErrorDialog(e);

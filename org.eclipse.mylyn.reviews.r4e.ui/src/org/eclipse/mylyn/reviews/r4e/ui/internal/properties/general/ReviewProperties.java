@@ -251,7 +251,7 @@ public class ReviewProperties extends ModelElementProperties {
 	 */
 	@Override
 	public void setPropertyValue(Object aId, Object aValue) { // $codepro.audit.disable emptyMethod
-		if (!(R4EUIModelController.isDialogOpen()) && getElement().isOpen() && !getElement().isUserReviewed()) {
+		if (!(R4EUIModelController.isJobInProgress()) && getElement().isOpen() && !getElement().isUserReviewed()) {
 			try {
 				if (REVIEW_NAME_ID.equals(aId)) {
 					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(

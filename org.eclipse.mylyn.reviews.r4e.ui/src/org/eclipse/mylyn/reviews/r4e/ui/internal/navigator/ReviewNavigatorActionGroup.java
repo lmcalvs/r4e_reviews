@@ -196,7 +196,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		final IContributionItem[] items = toolbar.getItems();
 		for (IContributionItem item : items) {
 			if (item instanceof ActionContributionItem) {
-				if (R4EUIModelController.isDialogOpen()) {
+				if (R4EUIModelController.isJobInProgress()) {
 					((ActionContributionItem) item).getAction().setEnabled(false);
 				} else {
 					((ActionContributionItem) item).getAction().setEnabled(true);

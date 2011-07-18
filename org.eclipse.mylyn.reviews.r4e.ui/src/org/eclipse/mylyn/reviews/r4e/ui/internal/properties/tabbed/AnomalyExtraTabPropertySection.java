@@ -661,7 +661,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			fStateCombo.setEnabled(false);
 			fClassCombo.setEnabled(false);
 			fRankCombo.setEnabled(false);

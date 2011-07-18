@@ -170,7 +170,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	public ReviewComponent createChildModelDataElement() {
 		//Get comment from user and set it in model data
 		R4EComment tempComment = null;
-		R4EUIModelController.setDialogOpen(true);
+		R4EUIModelController.setJobInProgress(true);
 		final CommentInputDialog dialog = new CommentInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite()
 				.getWorkbenchWindow()
@@ -181,7 +181,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 			tempComment.setDescription(dialog.getCommentValue());
 		}
 		// else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);
+		R4EUIModelController.setJobInProgress(false);
 		return tempComment;
 	}
 
@@ -385,7 +385,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		R4EUIComment uiComment = null;
 
 		//Get comment details from user
-		R4EUIModelController.setDialogOpen(true);
+		R4EUIModelController.setJobInProgress(true);
 		final CommentInputDialog dialog = new CommentInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite()
 				.getWorkbenchWindow()
@@ -409,7 +409,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 			addChildren(uiComment);
 		}
 		// else Window.CANCEL
-		R4EUIModelController.setDialogOpen(false);
+		R4EUIModelController.setJobInProgress(false);
 		return uiComment;
 	}
 

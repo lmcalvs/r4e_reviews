@@ -157,7 +157,8 @@ public class ImportPostponedHandler extends AbstractHandler {
 					//the version of the file in the current review need to be in the workspace.  This is a limitation.
 					EList<R4EFileContext> currentFiles = ((R4EItem) currentItem).getFileContextList();
 					for (R4EFileContext currentFile : currentFiles) {
-						if (null != currentFile.getTarget().getPlatformURI()
+						if (null != currentFile.getTarget()
+								&& null != currentFile.getTarget().getPlatformURI()
 								&& currentFile.getTarget().getPlatformURI().equals(oldAnomalyFile.getPlatformURI())
 								&& null == ((R4EAnomaly) oldAnomaly).getInfoAtt().get(
 										R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {

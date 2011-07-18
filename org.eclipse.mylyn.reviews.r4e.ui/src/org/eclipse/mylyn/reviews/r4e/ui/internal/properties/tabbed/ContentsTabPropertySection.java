@@ -108,7 +108,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen()) {
+		if (R4EUIModelController.isJobInProgress()) {
 			fPositionText.setEnabled(false);
 		} else {
 			fPositionText.setEnabled(true);

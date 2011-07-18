@@ -267,7 +267,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 						} catch (OutOfSyncException e1) {
 							UIUtils.displaySyncErrorDialog(e1);
 						} finally {
-							R4EUIModelController.setDialogOpen(false);
+							R4EUIModelController.setJobInProgress(false);
 						}
 					}
 				} else {
@@ -696,7 +696,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isDialogOpen() || (!((R4EUIReviewBasic) fProperties.getElement()).isOpen())) {
+		if (R4EUIModelController.isJobInProgress() || (!((R4EUIReviewBasic) fProperties.getElement()).isOpen())) {
 			fNameText.setEnabled(false);
 			fPhaseCombo.setEnabled(false);
 			fDescriptionText.setEnabled(false);
