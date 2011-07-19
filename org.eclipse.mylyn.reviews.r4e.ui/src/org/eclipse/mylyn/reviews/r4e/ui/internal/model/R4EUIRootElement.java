@@ -306,10 +306,19 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			addChildren(addedChild);
 
 			final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+			String newGroup = reviewGroup.eResource().getURI().toFileString();
+			String prefGroupsStr = preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH);
+			String[] prefGroups = prefGroupsStr.split(System.getProperty("line.separator"));
+			for (String prefGroup : prefGroups) {
+				if (prefGroup.equals(newGroup + ";")) {
+					return addedChild; //Do not put group reference in preferences if it is already there
+				}
+			}
+
 			preferenceStore.setValue(
 					PreferenceConstants.P_GROUP_FILE_PATH,
 					preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH)
-							+ System.getProperty("line.separator") + reviewGroup.eResource().getURI().toFileString());
+							+ System.getProperty("line.separator") + newGroup);
 			return addedChild;
 		} else if (aModelComponent instanceof R4EDesignRuleCollection) {
 			final String ruleSetName = ((R4EDesignRuleCollection) aModelComponent).getName();
@@ -331,10 +340,19 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			addChildren(addedChild);
 
 			final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+			String newSet = ruleSet.eResource().getURI().toFileString();
+			String prefSetsStr = preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH);
+			String[] prefSets = prefSetsStr.split(System.getProperty("line.separator"));
+			for (String prefSet : prefSets) {
+				if (prefSet.equals(newSet)) {
+					return addedChild; //Do not put group reference in preferences if it is already there
+				}
+			}
+
 			preferenceStore.setValue(
 					PreferenceConstants.P_RULE_SET_FILE_PATH,
 					preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH)
-							+ System.getProperty("line.separator") + ruleSet.eResource().getURI().toFileString());
+							+ System.getProperty("line.separator") + newSet);
 			return addedChild;
 		} else {
 			return null; //should never happen

@@ -32,7 +32,6 @@ import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
@@ -419,6 +418,8 @@ public class R4EUIModelController {
 			} catch (ResourceHandlingException e) {
 				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 
+				//Bug 347780:  Remove this code for now.  Later we will implement to validate the group files
+				/*
 				//Review Group not found, ask user for review group creation
 				MessageDialog dialog = new MessageDialog(
 						// $codepro.audit.disable variableDeclaredInLoop
@@ -430,6 +431,7 @@ public class R4EUIModelController {
 					changePrefsPaths = true;
 					newRuleSetPaths.remove(ruleSetPath);
 				}
+				 */
 			}
 		}
 
