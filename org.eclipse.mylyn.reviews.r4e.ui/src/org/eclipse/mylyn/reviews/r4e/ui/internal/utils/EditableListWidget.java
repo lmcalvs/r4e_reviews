@@ -63,14 +63,14 @@ public class EditableListWidget {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field MAX_COLUMN_WIDTH. (value is 600)
+	 * Field DEFAULT_TABLE_WIDTH. (value is 200)
 	 */
 	private static final int DEFAULT_TABLE_WIDTH = 200;
 
 	/**
-	 * Field MAX_COLUMN_HALF_WIDTH. (value is 300)
+	 * Field DEFAULT_TABLE_HEIGHT. (value is 300)
 	 */
-	private static final int DEFAULT_TABLE_HEIGHT = 200;
+	private static final int DEFAULT_TABLE_HEIGHT = 300;
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -177,13 +177,25 @@ public class EditableListWidget {
 	public void createEditableListFromTable(FormToolkit aToolkit, final Class<?> aEditableWidgetClass) {
 
 		final TableColumn tableColumn = new TableColumn(fMainTable, SWT.LEFT, 0);
-		final TableColumn tableColumn2 = new TableColumn(fMainTable, SWT.RIGHT, 1);
+		final TableColumn tableColumn2;
+		fMainTable.setHeaderVisible(true);
+
+		final Rectangle area = fMainTable.getClientArea();
+		final Point size = fMainTable.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		final ScrollBar vBar = fMainTable.getVerticalBar();
+		int width = area.width - fMainTable.computeTrim(0, 0, 0, 0).width;
 
 		if (aEditableWidgetClass.equals(Date.class)) {
-			fMainTable.setHeaderVisible(true);
+			tableColumn2 = new TableColumn(fMainTable, SWT.RIGHT, 1);
 			tableColumn.setText(R4EUIConstants.SPENT_TIME_COLUMN_HEADER);
 			tableColumn2.setText(R4EUIConstants.ENTRY_TIME_COLUMN_HEADER);
+			tableColumn.setWidth(width / 2);
+			tableColumn2.setWidth(width - tableColumn.getWidth());
+		} else {
+			tableColumn2 = null; //only 1 column
+			tableColumn.setWidth(width);
 		}
+		fMainComposite.getParent().layout();
 
 		fMainComposite.addControlListener(new ControlAdapter() {
 			@Override
@@ -392,7 +404,9 @@ public class EditableListWidget {
 				} else {
 					fRemoveButton.setEnabled(true);
 				}
-				fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
+				if (null != fListener) {
+					fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
+				}
 				fMainTable.redraw();
 			}
 
