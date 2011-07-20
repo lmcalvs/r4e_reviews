@@ -72,12 +72,12 @@ public class SendNotificationHandler extends AbstractHandler {
 				Object obj = null;
 				if (source instanceof List) {
 					if (((List<?>) source).size() > 0) {
-						source = ((List<?>) source).get(0); //If this is a list, get first element
-						if (source instanceof AbstractSet) {
-							final Iterator<?> iterator = ((AbstractSet<?>) source).iterator();
+						Object sourceElement = ((List<?>) source).get(0); //If this is a list, get first element
+						if (sourceElement instanceof AbstractSet) {
+							final Iterator<?> iterator = ((AbstractSet<?>) sourceElement).iterator();
 							obj = iterator.next();
-						} else if (source instanceof IR4EUIModelElement) {
-							obj = source;
+						} else if (sourceElement instanceof IR4EUIModelElement) {
+							obj = source; //Keep all selections
 						}
 					} else {
 						//empty selection, try to get active editor selection
@@ -98,7 +98,7 @@ public class SendNotificationHandler extends AbstractHandler {
 					obj = iterator.next();
 				}
 				R4EUIModelController.setJobInProgress(true);
-				//if the source is Review element, all options are available.  O(therwise, only ask questions is supported
+				//if the source is unique and is a Review element, all options are available.  Otherwise, only ask questions is supported
 				final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
 						R4EUIModelController.getNavigatorView().getSite().getWorkbenchWindow().getShell(), obj);
 				dialog.create();

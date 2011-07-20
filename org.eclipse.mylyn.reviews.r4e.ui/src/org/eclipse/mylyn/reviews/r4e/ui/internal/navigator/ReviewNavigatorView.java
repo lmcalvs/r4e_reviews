@@ -58,6 +58,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.DateComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.LinePositionComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
@@ -689,6 +690,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			((ReviewNavigatorActionGroup) fActionSet).runReviewElemsFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runHideRuleSetsFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_RULE_SETS_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runHideDeltasFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_DELTAS_FILTER));
+			getTreeViewer().setComparator(new DateComparator());
 		} catch (ExecutionException e) {
 			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logError("Exception: " + e.toString(), e);

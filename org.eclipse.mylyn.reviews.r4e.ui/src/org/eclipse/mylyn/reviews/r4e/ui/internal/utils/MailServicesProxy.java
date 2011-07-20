@@ -48,6 +48,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
@@ -55,7 +56,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -137,7 +137,8 @@ public class MailServicesProxy {
 	/**
 	 * Field QUESTION_MSG_BODY. (value is ""I have a Question concerning the Following "")
 	 */
-	private static final String QUESTION_MSG_BODY = "I have a Question concerning the Following ";
+	private static final String QUESTION_MSG_BODY = "I have a Question concerning the Following Elements: "
+			+ LINE_FEED_MSG_PART + LINE_FEED_MSG_PART;
 
 	/**
 	 * Field DEFAULT_MEETING_DURATION. (value is "60")
@@ -641,122 +642,136 @@ public class MailServicesProxy {
 		msgBody.append(createIntroPart());
 		msgBody.append(QUESTION_MSG_BODY);
 
-		if (aSource instanceof R4EUIReviewBasic) {
-			msgBody.append("Review :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-		} else if (aSource instanceof R4EUIPostponedAnomaly) {
+		if (aSource instanceof List) {
+			for (Object sourceElement : (List<?>) aSource) {
+				addElementInfo(msgBody, sourceElement);
+				msgBody.append(LINE_FEED_MSG_PART);
+			}
+		} else if (aSource instanceof IR4EUIModelElement) {
+			addElementInfo(msgBody, aSource);
+		}
+
+		msgBody.append(LINE_FEED_MSG_PART);
+		msgBody.append(createReviewInfoPart());
+		msgBody.append(createOutroPart());
+		return msgBody.toString();
+	}
+
+	private static void addElementInfo(StringBuilder aMsgBody, Object aSource) {
+		if (aSource instanceof R4EUIPostponedAnomaly) {
 			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIPostponedAnomaly) aSource).getParent()).getTargetFileVersion();
-			msgBody.append("Anomaly :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
 			if (null != file) {
 				if (null != file.getResource()) {
-					msgBody.append("File: " + file.getResource().getProject() + ": "
+					aMsgBody.append("Postponed File: " + file.getResource().getProject() + ": "
 							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
 				} else {
-					msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("Postponed File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 				}
-				msgBody.append("Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
+				aMsgBody.append("Postponed File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
-				msgBody.append("File: " + ((R4EUIFileContext) ((R4EUIPostponedAnomaly) aSource).getParent()).getName()
+				aMsgBody.append("Postponed File: "
+						+ ((R4EUIFileContext) ((R4EUIPostponedAnomaly) aSource).getParent()).getName()
 						+ LINE_FEED_MSG_PART);
 			}
-			msgBody.append("Line(s): " + ((R4EUIPostponedAnomaly) aSource).getPosition().toString()
+			aMsgBody.append("Postponed Anomaly Line(s): " + ((R4EUIPostponedAnomaly) aSource).getPosition().toString()
 					+ LINE_FEED_MSG_PART);
-			msgBody.append("Title: " + ((R4EUIPostponedAnomaly) aSource).getAnomaly().getTitle() + LINE_FEED_MSG_PART);
-			msgBody.append("Description: " + ((R4EUIPostponedAnomaly) aSource).getAnomaly().getDescription()
+			aMsgBody.append("Postponed Anomaly Title: " + ((R4EUIPostponedAnomaly) aSource).getAnomaly().getTitle()
 					+ LINE_FEED_MSG_PART);
+			aMsgBody.append("Postponed Anomaly Description: "
+					+ ((R4EUIPostponedAnomaly) aSource).getAnomaly().getDescription() + LINE_FEED_MSG_PART);
 		} else if (aSource instanceof R4EUIAnomalyBasic) {
 			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIAnomalyBasic) aSource).getParent().getParent()).getTargetFileVersion();
-			msgBody.append("Anomaly :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
 			if (null != file) {
 				if (null != file.getResource()) {
-					msgBody.append("File: " + file.getResource().getProject() + ": "
+					aMsgBody.append("File: " + file.getResource().getProject() + ": "
 							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
 				} else {
-					msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 				}
-				msgBody.append("Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
+				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
-				msgBody.append("File: "
+				aMsgBody.append("File: "
 						+ ((R4EUIFileContext) ((R4EUIAnomalyBasic) aSource).getParent().getParent()).getName()
 						+ LINE_FEED_MSG_PART);
 			}
-			msgBody.append("Line(s): " + ((R4EUIAnomalyBasic) aSource).getPosition().toString() + LINE_FEED_MSG_PART);
-			msgBody.append("Title: " + ((R4EUIAnomalyBasic) aSource).getAnomaly().getTitle() + LINE_FEED_MSG_PART);
-			msgBody.append("Description: " + ((R4EUIAnomalyBasic) aSource).getAnomaly().getDescription()
+			aMsgBody.append("Anomaly Line(s): " + ((R4EUIAnomalyBasic) aSource).getPosition().toString()
+					+ LINE_FEED_MSG_PART);
+			aMsgBody.append("Anomaly Title: " + ((R4EUIAnomalyBasic) aSource).getAnomaly().getTitle()
+					+ LINE_FEED_MSG_PART);
+			aMsgBody.append("Anomaly Description: " + ((R4EUIAnomalyBasic) aSource).getAnomaly().getDescription()
 					+ LINE_FEED_MSG_PART);
 		} else if (aSource instanceof R4EUIComment) {
 			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIComment) aSource).getParent()
 					.getParent()
 					.getParent()).getTargetFileVersion();
-			msgBody.append("Anomaly :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
 			if (null != file) {
 				if (null != file.getResource()) {
-					msgBody.append("File: " + file.getResource().getProject() + ": "
+					aMsgBody.append("File: " + file.getResource().getProject() + ": "
 							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
 				} else {
-					msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 				}
-				msgBody.append("Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
+				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
-				msgBody.append("File: "
+				aMsgBody.append("File: "
 						+ ((R4EUIFileContext) ((R4EUIComment) aSource).getParent().getParent().getParent()).getName()
 						+ LINE_FEED_MSG_PART);
 			}
-			msgBody.append("Anomaly Line(s): "
+			aMsgBody.append("Anomaly Line(s): "
 					+ ((R4EUIAnomalyBasic) ((R4EUIComment) aSource).getParent()).getPosition().toString()
 					+ LINE_FEED_MSG_PART);
-			msgBody.append("Anomaly Title: "
+			aMsgBody.append("Anomaly Title: "
 					+ ((R4EUIAnomalyBasic) ((R4EUIComment) aSource).getParent()).getAnomaly().getTitle()
 					+ LINE_FEED_MSG_PART);
-			msgBody.append("Anomaly Description: "
+			aMsgBody.append("Anomaly Description: "
 					+ ((R4EUIAnomalyBasic) ((R4EUIComment) aSource).getParent()).getAnomaly().getDescription()
 					+ LINE_FEED_MSG_PART);
 
-			msgBody.append("Comment: " + ((R4EUIComment) aSource).getComment().getDescription() + LINE_FEED_MSG_PART);
+			aMsgBody.append("Anomaly Comment: " + ((R4EUIComment) aSource).getComment().getDescription()
+					+ LINE_FEED_MSG_PART);
 
 		} else if (aSource instanceof R4EUIReviewItem) {
-			msgBody.append("Review Item :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-			msgBody.append("Description: " + ((R4EUIReviewItem) aSource).getItem().getDescription()
+			aMsgBody.append("Review Item Description: " + ((R4EUIReviewItem) aSource).getItem().getDescription()
 					+ LINE_FEED_MSG_PART);
 
 		} else if (aSource instanceof R4EUIFileContext) {
-			msgBody.append("File:" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
 			final R4EFileVersion targetFile = ((R4EUIFileContext) aSource).getTargetFileVersion();
 			if (null != targetFile) {
 				if (null != targetFile.getResource()) {
-					msgBody.append("Target File: " + targetFile.getResource().getProject() + ": "
+					aMsgBody.append("Target File: " + targetFile.getResource().getProject() + ": "
 							+ targetFile.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
 				} else {
-					msgBody.append("File: " + targetFile.getRepositoryPath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("File: " + targetFile.getRepositoryPath() + LINE_FEED_MSG_PART);
 				}
-				msgBody.append("Target Version: " + targetFile.getVersionID() + LINE_FEED_MSG_PART);
+				aMsgBody.append("Target Version: " + targetFile.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
-				msgBody.append("File: " + ((R4EUIFileContext) aSource).getName() + LINE_FEED_MSG_PART);
-				msgBody.append("Target Version: None" + LINE_FEED_MSG_PART);
+				aMsgBody.append("File: " + ((R4EUIFileContext) aSource).getName() + LINE_FEED_MSG_PART);
+				aMsgBody.append("Target File Version: None" + LINE_FEED_MSG_PART);
 			}
 			final R4EFileVersion baseFile = ((R4EUIFileContext) aSource).getBaseFileVersion();
 			if (null == baseFile) {
-				msgBody.append("Base Version: None" + LINE_FEED_MSG_PART);
+				aMsgBody.append("Base File Version: None" + LINE_FEED_MSG_PART);
 			} else {
-				msgBody.append("Base Version: " + baseFile.getVersionID() + LINE_FEED_MSG_PART);
+				aMsgBody.append("Base File Version: " + baseFile.getVersionID() + LINE_FEED_MSG_PART);
 			}
 
 		} else if (aSource instanceof R4EUIContent) {
 			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIContent) aSource).getParent().getParent()).getTargetFileVersion();
-			msgBody.append("Selection :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
 			if (null != file) {
 				if (null != file.getResource()) {
-					msgBody.append("File: " + file.getResource().getProject() + ": "
+					aMsgBody.append("File: " + file.getResource().getProject() + ": "
 							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
 				} else {
-					msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 				}
-				msgBody.append("Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
+				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
-				msgBody.append("File: "
+				aMsgBody.append("File: "
 						+ ((R4EUIFileContext) ((R4EUIContent) aSource).getParent().getParent()).getName()
 						+ LINE_FEED_MSG_PART);
 			}
-			msgBody.append("Line(s): " + ((R4EUIContent) aSource).getPosition().toString() + LINE_FEED_MSG_PART);
+			aMsgBody.append("Content Line(s): " + ((R4EUIContent) aSource).getPosition().toString()
+					+ LINE_FEED_MSG_PART);
 
 		} else if (aSource instanceof ITextEditor) {
 			//Get the information from the text editor
@@ -768,17 +783,17 @@ public class MailServicesProxy {
 			R4EFileVersion file = null;
 			if (input instanceof R4EFileRevisionEditorInput) {
 				file = ((R4EFileRevisionEditorInput) input).getFileVersion();
-				msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+				aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 			} else if (input instanceof R4EFileEditorInput) {
 				file = ((R4EFileEditorInput) input).getFileVersion();
-				msgBody.append("File: " + file.getResource().getProject() + ": "
+				aMsgBody.append("File: " + file.getResource().getProject() + ": "
 						+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
 			}
-			msgBody.append(LINE_FEED_MSG_PART);
-			msgBody.append("Position in File : " + CommandUtils.getPosition(selectedText).toString()
+			aMsgBody.append(LINE_FEED_MSG_PART);
+			aMsgBody.append("Position in File: " + CommandUtils.getPosition(selectedText).toString()
 					+ LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-			msgBody.append("Contents :" + LINE_FEED_MSG_PART);
-			msgBody.append(selectedText.getText());
+			aMsgBody.append("Contents :" + LINE_FEED_MSG_PART);
+			aMsgBody.append(selectedText.getText());
 
 		} else if (aSource instanceof TextSelection) {
 			final IEditorPart editorPart = PlatformUI.getWorkbench()
@@ -790,26 +805,22 @@ public class MailServicesProxy {
 			R4EFileVersion file = null;
 			if (input instanceof R4ECompareEditorInput) {
 				filename = ((R4ECompareEditorInput) input).getLeftElement().getName();
-				msgBody.append("File: " + filename + LINE_FEED_MSG_PART);
+				aMsgBody.append("File: " + filename + LINE_FEED_MSG_PART);
 			} else if (input instanceof R4EFileRevisionEditorInput) {
 				file = ((R4EFileRevisionEditorInput) input).getFileVersion();
-				msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+				aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 			} else if (input instanceof R4EFileEditorInput) {
 				file = ((R4EFileEditorInput) input).getFileVersion();
-				msgBody.append("File: " + file.getResource().getProject() + ": "
+				aMsgBody.append("File: " + file.getResource().getProject() + ": "
 						+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
 			}
 			final TextSelection selectedText = (TextSelection) aSource;
-			msgBody.append(LINE_FEED_MSG_PART);
-			msgBody.append("Position in File : " + CommandUtils.getPosition(selectedText).toString()
+			aMsgBody.append(LINE_FEED_MSG_PART);
+			aMsgBody.append("Position in File: " + CommandUtils.getPosition(selectedText).toString()
 					+ LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-			msgBody.append("Contents :" + LINE_FEED_MSG_PART);
-			msgBody.append(selectedText.getText());
+			aMsgBody.append("Contents: " + LINE_FEED_MSG_PART);
+			aMsgBody.append(selectedText.getText());
 		}
-		msgBody.append(LINE_FEED_MSG_PART);
-		msgBody.append(createReviewInfoPart());
-		msgBody.append(createOutroPart());
-		return msgBody.toString();
 	}
 
 	/**
