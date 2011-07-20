@@ -63,67 +63,70 @@ public class NewChildElementHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent event) {
 
-		final UIJob job = new UIJob("Adding New Child Element...") {
-			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
-				final IR4EUIModelElement element = getParentElement(event);
-				IR4EUIModelElement newElement = null;
-				final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
+		final IR4EUIModelElement element = getParentElement(event);
+		final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
 
-				try {
-					//Get data from user
-					if (null != element) {
-						final ReviewComponent tempModelComponent = element.createChildModelDataElement();
-						if (null != tempModelComponent) {
-							Activator.Ftracer.traceInfo("Adding child to element " + element.getName());
+		//Get data from user
+		if (null != element) {
+			try {
+				final ReviewComponent tempModelComponent = element.createChildModelDataElement();
+				if (null != tempModelComponent) {
+					Activator.Ftracer.traceInfo("Adding child to element " + element.getName());
 
-							//Create actual model element
-							newElement = element.createChildren(tempModelComponent);
-							if (null != newElement) {
-								//Set focus to newly created element and open it
-								viewer.expandToLevel(newElement, AbstractTreeViewer.ALL_LEVELS);
-								viewer.setSelection(new StructuredSelection(newElement), true);
+					//Create actual model element
+					final UIJob job = new UIJob("Adding New Child Element...") {
+						@Override
+						public IStatus runInUIThread(IProgressMonitor monitor) {
+							IR4EUIModelElement newElement = null;
+							try {
+								newElement = element.createChildren(tempModelComponent);
+								if (null != newElement) {
+									//Set focus to newly created element and open it
+									viewer.expandToLevel(newElement, AbstractTreeViewer.ALL_LEVELS);
+									viewer.setSelection(new StructuredSelection(newElement), true);
+								}
+							} catch (ResourceHandlingException e) {
+								UIUtils.displayResourceErrorDialog(e);
+
+								//Remove object if partially created
+								try {
+									element.removeChildren(newElement, true);
+								} catch (ResourceHandlingException e1) {
+									UIUtils.displayResourceErrorDialog(e1);
+								} catch (OutOfSyncException e1) {
+									UIUtils.displaySyncErrorDialog(e1);
+								}
+
+							} catch (OutOfSyncException e) {
+								UIUtils.displaySyncErrorDialog(e);
+
+								//Remove object if partially created
+								try {
+									element.removeChildren(newElement, true);
+								} catch (ResourceHandlingException e1) {
+									UIUtils.displayResourceErrorDialog(e1);
+								} catch (OutOfSyncException e1) {
+									UIUtils.displaySyncErrorDialog(e1);
+								}
 							}
+							return Status.OK_STATUS;
 						}
-					}
-				} catch (ResourceHandlingException e) {
-					UIUtils.displayResourceErrorDialog(e);
-
-					//Remove object if partially created
-					try {
-						element.removeChildren(newElement, true);
-					} catch (ResourceHandlingException e1) {
-						UIUtils.displayResourceErrorDialog(e1);
-					} catch (OutOfSyncException e1) {
-						UIUtils.displaySyncErrorDialog(e1);
-					}
-
-				} catch (OutOfSyncException e) {
-					UIUtils.displaySyncErrorDialog(e);
-
-					//Remove object if partially created
-					try {
-						element.removeChildren(newElement, true);
-					} catch (ResourceHandlingException e1) {
-						UIUtils.displayResourceErrorDialog(e1);
-					} catch (OutOfSyncException e1) {
-						UIUtils.displaySyncErrorDialog(e1);
-					}
+					};
+					job.setUser(true);
+					job.schedule();
 				}
+			} catch (ResourceHandlingException e) {
+				UIUtils.displayResourceErrorDialog(e);
 
-				try {
-					final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
-							event)
-							.getService(IEvaluationService.class);
-					evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen");
-				} catch (ExecutionException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-				return Status.OK_STATUS;
 			}
-		};
-		job.setUser(true);
-		job.schedule();
+			try {
+				final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
+						event).getService(IEvaluationService.class);
+				evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen");
+			} catch (ExecutionException e) {
+				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			}
+		}
 		return null;
 	}
 

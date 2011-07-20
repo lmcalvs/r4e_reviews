@@ -139,6 +139,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				R4EUIModelController.setJobInProgress(true); //Disable operations on UI
 				final ChangeSet changeSet = uiConnector.getChangeSet(null, project);
 				createReviewItem(event, changeSet);
+				R4EUIModelController.setJobInProgress(false);
 			} else {
 				// We could not find any version control system, thus no items
 				final String strProject = ((null == project) ? "null" : project.getName());

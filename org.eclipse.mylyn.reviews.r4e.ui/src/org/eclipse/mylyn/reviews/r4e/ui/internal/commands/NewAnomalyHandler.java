@@ -31,7 +31,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IJavaElement;
@@ -64,7 +63,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -88,48 +86,40 @@ public class NewAnomalyHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent event) {
 
-		final UIJob job = new UIJob("Adding New Anomaly...") {
-			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
-				final IEditorPart editorPart = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow()
-						.getActivePage()
-						.getActiveEditor(); // $codepro.audit.disable methodChainLength
+		final IEditorPart editorPart = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow()
+				.getActivePage()
+				.getActiveEditor(); // $codepro.audit.disable methodChainLength
 
-				//Act differently depending on the type of selection we get
-				final ISelection selection = HandlerUtil.getCurrentSelection(event);
-				if (selection instanceof ITextSelection) {
-					addAnomalyFromText((ITextSelection) selection);
+		//Act differently depending on the type of selection we get
+		final ISelection selection = HandlerUtil.getCurrentSelection(event);
+		if (selection instanceof ITextSelection) {
+			addAnomalyFromText((ITextSelection) selection);
 
-				} else if (selection instanceof ITreeSelection) {
+		} else if (selection instanceof ITreeSelection) {
 
-					//First remove any editor selection (if open) if we execute the command from the review navigator view
-					if (null != editorPart && editorPart instanceof ITextEditor) {
-						((ITextEditor) editorPart).getSelectionProvider().setSelection(null);
-					}
-
-					//Then iterate through all selections	
-					for (final Iterator<?> iterator = ((ITreeSelection) selection).iterator(); iterator.hasNext();) {
-						addAnomalyFromTree(iterator.next());
-					}
-				} else if (selection.isEmpty()) {
-					//Try to get the active editor highlighted range and set it as the editor's selection
-					if (null != editorPart) {
-						if (editorPart instanceof ITextEditor) {
-							final IRegion region = ((ITextEditor) editorPart).getHighlightRange();
-							final TextSelection selectedText = new TextSelection(
-									((ITextEditor) editorPart).getDocumentProvider().getDocument(
-											editorPart.getEditorInput()), region.getOffset(), region.getLength());
-							((ITextEditor) editorPart).getSelectionProvider().setSelection(selectedText);
-							addAnomalyFromText(selectedText);
-						}
-					}
-				}
-				return Status.OK_STATUS;
+			//First remove any editor selection (if open) if we execute the command from the review navigator view
+			if (null != editorPart && editorPart instanceof ITextEditor) {
+				((ITextEditor) editorPart).getSelectionProvider().setSelection(null);
 			}
-		};
-		job.setUser(true);
-		job.schedule();
+
+			//Then iterate through all selections	
+			for (final Iterator<?> iterator = ((ITreeSelection) selection).iterator(); iterator.hasNext();) {
+				addAnomalyFromTree(iterator.next());
+			}
+		} else if (selection.isEmpty()) {
+			//Try to get the active editor highlighted range and set it as the editor's selection
+			if (null != editorPart) {
+				if (editorPart instanceof ITextEditor) {
+					final IRegion region = ((ITextEditor) editorPart).getHighlightRange();
+					final TextSelection selectedText = new TextSelection(
+							((ITextEditor) editorPart).getDocumentProvider().getDocument(editorPart.getEditorInput()),
+							region.getOffset(), region.getLength());
+					((ITextEditor) editorPart).getSelectionProvider().setSelection(selectedText);
+					addAnomalyFromText(selectedText);
+				}
+			}
+		}
 		return null;
 	}
 
