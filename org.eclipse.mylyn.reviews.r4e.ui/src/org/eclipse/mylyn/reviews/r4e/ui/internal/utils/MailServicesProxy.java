@@ -50,6 +50,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -312,8 +313,9 @@ public class MailServicesProxy {
 		final ArrayList<String> destinations = new ArrayList<String>();
 		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
 		for (R4EParticipant participant : participants) {
-			if (null != participant.getEmail() && !R4EUIModelController.getReviewer().equals(participant.getId())) {
-				//All participants should receive this email
+			if (participant.isEnabled() && null != participant.getEmail()
+					&& !R4EUIModelController.getReviewer().equals(participant.getId())) {
+				//All active participants should receive this email
 				destinations.add(participant.getEmail());
 			}
 		}
@@ -329,7 +331,7 @@ public class MailServicesProxy {
 		final ArrayList<String> destinations = new ArrayList<String>();
 		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
 		for (R4EParticipant participant : participants) {
-			if (null != participant.getEmail()) {
+			if (participant.isEnabled() && null != participant.getEmail()) {
 				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL))) {
 					if (!R4EUIModelController.getReviewer().equals(participant.getId())) {
 						destinations.add(participant.getEmail());
@@ -357,7 +359,7 @@ public class MailServicesProxy {
 		final ArrayList<String> destinations = new ArrayList<String>();
 		final List<R4EParticipant> participants = R4EUIModelController.getActiveReview().getParticipants();
 		for (R4EParticipant participant : participants) {
-			if (null != participant.getEmail()) {
+			if (participant.isEnabled() && null != participant.getEmail()) {
 				if (!(R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL))) {
 					if (!R4EUIModelController.getReviewer().equals(participant.getId())) {
 						destinations.add(participant.getEmail());
@@ -410,7 +412,8 @@ public class MailServicesProxy {
 		final List<R4EUIReviewItem> items = R4EUIModelController.getActiveReview().getReviewItems();
 		for (R4EUIReviewItem item : items) {
 			if (item.isEnabled()) {
-				msgBody.append("Review Item -> " + item.getName() + LINE_FEED_MSG_PART);
+				msgBody.append("Review Item -> " + item.getItem().getDescription() + LINE_FEED_MSG_PART
+						+ LINE_FEED_MSG_PART);
 				msgBody.append("Eclipse Project: File Path Relative to Eclipse Project[: Line range]"
 						+ LINE_FEED_MSG_PART);
 				R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
@@ -515,6 +518,7 @@ public class MailServicesProxy {
 		msgBody.append(createIntroPart());
 		msgBody.append(aHeader + LINE_FEED_MSG_PART);
 
+		//First count the number of elements to add to the message 
 		int numReviewedFiles = 0;
 		int numTotalFiles = 0;
 		int numTotalAnomalies = 0;
@@ -528,8 +532,20 @@ public class MailServicesProxy {
 				++numTotalFiles;
 				if (null != (R4EUIAnomalyContainer) context.getAnomalyContainerElement()) {
 					R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) ((R4EUIAnomalyContainer) context.getAnomalyContainerElement()).getChildren();
-					numTotalAnomalies += anomalies.length;
+					for (R4EUIAnomalyBasic anomaly : anomalies) {
+						if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
+							++numTotalAnomalies; //Specific anomalies
+						}
+					}
 				}
+			}
+		}
+		R4EUIAnomalyBasic[] globalAnomalies = (R4EUIAnomalyBasic[]) R4EUIModelController.getActiveReview()
+				.getAnomalyContainer()
+				.getChildren();
+		for (R4EUIAnomalyBasic anomaly : globalAnomalies) {
+			if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
+				++numTotalAnomalies; //Global Anomalies
 			}
 		}
 
@@ -544,34 +560,44 @@ public class MailServicesProxy {
 		//Add anomalies created by current reviewer
 		msgBody.append("Anomalies Created by: " + R4EUIModelController.getReviewer() + LINE_FEED_MSG_PART);
 		msgBody.append("Count: " + numTotalAnomalies + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-		if (numTotalAnomalies > 0) {
-			msgBody.append("FileContext: " + TAB_MSG_PART + "Eclipse Project: File Path Relative to Eclipse Project: "
-					+ LINE_FEED_MSG_PART);
-			msgBody.append(TAB_MSG_PART + "Anomaly: " + TAB_MSG_PART + "Line Range: Title: Description"
-					+ LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-		}
 
-		boolean titleWritten = false;
+		R4EUIFileContext context;
+		R4EUIAnomalyBasic anomaly;
 		for (R4EUIReviewItem item : items) {
 			R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
-			for (R4EUIFileContext context : contexts) {
+			for (int i = 0; i < contexts.length; i++) {
+				context = contexts[i];
+				if (i == 0) {
+					//Add format line
+					msgBody.append("FileContext: " + TAB_MSG_PART
+							+ "Eclipse Project: File Path Relative to Eclipse Project: " + LINE_FEED_MSG_PART);
+				}
 				if (null != (R4EUIAnomalyContainer) context.getAnomalyContainerElement()) {
 					R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) ((R4EUIAnomalyContainer) context.getAnomalyContainerElement()).getChildren();
-					titleWritten = false;
-					for (R4EUIAnomalyBasic anomaly : anomalies) {
-						if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
-							if (!titleWritten) {
-								if (null != context.getTargetFileVersion()
-										&& null != context.getTargetFileVersion().getResource()) {
-									msgBody.append(context.getTargetFileVersion().getResource().getProject() + ": "
-											+ context.getTargetFileVersion().getResource().getProjectRelativePath()
-											+ LINE_FEED_MSG_PART);
-									titleWritten = true;
-								}
-							}
-							msgBody.append(TAB_MSG_PART + anomaly.getPosition().toString() + ": "
-									+ anomaly.getAnomaly().getTitle() + ": " + anomaly.getAnomaly().getDescription()
+					if (null != context.getTargetFileVersion() && null != context.getTargetFileVersion().getResource()) {
+						msgBody.append(context.getTargetFileVersion().getResource().getProject() + ": "
+								+ context.getTargetFileVersion().getResource().getProjectRelativePath()
+								+ LINE_FEED_MSG_PART);
+					}
+					for (int j = 0; j < anomalies.length; j++) {
+						anomaly = anomalies[j];
+						if (j == 0) {
+							//Add format line
+							msgBody.append(TAB_MSG_PART + "Anomaly: " + "Line Range: Title: Description"
 									+ LINE_FEED_MSG_PART);
+						}
+						if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
+							//Add anomaly
+							msgBody.append(TAB_MSG_PART + TAB_MSG_PART + "   " + anomaly.getPosition().toString()
+									+ ": " + anomaly.getAnomaly().getTitle() + ": "
+									+ anomaly.getAnomaly().getDescription() + LINE_FEED_MSG_PART);
+
+							//Also add child comments
+							R4EUIComment[] comments = (R4EUIComment[]) anomaly.getChildren();
+							for (R4EUIComment comment : comments) {
+								msgBody.append(TAB_MSG_PART + TAB_MSG_PART + TAB_MSG_PART + "Comment: "
+										+ comment.getComment().getDescription() + LINE_FEED_MSG_PART);
+							}
 						}
 					}
 				}
@@ -580,16 +606,21 @@ public class MailServicesProxy {
 		msgBody.append(LINE_FEED_MSG_PART);
 
 		//Add global anomalies
-		final R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) R4EUIModelController.getActiveReview()
-				.getAnomalyContainer()
-				.getChildren();
-		if (anomalies.length > 0) {
+		if (globalAnomalies.length > 0) {
 			msgBody.append("Global Anomalies: " + LINE_FEED_MSG_PART);
 		}
-		for (R4EUIAnomalyBasic anomaly : anomalies) {
-			if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
-				msgBody.append(anomaly.getAnomaly().getTitle() + ": " + anomaly.getAnomaly().getDescription()
-						+ LINE_FEED_MSG_PART);
+		for (R4EUIAnomalyBasic globalAnomaly : globalAnomalies) {
+			if (globalAnomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
+				//Add anomaly
+				msgBody.append(globalAnomaly.getAnomaly().getTitle() + ": "
+						+ globalAnomaly.getAnomaly().getDescription() + LINE_FEED_MSG_PART);
+
+				//Also add child comments
+				R4EUIComment[] globalComments = (R4EUIComment[]) globalAnomaly.getChildren();
+				for (R4EUIComment globalComment : globalComments) {
+					msgBody.append(TAB_MSG_PART + "Comment: " + globalComment.getComment().getDescription()
+							+ LINE_FEED_MSG_PART);
+				}
 			}
 		}
 
@@ -652,6 +683,35 @@ public class MailServicesProxy {
 			msgBody.append("Title: " + ((R4EUIAnomalyBasic) aSource).getAnomaly().getTitle() + LINE_FEED_MSG_PART);
 			msgBody.append("Description: " + ((R4EUIAnomalyBasic) aSource).getAnomaly().getDescription()
 					+ LINE_FEED_MSG_PART);
+		} else if (aSource instanceof R4EUIComment) {
+			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIComment) aSource).getParent()
+					.getParent()
+					.getParent()).getTargetFileVersion();
+			msgBody.append("Anomaly :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+			if (null != file) {
+				if (null != file.getResource()) {
+					msgBody.append("File: " + file.getResource().getProject() + ": "
+							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+				} else {
+					msgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+				}
+				msgBody.append("Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
+			} else {
+				msgBody.append("File: "
+						+ ((R4EUIFileContext) ((R4EUIComment) aSource).getParent().getParent().getParent()).getName()
+						+ LINE_FEED_MSG_PART);
+			}
+			msgBody.append("Anomaly Line(s): "
+					+ ((R4EUIAnomalyBasic) ((R4EUIComment) aSource).getParent()).getPosition().toString()
+					+ LINE_FEED_MSG_PART);
+			msgBody.append("Anomaly Title: "
+					+ ((R4EUIAnomalyBasic) ((R4EUIComment) aSource).getParent()).getAnomaly().getTitle()
+					+ LINE_FEED_MSG_PART);
+			msgBody.append("Anomaly Description: "
+					+ ((R4EUIAnomalyBasic) ((R4EUIComment) aSource).getParent()).getAnomaly().getDescription()
+					+ LINE_FEED_MSG_PART);
+
+			msgBody.append("Comment: " + ((R4EUIComment) aSource).getComment().getDescription() + LINE_FEED_MSG_PART);
 
 		} else if (aSource instanceof R4EUIReviewItem) {
 			msgBody.append("Review Item :" + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);

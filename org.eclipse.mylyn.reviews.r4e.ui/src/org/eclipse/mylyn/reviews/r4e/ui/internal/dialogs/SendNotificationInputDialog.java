@@ -60,6 +60,31 @@ public class SendNotificationInputDialog extends FormDialog {
 	 */
 	private static final String BASIC_PARAMS_HEADER_MSG = "Which notification type do you want to send?";
 
+	/**
+	 * Field REVIEW_COMPLETION. (value is ""Notify of Review Completion"")
+	 */
+	private static final String REVIEW_COMPLETION = "Notify of Review Completion";
+
+	/**
+	 * Field REVIEW_PROGRESS. (value is ""Notify of Review Progress"")
+	 */
+	private static final String REVIEW_PROGRESS = "Notify of Review Progress";
+
+	/**
+	 * Field QUESTION. (value is ""Ask Question to Participant"")
+	 */
+	private static final String QUESTION = "Ask Question to Participant";
+
+	/**
+	 * Field MEETING_REQUEST. (value is ""Send Meeting Request"")
+	 */
+	private static final String MEETING_REQUEST = "Send Meeting Request";
+
+	/**
+	 * Field UPDATED_REVIEW_ITEMS. (value is ""Notify Participants of Updated Items Ready for Review"")
+	 */
+	private static final String UPDATED_REVIEW_ITEMS = "Notify Participants of Updated Items Ready for Review";
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -203,31 +228,29 @@ public class SendNotificationInputDialog extends FormDialog {
 		//Email/Notification type radio button
 		if (fSource instanceof R4EUIReviewBasic) {
 			if (((R4EUIReviewBasic) fSource).isUserReviewed()) {
-				fCompletionButton = toolkit.createButton(basicSectionClient, "Notify Review Owner of Completion",
-						SWT.RADIO);
+				fCompletionButton = toolkit.createButton(basicSectionClient, REVIEW_COMPLETION, SWT.RADIO);
 				fCompletionButton.setSelection(true);
 				fCompletionButton.setToolTipText(R4EUIConstants.NOTIFICATION_COMPLETION_TOOLTIP);
 				fCompletionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 			} else {
-				fItemsUpdatedButton = toolkit.createButton(basicSectionClient,
-						"Notify Participants of New/Removed/Updated Items Ready for Review", SWT.RADIO);
+				fItemsUpdatedButton = toolkit.createButton(basicSectionClient, UPDATED_REVIEW_ITEMS, SWT.RADIO);
 				fItemsUpdatedButton.setToolTipText(R4EUIConstants.NOTIFICATION_ITEMS_UPDATED_TOOLTIP);
 				fItemsUpdatedButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 
-				fProgressButton = toolkit.createButton(basicSectionClient, "Notify review Owner of Progress", SWT.RADIO);
+				fProgressButton = toolkit.createButton(basicSectionClient, REVIEW_PROGRESS, SWT.RADIO);
 				fProgressButton.setToolTipText(R4EUIConstants.NOTIFICATION_PROGRESS_TOOLTIP);
 				fProgressButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 
-				fQuestionButton = toolkit.createButton(basicSectionClient, "Ask Question to Participant", SWT.RADIO);
+				fQuestionButton = toolkit.createButton(basicSectionClient, QUESTION, SWT.RADIO);
 				fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
 				fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 
-				fMeetingButton = toolkit.createButton(basicSectionClient, "Send Meeting Request", SWT.RADIO);
+				fMeetingButton = toolkit.createButton(basicSectionClient, MEETING_REQUEST, SWT.RADIO);
 				fMeetingButton.setToolTipText(R4EUIConstants.MEETING_REQUEST_TOOLTIP);
 				fMeetingButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 			}
 		} else {
-			fQuestionButton = toolkit.createButton(basicSectionClient, "Ask Question to Participant", SWT.RADIO);
+			fQuestionButton = toolkit.createButton(basicSectionClient, QUESTION, SWT.RADIO);
 			fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
 			fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		}
