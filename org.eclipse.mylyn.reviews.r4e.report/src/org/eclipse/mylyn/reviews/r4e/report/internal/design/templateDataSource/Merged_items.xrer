@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/">
+  <r4ecore:R4EItem xmi:id="_kpxl0ZW0EeCr_aBKIcQ8JA" description="Adding pom to ldap plug-in" addedById="lmcbout" repositoryRef="bb0923f3c4fe02f65f97f8c8b58bc23a65d1301a" authorRep="alvsan09@gmail.com" submitted="2011-04-11T08:43:45.000-0400">
+    <id href="#_kpxl0pW0EeCr_aBKIcQ8JA"/>
+    <addedBy href="Merged_comments.xrer#_Zri9s5W0EeCr_aBKIcQ8JA"/>
+    <review href="Merged_review.xrer#_VySFwJgoEeCzPO4WlSPhFA"/>
+    <fileContextList href="#_ktC8QJW0EeCr_aBKIcQ8JA"/>
+    <fileContextList href="#_ku1E8JW0EeCr_aBKIcQ8JA"/>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.ldap</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_kpxl0pW0EeCr_aBKIcQ8JA" sequenceID="1" userID="lmcbout"/>
+  <r4ecore:R4EFileContext xmi:id="_ktC8QJW0EeCr_aBKIcQ8JA" type="R4E_MODIFIED">
+    <id href="#_ktC8QZW0EeCr_aBKIcQ8JA"/>
+    <base href="#_ktC8Q5W0EeCr_aBKIcQ8JA"/>
+    <target href="#_ktpZMJW0EeCr_aBKIcQ8JA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_ktC8QZW0EeCr_aBKIcQ8JA" sequenceID="2" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_ktC8Q5W0EeCr_aBKIcQ8JA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/META-INF/MANIFEST.MF" versionID="7b5e3702d02347844a452d9aa6fa3b66b7f6c394" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="7b5e3702d02347844a452d9aa6fa3b66b7f6c394"/>
+  <r4ecore:R4EFileVersion xmi:id="_ktpZMJW0EeCr_aBKIcQ8JA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/META-INF/MANIFEST.MF" versionID="c05d3e0dbdac2d2fe474f2cddd5af62c37efde6d" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="c05d3e0dbdac2d2fe474f2cddd5af62c37efde6d"/>
+  <r4ecore:R4EFileContext xmi:id="_ku1E8JW0EeCr_aBKIcQ8JA" type="R4E_ADDED">
+    <id href="#_ku1E8ZW0EeCr_aBKIcQ8JA"/>
+    <target href="#_ku1E85W0EeCr_aBKIcQ8JA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_ku1E8ZW0EeCr_aBKIcQ8JA" sequenceID="3" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_ku1E85W0EeCr_aBKIcQ8JA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/pom.xml" versionID="84bb3f7bf94dd435c48a76b36febb4a459049448" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/pom.xml" name="pom.xml" localVersionID="84bb3f7bf94dd435c48a76b36febb4a459049448"/>
+  <r4ecore:R4EItem xmi:id="_tNvK8ZW0EeCr_aBKIcQ8JA" addedById="lmcbout">
+    <id href="#_tNvK8pW0EeCr_aBKIcQ8JA"/>
+    <addedBy href="Merged_comments.xrer#_Zri9s5W0EeCr_aBKIcQ8JA"/>
+    <review href="Merged_review.xrer#_VySFwJgoEeCzPO4WlSPhFA"/>
+    <fileContextList href="#_tOCF4JW0EeCr_aBKIcQ8JA"/>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.ldap</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_tNvK8pW0EeCr_aBKIcQ8JA" sequenceID="4" userID="lmcbout"/>
+  <r4ecore:R4EFileContext xmi:id="_tOCF4JW0EeCr_aBKIcQ8JA">
+    <id href="#_tOCF4ZW0EeCr_aBKIcQ8JA"/>
+    <deltas href="#_tPOYsZW0EeCr_aBKIcQ8JA"/>
+    <base href="#_tOCF45W0EeCr_aBKIcQ8JA"/>
+    <target href="#_tOn7wJW0EeCr_aBKIcQ8JA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_tOCF4ZW0EeCr_aBKIcQ8JA" sequenceID="5" userID="lmcbout"/>
+  <r4ecore:R4EDelta xmi:id="_tPOYsZW0EeCr_aBKIcQ8JA">
+    <id href="#_tPOYspW0EeCr_aBKIcQ8JA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_tPOYs5W0EeCr_aBKIcQ8JA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_tPOYspW0EeCr_aBKIcQ8JA" sequenceID="6" userID="lmcbout"/>
+  <r4ecore:R4ETextContent xmi:id="_tPOYs5W0EeCr_aBKIcQ8JA">
+    <location href="#_tPOYtJW0EeCr_aBKIcQ8JA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_tPOYtJW0EeCr_aBKIcQ8JA" startPosition="6694" length="454" startLine="176" endLine="188"/>
+  <r4ecore:R4EFileVersion xmi:id="_tOCF45W0EeCr_aBKIcQ8JA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/queryUtility/QueryGlobalLdapDirectory.java" versionID="41bc7682e36ef86bc114c5016a8f5d35097ac27b" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/queryUtility/QueryGlobalLdapDirectory.java" name="QueryGlobalLdapDirectory.java" localVersionID="41bc7682e36ef86bc114c5016a8f5d35097ac27b"/>
+  <r4ecore:R4EFileVersion xmi:id="_tOn7wJW0EeCr_aBKIcQ8JA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/queryUtility/QueryGlobalLdapDirectory.java" versionID="41bc7682e36ef86bc114c5016a8f5d35097ac27b" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/queryUtility/QueryGlobalLdapDirectory.java" name="QueryGlobalLdapDirectory.java" localVersionID="41bc7682e36ef86bc114c5016a8f5d35097ac27b"/>
+  <r4ecore:R4EItem xmi:id="_w1m3kZHlEeCpNuNFfnwzAQ" description="Merge branch 'mailServicesImpl'&#xA;" addedById="lmcbout" repositoryRef="b4f03c02e47e9c17f6ac7ed128b9e8a0a270c48a" authorRep="sebastien.dubois@ericsson.com" submitted="2011-04-11T11:12:57.000-0400">
+    <id href="#_w1m3kpHlEeCpNuNFfnwzAQ"/>
+    <addedBy href="Merged_comments.xrer#_-rh7A5HkEeCpNuNFfnwzAQ"/>
+    <review href="Merged_review.xrer#_V2TqI5goEeCzPO4WlSPhFA"/>
+    <fileContextList href="#_w6sy8JHlEeCpNuNFfnwzAQ"/>
+    <fileContextList href="#_w8KLgJHlEeCpNuNFfnwzAQ"/>
+    <fileContextList href="#_w-JvkJHlEeCpNuNFfnwzAQ"/>
+    <fileContextList href="#_w_rZkJHlEeCpNuNFfnwzAQ"/>
+    <fileContextList href="#_xBYCsJHlEeCpNuNFfnwzAQ"/>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.notifications</ProjectURIs>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.ldap</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_w1m3kpHlEeCpNuNFfnwzAQ" sequenceID="2" userID="lmcbout"/>
+  <r4ecore:R4EFileContext xmi:id="_w6sy8JHlEeCpNuNFfnwzAQ" type="R4E_MODIFIED">
+    <id href="#_w6sy8ZHlEeCpNuNFfnwzAQ"/>
+    <base href="#_w6xEYJHlEeCpNuNFfnwzAQ"/>
+    <target href="#_w7XhUJHlEeCpNuNFfnwzAQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_w6sy8ZHlEeCpNuNFfnwzAQ" sequenceID="3" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_w6xEYJHlEeCpNuNFfnwzAQ" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/META-INF/MANIFEST.MF" versionID="c96997204e9ae31672b48a9ec3c5c3a210b77b53" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="c96997204e9ae31672b48a9ec3c5c3a210b77b53"/>
+  <r4ecore:R4EFileVersion xmi:id="_w7XhUJHlEeCpNuNFfnwzAQ" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/META-INF/MANIFEST.MF" versionID="0f95bd6111068b41e6228526685175a84c7e3db9" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="0f95bd6111068b41e6228526685175a84c7e3db9"/>
+  <r4ecore:R4EFileContext xmi:id="_w8KLgJHlEeCpNuNFfnwzAQ" type="R4E_DELETED">
+    <id href="#_w8KLgZHlEeCpNuNFfnwzAQ"/>
+    <base href="#_w8MAsJHlEeCpNuNFfnwzAQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_w8KLgZHlEeCpNuNFfnwzAQ" sequenceID="4" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_w8MAsJHlEeCpNuNFfnwzAQ" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/pom.xml" versionID="f745f5102b3659e4b3c3c77050595f35445f5af9" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/pom.xml" name="pom.xml" localVersionID="f745f5102b3659e4b3c3c77050595f35445f5af9"/>
+  <r4ecore:R4EFileContext xmi:id="_w-JvkJHlEeCpNuNFfnwzAQ" type="R4E_MODIFIED">
+    <id href="#_w-JvkZHlEeCpNuNFfnwzAQ"/>
+    <base href="#_w-ML0JHlEeCpNuNFfnwzAQ"/>
+    <target href="#_w-g78JHlEeCpNuNFfnwzAQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_w-JvkZHlEeCpNuNFfnwzAQ" sequenceID="5" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_w-ML0JHlEeCpNuNFfnwzAQ" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/META-INF/MANIFEST.MF" versionID="c05d3e0dbdac2d2fe474f2cddd5af62c37efde6d" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="c05d3e0dbdac2d2fe474f2cddd5af62c37efde6d"/>
+  <r4ecore:R4EFileVersion xmi:id="_w-g78JHlEeCpNuNFfnwzAQ" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/META-INF/MANIFEST.MF" versionID="7b5e3702d02347844a452d9aa6fa3b66b7f6c394" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="7b5e3702d02347844a452d9aa6fa3b66b7f6c394"/>
+  <r4ecore:R4EFileContext xmi:id="_w_rZkJHlEeCpNuNFfnwzAQ" type="R4E_DELETED">
+    <id href="#_w_rZkZHlEeCpNuNFfnwzAQ"/>
+    <base href="#_w_tOwJHlEeCpNuNFfnwzAQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_w_rZkZHlEeCpNuNFfnwzAQ" sequenceID="6" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_w_tOwJHlEeCpNuNFfnwzAQ" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/pom.xml" versionID="84bb3f7bf94dd435c48a76b36febb4a459049448" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/pom.xml" name="pom.xml" localVersionID="84bb3f7bf94dd435c48a76b36febb4a459049448"/>
+  <r4ecore:R4EFileContext xmi:id="_xBYCsJHlEeCpNuNFfnwzAQ" type="R4E_MODIFIED">
+    <id href="#_xBYCsZHlEeCpNuNFfnwzAQ"/>
+    <base href="#_xBZ34JHlEeCpNuNFfnwzAQ"/>
+    <target href="#_xBbtEJHlEeCpNuNFfnwzAQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_xBYCsZHlEeCpNuNFfnwzAQ" sequenceID="7" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_xBZ34JHlEeCpNuNFfnwzAQ" versionID="a8f1d433e256b8bba65563b8e075a1b66c9be127" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ui/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="a8f1d433e256b8bba65563b8e075a1b66c9be127"/>
+  <r4ecore:R4EFileVersion xmi:id="_xBbtEJHlEeCpNuNFfnwzAQ" versionID="f24456a8852218b15940cf535bd9f6bc1155425e" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ui/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="f24456a8852218b15940cf535bd9f6bc1155425e"/>
+  <r4ecore:R4EItem xmi:id="_gqZ-0ZHmEeCpNuNFfnwzAQ" addedById="lmcbout">
+    <id href="#_gqZ-0pHmEeCpNuNFfnwzAQ"/>
+    <addedBy href="Merged_comments.xrer#_-rh7A5HkEeCpNuNFfnwzAQ"/>
+    <review href="Merged_review.xrer#_V2TqI5goEeCzPO4WlSPhFA"/>
+    <fileContextList href="#_gqmzIJHmEeCpNuNFfnwzAQ"/>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.notifications</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_gqZ-0pHmEeCpNuNFfnwzAQ" sequenceID="8" userID="lmcbout"/>
+  <r4ecore:R4EFileContext xmi:id="_gqmzIJHmEeCpNuNFfnwzAQ">
+    <id href="#_gqmzIZHmEeCpNuNFfnwzAQ"/>
+    <deltas href="#_grPsUZHmEeCpNuNFfnwzAQ"/>
+    <base href="#_gqpPYJHmEeCpNuNFfnwzAQ"/>
+    <target href="#_gq6VIJHmEeCpNuNFfnwzAQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_gqmzIZHmEeCpNuNFfnwzAQ" sequenceID="9" userID="lmcbout"/>
+  <r4ecore:R4EDelta xmi:id="_grPsUZHmEeCpNuNFfnwzAQ">
+    <id href="#_grQTYJHmEeCpNuNFfnwzAQ"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_grSvoJHmEeCpNuNFfnwzAQ"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_grQTYJHmEeCpNuNFfnwzAQ" sequenceID="10" userID="lmcbout"/>
+  <r4ecore:R4ETextContent xmi:id="_grSvoJHmEeCpNuNFfnwzAQ">
+    <location href="#_grVL4JHmEeCpNuNFfnwzAQ"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_grVL4JHmEeCpNuNFfnwzAQ" startPosition="395" length="84" startLine="11" endLine="15"/>
+  <r4ecore:R4EFileVersion xmi:id="_gqpPYJHmEeCpNuNFfnwzAQ" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationFilter.java" versionID="dbcdc42f51ad6293d796eb621814f955a84ff436" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationFilter.java" name="NotificationFilter.java" localVersionID="dbcdc42f51ad6293d796eb621814f955a84ff436"/>
+  <r4ecore:R4EFileVersion xmi:id="_gq6VIJHmEeCpNuNFfnwzAQ" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationFilter.java" versionID="dbcdc42f51ad6293d796eb621814f955a84ff436" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationFilter.java" name="NotificationFilter.java" localVersionID="dbcdc42f51ad6293d796eb621814f955a84ff436"/>
+  <r4ecore:R4EItem xmi:id="_n0j2MZHXEeCSr4R34uhemA" addedById="lmcbout">
+    <id href="#_n0j2MpHXEeCSr4R34uhemA"/>
+    <addedBy href="Merged_comments.xrer#_VNeK0JHNEeCDdOzWDZKi8Q"/>
+    <review href="Merged_review.xrer#_V9mk9JgoEeCzPO4WlSPhFA"/>
+    <fileContextList href="#_n1KTIJHXEeCSr4R34uhemA"/>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.ldap</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_n0j2MpHXEeCSr4R34uhemA" sequenceID="1" userID="lmcbout"/>
+  <r4ecore:R4EFileContext xmi:id="_n1KTIJHXEeCSr4R34uhemA">
+    <id href="#_n1KTIZHXEeCSr4R34uhemA"/>
+    <deltas href="#_n2GHQZHXEeCSr4R34uhemA"/>
+    <base href="#_n1MIUJHXEeCSr4R34uhemA"/>
+    <target href="#_n1pbUJHXEeCSr4R34uhemA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_n1KTIZHXEeCSr4R34uhemA" sequenceID="2" userID="lmcbout"/>
+  <r4ecore:R4EDelta xmi:id="_n2GHQZHXEeCSr4R34uhemA">
+    <id href="#_n2GHQpHXEeCSr4R34uhemA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_n2NcAJHXEeCSr4R34uhemA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_n2GHQpHXEeCSr4R34uhemA" sequenceID="3" userID="lmcbout"/>
+  <r4ecore:R4ETextContent xmi:id="_n2NcAJHXEeCSr4R34uhemA">
+    <location href="#_n2SUgJHXEeCSr4R34uhemA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_n2SUgJHXEeCSr4R34uhemA" startPosition="951" length="143" startLine="31" endLine="38"/>
+  <r4ecore:R4EFileVersion xmi:id="_n1MIUJHXEeCSr4R34uhemA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/preferences/PreferenceConstants.java" repositoryPath="/org.eclipse.mylyn.reviews.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/preferences/PreferenceConstants.java" name="PreferenceConstants.java" localVersionID="75798120b1b1c9018caef755b7f8cb4d13e04b03"/>
+  <r4ecore:R4EFileVersion xmi:id="_n1pbUJHXEeCSr4R34uhemA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/preferences/PreferenceConstants.java" versionID="(Version not in Source Control)" repositoryPath="C:/git/org.eclipse.mylyn.reviews/r4e/org.eclipse.mylyn.reviews.r4e.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/preferences/PreferenceConstants.java" name="PreferenceConstants.java" localVersionID="75798120b1b1c9018caef755b7f8cb4d13e04b03"/>
+  <r4ecore:R4EItem xmi:id="_WsoPcZHYEeCSr4R34uhemA" addedById="lmcbout">
+    <id href="#_WsoPcpHYEeCSr4R34uhemA"/>
+    <addedBy href="Merged_comments.xrer#_VNeK0JHNEeCDdOzWDZKi8Q"/>
+    <review href="Merged_review.xrer#_V9mk9JgoEeCzPO4WlSPhFA"/>
+    <fileContextList href="#_Wsu9IJHYEeCSr4R34uhemA"/>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.ldap</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_WsoPcpHYEeCSr4R34uhemA" sequenceID="4" userID="lmcbout"/>
+  <r4ecore:R4EFileContext xmi:id="_Wsu9IJHYEeCSr4R34uhemA">
+    <id href="#_Wsu9IZHYEeCSr4R34uhemA"/>
+    <deltas href="#_WtX2UZHYEeCSr4R34uhemA"/>
+    <base href="#_WsxZYJHYEeCSr4R34uhemA"/>
+    <target href="#_WtGwkJHYEeCSr4R34uhemA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_Wsu9IZHYEeCSr4R34uhemA" sequenceID="5" userID="lmcbout"/>
+  <r4ecore:R4EDelta xmi:id="_WtX2UZHYEeCSr4R34uhemA">
+    <id href="#_WtX2UpHYEeCSr4R34uhemA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_WtZrgJHYEeCSr4R34uhemA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_WtX2UpHYEeCSr4R34uhemA" sequenceID="6" userID="lmcbout"/>
+  <r4ecore:R4ETextContent xmi:id="_WtZrgJHYEeCSr4R34uhemA" info="storeDefaultPreferences">
+    <location href="#_WtcHwJHYEeCSr4R34uhemA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_WtcHwJHYEeCSr4R34uhemA" startPosition="3636" length="2322" startLine="79" endLine="117"/>
+  <r4ecore:R4EFileVersion xmi:id="_WsxZYJHYEeCSr4R34uhemA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/preferences/PreferenceInitializer.java" repositoryPath="/org.eclipse.mylyn.reviews.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/preferences/PreferenceInitializer.java" name="PreferenceInitializer.java" localVersionID="475cdf3e7f491ddf7f924734d58062a66d8a3e2a"/>
+  <r4ecore:R4EFileVersion xmi:id="_WtGwkJHYEeCSr4R34uhemA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/preferences/PreferenceInitializer.java" versionID="(Version not in Source Control)" repositoryPath="C:/git/org.eclipse.mylyn.reviews/r4e/org.eclipse.mylyn.reviews.r4e.ldap/src/org/eclipse/mylyn/reviews/ldap/internal/preferences/PreferenceInitializer.java" name="PreferenceInitializer.java" localVersionID="475cdf3e7f491ddf7f924734d58062a66d8a3e2a"/>
+  <r4ecore:R4EItem xmi:id="_gx0WwZHYEeCSr4R34uhemA" addedById="lmcbout">
+    <id href="#_gx0WwpHYEeCSr4R34uhemA"/>
+    <addedBy href="Merged_comments.xrer#_VNeK0JHNEeCDdOzWDZKi8Q"/>
+    <review href="Merged_review.xrer#_V9mk9JgoEeCzPO4WlSPhFA"/>
+    <fileContextList href="#_gyUtEJHYEeCSr4R34uhemA"/>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.notifications</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_gx0WwpHYEeCSr4R34uhemA" sequenceID="7" userID="lmcbout"/>
+  <r4ecore:R4EFileContext xmi:id="_gyUtEJHYEeCSr4R34uhemA">
+    <id href="#_gyUtEZHYEeCSr4R34uhemA"/>
+    <deltas href="#_gzZrIZHYEeCSr4R34uhemA"/>
+    <deltas href="#_B88e4ZHZEeCSr4R34uhemA"/>
+    <base href="#_gyXJUJHYEeCSr4R34uhemA"/>
+    <target href="#_gy4GsJHYEeCSr4R34uhemA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_gyUtEZHYEeCSr4R34uhemA" sequenceID="8" userID="lmcbout"/>
+  <r4ecore:R4EDelta xmi:id="_gzZrIZHYEeCSr4R34uhemA">
+    <id href="#_gzZrIpHYEeCSr4R34uhemA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_gzd8kJHYEeCSr4R34uhemA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_gzZrIpHYEeCSr4R34uhemA" sequenceID="9" userID="lmcbout"/>
+  <r4ecore:R4ETextContent xmi:id="_gzd8kJHYEeCSr4R34uhemA" info="filter">
+    <location href="#_gziOAJHYEeCSr4R34uhemA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_gziOAJHYEeCSr4R34uhemA" startPosition="582" length="620" startLine="22" endLine="43"/>
+  <r4ecore:R4EDelta xmi:id="_B88e4ZHZEeCSr4R34uhemA">
+    <id href="#_B88e4pHZEeCSr4R34uhemA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_B9DzoJHZEeCSr4R34uhemA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_B88e4pHZEeCSr4R34uhemA" sequenceID="11" userID="lmcbout"/>
+  <r4ecore:R4ETextContent xmi:id="_B9DzoJHZEeCSr4R34uhemA">
+    <location href="#_B9J6QJHZEeCSr4R34uhemA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_B9J6QJHZEeCSr4R34uhemA" startPosition="838" length="303" startLine="30" endLine="38"/>
+  <r4ecore:R4EFileVersion xmi:id="_gyXJUJHYEeCSr4R34uhemA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationFilter.java" repositoryPath="/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationFilter.java" name="NotificationFilter.java" localVersionID="dbcdc42f51ad6293d796eb621814f955a84ff436"/>
+  <r4ecore:R4EFileVersion xmi:id="_gy4GsJHYEeCSr4R34uhemA" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationFilter.java" versionID="(Version not in Source Control)" repositoryPath="C:/git/org.eclipse.mylyn.reviews/r4e/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationFilter.java" name="NotificationFilter.java" localVersionID="dbcdc42f51ad6293d796eb621814f955a84ff436"/>
+  <r4ecore:R4EItem xmi:id="_Z0U_MZHjEeCpNuNFfnwzAQ" description="[R4E] Allow tracing from .options" addedById="lmcbout" repositoryRef="d601b84bb44c0ed7604f77c0c6ec1d64e084b460" authorRep="alvsan09@gmail.com" submitted="2011-04-27T17:04:26.000-0400">
+    <id href="#_Z0U_MpHjEeCpNuNFfnwzAQ"/>
+    <addedBy href="Merged_comments.xrer#_VNeK0JHNEeCDdOzWDZKi8Q"/>
+    <review href="Merged_review.xrer#_V9mk9JgoEeCzPO4WlSPhFA"/>
+    <fileContextList href="#_Z3_XMJHjEeCpNuNFfnwzAQ"/>
+    <fileContextList href="#_Z5LqAJHjEeCpNuNFfnwzAQ"/>
+    <fileContextList href="#_Z66IUJHjEeCpNuNFfnwzAQ"/>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.ldap</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_Z0U_MpHjEeCpNuNFfnwzAQ" sequenceID="11" userID="lmcbout"/>
+  <r4ecore:R4EFileContext xmi:id="_Z3_XMJHjEeCpNuNFfnwzAQ" type="R4E_MODIFIED">
+    <id href="#_Z3_XMZHjEeCpNuNFfnwzAQ"/>
+    <base href="#_Z4CagJHjEeCpNuNFfnwzAQ"/>
+    <target href="#_Z4Fd0JHjEeCpNuNFfnwzAQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_Z3_XMZHjEeCpNuNFfnwzAQ" sequenceID="12" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_Z4CagJHjEeCpNuNFfnwzAQ" versionID="03eb07692c0e27ada9936757bd51e9948f0bf7f2" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.core/src/org/eclipse/mylyn/reviews/r4e/core/Activator.java" name="Activator.java" localVersionID="03eb07692c0e27ada9936757bd51e9948f0bf7f2"/>
+  <r4ecore:R4EFileVersion xmi:id="_Z4Fd0JHjEeCpNuNFfnwzAQ" versionID="e80f3fd578a7b1a1c1a935fef90eff2353d7f542" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.core/src/org/eclipse/mylyn/reviews/r4e/core/Activator.java" name="Activator.java" localVersionID="e80f3fd578a7b1a1c1a935fef90eff2353d7f542"/>
+  <r4ecore:R4EFileContext xmi:id="_Z5LqAJHjEeCpNuNFfnwzAQ" type="R4E_MODIFIED">
+    <id href="#_Z5LqAZHjEeCpNuNFfnwzAQ"/>
+    <base href="#_Z5OtUJHjEeCpNuNFfnwzAQ"/>
+    <target href="#_Z5hoQJHjEeCpNuNFfnwzAQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_Z5LqAZHjEeCpNuNFfnwzAQ" sequenceID="13" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_Z5OtUJHjEeCpNuNFfnwzAQ" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/src/org/eclipse/mylyn/reviews/ldap/Activator.java" versionID="219be084b04693b98f418219b552a9e8f888e892" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/src/org/eclipse/mylyn/reviews/ldap/Activator.java" name="Activator.java" localVersionID="219be084b04693b98f418219b552a9e8f888e892"/>
+  <r4ecore:R4EFileVersion xmi:id="_Z5hoQJHjEeCpNuNFfnwzAQ" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/src/org/eclipse/mylyn/reviews/ldap/Activator.java" versionID="5c3676400c50c91b803b62a6581381bbf9157153" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/src/org/eclipse/mylyn/reviews/ldap/Activator.java" name="Activator.java" localVersionID="5c3676400c50c91b803b62a6581381bbf9157153"/>
+  <r4ecore:R4EFileContext xmi:id="_Z66IUJHjEeCpNuNFfnwzAQ" type="R4E_MODIFIED">
+    <id href="#_Z66IUZHjEeCpNuNFfnwzAQ"/>
+    <base href="#_Z69LoJHjEeCpNuNFfnwzAQ"/>
+    <target href="#_Z7AO8JHjEeCpNuNFfnwzAQ"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_Z66IUZHjEeCpNuNFfnwzAQ" sequenceID="14" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_Z69LoJHjEeCpNuNFfnwzAQ" versionID="e23f6500562c88247e092ab0815701e639e6d1da" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ui/src/org/eclipse/mylyn/reviews/r4e/ui/Activator.java" name="Activator.java" localVersionID="e23f6500562c88247e092ab0815701e639e6d1da"/>
+  <r4ecore:R4EFileVersion xmi:id="_Z7AO8JHjEeCpNuNFfnwzAQ"/>
+  <r4ecore:R4EItem xmi:id="_R57PQZH1EeC459_K8dV_fg" addedById="lmcbout">
+    <id href="#_R57PQpH1EeC459_K8dV_fg"/>
+    <addedBy href="Merged_comments.xrer#_NSOMs5HnEeCpNuNFfnwzAQ"/>
+    <review href="Merged_review.xrer#_WCz1E5goEeCzPO4WlSPhFA"/>
+    <fileContextList href="#_R6J4wJH1EeC459_K8dV_fg"/>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.git.core</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_R57PQpH1EeC459_K8dV_fg" sequenceID="1" userID="lmcbout"/>
+  <r4ecore:R4EFileContext xmi:id="_R6J4wJH1EeC459_K8dV_fg">
+    <id href="#_R6J4wZH1EeC459_K8dV_fg"/>
+    <deltas href="#_R6fP8ZH1EeC459_K8dV_fg"/>
+    <target href="#_R6LG4JH1EeC459_K8dV_fg"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_R6J4wZH1EeC459_K8dV_fg" sequenceID="2" userID="lmcbout"/>
+  <r4ecore:R4EDelta xmi:id="_R6fP8ZH1EeC459_K8dV_fg">
+    <id href="#_R6fP8pH1EeC459_K8dV_fg"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_R6hFIJH1EeC459_K8dV_fg"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_R6fP8pH1EeC459_K8dV_fg" sequenceID="3" userID="lmcbout"/>
+  <r4ecore:R4ETextContent xmi:id="_R6hFIJH1EeC459_K8dV_fg">
+    <location href="#_R6i6UJH1EeC459_K8dV_fg"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_R6i6UJH1EeC459_K8dV_fg" startPosition="3002" length="417" startLine="74" endLine="84"/>
+  <r4ecore:R4EFileVersion xmi:id="_R6LG4JH1EeC459_K8dV_fg" platformURI="platform:/resource/org.eclipse.mylyn.git.core/src/org/eclipse/mylyn/internal/git/core/GitConnector.java" versionID="(Version not in Source Control)" repositoryPath="C:/eclipse/eclipse362/runtime-New_configuration(1)/org.eclipse.mylyn.git.core/src/org/eclipse/mylyn/internal/git/core/GitConnector.java" name="GitConnector.java" localVersionID="b8a6140ebd67dbe76d8c57b34973dffc39c72c90"/>
+  <r4ecore:R4EItem xmi:id="_ZGGiEZH1EeC459_K8dV_fg" description="Merge branch 'master' of ssh://git.eclipse.org/gitroot/mylyn/org.eclipse.mylyn.reviews&#xA;" addedById="lmcbout" repositoryRef="40495df33366596ad0c254167f4c7214da0c1eb5" authorRep="lmcbout@gmail.com" submitted="2011-04-12T11:30:52.000-0400">
+    <id href="#_ZGGiEpH1EeC459_K8dV_fg"/>
+    <addedBy href="Merged_comments.xrer#_NSOMs5HnEeCpNuNFfnwzAQ"/>
+    <review href="Merged_review.xrer#_WCz1E5goEeCzPO4WlSPhFA"/>
+    <fileContextList href="#_ZI1tAJH1EeC459_K8dV_fg"/>
+    <fileContextList href="#_ZKeEsJH1EeC459_K8dV_fg"/>
+    <fileContextList href="#_ZMNKEJH1EeC459_K8dV_fg"/>
+    <fileContextList href="#_ZOZicJH1EeC459_K8dV_fg"/>
+    <fileContextList href="#_ZQnI8JH1EeC459_K8dV_fg"/>
+    <fileContextList href="#_ZR6wgJH1EeC459_K8dV_fg"/>
+    <fileContextList href="#_ZTs5MJH1EeC459_K8dV_fg"/>
+    <fileContextList href="#_ZVQYYJH1EeC459_K8dV_fg"/>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.notifications</ProjectURIs>
+    <ProjectURIs>platform:/resource/org.eclipse.mylyn.reviews.ldap</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_ZGGiEpH1EeC459_K8dV_fg" sequenceID="4" userID="lmcbout"/>
+  <r4ecore:R4EFileContext xmi:id="_ZI1tAJH1EeC459_K8dV_fg" type="R4E_MODIFIED">
+    <id href="#_ZI1tAZH1EeC459_K8dV_fg"/>
+    <base href="#_ZI4wUJH1EeC459_K8dV_fg"/>
+    <target href="#_ZJOHgJH1EeC459_K8dV_fg"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_ZI1tAZH1EeC459_K8dV_fg" sequenceID="5" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZI4wUJH1EeC459_K8dV_fg" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/META-INF/MANIFEST.MF" versionID="0f95bd6111068b41e6228526685175a84c7e3db9" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="0f95bd6111068b41e6228526685175a84c7e3db9"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZJOHgJH1EeC459_K8dV_fg" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/META-INF/MANIFEST.MF" versionID="c96997204e9ae31672b48a9ec3c5c3a210b77b53" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="c96997204e9ae31672b48a9ec3c5c3a210b77b53"/>
+  <r4ecore:R4EFileContext xmi:id="_ZKeEsJH1EeC459_K8dV_fg" type="R4E_ADDED">
+    <id href="#_ZKeEsZH1EeC459_K8dV_fg"/>
+    <target href="#_ZKf54JH1EeC459_K8dV_fg"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_ZKeEsZH1EeC459_K8dV_fg" sequenceID="6" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZKf54JH1EeC459_K8dV_fg" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/pom.xml" versionID="f745f5102b3659e4b3c3c77050595f35445f5af9" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/pom.xml" name="pom.xml" localVersionID="f745f5102b3659e4b3c3c77050595f35445f5af9"/>
+  <r4ecore:R4EFileContext xmi:id="_ZMNKEJH1EeC459_K8dV_fg" type="R4E_MODIFIED">
+    <id href="#_ZMNKEZH1EeC459_K8dV_fg"/>
+    <base href="#_ZMPmUJH1EeC459_K8dV_fg"/>
+    <target href="#_ZMmysJH1EeC459_K8dV_fg"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_ZMNKEZH1EeC459_K8dV_fg" sequenceID="7" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZMPmUJH1EeC459_K8dV_fg" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationsCore.java" versionID="93af5168bd0b6ae69fd713f8e8afce8aa52012fd" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationsCore.java" name="NotificationsCore.java" localVersionID="93af5168bd0b6ae69fd713f8e8afce8aa52012fd"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZMmysJH1EeC459_K8dV_fg" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationsCore.java" versionID="eb4f97c366ff1a9d4cc52270b59be7230b81f6d3" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/core/NotificationsCore.java" name="NotificationsCore.java" localVersionID="eb4f97c366ff1a9d4cc52270b59be7230b81f6d3"/>
+  <r4ecore:R4EFileContext xmi:id="_ZOZicJH1EeC459_K8dV_fg" type="R4E_MODIFIED">
+    <id href="#_ZOZicZH1EeC459_K8dV_fg"/>
+    <base href="#_ZOb-sJH1EeC459_K8dV_fg"/>
+    <target href="#_ZOzLEJH1EeC459_K8dV_fg"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_ZOZicZH1EeC459_K8dV_fg" sequenceID="8" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZOb-sJH1EeC459_K8dV_fg" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/spi/NotificationsConnector.java" versionID="08a868c094596dd825d07c42d8951451f8659273" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/spi/NotificationsConnector.java" name="NotificationsConnector.java" localVersionID="08a868c094596dd825d07c42d8951451f8659273"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZOzLEJH1EeC459_K8dV_fg" platformURI="platform:/resource/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/spi/NotificationsConnector.java" versionID="5a00ac5059cd9d00beecf87bb6dbd259ecc2a73b" repositoryPath="r4e/org.eclipse.mylyn.reviews.notifications/src/org/eclipse/mylyn/reviews/notifications/spi/NotificationsConnector.java" name="NotificationsConnector.java" localVersionID="5a00ac5059cd9d00beecf87bb6dbd259ecc2a73b"/>
+  <r4ecore:R4EFileContext xmi:id="_ZQnI8JH1EeC459_K8dV_fg" type="R4E_MODIFIED">
+    <id href="#_ZQnI8ZH1EeC459_K8dV_fg"/>
+    <base href="#_ZQqMQJH1EeC459_K8dV_fg"/>
+    <target href="#_ZQ75EJH1EeC459_K8dV_fg"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_ZQnI8ZH1EeC459_K8dV_fg" sequenceID="9" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZQqMQJH1EeC459_K8dV_fg" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/META-INF/MANIFEST.MF" versionID="7b5e3702d02347844a452d9aa6fa3b66b7f6c394" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="7b5e3702d02347844a452d9aa6fa3b66b7f6c394"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZQ75EJH1EeC459_K8dV_fg" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/META-INF/MANIFEST.MF" versionID="c05d3e0dbdac2d2fe474f2cddd5af62c37efde6d" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="c05d3e0dbdac2d2fe474f2cddd5af62c37efde6d"/>
+  <r4ecore:R4EFileContext xmi:id="_ZR6wgJH1EeC459_K8dV_fg" type="R4E_ADDED">
+    <id href="#_ZR6wgZH1EeC459_K8dV_fg"/>
+    <target href="#_ZR9z0JH1EeC459_K8dV_fg"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_ZR6wgZH1EeC459_K8dV_fg" sequenceID="10" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZR9z0JH1EeC459_K8dV_fg" platformURI="platform:/resource/org.eclipse.mylyn.reviews.ldap/pom.xml" versionID="84bb3f7bf94dd435c48a76b36febb4a459049448" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ldap/pom.xml" name="pom.xml" localVersionID="84bb3f7bf94dd435c48a76b36febb4a459049448"/>
+  <r4ecore:R4EFileContext xmi:id="_ZTs5MJH1EeC459_K8dV_fg" type="R4E_MODIFIED">
+    <id href="#_ZTs5MZH1EeC459_K8dV_fg"/>
+    <base href="#_ZTvVcJH1EeC459_K8dV_fg"/>
+    <target href="#_ZTxxsJH1EeC459_K8dV_fg"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_ZTs5MZH1EeC459_K8dV_fg" sequenceID="11" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZTvVcJH1EeC459_K8dV_fg" versionID="a8f1d433e256b8bba65563b8e075a1b66c9be127" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ui/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="a8f1d433e256b8bba65563b8e075a1b66c9be127"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZTxxsJH1EeC459_K8dV_fg" versionID="f24456a8852218b15940cf535bd9f6bc1155425e" repositoryPath="r4e/org.eclipse.mylyn.reviews.r4e.ui/META-INF/MANIFEST.MF" name="MANIFEST.MF" localVersionID="f24456a8852218b15940cf535bd9f6bc1155425e"/>
+  <r4ecore:R4EFileContext xmi:id="_ZVQYYJH1EeC459_K8dV_fg" type="R4E_MODIFIED">
+    <id href="#_ZVQYYZH1EeC459_K8dV_fg"/>
+    <base href="#_ZVUCwJH1EeC459_K8dV_fg"/>
+    <target href="#_ZVV38JH1EeC459_K8dV_fg"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_ZVQYYZH1EeC459_K8dV_fg" sequenceID="12" userID="lmcbout"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZVUCwJH1EeC459_K8dV_fg" versionID="29a3d0f7a8408a1a76250a76094f81faeae62305" repositoryPath="r4e/pom.xml" name="pom.xml" localVersionID="29a3d0f7a8408a1a76250a76094f81faeae62305"/>
+  <r4ecore:R4EFileVersion xmi:id="_ZVV38JH1EeC459_K8dV_fg"/>
+</xmi:XMI>
