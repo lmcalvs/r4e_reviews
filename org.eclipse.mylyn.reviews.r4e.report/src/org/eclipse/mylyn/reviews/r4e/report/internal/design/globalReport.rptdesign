@@ -13,7 +13,7 @@
             <property name="FILELIST">C:\temp\openTest\r4e_work_1309803939682\Merged\Merged_review.xrer</property>
         </oda-data-source>
         <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.xml" name="Merged_comments" id="688">
-            <property name="FILELIST">C:\git\r4eSecond\r4e\org.eclipse.mylyn.reviews.r4e.report\src\org\eclipse\mylyn\reviews\r4e\report\internal\design\templateDataSource\Merged_comments.xrer</property>
+            <property name="FILELIST">C:\git\org.eclipse.mylyn.reviews\r4e\org.eclipse.mylyn.reviews.r4e.report\src\org\eclipse\mylyn\reviews\r4e\report\internal\design\templateDataSource\Merged_comments.xrer</property>
         </oda-data-source>
         <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.xml" name="Merged_items" id="689">
             <property name="FILELIST">C:\temp\openTest\r4e_work_1309802916363\Merged\Merged_items.xrer</property>
