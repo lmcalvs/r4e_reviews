@@ -18,6 +18,7 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -35,6 +36,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ReviewProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -48,6 +50,16 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Field REVIEW_FORMAL_ICON_FILE. (value is ""icons/obj16/reviewfrm_obj.gif"")
+	 */
+	private static final String REVIEW_FORMAL_ICON_FILE = "icons/obj16/reviewfrm_obj.gif";
+
+	/**
+	 * Field REVIEW_FORMAL_CLOSED_ICON_FILE. (value is ""icons/obj16/revfrmclsd_obj.gif"")
+	 */
+	private static final String REVIEW_FORMAL_CLOSED_ICON_FILE = "icons/obj16/revfrmclsd_obj.gif";
 
 	/**
 	 * Field REVIEW_PHASE_REWORK. (value is ""REWORK"")
@@ -81,6 +93,11 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	public R4EUIReviewExtended(R4EUIReviewGroup aParent, R4EReview aReview, R4EReviewType aType, boolean aOpen)
 			throws ResourceHandlingException {
 		super(aParent, aReview, aType, aOpen);
+		if (aOpen) {
+			setImage(REVIEW_FORMAL_ICON_FILE);
+		} else {
+			setImage(REVIEW_FORMAL_CLOSED_ICON_FILE);
+		}
 	}
 
 	// ------------------------------------------------------------------------
@@ -105,6 +122,31 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 			return new ReviewProperties(this);
 		}
 		return null;
+	}
+
+	/**
+	 * Close the model element (i.e. disable it)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#close()
+	 */
+	@Override
+	public void close() {
+		super.close();
+		setImage(REVIEW_FORMAL_CLOSED_ICON_FILE);
+	}
+
+	/**
+	 * Open the model element (i.e. enable it)
+	 * 
+	 * @throws ResourceHandlingException
+	 * @throws ReviewVersionsException
+	 * @throws FileNotFoundException
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#open()
+	 */
+	@Override
+	public void open() throws ResourceHandlingException, FileNotFoundException, ReviewVersionsException {
+		super.open();
+		setImage(REVIEW_FORMAL_ICON_FILE);
 	}
 
 	//Phase Management

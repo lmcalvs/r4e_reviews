@@ -50,27 +50,25 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	// Constants
 	// ------------------------------------------------------------------------
 
-	//TODO get different icons depending on the role
+	/**
+	 * Field PARTICIPANT_REVIEWER_ICON_FILE. (value is ""icons/obj16/partrevr_obj.png"")
+	 */
+	private static final String PARTICIPANT_REVIEWER_ICON_FILE = "icons/obj16/partrevr_obj.png";
 
 	/**
-	 * Field PARTICIPANT_REVIEWER_ICON_FILE. (value is ""icons/obj16/part_obj.png"")
+	 * Field PARTICIPANT_LEAD_ICON_FILE. (value is ""icons/obj16/partlead_obj.png"")
 	 */
-	private static final String PARTICIPANT_REVIEWER_ICON_FILE = "icons/obj16/part_obj.png";
+	private static final String PARTICIPANT_LEAD_ICON_FILE = "icons/obj16/partlead_obj.png";
 
 	/**
-	 * Field PARTICIPANT_REVIEWER_ICON_FILE. (value is ""icons/obj16/part_obj.png"")
+	 * Field PARTICIPANT_AUTHOR_ICON_FILE. (value is ""icons/obj16/partauthr_obj.png"")
 	 */
-	private static final String PARTICIPANT_LEAD_ICON_FILE = "icons/obj16/part_obj.png";
+	private static final String PARTICIPANT_AUTHOR_ICON_FILE = "icons/obj16/partauthr_obj.png";
 
 	/**
-	 * Field PARTICIPANT_REVIEWER_ICON_FILE. (value is ""icons/obj16/part_obj.png"")
+	 * Field PARTICIPANT_ORGANIZER_ICON_FILE. (value is ""icons/obj16/partorg_obj.png"")
 	 */
-	private static final String PARTICIPANT_AUTHOR_ICON_FILE = "icons/obj16/part_obj.png";
-
-	/**
-	 * Field PARTICIPANT_REVIEWER_ICON_FILE. (value is ""icons/obj16/part_obj.png"")
-	 */
-	private static final String PARTICIPANT_ORGANIZER_ICON_FILE = "icons/obj16/part_obj.png";
+	private static final String PARTICIPANT_ORGANIZER_ICON_FILE = "icons/obj16/partorg_obj.png";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -115,7 +113,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 				return;
 			}
 		}
-		setImage(PARTICIPANT_REVIEWER_ICON_FILE);
+		setRoleIcon();
 		return;
 	}
 
@@ -150,6 +148,41 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 */
 	public R4EParticipant getParticipant() {
 		return fParticipant;
+	}
+
+	/**
+	 * Method setRoleIcon. Set particpant icon based on most significant role
+	 */
+	public void setRoleIcon() {
+		EList<R4EUserRole> roles = fParticipant.getRoles();
+		//First check for Lead
+		for (R4EUserRole role : roles) {
+			if (role.equals(R4EUserRole.R4E_ROLE_LEAD)) {
+				setImage(PARTICIPANT_LEAD_ICON_FILE);
+				return;
+			}
+		}
+		//Next Organizer
+		for (R4EUserRole role : roles) {
+			if (role.equals(R4EUserRole.R4E_ROLE_ORGANIZER)) {
+				setImage(PARTICIPANT_ORGANIZER_ICON_FILE);
+				return;
+			}
+		}
+		//Next Author
+		for (R4EUserRole role : roles) {
+			if (role.equals(R4EUserRole.R4E_ROLE_AUTHOR)) {
+				setImage(PARTICIPANT_AUTHOR_ICON_FILE);
+				return;
+			}
+		}
+		//Finally Reviewer
+		for (R4EUserRole role : roles) {
+			if (role.equals(R4EUserRole.R4E_ROLE_REVIEWER)) {
+				setImage(PARTICIPANT_REVIEWER_ICON_FILE);
+				return;
+			}
+		}
 	}
 
 	/**

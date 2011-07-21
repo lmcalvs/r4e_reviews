@@ -72,14 +72,24 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field REVIEW_ICON_FILE. (value is ""icons/obj16/review_obj.gif"")
+	 * Field REVIEW_BASIC_ICON_FILE. (value is ""icons/obj16/reviewbas_obj.gif"")
 	 */
-	private static final String REVIEW_ICON_FILE = "icons/obj16/review_obj.gif";
+	private static final String REVIEW_BASIC_ICON_FILE = "icons/obj16/reviewbas_obj.gif";
 
 	/**
-	 * Field REVIEW_ICON_FILE. (value is ""icons/obj16/revclsd_obj.gif"")
+	 * Field REVIEW_BASIC_CLOSED_ICON_FILE. (value is ""icons/obj16/revbasclsd_obj.gif"")
 	 */
-	private static final String REVIEW_CLOSED_ICON_FILE = "icons/obj16/revclsd_obj.gif";
+	private static final String REVIEW_BASIC_CLOSED_ICON_FILE = "icons/obj16/revbasclsd_obj.gif";
+
+	/**
+	 * Field REVIEW_INFORMAL_ICON_FILE. (value is ""icons/obj16/reviewinf_obj.gif"")
+	 */
+	private static final String REVIEW_INFORMAL_ICON_FILE = "icons/obj16/reviewinf_obj.gif";
+
+	/**
+	 * Field REVIEW_INFORMAL_CLOSED_ICON_FILE. (value is ""icons/obj16/revinfclsd_obj.gif"")
+	 */
+	private static final String REVIEW_INFORMAL_CLOSED_ICON_FILE = "icons/obj16/revinfclsd_obj.gif";
 
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Delete Review"")
@@ -184,7 +194,6 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 */
-	//TODO have different icons for all review types
 	public R4EUIReviewBasic(R4EUIReviewGroup aParent, R4EReview aReview, R4EReviewType aType, boolean aOpen)
 			throws ResourceHandlingException {
 		super(aParent, getReviewDisplayName(aReview.getName(), aType), aReview.getExtraNotes());
@@ -195,7 +204,11 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fItems = new ArrayList<R4EUIReviewItem>();
 		if (aOpen) {
 			//Open the new review and make it the active one (close any other that is open)
-			setImage(REVIEW_ICON_FILE);
+			if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+				setImage(REVIEW_BASIC_ICON_FILE);
+			} else {
+				setImage(REVIEW_INFORMAL_ICON_FILE);
+			}
 			fOpen = true;
 			final List<R4EUserRole> role = new ArrayList<R4EUserRole>(1);
 			role.add(R4EUserRole.R4E_ROLE_LEAD);
@@ -208,7 +221,11 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			}
 			R4EUIModelController.setActiveReview(this);
 		} else {
-			setImage(REVIEW_CLOSED_ICON_FILE);
+			if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+				setImage(REVIEW_BASIC_CLOSED_ICON_FILE);
+			} else {
+				setImage(REVIEW_INFORMAL_CLOSED_ICON_FILE);
+			}
 			fOpen = false;
 		}
 	}
@@ -478,7 +495,11 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fOpen = false;
 		R4EUIModelController.FModelExt.closeR4EReview(fReview); //Notify model
 		R4EUIModelController.clearAnomalyMap();
-		fImage = UIUtils.loadIcon(REVIEW_CLOSED_ICON_FILE);
+		if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+			fImage = UIUtils.loadIcon(REVIEW_BASIC_CLOSED_ICON_FILE);
+		} else {
+			fImage = UIUtils.loadIcon(REVIEW_INFORMAL_CLOSED_ICON_FILE);
+		}
 		R4EUIModelController.setActiveReview(null);
 		fireUserReviewStateChanged(this);
 	}
@@ -547,7 +568,11 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		}
 
 		fOpen = true;
-		fImage = UIUtils.loadIcon(REVIEW_ICON_FILE);
+		if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+			fImage = UIUtils.loadIcon(REVIEW_BASIC_ICON_FILE);
+		} else if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+			fImage = UIUtils.loadIcon(REVIEW_INFORMAL_ICON_FILE);
+		}
 		R4EUIModelController.setActiveReview(this);
 		fireUserReviewStateChanged(this);
 
