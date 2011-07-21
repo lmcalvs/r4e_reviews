@@ -65,12 +65,12 @@ public class EditableListWidget {
 	/**
 	 * Field DEFAULT_TABLE_WIDTH. (value is 200)
 	 */
-	private static final int DEFAULT_TABLE_WIDTH = 200;
+	private static final int DEFAULT_TABLE_WIDTH = 300;
 
 	/**
 	 * Field DEFAULT_TABLE_HEIGHT. (value is 300)
 	 */
-	private static final int DEFAULT_TABLE_HEIGHT = 300;
+	private static final int DEFAULT_TABLE_HEIGHT = 200;
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -163,6 +163,8 @@ public class EditableListWidget {
 	 * Method dispose.
 	 */
 	public void dispose() {
+
+		fMainTable.dispose();
 		fMainComposite.dispose();
 	}
 
@@ -180,22 +182,15 @@ public class EditableListWidget {
 		final TableColumn tableColumn2;
 		fMainTable.setHeaderVisible(true);
 
-		final Rectangle area = fMainTable.getClientArea();
-		final Point size = fMainTable.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		final ScrollBar vBar = fMainTable.getVerticalBar();
-		int width = area.width - fMainTable.computeTrim(0, 0, 0, 0).width;
-
 		if (aEditableWidgetClass.equals(Date.class)) {
 			tableColumn2 = new TableColumn(fMainTable, SWT.RIGHT, 1);
 			tableColumn.setText(R4EUIConstants.SPENT_TIME_COLUMN_HEADER);
 			tableColumn2.setText(R4EUIConstants.ENTRY_TIME_COLUMN_HEADER);
-			tableColumn.setWidth(width / 2);
-			tableColumn2.setWidth(width - tableColumn.getWidth());
+			tableColumn.pack();
+			tableColumn2.pack();
 		} else {
 			tableColumn2 = null; //only 1 column
-			tableColumn.setWidth(width);
 		}
-		fMainComposite.getParent().layout();
 
 		fMainComposite.addControlListener(new ControlAdapter() {
 			@Override
@@ -205,6 +200,10 @@ public class EditableListWidget {
 				final Point size = fMainTable.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 				final ScrollBar vBar = fMainTable.getVerticalBar();
 				int width = area.width - fMainTable.computeTrim(0, 0, 0, 0).width - vBar.getSize().x;
+				if (width < 0) {
+					return;
+				}
+
 				if (size.y > area.height + fMainTable.getHeaderHeight()) {
 					// Subtract the scrollbar width from the total column width
 					// if a vertical scrollbar will be required
@@ -252,10 +251,7 @@ public class EditableListWidget {
 			}
 
 			public void focusGained(FocusEvent e) {
-				//Send items updated notification
-				if (null != fListener) {
-					fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
-				}
+				//Do nothing
 			}
 		});
 
@@ -418,8 +414,8 @@ public class EditableListWidget {
 	/**
 	 * Method clearAll.
 	 */
-	public void clearAll() {
-		fMainTable.clearAll();
+	public void removeAll() {
+		fMainTable.removeAll();
 	}
 
 	/**
@@ -469,6 +465,12 @@ public class EditableListWidget {
 	public void setEnabled(boolean aEnabled) {
 		fMainComposite.setEnabled(aEnabled);
 		fMainTable.setEnabled(aEnabled);
+		if (!aEnabled) {
+			fAddButton.setEnabled(aEnabled);
+			fRemoveButton.setEnabled(aEnabled);
+		} else {
+			updateButtons();
+		}
 	}
 
 	/**
@@ -523,8 +525,9 @@ public class EditableListWidget {
 	 */
 	public void setTableHeader(int aIndex, String aText) {
 		try {
-			final TableColumn column = fMainTable.getColumn(aIndex);
+			TableColumn column = fMainTable.getColumn(aIndex);
 			column.setText(aText);
+			updateTable();
 		} catch (IllegalArgumentException e) {
 			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
@@ -549,6 +552,15 @@ public class EditableListWidget {
 			fRemoveButton.setEnabled(false);
 		} else {
 			fRemoveButton.setEnabled(true);
+		}
+	}
+
+	/**
+	 * Method updateButtons.
+	 */
+	public void updateTable() {
+		for (TableColumn column : fMainTable.getColumns()) {
+			column.pack();
 		}
 	}
 }

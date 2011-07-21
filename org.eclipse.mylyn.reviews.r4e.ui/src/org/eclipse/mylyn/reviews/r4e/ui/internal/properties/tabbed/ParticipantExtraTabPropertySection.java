@@ -180,7 +180,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 		fRefreshInProgress = true;
 		final R4EParticipant modelUser = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
 		final int numTimeEntries = modelUser.getTimeLog().size();
-		fTimeSpentDetailedList.clearAll();
+		fTimeSpentDetailedList.removeAll();
 		int totalTimeSpent = 0;
 		Item item = null;
 		Entry<Date, Integer> timeEntry = null;
@@ -202,9 +202,10 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 			totalTimeSpent += timeEntry.getValue().intValue();
 		}
 		fTimeSpentDetailedList.setTableHeader(0, "Time Spent: " + Integer.toString(totalTimeSpent) + " minutes");
+		fTimeSpentDetailedList.updateButtons();
 
 		final String[] roles = ((R4EUIParticipant) fProperties.getElement()).getRoles(modelUser.getRoles());
-		fRolesList.clearAll();
+		fRolesList.removeAll();
 		String role = null;
 		for (int i = 0; i < roles.length; i++) {
 			role = roles[i];
@@ -218,6 +219,7 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 			}
 			item.setText(role);
 		}
+		fRolesList.updateButtons();
 
 		if (null != modelUser.getFocusArea()) {
 			fFocusAreaText.setText(modelUser.getFocusArea());

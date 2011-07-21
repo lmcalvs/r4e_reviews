@@ -225,7 +225,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getGroup();
 
 		final String[] projects = (String[]) modelGroup.getAvailableProjects().toArray();
-		fAvailableProjects.clearAll();
+		fAvailableProjects.removeAll();
 		Item item = null;
 		String project = null;
 
@@ -244,7 +244,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		fAvailableProjects.updateButtons();
 
 		final String[] components = (String[]) modelGroup.getAvailableComponents().toArray();
-		fAvailableComponents.clearAll();
+		fAvailableComponents.removeAll();
 		String component = null;
 		for (int i = 0; i < components.length; i++) {
 			component = components[i];
@@ -258,6 +258,8 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 			}
 			item.setText(component);
 		}
+		fAvailableComponents.updateButtons();
+
 		fDefaultEntryCriteriaText.setText(modelGroup.getDefaultEntryCriteria());
 
 		final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement) ((R4EUIReviewGroup) fProperties.getElement()).getParent()).getRuleSets();
@@ -276,7 +278,7 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		}
 		fRuleSetLocations.setEditableValues(ruleSetLocations.toArray(new String[ruleSetLocations.size()]));
 		final String[] ruleSetsLocations = (String[]) modelGroup.getDesignRuleLocations().toArray();
-		fRuleSetLocations.clearAll();
+		fRuleSetLocations.removeAll();
 		item = null;
 		String ruleSet = null;
 		for (int i = 0; i < ruleSetsLocations.length; i++) {

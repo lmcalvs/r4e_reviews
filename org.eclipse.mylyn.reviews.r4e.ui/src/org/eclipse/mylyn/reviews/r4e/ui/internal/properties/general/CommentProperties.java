@@ -17,13 +17,9 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general;
 
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
@@ -124,36 +120,5 @@ public class CommentProperties extends ModelElementProperties {
 			return ((R4EUIComment) getElement()).getComment().getDescription();
 		}
 		return null;
-	}
-
-	/**
-	 * Method setPropertyValue.
-	 * 
-	 * @param aId
-	 *            Object
-	 * @param aValue
-	 *            Object
-	 * @see org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(Object, Object)
-	 */
-	@Override
-	public void setPropertyValue(Object aId, Object aValue) { // $codepro.audit.disable emptyMethod
-		if (!(R4EUIModelController.isJobInProgress())) {
-			try {
-				if (COMMENT_DESCRIPTION_ID.equals(aId)) {
-					final String currentUser = R4EUIModelController.getReviewer();
-					if (((R4EUIComment) getElement()).getComment().getUser().getId().equals(currentUser)) {
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(
-								((R4EUIComment) getElement()).getComment(), currentUser);
-						((R4EUIComment) getElement()).getComment().setDescription((String) aValue);
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-					}
-
-				}
-			} catch (ResourceHandlingException e) {
-				UIUtils.displayResourceErrorDialog(e);
-			} catch (OutOfSyncException e) {
-				UIUtils.displaySyncErrorDialog(e);
-			}
-		}
 	}
 }

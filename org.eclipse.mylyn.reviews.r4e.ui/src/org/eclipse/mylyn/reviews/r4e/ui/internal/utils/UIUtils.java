@@ -238,7 +238,7 @@ public class UIUtils {
 				final Point newSize = aText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 				final Point oldSize = aText.getSize();
 				final int heightDiff = newSize.y - oldSize.y;
-				if (0 != heightDiff) {
+				if (0 != heightDiff && 0 != oldSize.y) {
 					aText.setSize(newSize);
 					aText.getParent().layout();
 

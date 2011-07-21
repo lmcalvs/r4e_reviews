@@ -601,7 +601,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 				.getAvailableComponents()
 				.toArray());
 		final String[] components = (String[]) modelReview.getComponents().toArray();
-		fComponents.clearAll();
+		fComponents.removeAll();
 		Item item = null;
 		String component = null;
 
@@ -652,7 +652,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 
 			item = null;
 			final int numParticipants = participants.size();
-			fDecisionUsersList.clearAll();
+			fDecisionUsersList.removeAll();
 			for (int i = 0; i < numParticipants; i++) {
 				if (participants.get(i).isIsPartOfDecision()) {
 					if (i >= fDecisionUsersList.getItemCount()) {

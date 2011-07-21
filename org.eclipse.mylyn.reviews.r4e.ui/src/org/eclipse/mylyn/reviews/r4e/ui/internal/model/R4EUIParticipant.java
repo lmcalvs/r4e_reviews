@@ -51,6 +51,11 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field PARTICIPANT_ICON_FILE. (value is ""icons/obj16/part_obj.png"")
+	 */
+	private static final String PARTICIPANT_ICON_FILE = "icons/obj16/part_obj.png";
+
+	/**
 	 * Field PARTICIPANT_REVIEWER_ICON_FILE. (value is ""icons/obj16/partrevr_obj.png"")
 	 */
 	private static final String PARTICIPANT_REVIEWER_ICON_FILE = "icons/obj16/partrevr_obj.png";
@@ -183,6 +188,8 @@ public class R4EUIParticipant extends R4EUIModelElement {
 				return;
 			}
 		}
+		//If no role, set default icon
+		setImage(PARTICIPANT_ICON_FILE);
 	}
 
 	/**
