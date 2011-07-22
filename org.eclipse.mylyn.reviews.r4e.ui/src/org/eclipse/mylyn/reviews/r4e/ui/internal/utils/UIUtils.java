@@ -52,6 +52,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
@@ -367,12 +368,11 @@ public class UIUtils {
 	 *            R4ECompareEditorInput
 	 */
 	public static void selectElementInEditor(R4ECompareEditorInput aInput) {
-		//NOTE:  This is a dirty hack that involves accessing class and field we shouldn't, but that's
-		//       the only way to select the current position in the compare editor.  Hopefully this code can
-		//		 be removed later when the Eclipse compare editor allows this.
+
 		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
 		IR4EUIPosition position = null;
+		int selectionIndex = -1;
 
 		if (element instanceof R4EUIAnomalyBasic) {
 			position = ((R4EUIAnomalyBasic) element).getPosition();
@@ -380,42 +380,60 @@ public class UIUtils {
 			position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
 		} else if (element instanceof R4EUIContent) {
 			position = ((R4EUIContent) element).getPosition();
+			R4EUIContentsContainer container = (R4EUIContentsContainer) ((R4EUIContent) element).getParent();
+			selectionIndex = container.getContentsList().indexOf(element);
 		} else {
 			return; //Do nothing if any other element is selected
 		}
-
 		final ICompareNavigator navigator = aInput.getNavigator();
-		if (navigator instanceof CompareEditorInputNavigator) {
-			final Object[] panes = ((CompareEditorInputNavigator) navigator).getPanes();
-			for (Object pane : panes) {
-				if (pane instanceof CompareContentViewerSwitchingPane) {
-					Viewer viewer = ((CompareContentViewerSwitchingPane) pane).getViewer();
-					if (viewer instanceof TextMergeViewer) {
-						TextMergeViewer textViewer = (TextMergeViewer) viewer;
-						Class textViewerClass = textViewer.getClass();
-						if (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME)) {
-							do {
-								textViewerClass = textViewerClass.getSuperclass();
-								if (textViewerClass.getName().equals(DEFAULT_OBJECT_CLASS_NAME)) {
-									break;
-								}
-							} while (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME));
-						}
-						try {
-							Field field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_LEFT);
-							field.setAccessible(true);
-							MergeSourceViewer sourceViewer = (MergeSourceViewer) field.get(textViewer);
-							ITextEditor adapter = (ITextEditor) sourceViewer.getAdapter(ITextEditor.class);
-							adapter.selectAndReveal(((R4EUITextPosition) position).getOffset(),
-									((R4EUITextPosition) position).getLength());
-						} catch (SecurityException e) {
-							//just continue
-						} catch (NoSuchFieldException e) {
-							//just continue
-						} catch (IllegalArgumentException e) {
-							//just continue
-						} catch (IllegalAccessException e) {
-							//just continue
+
+		//Decide which way we select the current position
+		if (selectionIndex != -1) {
+			//Use the change index to select position in file
+			while (!(navigator.selectChange(false))) {
+				//Reset position to the first difference
+			}
+
+			for (int i = 0; i < selectionIndex; i++) {
+				navigator.selectChange(true); //get the difference that corresponds to the right selection
+			}
+		} else {
+			//Use free form to select position in file
+			//NOTE:  This is a dirty hack that involves accessing class and field we shouldn't, but that's
+			//       the only way to select the current position in the compare editor.  Hopefully this code can
+			//		 be removed later when the Eclipse compare editor allows this.
+			if (navigator instanceof CompareEditorInputNavigator) {
+				final Object[] panes = ((CompareEditorInputNavigator) navigator).getPanes();
+				for (Object pane : panes) {
+					if (pane instanceof CompareContentViewerSwitchingPane) {
+						Viewer viewer = ((CompareContentViewerSwitchingPane) pane).getViewer();
+						if (viewer instanceof TextMergeViewer) {
+							TextMergeViewer textViewer = (TextMergeViewer) viewer;
+							Class textViewerClass = textViewer.getClass();
+							if (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME)) {
+								do {
+									textViewerClass = textViewerClass.getSuperclass();
+									if (textViewerClass.getName().equals(DEFAULT_OBJECT_CLASS_NAME)) {
+										break;
+									}
+								} while (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME));
+							}
+							try {
+								Field field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_LEFT);
+								field.setAccessible(true);
+								MergeSourceViewer sourceViewer = (MergeSourceViewer) field.get(textViewer);
+								ITextEditor adapter = (ITextEditor) sourceViewer.getAdapter(ITextEditor.class);
+								adapter.selectAndReveal(((R4EUITextPosition) position).getOffset(),
+										((R4EUITextPosition) position).getLength());
+							} catch (SecurityException e) {
+								//just continue
+							} catch (NoSuchFieldException e) {
+								//just continue
+							} catch (IllegalArgumentException e) {
+								//just continue
+							} catch (IllegalAccessException e) {
+								//just continue
+							}
 						}
 					}
 				}

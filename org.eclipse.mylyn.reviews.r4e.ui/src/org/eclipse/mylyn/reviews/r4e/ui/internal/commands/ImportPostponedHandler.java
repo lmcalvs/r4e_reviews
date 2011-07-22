@@ -145,6 +145,9 @@ public class ImportPostponedHandler extends AbstractHandler {
 
 				//Get parent file
 				R4EFileVersion oldAnomalyFile = CommandUtils.getAnomalyParentFile((R4EAnomaly) oldAnomaly);
+				if (null == oldAnomalyFile) {
+					continue; //Global anomalies cannot be imported
+				}
 
 				for (Item currentItem : currentReview.getReviewItems()) {
 					//Ignore R4EUIPostponedContainer for current review here
@@ -197,6 +200,10 @@ public class ImportPostponedHandler extends AbstractHandler {
 
 		//Lazily create the postponed file and add it to the postponed container, if not already done
 		final R4EFileVersion oldFile = CommandUtils.getAnomalyParentFile(aOldAnomaly);
+		if (null == oldFile) {
+			return; //Global anomalies cannot be imported
+		}
+
 		final List<R4EUIFileContext> postponedUiFileContexts = uiPostponedContainer.getFileContexts();
 		R4EUIPostponedFile uiPostponedFile = null;
 		for (R4EUIFileContext currentFileContext : postponedUiFileContexts) {

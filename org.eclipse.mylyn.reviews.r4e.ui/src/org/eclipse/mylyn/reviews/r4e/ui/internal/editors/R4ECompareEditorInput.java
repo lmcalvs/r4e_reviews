@@ -252,8 +252,7 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		if (null != fLeft) {
 			final StringBuilder leftLabel = new StringBuilder("Target: " + fLeft.getName());
 			if (fLeft instanceof R4EFileRevisionTypedElement) {
-				leftLabel.append(" "
-						+ ((R4EFileRevisionTypedElement) fLeft).getFileVersion().getVersionID().substring(0, 7));
+				leftLabel.append(" " + ((R4EFileRevisionTypedElement) fLeft).getFileVersion().getVersionID());
 			}
 			fConfig.setLeftLabel(leftLabel.toString());
 		}
