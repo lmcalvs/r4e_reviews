@@ -34,12 +34,15 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
@@ -377,6 +380,18 @@ public class ReviewGroupInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fGroupNameInputTextField.setToolTipText(R4EUIConstants.REVIEW_GROUP_NAME_TOOLTIP);
 		fGroupNameInputTextField.setLayoutData(textGridData);
+		fGroupNameInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fGroupNameInputTextField.getText().length() > 0
+						&& fGroupFolderInputTextField.getText().length() > 0
+						&& fGroupDescriptionInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Group Folder
 		label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_FOLDER_DIALOG_VALUE);
@@ -408,6 +423,18 @@ public class ReviewGroupInputDialog extends FormDialog {
 				}
 			}
 		});
+		fGroupFolderInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fGroupNameInputTextField.getText().length() > 0
+						&& fGroupFolderInputTextField.getText().length() > 0
+						&& fGroupDescriptionInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Group Description
 		label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_GROUP_DESCRIPTION_DIALOG_VALUE);
@@ -420,6 +447,18 @@ public class ReviewGroupInputDialog extends FormDialog {
 		textGridData.heightHint = fGroupNameInputTextField.getLineHeight() * 3;
 		fGroupDescriptionInputTextField.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
 		fGroupDescriptionInputTextField.setLayoutData(textGridData);
+		fGroupDescriptionInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fGroupNameInputTextField.getText().length() > 0
+						&& fGroupFolderInputTextField.getText().length() > 0
+						&& fGroupDescriptionInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Extra parameters section
 		final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION
@@ -491,6 +530,19 @@ public class ReviewGroupInputDialog extends FormDialog {
 			fRuleSets.setEnabled(false);
 		}
 		fRuleSets.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
+	}
+
+	/**
+	 * Configures the button bar.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 */
+	@Override
+	protected Control createButtonBar(Composite parent) {
+		Control bar = super.createButtonBar(parent);
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
+		return bar;
 	}
 
 	/**

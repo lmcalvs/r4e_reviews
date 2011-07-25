@@ -75,6 +75,26 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 */
 	private static final String PARTICIPANT_ORGANIZER_ICON_FILE = "icons/obj16/partorg_obj.png";
 
+	/**
+	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Disable Participant"")
+	 */
+	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Participant";
+
+	/**
+	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable (and Optionally Remove) this Participant"")
+	 */
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Participant";
+
+	/**
+	 * Field RESTORE_ELEMENT_COMMAND_NAME. (value is ""Restore Participant"")
+	 */
+	private static final String RESTORE_ELEMENT_COMMAND_NAME = "Restore Participant";
+
+	/**
+	 * Field RESTORE_ELEMENT_ACTION_TOOLTIP. (value is ""Restore this disabled Participant"")
+	 */
+	private static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this disabled Participant";
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -334,6 +354,28 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method getRemoveElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRemoveElementCmdName()
+	 */
+	@Override
+	public String getRemoveElementCmdName() {
+		return REMOVE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getRemoveElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRemoveElementCmdTooltip()
+	 */
+	@Override
+	public String getRemoveElementCmdTooltip() {
+		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
 	 * Method isRestoreElementCmd.
 	 * 
 	 * @return boolean
@@ -350,4 +392,25 @@ public class R4EUIParticipant extends R4EUIModelElement {
 		return true;
 	}
 
+	/**
+	 * Method getRestoreElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRestoreElementCmdName()
+	 */
+	@Override
+	public String getRestoreElementCmdName() {
+		return RESTORE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getRestoreElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRestoreElementCmdTooltip()
+	 */
+	@Override
+	public String getRestoreElementCmdTooltip() {
+		return RESTORE_ELEMENT_COMMAND_TOOLTIP;
+	}
 }

@@ -92,6 +92,26 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	private static final String REVIEW_INFORMAL_CLOSED_ICON_FILE = "icons/obj16/revinfclsd_obj.gif";
 
 	/**
+	 * Field OPEN_ELEMENT_COMMAND_NAME. (value is ""Open Review"")
+	 */
+	private static final String OPEN_ELEMENT_COMMAND_NAME = "Open Review";
+
+	/**
+	 * Field OPEN_ELEMENT_COMMAND_TOOLTIP. (value is ""Open and Load Data for this Review"")
+	 */
+	private static final String OPEN_ELEMENT_COMMAND_TOOLTIP = "Open and Load Data for this Review";
+
+	/**
+	 * Field CLOSE_ELEMENT_COMMAND_NAME. (value is ""Close Review"")
+	 */
+	private static final String CLOSE_ELEMENT_COMMAND_NAME = "Close Review";
+
+	/**
+	 * Field CLOSE_ELEMENT_COMMAND_TOOLTIP. (value is ""Close and Unload Data for this Review"")
+	 */
+	private static final String CLOSE_ELEMENT_COMMAND_TOOLTIP = "Close and Unload Data for this Review";
+
+	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Delete Review"")
 	 */
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Review";
@@ -1203,6 +1223,28 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method getOpenElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getOpenElementCmdName()
+	 */
+	@Override
+	public String getOpenElementCmdName() {
+		return OPEN_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getOpenElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getOpenElementCmdTooltip()
+	 */
+	@Override
+	public String getOpenElementCmdTooltip() {
+		return OPEN_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
 	 * Method isCloseElementCmd.
 	 * 
 	 * @return boolean
@@ -1214,6 +1256,28 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Method getCloseElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCloseElementCmdName()
+	 */
+	@Override
+	public String getCloseElementCmdName() {
+		return CLOSE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getCloseElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCloseElementCmdTooltip()
+	 */
+	@Override
+	public String getCloseElementCmdTooltip() {
+		return CLOSE_ELEMENT_COMMAND_TOOLTIP;
 	}
 
 	/**

@@ -35,6 +35,9 @@ public class LinkPropertiesHandler extends AbstractHandler {
 	// Methods
 	// ------------------------------------------------------------------------
 
+	//NOTE: This class is not used anymore as the linking between R4E properties view and the Review navigator is always enabled.
+	//		If we get rid of the R4E properties view and only use the vanilla Properties view, then this could be useful to "pin"
+	//		the properties view to accept R4E input only.
 	/**
 	 * Method execute.
 	 * 

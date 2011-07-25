@@ -27,12 +27,15 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -277,6 +280,17 @@ public class RuleSetInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fVersionInputTextField.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
 		fVersionInputTextField.setLayoutData(textGridData);
+		fVersionInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fVersionInputTextField.getText().length() > 0 && fNameInputTextField.getText().length() > 0
+						&& fFolderInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Rule Set Name
 		label = toolkit.createLabel(basicSectionClient, ADD_RULE_SET_NAME_DIALOG_VALUE);
@@ -287,6 +301,17 @@ public class RuleSetInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fNameInputTextField.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
 		fNameInputTextField.setLayoutData(textGridData);
+		fNameInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fVersionInputTextField.getText().length() > 0 && fNameInputTextField.getText().length() > 0
+						&& fFolderInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Rule Set Folder
 		label = toolkit.createLabel(basicSectionClient, ADD_RULE_SET_FOLDER_DIALOG_VALUE);
@@ -318,6 +343,30 @@ public class RuleSetInputDialog extends FormDialog {
 				}
 			}
 		});
+		fFolderInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fVersionInputTextField.getText().length() > 0 && fNameInputTextField.getText().length() > 0
+						&& fFolderInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
+	}
+
+	/**
+	 * Configures the button bar.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 */
+	@Override
+	protected Control createButtonBar(Composite parent) {
+		Control bar = super.createButtonBar(parent);
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
+		return bar;
 	}
 
 	/**

@@ -284,24 +284,6 @@
                style="push"
                tooltip="Refresh Data">
          </command>
-         <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
-               icon="icons/elcl16/lnked_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
-               label="Link Editor"
-               mnemonic="l"
-               style="toggle"
-               tooltip="Link the Navigator View with the Editor">
-         </command>
-         <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
-               icon="icons/elcl16/lnkprop_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
-               label="Link Properties"
-               mnemonic="p"
-               style="toggle"
-               tooltip="Link the Navigator View with the R4E Properties View">
-         </command>
       </menuContribution>
       <menuContribution
             locationURI="menu:org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView">
@@ -407,24 +389,6 @@
                name="org.eclipse.mylyn.reviews.r4e.ui.separator3"
                visible="true">
          </separator>
-         <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
-               icon="icons/elcl16/lnked_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
-               label="Link Editor"
-               mnemonic="l"
-               style="toggle"
-               tooltip="Link the Navigator View with the Editor">
-         </command>
-         <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
-               icon="icons/elcl16/lnkprop_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
-               label="Link Properties"
-               mnemonic="p"
-               style="toggle"
-               tooltip="Link the Navigator View with the R4E Properties View">
-         </command>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView?after=additions">

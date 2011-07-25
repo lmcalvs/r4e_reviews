@@ -71,6 +71,16 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review "
 			+ "Item from its Parent Review";
 
+	/**
+	 * Field RESTORE_ELEMENT_COMMAND_NAME. (value is ""Restore Review Item"")
+	 */
+	private static final String RESTORE_ELEMENT_COMMAND_NAME = "Restore Review Item";
+
+	/**
+	 * Field RESTORE_ELEMENT_ACTION_TOOLTIP. (value is ""Restore this disabled Review Item"")
+	 */
+	private static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this disabled Review Item";
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -559,23 +569,6 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	}
 
 	/**
-	 * Method isRestoreElementCmd.
-	 * 
-	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#iisRestoreElementCmd()
-	 */
-	@Override
-	public boolean isRestoreElementCmd() {
-		if (!(getParent().isEnabled())) {
-			return false;
-		}
-		if (isEnabled()) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
 	 * Method getRemoveElementCmdName.
 	 * 
 	 * @return String
@@ -595,6 +588,45 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	@Override
 	public String getRemoveElementCmdTooltip() {
 		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
+	 * Method isRestoreElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (!(getParent().isEnabled())) {
+			return false;
+		}
+		if (isEnabled()) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Method getRestoreElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRestoreElementCmdName()
+	 */
+	@Override
+	public String getRestoreElementCmdName() {
+		return RESTORE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getRestoreElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRestoreElementCmdTooltip()
+	 */
+	@Override
+	public String getRestoreElementCmdTooltip() {
+		return RESTORE_ELEMENT_COMMAND_TOOLTIP;
 	}
 
 	/**

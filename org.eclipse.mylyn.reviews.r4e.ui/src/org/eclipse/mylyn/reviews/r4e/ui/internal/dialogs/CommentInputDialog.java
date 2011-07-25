@@ -27,9 +27,12 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.mylyn.reviews.r4e.ui.Activator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -202,6 +205,29 @@ public class CommentInputDialog extends FormDialog {
 		textGridData.heightHint = fCommentInputTextField.getLineHeight() * 3;
 		fCommentInputTextField.setToolTipText(R4EUIConstants.COMMENT_DESCRIPTION_TOOLTIP);
 		fCommentInputTextField.setLayoutData(textGridData);
+		fCommentInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fCommentInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
+	}
+
+	/**
+	 * Configures the button bar.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 */
+	@Override
+	protected Control createButtonBar(Composite parent) {
+		Control bar = super.createButtonBar(parent);
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
+		return bar;
 	}
 
 	/**

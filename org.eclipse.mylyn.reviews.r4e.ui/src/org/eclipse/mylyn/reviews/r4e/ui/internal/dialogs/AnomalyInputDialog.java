@@ -54,10 +54,13 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorLabelP
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorTreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -295,6 +298,17 @@ public class AnomalyInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fAnomalyTitleInputTextField.setToolTipText(R4EUIConstants.ANOMALY_TITLE_TOOLTIP);
 		fAnomalyTitleInputTextField.setLayoutData(textGridData);
+		fAnomalyTitleInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fAnomalyTitleInputTextField.getText().length() > 0
+						&& fAnomalyDescriptionInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Anomaly Description
 		label = toolkit.createLabel(basicSectionClient, ADD_DESCRIPTION_DIALOG_VALUE);
@@ -307,6 +321,17 @@ public class AnomalyInputDialog extends FormDialog {
 		textGridData.heightHint = fAnomalyTitleInputTextField.getLineHeight() * 3;
 		fAnomalyDescriptionInputTextField.setToolTipText(R4EUIConstants.ANOMALY_DESCRIPTION_TOOLTIP);
 		fAnomalyDescriptionInputTextField.setLayoutData(textGridData);
+		fAnomalyDescriptionInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fAnomalyTitleInputTextField.getText().length() > 0
+						&& fAnomalyDescriptionInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Extra parameters section
 		final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION
@@ -552,6 +577,19 @@ public class AnomalyInputDialog extends FormDialog {
 				fRuleTreeViewer.setSelection(null);
 			}
 		});
+	}
+
+	/**
+	 * Configures the button bar.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 */
+	@Override
+	protected Control createButtonBar(Composite parent) {
+		Control bar = super.createButtonBar(parent);
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
+		return bar;
 	}
 
 	/**

@@ -245,11 +245,20 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 						}
 						try {
 							if (fProperties.getElement() instanceof R4EUIReviewExtended) {
-								((R4EUIReviewExtended) fProperties.getElement()).updatePhase(phase);
 								final R4EFormalReview review = ((R4EFormalReview) ((R4EUIReviewExtended) fProperties.getElement()).getReview());
-								if (review.getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
+								if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
 										&& null == review.getActiveMeeting()) {
 									MailServicesProxy.sendMeetingRequest();
+								}
+								//Prevent changing state to PREPARATION if no Meeting Request was sent out
+								if (null != review.getActiveMeeting()) {
+									((R4EUIReviewExtended) fProperties.getElement()).updatePhase(phase);
+								} else {
+									final ErrorDialog dialog = new ErrorDialog(null, "Error",
+											"No Meeting Data present", new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+													0, "Please allow sending out a Meeting Request", null),
+											IStatus.ERROR);
+									dialog.open();
 								}
 							} else {
 								((R4EUIReviewBasic) fProperties.getElement()).updatePhase(phase);

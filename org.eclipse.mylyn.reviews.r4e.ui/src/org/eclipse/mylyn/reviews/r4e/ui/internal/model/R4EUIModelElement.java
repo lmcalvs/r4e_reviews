@@ -575,6 +575,26 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
+	 * Method getOpenElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getOpenElementCmdName()
+	 */
+	public String getOpenElementCmdName() {
+		return R4EUIConstants.OPEN_ELEMENT_COMMAND_NAME; //default implementation
+	}
+
+	/**
+	 * Method getOpenElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getOpenElementCmdTooltip()
+	 */
+	public String getOpenElementCmdTooltip() {
+		return R4EUIConstants.OPEN_ELEMENT_COMMAND_TOOLTIP; //default implementation
+	}
+
+	/**
 	 * Method isCloseElementCmd.
 	 * 
 	 * @return boolean
@@ -585,32 +605,52 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
+	 * Method getCloseElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCloseElementCmdName()
+	 */
+	public String getCloseElementCmdName() {
+		return R4EUIConstants.CLOSE_ELEMENT_COMMAND_NAME; //default implementation
+	}
+
+	/**
+	 * Method getCloseElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCloseElementCmdTooltip()
+	 */
+	public String getCloseElementCmdTooltip() {
+		return R4EUIConstants.CLOSE_ELEMENT_COMMAND_TOOLTIP; //default implementation
+	}
+
+	/**
 	 * Method isAddChildElementCmd.
 	 * 
 	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAddChildElementCmd()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isNewChildElementCmd()
 	 */
-	public boolean isAddChildElementCmd() {
+	public boolean isNewChildElementCmd() {
 		return false; //default implementation
 	}
 
 	/**
-	 * Method getAddChildElementCmdName.
+	 * Method getNewChildElementCmdName.
 	 * 
 	 * @return String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getAddChildElementCmdName()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNewChildElementCmdName()
 	 */
-	public String getAddChildElementCmdName() {
+	public String getNewChildElementCmdName() {
 		return R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_NAME; //default implementation
 	}
 
 	/**
-	 * Method getAddChildElementCmdTooltip.
+	 * Method getNewChildElementCmdTooltip.
 	 * 
 	 * @return String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNewChildElementCmdTooltip()
 	 */
-	public String getAddChildElementCmdTooltip() {
+	public String getNewChildElementCmdTooltip() {
 		return R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_TOOLTIP; //default implementation
 	}
 
@@ -621,16 +661,6 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isRemoveElementCmd()
 	 */
 	public boolean isRemoveElementCmd() {
-		return false; //default implementation
-	}
-
-	/**
-	 * Method isRestoreElementCmd.
-	 * 
-	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#iisRestoreElementCmd()
-	 */
-	public boolean isRestoreElementCmd() {
 		return false; //default implementation
 	}
 
@@ -652,6 +682,36 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public String getRemoveElementCmdTooltip() {
 		return R4EUIConstants.REMOVE_ELEMENT_COMMAND_TOOLTIP; //default implementation
+	}
+
+	/**
+	 * Method isRestoreElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	public boolean isRestoreElementCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method getRestoreElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRestoreElementCmdName()
+	 */
+	public String getRestoreElementCmdName() {
+		return R4EUIConstants.RESTORE_ELEMENT_COMMAND_NAME; //default implementation
+	}
+
+	/**
+	 * Method getRestoreElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRestoreElementCmdTooltip()
+	 */
+	public String getRestoreElementCmdTooltip() {
+		return R4EUIConstants.RESTORE_ELEMENT_COMMAND_TOOLTIP; //default implementation
 	}
 
 	/**

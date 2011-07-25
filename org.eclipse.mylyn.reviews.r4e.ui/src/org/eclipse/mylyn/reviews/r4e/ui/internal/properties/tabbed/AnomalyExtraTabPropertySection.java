@@ -184,6 +184,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 				//No implementation needed
 			}
 		});
+		addScrollListener(fStateCombo);
 
 		final CLabel stateLabel = widgetFactory.createCLabel(composite, R4EUIConstants.STATE_LABEL);
 		data = new FormData();
@@ -230,6 +231,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 				//No implementation needed
 			}
 		});
+		addScrollListener(fClassCombo);
 
 		final CLabel classLabel = widgetFactory.createCLabel(composite, R4EUIConstants.CLASS_LABEL);
 		data = new FormData();
@@ -274,6 +276,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 				//No implementation needed
 			}
 		});
+		addScrollListener(fRankCombo);
 
 		final CLabel rankLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RANK_LABEL);
 		data = new FormData();
@@ -464,6 +467,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 				//No implementation needed
 			}
 		});
+		addScrollListener(fDecidedByCombo);
 
 		final CLabel decidedByLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DECIDED_BY_LABEL);
 		data = new FormData();
@@ -508,6 +512,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 				//No implementation needed
 			}
 		});
+		addScrollListener(fFixedByCombo);
 
 		final CLabel fixedByLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FIXED_BY_LABEL);
 		data = new FormData();
@@ -552,6 +557,7 @@ public class AnomalyExtraTabPropertySection extends ModelElementTabPropertySecti
 				//No implementation needed
 			}
 		});
+		addScrollListener(fFollowUpByCombo);
 
 		final CLabel followUpByLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FOLLOWUP_BY_LABEL);
 		data = new FormData();

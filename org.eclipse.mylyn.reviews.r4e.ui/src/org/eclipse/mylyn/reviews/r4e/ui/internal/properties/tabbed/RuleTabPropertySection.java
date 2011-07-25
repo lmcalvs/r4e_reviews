@@ -241,6 +241,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 				//No implementation needed
 			}
 		});
+		addScrollListener(fClassCombo);
 
 		final CLabel classLabel = widgetFactory.createCLabel(composite, R4EUIConstants.CLASS_LABEL);
 		data = new FormData();
@@ -280,6 +281,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 				//No implementation needed
 			}
 		});
+		addScrollListener(fRankCombo);
 
 		final CLabel rankLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RANK_LABEL);
 		data = new FormData();

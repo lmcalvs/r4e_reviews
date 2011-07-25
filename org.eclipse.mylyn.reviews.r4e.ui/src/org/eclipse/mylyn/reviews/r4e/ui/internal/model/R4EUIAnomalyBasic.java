@@ -75,6 +75,16 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Anomaly "
 			+ "from its parent file or review";
 
+	/**
+	 * Field RESTORE_ELEMENT_COMMAND_NAME. (value is ""Restore Anomaly"")
+	 */
+	private static final String RESTORE_ELEMENT_COMMAND_NAME = "Restore Anomaly";
+
+	/**
+	 * Field RESTORE_ELEMENT_ACTION_TOOLTIP. (value is ""Restore this disabled Anomaly"")
+	 */
+	private static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this disabled Anomaly";
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -528,10 +538,10 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * Method isAddChildElementCmd.
 	 * 
 	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAddChildElementCmd()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isNewChildElementCmd()
 	 */
 	@Override
-	public boolean isAddChildElementCmd() {
+	public boolean isNewChildElementCmd() {
 		if (isEnabled()) {
 			return true;
 		}
@@ -542,10 +552,10 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * Method getAddChildElementCmdName.
 	 * 
 	 * @return String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getAddChildElementCmdName()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNewChildElementCmdName()
 	 */
 	@Override
-	public String getAddChildElementCmdName() {
+	public String getNewChildElementCmdName() {
 		return NEW_CHILD_ELEMENT_COMMAND_NAME;
 	}
 
@@ -553,10 +563,10 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * Method getAddChildElementCmdTooltip.
 	 * 
 	 * @return String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNewChildElementCmdTooltip()
 	 */
 	@Override
-	public String getAddChildElementCmdTooltip() {
+	public String getNewChildElementCmdTooltip() {
 		return NEW_CHILD_ELEMENT_COMMAND_TOOLTIP;
 	}
 
@@ -572,23 +582,6 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Method isRestoreElementCmd.
-	 * 
-	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#iisRestoreElementCmd()
-	 */
-	@Override
-	public boolean isRestoreElementCmd() {
-		if (!(getParent().getParent().isEnabled())) {
-			return false;
-		}
-		if (isEnabled()) {
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -611,6 +604,45 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	@Override
 	public String getRemoveElementCmdTooltip() {
 		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
+	 * Method isRestoreElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (!(getParent().getParent().isEnabled())) {
+			return false;
+		}
+		if (isEnabled()) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Method getRestoreElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRestoreElementCmdName()
+	 */
+	@Override
+	public String getRestoreElementCmdName() {
+		return RESTORE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getRestoreElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRestoreElementCmdTooltip()
+	 */
+	@Override
+	public String getRestoreElementCmdTooltip() {
+		return RESTORE_ELEMENT_COMMAND_TOOLTIP;
 	}
 
 	/**

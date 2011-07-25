@@ -31,9 +31,12 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -299,6 +302,17 @@ public class RuleInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fIdInputTextField.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
 		fIdInputTextField.setLayoutData(textGridData);
+		fIdInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fIdInputTextField.getText().length() > 0 && fTitleInputTextField.getText().length() > 0
+						&& fDescriptionInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Rule Title
 		label = toolkit.createLabel(basicSectionClient, ADD_RULE_TITLE_DIALOG_VALUE);
@@ -309,6 +323,17 @@ public class RuleInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fTitleInputTextField.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
 		fTitleInputTextField.setLayoutData(textGridData);
+		fTitleInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fIdInputTextField.getText().length() > 0 && fTitleInputTextField.getText().length() > 0
+						&& fDescriptionInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Rule Description
 		label = toolkit.createLabel(basicSectionClient, ADD_RULE_DESCRIPTION_DIALOG_VALUE);
@@ -321,6 +346,17 @@ public class RuleInputDialog extends FormDialog {
 		textGridData.heightHint = fDescriptionInputTextField.getLineHeight() * 3;
 		fDescriptionInputTextField.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
 		fDescriptionInputTextField.setLayoutData(textGridData);
+		fDescriptionInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fIdInputTextField.getText().length() > 0 && fTitleInputTextField.getText().length() > 0
+						&& fDescriptionInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Rule Class
 		label = toolkit.createLabel(basicSectionClient, ADD_RULE_CLASS_DIALOG_VALUE);
@@ -346,6 +382,19 @@ public class RuleInputDialog extends FormDialog {
 		fRankCombo.setToolTipText(R4EUIConstants.RULE_RANK_TOOLTIP);
 		fRankCombo.setLayoutData(textGridData);
 
+	}
+
+	/**
+	 * Configures the button bar.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 */
+	@Override
+	protected Control createButtonBar(Composite parent) {
+		Control bar = super.createButtonBar(parent);
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
+		return bar;
 	}
 
 	/**

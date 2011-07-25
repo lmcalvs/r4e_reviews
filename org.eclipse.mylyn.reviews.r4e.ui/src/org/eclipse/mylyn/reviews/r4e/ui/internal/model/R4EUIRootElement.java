@@ -547,10 +547,10 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * Method isAddChildElementCmd.
 	 * 
 	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAddChildElementCmd()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isNewChildElementCmd()
 	 */
 	@Override
-	public boolean isAddChildElementCmd() {
+	public boolean isNewChildElementCmd() {
 		if (isEnabled()) {
 			return true;
 		}
@@ -561,10 +561,10 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * Method getAddChildElementCmdName.
 	 * 
 	 * @return String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getAddChildElementCmdName()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNewChildElementCmdName()
 	 */
 	@Override
-	public String getAddChildElementCmdName() {
+	public String getNewChildElementCmdName() {
 		return R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_NAME;
 	}
 
@@ -572,10 +572,10 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * Method getAddChildElementCmdTooltip.
 	 * 
 	 * @return String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNewChildElementCmdTooltip()
 	 */
 	@Override
-	public String getAddChildElementCmdTooltip() {
+	public String getNewChildElementCmdTooltip() {
 		return R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_TOOLTIP;
 	}
 }

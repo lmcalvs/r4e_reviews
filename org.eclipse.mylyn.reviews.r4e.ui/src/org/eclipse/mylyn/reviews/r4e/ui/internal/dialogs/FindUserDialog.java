@@ -45,12 +45,15 @@ import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.UserInformationFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -322,6 +325,19 @@ public class FindUserDialog extends FormDialog {
 	}
 
 	/**
+	 * Configures the button bar.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 */
+	@Override
+	protected Control createButtonBar(Composite parent) {
+		Control bar = super.createButtonBar(parent);
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
+		return bar;
+	}
+
+	/**
 	 * Creates new user details area
 	 * 
 	 * @param aParent
@@ -359,6 +375,16 @@ public class FindUserDialog extends FormDialog {
 		userIdTextData.width = TEXT_FIELD_WIDTH;
 		fUserIdInputTextField.setToolTipText(R4EUIConstants.USER_ID_TOOLTIP);
 		fUserIdInputTextField.setLayoutData(userIdTextData);
+		fUserIdInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fUserIdInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		// Name
 		final Label userNameLabel = aToolkit.createLabel(fUserDetailsForm, R4EUIConstants.NAME_LABEL);

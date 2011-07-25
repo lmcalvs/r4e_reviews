@@ -341,11 +341,39 @@ public interface IR4EUIModelElement {
 	boolean isOpenElementCmd();
 
 	/**
+	 * Method getOpenElementCmdName.
+	 * 
+	 * @return String
+	 */
+	String getOpenElementCmdName();
+
+	/**
+	 * Method getOpenElementCmdTooltip.
+	 * 
+	 * @return String
+	 */
+	String getOpenElementCmdTooltip();
+
+	/**
 	 * Method isCloseElementCmd.
 	 * 
 	 * @return boolean
 	 */
 	boolean isCloseElementCmd();
+
+	/**
+	 * Method getCloseElementCmdName.
+	 * 
+	 * @return String
+	 */
+	String getCloseElementCmdName();
+
+	/**
+	 * Method getCloseElementCmdTooltip.
+	 * 
+	 * @return String
+	 */
+	String getCloseElementCmdTooltip();
 
 	/**
 	 * Method isRestoreElementCmd.
@@ -355,25 +383,39 @@ public interface IR4EUIModelElement {
 	boolean isRestoreElementCmd();
 
 	/**
-	 * Method isAddChildElementCmd.
+	 * Method getRestoreElementCmdName.
+	 * 
+	 * @return String
+	 */
+	String getRestoreElementCmdName();
+
+	/**
+	 * Method getRestoreElementCmdTooltip.
+	 * 
+	 * @return String
+	 */
+	String getRestoreElementCmdTooltip();
+
+	/**
+	 * Method isNewChildElementCmd.
 	 * 
 	 * @return boolean
 	 */
-	boolean isAddChildElementCmd();
+	boolean isNewChildElementCmd();
 
 	/**
-	 * Method getAddChildElementCmdName.
+	 * Method getNewChildElementCmdName.
 	 * 
 	 * @return String
 	 */
-	String getAddChildElementCmdName();
+	String getNewChildElementCmdName();
 
 	/**
-	 * Method getAddChildElementCmdTooltip.
+	 * Method getNewChildElementCmdTooltip.
 	 * 
 	 * @return String
 	 */
-	String getAddChildElementCmdTooltip();
+	String getNewChildElementCmdTooltip();
 
 	/**
 	 * Method isRemoveElementCmd.

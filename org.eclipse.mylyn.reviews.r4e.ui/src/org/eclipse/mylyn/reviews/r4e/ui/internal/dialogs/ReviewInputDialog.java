@@ -33,9 +33,12 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -254,8 +257,16 @@ public class ReviewInputDialog extends FormDialog {
 				fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_FORMAL;
 			} else if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_INFORMAL)) {
 				fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_INFORMAL;
-			} else {
+			} else if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_BASIC)) {
 				fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_BASIC;
+			} else {
+				//Validation of input failed
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+						"No input given for Review Type",
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, null, null), IStatus.ERROR);
+				dialog.open();
+				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+				return;
 			}
 
 			//Validate Review Name
@@ -364,11 +375,22 @@ public class ReviewInputDialog extends FormDialog {
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fReviewType = new CCombo(composite, SWT.BORDER | SWT.READ_ONLY);
 		fReviewType.setItems(REVIEW_TYPES);
-		fReviewType.select(0);
+		//fReviewType.select(0);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fReviewType.setToolTipText(R4EUIConstants.REVIEW_TYPE_TOOLTIP);
 		fReviewType.setLayoutData(textGridData);
+		fReviewType.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fReviewType.getText().length() > 0 && fReviewNameInputTextField.getText().length() > 0
+						&& fReviewDescriptionInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Basic parameters section
 		final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION
@@ -398,6 +420,17 @@ public class ReviewInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fReviewNameInputTextField.setToolTipText(R4EUIConstants.REVIEW_NAME_TOOLTIP);
 		fReviewNameInputTextField.setLayoutData(textGridData);
+		fReviewNameInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fReviewType.getText().length() > 0 && fReviewNameInputTextField.getText().length() > 0
+						&& fReviewDescriptionInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Review Description
 		label = toolkit.createLabel(basicSectionClient, ADD_REVIEW_DESCRIPTION_DIALOG_VALUE);
@@ -410,6 +443,17 @@ public class ReviewInputDialog extends FormDialog {
 		textGridData.heightHint = fReviewNameInputTextField.getLineHeight() * 3;
 		fReviewDescriptionInputTextField.setToolTipText(R4EUIConstants.REVIEW_DESCRIPTION_TOOLTIP);
 		fReviewDescriptionInputTextField.setLayoutData(textGridData);
+		fReviewDescriptionInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fReviewType.getText().length() > 0 && fReviewNameInputTextField.getText().length() > 0
+						&& fReviewDescriptionInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Extra parameters section
 		final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION
@@ -494,6 +538,19 @@ public class ReviewInputDialog extends FormDialog {
 		textGridData.heightHint = fReviewNameInputTextField.getLineHeight() * 3;
 		fReferenceMaterialTextField.setToolTipText(R4EUIConstants.REVIEW_REFERENCE_MATERIAL_TOOLTIP);
 		fReferenceMaterialTextField.setLayoutData(textGridData);
+	}
+
+	/**
+	 * Configures the button bar.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 */
+	@Override
+	protected Control createButtonBar(Composite parent) {
+		Control bar = super.createButtonBar(parent);
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
+		return bar;
 	}
 
 	/**

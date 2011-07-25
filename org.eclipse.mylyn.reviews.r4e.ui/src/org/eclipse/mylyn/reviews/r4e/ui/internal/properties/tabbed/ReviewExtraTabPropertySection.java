@@ -220,6 +220,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 				//No implementation needed
 			}
 		});
+		addScrollListener(fProjectCombo);
 
 		final CLabel projectLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.PROJECT_LABEL);
 		data = new FormData();
@@ -517,6 +518,7 @@ public class ReviewExtraTabPropertySection extends ModelElementTabPropertySectio
 				//No implementation needed
 			}
 		});
+		addScrollListener(fExitDecisionCombo);
 
 		//Decision Participants
 		fDecisionUsersListLabel = widgetFactory.createCLabel(decisionSectionClient,

@@ -22,9 +22,15 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ModelElementProperties;
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseWheelListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.internal.forms.widgets.FormUtil;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -135,5 +141,51 @@ public class ModelElementTabPropertySection extends AbstractPropertySection impl
 	 */
 	protected void setEnabledFields() { // $codepro.audit.disable emptyMethod
 		//default implementation
+	}
+
+	/**
+	 * Method scroll.
+	 * 
+	 * @param aComp
+	 *            ScrolledComposite
+	 * @param aXOffset
+	 *            int
+	 * @param aYOffset
+	 *            int
+	 */
+	public static void scroll(ScrolledComposite aComp, int aXOffset, int aYOffset) {
+		Point origin = aComp.getOrigin();
+		Point contentSize = aComp.getContent().getSize();
+		int xorigin = origin.x + aXOffset;
+		int yorigin = origin.y + aYOffset;
+		xorigin = Math.max(xorigin, 0);
+		xorigin = Math.min(xorigin, contentSize.x - 1);
+		yorigin = Math.max(yorigin, 0);
+		yorigin = Math.min(yorigin, contentSize.y - 1);
+		aComp.setOrigin(xorigin, yorigin);
+	}
+
+	/**
+	 * Method addScrollListener. Transfer scrolling from Combo box to the parent scrolled form
+	 * 
+	 * @param aCombo
+	 *            CCombo
+	 */
+	public static void addScrollListener(final CCombo aCombo) {
+		aCombo.addMouseWheelListener(new MouseWheelListener() {
+			public void mouseScrolled(MouseEvent event) {
+				@SuppressWarnings("restriction")
+				ScrolledComposite form = FormUtil.getScrolledComposite(aCombo);
+				if (form != null && form.getVerticalBar() != null) {
+					if (event.count < 0) {
+						// scroll form down
+						scroll(form, 0, form.getVerticalBar().getIncrement());
+					} else {
+						// scroll form up
+						scroll(form, 0, -form.getVerticalBar().getIncrement());
+					}
+				}
+			}
+		});
 	}
 }

@@ -71,6 +71,26 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	private static final String NEW_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Rule Area to the Current Rule Set";
 
 	/**
+	 * Field OPEN_ELEMENT_COMMAND_NAME. (value is ""Open Rule Set"")
+	 */
+	private static final String OPEN_ELEMENT_COMMAND_NAME = "Open Rule Set";
+
+	/**
+	 * Field OPEN_ELEMENT_COMMAND_TOOLTIP. (value is ""Open and Load Data for this Rule Set"")
+	 */
+	private static final String OPEN_ELEMENT_COMMAND_TOOLTIP = "Open and Load Data for this Rule Set";
+
+	/**
+	 * Field CLOSE_ELEMENT_COMMAND_NAME. (value is ""Close Rule Set"")
+	 */
+	private static final String CLOSE_ELEMENT_COMMAND_NAME = "Close Rule Set";
+
+	/**
+	 * Field CLOSE_ELEMENT_COMMAND_TOOLTIP. (value is ""Close and Unload Data for this Rule Set"")
+	 */
+	private static final String CLOSE_ELEMENT_COMMAND_TOOLTIP = "Close and Unload Data for this Rule Set";
+
+	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Disable Rule Set"")
 	 */
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Rule Set";
@@ -477,6 +497,28 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method getOpenElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getOpenElementCmdName()
+	 */
+	@Override
+	public String getOpenElementCmdName() {
+		return OPEN_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getOpenElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getOpenElementCmdTooltip()
+	 */
+	@Override
+	public String getOpenElementCmdTooltip() {
+		return OPEN_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
 	 * Method isCloseElementCmd.
 	 * 
 	 * @return boolean
@@ -491,13 +533,35 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method getCloseElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCloseElementCmdName()
+	 */
+	@Override
+	public String getCloseElementCmdName() {
+		return CLOSE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getCloseElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCloseElementCmdTooltip()
+	 */
+	@Override
+	public String getCloseElementCmdTooltip() {
+		return CLOSE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
 	 * Method isAddChildElementCmd.
 	 * 
 	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAddChildElementCmd()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isNewChildElementCmd()
 	 */
 	@Override
-	public boolean isAddChildElementCmd() {
+	public boolean isNewChildElementCmd() {
 		if (isEnabled() && isOpen()) {
 			return true;
 		}
@@ -508,10 +572,10 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * Method getAddChildElementCmdName.
 	 * 
 	 * @return String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getAddChildElementCmdName()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNewChildElementCmdName()
 	 */
 	@Override
-	public String getAddChildElementCmdName() {
+	public String getNewChildElementCmdName() {
 		return NEW_CHILD_ELEMENT_COMMAND_NAME;
 	}
 
@@ -519,10 +583,10 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * Method getAddChildElementCmdTooltip.
 	 * 
 	 * @return String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNewChildElementCmdTooltip()
 	 */
 	@Override
-	public String getAddChildElementCmdTooltip() {
+	public String getNewChildElementCmdTooltip() {
 		return NEW_CHILD_ELEMENT_COMMAND_TOOLTIP;
 	}
 

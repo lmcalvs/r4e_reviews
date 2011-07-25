@@ -35,6 +35,8 @@ public class LinkEditorHandler extends AbstractHandler {
 	// Methods
 	// ------------------------------------------------------------------------
 
+	//NOTE:  This code is currently not used, but should be re-introduced with full linking between the navigator view 
+	//		 ans the editors eventually
 	/**
 	 * Method execute.
 	 * 

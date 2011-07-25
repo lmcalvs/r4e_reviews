@@ -79,14 +79,44 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	private static final String NEW_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Review to the Current Review Group";
 
 	/**
-	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Delete Review Group"")
+	 * Field OPEN_ELEMENT_COMMAND_NAME. (value is ""Open Review Group"")
+	 */
+	private static final String OPEN_ELEMENT_COMMAND_NAME = "Open Review Group";
+
+	/**
+	 * Field OPEN_ELEMENT_COMMAND_TOOLTIP. (value is ""Open and Load Data for this Review Group"")
+	 */
+	private static final String OPEN_ELEMENT_COMMAND_TOOLTIP = "Open and Load Data for this Review Group";
+
+	/**
+	 * Field CLOSE_ELEMENT_COMMAND_NAME. (value is ""Close Review Group"")
+	 */
+	private static final String CLOSE_ELEMENT_COMMAND_NAME = "Close Review Group";
+
+	/**
+	 * Field CLOSE_ELEMENT_COMMAND_TOOLTIP. (value is ""Close and Unload Data for this Review Group"")
+	 */
+	private static final String CLOSE_ELEMENT_COMMAND_TOOLTIP = "Close and Unload Data for this Review Group";
+
+	/**
+	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Disable Review Group"")
 	 */
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Review Group";
 
 	/**
-	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Remove this review group"")
+	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable (and Optionally Remove) this Review Group"")
 	 */
 	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review Group";
+
+	/**
+	 * Field RESTORE_ELEMENT_COMMAND_NAME. (value is ""Restore Review Group"")
+	 */
+	private static final String RESTORE_ELEMENT_COMMAND_NAME = "Restore Review Group";
+
+	/**
+	 * Field RESTORE_ELEMENT_ACTION_TOOLTIP. (value is ""Restore this disabled Review Group"")
+	 */
+	private static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this disabled Review Group";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -568,6 +598,28 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method getOpenElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getOpenElementCmdName()
+	 */
+	@Override
+	public String getOpenElementCmdName() {
+		return OPEN_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getOpenElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getOpenElementCmdTooltip()
+	 */
+	@Override
+	public String getOpenElementCmdTooltip() {
+		return OPEN_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
 	 * Method isCloseElementCmd.
 	 * 
 	 * @return boolean
@@ -582,13 +634,35 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method getCloseElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCloseElementCmdName()
+	 */
+	@Override
+	public String getCloseElementCmdName() {
+		return CLOSE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getCloseElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCloseElementCmdTooltip()
+	 */
+	@Override
+	public String getCloseElementCmdTooltip() {
+		return CLOSE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
 	 * Method isAddChildElementCmd.
 	 * 
 	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAddChildElementCmd()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isNewChildElementCmd()
 	 */
 	@Override
-	public boolean isAddChildElementCmd() {
+	public boolean isNewChildElementCmd() {
 		if (isEnabled() && isOpen()) {
 			return true;
 		}
@@ -599,10 +673,10 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * Method getAddChildElementCmdName.
 	 * 
 	 * @return String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getAddChildElementCmdName()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNewChildElementCmdName()
 	 */
 	@Override
-	public String getAddChildElementCmdName() {
+	public String getNewChildElementCmdName() {
 		return NEW_CHILD_ELEMENT_COMMAND_NAME;
 	}
 
@@ -610,10 +684,10 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * Method getAddChildElementCmdTooltip.
 	 * 
 	 * @return String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getAddChildElementCmdTooltip()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNewChildElementCmdTooltip()
 	 */
 	@Override
-	public String getAddChildElementCmdTooltip() {
+	public String getNewChildElementCmdTooltip() {
 		return NEW_CHILD_ELEMENT_COMMAND_TOOLTIP;
 	}
 
@@ -629,20 +703,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Method isRestoreElementCmd.
-	 * 
-	 * @return boolean
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#iisRestoreElementCmd()
-	 */
-	@Override
-	public boolean isRestoreElementCmd() {
-		if (isOpen() || isEnabled()) {
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -665,5 +725,41 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public String getRemoveElementCmdTooltip() {
 		return REMOVE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
+	 * Method isRestoreElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (isOpen() || isEnabled()) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Method getRestoreElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRestoreElementCmdName()
+	 */
+	@Override
+	public String getRestoreElementCmdName() {
+		return RESTORE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getRestoreElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getRestoreElementCmdTooltip()
+	 */
+	@Override
+	public String getRestoreElementCmdTooltip() {
+		return RESTORE_ELEMENT_COMMAND_TOOLTIP;
 	}
 }

@@ -43,12 +43,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -324,6 +327,17 @@ public class ParticipantInputDialog extends FormDialog {
 				//Nothing to do
 			}
 		});
+		fParticipantIdInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fParticipantIdInputTextField.getText().length() > 0
+						&& fParticipantDetailsInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//Find user button
 		final Button findUserButton = toolkit.createButton(basicSectionClient, FIND_BUTTON_LABEL, SWT.NONE);
@@ -365,6 +379,17 @@ public class ParticipantInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fParticipantEmailInputTextField.setToolTipText(R4EUIConstants.PARTICIPANT_EMAIL_TOOLTIP);
 		fParticipantEmailInputTextField.setLayoutData(textGridData);
+		fParticipantEmailInputTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				// ignore
+				if (fParticipantIdInputTextField.getText().length() > 0
+						&& fParticipantDetailsInputTextField.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
 
 		//User details
 		label = toolkit.createLabel(basicSectionClient, R4EUIConstants.USER_DETAILS_LABEL);
@@ -417,6 +442,19 @@ public class ParticipantInputDialog extends FormDialog {
 		textGridData.heightHint = fFocusAreaTextField.getLineHeight() * 3;
 		fFocusAreaTextField.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
 		fFocusAreaTextField.setLayoutData(textGridData);
+	}
+
+	/**
+	 * Configures the button bar.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 */
+	@Override
+	protected Control createButtonBar(Composite parent) {
+		Control bar = super.createButtonBar(parent);
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
+		return bar;
 	}
 
 	/**
