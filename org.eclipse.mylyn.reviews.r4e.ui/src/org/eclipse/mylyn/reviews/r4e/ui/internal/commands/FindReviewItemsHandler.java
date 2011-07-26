@@ -58,7 +58,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDeltaContainer;
@@ -126,11 +126,11 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				project = (IProject) adaptableProject.getAdapter(IProject.class);
 			} else {
 				// Should never happen
-				Activator.Ftracer.traceError("No project defined for selection of class " + selectedElement.getClass());
-				Activator.getDefault().logError(
+				R4EUIPlugin.Ftracer.traceError("No project defined for selection of class " + selectedElement.getClass());
+				R4EUIPlugin.getDefault().logError(
 						"No project defined for selection of class " + selectedElement.getClass(), null);
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Find Review Item Error", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+						"Find Review Item Error", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								"No project defined for selection", null), IStatus.ERROR);
 				dialog.open();
 				return null;
@@ -138,7 +138,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 
 			final ScmConnectorUi uiConnector = ScmUi.getUiConnector(project);
 			if (null != uiConnector) {
-				Activator.Ftracer.traceDebug("Resolved Scm Ui connector: " + uiConnector);
+				R4EUIPlugin.Ftracer.traceDebug("Resolved Scm Ui connector: " + uiConnector);
 				R4EUIModelController.setJobInProgress(true); //Disable operations on UI
 				final ChangeSet changeSet = uiConnector.getChangeSet(null, project);
 				createReviewItem(event, changeSet);
@@ -146,9 +146,9 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			} else {
 				// We could not find any version control system, thus no items
 				final String strProject = ((null == project) ? "null" : project.getName());
-				Activator.Ftracer.traceDebug("No Scm Ui connector found for project: " + strProject);
+				R4EUIPlugin.Ftracer.traceDebug("No Scm Ui connector found for project: " + strProject);
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
-						"Cannot find new Review Items", new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0,
+						"Cannot find new Review Items", new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0,
 								"No SCM Connector detected for Project " + project.getName(), null), IStatus.WARNING);
 				dialog.open();
 			}
@@ -166,12 +166,12 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	private void createReviewItem(final ExecutionEvent event, final ChangeSet changeSet) {
 
 		if (null == changeSet) {
-			Activator.Ftracer.traceInfo("Received null ChangeSet");
+			R4EUIPlugin.Ftracer.traceInfo("Received null ChangeSet");
 			return;
 		}
 
 		final int size = changeSet.getChanges().size();
-		Activator.Ftracer.traceInfo("Received ChangeSet with " + size + " elements");
+		R4EUIPlugin.Ftracer.traceInfo("Received ChangeSet with " + size + " elements");
 		if (0 == size) {
 			return; // nothing to add
 		}
@@ -181,9 +181,9 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		for (R4EUIReviewItem uiItem : uiReview.getReviewItems()) {
 			if (changeSet.getId().equals(uiItem.getItem().getRepositoryRef())) {
 				//The commit item already exists so ignore command
-				Activator.Ftracer.traceWarning("Review Item already exists.  Ignoring");
+				R4EUIPlugin.Ftracer.traceWarning("Review Item already exists.  Ignoring");
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
-						"Cannot add Review Item", new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0,
+						"Cannot add Review Item", new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0,
 								"Review Item already exists", null), IStatus.WARNING);
 				dialog.open();
 				R4EUIModelController.setJobInProgress(false);
@@ -217,7 +217,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 							final ScmArtifact baseArt = change.getBase();
 							final ScmArtifact targetArt = change.getTarget();
 							if (null == baseArt && null == targetArt) {
-								Activator.Ftracer.traceDebug("Received a Change with no base and target in ChangeSet: "
+								R4EUIPlugin.Ftracer.traceDebug("Received a Change with no base and target in ChangeSet: "
 										+ changeSet.getId() + ", Date: " + changeSet.getDate().toString());
 							}
 
@@ -238,7 +238,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 									targetLocalVersion, CommandUtils.adaptType(change.getChangeType()));
 
 							//If configured, get deltas for this file
-							if (Activator.getDefault()
+							if (R4EUIPlugin.getDefault()
 									.getPreferenceStore()
 									.getBoolean(PreferenceConstants.P_USE_DELTAS)) {
 								updateFilesWithDeltas(file);
@@ -246,11 +246,11 @@ public class FindReviewItemsHandler extends AbstractHandler {
 							filesToAddlist.add(file);
 							monitor.worked(1);
 						} catch (final ReviewsFileStorageException e) {
-							Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-							Activator.getDefault().logError("Exception: " + e.toString(), e);
+							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 						} catch (final CoreException e) {
-							Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-							Activator.getDefault().logError("Exception: " + e.toString(), e);
+							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 						}
 					}
 					Display.getDefault().asyncExec(new Runnable() {
@@ -287,13 +287,13 @@ public class FindReviewItemsHandler extends AbstractHandler {
 												deltaContainer.createDelta((R4EUITextPosition) position);
 											}
 										} catch (OutOfSyncException e) {
-											Activator.Ftracer.traceError("Exception: " + e.toString() + " ("
+											R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " ("
 													+ e.getMessage() + ")");
-											Activator.getDefault().logError("Exception: " + e.toString(), e);
+											R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 										} catch (ResourceHandlingException e) {
-											Activator.Ftracer.traceError("Exception: " + e.toString() + " ("
+											R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " ("
 													+ e.getMessage() + ")");
-											Activator.getDefault().logError("Exception: " + e.toString(), e);
+											R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 										}
 									}
 
@@ -408,7 +408,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 					final IFileRevision fileRev = aRepository.getIFileRevision(null, base);
 					base.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
-					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -419,7 +419,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 					final IFileRevision fileRev = aRepository.getIFileRevision(null, target);
 					target.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
-					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 

@@ -36,7 +36,7 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.FindUsersTableViewerSorter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -332,7 +332,7 @@ public class FindUserDialog extends FormDialog {
 	 */
 	@Override
 	protected Control createButtonBar(Composite parent) {
-		Control bar = super.createButtonBar(parent);
+		final Control bar = super.createButtonBar(parent);
 		getButton(IDialogConstants.OK_ID).setEnabled(false);
 		return bar;
 	}
@@ -681,17 +681,17 @@ public class FindUserDialog extends FormDialog {
 				MessageDialog.openInformation(getShell(), "Find User Result", "No Users found");
 			}
 		} catch (NamingException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-					"Naming Error Detected", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e),
+					"Naming Error Detected", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e),
 					IStatus.ERROR);
 			dialog.open();
 		} catch (IOException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "I/O Error Detected",
-					new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+					new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 			dialog.open();
 		}
 	}

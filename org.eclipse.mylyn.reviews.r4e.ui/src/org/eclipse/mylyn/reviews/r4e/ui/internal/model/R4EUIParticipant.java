@@ -31,7 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ParticipantProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -53,27 +53,27 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	/**
 	 * Field PARTICIPANT_ICON_FILE. (value is ""icons/obj16/part_obj.png"")
 	 */
-	private static final String PARTICIPANT_ICON_FILE = "icons/obj16/part_obj.png";
+	public static final String PARTICIPANT_ICON_FILE = "icons/obj16/part_obj.png";
 
 	/**
 	 * Field PARTICIPANT_REVIEWER_ICON_FILE. (value is ""icons/obj16/partrevr_obj.png"")
 	 */
-	private static final String PARTICIPANT_REVIEWER_ICON_FILE = "icons/obj16/partrevr_obj.png";
+	public static final String PARTICIPANT_REVIEWER_ICON_FILE = "icons/obj16/partrevr_obj.png";
 
 	/**
 	 * Field PARTICIPANT_LEAD_ICON_FILE. (value is ""icons/obj16/partlead_obj.png"")
 	 */
-	private static final String PARTICIPANT_LEAD_ICON_FILE = "icons/obj16/partlead_obj.png";
+	public static final String PARTICIPANT_LEAD_ICON_FILE = "icons/obj16/partlead_obj.png";
 
 	/**
 	 * Field PARTICIPANT_AUTHOR_ICON_FILE. (value is ""icons/obj16/partauthr_obj.png"")
 	 */
-	private static final String PARTICIPANT_AUTHOR_ICON_FILE = "icons/obj16/partauthr_obj.png";
+	public static final String PARTICIPANT_AUTHOR_ICON_FILE = "icons/obj16/partauthr_obj.png";
 
 	/**
 	 * Field PARTICIPANT_ORGANIZER_ICON_FILE. (value is ""icons/obj16/partorg_obj.png"")
 	 */
-	private static final String PARTICIPANT_ORGANIZER_ICON_FILE = "icons/obj16/partorg_obj.png";
+	public static final String PARTICIPANT_ORGANIZER_ICON_FILE = "icons/obj16/partorg_obj.png";
 
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Disable Participant"")
@@ -179,7 +179,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * Method setRoleIcon. Set particpant icon based on most significant role
 	 */
 	public void setRoleIcon() {
-		EList<R4EUserRole> roles = fParticipant.getRoles();
+		final EList<R4EUserRole> roles = fParticipant.getRoles();
 		//First check for Lead
 		for (R4EUserRole role : roles) {
 			if (role.equals(R4EUserRole.R4E_ROLE_LEAD)) {
@@ -332,9 +332,9 @@ public class R4EUIParticipant extends R4EUIModelElement {
 					}
 				}
 			} catch (NamingException e) {
-				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			} catch (IOException e) {
-				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			}
 		}
 	}

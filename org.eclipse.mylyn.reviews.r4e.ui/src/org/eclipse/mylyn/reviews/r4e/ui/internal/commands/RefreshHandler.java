@@ -31,7 +31,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
@@ -92,8 +92,8 @@ public class RefreshHandler extends AbstractHandler {
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);
 					} catch (FileNotFoundException e) {
-						Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						Activator.getDefault().logError("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 					} catch (ReviewVersionsException e) {
 						UIUtils.displayVersionErrorDialog(e);
 					}
@@ -131,11 +131,11 @@ public class RefreshHandler extends AbstractHandler {
 			UIUtils.displayVersionErrorDialog(e);
 
 		} catch (FileNotFoundException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 					"File not found error detected while refreshing review item ", new Status(IStatus.ERROR,
-							Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+							R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 			dialog.open();
 		}
 	}

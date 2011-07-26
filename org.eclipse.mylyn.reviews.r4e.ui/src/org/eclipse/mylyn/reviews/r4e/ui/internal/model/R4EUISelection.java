@@ -33,7 +33,7 @@ public class R4EUISelection extends R4EUIContent {
 	/**
 	 * Field SELECTION_ICON_FILE. (value is ""icons/obj16/sel_obj.gif"")
 	 */
-	private static final String SELECTION_ICON_FILE = "icons/obj16/sel_obj.gif";
+	public static final String SELECTION_ICON_FILE = "icons/obj16/sel_obj.gif";
 
 	// ------------------------------------------------------------------------
 	// Constructors

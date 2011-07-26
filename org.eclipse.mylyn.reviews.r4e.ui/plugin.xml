@@ -389,6 +389,15 @@
                name="org.eclipse.mylyn.reviews.r4e.ui.separator3"
                visible="true">
          </separator>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ShowUILegend"
+               icon="icons/view16/icons-legend.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.ShowUILegend"
+               label="Show UI Legend"
+               mnemonic="l"
+               style="push"
+               tooltip="Show UI Legend">
+         </command>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView?after=additions">
@@ -674,6 +683,13 @@
             description="Import Anomalies that were set to Postponed in previous Reviews for the current Files "
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.importPostponed"
             name="Import Postponed Elements">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
+            defaultHandler="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ShowUiLegendHandler"
+            description="Show UI Legend"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.ShowUILegend"
+            name="Show UI Legend">
       </command>
    </extension>
    <extension

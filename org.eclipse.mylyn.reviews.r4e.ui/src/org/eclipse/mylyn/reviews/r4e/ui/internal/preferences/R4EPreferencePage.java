@@ -33,7 +33,7 @@ import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.FilePathEditor;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -176,7 +176,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 */
 	public R4EPreferencePage() {
 		super(GRID);
-		setPreferenceStore(Activator.getDefault().getPreferenceStore());
+		setPreferenceStore(R4EUIPlugin.getDefault().getPreferenceStore());
 		setDescription(PreferenceConstants.P_DESC);
 	}
 
@@ -191,7 +191,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	@Override
 	public void createFieldEditors() {
 
-		Activator.Ftracer.traceInfo("Build R4E Preference page");
+		R4EUIPlugin.Ftracer.traceInfo("Build R4E Preference page");
 
 		//The Main preferences composite
 		final Composite prefsContainer = new Composite(getFieldEditorParent(), SWT.NONE);
@@ -219,7 +219,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 */
 	private void createUserPreferencesTab(TabFolder aParent) {
 
-		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 
 		final TabItem tabItem = new TabItem(aParent, SWT.NONE);
 		tabItem.setText("User");
@@ -410,8 +410,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 					fRuleSetVersionText.setText(ruleSet.getVersion());
 					R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(ruleSet);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 				}
 			}
 
@@ -476,7 +476,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4ERuleSetPrefsSpacer.setLayoutData(r4ERuleSetPrefsSpacerData);
 
 		//Filers checkboxes
-		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 		fReviewShowDisabledButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fReviewShowDisabledButton.setText(R4EUIConstants.SHOW_DISABLED_FILTER_NAME);
 		fReviewShowDisabledButton.setLayoutData(r4EFilterPrefsGroupData);
@@ -559,7 +559,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 */
 	@Override
 	protected void performDefaults() {
-		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 
 		//If no email preferences are set, try to retrieve it from the external DB
 		final String userId = store.getDefaultString(PreferenceConstants.P_USER_ID);
@@ -573,9 +573,9 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 					store.setDefault(PreferenceConstants.P_USER_EMAIL, userInfos.get(0).getEmail());
 				}
 			} catch (NamingException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			} catch (IOException e) {
-				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			}
 		}
 
@@ -616,7 +616,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 */
 	@Override
 	public boolean performOk() {
-		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 
 		//Set preferences for default filters and apply them
 		store.setValue(PreferenceConstants.P_SHOW_DISABLED, fReviewShowDisabledButton.getSelection());
@@ -659,9 +659,9 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 						store.setValue(PreferenceConstants.P_USER_EMAIL, userInfos.get(0).getEmail());
 					}
 				} catch (NamingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (IOException e) {
-					Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 		}

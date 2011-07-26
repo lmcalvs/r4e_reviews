@@ -36,7 +36,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ReviewItemProperties;
@@ -58,7 +58,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 	/**
 	 * Field fReviewItemFile. (value is ""icons/obj16/revitm_obj.gif"")
 	 */
-	private static final String REVIEW_ITEM_ICON_FILE = "icons/obj16/revitm_obj.gif";
+	public static final String REVIEW_ITEM_ICON_FILE = "icons/obj16/revitm_obj.gif";
 
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Delete Review Item"")
@@ -302,7 +302,9 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 			for (int i = 0; i < filesSize; i++) {
 				file = files.get(i);
 				if (file.isEnabled()
-						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						|| R4EUIPlugin.getDefault()
+								.getPreferenceStore()
+								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					uiFileContext = new R4EUIFileContext(this, files.get(i));
 					addChildren(uiFileContext);
 					if (uiFileContext.isEnabled()) {
@@ -371,7 +373,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		try {
 			revRegistry = RFSRegistryFactory.getRegistry(((R4EUIReviewBasic) this.getParent()).getReview());
 		} catch (ReviewsFileStorageException e1) {
-			Activator.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
+			R4EUIPlugin.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
 		}
 
 		final R4EFileContext fileContext = R4EUIModelController.FModelExt.createR4EFileContext(fItem);
@@ -391,7 +393,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 					final IFileRevision fileRev = revRegistry.getIFileRevision(null, rfileBaseVersion);
 					rfileBaseVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
-					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -422,7 +424,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 					final IFileRevision fileRev = revRegistry.getIFileRevision(null, rfileTargetVersion);
 					rfileTargetVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
-					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -472,7 +474,7 @@ public class R4EUIReviewItem extends R4EUIModelElement {
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 		//Remove element from UI if the show disabled element option is off
-		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fFileContexts.remove(removedElement);
 			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);

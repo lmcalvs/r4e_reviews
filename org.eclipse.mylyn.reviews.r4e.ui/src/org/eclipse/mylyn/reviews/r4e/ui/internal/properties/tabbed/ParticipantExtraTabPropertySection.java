@@ -28,7 +28,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
@@ -290,13 +290,13 @@ public class ParticipantExtraTabPropertySection extends ModelElementTabPropertyS
 						}
 					} catch (NumberFormatException e) {
 						//skip this entry
-						Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 						continue;
 					} catch (ParseException e) {
 						//skip this entry
-						Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 						continue;
 					}
 				}

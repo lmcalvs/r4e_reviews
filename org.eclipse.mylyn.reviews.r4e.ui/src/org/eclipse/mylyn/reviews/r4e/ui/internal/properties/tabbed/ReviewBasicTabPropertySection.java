@@ -37,7 +37,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
@@ -240,7 +240,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 					if (!fRefreshInProgress) {
 						if (null != aResultMsg.get()) {
 							final ErrorDialog dialog = new ErrorDialog(null, "Warning", aResultMsg.get(), new Status(
-									IStatus.WARNING, Activator.PLUGIN_ID, 0, null, null), IStatus.WARNING);
+									IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0, null, null), IStatus.WARNING);
 							dialog.open();
 						}
 						try {
@@ -255,7 +255,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 									((R4EUIReviewExtended) fProperties.getElement()).updatePhase(phase);
 								} else {
 									final ErrorDialog dialog = new ErrorDialog(null, "Error",
-											"No Meeting Data present", new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+											"No Meeting Data present", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
 													0, "Please allow sending out a Meeting Request", null),
 											IStatus.ERROR);
 									dialog.open();
@@ -281,7 +281,7 @@ public class ReviewBasicTabPropertySection extends ModelElementTabPropertySectio
 					}
 				} else {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.REVIEW_NOT_COMPLETED_ERROR,
-							"Review phase cannot be changed", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+							"Review phase cannot be changed", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 									aResultMsg.get(), null), IStatus.ERROR);
 					dialog.open();
 				}

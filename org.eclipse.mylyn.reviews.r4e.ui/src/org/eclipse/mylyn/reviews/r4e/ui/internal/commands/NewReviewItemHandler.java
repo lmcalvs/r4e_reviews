@@ -53,7 +53,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
@@ -106,7 +106,7 @@ public class NewReviewItemHandler extends AbstractHandler {
 				if (isInputCommitItem()) {
 					//Cannot add review item manually on a commit
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-							"Cannot Add Review Item", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+							"Cannot Add Review Item", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 									"A Review Item cannot be added " + "manually on an already exisiting Review Item",
 									null), IStatus.ERROR);
 					dialog.open();
@@ -199,9 +199,9 @@ public class NewReviewItemHandler extends AbstractHandler {
 			if (null != targetVersion) {
 				addReviewItem(baseVersion, targetVersion, position);
 			} else {
-				Activator.Ftracer.traceWarning("Trying to add review item to base file");
+				R4EUIPlugin.Ftracer.traceWarning("Trying to add review item to base file");
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Add Review Item Error", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+						"Add Review Item Error", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								"No Target File present to Add Review Item", null), IStatus.ERROR);
 				dialog.open();
 			}
@@ -251,7 +251,7 @@ public class NewReviewItemHandler extends AbstractHandler {
 						workspaceFile);
 			} else {
 				//This should never happen
-				Activator.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString() + ".  Ignoring");
+				R4EUIPlugin.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString() + ".  Ignoring");
 				return;
 			}
 
@@ -263,18 +263,18 @@ public class NewReviewItemHandler extends AbstractHandler {
 			if (null != targetVersion) {
 				addReviewItem(baseVersion, targetVersion, position);
 			} else {
-				Activator.Ftracer.traceWarning("Trying to add review item to base file");
+				R4EUIPlugin.Ftracer.traceWarning("Trying to add review item to base file");
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Add Review Item Error", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+						"Add Review Item Error", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								"No Target File present to Add Review Item", null), IStatus.ERROR);
 				dialog.open();
 			}
 		} catch (JavaModelException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (CModelException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (CoreException e) {
 			UIUtils.displayCoreErrorDialog(e);
 		} catch (ReviewsFileStorageException e) {
@@ -329,16 +329,16 @@ public class NewReviewItemHandler extends AbstractHandler {
 							}
 							if (newSelection) {
 								addReviewItemToExistingFileContext(contentContainer, aUIPosition);
-								Activator.Ftracer.traceInfo("Added review item: Target = "
+								R4EUIPlugin.Ftracer.traceInfo("Added review item: Target = "
 										+ file.getFileContext().getTarget().getName()
 										+ ((null != file.getFileContext().getBase()) ? "Base = "
 												+ file.getFileContext().getBase().getName() : "") + " Position = "
 										+ aUIPosition.toString());
 							} else {
 								//The selection already exists so ignore command
-								Activator.Ftracer.traceWarning("Review Item already exists.  Ignoring");
+								R4EUIPlugin.Ftracer.traceWarning("Review Item already exists.  Ignoring");
 								final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
-										"Cannot add Review Item", new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0,
+										"Cannot add Review Item", new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0,
 												"Review Item already exists", null), IStatus.WARNING);
 								dialog.open();
 							}
@@ -350,7 +350,7 @@ public class NewReviewItemHandler extends AbstractHandler {
 
 			//This is a new file create it (and its parent reviewItem) and all its children
 			addReviewItemToNewFileContext(aBaseFileVersion, aTargetFileVersion, aUIPosition);
-			Activator.Ftracer.traceInfo("Added Review Item: Target = "
+			R4EUIPlugin.Ftracer.traceInfo("Added Review Item: Target = "
 					+ aTargetFileVersion.getName()
 					+ "_"
 					+ aTargetFileVersion.getVersionID()

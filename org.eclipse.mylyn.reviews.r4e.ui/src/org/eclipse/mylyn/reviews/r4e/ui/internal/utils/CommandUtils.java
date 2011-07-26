@@ -56,7 +56,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
@@ -138,7 +138,7 @@ public class CommandUtils {
 			return ((R4EFileEditorInput) input).getFileVersion();
 		} else {
 			//Should never happen
-			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, "Invalid input "
+			throw new CoreException(new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, IStatus.OK, "Invalid input "
 					+ input.getClass().toString(), null));
 		}
 	}
@@ -221,7 +221,7 @@ public class CommandUtils {
 			return ((R4EFileEditorInput) input).getFileVersion();
 		} else {
 			//Should never happen
-			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, "Invalid input "
+			throw new CoreException(new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, IStatus.OK, "Invalid input "
 					+ input.getClass().toString(), null));
 		}
 	}
@@ -278,7 +278,7 @@ public class CommandUtils {
 		try {
 			iStream = fileRev.getStorage(null).getContents();
 		} catch (CoreException e) {
-			Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			return null;
 		}
 
@@ -463,7 +463,7 @@ public class CommandUtils {
 
 		final String fileRelPath = aScmArt.getProjectRelativePath();
 		if (null == fileRelPath) {
-			Activator.Ftracer.traceDebug("Invalid relative file path in scmArtifact with path: " + aScmArt.getPath());
+			R4EUIPlugin.Ftracer.traceDebug("Invalid relative file path in scmArtifact with path: " + aScmArt.getPath());
 		}
 		final IProject project = ResourceUtils.getProject(aScmArt.getProjectName());
 		final IResource resource = ResourceUtils.findResource(project, fileRelPath);
@@ -473,7 +473,7 @@ public class CommandUtils {
 
 		final String projPlatformURI = ResourceUtils.toPlatformURIStr(project);
 		if (null == projPlatformURI) {
-			Activator.Ftracer.traceDebug("Unable to resolve the project: " + aScmArt.getProjectName()
+			R4EUIPlugin.Ftracer.traceDebug("Unable to resolve the project: " + aScmArt.getProjectName()
 					+ " platform's URI, in scmArtifact with path: " + aScmArt.getPath());
 		}
 	}
@@ -516,9 +516,9 @@ public class CommandUtils {
 				}
 			}
 		} catch (ReviewsFileStorageException e) {
-			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		} catch (CoreException e) {
-			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		}
 		return false;
 	}

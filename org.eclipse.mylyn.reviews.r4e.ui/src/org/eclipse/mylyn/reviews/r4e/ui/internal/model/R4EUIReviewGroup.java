@@ -39,7 +39,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ReviewInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
@@ -61,12 +61,12 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	/**
 	 * Field REVIEW_GROUP_ICON_FILE. (value is ""icons/obj16/revgrp_obj.gif"")
 	 */
-	private static final String REVIEW_GROUP_ICON_FILE = "icons/obj16/revgrp_obj.gif";
+	public static final String REVIEW_GROUP_ICON_FILE = "icons/obj16/revgrp_obj.gif";
 
 	/**
 	 * Field REVIEW_GROUP_CLOSED_ICON_FILE. (value is ""icons/obj16/revgrpclsd_obj.gif"")
 	 */
-	private static final String REVIEW_GROUP_CLOSED_ICON_FILE = "icons/obj16/revgrpclsd_obj.gif";
+	public static final String REVIEW_GROUP_CLOSED_ICON_FILE = "icons/obj16/revgrpclsd_obj.gif";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Review"")
@@ -325,7 +325,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			for (int i = 0; i < reviewsSize; i++) {
 				review = (R4EReview) reviews.get(i);
 				if (review.isEnabled()
-						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						|| R4EUIPlugin.getDefault()
+								.getPreferenceStore()
+								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					uiReview = null;
 					if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
 						uiReview = new R4EUIReviewExtended(this, review, review.getType(), false);
@@ -449,8 +451,8 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		for (R4EUIReviewBasic review : fReviews) {
 			if (review.getReview().getName().equals(reviewName)) {
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Error while creating new review ", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "Review "
-								+ reviewName + " already exists", null), IStatus.ERROR);
+						"Error while creating new review ", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+								"Review " + reviewName + " already exists", null), IStatus.ERROR);
 				dialog.open();
 				return null;
 			}
@@ -517,7 +519,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		removedElement.setEnabled(false);
 
 		//Remove element from UI if the show disabled element option is off
-		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fReviews.remove(removedElement);
 			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);

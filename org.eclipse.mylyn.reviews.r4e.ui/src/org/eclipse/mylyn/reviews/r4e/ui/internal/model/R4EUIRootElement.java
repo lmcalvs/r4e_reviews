@@ -35,7 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ReviewGroupInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.RuleSetInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
@@ -250,7 +250,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	public void loadReviewGroup(R4EReviewGroup aGroup) {
 		if (aGroup.isEnabled()
-				|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+				|| R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 			final R4EUIReviewGroup addedChild = new R4EUIReviewGroup(this, aGroup, false);
 			addChildren(addedChild);
 		}
@@ -265,7 +265,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 */
 	public void loadRuleSet(R4EDesignRuleCollection aRuleSet) {
 		if (aRuleSet.isEnabled()
-				|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+				|| R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 			final R4EUIRuleSet addedChild = new R4EUIRuleSet(this, aRuleSet, false);
 			addChildren(addedChild);
 			addedChild.close();
@@ -292,7 +292,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			for (R4EUIReviewGroup group : fReviewGroups) {
 				if (group.getReviewGroup().getName().equals(groupName)) {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-							"Error while creating new Review Group ", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+							"Error while creating new Review Group ", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 									"Review Group " + groupName + " already exists", null), IStatus.ERROR);
 					dialog.open();
 					return null;
@@ -305,10 +305,10 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			addedChild.setModelData(aModelComponent);
 			addChildren(addedChild);
 
-			final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-			String newGroup = reviewGroup.eResource().getURI().toFileString();
-			String prefGroupsStr = preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH);
-			String[] prefGroups = prefGroupsStr.split(System.getProperty("line.separator"));
+			final IPreferenceStore preferenceStore = R4EUIPlugin.getDefault().getPreferenceStore();
+			final String newGroup = reviewGroup.eResource().getURI().toFileString();
+			final String prefGroupsStr = preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH);
+			final String[] prefGroups = prefGroupsStr.split(System.getProperty("line.separator"));
 			for (String prefGroup : prefGroups) {
 				if (prefGroup.equals(newGroup + ";")) {
 					return addedChild; //Do not put group reference in preferences if it is already there
@@ -326,7 +326,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			for (R4EUIRuleSet ruleSet : fRuleSets) {
 				if (ruleSet.getRuleSet().getName().equals(ruleSetName)) {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-							"Error while creating new Rule Set  ", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+							"Error while creating new Rule Set  ", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 									"Rule Set " + ruleSetName + " already exists", null), IStatus.ERROR);
 					dialog.open();
 					return null;
@@ -339,10 +339,10 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			addedChild.setModelData(aModelComponent);
 			addChildren(addedChild);
 
-			final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-			String newSet = ruleSet.eResource().getURI().toFileString();
-			String prefSetsStr = preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH);
-			String[] prefSets = prefSetsStr.split(System.getProperty("line.separator"));
+			final IPreferenceStore preferenceStore = R4EUIPlugin.getDefault().getPreferenceStore();
+			final String newSet = ruleSet.eResource().getURI().toFileString();
+			final String prefSetsStr = preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH);
+			final String[] prefSets = prefSetsStr.split(System.getProperty("line.separator"));
 			for (String prefSet : prefSets) {
 				if (prefSet.equals(newSet)) {
 					return addedChild; //Do not put group reference in preferences if it is already there
@@ -408,7 +408,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			removedElement.setEnabled(false);
 
 			//Remove element from UI if the show disabled element option is off
-			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fReviewGroups.remove(removedElement);
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
@@ -421,7 +421,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 				if (group.getRuleSets().contains(removedElement)) {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 							"Rule Set cannot be removed because it is being used", new Status(IStatus.ERROR,
-									Activator.PLUGIN_ID, "Rule Set used in Group " + group.getName()), IStatus.ERROR);
+									R4EUIPlugin.PLUGIN_ID, "Rule Set used in Group " + group.getName()), IStatus.ERROR);
 					dialog.open();
 					return;
 				}
@@ -436,7 +436,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			removedElement.setEnabled(false);
 
 			//Remove element from UI if the show disabled element option is off
-			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fRuleSets.remove(removedElement);
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);

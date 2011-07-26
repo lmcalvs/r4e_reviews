@@ -33,7 +33,7 @@ import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
@@ -215,7 +215,7 @@ public class EditorProxy {
 			input = CommandUtils.createCompareEditorInput(aBaseFileVersion, aTargetFileVersion);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE); // Adjust the compare title
 
-			Activator.Ftracer.traceInfo("Open compare editor on files "
+			R4EUIPlugin.Ftracer.traceInfo("Open compare editor on files "
 					+ ((null != aTargetFileVersion) ? aTargetFileVersion.getName() : "") + " (Target) and "
 					+ ((null != aBaseFileVersion) ? aBaseFileVersion.getName() : "") + " (Base)");
 			CompareUI.openCompareEditor(input, true);
@@ -333,8 +333,8 @@ public class EditorProxy {
 			try {
 				type = Platform.getContentTypeManager().findContentTypeFor(aContents, aFileName);
 			} catch (IOException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logError("Exception: " + e.toString(), e);
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			}
 		}
 		if (null == type) {

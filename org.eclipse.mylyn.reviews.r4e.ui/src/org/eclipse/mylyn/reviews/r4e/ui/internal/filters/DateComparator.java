@@ -55,8 +55,8 @@ public class DateComparator extends ViewerComparator {
 			return 0;
 		}
 
-		Date firstDate = ((R4EUIComment) e1).getComment().getCreatedOn();
-		Date secondDate = ((R4EUIComment) e2).getComment().getCreatedOn();
+		final Date firstDate = ((R4EUIComment) e1).getComment().getCreatedOn();
+		final Date secondDate = ((R4EUIComment) e2).getComment().getCreatedOn();
 
 		//Compare dates
 		if (firstDate.before(secondDate)) {

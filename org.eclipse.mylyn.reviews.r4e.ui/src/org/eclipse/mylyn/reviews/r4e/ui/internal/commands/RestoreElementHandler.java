@@ -40,7 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -87,7 +87,7 @@ public class RestoreElementHandler extends AbstractHandler {
 						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
 							try {
 								element = (IR4EUIModelElement) iterator.next();
-								Activator.Ftracer.traceInfo("Restore element " + element.getName());
+								R4EUIPlugin.Ftracer.traceInfo("Restore element " + element.getName());
 								element.setEnabled(true);
 								if (element instanceof R4EUIReviewBasic) {
 									if (null != R4EUIModelController.getActiveReview()) {
@@ -108,8 +108,8 @@ public class RestoreElementHandler extends AbstractHandler {
 							} catch (OutOfSyncException e) {
 								UIUtils.displaySyncErrorDialog(e);
 							} catch (FileNotFoundException e) {
-								Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-								Activator.getDefault().logError("Exception: " + e.toString(), e);
+								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 							} catch (ReviewVersionsException e) {
 								UIUtils.displayVersionErrorDialog(e);
 							}

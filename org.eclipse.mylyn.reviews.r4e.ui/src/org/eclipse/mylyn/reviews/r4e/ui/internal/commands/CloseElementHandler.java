@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -67,7 +67,7 @@ public class CloseElementHandler extends AbstractHandler {
 								break;
 							}
 						}
-						Activator.Ftracer.traceInfo("Closing element " + element.getName());
+						R4EUIPlugin.Ftracer.traceInfo("Closing element " + element.getName());
 
 						//The action is only performed on the first element, so select it
 						final StructuredSelection newSelection = new StructuredSelection(

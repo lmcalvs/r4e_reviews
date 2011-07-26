@@ -24,7 +24,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 
@@ -41,7 +41,7 @@ public class R4EUIDeltaContainer extends R4EUIContentsContainer {
 	/**
 	 * Field DELTA_CONTAINER_ICON_FILE. (value is ""icons/obj16/selcont_obj.gif"")
 	 */
-	private static final String DELTA_CONTAINER_ICON_FILE = "icons/obj16/deltacont_obj.gif";
+	public static final String DELTA_CONTAINER_ICON_FILE = "icons/obj16/deltacont_obj.gif";
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -104,7 +104,9 @@ public class R4EUIDeltaContainer extends R4EUIContentsContainer {
 			for (int i = 0; i < deltaSize; i++) {
 				delta = deltas.get(i);
 				if (delta.isEnabled()
-						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						|| R4EUIPlugin.getDefault()
+								.getPreferenceStore()
+								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					position = new R4EUITextPosition(deltas.get(i).getTarget().getLocation());
 					newDelta = new R4EUIDelta(this, deltas.get(i), position);
 					addChildren(newDelta);

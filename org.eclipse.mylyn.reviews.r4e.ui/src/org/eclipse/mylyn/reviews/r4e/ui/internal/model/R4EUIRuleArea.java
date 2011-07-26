@@ -29,7 +29,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.RuleViolationInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
@@ -49,7 +49,7 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	/**
 	 * Field RULE_AREA_ICON_FILE. (value is ""icons/obj16/rulearea_obj.gif"")
 	 */
-	private static final String RULE_AREA_ICON_FILE = "icons/obj16/rulearea_obj.gif";
+	public static final String RULE_AREA_ICON_FILE = "icons/obj16/rulearea_obj.gif";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Rule Violation"")
@@ -242,7 +242,9 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 			final int violationSize = violations.size();
 			for (int i = 0; i < violationSize; i++) {
 				if (violations.get(i).isEnabled()
-						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						|| R4EUIPlugin.getDefault()
+								.getPreferenceStore()
+								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					uiViolation = new R4EUIRuleViolation(this, violations.get(i));
 					addChildren(uiViolation);
 					if (uiViolation.isEnabled()) {
@@ -346,7 +348,7 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 		//Remove element from UI if the show disabled element option is off
-		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fViolations.remove(removedElement);
 			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);

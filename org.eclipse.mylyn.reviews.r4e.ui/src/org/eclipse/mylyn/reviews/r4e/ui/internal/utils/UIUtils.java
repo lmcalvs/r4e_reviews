@@ -20,8 +20,10 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -45,7 +47,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
@@ -63,6 +65,9 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -104,7 +109,7 @@ public class UIUtils {
 	 * @return Image
 	 */
 	public static Image loadIcon(String url) {
-		final Activator plugin = Activator.getDefault();
+		final R4EUIPlugin plugin = R4EUIPlugin.getDefault();
 		Image icon = plugin.getImageRegistry().get(url);
 		if (null == icon) {
 			final URL imageURL = plugin.getBundle().getEntry(url);
@@ -122,10 +127,10 @@ public class UIUtils {
 	 *            ResourceHandlingException
 	 */
 	public static void displayResourceErrorDialog(ResourceHandlingException e) {
-		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		Activator.getDefault().logError("Exception: " + e.toString(), e);
+		R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Resource Error Detected",
-				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+				new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 		dialog.open();
 	}
 
@@ -136,12 +141,12 @@ public class UIUtils {
 	 *            OutOfSyncException
 	 */
 	public static void displaySyncErrorDialog(OutOfSyncException e) {
-		Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		final ErrorDialog dialog = new ErrorDialog(
 				null,
 				R4EUIConstants.DIALOG_TITLE_ERROR,
 				"Synchronization Error Detected" + "Please refresh the review navigator view and try the command again",
-				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+				new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 		dialog.open();
 		// TODO later we will want to do this automatically
 	}
@@ -153,10 +158,10 @@ public class UIUtils {
 	 *            ReviewVersionsException
 	 */
 	public static void displayVersionErrorDialog(ReviewVersionsException e) {
-		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		Activator.getDefault().logError("Exception: " + e.toString(), e);
+		R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Version Error Detected",
-				new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+				new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 		dialog.open();
 	}
 
@@ -167,10 +172,10 @@ public class UIUtils {
 	 *            ReviewVersionsException
 	 */
 	public static void displayReviewsFileStorageErrorDialog(ReviewsFileStorageException e) {
-		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		Activator.getDefault().logError("Exception: " + e.toString(), e);
+		R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-				"Local Review Storage Error Detected", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+				"Local Review Storage Error Detected", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 						e.getMessage(), e), IStatus.ERROR);
 		dialog.open();
 	}
@@ -182,10 +187,10 @@ public class UIUtils {
 	 *            CoreException
 	 */
 	public static void displayCoreErrorDialog(CoreException e) {
-		Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		Activator.getDefault().logError("Exception: " + e.toString(), e);
+		R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-				"Eclipse Runtime Core Error Detected", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+				"Eclipse Runtime Core Error Detected", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 						e.getMessage(), e), IStatus.ERROR);
 		dialog.open();
 	}
@@ -380,7 +385,7 @@ public class UIUtils {
 			position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
 		} else if (element instanceof R4EUIContent) {
 			position = ((R4EUIContent) element).getPosition();
-			R4EUIContentsContainer container = (R4EUIContentsContainer) ((R4EUIContent) element).getParent();
+			final R4EUIContentsContainer container = (R4EUIContentsContainer) ((R4EUIContent) element).getParent();
 			selectionIndex = container.getContentsList().indexOf(element);
 		} else {
 			return; //Do nothing if any other element is selected
@@ -438,6 +443,40 @@ public class UIUtils {
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * Method openUrl Opens a default web browser
+	 * 
+	 * @param aLocation
+	 *            - String
+	 */
+	public static void openUrl(String aLocation) {
+		URL url = null;
+		if (null != aLocation) {
+			try {
+				url = new URL(aLocation);
+			} catch (MalformedURLException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Invalid location",
+						new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+				dialog.open();
+			}
+		}
+		final String generatedId = "org.eclipse.mylyn.web.browser-" + Calendar.getInstance().getTimeInMillis(); //$NON-NLS-1$
+		final IWebBrowser browser;
+		try {
+			browser = PlatformUI.getWorkbench().getBrowserSupport().createBrowser(generatedId);
+			browser.openURL(url);
+		} catch (PartInitException e) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+					"Error opening Browser", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e),
+					IStatus.ERROR);
+			dialog.open();
 		}
 	}
 }

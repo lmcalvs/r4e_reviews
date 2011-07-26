@@ -23,7 +23,7 @@ import java.util.List;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -57,7 +57,7 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isOpenElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.OPEN_ELEMENT_COMMAND, R4EUIConstants.OPEN_ELEMENT_COMMAND, null,
-						ImageDescriptor.createFromURL(Activator.getDefault()
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
 								.getBundle()
 								.getEntry(R4EUIConstants.OPEN_ELEMENT_ICON_FILE)), null, null,
 						element.getOpenElementCmdName(), R4EUIConstants.OPEN_ELEMENT_COMMAND_MNEMONIC,
@@ -68,7 +68,7 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isCloseElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.CLOSE_ELEMENT_COMMAND, R4EUIConstants.CLOSE_ELEMENT_COMMAND, null,
-						ImageDescriptor.createFromURL(Activator.getDefault()
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
 								.getBundle()
 								.getEntry(R4EUIConstants.CLOSE_ELEMENT_ICON_FILE)), null, null,
 						element.getCloseElementCmdName(), R4EUIConstants.CLOSE_ELEMENT_COMMAND_MNEMONIC,
@@ -106,7 +106,7 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isOpenEditorCmd() && R4EUIModelController.getNavigatorView().isEditorLinked()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.OPEN_EDITOR_COMMAND, R4EUIConstants.OPEN_EDITOR_COMMAND, null,
-						ImageDescriptor.createFromURL(Activator.getDefault()
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
 								.getBundle()
 								.getEntry(R4EUIConstants.OPEN_EDITOR_ICON_FILE)), null, null,
 						R4EUIConstants.OPEN_EDITOR_COMMAND_NAME, R4EUIConstants.OPEN_EDITOR_COMMAND_MNEMONIC,
@@ -117,7 +117,7 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isChangeUserReviewStateCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND, R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND, null,
-						ImageDescriptor.createFromURL(Activator.getDefault()
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
 								.getBundle()
 								.getEntry(R4EUIConstants.CHANGE_REVIEW_STATE_ICON_FILE)), null, null,
 						element.isUserReviewed()
@@ -143,7 +143,7 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isSendEmailCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.SEND_EMAIL_COMMAND, R4EUIConstants.SEND_EMAIL_COMMAND, null,
-						ImageDescriptor.createFromURL(Activator.getDefault()
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
 								.getBundle()
 								.getEntry(R4EUIConstants.SEND_EMAIL_ICON_FILE)), null, null,
 						R4EUIConstants.SEND_EMAIL_COMMAND_NAME, R4EUIConstants.SEND_EMAIL_COMMAND_MNEMONIC,
@@ -154,7 +154,7 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isImportPostponedCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.IMPORT_POSTPONED_COMMAND, R4EUIConstants.IMPORT_POSTPONED_COMMAND, null,
-						ImageDescriptor.createFromURL(Activator.getDefault()
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
 								.getBundle()
 								.getEntry(R4EUIConstants.IMPORT_POSTPONED_ICON_FILE)), null, null,
 						R4EUIConstants.IMPORT_POSTPONED_COMMAND_NAME, R4EUIConstants.IMPORT_POSTPONED_COMMAND_MNEMONIC,

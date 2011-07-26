@@ -34,7 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.FileContextProperties;
@@ -57,17 +57,17 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	/**
 	 * Field FILE_CONTEXT_ICON_FILE. (value is ""icons/obj16/filectx_obj.gif"")
 	 */
-	private static final String FILE_CONTEXT_ICON_FILE = "icons/obj16/filectx_obj.gif";
+	public static final String FILE_CONTEXT_ICON_FILE = "icons/obj16/filectx_obj.gif";
 
 	/**
 	 * Field REMOVED_OVERLAY_ICON_FILE.
 	 */
-	private static final String REMOVED_OVERLAY_ICON_FILE = "icons/ovr16/removr_tsk.png";
+	public static final String REMOVED_OVERLAY_ICON_FILE = "icons/ovr16/removr_tsk.png";
 
 	/**
 	 * Field ADDED_OVERLAY_ICON_FILE.
 	 */
-	private static final String ADDED_OVERLAY_ICON_FILE = "icons/ovr16/addovr_tsk.png";
+	public static final String ADDED_OVERLAY_ICON_FILE = "icons/ovr16/addovr_tsk.png";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -470,8 +470,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		try {
 			revRegistry = RFSRegistryFactory.getRegistry(((R4EUIReviewBasic) this.getParent().getParent()).getReview());
 		} catch (ReviewsFileStorageException e1) {
-			Activator.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
-			Activator.getDefault().logInfo("Exception: " + e1.toString(), e1);
+			R4EUIPlugin.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
+			R4EUIPlugin.getDefault().logInfo("Exception: " + e1.toString(), e1);
 		}
 
 		//Restore base file version (if it exists)
@@ -481,7 +481,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				final IFile baseFile = ResourceUtils.toIFile(baseFileVersion.getPlatformURI());
 				baseFileVersion.setResource(baseFile);
 			} catch (FileNotFoundException e) {
-				Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				baseFileVersion.setResource(null);
 			}
 
@@ -491,7 +491,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 					final IFileRevision fileRev = revRegistry.getIFileRevision(null, baseFileVersion);
 					baseFileVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
-					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 		}
@@ -503,7 +503,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				final IFile targetFile = ResourceUtils.toIFile(targetFileVersion.getPlatformURI());
 				targetFileVersion.setResource(targetFile);
 			} catch (FileNotFoundException e) {
-				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				targetFileVersion.setResource(null);
 			}
 
@@ -513,7 +513,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 					final IFileRevision fileRev = revRegistry.getIFileRevision(null, targetFileVersion);
 					targetFileVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
-					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 		}
@@ -529,8 +529,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			try {
 				fContentsContainer.open();
 			} catch (FileNotFoundException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logError("Exception: " + e.toString(), e);
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			} catch (ResourceHandlingException e) {
 				UIUtils.displayResourceErrorDialog(e);
 			} catch (ReviewVersionsException e) {
@@ -588,7 +588,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			throws ResourceHandlingException, OutOfSyncException {
 		if (aChildToRemove instanceof R4EUIContentsContainer) {
 			fContentsContainer.removeAllChildren(aFileRemove);
-			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fContentsContainer = null;
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
@@ -597,7 +597,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			}
 		} else if (aChildToRemove instanceof R4EUIAnomalyContainer) {
 			fAnomalyContainer.removeAllChildren(aFileRemove);
-			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fAnomalyContainer = null;
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);

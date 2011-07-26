@@ -32,7 +32,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.CommentInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
@@ -52,7 +52,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	/**
 	 * Field fAnomalyFile. (value is ""icons/obj16/anmly_obj.gif"")
 	 */
-	private static final String ANOMALY_ICON_FILE = "icons/obj16/anmly_obj.gif";
+	public static final String ANOMALY_ICON_FILE = "icons/obj16/anmly_obj.gif";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Comment"")
@@ -328,7 +328,9 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 			for (int i = 0; i < commentsSize; i++) {
 				r4eComment = (R4EComment) comments.get(i);
 				if (r4eComment.isEnabled()
-						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						|| R4EUIPlugin.getDefault()
+								.getPreferenceStore()
+								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					addChildren(new R4EUIComment(this, r4eComment));
 				}
 			}
@@ -449,7 +451,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 		//Remove element from UI if the show disabled element option is off
-		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fComments.remove(removedElement);
 			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);

@@ -22,7 +22,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -53,10 +53,10 @@ public class ReviewTypeSortHandler extends AbstractHandler {
 		boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());
 
 		if (!oldValue) {
-			Activator.Ftracer.traceInfo("Apply review type sorter to ReviewNavigator");
+			R4EUIPlugin.Ftracer.traceInfo("Apply review type sorter to ReviewNavigator");
 			viewer.setComparator(sorter);
 		} else {
-			Activator.Ftracer.traceInfo("Remove review type sorter from ReviewNavigator");
+			R4EUIPlugin.Ftracer.traceInfo("Remove review type sorter from ReviewNavigator");
 			viewer.setComparator(null);
 		}
 		R4EUIModelController.getNavigatorView().getTreeViewer().setExpandedElements(elements);

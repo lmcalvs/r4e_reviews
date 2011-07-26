@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.EditableListWidget;
@@ -242,7 +242,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 			if (null != validateResult) {
 				//Validate of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"No input given for Group Name", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+						"No input given for Group Name", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -256,7 +256,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 				//Validate of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 						"Invalid input folder",
-						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+						new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
@@ -267,7 +267,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 				//Validate of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 						"Invalid input folder",
-						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+						new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
@@ -540,7 +540,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 */
 	@Override
 	protected Control createButtonBar(Composite parent) {
-		Control bar = super.createButtonBar(parent);
+		final Control bar = super.createButtonBar(parent);
 		getButton(IDialogConstants.OK_ID).setEnabled(false);
 		return bar;
 	}

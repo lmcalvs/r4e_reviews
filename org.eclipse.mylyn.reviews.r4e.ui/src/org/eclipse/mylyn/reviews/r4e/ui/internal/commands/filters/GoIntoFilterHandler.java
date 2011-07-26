@@ -23,7 +23,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.FocusFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -64,7 +64,7 @@ public class GoIntoFilterHandler extends AbstractHandler {
 			if (null != selection) {
 				final IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
 				if (null != element) {
-					Activator.Ftracer.traceInfo("Setting focus on current element");
+					R4EUIPlugin.Ftracer.traceInfo("Setting focus on current element");
 					R4EUIModelController.setCurrentFocusElement(element);
 					viewer.setInput(element.getParent());
 					viewer.addFilter(filter);
@@ -72,7 +72,7 @@ public class GoIntoFilterHandler extends AbstractHandler {
 				}
 			}
 		} else {
-			Activator.Ftracer.traceInfo("Removing focus");
+			R4EUIPlugin.Ftracer.traceInfo("Removing focus");
 			viewer.removeFilter(filter);
 			R4EUIModelController.setCurrentFocusElement(R4EUIModelController.getRootElement());
 			viewer.setInput(R4EUIModelController.getRootElement());

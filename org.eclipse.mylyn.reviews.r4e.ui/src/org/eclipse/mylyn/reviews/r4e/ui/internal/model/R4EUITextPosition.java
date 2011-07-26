@@ -28,7 +28,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.texteditor.IDocumentProvider;
@@ -216,9 +216,9 @@ public class R4EUITextPosition implements IR4EUIPosition {
 				return;
 			}
 		} catch (BadLocationException e) {
-			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ").  "
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ").  "
 					+ "Setting text position to default values");
-			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 			fEndLine = fStartLine;
 			fLength = 0;
 		}

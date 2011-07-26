@@ -21,7 +21,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.HideDeltasFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
@@ -57,10 +57,10 @@ public class HideDeltasFilterHandler extends AbstractHandler {
 		boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());
 
 		if (!oldValue) {
-			Activator.Ftracer.traceInfo("Apply hide Deltas elements filter to ReviewNavigator");
+			R4EUIPlugin.Ftracer.traceInfo("Apply hide Deltas elements filter to ReviewNavigator");
 			viewer.addFilter(filter);
 		} else {
-			Activator.Ftracer.traceInfo("Remove hide Deltas elements filter from ReviewNavigator");
+			R4EUIPlugin.Ftracer.traceInfo("Remove hide Deltas elements filter from ReviewNavigator");
 			viewer.removeFilter(filter);
 		}
 		R4EUIModelController.getNavigatorView().getTreeViewer().setExpandedElements(elements);

@@ -41,7 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
@@ -201,7 +201,7 @@ public class AnomalyInputDialog extends FormDialog {
 			if (null != validateResult) {
 				//Validation of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"No input given for Anomaly Title", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+						"No input given for Anomaly Title", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -214,7 +214,7 @@ public class AnomalyInputDialog extends FormDialog {
 			if (null != validateResult) {
 				//Validation of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"No input given for Anomaly Comment", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+						"No input given for Anomaly Comment", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -318,7 +318,7 @@ public class AnomalyInputDialog extends FormDialog {
 				| SWT.BORDER | SWT.WRAP);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
-		textGridData.heightHint = fAnomalyTitleInputTextField.getLineHeight() * 3;
+		textGridData.heightHint = fAnomalyTitleInputTextField.getLineHeight() * 7;
 		fAnomalyDescriptionInputTextField.setToolTipText(R4EUIConstants.ANOMALY_DESCRIPTION_TOOLTIP);
 		fAnomalyDescriptionInputTextField.setLayoutData(textGridData);
 		fAnomalyDescriptionInputTextField.addModifyListener(new ModifyListener() {
@@ -537,14 +537,17 @@ public class AnomalyInputDialog extends FormDialog {
 							try {
 								parentRuleSetElement.open();
 							} catch (FileNotFoundException e) {
-								Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-								Activator.getDefault().logError("Exception: " + e.toString(), e);
+								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage()
+										+ ")");
+								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 							} catch (ResourceHandlingException e) {
-								Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-								Activator.getDefault().logError("Exception: " + e.toString(), e);
+								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage()
+										+ ")");
+								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 							} catch (ReviewVersionsException e) {
-								Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-								Activator.getDefault().logError("Exception: " + e.toString(), e);
+								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage()
+										+ ")");
+								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 							}
 						}
 						return true;
@@ -587,7 +590,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 */
 	@Override
 	protected Control createButtonBar(Composite parent) {
-		Control bar = super.createButtonBar(parent);
+		final Control bar = super.createButtonBar(parent);
 		getButton(IDialogConstants.OK_ID).setEnabled(false);
 		return bar;
 	}

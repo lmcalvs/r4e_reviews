@@ -48,7 +48,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactory
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorView;
@@ -220,17 +220,17 @@ public class R4EUIModelController {
 				actionGroup.runReviewsParticipantFilterCommand(actionGroup.getFilterParticipant());
 			}
 		} catch (ExecutionException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (NotDefinedException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (NotEnabledException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (NotHandledException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		}
 	}
 
@@ -301,7 +301,7 @@ public class R4EUIModelController {
 		try {
 			group = FModelExt.openR4EReviewGroup(URI.createFileURI(filePath));
 		} catch (ResourceHandlingException e) {
-			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		}
 		return group;
 	}
@@ -327,13 +327,13 @@ public class R4EUIModelController {
 		FResourceUpdater = SerializeFactory.getResourceUpdater();
 
 		//Set current user as reviewer
-		setReviewer(Activator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_USER_ID));
+		setReviewer(R4EUIPlugin.getDefault().getPreferenceStore().getString(PreferenceConstants.P_USER_ID));
 
 		//Add root for Review Navigator
 		FRootElement = new R4EUIRootElement(null, "R4E");
 
 		//Load Review Groups
-		final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+		final IPreferenceStore preferenceStore = R4EUIPlugin.getDefault().getPreferenceStore();
 		final String groupPaths = preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH);
 		final List<String> groupPathsList = UIUtils.parseStringList(groupPaths);
 		loadReviewGroups(groupPathsList);
@@ -367,7 +367,7 @@ public class R4EUIModelController {
 				reviewGroup = FModelExt.openR4EReviewGroup(URI.createFileURI(groupPath));
 				FRootElement.loadReviewGroup(reviewGroup);
 			} catch (ResourceHandlingException e) {
-				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 
 				//Bug 347780:  Remove this code for now.  Later we will implement to validate the group files
 				/*
@@ -388,7 +388,7 @@ public class R4EUIModelController {
 
 		//Adjust review group paths in preferences
 		if (changePrefsPaths) {
-			Activator.getDefault()
+			R4EUIPlugin.getDefault()
 					.getPreferenceStore()
 					.setValue(PreferenceConstants.P_GROUP_FILE_PATH, buildReviewGroupsStr(newGroupPaths));
 		}
@@ -402,7 +402,7 @@ public class R4EUIModelController {
 	 */
 	public static void loadRuleSets(List<String> aRuleSetPaths) {
 
-		boolean changePrefsPaths = false;
+		final boolean changePrefsPaths = false;
 		R4EDesignRuleCollection ruleSet = null;
 		final List<String> newRuleSetPaths = new ArrayList<String>();
 		newRuleSetPaths.addAll(aRuleSetPaths);
@@ -416,7 +416,7 @@ public class R4EUIModelController {
 				ruleSet = FModelExt.openR4EDesignRuleCollection(URI.createFileURI(ruleSetPath));
 				FRootElement.loadRuleSet(ruleSet);
 			} catch (ResourceHandlingException e) {
-				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 
 				//Bug 347780:  Remove this code for now.  Later we will implement to validate the group files
 				/*
@@ -437,7 +437,7 @@ public class R4EUIModelController {
 
 		//Adjust review group paths in preferences
 		if (changePrefsPaths) {
-			Activator.getDefault()
+			R4EUIPlugin.getDefault()
 					.getPreferenceStore()
 					.setValue(PreferenceConstants.P_RULE_SET_FILE_PATH, buildReviewGroupsStr(newRuleSetPaths));
 		}

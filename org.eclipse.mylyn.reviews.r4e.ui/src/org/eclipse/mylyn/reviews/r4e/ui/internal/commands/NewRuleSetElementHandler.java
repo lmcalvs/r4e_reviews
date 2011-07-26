@@ -30,7 +30,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
@@ -71,7 +71,7 @@ public class NewRuleSetElementHandler extends AbstractHandler {
 					//Get data from user
 					final ReviewComponent tempModelComponent = ((R4EUIRootElement) element).createRuleSetElement();
 					if (null != tempModelComponent) {
-						Activator.Ftracer.traceInfo("Adding Rule Set to the root element ");
+						R4EUIPlugin.Ftracer.traceInfo("Adding Rule Set to the root element ");
 
 						//Create actual model element
 						newElement = element.createChildren(tempModelComponent);
@@ -112,7 +112,7 @@ public class NewRuleSetElementHandler extends AbstractHandler {
 							.getService(IEvaluationService.class);
 					evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen");
 				} catch (ExecutionException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 				return Status.OK_STATUS;
 			}

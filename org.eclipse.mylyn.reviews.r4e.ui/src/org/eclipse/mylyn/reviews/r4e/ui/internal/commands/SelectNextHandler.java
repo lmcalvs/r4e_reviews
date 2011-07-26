@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
@@ -73,7 +73,7 @@ public class SelectNextHandler extends AbstractHandler {
 
 					//If there is one, select it
 					if (null != nextElement) {
-						Activator.Ftracer.traceInfo("Select next element " + nextElement.getName());
+						R4EUIPlugin.Ftracer.traceInfo("Select next element " + nextElement.getName());
 						final ISelection nextSelection = new StructuredSelection(nextElement);
 						view.getTreeViewer().setSelection(nextSelection);
 

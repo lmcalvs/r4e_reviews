@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
@@ -74,7 +74,7 @@ public class SelectPreviousHandler extends AbstractHandler {
 
 						//If there is one, select it
 						if (null != previousElement) {
-							Activator.Ftracer.traceInfo("Select previous element " + previousElement.getName());
+							R4EUIPlugin.Ftracer.traceInfo("Select previous element " + previousElement.getName());
 							final ISelection previousSelection = new StructuredSelection(previousElement);
 							view.getTreeViewer().setSelection(previousSelection);
 

@@ -29,7 +29,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.RuleInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
@@ -47,9 +47,9 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field fSelectionContainerFile. (value is ""icons/obj16/ruleviolation_obj.gif"")
+	 * Field RULE_VIOLATION_ICON_FILE. (value is ""icons/obj16/ruleviolation_obj.gif"")
 	 */
-	private static final String RULE_AREA_ICON_FILE = "icons/obj16/ruleviolation_obj.gif";
+	public static final String RULE_VIOLATION_ICON_FILE = "icons/obj16/ruleviolation_obj.gif";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Rule"")
@@ -113,7 +113,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 		super(aParent, aViolation.getName(), null);
 		fViolation = aViolation;
 		fRules = new ArrayList<R4EUIRule>();
-		setImage(RULE_AREA_ICON_FILE);
+		setImage(RULE_VIOLATION_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
@@ -246,7 +246,9 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 			final int ruleSize = rules.size();
 			for (int i = 0; i < ruleSize; i++) {
 				if (rules.get(i).isEnabled()
-						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						|| R4EUIPlugin.getDefault()
+								.getPreferenceStore()
+								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					uiRule = new R4EUIRule(this, rules.get(i));
 					addChildren(uiRule);
 				}
@@ -348,7 +350,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 		//Remove element from UI if the show disabled element option is off
-		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fRules.remove(removedElement);
 			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);

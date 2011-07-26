@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -166,7 +166,7 @@ public class RuleSetInputDialog extends FormDialog {
 			if (null != validateResult) {
 				//Validation of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"No input given for Rule Set Version", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+						"No input given for Rule Set Version", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -180,7 +180,7 @@ public class RuleSetInputDialog extends FormDialog {
 				//Validate of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 						"Invalid input folder",
-						new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+						new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
@@ -191,7 +191,7 @@ public class RuleSetInputDialog extends FormDialog {
 			if (null != validateResult) {
 				//Validate of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Rule Set file already exists", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+						"Rule Set file already exists", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -204,7 +204,7 @@ public class RuleSetInputDialog extends FormDialog {
 			if (null != validateResult) {
 				//Validation of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"No input given for Rule Set Name", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+						"No input given for Rule Set Name", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -364,7 +364,7 @@ public class RuleSetInputDialog extends FormDialog {
 	 */
 	@Override
 	protected Control createButtonBar(Composite parent) {
-		Control bar = super.createButtonBar(parent);
+		final Control bar = super.createButtonBar(parent);
 		getButton(IDialogConstants.OK_ID).setEnabled(false);
 		return bar;
 	}

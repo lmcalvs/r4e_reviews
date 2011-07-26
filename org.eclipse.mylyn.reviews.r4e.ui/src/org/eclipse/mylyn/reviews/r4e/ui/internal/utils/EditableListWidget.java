@@ -23,7 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableEditor;
@@ -525,12 +525,12 @@ public class EditableListWidget {
 	 */
 	public void setTableHeader(int aIndex, String aText) {
 		try {
-			TableColumn column = fMainTable.getColumn(aIndex);
+			final TableColumn column = fMainTable.getColumn(aIndex);
 			column.setText(aText);
 			updateTable();
 		} catch (IllegalArgumentException e) {
-			Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logWarning("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 		}
 	}
 

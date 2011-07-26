@@ -40,7 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.PostponedFileProperties;
@@ -62,7 +62,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 	/**
 	 * Field POSTPONED_FILE_ICON_FILE. (value is ""icons/obj16/postfile_obj.gif"")
 	 */
-	private static final String POSTPONED_FILE_ICON_FILE = "icons/obj16/postfile_obj.gif";
+	public static final String POSTPONED_FILE_ICON_FILE = "icons/obj16/postfile_obj.gif";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -193,8 +193,8 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 		try {
 			revRegistry = RFSRegistryFactory.getRegistry(((R4EUIReviewBasic) this.getParent().getParent()).getReview());
 		} catch (ReviewsFileStorageException e1) {
-			Activator.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
-			Activator.getDefault().logInfo("Exception: " + e1.toString(), e1);
+			R4EUIPlugin.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
+			R4EUIPlugin.getDefault().logInfo("Exception: " + e1.toString(), e1);
 		}
 
 		//Restore target file version
@@ -204,7 +204,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 				final IFile targetFile = ResourceUtils.toIFile(targetFileVersion.getPlatformURI());
 				targetFileVersion.setResource(targetFile);
 			} catch (FileNotFoundException e) {
-				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				targetFileVersion.setResource(null);
 			}
 
@@ -214,7 +214,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 					final IFileRevision fileRev = revRegistry.getIFileRevision(null, targetFileVersion);
 					targetFileVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
-					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 		}
@@ -232,7 +232,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 				continue;
 			}
 			if (anomaly.isEnabled()
-					|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+					|| R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 				//Do not set position for global EList<E>lies
 				position = null;
 				EList<Location> locations = anomaly.getLocation(); // $codepro.audit.disable variableDeclaredInLoop
@@ -370,7 +370,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 			modelAnomaly.setEnabled(false);
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
-			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fUiAnomalies.remove(removedElement);
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);

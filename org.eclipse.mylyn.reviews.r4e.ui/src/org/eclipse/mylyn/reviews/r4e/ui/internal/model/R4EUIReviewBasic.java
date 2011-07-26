@@ -50,7 +50,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdat
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ImportPostponedHandler;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
@@ -74,22 +74,22 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	/**
 	 * Field REVIEW_BASIC_ICON_FILE. (value is ""icons/obj16/reviewbas_obj.gif"")
 	 */
-	private static final String REVIEW_BASIC_ICON_FILE = "icons/obj16/reviewbas_obj.gif";
+	public static final String REVIEW_BASIC_ICON_FILE = "icons/obj16/reviewbas_obj.gif";
 
 	/**
 	 * Field REVIEW_BASIC_CLOSED_ICON_FILE. (value is ""icons/obj16/revbasclsd_obj.gif"")
 	 */
-	private static final String REVIEW_BASIC_CLOSED_ICON_FILE = "icons/obj16/revbasclsd_obj.gif";
+	public static final String REVIEW_BASIC_CLOSED_ICON_FILE = "icons/obj16/revbasclsd_obj.gif";
 
 	/**
 	 * Field REVIEW_INFORMAL_ICON_FILE. (value is ""icons/obj16/reviewinf_obj.gif"")
 	 */
-	private static final String REVIEW_INFORMAL_ICON_FILE = "icons/obj16/reviewinf_obj.gif";
+	public static final String REVIEW_INFORMAL_ICON_FILE = "icons/obj16/reviewinf_obj.gif";
 
 	/**
 	 * Field REVIEW_INFORMAL_CLOSED_ICON_FILE. (value is ""icons/obj16/revinfclsd_obj.gif"")
 	 */
-	private static final String REVIEW_INFORMAL_CLOSED_ICON_FILE = "icons/obj16/revinfclsd_obj.gif";
+	public static final String REVIEW_INFORMAL_CLOSED_ICON_FILE = "icons/obj16/revinfclsd_obj.gif";
 
 	/**
 	 * Field OPEN_ELEMENT_COMMAND_NAME. (value is ""Open Review"")
@@ -366,8 +366,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				try {
 					fParticipantsContainer.getParticipant(participant).setEnabled(true);
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					Activator.getDefault().logError("Exception: " + e.toString(), e);
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 				}
 			}
 		} else {
@@ -452,8 +452,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				return participant.isReviewCompleted();
 			}
 		} catch (ResourceHandlingException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			return fUserReviewed;
 		}
 		return fUserReviewed;
@@ -548,7 +548,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			for (int i = 0; i < itemsSize; i++) {
 				item = (R4EItem) items.get(i);
 				if (item.isEnabled()
-						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						|| R4EUIPlugin.getDefault()
+								.getPreferenceStore()
+								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 
 					if (R4EUIConstants.TRUE_ATTR_VALUE_STR.equals(item.getInfoAtt().get(
 							R4EUIConstants.POSTPONED_ATTR_STR))) {
@@ -583,8 +585,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		try {
 			CommandUtils.showPostponedElements(this);
 		} catch (OutOfSyncException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		}
 
 		fOpen = true;
@@ -597,7 +599,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fireUserReviewStateChanged(this);
 
 		//Automatically import postponed anomalies if set in preferences
-		if (Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_AUTO_IMPORT_POSTPONED)) {
+		if (R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_AUTO_IMPORT_POSTPONED)) {
 			ImportPostponedHandler.importPostponedElements();
 		}
 	}
@@ -689,9 +691,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.setSentCount(coreMeetingData.getSentCount() + 1);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -701,9 +703,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.setSentCount(0);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -717,9 +719,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.setId(aId);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -733,9 +735,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.setSubject(aSubject);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -749,9 +751,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.setBody(aBody);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -765,9 +767,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.setLocation(aLocation);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -781,9 +783,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.setStartTime(aStartTime.longValue());
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -797,9 +799,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.setDuration(aDuration.intValue());
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -813,9 +815,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.setSender(aSender);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -831,9 +833,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.getReceivers().clear();
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -843,9 +845,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.getReceivers().add(aReceiver);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -855,9 +857,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					coreMeetingData.getReceivers().remove(aReceiver);
 					resUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				} catch (OutOfSyncException e) {
-					Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
@@ -1066,7 +1068,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 			//Remove element from UI if the show disabled element option is off
-			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fPostponedContainer = null;
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
@@ -1089,7 +1091,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 			//Remove element from UI if the show disabled element option is off
-			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fItems.remove(removedElement);
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
@@ -1098,7 +1100,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			}
 		} else if (aChildToRemove instanceof R4EUIAnomalyContainer) {
 			fAnomalyContainer.removeAllChildren(aFileRemove);
-			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fAnomalyContainer = null;
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
@@ -1107,7 +1109,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			}
 		} else if (aChildToRemove instanceof R4EUIParticipantContainer) {
 			fParticipantsContainer.removeAllChildren(aFileRemove);
-			if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fParticipantsContainer = null;
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);

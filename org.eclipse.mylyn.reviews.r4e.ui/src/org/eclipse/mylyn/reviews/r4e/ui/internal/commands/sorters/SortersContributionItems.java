@@ -19,7 +19,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters;
 
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.ui.actions.CompoundContributionItem;
@@ -44,7 +44,7 @@ public class SortersContributionItems extends CompoundContributionItem {
 
 		CommandContributionItemParameter params = new CommandContributionItemParameter(
 				R4EUIModelController.getNavigatorView().getSite(), R4EUIConstants.ALPHA_SORTER_COMMAND,
-				R4EUIConstants.ALPHA_SORTER_COMMAND, null, ImageDescriptor.createFromURL(Activator.getDefault()
+				R4EUIConstants.ALPHA_SORTER_COMMAND, null, ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
 						.getBundle()
 						.getEntry(R4EUIConstants.ALPHA_SORTER_ICON_FILE)), null, null,
 				R4EUIConstants.ALPHA_SORTER_NAME, R4EUIConstants.ALPHA_SORTER_MNEMONIC,
@@ -53,7 +53,7 @@ public class SortersContributionItems extends CompoundContributionItem {
 
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 				R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND, R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND, null,
-				ImageDescriptor.createFromURL(Activator.getDefault()
+				ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
 						.getBundle()
 						.getEntry(R4EUIConstants.REVIEW_TYPE_SORTER_ICON_FILE)), null, null,
 				R4EUIConstants.REVIEW_TYPE_SORTER_NAME, R4EUIConstants.REVIEW_TYPE_SORTER_MNEMONIC,

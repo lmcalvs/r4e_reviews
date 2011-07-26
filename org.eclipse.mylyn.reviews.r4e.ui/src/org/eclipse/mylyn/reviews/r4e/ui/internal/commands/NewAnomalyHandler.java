@@ -47,7 +47,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
@@ -141,9 +141,9 @@ public class NewAnomalyHandler extends AbstractHandler {
 			if (null != targetVersion) {
 				addAnomaly(baseVersion, targetVersion, position);
 			} else {
-				Activator.Ftracer.traceWarning("Trying to add review item to base file");
+				R4EUIPlugin.Ftracer.traceWarning("Trying to add review item to base file");
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Add Anomaly Error", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+						"Add Anomaly Error", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								"No Target File present to Add Anomaly", null), IStatus.ERROR);
 				dialog.open();
 			}
@@ -194,7 +194,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 						workspaceFile);
 			} else {
 				//This should never happen
-				Activator.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString() + ".  Ignoring");
+				R4EUIPlugin.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString() + ".  Ignoring");
 				return;
 			}
 
@@ -206,19 +206,19 @@ public class NewAnomalyHandler extends AbstractHandler {
 			if (null != targetVersion) {
 				addAnomaly(baseVersion, targetVersion, position);
 			} else {
-				Activator.Ftracer.traceWarning("Trying to add review item to base file");
+				R4EUIPlugin.Ftracer.traceWarning("Trying to add review item to base file");
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Add Anomaly Error", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0,
+						"Add Anomaly Error", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								"No Target File present to Add Anomaly", null), IStatus.ERROR);
 				dialog.open();
 			}
 
 		} catch (JavaModelException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (CModelException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (CoreException e) {
 			UIUtils.displayCoreErrorDialog(e);
 		} catch (ReviewsFileStorageException e) {
@@ -263,7 +263,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 								if (uiAnomaly.getPosition().isSameAs(aUIPosition)) {
 									isNewAnomaly = false;
 									addCommentToExistingAnomaly(uiAnomaly);
-									Activator.Ftracer.traceInfo("Added comment to existing anomaly: Target = "
+									R4EUIPlugin.Ftracer.traceInfo("Added comment to existing anomaly: Target = "
 											+ file.getFileContext().getTarget().getName()
 											+ ((null != file.getFileContext().getBase()) ? "Base = "
 													+ file.getFileContext().getBase().getName() : "") + " Position = "
@@ -276,7 +276,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 						}
 						if (isNewAnomaly) {
 							addAnomalyToExistingFileContext(aTargetFileVersion, anomalyContainer, aUIPosition);
-							Activator.Ftracer.traceInfo("Added anomaly: Target = "
+							R4EUIPlugin.Ftracer.traceInfo("Added anomaly: Target = "
 									+ file.getFileContext().getTarget().getName()
 									+ ((null != file.getFileContext().getBase()) ? "Base = "
 											+ file.getFileContext().getBase().getName() : "") + " Position = "
@@ -289,7 +289,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 			//This is a new file create it (and its parent reviewItem) and all its children
 			addAnomalyToNewFileContext(aBaseFileVersion, aTargetFileVersion, aUIPosition);
-			Activator.Ftracer.traceInfo("Added Anomaly: Target = "
+			R4EUIPlugin.Ftracer.traceInfo("Added Anomaly: Target = "
 					+ aTargetFileVersion.getName()
 					+ "_"
 					+ aTargetFileVersion.getVersionID()

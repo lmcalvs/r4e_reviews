@@ -43,7 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.AnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
@@ -63,7 +63,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	/**
 	 * Field fAnomalyContainerFile. (value is ""icons/obj16/anmlycont_obj.gif"")
 	 */
-	private static final String ANOMALY_CONTAINER_ICON_FILE = "icons/obj16/anmlycont_obj.gif";
+	public static final String ANOMALY_CONTAINER_ICON_FILE = "icons/obj16/anmlycont_obj.gif";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Anomaly"")
@@ -212,7 +212,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				}
 
 				if (anomaly.isEnabled()
-						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						|| R4EUIPlugin.getDefault()
+								.getPreferenceStore()
+								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					//Do not set position for global EList<E>lies
 					position = null;
 					EList<Location> locations = anomalies.get(i).getLocation(); // $codepro.audit.disable variableDeclaredInLoop
@@ -258,7 +260,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				for (int i = 0; i < anomaliesSize; i++) {
 					anomaly = (R4EAnomaly) anomalies.get(i);
 					if (anomaly.isEnabled()
-							|| Activator.getDefault()
+							|| R4EUIPlugin.getDefault()
 									.getPreferenceStore()
 									.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 						if (0 == anomaly.getLocation().size()) {
@@ -462,7 +464,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 		//Remove element from UI if the show disabled element option is off
-		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fAnomalies.remove(removedElement);
 			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);

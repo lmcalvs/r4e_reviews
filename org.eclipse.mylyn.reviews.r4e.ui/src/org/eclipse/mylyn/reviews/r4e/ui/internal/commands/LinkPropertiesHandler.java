@@ -21,7 +21,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -55,9 +55,9 @@ public class LinkPropertiesHandler extends AbstractHandler {
 		boolean oldValue = HandlerUtil.toggleCommandState(command);
 
 		if (!oldValue) {
-			Activator.Ftracer.traceInfo("Linking R4E Properties view with ReviewNavigator");
+			R4EUIPlugin.Ftracer.traceInfo("Linking R4E Properties view with ReviewNavigator");
 		} else {
-			Activator.Ftracer.traceInfo("Unlinking R4E Properties view with ReviewNavigator");
+			R4EUIPlugin.Ftracer.traceInfo("Unlinking R4E Properties view with ReviewNavigator");
 		}
 		R4EUIModelController.getNavigatorView().setPropertiesLinked(!oldValue);
 		R4EUIModelController.getNavigatorView().getTreeViewer().setExpandedElements(elements);

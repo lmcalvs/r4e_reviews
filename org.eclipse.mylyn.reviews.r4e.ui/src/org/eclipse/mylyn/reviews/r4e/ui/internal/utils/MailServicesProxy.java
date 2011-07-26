@@ -44,7 +44,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
@@ -541,7 +541,7 @@ public class MailServicesProxy {
 				}
 			}
 		}
-		R4EUIAnomalyBasic[] globalAnomalies = (R4EUIAnomalyBasic[]) R4EUIModelController.getActiveReview()
+		final R4EUIAnomalyBasic[] globalAnomalies = (R4EUIAnomalyBasic[]) R4EUIModelController.getActiveReview()
 				.getAnomalyContainer()
 				.getChildren();
 		for (R4EUIAnomalyBasic anomaly : globalAnomalies) {
@@ -568,7 +568,7 @@ public class MailServicesProxy {
 			R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
 			for (int i = 0; i < contexts.length; i++) {
 				context = contexts[i];
-				if (i == 0) {
+				if (0 == i) {
 					//Add format line
 					msgBody.append("FileContext: " + TAB_MSG_PART
 							+ "Eclipse Project: File Path Relative to Eclipse Project: " + LINE_FEED_MSG_PART);
@@ -582,7 +582,7 @@ public class MailServicesProxy {
 					}
 					for (int j = 0; j < anomalies.length; j++) {
 						anomaly = anomalies[j];
-						if (j == 0) {
+						if (0 == j) {
 							//Add format line
 							msgBody.append(TAB_MSG_PART + "Anomaly: " + "Line Range: Title: Description"
 									+ LINE_FEED_MSG_PART);
@@ -984,7 +984,7 @@ public class MailServicesProxy {
 				R4EUIConstants.DIALOG_TITLE_WARNING,
 				"No Email connector detected"
 						+ "Take note that no Automatic Email can be sent because no Mail Services Connector is Present",
-				new Status(IStatus.WARNING, Activator.PLUGIN_ID, 0, null, null), IStatus.WARNING);
+				new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0, null, null), IStatus.WARNING);
 		dialog.open();
 	}
 

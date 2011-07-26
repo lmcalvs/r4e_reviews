@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -130,8 +130,8 @@ public class CommentInputDialog extends FormDialog {
 			if (null != validateResult) {
 				//Validation of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"No input given for Comment", new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, validateResult,
-								null), IStatus.ERROR);
+						"No input given for Comment", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+								validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
@@ -202,7 +202,7 @@ public class CommentInputDialog extends FormDialog {
 				| SWT.WRAP);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		textGridData.horizontalSpan = 3;
-		textGridData.heightHint = fCommentInputTextField.getLineHeight() * 3;
+		textGridData.heightHint = fCommentInputTextField.getLineHeight() * 7;
 		fCommentInputTextField.setToolTipText(R4EUIConstants.COMMENT_DESCRIPTION_TOOLTIP);
 		fCommentInputTextField.setLayoutData(textGridData);
 		fCommentInputTextField.addModifyListener(new ModifyListener() {
@@ -222,10 +222,11 @@ public class CommentInputDialog extends FormDialog {
 	 * 
 	 * @param parent
 	 *            the parent composite
+	 * @return Control
 	 */
 	@Override
 	protected Control createButtonBar(Composite parent) {
-		Control bar = super.createButtonBar(parent);
+		final Control bar = super.createButtonBar(parent);
 		getButton(IDialogConstants.OK_ID).setEnabled(false);
 		return bar;
 	}

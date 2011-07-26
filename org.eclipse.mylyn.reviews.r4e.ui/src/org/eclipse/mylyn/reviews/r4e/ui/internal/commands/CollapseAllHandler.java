@@ -24,7 +24,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.ui.progress.UIJob;
 
@@ -53,7 +53,7 @@ public class CollapseAllHandler extends AbstractHandler {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				//Collapse tree (all levels)
-				Activator.Ftracer.traceInfo("Collapsing whole tree");
+				R4EUIPlugin.Ftracer.traceInfo("Collapsing whole tree");
 				R4EUIModelController.getNavigatorView().getTreeViewer().collapseAll();
 				return Status.OK_STATUS;
 			}

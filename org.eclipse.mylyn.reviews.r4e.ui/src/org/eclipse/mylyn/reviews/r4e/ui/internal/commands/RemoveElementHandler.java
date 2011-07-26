@@ -40,7 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -86,7 +86,7 @@ public class RemoveElementHandler extends AbstractHandler {
 						final List<R4EReviewComponent> removedItems = new ArrayList<R4EReviewComponent>();
 						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
 							element = (IR4EUIModelElement) iterator.next();
-							Activator.Ftracer.traceInfo("Disable element " + element.getName());
+							R4EUIPlugin.Ftracer.traceInfo("Disable element " + element.getName());
 							dialog = MessageDialogWithToggle.openOkCancelConfirm(null, "Disable element",
 									"Do you really want to disable this element?",
 									"Also delete from file (not supported yet)", false, null, null);

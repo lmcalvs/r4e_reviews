@@ -24,7 +24,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 
@@ -41,7 +41,7 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 	/**
 	 * Field SELECTION_CONTAINER_ICON_FILE. (value is ""icons/obj16/selcont_obj.gif"")
 	 */
-	private static final String SELECTION_CONTAINER_ICON_FILE = "icons/obj16/selcont_obj.gif";
+	public static final String SELECTION_CONTAINER_ICON_FILE = "icons/obj16/selcont_obj.gif";
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -105,7 +105,9 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 			for (int i = 0; i < selectionsSize; i++) {
 				selection = selections.get(i);
 				if (selection.isEnabled()
-						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						|| R4EUIPlugin.getDefault()
+								.getPreferenceStore()
+								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					position = new R4EUITextPosition(selections.get(i).getTarget().getLocation());
 					newSelection = new R4EUISelection(this, selections.get(i), position);
 					addChildren(newSelection);

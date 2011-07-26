@@ -39,7 +39,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
@@ -106,8 +106,8 @@ public class ImportPostponedHandler extends AbstractHandler {
 					try {
 						importAnomaly((R4EUIReviewBasic) oldReview, oldAnomaly);
 					} catch (ResourceHandlingException e) {
-						Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						Activator.getDefault().logError("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 					}
 				}
 
@@ -115,11 +115,11 @@ public class ImportPostponedHandler extends AbstractHandler {
 				CommandUtils.showPostponedElements(R4EUIModelController.getActiveReview());
 
 			} catch (OutOfSyncException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logError("Exception: " + e.toString(), e);
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			} catch (ResourceHandlingException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logError("Exception: " + e.toString(), e);
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			}
 		}
 	}
@@ -173,8 +173,8 @@ public class ImportPostponedHandler extends AbstractHandler {
 			R4EUIModelController.FModelExt.closeR4EReview(oldReview);
 
 		} catch (ResourceHandlingException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		}
 		return anomaliesToConsider;
 	}

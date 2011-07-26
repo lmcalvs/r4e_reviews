@@ -50,7 +50,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
@@ -90,7 +90,7 @@ public class OpenElementHandler extends AbstractHandler {
 							final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
 
 							if (element instanceof R4EUIReviewBasic) {
-								Activator.Ftracer.traceInfo("Opening element " + element.getName());
+								R4EUIPlugin.Ftracer.traceInfo("Opening element " + element.getName());
 								final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 								if (null != activeReview) {
 									activeReview.close();
@@ -109,11 +109,11 @@ public class OpenElementHandler extends AbstractHandler {
 							UIUtils.displayVersionErrorDialog(e);
 
 						} catch (FileNotFoundException e) {
-							Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-							Activator.getDefault().logError("Exception: " + e.toString(), e);
+							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 							final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 									"File not found error detected while opening element", new Status(IStatus.ERROR,
-											Activator.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+											R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 							dialog.open();
 						}
 					}

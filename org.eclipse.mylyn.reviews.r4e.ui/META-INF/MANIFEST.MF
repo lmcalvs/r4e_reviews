@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.mylyn.reviews.r4e.ui;singleton:=true
 Bundle-Version: 0.9.0.qualifier
-Bundle-Activator: org.eclipse.mylyn.reviews.r4e.ui.Activator
+Bundle-Activator: org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -30,7 +30,8 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.apache.commons.io;version="1.4.0",
- org.eclipse.egit.ui.internal;version="0.9.1"
+ org.eclipse.egit.ui.internal;version="0.9.1",
+ org.eclipse.ui.internal.browser
 Bundle-Vendor: %providerName
 Export-Package: org.eclipse.mylyn.reviews.r4e.ui;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.internal.commands;x-internal:=true,

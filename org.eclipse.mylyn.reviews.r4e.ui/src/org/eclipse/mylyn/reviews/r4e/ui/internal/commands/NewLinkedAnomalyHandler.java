@@ -28,7 +28,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
@@ -68,7 +68,7 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 				final IR4EUIModelElement element = ((IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement());
 				if (element instanceof R4EUIContent) {
 					try {
-						Activator.Ftracer.traceInfo("Adding linked anomaly to element " + element.getName());
+						R4EUIPlugin.Ftracer.traceInfo("Adding linked anomaly to element " + element.getName());
 						addLinkedAnomaly((R4EUIContent) element);
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);

@@ -34,7 +34,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.SendNotificationInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -76,7 +76,7 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
 							try {
 								element = (IR4EUIModelElement) iterator.next();
-								Activator.Ftracer.traceInfo("Changing review state for element " + element.getName());
+								R4EUIPlugin.Ftracer.traceInfo("Changing review state for element " + element.getName());
 								element.setUserReviewed(!(element.isUserReviewed()));
 
 								//If we just completed the review, prompt user for mail sending

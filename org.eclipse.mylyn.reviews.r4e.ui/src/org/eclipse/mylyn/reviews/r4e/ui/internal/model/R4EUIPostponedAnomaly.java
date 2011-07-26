@@ -45,7 +45,7 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 	/**
 	 * Field POSTPONED_ANOMALY_ICON_FILE. (value is ""icons/obj16/postanmly_obj.gif"")
 	 */
-	private static final String POSTPONED_ANOMALY_ICON_FILE = "icons/obj16/postanmly_obj.gif";
+	public static final String POSTPONED_ANOMALY_ICON_FILE = "icons/obj16/postanmly_obj.gif";
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -114,7 +114,8 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 				.getInfoAtt()
 				.get(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME);
 		final R4EUIReviewGroup uiGroup = (R4EUIReviewGroup) getParent().getParent().getParent().getParent();
-		final R4EReview origReview = R4EUIModelController.FModelExt.openR4EReview(uiGroup.getReviewGroup(), origReviewName);
+		final R4EReview origReview = R4EUIModelController.FModelExt.openR4EReview(uiGroup.getReviewGroup(),
+				origReviewName);
 		final R4EAnomaly origAnomaly = CommandUtils.getOriginalAnomaly(origReview, fAnomaly);
 		if (null != origAnomaly) {
 			//set data in original anomaly
@@ -193,7 +194,8 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 				.getInfoAtt()
 				.get(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME);
 		final R4EUIReviewGroup uiGroup = (R4EUIReviewGroup) getParent().getParent().getParent().getParent();
-		final R4EReview origReview = R4EUIModelController.FModelExt.openR4EReview(uiGroup.getReviewGroup(), origReviewName);
+		final R4EReview origReview = R4EUIModelController.FModelExt.openR4EReview(uiGroup.getReviewGroup(),
+				origReviewName);
 		final R4EAnomaly origAnomaly = CommandUtils.getOriginalAnomaly(origReview, fAnomaly);
 		if (null != origAnomaly) {
 			//Add Child Comments to original anomaly

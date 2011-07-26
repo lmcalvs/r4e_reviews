@@ -68,11 +68,11 @@ public class SendNotificationHandler extends AbstractHandler {
 		final UIJob job = new UIJob("Sending Notification...") {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
-				Object source = ((EvaluationContext) event.getApplicationContext()).getDefaultVariable();
+				final Object source = ((EvaluationContext) event.getApplicationContext()).getDefaultVariable();
 				Object obj = null;
 				if (source instanceof List) {
 					if (((List<?>) source).size() > 0) {
-						Object sourceElement = ((List<?>) source).get(0); //If this is a list, get first element
+						final Object sourceElement = ((List<?>) source).get(0); //If this is a list, get first element
 						if (sourceElement instanceof AbstractSet) {
 							final Iterator<?> iterator = ((AbstractSet<?>) sourceElement).iterator();
 							obj = iterator.next();

@@ -34,7 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.team.core.history.IFileRevision;
@@ -52,7 +52,7 @@ public class R4EUIPostponedContainer extends R4EUIReviewItem {
 	/**
 	 * Field POSTPONED_CONTAINER_ICON_FILE. (value is ""icons/obj16/postcont_obj.gif"")
 	 */
-	private static final String POSTPONED_CONTAINER_ICON_FILE = "icons/obj16/postcont_obj.gif";
+	public static final String POSTPONED_CONTAINER_ICON_FILE = "icons/obj16/postcont_obj.gif";
 
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Delete Review Item"")
@@ -147,7 +147,7 @@ public class R4EUIPostponedContainer extends R4EUIReviewItem {
 		try {
 			revRegistry = RFSRegistryFactory.getRegistry(((R4EUIReviewBasic) this.getParent()).getReview());
 		} catch (ReviewsFileStorageException e1) {
-			Activator.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
+			R4EUIPlugin.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
 		}
 
 		final R4EFileContext fileContext = R4EUIModelController.FModelExt.createR4EFileContext(fItem);
@@ -167,7 +167,7 @@ public class R4EUIPostponedContainer extends R4EUIReviewItem {
 				final IFile targetFile = ResourceUtils.toIFile(rfileTargetVersion.getPlatformURI());
 				rfileTargetVersion.setResource(targetFile);
 			} catch (FileNotFoundException e) {
-				Activator.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				rfileTargetVersion.setResource(null);
 			}
 
@@ -177,7 +177,7 @@ public class R4EUIPostponedContainer extends R4EUIReviewItem {
 					final IFileRevision fileRev = revRegistry.getIFileRevision(null, rfileTargetVersion);
 					rfileTargetVersion.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
-					Activator.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 		}

@@ -23,7 +23,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
 
@@ -48,7 +48,7 @@ public class RemoveAllFiltersHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		Activator.Ftracer.traceInfo("Remove all filters");
+		R4EUIPlugin.Ftracer.traceInfo("Remove all filters");
 
 		//We need to preserve the expansion state and restore it afterwards
 		final Object[] elements = R4EUIModelController.getNavigatorView().getTreeViewer().getExpandedElements();
@@ -56,14 +56,14 @@ public class RemoveAllFiltersHandler extends AbstractHandler {
 		try {
 			((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).resetAllFilterActions();
 		} catch (NotDefinedException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (NotEnabledException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (NotHandledException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		}
 		R4EUIModelController.getNavigatorView().getTreeViewer().setExpandedElements(elements);
 		return null;

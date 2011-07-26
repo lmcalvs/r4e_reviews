@@ -19,7 +19,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.model.IWorkbenchAdapter;
@@ -70,8 +70,8 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IWorkb
 				return fFileVersion.getFileRevision().getStorage(null);
 			}
 		} catch (CoreException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		}
 		return null;
 	}
@@ -128,8 +128,8 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IWorkb
 				return fFileVersion.getFileRevision().getStorage(null).getFullPath().toString();
 			}
 		} catch (CoreException e) {
-			Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			Activator.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		}
 		return null;
 	}
@@ -153,8 +153,8 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IWorkb
 			try {
 				return fFileVersion.getFileRevision().getStorage(null);
 			} catch (CoreException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				Activator.getDefault().logError("Exception: " + e.toString(), e);
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			}
 		}
 		return super.getAdapter(aAdapter);

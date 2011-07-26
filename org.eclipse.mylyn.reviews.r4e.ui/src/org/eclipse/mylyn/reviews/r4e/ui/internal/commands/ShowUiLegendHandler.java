@@ -8,13 +8,13 @@
  * 
  * Description:
  * 
- * This class implements the navigator view toolbar command to expand all elements
- * of the review tree
+ * This class implements the navigator view toolbar command to show the UI legend dialog
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
  *   
  ******************************************************************************/
+
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -24,14 +24,15 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.R4EUILegendDialog;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ExpandAllHandler extends AbstractHandler {
+public class ShowUiLegendHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -48,12 +49,15 @@ public class ExpandAllHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
 
-		final UIJob job = new UIJob("Expanding All Elements...") {
+		final UIJob job = new UIJob("Show UI Legend") {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
-				//Expand tree (all levels)
-				R4EUIPlugin.Ftracer.traceInfo("Expanding whole tree");
-				R4EUIModelController.getNavigatorView().getTreeViewer().expandAll();
+				//Collapse tree (all levels)
+				R4EUIPlugin.Ftracer.traceInfo("Showing UI Legend");
+				final R4EUILegendDialog uiLegendDialog = new R4EUILegendDialog(PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow()
+						.getShell());
+				uiLegendDialog.open();
 				return Status.OK_STATUS;
 			}
 		};

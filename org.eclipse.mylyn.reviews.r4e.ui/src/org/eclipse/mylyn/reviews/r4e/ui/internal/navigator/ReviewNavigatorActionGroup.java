@@ -27,7 +27,7 @@ import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.ReviewTypeComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AnomaliesMyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AnomaliesOnlyFilter;
@@ -135,7 +135,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	public ReviewNavigatorActionGroup(ReviewNavigatorView aView) {
 		super();
-		Activator.Ftracer.traceInfo("Create Action Group for view " + aView.getPartName());
+		R4EUIPlugin.Ftracer.traceInfo("Create Action Group for view " + aView.getPartName());
 		fView = aView;
 		fCommandService = (ICommandService) fView.getSite().getWorkbenchWindow().getService(ICommandService.class);
 		fHandlerService = (IHandlerService) fView.getSite().getWorkbenchWindow().getService(IHandlerService.class);

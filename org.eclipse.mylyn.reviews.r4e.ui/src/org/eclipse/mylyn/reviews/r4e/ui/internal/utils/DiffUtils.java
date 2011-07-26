@@ -34,7 +34,7 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Position;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
@@ -55,7 +55,7 @@ public class DiffUtils {
 	/**
 	 * Field DIFF_RANGE_CATEGORY. (value is "Activator.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"")
 	 */
-	private static final String DIFF_RANGE_CATEGORY = Activator.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"; //$NON-NLS-1$
+	private static final String DIFF_RANGE_CATEGORY = R4EUIPlugin.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"; //$NON-NLS-1$
 
 	/** Selects between smartTokenDiff and mergingTokenDiff */
 	private static final boolean USE_MERGING_TOKEN_DIFF = false;

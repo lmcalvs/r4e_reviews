@@ -39,7 +39,7 @@ public class R4EUIRule extends R4EUIModelElement {
 	/**
 	 * Field fSelectionFile. (value is ""icons/obj16/rule_obj.gif"")
 	 */
-	private static final String RULE_ICON_FILE = "icons/obj16/rule_obj.gif";
+	public static final String RULE_ICON_FILE = "icons/obj16/rule_obj.gif";
 
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Disable Rule"")

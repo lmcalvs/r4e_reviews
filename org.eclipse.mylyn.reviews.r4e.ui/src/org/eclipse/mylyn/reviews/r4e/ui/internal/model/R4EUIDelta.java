@@ -33,7 +33,7 @@ public class R4EUIDelta extends R4EUIContent {
 	/**
 	 * Field DELTA_ICON_FILE. (value is ""icons/obj16/sel_obj.gif"")
 	 */
-	private static final String DELTA_ICON_FILE = "icons/obj16/delta_obj.gif";
+	public static final String DELTA_ICON_FILE = "icons/obj16/delta_obj.gif";
 
 	// ------------------------------------------------------------------------
 	// Constructors

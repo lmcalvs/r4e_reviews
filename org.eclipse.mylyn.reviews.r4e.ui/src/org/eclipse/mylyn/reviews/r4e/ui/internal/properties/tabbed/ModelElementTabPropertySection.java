@@ -154,8 +154,8 @@ public class ModelElementTabPropertySection extends AbstractPropertySection impl
 	 *            int
 	 */
 	public static void scroll(ScrolledComposite aComp, int aXOffset, int aYOffset) {
-		Point origin = aComp.getOrigin();
-		Point contentSize = aComp.getContent().getSize();
+		final Point origin = aComp.getOrigin();
+		final Point contentSize = aComp.getContent().getSize();
 		int xorigin = origin.x + aXOffset;
 		int yorigin = origin.y + aYOffset;
 		xorigin = Math.max(xorigin, 0);
@@ -175,8 +175,8 @@ public class ModelElementTabPropertySection extends AbstractPropertySection impl
 		aCombo.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseScrolled(MouseEvent event) {
 				@SuppressWarnings("restriction")
-				ScrolledComposite form = FormUtil.getScrolledComposite(aCombo);
-				if (form != null && form.getVerticalBar() != null) {
+				final ScrolledComposite form = FormUtil.getScrolledComposite(aCombo);
+				if (null != form && null != form.getVerticalBar()) {
 					if (event.count < 0) {
 						// scroll form down
 						scroll(form, 0, form.getVerticalBar().getIncrement());

@@ -30,7 +30,7 @@ import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Position;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
@@ -62,7 +62,7 @@ public class Diff {
 	 * Field DIFF_RANGE_CATEGORY.
 	 * (value is "Activator.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"")
 	 */
-	private static final String DIFF_RANGE_CATEGORY = Activator.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"; //$NON-NLS-1$
+	private static final String DIFF_RANGE_CATEGORY = R4EUIPlugin.PLUGIN_ID + ".DIFF_RANGE_CATEGORY"; //$NON-NLS-1$
 
 	/**
 	 * Field fConfig.

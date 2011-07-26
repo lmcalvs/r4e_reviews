@@ -24,7 +24,7 @@ import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelListener;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelEvent;
@@ -124,7 +124,7 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(Viewer, Object, Object)
 	 */
 	public void inputChanged(Viewer aViewer, Object aOldInput, Object aNewInput) {
-		Activator.Ftracer.traceInfo("Input changed");
+		R4EUIPlugin.Ftracer.traceInfo("Input changed");
 		fViewer = (TreeViewer) aViewer;
 		if (null != aOldInput) {
 			removeListenerFrom((IR4EUIModelElement) aOldInput);
@@ -142,7 +142,7 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelListener#addEvent(R4EUIModelEvent)
 	 */
 	public void addEvent(R4EUIModelEvent aEvent) {
-		Activator.Ftracer.traceInfo("Add event received for element "
+		R4EUIPlugin.Ftracer.traceInfo("Add event received for element "
 				+ ((IR4EUIModelElement) aEvent.receiver()).getName());
 		fViewer.refresh(((IR4EUIModelElement) aEvent.receiver()).getParent(), false);
 	}
@@ -155,7 +155,7 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelListener#removeEvent(R4EUIModelEvent)
 	 */
 	public void removeEvent(R4EUIModelEvent aEvent) {
-		Activator.Ftracer.traceInfo("Remove event received for element "
+		R4EUIPlugin.Ftracer.traceInfo("Remove event received for element "
 				+ ((IR4EUIModelElement) aEvent.receiver()).getName());
 		fViewer.refresh(((IR4EUIModelElement) aEvent.receiver()).getParent(), false);
 	}
@@ -172,7 +172,7 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 			return;
 		}
 		final IR4EUIModelElement affectedObject = (IR4EUIModelElement) aEvent.receiver();
-		Activator.Ftracer.traceInfo("Changed event received for element " + affectedObject.getName());
+		R4EUIPlugin.Ftracer.traceInfo("Changed event received for element " + affectedObject.getName());
 		if (affectedObject instanceof R4EUIReviewGroup || affectedObject instanceof R4EUIReviewBasic
 				|| affectedObject instanceof R4EUIRuleSet) {
 

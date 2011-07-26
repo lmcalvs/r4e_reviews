@@ -31,7 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ParticipantInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
@@ -49,7 +49,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	/**
 	 * Field fSelectionContainerFile. (value is ""icons/obj16/partcont_obj.png"")
 	 */
-	private static final String PARTICIPANT_CONTAINER_ICON_FILE = "icons/obj16/partcont_obj.png";
+	public static final String PARTICIPANT_CONTAINER_ICON_FILE = "icons/obj16/partcont_obj.png";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Participant"")
@@ -203,7 +203,9 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 			final int participantsSize = participants.size();
 			for (int i = 0; i < participantsSize; i++) {
 				if (participants.get(i).isEnabled()
-						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						|| R4EUIPlugin.getDefault()
+								.getPreferenceStore()
+								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					addChildren(new R4EUIParticipant(this, participants.get(i)));
 				}
 			}
@@ -286,7 +288,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 		//Remove element from UI if the show disabled element option is off
-		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fParticipants.remove(removedElement);
 			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);

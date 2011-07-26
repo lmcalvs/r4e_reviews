@@ -31,7 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.RuleAreaInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
@@ -53,12 +53,12 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	/**
 	 * Field RULE_SET_ICON_FILE. (value is ""icons/obj16/ruleset_obj.gif"")
 	 */
-	private static final String RULE_SET_ICON_FILE = "icons/obj16/ruleset_obj.gif";
+	public static final String RULE_SET_ICON_FILE = "icons/obj16/ruleset_obj.gif";
 
 	/**
 	 * Field RULE_SET_CLOSED_ICON_FILE. (value is ""icons/obj16/rulesetclsd_obj.gif"")
 	 */
-	private static final String RULE_SET_CLOSED_ICON_FILE = "icons/obj16/rulesetclsd_obj.gif";
+	public static final String RULE_SET_CLOSED_ICON_FILE = "icons/obj16/rulesetclsd_obj.gif";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Rule Area"")
@@ -306,7 +306,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 			final int areaSize = areas.size();
 			for (int i = 0; i < areaSize; i++) {
 				if (areas.get(i).isEnabled()
-						|| Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						|| R4EUIPlugin.getDefault()
+								.getPreferenceStore()
+								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					uiArea = new R4EUIRuleArea(this, areas.get(i));
 					addChildren(uiArea);
 					if (uiArea.isEnabled()) {
@@ -414,7 +416,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 		//Remove element from UI if the show disabled element option is off
-		if (!(Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fAreas.remove(removedElement);
 			aChildToRemove.removeListeners();
 			fireRemove(aChildToRemove);

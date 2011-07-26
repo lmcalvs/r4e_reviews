@@ -23,7 +23,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
@@ -68,11 +68,11 @@ public class ReviewsParticipantFilterHandler extends AbstractHandler {
 		boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());
 
 		if (!oldValue) {
-			Activator.Ftracer.traceInfo("Apply participant filter for participant " + filter.getParticipant()
+			R4EUIPlugin.Ftracer.traceInfo("Apply participant filter for participant " + filter.getParticipant()
 					+ " to ReviewNavigator");
 			viewer.addFilter(filter);
 		} else {
-			Activator.Ftracer.traceInfo("Remove participant filter from ReviewNavigator");
+			R4EUIPlugin.Ftracer.traceInfo("Remove participant filter from ReviewNavigator");
 			viewer.removeFilter(filter);
 			filter.setParticipant("");
 		}

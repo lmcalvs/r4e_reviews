@@ -21,6 +21,8 @@ package org.eclipse.mylyn.reviews.r4e.ui;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.forms.FormColors;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -30,7 +32,7 @@ import org.osgi.framework.BundleContext;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class Activator extends AbstractUIPlugin {
+public class R4EUIPlugin extends AbstractUIPlugin {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -48,12 +50,17 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * Field Plugin.
 	 */
-	private static Activator Fplugin; // The shared instance
+	private static R4EUIPlugin Fplugin; // The shared instance
 
 	/**
 	 * Field Tracer.
 	 */
 	public static Tracer Ftracer;
+
+	/**
+	 * Field fFormColors.
+	 */
+	private FormColors fFormColors; // shared colors for all forms
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -62,7 +69,7 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * The constructor
 	 */
-	public Activator() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.enforceTheSingletonPropertyWithAPrivateConstructor, emptyMethod
+	public R4EUIPlugin() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.enforceTheSingletonPropertyWithAPrivateConstructor, emptyMethod
 		//Empty constructor
 	}
 
@@ -97,9 +104,31 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	@Override
 	public void stop(BundleContext aContext) throws Exception { // $codepro.audit.disable declaredExceptions
+
+		//Dispose default colors
+		if (null != fFormColors) {
+			fFormColors.dispose();
+			fFormColors = null;
+		}
+
 		Fplugin = null;
 		super.stop(aContext);
 		Ftracer.traceDebug("plugin stopped");
+	}
+
+	/**
+	 * Method getFormColors.
+	 * 
+	 * @param display
+	 *            Display
+	 * @return FormColors
+	 */
+	public FormColors getFormColors(Display display) {
+		if (null == fFormColors) {
+			fFormColors = new FormColors(display);
+			fFormColors.markShared();
+		}
+		return fFormColors;
 	}
 
 	/**
@@ -107,7 +136,7 @@ public class Activator extends AbstractUIPlugin {
 	 * 
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static R4EUIPlugin getDefault() {
 		return Fplugin;
 	}
 

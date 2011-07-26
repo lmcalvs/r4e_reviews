@@ -54,12 +54,12 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	/**
 	 * Field REVIEW_FORMAL_ICON_FILE. (value is ""icons/obj16/reviewfrm_obj.gif"")
 	 */
-	private static final String REVIEW_FORMAL_ICON_FILE = "icons/obj16/reviewfrm_obj.gif";
+	public static final String REVIEW_FORMAL_ICON_FILE = "icons/obj16/reviewfrm_obj.gif";
 
 	/**
 	 * Field REVIEW_FORMAL_CLOSED_ICON_FILE. (value is ""icons/obj16/revfrmclsd_obj.gif"")
 	 */
-	private static final String REVIEW_FORMAL_CLOSED_ICON_FILE = "icons/obj16/revfrmclsd_obj.gif";
+	public static final String REVIEW_FORMAL_CLOSED_ICON_FILE = "icons/obj16/revfrmclsd_obj.gif";
 
 	/**
 	 * Field REVIEW_PHASE_REWORK. (value is ""REWORK"")

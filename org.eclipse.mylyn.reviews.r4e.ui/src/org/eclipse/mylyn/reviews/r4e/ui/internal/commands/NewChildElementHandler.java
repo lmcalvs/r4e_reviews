@@ -31,7 +31,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -71,7 +71,7 @@ public class NewChildElementHandler extends AbstractHandler {
 			try {
 				final ReviewComponent tempModelComponent = element.createChildModelDataElement();
 				if (null != tempModelComponent) {
-					Activator.Ftracer.traceInfo("Adding child to element " + element.getName());
+					R4EUIPlugin.Ftracer.traceInfo("Adding child to element " + element.getName());
 
 					//Create actual model element
 					final UIJob job = new UIJob("Adding New Child Element...") {
@@ -124,7 +124,7 @@ public class NewChildElementHandler extends AbstractHandler {
 						event).getService(IEvaluationService.class);
 				evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen");
 			} catch (ExecutionException e) {
-				Activator.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			}
 		}
 		return null;

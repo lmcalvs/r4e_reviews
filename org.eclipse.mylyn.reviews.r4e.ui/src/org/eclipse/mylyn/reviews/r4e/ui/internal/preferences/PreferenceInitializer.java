@@ -20,7 +20,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.mylyn.reviews.r4e.ui.Activator;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 
 /**
  * Class used to initialize default preference values.
@@ -41,7 +41,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 
 		//Set default User ID if none already stored in preferences
 		final String defaultUserId = System.getProperty("user.name");
