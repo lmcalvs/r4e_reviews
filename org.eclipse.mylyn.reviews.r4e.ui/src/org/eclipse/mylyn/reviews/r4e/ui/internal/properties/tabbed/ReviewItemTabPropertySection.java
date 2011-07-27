@@ -51,20 +51,6 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 public class ReviewItemTabPropertySection extends ModelElementTabPropertySection {
 
 	// ------------------------------------------------------------------------
-	// Constants
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Field CHANGE_ID_LABEL. (value is ""Change Id: "")
-	 */
-	private static final String CHANGE_ID_LABEL = "Change Id: ";
-
-	/**
-	 * Field DATE_SUBMITTED_LABEL. (value is ""Date Submitted: "")
-	 */
-	private static final String DATE_SUBMITTED_LABEL = "Date Submitted: ";
-
-	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
 
@@ -180,7 +166,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		fRepositoryText.setToolTipText(R4EUIConstants.REVIEW_ITEM_CHANGE_ID_TOOLTIP);
 		fRepositoryText.setLayoutData(data);
 
-		final CLabel repositoryLabel = widgetFactory.createCLabel(composite, CHANGE_ID_LABEL);
+		final CLabel repositoryLabel = widgetFactory.createCLabel(composite, R4EUIConstants.CHANGE_ID_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fRepositoryText, -ITabbedPropertyConstants.HSPACE);
@@ -197,7 +183,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		fDateSubmitted.setToolTipText(R4EUIConstants.REVIEW_ITEM_DATE_SUBMITTED_TOOLTIP);
 		fDateSubmitted.setLayoutData(data);
 
-		final CLabel dateSubmittedLabel = widgetFactory.createCLabel(composite, DATE_SUBMITTED_LABEL);
+		final CLabel dateSubmittedLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DATE_SUBMITTED_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fDateSubmitted, -ITabbedPropertyConstants.HSPACE);

@@ -657,6 +657,14 @@ public class MailServicesProxy {
 		return msgBody.toString();
 	}
 
+	/**
+	 * Method addElementInfo
+	 * 
+	 * @param aMsgBody
+	 *            StringBuilder
+	 * @param aSource
+	 *            Object
+	 */
 	private static void addElementInfo(StringBuilder aMsgBody, Object aSource) {
 		if (aSource instanceof R4EUIPostponedAnomaly) {
 			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIPostponedAnomaly) aSource).getParent()).getTargetFileVersion();

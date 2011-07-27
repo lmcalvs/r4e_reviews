@@ -255,8 +255,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 			if (null != validateResult) {
 				//Validate of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Invalid input folder",
-						new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+						"Invalid input folder", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult,
+								null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
@@ -266,8 +266,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 			if (null != validateResult) {
 				//Validate of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Invalid input folder",
-						new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+						"Invalid input folder", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult,
+								null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
@@ -537,6 +537,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * 
 	 * @param parent
 	 *            the parent composite
+	 * @return Control
 	 */
 	@Override
 	protected Control createButtonBar(Composite parent) {

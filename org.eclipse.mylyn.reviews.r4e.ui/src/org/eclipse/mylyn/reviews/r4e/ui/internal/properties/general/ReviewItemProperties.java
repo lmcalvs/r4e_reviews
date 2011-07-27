@@ -45,6 +45,17 @@ public class ReviewItemProperties extends ModelElementProperties {
 			REVIEW_ITEM_AUTHOR_ID, R4EUIConstants.AUTHOR_LABEL);
 
 	/**
+	 * Field REVIEW_ITEM_AUTHOR_REP_ID. (value is ""reviewItemElement.authorRep"")
+	 */
+	private static final String REVIEW_ITEM_AUTHOR_REP_ID = "reviewItemElement.authorRep";
+
+	/**
+	 * Field REVIEW_ITEM_AUTHOR_REP_PROPERTY_DESCRIPTOR.
+	 */
+	private static final PropertyDescriptor REVIEW_ITEM_AUTHOR_REP_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			REVIEW_ITEM_AUTHOR_REP_ID, R4EUIConstants.EMAIL_LABEL);
+
+	/**
 	 * Field REVIEW_ITEM_PROJECT_ID. (value is ""reviewItemElement.project"")
 	 */
 	private static final String REVIEW_ITEM_PROJECT_ID = "reviewItemElement.project";
@@ -54,6 +65,28 @@ public class ReviewItemProperties extends ModelElementProperties {
 	 */
 	private static final PropertyDescriptor REVIEW_ITEM_PROJECT_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			REVIEW_ITEM_PROJECT_ID, R4EUIConstants.PROJECT_LABEL);
+
+	/**
+	 * Field REVIEW_ITEM_CHANGE_ID. (value is ""reviewItemElement.ChangeId"")
+	 */
+	private static final String REVIEW_ITEM_CHANGE_ID = "reviewItemElement.ChangeId";
+
+	/**
+	 * Field REVIEW_ITEM_CHANGE_ID_PROPERTY_DESCRIPTOR.
+	 */
+	private static final PropertyDescriptor REVIEW_ITEM_CHANGE_ID_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			REVIEW_ITEM_CHANGE_ID, R4EUIConstants.CHANGE_ID_LABEL);
+
+	/**
+	 * Field REVIEW_ITEM_DATE_SUBMITTED_ID. (value is ""reviewItemElement.dateSubmitted"")
+	 */
+	private static final String REVIEW_ITEM_DATE_SUBMITTED_ID = "reviewItemElement.dateSubmitted";
+
+	/**
+	 * Field REVIEW_ITEM_DESCRIPTION_PROPERTY_DESCRIPTOR.
+	 */
+	private static final PropertyDescriptor REVIEW_ITEM_DATE_SUBMITTED_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			REVIEW_ITEM_DATE_SUBMITTED_ID, R4EUIConstants.DATE_SUBMITTED_LABEL);
 
 	/**
 	 * Field REVIEW_ITEM_DESCRIPTION_ID. (value is ""reviewItemElement.description"")
@@ -70,7 +103,9 @@ public class ReviewItemProperties extends ModelElementProperties {
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { REVIEW_ITEM_AUTHOR_PROPERTY_DESCRIPTOR,
-			REVIEW_ITEM_PROJECT_PROPERTY_DESCRIPTOR, REVIEW_ITEM_DESCRIPTION_PROPERTY_DESCRIPTOR };
+			REVIEW_ITEM_AUTHOR_REP_PROPERTY_DESCRIPTOR, REVIEW_ITEM_PROJECT_PROPERTY_DESCRIPTOR,
+			REVIEW_ITEM_CHANGE_ID_PROPERTY_DESCRIPTOR, REVIEW_ITEM_DATE_SUBMITTED_PROPERTY_DESCRIPTOR,
+			REVIEW_ITEM_DESCRIPTION_PROPERTY_DESCRIPTOR };
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -113,8 +148,14 @@ public class ReviewItemProperties extends ModelElementProperties {
 	public Object getPropertyValue(Object aId) {
 		if (REVIEW_ITEM_AUTHOR_ID.equals(aId)) {
 			return ((R4EUIReviewItem) getElement()).getItem().getAddedById();
+		} else if (REVIEW_ITEM_AUTHOR_REP_ID.equals(aId)) {
+			return ((R4EUIReviewItem) getElement()).getItem().getAuthorRep();
 		} else if (REVIEW_ITEM_PROJECT_ID.equals(aId)) {
 			return ((R4EUIReviewItem) getElement()).getItem().getProjectURIs();
+		} else if (REVIEW_ITEM_CHANGE_ID.equals(aId)) {
+			return ((R4EUIReviewItem) getElement()).getItem().getRepositoryRef();
+		} else if (REVIEW_ITEM_DATE_SUBMITTED_ID.equals(aId)) {
+			return ((R4EUIReviewItem) getElement()).getItem().getSubmitted();
 		} else if (REVIEW_ITEM_DESCRIPTION_ID.equals(aId)) {
 			return ((R4EUIReviewItem) getElement()).getItem().getDescription();
 		}

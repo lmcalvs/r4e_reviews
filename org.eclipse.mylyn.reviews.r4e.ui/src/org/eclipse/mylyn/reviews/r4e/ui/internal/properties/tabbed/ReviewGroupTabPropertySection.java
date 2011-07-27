@@ -1,5 +1,6 @@
+// $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity, com.instantiations.assist.eclipse.analysis.instanceFieldSecurity, sourceLength, explicitThisUsage
 /*******************************************************************************
- * Copyright (c) 2011 Ericsson Research Canada
+ * Copyright (c) 2010 Ericsson Research Canada
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -8,13 +9,14 @@
  * 
  * Description:
  * 
- * This class implements the tabbed property section for the additional properties
- * for the Review Group model element
+ * This class implements the tabbed property section for the Review Group model 
+ * element
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
  *   
  ******************************************************************************/
+
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
 import java.util.ArrayList;
@@ -35,13 +37,19 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.forms.events.ExpansionAdapter;
+import org.eclipse.ui.forms.events.ExpansionEvent;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -50,11 +58,40 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertySection implements IEditableListListener {
+public class ReviewGroupTabPropertySection extends ModelElementTabPropertySection implements IEditableListListener {
+
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Field PROJ_COMP_SECTION_LABEL. (value is ""Projects & Components"")
+	 */
+	private static final String PROJ_COMP_SECTION_LABEL = "Projects and Components";
+
+	/**
+	 * Field RULE_SETS_SECTION_LABEL. (value is ""Rule Sets"")
+	 */
+	private static final String RULE_SETS_SECTION_LABEL = "Rule Sets";
 
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Field fNameText.
+	 */
+	private CLabel fNameText = null;
+
+	/**
+	 * Field fFolderText.
+	 */
+	private CLabel fFilePathText = null;
+
+	/**
+	 * Field fDescriptionText.
+	 */
+	protected Text fDescriptionText = null;
 
 	/**
 	 * Field fAvailableProjects.
@@ -118,50 +155,92 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 	 */
 	@Override
 	public void createControls(Composite parent, TabbedPropertySheetPage aTabbedPropertySheetPage) {
-		super.createControls(parent.getParent(), aTabbedPropertySheetPage);
+		super.createControls(parent, aTabbedPropertySheetPage);
 
+		//Tell element to build its own detailed tab layout
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
 		final Composite composite = widgetFactory.createFlatFormComposite(parent);
 		FormData data = null;
 
-		//Projects
+		//Group Name (Read-only for now)
+		fNameText = widgetFactory.createCLabel(composite, "");
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
-		fAvailableProjects = new EditableListWidget(widgetFactory, composite, data, this, 1, Text.class, null);
-		fAvailableProjects.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
+		fNameText.setToolTipText(R4EUIConstants.REVIEW_GROUP_NAME_TOOLTIP);
+		fNameText.setLayoutData(data);
 
-		final CLabel projectsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AVAILABLE_PROJECTS_LABEL);
+		final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.NAME_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(fAvailableProjects.getComposite(), -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fAvailableProjects.getComposite(), 0, SWT.TOP);
-		projectsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
-		projectsLabel.setLayoutData(data);
+		data.right = new FormAttachment(fNameText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
+		nameLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_NAME_TOOLTIP);
+		nameLabel.setLayoutData(data);
 
-		//Components
+		//Group Folder (read-only)
+		fFilePathText = widgetFactory.createCLabel(composite, "");
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fAvailableProjects.getComposite(), ITabbedPropertyConstants.VSPACE);
-		fAvailableComponents = new EditableListWidget(widgetFactory, composite, data, this, 2, Text.class, null);
-		fAvailableComponents.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
+		data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+		fFilePathText.setToolTipText(R4EUIConstants.REVIEW_GROUP_FILE_PATH_TOOLTIP);
+		fFilePathText.setLayoutData(data);
 
-		final CLabel componentsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.AVAILABLE_COMPONENTS_LABEL);
+		final CLabel folderLabel = widgetFactory.createCLabel(composite, R4EUIConstants.FILE_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(fAvailableComponents.getComposite(), -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fAvailableComponents.getComposite(), 0, SWT.TOP);
-		componentsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
-		componentsLabel.setLayoutData(data);
+		data.right = new FormAttachment(fFilePathText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fFilePathText, 0, SWT.CENTER);
+		folderLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_FILE_PATH_TOOLTIP);
+		folderLabel.setLayoutData(data);
+
+		//Group Description
+		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fFilePathText, ITabbedPropertyConstants.VSPACE);
+		fDescriptionText.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
+		fDescriptionText.setLayoutData(data);
+		fDescriptionText.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+						modelGroup.setDescription(fDescriptionText.getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
+			}
+
+			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
+				//Nothing to do
+			}
+		});
+		UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
+
+		final CLabel descriptionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DESCRIPTION_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fDescriptionText, 0, SWT.TOP);
+		descriptionLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
+		descriptionLabel.setLayoutData(data);
 
 		//Entry Criteria
 		fDefaultEntryCriteriaText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fAvailableComponents.getComposite(), ITabbedPropertyConstants.VSPACE);
+		data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
 		fDefaultEntryCriteriaText.setToolTipText(R4EUIConstants.REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP);
 		fDefaultEntryCriteriaText.setLayoutData(data);
 		fDefaultEntryCriteriaText.addFocusListener(new FocusListener() {
@@ -196,22 +275,130 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 		entryCriteriaLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP);
 		entryCriteriaLabel.setLayoutData(data);
 
-		//Rule Sets
-		data = new FormData();
-		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		createRuleSetSection(widgetFactory, composite, createProjectCompSection(widgetFactory, composite));
+	}
+
+	/**
+	 * Method createProjectCompSection.
+	 * 
+	 * @param aWidgetFactory
+	 *            TabbedPropertySheetWidgetFactory
+	 * @param aComposite
+	 *            Composite
+	 * @return Composite
+	 */
+	private Composite createProjectCompSection(TabbedPropertySheetWidgetFactory aWidgetFactory,
+			final Composite aComposite) {
+		//Project & Components section
+		final ExpandableComposite projCompSection = aWidgetFactory.createExpandableComposite(aComposite,
+				ExpandableComposite.TWISTIE);
+		final FormData data = new FormData();
+		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fDefaultEntryCriteriaText, ITabbedPropertyConstants.VSPACE);
-		fRuleSetLocations = new EditableListWidget(widgetFactory, composite, data, this, 3, CCombo.class, null);
-		fRuleSetLocations.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
+		projCompSection.setLayoutData(data);
+		projCompSection.setText(PROJ_COMP_SECTION_LABEL);
+		projCompSection.addExpansionListener(new ExpansionAdapter() {
+			@Override
+			public void expansionStateChanged(ExpansionEvent e) {
+				final ScrolledComposite scrolledParent = (ScrolledComposite) aComposite.getParent()
+						.getParent()
+						.getParent()
+						.getParent()
+						.getParent();
+				scrolledParent.setMinSize(aComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				scrolledParent.layout(true, true);
+			}
+		});
+		projCompSection.setLayout(new GridLayout(1, false));
 
-		final CLabel ruleSetsLabel = widgetFactory.createCLabel(composite, R4EUIConstants.RULE_SETS_LABEL);
-		data = new FormData();
+		final Composite projCompSectionClient = aWidgetFactory.createComposite(projCompSection);
+		projCompSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		projCompSectionClient.setLayout(new GridLayout(4, false));
+		projCompSection.setClient(projCompSectionClient);
+
+		//Projects
+		final CLabel projectsLabel = aWidgetFactory.createCLabel(projCompSectionClient,
+				R4EUIConstants.AVAILABLE_PROJECTS_LABEL);
+		GridData gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		projectsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
+		projectsLabel.setLayoutData(gridData);
+
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fAvailableProjects = new EditableListWidget(aWidgetFactory, projCompSectionClient, gridData, this, 1,
+				Text.class, null);
+		fAvailableProjects.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
+
+		//Components
+		final CLabel componentsLabel = aWidgetFactory.createCLabel(projCompSectionClient,
+				R4EUIConstants.AVAILABLE_COMPONENTS_LABEL);
+		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		componentsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
+		componentsLabel.setLayoutData(gridData);
+
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fAvailableComponents = new EditableListWidget(aWidgetFactory, projCompSectionClient, gridData, this, 2,
+				Text.class, null);
+		fAvailableComponents.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
+		return projCompSection;
+	}
+
+	/**
+	 * Method createRuleSetSection.
+	 * 
+	 * @param aWidgetFactory
+	 *            TabbedPropertySheetWidgetFactory
+	 * @param aComposite
+	 *            Composite
+	 * @param aTopComposite
+	 *            Composite
+	 */
+	private void createRuleSetSection(TabbedPropertySheetWidgetFactory aWidgetFactory, final Composite aComposite,
+			final Composite aTopComposite) {
+		//Rule Sets section
+		final ExpandableComposite ruleSetsSection = aWidgetFactory.createExpandableComposite(aComposite,
+				ExpandableComposite.TWISTIE);
+		final FormData data = new FormData();
 		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(fRuleSetLocations.getComposite(), -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fRuleSetLocations.getComposite(), 0, SWT.TOP);
-		ruleSetsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
-		ruleSetsLabel.setLayoutData(data);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(aTopComposite, ITabbedPropertyConstants.VSPACE);
+		ruleSetsSection.setLayoutData(data);
+		ruleSetsSection.setText(RULE_SETS_SECTION_LABEL);
+		ruleSetsSection.addExpansionListener(new ExpansionAdapter() {
+			@Override
+			public void expansionStateChanged(ExpansionEvent e) {
+				final ScrolledComposite scrolledParent = (ScrolledComposite) aComposite.getParent()
+						.getParent()
+						.getParent()
+						.getParent()
+						.getParent();
+				scrolledParent.setMinSize(aComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				scrolledParent.layout(true, true);
+			}
+		});
+		ruleSetsSection.setLayout(new GridLayout(1, false));
 
+		final Composite ruleSetSectionClient = aWidgetFactory.createComposite(ruleSetsSection);
+		ruleSetSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		ruleSetSectionClient.setLayout(new GridLayout(4, false));
+		ruleSetsSection.setClient(ruleSetSectionClient);
+
+		//Rule Sets
+		final CLabel ruleSetsLabel = aWidgetFactory.createCLabel(ruleSetSectionClient, R4EUIConstants.RULE_SETS_LABEL);
+		GridData gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		ruleSetsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
+		ruleSetsLabel.setLayoutData(gridData);
+
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fRuleSetLocations = new EditableListWidget(aWidgetFactory, ruleSetSectionClient, gridData, this, 3,
+				CCombo.class, null);
+		fRuleSetLocations.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
 	}
 
 	/**
@@ -222,7 +409,21 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 	@Override
 	public void refresh() {
 		fRefreshInProgress = true;
-		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getGroup();
+		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
+		fNameText.setText(modelGroup.getName());
+		if (null != ((R4EUIReviewGroup) fProperties.getElement()).getGroup().eResource()) {
+			fFilePathText.setText(((R4EUIReviewGroup) fProperties.getElement()).getGroup()
+					.eResource()
+					.getURI()
+					.toFileString());
+		} else {
+			fFilePathText.setText("");
+		}
+		if (null != modelGroup.getDescription()) {
+			fDescriptionText.setText(modelGroup.getDescription());
+		} else {
+			fDescriptionText.setText("");
+		}
 
 		final String[] projects = (String[]) modelGroup.getAvailableProjects().toArray();
 		fAvailableProjects.removeAll();
@@ -303,12 +504,18 @@ public class ReviewGroupExtraTabPropertySection extends ModelElementTabPropertyS
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isJobInProgress() || (!((R4EUIReviewGroup) fProperties.getElement()).isOpen())) {
+		if (R4EUIModelController.isJobInProgress() || !((R4EUIReviewGroup) fProperties.getElement()).isOpen()) {
+			fNameText.setEnabled(false);
+			fFilePathText.setEnabled(false);
+			fDescriptionText.setEnabled(false);
 			fAvailableProjects.setEnabled(false);
 			fAvailableComponents.setEnabled(false);
 			fDefaultEntryCriteriaText.setEnabled(false);
 			fRuleSetLocations.setEnabled(false);
 		} else {
+			fNameText.setEnabled(true);
+			fFilePathText.setEnabled(true);
+			fDescriptionText.setEnabled(true);
 			fAvailableProjects.setEnabled(true);
 			fAvailableComponents.setEnabled(true);
 			fDefaultEntryCriteriaText.setEnabled(true);

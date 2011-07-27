@@ -484,9 +484,19 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String NO_VERSION_PROPERTY_MESSAGE = "(Not Present)";
 
 	/**
-	 * Field PROJECT_ID_LABEL. (value is ""Project Id: "")
+	 * Field PROJECT_LABEL. (value is ""Project Id: "")
 	 */
 	public static final String PROJECT_LABEL = "Project Id: ";
+
+	/**
+	 * Field CHANGE_ID_LABEL. (value is ""Change Id: "")
+	 */
+	public static final String CHANGE_ID_LABEL = "Change Id: ";
+
+	/**
+	 * Field DATE_SUBMITTED_LABEL. (value is ""Date Submitted: "")
+	 */
+	public static final String DATE_SUBMITTED_LABEL = "Date Submitted: ";
 
 	/**
 	 * Field PATH_LABEL. (value is ""Path: "")

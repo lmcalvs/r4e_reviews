@@ -194,8 +194,8 @@ public class RuleInputDialog extends FormDialog {
 			if (null != validateResult) {
 				//Validation of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"No input given for Rule Id", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult,
-								null), IStatus.ERROR);
+						"No input given for Rule Id", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+								validateResult, null), IStatus.ERROR);
 				dialog.open();
 				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
@@ -389,6 +389,7 @@ public class RuleInputDialog extends FormDialog {
 	 * 
 	 * @param parent
 	 *            the parent composite
+	 * @return Control
 	 */
 	@Override
 	protected Control createButtonBar(Composite parent) {

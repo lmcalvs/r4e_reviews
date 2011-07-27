@@ -558,7 +558,7 @@ public class R4EUILegendControl extends Composite {
 	 *            Composite
 	 */
 	private void createLinkHelpSection(Composite parent) {
-		TableWrapLayout layout = new TableWrapLayout();
+		final TableWrapLayout layout = new TableWrapLayout();
 		layout.verticalSpacing = 0;
 		layout.leftMargin = 0;
 		layout.rightMargin = 0;
@@ -569,7 +569,7 @@ public class R4EUILegendControl extends Composite {
 		hyperlinkClient.setLayout(layout);
 		hyperlinkClient.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
 
-		Hyperlink gettingStartedLink = toolkit.createHyperlink(hyperlinkClient, "See also R4E online help", SWT.WRAP);
+		final Hyperlink gettingStartedLink = toolkit.createHyperlink(hyperlinkClient, "See also R4E online help", SWT.WRAP);
 		gettingStartedLink.addHyperlinkListener(new IHyperlinkListener() {
 			public void linkActivated(HyperlinkEvent e) {
 				close();

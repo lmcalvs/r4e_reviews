@@ -587,6 +587,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * 
 	 * @param parent
 	 *            the parent composite
+	 * @return Control
 	 */
 	@Override
 	protected Control createButtonBar(Composite parent) {
