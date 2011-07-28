@@ -65,6 +65,12 @@
 		</ul>
 		<p>To enable full functionality, make sure these features/plugins are included in your current Eclipse installation </p>
 		<h3 id="Starting_R4E">Starting R4E</h3>
+		<p>R4E uses Eclipse Capabilities to manage its functionalities. In order to use R4E, its capabilities must be enabled. This can be done be enabling R4E in the Eclipse 
+			<i>Preferences-&gt;General-&gt;Capabilities</i> preference page. 
+		</p>
+		<p>
+			<img border="0" src="images/R4E_capabilities.png"/> 
+		</p>
 		<p>The start up R4E, show the Review Navigator View using the Eclipse Show View menu: </p>
 		<p>
 			<img border="0" src="images/R4E_show_view.png"/> 
@@ -91,7 +97,9 @@
 		<p>
 			<br/> 
 		</p>
-		<p>&nbsp; &nbsp;This is used to enter the current user details. The User ID is set by default to the login ID of the current session and can be modified to any String that can be used to identify the user. The User Email should be set to a valid email for the user. The E-mail address is used to notify the user informations about the reviews he is currently part of by Email, as configured in the SMTP Hosts Definitions section. Take note that if the LDAP Preferences are filled-in (see below) and a corresponding LDAP database can be resolved, then this field will be automatically be set based on the User ID entered.
+		<p>&nbsp; &nbsp;This is used to enter the current user details. The User ID is set by default to the login ID of the current session and can be modified to any String that can be used to identify the user. The User Email should be set to a valid email for the user. The E-mail address is used to notify the user informations about the reviews he is currently part of by Email, as configured in the SMTP Hosts Definitions section. Take note that if the LDAP Preferences are filled-in (see below) and a corresponding LDAP database can be resolved, then this field will be automatically be set based on the User ID entered. The 
+			<i>Create Delta Elements...</i> check box is used to control the display of file differences as elements in the Review Navigator.  The 
+			<i>Update Postponed Anomalies...</i> is used to automatically import outstanding anomalies that were set to postponed in previous versions of files included in the current review.  See Postponed Anomalies section below for more information.
 			<br/> 
 		</p>
 		<p>
@@ -142,7 +150,7 @@
 		</p>
 		<p>&nbsp; &nbsp;This is used to set-up default filters that will be applied to the Review Navigator view. See the Filters section below for the various filters descriptions. </p>
 		<p>
-			<br/> 
+			<br/>
 		</p>
 		<h3 id="R4E_LDAP_Settings">R4E LDAP Settings</h3>
 		<p>
@@ -369,7 +377,7 @@
 			<br/> 
 		</p>
 		<p>
-			<br/> 
+			<br/>
 		</p>
 		<h3 id="Tutorial_1:_Performing_a_Basic_Review">Tutorial 1: Performing a Basic Review</h3>
 		<p>This tutorial shows how to use R4E by going through a very simple Basic Review. It also introduces how to add Review Items from a Commit to the Version Contro System. </p>
@@ -403,8 +411,8 @@
 			<li>Once the Review is created, you will notice that new elements were added to the Navigator tree: The review itself, the global anomaly container, and the current user as a new participant to the review.</li>
 		</ul>
 		<ul>
-			<li>You can now browse through the R4E property view, which will appear as soon as you select a new element in the Navigator tree (unless the Link Properties View command is toggled off in the Review Navigator toolbar, in which case you should toggle it on). You will notice that the current participant roles in the Participant Extra Properties tab are set to 
-				<b>Organizer '''and '''Lead</b>. This is the default and it can be changed if needed. You will also notice that the General Properties tab for the review has the start date property set to when the review was created and that the end date property is set to 
+			<li>You can now browse through the R4E property view, which will appear as soon as you select a new element in the Navigator tree. You will notice that the current participant roles in the Participant Extra Properties tab are set to 
+				<b>Organizer '''and '''Lead</b>. This is the default and it can be changed if needed. Take note that the icons representing the participants in the Navigator View will change depending on the primary role of the participant.  You will also notice that the General Properties tab for the review has the start date property set to when the review was created and that the end date property is set to 
 				<i>(In Progress)</i> to indicates that the review is still going on.
 			</li>
 		</ul>
@@ -482,9 +490,9 @@
 		</p>
 		<ul>
 			<li>Now, let's pretend we are done and the anomaly that the anomaly we highlighted is dealt with. We can now mark this review as completed. To do this, select the Review Element and, in the R4E Properties view, set the 
-				<i>Exit Decision</i> property in the Extra tab to 
+				<i>Exit Decision</i> property to 
 				<i>Accepted</i>. Next set the 
-				<i>Phase</i> property in the General tab to 
+				<i>Phase</i> property in the to 
 				<i>Completed</i>.
 			</li>
 		</ul>
@@ -492,7 +500,7 @@
 			<li>The review is now completed and we are done with this tutorial.</li>
 		</ul>
 		<p>
-			<br/> 
+			<br/>
 		</p>
 		<h3 id="Tutorial_2:_Performing_an_Informal_Review">Tutorial 2: Performing an Informal Review</h3>
 		<p>This tutorial shows how to use R4E by going through a very simple Informal Review. It also introduces how to add Review Items manually, how to remove obsolete items from the Review Navigator view, and how to use Email notifications. </p>
@@ -649,7 +657,7 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>Now, in order to complete the review, we need to resolve the anomaly that was raised. Select the anomaly icon in the Review Navigator view and look at the R4E Properties view extra tab. We should see he following:</li>
+			<li>Now, in order to complete the review, we need to resolve the anomaly that was raised. Select the anomaly icon in the Review Navigator view and look at the R4E Properties view detailed tab. We should see he following:</li>
 		</ul>
 		<p>
 			<br/> 
@@ -689,13 +697,14 @@
 		<ul>
 			<li>Once we've entered a comment, we can now the set Anomaly state to 
 				<i>FIXED</i> by changing the 
-				<i>State ''combo box value in the R4E Properties view. Note that the ''Fixed by</i> filed gets automatically set to the current user. This can be changed to any of the participants if needed.
+				<i>State ''combo box value in the R4E Properties view. Note that the ''Fixed by</i> property (in the 
+				<i>Participant Details</i> expandable section) gets automatically set to the current user. This can be changed to any of the participants if needed.
 			</li>
 		</ul>
 		<ul>
 			<li>We can now complete the review as we've done in the previous tutorial, by setting the 
-				<i>Exit Decision</i> field in the Review R4E Properties view-&gt;Extra tab to 
-				<i>Accepted</i> and the Phase field in the Review R4E Properties view-&gt;Basic tab to 
+				<i>Exit Decision</i> field in the Review R4E Properties view-&gt;Detailed tab/Decision Information expandable section to 
+				<i>Accepted</i> and the Phase field in the Review R4E Properties view-&gt;Detailed tab to 
 				<i>COMPLETED</i>.
 			</li>
 		</ul>
@@ -717,15 +726,17 @@
 			<li>We are now done with this tutorial.</li>
 		</ul>
 		<p>
-			<br/> 
+			<br/>
 		</p>
 		<h3 id="Tutorial_3:_Performing_a_Formal_Review">Tutorial 3: Performing a Formal Review</h3>
 		<p>This tutorial shows how to use R4E by going through a very simple Formal Review. It also introduces how to work with Linked Anomalies, Design Rules, optional review parameters, review time tracking, and how to use Meetings Notifications. </p>
 		<ul>
-			<li>First we will add default porjects and components to our review group. Select the Review Group icon in the Review Navigator view and go to the Group extra properties tab in the R4E Properties view. Add Projects and Components to the Group by clicking on the 
+			<li>First we will add default projects and components to our review group. Select the Review Group icon in the Review Navigator view and go to the Group Detailed properties tab in the R4E Properties view. In the 
+				<i>Project and Components</i> expandable section, add Projects and Components to the Group by clicking on the 
 				<i>Add</i> buttons for the 
 				<i>Available Projects</i> and 
-				<i>Available Components</i> tables and typing in some values. We will also add a reference to the Rule Set we created in the setup.
+				<i>Available Components</i> tables and typing in some values. We will also add a reference to the Rule Set we created in the setup in the 
+				<i>Rule Sets</i> expandable section.
 			</li>
 		</ul>
 		<p>
@@ -758,7 +769,7 @@
 			<li>As in the other Review tutorials above, the Review Navigator tree is updated with the new elements.</li>
 		</ul>
 		<ul>
-			<li>If you look at the Review Properties General tab, you will notice that is display a 
+			<li>If you look at the Review Properties Detailed tab, you will notice that is display a 
 				<i>Phase Map</i> table. The phase map is only displayed for formal reviews and is used to track the progress of the review. At review creation, the ''PLANNING ''phase is the active one.
 			</li>
 		</ul>
@@ -795,7 +806,7 @@
 			<br/> 
 		</p>
 		<p>
-			<img border="0" src="images/TutorialNavigatorView1.png"/> 
+			<img border="0" src="images/TutorialNavigatorView2.png"/> 
 		</p>
 		<p>
 			<br/> 
@@ -809,7 +820,7 @@
 			<br/> 
 		</p>
 		<p>
-			<img border="0" src="images/TutorialAddParticipant.png"/> 
+			<img border="0" src="images/TutorialAddParticipant2.png"/> 
 		</p>
 		<p>
 			<br/> 
@@ -851,7 +862,7 @@
 			</li>
 		</ul>
 		<ul>
-			<li>Let's say we found that part of the modified code is not correct, we can select the Delta in the Review Navigatorc and directly writen an Anomaly on it by right-click on the Delta and using the 
+			<li>Let's say we found that part of the modified code is not correct, we can select the Delta in the Review Navigator and directly writen an Anomaly on it by right-click on the Delta and using the 
 				<i>New Linked Anomaly</i> command.
 			</li>
 		</ul>
@@ -879,7 +890,7 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>We are finished reviewing the files and we will now add the time we spent reviewing the files. We do this by selecting the participant element in the Review Navigator and going to its R4E Properties view Extra tab. In the 
+			<li>We are finished reviewing the files and we will now add the time we spent reviewing the files. We do this by selecting the participant element in the Review Navigator and going to its R4E Properties view Detailed tab, Time Management expandable section. In the 
 				<i>Time Spent</i> table, add the time we spent.
 			</li>
 		</ul>
@@ -952,7 +963,7 @@
 			<li>We are now done with this tutorial.</li>
 		</ul>
 		<p>
-			<br/> 
+			<br/>
 		</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>

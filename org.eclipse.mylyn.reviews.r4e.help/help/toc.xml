@@ -47,6 +47,7 @@
 			<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Lead" label="Lead"></topic>
 			<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Organizer" label="Organizer"></topic>
 			<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Participant" label="Participant"></topic>
+			<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Postponed_Anomaly" label="Postponed Anomaly"></topic>
 			<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Resource_Review_Item" label="Resource Review Item"></topic>
 			<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Reviewer" label="Reviewer"></topic>
 			<topic href="help/Reviews/R4E/User_Guide/Concepts.html#Review_Group" label="Review Group"></topic>
@@ -81,40 +82,28 @@
 			</topic>
 			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Handling_Design_Rules" label="Handling Design Rules">
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Rule_Set" label="Creating a Rule Set"></topic>
-				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Opening_an_Existing_Rule_Set" label="Opening an Existing Rule Set"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Importing_an_Existing_Rule_Set" label="Importing an Existing Rule Set"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Rule_Area" label="Creating a Rule Area"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Rule_Violation" label="Creating a Rule Violation"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Rule" label="Creating a Rule"></topic>
 			</topic>
 			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Editors" label="Working with Editors"></topic>
 			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_R4E_Properties" label="Working with R4E Properties">
-				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Review_Groups_Properties" label="Working with Review Groups Properties">
-					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#General_Properties" label="General Properties"></topic>
-					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Extra_Properties" label="Extra Properties"></topic>
-				</topic>
-				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Reviews_Properties" label="Working with Reviews Properties">
-					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#General_Properties_2" label="General Properties"></topic>
-					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Extra_Properties_2" label="Extra Properties"></topic>
-				</topic>
+				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Review_Groups_Properties" label="Working with Review Groups Properties"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Reviews_Properties" label="Working with Reviews Properties"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Review_Items_Properties" label="Working with Review Items Properties"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_File_Contexts_Properties" label="Working with File Contexts Properties"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Selections_and_Deltas_Properties" label="Working with Selections and Deltas Properties"></topic>
-				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Anomalies_Properties" label="Working with Anomalies Properties">
-					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#General_Properties_3" label="General Properties"></topic>
-					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Extra_Properties_3" label="Extra Properties"></topic>
-				</topic>
+				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Anomalies_Properties" label="Working with Anomalies Properties"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Comments_Properties" label="Working with Comments Properties"></topic>
-				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Participant_Properties" label="Working with Participant Properties">
-					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#General_Properties_4" label="General Properties"></topic>
-					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Extra_Properties_4" label="Extra Properties"></topic>
-				</topic>
+				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Participant_Properties" label="Working with Participant Properties"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Rule_Sets_Properties" label="Working with Rule Sets Properties"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Rule_Areas_and_Rule_Violations_Properties" label="Working with Rule Areas and Rule Violations Properties"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Working_with_Rules_Properties" label="Working with Rules Properties"></topic>
-				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Using_Key_Bindings_and_Hotkeys" label="Using Key Bindings and Hotkeys">
-					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Keys" label="Keys"></topic>
-					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Bindings" label="Bindings"></topic>
-				</topic>
+			</topic>
+			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Using_Key_Bindings_and_Hotkeys" label="Using Key Bindings and Hotkeys">
+				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Keys" label="Keys"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Bindings" label="Bindings"></topic>
 			</topic>
 			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Using_Notifications" label="Using Notifications">
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Using_Email_Notifications" label="Using Email Notifications"></topic>
@@ -133,6 +122,6 @@
 			</topic>
 		</topic>
 		<topic href="help/Reviews/R4E/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
+  <anchor id="r4emain"/>
 	</topic>
- <anchor id="r4emain"/>
 </toc>

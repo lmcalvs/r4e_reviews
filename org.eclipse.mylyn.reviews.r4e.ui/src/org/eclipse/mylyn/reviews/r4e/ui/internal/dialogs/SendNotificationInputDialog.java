@@ -18,6 +18,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
+import java.util.List;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -225,9 +227,22 @@ public class SendNotificationInputDialog extends FormDialog {
 		basicSectionClient.setLayout(layout);
 		basicSection.setClient(basicSectionClient);
 
+		//Look for Review Element
+		Object elementFound = null;
+		if (fSource instanceof List) {
+			for (Object sourceElement : (List<?>) fSource) {
+				elementFound = sourceElement;
+				if (elementFound instanceof R4EUIReviewBasic) {
+					break;
+				}
+			}
+		} else {
+			elementFound = fSource;
+		}
+
 		//Email/Notification type radio button
-		if (fSource instanceof R4EUIReviewBasic) {
-			if (((R4EUIReviewBasic) fSource).isUserReviewed()) {
+		if (elementFound instanceof R4EUIReviewBasic) {
+			if (((R4EUIReviewBasic) elementFound).isUserReviewed()) {
 				fCompletionButton = toolkit.createButton(basicSectionClient, REVIEW_COMPLETION, SWT.RADIO);
 				fCompletionButton.setSelection(true);
 				fCompletionButton.setToolTipText(R4EUIConstants.NOTIFICATION_COMPLETION_TOOLTIP);

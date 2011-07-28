@@ -331,7 +331,7 @@ public class ParticipantInputDialog extends FormDialog {
 			public void modifyText(ModifyEvent e) {
 				// ignore
 				if (fParticipantIdInputTextField.getText().length() > 0
-						&& fParticipantDetailsInputTextField.getText().length() > 0) {
+						&& fParticipantEmailInputTextField.getText().length() > 0) {
 					getButton(IDialogConstants.OK_ID).setEnabled(true);
 				} else {
 					getButton(IDialogConstants.OK_ID).setEnabled(false);
@@ -383,7 +383,7 @@ public class ParticipantInputDialog extends FormDialog {
 			public void modifyText(ModifyEvent e) {
 				// ignore
 				if (fParticipantIdInputTextField.getText().length() > 0
-						&& fParticipantDetailsInputTextField.getText().length() > 0) {
+						&& fParticipantEmailInputTextField.getText().length() > 0) {
 					getButton(IDialogConstants.OK_ID).setEnabled(true);
 				} else {
 					getButton(IDialogConstants.OK_ID).setEnabled(false);
