@@ -65,6 +65,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.versions.core.ChangeType;
@@ -657,7 +658,8 @@ public class CommandUtils {
 		if (null != container) {
 			boolean containerEnabled = false;
 			for (IR4EUIModelElement file : container.getChildren()) {
-				for (IR4EUIModelElement anomaly : file.getChildren()) {
+				R4EUIPostponedFile postFile = (R4EUIPostponedFile) file;
+				for (IR4EUIModelElement anomaly : postFile.getChildren()) {
 					if (!anomaly.isEnabled()) {
 						file.removeChildren(anomaly, false);
 					}

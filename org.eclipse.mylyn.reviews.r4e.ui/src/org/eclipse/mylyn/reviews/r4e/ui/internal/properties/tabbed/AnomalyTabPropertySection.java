@@ -224,8 +224,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						//Set new UI display
 						if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
 							fProperties.getElement().setName(
-									R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
-											((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
+									R4EUIAnomalyExtended.buildAnomalyExtName(modelAnomaly,
+											((R4EUIAnomalyExtended) fProperties.getElement()).getPosition()));
 						} else {
 							fProperties.getElement().setName(
 									R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
@@ -334,6 +334,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					}
 				}
 				refresh();
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod

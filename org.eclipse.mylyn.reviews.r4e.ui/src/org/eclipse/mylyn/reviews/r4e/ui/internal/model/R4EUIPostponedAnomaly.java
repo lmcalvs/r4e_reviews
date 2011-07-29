@@ -98,6 +98,7 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 			fAnomaly.setEnabled(false); //Disable anomaly if it is not postponed to begin with
 			close();
 		}
+		updateState(aPostponedAnomaly.getState());
 		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 

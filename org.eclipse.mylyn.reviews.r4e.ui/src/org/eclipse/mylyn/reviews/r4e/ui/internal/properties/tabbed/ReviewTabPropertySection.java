@@ -1244,7 +1244,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 
 			R4EReviewPhaseInfo phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
 			final R4EReviewPhaseInfo currentPhaseInfo = modelFormalReview.getCurrent();
-			if (null != phaseInfo) {
+			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
 				fPhasePlanning.setText(1, phaseInfo.getPhaseOwnerID());
 				fPhasePlanning.setText(2,
 						(null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
@@ -1266,7 +1266,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				}
 			}
 			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
-			if (null != phaseInfo) {
+			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
 				fPhasePreparation.setText(1, phaseInfo.getPhaseOwnerID());
 				fPhasePreparation.setText(2,
 						(null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
@@ -1287,7 +1287,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				}
 			}
 			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
-			if (null != phaseInfo) {
+			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
 				fPhaseDecision.setText(1, phaseInfo.getPhaseOwnerID());
 				fPhaseDecision.setText(2,
 						(null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
@@ -1309,7 +1309,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				}
 			}
 			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
-			if (null != phaseInfo) {
+			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
 				fPhaseRework.setText(1, phaseInfo.getPhaseOwnerID());
 				fPhaseRework.setText(2,
 						(null != phaseInfo.getStartDate()) ? dateFormat.format(phaseInfo.getStartDate()) : "");
@@ -1331,7 +1331,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				}
 			}
 			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
-			if (null != phaseInfo) {
+			if (null != phaseInfo && null != phaseInfo.getType()) {
 				if (currentPhaseInfo.getType().equals(phaseInfo.getType())) {
 					fPhasePlanning.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
 					fPhasePreparation.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
