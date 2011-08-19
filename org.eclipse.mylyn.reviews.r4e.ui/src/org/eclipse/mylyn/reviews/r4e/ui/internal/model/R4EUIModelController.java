@@ -14,6 +14,7 @@
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Jacques Bouthillier - Add method definition for Report package availability
  *   
  ******************************************************************************/
 
@@ -70,7 +71,7 @@ public class R4EUIModelController {
 	/**
 	 * Field MAIL_CONNECTOR_IDS.
 	 */
-	private static final String[] MAIL_CONNECTOR_IDS = { "reviews.r4e.mail.outlook.connector" };
+	private static final String[] MAIL_CONNECTOR_IDS = { "reviews.r4e.mail.outlook.connector" }; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -388,9 +389,8 @@ public class R4EUIModelController {
 
 		//Adjust review group paths in preferences
 		if (changePrefsPaths) {
-			R4EUIPlugin.getDefault()
-					.getPreferenceStore()
-					.setValue(PreferenceConstants.P_GROUP_FILE_PATH, buildReviewGroupsStr(newGroupPaths));
+			R4EUIPlugin.getDefault().getPreferenceStore().setValue(PreferenceConstants.P_GROUP_FILE_PATH,
+					buildReviewGroupsStr(newGroupPaths));
 		}
 	}
 
@@ -437,9 +437,8 @@ public class R4EUIModelController {
 
 		//Adjust review group paths in preferences
 		if (changePrefsPaths) {
-			R4EUIPlugin.getDefault()
-					.getPreferenceStore()
-					.setValue(PreferenceConstants.P_RULE_SET_FILE_PATH, buildReviewGroupsStr(newRuleSetPaths));
+			R4EUIPlugin.getDefault().getPreferenceStore().setValue(PreferenceConstants.P_RULE_SET_FILE_PATH,
+					buildReviewGroupsStr(newRuleSetPaths));
 		}
 	}
 
@@ -542,7 +541,20 @@ public class R4EUIModelController {
 	 */
 	public static boolean isUserQueryAvailable() {
 		//Verify if the LDAP bundle is available
-		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.ldap")) {
+		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.ldap")) { //$NON-NLS-1$
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method isUserReportAvailable.
+	 * 
+	 * @return boolean\
+	 */
+	public static boolean isUserReportAvailable() {
+		//Verify if the Report bundle is available
+		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.r4e.report")) { //$NON-NLS-1$
 			return true;
 		}
 		return false;

@@ -13,6 +13,7 @@
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Jacques Bouthillier - Add definition for Report
  *   
  *******************************************************************************/
 
@@ -121,6 +122,16 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review from "
 			+ "its Parent Review Group";
+
+	/**
+	 * Field REPORT_ELEMENT_COMMAND_NAME. (value is ""Report Review"")
+	 */
+	private static final String REPORT_ELEMENT_COMMAND_NAME = "Report Review"; //$NON-NLS-1$
+
+	/**
+	 * Field REPORT_ELEMENT_COMMAND_TOOLTIP. (value is ""Create a report for this Review"")
+	 */
+	private static final String REPORT_ELEMENT_COMMAND_TOOLTIP = "Create a report for this Review"; //$NON-NLS-1$
 
 	/**
 	 * Field REVIEW_PHASE_STARTED. (value is ""PLANNING"")
@@ -1244,6 +1255,44 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	@Override
 	public String getOpenElementCmdTooltip() {
 		return OPEN_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
+	 * Method isReportElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isReportElementCmd()
+	 */
+	@Override
+	public boolean isReportElementCmd() {
+		//Any type of review, is allowed
+		if (R4EUIModelController.isUserReportAvailable()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Method getReportElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getOpenElementCmdName()
+	 */
+	@Override
+	public String getReportElementCmdName() {
+		return REPORT_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getReportElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getOpenElementCmdTooltip()
+	 */
+	@Override
+	public String getReportElementCmdTooltip() {
+		return REPORT_ELEMENT_COMMAND_TOOLTIP;
 	}
 
 	/**

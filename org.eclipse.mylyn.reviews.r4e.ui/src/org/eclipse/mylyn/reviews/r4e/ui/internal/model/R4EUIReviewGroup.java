@@ -13,6 +13,7 @@
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Jacques Bouthillier - Add method to read the group path file for Report
  *   
  ******************************************************************************/
 
@@ -205,6 +206,15 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	public R4EReviewGroup getGroup() {
 		return fGroup;
+	}
+
+	/**
+	 * Method getGroupFile.
+	 * 
+	 * @return R4EReviewGroup
+	 */
+	public String getGroupFile() {
+		return fGroupFileURI.toFileString();
 	}
 
 	/**

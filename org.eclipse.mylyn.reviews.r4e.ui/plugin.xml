@@ -619,6 +619,12 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
+            description="Report Element"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.reportElement"
+            name="Report Element">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
             description="Add a New Child Element"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement"
             name="New Child Element">
@@ -1014,6 +1020,15 @@
       <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ImportPostponedHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.importPostponed">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
+       <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ReportElementHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.reportElement">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">

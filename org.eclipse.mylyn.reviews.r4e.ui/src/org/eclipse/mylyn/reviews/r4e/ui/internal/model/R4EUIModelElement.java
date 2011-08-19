@@ -14,6 +14,7 @@
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Jacques Bouthillier - Add method definition for Report 
  *   
  ******************************************************************************/
 
@@ -51,12 +52,12 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	/**
 	 * Field REVIEWED_OVERLAY_ICON_FILE.
 	 */
-	public static final String REVIEWED_OVERLAY_ICON_FILE = "icons/ovr16/revovr_tsk.gif";
+	public static final String REVIEWED_OVERLAY_ICON_FILE = "icons/ovr16/revovr_tsk.gif"; //$NON-NLS-1$
 
 	/**
 	 * Field DISABLED_OVERLAY_ICON_FILE.
 	 */
-	public static final String DISABLED_OVERLAY_ICON_FILE = "icons/ovr16/dsbldovr_tsk.gif";
+	public static final String DISABLED_OVERLAY_ICON_FILE = "icons/ovr16/dsbldovr_tsk.gif"; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -592,6 +593,36 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public String getOpenElementCmdTooltip() {
 		return R4EUIConstants.OPEN_ELEMENT_COMMAND_TOOLTIP; //default implementation
+	}
+
+	/**
+	 * Method isReportElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isReportElementCmd()
+	 */
+	public boolean isReportElementCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method getReportElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getReportElementCmdName()
+	 */
+	public String getReportElementCmdName() {
+		return R4EUIConstants.REPORT_ELEMENT_COMMAND_NAME; //default implementation
+	}
+
+	/**
+	 * Method getReportElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getReportElementCmdTooltip()
+	 */
+	public String getReportElementCmdTooltip() {
+		return R4EUIConstants.REPORT_ELEMENT_COMMAND_TOOLTIP; //default implementation
 	}
 
 	/**

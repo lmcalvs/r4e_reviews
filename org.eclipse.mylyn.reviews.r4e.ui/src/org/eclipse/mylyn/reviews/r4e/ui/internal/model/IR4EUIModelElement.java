@@ -13,6 +13,7 @@
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Jacques Bouthillier - Add method definition for Report
  *   
  ******************************************************************************/
 
@@ -353,6 +354,27 @@ public interface IR4EUIModelElement {
 	 * @return String
 	 */
 	String getOpenElementCmdTooltip();
+
+	/**
+	 * Method isReportElementCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isReportElementCmd();
+
+	/**
+	 * Method getReportElementCmdName.
+	 * 
+	 * @return String
+	 */
+	String getReportElementCmdName();
+
+	/**
+	 * Method getReportElementCmdTooltip.
+	 * 
+	 * @return String
+	 */
+	public String getReportElementCmdTooltip();
 
 	/**
 	 * Method isCloseElementCmd.

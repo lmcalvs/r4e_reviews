@@ -13,6 +13,7 @@
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Jacques Bouthillier - Add definition for Report
  *   
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
@@ -1170,6 +1171,31 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field OPEN_ELEMENT_COMMAND_MNEMONIC. (value is ""o"")
 	 */
 	public static final String OPEN_ELEMENT_COMMAND_MNEMONIC = "o";
+
+	/**
+	 * Field REPORT_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.reportElement"")
+	 */
+	public static final String REPORT_ELEMENT_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.reportElement";
+
+	/**
+	 * Field REPORT_ELEMENT_ICON_FILE. (value is ""icons/obj16/report_tsk.gif"")
+	 */
+	public static final String REPORT_ELEMENT_ICON_FILE = "icons/obj16/report_tsk.gif";
+
+	/**
+	 * Field REPORT_ELEMENT_COMMAND_NAME. (value is ""Report element"")
+	 */
+	public static final String REPORT_ELEMENT_COMMAND_NAME = "Report Element";
+
+	/**
+	 * Field REPORT_ELEMENT_COMMAND_TOOLTIP. (value is ""Report for this Element"")
+	 */
+	public static final String REPORT_ELEMENT_COMMAND_TOOLTIP = "Report Data for this Element";
+
+	/**
+	 * Field REPORT_ELEMENT_COMMAND_MNEMONIC. (value is ""r"")
+	 */
+	public static final String REPORT_ELEMENT_COMMAND_MNEMONIC = "r";
 
 	/**
 	 * Field CLOSE_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.closeElement"")
