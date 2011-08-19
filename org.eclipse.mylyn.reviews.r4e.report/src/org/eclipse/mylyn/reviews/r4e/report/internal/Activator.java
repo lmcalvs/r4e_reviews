@@ -9,7 +9,7 @@
  * Description:
  * 
  * Contributors:
- *   Jacques Bouthillier - Initial Implementation of the R4E LDAP preferences
+ *   Jacques Bouthillier - Initial Implementation of the R4E Report preferences
  ********************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.report.internal;
 

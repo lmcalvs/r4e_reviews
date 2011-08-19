@@ -19,7 +19,6 @@ package org.eclipse.mylyn.reviews.r4e.report.internal.dialog;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -45,7 +44,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.StringConverter;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -60,10 +58,8 @@ import org.eclipse.mylyn.reviews.r4e.report.internal.Activator;
 import org.eclipse.mylyn.reviews.r4e.report.internal.util.OSPLATFORM;
 import org.eclipse.mylyn.reviews.r4e.report.internal.util.Popup;
 import org.eclipse.mylyn.reviews.r4e.report.internal.util.R4EReportString;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -255,21 +251,23 @@ public class ReportGeneration implements IR4EReport {
 
 		if (rootDir != null) {
 
-			// Generate a pop-up dialog to notify the report generation
-			final Shell s = new Shell(SWT.MODELESS);
-
-			String message = R4EReportString.getString("Popup.messageOneMoment");
-			final MessageDialog dialog = new MessageDialog(
-					s,
-					R4EReportString.getString("Popup.messageTitle"),
-					null, // accept
-					// the
-					// default
-					// window
-					// icon
-					message, MessageDialog.INFORMATION,
-					new String[] { IDialogConstants.OK_LABEL }, 0);
-			// ok is the default
+			//Should think to use a progress bar here
+			
+//			// Generate a pop-up dialog to notify the report generation
+//			final Shell s = new Shell(SWT.MODELESS);
+//
+//			String message = R4EReportString.getString("Popup.messageOneMoment");
+//			final MessageDialog dialog = new MessageDialog(
+//					s,
+//					R4EReportString.getString("Popup.messageTitle"),
+//					null, // accept
+//					// the
+//					// default
+//					// window
+//					// icon
+//					message, MessageDialog.INFORMATION,
+//					new String[] { IDialogConstants.OK_LABEL }, 0);
+//			// ok is the default
 
 			// Thread to generate the report while the window is still
 			// editable
@@ -288,10 +286,10 @@ public class ReportGeneration implements IR4EReport {
 			}.start();
 
 			// Open the wait window
-			dialog.open();
-			Activator.FTracer.traceInfo
-					("After the dialog close ret: "
-							+ dialog.getReturnCode());
+			//dialog.open();
+//			Activator.FTracer.traceInfo
+//					("After the dialog close ret: "
+//							+ dialog.getReturnCode());
 
 		}
 
