@@ -141,10 +141,25 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 		ObjectId objid = null;
 		try {
 			objid = fInserter.insert(Constants.OBJ_BLOB, content);
-			fInserter.flush();
 			FileSupportCommandFactory.getInstance().grantWritePermission(fRepository.getDirectory().getAbsolutePath());
+			fInserter.flush();
 		} catch (IOException e) {
-			throw new ReviewsFileStorageException(e);
+			//Check if the file has been registered in the repository if yes record the id, log the exception and continue
+			//If the id is not registered throw the exception
+			id = blobIdFor(content);
+			InputStream is = getBlobContent(null, id);
+			
+			if (is == null) {
+				//The file was not registered in the local repo
+				throw new ReviewsFileStorageException(e);
+			} else {
+				Activator.getDefault().fTracer.traceError("IOException while registering content however it's already available in the local repository, " + e.getMessage());
+				try {
+					is.close();
+				} catch (IOException e1) {
+					Activator.getDefault().fTracer.traceError("IOException while closing probe stream, " + e1.getMessage());
+				}
+			}
 		} finally {
 			fInserter.release();
 		}

@@ -111,6 +111,8 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		newContext.setBookingNum(fcount);
 		checkedOutMap.put(fcount, newContext);
 
+		Activator.fTracer.traceDebug("Checkout Num: " + fcount + ", Object: " + aEObject.toString());
+		
 		// return booking number
 		return fcount;
 	}
@@ -153,6 +155,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 	 */
 	public void checkIn(Long aBookingNumber) throws ResourceHandlingException {
 		if (aBookingNumber == null) {
+			Activator.fTracer.traceDebug("CheckIn with booking number set to null");
 			return;
 		}
 
@@ -164,6 +167,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 			fWriter.saveResource(resource);
 			// remove lock
 			unlockResource(resource);
+			Activator.fTracer.traceDebug("CheckIn: " + aBookingNumber);
 		} else {
 			Activator.fTracer.traceError(new StringBuilder("CheckIn failed: booking number is not active: "
 					+ aBookingNumber).toString());
@@ -259,6 +263,8 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 				writer.close();
 			}
 		}
+		
+		Activator.fTracer.traceDebug("Checkout lock created " + file.getAbsolutePath());
 	}
 
 	// /**
@@ -319,11 +325,13 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 					+ file.getAbsolutePath().toString() + ". File does not exist");
 		}
 
-		file = new File(resUri.toFileString() + LOCK_EXT);
+		String fileStr = resUri.toFileString() + LOCK_EXT;
+		file = new File(fileStr);
 		// check if the file to delete exists
 		if (file.exists()) {
 			// remove the file
 			file.delete();
+			Activator.fTracer.traceDebug("CheckIn, Lock file removed: " + fileStr);
 		} else {
 			StringBuilder message = new StringBuilder("Lock to remove does not exist");
 			String absPath = file.getAbsolutePath();
