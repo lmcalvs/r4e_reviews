@@ -34,6 +34,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
@@ -568,8 +569,14 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						uiItem = new R4EUIPostponedContainer(this, item, R4EUIConstants.POSTPONED_ELEMENTS_LABEL_NAME);
 					} else if (null == item.getRepositoryRef() || "".equals(item.getRepositoryRef())) {
 						//Resource
-						String name = "Resource: " + item.getFileContextList().get(0).getTarget().getName();
-						uiItem = new R4EUIReviewItem(this, item, name, "");
+						EList<R4EFileContext> contextList = item.getFileContextList();
+						StringBuilder name = new StringBuilder("Resource: "); //$NON-NLS-1$
+						if (contextList.size() > 0) {
+							name = name.append(item.getFileContextList().get(0).getTarget().getName());
+						} else {
+							R4EUIPlugin.Ftracer.traceError("Context list empty in a review item, index: " + i); //$NON-NLS-1$
+						}
+						uiItem = new R4EUIReviewItem(this, item, name.toString(), "");
 					} else {
 						//Commit
 						String description = item.getDescription();

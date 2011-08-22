@@ -19,6 +19,7 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -289,6 +290,12 @@ public class CommandUtils {
 
 		// Push a local copy to local review repository, and obtain the local id
 		tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(iStream));
+		try {
+			iStream.close();
+		} catch (IOException e) {
+			R4EUIPlugin.getDefault();
+			R4EUIPlugin.Ftracer.traceWarning("Exception while closing stream, " + e.toString());
+		}
 
 		return tmpFileVersion;
 	}
