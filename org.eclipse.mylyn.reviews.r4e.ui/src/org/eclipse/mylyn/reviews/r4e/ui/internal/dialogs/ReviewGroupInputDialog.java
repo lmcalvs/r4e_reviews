@@ -441,7 +441,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 		label.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fGroupDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL
-				| SWT.BORDER | SWT.WRAP);
+				| SWT.BORDER);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fGroupNameInputTextField.getLineHeight() * 3;
@@ -504,7 +504,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 		label.setToolTipText(R4EUIConstants.REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fDefaultEntryCriteriaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL
-				| SWT.BORDER | SWT.WRAP);
+				| SWT.BORDER);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fGroupNameInputTextField.getLineHeight() * 3;

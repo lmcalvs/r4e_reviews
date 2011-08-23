@@ -436,7 +436,7 @@ public class ParticipantInputDialog extends FormDialog {
 		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.FOCUS_AREA_LABEL);
 		label.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fFocusAreaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.BORDER);
+		fFocusAreaTextField = toolkit.createText(extraSectionClient, "", SWT.SINGLE | SWT.V_SCROLL | SWT.BORDER);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fFocusAreaTextField.getLineHeight() * 3;
