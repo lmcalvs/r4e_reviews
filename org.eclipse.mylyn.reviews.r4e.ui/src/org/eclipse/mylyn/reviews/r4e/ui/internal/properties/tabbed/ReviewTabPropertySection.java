@@ -1264,7 +1264,12 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					fPlanningPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent()
 							.getPhaseOwnerID()));
 				}
+			} else {
+				fPhasePlanning.setText(1, "");
+				fPhasePlanning.setText(2, "");
+				fPhasePlanning.setText(3, "");
 			}
+
 			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
 			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
 				fPhasePreparation.setText(1, phaseInfo.getPhaseOwnerID());
@@ -1285,7 +1290,12 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					fPreparationPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent()
 							.getPhaseOwnerID()));
 				}
+			} else {
+				fPhasePreparation.setText(1, "");
+				fPhasePreparation.setText(2, "");
+				fPhasePreparation.setText(3, "");
 			}
+
 			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
 			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
 				fPhaseDecision.setText(1, phaseInfo.getPhaseOwnerID());
@@ -1307,7 +1317,12 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					fDecisionPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent()
 							.getPhaseOwnerID()));
 				}
+			} else {
+				fPhaseDecision.setText(1, "");
+				fPhaseDecision.setText(2, "");
+				fPhaseDecision.setText(3, "");
 			}
+
 			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
 			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
 				fPhaseRework.setText(1, phaseInfo.getPhaseOwnerID());
@@ -1329,7 +1344,12 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					fReworkPhaseOwnerCombo.select(UIUtils.mapParticipantToIndex(modelFormalReview.getCurrent()
 							.getPhaseOwnerID()));
 				}
+			} else {
+				fPhaseRework.setText(1, "");
+				fPhaseRework.setText(2, "");
+				fPhaseRework.setText(3, "");
 			}
+
 			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
 			if (null != phaseInfo && null != phaseInfo.getType()) {
 				if (currentPhaseInfo.getType().equals(phaseInfo.getType())) {
@@ -1343,7 +1363,6 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
 				}
 			}
-
 		} else {
 			fPhaseCombo.setItems(uiReview.getAvailablePhases());
 			fPhaseCombo.select(uiReview.mapPhaseToIndex(((R4EReviewState) modelReview.getState()).getState()));
