@@ -500,9 +500,24 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String DATE_SUBMITTED_LABEL = "Date Submitted: ";
 
 	/**
-	 * Field PATH_LABEL. (value is ""Path: "")
+	 * Field PATH_INFORMATION_LABEL. (value is ""Path Information"")
 	 */
-	public static final String PATH_LABEL = "Path: ";
+	public static final String PATH_INFORMATION_LABEL = "Path Information";
+
+	/**
+	 * Field PATH_REPOSITORY_LABEL. (value is ""Repository: "")
+	 */
+	public static final String PATH_REPOSITORY_LABEL = "Repository Path: ";
+
+	/**
+	 * Field PATH_ABSOLUTE_LABEL. (value is ""Absolute: "")
+	 */
+	public static final String PATH_ABSOLUTE_LABEL = "Absolute Path: ";
+
+	/**
+	 * Field PATH_PROJECT_LABEL. (value is ""Project Relative: "")
+	 */
+	public static final String PATH_PROJECT_LABEL = "Project Relative Path: ";
 
 	/**
 	 * Field VERSION_LABEL. (value is ""Version: "")
@@ -1468,9 +1483,22 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String FILECONTEXT_BASE_FILE_NAME_TOOLTIP = "The base (or Reference File) Name for the File to Review";
 
 	/**
-	 * Field FILECONTEXT_BASE_FILE_PATH_TOOLTIP. (value is ""The base (or Reference File) Path for the File to Review"")
+	 * Field FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP. (value is ""The base (or Reference File) Repository Path for
+	 * the File to Review"")
 	 */
-	public static final String FILECONTEXT_BASE_FILE_PATH_TOOLTIP = "The base (or Reference File) Path for the File to Review";
+	public static final String FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP = "The base (or Reference File) Repository Path for the File to Review";
+
+	/**
+	 * Field FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP. (value is ""The base (or Reference File) Absolute Path for the
+	 * File to Review"")
+	 */
+	public static final String FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP = "The base (or Reference File) Absolute Path for the File to Review";
+
+	/**
+	 * Field FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP. (value is ""The base (or Reference File) Project Relative Path
+	 * for the File to Review"")
+	 */
+	public static final String FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP = "The base (or Reference File) Project Relative Path for the File to Review";
 
 	/**
 	 * Field FILECONTEXT_BASE_FILE_VERSION_TOOLTIP. (value is ""The base (or Reference File) Version for the File to
@@ -1918,20 +1946,32 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String PARENT_REVIEW_TOOLTIP = "The name of the review where the original postponed anomaly was raised";
 
 	/**
-	 * Field POSTPONED_FILE_FILE_NAME_TOOLTIP. (value is ""The Name of the file where the original postponed anomaly was
+	 * Field POSTPONED_FILE_NAME_TOOLTIP. (value is ""The Name of the file where the original postponed anomaly was
 	 * raised"")
 	 */
-	public static final String POSTPONED_FILE_FILE_NAME_TOOLTIP = "The Name of the file where the original postponed anomaly was raised";
+	public static final String POSTPONED_FILE_NAME_TOOLTIP = "The Name of the file where the original postponed anomaly was raised";
 
 	/**
-	 * Field POSTPONED_FILE_FILE_PATH_TOOLTIP. (value is ""The Path to the file where the original postponed anomaly was
-	 * raised"")
+	 * Field POSTPONED_FILE_PATH_REPOSITORY_TOOLTIP. (value is ""The Repository Path to the file where the original
+	 * postponed anomaly was raised"")
 	 */
-	public static final String POSTPONED_FILE_FILE_PATH_TOOLTIP = "The Path to the file where the original postponed anomaly was raised";
+	public static final String POSTPONED_FILE_PATH_REPOSITORY_TOOLTIP = "The Repository Path to the file where the original postponed anomaly was raised";
 
 	/**
-	 * Field POSTPONED_FILE_FILE_VERSION_TOOLTIP. (value is ""The Version of the file where the original postponed
-	 * anomaly was raised"")
+	 * Field POSTPONED_FILE_PATH_ABSOLUTE_TOOLTIP. (value is ""The Absolute Path to the file where the original
+	 * postponed anomaly was raised"")
 	 */
-	public static final String POSTPONED_FILE_FILE_VERSION_TOOLTIP = "The Version of the file where the original postponed anomaly was raised";
+	public static final String POSTPONED_FILE_PATH_ABSOLUTE_TOOLTIP = "The Absolute Path to the file where the original postponed anomaly was raised";
+
+	/**
+	 * Field POSTPONED_FILE_PATH_PROJECT_TOOLTIP. (value is ""The Project Relative Path to the file where the original
+	 * postponed anomaly was raised"")
+	 */
+	public static final String POSTPONED_FILE_PATH_PROJECT_TOOLTIP = "The Project Relative Path to the file where the original postponed anomaly was raised";
+
+	/**
+	 * Field POSTPONED_FILE_VERSION_TOOLTIP. (value is ""The Version of the file where the original postponed anomaly
+	 * was raised"")
+	 */
+	public static final String POSTPONED_FILE_VERSION_TOOLTIP = "The Version of the file where the original postponed anomaly was raised";
 }

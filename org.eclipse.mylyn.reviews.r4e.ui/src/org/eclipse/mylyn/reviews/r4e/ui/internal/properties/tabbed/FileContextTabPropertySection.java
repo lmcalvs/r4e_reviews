@@ -28,11 +28,17 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.ui.forms.events.ExpansionAdapter;
+import org.eclipse.ui.forms.events.ExpansionEvent;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -48,32 +54,52 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field FBaseFileNameText.
+	 * Field fBaseFileNameText.
 	 */
 	protected CLabel fBaseFileNameText = null;
 
 	/**
-	 * Field FBaseFilePathText.
+	 * Field fBaseFilePathAbsoluteText.
 	 */
-	protected CLabel fBaseFilePathText = null;
+	protected CLabel fBaseFilePathAbsoluteText = null;
 
 	/**
-	 * Field FBaseFileVersionText.
+	 * Field fBaseFilePathProjectText.
+	 */
+	protected CLabel fBaseFilePathProjectText = null;
+
+	/**
+	 * Field fBaseFilePathRepositoryText.
+	 */
+	protected CLabel fBaseFilePathRepositoryText = null;
+
+	/**
+	 * Field fBaseFileVersionText.
 	 */
 	protected CLabel fBaseFileVersionText = null;
 
 	/**
-	 * Field FTargetFileNameText.
+	 * Field fTargetFileNameText.
 	 */
 	protected CLabel fTargetFileNameText = null;
 
 	/**
-	 * Field FTargetFilePathText.
+	 * Field fTargetFilePathAbsoluteText.
 	 */
-	protected CLabel fTargetFilePathText = null;
+	protected CLabel fTargetFilePathAbsoluteText = null;
 
 	/**
-	 * Field FTargetFileVersionText.
+	 * Field fTargetFilePathProjectText.
+	 */
+	protected CLabel fTargetFilePathProjectText = null;
+
+	/**
+	 * Field fTargetFilePathRepositoryText.
+	 */
+	protected CLabel fTargetFilePathRepositoryText = null;
+
+	/**
+	 * Field fTargetFileVersionText.
 	 */
 	protected CLabel fTargetFileVersionText = null;
 
@@ -130,12 +156,11 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	 * @param aWidgetFactory
 	 *            TabbedPropertySheetWidgetFactory
 	 */
-	private void createBaseFileVersionComposite(Composite aParent, TabbedPropertySheetWidgetFactory aWidgetFactory) {
-		FormData data = null;
+	private void createBaseFileVersionComposite(final Composite aParent, TabbedPropertySheetWidgetFactory aWidgetFactory) {
 
 		//File Name (read-only)
 		fBaseFileNameText = aWidgetFactory.createCLabel(aParent, "");
-		data = new FormData();
+		FormData data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(aParent, ITabbedPropertyConstants.VSPACE);
@@ -150,29 +175,12 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		fileNameLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_NAME_TOOLTIP);
 		fileNameLabel.setLayoutData(data);
 
-		//File Path (read-only)
-		fBaseFilePathText = aWidgetFactory.createCLabel(aParent, "");
-		data = new FormData();
-		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fBaseFileNameText, ITabbedPropertyConstants.VSPACE);
-		fBaseFilePathText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_TOOLTIP);
-		fBaseFilePathText.setLayoutData(data);
-
-		final CLabel filePathLabel = aWidgetFactory.createCLabel(aParent, R4EUIConstants.PATH_LABEL);
-		data = new FormData();
-		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(fBaseFilePathText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fBaseFilePathText, 0, SWT.TOP);
-		filePathLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_TOOLTIP);
-		filePathLabel.setLayoutData(data);
-
 		//File Version (read-only)
 		fBaseFileVersionText = aWidgetFactory.createCLabel(aParent, "");
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fBaseFilePathText, ITabbedPropertyConstants.VSPACE);
+		data.top = new FormAttachment(fBaseFileNameText, ITabbedPropertyConstants.VSPACE);
 		fBaseFileVersionText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_VERSION_TOOLTIP);
 		fBaseFileVersionText.setLayoutData(data);
 
@@ -183,6 +191,77 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		data.top = new FormAttachment(fBaseFileVersionText, 0, SWT.TOP);
 		fileVersionLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_VERSION_TOOLTIP);
 		fileVersionLabel.setLayoutData(data);
+
+		//Path information section
+		final ExpandableComposite pathSection = aWidgetFactory.createExpandableComposite(aParent,
+				ExpandableComposite.TWISTIE);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fBaseFileVersionText, ITabbedPropertyConstants.VSPACE);
+		pathSection.setLayoutData(data);
+		pathSection.setText(R4EUIConstants.PATH_INFORMATION_LABEL);
+		pathSection.addExpansionListener(new ExpansionAdapter() {
+			@Override
+			public void expansionStateChanged(ExpansionEvent e) {
+				final ScrolledComposite scrolledParent = (ScrolledComposite) aParent.getParent()
+						.getParent()
+						.getParent()
+						.getParent()
+						.getParent()
+						.getParent();
+				scrolledParent.setMinSize(aParent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				scrolledParent.layout(true, true);
+			}
+		});
+		pathSection.setLayout(new GridLayout(1, false));
+
+		final Composite pathSectionClient = aWidgetFactory.createComposite(pathSection);
+		pathSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		pathSectionClient.setLayout(new GridLayout(4, false));
+		pathSection.setClient(pathSectionClient);
+
+		//Repository File Path (read-only)
+		final CLabel filePathRepositoryLabel = aWidgetFactory.createCLabel(pathSectionClient,
+				R4EUIConstants.PATH_REPOSITORY_LABEL);
+		GridData gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		filePathRepositoryLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP);
+		filePathRepositoryLabel.setLayoutData(gridData);
+
+		fBaseFilePathRepositoryText = aWidgetFactory.createCLabel(pathSectionClient, "");
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fBaseFilePathRepositoryText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP);
+		fBaseFilePathRepositoryText.setLayoutData(gridData);
+
+		//Absolute File Path (read-only)
+		final CLabel filePathAbsoluteLabel = aWidgetFactory.createCLabel(pathSectionClient,
+				R4EUIConstants.PATH_ABSOLUTE_LABEL);
+		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		filePathAbsoluteLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP);
+		filePathAbsoluteLabel.setLayoutData(gridData);
+
+		fBaseFilePathAbsoluteText = aWidgetFactory.createCLabel(pathSectionClient, "");
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fBaseFilePathAbsoluteText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP);
+		fBaseFilePathAbsoluteText.setLayoutData(gridData);
+
+		//Project Relative File Path (read-only)
+		final CLabel filePathProjectLabel = aWidgetFactory.createCLabel(pathSectionClient,
+				R4EUIConstants.PATH_PROJECT_LABEL);
+		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		filePathProjectLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP);
+		filePathProjectLabel.setLayoutData(gridData);
+
+		fBaseFilePathProjectText = aWidgetFactory.createCLabel(pathSectionClient, "");
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fBaseFilePathProjectText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP);
+		fBaseFilePathProjectText.setLayoutData(gridData);
 	}
 
 	/**
@@ -193,7 +272,8 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	 * @param aWidgetFactory
 	 *            TabbedPropertySheetWidgetFactory
 	 */
-	private void createTargetFileVersionComposite(Composite aParent, TabbedPropertySheetWidgetFactory aWidgetFactory) {
+	private void createTargetFileVersionComposite(final Composite aParent,
+			TabbedPropertySheetWidgetFactory aWidgetFactory) {
 		FormData data = null;
 
 		//File Name (read-only)
@@ -213,29 +293,12 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		fileNameLabel.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_NAME_TOOLTIP);
 		fileNameLabel.setLayoutData(data);
 
-		//File Path (read-only)
-		fTargetFilePathText = aWidgetFactory.createCLabel(aParent, "");
-		data = new FormData();
-		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fTargetFileNameText, ITabbedPropertyConstants.VSPACE);
-		fTargetFilePathText.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_PATH_TOOLTIP);
-		fTargetFilePathText.setLayoutData(data);
-
-		final CLabel filePathLabel = aWidgetFactory.createCLabel(aParent, R4EUIConstants.PATH_LABEL);
-		data = new FormData();
-		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(fTargetFilePathText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fTargetFilePathText, 0, SWT.TOP);
-		filePathLabel.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_PATH_TOOLTIP);
-		filePathLabel.setLayoutData(data);
-
 		//File Version (read-only)
 		fTargetFileVersionText = aWidgetFactory.createCLabel(aParent, "");
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fTargetFilePathText, ITabbedPropertyConstants.VSPACE);
+		data.top = new FormAttachment(fTargetFileNameText, ITabbedPropertyConstants.VSPACE);
 		fTargetFileVersionText.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_VERSION_TOOLTIP);
 		fTargetFileVersionText.setLayoutData(data);
 
@@ -246,6 +309,77 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		data.top = new FormAttachment(fTargetFileVersionText, 0, SWT.TOP);
 		fileVersionLabel.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_VERSION_TOOLTIP);
 		fileVersionLabel.setLayoutData(data);
+
+		//Path information section
+		final ExpandableComposite pathSection = aWidgetFactory.createExpandableComposite(aParent,
+				ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fTargetFileVersionText, ITabbedPropertyConstants.VSPACE);
+		pathSection.setLayoutData(data);
+		pathSection.setText(R4EUIConstants.PATH_INFORMATION_LABEL);
+		pathSection.addExpansionListener(new ExpansionAdapter() {
+			@Override
+			public void expansionStateChanged(ExpansionEvent e) {
+				final ScrolledComposite scrolledParent = (ScrolledComposite) aParent.getParent()
+						.getParent()
+						.getParent()
+						.getParent()
+						.getParent()
+						.getParent();
+				scrolledParent.setMinSize(aParent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				scrolledParent.layout(true, true);
+			}
+		});
+		pathSection.setLayout(new GridLayout(1, false));
+
+		final Composite pathSectionClient = aWidgetFactory.createComposite(pathSection);
+		pathSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		pathSectionClient.setLayout(new GridLayout(4, false));
+		pathSection.setClient(pathSectionClient);
+
+		//Repository File Path (read-only)
+		final CLabel filePathRepositoryLabel = aWidgetFactory.createCLabel(pathSectionClient,
+				R4EUIConstants.PATH_REPOSITORY_LABEL);
+		GridData gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		filePathRepositoryLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP);
+		filePathRepositoryLabel.setLayoutData(gridData);
+
+		fTargetFilePathRepositoryText = aWidgetFactory.createCLabel(pathSectionClient, "");
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fTargetFilePathRepositoryText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP);
+		fTargetFilePathRepositoryText.setLayoutData(gridData);
+
+		//Absolute File Path (read-only)
+		final CLabel filePathAbsoluteLabel = aWidgetFactory.createCLabel(pathSectionClient,
+				R4EUIConstants.PATH_ABSOLUTE_LABEL);
+		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		filePathAbsoluteLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP);
+		filePathAbsoluteLabel.setLayoutData(gridData);
+
+		fTargetFilePathAbsoluteText = aWidgetFactory.createCLabel(pathSectionClient, "");
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fTargetFilePathAbsoluteText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP);
+		fTargetFilePathAbsoluteText.setLayoutData(gridData);
+
+		//Project Relative File Path (read-only)
+		final CLabel filePathProjectLabel = aWidgetFactory.createCLabel(pathSectionClient,
+				R4EUIConstants.PATH_PROJECT_LABEL);
+		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		filePathProjectLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP);
+		filePathProjectLabel.setLayoutData(gridData);
+
+		fTargetFilePathProjectText = aWidgetFactory.createCLabel(pathSectionClient, "");
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fTargetFilePathProjectText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP);
+		fTargetFilePathProjectText.setLayoutData(gridData);
 	}
 
 	/**
@@ -261,16 +395,21 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		if (null != modelFile.getBase()) {
 			fBaseFileNameText.setText(baseVersion.getName());
 			final IResource baseResource = baseVersion.getResource();
-			//The properties shows the absolute path
+			//The properties shows the absolute, project relative and repository path
+			fBaseFilePathRepositoryText.setText(baseVersion.getRepositoryPath());
 			if (null != baseResource) {
-				fBaseFilePathText.setText(baseResource.getLocation().toOSString());
+				fBaseFilePathAbsoluteText.setText(baseResource.getLocation().toPortableString());
+				fBaseFilePathProjectText.setText(baseResource.getProjectRelativePath().toPortableString());
 			} else {
-				fBaseFilePathText.setText("(Not in workspace)");
+				fBaseFilePathAbsoluteText.setText("(Not in workspace)");
+				fBaseFilePathProjectText.setText("(Not in workspace)");
 			}
 			fBaseFileVersionText.setText(baseVersion.getVersionID());
 		} else {
 			fBaseFileNameText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
-			fBaseFilePathText.setText("");
+			fBaseFilePathRepositoryText.setText("");
+			fBaseFilePathAbsoluteText.setText("");
+			fBaseFilePathProjectText.setText("");
 			fBaseFileVersionText.setText("");
 		}
 
@@ -278,16 +417,21 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		if (null != targetVersion) {
 			fTargetFileNameText.setText(targetVersion.getName());
 			final IResource targetResource = targetVersion.getResource();
-			//The properties shows the absolute path
+			//The properties shows the absolute, project relative and repository path
+			fTargetFilePathRepositoryText.setText(targetVersion.getRepositoryPath());
 			if (null != targetResource) {
-				fTargetFilePathText.setText(targetResource.getLocation().toOSString());
+				fTargetFilePathAbsoluteText.setText(targetResource.getLocation().toPortableString());
+				fTargetFilePathProjectText.setText(targetResource.getProjectRelativePath().toPortableString());
 			} else {
-				fTargetFilePathText.setText("");
+				fTargetFilePathAbsoluteText.setText("(Not in workspace)");
+				fTargetFilePathProjectText.setText("(Not in workspace)");
 			}
 			fTargetFileVersionText.setText(targetVersion.getVersionID());
 		} else {
 			fTargetFileNameText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
-			fTargetFilePathText.setText("");
+			fTargetFilePathRepositoryText.setText("");
+			fTargetFilePathAbsoluteText.setText("");
+			fTargetFilePathProjectText.setText("");
 			fTargetFileVersionText.setText("");
 		}
 		setEnabledFields();
@@ -308,17 +452,25 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 
 		if (R4EUIModelController.isJobInProgress()) {
 			fBaseFileNameText.setEnabled(false);
-			fBaseFilePathText.setEnabled(false);
+			fBaseFilePathRepositoryText.setEnabled(false);
+			fBaseFilePathAbsoluteText.setEnabled(false);
+			fBaseFilePathProjectText.setEnabled(false);
 			fBaseFileVersionText.setEnabled(false);
 			fTargetFileNameText.setEnabled(false);
-			fTargetFilePathText.setEnabled(false);
+			fTargetFilePathRepositoryText.setEnabled(true);
+			fTargetFilePathAbsoluteText.setEnabled(false);
+			fTargetFilePathProjectText.setEnabled(false);
 			fTargetFileVersionText.setEnabled(false);
 		} else {
 			fBaseFileNameText.setEnabled(true);
-			fBaseFilePathText.setEnabled(true);
+			fBaseFilePathRepositoryText.setEnabled(true);
+			fBaseFilePathAbsoluteText.setEnabled(true);
+			fBaseFilePathProjectText.setEnabled(true);
 			fBaseFileVersionText.setEnabled(true);
 			fTargetFileNameText.setEnabled(true);
-			fTargetFilePathText.setEnabled(true);
+			fTargetFilePathRepositoryText.setEnabled(true);
+			fTargetFilePathAbsoluteText.setEnabled(true);
+			fTargetFilePathProjectText.setEnabled(true);
 			fTargetFileVersionText.setEnabled(true);
 		}
 	}

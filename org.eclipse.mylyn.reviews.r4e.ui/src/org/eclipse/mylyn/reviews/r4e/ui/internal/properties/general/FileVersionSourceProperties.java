@@ -48,15 +48,37 @@ public class FileVersionSourceProperties implements IPropertySource {
 			FILE_VERSION_NAME_ID, R4EUIConstants.NAME_LABEL);
 
 	/**
-	 * Field FILE_VERSION_PATH_ID. (value is ""fileVersionElement.path"")
+	 * Field FILE_VERSION_PATH_REPOSITORY_ID. (value is ""fileVersionElement.repositoryPath"")
 	 */
-	private static final String FILE_VERSION_PATH_ID = "fileVersionElement.path";
+	private static final String FILE_VERSION_PATH_REPOSITORY_ID = "fileVersionElement.repositoryPath";
 
 	/**
-	 * Field FILE_VERSION_PATH_PROPERTY_DESCRIPTOR.
+	 * Field FILE_VERSION_PATH_REPOSITORY_PROPERTY_DESCRIPTOR.
 	 */
-	private static final PropertyDescriptor FILE_VERSION_PATH_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			FILE_VERSION_PATH_ID, R4EUIConstants.PATH_LABEL);
+	private static final PropertyDescriptor FILE_VERSION_PATH_REPOSITORY_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			FILE_VERSION_PATH_REPOSITORY_ID, R4EUIConstants.PATH_REPOSITORY_LABEL);
+
+	/**
+	 * Field FILE_VERSION_PATH_ABSOLUTE_ID. (value is ""fileVersionElement.absolutePath"")
+	 */
+	private static final String FILE_VERSION_PATH_ABSOLUTE_ID = "fileVersionElement.absolutePath";
+
+	/**
+	 * Field FILE_VERSION_PATH_ABSOLUTE_PROPERTY_DESCRIPTOR.
+	 */
+	private static final PropertyDescriptor FILE_VERSION_PATH_ABSOLUTE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			FILE_VERSION_PATH_ABSOLUTE_ID, R4EUIConstants.PATH_ABSOLUTE_LABEL);
+
+	/**
+	 * Field FILE_VERSION_PATH_PROJECT_ID. (value is ""fileVersionElement.projectPath"")
+	 */
+	private static final String FILE_VERSION_PATH_PROJECT_ID = "fileVersionElement.projectPath";
+
+	/**
+	 * Field FILE_VERSION_PATH_PROJECT_PROPERTY_DESCRIPTOR.
+	 */
+	private static final PropertyDescriptor FILE_VERSION_PATH_PROJECT_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			FILE_VERSION_PATH_PROJECT_ID, R4EUIConstants.PATH_PROJECT_LABEL);
 
 	/**
 	 * Field FILE_VERSION_ID. (value is ""fileVersionElement.version"")
@@ -73,7 +95,8 @@ public class FileVersionSourceProperties implements IPropertySource {
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { FILE_VERSION_NAME_PROPERTY_DESCRIPTOR,
-			FILE_VERSION_PATH_PROPERTY_DESCRIPTOR, FILE_VERSION_PROPERTY_DESCRIPTOR };
+			FILE_VERSION_PROPERTY_DESCRIPTOR, FILE_VERSION_PATH_REPOSITORY_PROPERTY_DESCRIPTOR,
+			FILE_VERSION_PATH_ABSOLUTE_PROPERTY_DESCRIPTOR, FILE_VERSION_PATH_PROJECT_PROPERTY_DESCRIPTOR };
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -135,12 +158,25 @@ public class FileVersionSourceProperties implements IPropertySource {
 			if (null != fFileVersion) {
 				return fFileVersion.getName();
 			}
-		} else if (FILE_VERSION_PATH_ID.equals(aId)) {
+		} else if (FILE_VERSION_PATH_REPOSITORY_ID.equals(aId)) {
+			//The properties shows the absolute path
+			if (null != fFileVersion) {
+				return fFileVersion.getRepositoryPath();
+			}
+		} else if (FILE_VERSION_PATH_ABSOLUTE_ID.equals(aId)) {
 			//The properties shows the absolute path
 			if (null != fFileVersion) {
 				final IResource resource = fFileVersion.getResource();
 				if (null != resource) {
-					return resource.getLocation().toOSString();
+					return resource.getLocation().toPortableString();
+				}
+			}
+		} else if (FILE_VERSION_PATH_PROJECT_ID.equals(aId)) {
+			//The properties shows the absolute path
+			if (null != fFileVersion) {
+				final IResource resource = fFileVersion.getResource();
+				if (null != resource) {
+					return resource.getProjectRelativePath().toPortableString();
 				}
 			}
 		} else if (FILE_VERSION_ID.equals(aId)) {

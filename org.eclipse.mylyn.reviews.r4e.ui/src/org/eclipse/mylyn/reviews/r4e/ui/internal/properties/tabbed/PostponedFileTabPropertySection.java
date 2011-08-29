@@ -27,10 +27,16 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.forms.events.ExpansionAdapter;
+import org.eclipse.ui.forms.events.ExpansionEvent;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -51,9 +57,19 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 	protected CLabel fOriginalFileNameText = null;
 
 	/**
-	 * Field fOriginalFilePathText.
+	 * Field fOriginalFilePathRepositoryText.
 	 */
-	protected CLabel fOriginalFilePathText = null;
+	protected CLabel fOriginalFilePathRepositoryText = null;
+
+	/**
+	 * Field fOriginalFilePathAbsoluteText.
+	 */
+	protected CLabel fOriginalFilePathAbsoluteText = null;
+
+	/**
+	 * Field fOriginalFilePathProjectText.
+	 */
+	protected CLabel fOriginalFilePathProjectText = null;
 
 	/**
 	 * Field fOriginalFileVersionText.
@@ -125,7 +141,8 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 	 * @param aWidgetFactory
 	 *            TabbedPropertySheetWidgetFactory
 	 */
-	private void createOriginalFileVersionComposite(Composite aParent, TabbedPropertySheetWidgetFactory aWidgetFactory) {
+	private void createOriginalFileVersionComposite(final Composite aParent,
+			TabbedPropertySheetWidgetFactory aWidgetFactory) {
 		FormData data = null;
 
 		//File Name (read-only)
@@ -134,7 +151,7 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(aParent, ITabbedPropertyConstants.VSPACE);
-		fOriginalFileNameText.setToolTipText(R4EUIConstants.POSTPONED_FILE_FILE_NAME_TOOLTIP);
+		fOriginalFileNameText.setToolTipText(R4EUIConstants.POSTPONED_FILE_NAME_TOOLTIP);
 		fOriginalFileNameText.setLayoutData(data);
 
 		final CLabel fileNameLabel = aWidgetFactory.createCLabel(aParent, R4EUIConstants.NAME_LABEL);
@@ -142,33 +159,16 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fOriginalFileNameText, -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fOriginalFileNameText, 0, SWT.CENTER);
-		fileNameLabel.setToolTipText(R4EUIConstants.POSTPONED_FILE_FILE_NAME_TOOLTIP);
+		fileNameLabel.setToolTipText(R4EUIConstants.POSTPONED_FILE_NAME_TOOLTIP);
 		fileNameLabel.setLayoutData(data);
-
-		//File Path (read-only)
-		fOriginalFilePathText = aWidgetFactory.createCLabel(aParent, "");
-		data = new FormData();
-		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fOriginalFileNameText, ITabbedPropertyConstants.VSPACE);
-		fOriginalFilePathText.setToolTipText(R4EUIConstants.POSTPONED_FILE_FILE_PATH_TOOLTIP);
-		fOriginalFilePathText.setLayoutData(data);
-
-		final CLabel filePathLabel = aWidgetFactory.createCLabel(aParent, R4EUIConstants.PATH_LABEL);
-		data = new FormData();
-		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(fOriginalFilePathText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fOriginalFilePathText, 0, SWT.TOP);
-		filePathLabel.setToolTipText(R4EUIConstants.POSTPONED_FILE_FILE_PATH_TOOLTIP);
-		filePathLabel.setLayoutData(data);
 
 		//File Version (read-only)
 		fOriginalFileVersionText = aWidgetFactory.createCLabel(aParent, "");
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fOriginalFilePathText, ITabbedPropertyConstants.VSPACE);
-		fOriginalFileVersionText.setToolTipText(R4EUIConstants.POSTPONED_FILE_FILE_VERSION_TOOLTIP);
+		data.top = new FormAttachment(fOriginalFileNameText, ITabbedPropertyConstants.VSPACE);
+		fOriginalFileVersionText.setToolTipText(R4EUIConstants.POSTPONED_FILE_VERSION_TOOLTIP);
 		fOriginalFileVersionText.setLayoutData(data);
 
 		final CLabel fileVersionLabel = aWidgetFactory.createCLabel(aParent, R4EUIConstants.VERSION_LABEL);
@@ -176,8 +176,79 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fOriginalFileVersionText, -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fOriginalFileVersionText, 0, SWT.TOP);
-		fileVersionLabel.setToolTipText(R4EUIConstants.POSTPONED_FILE_FILE_VERSION_TOOLTIP);
+		fileVersionLabel.setToolTipText(R4EUIConstants.POSTPONED_FILE_VERSION_TOOLTIP);
 		fileVersionLabel.setLayoutData(data);
+
+		//Path information section
+		final ExpandableComposite pathSection = aWidgetFactory.createExpandableComposite(aParent,
+				ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fOriginalFileVersionText, ITabbedPropertyConstants.VSPACE);
+		pathSection.setLayoutData(data);
+		pathSection.setText(R4EUIConstants.PATH_INFORMATION_LABEL);
+		pathSection.addExpansionListener(new ExpansionAdapter() {
+			@Override
+			public void expansionStateChanged(ExpansionEvent e) {
+				final ScrolledComposite scrolledParent = (ScrolledComposite) aParent.getParent()
+						.getParent()
+						.getParent()
+						.getParent()
+						.getParent()
+						.getParent();
+				scrolledParent.setMinSize(aParent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				scrolledParent.layout(true, true);
+			}
+		});
+		pathSection.setLayout(new GridLayout(1, false));
+
+		final Composite pathSectionClient = aWidgetFactory.createComposite(pathSection);
+		pathSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		pathSectionClient.setLayout(new GridLayout(4, false));
+		pathSection.setClient(pathSectionClient);
+
+		//Repository File Path (read-only)
+		final CLabel filePathRepositoryLabel = aWidgetFactory.createCLabel(pathSectionClient,
+				R4EUIConstants.PATH_REPOSITORY_LABEL);
+		GridData gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		filePathRepositoryLabel.setToolTipText(R4EUIConstants.POSTPONED_FILE_PATH_REPOSITORY_TOOLTIP);
+		filePathRepositoryLabel.setLayoutData(gridData);
+
+		fOriginalFilePathRepositoryText = aWidgetFactory.createCLabel(pathSectionClient, "");
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fOriginalFilePathRepositoryText.setToolTipText(R4EUIConstants.POSTPONED_FILE_PATH_REPOSITORY_TOOLTIP);
+		fOriginalFilePathRepositoryText.setLayoutData(gridData);
+
+		//Absolute File Path (read-only)
+		final CLabel filePathAbsoluteLabel = aWidgetFactory.createCLabel(pathSectionClient,
+				R4EUIConstants.PATH_ABSOLUTE_LABEL);
+		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		filePathAbsoluteLabel.setToolTipText(R4EUIConstants.POSTPONED_FILE_PATH_ABSOLUTE_TOOLTIP);
+		filePathAbsoluteLabel.setLayoutData(gridData);
+
+		fOriginalFilePathAbsoluteText = aWidgetFactory.createCLabel(pathSectionClient, "");
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fOriginalFilePathAbsoluteText.setToolTipText(R4EUIConstants.POSTPONED_FILE_PATH_ABSOLUTE_TOOLTIP);
+		fOriginalFilePathAbsoluteText.setLayoutData(gridData);
+
+		//Project Relative File Path (read-only)
+		final CLabel filePathProjectLabel = aWidgetFactory.createCLabel(pathSectionClient,
+				R4EUIConstants.PATH_PROJECT_LABEL);
+		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 1;
+		filePathProjectLabel.setToolTipText(R4EUIConstants.POSTPONED_FILE_PATH_PROJECT_TOOLTIP);
+		filePathProjectLabel.setLayoutData(gridData);
+
+		fOriginalFilePathProjectText = aWidgetFactory.createCLabel(pathSectionClient, "");
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		fOriginalFilePathProjectText.setToolTipText(R4EUIConstants.POSTPONED_FILE_PATH_PROJECT_TOOLTIP);
+		fOriginalFilePathProjectText.setLayoutData(gridData);
 	}
 
 	/**
@@ -198,14 +269,14 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 			final IResource targetResource = targetVersion.getResource();
 			//The properties shows the absolute path
 			if (null != targetResource) {
-				fOriginalFilePathText.setText(targetResource.getLocation().toOSString());
+				fOriginalFilePathAbsoluteText.setText(targetResource.getLocation().toOSString());
 			} else {
-				fOriginalFilePathText.setText("");
+				fOriginalFilePathAbsoluteText.setText("");
 			}
 			fOriginalFileVersionText.setText(targetVersion.getVersionID());
 		} else {
 			fOriginalFileNameText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
-			fOriginalFilePathText.setText("");
+			fOriginalFilePathAbsoluteText.setText("");
 			fOriginalFileVersionText.setText("");
 		}
 		setEnabledFields();
@@ -220,12 +291,12 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 		if (R4EUIModelController.isJobInProgress()) {
 			fReviewNameText.setEnabled(false);
 			fOriginalFileNameText.setEnabled(false);
-			fOriginalFilePathText.setEnabled(false);
+			fOriginalFilePathAbsoluteText.setEnabled(false);
 			fOriginalFileVersionText.setEnabled(false);
 		} else {
 			fReviewNameText.setEnabled(true);
 			fOriginalFileNameText.setEnabled(true);
-			fOriginalFilePathText.setEnabled(true);
+			fOriginalFilePathAbsoluteText.setEnabled(true);
 			fOriginalFileVersionText.setEnabled(true);
 		}
 	}
