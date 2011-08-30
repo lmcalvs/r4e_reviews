@@ -31,6 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -87,8 +88,8 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 				}
 			} else {
 				final Object obj = iterator.next();
-				if (obj instanceof org.eclipse.jdt.core.ISourceReference
-						|| obj instanceof org.eclipse.cdt.core.model.ISourceReference) {
+				if ((R4EUIPlugin.isJDTAvailable() && obj instanceof org.eclipse.jdt.core.ISourceReference)
+						|| (R4EUIPlugin.isCDTAvailable() && obj instanceof org.eclipse.cdt.core.model.ISourceReference)) {
 					if (!(isR4EEditorInputAvailable())) {
 						return false;
 					}

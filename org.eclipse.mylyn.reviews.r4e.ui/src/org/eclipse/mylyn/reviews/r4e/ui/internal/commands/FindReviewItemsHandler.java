@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.compare.rangedifferencer.RangeDifference;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -36,10 +35,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IPackageFragment;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -113,12 +108,13 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			// NOTE: The valadity testes are done if the ProjectPropertyTester class
 			if (selectedElement instanceof IProject) {
 				project = (IProject) selectedElement;
-			} else if (selectedElement instanceof IJavaProject) {
-				project = ((IJavaProject) selectedElement).getProject();
-			} else if (selectedElement instanceof ICProject) {
-				project = ((ICProject) selectedElement).getProject();
-			} else if (selectedElement instanceof IPackageFragment || selectedElement instanceof IPackageFragmentRoot) {
-				project = ((IJavaElement) selectedElement).getJavaProject().getProject();
+			} else if (R4EUIPlugin.isJDTAvailable() && selectedElement instanceof org.eclipse.jdt.core.IJavaProject) {
+				project = ((org.eclipse.jdt.core.IJavaProject) selectedElement).getProject();
+			} else if (R4EUIPlugin.isCDTAvailable() && selectedElement instanceof org.eclipse.cdt.core.model.ICProject) {
+				project = ((org.eclipse.cdt.core.model.ICProject) selectedElement).getProject();
+			} else if (selectedElement instanceof org.eclipse.jdt.core.IPackageFragment
+					|| selectedElement instanceof org.eclipse.jdt.core.IPackageFragmentRoot) {
+				project = ((org.eclipse.jdt.core.IJavaElement) selectedElement).getJavaProject().getProject();
 			} else if (selectedElement instanceof IFolder) {
 				project = ((IFolder) selectedElement).getProject();
 			} else if (selectedElement instanceof IAdaptable) {
@@ -126,7 +122,8 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				project = (IProject) adaptableProject.getAdapter(IProject.class);
 			} else {
 				// Should never happen
-				R4EUIPlugin.Ftracer.traceError("No project defined for selection of class " + selectedElement.getClass());
+				R4EUIPlugin.Ftracer.traceError("No project defined for selection of class "
+						+ selectedElement.getClass());
 				R4EUIPlugin.getDefault().logError(
 						"No project defined for selection of class " + selectedElement.getClass(), null);
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,

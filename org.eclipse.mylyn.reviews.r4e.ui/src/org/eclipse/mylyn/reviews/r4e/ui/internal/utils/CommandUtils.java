@@ -25,7 +25,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.cdt.core.model.ICElement;
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
@@ -35,7 +34,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
@@ -381,7 +379,7 @@ public class CommandUtils {
 			throws CoreException {
 		final R4EUITextPosition position = new R4EUITextPosition(aSelectedElement.getSourceRange().getOffset(),
 				aSelectedElement.getSourceRange().getLength(), aFile);
-		position.setName(((IJavaElement) aSelectedElement).getElementName());
+		position.setName(((org.eclipse.jdt.core.IJavaElement) aSelectedElement).getElementName());
 		return position;
 	}
 
@@ -402,7 +400,7 @@ public class CommandUtils {
 				aSelectedElement.getSourceRange().getLength(), aFile);
 		position.setStartLine(aSelectedElement.getSourceRange().getStartLine());
 		position.setEndLine(aSelectedElement.getSourceRange().getEndLine());
-		position.setName(((ICElement) aSelectedElement).getElementName());
+		position.setName(((org.eclipse.cdt.core.model.ICElement) aSelectedElement).getElementName());
 		return position;
 	}
 

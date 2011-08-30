@@ -19,11 +19,13 @@
 package org.eclipse.mylyn.reviews.r4e.ui;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.FormColors;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -42,6 +44,16 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	 * Field PLUGIN_ID. (value is ""org.eclipse.mylyn.reviews.r4e.ui"")
 	 */
 	public static final String PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.ui"; // The plug-in ID
+
+	/**
+	 * Field JDT_PLUGIN_ID. (value is ""org.eclipse.jdt.core"")
+	 */
+	public static final String JDT_PLUGIN_ID = "org.eclipse.jdt.core";
+
+	/**
+	 * Field CDT_PLUGIN_ID. (value is ""org.eclipse.cdt.core"")
+	 */
+	public static final String CDT_PLUGIN_ID = "org.eclipse.cdt.core";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -62,6 +74,16 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	 */
 	private FormColors fFormColors; // shared colors for all forms
 
+	/**
+	 * Field FJDTAvailable.
+	 */
+	private static Boolean FJDTAvailable = false;
+
+	/**
+	 * Field FCDTAvailable.
+	 */
+	private static Boolean FCDTAvailable = false;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -70,7 +92,18 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public R4EUIPlugin() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.enforceTheSingletonPropertyWithAPrivateConstructor, emptyMethod
-		//Empty constructor
+
+		//Set Plugin validity: JDT
+		Bundle bdleJDT = Platform.getBundle(JDT_PLUGIN_ID);
+		if (bdleJDT != null) {
+			FJDTAvailable = true;
+		}
+
+		//Set Plugin validity: CDT
+		Bundle bdleCDT = Platform.getBundle(CDT_PLUGIN_ID);
+		if (bdleCDT != null) {
+			FCDTAvailable = true;
+		}
 	}
 
 	// ------------------------------------------------------------------------
@@ -138,6 +171,24 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	 */
 	public static R4EUIPlugin getDefault() {
 		return Fplugin;
+	}
+
+	/**
+	 * Check if JDT functionality is available
+	 * 
+	 * @return Boolean
+	 */
+	public static Boolean isJDTAvailable() {
+		return FJDTAvailable;
+	}
+
+	/**
+	 * Check if CDT functionality is available
+	 * 
+	 * @return Boolean
+	 */
+	public static Boolean isCDTAvailable() {
+		return FCDTAvailable;
 	}
 
 	/**

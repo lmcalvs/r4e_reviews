@@ -22,10 +22,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.cdt.core.model.CModelException;
-import org.eclipse.cdt.core.model.ICElement;
-import org.eclipse.cdt.core.model.ISourceReference;
-import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -33,8 +29,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
@@ -175,26 +169,29 @@ public class NewAnomalyHandler extends AbstractHandler {
 			if (aSelection instanceof IFile) {
 				position = CommandUtils.getPosition((IFile) aSelection);
 				workspaceFile = (IFile) aSelection;
-			} else if (aSelection instanceof org.eclipse.jdt.core.ISourceReference) {
+			} else if (R4EUIPlugin.isJDTAvailable() && aSelection instanceof org.eclipse.jdt.core.ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement IJavaElement.  The resource is always an IFile
-				workspaceFile = (IFile) ((IJavaElement) aSelection).getResource();
+				workspaceFile = (IFile) ((org.eclipse.jdt.core.IJavaElement) aSelection).getResource();
 				//TODO is that the right file to get the position???
 				position = CommandUtils.getPosition((org.eclipse.jdt.core.ISourceReference) aSelection, workspaceFile);
-			} else if (aSelection instanceof org.eclipse.cdt.core.model.ISourceReference) {
+			} else if (R4EUIPlugin.isCDTAvailable()
+					&& aSelection instanceof org.eclipse.cdt.core.model.ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement ICElement.  The resource is always an IFile
-				if (aSelection instanceof ITranslationUnit) {
-					workspaceFile = (IFile) ((ICElement) aSelection).getResource();
-				} else if (aSelection instanceof ISourceReference) {
-					workspaceFile = (IFile) ((ICElement) aSelection).getParent().getResource();
+				if (aSelection instanceof org.eclipse.cdt.core.model.ITranslationUnit) {
+					workspaceFile = (IFile) ((org.eclipse.cdt.core.model.ICElement) aSelection).getResource();
+				} else if (aSelection instanceof org.eclipse.jdt.core.ISourceReference) {
+					workspaceFile = (IFile) ((org.eclipse.cdt.core.model.ICElement) aSelection).getParent()
+							.getResource();
 				}
 				//TODO is that the right file to get the position???
 				position = CommandUtils.getPosition((org.eclipse.cdt.core.model.ISourceReference) aSelection,
 						workspaceFile);
 			} else {
 				//This should never happen
-				R4EUIPlugin.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString() + ".  Ignoring");
+				R4EUIPlugin.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString()
+						+ ".  Ignoring");
 				return;
 			}
 
@@ -212,13 +209,6 @@ public class NewAnomalyHandler extends AbstractHandler {
 								"No Target File present to Add Anomaly", null), IStatus.ERROR);
 				dialog.open();
 			}
-
-		} catch (JavaModelException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		} catch (CModelException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (CoreException e) {
 			UIUtils.displayCoreErrorDialog(e);
 		} catch (ReviewsFileStorageException e) {

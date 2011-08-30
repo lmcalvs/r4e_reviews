@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.cdt.core.model.CModelException;
-import org.eclipse.cdt.core.model.ICElement;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -34,8 +32,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
@@ -236,22 +232,24 @@ public class NewReviewItemHandler extends AbstractHandler {
 			if (aSelection instanceof IFile) {
 				position = CommandUtils.getPosition((IFile) aSelection);
 				workspaceFile = (IFile) aSelection;
-			} else if (aSelection instanceof org.eclipse.jdt.core.ISourceReference) {
+			} else if (R4EUIPlugin.isJDTAvailable() && aSelection instanceof org.eclipse.jdt.core.ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement IJavaElement.  The resource is always an IFile
-				workspaceFile = (IFile) ((IJavaElement) aSelection).getResource();
+				workspaceFile = (IFile) ((org.eclipse.jdt.core.IJavaElement) aSelection).getResource();
 				//TODO is that the right file to get the position???
 				position = CommandUtils.getPosition((org.eclipse.jdt.core.ISourceReference) aSelection, workspaceFile);
-			} else if (aSelection instanceof org.eclipse.cdt.core.model.ISourceReference) {
+			} else if (R4EUIPlugin.isCDTAvailable()
+					&& aSelection instanceof org.eclipse.cdt.core.model.ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement ICElement.  The resource is always an IFile
-				workspaceFile = (IFile) ((ICElement) aSelection).getParent().getResource();
+				workspaceFile = (IFile) ((org.eclipse.cdt.core.model.ICElement) aSelection).getParent().getResource();
 				//TODO is that the right file to get the position???
 				position = CommandUtils.getPosition((org.eclipse.cdt.core.model.ISourceReference) aSelection,
 						workspaceFile);
 			} else {
 				//This should never happen
-				R4EUIPlugin.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString() + ".  Ignoring");
+				R4EUIPlugin.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString()
+						+ ".  Ignoring");
 				return;
 			}
 
@@ -269,12 +267,6 @@ public class NewReviewItemHandler extends AbstractHandler {
 								"No Target File present to Add Review Item", null), IStatus.ERROR);
 				dialog.open();
 			}
-		} catch (JavaModelException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		} catch (CModelException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		} catch (CoreException e) {
 			UIUtils.displayCoreErrorDialog(e);
 		} catch (ReviewsFileStorageException e) {
