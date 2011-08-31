@@ -23,6 +23,7 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -88,7 +89,7 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 				}
 			} else {
 				final Object obj = iterator.next();
-				if ((R4EUIPlugin.isJDTAvailable() && obj instanceof org.eclipse.jdt.core.ISourceReference)
+				if ((R4EUIPlugin.isJDTAvailable() && obj instanceof ISourceReference)
 						|| (R4EUIPlugin.isCDTAvailable() && obj instanceof org.eclipse.cdt.core.model.ISourceReference)) {
 					if (!(isR4EEditorInputAvailable())) {
 						return false;

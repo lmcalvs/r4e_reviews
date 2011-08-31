@@ -32,6 +32,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
@@ -232,16 +234,17 @@ public class NewReviewItemHandler extends AbstractHandler {
 			if (aSelection instanceof IFile) {
 				position = CommandUtils.getPosition((IFile) aSelection);
 				workspaceFile = (IFile) aSelection;
-			} else if (R4EUIPlugin.isJDTAvailable() && aSelection instanceof org.eclipse.jdt.core.ISourceReference) {
+			} else if (R4EUIPlugin.isJDTAvailable() && aSelection instanceof ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement IJavaElement.  The resource is always an IFile
-				workspaceFile = (IFile) ((org.eclipse.jdt.core.IJavaElement) aSelection).getResource();
+				workspaceFile = (IFile) ((IJavaElement) aSelection).getResource();
 				//TODO is that the right file to get the position???
-				position = CommandUtils.getPosition((org.eclipse.jdt.core.ISourceReference) aSelection, workspaceFile);
+				position = CommandUtils.getPosition((ISourceReference) aSelection, workspaceFile);
 			} else if (R4EUIPlugin.isCDTAvailable()
 					&& aSelection instanceof org.eclipse.cdt.core.model.ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement ICElement.  The resource is always an IFile
+				//TO Fix this causes an error java.lang.ClassCastException: org.eclipse.core.internal.resources.Project cannot be cast to org.eclipse.core.resources.IFile
 				workspaceFile = (IFile) ((org.eclipse.cdt.core.model.ICElement) aSelection).getParent().getResource();
 				//TODO is that the right file to get the position???
 				position = CommandUtils.getPosition((org.eclipse.cdt.core.model.ISourceReference) aSelection,

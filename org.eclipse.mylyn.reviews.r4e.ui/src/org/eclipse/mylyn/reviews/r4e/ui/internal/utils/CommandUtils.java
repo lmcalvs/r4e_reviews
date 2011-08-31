@@ -34,6 +34,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
@@ -369,17 +371,16 @@ public class CommandUtils {
 	 * Method getPosition. Get position for workspace java source files
 	 * 
 	 * @param aSelectedElement
-	 *            org.eclipse.jdt.core.ISourceReference
+	 *            ISourceReference
 	 * @param aFile
 	 *            IFile
 	 * @return TextPosition
 	 * @throws CoreException
 	 */
-	public static R4EUITextPosition getPosition(org.eclipse.jdt.core.ISourceReference aSelectedElement, IFile aFile)
-			throws CoreException {
+	public static R4EUITextPosition getPosition(ISourceReference aSelectedElement, IFile aFile) throws CoreException {
 		final R4EUITextPosition position = new R4EUITextPosition(aSelectedElement.getSourceRange().getOffset(),
 				aSelectedElement.getSourceRange().getLength(), aFile);
-		position.setName(((org.eclipse.jdt.core.IJavaElement) aSelectedElement).getElementName());
+		position.setName(((IJavaElement) aSelectedElement).getElementName());
 		return position;
 	}
 

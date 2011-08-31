@@ -29,6 +29,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
@@ -169,19 +171,19 @@ public class NewAnomalyHandler extends AbstractHandler {
 			if (aSelection instanceof IFile) {
 				position = CommandUtils.getPosition((IFile) aSelection);
 				workspaceFile = (IFile) aSelection;
-			} else if (R4EUIPlugin.isJDTAvailable() && aSelection instanceof org.eclipse.jdt.core.ISourceReference) {
+			} else if (R4EUIPlugin.isJDTAvailable() && aSelection instanceof ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement IJavaElement.  The resource is always an IFile
-				workspaceFile = (IFile) ((org.eclipse.jdt.core.IJavaElement) aSelection).getResource();
+				workspaceFile = (IFile) ((IJavaElement) aSelection).getResource();
 				//TODO is that the right file to get the position???
-				position = CommandUtils.getPosition((org.eclipse.jdt.core.ISourceReference) aSelection, workspaceFile);
+				position = CommandUtils.getPosition((ISourceReference) aSelection, workspaceFile);
 			} else if (R4EUIPlugin.isCDTAvailable()
 					&& aSelection instanceof org.eclipse.cdt.core.model.ISourceReference) {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement ICElement.  The resource is always an IFile
 				if (aSelection instanceof org.eclipse.cdt.core.model.ITranslationUnit) {
 					workspaceFile = (IFile) ((org.eclipse.cdt.core.model.ICElement) aSelection).getResource();
-				} else if (aSelection instanceof org.eclipse.jdt.core.ISourceReference) {
+				} else if (aSelection instanceof org.eclipse.cdt.core.model.ICElement) {
 					workspaceFile = (IFile) ((org.eclipse.cdt.core.model.ICElement) aSelection).getParent()
 							.getResource();
 				}
