@@ -25,6 +25,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -398,11 +399,15 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			//The properties shows the absolute, project relative and repository path
 			fBaseFilePathRepositoryText.setText(baseVersion.getRepositoryPath());
 			if (null != baseResource) {
-				fBaseFilePathAbsoluteText.setText(baseResource.getLocation().toPortableString());
+				if (CommandUtils.useWorkspaceResource(baseVersion)) {
+					fBaseFilePathAbsoluteText.setText(baseResource.getLocation().toPortableString());
+				} else {
+					fBaseFilePathAbsoluteText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
+				}
 				fBaseFilePathProjectText.setText(baseResource.getProjectRelativePath().toPortableString());
 			} else {
-				fBaseFilePathAbsoluteText.setText("(Not in workspace)");
-				fBaseFilePathProjectText.setText("(Not in workspace)");
+				fBaseFilePathAbsoluteText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
+				fBaseFilePathProjectText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
 			}
 			fBaseFileVersionText.setText(baseVersion.getVersionID());
 		} else {
@@ -420,11 +425,15 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			//The properties shows the absolute, project relative and repository path
 			fTargetFilePathRepositoryText.setText(targetVersion.getRepositoryPath());
 			if (null != targetResource) {
-				fTargetFilePathAbsoluteText.setText(targetResource.getLocation().toPortableString());
+				if (CommandUtils.useWorkspaceResource(targetVersion)) {
+					fTargetFilePathAbsoluteText.setText(targetResource.getLocation().toPortableString());
+				} else {
+					fTargetFilePathAbsoluteText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
+				}
 				fTargetFilePathProjectText.setText(targetResource.getProjectRelativePath().toPortableString());
 			} else {
-				fTargetFilePathAbsoluteText.setText("(Not in workspace)");
-				fTargetFilePathProjectText.setText("(Not in workspace)");
+				fTargetFilePathAbsoluteText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
+				fTargetFilePathProjectText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
 			}
 			fTargetFileVersionText.setText(targetVersion.getVersionID());
 		} else {
