@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.prefs.PreferenceChangeEvent;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotEnabledException;
@@ -36,7 +37,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -151,6 +151,16 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Method isVisible.
+	 * 
+	 * @return - true is the view is visible, false otherwise
+	 */
+	public boolean isVisible() {
+		IWorkbenchPage page = R4EUIPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		return page.isPartVisible(this);
+	}
+
+	/**
 	 * Method setEditorLinked.
 	 * 
 	 * @param aEditorLinked
@@ -205,16 +215,17 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			fActionSet.dispose();
 		}
 		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
-		if (project.exists()) {
-			try {
-				project.delete(true, null);
-			} catch (CoreException e) {
-				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
-			}
-		}
-		super.dispose();
 
+		try {
+			if (project.exists()) {
+				project.delete(true, null);
+			}
+		} catch (CoreException e) {
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+		} finally {
+			super.dispose();
+		}
 	}
 
 	/**
@@ -566,13 +577,15 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 *            PreferenceChangeEvent
 	 * @see org.eclipse.core.runtime.preferences.IEclipsePreferences$IPreferenceChangeListener#preferenceChange(PreferenceChangeEvent)
 	 */
-	public void preferenceChange(PreferenceChangeEvent event) {
+	public void preferenceChange(org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent event) {
 
 		if (event.getKey().equals(PreferenceConstants.P_USER_ID)) {
 			//Reset reviewer to current ID
 			final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 			R4EUIModelController.setReviewer(store.getString(PreferenceConstants.P_USER_ID));
-			getTreeViewer().refresh();
+			if (isVisible()) {
+				getTreeViewer().refresh();
+			}
 		} else if (event.getKey().equals(PreferenceConstants.P_GROUP_FILE_PATH)) {
 			//Check what is currently loaded vs. what is in the preferences.  Adjust input accordingly
 			final List<R4EUIReviewGroup> groupsLoaded = Arrays.asList(((R4EUIRootElement) R4EUIModelController.getRootElement()).getGroups());
@@ -679,30 +692,32 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * Method applyDefaultFilters.
 	 */
 	public void applyDefaultFilters() {
-		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
-		try {
-			((ReviewNavigatorActionGroup) fActionSet).resetAllFilterActions();
-			((ReviewNavigatorActionGroup) fActionSet).runReviewsOnlyFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_ONLY_FILTER));
-			((ReviewNavigatorActionGroup) fActionSet).runReviewsMyFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_MY_FILTER));
-			((ReviewNavigatorActionGroup) fActionSet).runReviewsParticipantFilterCommand(store.getString(PreferenceConstants.P_PARTICIPANT_FILTER));
-			((ReviewNavigatorActionGroup) fActionSet).runAnomaliesFilterCommand(store.getBoolean(PreferenceConstants.P_ANOMALIES_ALL_FILTER));
-			((ReviewNavigatorActionGroup) fActionSet).runAnomaliesMyFilterCommand(store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
-			((ReviewNavigatorActionGroup) fActionSet).runReviewElemsFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));
-			((ReviewNavigatorActionGroup) fActionSet).runHideRuleSetsFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_RULE_SETS_FILTER));
-			((ReviewNavigatorActionGroup) fActionSet).runHideDeltasFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_DELTAS_FILTER));
-			getTreeViewer().setComparator(new DateComparator());
-		} catch (ExecutionException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		} catch (NotDefinedException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		} catch (NotEnabledException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		} catch (NotHandledException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		if (isVisible()) {
+			final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
+			try {
+				((ReviewNavigatorActionGroup) fActionSet).resetAllFilterActions();
+				((ReviewNavigatorActionGroup) fActionSet).runReviewsOnlyFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_ONLY_FILTER));
+				((ReviewNavigatorActionGroup) fActionSet).runReviewsMyFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_MY_FILTER));
+				((ReviewNavigatorActionGroup) fActionSet).runReviewsParticipantFilterCommand(store.getString(PreferenceConstants.P_PARTICIPANT_FILTER));
+				((ReviewNavigatorActionGroup) fActionSet).runAnomaliesFilterCommand(store.getBoolean(PreferenceConstants.P_ANOMALIES_ALL_FILTER));
+				((ReviewNavigatorActionGroup) fActionSet).runAnomaliesMyFilterCommand(store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
+				((ReviewNavigatorActionGroup) fActionSet).runReviewElemsFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));
+				((ReviewNavigatorActionGroup) fActionSet).runHideRuleSetsFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_RULE_SETS_FILTER));
+				((ReviewNavigatorActionGroup) fActionSet).runHideDeltasFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_DELTAS_FILTER));
+				getTreeViewer().setComparator(new DateComparator());
+			} catch (ExecutionException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			} catch (NotDefinedException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			} catch (NotEnabledException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			} catch (NotHandledException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			}
 		}
 	}
 
