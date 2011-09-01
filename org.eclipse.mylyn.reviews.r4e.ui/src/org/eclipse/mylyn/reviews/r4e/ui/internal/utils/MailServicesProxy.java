@@ -934,7 +934,8 @@ public class MailServicesProxy {
 				meetingData = R4EUIModelController.getMailConnector().createMeetingRequest(messageSubject, messageBody,
 						messageDestinations, aStartDate, aDuration);
 			} catch (CoreException e) {
-				UIUtils.displayCoreErrorDialog(e);
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 				return;
 			}
 			R4EUIModelController.getActiveReview().setMeetingData(meetingData);
