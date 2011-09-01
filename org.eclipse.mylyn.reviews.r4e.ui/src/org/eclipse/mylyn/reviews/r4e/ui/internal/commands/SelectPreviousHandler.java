@@ -66,7 +66,7 @@ public class SelectPreviousHandler extends AbstractHandler {
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				final ISelection selection = HandlerUtil.getCurrentSelection(event);
 				if (selection instanceof IStructuredSelection) {
-					if (!selection.isEmpty()) {
+					if (null != selection && !selection.isEmpty()) {
 						final ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
 
 						//Get the previous element
