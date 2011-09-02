@@ -184,56 +184,61 @@ public class ReviewGroupResTest extends TestCase {
 		System.out.println("test case finished");
 	}
 
-	// @Test
-	// public void testTransformReal() {
-	// // From Objects to Disk
-	// R4EReviewGroup loadedGroup = null;
-	// URI origURI = URI.createFileURI("C:/Users/lmcalvs/OpenReviews/openTest/Various_group_root.xrer");
-	//
-	// try {
-	// loadedGroup = fFactory.openR4EReviewGroup(origURI);
-	// // loadedGroup = GoldenStubHandler.serializeStub();
-	// } catch (ResourceHandlingException e) {
-	// e.printStackTrace();
-	// fail("Exception");
-	// }
-	//
-	// // URI origURI = loadedGroup.eResource().getURI();
-	//
-	// // Open Original Serialised model
-	// URI destFolderURI = origURI.trimSegments(1).appendSegment("transformations");
-	// String filePrefix = "Merged";
-	// ReviewGroupRes destGroup = null;
-	// try {
-	// destGroup = ModelTransform.instance.createReviewGroupRes(destFolderURI, loadedGroup.getName(), filePrefix);
-	// } catch (ResourceHandlingException e) {
-	// e.printStackTrace();
-	// fail("Exception");
-	// }
-	//
-	// assertNotNull("Failed to create transformation group", destGroup);
-	//
-	// R4EReview dReview = null;
-	// Set<String> reviewNames = loadedGroup.getReviewsMap().keySet();
-	// URI destURI = destGroup.eResource().getURI();
-	// for (Iterator<String> iterator = reviewNames.iterator(); iterator.hasNext();) {
-	// String reviewName = iterator.next();
-	// // Open the review
-	// try {
-	// fFactory.openR4EReview(loadedGroup, reviewName);
-	// dReview = ModelTransform.instance.transformReview(origURI, destURI, reviewName);
-	// } catch (ResourceHandlingException e) {
-	// e.printStackTrace();
-	// fail("Exception");
-	// }
-	//
-	// // Transform
-	// assertNotNull("Transformed Review is null", dReview);
-	// }
-	//
-	// //release resources (memory)
-	// // ModelTransformImpl.instance.closeReviewGroupRes(destGroup);
-	// System.out.println("test case finished");
-	// }
+//	@Test
+//	public void testTransformReal() {
+//		// From Objects to Disk
+//		R4EReviewGroup loadedGroup = null;
+//		URI origURI = URI
+//				.createFileURI("C:/Users/lmcalvs/OpenReviews/ReportTrans/ReportTrans_group_root.xrer");
+//
+//		try {
+//			loadedGroup = fFactory.openR4EReviewGroup(origURI);
+//			// loadedGroup = GoldenStubHandler.serializeStub();
+//		} catch (ResourceHandlingException e) {
+//			e.printStackTrace();
+//			fail("Exception");
+//		}
+//
+//		// URI origURI = loadedGroup.eResource().getURI();
+//
+//		// Open Original Serialised model
+//		URI destFolderURI = origURI.trimSegments(1).appendSegment(
+//				"transformations");
+//		String filePrefix = "Merged";
+//		ReviewGroupRes destGroup = null;
+//		try {
+//			destGroup = ModelTransform.instance.createReviewGroupRes(
+//					destFolderURI, loadedGroup.getName(), filePrefix);
+//		} catch (ResourceHandlingException e) {
+//			e.printStackTrace();
+//			fail("Exception");
+//		}
+//
+//		assertNotNull("Failed to create transformation group", destGroup);
+//
+//		R4EReview dReview = null;
+//		Set<String> reviewNames = loadedGroup.getReviewsMap().keySet();
+//		URI destURI = destGroup.eResource().getURI();
+//		for (Iterator<String> iterator = reviewNames.iterator(); iterator
+//				.hasNext();) {
+//			String reviewName = iterator.next();
+//			// Open the review
+//			try {
+//				fFactory.openR4EReview(loadedGroup, reviewName);
+//				dReview = ModelTransform.instance.transformReview(origURI,
+//						destURI, reviewName);
+//			} catch (ResourceHandlingException e) {
+//				e.printStackTrace();
+//				fail("Exception");
+//			}
+//
+//			// Transform
+//			assertNotNull("Transformed Review is null", dReview);
+//		}
+//
+//		// release resources (memory)
+//		// ModelTransformImpl.instance.closeReviewGroupRes(destGroup);
+//		System.out.println("test case finished");
+//	}
 
 } //ReviewGroupResTest

@@ -11,7 +11,6 @@
 
 package org.eclipse.mylyn.reviews.r4e.internal.transform.impl;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -21,15 +20,17 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.mylyn.reviews.frame.core.model.Location;
-import org.eclipse.mylyn.reviews.frame.core.model.Topic;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
+import org.eclipse.mylyn.reviews.frame.core.model.ReviewState;
+import org.eclipse.mylyn.reviews.frame.core.model.TaskReference;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
@@ -39,7 +40,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.IRWUserBasedRes.ResourceT
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
-import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.Activator;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.ModelTransform;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes;
@@ -51,12 +51,6 @@ import org.eclipse.mylyn.reviews.r4e.internal.transform.serial.impl.TResSerializ
  * @author Alvaro Sanchez-Leon
  */
 public class ModelTransformImpl implements ModelTransform {
-
-//	private static final String REVIEWS_RES_NAME = "Merged";
-//
-//	private static final String ANOMALIES_RES_NAME = "Merged";
-//
-//	private static final String ITEMS_RES_NAME = "Merged";
 
 	IModelWriter fWriter = TResSerializeFactory.getWriter();
 
@@ -87,14 +81,8 @@ public class ModelTransformImpl implements ModelTransform {
 		return group;
 	}
 
-	/**
-	 *
-	 */
 	public ReviewGroupRes openReviewGroupRes(URI aResourcePath) throws ResourceHandlingException {
 		ReviewGroupRes group = fReader.deserializeTopElement(aResourcePath, ReviewGroupRes.class);
-
-		// Load resources from all participants
-		URI folder = ResourceUtils.getFolderPath(aResourcePath);
 
 		// Build the mapping references to anomaly types
 		EList<R4EAnomalyType> anomTypes = group.getAvailableAnomalyTypes();
@@ -116,14 +104,14 @@ public class ModelTransformImpl implements ModelTransform {
 		// Obtain all resources
 		Resource resource = aReviewGroup.eResource();
 		if (resource == null) {
-			sb.append("Attempting to close a review group with no associated resource");
+			sb.append("Attempting to close a review group with no associated resource"); //$NON-NLS-1$
 			Activator.fTracer.traceDebug(sb.toString());
 			return sb.toString();
 		}
 
 		ResourceSet resSet = resource.getResourceSet();
 		if (resSet == null) {
-			sb.append("Attempting to close a review group with no associated resource set");
+			sb.append("Attempting to close a review group with no associated resource set"); //$NON-NLS-1$
 			Activator.fTracer.traceDebug(sb.toString());
 			return sb.toString();
 		}
@@ -138,13 +126,10 @@ public class ModelTransformImpl implements ModelTransform {
 	}
 
 	/**
-	 * Transform the original review to concatenate a copy of the contents on a separate model with consolidated
-	 * resources (i.e. one file per items, one for anomalies, one for all reviews, one for all users and comments
+	 * Transform the original review to concatenate a copy of the contents on a separate model within a consolidated
+	 * resource
 	 * 
 	 * @throws ResourceHandlingException
-	 */
-	/**
-	 *
 	 */
 	public ReviewRes transformReview(URI origReviewGroup, URI destReviewGroup, String origReviewName)
 			throws ResourceHandlingException {
@@ -153,7 +138,6 @@ public class ModelTransformImpl implements ModelTransform {
 
 		//Open original review
 		R4EReview origReview = RModelFactoryExt.eINSTANCE.openR4EReview(origGroup, origReviewName);
-		ResourceSet origResSet = origReview.eResource().getResourceSet();
 
 		//Open destination group
 		ReviewGroupRes destGroup = openReviewGroupRes(destReviewGroup);
@@ -167,7 +151,7 @@ public class ModelTransformImpl implements ModelTransform {
 		for (Object element : existingReviews) {
 			ReviewRes reviewRes = (ReviewRes) element;
 			if (reviewRes.getName().equals(origReviewName)) {
-				StringBuilder sb = new StringBuilder("A review with this name already exists in destination Group: "
+				StringBuilder sb = new StringBuilder("A review with this name already exists in destination Group: " //$NON-NLS-1$
 						+ origReviewName);
 				throw new ResourceHandlingException(sb.toString());
 			}
@@ -199,148 +183,51 @@ public class ModelTransformImpl implements ModelTransform {
 	}
 
 	private void adaptReview(R4EReview origReview, ReviewRes destReview, ReviewGroupRes destGroup) {
-
+		Copier copier = new Copier();
 		Collection<R4EUser> origUsersList = origReview.getUsersMap().values();
-		ResourceSet resSet = destReview.eResource().getResourceSet();
 
-		//copy review values
+		//copy review data from original element to the extended review element
+		copyReviewData(origReview, destReview, copier);
+
+		Resource destResource = destReview.eResource();
+		R4EUser createdBy = origReview.getCreatedBy();
 		EList<R4EUser> users = destReview.getUsersRes();
-		copyReviewData(origReview, destReview);
-
-		//Destination review folder
-		String filePrefix = destGroup.getFilesPrefix();
-		URI containerPath = destReview.eResource().getURI().trimSegments(1);
-		URI destAnomaliesURI = fWriter.createResourceURI(filePrefix, containerPath, ResourceType.USER_COMMENT);
-		URI destItemsURI = fWriter.createResourceURI(filePrefix, containerPath, ResourceType.USER_ITEM);
-
-		Resource destAnomaliesResource = null;
-		Resource destItemsResource = null;
-
-		//Resolve the Anomalies resource 
-		File file = new File(destAnomaliesURI.devicePath());
-		if (file.exists()) {
-			destAnomaliesResource = resSet.getResource(destAnomaliesURI, true);
-		} else {
-			destAnomaliesResource = resSet.createResource(destAnomaliesURI);
-		}
-
-		//Resolve the Items resource
-		file = new File(destItemsURI.devicePath());
-		if (file.exists()) {
-			destItemsResource = resSet.getResource(destItemsURI, true);
-		} else {
-			destItemsResource = resSet.createResource(destItemsURI);
-		}
-
-		//Move all users to new destination resource, this will make sure that back reference from children to any user will point to the updated resource
-		for (R4EUser user : origUsersList) {
+		//clone all users to new destination resource, this will make sure that back reference from children to any user will point to the updated resource
+		for (R4EUser oUser : origUsersList) {
+			R4EUser dUser = (R4EUser) copyToResource(destResource, oUser, copier);
 			//move the user to the destination review
-			users.add(user);
-			user.setReviewInstance(destReview);
-			//Move the user to a new destination serialisation resource
-			destAnomaliesResource.getContents().add(user);
+			users.add(dUser);
+			//Associate the user to a new destination serialisation resource
+			destResource.getContents().add(dUser);
+			//find created by user and update the reference in the destination review
+			if (oUser == createdBy) {
+				destReview.setCreatedBy(dUser);
+			}
 		}
 
-		//First user pass: Move user's content to the destination resources
-		for (R4EUser user : origUsersList) {
-			//Make sure proxy resolution is not longer used
-			R4EID[] idsArr = null;
-			if (user instanceof R4EParticipant) {
-				R4EParticipant participant = (R4EParticipant) user;
-				EList<R4EID> reviewedIds = participant.getReviewedContent();
-				idsArr = reviewedIds.toArray(new R4EID[0]);
-				reviewedIds.clear();
-				for (R4EID id : idsArr) {
-					reviewedIds.add(id);
-				}
-			}
+		//Update all references in the copied elements
+		copier.copyReferences();
 
-			//Move anomalies to a different resource
+		//The review is a new element extended from original review.
+		//Refresh all review references in the underneath structure to
+		//point to the extended one.
+		EList<R4EUser> destUsers = destReview.getUsersRes();
+		for (R4EUser user : destUsers) {
+			//update it at the user 
+			user.setReviewInstance(destReview);
 			EList<R4EComment> comments = user.getAddedComments();
 			for (R4EComment comment : comments) {
-				//Move the item to the destination resource
-				switchResources(destAnomaliesResource, comment);
-
-				//refresh the references to the locations
-				if (comment instanceof Topic) {
-					Topic topic = (Topic) comment;
-					EList<Location> locations = topic.getLocation();
-					//Save the iterable references
-					Location[] locationsRefs = locations.toArray(new Location[0]);
-					topic.getLocation().clear();
-					//refresh
-					for (Location location : locationsRefs) {
-						topic.getLocation().add(location);
-					}
+				if (comment instanceof R4EAnomaly) {
+					R4EAnomaly anomaly = (R4EAnomaly) comment;
+					//Update of Review instance at the anomaly level
+					anomaly.setReview(destReview);
 				}
 			}
 
-			//Move Items to a different resource
 			EList<R4EItem> items = user.getAddedItems();
 			for (R4EItem item : items) {
-				//workaround to resolve proxy
-//				EList<R4EFileContext> contexts = item.getFileContextList();
-//				R4EFileVersion base = null;
-//				R4EFileVersion target = null;
-//				Set<String> names = new HashSet<String>();
-//				for (Object element : contexts) {
-//					R4EFileContext dContext = (R4EFileContext) element;
-//					base = dContext.getBase();
-//					target = dContext.getTarget();
-//
-//					if (base != null) {
-//						names.add(base.getName());
-//					}
-//					if (target != null) {
-//						names.add(target.getName());
-//					}
-//
-//					target = dContext.getTarget();
-//					dContext.setBase(null);
-//					dContext.setTarget(null);
-//					Activator.getDefault();
-//					//refresh with updated references
-//					Activator.fTracer.traceDebug("Refreshing context: " + dContext.getBase() + dContext.getTarget());
-//					dContext.setBase(base);
-//					dContext.setTarget(target);
-//				}
-
-				//Move the item to the destination resource
-				switchResources(destItemsResource, item);
+				//update of review instance at review item level
 				item.setReview(destReview);
-				//TODO: Investigate why this reference is not updated by EMF
-				String addedBy = item.getAddedById();
-				item.setAddedBy(origReview.getUsersMap().get(addedBy));
-			}
-		}
-
-		//Second user pass: Adjust reviewed content references which have just been moved in the item level for all users above
-		for (R4EUser user : origUsersList) {
-			EList<R4EComment> comments = user.getAddedComments();
-			for (R4EComment comment : comments) {
-				//refresh the references to the locations
-				if (comment instanceof Topic) {
-					Topic topic = (Topic) comment;
-					EList<Location> locations = topic.getLocation();
-					//Save the iterable references
-					Location[] locationsRefs = locations.toArray(new Location[0]);
-					topic.getLocation().clear();
-					//refresh
-					for (Location location : locationsRefs) {
-						topic.getLocation().add(location);
-					}
-				}
-			}
-
-			//refresh the reviewed ids of a participant
-			if (user instanceof R4EParticipant) {
-				R4EParticipant participant = (R4EParticipant) user;
-				EList<R4EID> reviewedIds = participant.getReviewedContent();
-				R4EID[] idsArr = reviewedIds.toArray(new R4EID[0]);
-				reviewedIds.clear();
-				for (R4EID id : idsArr) {
-					reviewedIds.add(id);
-				}
 			}
 		}
 	}
@@ -349,11 +236,11 @@ public class ModelTransformImpl implements ModelTransform {
 	 * @param destResource
 	 * @param eObject
 	 */
-	private void switchResources(Resource destResource, EObject eObject) {
+	private void associateToResource(Resource destResource, EObject eObject) {
 		//Migrate the object itself
 		destResource.getContents().add(eObject);
 		//Migrate the direct contents as well
-		for (Iterator iterator = EcoreUtil.getAllContents(eObject, true); iterator.hasNext();) {
+		for (Iterator<Object> iterator = EcoreUtil.getAllContents(eObject, true); iterator.hasNext();) {
 			Object child = iterator.next();
 			if (child instanceof EObject) {
 				EObject eobject = (EObject) child;
@@ -362,39 +249,48 @@ public class ModelTransformImpl implements ModelTransform {
 		}
 	}
 
+	private EObject copyToResource(Resource resource, EObject source, Copier copier) {
+		EObject copyOfObject = copier.copy(source);
+		associateToResource(resource, copyOfObject);
+		return copyOfObject;
+	}
+
 	/**
 	 * @param origReview
 	 * @param destReview
+	 * @param copier
 	 */
-	private void copyReviewData(R4EReview origReview, ReviewRes destReview) {
+	private void copyReviewData(R4EReview origReview, ReviewRes destReview, Copier copier) {
 		Resource res = destReview.eResource();
 
-		//Move references 
+		//copy EObject references 
 		if (origReview.getActiveMeeting() != null) {
-			switchResources(res, origReview.getActiveMeeting());
+			R4EMeetingData meetingData = (R4EMeetingData) copyToResource(res, origReview.getActiveMeeting(), copier);
+			destReview.setActiveMeeting(meetingData);
 		}
 
 		if (origReview.getAnomalyTemplate() != null) {
-			switchResources(res, origReview.getAnomalyTemplate());
+			R4EAnomaly anomalyTemplate = (R4EAnomaly) copyToResource(res, origReview.getAnomalyTemplate(), copier);
+			destReview.setAnomalyTemplate(anomalyTemplate);
 		}
 
 		if (origReview.getDecision() != null) {
-			switchResources(res, origReview.getDecision());
+			R4EReviewDecision decision = (R4EReviewDecision) copyToResource(res, origReview.getDecision(), copier);
+			destReview.setDecision(decision);
 		}
 
 		if (origReview.getReviewTask() != null) {
-			switchResources(res, origReview.getReviewTask());
+			TaskReference taskRef = (TaskReference) copyToResource(res, origReview.getReviewTask(), copier);
+			destReview.setReviewTask(taskRef);
 		}
 
 		if (origReview.getState() != null) {
-			switchResources(res, origReview.getState());
+			ReviewState state = (ReviewState) copyToResource(res, origReview.getState(), copier);
+			destReview.setState(state);
 		}
 
-		//Update references and values in the destination review
-		destReview.setActiveMeeting(origReview.getActiveMeeting());
-		destReview.setAnomalyTemplate(origReview.getAnomalyTemplate());
-		destReview.setCreatedBy(origReview.getCreatedBy());
-		destReview.setDecision(origReview.getDecision());
+		//associate java types
+		destReview.setType(origReview.getType());
 		destReview.setEnabled(origReview.isEnabled());
 		destReview.setEndDate(origReview.getEndDate());
 		destReview.setEntryCriteria(origReview.getEntryCriteria());
@@ -403,11 +299,9 @@ public class ModelTransformImpl implements ModelTransform {
 		destReview.setObjectives(origReview.getObjectives());
 		destReview.setProject(origReview.getProject());
 		destReview.setReferenceMaterial(origReview.getReferenceMaterial());
-		destReview.setReviewTask(origReview.getReviewTask());
 		destReview.setStartDate(origReview.getStartDate());
-		destReview.setState(origReview.getState());
-		destReview.setType(origReview.getType());
 		destReview.setXmlVersion(origReview.getXmlVersion());
+
 		//copy review components
 		EList<String> components = origReview.getComponents();
 		for (Object element : components) {
@@ -419,14 +313,18 @@ public class ModelTransformImpl implements ModelTransform {
 			R4EFormalReview formalRevOrig = (R4EFormalReview) origReview;
 			EList<R4EReviewPhaseInfo> phases = formalRevOrig.getPhases();
 			if (phases != null) {
+				R4EReviewPhaseInfo currentPhase = formalRevOrig.getCurrent();
 				R4EReviewPhaseInfo[] movingPhases = phases.toArray(new R4EReviewPhaseInfo[0]);
 				for (R4EReviewPhaseInfo phaseInfo : movingPhases) {
-					switchResources(res, phaseInfo);
-					destReview.getPhases().add(phaseInfo);
+					R4EReviewPhaseInfo phaseInfoCopy = (R4EReviewPhaseInfo) copyToResource(res, phaseInfo, copier);
+					destReview.getPhases().add(phaseInfoCopy);
+					//Current phase found
+					if (phaseInfo == currentPhase) {
+						destReview.setCurrent(phaseInfoCopy);
+					}
 				}
 			}
 
-			destReview.setCurrent(formalRevOrig.getCurrent());
 		}
 	}
 }

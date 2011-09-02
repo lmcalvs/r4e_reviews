@@ -47,6 +47,12 @@ public interface ModelTransform {
 	 */
 	public ReviewGroupRes openReviewGroupRes(URI aResourcePath) throws ResourceHandlingException;
 
+	/**
+	 * Close the file Resources associated to the given review group
+	 * 
+	 * @param aReviewGroup
+	 * @return - Message for unexpected cases, e.g. nothing to close, etc..
+	 */
 	public String closeReviewGroupRes(ReviewGroupRes aReviewGroup);
 
 	/**
