@@ -1070,8 +1070,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
 			throws ResourceHandlingException, OutOfSyncException {
-		if (aChildToRemove instanceof R4EUIPostponedContainer) {
-			final R4EUIPostponedContainer removedElement = (R4EUIPostponedContainer) aChildToRemove;
+		if (aChildToRemove instanceof R4EUIFileContainer) {
+			final R4EUIFileContainer removedElement = (R4EUIFileContainer) aChildToRemove;
 
 			//Also recursively remove all children 
 			removedElement.removeAllChildren(aFileRemove);
@@ -1088,29 +1088,6 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			//Remove element from UI if the show disabled element option is off
 			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fPostponedContainer = null;
-				aChildToRemove.removeListeners();
-				fireRemove(aChildToRemove);
-			} else {
-				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
-			}
-		} else if (aChildToRemove instanceof R4EUIReviewItem) {
-			final R4EUIReviewItem removedElement = fItems.get(fItems.indexOf(aChildToRemove));
-
-			//Also recursively remove all children 
-			removedElement.removeAllChildren(aFileRemove);
-
-			/* TODO uncomment when core model supports hard-removing of elements
-			if (aFileRemove) removedElement.getItem().remove());
-			else */
-			final R4EItem modelItem = removedElement.getItem();
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelItem,
-					R4EUIModelController.getReviewer());
-			modelItem.setEnabled(false);
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-			//Remove element from UI if the show disabled element option is off
-			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
-				fItems.remove(removedElement);
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
 			} else {
@@ -1222,7 +1199,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isChangeUserReviewStateCmd() {
-		if (isEnabled() && isOpen()) {
+		if (isEnabled()
+				&& isOpen()
+				&& !(((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -1346,7 +1325,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (!isOpen() && isEnabled()) {
+		if (!isOpen()
+				&& isEnabled()
+				&& !(((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -1363,7 +1344,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		if (!(getParent().isEnabled())) {
 			return false;
 		}
-		if (isOpen() || isEnabled()) {
+		if (isOpen() || isEnabled()
+				|| ((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;
 		}
 		return true;
@@ -1413,7 +1395,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isImportPostponedCmd() {
-		if ((!getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) && isOpen()) {
+		if ((!getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC))
+				&& isOpen()
+				&& !(((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;

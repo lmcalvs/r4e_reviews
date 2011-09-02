@@ -43,7 +43,7 @@ import org.eclipse.team.core.history.IFileRevision;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class R4EUIPostponedContainer extends R4EUIReviewItem {
+public class R4EUIPostponedContainer extends R4EUIFileContainer {
 
 	// ------------------------------------------------------------------------
 	// Constants

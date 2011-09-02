@@ -20,23 +20,29 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.navigator;
 
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.viewers.IColorDecorator;
 import org.eclipse.jface.viewers.IFontDecorator;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.OverlayImageIcon;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator {
+public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator, IColorDecorator {
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -166,6 +172,9 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * @see org.eclipse.jface.viewers.IFontDecorator#decorateFont(Object)
 	 */
 	public Font decorateFont(Object aElement) { // $codepro.audit.disable
+		if (null != R4EUIModelController.getActiveReview() && R4EUIModelController.getActiveReview().equals(aElement)) {
+			return JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
+		}
 		if (isMyReview((IR4EUIModelElement) aElement)) {
 			return JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT);
 		}
@@ -191,5 +200,18 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 			currentElement = currentElement.getParent();
 		}
 		return false;
+	}
+
+	public Color decorateBackground(Object element) {
+		return null;
+	}
+
+	public Color decorateForeground(Object aElement) {
+		if (aElement instanceof R4EUIReviewBasic
+				&& ((R4EReviewState) ((R4EUIReviewBasic) aElement).getReview().getState()).getState().equals(
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+			return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY);
+		}
+		return null;
 	}
 }

@@ -22,6 +22,8 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
@@ -459,7 +461,9 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			return;
 		}
 
-		if (R4EUIModelController.isJobInProgress()) {
+		if (R4EUIModelController.isJobInProgress()
+				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			fBaseFileNameText.setEnabled(false);
 			fBaseFilePathRepositoryText.setEnabled(false);
 			fBaseFilePathAbsoluteText.setEnabled(false);

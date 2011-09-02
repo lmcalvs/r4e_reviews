@@ -58,33 +58,38 @@
                   tooltip="Find Review Items from a given Project in Workspace">
                <visibleWhen
                      checkEnabled="false">
-                  <with
-                        variable="selection">
-                     <iterate
-                           ifEmpty="false"
-                           operator="or">
-                        <or>
-                           <instanceof
-                                 value="org.eclipse.core.resources.IProject">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.jdt.core.IJavaProject">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.cdt.core.model.ICProject">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.core.resources.IFolder">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.jdt.core.IPackageFragmentRoot">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.jdt.core.IPackageFragment">
-                           </instanceof>
-                        </or>
-                     </iterate>
-                  </with>
+                  <and>
+                     <test
+                           property="org.eclipse.mylyn.reviews.r4e.ui.commands.review.completed">
+                     </test>
+                     <with
+                           variable="selection">
+                        <iterate
+                              ifEmpty="false"
+                              operator="or">
+                           <or>
+                              <instanceof
+                                    value="org.eclipse.core.resources.IProject">
+                              </instanceof>
+                              <instanceof
+                                    value="org.eclipse.jdt.core.IJavaProject">
+                              </instanceof>
+                              <instanceof
+                                    value="org.eclipse.cdt.core.model.ICProject">
+                              </instanceof>
+                              <instanceof
+                                    value="org.eclipse.core.resources.IFolder">
+                              </instanceof>
+                              <instanceof
+                                    value="org.eclipse.jdt.core.IPackageFragmentRoot">
+                              </instanceof>
+                              <instanceof
+                                    value="org.eclipse.jdt.core.IPackageFragment">
+                              </instanceof>
+                           </or>
+                        </iterate>
+                     </with>
+                  </and>
                </visibleWhen>
             </command>
             <command
@@ -97,30 +102,35 @@
                   tooltip="Add a New Review Item to the Current Review">
                <visibleWhen
                      checkEnabled="false">
-                  <or>
-                     <with
-                           variable="selection">
-                        <iterate>
-                           <or>
-                              <instanceof
-                                    value="org.eclipse.core.resources.IFile">
-                              </instanceof>
-                              <instanceof
-                                    value="org.eclipse.jdt.core.ISourceReference">
-                              </instanceof>
-                              <instanceof
-                                    value="org.eclipse.cdt.core.model.ISourceReference">
-                              </instanceof>
-                           </or>
-                        </iterate>
-                     </with>
-                     <with
-                           variable="activePart">
-                        <instanceof
-                              value="org.eclipse.ui.IEditorPart">
-                        </instanceof>
-                     </with>
-                  </or>
+                  <and>
+                     <test
+                           property="org.eclipse.mylyn.reviews.r4e.ui.commands.review.completed">
+                     </test>
+                     <or>
+                        <with
+                              variable="selection">
+                           <iterate>
+                              <or>
+                                 <instanceof
+                                       value="org.eclipse.core.resources.IFile">
+                                 </instanceof>
+                                 <instanceof
+                                       value="org.eclipse.jdt.core.ISourceReference">
+                                 </instanceof>
+                                 <instanceof
+                                       value="org.eclipse.cdt.core.model.ISourceReference">
+                                 </instanceof>
+                              </or>
+                           </iterate>
+                        </with>
+                        <with
+                              variable="activePart">
+                           <instanceof
+                                 value="org.eclipse.ui.IEditorPart">
+                           </instanceof>
+                        </with>
+                     </or>
+                  </and>
                </visibleWhen>
             </command>
             <command
@@ -133,30 +143,35 @@
                   tooltip="Add a New Anomaly to the Current Review">
                <visibleWhen
                      checkEnabled="false">
-                  <or>
-                     <with
-                           variable="selection">
-                        <iterate>
-                           <or>
-                              <instanceof
-                                    value="org.eclipse.core.resources.IFile">
-                              </instanceof>
-                              <instanceof
-                                    value="org.eclipse.jdt.core.ISourceReference">
-                              </instanceof>
-                              <instanceof
-                                    value="org.eclipse.cdt.core.model.ISourceReference">
-                              </instanceof>
-                           </or>
-                        </iterate>
-                     </with>
-                     <with
-                           variable="activePart">
-                        <instanceof
-                              value="org.eclipse.ui.IEditorPart">
-                        </instanceof>
-                     </with>
-                  </or>
+                  <and>
+                     <test
+                           property="org.eclipse.mylyn.reviews.r4e.ui.commands.review.completed">
+                     </test>
+                     <or>
+                        <with
+                              variable="selection">
+                           <iterate>
+                              <or>
+                                 <instanceof
+                                       value="org.eclipse.core.resources.IFile">
+                                 </instanceof>
+                                 <instanceof
+                                       value="org.eclipse.jdt.core.ISourceReference">
+                                 </instanceof>
+                                 <instanceof
+                                       value="org.eclipse.cdt.core.model.ISourceReference">
+                                 </instanceof>
+                              </or>
+                           </iterate>
+                        </with>
+                        <with
+                              variable="activePart">
+                           <instanceof
+                                 value="org.eclipse.ui.IEditorPart">
+                           </instanceof>
+                        </with>
+                     </or>
+                  </and>
                </visibleWhen>
             </command>
             <command
@@ -197,14 +212,9 @@
             </command>
             <visibleWhen
                   checkEnabled="false">
-               <and>
-                  <test
-                        property="org.eclipse.mylyn.reviews.r4e.ui.commands.review.completed">
-                  </test>
-                  <test
-                        property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-                  </test>
-               </and>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+               </test>
             </visibleWhen>
          </menu>
       </menuContribution>

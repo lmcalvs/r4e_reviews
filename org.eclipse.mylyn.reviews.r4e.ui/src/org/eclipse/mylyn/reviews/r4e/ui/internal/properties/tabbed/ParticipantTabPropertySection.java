@@ -30,6 +30,8 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -536,7 +538,9 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isJobInProgress()) {
+		if (R4EUIModelController.isJobInProgress()
+				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			fIdText.setEnabled(false);
 			fNumItemsText.setEnabled(false);
 			fNumAnomaliesText.setEnabled(false);
