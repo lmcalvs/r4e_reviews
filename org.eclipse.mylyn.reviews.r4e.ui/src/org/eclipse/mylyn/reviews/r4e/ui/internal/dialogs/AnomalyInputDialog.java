@@ -53,7 +53,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorConten
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorLabelProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorTreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Point;
@@ -148,6 +150,16 @@ public class AnomalyInputDialog extends FormDialog {
 	 * Field fAnomalyDescriptionInputTextField.
 	 */
 	protected Text fAnomalyDescriptionInputTextField;
+
+	/**
+	 * Field fAnomalyClass.
+	 */
+	protected CCombo fAnomalyClass = null;
+
+	/**
+	 * Field fAnomalyRank.
+	 */
+	protected CCombo fAnomalyRank = null;
 
 	/**
 	 * Field fRuleTreeViewer.
@@ -351,6 +363,30 @@ public class AnomalyInputDialog extends FormDialog {
 		final Composite extraSectionClient = toolkit.createComposite(extraSection);
 		extraSectionClient.setLayout(layout);
 		extraSection.setClient(extraSectionClient);
+
+		//Anomaly Class
+		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.CLASS_LABEL);
+		label.setToolTipText(R4EUIConstants.ANOMALY_CLASS_TOOLTIP);
+		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+
+		fAnomalyClass = new CCombo(extraSectionClient, SWT.BORDER | SWT.READ_ONLY);
+		fAnomalyClass.setItems(UIUtils.getClasses());
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		fAnomalyClass.setToolTipText(R4EUIConstants.ANOMALY_CLASS_TOOLTIP);
+		fAnomalyClass.setLayoutData(textGridData);
+
+		//Anomaly Rank 	
+		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.RANK_LABEL);
+		label.setToolTipText(R4EUIConstants.ANOMALY_RANK_TOOLTIP);
+		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+
+		fAnomalyRank = new CCombo(extraSectionClient, SWT.BORDER | SWT.READ_ONLY);
+		fAnomalyRank.setItems(UIUtils.getRanks());
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		fAnomalyRank.setToolTipText(R4EUIConstants.ANOMALY_CLASS_TOOLTIP);
+		fAnomalyRank.setLayoutData(textGridData);
 
 		//Rule Tree
 		label = toolkit.createLabel(extraSectionClient, ADD_RULE_DIALOG_VALUE);
@@ -574,10 +610,16 @@ public class AnomalyInputDialog extends FormDialog {
 						final R4EUIRule rule = (R4EUIRule) ((IStructuredSelection) event.getSelection()).getFirstElement();
 						fAnomalyTitleInputTextField.setText(rule.getRule().getTitle());
 						fAnomalyDescriptionInputTextField.setText(rule.getRule().getDescription());
+						fAnomalyClass.select(rule.getRule().getClass_().getValue());
+						fAnomalyRank.select(rule.getRule().getRank().getValue());
+						fAnomalyClass.setEnabled(false);
+						fAnomalyRank.setEnabled(false);
 						return;
 					}
 				}
 				fRuleTreeViewer.setSelection(null);
+				fAnomalyClass.setEnabled(true);
+				fAnomalyRank.setEnabled(true);
 			}
 		});
 	}
