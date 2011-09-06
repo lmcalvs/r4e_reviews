@@ -35,6 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.FocusFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.HideDeltasFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.HideRuleSetsFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.NavigatorElementComparator;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewCompletedFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewedElemsFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewsOnlyFilter;
@@ -106,6 +107,11 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	private final ReviewParticipantFilter fReviewsParticipantFilter;
 
 	/**
+	 * Field fReviewsCompletedFilter.
+	 */
+	private final ReviewCompletedFilter fReviewsCompletedFilter;
+
+	/**
 	 * Field fAnomaliesFilter.
 	 */
 	private final AnomaliesOnlyFilter fAnomaliesFilter;
@@ -153,6 +159,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		fReviewsOnlyFilter = new ReviewsOnlyFilter();
 		fReviewsMyFilter = new ReviewParticipantFilter();
 		fReviewsParticipantFilter = new ReviewParticipantFilter();
+		fReviewsCompletedFilter = new ReviewCompletedFilter();
 		fAnomaliesFilter = new AnomaliesOnlyFilter();
 		fReviewedElemsFilter = new ReviewedElemsFilter();
 		fHideRuleSetsFilter = new HideRuleSetsFilter();
@@ -179,6 +186,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		runReviewsOnlyFilterCommand(false);
 		runReviewsMyFilterCommand(false);
 		runReviewsParticipantFilterCommand("");
+		runReviewsCompletedFilterCommand(false);
 		runAnomaliesFilterCommand(false);
 		runAnomaliesMyFilterCommand(false);
 		runReviewElemsFilterCommand(false);
@@ -221,6 +229,43 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	public ViewerComparator getReviewTypeSorter() {
 		return fReviewTypeSorter;
+	}
+
+	/**
+	 * Method getReviewsCompletedFilter.
+	 * 
+	 * @return fReviewsCompletedFilter
+	 */
+	public ReviewCompletedFilter getReviewsCompletedFilter() {
+		return fReviewsCompletedFilter;
+	}
+
+	/**
+	 * Method resetReviewsCompletedFilterCommand.
+	 */
+	private void resetReviewsCompletedFilterCommand() {
+		fView.getTreeViewer().removeFilter(fReviewsCompletedFilter);
+		fCommandService.getCommand(R4EUIConstants.REVIEWS_COMPLETED_FILTER_COMMAND)
+				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+				.setValue(Boolean.valueOf(false));
+	}
+
+	/**
+	 * Method runReviewsCompletedFilterCommand.
+	 * 
+	 * @param aApply
+	 *            boolean
+	 * @throws NotHandledException
+	 * @throws NotEnabledException
+	 * @throws NotDefinedException
+	 * @throws ExecutionException
+	 */
+	public void runReviewsCompletedFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
+			NotEnabledException, NotHandledException {
+		resetReviewsCompletedFilterCommand();
+		if (aApply) {
+			fHandlerService.executeCommand(R4EUIConstants.REVIEWS_COMPLETED_FILTER_COMMAND, null);
+		}
 	}
 
 	/**
@@ -640,7 +685,8 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		boolean commandActive = fCommandService.getCommand(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND)
 				.getHandler()
 				.isEnabled();
-		final IHandlerActivation activationToken = fHandlerService.activateHandler(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND,
+		final IHandlerActivation activationToken = fHandlerService.activateHandler(
+				R4EUIConstants.NEW_REVIEW_ITEM_COMMAND,
 				fCommandService.getCommand(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND).getHandler());
 		fHandlerService.executeCommand(R4EUIConstants.NEW_REVIEW_ITEM_COMMAND, null);
 		if (!commandActive) {

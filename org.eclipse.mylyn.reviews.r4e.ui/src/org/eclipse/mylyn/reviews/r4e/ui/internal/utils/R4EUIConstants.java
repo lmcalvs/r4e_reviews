@@ -899,6 +899,27 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ANOMALIES_MY_FILTER_MNEMONIC = "z";
 
 	/**
+	 * Field REVIEWS_COMPLETED_FILTER_COMMAND. (value is
+	 * ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsCompleted"")
+	 */
+	public static final String REVIEWS_COMPLETED_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsCompleted";
+
+	/**
+	 * Field REVIEWS_COMPLETED_FILTER_NAME. (value is ""Hide Completed Reviews"")
+	 */
+	public static final String REVIEWS_COMPLETED_FILTER_NAME = "Hide Completed Reviews";
+
+	/**
+	 * Field REVIEWS_COMPLETED_FILTER_TOOLTIP. (value is ""Hide Completed Reviews"")
+	 */
+	public static final String REVIEWS_COMPLETED_FILTER_TOOLTIP = "Hide Completed Reviews";
+
+	/**
+	 * Field REVIEWS_COMPLETED_FILTER_MNEMONIC. (value is ""c"")
+	 */
+	public static final String REVIEWS_COMPLETED_FILTER_MNEMONIC = "c";
+
+	/**
 	 * Field REVIEWS_ONLY_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsOnly"")
 	 */
 	public static final String REVIEWS_ONLY_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsOnly";

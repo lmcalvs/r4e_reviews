@@ -45,9 +45,15 @@ public class FiltersContributionItems extends CompoundContributionItem {
 		final List<IContributionItem> list = new ArrayList<IContributionItem>();
 
 		CommandContributionItemParameter params = new CommandContributionItemParameter(
-				R4EUIModelController.getNavigatorView().getSite(), R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND,
-				R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND, null, null, null, null,
-				R4EUIConstants.REVIEWS_ONLY_FILTER_NAME, R4EUIConstants.REVIEWS_ONLY_FILTER_MNEMONIC,
+				R4EUIModelController.getNavigatorView().getSite(), R4EUIConstants.REVIEWS_COMPLETED_FILTER_COMMAND,
+				R4EUIConstants.REVIEWS_COMPLETED_FILTER_COMMAND, null, null, null, null,
+				R4EUIConstants.REVIEWS_COMPLETED_FILTER_NAME, R4EUIConstants.REVIEWS_COMPLETED_FILTER_MNEMONIC,
+				R4EUIConstants.REVIEWS_COMPLETED_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
+		list.add(new CommandContributionItem(params));
+
+		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+				R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND, R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND, null, null,
+				null, null, R4EUIConstants.REVIEWS_ONLY_FILTER_NAME, R4EUIConstants.REVIEWS_ONLY_FILTER_MNEMONIC,
 				R4EUIConstants.REVIEWS_ONLY_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
 		list.add(new CommandContributionItem(params));
 
@@ -97,8 +103,8 @@ public class FiltersContributionItems extends CompoundContributionItem {
 		list.add(new CommandContributionItem(params));
 
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-				R4EUIConstants.GO_INTO_FILTER_COMMAND, R4EUIConstants.GO_INTO_FILTER_COMMAND, null, null, null,
-				null, R4EUIConstants.GO_INTO_FILTER_NAME, R4EUIConstants.GO_INTO_FILTER_MNEMONIC,
+				R4EUIConstants.GO_INTO_FILTER_COMMAND, R4EUIConstants.GO_INTO_FILTER_COMMAND, null, null, null, null,
+				R4EUIConstants.GO_INTO_FILTER_NAME, R4EUIConstants.GO_INTO_FILTER_MNEMONIC,
 				R4EUIConstants.GO_INTO_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, true);
 		list.add(new CommandContributionItem(params));
 

@@ -699,6 +699,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 			try {
 				((ReviewNavigatorActionGroup) fActionSet).resetAllFilterActions();
+				((ReviewNavigatorActionGroup) fActionSet).runReviewsCompletedFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER));
 				((ReviewNavigatorActionGroup) fActionSet).runReviewsOnlyFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_ONLY_FILTER));
 				((ReviewNavigatorActionGroup) fActionSet).runReviewsMyFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_MY_FILTER));
 				((ReviewNavigatorActionGroup) fActionSet).runReviewsParticipantFilterCommand(store.getString(PreferenceConstants.P_PARTICIPANT_FILTER));

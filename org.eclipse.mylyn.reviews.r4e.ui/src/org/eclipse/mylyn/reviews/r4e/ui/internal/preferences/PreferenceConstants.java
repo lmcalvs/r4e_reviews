@@ -112,6 +112,11 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_SHOW_DISABLED = "showDisabled";
 
 	/**
+	 * Field P_REVIEWS_COMPLETED_FILTER. (value is ""reviewsCompletedFilter"")
+	 */
+	public static final String P_REVIEWS_COMPLETED_FILTER = "reviewsCompletedFilter";
+
+	/**
 	 * Field P_REVIEWS_ONLY_FILTER. (value is ""reviewsOnlyFilter"")
 	 */
 	public static final String P_REVIEWS_ONLY_FILTER = "reviewsOnlyFilter";

@@ -524,6 +524,16 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
+            description="Hide Completed Reviews Filter"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsCompleted"
+            name="ReviewsCompleted">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
             description="Reviews Only Filter"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsOnly"
             name="ReviewsOnly">
@@ -817,6 +827,15 @@
       <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AnomaliesMyFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesMy">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewsCompletedFilterHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsCompleted">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">

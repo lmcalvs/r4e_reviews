@@ -123,6 +123,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private Button fReviewShowDisabledButton = null;
 
 	/**
+	 * Field fReviewsCompletedFilterButton.
+	 */
+	private Button fReviewsCompletedFilterButton = null;
+
+	/**
 	 * Field fReviewsOnlyFilterButton.
 	 */
 	private Button fReviewsOnlyFilterButton = null;
@@ -482,6 +487,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fReviewShowDisabledButton.setLayoutData(r4EFilterPrefsGroupData);
 		fReviewShowDisabledButton.setSelection(store.getBoolean(PreferenceConstants.P_SHOW_DISABLED));
 
+		fReviewsCompletedFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fReviewsCompletedFilterButton.setText(R4EUIConstants.REVIEWS_COMPLETED_FILTER_NAME);
+		fReviewsCompletedFilterButton.setLayoutData(r4EFilterPrefsGroupData);
+		fReviewsCompletedFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER));
+
 		fReviewsOnlyFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fReviewsOnlyFilterButton.setText(R4EUIConstants.REVIEWS_ONLY_FILTER_NAME);
 		fReviewsOnlyFilterButton.setLayoutData(r4EFilterPrefsGroupData);
@@ -586,6 +596,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		//Remove all Filters
 		store.setValue(PreferenceConstants.P_SHOW_DISABLED, false);
 		fReviewShowDisabledButton.setSelection(false);
+		store.setValue(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER, false);
+		fReviewsCompletedFilterButton.setSelection(false);
 		store.setValue(PreferenceConstants.P_REVIEWS_ONLY_FILTER, false);
 		fReviewsOnlyFilterButton.setSelection(false);
 		store.setValue(PreferenceConstants.P_ANOMALIES_MY_FILTER, false);
@@ -620,6 +632,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 		//Set preferences for default filters and apply them
 		store.setValue(PreferenceConstants.P_SHOW_DISABLED, fReviewShowDisabledButton.getSelection());
+		store.setValue(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER, fReviewsCompletedFilterButton.getSelection());
 		store.setValue(PreferenceConstants.P_REVIEWS_ONLY_FILTER, fReviewsOnlyFilterButton.getSelection());
 		store.setValue(PreferenceConstants.P_ANOMALIES_MY_FILTER, fAnomaliesMyFilterButton.getSelection());
 		store.setValue(PreferenceConstants.P_REVIEWS_MY_FILTER, fReviewMyFilterButton.getSelection());
