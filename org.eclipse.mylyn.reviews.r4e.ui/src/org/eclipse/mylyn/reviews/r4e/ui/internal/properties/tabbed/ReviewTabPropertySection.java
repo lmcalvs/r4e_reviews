@@ -409,6 +409,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				//No implementation needed
 			}
 		});
+		addScrollListener(fPhaseCombo);
 
 		final CLabel phaseLabel = widgetFactory.createCLabel(mainForm, R4EUIConstants.PHASE_LABEL);
 		data = new FormData();
@@ -1009,6 +1010,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				refresh();
 			}
 		});
+		addScrollListener(fPlanningPhaseOwnerCombo);
 		final TableEditor planningEditor = new TableEditor(fPhaseTable);
 		planningEditor.grabHorizontal = true;
 		planningEditor.grabVertical = true;
@@ -1040,6 +1042,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				refresh();
 			}
 		});
+		addScrollListener(fPreparationPhaseOwnerCombo);
 		final TableEditor preparationEditor = new TableEditor(fPhaseTable);
 		preparationEditor.grabHorizontal = true;
 		preparationEditor.grabVertical = true;
@@ -1071,6 +1074,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				refresh();
 			}
 		});
+		addScrollListener(fDecisionPhaseOwnerCombo);
 		final TableEditor decisionEditor = new TableEditor(fPhaseTable);
 		decisionEditor.grabHorizontal = true;
 		decisionEditor.grabVertical = true;
@@ -1102,6 +1106,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				refresh();
 			}
 		});
+		addScrollListener(fReworkPhaseOwnerCombo);
 		final TableEditor reworkEditor = new TableEditor(fPhaseTable);
 		reworkEditor.grabHorizontal = true;
 		reworkEditor.grabVertical = true;

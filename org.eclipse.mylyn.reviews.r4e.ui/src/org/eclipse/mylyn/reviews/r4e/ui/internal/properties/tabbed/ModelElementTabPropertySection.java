@@ -22,12 +22,13 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ModelElementProperties;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.internal.forms.widgets.FormUtil;
@@ -172,10 +173,11 @@ public class ModelElementTabPropertySection extends AbstractPropertySection impl
 	 *            CCombo
 	 */
 	public static void addScrollListener(final CCombo aCombo) {
-		aCombo.addMouseWheelListener(new MouseWheelListener() {
-			public void mouseScrolled(MouseEvent event) {
-				@SuppressWarnings("restriction")
-				final ScrolledComposite form = FormUtil.getScrolledComposite(aCombo);
+		aCombo.addListener(SWT.MouseVerticalWheel, new Listener() {
+			@SuppressWarnings("restriction")
+			public void handleEvent(Event event) {
+				ScrolledComposite form = FormUtil.getScrolledComposite(aCombo);
+				aCombo.select(aCombo.getSelectionIndex());
 				if (null != form && null != form.getVerticalBar()) {
 					if (event.count < 0) {
 						// scroll form down
@@ -185,6 +187,7 @@ public class ModelElementTabPropertySection extends AbstractPropertySection impl
 						scroll(form, 0, -form.getVerticalBar().getIncrement());
 					}
 				}
+				event.doit = false;
 			}
 		});
 	}
