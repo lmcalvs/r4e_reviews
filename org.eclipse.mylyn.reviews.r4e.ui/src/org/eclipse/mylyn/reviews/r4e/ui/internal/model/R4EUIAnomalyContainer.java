@@ -108,6 +108,33 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 
 	//Attributes
 
+	public static R4EAnomaly createDetachedAnomaly() {
+		//Get comment from user and set it in model data
+		R4EAnomaly tempAnomaly = null;
+		R4EUIModelController.setJobInProgress(true);
+		final AnomalyInputDialog dialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+				getSite()
+				.getWorkbenchWindow()
+				.getShell());
+		final int result = dialog.open();
+		if (result == Window.OK) {
+			tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
+			final R4ECommentType tempCommentType = RModelFactory.eINSTANCE.createR4ECommentType();
+			tempAnomaly.setTitle(dialog.getAnomalyTitleValue());
+			tempAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
+			if (null != dialog.getRuleReferenceValue()) {
+				final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
+				tempCommentType.setType(rule.getClass_());
+				tempAnomaly.setType(tempCommentType);
+				tempAnomaly.setRank(rule.getRank());
+				tempAnomaly.setRuleID(rule.getId());
+			}
+		} else if (result != Window.CANCEL) {
+			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
+		}
+		return tempAnomaly;
+	}
+
 	/**
 	 * Create a serialization model element object
 	 * 
@@ -135,9 +162,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				tempAnomaly.setRank(rule.getRank());
 				tempAnomaly.setRuleID(rule.getId());
 			}
+		} else if (result != Window.CANCEL) {
+			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
-		// else Window.CANCEL
-		R4EUIModelController.setJobInProgress(false);
 		return tempAnomaly;
 	}
 
@@ -429,9 +456,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			aUiPosition.setPositionInModel(position);
 			uiAnomaly.setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(anomaly)); //Also set UI tooltip immediately
 			addChildren(uiAnomaly);
+		} else if (result != Window.CANCEL) {
+			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
-		// else Window.CANCEL
-		R4EUIModelController.setJobInProgress(false);
 		return uiAnomaly;
 	}
 

@@ -247,6 +247,7 @@ public class AnomalyInputDialog extends FormDialog {
 			fAnomalyDescriptionValue = null;
 			fRuleReferenceValue = null;
 		}
+		R4EUIModelController.setJobInProgress(false); //Do this here to refresh the view properly
 		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 		super.buttonPressed(buttonId);
 	}

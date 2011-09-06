@@ -244,6 +244,7 @@ public class ParticipantInputDialog extends FormDialog {
 			fParticipantEmailValue = null;
 			fParticipantDetailsValue = null;
 		}
+		R4EUIModelController.setJobInProgress(false); //Do this here to refresh the view properly
 		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 		super.buttonPressed(buttonId);
 	}

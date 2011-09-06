@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
@@ -174,6 +175,7 @@ public class SendNotificationInputDialog extends FormDialog {
 		} else {
 			fMessageType = R4EUIConstants.INVALID_VALUE;
 		}
+		R4EUIModelController.setJobInProgress(false); //Do this here to refresh the view properly
 		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 		super.buttonPressed(buttonId);
 	}

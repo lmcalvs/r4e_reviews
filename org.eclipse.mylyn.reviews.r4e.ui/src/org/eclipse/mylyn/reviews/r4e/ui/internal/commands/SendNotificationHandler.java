@@ -140,8 +140,9 @@ public class SendNotificationHandler extends AbstractHandler {
 					} finally {
 						R4EUIModelController.setJobInProgress(false);
 					}
-				} //else Window.CANCEL
-				R4EUIModelController.setJobInProgress(false);
+				} else if (result != Window.CANCEL) {
+					R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
+				}
 				return Status.OK_STATUS;
 			}
 		};

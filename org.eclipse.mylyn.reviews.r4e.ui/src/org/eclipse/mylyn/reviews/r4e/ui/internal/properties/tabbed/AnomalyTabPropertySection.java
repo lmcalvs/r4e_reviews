@@ -530,6 +530,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fRuleButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				//Modify anomaly
+				R4EUIModelController.setJobInProgress(true);
 				final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
 				final AnomalyInputDialog dialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 						getSite()
@@ -582,6 +583,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						}
 						refresh();
 					}
+				} else if (result != Window.CANCEL) {
+					R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 				}
 			}
 

@@ -117,9 +117,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 				tempReviewGroup.getDesignRuleLocations().add(ruleSetLocation);
 			}
 			tempReviewGroup.setDefaultEntryCriteria(dialog.getDefaultEntryCriteriaValue());
+		} else if (result != Window.CANCEL) {
+			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
-		//else Window.CANCEL
-		R4EUIModelController.setJobInProgress(false);
 		return tempReviewGroup;
 	}
 
@@ -145,9 +145,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			tempRuleSet.setVersion(dialog.getVersionValue());
 			tempRuleSet.setFolder(dialog.getFolderValue());
 			tempRuleSet.setName(dialog.getNameValue());
+		} else if (result != Window.CANCEL) {
+			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
-		//else Window.CANCEL
-		R4EUIModelController.setJobInProgress(false);
 		return tempRuleSet;
 	}
 
@@ -292,8 +292,8 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			for (R4EUIReviewGroup group : fReviewGroups) {
 				if (group.getReviewGroup().getName().equals(groupName)) {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-							"Error while creating new Review Group ", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
-									"Review Group " + groupName + " already exists", null), IStatus.ERROR);
+							"Error while creating new Review Group ", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
+									0, "Review Group " + groupName + " already exists", null), IStatus.ERROR);
 					dialog.open();
 					return null;
 				}

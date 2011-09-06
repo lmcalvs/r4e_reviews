@@ -115,9 +115,9 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 			tempParticipant.setEmail(dialog.getParticipantEmailValue());
 			tempParticipant.getRoles().addAll(dialog.getParticipantRolesValue());
 			tempParticipant.setFocusArea(dialog.getFocusAreaValue());
+		} else if (result != Window.CANCEL) {
+			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
-		// else Window.CANCEL
-		R4EUIModelController.setJobInProgress(false);
 		return tempParticipant;
 	}
 
