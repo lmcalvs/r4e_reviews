@@ -213,7 +213,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 								monitor.done();
 								return Status.CANCEL_STATUS;
 							}
-
+							monitor.subTask("Getting base and target artifacts.");
 							final ScmArtifact baseArt = change.getBase();
 							final ScmArtifact targetArt = change.getTarget();
 							if (null == baseArt && null == targetArt) {
@@ -225,10 +225,13 @@ public class FindReviewItemsHandler extends AbstractHandler {
 							R4EFileVersion baseLocalVersion = null;
 							R4EFileVersion targetLocalVersion = null;
 							if (null != baseArt) {
+								monitor.subTask("Fetching file " + baseArt.getPath() + " (base) from remote repository");
 								baseLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository,
 										baseArt);
 							}
 							if (null != targetArt) {
+								monitor.subTask("Fetching file " + targetArt.getPath()
+										+ " (target) from remote repository");
 								targetLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(localRepository,
 										targetArt);
 							}
@@ -241,6 +244,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 							if (R4EUIPlugin.getDefault()
 									.getPreferenceStore()
 									.getBoolean(PreferenceConstants.P_USE_DELTAS)) {
+								monitor.subTask("Computing differences for file " + file.toString());
 								updateFilesWithDeltas(file);
 							}
 							filesToAddlist.add(file);
@@ -253,6 +257,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 						}
 					}
+					monitor.subTask("Adding Review Item to R4E model");
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
 							//Now add elements to the UI model if there are any elements to add
