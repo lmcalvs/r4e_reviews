@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -37,6 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -1561,6 +1563,13 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					modelReview.getComponents().add(item.getText());
 				}
 			} else { //aInstanceId == 2
+				//Reset all values first
+				Collection<R4EUser> users = modelReview.getUsersMap().values();
+				for (R4EUser user : users) {
+					if (user instanceof R4EParticipant) {
+						((R4EParticipant) user).setIsPartOfDecision(false);
+					}
+				}
 				for (Item item : aItems) {
 					R4EParticipant participant = (R4EParticipant) modelReview.getUsersMap().get(item.getText());
 					if (null != participant) {

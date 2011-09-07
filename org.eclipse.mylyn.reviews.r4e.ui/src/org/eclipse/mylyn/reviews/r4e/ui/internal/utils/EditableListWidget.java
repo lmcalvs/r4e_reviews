@@ -387,7 +387,7 @@ public class EditableListWidget {
 					//Currently selected item
 					int tableItemIndex = fMainTable.getSelectionIndex();
 					if (R4EUIConstants.INVALID_VALUE == tableItemIndex) {
-						//Remove the selected element (and control if there is one) or the last one if noe is selected
+						//Remove the selected element (and control if there is one) or the last one if none is selected
 						tableItemIndex = numItems - 1;
 					}
 					if (tableItemIndex >= firstControlIndex) {
@@ -465,7 +465,7 @@ public class EditableListWidget {
 	public void setEnabled(boolean aEnabled) {
 		fMainComposite.setEnabled(aEnabled);
 		fMainTable.setEnabled(aEnabled);
-		if (!aEnabled) {
+		if (aEnabled == false) {
 			fAddButton.setEnabled(aEnabled);
 			fRemoveButton.setEnabled(aEnabled);
 		} else {
@@ -553,6 +553,7 @@ public class EditableListWidget {
 		} else {
 			fRemoveButton.setEnabled(true);
 		}
+		fAddButton.setEnabled(true);
 	}
 
 	/**
