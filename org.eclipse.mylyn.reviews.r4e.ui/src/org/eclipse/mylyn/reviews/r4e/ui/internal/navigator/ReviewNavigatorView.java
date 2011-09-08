@@ -227,6 +227,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 		} finally {
+			R4EUIModelController.setActiveReview(null);
 			super.dispose();
 		}
 	}

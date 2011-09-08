@@ -25,10 +25,14 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.eclipse.compare.ITypedElement;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.TextSelection;
@@ -48,6 +52,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
@@ -56,10 +62,13 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -285,9 +294,12 @@ public class MailServicesProxy {
 	 */
 	public static void sendMessage(String[] aDestinations, String aSubject, String aBody) throws CoreException,
 			ResourceHandlingException {
-		final String originatorEmail = R4EUIModelController.getActiveReview()
-				.getParticipant(R4EUIModelController.getReviewer(), false)
-				.getEmail();
+		R4EParticipant user = R4EUIModelController.getActiveReview().getParticipant(R4EUIModelController.getReviewer(),
+				false);
+		String originatorEmail = null;
+		if (null != user) {
+			user.getEmail();
+		}
 		R4EUIModelController.getMailConnector().sendEmailGraphical(originatorEmail, aDestinations, aSubject, aBody,
 				null, null);
 	}
@@ -649,6 +661,8 @@ public class MailServicesProxy {
 			}
 		} else if (aSource instanceof IR4EUIModelElement) {
 			addElementInfo(msgBody, aSource);
+		} else if (aSource instanceof TextSelection) {
+			addElementInfo(msgBody, aSource);
 		}
 
 		msgBody.append(LINE_FEED_MSG_PART);
@@ -688,46 +702,51 @@ public class MailServicesProxy {
 			aMsgBody.append("Postponed Anomaly Description: "
 					+ ((R4EUIPostponedAnomaly) aSource).getAnomaly().getDescription() + LINE_FEED_MSG_PART);
 		} else if (aSource instanceof R4EUIAnomalyBasic) {
-			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIAnomalyBasic) aSource).getParent().getParent()).getTargetFileVersion();
-			if (null != file) {
-				if (null != file.getResource()) {
-					aMsgBody.append("File: " + file.getResource().getProject() + ": "
-							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+			IR4EUIModelElement parent = ((R4EUIAnomalyBasic) aSource).getParent().getParent();
+			if (parent instanceof R4EUIFileContext) {
+				//This is an anomaly tied to specific content
+				final R4EFileVersion file = ((R4EUIFileContext) parent).getTargetFileVersion();
+				if (null != file) {
+					if (null != file.getResource()) {
+						aMsgBody.append("File: " + file.getResource().getProject() + ": "
+								+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+					} else {
+						aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+					}
+					aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 				} else {
-					aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("File: "
+							+ ((R4EUIFileContext) ((R4EUIAnomalyBasic) aSource).getParent().getParent()).getName()
+							+ LINE_FEED_MSG_PART);
 				}
-				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
-			} else {
-				aMsgBody.append("File: "
-						+ ((R4EUIFileContext) ((R4EUIAnomalyBasic) aSource).getParent().getParent()).getName()
+				aMsgBody.append("Anomaly Line(s): " + ((R4EUIAnomalyBasic) aSource).getPosition().toString()
 						+ LINE_FEED_MSG_PART);
 			}
-			aMsgBody.append("Anomaly Line(s): " + ((R4EUIAnomalyBasic) aSource).getPosition().toString()
-					+ LINE_FEED_MSG_PART);
 			aMsgBody.append("Anomaly Title: " + ((R4EUIAnomalyBasic) aSource).getAnomaly().getTitle()
 					+ LINE_FEED_MSG_PART);
 			aMsgBody.append("Anomaly Description: " + ((R4EUIAnomalyBasic) aSource).getAnomaly().getDescription()
 					+ LINE_FEED_MSG_PART);
 		} else if (aSource instanceof R4EUIComment) {
-			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIComment) aSource).getParent()
-					.getParent()
-					.getParent()).getTargetFileVersion();
-			if (null != file) {
-				if (null != file.getResource()) {
-					aMsgBody.append("File: " + file.getResource().getProject() + ": "
-							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+			IR4EUIModelElement parent = ((R4EUIComment) aSource).getParent().getParent().getParent();
+			if (parent instanceof R4EUIFileContext) {
+				final R4EFileVersion file = ((R4EUIFileContext) parent).getTargetFileVersion();
+				if (null != file) {
+					if (null != file.getResource()) {
+						aMsgBody.append("File: " + file.getResource().getProject() + ": "
+								+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+					} else {
+						aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+					}
+					aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 				} else {
-					aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("File: "
+							+ ((R4EUIFileContext) ((R4EUIComment) aSource).getParent().getParent().getParent()).getName()
+							+ LINE_FEED_MSG_PART);
 				}
-				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
-			} else {
-				aMsgBody.append("File: "
-						+ ((R4EUIFileContext) ((R4EUIComment) aSource).getParent().getParent().getParent()).getName()
+				aMsgBody.append("Anomaly Line(s): "
+						+ ((R4EUIAnomalyBasic) ((R4EUIComment) aSource).getParent()).getPosition().toString()
 						+ LINE_FEED_MSG_PART);
 			}
-			aMsgBody.append("Anomaly Line(s): "
-					+ ((R4EUIAnomalyBasic) ((R4EUIComment) aSource).getParent()).getPosition().toString()
-					+ LINE_FEED_MSG_PART);
 			aMsgBody.append("Anomaly Title: "
 					+ ((R4EUIAnomalyBasic) ((R4EUIComment) aSource).getParent()).getAnomaly().getTitle()
 					+ LINE_FEED_MSG_PART);
@@ -737,10 +756,18 @@ public class MailServicesProxy {
 
 			aMsgBody.append("Anomaly Comment: " + ((R4EUIComment) aSource).getComment().getDescription()
 					+ LINE_FEED_MSG_PART);
+		} else if (aSource instanceof R4EUIReviewBasic) {
+			aMsgBody.append("Review: " + ((R4EUIReviewBasic) aSource).getReview().getName() + LINE_FEED_MSG_PART);
 
 		} else if (aSource instanceof R4EUIReviewItem) {
-			aMsgBody.append("Review Item Description: " + ((R4EUIReviewItem) aSource).getItem().getDescription()
-					+ LINE_FEED_MSG_PART);
+			String description = ((R4EUIReviewItem) aSource).getItem().getDescription();
+			if (null != description) {
+				aMsgBody.append("Review Item Description: " + description + LINE_FEED_MSG_PART);
+			} else {
+				//This is a ressource review item, so put the resource filename
+				aMsgBody.append("Review Item Resource: "
+						+ ((R4EUIReviewItem) aSource).getFileContexts().get(0).getName() + LINE_FEED_MSG_PART);
+			}
 
 		} else if (aSource instanceof R4EUIFileContext) {
 			final R4EFileVersion targetFile = ((R4EUIFileContext) aSource).getTargetFileVersion();
@@ -809,18 +836,34 @@ public class MailServicesProxy {
 					.getActivePage()
 					.getActiveEditor();
 			final IEditorInput input = editorPart.getEditorInput();
-			String filename = null;
-			R4EFileVersion file = null;
 			if (input instanceof R4ECompareEditorInput) {
-				filename = ((R4ECompareEditorInput) input).getLeftElement().getName();
-				aMsgBody.append("File: " + filename + LINE_FEED_MSG_PART);
+				//TODO: For now we give the file version of the file on the left side, regardless of whose side the selected input was.
+				//		Later we want to refine this.
+				ITypedElement element = ((R4ECompareEditorInput) input).getLeftElement();
+				if (element instanceof R4EFileTypedElement) {
+					R4EFileVersion file = ((R4EFileTypedElement) element).getFileVersion();
+					aMsgBody.append("File: " + file.getResource().getProject() + ": "
+							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
+				} else if (element instanceof R4EFileRevisionTypedElement) {
+					R4EFileVersion file = ((R4EFileRevisionTypedElement) element).getFileVersion();
+					aMsgBody.append("File Path: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
+				}
 			} else if (input instanceof R4EFileRevisionEditorInput) {
-				file = ((R4EFileRevisionEditorInput) input).getFileVersion();
-				aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+				R4EFileVersion file = ((R4EFileRevisionEditorInput) input).getFileVersion();
+				aMsgBody.append("File Path: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
+				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else if (input instanceof R4EFileEditorInput) {
-				file = ((R4EFileEditorInput) input).getFileVersion();
+				R4EFileVersion file = ((R4EFileEditorInput) input).getFileVersion();
 				aMsgBody.append("File: " + file.getResource().getProject() + ": "
 						+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
+			} else if (input instanceof FileEditorInput) {
+				IFile file = ((FileEditorInput) input).getFile();
+				aMsgBody.append("File: " + file.getProject() + ": " + file.getProjectRelativePath()
+						+ LINE_FEED_MSG_PART);
+				aMsgBody.append("File Version: (None available)" + LINE_FEED_MSG_PART);
 			}
 			final TextSelection selectedText = (TextSelection) aSource;
 			aMsgBody.append(LINE_FEED_MSG_PART);
@@ -828,6 +871,40 @@ public class MailServicesProxy {
 					+ LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
 			aMsgBody.append("Contents: " + LINE_FEED_MSG_PART);
 			aMsgBody.append(selectedText.getText());
+		} else if (R4EUIPlugin.isJDTAvailable() && aSource instanceof ISourceReference) {
+			//NOTE:  This is always true because all elements that implement ISourceReference
+			//       also implement IJavaElement.  The resource is always an IFile
+			IFile file = (IFile) ((IJavaElement) aSource).getResource();
+			aMsgBody.append("File: " + file.getProject() + ": " + file.getProjectRelativePath() + LINE_FEED_MSG_PART);
+			aMsgBody.append("File Version: (None available)" + LINE_FEED_MSG_PART);
+			try {
+				R4EUITextPosition position = CommandUtils.getPosition((ISourceReference) aSource, file);
+				aMsgBody.append("Position in File: " + position.toString() + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
+			} catch (CoreException e) {
+				// Ignore
+			}
+		} else if (R4EUIPlugin.isCDTAvailable() && aSource instanceof org.eclipse.cdt.core.model.ISourceReference) {
+			//NOTE:  This is always true because all elements that implement ISourceReference
+			//       also implement ICElement.  The resource is always an IFile
+			IFile file = null;
+			if (aSource instanceof org.eclipse.cdt.core.model.ITranslationUnit) {
+				file = (IFile) ((org.eclipse.cdt.core.model.ICElement) aSource).getResource();
+			} else if (aSource instanceof org.eclipse.cdt.core.model.ICElement) {
+				file = (IFile) ((org.eclipse.cdt.core.model.ICElement) aSource).getParent().getResource();
+			}
+			if (null != file) {
+				aMsgBody.append("File: " + file.getProject() + ": " + file.getProjectRelativePath()
+						+ LINE_FEED_MSG_PART);
+				aMsgBody.append("File Version: (None available)" + LINE_FEED_MSG_PART);
+				try {
+					R4EUITextPosition position = CommandUtils.getPosition(
+							(org.eclipse.cdt.core.model.ISourceReference) aSource, file);
+					aMsgBody.append("Position in File: " + position.toString() + LINE_FEED_MSG_PART
+							+ LINE_FEED_MSG_PART);
+				} catch (CoreException e) {
+					// Ignore
+				}
+			}
 		}
 	}
 

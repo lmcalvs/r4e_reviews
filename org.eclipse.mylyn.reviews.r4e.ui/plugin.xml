@@ -58,10 +58,6 @@
                   tooltip="Find Review Items from a given Project in Workspace">
                <visibleWhen
                      checkEnabled="false">
-                  <and>
-                     <test
-                           property="org.eclipse.mylyn.reviews.r4e.ui.commands.review.completed">
-                     </test>
                      <with
                            variable="selection">
                         <iterate
@@ -89,7 +85,6 @@
                            </or>
                         </iterate>
                      </with>
-                  </and>
                </visibleWhen>
             </command>
             <command
@@ -102,10 +97,6 @@
                   tooltip="Add a New Review Item to the Current Review">
                <visibleWhen
                      checkEnabled="false">
-                  <and>
-                     <test
-                           property="org.eclipse.mylyn.reviews.r4e.ui.commands.review.completed">
-                     </test>
                      <or>
                         <with
                               variable="selection">
@@ -130,7 +121,6 @@
                            </instanceof>
                         </with>
                      </or>
-                  </and>
                </visibleWhen>
             </command>
             <command
@@ -143,10 +133,6 @@
                   tooltip="Add a New Anomaly to the Current Review">
                <visibleWhen
                      checkEnabled="false">
-                  <and>
-                     <test
-                           property="org.eclipse.mylyn.reviews.r4e.ui.commands.review.completed">
-                     </test>
                      <or>
                         <with
                               variable="selection">
@@ -171,7 +157,6 @@
                            </instanceof>
                         </with>
                      </or>
-                  </and>
                </visibleWhen>
             </command>
             <command
@@ -210,11 +195,21 @@
                   </or>
                </visibleWhen>
             </command>
-            <visibleWhen
-                  checkEnabled="false">
-               <test
+            <visibleWhen checkEnabled="false">
+               <and>
+                  <with
+                        variable="selection">
+                     <count
+                           value="+">
+                     </count>
+                  </with>
+                  <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.review.completed">
+                  </test>
+                  <test
                      property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-               </test>
+                  </test>
+               </and>
             </visibleWhen>
          </menu>
       </menuContribution>

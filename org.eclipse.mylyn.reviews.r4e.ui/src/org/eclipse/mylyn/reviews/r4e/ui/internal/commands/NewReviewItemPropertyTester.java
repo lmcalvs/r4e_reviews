@@ -22,6 +22,7 @@ import java.util.AbstractList;
 import java.util.AbstractSet;
 import java.util.Iterator;
 
+import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.text.TextSelection;
@@ -33,8 +34,11 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -42,6 +46,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.views.contentoutline.ContentOutline;
 
 /**
  * @author lmcdubo
@@ -80,8 +85,16 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 				}
 			}
 		}
-		//This happens when the command is selected from the outline view on an external or workspace file
+
 		if (receiver instanceof AbstractList) {
+			final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+			if (null != window) {
+				final IWorkbenchPage page = window.getActivePage();
+				if (null != page && !(page.getActivePart() instanceof ContentOutline)) {
+					return true; //not an Outline view
+				}
+			}
+			//This happens when the command is selected from the outline view on an external or workspace file
 			final Iterator<?> iterator = ((AbstractList<?>) receiver).iterator();
 			if (!iterator.hasNext()) {
 				if (!(isR4EEditorInputAvailable())) {
@@ -140,7 +153,7 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 				editorInput = page.getActiveEditor().getEditorInput();
 				//Single editor
 				if (editorInput instanceof R4EFileRevisionEditorInput) {
-					if (null == ((R4EFileRevisionEditorInput) editorInput).getFileVersion().getResource()) {
+					if (null == ((R4EFileRevisionEditorInput) editorInput).getFileVersion().getRepositoryPath()) {
 						return false; //No valid target
 					}
 					final R4EItem parentItem = ((R4EItem) ((R4EFileRevisionEditorInput) editorInput).getFileVersion()
@@ -154,6 +167,26 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 							.eContainer()
 							.eContainer());
 					if (null != parentItem.getRepositoryRef()) {
+						return false; //Cannot add review item on a commit
+					}
+					//Compare editor
+				} else if (editorInput instanceof R4ECompareEditorInput) {
+					final ITypedElement targetElement = ((R4ECompareEditorInput) editorInput).getLeftElement();
+					if (null == targetElement) {
+						return false;
+					}
+					R4EItem parentItem = null;
+					ITypedElement element = ((R4ECompareEditorInput) editorInput).getLeftElement();
+					if (element instanceof R4EFileRevisionTypedElement) {
+						parentItem = ((R4EItem) ((R4EFileRevisionTypedElement) element).getFileVersion()
+								.eContainer()
+								.eContainer());
+					} else if (element instanceof R4EFileTypedElement) {
+						parentItem = ((R4EItem) ((R4EFileTypedElement) element).getFileVersion()
+								.eContainer()
+								.eContainer());
+					}
+					if (null != parentItem && null != parentItem.getRepositoryRef()) {
 						return false; //Cannot add review item on a commit
 					}
 				}

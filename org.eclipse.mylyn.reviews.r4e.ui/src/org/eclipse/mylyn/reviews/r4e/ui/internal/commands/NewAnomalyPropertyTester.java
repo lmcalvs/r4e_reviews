@@ -42,6 +42,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.views.contentoutline.ContentOutline;
 
 /**
  * @author lmcdubo
@@ -71,7 +72,7 @@ public class NewAnomalyPropertyTester extends PropertyTester {
 			return false;
 		}
 
-		//If the file opened is an R4E File that does not have a valid target version, the command is disabled
+		//If the file opened in the current editor is an R4E File that does not have a valid target version, the command is disabled
 		if (receiver instanceof AbstractSet) {
 			final Iterator<?> iterator = ((AbstractSet<?>) receiver).iterator();
 			if (iterator.next() instanceof TextSelection) {
@@ -80,8 +81,16 @@ public class NewAnomalyPropertyTester extends PropertyTester {
 				}
 			}
 		}
-		//This happens when the command is selected from the outline view on an external or workspace file
+
 		if (receiver instanceof AbstractList) {
+			final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+			if (null != window) {
+				final IWorkbenchPage page = window.getActivePage();
+				if (null != page && !(page.getActivePart() instanceof ContentOutline)) {
+					return true; //not an Outline view
+				}
+			}
+			//This happens when the command is selected from the outline view on an external or workspace file
 			final Iterator<?> iterator = ((AbstractList<?>) receiver).iterator();
 			if (!iterator.hasNext()) {
 				if (!(isR4EEditorInputAvailable())) {
@@ -134,7 +143,7 @@ public class NewAnomalyPropertyTester extends PropertyTester {
 			if (null != page && null != page.getActiveEditor()) {
 				editorInput = page.getActiveEditor().getEditorInput();
 				if (editorInput instanceof R4EFileRevisionEditorInput) {
-					if (null == ((R4EFileRevisionEditorInput) editorInput).getFileVersion().getResource()) {
+					if (null == ((R4EFileRevisionEditorInput) editorInput).getFileVersion().getRepositoryPath()) {
 						return false;
 					}
 					//Compare editor
