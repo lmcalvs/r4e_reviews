@@ -23,6 +23,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
@@ -139,20 +141,10 @@ public class EditableListWidget {
 		fMainComposite = aToolkit.createComposite(aParent);
 		fMainComposite.setLayoutData(aLayoutData);
 		fMainComposite.setLayout(new GridLayout(4, false));
-		fMainTable = aToolkit.createTable(fMainComposite, SWT.FULL_SELECTION | SWT.BORDER);
-		final GridData tableData = new GridData(GridData.FILL, GridData.FILL, true, true);
-		if (aEditableWidgetClass.equals(Date.class)) {
-			tableData.horizontalSpan = 1;
-		} else {
-			tableData.horizontalSpan = 2;
-		}
-		fMainTable.setLayoutData(tableData);
-		fMainTable.setLinesVisible(true);
 		fListener = aListener;
 		fInstanceId = aInstanceId;
 		fValues = aEditableValues;
 		createEditableListFromTable(aToolkit, aEditableWidgetClass);
-		fMainTable.setSize(DEFAULT_TABLE_WIDTH, DEFAULT_TABLE_HEIGHT); //default table size
 	}
 
 	// ------------------------------------------------------------------------
@@ -178,19 +170,38 @@ public class EditableListWidget {
 	 */
 	public void createEditableListFromTable(FormToolkit aToolkit, final Class<?> aEditableWidgetClass) {
 
-		final TableColumn tableColumn = new TableColumn(fMainTable, SWT.LEFT, 0);
+		final Composite tableComposite = aToolkit.createComposite(fMainComposite);
+		fMainTable = aToolkit.createTable(tableComposite, SWT.FULL_SELECTION | SWT.BORDER);
+
+		final GridData tableCompositeData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		if (aEditableWidgetClass.equals(Date.class)) {
+			tableCompositeData.horizontalSpan = 1;
+		} else {
+			tableCompositeData.horizontalSpan = 2;
+		}
+		TableColumnLayout tableColumnLayout = new TableColumnLayout();
+		tableComposite.setLayout(tableColumnLayout);
+
+		final TableColumn tableColumn = new TableColumn(fMainTable, SWT.NONE, 0);
 		final TableColumn tableColumn2;
-		fMainTable.setHeaderVisible(true);
+		fMainTable.setLinesVisible(true);
 
 		if (aEditableWidgetClass.equals(Date.class)) {
-			tableColumn2 = new TableColumn(fMainTable, SWT.RIGHT, 1);
+			fMainTable.setHeaderVisible(true);
+			tableColumn2 = new TableColumn(fMainTable, SWT.NONE, 1);
 			tableColumn.setText(R4EUIConstants.SPENT_TIME_COLUMN_HEADER);
 			tableColumn2.setText(R4EUIConstants.ENTRY_TIME_COLUMN_HEADER);
 			tableColumn.pack();
 			tableColumn2.pack();
+			tableColumnLayout.setColumnData(tableColumn, new ColumnWeightData(50, tableColumn.getWidth() * 2, true));
+			tableColumnLayout.setColumnData(tableColumn2, new ColumnWeightData(50, tableColumn.getWidth(), true));
+
 		} else {
 			tableColumn2 = null; //only 1 column
+			tableColumnLayout.setColumnData(tableColumn, new ColumnWeightData(100, 100, true));
 		}
+		tableComposite.setLayoutData(tableCompositeData);
+		fMainTable.setSize(DEFAULT_TABLE_WIDTH, DEFAULT_TABLE_HEIGHT); //default table size
 
 		fMainComposite.addControlListener(new ControlAdapter() {
 			@Override
@@ -214,7 +225,7 @@ public class EditableListWidget {
 				if (oldSize.x > area.width) {
 					// table is getting smaller so make the columns smaller first and then resize the table to
 					// match the client area width
-					if (aEditableWidgetClass.equals(Date.class)) {
+					if (null != tableColumn2) {
 						tableColumn.setWidth(width / 3);
 						tableColumn2.setWidth(width - tableColumn.getWidth());
 					} else {
@@ -225,7 +236,7 @@ public class EditableListWidget {
 					// table is getting bigger so make the table bigger first and then make the columns wider
 					// to match the client area width
 					fMainTable.setSize(area.width, area.height);
-					if (aEditableWidgetClass.equals(Date.class)) {
+					if (null != tableColumn2) {
 						tableColumn.setWidth(width / 3);
 						tableColumn2.setWidth(width - tableColumn.getWidth());
 					} else {
@@ -276,6 +287,7 @@ public class EditableListWidget {
 		fAddButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				final TableItem newItem = new TableItem(fMainTable, SWT.NONE);
+				fMainTable.showItem(newItem);
 				final Control editableControl;
 				if (aEditableWidgetClass.equals(Text.class)) {
 					editableControl = new Text(fMainTable, SWT.SINGLE | SWT.BORDER);
@@ -368,8 +380,6 @@ public class EditableListWidget {
 				editor.grabVertical = true;
 				editor.setEditor(editableControl, newItem, 0);
 				fRemoveButton.setEnabled(true);
-				fMainTable.showItem(newItem);
-				fMainTable.redraw();
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
