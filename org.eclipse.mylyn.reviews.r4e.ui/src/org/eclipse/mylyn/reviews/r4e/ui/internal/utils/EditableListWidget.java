@@ -198,19 +198,22 @@ public class EditableListWidget {
 
 		} else {
 			tableColumn2 = null; //only 1 column
-			tableColumnLayout.setColumnData(tableColumn, new ColumnWeightData(100, 100, true));
+			tableColumnLayout.setColumnData(tableColumn, new ColumnWeightData(10, 100, true));
 		}
 		tableComposite.setLayoutData(tableCompositeData);
-		fMainTable.setSize(DEFAULT_TABLE_WIDTH, DEFAULT_TABLE_HEIGHT); //default table size
 
 		fMainComposite.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
 
-				final Rectangle area = fMainTable.getClientArea();
-				final Point size = fMainTable.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-				final ScrollBar vBar = fMainTable.getVerticalBar();
-				int width = area.width - fMainTable.computeTrim(0, 0, 0, 0).width - vBar.getSize().x;
+				//TODO:  This does not work 100% as resizing the colums lags when the parent area gets shrinked quickly.
+				//        This causes the rightmost part of the table composite to be clipped away.
+				//        This will need to be improved, see bug 356857.
+				Rectangle area = fMainTable.getClientArea();
+				Point size = tableComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				ScrollBar vBar = fMainTable.getVerticalBar();
+				int vBarWidth = vBar.getSize().x;
+				int width = area.width - vBarWidth * 3;
 				if (width < 0) {
 					return;
 				}
@@ -218,30 +221,16 @@ public class EditableListWidget {
 				if (size.y > area.height + fMainTable.getHeaderHeight()) {
 					// Subtract the scrollbar width from the total column width
 					// if a vertical scrollbar will be required
-					final Point vBarSize = vBar.getSize();
-					width -= vBarSize.x;
+					width -= vBarWidth;
 				}
-				final Point oldSize = fMainTable.getSize();
-				if (oldSize.x > area.width) {
-					// table is getting smaller so make the columns smaller first and then resize the table to
-					// match the client area width
-					if (null != tableColumn2) {
-						tableColumn.setWidth(width / 3);
-						tableColumn2.setWidth(width - tableColumn.getWidth());
-					} else {
-						tableColumn.setWidth(width);
-					}
-					fMainTable.setSize(area.width, area.height);
+
+				// Set column width first and then resize the table to
+				// match the client area width
+				if (null != tableColumn2) {
+					tableColumn.setWidth(width / 2);
+					tableColumn2.setWidth(width - tableColumn.getWidth());
 				} else {
-					// table is getting bigger so make the table bigger first and then make the columns wider
-					// to match the client area width
-					fMainTable.setSize(area.width, area.height);
-					if (null != tableColumn2) {
-						tableColumn.setWidth(width / 3);
-						tableColumn2.setWidth(width - tableColumn.getWidth());
-					} else {
-						tableColumn.setWidth(width);
-					}
+					tableColumn.setWidth(width);
 				}
 			}
 		});
