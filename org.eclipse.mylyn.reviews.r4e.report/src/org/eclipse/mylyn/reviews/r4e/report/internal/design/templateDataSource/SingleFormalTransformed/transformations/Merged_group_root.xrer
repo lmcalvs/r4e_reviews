@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ResTrans:ReviewGroupRes xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ResTrans="http://org.eclipse.mylyn.reviews.r4e.model.transform/1.0" xmi:id="_2eSEANrmEeCfDvgL03vDEA" name="ReportTrans" filesPrefix="Merged">
+  <reviewsRes href="Merged/Merged_review.xrer#_2qxn4NrmEeCfDvgL03vDEA"/>
+</ResTrans:ReviewGroupRes>

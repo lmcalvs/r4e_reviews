@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResTrans="http://org.eclipse.mylyn.reviews.r4e.model.transform/1.0" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/">
+  <ResTrans:ReviewRes xmi:id="_2qxn4NrmEeCfDvgL03vDEA" name="IEEE - Trans" project="Project Gama" entryCriteria="Run test suite" extraNotes="desc" objectives="formal review transformation test" referenceMaterial="emf book" startDate="2011-08-30T17:07:00.695-0400" type="R4E_REVIEW_TYPE_FORMAL" createdBy="_2rTzYNrmEeCfDvgL03vDEA" current="_2q15VNrmEeCfDvgL03vDEA">
+    <state xsi:type="r4ecore:R4EReviewState" href="#_2q1SQdrmEeCfDvgL03vDEA"/>
+    <components>UI</components>
+    <components>OSCL</components>
+    <decision href="#_2q1SQNrmEeCfDvgL03vDEA"/>
+    <activeMeeting href="#_2q0rMNrmEeCfDvgL03vDEA"/>
+    <phases href="#_2q15UNrmEeCfDvgL03vDEA"/>
+    <phases href="#_2q15UdrmEeCfDvgL03vDEA"/>
+    <phases href="#_2q15UtrmEeCfDvgL03vDEA"/>
+    <phases href="#_2q15U9rmEeCfDvgL03vDEA"/>
+    <phases href="#_2q15VNrmEeCfDvgL03vDEA"/>
+    <usersRes href="#_2q3HcNrmEeCfDvgL03vDEA"/>
+    <usersRes href="#_2q5jsNrmEeCfDvgL03vDEA"/>
+    <usersRes href="#_2rTzYNrmEeCfDvgL03vDEA"/>
+    <usersRes href="#_2rxtcNrmEeCfDvgL03vDEA"/>
+  </ResTrans:ReviewRes>
+  <r4ecore:R4EMeetingData xmi:id="_2q0rMNrmEeCfDvgL03vDEA" id="[r4e-mail]  Review DECISION: IEEE - Trans - Decision Meeting Request Updated1314741529811" subject="[r4e-mail]  Review DECISION: IEEE - Trans - Decision Meeting Request Updated" location="Alvaro's office" startTime="1315216800000" duration="150" sentCount="1" sender="Alvaro Sanchez-Leon" body="&#xD;&#xA;Hi,&#xD;&#xA;&#xD;&#xA;This invitation is for the decision phase.&#xD;&#xA;Please review the included items prior to the meeting.&#xD;&#xA;&#xD;&#xA;Review Item -> Remove Subversive menu in Help (bug 229495)&#xD;&#xA;https://bugs.eclipse.org/bugs/show_bug.cgi?id=229495&#xD;&#xA;&#xD;&#xA;Eclipse Project: File Path Relative to Eclipse Project[: Line range]&#xD;&#xA;&#x9;P/org.eclipse.team.svn.ui: src/org/eclipse/team/svn/ui/messages.properties: Line 227, Line 722, &#x9;P/org.eclipse.team.svn.ui.nl1: src/org/eclipse/team/svn/ui/messages_fr.properties: Line 1047, &#x9;P/org.eclipse.team.svn.mylyn: META-INF/MANIFEST.MF: Lines 25-26, &#x9;P/org.eclipse. team.svn.ui.nl1: plugin_fr.properties: Line 12, Line 75, Line 184, &#x9;P/org.eclipse.team.svn.ui: src/org/eclipse/team/svn/ui/SVNUIMessages.java: Line 768, Line 815, Line 861, Line 1420, &#x9;P/org.eclipse.team.svn.ui.nl1: plugin_ja.properties: Line 12, Line 77, Line 182, &#x9;P/org.eclipse.team.svn.ui: plugin.properties: Line 18, Line 113, Line 134, Line 256, &#x9;P/org.eclipse.team.svn.ui: plugin.xml: Line 1714, &#x9;P/org.eclipse.team.svn.mylyn: plugin.xml: Lines 38-44, &#xD;&#xA;Review Item -> Do not mess svn:externals order (bug 350143)&#xD;&#xA;https://bugs.eclipse.org/bugs/show_bug.cgi?id=350143&#xD;&#xA;&#xD;&#xA;Eclipse Project: File Path Relative to Eclipse Project[: Line range]&#xD;&#xA;&#x9;P/org.eclipse.team.svn.core: src/org/eclipse/team/svn/core/operation/remote/GetRemoteFolderChildrenOperation.java: Line 10, Lines 126-130, &#x9;P/org.eclipse.team.svn.ui: src/org/eclipse/team/svn/ui/repository/model/RepositoryFolder.java: Lines 104-105, Lines 110-112, Lines 116-117, Lines 120-121, Lines 124-12 5, Lines 128-129, Lines 133-140, &#x9;P/org.eclipse.team.svn.tests: src/org/eclipse/team/svn/tests/ui/RepositoryViewMenuEnablementTest.java: Line 239, &#x9;P/org.eclipse.team.svn.ui: src/org/eclipse/team/svn/ui/panel/common/RepositoryTreePanel.java: Lines 169-170, &#x9;P/org.eclipse.team.svn.ui: src/org/eclipse/team/svn/ui/compare/ResourceCompareInput.java: Line 274, Line 282, Line 290, Line 489, &#x9;P/org.eclipse.team.svn.ui: src/org/eclipse/team/svn/ui/composite/RepositoryTreeComposite.java: Line 74, &#xD;&#xA;&#xD;&#xA;Review Information&#xD;&#xA;Group: &#x9;&#x9;ReportTrans&#xD;&#xA;Review: &#x9;IEEE - Trans&#xD;&#xA;Components: &#x9;UI, OSCL, &#xD;&#xA;Project: &#x9;Project Gama&#xD;&#xA;Participants: &#x9;lmcbout, lmcmass, lmcalvs, lmcdubo, &#xD;&#xA;&#xD;&#xA;Best Regards,&#xD;&#xA;lmcmass">
+    <receivers>/o=Ericsson/ou=AM1/cn=Recipients/cn=LMCALVS</receivers>
+  </r4ecore:R4EMeetingData>
+  <r4ecore:R4EReviewDecision xmi:id="_2q1SQNrmEeCfDvgL03vDEA" spentTime="60" value="R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP"/>
+  <r4ecore:R4EReviewState xmi:id="_2q1SQdrmEeCfDvgL03vDEA" state="R4E_REVIEW_PHASE_COMPLETED"/>
+  <r4ecore:R4EReviewPhaseInfo xmi:id="_2q15UNrmEeCfDvgL03vDEA" endDate="2011-08-30T17:30:28.785-0400" phaseOwnerID="lmcalvs" startDate="2011-08-30T17:07:01.193-0400"/>
+  <r4ecore:R4EReviewPhaseInfo xmi:id="_2q15UdrmEeCfDvgL03vDEA" endDate="2011-08-30T17:53:57.645-0400" type="R4E_REVIEW_PHASE_PREPARATION" phaseOwnerID="lmcmass" startDate="2011-08-30T17:51:45.292-0400"/>
+  <r4ecore:R4EReviewPhaseInfo xmi:id="_2q15UtrmEeCfDvgL03vDEA" endDate="2011-08-30T18:01:27.319-0400" type="R4E_REVIEW_PHASE_DECISION" phaseOwnerID="lmcmass" startDate="2011-08-30T17:53:57.690-0400"/>
+  <r4ecore:R4EReviewPhaseInfo xmi:id="_2q15U9rmEeCfDvgL03vDEA" endDate="2011-09-05T18:03:52.575-0400" type="R4E_REVIEW_PHASE_REWORK" phaseOwnerID="lmcmass" startDate="2011-08-30T18:01:27.369-0400"/>
+  <r4ecore:R4EReviewPhaseInfo xmi:id="_2q15VNrmEeCfDvgL03vDEA" type="R4E_REVIEW_PHASE_COMPLETED" phaseOwnerID="lmcmass" startDate="2011-09-08T18:03:52.627-0400"/>
+  <r4ecore:R4EParticipant xmi:id="_2q3HcNrmEeCfDvgL03vDEA" id="lmcbout" email="jacques.bouthillier@ericsson.com" reviewInstance="_2qxn4NrmEeCfDvgL03vDEA" focusArea="UI, Notifications">
+    <roles>R4E_ROLE_REVIEWER</roles>
+    <roles>R4E_ROLE_AUTHOR</roles>
+    <roles>R4E_ROLE_LEAD</roles>
+    <timeLog href="#_2q4VkNrmEeCfDvgL03vDEA"/>
+    <timeLog href="#_2q4VkdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EParticipant>
+  <r4ecore:MapDateToDuration xmi:id="_2q4VkNrmEeCfDvgL03vDEA" key="2011-08-30T17:57:27.000-0400" value="20"/>
+  <r4ecore:MapDateToDuration xmi:id="_2q4VkdrmEeCfDvgL03vDEA" key="2011-08-30T17:57:32.000-0400" value="30"/>
+  <r4ecore:R4EParticipant xmi:id="_2q5jsNrmEeCfDvgL03vDEA" id="lmcmass" email="marco.masse@ericsson.com" sequenceIDCounter="5" reviewInstance="_2qxn4NrmEeCfDvgL03vDEA" focusArea="process" reviewedContent="_2rVBi9rmEeCfDvgL03vDEA _2rVBjdrmEeCfDvgL03vDEA _2rVBkdrmEeCfDvgL03vDEA _2rVBl9rmEeCfDvgL03vDEA _2rVBmdrmEeCfDvgL03vDEA _2rVBn9rmEeCfDvgL03vDEA _2rVokNrmEeCfDvgL03vDEA _2rVok9rmEeCfDvgL03vDEA _2rVoldrmEeCfDvgL03vDEA _2rVom9rmEeCfDvgL03vDEA _2rVontrmEeCfDvgL03vDEA _2rVooNrmEeCfDvgL03vDEA _2rVopNrmEeCfDvgL03vDEA _2rVoqNrmEeCfDvgL03vDEA _2rVortrmEeCfDvgL03vDEA _2rVosdrmEeCfDvgL03vDEA _2rVos9rmEeCfDvgL03vDEA _2rWPo9rmEeCfDvgL03vDEA _2rWPp9rmEeCfDvgL03vDEA _2rWPq9rmEeCfDvgL03vDEA _2rWPsdrmEeCfDvgL03vDEA _2rWPs9rmEeCfDvgL03vDEA _2rWPt9rmEeCfDvgL03vDEA _2rW2s9rmEeCfDvgL03vDEA _2rW2udrmEeCfDvgL03vDEA _2rW2u9rmEeCfDvgL03vDEA _2rW2v9rmEeCfDvgL03vDEA _2rW2w9rmEeCfDvgL03vDEA _2rW2x9rmEeCfDvgL03vDEA _2rW2zdrmEeCfDvgL03vDEA _2rW2z9rmEeCfDvgL03vDEA _2rXdw9rmEeCfDvgL03vDEA _2rXdxdrmEeCfDvgL03vDEA">
+    <addedComments href="#_2q5jsdrmEeCfDvgL03vDEA"/>
+    <addedComments href="#_2q5js9rmEeCfDvgL03vDEA"/>
+    <addedComments href="#_2q5jtdrmEeCfDvgL03vDEA"/>
+    <addedComments href="#_2q5jt9rmEeCfDvgL03vDEA"/>
+    <addedComments href="#_2q6KwdrmEeCfDvgL03vDEA"/>
+    <roles>R4E_ROLE_REVIEWER</roles>
+    <roles>R4E_ROLE_LEAD</roles>
+    <timeLog href="#_2q6Kw9rmEeCfDvgL03vDEA"/>
+    <timeLog href="#_2q6KxNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EParticipant>
+  <r4ecore:R4EComment xmi:id="_2q5jsdrmEeCfDvgL03vDEA" user="_2q5jsNrmEeCfDvgL03vDEA" description="lmcmass - comment" createdOn="2011-08-30T17:49:48.506-0400" anomaly="_2rUacNrmEeCfDvgL03vDEA">
+    <id href="#_2q5jstrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EComment>
+  <r4ecore:R4EID xmi:id="_2q5jstrmEeCfDvgL03vDEA" sequenceID="1" userID="lmcmass"/>
+  <r4ecore:R4EComment xmi:id="_2q5js9rmEeCfDvgL03vDEA" user="_2q5jsNrmEeCfDvgL03vDEA" description="lmcmass - comment 2" createdOn="2011-08-30T17:49:59.238-0400" anomaly="_2rUadtrmEeCfDvgL03vDEA">
+    <id href="#_2q5jtNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EComment>
+  <r4ecore:R4EID xmi:id="_2q5jtNrmEeCfDvgL03vDEA" sequenceID="2" userID="lmcmass"/>
+  <r4ecore:R4EComment xmi:id="_2q5jtdrmEeCfDvgL03vDEA" user="_2q5jsNrmEeCfDvgL03vDEA" description="lmcmass - comment 3" createdOn="2011-08-30T17:50:10.225-0400" anomaly="_2rUafNrmEeCfDvgL03vDEA">
+    <id href="#_2q5jttrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EComment>
+  <r4ecore:R4EID xmi:id="_2q5jttrmEeCfDvgL03vDEA" sequenceID="3" userID="lmcmass"/>
+  <r4ecore:R4EComment xmi:id="_2q5jt9rmEeCfDvgL03vDEA" user="_2q5jsNrmEeCfDvgL03vDEA" description="lmcmass comment 4" createdOn="2011-08-30T17:50:22.314-0400" anomaly="_2rUagtrmEeCfDvgL03vDEA">
+    <id href="#_2q6KwNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EComment>
+  <r4ecore:R4EID xmi:id="_2q6KwNrmEeCfDvgL03vDEA" sequenceID="4" userID="lmcmass"/>
+  <r4ecore:R4EComment xmi:id="_2q6KwdrmEeCfDvgL03vDEA" user="_2q5jsNrmEeCfDvgL03vDEA" description="lmcmass - comment 6" createdOn="2011-08-30T17:50:34.086-0400" anomaly="_2rVBgtrmEeCfDvgL03vDEA">
+    <id href="#_2q6KwtrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EComment>
+  <r4ecore:R4EID xmi:id="_2q6KwtrmEeCfDvgL03vDEA" sequenceID="5" userID="lmcmass"/>
+  <r4ecore:MapDateToDuration xmi:id="_2q6Kw9rmEeCfDvgL03vDEA" key="2011-08-30T17:57:39.000-0400" value="20"/>
+  <r4ecore:MapDateToDuration xmi:id="_2q6KxNrmEeCfDvgL03vDEA" key="2011-08-30T17:57:43.000-0400" value="30"/>
+  <r4ecore:R4EParticipant xmi:id="_2rTzYNrmEeCfDvgL03vDEA" id="lmcalvs" email="alvaro.sanchez-leon@ericsson.com" sequenceIDCounter="65" reviewCreatedByMe="true" reviewInstance="_2qxn4NrmEeCfDvgL03vDEA" focusArea="structure" isPartOfDecision="true" reviewedContent="_2rXdzdrmEeCfDvgL03vDEA _2rXdz9rmEeCfDvgL03vDEA _2rXd09rmEeCfDvgL03vDEA _2rXd2drmEeCfDvgL03vDEA _2rXd29rmEeCfDvgL03vDEA _2rYE0trmEeCfDvgL03vDEA _2rZS8trmEeCfDvgL03vDEA _2rZS9trmEeCfDvgL03vDEA _2rZS-trmEeCfDvgL03vDEA _2rZS_trmEeCfDvgL03vDEA _2rZTAtrmEeCfDvgL03vDEA _2rZ6BNrmEeCfDvgL03vDEA _2rZ6BtrmEeCfDvgL03vDEA _2rbIIdrmEeCfDvgL03vDEA _2rbII9rmEeCfDvgL03vDEA _2rbIKdrmEeCfDvgL03vDEA _2rbIK9rmEeCfDvgL03vDEA _2rbIL9rmEeCfDvgL03vDEA _2rbIM9rmEeCfDvgL03vDEA _2rbIN9rmEeCfDvgL03vDEA _2rbIPdrmEeCfDvgL03vDEA _2rbIP9rmEeCfDvgL03vDEA">
+    <addedComments href="#_2rUacNrmEeCfDvgL03vDEA"/>
+    <addedComments href="#_2rUadtrmEeCfDvgL03vDEA"/>
+    <addedComments href="#_2rUafNrmEeCfDvgL03vDEA"/>
+    <addedComments href="#_2rUagtrmEeCfDvgL03vDEA"/>
+    <addedComments href="#_2rUaiNrmEeCfDvgL03vDEA"/>
+    <addedComments href="#_2rUaitrmEeCfDvgL03vDEA"/>
+    <addedComments href="#_2rUajNrmEeCfDvgL03vDEA"/>
+    <addedComments href="#_2rVBgtrmEeCfDvgL03vDEA"/>
+    <addedItems href="#_2rVBiNrmEeCfDvgL03vDEA"/>
+    <addedItems href="#_2rXdytrmEeCfDvgL03vDEA"/>
+    <roles>R4E_ROLE_ORGANIZER</roles>
+    <roles>R4E_ROLE_LEAD</roles>
+    <timeLog href="#_2rbIRNrmEeCfDvgL03vDEA"/>
+    <timeLog href="#_2rbIRdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EParticipant>
+  <r4ecore:R4EAnomaly xmi:id="_2rUacNrmEeCfDvgL03vDEA" user="_2rTzYNrmEeCfDvgL03vDEA" description="desc" review="_2qxn4NrmEeCfDvgL03vDEA" title="lmcalvs - Robustness rule one" createdOn="2011-08-30T17:32:17.768-0400" state="R4E_ANOMALY_STATE_VERIFIED" dueDate="2011-09-06T00:00:00.000-0400" fixedInVersion="_2rVBldrmEeCfDvgL03vDEA" ruleID="RO-01" decidedByID="lmcbout" fixedByID="lmcdubo" followUpByID="lmcdubo">
+    <type xsi:type="r4ecore:R4ECommentType" href="#_2rUacdrmEeCfDvgL03vDEA"/>
+    <location xsi:type="r4ecore:R4ETextContent" href="#_2rUactrmEeCfDvgL03vDEA"/>
+    <id href="#_2rUaddrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomaly>
+  <r4ecore:R4ECommentType xmi:id="_2rUacdrmEeCfDvgL03vDEA"/>
+  <r4ecore:R4ETextContent xmi:id="_2rUactrmEeCfDvgL03vDEA">
+    <location href="#_2rUac9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4EAnomalyTextPosition xmi:id="_2rUac9rmEeCfDvgL03vDEA" startPosition="11171" startLine="227" endLine="227">
+    <file href="#_2rUadNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomalyTextPosition>
+  <r4ecore:R4EFileVersion xmi:id="_2rUadNrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/messages.properties" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/messages.properties::20945" name="messages.properties" localVersionID="638ad94c3575b58d499ed6d0ec722020c92aeddb"/>
+  <r4ecore:R4EID xmi:id="_2rUaddrmEeCfDvgL03vDEA" sequenceID="58" userID="lmcalvs"/>
+  <r4ecore:R4EAnomaly xmi:id="_2rUadtrmEeCfDvgL03vDEA" user="_2rTzYNrmEeCfDvgL03vDEA" description="desc" review="_2qxn4NrmEeCfDvgL03vDEA" title="lmcalvs - Robustness 2" createdOn="2011-08-30T17:32:40.164-0400" state="R4E_ANOMALY_STATE_VERIFIED" rank="R4E_RANK_MAJOR" fixedInVersion="_2rVomdrmEeCfDvgL03vDEA" ruleID="R0-2" decidedByID="lmcmass" fixedByID="lmcmass" followUpByID="lmcmass">
+    <type xsi:type="r4ecore:R4ECommentType" href="#_2rUad9rmEeCfDvgL03vDEA"/>
+    <location xsi:type="r4ecore:R4ETextContent" href="#_2rUaeNrmEeCfDvgL03vDEA"/>
+    <id href="#_2rUae9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomaly>
+  <r4ecore:R4ECommentType xmi:id="_2rUad9rmEeCfDvgL03vDEA" type="R4E_CLASS_IMPROVEMENT"/>
+  <r4ecore:R4ETextContent xmi:id="_2rUaeNrmEeCfDvgL03vDEA">
+    <location href="#_2rUaedrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4EAnomalyTextPosition xmi:id="_2rUaedrmEeCfDvgL03vDEA" startPosition="977" length="119" startLine="25" endLine="26">
+    <file href="#_2rUaetrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomalyTextPosition>
+  <r4ecore:R4EFileVersion xmi:id="_2rUaetrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.mylyn/META-INF/MANIFEST.MF" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.mylyn/META-INF/MANIFEST.MF::20945" name="MANIFEST.MF" localVersionID="6e99233a87fa00c00717a619f1668b82ee9d2287"/>
+  <r4ecore:R4EID xmi:id="_2rUae9rmEeCfDvgL03vDEA" sequenceID="59" userID="lmcalvs"/>
+  <r4ecore:R4EAnomaly xmi:id="_2rUafNrmEeCfDvgL03vDEA" user="_2rTzYNrmEeCfDvgL03vDEA" description="description&#x9;" review="_2qxn4NrmEeCfDvgL03vDEA" title="lmcalvs - Performance one " createdOn="2011-08-30T17:33:03.935-0400" state="R4E_ANOMALY_STATE_DEFERRED" rank="" ruleID="PF-01" decidedByID="lmcalvs">
+    <type xsi:type="r4ecore:R4ECommentType" href="#_2rUafdrmEeCfDvgL03vDEA"/>
+    <location xsi:type="r4ecore:R4ETextContent" href="#_2rUaftrmEeCfDvgL03vDEA"/>
+    <id href="#_2rUagdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomaly>
+  <r4ecore:R4ECommentType xmi:id="_2rUafdrmEeCfDvgL03vDEA"/>
+  <r4ecore:R4ETextContent xmi:id="_2rUaftrmEeCfDvgL03vDEA">
+    <location href="#_2rUaf9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4EAnomalyTextPosition xmi:id="_2rUaf9rmEeCfDvgL03vDEA" startPosition="1141" startLine="12" endLine="12">
+    <file href="#_2rUagNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomalyTextPosition>
+  <r4ecore:R4EFileVersion xmi:id="_2rUagNrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui.nl1/plugin_ja.properties" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui.nl1/plugin_ja.properties::20945" name="plugin_ja.properties" localVersionID="29f3951f8bce0af8555f7af19762b0eb4c0e8029"/>
+  <r4ecore:R4EID xmi:id="_2rUagdrmEeCfDvgL03vDEA" sequenceID="60" userID="lmcalvs"/>
+  <r4ecore:R4EAnomaly xmi:id="_2rUagtrmEeCfDvgL03vDEA" user="_2rTzYNrmEeCfDvgL03vDEA" description="desc" review="_2qxn4NrmEeCfDvgL03vDEA" title="lmcalvs - three" createdOn="2011-08-30T17:34:29.547-0400" state="R4E_ANOMALY_STATE_DEFERRED" dueDate="2011-09-06T00:00:00.000-0400" rank="" decidedByID="lmcmass">
+    <type xsi:type="r4ecore:R4ECommentType" href="#_2rUag9rmEeCfDvgL03vDEA"/>
+    <location xsi:type="r4ecore:R4ETextContent" href="#_2rUahNrmEeCfDvgL03vDEA"/>
+    <id href="#_2rUah9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomaly>
+  <r4ecore:R4ECommentType xmi:id="_2rUag9rmEeCfDvgL03vDEA"/>
+  <r4ecore:R4ETextContent xmi:id="_2rUahNrmEeCfDvgL03vDEA">
+    <location href="#_2rUahdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4EAnomalyTextPosition xmi:id="_2rUahdrmEeCfDvgL03vDEA" startPosition="84248" startLine="1714" endLine="1714">
+    <file href="#_2rUahtrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomalyTextPosition>
+  <r4ecore:R4EFileVersion xmi:id="_2rUahtrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/plugin.xml" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/plugin.xml::20945" name="plugin.xml" localVersionID="e78ddd78f453779dd318aa15fb2473e03b3251d0"/>
+  <r4ecore:R4EID xmi:id="_2rUah9rmEeCfDvgL03vDEA" sequenceID="61" userID="lmcalvs"/>
+  <r4ecore:R4EComment xmi:id="_2rUaiNrmEeCfDvgL03vDEA" user="_2rTzYNrmEeCfDvgL03vDEA" description="lmcbout -comment&#xD;&#xA;" createdOn="2011-08-30T17:46:27.383-0400" anomaly="_2rUafNrmEeCfDvgL03vDEA">
+    <id href="#_2rUaidrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EComment>
+  <r4ecore:R4EID xmi:id="_2rUaidrmEeCfDvgL03vDEA" sequenceID="62" userID="lmcalvs"/>
+  <r4ecore:R4EComment xmi:id="_2rUaitrmEeCfDvgL03vDEA" user="_2rTzYNrmEeCfDvgL03vDEA" description="lmcbout  -comment - 2" createdOn="2011-08-30T17:46:38.161-0400" anomaly="_2rUagtrmEeCfDvgL03vDEA">
+    <id href="#_2rUai9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EComment>
+  <r4ecore:R4EID xmi:id="_2rUai9rmEeCfDvgL03vDEA" sequenceID="63" userID="lmcalvs"/>
+  <r4ecore:R4EAnomaly xmi:id="_2rUajNrmEeCfDvgL03vDEA" user="_2rTzYNrmEeCfDvgL03vDEA" description="desc" review="_2qxn4NrmEeCfDvgL03vDEA" title="lmcbout - Robustness rule one" createdOn="2011-08-30T17:47:08.215-0400" state="R4E_ANOMALY_STATE_VERIFIED" fixedInVersion="_2rW2t9rmEeCfDvgL03vDEA" ruleID="RO-01" decidedByID="lmcmass" fixedByID="lmcmass" followUpByID="lmcmass">
+    <type xsi:type="r4ecore:R4ECommentType" href="#_2rUajdrmEeCfDvgL03vDEA"/>
+    <location xsi:type="r4ecore:R4ETextContent" href="#_2rUajtrmEeCfDvgL03vDEA"/>
+    <id href="#_2rVBgdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomaly>
+  <r4ecore:R4ECommentType xmi:id="_2rUajdrmEeCfDvgL03vDEA"/>
+  <r4ecore:R4ETextContent xmi:id="_2rUajtrmEeCfDvgL03vDEA">
+    <location href="#_2rUaj9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4EAnomalyTextPosition xmi:id="_2rUaj9rmEeCfDvgL03vDEA" startPosition="1143" length="390" startLine="13" endLine="16">
+    <file href="#_2rVBgNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomalyTextPosition>
+  <r4ecore:R4EFileVersion xmi:id="_2rVBgNrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui.nl1/plugin_ja.properties" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui.nl1/plugin_ja.properties::20945" name="plugin_ja.properties" localVersionID="29f3951f8bce0af8555f7af19762b0eb4c0e8029"/>
+  <r4ecore:R4EID xmi:id="_2rVBgdrmEeCfDvgL03vDEA" sequenceID="64" userID="lmcalvs"/>
+  <r4ecore:R4EAnomaly xmi:id="_2rVBgtrmEeCfDvgL03vDEA" user="_2rTzYNrmEeCfDvgL03vDEA" description="desc" review="_2qxn4NrmEeCfDvgL03vDEA" title="lmcbout - Robustness 2" createdOn="2011-08-30T17:48:40.288-0400" state="R4E_ANOMALY_STATE_REJECTED" rank="R4E_RANK_MAJOR" ruleID="R0-2" decidedByID="lmcmass">
+    <type xsi:type="r4ecore:R4ECommentType" href="#_2rVBg9rmEeCfDvgL03vDEA"/>
+    <location xsi:type="r4ecore:R4ETextContent" href="#_2rVBhNrmEeCfDvgL03vDEA"/>
+    <id href="#_2rVBh9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomaly>
+  <r4ecore:R4ECommentType xmi:id="_2rVBg9rmEeCfDvgL03vDEA" type="R4E_CLASS_IMPROVEMENT"/>
+  <r4ecore:R4ETextContent xmi:id="_2rVBhNrmEeCfDvgL03vDEA">
+    <location href="#_2rVBhdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4EAnomalyTextPosition xmi:id="_2rVBhdrmEeCfDvgL03vDEA" startPosition="84539" length="147" startLine="1723" endLine="1726">
+    <file href="#_2rVBhtrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EAnomalyTextPosition>
+  <r4ecore:R4EFileVersion xmi:id="_2rVBhtrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/plugin.xml" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/plugin.xml::20945" name="plugin.xml" localVersionID="e78ddd78f453779dd318aa15fb2473e03b3251d0"/>
+  <r4ecore:R4EID xmi:id="_2rVBh9rmEeCfDvgL03vDEA" sequenceID="65" userID="lmcalvs"/>
+  <r4ecore:R4EItem xmi:id="_2rVBiNrmEeCfDvgL03vDEA" addedBy="_2rTzYNrmEeCfDvgL03vDEA" review="_2qxn4NrmEeCfDvgL03vDEA" description="Remove Subversive menu in Help (bug 229495)&#xA;https://bugs.eclipse.org/bugs/show_bug.cgi?id=229495" addedById="lmcalvs" repositoryRef="20945" authorRep="" submitted="2011-02-06T11:41:02.299-0500">
+    <id href="#_2rVBidrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rVBitrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rVBltrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rVBntrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rVBodrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rVoktrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rVomtrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rVondrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rVordrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rVosNrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rWPsNrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rW2uNrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rW2zNrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rXdwtrmEeCfDvgL03vDEA"/>
+    <ProjectURIs>platform:/resource/org.eclipse.team.svn.ui</ProjectURIs>
+    <ProjectURIs>platform:/resource/org.eclipse.team.svn.ui.nl1</ProjectURIs>
+    <ProjectURIs>platform:/resource/org.eclipse.team.svn.mylyn</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_2rVBidrmEeCfDvgL03vDEA" sequenceID="1" userID="lmcalvs"/>
+  <r4ecore:R4EFileContext xmi:id="_2rVBitrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rVBi9rmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rVBjNrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rVBkNrmEeCfDvgL03vDEA"/>
+    <base href="#_2rVBlNrmEeCfDvgL03vDEA"/>
+    <target href="#_2rVBldrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rVBi9rmEeCfDvgL03vDEA" sequenceID="2" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rVBjNrmEeCfDvgL03vDEA">
+    <id href="#_2rVBjdrmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rVBjtrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rVBjdrmEeCfDvgL03vDEA" sequenceID="3" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rVBjtrmEeCfDvgL03vDEA">
+    <location href="#_2rVBj9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rVBj9rmEeCfDvgL03vDEA" startPosition="11171" startLine="227" endLine="227"/>
+  <r4ecore:R4EDelta xmi:id="_2rVBkNrmEeCfDvgL03vDEA">
+    <id href="#_2rVBkdrmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rVBktrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rVBkdrmEeCfDvgL03vDEA" sequenceID="4" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rVBktrmEeCfDvgL03vDEA">
+    <location href="#_2rVBk9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rVBk9rmEeCfDvgL03vDEA" startPosition="43706" startLine="722" endLine="722"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVBlNrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/messages.properties" versionID="20900" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/messages.properties::20900" name="messages.properties" localVersionID="2b52ed0367ba545482299b055b11be828501bad4"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVBldrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/messages.properties" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/messages.properties::20945" name="messages.properties" localVersionID="638ad94c3575b58d499ed6d0ec722020c92aeddb"/>
+  <r4ecore:R4EFileContext xmi:id="_2rVBltrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rVBl9rmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rVBmNrmEeCfDvgL03vDEA"/>
+    <base href="#_2rVBnNrmEeCfDvgL03vDEA"/>
+    <target href="#_2rVBndrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rVBl9rmEeCfDvgL03vDEA" sequenceID="5" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rVBmNrmEeCfDvgL03vDEA">
+    <id href="#_2rVBmdrmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rVBmtrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rVBmdrmEeCfDvgL03vDEA" sequenceID="6" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rVBmtrmEeCfDvgL03vDEA">
+    <location href="#_2rVBm9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rVBm9rmEeCfDvgL03vDEA" startPosition="86044" startLine="1047" endLine="1047"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVBnNrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui.nl1/src/org/eclipse/team/svn/ui/messages_fr.properties" versionID="20903" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui.nl1/src/org/eclipse/team/svn/ui/messages_fr.properties::20903" name="messages_fr.properties" localVersionID="4021493efc8669de62ef3c1e317262796ec9e6f9"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVBndrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui.nl1/src/org/eclipse/team/svn/ui/messages_fr.properties" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui.nl1/src/org/eclipse/team/svn/ui/messages_fr.properties::20945" name="messages_fr.properties" localVersionID="ad46e14a77485ae86f35fd4eae083a3c456b11bf"/>
+  <r4ecore:R4EFileContext xmi:id="_2rVBntrmEeCfDvgL03vDEA" type="R4E_DELETED">
+    <id href="#_2rVBn9rmEeCfDvgL03vDEA"/>
+    <base href="#_2rVBoNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rVBn9rmEeCfDvgL03vDEA" sequenceID="7" userID="lmcalvs"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVBoNrmEeCfDvgL03vDEA" versionID="20453" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/debugmail/SendBugReportAction.java::20453" name="SendBugReportAction.java" localVersionID="2fb30e521318ac6d377f2e396f01bde865ecc9ff"/>
+  <r4ecore:R4EFileContext xmi:id="_2rVBodrmEeCfDvgL03vDEA" type="R4E_DELETED">
+    <id href="#_2rVokNrmEeCfDvgL03vDEA"/>
+    <base href="#_2rVokdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rVokNrmEeCfDvgL03vDEA" sequenceID="8" userID="lmcalvs"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVokdrmEeCfDvgL03vDEA" versionID="20453" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/debugmail/SendTipForImprovementAction.java::20453" name="SendTipForImprovementAction.java" localVersionID="8ad6cf62f222df943396d1a03e6c863a92b7c1cc"/>
+  <r4ecore:R4EFileContext xmi:id="_2rVoktrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rVok9rmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rVolNrmEeCfDvgL03vDEA"/>
+    <base href="#_2rVomNrmEeCfDvgL03vDEA"/>
+    <target href="#_2rVomdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rVok9rmEeCfDvgL03vDEA" sequenceID="9" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rVolNrmEeCfDvgL03vDEA">
+    <id href="#_2rVoldrmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rVoltrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rVoldrmEeCfDvgL03vDEA" sequenceID="10" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rVoltrmEeCfDvgL03vDEA">
+    <location href="#_2rVol9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rVol9rmEeCfDvgL03vDEA" startPosition="977" length="119" startLine="25" endLine="26"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVomNrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.mylyn/META-INF/MANIFEST.MF" versionID="20917" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.mylyn/META-INF/MANIFEST.MF::20917" name="MANIFEST.MF" localVersionID="8a2c67910f83504b085e490dbe957374d4f2d7d3"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVomdrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.mylyn/META-INF/MANIFEST.MF" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.mylyn/META-INF/MANIFEST.MF::20945" name="MANIFEST.MF" localVersionID="6e99233a87fa00c00717a619f1668b82ee9d2287"/>
+  <r4ecore:R4EFileContext xmi:id="_2rVomtrmEeCfDvgL03vDEA" type="R4E_DELETED">
+    <id href="#_2rVom9rmEeCfDvgL03vDEA"/>
+    <base href="#_2rVonNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rVom9rmEeCfDvgL03vDEA" sequenceID="11" userID="lmcalvs"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVonNrmEeCfDvgL03vDEA" versionID="20785" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/debugmail/MigrateToEclipse.java::20785" name="MigrateToEclipse.java" localVersionID="8ba25d98190bd8921ca97cb30de7174ae08bb41a"/>
+  <r4ecore:R4EFileContext xmi:id="_2rVondrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rVontrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rVon9rmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rVoo9rmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rVop9rmEeCfDvgL03vDEA"/>
+    <base href="#_2rVoq9rmEeCfDvgL03vDEA"/>
+    <target href="#_2rVorNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rVontrmEeCfDvgL03vDEA" sequenceID="12" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rVon9rmEeCfDvgL03vDEA">
+    <id href="#_2rVooNrmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rVoodrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rVooNrmEeCfDvgL03vDEA" sequenceID="13" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rVoodrmEeCfDvgL03vDEA">
+    <location href="#_2rVootrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rVootrmEeCfDvgL03vDEA" startPosition="814" startLine="12" endLine="12"/>
+  <r4ecore:R4EDelta xmi:id="_2rVoo9rmEeCfDvgL03vDEA">
+    <id href="#_2rVopNrmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rVopdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rVopNrmEeCfDvgL03vDEA" sequenceID="14" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rVopdrmEeCfDvgL03vDEA">
+    <location href="#_2rVoptrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rVoptrmEeCfDvgL03vDEA" startPosition="5703" startLine="75" endLine="75"/>
+  <r4ecore:R4EDelta xmi:id="_2rVop9rmEeCfDvgL03vDEA">
+    <id href="#_2rVoqNrmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rVoqdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rVoqNrmEeCfDvgL03vDEA" sequenceID="15" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rVoqdrmEeCfDvgL03vDEA">
+    <location href="#_2rVoqtrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rVoqtrmEeCfDvgL03vDEA" startPosition="14445" startLine="184" endLine="184"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVoq9rmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui.nl1/plugin_fr.properties" versionID="20688" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui.nl1/plugin_fr.properties::20688" name="plugin_fr.properties" localVersionID="64073023f0edc1633be776920ff809a88ca92b1e"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVorNrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui.nl1/plugin_fr.properties" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui.nl1/plugin_fr.properties::20945" name="plugin_fr.properties" localVersionID="7d54d23896403c8b337f6b4976351d402f49a2bc"/>
+  <r4ecore:R4EFileContext xmi:id="_2rVordrmEeCfDvgL03vDEA" type="R4E_DELETED">
+    <id href="#_2rVortrmEeCfDvgL03vDEA"/>
+    <base href="#_2rVor9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rVortrmEeCfDvgL03vDEA" sequenceID="16" userID="lmcalvs"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rVor9rmEeCfDvgL03vDEA" versionID="20454" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/panel/reporting/MailReportPanel.java::20454" name="MailReportPanel.java" localVersionID="c63ad2ac184b62b5194b1d772a33ab9e90a9e87b"/>
+  <r4ecore:R4EFileContext xmi:id="_2rVosNrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rVosdrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rVostrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rWPotrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rWPptrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rWPqtrmEeCfDvgL03vDEA"/>
+    <base href="#_2rWPrtrmEeCfDvgL03vDEA"/>
+    <target href="#_2rWPr9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rVosdrmEeCfDvgL03vDEA" sequenceID="17" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rVostrmEeCfDvgL03vDEA">
+    <id href="#_2rVos9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rWPoNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rVos9rmEeCfDvgL03vDEA" sequenceID="18" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rWPoNrmEeCfDvgL03vDEA">
+    <location href="#_2rWPodrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rWPodrmEeCfDvgL03vDEA" startPosition="42542" startLine="768" endLine="768"/>
+  <r4ecore:R4EDelta xmi:id="_2rWPotrmEeCfDvgL03vDEA">
+    <id href="#_2rWPo9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rWPpNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rWPo9rmEeCfDvgL03vDEA" sequenceID="19" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rWPpNrmEeCfDvgL03vDEA">
+    <location href="#_2rWPpdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rWPpdrmEeCfDvgL03vDEA" startPosition="45012" startLine="815" endLine="815"/>
+  <r4ecore:R4EDelta xmi:id="_2rWPptrmEeCfDvgL03vDEA">
+    <id href="#_2rWPp9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rWPqNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rWPp9rmEeCfDvgL03vDEA" sequenceID="20" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rWPqNrmEeCfDvgL03vDEA">
+    <location href="#_2rWPqdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rWPqdrmEeCfDvgL03vDEA" startPosition="47346" startLine="861" endLine="861"/>
+  <r4ecore:R4EDelta xmi:id="_2rWPqtrmEeCfDvgL03vDEA">
+    <id href="#_2rWPq9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rWPrNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rWPq9rmEeCfDvgL03vDEA" sequenceID="21" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rWPrNrmEeCfDvgL03vDEA">
+    <location href="#_2rWPrdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rWPrdrmEeCfDvgL03vDEA" startPosition="78832" startLine="1420" endLine="1420"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rWPrtrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/SVNUIMessages.java" versionID="20900" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/SVNUIMessages.java::20900" name="SVNUIMessages.java" localVersionID="5cc9139cd62b7f1aed758d17c8768e0ee3fb87da"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rWPr9rmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/SVNUIMessages.java" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/SVNUIMessages.java::20945" name="SVNUIMessages.java" localVersionID="97cd33cb88cf9c879bceeecab0704a2e7c5b5524"/>
+  <r4ecore:R4EFileContext xmi:id="_2rWPsNrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rWPsdrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rWPstrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rWPttrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rW2strmEeCfDvgL03vDEA"/>
+    <base href="#_2rW2ttrmEeCfDvgL03vDEA"/>
+    <target href="#_2rW2t9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rWPsdrmEeCfDvgL03vDEA" sequenceID="22" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rWPstrmEeCfDvgL03vDEA">
+    <id href="#_2rWPs9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rWPtNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rWPs9rmEeCfDvgL03vDEA" sequenceID="23" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rWPtNrmEeCfDvgL03vDEA">
+    <location href="#_2rWPtdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rWPtdrmEeCfDvgL03vDEA" startPosition="1141" startLine="12" endLine="12"/>
+  <r4ecore:R4EDelta xmi:id="_2rWPttrmEeCfDvgL03vDEA">
+    <id href="#_2rWPt9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rW2sNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rWPt9rmEeCfDvgL03vDEA" sequenceID="24" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rW2sNrmEeCfDvgL03vDEA">
+    <location href="#_2rW2sdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rW2sdrmEeCfDvgL03vDEA" startPosition="8815" startLine="77" endLine="77"/>
+  <r4ecore:R4EDelta xmi:id="_2rW2strmEeCfDvgL03vDEA">
+    <id href="#_2rW2s9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rW2tNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rW2s9rmEeCfDvgL03vDEA" sequenceID="25" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rW2tNrmEeCfDvgL03vDEA">
+    <location href="#_2rW2tdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rW2tdrmEeCfDvgL03vDEA" startPosition="21104" startLine="182" endLine="182"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rW2ttrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui.nl1/plugin_ja.properties" versionID="20688" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui.nl1/plugin_ja.properties::20688" name="plugin_ja.properties" localVersionID="07d63f6257173431720cddf161e47000cd08b503"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rW2t9rmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui.nl1/plugin_ja.properties" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui.nl1/plugin_ja.properties::20945" name="plugin_ja.properties" localVersionID="29f3951f8bce0af8555f7af19762b0eb4c0e8029"/>
+  <r4ecore:R4EFileContext xmi:id="_2rW2uNrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rW2udrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rW2utrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rW2vtrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rW2wtrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rW2xtrmEeCfDvgL03vDEA"/>
+    <base href="#_2rW2ytrmEeCfDvgL03vDEA"/>
+    <target href="#_2rW2y9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rW2udrmEeCfDvgL03vDEA" sequenceID="26" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rW2utrmEeCfDvgL03vDEA">
+    <id href="#_2rW2u9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rW2vNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rW2u9rmEeCfDvgL03vDEA" sequenceID="27" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rW2vNrmEeCfDvgL03vDEA">
+    <location href="#_2rW2vdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rW2vdrmEeCfDvgL03vDEA" startPosition="828" startLine="18" endLine="18"/>
+  <r4ecore:R4EDelta xmi:id="_2rW2vtrmEeCfDvgL03vDEA">
+    <id href="#_2rW2v9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rW2wNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rW2v9rmEeCfDvgL03vDEA" sequenceID="28" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rW2wNrmEeCfDvgL03vDEA">
+    <location href="#_2rW2wdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rW2wdrmEeCfDvgL03vDEA" startPosition="6252" startLine="113" endLine="113"/>
+  <r4ecore:R4EDelta xmi:id="_2rW2wtrmEeCfDvgL03vDEA">
+    <id href="#_2rW2w9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rW2xNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rW2w9rmEeCfDvgL03vDEA" sequenceID="29" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rW2xNrmEeCfDvgL03vDEA">
+    <location href="#_2rW2xdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rW2xdrmEeCfDvgL03vDEA" startPosition="6952" startLine="134" endLine="134"/>
+  <r4ecore:R4EDelta xmi:id="_2rW2xtrmEeCfDvgL03vDEA">
+    <id href="#_2rW2x9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rW2yNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rW2x9rmEeCfDvgL03vDEA" sequenceID="30" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rW2yNrmEeCfDvgL03vDEA">
+    <location href="#_2rW2ydrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rW2ydrmEeCfDvgL03vDEA" startPosition="14927" startLine="256" endLine="256"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rW2ytrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/plugin.properties" versionID="20908" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/plugin.properties::20908" name="plugin.properties" localVersionID="ad66fc4da71724393d631e27c78a705537d7f558"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rW2y9rmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/plugin.properties" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/plugin.properties::20945" name="plugin.properties" localVersionID="722061d4ae9867dc55c22aef3e44574edf72208b"/>
+  <r4ecore:R4EFileContext xmi:id="_2rW2zNrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rW2zdrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rW2ztrmEeCfDvgL03vDEA"/>
+    <base href="#_2rXdwNrmEeCfDvgL03vDEA"/>
+    <target href="#_2rXdwdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rW2zdrmEeCfDvgL03vDEA" sequenceID="31" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rW2ztrmEeCfDvgL03vDEA">
+    <id href="#_2rW2z9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rW20NrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rW2z9rmEeCfDvgL03vDEA" sequenceID="32" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rW20NrmEeCfDvgL03vDEA">
+    <location href="#_2rW20drmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rW20drmEeCfDvgL03vDEA" startPosition="84248" startLine="1714" endLine="1714"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rXdwNrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/plugin.xml" versionID="20942" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/plugin.xml::20942" name="plugin.xml" localVersionID="e72f4dd799bdd6e7c072a8b4f32bdf556d4e5c6a"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rXdwdrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/plugin.xml" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/plugin.xml::20945" name="plugin.xml" localVersionID="e78ddd78f453779dd318aa15fb2473e03b3251d0"/>
+  <r4ecore:R4EFileContext xmi:id="_2rXdwtrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rXdw9rmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rXdxNrmEeCfDvgL03vDEA"/>
+    <base href="#_2rXdyNrmEeCfDvgL03vDEA"/>
+    <target href="#_2rXdydrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rXdw9rmEeCfDvgL03vDEA" sequenceID="33" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rXdxNrmEeCfDvgL03vDEA">
+    <id href="#_2rXdxdrmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rXdxtrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rXdxdrmEeCfDvgL03vDEA" sequenceID="34" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rXdxtrmEeCfDvgL03vDEA">
+    <location href="#_2rXdx9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rXdx9rmEeCfDvgL03vDEA" startPosition="1629" length="317" startLine="38" endLine="44"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rXdyNrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.mylyn/plugin.xml" versionID="20502" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.mylyn/plugin.xml::20502" name="plugin.xml" localVersionID="19e4d44ce7ba523bddee2922cdd0cf07aabe049d"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rXdydrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.mylyn/plugin.xml" versionID="20945" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.mylyn/plugin.xml::20945" name="plugin.xml" localVersionID="5de9e79fafc9fdac4d608b22baf42b8bbd2d065f"/>
+  <r4ecore:R4EItem xmi:id="_2rXdytrmEeCfDvgL03vDEA" addedBy="_2rTzYNrmEeCfDvgL03vDEA" review="_2qxn4NrmEeCfDvgL03vDEA" description="Do not mess svn:externals order (bug 350143)&#xA;https://bugs.eclipse.org/bugs/show_bug.cgi?id=350143" addedById="lmcalvs" repositoryRef="21010" authorRep="" submitted="2011-07-29T13:08:38.683-0400">
+    <id href="#_2rXdy9rmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rXdzNrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rXd2NrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rZ6A9rmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rbIINrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rbIKNrmEeCfDvgL03vDEA"/>
+    <fileContextList href="#_2rbIPNrmEeCfDvgL03vDEA"/>
+    <ProjectURIs>platform:/resource/org.eclipse.team.svn.core</ProjectURIs>
+    <ProjectURIs>platform:/resource/org.eclipse.team.svn.ui</ProjectURIs>
+    <ProjectURIs>platform:/resource/org.eclipse.team.svn.tests</ProjectURIs>
+  </r4ecore:R4EItem>
+  <r4ecore:R4EID xmi:id="_2rXdy9rmEeCfDvgL03vDEA" sequenceID="35" userID="lmcalvs"/>
+  <r4ecore:R4EFileContext xmi:id="_2rXdzNrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rXdzdrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rXdztrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rXd0trmEeCfDvgL03vDEA"/>
+    <base href="#_2rXd1trmEeCfDvgL03vDEA"/>
+    <target href="#_2rXd19rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rXdzdrmEeCfDvgL03vDEA" sequenceID="36" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rXdztrmEeCfDvgL03vDEA">
+    <id href="#_2rXdz9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rXd0NrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rXdz9rmEeCfDvgL03vDEA" sequenceID="37" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rXd0NrmEeCfDvgL03vDEA">
+    <location href="#_2rXd0drmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rXd0drmEeCfDvgL03vDEA" startPosition="457" length="113" startLine="10" endLine="10"/>
+  <r4ecore:R4EDelta xmi:id="_2rXd0trmEeCfDvgL03vDEA">
+    <id href="#_2rXd09rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rXd1NrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rXd09rmEeCfDvgL03vDEA" sequenceID="38" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rXd1NrmEeCfDvgL03vDEA">
+    <location href="#_2rXd1drmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rXd1drmEeCfDvgL03vDEA" startPosition="5682" length="468" startLine="126" endLine="130"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rXd1trmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.core/src/org/eclipse/team/svn/core/operation/remote/GetRemoteFolderChildrenOperation.java" versionID="21008" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.core/src/org/eclipse/team/svn/core/operation/remote/GetRemoteFolderChildrenOperation.java::21008" name="GetRemoteFolderChildrenOperation.java" localVersionID="d16294cd4c928d53103869429faa8c6ee833e3a4"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rXd19rmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.core/src/org/eclipse/team/svn/core/operation/remote/GetRemoteFolderChildrenOperation.java" versionID="21010" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.core/src/org/eclipse/team/svn/core/operation/remote/GetRemoteFolderChildrenOperation.java::21010" name="GetRemoteFolderChildrenOperation.java" localVersionID="7af90f0b12fff2f6f0839e82e5fa1279c73ee915"/>
+  <r4ecore:R4EFileContext xmi:id="_2rXd2NrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rXd2drmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rXd2trmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rYE0drmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rZS8drmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rZS9drmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rZS-drmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rZS_drmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rZTAdrmEeCfDvgL03vDEA"/>
+    <base href="#_2rZ6AdrmEeCfDvgL03vDEA"/>
+    <target href="#_2rZ6AtrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rXd2drmEeCfDvgL03vDEA" sequenceID="39" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rXd2trmEeCfDvgL03vDEA">
+    <id href="#_2rXd29rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rXd3NrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rXd29rmEeCfDvgL03vDEA" sequenceID="40" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rXd3NrmEeCfDvgL03vDEA">
+    <location href="#_2rYE0NrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rYE0NrmEeCfDvgL03vDEA" startPosition="4420" length="181" startLine="104" endLine="105"/>
+  <r4ecore:R4EDelta xmi:id="_2rYE0drmEeCfDvgL03vDEA">
+    <id href="#_2rYE0trmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rYE09rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rYE0trmEeCfDvgL03vDEA" sequenceID="41" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rYE09rmEeCfDvgL03vDEA">
+    <location href="#_2rZS8NrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rZS8NrmEeCfDvgL03vDEA" startPosition="4633" length="234" startLine="110" endLine="112"/>
+  <r4ecore:R4EDelta xmi:id="_2rZS8drmEeCfDvgL03vDEA">
+    <id href="#_2rZS8trmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rZS89rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rZS8trmEeCfDvgL03vDEA" sequenceID="42" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rZS89rmEeCfDvgL03vDEA">
+    <location href="#_2rZS9NrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rZS9NrmEeCfDvgL03vDEA" startPosition="4989" length="62" startLine="116" endLine="117"/>
+  <r4ecore:R4EDelta xmi:id="_2rZS9drmEeCfDvgL03vDEA">
+    <id href="#_2rZS9trmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rZS99rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rZS9trmEeCfDvgL03vDEA" sequenceID="43" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rZS99rmEeCfDvgL03vDEA">
+    <location href="#_2rZS-NrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rZS-NrmEeCfDvgL03vDEA" startPosition="5101" length="65" startLine="120" endLine="121"/>
+  <r4ecore:R4EDelta xmi:id="_2rZS-drmEeCfDvgL03vDEA">
+    <id href="#_2rZS-trmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rZS-9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rZS-trmEeCfDvgL03vDEA" sequenceID="44" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rZS-9rmEeCfDvgL03vDEA">
+    <location href="#_2rZS_NrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rZS_NrmEeCfDvgL03vDEA" startPosition="5212" length="61" startLine="124" endLine="125"/>
+  <r4ecore:R4EDelta xmi:id="_2rZS_drmEeCfDvgL03vDEA">
+    <id href="#_2rZS_trmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rZS_9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rZS_trmEeCfDvgL03vDEA" sequenceID="45" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rZS_9rmEeCfDvgL03vDEA">
+    <location href="#_2rZTANrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rZTANrmEeCfDvgL03vDEA" startPosition="5296" length="61" startLine="128" endLine="129"/>
+  <r4ecore:R4EDelta xmi:id="_2rZTAdrmEeCfDvgL03vDEA">
+    <id href="#_2rZTAtrmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rZTA9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rZTAtrmEeCfDvgL03vDEA" sequenceID="46" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rZTA9rmEeCfDvgL03vDEA">
+    <location href="#_2rZ6ANrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rZ6ANrmEeCfDvgL03vDEA" startPosition="5375" length="291" startLine="133" endLine="140"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rZ6AdrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/repository/model/RepositoryFolder.java" versionID="21005" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/repository/model/RepositoryFolder.java::21005" name="RepositoryFolder.java" localVersionID="353e6658b25e7945aefd972d21adcfce434c06bd"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rZ6AtrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/repository/model/RepositoryFolder.java" versionID="21010" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/repository/model/RepositoryFolder.java::21010" name="RepositoryFolder.java" localVersionID="195af50cd2de7c3ba5eb4ce1b219b04dc8591bba"/>
+  <r4ecore:R4EFileContext xmi:id="_2rZ6A9rmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rZ6BNrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rZ6BdrmEeCfDvgL03vDEA"/>
+    <base href="#_2rahEdrmEeCfDvgL03vDEA"/>
+    <target href="#_2rahEtrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rZ6BNrmEeCfDvgL03vDEA" sequenceID="47" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rZ6BdrmEeCfDvgL03vDEA">
+    <id href="#_2rZ6BtrmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rZ6B9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rZ6BtrmEeCfDvgL03vDEA" sequenceID="48" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rZ6B9rmEeCfDvgL03vDEA">
+    <location href="#_2rahENrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rahENrmEeCfDvgL03vDEA" startPosition="13183" length="118" startLine="239" endLine="239"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rahEdrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.tests/src/org/eclipse/team/svn/tests/ui/RepositoryViewMenuEnablementTest.java" versionID="15989" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.tests/src/org/eclipse/team/svn/tests/ui/RepositoryViewMenuEnablementTest.java::15989" name="RepositoryViewMenuEnablementTest.java" localVersionID="3232fc45d759b37908213ffcf3d666e4ecb83fe8"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rahEtrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.tests/src/org/eclipse/team/svn/tests/ui/RepositoryViewMenuEnablementTest.java" versionID="21010" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.tests/src/org/eclipse/team/svn/tests/ui/RepositoryViewMenuEnablementTest.java::21010" name="RepositoryViewMenuEnablementTest.java" localVersionID="722bef6ce4a0bbe440c1372f5e513b3e6f4ab8cb"/>
+  <r4ecore:R4EFileContext xmi:id="_2rbIINrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rbIIdrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rbIItrmEeCfDvgL03vDEA"/>
+    <base href="#_2rbIJtrmEeCfDvgL03vDEA"/>
+    <target href="#_2rbIJ9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rbIIdrmEeCfDvgL03vDEA" sequenceID="49" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rbIItrmEeCfDvgL03vDEA">
+    <id href="#_2rbII9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rbIJNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rbII9rmEeCfDvgL03vDEA" sequenceID="50" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rbIJNrmEeCfDvgL03vDEA">
+    <location href="#_2rbIJdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rbIJdrmEeCfDvgL03vDEA" startPosition="7368" length="193" startLine="169" endLine="170"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rbIJtrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/panel/common/RepositoryTreePanel.java" versionID="20656" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/panel/common/RepositoryTreePanel.java::20656" name="RepositoryTreePanel.java" localVersionID="3b07f8a2e7694448e3cc9cda9a3952f7ee7aa9e1"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rbIJ9rmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/panel/common/RepositoryTreePanel.java" versionID="21010" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/panel/common/RepositoryTreePanel.java::21010" name="RepositoryTreePanel.java" localVersionID="a9271f8c62e740a153089bb5eb6aceccf5f473fd"/>
+  <r4ecore:R4EFileContext xmi:id="_2rbIKNrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rbIKdrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rbIKtrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rbILtrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rbIMtrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rbINtrmEeCfDvgL03vDEA"/>
+    <base href="#_2rbIOtrmEeCfDvgL03vDEA"/>
+    <target href="#_2rbIO9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rbIKdrmEeCfDvgL03vDEA" sequenceID="51" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rbIKtrmEeCfDvgL03vDEA">
+    <id href="#_2rbIK9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rbILNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rbIK9rmEeCfDvgL03vDEA" sequenceID="52" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rbILNrmEeCfDvgL03vDEA">
+    <location href="#_2rbILdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rbILdrmEeCfDvgL03vDEA" startPosition="11482" length="129" startLine="274" endLine="274"/>
+  <r4ecore:R4EDelta xmi:id="_2rbILtrmEeCfDvgL03vDEA">
+    <id href="#_2rbIL9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rbIMNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rbIL9rmEeCfDvgL03vDEA" sequenceID="53" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rbIMNrmEeCfDvgL03vDEA">
+    <location href="#_2rbIMdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rbIMdrmEeCfDvgL03vDEA" startPosition="11785" length="125" startLine="282" endLine="282"/>
+  <r4ecore:R4EDelta xmi:id="_2rbIMtrmEeCfDvgL03vDEA">
+    <id href="#_2rbIM9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rbINNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rbIM9rmEeCfDvgL03vDEA" sequenceID="54" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rbINNrmEeCfDvgL03vDEA">
+    <location href="#_2rbINdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rbINdrmEeCfDvgL03vDEA" startPosition="12088" length="126" startLine="290" endLine="290"/>
+  <r4ecore:R4EDelta xmi:id="_2rbINtrmEeCfDvgL03vDEA">
+    <id href="#_2rbIN9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rbIONrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rbIN9rmEeCfDvgL03vDEA" sequenceID="55" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rbIONrmEeCfDvgL03vDEA">
+    <location href="#_2rbIOdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rbIOdrmEeCfDvgL03vDEA" startPosition="18715" length="86" startLine="489" endLine="489"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rbIOtrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/compare/ResourceCompareInput.java" versionID="20956" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/compare/ResourceCompareInput.java::20956" name="ResourceCompareInput.java" localVersionID="a830a3d1e9da6ffc3659c67769a157cb8facfbb9"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rbIO9rmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/compare/ResourceCompareInput.java" versionID="21010" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/compare/ResourceCompareInput.java::21010" name="ResourceCompareInput.java" localVersionID="b22277ef421d65d3e0168e080417408b65cc59ae"/>
+  <r4ecore:R4EFileContext xmi:id="_2rbIPNrmEeCfDvgL03vDEA" type="R4E_MODIFIED">
+    <id href="#_2rbIPdrmEeCfDvgL03vDEA"/>
+    <deltas href="#_2rbIPtrmEeCfDvgL03vDEA"/>
+    <base href="#_2rbIQtrmEeCfDvgL03vDEA"/>
+    <target href="#_2rbIQ9rmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EFileContext>
+  <r4ecore:R4EID xmi:id="_2rbIPdrmEeCfDvgL03vDEA" sequenceID="56" userID="lmcalvs"/>
+  <r4ecore:R4EDelta xmi:id="_2rbIPtrmEeCfDvgL03vDEA">
+    <id href="#_2rbIP9rmEeCfDvgL03vDEA"/>
+    <target xsi:type="r4ecore:R4ETextContent" href="#_2rbIQNrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EDelta>
+  <r4ecore:R4EID xmi:id="_2rbIP9rmEeCfDvgL03vDEA" sequenceID="57" userID="lmcalvs"/>
+  <r4ecore:R4ETextContent xmi:id="_2rbIQNrmEeCfDvgL03vDEA">
+    <location href="#_2rbIQdrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4ETextContent>
+  <r4ecore:R4ETextPosition xmi:id="_2rbIQdrmEeCfDvgL03vDEA" startPosition="2974" length="101" startLine="74" endLine="74"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rbIQtrmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/composite/RepositoryTreeComposite.java" versionID="20624" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/composite/RepositoryTreeComposite.java::20624" name="RepositoryTreeComposite.java" localVersionID="ae2c36cf7dca7fdb291c6f1f36a25ad5f6af8711"/>
+  <r4ecore:R4EFileVersion xmi:id="_2rbIQ9rmEeCfDvgL03vDEA" platformURI="platform:/resource/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/composite/RepositoryTreeComposite.java" versionID="21010" repositoryPath="http::/dev.eclipse.org/svnroot/technology/org.eclipse.subversive/trunk/org.eclipse.team.svn.ui/src/org/eclipse/team/svn/ui/composite/RepositoryTreeComposite.java::21010" name="RepositoryTreeComposite.java" localVersionID="5f37d300892f33203c272008859d718c2bb8843f"/>
+  <r4ecore:MapDateToDuration xmi:id="_2rbIRNrmEeCfDvgL03vDEA" key="2011-08-30T17:57:49.000-0400" value="30"/>
+  <r4ecore:MapDateToDuration xmi:id="_2rbIRdrmEeCfDvgL03vDEA" key="2011-08-30T17:57:53.000-0400" value="20"/>
+  <r4ecore:R4EParticipant xmi:id="_2rxtcNrmEeCfDvgL03vDEA" id="lmcdubo" email="sebastien.dubois@ericsson.com" reviewInstance="_2qxn4NrmEeCfDvgL03vDEA" focusArea="Useability">
+    <roles>R4E_ROLE_REVIEWER</roles>
+    <roles>R4E_ROLE_AUTHOR</roles>
+    <roles>R4E_ROLE_LEAD</roles>
+    <timeLog href="#_2rxtcdrmEeCfDvgL03vDEA"/>
+    <timeLog href="#_2rxtctrmEeCfDvgL03vDEA"/>
+  </r4ecore:R4EParticipant>
+  <r4ecore:MapDateToDuration xmi:id="_2rxtcdrmEeCfDvgL03vDEA" key="2011-08-30T17:58:02.000-0400" value="80"/>
+  <r4ecore:MapDateToDuration xmi:id="_2rxtctrmEeCfDvgL03vDEA" key="2011-08-30T17:58:10.000-0400" value="30"/>
+</xmi:XMI>
