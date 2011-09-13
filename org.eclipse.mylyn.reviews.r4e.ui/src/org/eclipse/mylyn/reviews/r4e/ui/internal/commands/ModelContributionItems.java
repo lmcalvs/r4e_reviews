@@ -58,20 +58,45 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isOpenElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.OPEN_ELEMENT_COMMAND, R4EUIConstants.OPEN_ELEMENT_COMMAND, null,
-						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault().getBundle().getEntry(
-								R4EUIConstants.OPEN_ELEMENT_ICON_FILE)), null, null, element.getOpenElementCmdName(),
-						R4EUIConstants.OPEN_ELEMENT_COMMAND_MNEMONIC, element.getOpenElementCmdTooltip(),
-						CommandContributionItem.STYLE_PUSH, null, true);
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.OPEN_ELEMENT_ICON_FILE)), null, null,
+						element.getOpenElementCmdName(), R4EUIConstants.OPEN_ELEMENT_COMMAND_MNEMONIC,
+						element.getOpenElementCmdTooltip(), CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
 
 			if (element.isCloseElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.CLOSE_ELEMENT_COMMAND, R4EUIConstants.CLOSE_ELEMENT_COMMAND, null,
-						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault().getBundle().getEntry(
-								R4EUIConstants.CLOSE_ELEMENT_ICON_FILE)), null, null, element.getCloseElementCmdName(),
-						R4EUIConstants.CLOSE_ELEMENT_COMMAND_MNEMONIC, element.getCloseElementCmdTooltip(),
-						CommandContributionItem.STYLE_PUSH, null, true);
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.CLOSE_ELEMENT_ICON_FILE)), null, null,
+						element.getCloseElementCmdName(), R4EUIConstants.CLOSE_ELEMENT_COMMAND_MNEMONIC,
+						element.getCloseElementCmdTooltip(), CommandContributionItem.STYLE_PUSH, null, true);
+				list.add(new CommandContributionItem(params));
+			}
+
+			if (element.isNextStateElementCmd()) {
+				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+						R4EUIConstants.NEXT_STATE_ELEMENT_COMMAND, R4EUIConstants.NEXT_STATE_ELEMENT_COMMAND, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.NEXT_STATE_ELEMENT_ICON_FILE)), null, null,
+						element.getNextStateElementCmdName(), R4EUIConstants.NEXT_STATE_ELEMENT_COMMAND_MNEMONIC,
+						element.getNextStateElementCmdTooltip(), CommandContributionItem.STYLE_PUSH, null, true);
+				list.add(new CommandContributionItem(params));
+			}
+
+			if (element.isPreviousStateElementCmd()) {
+				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+						R4EUIConstants.PREVIOUS_STATE_ELEMENT_COMMAND, R4EUIConstants.PREVIOUS_STATE_ELEMENT_COMMAND,
+						null, ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.PREVIOUS_STATE_ELEMENT_ICON_FILE)), null, null,
+						element.getPreviousStateElementCmdName(),
+						R4EUIConstants.PREVIOUS_STATE_ELEMENT_COMMAND_MNEMONIC,
+						element.getPreviousStateElementCmdTooltip(), CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
 
@@ -105,8 +130,9 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isOpenEditorCmd() && R4EUIModelController.getNavigatorView().isEditorLinked()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.OPEN_EDITOR_COMMAND, R4EUIConstants.OPEN_EDITOR_COMMAND, null,
-						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault().getBundle().getEntry(
-								R4EUIConstants.OPEN_EDITOR_ICON_FILE)), null, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.OPEN_EDITOR_ICON_FILE)), null, null,
 						R4EUIConstants.OPEN_EDITOR_COMMAND_NAME, R4EUIConstants.OPEN_EDITOR_COMMAND_MNEMONIC,
 						R4EUIConstants.OPEN_EDITOR_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
@@ -115,8 +141,10 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isChangeUserReviewStateCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND, R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND, null,
-						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault().getBundle().getEntry(
-								R4EUIConstants.CHANGE_REVIEW_STATE_ICON_FILE)), null, null, element.isUserReviewed()
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.CHANGE_REVIEW_STATE_ICON_FILE)), null, null,
+						element.isUserReviewed()
 								? R4EUIConstants.UNMARK_REVIEW_STATE_COMMAND_NAME
 								: R4EUIConstants.MARK_REVIEW_STATE_COMMAND_NAME,
 						R4EUIConstants.CHANGE_REVIEW_STATE_COMMAND_MNEMONIC, element.isUserReviewed()
@@ -139,8 +167,9 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isSendEmailCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.SEND_EMAIL_COMMAND, R4EUIConstants.SEND_EMAIL_COMMAND, null,
-						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault().getBundle().getEntry(
-								R4EUIConstants.SEND_EMAIL_ICON_FILE)), null, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.SEND_EMAIL_ICON_FILE)), null, null,
 						R4EUIConstants.SEND_EMAIL_COMMAND_NAME, R4EUIConstants.SEND_EMAIL_COMMAND_MNEMONIC,
 						R4EUIConstants.SEND_EMAIL_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
@@ -149,8 +178,9 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isImportPostponedCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.IMPORT_POSTPONED_COMMAND, R4EUIConstants.IMPORT_POSTPONED_COMMAND, null,
-						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault().getBundle().getEntry(
-								R4EUIConstants.IMPORT_POSTPONED_ICON_FILE)), null, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.IMPORT_POSTPONED_ICON_FILE)), null, null,
 						R4EUIConstants.IMPORT_POSTPONED_COMMAND_NAME, R4EUIConstants.IMPORT_POSTPONED_COMMAND_MNEMONIC,
 						R4EUIConstants.IMPORT_POSTPONED_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
@@ -159,8 +189,9 @@ public class ModelContributionItems extends CompoundContributionItem {
 			if (element.isReportElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.REPORT_ELEMENT_COMMAND, R4EUIConstants.REPORT_ELEMENT_COMMAND, null,
-						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault().getBundle().getEntry(
-								R4EUIConstants.REPORT_ELEMENT_ICON_FILE)), null, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.REPORT_ELEMENT_ICON_FILE)), null, null,
 						element.getReportElementCmdName(), R4EUIConstants.REPORT_ELEMENT_COMMAND_MNEMONIC,
 						element.getReportElementCmdTooltip(), CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));

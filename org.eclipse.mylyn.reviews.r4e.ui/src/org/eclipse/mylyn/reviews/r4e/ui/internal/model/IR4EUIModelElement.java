@@ -398,6 +398,48 @@ public interface IR4EUIModelElement {
 	String getCloseElementCmdTooltip();
 
 	/**
+	 * Method isNextStateElementCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isNextStateElementCmd();
+
+	/**
+	 * Method getNextStateElementCmdName.
+	 * 
+	 * @return String
+	 */
+	String getNextStateElementCmdName();
+
+	/**
+	 * Method getNextStateElementCmdTooltip.
+	 * 
+	 * @return String
+	 */
+	String getNextStateElementCmdTooltip();
+
+	/**
+	 * Method isPreviousStateElementCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isPreviousStateElementCmd();
+
+	/**
+	 * Method getPreviousStateElementCmdName.
+	 * 
+	 * @return String
+	 */
+	String getPreviousStateElementCmdName();
+
+	/**
+	 * Method getPreviousStateElementCmdTooltip.
+	 * 
+	 * @return String
+	 */
+	String getPreviousStateElementCmdTooltip();
+
+	/**
 	 * Method isRestoreElementCmd.
 	 * 
 	 * @return boolean

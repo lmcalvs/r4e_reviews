@@ -22,15 +22,10 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -41,7 +36,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
@@ -348,63 +342,16 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		fPhaseCombo.setLayoutData(data);
 		fPhaseCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				final AtomicReference<String> aResultMsg = new AtomicReference<String>(null);
 				R4EReviewPhase phase = null;
 				if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 					phase = ((R4EUIReviewExtended) fProperties.getElement()).getPhaseFromString(fPhaseCombo.getText());
 				} else {
 					phase = ((R4EUIReviewBasic) fProperties.getElement()).getPhaseFromString(fPhaseCombo.getText());
 				}
-				if (((R4EUIReviewBasic) fProperties.getElement()).validatePhaseChange(phase, aResultMsg)) {
-					if (!fRefreshInProgress) {
-						if (null != aResultMsg.get()) {
-							final ErrorDialog dialog = new ErrorDialog(null, "Warning", aResultMsg.get(), new Status(
-									IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0, null, null), IStatus.WARNING);
-							dialog.open();
-						}
-						try {
-							if (fProperties.getElement() instanceof R4EUIReviewExtended) {
-								final R4EFormalReview review = ((R4EFormalReview) ((R4EUIReviewExtended) fProperties.getElement()).getReview());
-								if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
-										&& null == review.getActiveMeeting()) {
-									MailServicesProxy.sendMeetingRequest();
-								}
-								//Prevent changing state to PREPARATION if no Meeting Request was sent out
-								if (null != review.getActiveMeeting()) {
-									((R4EUIReviewExtended) fProperties.getElement()).updatePhase(phase);
-								} else {
-									final ErrorDialog dialog = new ErrorDialog(null, "Error",
-											"No Meeting Data present", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
-													0, "Please allow sending out a Meeting Request", null),
-											IStatus.ERROR);
-									dialog.open();
-								}
-							} else {
-								((R4EUIReviewBasic) fProperties.getElement()).updatePhase(phase);
-							}
-							//Set end date when the review is completed
-							if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-								R4EUIModelController.getActiveReview()
-										.getReview()
-										.setEndDate(Calendar.getInstance().getTime());
-							} else {
-								R4EUIModelController.getActiveReview().getReview().setEndDate(null);
-							}
-						} catch (ResourceHandlingException e1) {
-							UIUtils.displayResourceErrorDialog(e1);
-						} catch (OutOfSyncException e1) {
-							UIUtils.displaySyncErrorDialog(e1);
-						} finally {
-							R4EUIModelController.setJobInProgress(false);
-						}
-					}
-				} else {
-					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.REVIEW_NOT_COMPLETED_ERROR,
-							"Review phase cannot be changed", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
-									aResultMsg.get(), null), IStatus.ERROR);
-					dialog.open();
+				if (!fRefreshInProgress) {
+					UIUtils.changeReviewPhase(fProperties.getElement(), phase);
+					refresh();
 				}
-				refresh();
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod

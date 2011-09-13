@@ -656,6 +656,66 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
+	 * Method isNextStateElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isNextStateElementCmd()
+	 */
+	public boolean isNextStateElementCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method getNextStateElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNextStateElementCmdName()
+	 */
+	public String getNextStateElementCmdName() {
+		return R4EUIConstants.CLOSE_ELEMENT_COMMAND_NAME; //default implementation
+	}
+
+	/**
+	 * Method getNextStateElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNextStateElementCmdTooltip()
+	 */
+	public String getNextStateElementCmdTooltip() {
+		return R4EUIConstants.CLOSE_ELEMENT_COMMAND_TOOLTIP; //default implementation
+	}
+
+	/**
+	 * Method isPreviousStateElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isPreviousStateElementCmd()
+	 */
+	public boolean isPreviousStateElementCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method getPreviousStateElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPreviousStateElementCmdName()
+	 */
+	public String getPreviousStateElementCmdName() {
+		return R4EUIConstants.CLOSE_ELEMENT_COMMAND_NAME; //default implementation
+	}
+
+	/**
+	 * Method getPreviousStateElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPreviousStateElementCmdTooltip()
+	 */
+	public String getPreviousStateElementCmdTooltip() {
+		return R4EUIConstants.CLOSE_ELEMENT_COMMAND_TOOLTIP; //default implementation
+	}
+
+	/**
 	 * Method isAddChildElementCmd.
 	 * 
 	 * @return boolean

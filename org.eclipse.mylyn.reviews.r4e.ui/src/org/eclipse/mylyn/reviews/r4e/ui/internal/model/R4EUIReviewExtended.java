@@ -149,6 +149,36 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 		setImage(REVIEW_FORMAL_ICON_FILE);
 	}
 
+	//Commands
+
+	/**
+	 * Method isNextStateElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isNextStateElementCmd()
+	 */
+	@Override
+	public boolean isNextStateElementCmd() {
+		if (isOpen() && 0 < getNextAvailablePhases().length) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method isPreviousStateElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isPreviousStateElementCmd()
+	 */
+	@Override
+	public boolean isPreviousStateElementCmd() {
+		if (isOpen() && null != getPreviousPhase()) {
+			return true;
+		}
+		return false;
+	}
+
 	//Phase Management
 
 	/**
@@ -224,7 +254,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
 			return R4EUIConstants.PHASE_REWORK_LABEL;
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-			return REVIEW_PHASE_COMPLETED;
+			return R4EUIConstants.REVIEW_PHASE_COMPLETED;
 		} else {
 			return "";
 		}
@@ -247,7 +277,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 			return R4EReviewPhase.R4E_REVIEW_PHASE_DECISION;
 		} else if (aNewPhase.equals(R4EUIConstants.PHASE_REWORK_LABEL)) {
 			return R4EReviewPhase.R4E_REVIEW_PHASE_REWORK;
-		} else if (aNewPhase.equals(REVIEW_PHASE_COMPLETED)) {
+		} else if (aNewPhase.equals(R4EUIConstants.REVIEW_PHASE_COMPLETED)) {
 			return R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED;
 		} else {
 			return null; //should never happen
@@ -277,6 +307,46 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 			phaseStrings.add(getPhaseString(phase));
 		}
 		return phaseStrings.toArray(new String[phaseStrings.size()]);
+	}
+
+	/**
+	 * Method getNextAvailablePhases.
+	 * 
+	 * @return String[]
+	 */
+	public String[] getNextAvailablePhases() {
+		//Peek state machine to get next available states
+		final R4EReviewPhase[] phases = getNextAllowedPhases(((R4EReviewState) getReview().getState()).getState());
+		final List<String> phaseStrings = new ArrayList<String>();
+		for (R4EReviewPhase phase : phases) {
+			phaseStrings.add(getPhaseString(phase));
+		}
+		return phaseStrings.toArray(new String[phaseStrings.size()]);
+	}
+
+	/**
+	 * Method getPreviousPhase.
+	 * 
+	 * @return R4EReviewPhase
+	 */
+	public R4EReviewPhase getPreviousPhase() {
+		R4EReviewPhase currentPhase = ((R4EReviewState) getReview().getState()).getState();
+
+		switch (currentPhase.getValue()) {
+
+		case R4EReviewPhase.R4E_REVIEW_PHASE_DECISION_VALUE:
+			return R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION;
+
+		case R4EReviewPhase.R4E_REVIEW_PHASE_REWORK_VALUE:
+			return R4EReviewPhase.R4E_REVIEW_PHASE_DECISION;
+
+		case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
+			return R4EReviewPhase.R4E_REVIEW_PHASE_REWORK;
+
+		default:
+			//should never happen
+			return null;
+		}
 	}
 
 	/**
@@ -354,6 +424,41 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 		case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
 			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
 			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
+			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+			break;
+
+		default:
+			//should never happen
+		}
+
+		return phases.toArray(new R4EReviewPhase[phases.size()]);
+	}
+
+	/**
+	 * Method getNextAllowedPhases.
+	 * 
+	 * @param aCurrentPhase
+	 *            R4EReviewPhase
+	 * @return R4EReviewPhase[]
+	 */
+	protected R4EReviewPhase[] getNextAllowedPhases(R4EReviewPhase aCurrentPhase) {
+		final List<R4EReviewPhase> phases = new ArrayList<R4EReviewPhase>();
+
+		switch (aCurrentPhase.getValue()) {
+		case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:
+			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
+			break;
+
+		case R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION_VALUE:
+			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
+			break;
+
+		case R4EReviewPhase.R4E_REVIEW_PHASE_DECISION_VALUE:
+			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
+			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+			break;
+
+		case R4EReviewPhase.R4E_REVIEW_PHASE_REWORK_VALUE:
 			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
 			break;
 

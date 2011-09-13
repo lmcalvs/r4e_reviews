@@ -58,6 +58,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
+import org.eclipse.ui.services.IEvaluationService;
 
 /**
  * @author lmcdubo
@@ -117,6 +118,15 @@ public class OpenElementHandler extends AbstractHandler {
 							dialog.open();
 						}
 					}
+				}
+				try {
+					final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
+							event)
+							.getService(IEvaluationService.class);
+					evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.nextState");
+					evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.previousState");
+				} catch (ExecutionException e) {
+					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 				return Status.OK_STATUS;
 			}

@@ -44,6 +44,26 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field NEXT_STATE_ELEMENT_COMMAND_NAME. (value is ""Progress Anomaly"")
+	 */
+	private static final String NEXT_STATE_ELEMENT_COMMAND_NAME = "Progress Anomaly";
+
+	/**
+	 * Field NEXT_STATE_ELEMENT_COMMAND_TOOLTIP. (value is ""Progress Anomaly to Next State"")
+	 */
+	private static final String NEXT_STATE_ELEMENT_COMMAND_TOOLTIP = "Progress Anomaly to Next State";
+
+	/**
+	 * Field PREVIOUS_STATE_ELEMENT_COMMAND_NAME. (value is ""Regress Anomaly"")
+	 */
+	private static final String PREVIOUS_STATE_ELEMENT_COMMAND_NAME = "Regress Anomaly";
+
+	/**
+	 * Field PREVIOUS_STATE_ELEMENT_COMMAND_TOOLTIP. (value is ""Regress Anomaly to Previous State"")
+	 */
+	private static final String PREVIOUS_STATE_ELEMENT_COMMAND_TOOLTIP = "Regress Anomaly to Previous State";
+
+	/**
 	 * Field ANOMALY_STATE_CREATED. (value is ""CREATED"")
 	 */
 	private static final String ANOMALY_STATE_CREATED = "CREATED";
@@ -223,6 +243,82 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		}
 	}
 
+	//Commands
+
+	/**
+	 * Method isNextStateElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isNextStateElementCmd()
+	 */
+	@Override
+	public boolean isNextStateElementCmd() {
+		if (0 < getNextAvailableStates().length) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method getNextStateElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNextStateElementCmdName()
+	 */
+	@Override
+	public String getNextStateElementCmdName() {
+		return NEXT_STATE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getNextStateElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNextStateElementCmdTooltip()
+	 */
+	@Override
+	public String getNextStateElementCmdTooltip() {
+		return NEXT_STATE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
+	 * Method isPreviousStateElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isPreviousStateElementCmd()
+	 */
+	@Override
+	public boolean isPreviousStateElementCmd() {
+		if (null != getPreviousState()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method getPreviousStateElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPreviousStateElementCmdName()
+	 */
+	@Override
+	public String getPreviousStateElementCmdName() {
+		return PREVIOUS_STATE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getPreviousStateElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPreviousStateElementCmdTooltip()
+	 */
+	@Override
+	public String getPreviousStateElementCmdTooltip() {
+		return PREVIOUS_STATE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	//State Management
+
 	/**
 	 * Method getStateString.
 	 * 
@@ -303,6 +399,103 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 			stateStrings.add(getStateString(state));
 		}
 		return stateStrings.toArray(new String[stateStrings.size()]);
+	}
+
+	/**
+	 * Method getNextAvailableStates.
+	 * 
+	 * @return String[]
+	 */
+	public String[] getNextAvailableStates() {
+		//Peek state machine to get available states
+		final R4EAnomalyState[] states = getNextAllowedStates(getAnomaly().getState());
+		final List<String> stateStrings = new ArrayList<String>();
+		for (R4EAnomalyState state : states) {
+			stateStrings.add(getStateString(state));
+		}
+		return stateStrings.toArray(new String[stateStrings.size()]);
+	}
+
+	/**
+	 * Method getPreviousState.
+	 * 
+	 * @return R4EAnomalyState
+	 */
+	public R4EAnomalyState getPreviousState() {
+		R4EAnomalyState currentState = getAnomaly().getState();
+
+		if (null != R4EUIModelController.getActiveReview()) {
+			if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+				switch (currentState.getValue()) {
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED_VALUE:
+					return R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED_VALUE:
+					return R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED_VALUE:
+					return R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_FIXED_VALUE:
+					return R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED_VALUE:
+					return R4EAnomalyState.R4E_ANOMALY_STATE_FIXED;
+
+				default:
+					return null;
+				}
+			} else { //R4EReviewType.R4E_REVIEW_TYPE_FORMAL
+				final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
+						.getType();
+				switch (currentState.getValue()) {
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+						return R4EAnomalyState.R4E_ANOMALY_STATE_CREATED;
+					}
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+						return R4EAnomalyState.R4E_ANOMALY_STATE_CREATED;
+					}
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+						return R4EAnomalyState.R4E_ANOMALY_STATE_CREATED;
+					}
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+						return R4EAnomalyState.R4E_ANOMALY_STATE_CREATED;
+					}
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_FIXED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+						return R4EAnomalyState.R4E_ANOMALY_STATE_CREATED;
+					}
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+						return R4EAnomalyState.R4E_ANOMALY_STATE_FIXED;
+					}
+					break;
+
+				default:
+					//should never happen
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -629,6 +822,76 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 
 				case R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED_VALUE:
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
+					break;
+
+				default:
+					//should never happen
+				}
+			}
+		}
+		return states.toArray(new R4EAnomalyState[states.size()]);
+	}
+
+	/**
+	 * Method getNextAllowedStates.
+	 * 
+	 * @param aCurrentState
+	 *            R4EAnomalyState
+	 * @return R4EAnomalyState[]
+	 */
+	private R4EAnomalyState[] getNextAllowedStates(R4EAnomalyState aCurrentState) {
+		final List<R4EAnomalyState> states = new ArrayList<R4EAnomalyState>();
+
+		if (null != R4EUIModelController.getActiveReview()) {
+			if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+				switch (aCurrentState.getValue()) {
+				case R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED_VALUE:
+					if (getParent() instanceof R4EUIPostponedFile
+							|| getParent().getParent() instanceof R4EUIFileContext) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
+					}
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_FIXED_VALUE:
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
+					break;
+
+				default:
+					//should never happen
+				}
+			} else { //R4EReviewType.R4E_REVIEW_TYPE_FORMAL
+				final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
+						.getType();
+				switch (aCurrentState.getValue()) {
+				case R4EAnomalyState.R4E_ANOMALY_STATE_CREATED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+						if (getParent() instanceof R4EUIPostponedFile
+								|| getParent().getParent() instanceof R4EUIFileContext) {
+							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
+						}
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
+					}
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
+					}
+					break;
+
+				case R4EAnomalyState.R4E_ANOMALY_STATE_FIXED_VALUE:
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
+					}
 					break;
 
 				default:

@@ -234,6 +234,24 @@
                tooltip="Add a New Rule Set">
          </command>
          <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"
+               icon="icons/elcl16/prevstate_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"
+               label="Regress State"
+               mnemonic="r"
+               style="push"
+               tooltip="Regress the element to its Previous logical State">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
+               icon="icons/elcl16/nxtstate_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
+               label="Progress State"
+               mnemonic="p"
+               style="push"
+               tooltip="Progress the element to one of its Next logical state">
+         </command>
+         <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
                icon="icons/elcl16/expndall_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
@@ -329,6 +347,24 @@
                mnemonic="a"
                style="push"
                tooltip="Add a New Rule Set">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"
+               icon="icons/elcl16/prevstate_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"
+               label="Regress State"
+               mnemonic="r"
+               style="push"
+               tooltip="Progress the element to one of its Previous logical State">
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
+               icon="icons/elcl16/nxtstate_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
+               label="Progress State"
+               mnemonic="p"
+               style="push"
+               tooltip="Progress the element to one of its Next logical state">
          </command>
          <separator
                name="org.eclipse.mylyn.reviews.r4e.ui.separator2"
@@ -619,6 +655,18 @@
             description="Change Review State"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState"
             name="Change Review State">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
+            description="Progress to Next State"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
+            name="Progress to Next State">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
+            description="Regress to Previous State"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"
+            name="Progress to Next State">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
@@ -1059,6 +1107,34 @@
             </test>
          </enabledWhen>
       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.NextStateHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState">
+          <enabledWhen>
+             <and>
+                <test
+                      property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+                </test>
+                <test
+                      property="org.eclipse.mylyn.reviews.r4e.ui.commands.nextState">
+                </test>
+             </and>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.PreviousStateHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState">
+          <enabledWhen>
+             <and>
+                <test
+                      property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+                </test>
+                <test
+                      property="org.eclipse.mylyn.reviews.r4e.ui.commands.previousState">
+                </test>
+             </and>
+          </enabledWhen>
+       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
@@ -1238,6 +1314,20 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.projectPropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.project"
             properties="project"
+            type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.NextStatePropertyTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.nextStatePropertyTester"
+            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands"
+            properties="nextState"
+            type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.PreviousStatePropertyTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.previousStatePropertyTester"
+            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands"
+            properties="previousState"
             type="java.lang.Object">
       </propertyTester>
    </extension>

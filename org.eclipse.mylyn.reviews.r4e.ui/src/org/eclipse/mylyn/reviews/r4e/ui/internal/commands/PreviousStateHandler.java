@@ -9,13 +9,16 @@
  * 
  * Description:
  * 
- * This class implements the context-sensitive command to close an element
+ * This class implements the command to regress the element (Review/Anomaly)
+ * to its previous state
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
  *   
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
+
+import java.util.Iterator;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -25,10 +28,16 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.services.IEvaluationService;
@@ -37,7 +46,7 @@ import org.eclipse.ui.services.IEvaluationService;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class CloseElementHandler extends AbstractHandler {
+public class PreviousStateHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -53,37 +62,45 @@ public class CloseElementHandler extends AbstractHandler {
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
 	public Object execute(final ExecutionEvent event) {
-
-		final UIJob job = new UIJob("Closing Element...") {
+		final UIJob job = new UIJob("Regressing element to previous state...") {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				final ISelection selection = HandlerUtil.getCurrentSelection(event);
 				if (selection instanceof IStructuredSelection) {
 					if (!selection.isEmpty()) {
-						final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
-						element.close();
-						for (IR4EUIModelElement childElement : element.getChildren()) {
-							if (null != childElement && childElement.isOpen()) {
-								childElement.close();
-								break;
+						IR4EUIModelElement element = null;
+						R4EUIModelController.setJobInProgress(true);
+						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
+							element = (IR4EUIModelElement) iterator.next();
+							R4EUIPlugin.Ftracer.traceInfo("Regressing state for element " + element.getName());
+
+							if (element instanceof R4EUIReviewExtended) {
+								R4EReviewPhase newPhase = ((R4EUIReviewExtended) element).getPreviousPhase();
+								UIUtils.changeReviewPhase(element, newPhase);
+
+							} else if (element instanceof R4EUIReviewBasic) {
+								R4EReviewPhase newPhase = ((R4EUIReviewBasic) element).getPhaseFromString(R4EUIConstants.REVIEW_PHASE_STARTED);
+								UIUtils.changeReviewPhase(element, newPhase);
+
+							} else if (element instanceof R4EUIAnomalyExtended) {
+								//Get next state (from user if needed)
+								R4EAnomalyState newState = ((R4EUIAnomalyExtended) element).getPreviousState();
+								UIUtils.changeAnomalyState(element, newState);
+
 							}
 						}
-						R4EUIPlugin.Ftracer.traceInfo("Closing element " + element.getName());
-
-						//The action is only performed on the first element, so select it
-						final StructuredSelection newSelection = new StructuredSelection(
-								((IStructuredSelection) selection).getFirstElement());
-						R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
+						try {
+							final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
+									event)
+									.getService(IEvaluationService.class);
+							evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.previousState");
+							evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.nextState");
+						} catch (ExecutionException e) {
+							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						}
+						R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
+						R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 					}
-				}
-				try {
-					final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
-							event)
-							.getService(IEvaluationService.class);
-					evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.nextState");
-					evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.previousState");
-				} catch (ExecutionException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 				return Status.OK_STATUS;
 			}

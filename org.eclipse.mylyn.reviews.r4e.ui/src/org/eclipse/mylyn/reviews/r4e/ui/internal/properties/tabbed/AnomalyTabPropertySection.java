@@ -322,18 +322,9 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fStateCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				if (!fRefreshInProgress) {
-					try {
-						((R4EUIAnomalyExtended) fProperties.getElement()).updateState(R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText()));
 
-						//If this is a postponed anomaly, update original one as well
-						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
-							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
-						}
-					} catch (ResourceHandlingException e1) {
-						UIUtils.displayResourceErrorDialog(e1);
-					} catch (OutOfSyncException e1) {
-						UIUtils.displaySyncErrorDialog(e1);
-					}
+					UIUtils.changeAnomalyState(fProperties.getElement(),
+							R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText()));
 				}
 				refresh();
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();

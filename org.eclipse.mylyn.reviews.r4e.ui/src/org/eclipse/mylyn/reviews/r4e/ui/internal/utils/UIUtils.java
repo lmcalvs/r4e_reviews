@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.compare.ICompareNavigator;
 import org.eclipse.compare.contentmergeviewer.TextMergeViewer;
@@ -40,7 +41,10 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -52,10 +56,14 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
@@ -477,6 +485,85 @@ public class UIUtils {
 					"Error opening Browser", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e),
 					IStatus.ERROR);
 			dialog.open();
+		}
+	}
+
+	/**
+	 * Method changeReviewState Verifies and Changes Review Element phase to a new one
+	 * 
+	 * @param aReview
+	 *            - R4EUIModelElement
+	 * @param aNewPhase
+	 *            - R4EReviewPhase
+	 */
+	public static void changeReviewPhase(IR4EUIModelElement aReview, R4EReviewPhase aNewPhase) {
+		final AtomicReference<String> aResultMsg = new AtomicReference<String>(null);
+		if (((R4EUIReviewBasic) aReview).validatePhaseChange(aNewPhase, aResultMsg)) {
+			if (null != aResultMsg.get()) {
+				final ErrorDialog dialog = new ErrorDialog(null, "Warning", aResultMsg.get(), new Status(
+						IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0, null, null), IStatus.WARNING);
+				dialog.open();
+			}
+			try {
+				if (aReview instanceof R4EUIReviewExtended) {
+					final R4EFormalReview review = ((R4EFormalReview) ((R4EUIReviewExtended) aReview).getReview());
+					if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
+							&& null == review.getActiveMeeting()) {
+						MailServicesProxy.sendMeetingRequest();
+					}
+					//Prevent changing state to PREPARATION if no Meeting Request was sent out
+					if (null != review.getActiveMeeting()) {
+						((R4EUIReviewExtended) aReview).updatePhase(aNewPhase);
+					} else {
+						final ErrorDialog dialog = new ErrorDialog(null, "Error", "No Meeting Data present",
+								new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+										"Please allow sending out a Meeting Request", null), IStatus.ERROR);
+						dialog.open();
+					}
+				} else {
+					((R4EUIReviewBasic) aReview).updatePhase(aNewPhase);
+				}
+				//Set end date when the review is completed
+				if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+					R4EUIModelController.getActiveReview().getReview().setEndDate(Calendar.getInstance().getTime());
+				} else {
+					R4EUIModelController.getActiveReview().getReview().setEndDate(null);
+				}
+			} catch (ResourceHandlingException e1) {
+				UIUtils.displayResourceErrorDialog(e1);
+			} catch (OutOfSyncException e1) {
+				UIUtils.displaySyncErrorDialog(e1);
+			} finally {
+				R4EUIModelController.setJobInProgress(false);
+			}
+		} else {
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.REVIEW_NOT_COMPLETED_ERROR,
+					"Review phase cannot be changed", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+							aResultMsg.get(), null), IStatus.ERROR);
+			dialog.open();
+		}
+	}
+
+	/**
+	 * Method changeAnomalyState Verifies and Changes Anomaly Element state to a new one
+	 * 
+	 * @param aReview
+	 *            - R4EUIModelElement
+	 * @param aNewPhase
+	 *            - R4EReviewPhase
+	 */
+	public static void changeAnomalyState(IR4EUIModelElement aAnomaly, R4EAnomalyState aNewState) {
+		try {
+			((R4EUIAnomalyExtended) aAnomaly).updateState(aNewState);
+
+			//If this is a postponed anomaly, update original one as well
+			if (aAnomaly instanceof R4EUIPostponedAnomaly) {
+				((R4EUIPostponedAnomaly) aAnomaly).updateOriginalAnomaly();
+			}
+		} catch (ResourceHandlingException e1) {
+			UIUtils.displayResourceErrorDialog(e1);
+		} catch (OutOfSyncException e1) {
+			UIUtils.displaySyncErrorDialog(e1);
 		}
 	}
 }

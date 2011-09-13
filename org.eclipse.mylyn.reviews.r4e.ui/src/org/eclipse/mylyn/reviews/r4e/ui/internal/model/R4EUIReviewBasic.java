@@ -114,6 +114,26 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	private static final String CLOSE_ELEMENT_COMMAND_TOOLTIP = "Close and Unload Data for this Review";
 
 	/**
+	 * Field NEXT_STATE_ELEMENT_COMMAND_NAME. (value is ""Progress Review"")
+	 */
+	private static final String NEXT_STATE_ELEMENT_COMMAND_NAME = "Progress Review";
+
+	/**
+	 * Field NEXT_STATE_ELEMENT_COMMAND_TOOLTIP. (value is ""Progress Review to Next Phase"")
+	 */
+	private static final String NEXT_STATE_ELEMENT_COMMAND_TOOLTIP = "Progress Review to Next Phase";
+
+	/**
+	 * Field PREVIOUS_STATE_ELEMENT_COMMAND_NAME. (value is ""Regress Review"")
+	 */
+	private static final String PREVIOUS_STATE_ELEMENT_COMMAND_NAME = "Regress Review";
+
+	/**
+	 * Field PREVIOUS_STATE_ELEMENT_COMMAND_TOOLTIP. (value is ""Regress Review to Previous Phase"")
+	 */
+	private static final String PREVIOUS_STATE_ELEMENT_COMMAND_TOOLTIP = "Regress Review to Previous Phase";
+
+	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Delete Review"")
 	 */
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Review";
@@ -135,19 +155,10 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	private static final String REPORT_ELEMENT_COMMAND_TOOLTIP = "Create a report for this Review"; //$NON-NLS-1$
 
 	/**
-	 * Field REVIEW_PHASE_STARTED. (value is ""PLANNING"")
-	 */
-	private static final String REVIEW_PHASE_STARTED = "STARTED";
-
-	/**
-	 * Field REVIEW_PHASE_COMPLETED. (value is ""COMPLETED"")
-	 */
-	protected static final String REVIEW_PHASE_COMPLETED = "COMPLETED";
-
-	/**
 	 * Field FBasicPhaseValues.
 	 */
-	private static final String[] BASIC_PHASE_VALUES = { REVIEW_PHASE_STARTED, REVIEW_PHASE_COMPLETED };
+	private static final String[] BASIC_PHASE_VALUES = { R4EUIConstants.REVIEW_PHASE_STARTED,
+			R4EUIConstants.REVIEW_PHASE_COMPLETED };
 
 	/**
 	 * Field EXIT_DECISION_NONE. (value is ""No Decision"")
@@ -1307,6 +1318,78 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method isNextStateElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isNextStateElementCmd()
+	 */
+	@Override
+	public boolean isNextStateElementCmd() {
+		if (isOpen()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method getNextStateElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNextStateElementCmdName()
+	 */
+	@Override
+	public String getNextStateElementCmdName() {
+		return NEXT_STATE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getNextStateElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNextStateElementCmdTooltip()
+	 */
+	@Override
+	public String getNextStateElementCmdTooltip() {
+		return NEXT_STATE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
+	 * Method isPreviousStateElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isPreviousStateElementCmd()
+	 */
+	@Override
+	public boolean isPreviousStateElementCmd() {
+		if (isOpen()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method getPreviousStateElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPreviousStateElementCmdName()
+	 */
+	@Override
+	public String getPreviousStateElementCmdName() {
+		return PREVIOUS_STATE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getPreviousStateElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPreviousStateElementCmdTooltip()
+	 */
+	@Override
+	public String getPreviousStateElementCmdTooltip() {
+		return PREVIOUS_STATE_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
 	 * Method getCloseElementCmdTooltip.
 	 * 
 	 * @return String
@@ -1454,9 +1537,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	public String getPhaseString(R4EReviewPhase aNewPhase) {
 		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
-			return REVIEW_PHASE_STARTED;
+			return R4EUIConstants.REVIEW_PHASE_STARTED;
 		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-			return REVIEW_PHASE_COMPLETED;
+			return R4EUIConstants.REVIEW_PHASE_COMPLETED;
 		} else {
 			return "";
 		}
@@ -1470,9 +1553,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @return R4EReviewPhase
 	 */
 	public R4EReviewPhase getPhaseFromString(String aNewPhase) {
-		if (aNewPhase.equals(REVIEW_PHASE_STARTED)) {
+		if (aNewPhase.equals(R4EUIConstants.REVIEW_PHASE_STARTED)) {
 			return R4EReviewPhase.R4E_REVIEW_PHASE_STARTED;
-		} else if (aNewPhase.equals(REVIEW_PHASE_COMPLETED)) {
+		} else if (aNewPhase.equals(R4EUIConstants.REVIEW_PHASE_COMPLETED)) {
 			return R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED;
 		} else {
 			return null; //should never happen
@@ -1583,17 +1666,17 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public boolean checkCompletionStatus(AtomicReference<String> aErrorMessage) { // $codepro.audit.disable booleanMethodNamingConvention
 		if (!(fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC))) {
 			if (null == fReview.getDecision() || null == fReview.getDecision().getValue()) {
-				aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED
+				aErrorMessage.set("Phase cannot be changed to " + R4EUIConstants.REVIEW_PHASE_COMPLETED
 						+ " as review exit decision information is missing");
 				return false;
 			}
 			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_NONE)) {
-				aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED
+				aErrorMessage.set("Phase cannot be changed to " + R4EUIConstants.REVIEW_PHASE_COMPLETED
 						+ " as review exit decision information is set to NONE");
 				return false;
 			}
 			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_REJECTED)) {
-				aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED
+				aErrorMessage.set("Phase cannot be changed to " + R4EUIConstants.REVIEW_PHASE_COMPLETED
 						+ " as review exit decision information is set to REJECTED");
 				return true;
 			}
@@ -1603,7 +1686,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			final StringBuilder sb = new StringBuilder();
 			boolean resultOk = true;
 			if (!(fAnomalyContainer.checkCompletionStatus(resultMsg))) {
-				sb.append("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED
+				sb.append("Phase cannot be changed to " + R4EUIConstants.REVIEW_PHASE_COMPLETED
 						+ " as some anomalies are in the wrong state:" + System.getProperty("line.separator"));
 				sb.append(resultMsg);
 				resultOk = false;
@@ -1615,7 +1698,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
 					if (null != container && !(container.checkCompletionStatus(resultMsg))) {
 						if (resultOk) {
-							sb.append("Phase cannot be changed to " + REVIEW_PHASE_COMPLETED
+							sb.append("Phase cannot be changed to " + R4EUIConstants.REVIEW_PHASE_COMPLETED
 									+ " as some anomalies are in the wrong state:"
 									+ System.getProperty("line.separator"));
 							resultOk = false;

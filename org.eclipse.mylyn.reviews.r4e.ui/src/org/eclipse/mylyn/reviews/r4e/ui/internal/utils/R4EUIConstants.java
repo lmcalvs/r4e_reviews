@@ -649,7 +649,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final String EXTRA_PARAMS_HEADER = "Extra Parameters";
 
-	//Review types
+	//Review types and phases
 
 	/**
 	 * Field REVIEW_TYPE_BASIC. (value is ""Basic"")
@@ -665,6 +665,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REVIEW_TYPE_FORMAL. (value is ""Formal"")
 	 */
 	public static final String REVIEW_TYPE_FORMAL = "Formal";
+
+	/**
+	 * Field REVIEW_PHASE_STARTED. (value is ""PLANNING"")
+	 */
+	public static final String REVIEW_PHASE_STARTED = "STARTED";
+
+	/**
+	 * Field REVIEW_PHASE_COMPLETED. (value is ""COMPLETED"")
+	 */
+	public static final String REVIEW_PHASE_COMPLETED = "COMPLETED";
 
 	//Review item types
 
@@ -1259,6 +1269,56 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String CLOSE_ELEMENT_COMMAND_MNEMONIC = "c";
 
 	/**
+	 * Field NEXT_STATE_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"")
+	 */
+	public static final String NEXT_STATE_ELEMENT_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.NextState";
+
+	/**
+	 * Field NEXT_STATE_ELEMENT_ICON_FILE. (value is ""icons/elcl16/nxtstate_menu.gif"")
+	 */
+	public static final String NEXT_STATE_ELEMENT_ICON_FILE = "icons/elcl16/nxtstate_menu.gif";
+
+	/**
+	 * Field NEXT_STATE_ELEMENT_COMMAND_NAME. (value is ""Progress State"")
+	 */
+	public static final String NEXT_STATE_ELEMENT_COMMAND_NAME = "Progress State";
+
+	/**
+	 * Field NEXT_STATE_ELEMENT_COMMAND_TOOLTIP. (value is ""Progress the element to one of its Next logical state"")
+	 */
+	public static final String NEXT_STATE_ELEMENT_COMMAND_TOOLTIP = "Progress the element to one of its Next logical state";
+
+	/**
+	 * Field NEXT_STATE_ELEMENT_COMMAND_MNEMONIC. (value is ""P"")
+	 */
+	public static final String NEXT_STATE_ELEMENT_COMMAND_MNEMONIC = "P";
+
+	/**
+	 * Field PREVIOUS_STATE_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"")
+	 */
+	public static final String PREVIOUS_STATE_ELEMENT_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState";
+
+	/**
+	 * Field PREVIOUS_STATE_ELEMENT_ICON_FILE. (value is ""icons/elcl16/prevstate_menu.gif"")
+	 */
+	public static final String PREVIOUS_STATE_ELEMENT_ICON_FILE = "icons/elcl16/prevstate_menu.gif";
+
+	/**
+	 * Field PREVIOUS_STATE_ELEMENT_COMMAND_NAME. (value is ""Regress State"")
+	 */
+	public static final String PREVIOUS_STATE_ELEMENT_COMMAND_NAME = "Regress State";
+
+	/**
+	 * Field PREVIOUS_STATE_ELEMENT_COMMAND_TOOLTIP. (value is ""Regress the element to its Previous logical State"")
+	 */
+	public static final String PREVIOUS_STATE_ELEMENT_COMMAND_TOOLTIP = "Regress the element to its Previous logical State";
+
+	/**
+	 * Field PREVIOUS_STATE_ELEMENT_COMMAND_MNEMONIC. (value is ""R"")
+	 */
+	public static final String PREVIOUS_STATE_ELEMENT_COMMAND_MNEMONIC = "R";
+
+	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.addChildElement"")
 	 */
 	public static final String NEW_CHILD_ELEMENT_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement";
@@ -1304,7 +1364,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Element";
 
 	/**
-	 * Field REMOVE_ELEMENT_COMMAND_MNEMONIC. (value is ""r"")
+	 * Field REMOVE_ELEMENT_COMMAND_MNEMONIC. (value is ""x"")
 	 */
 	public static final String REMOVE_ELEMENT_COMMAND_MNEMONIC = "x";
 
@@ -1349,7 +1409,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String SEND_EMAIL_COMMAND_TOOLTIP = "Send Email or Notification";
 
 	/**
-	 * Field SEND_EMAIL_COMMAND_MNEMONIC. (value is ""r"")
+	 * Field SEND_EMAIL_COMMAND_MNEMONIC. (value is ""N"")
 	 */
 	public static final String SEND_EMAIL_COMMAND_MNEMONIC = "N";
 
