@@ -86,8 +86,8 @@ public class NextStateHandler extends AbstractHandler {
 									//Get next phase from user
 									R4EUIModelController.setJobInProgress(true);
 									final ChangeStateDialog dialog = new ChangeStateDialog(
-											R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-													getSite()
+											R4EUIModelController.getNavigatorView()
+													.getSite()
 													.getWorkbenchWindow()
 													.getShell(), reviewElement);
 									dialog.create();
@@ -121,8 +121,8 @@ public class NextStateHandler extends AbstractHandler {
 								if (newStatesStr.length > 1) {
 
 									final ChangeStateDialog dialog = new ChangeStateDialog(
-											R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-													getSite()
+											R4EUIModelController.getNavigatorView()
+													.getSite()
 													.getWorkbenchWindow()
 													.getShell(), anomalyElement);
 									dialog.create();

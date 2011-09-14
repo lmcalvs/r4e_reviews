@@ -1229,14 +1229,14 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REPORT_ELEMENT_ICON_FILE = "icons/obj16/report_tsk.gif";
 
 	/**
-	 * Field REPORT_ELEMENT_COMMAND_NAME. (value is ""Report element"")
+	 * Field REPORT_ELEMENT_COMMAND_NAME. (value is ""Generate Report"")
 	 */
-	public static final String REPORT_ELEMENT_COMMAND_NAME = "Report Element";
+	public static final String REPORT_ELEMENT_COMMAND_NAME = "Generate Report";
 
 	/**
-	 * Field REPORT_ELEMENT_COMMAND_TOOLTIP. (value is ""Report for this Element"")
+	 * Field REPORT_ELEMENT_COMMAND_TOOLTIP. (value is ""Generate a Report for this Element"")
 	 */
-	public static final String REPORT_ELEMENT_COMMAND_TOOLTIP = "Report Data for this Element";
+	public static final String REPORT_ELEMENT_COMMAND_TOOLTIP = "Generate a Report for this Element";
 
 	/**
 	 * Field REPORT_ELEMENT_COMMAND_MNEMONIC. (value is ""r"")

@@ -145,14 +145,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			+ "its Parent Review Group";
 
 	/**
-	 * Field REPORT_ELEMENT_COMMAND_NAME. (value is ""Report Review"")
-	 */
-	private static final String REPORT_ELEMENT_COMMAND_NAME = "Report Review"; //$NON-NLS-1$
-
-	/**
 	 * Field REPORT_ELEMENT_COMMAND_TOOLTIP. (value is ""Create a report for this Review"")
 	 */
-	private static final String REPORT_ELEMENT_COMMAND_TOOLTIP = "Create a report for this Review"; //$NON-NLS-1$
+	private static final String REPORT_ELEMENT_COMMAND_TOOLTIP = "Generate a report for this Review"; //$NON-NLS-1$
 
 	/**
 	 * Field FBasicPhaseValues.
@@ -1263,11 +1258,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	@Override
 	public boolean isReportElementCmd() {
 		//Any type of review, is allowed
-		if (R4EUIModelController.isUserReportAvailable()) {
-			return true;
-		} else {
-			return false;
-		}
+		return R4EUIPlugin.isUserReportAvailable();
 	}
 
 	/**
@@ -1278,7 +1269,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public String getReportElementCmdName() {
-		return REPORT_ELEMENT_COMMAND_NAME;
+		return R4EUIConstants.REPORT_ELEMENT_COMMAND_NAME;
 	}
 
 	/**

@@ -61,20 +61,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 public class EditableListWidget {
 
 	// ------------------------------------------------------------------------
-	// Constants
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Field DEFAULT_TABLE_WIDTH. (value is 200)
-	 */
-	private static final int DEFAULT_TABLE_WIDTH = 300;
-
-	/**
-	 * Field DEFAULT_TABLE_HEIGHT. (value is 300)
-	 */
-	private static final int DEFAULT_TABLE_HEIGHT = 200;
-
-	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
 
@@ -179,7 +165,7 @@ public class EditableListWidget {
 		} else {
 			tableCompositeData.horizontalSpan = 2;
 		}
-		TableColumnLayout tableColumnLayout = new TableColumnLayout();
+		final TableColumnLayout tableColumnLayout = new TableColumnLayout();
 		tableComposite.setLayout(tableColumnLayout);
 
 		final TableColumn tableColumn = new TableColumn(fMainTable, SWT.NONE, 0);
@@ -209,10 +195,10 @@ public class EditableListWidget {
 				//TODO:  This does not work 100% as resizing the colums lags when the parent area gets shrinked quickly.
 				//        This causes the rightmost part of the table composite to be clipped away.
 				//        This will need to be improved, see bug 356857.
-				Rectangle area = fMainTable.getClientArea();
-				Point size = tableComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-				ScrollBar vBar = fMainTable.getVerticalBar();
-				int vBarWidth = vBar.getSize().x;
+				final Rectangle area = fMainTable.getClientArea();
+				final Point size = tableComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				final ScrollBar vBar = fMainTable.getVerticalBar();
+				final int vBarWidth = vBar.getSize().x;
 				int width = area.width - vBarWidth * 3;
 				if (width < 0) {
 					return;
@@ -464,7 +450,7 @@ public class EditableListWidget {
 	public void setEnabled(boolean aEnabled) {
 		fMainComposite.setEnabled(aEnabled);
 		fMainTable.setEnabled(aEnabled);
-		if (aEnabled == false) {
+		if (!aEnabled) {
 			fAddButton.setEnabled(aEnabled);
 			fRemoveButton.setEnabled(aEnabled);
 		} else {

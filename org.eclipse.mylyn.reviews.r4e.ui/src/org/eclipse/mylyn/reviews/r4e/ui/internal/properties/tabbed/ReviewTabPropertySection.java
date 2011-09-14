@@ -1525,7 +1525,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				}
 			} else { //aInstanceId == 2
 				//Reset all values first
-				Collection<R4EUser> users = modelReview.getUsersMap().values();
+				final Collection<R4EUser> users = modelReview.getUsersMap().values();
 				for (R4EUser user : users) {
 					if (user instanceof R4EParticipant) {
 						((R4EParticipant) user).setIsPartOfDecision(false);

@@ -422,7 +422,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * @return R4EAnomalyState
 	 */
 	public R4EAnomalyState getPreviousState() {
-		R4EAnomalyState currentState = getAnomaly().getState();
+		final R4EAnomalyState currentState = getAnomaly().getState();
 
 		if (null != R4EUIModelController.getActiveReview()) {
 			if (R4EUIModelController.getActiveReview()

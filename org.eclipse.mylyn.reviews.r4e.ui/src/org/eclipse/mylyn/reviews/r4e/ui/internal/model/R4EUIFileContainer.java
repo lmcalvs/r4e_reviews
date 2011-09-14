@@ -36,6 +36,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorConten
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public abstract class R4EUIFileContainer extends R4EUIModelElement {
 
 	// ------------------------------------------------------------------------
@@ -68,7 +72,7 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 	 * @param aTooltip
 	 *            String
 	 */
-	public R4EUIFileContainer(IR4EUIModelElement aParent, R4EItem aItem, String aName, String aTooltip) {
+	protected R4EUIFileContainer(IR4EUIModelElement aParent, R4EItem aItem, String aName, String aTooltip) {
 		super(aParent, aName, aTooltip);
 		fItem = aItem;
 		fFileContexts = new ArrayList<R4EUIFileContext>();

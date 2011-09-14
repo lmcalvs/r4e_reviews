@@ -156,7 +156,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * @return - true is the view is visible, false otherwise
 	 */
 	public boolean isVisible() {
-		IWorkbenchPage page = R4EUIPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		final IWorkbenchPage page = R4EUIPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		if (null != page) {
 			return page.isPartVisible(this);
 		}

@@ -19,8 +19,8 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
@@ -94,7 +94,7 @@ public class ChangeStateDialog extends FormDialog {
 	/**
 	 * Field fElementType.
 	 */
-	private R4EUIModelElement fElementType = null;
+	private IR4EUIModelElement fElementType = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -105,8 +105,10 @@ public class ChangeStateDialog extends FormDialog {
 	 * 
 	 * @param aParentShell
 	 *            Shell
+	 * @param aElementType
+	 *            IR4EUIModelElement
 	 */
-	public ChangeStateDialog(Shell aParentShell, R4EUIModelElement aElementType) {
+	public ChangeStateDialog(Shell aParentShell, IR4EUIModelElement aElementType) {
 		super(aParentShell);
 		fElementType = aElementType;
 		setBlockOnOpen(true);
@@ -171,7 +173,7 @@ public class ChangeStateDialog extends FormDialog {
 		GridData textGridData = null;
 
 		//Next Review Phase
-		Label label = toolkit.createLabel(composite, fElementType instanceof R4EUIReviewBasic
+		final Label label = toolkit.createLabel(composite, fElementType instanceof R4EUIReviewBasic
 				? NEXT_REVIEW_PHASE_DIALOG_VALUE
 				: NEXT_ANOMALY_STATE_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.REVIEW_TYPE_TOOLTIP);

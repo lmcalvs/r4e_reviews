@@ -294,9 +294,9 @@ public class MailServicesProxy {
 	 */
 	public static void sendMessage(String[] aDestinations, String aSubject, String aBody) throws CoreException,
 			ResourceHandlingException {
-		R4EParticipant user = R4EUIModelController.getActiveReview().getParticipant(R4EUIModelController.getReviewer(),
+		final R4EParticipant user = R4EUIModelController.getActiveReview().getParticipant(R4EUIModelController.getReviewer(),
 				false);
-		String originatorEmail = null;
+		final String originatorEmail = null;
 		if (null != user) {
 			user.getEmail();
 		}
@@ -702,7 +702,7 @@ public class MailServicesProxy {
 			aMsgBody.append("Postponed Anomaly Description: "
 					+ ((R4EUIPostponedAnomaly) aSource).getAnomaly().getDescription() + LINE_FEED_MSG_PART);
 		} else if (aSource instanceof R4EUIAnomalyBasic) {
-			IR4EUIModelElement parent = ((R4EUIAnomalyBasic) aSource).getParent().getParent();
+			final IR4EUIModelElement parent = ((R4EUIAnomalyBasic) aSource).getParent().getParent();
 			if (parent instanceof R4EUIFileContext) {
 				//This is an anomaly tied to specific content
 				final R4EFileVersion file = ((R4EUIFileContext) parent).getTargetFileVersion();
@@ -727,7 +727,7 @@ public class MailServicesProxy {
 			aMsgBody.append("Anomaly Description: " + ((R4EUIAnomalyBasic) aSource).getAnomaly().getDescription()
 					+ LINE_FEED_MSG_PART);
 		} else if (aSource instanceof R4EUIComment) {
-			IR4EUIModelElement parent = ((R4EUIComment) aSource).getParent().getParent().getParent();
+			final IR4EUIModelElement parent = ((R4EUIComment) aSource).getParent().getParent().getParent();
 			if (parent instanceof R4EUIFileContext) {
 				final R4EFileVersion file = ((R4EUIFileContext) parent).getTargetFileVersion();
 				if (null != file) {
@@ -760,7 +760,7 @@ public class MailServicesProxy {
 			aMsgBody.append("Review: " + ((R4EUIReviewBasic) aSource).getReview().getName() + LINE_FEED_MSG_PART);
 
 		} else if (aSource instanceof R4EUIReviewItem) {
-			String description = ((R4EUIReviewItem) aSource).getItem().getDescription();
+			final String description = ((R4EUIReviewItem) aSource).getItem().getDescription();
 			if (null != description) {
 				aMsgBody.append("Review Item Description: " + description + LINE_FEED_MSG_PART);
 			} else {
@@ -839,28 +839,28 @@ public class MailServicesProxy {
 			if (input instanceof R4ECompareEditorInput) {
 				//TODO: For now we give the file version of the file on the left side, regardless of whose side the selected input was.
 				//		Later we want to refine this.
-				ITypedElement element = ((R4ECompareEditorInput) input).getLeftElement();
+				final ITypedElement element = ((R4ECompareEditorInput) input).getLeftElement();
 				if (element instanceof R4EFileTypedElement) {
-					R4EFileVersion file = ((R4EFileTypedElement) element).getFileVersion();
+					final R4EFileVersion file = ((R4EFileTypedElement) element).getFileVersion();
 					aMsgBody.append("File: " + file.getResource().getProject() + ": "
 							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
 					aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 				} else if (element instanceof R4EFileRevisionTypedElement) {
-					R4EFileVersion file = ((R4EFileRevisionTypedElement) element).getFileVersion();
+					final R4EFileVersion file = ((R4EFileRevisionTypedElement) element).getFileVersion();
 					aMsgBody.append("File Path: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 					aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 				}
 			} else if (input instanceof R4EFileRevisionEditorInput) {
-				R4EFileVersion file = ((R4EFileRevisionEditorInput) input).getFileVersion();
+				final R4EFileVersion file = ((R4EFileRevisionEditorInput) input).getFileVersion();
 				aMsgBody.append("File Path: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else if (input instanceof R4EFileEditorInput) {
-				R4EFileVersion file = ((R4EFileEditorInput) input).getFileVersion();
+				final R4EFileVersion file = ((R4EFileEditorInput) input).getFileVersion();
 				aMsgBody.append("File: " + file.getResource().getProject() + ": "
 						+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
 				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else if (input instanceof FileEditorInput) {
-				IFile file = ((FileEditorInput) input).getFile();
+				final IFile file = ((FileEditorInput) input).getFile();
 				aMsgBody.append("File: " + file.getProject() + ": " + file.getProjectRelativePath()
 						+ LINE_FEED_MSG_PART);
 				aMsgBody.append("File Version: (None available)" + LINE_FEED_MSG_PART);
@@ -874,11 +874,11 @@ public class MailServicesProxy {
 		} else if (R4EUIPlugin.isJDTAvailable() && aSource instanceof ISourceReference) {
 			//NOTE:  This is always true because all elements that implement ISourceReference
 			//       also implement IJavaElement.  The resource is always an IFile
-			IFile file = (IFile) ((IJavaElement) aSource).getResource();
+			final IFile file = (IFile) ((IJavaElement) aSource).getResource();
 			aMsgBody.append("File: " + file.getProject() + ": " + file.getProjectRelativePath() + LINE_FEED_MSG_PART);
 			aMsgBody.append("File Version: (None available)" + LINE_FEED_MSG_PART);
 			try {
-				R4EUITextPosition position = CommandUtils.getPosition((ISourceReference) aSource, file);
+				final R4EUITextPosition position = CommandUtils.getPosition((ISourceReference) aSource, file);
 				aMsgBody.append("Position in File: " + position.toString() + LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
 			} catch (CoreException e) {
 				// Ignore
@@ -897,7 +897,7 @@ public class MailServicesProxy {
 						+ LINE_FEED_MSG_PART);
 				aMsgBody.append("File Version: (None available)" + LINE_FEED_MSG_PART);
 				try {
-					R4EUITextPosition position = CommandUtils.getPosition(
+					final R4EUITextPosition position = CommandUtils.getPosition(
 							(org.eclipse.cdt.core.model.ISourceReference) aSource, file);
 					aMsgBody.append("Position in File: " + position.toString() + LINE_FEED_MSG_PART
 							+ LINE_FEED_MSG_PART);

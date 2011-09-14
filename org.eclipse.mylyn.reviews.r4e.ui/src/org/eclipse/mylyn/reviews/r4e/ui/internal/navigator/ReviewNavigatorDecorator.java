@@ -202,10 +202,24 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 		return false;
 	}
 
-	public Color decorateBackground(Object element) {
+	/**
+	 * Method decorateBackground
+	 * 
+	 * @param aElement
+	 *            Object
+	 * @return Color
+	 */
+	public Color decorateBackground(Object aElement) {
 		return null;
 	}
 
+	/**
+	 * Method decorateForeground
+	 * 
+	 * @param aElement
+	 *            Object
+	 * @return Color
+	 */
 	public Color decorateForeground(Object aElement) {
 		if (aElement instanceof R4EUIReviewBasic
 				&& ((R4EReviewState) ((R4EUIReviewBasic) aElement).getReview().getState()).getState().equals(

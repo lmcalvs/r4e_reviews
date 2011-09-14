@@ -55,6 +55,11 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	 */
 	public static final String CDT_PLUGIN_ID = "org.eclipse.cdt.core";
 
+	/**
+	 * Field R4E_REPORT_PLUGIN_ID. (value is ""org.eclipse.mylyn.reviews.r4e.report"")
+	 */
+	public static final String R4E_REPORT_PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.report";
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -77,12 +82,17 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	/**
 	 * Field FJDTAvailable.
 	 */
-	private static Boolean FJDTAvailable = false;
+	private static boolean FJDTAvailable = false;
 
 	/**
 	 * Field FCDTAvailable.
 	 */
-	private static Boolean FCDTAvailable = false;
+	private static boolean FCDTAvailable = false;
+
+	/**
+	 * Field FReportAvailable.
+	 */
+	private static boolean FReportAvailable = false;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -94,15 +104,21 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	public R4EUIPlugin() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.enforceTheSingletonPropertyWithAPrivateConstructor, emptyMethod
 
 		//Set Plugin validity: JDT
-		Bundle bdleJDT = Platform.getBundle(JDT_PLUGIN_ID);
-		if (bdleJDT != null) {
+		final Bundle bdleJDT = Platform.getBundle(JDT_PLUGIN_ID);
+		if (null != bdleJDT) {
 			FJDTAvailable = true;
 		}
 
 		//Set Plugin validity: CDT
-		Bundle bdleCDT = Platform.getBundle(CDT_PLUGIN_ID);
-		if (bdleCDT != null) {
+		final Bundle bdleCDT = Platform.getBundle(CDT_PLUGIN_ID);
+		if (null != bdleCDT) {
 			FCDTAvailable = true;
+		}
+
+		//Set Plugin validity: Report
+		final Bundle bdleReport = Platform.getBundle(R4E_REPORT_PLUGIN_ID);
+		if (null != bdleReport) {
+			FReportAvailable = true;
 		}
 	}
 
@@ -178,7 +194,7 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	 * 
 	 * @return Boolean
 	 */
-	public static Boolean isJDTAvailable() {
+	public static boolean isJDTAvailable() {
 		return FJDTAvailable;
 	}
 
@@ -187,8 +203,17 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	 * 
 	 * @return Boolean
 	 */
-	public static Boolean isCDTAvailable() {
+	public static boolean isCDTAvailable() {
 		return FCDTAvailable;
+	}
+
+	/**
+	 * Method isUserReportAvailable.
+	 * 
+	 * @return Boolean
+	 */
+	public static boolean isUserReportAvailable() {
+		return FReportAvailable;
 	}
 
 	/**

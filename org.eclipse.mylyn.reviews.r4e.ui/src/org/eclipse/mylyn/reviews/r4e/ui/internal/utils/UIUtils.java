@@ -547,10 +547,10 @@ public class UIUtils {
 	/**
 	 * Method changeAnomalyState Verifies and Changes Anomaly Element state to a new one
 	 * 
-	 * @param aReview
-	 *            - R4EUIModelElement
-	 * @param aNewPhase
-	 *            - R4EReviewPhase
+	 * @param aAnomaly
+	 *            - IR4EUIModelElement
+	 * @param aNewState
+	 *            - R4EAnomalyState
 	 */
 	public static void changeAnomalyState(IR4EUIModelElement aAnomaly, R4EAnomalyState aNewState) {
 		try {

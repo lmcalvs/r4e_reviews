@@ -330,7 +330,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 * @return R4EReviewPhase
 	 */
 	public R4EReviewPhase getPreviousPhase() {
-		R4EReviewPhase currentPhase = ((R4EReviewState) getReview().getState()).getState();
+		final R4EReviewPhase currentPhase = ((R4EReviewState) getReview().getState()).getState();
 
 		switch (currentPhase.getValue()) {
 

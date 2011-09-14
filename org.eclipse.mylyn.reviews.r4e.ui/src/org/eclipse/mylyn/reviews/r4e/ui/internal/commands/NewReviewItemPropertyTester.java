@@ -176,7 +176,7 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 						return false;
 					}
 					R4EItem parentItem = null;
-					ITypedElement element = ((R4ECompareEditorInput) editorInput).getLeftElement();
+					final ITypedElement element = ((R4ECompareEditorInput) editorInput).getLeftElement();
 					if (element instanceof R4EFileRevisionTypedElement) {
 						parentItem = ((R4EItem) ((R4EFileRevisionTypedElement) element).getFileVersion()
 								.eContainer()

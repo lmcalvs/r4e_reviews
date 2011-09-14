@@ -374,7 +374,7 @@ public interface IR4EUIModelElement {
 	 * 
 	 * @return String
 	 */
-	public String getReportElementCmdTooltip();
+	String getReportElementCmdTooltip();
 
 	/**
 	 * Method isCloseElementCmd.

@@ -26,6 +26,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class ReviewCompletedFilter extends ViewerFilter {
 
 	/**

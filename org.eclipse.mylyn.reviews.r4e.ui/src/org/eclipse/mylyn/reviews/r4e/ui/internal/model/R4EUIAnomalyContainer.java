@@ -108,6 +108,11 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 
 	//Attributes
 
+	/**
+	 * Method createDetachedAnomaly.
+	 * 
+	 * @return R4EAnomaly
+	 */
 	public static R4EAnomaly createDetachedAnomaly() {
 		//Get comment from user and set it in model data
 		R4EAnomaly tempAnomaly = null;

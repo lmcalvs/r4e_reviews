@@ -453,6 +453,14 @@ public class R4EUILegendControl extends Composite {
 		toolkit.createLabel(r4eClient, "New Rule Set");
 
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon("icons/elcl16/nxtstate_menu.gif"));
+		toolkit.createLabel(r4eClient, "Progress (Advance) Element State");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon("icons/elcl16/prevstate_menu.gif"));
+		toolkit.createLabel(r4eClient, "Regress (Rewind) Element State");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon("icons/elcl16/expndall_menu.gif"));
 		toolkit.createLabel(r4eClient, "Expand Navigator Tree");
 
@@ -549,6 +557,10 @@ public class R4EUILegendControl extends Composite {
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon(R4EUIConstants.IMPORT_POSTPONED_ICON_FILE));
 		toolkit.createLabel(r4eClient, "Import Postponed Elements");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon(R4EUIConstants.REPORT_ELEMENT_ICON_FILE));
+		toolkit.createLabel(r4eClient, "Generate Report for Review");
 	}
 
 	/**
@@ -569,7 +581,8 @@ public class R4EUILegendControl extends Composite {
 		hyperlinkClient.setLayout(layout);
 		hyperlinkClient.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
 
-		final Hyperlink gettingStartedLink = toolkit.createHyperlink(hyperlinkClient, "See also R4E online help", SWT.WRAP);
+		final Hyperlink gettingStartedLink = toolkit.createHyperlink(hyperlinkClient, "See also R4E online help",
+				SWT.WRAP);
 		gettingStartedLink.addHyperlinkListener(new IHyperlinkListener() {
 			public void linkActivated(HyperlinkEvent e) {
 				close();

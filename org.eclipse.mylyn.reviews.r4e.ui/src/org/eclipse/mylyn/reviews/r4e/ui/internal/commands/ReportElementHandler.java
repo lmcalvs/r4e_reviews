@@ -54,53 +54,55 @@ public class ReportElementHandler extends AbstractHandler {
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(final ExecutionEvent event) throws ExecutionException {
+	public Object execute(final ExecutionEvent event) {
 
-		final UIJob job = new UIJob("Reporting Element...") { //$NON-NLS-1$
-			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
-				final ISelection selection = HandlerUtil.getCurrentSelection(event);
-				if (selection instanceof IStructuredSelection) {
-					if (!selection.isEmpty()) {
-						IR4EUIModelElement element = null;
-						R4EUIReviewGroup group = null;
-						IStructuredSelection structSelection = (IStructuredSelection) selection;
-						int size = structSelection.size();
-						File[] listSelectReviews = new File[size];
-						Iterator<?> iter = structSelection.iterator();
+		if (R4EUIPlugin.isUserReportAvailable()) {
+			final UIJob job = new UIJob("Reporting Element...") { //$NON-NLS-1$
+				@Override
+				public IStatus runInUIThread(IProgressMonitor monitor) {
+					final ISelection selection = HandlerUtil.getCurrentSelection(event);
+					if (selection instanceof IStructuredSelection) {
+						if (!selection.isEmpty()) {
+							IR4EUIModelElement element = null;
+							R4EUIReviewGroup group = null;
+							final IStructuredSelection structSelection = (IStructuredSelection) selection;
+							final int size = structSelection.size();
+							final File[] listSelectReviews = new File[size];
+							final Iterator<?> iter = structSelection.iterator();
 
-						int i = 0;
-						while (iter.hasNext()) {
-							element = (IR4EUIModelElement) iter.next();
-							if (element instanceof R4EUIReviewBasic) {
-								R4EUIReviewBasic extentElement = (R4EUIReviewBasic) element;
-								R4EUIPlugin.Ftracer.traceInfo("Review name element " //$NON-NLS-1$
-										+ extentElement.getReview().getName());
-								listSelectReviews[i] = new File(extentElement.getReview().getName());
-								i++;
+							int i = 0;
+							while (iter.hasNext()) {
+								element = (IR4EUIModelElement) iter.next();
+								if (element instanceof R4EUIReviewBasic) {
+									R4EUIReviewBasic extentElement = (R4EUIReviewBasic) element;
+									R4EUIPlugin.Ftracer.traceInfo("Review name element " //$NON-NLS-1$
+											+ extentElement.getReview().getName());
+									listSelectReviews[i] = new File(extentElement.getReview().getName());
+									i++;
 
-							} else if (element instanceof R4EUIReviewGroup) {
-								group = (R4EUIReviewGroup) element;
-								R4EUIPlugin.Ftracer.traceInfo("Group file: " + group.getReviewGroup().getFolder()); //$NON-NLS-1$
+								} else if (element instanceof R4EUIReviewGroup) {
+									group = (R4EUIReviewGroup) element;
+									R4EUIPlugin.Ftracer.traceInfo("Group file: " + group.getReviewGroup().getFolder()); //$NON-NLS-1$
+								}
 							}
-						}
 
-						org.eclipse.mylyn.reviews.r4e.report.impl.IR4EReport reportGen = org.eclipse.mylyn.reviews.r4e.report.impl.R4EReportFactory.getInstance();
+							final org.eclipse.mylyn.reviews.r4e.report.impl.IR4EReport reportGen = org.eclipse.mylyn.reviews.r4e.report.impl.R4EReportFactory.getInstance();
 
-						reportGen.setReviewListSelection(listSelectReviews);
+							reportGen.setReviewListSelection(listSelectReviews);
 //							reportGen.setReportType(reportGen.SINGLE_REPORT_TYPE);
 
-						String groupFile = groupReview((IR4EUIModelElement) structSelection.getFirstElement());
-						R4EUIPlugin.Ftracer.traceInfo("Info: " + "Group file: " + groupFile); //$NON-NLS-1$//$NON-NLS-2$
-						reportGen.handleReportGeneration(groupFile);
+							final String groupFile = groupReview((IR4EUIModelElement) structSelection.getFirstElement());
+							R4EUIPlugin.Ftracer.traceInfo("Info: " + "Group file: " + groupFile); //$NON-NLS-1$//$NON-NLS-2$
+							reportGen.handleReportGeneration(groupFile);
 
+						}
 					}
+					return Status.OK_STATUS;
 				}
-				return Status.OK_STATUS;
-			}
-		};
-		job.setUser(true);
-		job.schedule();
+			};
+			job.setUser(true);
+			job.schedule();
+		}
 		return null;
 	}
 
@@ -109,13 +111,14 @@ public class ReportElementHandler extends AbstractHandler {
 	 * 
 	 * @param element
 	 *            IR4EUIModelElement
+	 * @return String
 	 */
 	private String groupReview(IR4EUIModelElement element) {
 		IR4EUIModelElement searchElement = element;
 		R4EUIReviewGroup group = null;
-		if (element != null) {
+		if (null != element) {
 			searchElement = element;
-			while (searchElement != null) {
+			while (null != searchElement) {
 				if (searchElement instanceof R4EUIReviewBasic) {
 					searchElement = searchElement.getParent();
 					R4EUIPlugin.Ftracer.traceInfo("Info: " + "Review element: " + searchElement.getName()); //$NON-NLS-1$ //$NON-NLS-2$
@@ -131,7 +134,7 @@ public class ReportElementHandler extends AbstractHandler {
 			}
 		}
 
-		if (group != null) {
+		if (null != group) {
 			return group.getGroupFile();
 		}
 		return ""; //$NON-NLS-1$

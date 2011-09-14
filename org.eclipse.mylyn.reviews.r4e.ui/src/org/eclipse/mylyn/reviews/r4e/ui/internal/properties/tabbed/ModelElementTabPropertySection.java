@@ -176,7 +176,7 @@ public class ModelElementTabPropertySection extends AbstractPropertySection impl
 		aCombo.addListener(SWT.MouseVerticalWheel, new Listener() {
 			@SuppressWarnings("restriction")
 			public void handleEvent(Event event) {
-				ScrolledComposite form = FormUtil.getScrolledComposite(aCombo);
+				final ScrolledComposite form = FormUtil.getScrolledComposite(aCombo);
 				aCombo.select(aCombo.getSelectionIndex());
 				if (null != form && null != form.getVerticalBar()) {
 					if (event.count < 0) {

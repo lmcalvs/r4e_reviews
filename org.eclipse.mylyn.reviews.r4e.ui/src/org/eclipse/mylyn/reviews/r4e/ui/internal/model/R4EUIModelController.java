@@ -389,8 +389,9 @@ public class R4EUIModelController {
 
 		//Adjust review group paths in preferences
 		if (changePrefsPaths) {
-			R4EUIPlugin.getDefault().getPreferenceStore().setValue(PreferenceConstants.P_GROUP_FILE_PATH,
-					buildReviewGroupsStr(newGroupPaths));
+			R4EUIPlugin.getDefault()
+					.getPreferenceStore()
+					.setValue(PreferenceConstants.P_GROUP_FILE_PATH, buildReviewGroupsStr(newGroupPaths));
 		}
 	}
 
@@ -437,8 +438,9 @@ public class R4EUIModelController {
 
 		//Adjust review group paths in preferences
 		if (changePrefsPaths) {
-			R4EUIPlugin.getDefault().getPreferenceStore().setValue(PreferenceConstants.P_RULE_SET_FILE_PATH,
-					buildReviewGroupsStr(newRuleSetPaths));
+			R4EUIPlugin.getDefault()
+					.getPreferenceStore()
+					.setValue(PreferenceConstants.P_RULE_SET_FILE_PATH, buildReviewGroupsStr(newRuleSetPaths));
 		}
 	}
 
@@ -542,19 +544,6 @@ public class R4EUIModelController {
 	public static boolean isUserQueryAvailable() {
 		//Verify if the LDAP bundle is available
 		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.ldap")) { //$NON-NLS-1$
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Method isUserReportAvailable.
-	 * 
-	 * @return boolean\
-	 */
-	public static boolean isUserReportAvailable() {
-		//Verify if the Report bundle is available
-		if (null != Platform.getBundle("org.eclipse.mylyn.reviews.r4e.report")) { //$NON-NLS-1$
 			return true;
 		}
 		return false;

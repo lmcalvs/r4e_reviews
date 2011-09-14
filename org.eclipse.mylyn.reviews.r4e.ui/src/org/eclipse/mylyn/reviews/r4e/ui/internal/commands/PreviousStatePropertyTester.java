@@ -57,7 +57,7 @@ public class PreviousStatePropertyTester extends PropertyTester {
 
 		if (null != R4EUIModelController.getActiveReview()) {
 			if (receiver instanceof AbstractList && ((AbstractList) receiver).size() > 0) {
-				Object element = ((AbstractList) receiver).get(0);
+				final Object element = ((AbstractList) receiver).get(0);
 				if (element instanceof R4EUIReviewExtended) {
 					if (null != ((R4EUIReviewExtended) element).getPreviousPhase()) {
 						return true;
