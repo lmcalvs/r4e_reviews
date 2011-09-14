@@ -30,6 +30,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -126,20 +127,6 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	public R4EUIParticipant(IR4EUIModelElement aParent, R4EParticipant aParticipant) {
 		super(aParent, aParticipant.getId(), aParticipant.getEmail());
 		fParticipant = aParticipant;
-
-		final EList<R4EUserRole> roles = fParticipant.getRoles();
-		for (R4EUserRole role : roles) {
-			if (role == R4EUserRole.R4E_ROLE_LEAD) {
-				setImage(PARTICIPANT_LEAD_ICON_FILE);
-				return;
-			} else if (role == R4EUserRole.R4E_ROLE_AUTHOR) {
-				setImage(PARTICIPANT_AUTHOR_ICON_FILE);
-				return;
-			} else if (role == R4EUserRole.R4E_ROLE_ORGANIZER) {
-				setImage(PARTICIPANT_ORGANIZER_ICON_FILE);
-				return;
-			}
-		}
 		setRoleIcon();
 		return;
 	}
@@ -181,37 +168,43 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * Method setRoleIcon. Set particpant icon based on most significant role
 	 */
 	public void setRoleIcon() {
-		final EList<R4EUserRole> roles = fParticipant.getRoles();
-		//First check for Lead
-		for (R4EUserRole role : roles) {
-			if (role.equals(R4EUserRole.R4E_ROLE_LEAD)) {
-				setImage(PARTICIPANT_LEAD_ICON_FILE);
-				return;
+		if (((R4EUIReviewBasic) getParent().getParent()).getReview()
+				.getType()
+				.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+			setImage(PARTICIPANT_ICON_FILE);
+		} else {
+			final EList<R4EUserRole> roles = fParticipant.getRoles();
+			//First check for Lead
+			for (R4EUserRole role : roles) {
+				if (role.equals(R4EUserRole.R4E_ROLE_LEAD)) {
+					setImage(PARTICIPANT_LEAD_ICON_FILE);
+					return;
+				}
 			}
-		}
-		//Next Organizer
-		for (R4EUserRole role : roles) {
-			if (role.equals(R4EUserRole.R4E_ROLE_ORGANIZER)) {
-				setImage(PARTICIPANT_ORGANIZER_ICON_FILE);
-				return;
+			//Next Organizer
+			for (R4EUserRole role : roles) {
+				if (role.equals(R4EUserRole.R4E_ROLE_ORGANIZER)) {
+					setImage(PARTICIPANT_ORGANIZER_ICON_FILE);
+					return;
+				}
 			}
-		}
-		//Next Author
-		for (R4EUserRole role : roles) {
-			if (role.equals(R4EUserRole.R4E_ROLE_AUTHOR)) {
-				setImage(PARTICIPANT_AUTHOR_ICON_FILE);
-				return;
+			//Next Author
+			for (R4EUserRole role : roles) {
+				if (role.equals(R4EUserRole.R4E_ROLE_AUTHOR)) {
+					setImage(PARTICIPANT_AUTHOR_ICON_FILE);
+					return;
+				}
 			}
-		}
-		//Finally Reviewer
-		for (R4EUserRole role : roles) {
-			if (role.equals(R4EUserRole.R4E_ROLE_REVIEWER)) {
-				setImage(PARTICIPANT_REVIEWER_ICON_FILE);
-				return;
+			//Finally Reviewer
+			for (R4EUserRole role : roles) {
+				if (role.equals(R4EUserRole.R4E_ROLE_REVIEWER)) {
+					setImage(PARTICIPANT_REVIEWER_ICON_FILE);
+					return;
+				}
 			}
+			//If no role, set default icon
+			setImage(PARTICIPANT_ICON_FILE);
 		}
-		//If no role, set default icon
-		setImage(PARTICIPANT_ICON_FILE);
 	}
 
 	/**

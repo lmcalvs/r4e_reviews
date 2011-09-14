@@ -33,6 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -221,6 +222,11 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 	 * Field FReferenceMaterialText.
 	 */
 	protected Text fReferenceMaterialText = null;
+
+	/**
+	 * Field fDecisionSection.
+	 */
+	private ExpandableComposite fDecisionSection = null;
 
 	/**
 	 * Field fExitDecision.
@@ -653,16 +659,16 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 	 */
 	private Composite createDecisionSection(TabbedPropertySheetWidgetFactory aWidgetFactory,
 			final Composite aComposite, final Composite aTopComposite) {
+
 		//Decision section
-		final ExpandableComposite decisionSection = aWidgetFactory.createExpandableComposite(aComposite,
-				ExpandableComposite.TWISTIE);
+		fDecisionSection = aWidgetFactory.createExpandableComposite(aComposite, ExpandableComposite.TWISTIE);
 		final FormData data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(aTopComposite, ITabbedPropertyConstants.VSPACE);
-		decisionSection.setLayoutData(data);
-		decisionSection.setText(DECISION_SECTION_LABEL);
-		decisionSection.addExpansionListener(new ExpansionAdapter() {
+		fDecisionSection.setLayoutData(data);
+		fDecisionSection.setText(DECISION_SECTION_LABEL);
+		fDecisionSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
 				final ScrolledComposite scrolledParent = (ScrolledComposite) aComposite.getParent()
@@ -674,12 +680,12 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				scrolledParent.layout(true, true);
 			}
 		});
-		decisionSection.setLayout(new GridLayout(1, false));
+		fDecisionSection.setLayout(new GridLayout(1, false));
 
-		final Composite decisionSectionClient = aWidgetFactory.createComposite(decisionSection);
+		final Composite decisionSectionClient = aWidgetFactory.createComposite(fDecisionSection);
 		decisionSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 		decisionSectionClient.setLayout(new GridLayout(4, false));
-		decisionSection.setClient(decisionSectionClient);
+		fDecisionSection.setClient(decisionSectionClient);
 
 		//Scheduled Meetings
 		final CLabel meetingInfoLabel = aWidgetFactory.createCLabel(decisionSectionClient,
@@ -874,7 +880,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			}
 		});
 
-		return decisionSection;
+		return fDecisionSection;
 	}
 
 	/**
@@ -1362,6 +1368,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				fReworkPhaseOwnerCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
 				fPhaseTable.setVisible(true);
 				fPhaseMapLabel.setVisible(true);
+				fDecisionSection.setVisible(true);
 				fDecisionUsersList.setEnabled(false);
 				fDecisionTimeSpentText.setEnabled(false);
 				fDecisionUsersListLabel.setVisible(true);
@@ -1380,6 +1387,13 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				fDecisionUsersList.setVisible(false);
 				fDecisionTimeSpentText.setVisible(false);
 				fDecisionTimeSpentLabel.setVisible(false);
+				if (((R4EUIReviewBasic) fProperties.getElement()).getReview()
+						.getType()
+						.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+					fDecisionSection.setVisible(false);
+				} else {
+					fDecisionSection.setVisible(true);
+				}
 			}
 		} else {
 			fNameText.setEnabled(true);

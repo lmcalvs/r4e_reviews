@@ -30,6 +30,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.window.Window;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -215,7 +216,7 @@ public class ParticipantInputDialog extends FormDialog {
 
 			//Validate Roles (optional)
 			fRolesValue = new ArrayList<R4EUserRole>();
-			if (fRoleTypes.getItems().length > 0) {
+			if (null != fRoleTypes && fRoleTypes.getItems().length > 0) {
 				for (Item item : fRoleTypes.getItems()) {
 					//Review type (no validation needed as this is a read-only combo box
 					if (item.getText().equals(R4EUIConstants.USER_ROLE_LEAD)) {
@@ -224,11 +225,20 @@ public class ParticipantInputDialog extends FormDialog {
 						fRolesValue.add(R4EUserRole.R4E_ROLE_AUTHOR);
 					} else if (item.getText().equals(R4EUIConstants.USER_ROLE_REVIEWER)) {
 						fRolesValue.add(R4EUserRole.R4E_ROLE_REVIEWER);
+					} else if (item.getText().equals(R4EUIConstants.USER_ROLE_ORGANIZER)) {
+						fRolesValue.add(R4EUserRole.R4E_ROLE_ORGANIZER);
 					}
 				}
 			} else {
-				//If there is no roles defined, put reviewer as default
-				fRolesValue.add(R4EUserRole.R4E_ROLE_REVIEWER);
+				//If there is no roles defined, put one as default depenmding on the review type
+				if (R4EUIModelController.getActiveReview()
+						.getReview()
+						.getType()
+						.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+					fRolesValue.add(R4EUserRole.R4E_ROLE_LEAD);
+				} else {
+					fRolesValue.add(R4EUserRole.R4E_ROLE_REVIEWER);
+				}
 			}
 
 			//Validate Focus Area (optional)
@@ -424,14 +434,16 @@ public class ParticipantInputDialog extends FormDialog {
 		extraSection.setClient(extraSectionClient);
 
 		//Roles
-		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.ROLES_LABEL);
-		label.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
-		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-		textGridData.horizontalSpan = 3;
-		fRoleTypes = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
-				R4EUIConstants.PARTICIPANT_ROLES);
-		fRoleTypes.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
+		if (!R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+			label = toolkit.createLabel(extraSectionClient, R4EUIConstants.ROLES_LABEL);
+			label.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
+			label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+			textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+			textGridData.horizontalSpan = 3;
+			fRoleTypes = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
+					R4EUIConstants.PARTICIPANT_ROLES);
+			fRoleTypes.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
+		}
 
 		//Focus Area
 		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.FOCUS_AREA_LABEL);

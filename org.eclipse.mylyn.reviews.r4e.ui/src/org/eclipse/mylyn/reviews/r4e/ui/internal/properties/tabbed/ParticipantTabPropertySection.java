@@ -32,6 +32,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -125,9 +126,19 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 	private CLabel fDetailsText = null;
 
 	/**
+	 * Field fTimeSection.
+	 */
+	private ExpandableComposite fTimeSection = null;
+
+	/**
 	 * Field fTimeSpentDetailedList.
 	 */
 	protected EditableListWidget fTimeSpentDetailedList = null;
+
+	/**
+	 * Field fRolesSection.
+	 */
+	private ExpandableComposite fRolesSection = null;
 
 	/**
 	 * Field fRolesList.
@@ -364,15 +375,14 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		fDetailsText.setLayoutData(gridData);
 
 		//Roles section
-		final ExpandableComposite rolesSection = aWidgetFactory.createExpandableComposite(aComposite,
-				ExpandableComposite.TWISTIE);
+		fRolesSection = aWidgetFactory.createExpandableComposite(aComposite, ExpandableComposite.TWISTIE);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(partDetailsSection, ITabbedPropertyConstants.VSPACE);
-		rolesSection.setLayoutData(data);
-		rolesSection.setText(ROLE_SECTION_LABEL);
-		rolesSection.addExpansionListener(new ExpansionAdapter() {
+		fRolesSection.setLayoutData(data);
+		fRolesSection.setText(ROLE_SECTION_LABEL);
+		fRolesSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
 				final ScrolledComposite scrolledParent = (ScrolledComposite) aComposite.getParent()
@@ -384,12 +394,12 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 				scrolledParent.layout(true, true);
 			}
 		});
-		rolesSection.setLayout(new GridLayout(1, false));
+		fRolesSection.setLayout(new GridLayout(1, false));
 
-		final Composite rolesSectionClient = aWidgetFactory.createComposite(rolesSection);
+		final Composite rolesSectionClient = aWidgetFactory.createComposite(fRolesSection);
 		rolesSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 		rolesSectionClient.setLayout(new GridLayout(4, false));
-		rolesSection.setClient(rolesSectionClient);
+		fRolesSection.setClient(rolesSectionClient);
 
 		//Roles
 		final CLabel rolesLabel = aWidgetFactory.createCLabel(rolesSectionClient, R4EUIConstants.ROLES_LABEL);
@@ -405,16 +415,15 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		fRolesList.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
 
 		//Time Management section
-		final ExpandableComposite timeSection = aWidgetFactory.createExpandableComposite(aComposite,
-				ExpandableComposite.TWISTIE);
+		fTimeSection = aWidgetFactory.createExpandableComposite(aComposite, ExpandableComposite.TWISTIE);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(rolesSection, ITabbedPropertyConstants.VSPACE);
+		data.top = new FormAttachment(fRolesSection, ITabbedPropertyConstants.VSPACE);
 		data.bottom = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		timeSection.setLayoutData(data);
-		timeSection.setText(TIME_SECTION_LABEL);
-		timeSection.addExpansionListener(new ExpansionAdapter() {
+		fTimeSection.setLayoutData(data);
+		fTimeSection.setText(TIME_SECTION_LABEL);
+		fTimeSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
 				final ScrolledComposite scrolledParent = (ScrolledComposite) aComposite.getParent()
@@ -426,12 +435,12 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 				scrolledParent.layout(true, true);
 			}
 		});
-		timeSection.setLayout(new GridLayout(1, false));
+		fTimeSection.setLayout(new GridLayout(1, false));
 
-		final Composite timeSectionClient = aWidgetFactory.createComposite(timeSection);
+		final Composite timeSectionClient = aWidgetFactory.createComposite(fTimeSection);
 		timeSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 		timeSectionClient.setLayout(new GridLayout(4, false));
-		timeSection.setClient(timeSectionClient);
+		fTimeSection.setClient(timeSectionClient);
 
 		//Time Spent (detailed)
 		final CLabel timeSpentDetailedLabel = aWidgetFactory.createCLabel(timeSectionClient,
@@ -556,6 +565,8 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 
 			if (R4EUIModelController.getActiveReview() instanceof R4EUIReviewExtended) {
 				final R4EUIReviewExtended uiReview = (R4EUIReviewExtended) R4EUIModelController.getActiveReview();
+				fTimeSection.setVisible(true);
+				fRolesSection.setVisible(true);
 
 				if (uiReview.isParticipantTimeSpentEnabled()) {
 					fTimeSpentDetailedList.setEnabled(true);
@@ -571,8 +582,19 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 					fFocusAreaText.setEnabled(false);
 				}
 			} else {
-				fTimeSpentDetailedList.setEnabled(true);
-				fRolesList.setEnabled(true);
+				if (R4EUIModelController.getActiveReview()
+						.getReview()
+						.getType()
+						.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+					fTimeSection.setVisible(false);
+					fRolesSection.setVisible(false);
+				} else {
+					fTimeSection.setVisible(true);
+					fRolesSection.setVisible(true);
+					fTimeSpentDetailedList.setEnabled(true);
+					fRolesList.setEnabled(true);
+				}
+
 				fFocusAreaText.setEnabled(true);
 			}
 		}

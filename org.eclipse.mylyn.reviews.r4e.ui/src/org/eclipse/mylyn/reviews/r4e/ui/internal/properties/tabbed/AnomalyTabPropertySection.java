@@ -117,6 +117,11 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	protected Text fDescriptionText = null;
 
 	/**
+	 * Field fStateLabel.
+	 */
+	private CLabel fStateLabel = null;
+
+	/**
 	 * Field fStateCombo.
 	 */
 	protected CCombo fStateCombo = null;
@@ -152,19 +157,39 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	protected Button fCalendarButton = null;
 
 	/**
-	 * Field fRankCombo.
+	 * Field fDecidedByLabel.
+	 */
+	private CLabel fDecidedByLabel = null;
+
+	/**
+	 * Field fDecidedByCombo.
 	 */
 	protected CCombo fDecidedByCombo = null;
 
 	/**
-	 * Field fRankCombo.
+	 * Field fFixedByLabel.
+	 */
+	private CLabel fFixedByLabel = null;
+
+	/**
+	 * Field fFixedByCombo.
 	 */
 	protected CCombo fFixedByCombo = null;
 
 	/**
-	 * Field fRankCombo.
+	 * Field fFollowUpByLabel.
+	 */
+	private CLabel fFollowUpByLabel = null;
+
+	/**
+	 * Field fFollowUpByCombo.
 	 */
 	protected CCombo fFollowUpByCombo = null;
+
+	/**
+	 * Field fNotAcceptedReasonLabel.
+	 */
+	private CLabel fNotAcceptedReasonLabel = null;
 
 	/**
 	 * Field fNotAcceptedReasonText.
@@ -336,13 +361,13 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		});
 		addScrollListener(fStateCombo);
 
-		final CLabel stateLabel = widgetFactory.createCLabel(composite, R4EUIConstants.STATE_LABEL);
+		fStateLabel = widgetFactory.createCLabel(composite, R4EUIConstants.STATE_LABEL);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fStateCombo, -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fStateCombo, 0, SWT.CENTER);
-		stateLabel.setToolTipText(R4EUIConstants.ANOMALY_STATE_TOOLTIP);
-		stateLabel.setLayoutData(data);
+		fStateLabel.setToolTipText(R4EUIConstants.ANOMALY_STATE_TOOLTIP);
+		fStateLabel.setLayoutData(data);
 
 		createParticipantDetailsSection(widgetFactory, composite, createAnomalyDetailsSection(widgetFactory, composite));
 	}
@@ -431,7 +456,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
+						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 						final R4ECommentType type = RModelFactoryExt.eINSTANCE.createR4ECommentType();
 						type.setType(UIUtils.getClassFromString(fClassCombo.getText()));
@@ -474,7 +499,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
+						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
 						modelAnomaly.setRank(UIUtils.getRankFromString(fRankCombo.getText()));
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -522,7 +547,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			public void widgetSelected(SelectionEvent e) {
 				//Modify anomaly
 				R4EUIModelController.setJobInProgress(true);
-				final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
+				final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 				final AnomalyInputDialog dialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 						getSite()
 						.getWorkbenchWindow()
@@ -615,7 +640,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					if (!fRefreshInProgress) {
 						try {
 							final String currentUser = R4EUIModelController.getReviewer();
-							final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
+							final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
 									currentUser);
 							modelAnomaly.setDueDate(dialog.getDate());
@@ -641,12 +666,12 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		});
 
 		//Not accepted reason
-		final CLabel notAcceptedReasonLabel = aWidgetFactory.createCLabel(anomalyDetailsSectionClient,
+		fNotAcceptedReasonLabel = aWidgetFactory.createCLabel(anomalyDetailsSectionClient,
 				R4EUIConstants.NOT_ACCEPTED_REASON_LABEL);
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		gridData.horizontalSpan = 1;
-		notAcceptedReasonLabel.setToolTipText(R4EUIConstants.ANOMALY_NOT_ACCEPTED_REASON_TOOLTIP);
-		notAcceptedReasonLabel.setLayoutData(gridData);
+		fNotAcceptedReasonLabel.setToolTipText(R4EUIConstants.ANOMALY_NOT_ACCEPTED_REASON_TOOLTIP);
+		fNotAcceptedReasonLabel.setLayoutData(gridData);
 
 		fNotAcceptedReasonText = aWidgetFactory.createText(anomalyDetailsSectionClient, "", SWT.READ_ONLY);
 		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
@@ -740,12 +765,11 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fAuthorText.setLayoutData(gridData);
 
 		//Decided by
-		final CLabel decidedByLabel = aWidgetFactory.createCLabel(participantDetailsSectionClient,
-				R4EUIConstants.DECIDED_BY_LABEL);
+		fDecidedByLabel = aWidgetFactory.createCLabel(participantDetailsSectionClient, R4EUIConstants.DECIDED_BY_LABEL);
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		gridData.horizontalSpan = 1;
-		decidedByLabel.setToolTipText(R4EUIConstants.ANOMALY_DECIDED_BY_TOOLTIP);
-		decidedByLabel.setLayoutData(gridData);
+		fDecidedByLabel.setToolTipText(R4EUIConstants.ANOMALY_DECIDED_BY_TOOLTIP);
+		fDecidedByLabel.setLayoutData(gridData);
 
 		fDecidedByCombo = aWidgetFactory.createCCombo(participantDetailsSectionClient, SWT.READ_ONLY);
 		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
@@ -782,12 +806,11 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		addScrollListener(fDecidedByCombo);
 
 		//Fixed by
-		final CLabel fixedByLabel = aWidgetFactory.createCLabel(participantDetailsSectionClient,
-				R4EUIConstants.FIXED_BY_LABEL);
+		fFixedByLabel = aWidgetFactory.createCLabel(participantDetailsSectionClient, R4EUIConstants.FIXED_BY_LABEL);
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		gridData.horizontalSpan = 1;
-		fixedByLabel.setToolTipText(R4EUIConstants.ANOMALY_FIXED_BY_TOOLTIP);
-		fixedByLabel.setLayoutData(gridData);
+		fFixedByLabel.setToolTipText(R4EUIConstants.ANOMALY_FIXED_BY_TOOLTIP);
+		fFixedByLabel.setLayoutData(gridData);
 
 		fFixedByCombo = aWidgetFactory.createCCombo(participantDetailsSectionClient, SWT.READ_ONLY);
 		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
@@ -823,13 +846,13 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		});
 		addScrollListener(fFixedByCombo);
 
-		//Folluw-up by
-		final CLabel followUpByLabel = aWidgetFactory.createCLabel(participantDetailsSectionClient,
+		//Follow-up by
+		fFollowUpByLabel = aWidgetFactory.createCLabel(participantDetailsSectionClient,
 				R4EUIConstants.FOLLOWUP_BY_LABEL);
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		gridData.horizontalSpan = 1;
-		followUpByLabel.setToolTipText(R4EUIConstants.ANOMALY_FOLLOWUP_BY_TOOLTIP);
-		followUpByLabel.setLayoutData(gridData);
+		fFollowUpByLabel.setToolTipText(R4EUIConstants.ANOMALY_FOLLOWUP_BY_TOOLTIP);
+		fFollowUpByLabel.setLayoutData(gridData);
 
 		fFollowUpByCombo = aWidgetFactory.createCCombo(participantDetailsSectionClient, SWT.READ_ONLY);
 		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
@@ -887,27 +910,28 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		}
 		fDescriptionText.setText(modelAnomaly.getDescription());
 
+		fClassCombo.setItems(UIUtils.getClasses());
+		if (null != modelAnomaly.getType() && null != ((R4ECommentType) modelAnomaly.getType()).getType()) {
+			fClassCombo.select(((R4ECommentType) modelAnomaly.getType()).getType().getValue());
+		} else {
+			fClassCombo.setText("");
+		}
+		fRankCombo.setItems(UIUtils.getRanks());
+		fRankCombo.select(modelAnomaly.getRank().getValue());
+		if (null != modelAnomaly.getRuleID()) {
+			fRuleId.setText(modelAnomaly.getRuleID());
+		}
+		if (null != modelAnomaly.getDueDate()) {
+			final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
+			fDateText.setText(dateFormat.format(modelAnomaly.getDueDate()));
+		} else {
+			fDateText.setText("");
+		}
+
 		if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
 			fStateCombo.setItems(((R4EUIAnomalyExtended) uiModelAnomaly).getAvailableStates());
 			fStateCombo.select(((R4EUIAnomalyExtended) uiModelAnomaly).mapStateToIndex(modelAnomaly.getState()));
 
-			fClassCombo.setItems(UIUtils.getClasses());
-			if (null != modelAnomaly.getType() && null != ((R4ECommentType) modelAnomaly.getType()).getType()) {
-				fClassCombo.select(((R4ECommentType) modelAnomaly.getType()).getType().getValue());
-			} else {
-				fClassCombo.setText("");
-			}
-			fRankCombo.setItems(UIUtils.getRanks());
-			fRankCombo.select(modelAnomaly.getRank().getValue());
-			if (null != modelAnomaly.getRuleID()) {
-				fRuleId.setText(modelAnomaly.getRuleID());
-			}
-			if (null != modelAnomaly.getDueDate()) {
-				final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
-				fDateText.setText(dateFormat.format(modelAnomaly.getDueDate()));
-			} else {
-				fDateText.setText("");
-			}
 			if (null != R4EUIModelController.getActiveReview()) {
 				final List<String> participants = R4EUIModelController.getActiveReview().getParticipantIDs();
 				fDecidedByCombo.setItems(participants.toArray(new String[participants.size()]));
@@ -951,18 +975,50 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fNotAcceptedReasonText.setEnabled(false);
 			fRuleButton.setEnabled(false);
 			fRuleId.setEnabled(false);
+			if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
+				fStateLabel.setVisible(true);
+				fStateCombo.setVisible(true);
+				fNotAcceptedReasonLabel.setVisible(true);
+				fDecidedByLabel.setVisible(true);
+				fDecidedByCombo.setVisible(true);
+				fFixedByLabel.setVisible(true);
+				fFixedByCombo.setVisible(true);
+				fFollowUpByLabel.setVisible(true);
+				fFollowUpByCombo.setVisible(true);
+			} else {
+				fStateLabel.setVisible(false);
+				fStateCombo.setVisible(false);
+				fNotAcceptedReasonLabel.setVisible(false);
+				fNotAcceptedReasonText.setEnabled(false);
+				fDecidedByLabel.setVisible(false);
+				fDecidedByCombo.setVisible(false);
+				fFixedByLabel.setVisible(false);
+				fFixedByCombo.setVisible(false);
+				fFollowUpByLabel.setVisible(false);
+				fFollowUpByCombo.setVisible(false);
+			}
 		} else {
 			fTitleText.setEnabled(true);
 			fAuthorText.setEnabled(true);
 			fCreationDateText.setEnabled(true);
 			fPositionText.setEnabled(true);
 			fDescriptionText.setEnabled(true);
+			fRuleButton.setEnabled(true);
+			fRuleId.setEnabled(true);
 
 			if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
 				final R4EUIAnomalyExtended uiAnomaly = (R4EUIAnomalyExtended) fProperties.getElement();
+				fStateLabel.setVisible(true);
+				fStateCombo.setVisible(true);
 				fStateCombo.setEnabled(true);
-				fRuleButton.setEnabled(true);
-				fRuleId.setEnabled(true);
+
+				if (uiAnomaly.isDueDateEnabled()) {
+					fDateText.setEnabled(true);
+					fCalendarButton.setEnabled(true);
+				} else {
+					fDateText.setEnabled(false);
+					fCalendarButton.setEnabled(false);
+				}
 
 				if (uiAnomaly.isClassEnabled()) {
 					fClassCombo.setEnabled(true);
@@ -976,32 +1032,32 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					fRankCombo.setEnabled(false);
 				}
 
-				if (uiAnomaly.isDueDateEnabled()) {
-					fDateText.setEnabled(true);
-					fCalendarButton.setEnabled(true);
-				} else {
-					fDateText.setEnabled(false);
-					fCalendarButton.setEnabled(false);
-				}
-
+				fDecidedByLabel.setVisible(true);
+				fDecidedByCombo.setVisible(true);
 				if (uiAnomaly.isDecidedByEnabled()) {
 					fDecidedByCombo.setEnabled(true);
 				} else {
 					fDecidedByCombo.setEnabled(false);
 				}
 
+				fFixedByLabel.setVisible(true);
+				fFixedByCombo.setVisible(true);
 				if (uiAnomaly.isFixedByEnabled()) {
 					fFixedByCombo.setEnabled(true);
 				} else {
 					fFixedByCombo.setEnabled(false);
 				}
 
+				fFollowUpByLabel.setVisible(true);
+				fFollowUpByCombo.setVisible(true);
 				if (uiAnomaly.isFollowUpByEnabled()) {
 					fFollowUpByCombo.setEnabled(true);
 				} else {
 					fFollowUpByCombo.setEnabled(false);
 				}
 
+				fNotAcceptedReasonLabel.setVisible(true);
+				fNotAcceptedReasonText.setVisible(true);
 				if (uiAnomaly.isNotAcceptedReasonEnabled()) {
 					fNotAcceptedReasonText.setEnabled(true);
 					fNotAcceptedReasonText.setEditable(true);
@@ -1009,17 +1065,25 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					fNotAcceptedReasonText.setEnabled(false);
 				}
 			} else {
-				fStateCombo.setEnabled(false);
-				fClassCombo.setEnabled(false);
-				fRankCombo.setEnabled(false);
-				fDateText.setEnabled(false);
-				fCalendarButton.setEnabled(false);
+				fStateLabel.setVisible(false);
+				fStateCombo.setVisible(false);
+
+				fClassCombo.setEnabled(true);
+				fRankCombo.setEnabled(true);
+				fDateText.setEnabled(true);
+				fCalendarButton.setEnabled(true);
+
 				fDecidedByCombo.setEnabled(false);
 				fFixedByCombo.setEnabled(false);
 				fFollowUpByCombo.setEnabled(false);
-				fNotAcceptedReasonText.setEnabled(false);
-				fRuleButton.setEnabled(false);
-				fRuleId.setEnabled(false);
+				fNotAcceptedReasonLabel.setVisible(false);
+				fNotAcceptedReasonText.setVisible(false);
+				fDecidedByLabel.setVisible(false);
+				fDecidedByCombo.setVisible(false);
+				fFixedByLabel.setVisible(false);
+				fFixedByCombo.setVisible(false);
+				fFollowUpByLabel.setVisible(false);
+				fFollowUpByCombo.setVisible(false);
 			}
 		}
 	}
