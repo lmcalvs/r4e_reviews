@@ -32,7 +32,7 @@ import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
-import org.eclipse.mylyn.reviews.ldap.Activator;
+import org.eclipse.mylyn.reviews.ldap.LdapPlugin;
 import org.eclipse.mylyn.reviews.ldap.internal.preferences.R4ELdapPreferencePage;
 import org.eclipse.mylyn.reviews.ldap.internal.util.R4EString;
 import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
@@ -106,7 +106,7 @@ public class QueryGlobalLdapDirectory implements IQueryUser {
 
 		filter.append(')');
 
-		Activator.FTracer.traceInfo("Filter search:" + filter);
+		LdapPlugin.FTracer.traceInfo("Filter search:" + filter);
 		// Order of data field received from querying the LDAP database
 		String[] returningAttributes = {
 				fLdap.getFieldUserId(), // uid
@@ -230,7 +230,7 @@ public class QueryGlobalLdapDirectory implements IQueryUser {
 			sb.append(serverInfo); // New LDAP
 		} else {
 			// XX May log an error here since the LDAP server is not defined in the property
-			Activator.FTracer.traceWarning("Warning " + R4EString.getString("messageError4"));
+			LdapPlugin.FTracer.traceWarning("Warning " + R4EString.getString("messageError4"));
 		}
 		// sb.append("ldap://127.0.0.1:3268"); // To test internally
 
@@ -254,7 +254,7 @@ public class QueryGlobalLdapDirectory implements IQueryUser {
 
 		// Authentication: "none", "simple", "strong".
 		env.put(Context.SECURITY_AUTHENTICATION, fLdap.getAuthentication());
-		Activator.FTracer.traceInfo("Info: " + "User: " + fLdap.getUserName()
+		LdapPlugin.FTracer.traceInfo("Info: " + "User: " + fLdap.getUserName()
 				+ "\t Authentication: " + fLdap.getAuthentication());
 		env.put(Context.SECURITY_PRINCIPAL, fLdap.getUserName());
 		env.put(Context.SECURITY_CREDENTIALS, fLdap.getPassword());

@@ -29,7 +29,7 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.RadioGroupFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
-import org.eclipse.mylyn.reviews.ldap.Activator;
+import org.eclipse.mylyn.reviews.ldap.LdapPlugin;
 import org.eclipse.mylyn.reviews.ldap.internal.util.R4EString;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -49,7 +49,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	private static IPreferenceStore FStore = Activator.getDefault().getPreferenceStore();
+	private static IPreferenceStore FStore = LdapPlugin.getDefault().getPreferenceStore();
 	private static final String FP_PORT_SEPARATOR = ":";
 
 	/**
@@ -127,7 +127,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	// ------------------------------------------------------------------------
 	@Override
 	protected void createFieldEditors() {
-		Activator.FTracer.traceInfo("Build R4E LDPA Preference page");
+		LdapPlugin.FTracer.traceInfo("Build R4E LDPA Preference page");
 
 		// The Main preferences composite
 		final Composite prefsContainer = new Composite(getFieldEditorParent(), SWT.NONE);
@@ -526,7 +526,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 		sb.append(FP_PORT_SEPARATOR);
 		sb.append(port);
 		if (host.equals("") || port.equals("")) {
-			Activator.FTracer.traceWarning("Warning " + "Host or port is empty");
+			LdapPlugin.FTracer.traceWarning("Warning " + "Host or port is empty");
 
 			throw new IOException(R4EString.getString("messageError1") + R4EString.getString("noHostOrPort"));
 		}
@@ -563,10 +563,10 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 		try {
 			encodedPwd = encodePassword();
 		} catch (UnsupportedEncodingException aE) {
-			Activator.getDefault().logError(R4EString.getString("messageError2"), aE);
+			LdapPlugin.getDefault().logError(R4EString.getString("messageError2"), aE);
 
 		} catch (NoSuchAlgorithmException aE) {
-			Activator.getDefault().logError(R4EString.getString("messageError3"), aE);
+			LdapPlugin.getDefault().logError(R4EString.getString("messageError3"), aE);
 		}
 		return encodedPwd;
 	}

@@ -24,18 +24,18 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+public class SmtpPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String FPLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.mail.smtp"; //$NON-NLS-1$
 
 	// The shared instance
-	private static Activator fPlugin;
+	private static SmtpPlugin fPlugin = null;
 
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public SmtpPlugin() {
 	}
 
 	/*
@@ -46,7 +46,7 @@ public class Activator extends AbstractUIPlugin {
 	 * )
 	 */
 	public void start(BundleContext context) throws Exception {
-		// super.start(context);
+		super.start(context);
 		fPlugin = this;
 	}
 
@@ -58,8 +58,8 @@ public class Activator extends AbstractUIPlugin {
 	 * )
 	 */
 	public void stop(BundleContext context) throws Exception {
-		// super.stop(context);
 		fPlugin = null;
+		super.stop(context);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class Activator extends AbstractUIPlugin {
 	 * 
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static SmtpPlugin getDefault() {
 		return fPlugin;
 	}
 

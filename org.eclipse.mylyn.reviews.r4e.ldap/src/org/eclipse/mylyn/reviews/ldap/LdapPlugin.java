@@ -26,7 +26,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Jacques Bouthillier
  */
-public class Activator extends AbstractUIPlugin {
+public class LdapPlugin extends AbstractUIPlugin {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -38,12 +38,12 @@ public class Activator extends AbstractUIPlugin {
 	// Member variables
 	// ------------------------------------------------------------------------
 	// The shared instance
-	private static Activator	FPlugin;
+	private static LdapPlugin	FPlugin = null;
 
 	/**
 	 * Field Tracer.
 	 */
-	public static Tracer		FTracer;
+	public static Tracer		FTracer = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -51,7 +51,7 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public LdapPlugin() {
 		// Empty constructor
 	}
 
@@ -94,7 +94,7 @@ public class Activator extends AbstractUIPlugin {
 	 * 
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static LdapPlugin getDefault() {
 		return FPlugin;
 	}
 

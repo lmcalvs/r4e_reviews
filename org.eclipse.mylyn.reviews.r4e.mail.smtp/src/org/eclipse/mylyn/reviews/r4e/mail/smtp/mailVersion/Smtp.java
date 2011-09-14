@@ -37,7 +37,7 @@ import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 import org.eclipse.mylyn.reviews.notifications.core.NotificationFilter;
 import org.eclipse.mylyn.reviews.notifications.core.NotificationsCore;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
-import org.eclipse.mylyn.reviews.r4e.mail.smtp.Activator;
+import org.eclipse.mylyn.reviews.r4e.mail.smtp.SmtpPlugin;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.MailData;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.dialogs.ScheduleMeetingInputDialog;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.preferences.SmtpHostPreferencePage;
@@ -116,7 +116,7 @@ public class Smtp extends NotificationsConnector {
 					StringBuilder sb = new StringBuilder();
 					sb.append("ComponentObjectModelException: ");
 					sb.append(aEex.getMessage());
-					throw new CoreException(new Status(Status.ERROR, Activator.FPLUGIN_ID,
+					throw new CoreException(new Status(Status.ERROR, SmtpPlugin.FPLUGIN_ID,
 							sb.toString()) {
 					});		
 				} 
@@ -233,7 +233,7 @@ public class Smtp extends NotificationsConnector {
 						aMeetingData.getSender(),
 						aMeetingData.getReceivers());
 			} catch (CoreException e) {
-				StatusHandler.log(new Status(IStatus.ERROR, Activator.FPLUGIN_ID, IStatus.OK, e.toString(), e));
+				StatusHandler.log(new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID, IStatus.OK, e.toString(), e));
 			}
 			final VCalendar vcal = new VCalendar();
 			final String vcalAttachment = vcal.createVCalendar(newMeetingData, defaultUserId, aMeetingData.getReceivers());
@@ -244,7 +244,7 @@ public class Smtp extends NotificationsConnector {
 					sendEmail(defaultUserId, newMeetingData.getReceivers(), newMeetingData.getSubject(), 
 							newMeetingData.getBody(), vcalAttachment, null);
 				} catch (CoreException e) {
-					StatusHandler.log(new Status(IStatus.ERROR, Activator.FPLUGIN_ID, IStatus.OK, e.toString(), e));
+					StatusHandler.log(new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID, IStatus.OK, e.toString(), e));
 				}
 			}
     	} 

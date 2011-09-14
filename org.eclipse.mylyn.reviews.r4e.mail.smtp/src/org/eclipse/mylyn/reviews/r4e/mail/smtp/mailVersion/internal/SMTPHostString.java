@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.mylyn.commons.core.StatusHandler;
-import org.eclipse.mylyn.reviews.r4e.mail.smtp.Activator;
+import org.eclipse.mylyn.reviews.r4e.mail.smtp.SmtpPlugin;
 
 /**
  * 
@@ -58,7 +58,7 @@ public class SMTPHostString {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
-			StatusHandler.log(new Status(IStatus.ERROR, Activator.FPLUGIN_ID, IStatus.OK, e.toString(), e));
+			StatusHandler.log(new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID, IStatus.OK, e.toString(), e));
 			// Debug.print("EXCEPTION In getString for:" + key);
 			return '!' + key + '!';
 		}
@@ -78,7 +78,7 @@ public class SMTPHostString {
 		try {
 			format = RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
-			StatusHandler.log(new Status(IStatus.ERROR, Activator.FPLUGIN_ID, IStatus.OK, e.toString(), e));
+			StatusHandler.log(new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID, IStatus.OK, e.toString(), e));
 			return "!" + key + "!";//$NON-NLS-2$ //$NON-NLS-1$ 
 		}
 		if (null == arg) {

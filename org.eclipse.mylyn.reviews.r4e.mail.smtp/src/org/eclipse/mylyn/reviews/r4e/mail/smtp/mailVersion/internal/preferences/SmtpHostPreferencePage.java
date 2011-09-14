@@ -26,7 +26,7 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.ListEditor;
-import org.eclipse.mylyn.reviews.r4e.mail.smtp.Activator;
+import org.eclipse.mylyn.reviews.r4e.mail.smtp.SmtpPlugin;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.SMTPHostString;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -45,8 +45,7 @@ public class SmtpHostPreferencePage extends FieldEditorPreferencePage implements
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	private static IPreferenceStore FStore = Activator.getDefault()
-			.getPreferenceStore();
+	private static IPreferenceStore FStore = null;
 
 	private String fLIST_SEPARATOR = ":";
 
@@ -75,6 +74,7 @@ public class SmtpHostPreferencePage extends FieldEditorPreferencePage implements
 	// ------------------------------------------------------------------------
 	public SmtpHostPreferencePage() {
 		super(GRID);
+		FStore = SmtpPlugin.getDefault().getPreferenceStore();
 		setPreferenceStore(FStore);
 	}
 

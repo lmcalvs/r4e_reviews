@@ -18,4 +18,4 @@ Import-Package: org.eclipse.ui.forms,
 Bundle-Vendor: %providerName
 Export-Package: org.eclipse.mylyn.reviews.r4e.mail.smtp,
  org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.preferences
-Bundle-Activator: org.eclipse.mylyn.reviews.r4e.mail.smtp.Activator
+Bundle-Activator: org.eclipse.mylyn.reviews.r4e.mail.smtp.SmtpPlugin

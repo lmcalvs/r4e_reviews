@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.mylyn.reviews.r4e.mail.smtp.Activator;
+import org.eclipse.mylyn.reviews.r4e.mail.smtp.SmtpPlugin;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.MailData;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.MailInputValidator;
 import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.SMTPHostString;
@@ -127,7 +127,7 @@ public class MailDialog extends FormDialog {
     					SMTPHostString.getString("dialog_title_error"), 
     					SMTPHostString.getString("to_Error"),
         				new Status(IStatus.ERROR, 
-        						Activator.FPLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+        						SmtpPlugin.FPLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
     			dialog.open();
     			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
     			return;
@@ -142,7 +142,7 @@ public class MailDialog extends FormDialog {
     					SMTPHostString.getString("dialog_title_error"),
     					SMTPHostString.getString("subject_Error"),
         				new Status(IStatus.ERROR, 
-        						Activator.FPLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+        						SmtpPlugin.FPLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
     			dialog.open();
     			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
     			return;
@@ -157,7 +157,7 @@ public class MailDialog extends FormDialog {
     					SMTPHostString.getString("dialog_title_error"),
     					SMTPHostString.getString("message_body_Error"),
         				new Status(IStatus.ERROR, 
-        						Activator.FPLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+        						SmtpPlugin.FPLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
     			dialog.open();
     			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
     			return;

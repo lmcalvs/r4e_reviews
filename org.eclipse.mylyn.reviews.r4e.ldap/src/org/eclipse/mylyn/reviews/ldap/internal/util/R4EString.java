@@ -17,7 +17,7 @@ import java.text.MessageFormat;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.eclipse.mylyn.reviews.ldap.Activator;
+import org.eclipse.mylyn.reviews.ldap.LdapPlugin;
 
 /**
  * @author Jacques Bouthillier
@@ -54,7 +54,7 @@ public class R4EString {
 		try {
 			return FRESOURCE_BUNDLE.getString(aKey);
 		} catch (MissingResourceException e) {
-			Activator.FTracer.traceWarning("Warning: " + "EXCEPTION In getString for:" + aKey);
+			LdapPlugin.FTracer.traceWarning("Warning: " + "EXCEPTION In getString for:" + aKey);
 			return '!' + aKey + '!';
 		}
 	}

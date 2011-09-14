@@ -21,7 +21,7 @@ package org.eclipse.mylyn.reviews.ldap.internal.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.mylyn.reviews.ldap.Activator;
+import org.eclipse.mylyn.reviews.ldap.LdapPlugin;
 
 /**
  * @author Jacques Bouthillier
@@ -38,7 +38,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		final IPreferenceStore store = LdapPlugin.getDefault().getPreferenceStore();
 		
 
 		// Default Server Information
@@ -80,7 +80,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 * Load the default value to the store value Use in Junit to reset the value
 	 */
 	public void storeDefaultPreferences() {
-		final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		final IPreferenceStore store = LdapPlugin.getDefault().getPreferenceStore();
 
 		// Default Server Information
 		store.setValue(PreferenceConstants.FP_SERVER_TYPE_ID, PreferenceConstants.FP_SERVER_BASIC);
