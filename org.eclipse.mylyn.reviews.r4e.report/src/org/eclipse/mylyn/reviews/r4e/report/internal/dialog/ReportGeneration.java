@@ -97,8 +97,6 @@ public class ReportGeneration implements IR4EReport {
 	// Use the definition of the report Data Source
 	private final String fGROUP_DATA_SOURCE = "Merged_group";
 	private final String fREVIEW_DATA_SOURCE = "Merged_review";
-	private final String fITEM_DATA_SOURCE = "Merged_items";
-	private final String fCOMMENTS_DATA_SOURCE = "Merged_comments";
 
 	//Report design template
 	private final String fInspectionRecordFileName = "inspectionRecord.rptdesign";
@@ -109,8 +107,6 @@ public class ReportGeneration implements IR4EReport {
 	private final String fINSPECT_RECORD = "InspectionRecord";
 	private final String fNO_NAME = "NoNameYet";
 
-	private final String fREPORT_ITEM_END = "_items";
-	private final String fCOMMENTS_END = "_comments";
 	private final String fREVIEW_END = "_review";
 	private final String fGROUP_END = "_group_root";
 	private final String fEXTENSION = ".xrer";
@@ -119,8 +115,6 @@ public class ReportGeneration implements IR4EReport {
 	private final String fSOURCE_PREFIX = "Merged";
 	private final String fPROJECT_REPORT_DIR = "Reports";
 	private final String fPROJECT_WORKING_DIR = "r4e_work";
-	private final String fCOMMENT_FILE = fSOURCE_PREFIX + fCOMMENTS_END + fEXTENSION;
-	private final String fREPORT_ITEM_FILE = fSOURCE_PREFIX + fREPORT_ITEM_END + fEXTENSION;
 	private final String fGROUP_FILE = fSOURCE_PREFIX + fGROUP_END + fEXTENSION;
 	private final String fFILE_SEP = "_";
 	
@@ -155,8 +149,6 @@ public class ReportGeneration implements IR4EReport {
 	private String fDesignFileName = "globalReport.rptdesign"; //Default value
 
 	// Variable to test if the file to generate the report exist
-	private Boolean fITEM_FILE_CREATED = false;
-	private Boolean fANOMALY_FILE_CREATED = false;
 	private Boolean fPROPERTY_FILE_CREATED = false;
 	private Composite fCompositeParent = null;
 	
@@ -186,7 +178,6 @@ public class ReportGeneration implements IR4EReport {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-
 
 	/****************************************/
 	/*                                      */
@@ -400,7 +391,7 @@ public class ReportGeneration implements IR4EReport {
 						+ fReviewNameList[i].getAbsolutePath());
 			}			
 		} else {
-			//Display a popup when no review
+			//Display a pop-up when no review
 			String message = R4EReportString.getString("Popup.noReview" );
 			Popup.warningRunnable(null, message);
 		}
@@ -623,7 +614,7 @@ public class ReportGeneration implements IR4EReport {
 		engine.destroy();
 		// Clean the directory maintaining the data used for the report
 		// after the report is generated
-	//	cleanReportDirectory(workingDir);
+		cleanReportDirectory(workingDir);
 
 		// Pop-up the report file
 		if (displayReport) {
@@ -681,44 +672,6 @@ public class ReportGeneration implements IR4EReport {
 	/* necessary report file to generate */
 	/* a report */
 	/** ********************************** */
-	private Boolean isAllReportingFileCreated(ModuleHandle aReportDesignHandle,
-			File aWorkingDir) {
-
-		Boolean b = true;
-
-		Activator.FTracer.traceInfo("ReportGeneration.isAllReportingFileCreated() BEGIN");
-		if (!isItemFileCreated()) {
-			Activator.FTracer.traceInfo
-					("ReportGeneration.isAllReportingFileCreated() ITEM_FILE_CREATED not CREATED");
-			// Set the data source for the report
-			File f = new File(fREPORT_ITEM_FILE);
-			prepareDataSource(f,// No file created yet
-					aReportDesignHandle, aWorkingDir);
-		}
-		if (!isAnomalyFileCreated()) {
-			Activator.FTracer.traceInfo
-					("ReportGeneration.isAllReportingFileCreated() ANOMALY_FILE_CREATED not CREATED");
-			File f = new File(fCOMMENT_FILE);
-			// Set the data source for the report
-			prepareDataSource(f,// No file created yet
-					aReportDesignHandle, aWorkingDir);
-		}
-		if (!isPropertyFileCreated()) {
-			Activator.FTracer.traceInfo("ReportGeneration.isAllReportingFileCreated() "
-					+ "PROPERTY_FILE_CREATED NOT CREATED");
-			b = false;
-		}
-		return b;
-	}
-
-
-	private void setItemFileCreated(Boolean aBol) {
-		fITEM_FILE_CREATED = aBol;
-	}
-
-	private void setAnomalyFileCreated(Boolean aBol) {
-		fANOMALY_FILE_CREATED = aBol;
-	}
 
 	private void setPropertyFileCreated(Boolean aBol) {
 		fPROPERTY_FILE_CREATED = aBol;
@@ -726,21 +679,7 @@ public class ReportGeneration implements IR4EReport {
 
 	private void resetReportingFileCreated() {
 		// Only test those files, all others will always be available
-		setItemFileCreated(false);
-		setAnomalyFileCreated(false);
 		setPropertyFileCreated(false);
-	}
-
-	private Boolean isItemFileCreated() {
-		return fITEM_FILE_CREATED;
-	}
-
-	private Boolean isAnomalyFileCreated() {
-		return fANOMALY_FILE_CREATED;
-	}
-
-	private Boolean isPropertyFileCreated() {
-		return fPROPERTY_FILE_CREATED;
 	}
 
 	/**
@@ -827,13 +766,7 @@ public class ReportGeneration implements IR4EReport {
 		String name = sta[0];
 
 		// Verify the end of the file
-		if (name.endsWith(fCOMMENTS_END)) {
-			commentsSetup(aFile, aReportDesignHandle, aReportDir);
-
-		} else if (name.endsWith(fREPORT_ITEM_END)) {
-			reportItemSetup(aFile, aReportDesignHandle, aReportDir);
-			
-		} else if (name.endsWith(fGROUP_END)) {
+		if (name.endsWith(fGROUP_END)) {
 			// Lets save as well the group file since it is not under
 			// any review
 			groupSetup(aFile, aReportDesignHandle);
@@ -868,39 +801,6 @@ public class ReportGeneration implements IR4EReport {
 		return fReportName;
 	}
 
-
-	/**
-	 * Prepare the setup for the comments file
-	 * 
-	 * @param aFile
-	 * @param aReportDesignHandle
-	 * @param reportDir
-	 */
-	private void commentsSetup(File aFile, ModuleHandle aReportDesignHandle,
-			File reportDir) {
-
-		Activator.FTracer.traceInfo("ReportGeneration.commentsSetup() Anomaly file: "
-				+ aFile.getAbsolutePath());
-		setDataSourceFile(aFile, aReportDesignHandle, fCOMMENTS_DATA_SOURCE);
-		setAnomalyFileCreated(true);
-
-	}
-
-	/**
-	 * Prepare the setup for the review item
-	 * 
-	 * @param aFile
-	 * @param aReportDesignHandle
-	 * @param aReportDir
-	 */
-	private void reportItemSetup(File aFile, ModuleHandle aReportDesignHandle,
-			File aReportDir) {
-
-		Activator.FTracer.traceInfo("ReportGeneration.reportItemSetup() Report Item file: "
-				+ aFile.getAbsolutePath());
-		setDataSourceFile(aFile, aReportDesignHandle, fITEM_DATA_SOURCE);
-		setItemFileCreated(true);
-	}
 
 	/**
 	 * Prepare the setup for the review property file
@@ -1319,7 +1219,6 @@ public class ReportGeneration implements IR4EReport {
 		return EditorsUI.DEFAULT_TEXT_EDITOR_ID;
 	}
 
-	// ////////////////////////
 	/**
 	 * Prepare the R4E report
 	 * 
@@ -1414,25 +1313,12 @@ public class ReportGeneration implements IR4EReport {
 				}
 
 
-//				// Test if we have all data to set a new report object
-//				// Need to create at least one instance of the file
-//				Boolean b = isAllReportingFileCreated(reportDesignHandle,
-//						workingDir);
-//
-//				if (!b) {
-//					// There is no Property file in this case
-//					Popup.warningRunnable(null, R4EReportString.getFormattedString(
-//							"reportWarning.noPropertyFile",
-//							selectedReview[countReview].getName()));
-//				} else {
 					// Prepare the report output
 					// Decide here if we generate HTML or PDF format report
 					IRunAndRenderTask renderTask = prepareOutputFile(runnable,
 							engine, fOutputFormat);
 					// Execute the preparation of the report
 					renderTask.run();
-
-//				}
 
 				// Clean the directory maintaining the data used for the report
 				// after the report is generated
