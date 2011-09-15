@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IRWUserBasedRes;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IRWUserBasedRes.ResourceType;
@@ -50,6 +51,12 @@ public class R4EWriter extends RWCommon implements IModelWriter {
 		fresTypeToTag.put(ResourceType.USER_GROUP, IRWUserBasedRes.GROUP_UREVIEW_TAG);
 		fresTypeToTag.put(ResourceType.GROUP, IRWUserBasedRes.GROUP_ROOT_TAG);
 		fresTypeToTag.put(ResourceType.DRULE_SET, IRWUserBasedRes.DRULE_SET_TAG);
+		
+		//Save options
+		if (fOptions == null) {
+			fOptions = new HashMap<String, Object>();
+		}
+		fOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
 	}
 
 	/* (non-Javadoc)
