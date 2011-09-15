@@ -9491,7 +9491,7 @@ if ( (phase == "R4E_REVIEW_PHASE_PLANNING" || phase == "" || phase == null)  ) {
 phase = row["PhaseInfo::type"];&#13;
 &#13;
 if ( phase == "R4E_REVIEW_PHASE_DECISION" ) {&#13;
-	startDate = row["startDate"];&#13;
+	startDate = row["PhaseInfo::startDate"];&#13;
 	 endDate = row["endDate"];&#13;
  &#13;
  	if (startDate == null || startDate == "" ) {&#13;
@@ -9515,7 +9515,7 @@ if ( phase == "R4E_REVIEW_PHASE_DECISION" ) {&#13;
 phase = row["PhaseInfo::type"];&#13;
 &#13;
 if ( phase == "R4E_REVIEW_PHASE_REWORK" ) {&#13;
-	startDate = row["startDate"];&#13;
+	startDate = row["PhaseInfo::startDate"];&#13;
 	 endDate = row["endDate"];&#13;
  &#13;
  	if (startDate == null || startDate == "" ) {&#13;
@@ -9590,6 +9590,11 @@ if ( phase == "R4E_REVIEW_PHASE_COMPLETED" ) {&#13;
                     <property name="columnName">PhaseInfo::phaseOwnerID</property>
                     <property name="alias">phaseOwnerID</property>
                     <text-property name="displayName">PhaseInfo::phaseOwnerID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Reviews::ReviewType</property>
+                    <property name="alias">ReviewType</property>
+                    <text-property name="displayName">Reviews::ReviewType</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Reviews::href_1</property>
@@ -9786,71 +9791,76 @@ if ( phase == "R4E_REVIEW_PHASE_COMPLETED" ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">20</property>
-                        <property name="name">PhaseInfo::xmi:id</property>
+                        <property name="name">ReviewType</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">21</property>
-                        <property name="name">endDate</property>
+                        <property name="name">PhaseInfo::xmi:id</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">22</property>
-                        <property name="name">phaseOwnerID</property>
+                        <property name="name">endDate</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">23</property>
-                        <property name="name">PhaseInfo::startDate</property>
+                        <property name="name">phaseOwnerID</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">24</property>
-                        <property name="name">PhaseInfo::type</property>
+                        <property name="name">PhaseInfo::startDate</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">25</property>
-                        <property name="name">CurrentPhase</property>
+                        <property name="name">PhaseInfo::type</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">26</property>
-                        <property name="name">ReviewStart</property>
+                        <property name="name">CurrentPhase</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">27</property>
-                        <property name="name">ReviewCompletion</property>
+                        <property name="name">ReviewStart</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">28</property>
+                        <property name="name">ReviewCompletion</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">29</property>
                         <property name="name">PreparationPhase</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">29</property>
+                        <property name="position">30</property>
                         <property name="name">PlanningPhase</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">30</property>
+                        <property name="position">31</property>
                         <property name="name">DecisionPhase</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">31</property>
+                        <property name="position">32</property>
                         <property name="name">ReworkPhase</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">32</property>
+                        <property name="position">33</property>
                         <property name="name">ReviewCycleDays</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">33</property>
+                        <property name="position">34</property>
                         <property name="name">TestCycle</property>
                         <property name="dataType">string</property>
                     </structure>
