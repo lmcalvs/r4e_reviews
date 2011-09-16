@@ -40,7 +40,6 @@
       <import plugin="org.eclipse.ui" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.team.core" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.ecore.xmi" version="2.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jface.text" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.mylyn.reviews.frame.core" version="0.1.0" match="greaterOrEqual"/>
@@ -55,17 +54,14 @@
       <import plugin="org.eclipse.mylyn.reviews.frame.core" version="0.8.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.mylyn.commons.core" version="3.3.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.mylyn.reviews.VCalendar" version="0.8.0" match="greaterOrEqual"/>
+      <import plugin="javax.activation" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="javax.mail" version="1.4.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.forms"/>
-      <import plugin="org.eclipse.birt.report.engine"/>
-      <import plugin="org.eclipse.core.filesystem"/>
-      <import plugin="org.eclipse.mylyn.reviews.r4e.transform" version="0.9.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.reviews.r4e.core" version="0.9.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.reviews.r4e.core" version="0.8.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.emf.ecore" version="2.5.0" match="compatible"/>
       <import feature="org.eclipse.egit" version="1.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.mylyn.versions" version="0.9.0" match="greaterOrEqual"/>
-      <import plugin="javax.activation" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui" version="3.6.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide" version="3.6.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
@@ -118,20 +114,6 @@
 
    <plugin
          id="org.eclipse.mylyn.reviews.VCalendar"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.mylyn.reviews.r4e.report"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.mylyn.reviews.r4e.transform"
          download-size="0"
          install-size="0"
          version="0.0.0"
