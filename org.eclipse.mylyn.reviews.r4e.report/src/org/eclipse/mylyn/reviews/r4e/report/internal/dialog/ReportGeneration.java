@@ -934,6 +934,11 @@ public class ReportGeneration implements IR4EReport {
 						("ReportGeneration.cleanReportDirectory() Directory exists already.");
 				Boolean b;
 				for (File f : aReportDir.listFiles()) {
+					if (f.isDirectory()) {
+						for (File sub : f.listFiles()) {
+							b = sub.delete(); //Delete the review file first
+						}
+					}
 					b = f.delete();
 					Activator.FTracer.traceInfo
 							("ReportGeneration.cleanReportDirectory() Files to delete: "

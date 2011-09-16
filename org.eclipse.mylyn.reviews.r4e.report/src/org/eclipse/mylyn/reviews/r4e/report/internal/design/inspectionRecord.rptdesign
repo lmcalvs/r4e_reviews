@@ -9336,11 +9336,15 @@ if (ret != null ) {&#13;
  } else  if (ret == row["PhaseInfo::xmi:id"] ) {&#13;
  	//Look at the type register for this current phase&#13;
    	value = row["PhaseInfo::type"];&#13;
-   	//Strip down the pahse string by removing the beginning R4E_REVIEW_PHASE_&#13;
-   	ret = value.replace("R4E_REVIEW_PHASE_", "");&#13;
+   	if (value == null ) {&#13;
+		ret = "PLANNING"; //No entry so ity is PLANNING phase here&#13;
+	} else {&#13;
+		//Strip down the phase string by removing the beginning R4E_REVIEW_PHASE_&#13;
+		ret = value.replace("R4E_REVIEW_PHASE_", "");&#13;
+	}&#13;
    	&#13;
  } else {&#13;
- 	value = "JBJB: " + row["PhaseInfo::xmi:id"] ;&#13;
+ 	value = row["PhaseInfo::xmi:id"] ;&#13;
  }</expression>
                     <property name="dataType">string</property>
                 </structure>

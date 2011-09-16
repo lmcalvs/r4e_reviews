@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.21" id="1">
-    <property name="createdBy">Eclipse BIRT Designer Version 2.5.2.v20100208 Build &lt;2.5.2.v20100210-0630></property>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.22" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 2.6.2.r262_v20110209 Build &lt;2.6.2.v20110214-1523></property>
     <property name="units">in</property>
     <property name="iconFile">/templates/blank_report.gif</property>
     <property name="bidiLayoutOrientation">ltr</property>
@@ -8948,139 +8948,123 @@ if (ret != null ) {&#13;
                     <property name="name">xmi:id</property>
                     <property name="nativeName">xmi:id</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
                     <property name="name">name</property>
                     <property name="nativeName">name</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">3</property>
                     <property name="name">project</property>
                     <property name="nativeName">project</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">4</property>
                     <property name="name">entryCriteria</property>
                     <property name="nativeName">entryCriteria</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">5</property>
                     <property name="name">extraNotes</property>
                     <property name="nativeName">extraNotes</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">6</property>
                     <property name="name">objectives</property>
                     <property name="nativeName">objectives</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">7</property>
                     <property name="name">referenceMaterial</property>
                     <property name="nativeName">referenceMaterial</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">8</property>
                     <property name="name">startDate</property>
                     <property name="nativeName">startDate</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">9</property>
                     <property name="name">createdBy</property>
                     <property name="nativeName">createdBy</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">10</property>
                     <property name="name">xsi:type</property>
                     <property name="nativeName">xsi:type</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">11</property>
                     <property name="name">href</property>
                     <property name="nativeName">href</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">12</property>
                     <property name="name">components</property>
                     <property name="nativeName">components</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">13</property>
                     <property name="name">href_1</property>
                     <property name="nativeName">href_1</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">14</property>
                     <property name="name">href_2</property>
                     <property name="nativeName">href_2</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">15</property>
                     <property name="name">href_3</property>
                     <property name="nativeName">href_3</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">16</property>
                     <property name="name">type</property>
                     <property name="nativeName">type</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">17</property>
                     <property name="name">current</property>
                     <property name="nativeName">current</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">18</property>
                     <property name="name">href_4</property>
                     <property name="nativeName">href_4</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//ResTrans:ReviewRes]#:#{xmi:id;STRING;@xmi:id},{name;STRING;@name},{project;STRING;@project},{entryCriteria;STRING;@entryCriteria},{extraNotes;STRING;@extraNotes},{objectives;STRING;@objectives},{referenceMaterial;STRING;@referenceMaterial},{startDate;STRING;@startDate},{createdBy;STRING;@createdBy},{xsi:type;STRING;state/@xsi:type},{href;STRING;state/@href},{components;STRING;components},{href_1;STRING;decision/@href},{href_2;STRING;activeMeeting/@href},{href_3;STRING;usersRes/@href},{type;STRING;@type},{current;STRING;@current},{href_4;STRING;phases/@href}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
-  <Version>1.0</Version>
+  <Version>2.0</Version>
   <design:ResultSets derivedMetaData="true">
     <design:resultSetDefinitions>
       <design:resultSetColumns>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>xmi:id</design:name>
-            <design:position>1</design:position>
+            <design:identifier>
+              <design:name>xmi:id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9093,8 +9077,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>name</design:name>
-            <design:position>2</design:position>
+            <design:identifier>
+              <design:name>name</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9107,8 +9093,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>project</design:name>
-            <design:position>3</design:position>
+            <design:identifier>
+              <design:name>project</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9121,8 +9109,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>entryCriteria</design:name>
-            <design:position>4</design:position>
+            <design:identifier>
+              <design:name>entryCriteria</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9135,8 +9125,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>extraNotes</design:name>
-            <design:position>5</design:position>
+            <design:identifier>
+              <design:name>extraNotes</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9149,8 +9141,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>objectives</design:name>
-            <design:position>6</design:position>
+            <design:identifier>
+              <design:name>objectives</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9163,8 +9157,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>referenceMaterial</design:name>
-            <design:position>7</design:position>
+            <design:identifier>
+              <design:name>referenceMaterial</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9177,8 +9173,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>startDate</design:name>
-            <design:position>8</design:position>
+            <design:identifier>
+              <design:name>startDate</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9191,8 +9189,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>createdBy</design:name>
-            <design:position>9</design:position>
+            <design:identifier>
+              <design:name>createdBy</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9205,8 +9205,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>xsi:type</design:name>
-            <design:position>10</design:position>
+            <design:identifier>
+              <design:name>xsi:type</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9219,8 +9221,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>href</design:name>
-            <design:position>11</design:position>
+            <design:identifier>
+              <design:name>href</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9233,8 +9237,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>components</design:name>
-            <design:position>12</design:position>
+            <design:identifier>
+              <design:name>components</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9247,8 +9253,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>href_1</design:name>
-            <design:position>13</design:position>
+            <design:identifier>
+              <design:name>href_1</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9261,8 +9269,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>href_2</design:name>
-            <design:position>14</design:position>
+            <design:identifier>
+              <design:name>href_2</design:name>
+              <design:position>14</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9275,8 +9285,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>href_3</design:name>
-            <design:position>15</design:position>
+            <design:identifier>
+              <design:name>href_3</design:name>
+              <design:position>15</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9289,8 +9301,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>type</design:name>
-            <design:position>16</design:position>
+            <design:identifier>
+              <design:name>type</design:name>
+              <design:position>16</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9303,8 +9317,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>current</design:name>
-            <design:position>17</design:position>
+            <design:identifier>
+              <design:name>current</design:name>
+              <design:position>17</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9317,8 +9333,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>href_4</design:name>
-            <design:position>18</design:position>
+            <design:identifier>
+              <design:name>href_4</design:name>
+              <design:position>18</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -9350,7 +9368,7 @@ if (ret != null ) {&#13;
                     <property name="name">CurrentPhase</property>
                     <expression name="expression">//Find Current Phase&#13;
 &#13;
- ret = row["current"];&#13;
+ ret = row["Reviews::current"];&#13;
 &#13;
  //Loook in Phase Info to find the type&#13;
  &#13;
@@ -9359,8 +9377,15 @@ if (ret != null ) {&#13;
  } else  if (ret == row["PhaseInfo::xmi:id"] ) {&#13;
  	//Look at the type register for this current phase&#13;
    	value = row["PhaseInfo::type"];&#13;
-   	//Strip down the pahse string by removing the beginning R4E_REVIEW_PHASE_&#13;
-   	ret = value.replace("R4E_REVIEW_PHASE_", "");&#13;
+   	if (value == null ) {&#13;
+&#13;
+		ret = "PLANNING"; //No entry so ity is PLANNING phase here&#13;
+&#13;
+	} else {&#13;
+		//Strip down the phase string by removing the beginning R4E_REVIEW_PHASE_&#13;
+		ret = value.replace("R4E_REVIEW_PHASE_", "");&#13;
+&#13;
+	}&#13;
    	&#13;
  } else {&#13;
  	value = "JBJB: " + row["PhaseInfo::xmi:id"] ;&#13;
@@ -9701,32 +9726,32 @@ if ( phase == "R4E_REVIEW_PHASE_COMPLETED" ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">name</property>
+                        <property name="name">Reviews::name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">3</property>
-                        <property name="name">project</property>
+                        <property name="name">Reviews::project</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">4</property>
-                        <property name="name">entryCriteria</property>
+                        <property name="name">Reviews::entryCriteria</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">5</property>
-                        <property name="name">extraNotes</property>
+                        <property name="name">Reviews::extraNotes</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">6</property>
-                        <property name="name">objectives</property>
+                        <property name="name">Reviews::objectives</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">7</property>
-                        <property name="name">referenceMaterial</property>
+                        <property name="name">Reviews::referenceMaterial</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -9736,37 +9761,37 @@ if ( phase == "R4E_REVIEW_PHASE_COMPLETED" ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">9</property>
-                        <property name="name">createdBy</property>
+                        <property name="name">Reviews::createdBy</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">10</property>
-                        <property name="name">xsi:type</property>
+                        <property name="name">Reviews::xsi:type</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">11</property>
-                        <property name="name">href</property>
+                        <property name="name">Reviews::href</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">12</property>
-                        <property name="name">components</property>
+                        <property name="name">Reviews::components</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">13</property>
-                        <property name="name">href_1</property>
+                        <property name="name">Reviews::href_1</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">14</property>
-                        <property name="name">href_2</property>
+                        <property name="name">Reviews::href_2</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">15</property>
-                        <property name="name">href_3</property>
+                        <property name="name">Reviews::href_3</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -9776,22 +9801,22 @@ if ( phase == "R4E_REVIEW_PHASE_COMPLETED" ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">17</property>
-                        <property name="name">current</property>
+                        <property name="name">Reviews::current</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">18</property>
-                        <property name="name">href_4</property>
+                        <property name="name">Reviews::href_4</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">19</property>
-                        <property name="name">CountRevi</property>
+                        <property name="name">Reviews::CountRevi</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">20</property>
-                        <property name="name">ReviewType</property>
+                        <property name="name">Reviews::ReviewType</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -9801,12 +9826,12 @@ if ( phase == "R4E_REVIEW_PHASE_COMPLETED" ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">22</property>
-                        <property name="name">endDate</property>
+                        <property name="name">PhaseInfo::endDate</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">23</property>
-                        <property name="name">phaseOwnerID</property>
+                        <property name="name">PhaseInfo::phaseOwnerID</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -10570,10 +10595,10 @@ if ( ret != null ) {&#13;
                     <expression name="expression">//Find Current Phase&#13;
 &#13;
 &#13;
-ret = row["current"];&#13;
+ret = row["Join Group-Review::Reviews::current"];&#13;
 &#13;
 &#13;
-//Loook in Phase Info to find the type&#13;
+//Look in Phase Info to find the type&#13;
 &#13;
 &#13;
 if (ret == null || ret == "" ) {&#13;
@@ -10586,9 +10611,13 @@ value = "N/A";&#13;
 &#13;
 value = row["PhaseInfo::type"];&#13;
 &#13;
-//Strip down the pahse string by removing the beginning R4E_REVIEW_PHASE_&#13;
+  if (value == null ) {&#13;
+  		ret = "PLANNING";  //No entry so ity is PLANNING phase here&#13;
+   } else {&#13;
+		//Strip down the phase string by removing the beginning R4E_REVIEW_PHASE_&#13;
 &#13;
-ret = value.replace("R4E_REVIEW_PHASE_", "");&#13;
+		ret = value.replace("R4E_REVIEW_PHASE_", "");&#13;
+   }&#13;
 &#13;
 }</expression>
                     <property name="dataType">string</property>
@@ -10755,147 +10784,147 @@ ret = value.replace("R4E_REVIEW_PHASE_", "");&#13;
                 <list-property name="resultSet">
                     <structure>
                         <property name="position">1</property>
-                        <property name="name">xmi:version</property>
+                        <property name="name">Join Group-Review::Group::xmi:version</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">Group::xmi:id</property>
+                        <property name="name">Join Group-Review::Group::xmi:id</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">3</property>
-                        <property name="name">Group::name</property>
+                        <property name="name">Join Group-Review::Group::name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">4</property>
-                        <property name="name">filesPrefix</property>
+                        <property name="name">Join Group-Review::Group::filesPrefix</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">5</property>
-                        <property name="name">Group::href</property>
+                        <property name="name">Join Group-Review::Group::href</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">6</property>
-                        <property name="name">GetReviewXmi</property>
+                        <property name="name">Join Group-Review::Group::GetReviewXmi</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">7</property>
-                        <property name="name">Reviews::xmi:id</property>
+                        <property name="name">Join Group-Review::Reviews::xmi:id</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">8</property>
-                        <property name="name">Reviews::name</property>
+                        <property name="name">Join Group-Review::Reviews::name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">9</property>
-                        <property name="name">project</property>
+                        <property name="name">Join Group-Review::Reviews::project</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">10</property>
-                        <property name="name">entryCriteria</property>
+                        <property name="name">Join Group-Review::Reviews::entryCriteria</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">11</property>
-                        <property name="name">extraNotes</property>
+                        <property name="name">Join Group-Review::Reviews::extraNotes</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">12</property>
-                        <property name="name">objectives</property>
+                        <property name="name">Join Group-Review::Reviews::objectives</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">13</property>
-                        <property name="name">referenceMaterial</property>
+                        <property name="name">Join Group-Review::Reviews::referenceMaterial</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">14</property>
-                        <property name="name">Join Group-Review::startDate</property>
+                        <property name="name">Join Group-Review::Reviews::startDate</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">15</property>
-                        <property name="name">createdBy</property>
+                        <property name="name">Join Group-Review::Reviews::createdBy</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">16</property>
-                        <property name="name">xsi:type</property>
+                        <property name="name">Join Group-Review::Reviews::xsi:type</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">17</property>
-                        <property name="name">Reviews::href</property>
+                        <property name="name">Join Group-Review::Reviews::href</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">18</property>
-                        <property name="name">components</property>
+                        <property name="name">Join Group-Review::Reviews::components</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">19</property>
-                        <property name="name">href_1</property>
+                        <property name="name">Join Group-Review::Reviews::href_1</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">20</property>
-                        <property name="name">href_2</property>
+                        <property name="name">Join Group-Review::Reviews::href_2</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">21</property>
-                        <property name="name">href_3</property>
+                        <property name="name">Join Group-Review::Reviews::href_3</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">22</property>
-                        <property name="name">Join Group-Review::type</property>
+                        <property name="name">Join Group-Review::Reviews::type</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">23</property>
-                        <property name="name">current</property>
+                        <property name="name">Join Group-Review::Reviews::current</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">24</property>
-                        <property name="name">href_4</property>
+                        <property name="name">Join Group-Review::Reviews::href_4</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">25</property>
-                        <property name="name">CountRevi</property>
+                        <property name="name">Join Group-Review::Reviews::CountRevi</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">26</property>
-                        <property name="name">ReviewType</property>
+                        <property name="name">Join Group-Review::Reviews::ReviewType</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">27</property>
-                        <property name="name">xmi:id</property>
+                        <property name="name">PhaseInfo::xmi:id</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">28</property>
-                        <property name="name">endDate</property>
+                        <property name="name">PhaseInfo::endDate</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">29</property>
-                        <property name="name">phaseOwnerID</property>
+                        <property name="name">PhaseInfo::phaseOwnerID</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
