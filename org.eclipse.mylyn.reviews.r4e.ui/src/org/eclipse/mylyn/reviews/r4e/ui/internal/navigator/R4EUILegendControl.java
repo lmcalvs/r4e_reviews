@@ -233,7 +233,7 @@ public class R4EUILegendControl extends Composite {
 		section.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
 
 		final TableWrapLayout layout = new TableWrapLayout();
-		layout.numColumns = 2;
+		layout.numColumns = 4;
 		layout.makeColumnsEqualWidth = false;
 		layout.verticalSpacing = 1;
 		layout.topMargin = 1;
