@@ -34,6 +34,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
@@ -65,6 +66,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -294,11 +296,15 @@ public class MailServicesProxy {
 	 */
 	public static void sendMessage(String[] aDestinations, String aSubject, String aBody) throws CoreException,
 			ResourceHandlingException {
-		final R4EParticipant user = R4EUIModelController.getActiveReview().getParticipant(R4EUIModelController.getReviewer(),
-				false);
-		final String originatorEmail = null;
+		final R4EParticipant user = R4EUIModelController.getActiveReview().getParticipant(
+				R4EUIModelController.getReviewer(), false);
+		String originatorEmail = null;
 		if (null != user) {
-			user.getEmail();
+			originatorEmail = user.getEmail();
+		} else {
+			//If current user is not part of the review, get email from preferences
+			final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
+			originatorEmail = store.getString(PreferenceConstants.P_USER_EMAIL);
 		}
 		R4EUIModelController.getMailConnector().sendEmailGraphical(originatorEmail, aDestinations, aSubject, aBody,
 				null, null);

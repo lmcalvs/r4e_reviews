@@ -20,6 +20,8 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -37,6 +39,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.ToolTip;
+import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -58,9 +61,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -152,14 +158,34 @@ public class AnomalyInputDialog extends FormDialog {
 	protected Text fAnomalyDescriptionInputTextField;
 
 	/**
+	 * Field fAnomalyClassValue.
+	 */
+	private R4EDesignRuleClass fAnomalyClassValue = null;
+
+	/**
 	 * Field fAnomalyClass.
 	 */
 	protected CCombo fAnomalyClass = null;
 
 	/**
+	 * Field fAnomalyRankValue.
+	 */
+	private R4EDesignRuleRank fAnomalyRankValue = null;
+
+	/**
 	 * Field fAnomalyRank.
 	 */
 	protected CCombo fAnomalyRank = null;
+
+	/**
+	 * Field fDateText.
+	 */
+	protected Text fDateText = null;
+
+	/**
+	 * Field fAnomalyDueDateValue.
+	 */
+	private Date fAnomalyDueDateValue = null;
 
 	/**
 	 * Field fRuleTreeViewer.
@@ -242,10 +268,16 @@ public class AnomalyInputDialog extends FormDialog {
 					fRuleReferenceValue = (R4EUIRule) selection.getFirstElement();
 				}
 			}
+
+			fAnomalyRankValue = UIUtils.getRankFromString(fAnomalyRank.getText());
+			fAnomalyClassValue = UIUtils.getClassFromString(fAnomalyClass.getText());
 		} else {
 			fAnomalyTitleValue = null;
 			fAnomalyDescriptionValue = null;
 			fRuleReferenceValue = null;
+			fAnomalyRankValue = null;
+			fAnomalyClassValue = null;
+			fAnomalyDueDateValue = null;
 		}
 		R4EUIModelController.setJobInProgress(false); //Do this here to refresh the view properly
 		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -388,6 +420,44 @@ public class AnomalyInputDialog extends FormDialog {
 		textGridData.horizontalSpan = 3;
 		fAnomalyRank.setToolTipText(R4EUIConstants.ANOMALY_CLASS_TOOLTIP);
 		fAnomalyRank.setLayoutData(textGridData);
+
+		//Due Date
+		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.DUE_DATE_LABEL);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		textGridData.horizontalSpan = 1;
+		label.setLayoutData(textGridData);
+
+		final Composite dateComposite = toolkit.createComposite(extraSectionClient);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		textGridData.horizontalSpan = 3;
+		dateComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
+		dateComposite.setLayoutData(textGridData);
+		dateComposite.setLayout(new GridLayout(2, false));
+
+		fDateText = toolkit.createText(dateComposite, "", SWT.READ_ONLY);
+		fDateText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		fDateText.setEditable(false);
+
+		Button calendarButton = toolkit.createButton(dateComposite, "...", SWT.NONE);
+		calendarButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		calendarButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				final CalendarDialog dialog = new CalendarDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
+						getSite()
+						.getWorkbenchWindow()
+						.getShell(), false);
+				final int result = dialog.open();
+				if (result == Window.OK) {
+					final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
+					fDateText.setText(dateFormat.format(dialog.getDate()));
+					fAnomalyDueDateValue = dialog.getDate();
+				}
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
+				// No implementation needed
+			}
+		});
 
 		//Rule Tree
 		label = toolkit.createLabel(extraSectionClient, ADD_RULE_DIALOG_VALUE);
@@ -749,6 +819,15 @@ public class AnomalyInputDialog extends FormDialog {
 	}
 
 	/**
+	 * Method getClass_.
+	 * 
+	 * @return R4EDesignRuleClass
+	 */
+	public R4EDesignRuleClass getClass_() {
+		return fAnomalyClassValue;
+	}
+
+	/**
 	 * Method getRankStr.
 	 * 
 	 * @param aRank
@@ -765,6 +844,24 @@ public class AnomalyInputDialog extends FormDialog {
 		} else {
 			return null; //should never happen
 		}
+	}
+
+	/**
+	 * Method getRank.
+	 * 
+	 * @return R4EDesignRuleRank
+	 */
+	public R4EDesignRuleRank getRank() {
+		return fAnomalyRankValue;
+	}
+
+	/**
+	 * Method getDueDate.
+	 * 
+	 * @return Date
+	 */
+	public Date getDueDate() {
+		return fAnomalyDueDateValue;
 	}
 
 	/**

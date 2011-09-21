@@ -1451,6 +1451,13 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				fPreparationPhaseOwnerCombo.setVisible(false);
 				fDecisionPhaseOwnerCombo.setVisible(false);
 				fReworkPhaseOwnerCombo.setVisible(false);
+				if (((R4EUIReviewBasic) fProperties.getElement()).getReview()
+						.getType()
+						.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+					fDecisionSection.setVisible(false);
+				} else {
+					fDecisionSection.setVisible(true);
+				}
 			}
 		}
 	}

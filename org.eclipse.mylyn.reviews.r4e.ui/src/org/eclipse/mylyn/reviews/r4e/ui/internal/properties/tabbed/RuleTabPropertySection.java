@@ -36,6 +36,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -63,7 +64,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field fDescriptionText.
 	 */
-	protected CLabel fDescriptionText = null;
+	protected Text fDescriptionText = null;
 
 	/**
 	 * Field fClassCombo.
@@ -174,7 +175,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		titleLabel.setLayoutData(data);
 
 		//Description
-		fDescriptionText = widgetFactory.createCLabel(composite, "", SWT.BORDER);
+		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -202,6 +203,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 				//Nothing to do
 			}
 		});
+		UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
 
 		final CLabel descriptionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DESCRIPTION_LABEL);
 		data = new FormData();

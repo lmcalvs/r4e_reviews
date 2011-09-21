@@ -17,9 +17,12 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
@@ -90,11 +93,57 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 			ANOMALY_DESCRIPTION_ID, R4EUIConstants.DESCRIPTION_LABEL);
 
 	/**
+	 * Field ANOMALY_DUE_DATE_ID. (value is ""anomalyElement.dueDate"")
+	 */
+	private static final String ANOMALY_DUE_DATE_ID = "anomalyElement.dueDate";
+
+	/**
+	 * Field ANOMALY_DUE_DATE_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor ANOMALY_DUE_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			ANOMALY_DUE_DATE_ID, R4EUIConstants.DUE_DATE_LABEL);
+
+	/**
+	 * Field ANOMALY_CLASS_ID. (value is ""anomalyElement.class"")
+	 */
+	private static final String ANOMALY_CLASS_ID = "anomalyElement.class";
+
+	/**
+	 * Field ANOMALY_CLASS_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final ComboBoxPropertyDescriptor ANOMALY_CLASS_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
+			ANOMALY_CLASS_ID, R4EUIConstants.CLASS_LABEL, UIUtils.getClasses());
+
+	/**
+	 * Field ANOMALY_RANK_ID. (value is ""anomalyElement.rank"")
+	 */
+	private static final String ANOMALY_RANK_ID = "anomalyElement.rank";
+
+	/**
+	 * Field ANOMALY_RANK_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final ComboBoxPropertyDescriptor ANOMALY_RANK_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
+			ANOMALY_RANK_ID, R4EUIConstants.RANK_LABEL, UIUtils.getRanks());
+
+	/**
+	 * Field ANOMALY_RULE_ID_ID. (value is ""anomalyElement.ruleId"")
+	 */
+	private static final String ANOMALY_RULE_ID_ID = "anomalyElement.ruleId";
+
+	/**
+	 * Field ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			ANOMALY_RULE_ID_ID, R4EUIConstants.RULE_ID_LABEL);
+
+	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { ANOMALY_TITLE_PROPERTY_DESCRIPTOR,
 			ANOMALY_POSITION_PROPERTY_DESCRIPTOR, ANOMALY_AUTHOR_PROPERTY_DESCRIPTOR,
-			ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR, ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR };
+			ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR, ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR,
+			ANOMALY_DUE_DATE_PROPERTY_DESCRIPTOR, ANOMALY_CLASS_PROPERTY_DESCRIPTOR, ANOMALY_RANK_PROPERTY_DESCRIPTOR,
+			ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR };
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -148,6 +197,19 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getCreatedOn().toString();
 		} else if (ANOMALY_DESCRIPTION_ID.equals(aId)) {
 			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getDescription();
+		} else if (ANOMALY_DUE_DATE_ID.equals(aId)) {
+			if (null != ((R4EUIAnomalyBasic) getElement()).getAnomaly().getDueDate()) {
+				return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getDueDate().toString();
+			}
+		} else if (ANOMALY_CLASS_ID.equals(aId)) {
+			final R4ECommentType type = (R4ECommentType) ((R4EUIAnomalyBasic) getElement()).getAnomaly().getType();
+			if (null != type) {
+				return Integer.valueOf(type.getType().getValue());
+			}
+		} else if (ANOMALY_RANK_ID.equals(aId)) {
+			return Integer.valueOf(((R4EUIAnomalyBasic) getElement()).getAnomaly().getRank().getValue());
+		} else if (ANOMALY_RULE_ID_ID.equals(aId)) {
+			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getRuleID();
 		}
 		return null;
 	}

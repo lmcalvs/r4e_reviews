@@ -16,11 +16,9 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general;
 
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -45,50 +43,6 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	 */
 	protected static final ComboBoxPropertyDescriptor ANOMALY_STATE_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
 			ANOMALY_STATE_ID, R4EUIConstants.STATE_LABEL, R4EUIAnomalyExtended.getStates());
-
-	/**
-	 * Field ANOMALY_DUE_DATE_ID. (value is ""anomalyElement.dueDate"")
-	 */
-	private static final String ANOMALY_DUE_DATE_ID = "anomalyElement.dueDate";
-
-	/**
-	 * Field ANOMALY_DUE_DATE_PROPERTY_DESCRIPTOR.
-	 */
-	protected static final PropertyDescriptor ANOMALY_DUE_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			ANOMALY_DUE_DATE_ID, R4EUIConstants.DUE_DATE_LABEL);
-
-	/**
-	 * Field ANOMALY_CLASS_ID. (value is ""anomalyElement.class"")
-	 */
-	private static final String ANOMALY_CLASS_ID = "anomalyElement.class";
-
-	/**
-	 * Field ANOMALY_CLASS_PROPERTY_DESCRIPTOR.
-	 */
-	protected static final ComboBoxPropertyDescriptor ANOMALY_CLASS_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_CLASS_ID, R4EUIConstants.CLASS_LABEL, UIUtils.getClasses());
-
-	/**
-	 * Field ANOMALY_RANK_ID. (value is ""anomalyElement.rank"")
-	 */
-	private static final String ANOMALY_RANK_ID = "anomalyElement.rank";
-
-	/**
-	 * Field ANOMALY_RANK_PROPERTY_DESCRIPTOR.
-	 */
-	protected static final ComboBoxPropertyDescriptor ANOMALY_RANK_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_RANK_ID, R4EUIConstants.RANK_LABEL, UIUtils.getRanks());
-
-	/**
-	 * Field ANOMALY_RULE_ID_ID. (value is ""anomalyElement.ruleId"")
-	 */
-	private static final String ANOMALY_RULE_ID_ID = "anomalyElement.ruleId";
-
-	/**
-	 * Field ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR.
-	 */
-	protected static final PropertyDescriptor ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			ANOMALY_RULE_ID_ID, R4EUIConstants.RULE_ID_LABEL);
 
 	/**
 	 * Field ANOMALY_NOT_ACCEPTED_REASON_ID. (value is ""anomalyElement.notAcceptedReason"")
@@ -190,19 +144,6 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 		}
 		if (ANOMALY_STATE_ID.equals(aId)) {
 			return Integer.valueOf(((R4EUIAnomalyExtended) getElement()).getAnomaly().getState().getValue());
-		} else if (ANOMALY_DUE_DATE_ID.equals(aId)) {
-			if (null != ((R4EUIAnomalyExtended) getElement()).getAnomaly().getDueDate()) {
-				return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getDueDate().toString();
-			}
-		} else if (ANOMALY_CLASS_ID.equals(aId)) {
-			final R4ECommentType type = (R4ECommentType) ((R4EUIAnomalyExtended) getElement()).getAnomaly().getType();
-			if (null != type) {
-				return Integer.valueOf(type.getType().getValue());
-			}
-		} else if (ANOMALY_RANK_ID.equals(aId)) {
-			return Integer.valueOf(((R4EUIAnomalyExtended) getElement()).getAnomaly().getRank().getValue());
-		} else if (ANOMALY_RULE_ID_ID.equals(aId)) {
-			return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getRuleID();
 		} else if (ANOMALY_NOT_ACCEPTED_REASON_ID.equals(aId)) {
 			if (null != ((R4EUIAnomalyExtended) getElement()).getAnomaly().getNotAcceptedReason()) {
 				return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getNotAcceptedReason();

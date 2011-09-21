@@ -166,7 +166,13 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				tempAnomaly.setType(tempCommentType);
 				tempAnomaly.setRank(rule.getRank());
 				tempAnomaly.setRuleID(rule.getId());
+			} else {
+				tempCommentType.setType(dialog.getClass_());
+				tempAnomaly.setType(tempCommentType);
+				tempAnomaly.setRank(dialog.getRank());
 			}
+			tempAnomaly.setDueDate(dialog.getDueDate());
+
 		} else if (result != Window.CANCEL) {
 			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
@@ -369,8 +375,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
 			OutOfSyncException {
 		final String user = R4EUIModelController.getReviewer();
-		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(((R4EUIReviewBasic) getParent()).getParticipant(
-				user, true));
+		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(R4EUIModelController.getActiveReview()
+				.getParticipant(user, true));
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, R4EUIModelController.getReviewer());
 		anomaly.setTitle(((R4EAnomaly) aModelComponent).getTitle()); //This is needed as the global anomaly title is displayed in the navigator view
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);

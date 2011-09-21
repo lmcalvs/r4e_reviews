@@ -582,13 +582,15 @@ public class FindUserDialog extends FormDialog {
 				if (fUsersTableViewer.getSelection() instanceof IStructuredSelection) {
 					final IStructuredSelection selection = (IStructuredSelection) fUsersTableViewer.getSelection();
 					final IUserInfo userInfo = (IUserInfo) selection.getFirstElement();
-					fUserIdInputTextField.setText(userInfo.getUserId());
-					fUserNameInputTextField.setText(userInfo.getName());
-					fUserOfficeInputTextField.setText(userInfo.getOffice());
-					fUserCompanyInputTextField.setText(userInfo.getCompany());
-					fUserDepartmentInputTextField.setText(userInfo.getDepartment());
-					fUserCityInputTextField.setText(userInfo.getCity());
-					fUserCountryInputTextField.setText(userInfo.getCountry());
+					if (null != userInfo) {
+						fUserIdInputTextField.setText(userInfo.getUserId());
+						fUserNameInputTextField.setText(userInfo.getName());
+						fUserOfficeInputTextField.setText(userInfo.getOffice());
+						fUserCompanyInputTextField.setText(userInfo.getCompany());
+						fUserDepartmentInputTextField.setText(userInfo.getDepartment());
+						fUserCityInputTextField.setText(userInfo.getCity());
+						fUserCountryInputTextField.setText(userInfo.getCountry());
+					}
 				}
 			}
 		});

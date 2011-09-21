@@ -20,11 +20,9 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -169,27 +167,6 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 			return new AnomalyExtraProperties(this);
 		}
 		return null;
-	}
-
-	/**
-	 * Set serialization model data by copying it from the passed-in object
-	 * 
-	 * @param aModelComponent
-	 *            - a serialization model element to copy information from
-	 * @throws ResourceHandlingException
-	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
-	 */
-	@Override
-	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
-
-		//Set data in model element
-		super.setModelData(aModelComponent);
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly,
-				R4EUIModelController.getReviewer());
-		fAnomaly.setType(((R4EAnomaly) aModelComponent).getType());
-		fAnomaly.setRank(((R4EAnomaly) aModelComponent).getRank());
-		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
 
 	/**

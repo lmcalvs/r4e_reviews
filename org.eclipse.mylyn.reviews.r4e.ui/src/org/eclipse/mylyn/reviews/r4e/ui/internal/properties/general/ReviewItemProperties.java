@@ -17,6 +17,11 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -149,7 +154,24 @@ public class ReviewItemProperties extends ModelElementProperties {
 		if (REVIEW_ITEM_AUTHOR_ID.equals(aId)) {
 			return ((R4EUIReviewItem) getElement()).getItem().getAddedById();
 		} else if (REVIEW_ITEM_AUTHOR_REP_ID.equals(aId)) {
-			return ((R4EUIReviewItem) getElement()).getItem().getAuthorRep();
+			R4EItem modelItem = ((R4EUIReviewItem) getElement()).getItem();
+			if (null != modelItem.getAuthorRep()) {
+				return modelItem.getAuthorRep();
+			} else {
+				try {
+					final R4EParticipant participant = R4EUIModelController.getActiveReview().getParticipant(
+							modelItem.getAddedById(), false);
+					if (null != participant) {
+						return participant.getEmail();
+					} else {
+						return "";
+					}
+				} catch (ResourceHandlingException e) {
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+					return "";
+				}
+			}
+
 		} else if (REVIEW_ITEM_PROJECT_ID.equals(aId)) {
 			return ((R4EUIReviewItem) getElement()).getItem().getProjectURIs();
 		} else if (REVIEW_ITEM_CHANGE_ID.equals(aId)) {

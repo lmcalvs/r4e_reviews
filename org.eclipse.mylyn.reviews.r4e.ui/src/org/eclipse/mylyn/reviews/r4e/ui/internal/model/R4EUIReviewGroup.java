@@ -243,6 +243,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		fGroup.getAvailableProjects().addAll(((R4EReviewGroup) aModelComponent).getAvailableProjects());
 		fGroup.getAvailableComponents().addAll(((R4EReviewGroup) aModelComponent).getAvailableComponents());
 		fGroup.setDefaultEntryCriteria(((R4EReviewGroup) aModelComponent).getDefaultEntryCriteria());
+		fGroup.getDesignRuleLocations().addAll(((R4EReviewGroup) aModelComponent).getDesignRuleLocations());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
 
