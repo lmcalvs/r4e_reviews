@@ -72,6 +72,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -257,21 +258,23 @@ public class UIUtils {
 					aText.getParent().layout();
 
 					//Set scrollable height so that scrollbar appear if needed
-					final ScrolledComposite scrolledParent = (ScrolledComposite) aText.getParent()
-							.getParent()
-							.getParent()
-							.getParent()
-							.getParent()
-							.getParent();
-					scrolledParent.setMinSize(aText.getParent().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+					Composite scrolledParent = aText.getParent();
+					while (!(scrolledParent instanceof ScrolledComposite)) {
+						scrolledParent = scrolledParent.getParent();
+						if (null == scrolledParent) {
+							return;
+						}
+					}
+					((ScrolledComposite) scrolledParent).setMinSize(aText.getParent().computeSize(SWT.DEFAULT,
+							SWT.DEFAULT));
 
 					//If the text falls outside of the display scroll down to reposition
 					if ((aText.getLocation().y + aText.getCaretLocation().y + aText.getLineHeight()) > (scrolledParent.getClientArea().y + scrolledParent.getClientArea().height)) {
 
-						final Point origin = scrolledParent.getOrigin();
+						final Point origin = ((ScrolledComposite) scrolledParent).getOrigin();
 						origin.y += heightDiff;
 
-						scrolledParent.setOrigin(origin);
+						((ScrolledComposite) scrolledParent).setOrigin(origin);
 					}
 				}
 			}

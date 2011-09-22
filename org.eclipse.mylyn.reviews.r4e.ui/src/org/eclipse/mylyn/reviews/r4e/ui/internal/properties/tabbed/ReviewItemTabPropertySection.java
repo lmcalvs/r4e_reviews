@@ -91,6 +91,17 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Method shouldUseExtraSpace.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.ui.views.properties.tabbed.ISection#shouldUseExtraSpace()
+	 */
+	@Override
+	public boolean shouldUseExtraSpace() {
+		return true;
+	}
+
+	/**
 	 * Method createControls.
 	 * 
 	 * @param parent
@@ -194,7 +205,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		dateSubmittedLabel.setLayoutData(data);
 
 		//Description
-		fDescriptionText = widgetFactory.createText(composite, "", SWT.BORDER);
+		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

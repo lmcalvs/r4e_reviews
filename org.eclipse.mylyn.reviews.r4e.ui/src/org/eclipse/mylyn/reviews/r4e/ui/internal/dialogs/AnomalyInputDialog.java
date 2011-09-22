@@ -434,7 +434,7 @@ public class AnomalyInputDialog extends FormDialog {
 		dateComposite.setLayoutData(textGridData);
 		dateComposite.setLayout(new GridLayout(2, false));
 
-		fDateText = toolkit.createText(dateComposite, "", SWT.READ_ONLY);
+		fDateText = toolkit.createText(dateComposite, "", SWT.BORDER | SWT.READ_ONLY);
 		fDateText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 		fDateText.setEditable(false);
 
