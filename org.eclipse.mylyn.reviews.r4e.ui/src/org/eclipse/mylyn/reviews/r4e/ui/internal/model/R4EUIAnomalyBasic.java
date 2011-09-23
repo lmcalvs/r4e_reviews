@@ -217,6 +217,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		fAnomaly.setType(((R4EAnomaly) aModelComponent).getType());
 		fAnomaly.setRank(((R4EAnomaly) aModelComponent).getRank());
 		fAnomaly.setDueDate(((R4EAnomaly) aModelComponent).getDueDate());
+		fAnomaly.setRule(((R4EAnomaly) aModelComponent).getRule());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		setToolTip(buildAnomalyToolTip(fAnomaly)); //Also set UI tooltip immediately
 	}

@@ -819,6 +819,18 @@ public class AnomalyInputDialog extends FormDialog {
 	}
 
 	/**
+	 * Method setClass_.
+	 * 
+	 * @param R4EDesignRuleClass
+	 */
+	public void setClass_(R4EDesignRuleClass aClass) {
+		fAnomalyClassValue = aClass;
+		if (null != fAnomalyClassValue) {
+			fAnomalyClass.setText(getClassStr(fAnomalyClassValue));
+		}
+	}
+
+	/**
 	 * Method getClass_.
 	 * 
 	 * @return R4EDesignRuleClass
@@ -847,12 +859,37 @@ public class AnomalyInputDialog extends FormDialog {
 	}
 
 	/**
+	 * Method setRank.
+	 * 
+	 * @param R4EDesignRuleRank
+	 */
+	public void setRank(R4EDesignRuleRank aRank) {
+		fAnomalyRankValue = aRank;
+		if (null != fAnomalyRankValue) {
+			fAnomalyRank.setText(getRankStr(fAnomalyRankValue));
+		}
+	}
+
+	/**
 	 * Method getRank.
 	 * 
 	 * @return R4EDesignRuleRank
 	 */
 	public R4EDesignRuleRank getRank() {
 		return fAnomalyRankValue;
+	}
+
+	/**
+	 * Method setDueDate.
+	 * 
+	 * @param Date
+	 */
+	public void setDueDate(Date aDate) {
+		fAnomalyDueDateValue = aDate;
+		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
+		if (null != fAnomalyDueDateValue) {
+			fDateText.setText(dateFormat.format(fAnomalyDueDateValue));
+		}
 	}
 
 	/**

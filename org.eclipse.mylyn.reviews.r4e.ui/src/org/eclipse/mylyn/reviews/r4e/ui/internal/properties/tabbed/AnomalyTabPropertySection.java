@@ -555,50 +555,61 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				dialog.create();
 				dialog.setTitle(modelAnomaly.getTitle());
 				dialog.setDescription(modelAnomaly.getDescription());
+				dialog.setDueDate(modelAnomaly.getDueDate());
+				if (null != modelAnomaly.getType()) {
+					dialog.setClass_(((R4ECommentType) modelAnomaly.getType()).getType());
+				}
+				dialog.setRank(modelAnomaly.getRank());
 				final int result = dialog.open();
 				if (result == Window.OK) {
-					if (null != dialog.getRuleReferenceValue()) {
-						if (!fRefreshInProgress) {
-							try {
-								//Set new model data
-								final String currentUser = R4EUIModelController.getReviewer();
-								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
-										currentUser);
+					if (!fRefreshInProgress) {
+						try {
+							//Set new model data
+							final String currentUser = R4EUIModelController.getReviewer();
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
+									currentUser);
+							modelAnomaly.setTitle(dialog.getAnomalyTitleValue());
+							modelAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
+							modelAnomaly.setDueDate(dialog.getDueDate());
+							if (null != dialog.getRuleReferenceValue()) {
 								final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
-								modelAnomaly.setTitle(dialog.getAnomalyTitleValue());
-								modelAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
 								final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
 								commentType.setType(rule.getClass_());
 								modelAnomaly.setType(commentType);
 								modelAnomaly.setRank(rule.getRank());
 								modelAnomaly.setRuleID(rule.getId());
-								R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-								//Set new UI display
-								if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
-									fProperties.getElement().setName(
-											R4EUIAnomalyExtended.buildAnomalyExtName(modelAnomaly,
-													((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
-								} else {
-									fProperties.getElement().setName(
-											R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
-													((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
-								}
-								fProperties.getElement()
-										.setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(modelAnomaly));
-
-								//If this is a postponed anomaly, update original one as well
-								if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
-									((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
-								}
-							} catch (ResourceHandlingException e1) {
-								UIUtils.displayResourceErrorDialog(e1);
-							} catch (OutOfSyncException e1) {
-								UIUtils.displaySyncErrorDialog(e1);
+							} else {
+								final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
+								commentType.setType(dialog.getClass_());
+								modelAnomaly.setType(commentType);
+								modelAnomaly.setRank(dialog.getRank());
+								modelAnomaly.setRuleID("");
 							}
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+							//Set new UI display
+							if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
+								fProperties.getElement().setName(
+										R4EUIAnomalyExtended.buildAnomalyExtName(modelAnomaly,
+												((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
+							} else {
+								fProperties.getElement().setName(
+										R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
+												((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
+							}
+							fProperties.getElement().setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(modelAnomaly));
+
+							//If this is a postponed anomaly, update original one as well
+							if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							}
+						} catch (ResourceHandlingException e1) {
+							UIUtils.displayResourceErrorDialog(e1);
+						} catch (OutOfSyncException e1) {
+							UIUtils.displaySyncErrorDialog(e1);
 						}
-						refresh();
 					}
+					refresh();
 				} else if (result != Window.CANCEL) {
 					R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 				}

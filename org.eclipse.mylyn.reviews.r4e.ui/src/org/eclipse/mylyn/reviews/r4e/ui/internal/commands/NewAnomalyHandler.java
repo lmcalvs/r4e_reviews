@@ -39,7 +39,7 @@ import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -363,7 +363,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 	private void addAnomalyToNewFileContext(R4EFileVersion aBaseFileVersion, R4EFileVersion aTargetFileVersion,
 			IR4EUIPosition aUIPosition) throws ResourceHandlingException, OutOfSyncException {
 
-		final ReviewComponent tempAnomaly = R4EUIAnomalyContainer.createDetachedAnomaly();
+		final R4EAnomaly tempAnomaly = R4EUIAnomalyContainer.createDetachedAnomaly();
 
 		if (null != tempAnomaly) {
 			final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
@@ -382,7 +382,9 @@ public class NewAnomalyHandler extends AbstractHandler {
 					R4EUIConstants.ANOMALIES_LABEL);
 			uiFileContext.addChildren(uiAnomalyContainer);
 
-			final R4EUIAnomalyBasic uiAnomaly = (R4EUIAnomalyBasic) uiAnomalyContainer.createChildren(tempAnomaly);
+			final R4EUIAnomalyBasic uiAnomaly = uiAnomalyContainer.createAnomalyFromDetached(aTargetFileVersion,
+					tempAnomaly, (R4EUITextPosition) aUIPosition);
+
 			if (null != uiAnomaly) {
 				//Set focus to newly created anomaly comment
 				R4EUIModelController.getNavigatorView()

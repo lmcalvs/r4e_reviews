@@ -127,12 +127,22 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			final R4ECommentType tempCommentType = RModelFactory.eINSTANCE.createR4ECommentType();
 			tempAnomaly.setTitle(dialog.getAnomalyTitleValue());
 			tempAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
+			tempAnomaly.setDueDate(dialog.getDueDate());
 			if (null != dialog.getRuleReferenceValue()) {
 				final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
 				tempCommentType.setType(rule.getClass_());
 				tempAnomaly.setType(tempCommentType);
 				tempAnomaly.setRank(rule.getRank());
 				tempAnomaly.setRuleID(rule.getId());
+			} else {
+				if (null != dialog.getClass_()) {
+					final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
+					commentType.setType(dialog.getClass_());
+					tempAnomaly.setType(commentType);
+				}
+				if (null != dialog.getRank()) {
+					tempAnomaly.setRank(dialog.getRank());
+				}
 			}
 		} else if (result != Window.CANCEL) {
 			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
@@ -157,22 +167,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		final int result = dialog.open();
 		if (result == Window.OK) {
 			tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
-			final R4ECommentType tempCommentType = RModelFactory.eINSTANCE.createR4ECommentType();
-			tempAnomaly.setTitle(dialog.getAnomalyTitleValue());
-			tempAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
-			if (null != dialog.getRuleReferenceValue()) {
-				final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
-				tempCommentType.setType(rule.getClass_());
-				tempAnomaly.setType(tempCommentType);
-				tempAnomaly.setRank(rule.getRank());
-				tempAnomaly.setRuleID(rule.getId());
-			} else {
-				tempCommentType.setType(dialog.getClass_());
-				tempAnomaly.setType(tempCommentType);
-				tempAnomaly.setRank(dialog.getRank());
-			}
-			tempAnomaly.setDueDate(dialog.getDueDate());
-
+			setAnomalyWithDialogValues(tempAnomaly, dialog);
 		} else if (result != Window.CANCEL) {
 			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
@@ -400,7 +395,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	}
 
 	/**
-	 * Method createAnomaly
+	 * Method createAnomaly Creates a new Anomaly from the user dialog
 	 * 
 	 * @param aAnomalyTempFileVersion
 	 *            R4EFileVersion
@@ -415,7 +410,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 
 		R4EUIAnomalyBasic uiAnomaly = null;
 
-		//Get anomaliy details from user
+		//Get anomaly details from user
 		R4EUIModelController.setJobInProgress(true);
 		final AnomalyInputDialog dialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
 				getSite()
@@ -429,47 +424,123 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
 			final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(), true);
 			final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
-
 			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, R4EUIModelController.getReviewer());
-			anomaly.setTitle(dialog.getAnomalyTitleValue());
-			anomaly.setDescription(dialog.getAnomalyDescriptionValue());
-			if (null != dialog.getRuleReferenceValue()) {
-				final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
-				final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
-				commentType.setType(rule.getClass_());
-				anomaly.setType(commentType);
-				anomaly.setRank(rule.getRank());
-				anomaly.setRuleID(rule.getId());
-			}
+			setAnomalyWithDialogValues(anomaly, dialog);
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
-			//Set position data
-			final R4EAnomalyTextPosition position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(R4EUIModelController.FModelExt.createR4ETextContent(anomaly));
-
-			//Set File version data
-			final R4EFileVersion anomalyFileVersion = R4EUIModelController.FModelExt.createR4EFileVersion(position);
-			bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomalyFileVersion,
-					R4EUIModelController.getReviewer());
-			CommandUtils.copyFileVersionData(anomalyFileVersion, aAnomalyTempFileVersion);
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-			//Create and set UI model element
-			if (uiReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
-				uiAnomaly = new R4EUIAnomalyBasic(this, anomaly, aUiPosition);
-			} else {
-				uiAnomaly = new R4EUIAnomalyExtended(this, anomaly, aUiPosition);
-				if (uiReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-					((R4EUIAnomalyExtended) uiAnomaly).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
-				} else { //R4EReviewType.R4E_REVIEW_TYPE_INFORMAL
-					((R4EUIAnomalyExtended) uiAnomaly).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
-				}
-			}
-			aUiPosition.setPositionInModel(position);
-			uiAnomaly.setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(anomaly)); //Also set UI tooltip immediately
-			addChildren(uiAnomaly);
+			uiAnomaly = createAnomalyDetails(anomaly, aAnomalyTempFileVersion, aUiPosition);
 		} else if (result != Window.CANCEL) {
 			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
+		return uiAnomaly;
+	}
+
+	/**
+	 * Method setAnomalyWithDialogValues
+	 * 
+	 * @param aAnomaly
+	 *            R4EAnomaly
+	 * @param aDialog
+	 *            AnomalyInputDialog
+	 * @return R4EUIAnomalyBasic
+	 */
+	private void setAnomalyWithDialogValues(R4EAnomaly aAnomaly, AnomalyInputDialog aDialog) {
+
+		aAnomaly.setTitle(aDialog.getAnomalyTitleValue());
+		aAnomaly.setDescription(aDialog.getAnomalyDescriptionValue());
+		aAnomaly.setDueDate(aDialog.getDueDate());
+		if (null != aDialog.getRuleReferenceValue()) {
+			final R4EDesignRule rule = aDialog.getRuleReferenceValue().getRule();
+			final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
+			commentType.setType(rule.getClass_());
+			aAnomaly.setType(commentType);
+			aAnomaly.setRank(rule.getRank());
+			aAnomaly.setRuleID(rule.getId());
+		} else {
+			if (null != aDialog.getClass_()) {
+				final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
+				commentType.setType(aDialog.getClass_());
+				aAnomaly.setType(commentType);
+			}
+			if (null != aDialog.getRank()) {
+				aAnomaly.setRank(aDialog.getRank());
+			}
+		}
+	}
+
+	/**
+	 * Method createAnomalyFromDetached Create a new anomaly from a detached model anomaly
+	 * 
+	 * @param aAnomalyTempFileVersion
+	 *            R4EFileVersion
+	 * @param aModelComponent
+	 *            R4EAnomaly
+	 * @param aUiPosition
+	 *            R4EUITextPosition
+	 * @return R4EUIAnomalyBasic
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 */
+	public R4EUIAnomalyBasic createAnomalyFromDetached(R4EFileVersion aAnomalyTempFileVersion,
+			R4EAnomaly aModelComponent, R4EUITextPosition aUiPosition) throws ResourceHandlingException,
+			OutOfSyncException {
+		final String user = R4EUIModelController.getReviewer();
+		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(R4EUIModelController.getActiveReview()
+				.getParticipant(user, true));
+		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, R4EUIModelController.getReviewer());
+		anomaly.setTitle(aModelComponent.getTitle()); //This is needed as the anomaly title is displayed in the navigator view
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+		R4EUIAnomalyBasic uiAnomaly = createAnomalyDetails(anomaly, aAnomalyTempFileVersion, aUiPosition);
+		uiAnomaly.setModelData(aModelComponent);
+		return uiAnomaly;
+	}
+
+	/**
+	 * Method createAnomalyDetails
+	 * 
+	 * @param aAnomalyTempFileVersion
+	 *            R4EFileVersion
+	 * @param aAnomaly
+	 *            R4EAnomaly
+	 * @param aAnomalyTempFileVersion
+	 *            R4EFileVersion
+	 * @param aUiPosition
+	 *            R4EUITextPosition
+	 * @return R4EUIAnomalyBasic
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 */
+	public R4EUIAnomalyBasic createAnomalyDetails(R4EAnomaly aAnomaly, R4EFileVersion aAnomalyTempFileVersion,
+			R4EUITextPosition aUiPosition) throws ResourceHandlingException, OutOfSyncException {
+
+		R4EUIAnomalyBasic uiAnomaly = null;
+		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
+
+		//Set position data
+		final R4EAnomalyTextPosition position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(R4EUIModelController.FModelExt.createR4ETextContent(aAnomaly));
+
+		//Set File version data
+		final R4EFileVersion anomalyFileVersion = R4EUIModelController.FModelExt.createR4EFileVersion(position);
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomalyFileVersion,
+				R4EUIModelController.getReviewer());
+		CommandUtils.copyFileVersionData(anomalyFileVersion, aAnomalyTempFileVersion);
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+		//Create and set UI model element
+		if (uiReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+			uiAnomaly = new R4EUIAnomalyBasic(this, aAnomaly, aUiPosition);
+		} else {
+			uiAnomaly = new R4EUIAnomalyExtended(this, aAnomaly, aUiPosition);
+			if (uiReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				((R4EUIAnomalyExtended) uiAnomaly).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
+			} else { //R4EReviewType.R4E_REVIEW_TYPE_INFORMAL
+				((R4EUIAnomalyExtended) uiAnomaly).updateState(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
+			}
+		}
+		aUiPosition.setPositionInModel(position);
+		uiAnomaly.setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(aAnomaly)); //Also set UI tooltip immediately
+		addChildren(uiAnomaly);
 		return uiAnomaly;
 	}
 
