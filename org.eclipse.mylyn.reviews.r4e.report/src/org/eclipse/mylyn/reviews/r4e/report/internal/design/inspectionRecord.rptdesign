@@ -2870,7 +2870,14 @@ Total.countDistinct ( row["xmi:id"] );</expression>
                     <property name="name">TotalPreparationTimeInHrs</property>
                     <expression name="expression">//Compute the total preparation time in hours &#13;
 &#13;
-ret =  Total.sum ( row["value"] ) / 60;</expression>
+//ret =  Total.sum ( row["value"] ) / 60;&#13;
+ret = Total.sum ( row["value"] );&#13;
+&#13;
+if ( ret == null || ret == "" ) {&#13;
+	val = 0;&#13;
+} else {&#13;
+    val = ret / 60;&#13;
+ }</expression>
                     <property name="dataType">float</property>
                 </structure>
             </list-property>
@@ -3451,7 +3458,10 @@ row["spentTime"] / 60</expression>
                     <expression name="expression">//Compute the Avg time per participant in DECISION PHASE&#13;
 &#13;
 &#13;
-Total.sum ( row["DecisionTimeInHrs"] )</expression>
+ret = Total.sum ( row["DecisionTimeInHrs"] )&#13;
+ if (ret == null ) {&#13;
+ 	ret = 0;&#13;
+ }</expression>
                     <property name="dataType">float</property>
                 </structure>
             </list-property>
@@ -3460,6 +3470,11 @@ Total.sum ( row["DecisionTimeInHrs"] )</expression>
                     <property name="columnName">Comment Participant::xmi:id</property>
                     <property name="alias">Comment Participant::xmi:id</property>
                     <text-property name="displayName">Comment Participant::xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Participant::GetOrganizer</property>
+                    <property name="alias">GetOrganizer</property>
+                    <text-property name="displayName">Comment Participant::GetOrganizer</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Comment Participant::CountParticipants</property>
@@ -3651,31 +3666,36 @@ Total.sum ( row["DecisionTimeInHrs"] )</expression>
                     </structure>
                     <structure>
                         <property name="position">18</property>
-                        <property name="name">DecisionTime::xmi:id</property>
+                        <property name="name">GetOrganizer</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">19</property>
-                        <property name="name">value</property>
+                        <property name="name">DecisionTime::xmi:id</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">20</property>
-                        <property name="name">spentTime</property>
+                        <property name="name">value</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">21</property>
+                        <property name="name">spentTime</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
                         <property name="name">DecisionTimeInHrs</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">22</property>
+                        <property name="position">23</property>
                         <property name="name">DecisonTimeTotalReviewEffort</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">23</property>
+                        <property name="position">24</property>
                         <property name="name">AvgDecisionTime</property>
                         <property name="dataType">float</property>
                     </structure>
@@ -4910,7 +4930,7 @@ ret = totalPrepTime + totalDecisionTime;</expression>
 totalTime = Total.max ( row["DecisionTimeInHrs"] );&#13;
 &#13;
 //Compute the ratio&#13;
-if ( totalTime == 0) {&#13;
+if ( totalTime == null || totalTime == 0) {&#13;
     value = 0;&#13;
 } else {&#13;
     value = totalAno / totalTime;&#13;
