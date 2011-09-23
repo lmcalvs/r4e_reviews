@@ -1015,6 +1015,16 @@ public class MailServicesProxy {
 			throws ResourceHandlingException, OutOfSyncException {
 		if (null != R4EUIModelController.getMailConnector()) {
 			final String[] messageDestinations = createItemsUpdatedDestinations();
+
+			//Notify user if request cannot be sent when no valid destinations defined
+			if (messageDestinations.length == 0) {
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+						"Cannot Send Meeting Request", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
+								"No valid destinations for participants defined", null), IStatus.ERROR);
+				dialog.open();
+				return;
+			}
+
 			String messageSubject = null;
 			if (null != R4EUIModelController.getActiveReview().getReview().getActiveMeeting()) {
 				messageSubject = createSubject() + " - Decision Meeting Request Updated";
