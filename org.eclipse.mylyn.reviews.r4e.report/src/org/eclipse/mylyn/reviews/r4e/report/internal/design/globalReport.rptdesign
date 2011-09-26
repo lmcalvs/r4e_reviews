@@ -5387,7 +5387,11 @@ countano = Total.max (row["CountStateAccepted"] )&#13;
                  &#13;
   //Get the total lines of Codes for the anomalies&#13;
   loc = Total.sum ( row["CountFileNumberOfLines"] );&#13;
-                 &#13;
+     &#13;
+  if ( loc == null ) {&#13;
+  	loc = 0;  //Init the value  if there is no review item to look at&#13;
+  }&#13;
+              &#13;
 //Compute the ratio anomalies /  line of codes&#13;
 if (loc == 0) {&#13;
    value = 0;&#13;
@@ -5628,37 +5632,37 @@ if (loc == 0) {&#13;
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">startPosition</property>
+                        <property name="name">Item TextPosition::startPosition</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">3</property>
-                        <property name="name">startLine</property>
+                        <property name="name">Item TextPosition::startLine</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">4</property>
-                        <property name="name">endLine</property>
+                        <property name="name">Item TextPosition::endLine</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">5</property>
-                        <property name="name">length</property>
+                        <property name="name">Item TextPosition::length</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">6</property>
-                        <property name="name">CountFileNumberOfLines</property>
+                        <property name="name">Item TextPosition::CountFileNumberOfLines</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">7</property>
-                        <property name="name">CountTotalLOC</property>
+                        <property name="name">Item TextPosition::CountTotalLOC</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">8</property>
-                        <property name="name">CountTotalReviewItems</property>
+                        <property name="name">Item TextPosition::CountTotalReviewItems</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
@@ -5668,177 +5672,177 @@ if (loc == 0) {&#13;
                     </structure>
                     <structure>
                         <property name="position">10</property>
-                        <property name="name">user</property>
+                        <property name="name">Comment Anomaly::user</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">11</property>
-                        <property name="name">description</property>
+                        <property name="name">Comment Anomaly::description</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">12</property>
-                        <property name="name">review</property>
+                        <property name="name">Comment Anomaly::review</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">13</property>
-                        <property name="name">title</property>
+                        <property name="name">Comment Anomaly::title</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">14</property>
-                        <property name="name">createdOn</property>
+                        <property name="name">Comment Anomaly::createdOn</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">15</property>
-                        <property name="name">rank</property>
+                        <property name="name">Comment Anomaly::rank</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">16</property>
-                        <property name="name">ruleID</property>
+                        <property name="name">Comment Anomaly::ruleID</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">17</property>
-                        <property name="name">xsi:type</property>
+                        <property name="name">Comment Anomaly::xsi:type</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">18</property>
-                        <property name="name">href</property>
+                        <property name="name">Comment Anomaly::href</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">19</property>
-                        <property name="name">xsi:type_1</property>
+                        <property name="name">Comment Anomaly::xsi:type_1</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">20</property>
-                        <property name="name">href_1</property>
+                        <property name="name">Comment Anomaly::href_1</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">21</property>
-                        <property name="name">href_2</property>
+                        <property name="name">Comment Anomaly::href_2</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">22</property>
-                        <property name="name">state</property>
+                        <property name="name">Comment Anomaly::state</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">23</property>
-                        <property name="name">dueDate</property>
+                        <property name="name">Comment Anomaly::dueDate</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">24</property>
-                        <property name="name">fixedInVersion</property>
+                        <property name="name">Comment Anomaly::fixedInVersion</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">25</property>
-                        <property name="name">decidedByID</property>
+                        <property name="name">Comment Anomaly::decidedByID</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">26</property>
-                        <property name="name">fixedByID</property>
+                        <property name="name">Comment Anomaly::fixedByID</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">27</property>
-                        <property name="name">followUpByID</property>
+                        <property name="name">Comment Anomaly::followUpByID</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">28</property>
-                        <property name="name">AnomalyType</property>
+                        <property name="name">Comment Anomaly::AnomalyType</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">29</property>
-                        <property name="name">IdentifyRankOther</property>
+                        <property name="name">Comment Anomaly::IdentifyRankOther</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">30</property>
-                        <property name="name">CountRankMinor</property>
+                        <property name="name">Comment Anomaly::CountRankMinor</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">31</property>
-                        <property name="name">CountRankMajor</property>
+                        <property name="name">Comment Anomaly::CountRankMajor</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">32</property>
-                        <property name="name">CountRankOther</property>
+                        <property name="name">Comment Anomaly::CountRankOther</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">33</property>
-                        <property name="name">CountStateCreated</property>
+                        <property name="name">Comment Anomaly::CountStateCreated</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">34</property>
-                        <property name="name">CountStateAssigned</property>
+                        <property name="name">Comment Anomaly::CountStateAssigned</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">35</property>
-                        <property name="name">CountStateAccepted</property>
+                        <property name="name">Comment Anomaly::CountStateAccepted</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">36</property>
-                        <property name="name">CountStateFixed</property>
+                        <property name="name">Comment Anomaly::CountStateFixed</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">37</property>
-                        <property name="name">CountStateDuplicated</property>
+                        <property name="name">Comment Anomaly::CountStateDuplicated</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">38</property>
-                        <property name="name">CountStateRejected</property>
+                        <property name="name">Comment Anomaly::CountStateRejected</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">39</property>
-                        <property name="name">CountStateDeferred</property>
+                        <property name="name">Comment Anomaly::CountStateDeferred</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">40</property>
-                        <property name="name">CountStateVerified</property>
+                        <property name="name">Comment Anomaly::CountStateVerified</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">41</property>
-                        <property name="name">CountTotalAnomaly</property>
+                        <property name="name">Comment Anomaly::CountTotalAnomaly</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">42</property>
-                        <property name="name">AnomalyDueDate</property>
+                        <property name="name">Comment Anomaly::AnomalyDueDate</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">43</property>
-                        <property name="name">AnomalyState</property>
+                        <property name="name">Comment Anomaly::AnomalyState</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">44</property>
-                        <property name="name">CountStateOthers</property>
+                        <property name="name">Comment Anomaly::CountStateOthers</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
