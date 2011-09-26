@@ -22,6 +22,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -33,6 +34,7 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
@@ -48,6 +50,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleArea;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
@@ -919,5 +922,27 @@ public class AnomalyInputDialog extends FormDialog {
 	 */
 	public void setDescription(String aDescription) {
 		fAnomalyDescriptionInputTextField.setText(aDescription);
+	}
+
+	/**
+	 * Method setRuleID.
+	 * 
+	 * @param aId
+	 *            String
+	 */
+	public void setRuleID(String aId) {
+		List<R4EUIRuleSet> ruleSets = ((R4EUIRootElement) R4EUIModelController.getRootElement()).getRuleSets();
+		for (R4EUIRuleSet ruleSet : ruleSets) {
+			for (IR4EUIModelElement area : ruleSet.getChildren()) {
+				for (IR4EUIModelElement violation : area.getChildren()) {
+					for (IR4EUIModelElement rule : violation.getChildren()) {
+						if (((R4EUIRule) rule).getRule().getId().equals(aId)) {
+							fRuleTreeViewer.setSelection(new StructuredSelection(rule), true);
+							return;
+						}
+					}
+				}
+			}
+		}
 	}
 }

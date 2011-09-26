@@ -40,11 +40,8 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
@@ -266,12 +263,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 									final R4EUIReviewItem uiReviewItem;
 									if (filesToAddlist.size() > 0) {
 										uiReviewItem = uiReview.createCommitReviewItem(changeSet, null);
-
-										//Set focus to newly created element
-										final TreeViewer viewer = R4EUIModelController.getNavigatorView()
-												.getTreeViewer();
-										viewer.expandToLevel(uiReviewItem, AbstractTreeViewer.ALL_LEVELS);
-										viewer.setSelection(new StructuredSelection(uiReviewItem), true);
+										UIUtils.setNavigatorViewFocus(uiReviewItem);
 									} else {
 										return;
 									}

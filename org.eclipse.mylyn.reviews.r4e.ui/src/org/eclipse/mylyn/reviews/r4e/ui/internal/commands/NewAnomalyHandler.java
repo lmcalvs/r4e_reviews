@@ -35,10 +35,8 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
-import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -309,15 +307,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 			OutOfSyncException {
 
 		final R4EUIComment uiComment = aUIAnomaly.createComment();
-		if (null != uiComment) {
-			//Set focus to newly created anomaly comment
-			R4EUIModelController.getNavigatorView()
-					.getTreeViewer()
-					.expandToLevel(uiComment, AbstractTreeViewer.ALL_LEVELS);
-			R4EUIModelController.getNavigatorView()
-					.getTreeViewer()
-					.setSelection(new StructuredSelection(uiComment), true);
-		}
+		UIUtils.setNavigatorViewFocus(uiComment);
 	}
 
 	/**
@@ -337,15 +327,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 		final R4EUIAnomalyBasic uiAnomaly = aContainer.createAnomaly(aTargetFileVersion,
 				(R4EUITextPosition) aUIPosition);
-		if (null != uiAnomaly) {
-			//Set focus to newly created anomaly comment
-			R4EUIModelController.getNavigatorView()
-					.getTreeViewer()
-					.expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
-			R4EUIModelController.getNavigatorView()
-					.getTreeViewer()
-					.setSelection(new StructuredSelection(uiAnomaly), true);
-		}
+		UIUtils.setNavigatorViewFocus(uiAnomaly);
 	}
 
 	/**
@@ -384,16 +366,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 			final R4EUIAnomalyBasic uiAnomaly = uiAnomalyContainer.createAnomalyFromDetached(aTargetFileVersion,
 					tempAnomaly, (R4EUITextPosition) aUIPosition);
-
-			if (null != uiAnomaly) {
-				//Set focus to newly created anomaly comment
-				R4EUIModelController.getNavigatorView()
-						.getTreeViewer()
-						.expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
-				R4EUIModelController.getNavigatorView()
-						.getTreeViewer()
-						.setSelection(new StructuredSelection(uiAnomaly), true);
-			}
+			UIUtils.setNavigatorViewFocus(uiAnomaly);
 		}
 	}
 }

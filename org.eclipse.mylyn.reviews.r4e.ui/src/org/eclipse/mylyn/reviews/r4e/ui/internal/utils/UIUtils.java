@@ -38,8 +38,10 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
@@ -567,6 +569,28 @@ public class UIUtils {
 			UIUtils.displayResourceErrorDialog(e1);
 		} catch (OutOfSyncException e1) {
 			UIUtils.displaySyncErrorDialog(e1);
+		}
+	}
+
+	/**
+	 * Method setNavigatorViewFocus.
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
+	 */
+	public static void setNavigatorViewFocus(IR4EUIModelElement aElement) {
+		if (null != aElement) {
+			//Set focus to newly created comment
+			R4EUIModelController.getNavigatorView()
+					.getTreeViewer()
+					.expandToLevel(aElement, AbstractTreeViewer.ALL_LEVELS);
+			R4EUIModelController.getNavigatorView()
+					.getTreeViewer()
+					.setSelection(new StructuredSelection(aElement), true);
+			R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getPage()
+					.activate(R4EUIModelController.getNavigatorView());
 		}
 	}
 }

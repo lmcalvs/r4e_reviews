@@ -560,6 +560,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					dialog.setClass_(((R4ECommentType) modelAnomaly.getType()).getType());
 				}
 				dialog.setRank(modelAnomaly.getRank());
+				dialog.setRuleID(modelAnomaly.getRuleID());
 				final int result = dialog.open();
 				if (result == Window.OK) {
 					if (!fRefreshInProgress) {

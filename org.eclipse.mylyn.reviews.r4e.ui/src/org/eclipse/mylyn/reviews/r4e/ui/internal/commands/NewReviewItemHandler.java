@@ -36,10 +36,8 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
@@ -376,14 +374,7 @@ public class NewReviewItemHandler extends AbstractHandler {
 			throws ResourceHandlingException, OutOfSyncException {
 
 		final R4EUISelection uiSelection = aContainer.createSelection((R4EUITextPosition) aUIPosition);
-
-		//Set focus to newly created anomaly comment
-		R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.expandToLevel(uiSelection, AbstractTreeViewer.ALL_LEVELS);
-		R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.setSelection(new StructuredSelection(uiSelection), true);
+		UIUtils.setNavigatorViewFocus(uiSelection);
 	}
 
 	/**
@@ -420,13 +411,7 @@ public class NewReviewItemHandler extends AbstractHandler {
 		uiFileContext.addChildren(uiSelectionContainer);
 
 		final R4EUISelection uiSelection = uiSelectionContainer.createSelection((R4EUITextPosition) aUIPosition);
-		//Set focus to newly created selection
-		R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.expandToLevel(uiSelection, AbstractTreeViewer.ALL_LEVELS);
-		R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.setSelection(new StructuredSelection(uiSelection), true);
+		UIUtils.setNavigatorViewFocus(uiSelection);
 
 		//Send email notification if needed
 		final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();

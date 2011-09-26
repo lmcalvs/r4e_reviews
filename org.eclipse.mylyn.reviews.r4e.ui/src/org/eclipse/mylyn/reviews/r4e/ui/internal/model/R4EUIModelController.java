@@ -34,7 +34,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.notifications.core.NotificationsCore;
@@ -246,18 +245,6 @@ public class R4EUIModelController {
 		FView.getTreeViewer().getTree().setEnabled(!aIsDialogOpen); //Also disable operations on UI Tree
 		for (IPropertyListener listener : FElementStateListenerList) {
 			listener.propertyChanged(null, 0);
-		}
-	}
-
-	/**
-	 * Set properties state based on the selected element
-	 * 
-	 * @param aSelection
-	 *            the selected element
-	 */
-	public static void selectionChanged(IStructuredSelection aSelection) {
-		for (IPropertyListener listener : FElementStateListenerList) {
-			listener.propertyChanged(null, 0); //TODO this is temporary and should be refined later
 		}
 	}
 

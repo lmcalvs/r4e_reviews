@@ -24,9 +24,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -80,11 +78,7 @@ public class NewChildElementHandler extends AbstractHandler {
 							IR4EUIModelElement newElement = null;
 							try {
 								newElement = element.createChildren(tempModelComponent);
-								if (null != newElement) {
-									//Set focus to newly created element and open it
-									viewer.expandToLevel(newElement, AbstractTreeViewer.ALL_LEVELS);
-									viewer.setSelection(new StructuredSelection(newElement), true);
-								}
+								UIUtils.setNavigatorViewFocus(newElement);
 							} catch (ResourceHandlingException e) {
 								UIUtils.displayResourceErrorDialog(e);
 

@@ -369,7 +369,6 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			public void selectionChanged(SelectionChangedEvent event) {
 				if (event.getSelection() instanceof IStructuredSelection) {
 					final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-					R4EUIModelController.selectionChanged(selection);
 					if (isPropertiesLinked()) {
 						try {
 							final IWorkbenchPage page = PlatformUI.getWorkbench()
