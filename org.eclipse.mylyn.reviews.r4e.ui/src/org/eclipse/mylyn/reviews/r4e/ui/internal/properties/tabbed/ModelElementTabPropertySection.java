@@ -19,7 +19,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ModelElementProperties;
 import org.eclipse.swt.SWT;
@@ -68,7 +67,6 @@ public class ModelElementTabPropertySection extends AbstractPropertySection impl
 	@Override
 	public void dispose() {
 		super.dispose();
-		R4EUIModelController.removeElementStateListener(this);
 	}
 
 	/**
@@ -83,7 +81,6 @@ public class ModelElementTabPropertySection extends AbstractPropertySection impl
 	@Override
 	public void createControls(Composite parent, TabbedPropertySheetPage aTabbedPropertySheetPage) {
 		super.createControls(parent, aTabbedPropertySheetPage);
-		R4EUIModelController.addElementStateListener(this);
 	}
 
 	/**

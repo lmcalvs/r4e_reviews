@@ -55,7 +55,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorView;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
-import org.eclipse.ui.IPropertyListener;
 
 /**
  * @author lmcdubo
@@ -123,11 +122,6 @@ public class R4EUIModelController {
 			0.75f); // $codepro.audit.disable constantNamingConvention
 
 	/**
-	 * Field FElementStateListenerList.
-	 */
-	private static final List<IPropertyListener> FElementStateListenerList = new ArrayList<IPropertyListener>(); // $codepro.audit.disable constantNamingConvention
-
-	/**
 	 * Field FMailConnector.
 	 */
 	private static NotificationsConnector FMailConnector = null;
@@ -140,26 +134,6 @@ public class R4EUIModelController {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-
-	/**
-	 * Method addElementStateListener.
-	 * 
-	 * @param aListener
-	 *            IPropertyListener
-	 */
-	public static void addElementStateListener(IPropertyListener aListener) {
-		FElementStateListenerList.add(aListener);
-	}
-
-	/**
-	 * Method removeElementStateListener.
-	 * 
-	 * @param aListener
-	 *            IPropertyListener
-	 */
-	public static void removeElementStateListener(IPropertyListener aListener) {
-		FElementStateListenerList.remove(aListener);
-	}
 
 	/**
 	 * Method setNavigatorView.
@@ -235,26 +209,14 @@ public class R4EUIModelController {
 	}
 
 	/**
-	 * Set properties state based on the current dialog state
+	 * Set current dialog state
 	 * 
 	 * @param aIsDialogOpen
 	 *            boolean
 	 */
 	public static void setJobInProgress(boolean aIsDialogOpen) {
 		FIsDialogOpen = aIsDialogOpen;
-		FView.getTreeViewer().getTree().setEnabled(!aIsDialogOpen); //Also disable operations on UI Tree
-		for (IPropertyListener listener : FElementStateListenerList) {
-			listener.propertyChanged(null, 0);
-		}
-	}
-
-	/**
-	 * Refresh properties
-	 */
-	public static void propertyChanged() {
-		for (IPropertyListener listener : FElementStateListenerList) {
-			listener.propertyChanged(null, 0); //TODO this is temporary and should be refined later
-		}
+		FView.getTreeViewer().getTree().setEnabled(!aIsDialogOpen); //Also enable/disable operations on UI Tree
 	}
 
 	/**

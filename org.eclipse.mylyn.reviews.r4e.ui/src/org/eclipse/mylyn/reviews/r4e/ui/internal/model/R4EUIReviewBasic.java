@@ -505,7 +505,6 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			}
 		}
 		fireUserReviewStateChanged(this);
-		R4EUIModelController.propertyChanged();
 	}
 
 	/**

@@ -276,7 +276,6 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		hookListeners();
 		final IEclipsePreferences node = new InstanceScope().getNode(R4EUIPlugin.PLUGIN_ID);
 		node.addPreferenceChangeListener(this);
-		R4EUIModelController.addElementStateListener(this);
 
 		//Apply default filters
 		applyDefaultFilters();
