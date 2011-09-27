@@ -125,7 +125,7 @@ public class PreferenceConstants {
 	public static final String	FP_MOBILE_LABEL				= "Mobile:";
 
 	public static final String	FP_ECN_ID					= "otherTelephone";
-	public static final String	FP_ECN_LABEL				= "ECN:";
+	public static final String	FP_ECN_LABEL				= "Other Phone:";
 
 	public static final String	FP_COMPANY_ID				= "company";
 	public static final String	FP_COMPANY_LABEL			= "Company";
