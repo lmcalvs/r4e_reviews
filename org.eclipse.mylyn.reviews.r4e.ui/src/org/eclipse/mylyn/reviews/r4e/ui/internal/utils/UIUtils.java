@@ -528,12 +528,6 @@ public class UIUtils {
 				} else {
 					((R4EUIReviewBasic) aReview).updatePhase(aNewPhase);
 				}
-				//Set end date when the review is completed
-				if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-					R4EUIModelController.getActiveReview().getReview().setEndDate(Calendar.getInstance().getTime());
-				} else {
-					R4EUIModelController.getActiveReview().getReview().setEndDate(null);
-				}
 			} catch (ResourceHandlingException e1) {
 				UIUtils.displayResourceErrorDialog(e1);
 			} catch (OutOfSyncException e1) {
