@@ -86,7 +86,6 @@ public class PreviousStateHandler extends AbstractHandler {
 								//Get next state (from user if needed)
 								R4EAnomalyState newState = ((R4EUIAnomalyExtended) element).getPreviousState();
 								UIUtils.changeAnomalyState(element, newState);
-
 							}
 						}
 						try {
@@ -99,7 +98,7 @@ public class PreviousStateHandler extends AbstractHandler {
 							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 						}
 						R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
-						R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+						UIUtils.setNavigatorViewFocus(element);
 					}
 				}
 				return Status.OK_STATUS;

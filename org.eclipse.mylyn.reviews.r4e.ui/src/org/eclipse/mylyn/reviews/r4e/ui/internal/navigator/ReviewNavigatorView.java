@@ -131,6 +131,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	private boolean fPropertiesLinked;
 
 	/**
+	 * Field fPropertySheetPage - the associated Tabbed Properties view
+	 */
+	protected TabbedPropertySheetPage fPropertySheetPage;
+
+	/**
 	 * Field fPartListener
 	 */
 	private IPartListener fPartListener = null;
@@ -218,6 +223,10 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			fActionSet.dispose();
 		}
 		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
+
+		if (getPropertySheetPage() != null) {
+			getPropertySheetPage().dispose();
+		}
 
 		try {
 			if (project.exists()) {
@@ -736,9 +745,21 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
 		if (adapter.equals(IPropertySheetPage.class)) {
-			return new TabbedPropertySheetPage(this);
+			return getPropertySheetPage();
 		}
 		return super.getAdapter(adapter);
+	}
+
+	/**
+	 * Method getPropertySheetPage.
+	 * 
+	 * @return TabbedPropertySheetPage
+	 */
+	public TabbedPropertySheetPage getPropertySheetPage() {
+		if (fPropertySheetPage == null || fPropertySheetPage.getControl() == null) {
+			fPropertySheetPage = new TabbedPropertySheetPage(this);
+		}
+		return fPropertySheetPage;
 	}
 
 	/**

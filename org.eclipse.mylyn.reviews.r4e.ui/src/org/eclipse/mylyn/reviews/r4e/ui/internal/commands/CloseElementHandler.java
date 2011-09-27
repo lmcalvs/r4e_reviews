@@ -25,10 +25,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.services.IEvaluationService;
@@ -69,11 +68,7 @@ public class CloseElementHandler extends AbstractHandler {
 							}
 						}
 						R4EUIPlugin.Ftracer.traceInfo("Closing element " + element.getName());
-
-						//The action is only performed on the first element, so select it
-						final StructuredSelection newSelection = new StructuredSelection(
-								((IStructuredSelection) selection).getFirstElement());
-						R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
+						UIUtils.setNavigatorViewFocus(element);
 					}
 				}
 				try {
