@@ -7,10 +7,10 @@
     <property name="imageDPI">96</property>
     <data-sources>
         <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.xml" name="Merged_group" id="1966">
-            <property name="FILELIST">R:\lmcbout\openGroup1\r4e_work_1317135455694\Merged_group_root.xrer</property>
+            <property name="FILELIST">R:\lmcbout\openGroup1\r4e_work_1317148447127\Merged_group_root.xrer</property>
         </oda-data-source>
         <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.xml" name="Merged_review" id="1967">
-            <property name="FILELIST">R:\lmcbout\openGroup1\r4e_work_1317135455694\Merged\Merged_review.xrer</property>
+            <property name="FILELIST">R:\lmcbout\openGroup1\r4e_work_1317148447127\Merged\Merged_review.xrer</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -8896,6 +8896,84 @@ if (ret != null ) {&#13;
                     <property name="dataType">string</property>
                 </structure>
             </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">xmi:id</property>
+                    <text-property name="heading">xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">name</property>
+                    <text-property name="heading">name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">project</property>
+                    <text-property name="heading">project</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">entryCriteria</property>
+                    <text-property name="heading">entryCriteria</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">extraNotes</property>
+                    <text-property name="heading">extraNotes</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">objectives</property>
+                    <text-property name="heading">objectives</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">referenceMaterial</property>
+                    <text-property name="heading">referenceMaterial</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">startDate</property>
+                    <text-property name="heading">startDate</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">createdBy</property>
+                    <text-property name="heading">createdBy</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">xsi:type</property>
+                    <text-property name="heading">xsi:type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">href</property>
+                    <text-property name="heading">href</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">components</property>
+                    <text-property name="heading">components</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">href_1</property>
+                    <text-property name="heading">href_1</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">href_2</property>
+                    <text-property name="heading">href_2</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">href_3</property>
+                    <text-property name="heading">href_3</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">type</property>
+                    <text-property name="heading">type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">current</property>
+                    <text-property name="heading">current</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">href_4</property>
+                    <text-property name="heading">href_4</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">endDate</property>
+                    <text-property name="heading">endDate</text-property>
+                </structure>
+            </list-property>
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
                     <structure>
@@ -8990,11 +9068,16 @@ if (ret != null ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">19</property>
+                        <property name="name">endDate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
                         <property name="name">CountRevi</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">20</property>
+                        <property name="position">21</property>
                         <property name="name">ReviewType</property>
                         <property name="dataType">string</property>
                     </structure>
@@ -9110,8 +9193,14 @@ if (ret != null ) {&#13;
                     <property name="nativeName">href_4</property>
                     <property name="dataType">string</property>
                 </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">endDate</property>
+                    <property name="nativeName">endDate</property>
+                    <property name="dataType">string</property>
+                </structure>
             </list-property>
-            <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//ResTrans:ReviewRes]#:#{xmi:id;STRING;@xmi:id},{name;STRING;@name},{project;STRING;@project},{entryCriteria;STRING;@entryCriteria},{extraNotes;STRING;@extraNotes},{objectives;STRING;@objectives},{referenceMaterial;STRING;@referenceMaterial},{startDate;STRING;@startDate},{createdBy;STRING;@createdBy},{xsi:type;STRING;state/@xsi:type},{href;STRING;state/@href},{components;STRING;components},{href_1;STRING;decision/@href},{href_2;STRING;activeMeeting/@href},{href_3;STRING;usersRes/@href},{type;STRING;@type},{current;STRING;@current},{href_4;STRING;phases/@href}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
+            <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//ResTrans:ReviewRes]#:#{xmi:id;STRING;@xmi:id},{name;STRING;@name},{project;STRING;@project},{entryCriteria;STRING;@entryCriteria},{extraNotes;STRING;@extraNotes},{objectives;STRING;@objectives},{referenceMaterial;STRING;@referenceMaterial},{startDate;STRING;@startDate},{createdBy;STRING;@createdBy},{xsi:type;STRING;state/@xsi:type},{href;STRING;state/@href},{components;STRING;components},{href_1;STRING;decision/@href},{href_2;STRING;activeMeeting/@href},{href_3;STRING;usersRes/@href},{type;STRING;@type},{current;STRING;@current},{href_4;STRING;phases/@href},{endDate;STRING;//@endDate}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
@@ -9424,33 +9513,6 @@ if (ret != null ) {&#13;
         <joint-data-set name="Join Review-PhaseInfo" id="2228">
             <list-property name="computedColumns">
                 <structure>
-                    <property name="name">CurrentPhase</property>
-                    <expression name="expression">//Find Current Phase&#13;
-&#13;
- ret = row["current"];&#13;
-&#13;
- //Loook in Phase Info to find the type&#13;
- &#13;
- if (ret == null || ret == "" ) {&#13;
- 	//Now we are in a BASIC or INFORMAL review&#13;
- &#13;
-   value = "N/A";&#13;
- } else  if (ret == row["PhaseInfo::xmi:id"] ) {&#13;
- 	//Look at the type register for this current phase&#13;
-   	value = row["PhaseInfo::type"];&#13;
-   	if (value == null ) {&#13;
-		ret = "PLANNING"; //No entry so ity is PLANNING phase here&#13;
-	} else {&#13;
-		//Strip down the phase string by removing the beginning R4E_REVIEW_PHASE_&#13;
-		ret = value.replace("R4E_REVIEW_PHASE_", "");&#13;
-	}&#13;
-   	&#13;
- } else {&#13;
- 	value = row["PhaseInfo::xmi:id"] ;&#13;
- }</expression>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
                     <property name="name">ReviewStart</property>
                     <expression name="expression">//Look when the review started&#13;
 &#13;
@@ -9458,7 +9520,8 @@ nbReview = row["CountRevi"];&#13;
 &#13;
 if ( nbReview == 1 ) {&#13;
 	dueDate = row["Reviews::startDate"];&#13;
-	if ( dueDate == null || ret == "" ) {&#13;
+	&#13;
+	if ( dueDate == null || dueDate == "" ) {&#13;
 		//look for the formal review&#13;
 		dueDate =row["PhaseInfo::startDate"];&#13;
 	}&#13;
@@ -9494,6 +9557,11 @@ nbReview = row["CountRevi"]&#13;
 &#13;
 if ( nbReview == 1 ) {&#13;
   	endDate = row["PhaseInfo::startDate"];&#13;
+  	&#13;
+  	if (endDate == null ) {&#13;
+  		//Test the end date for BASIC and INFORMAL review&#13;
+  		endDate = row["Reviews::endDate"];&#13;
+  	}&#13;
 &#13;
   	//Adjust the end date format&#13;
    if (endDate != null &amp;&amp; endDate != "" ) {&#13;
@@ -9775,10 +9843,6 @@ if ( phase == "R4E_REVIEW_PHASE_COMPLETED" ) {&#13;
                     <text-property name="displayName">Reviews::components</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">CurrentPhase</property>
-                    <property name="alias">CurrentPhase</property>
-                </structure>
-                <structure>
                     <property name="columnName">ReviewStart</property>
                     <property name="alias">ReviewStart</property>
                 </structure>
@@ -9905,42 +9969,42 @@ if ( phase == "R4E_REVIEW_PHASE_COMPLETED" ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">19</property>
+                        <property name="name">Reviews::endDate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
                         <property name="name">Reviews::CountRevi</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">20</property>
+                        <property name="position">21</property>
                         <property name="name">Reviews::ReviewType</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">21</property>
+                        <property name="position">22</property>
                         <property name="name">PhaseInfo::xmi:id</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">22</property>
+                        <property name="position">23</property>
                         <property name="name">PhaseInfo::endDate</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">23</property>
+                        <property name="position">24</property>
                         <property name="name">PhaseInfo::phaseOwnerID</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">24</property>
+                        <property name="position">25</property>
                         <property name="name">PhaseInfo::startDate</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">25</property>
-                        <property name="name">PhaseInfo::type</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
                         <property name="position">26</property>
-                        <property name="name">CurrentPhase</property>
+                        <property name="name">PhaseInfo::type</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -10168,6 +10232,554 @@ if ( ret != null ) {&#13;
                 </ex-property>
             </list-property>
         </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.datatools.enablement.oda.xml.dataSet" name="Review state" id="2356">
+            <list-property name="computedColumns">
+                <structure>
+                    <property name="name">CreateStateLink</property>
+                    <expression name="expression">//Create the link with the xmiId&#13;
+&#13;
+ret = "#"+ row["xmi:id"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">xmi:id</property>
+                    <text-property name="heading">xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">state</property>
+                    <text-property name="heading">state</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">state</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">CreateStateLink</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Merged_review</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">xmi:id</property>
+                    <property name="nativeName">xmi:id</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">state</property>
+                    <property name="nativeName">state</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//r4ecore:R4EReviewState]#:#{xmi:id;STRING;@xmi:id},{state;STRING;@state}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>xmi:id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>xmi:id</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>state</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>state</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>MAX_ROW</name>
+                    <value>-1</value>
+                </ex-property>
+                <ex-property>
+                    <name>XML_FILE</name>
+                </ex-property>
+            </list-property>
+        </oda-data-set>
+        <joint-data-set name="Join Review-PhaseInfo-State" id="2357">
+            <list-property name="computedColumns">
+                <structure>
+                    <property name="name">CurrentPhaseState</property>
+                    <expression name="expression">//Find Current Phase&#13;
+&#13;
+ ret = row["Join Review-PhaseInfo::Reviews::current"];&#13;
+&#13;
+ //Loook in Phase Info to find the type&#13;
+ &#13;
+ if (ret == null || ret == "" ) {&#13;
+ 	//Now we are in a BASIC or INFORMAL review&#13;
+ 		val = row["Review state::state"];&#13;
+ 		if ( val == null ) {&#13;
+ 			val = "ACTIVE"  //Default value when not COMPLETED&#13;
+ 		} else {&#13;
+   			ret = val.replace("R4E_REVIEW_PHASE_", "");	&#13;
+ 		}&#13;
+ } else  if ( row["Join Review-PhaseInfo::PhaseInfo::xmi:id"]) {&#13;
+ 	//Look at the type register for this current phase&#13;
+   	value = row["Join Review-PhaseInfo::PhaseInfo::type"];&#13;
+   	if (value == null ) {&#13;
+		ret = "PLANNING"; //No entry so ity is PLANNING phase here&#13;
+	} else {&#13;
+		//Strip down the phase string by removing the beginning R4E_REVIEW_PHASE_&#13;
+		ret = value.replace("R4E_REVIEW_PHASE_", "");&#13;
+	}&#13;
+   	&#13;
+ } else {&#13;
+ 	value =row["Join Review-PhaseInfo::PhaseInfo::xmi:id"] ;&#13;
+ }</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::PhaseInfo::endDate</property>
+                    <property name="alias">PhaseInfo::endDate</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::PhaseInfo::endDate</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Review state::state</property>
+                    <property name="alias">state</property>
+                    <text-property name="displayName">Review state::state</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::CurrentPhase</property>
+                    <property name="alias">CurrentPhase</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::CurrentPhase</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::xmi:id</property>
+                    <property name="alias">Reviews::xmi:id</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::PlanningPhase</property>
+                    <property name="alias">PlanningPhase</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::PlanningPhase</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::entryCriteria</property>
+                    <property name="alias">Reviews::entryCriteria</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::entryCriteria</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::components</property>
+                    <property name="alias">Reviews::components</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::components</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::href_4</property>
+                    <property name="alias">Reviews::href_4</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::href_4</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::href_3</property>
+                    <property name="alias">Reviews::href_3</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::href_3</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::extraNotes</property>
+                    <property name="alias">Reviews::extraNotes</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::extraNotes</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::href_2</property>
+                    <property name="alias">Reviews::href_2</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::href_2</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::PreparationPhase</property>
+                    <property name="alias">PreparationPhase</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::PreparationPhase</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::href_1</property>
+                    <property name="alias">Reviews::href_1</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::href_1</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Review state::xmi:id</property>
+                    <property name="alias">xmi:id</property>
+                    <text-property name="displayName">Review state::xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::CountRevi</property>
+                    <property name="alias">Reviews::CountRevi</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::CountRevi</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::ReviewType</property>
+                    <property name="alias">Reviews::ReviewType</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::ReviewType</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::PhaseInfo::xmi:id</property>
+                    <property name="alias">PhaseInfo::xmi:id</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::PhaseInfo::xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::ReviewStart</property>
+                    <property name="alias">ReviewStart</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::ReviewStart</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::PhaseInfo::type</property>
+                    <property name="alias">PhaseInfo::type</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::PhaseInfo::type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::referenceMaterial</property>
+                    <property name="alias">Reviews::referenceMaterial</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::referenceMaterial</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::project</property>
+                    <property name="alias">Reviews::project</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::project</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::TestCycle</property>
+                    <property name="alias">TestCycle</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::TestCycle</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::href</property>
+                    <property name="alias">Reviews::href</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::href</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::type</property>
+                    <property name="alias">Reviews::type</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::objectives</property>
+                    <property name="alias">Reviews::objectives</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::objectives</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Review state::CreateStateLink</property>
+                    <property name="alias">CreateStateLink</property>
+                    <text-property name="displayName">Review state::CreateStateLink</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::ReworkPhase</property>
+                    <property name="alias">ReworkPhase</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::ReworkPhase</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::ReviewCompletion</property>
+                    <property name="alias">ReviewCompletion</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::ReviewCompletion</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::startDate</property>
+                    <property name="alias">Reviews::startDate</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::startDate</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::PhaseInfo::phaseOwnerID</property>
+                    <property name="alias">PhaseInfo::phaseOwnerID</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::PhaseInfo::phaseOwnerID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::PhaseInfo::startDate</property>
+                    <property name="alias">PhaseInfo::startDate</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::PhaseInfo::startDate</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::ReviewCycleDays</property>
+                    <property name="alias">ReviewCycleDays</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::ReviewCycleDays</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::endDate</property>
+                    <property name="alias">Reviews::endDate</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::endDate</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::createdBy</property>
+                    <property name="alias">Reviews::createdBy</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::createdBy</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::xsi:type</property>
+                    <property name="alias">Reviews::xsi:type</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::xsi:type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::name</property>
+                    <property name="alias">Reviews::name</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::DecisionPhase</property>
+                    <property name="alias">DecisionPhase</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::DecisionPhase</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Join Review-PhaseInfo::Reviews::current</property>
+                    <property name="alias">Reviews::current</property>
+                    <text-property name="displayName">Join Review-PhaseInfo::Reviews::current</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::project</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::entryCriteria</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::extraNotes</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::objectives</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::referenceMaterial</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::startDate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::createdBy</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::xsi:type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::href</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::components</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::href_1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::href_2</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::href_3</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::current</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::href_4</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::endDate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::CountRevi</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">Join Review-PhaseInfo::Reviews::ReviewType</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">Join Review-PhaseInfo::PhaseInfo::xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
+                        <property name="name">Join Review-PhaseInfo::PhaseInfo::endDate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">24</property>
+                        <property name="name">Join Review-PhaseInfo::PhaseInfo::phaseOwnerID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">25</property>
+                        <property name="name">Join Review-PhaseInfo::PhaseInfo::startDate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">26</property>
+                        <property name="name">Join Review-PhaseInfo::PhaseInfo::type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">27</property>
+                        <property name="name">Join Review-PhaseInfo::CurrentPhase</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">28</property>
+                        <property name="name">Join Review-PhaseInfo::ReviewStart</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">29</property>
+                        <property name="name">Join Review-PhaseInfo::ReviewCompletion</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">30</property>
+                        <property name="name">Join Review-PhaseInfo::PreparationPhase</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">31</property>
+                        <property name="name">Join Review-PhaseInfo::PlanningPhase</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">32</property>
+                        <property name="name">Join Review-PhaseInfo::DecisionPhase</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">33</property>
+                        <property name="name">Join Review-PhaseInfo::ReworkPhase</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">34</property>
+                        <property name="name">Join Review-PhaseInfo::ReviewCycleDays</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">35</property>
+                        <property name="name">Join Review-PhaseInfo::TestCycle</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">36</property>
+                        <property name="name">Review state::xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">37</property>
+                        <property name="name">Review state::state</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">38</property>
+                        <property name="name">Review state::CreateStateLink</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">39</property>
+                        <property name="name">CurrentPhaseState</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <simple-property-list name="dataSets">
+                <value>Join Review-PhaseInfo</value>
+                <value>Review state</value>
+            </simple-property-list>
+            <list-property name="joinConditions">
+                <structure>
+                    <property name="joinType">left-out</property>
+                    <property name="joinOperator">eq</property>
+                    <property name="leftDataSet">Join Review-PhaseInfo</property>
+                    <property name="rightDataSet">Review state</property>
+                    <expression name="leftExpression">dataSetRow["Reviews::href"]</expression>
+                    <expression name="rightExpression">dataSetRow["CreateStateLink"]</expression>
+                </structure>
+            </list-property>
+        </joint-data-set>
     </data-sets>
     <styles>
         <style name="report" id="4">
@@ -10385,17 +10997,18 @@ if ( ret != null ) {&#13;
                     </label>
                 </cell>
                 <cell id="558">
-                    <data id="2230">
-                        <property name="dataSet">Join Review-PhaseInfo</property>
+                    <data id="2358">
+                        <property name="whiteSpace">nowrap</property>
+                        <property name="dataSet">Join Review-PhaseInfo-State</property>
                         <list-property name="boundDataColumns">
                             <structure>
-                                <property name="name">CurrentPhase</property>
-                                <text-property name="displayName">CurrentPhase</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["CurrentPhase"]</expression>
+                                <property name="name">CurrentPhaseState</property>
+                                <text-property name="displayName">CurrentPhaseState</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["CurrentPhaseState"]</expression>
                                 <property name="dataType">string</property>
                             </structure>
                         </list-property>
-                        <property name="resultSetColumn">CurrentPhase</property>
+                        <property name="resultSetColumn">CurrentPhaseState</property>
                     </data>
                 </cell>
             </row>
