@@ -44,7 +44,9 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 
 		//Set default User ID if none already stored in preferences
-		final String defaultUserId = System.getProperty("user.name");
-		store.setDefault(PreferenceConstants.P_USER_ID, defaultUserId);
+		store.setDefault(PreferenceConstants.P_USER_ID, System.getProperty("user.name"));
+		PreferenceConstants.setUserEmailDefaultPreferences();
+		store.setDefault(PreferenceConstants.P_USE_DELTAS, true);
+		store.setDefault(PreferenceConstants.P_HIDE_DELTAS_FILTER, true);
 	}
 }

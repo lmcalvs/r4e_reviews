@@ -569,25 +569,9 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 */
 	@Override
 	protected void performDefaults() {
+
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
-
-		//If no email preferences are set, try to retrieve it from the external DB
-		final String userId = store.getDefaultString(PreferenceConstants.P_USER_ID);
-
-		if (R4EUIModelController.isUserQueryAvailable()) {
-			try {
-				//Get detailed info from DB if available
-				final IQueryUser query = new QueryUserFactory().getInstance();
-				final java.util.List<IUserInfo> userInfos = query.searchByUserId(userId);
-				if (userInfos.size() > 0) {
-					store.setDefault(PreferenceConstants.P_USER_EMAIL, userInfos.get(0).getEmail());
-				}
-			} catch (NamingException e) {
-				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			} catch (IOException e) {
-				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			}
-		}
+		PreferenceConstants.setUserEmailDefaultPreferences();
 
 		store.setValue(PreferenceConstants.P_USE_DELTAS, true);
 		fUseDeltasButton.setSelection(true);
@@ -613,8 +597,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fReviewedItemsFilterButton.setSelection(false);
 		store.setValue(PreferenceConstants.P_HIDE_RULE_SETS_FILTER, false);
 		fHideRuleSetsFilterButton.setSelection(false);
-		store.setValue(PreferenceConstants.P_HIDE_DELTAS_FILTER, false);
-		fHideDeltasFilterButton.setSelection(false);
+		store.setValue(PreferenceConstants.P_HIDE_DELTAS_FILTER, true);
+		fHideDeltasFilterButton.setSelection(true);
 
 		//For field editors
 		super.performDefaults();

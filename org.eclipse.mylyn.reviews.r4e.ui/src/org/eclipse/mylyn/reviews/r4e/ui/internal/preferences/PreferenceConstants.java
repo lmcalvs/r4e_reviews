@@ -18,6 +18,17 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.preferences;
 
+import java.io.IOException;
+
+import javax.naming.NamingException;
+
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
+import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
+import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
+
 /**
  * Constant definitions for plug-in preferences
  * 
@@ -155,5 +166,27 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	 * Field P_HIDE_DELTAS_FILTER. (value is ""hideDeltasFilter"")
 	 */
 	public static final String P_HIDE_DELTAS_FILTER = "hideDeltasFilter";
+
+	/**
+	 * Method setUserEmailDefaultPreferences.
+	 */
+	public static void setUserEmailDefaultPreferences() {
+		if (R4EUIModelController.isUserQueryAvailable()) {
+			try {
+				//If no email preferences are set, try to retrieve it from the external DB
+				final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
+				final String userId = store.getDefaultString(PreferenceConstants.P_USER_ID);
+				final IQueryUser query = new QueryUserFactory().getInstance();
+				final java.util.List<IUserInfo> userInfos = query.searchByUserId(userId);
+				if (userInfos.size() > 0) {
+					store.setDefault(PreferenceConstants.P_USER_EMAIL, userInfos.get(0).getEmail());
+				}
+			} catch (NamingException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			} catch (IOException e) {
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			}
+		}
+	}
 
 }
