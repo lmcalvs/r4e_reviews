@@ -7,10 +7,10 @@
     <property name="imageDPI">96</property>
     <data-sources>
         <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.xml" name="Merged_group" id="1966">
-            <property name="FILELIST">R:\lmcbout\openGroup1\r4e_work_1317148447127\Merged_group_root.xrer</property>
+            <property name="FILELIST">C:\git\org.eclipse.mylyn.reviews\r4e\org.eclipse.mylyn.reviews.r4e.report\src\org\eclipse\mylyn\reviews\r4e\report\internal\design\templateDataSource\SingleFormalTransformed\transformations\Merged_group_root.xrer</property>
         </oda-data-source>
         <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.xml" name="Merged_review" id="1967">
-            <property name="FILELIST">R:\lmcbout\openGroup1\r4e_work_1317148447127\Merged\Merged_review.xrer</property>
+            <property name="FILELIST">C:\git\org.eclipse.mylyn.reviews\r4e\org.eclipse.mylyn.reviews.r4e.report\src\org\eclipse\mylyn\reviews\r4e\report\internal\design\templateDataSource\SingleFormalTransformed\transformations\Merged\Merged_review.xrer</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -2960,34 +2960,33 @@ if ( ret == null || ret == "" ) {&#13;
                     <property name="name">xmi:id</property>
                     <property name="nativeName">xmi:id</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
                     <property name="name">key</property>
                     <property name="nativeName">key</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">3</property>
                     <property name="name">value</property>
                     <property name="nativeName">value</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//r4ecore:MapDateToDuration]#:#{xmi:id;STRING;@xmi:id},{key;STRING;@key},{value;STRING;@value}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
-  <Version>1.0</Version>
+  <Version>2.0</Version>
   <design:ResultSets derivedMetaData="true">
     <design:resultSetDefinitions>
       <design:resultSetColumns>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>href</design:name>
-            <design:position>1</design:position>
+            <design:identifier>
+              <design:name>href</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -5917,7 +5916,10 @@ if (loc == 0) {&#13;
 //Compute the LOC per Hrs&#13;
 &#13;
  timeHrs =  Total.sum ( row["value"] ) / 60;&#13;
-  loc = row["CountTotalLOC"];&#13;
+  //loc = Total.max ( row["Item TextPosition::CountTotalLOC"] );&#13;
+  loc = Total.sum ( row["Item TextPosition::CountFileNumberOfLines"]);&#13;
+&#13;
+  &#13;
   if (loc== null ) {&#13;
   	loc =0; //Init the loc if o review item found&#13;
   }&#13;
