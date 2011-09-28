@@ -30,15 +30,6 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.navigatorViewCategory"
             name="R4E">
       </category>
-      <view
-            allowMultiple="false"
-            category="org.eclipse.mylyn.reviews.r4e.ui.navigatorViewCategory"
-            class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.R4EPropertiesView"            
-            icon="icons/elcl16/lnkprop_menu.gif"
-            id="org.eclipse.mylyn.reviews.r4e.ui.properties.R4EPropertiesView"
-            name="R4E Properties"
-            restorable="true">
-      </view>
    </extension>
    <extension
          point="org.eclipse.ui.menus">

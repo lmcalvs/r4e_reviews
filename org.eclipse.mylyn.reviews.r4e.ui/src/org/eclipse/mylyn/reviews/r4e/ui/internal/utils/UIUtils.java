@@ -573,7 +573,7 @@ public class UIUtils {
 	 */
 	public static void setNavigatorViewFocus(IR4EUIModelElement aElement, boolean aExpand) {
 		if (null != aElement) {
-			//Set focus to newly created comment
+			//Set focus to element
 			if (aExpand) {
 				R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(aElement, 1);
 			} else {

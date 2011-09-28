@@ -44,11 +44,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String R4E_TEMP_FOLDER = "temp";
 
 	/**
-	 * Field R4E_PROPERTIES_VIEW_NAME. (value is ""org.eclipse.mylyn.reviews.r4e.ui.properties.R4EPropertiesView"")
-	 */
-	public static final String R4E_PROPERTIES_VIEW_NAME = "org.eclipse.mylyn.reviews.r4e.ui.properties.R4EPropertiesView"; // $codepro.audit.disable constantNamingConvention
-
-	/**
 	 * Field GROUP_FILE_SUFFIX. (value is ""_group_root.xrer"")
 	 */
 	public static final String GROUP_FILE_SUFFIX = "_group_root.xrer";

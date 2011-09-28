@@ -216,6 +216,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		if (null != fPartListener) {
 			getSite().getPage().removePartListener(fPartListener);
 		}
+
 		if (null != fContextMenu && !fContextMenu.isDisposed()) {
 			fContextMenu.dispose();
 		}
@@ -224,8 +225,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		}
 		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
 
-		if (getPropertySheetPage() != null) {
-			getPropertySheetPage().dispose();
+		if (fPropertySheetPage != null) {
+			fPropertySheetPage.dispose();
 		}
 
 		try {
@@ -378,18 +379,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 				if (event.getSelection() instanceof IStructuredSelection) {
 					final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 					if (isPropertiesLinked()) {
-						try {
-							final IWorkbenchPage page = PlatformUI.getWorkbench()
-									.getActiveWorkbenchWindow()
-									.getActivePage();
-							final IViewPart propertiesView = page.findView(R4EUIConstants.R4E_PROPERTIES_VIEW_NAME);
-							if (!page.isPartVisible(propertiesView)) {
-								page.showView(R4EUIConstants.R4E_PROPERTIES_VIEW_NAME);
-							}
-						} catch (PartInitException e) {
-							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-						}
+						showProperties(selection);
 					}
 
 					if (isEditorLinked()) {
@@ -487,7 +477,12 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			}
 
 			public void partClosed(IWorkbenchPart part) { // $codepro.audit.disable emptyMethod
-				// No implementation		
+				//Remove Properties View references when it is closed
+				if (part instanceof PropertySheet) {
+					if (((PropertySheet) part).getCurrentPage() == fPropertySheetPage) {
+						fPropertySheetPage = null;
+					}
+				}
 			}
 
 			public void partBroughtToTop(IWorkbenchPart part) { // $codepro.audit.disable emptyMethod
