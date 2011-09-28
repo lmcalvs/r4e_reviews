@@ -73,7 +73,7 @@ public class NewRuleSetElementHandler extends AbstractHandler {
 
 						//Create actual model element
 						newElement = element.createChildren(tempModelComponent);
-						UIUtils.setNavigatorViewFocus(newElement);
+						UIUtils.setNavigatorViewFocus(newElement, true);
 					}
 				} catch (ResourceHandlingException e) {
 					UIUtils.displayResourceErrorDialog(e);

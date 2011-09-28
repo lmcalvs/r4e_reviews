@@ -263,7 +263,6 @@ public class FindReviewItemsHandler extends AbstractHandler {
 									final R4EUIReviewItem uiReviewItem;
 									if (filesToAddlist.size() > 0) {
 										uiReviewItem = uiReview.createCommitReviewItem(changeSet, null);
-										UIUtils.setNavigatorViewFocus(uiReviewItem);
 									} else {
 										return;
 									}
@@ -293,6 +292,8 @@ public class FindReviewItemsHandler extends AbstractHandler {
 											R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 										}
 									}
+
+									UIUtils.setNavigatorViewFocus(uiReviewItem, true);
 
 									//Notify users if need be
 									final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();

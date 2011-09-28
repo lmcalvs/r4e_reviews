@@ -95,8 +95,8 @@ public class RestoreElementHandler extends AbstractHandler {
 									}
 								}
 								element.open();
-								UIUtils.setNavigatorViewFocus(element);
-
+								UIUtils.setNavigatorViewFocus(element, false);
+								R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 								if (element instanceof R4EUIReviewItem) {
 									addedItems.add(((R4EUIReviewItem) element).getItem());
 								} else if (element instanceof R4EUIContent) {

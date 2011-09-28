@@ -99,6 +99,6 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 
 		final R4EUIAnomalyBasic uiAnomaly = container.createAnomaly(fileContext.getTargetFileVersion(),
 				(R4EUITextPosition) aElement.getPosition());
-		UIUtils.setNavigatorViewFocus(uiAnomaly);
+		UIUtils.setNavigatorViewFocus(uiAnomaly, true);
 	}
 }

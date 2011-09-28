@@ -117,7 +117,7 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 										R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 									}
 								}
-								UIUtils.setNavigatorViewFocus(element);
+								UIUtils.setNavigatorViewFocus(element, false);
 							} catch (ResourceHandlingException e) {
 								UIUtils.displayResourceErrorDialog(e);
 							} catch (OutOfSyncException e) {

@@ -38,7 +38,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -572,12 +571,14 @@ public class UIUtils {
 	 * @param aElement
 	 *            R4EUIModelElement
 	 */
-	public static void setNavigatorViewFocus(IR4EUIModelElement aElement) {
+	public static void setNavigatorViewFocus(IR4EUIModelElement aElement, boolean aExpand) {
 		if (null != aElement) {
 			//Set focus to newly created comment
-			R4EUIModelController.getNavigatorView()
-					.getTreeViewer()
-					.expandToLevel(aElement, AbstractTreeViewer.ALL_LEVELS);
+			if (aExpand) {
+				R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(aElement, 1);
+			} else {
+				R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(aElement, 0);
+			}
 			R4EUIModelController.getNavigatorView()
 					.getTreeViewer()
 					.setSelection(new StructuredSelection(aElement), true);

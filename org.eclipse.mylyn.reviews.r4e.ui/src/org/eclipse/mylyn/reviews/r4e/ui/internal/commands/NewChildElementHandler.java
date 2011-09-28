@@ -78,7 +78,7 @@ public class NewChildElementHandler extends AbstractHandler {
 							IR4EUIModelElement newElement = null;
 							try {
 								newElement = element.createChildren(tempModelComponent);
-								UIUtils.setNavigatorViewFocus(newElement);
+								UIUtils.setNavigatorViewFocus(newElement, true);
 							} catch (ResourceHandlingException e) {
 								UIUtils.displayResourceErrorDialog(e);
 

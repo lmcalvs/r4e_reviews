@@ -360,7 +360,7 @@ public class NewReviewItemHandler extends AbstractHandler {
 			throws ResourceHandlingException, OutOfSyncException {
 
 		final R4EUISelection uiSelection = aContainer.createSelection((R4EUITextPosition) aUIPosition);
-		UIUtils.setNavigatorViewFocus(uiSelection);
+		UIUtils.setNavigatorViewFocus(uiSelection, true);
 	}
 
 	/**
@@ -397,7 +397,7 @@ public class NewReviewItemHandler extends AbstractHandler {
 		uiFileContext.addChildren(uiSelectionContainer);
 
 		final R4EUISelection uiSelection = uiSelectionContainer.createSelection((R4EUITextPosition) aUIPosition);
-		UIUtils.setNavigatorViewFocus(uiSelection);
+		UIUtils.setNavigatorViewFocus(uiSelection, true);
 
 		//Send email notification if needed
 		final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();

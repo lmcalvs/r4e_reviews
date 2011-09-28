@@ -68,7 +68,7 @@ public class CloseElementHandler extends AbstractHandler {
 							}
 						}
 						R4EUIPlugin.Ftracer.traceInfo("Closing element " + element.getName());
-						UIUtils.setNavigatorViewFocus(element);
+						UIUtils.setNavigatorViewFocus(element, false);
 					}
 				}
 				try {

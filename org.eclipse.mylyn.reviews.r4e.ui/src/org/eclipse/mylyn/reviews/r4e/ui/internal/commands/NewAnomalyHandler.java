@@ -307,7 +307,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 			OutOfSyncException {
 
 		final R4EUIComment uiComment = aUIAnomaly.createComment();
-		UIUtils.setNavigatorViewFocus(uiComment);
+		UIUtils.setNavigatorViewFocus(uiComment, true);
 	}
 
 	/**
@@ -327,7 +327,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 		final R4EUIAnomalyBasic uiAnomaly = aContainer.createAnomaly(aTargetFileVersion,
 				(R4EUITextPosition) aUIPosition);
-		UIUtils.setNavigatorViewFocus(uiAnomaly);
+		UIUtils.setNavigatorViewFocus(uiAnomaly, true);
 	}
 
 	/**
@@ -366,7 +366,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 			final R4EUIAnomalyBasic uiAnomaly = uiAnomalyContainer.createAnomalyFromDetached(aTargetFileVersion,
 					tempAnomaly, (R4EUITextPosition) aUIPosition);
-			UIUtils.setNavigatorViewFocus(uiAnomaly);
+			UIUtils.setNavigatorViewFocus(uiAnomaly, true);
 		}
 	}
 }
