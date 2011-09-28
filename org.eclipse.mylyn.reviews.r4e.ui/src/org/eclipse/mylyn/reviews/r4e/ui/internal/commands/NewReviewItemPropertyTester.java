@@ -26,7 +26,6 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.text.TextSelection;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
@@ -35,7 +34,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
@@ -156,38 +154,19 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 					if (null == ((R4EFileRevisionEditorInput) editorInput).getFileVersion().getRepositoryPath()) {
 						return false; //No valid target
 					}
-					final R4EItem parentItem = ((R4EItem) ((R4EFileRevisionEditorInput) editorInput).getFileVersion()
-							.eContainer()
-							.eContainer());
-					if (null != parentItem.getRepositoryRef()) {
-						return false; //Cannot add review item on a commit
-					}
-				} else if (editorInput instanceof R4EFileEditorInput) {
-					final R4EItem parentItem = ((R4EItem) ((R4EFileEditorInput) editorInput).getFileVersion()
-							.eContainer()
-							.eContainer());
-					if (null != parentItem.getRepositoryRef()) {
-						return false; //Cannot add review item on a commit
-					}
 					//Compare editor
 				} else if (editorInput instanceof R4ECompareEditorInput) {
 					final ITypedElement targetElement = ((R4ECompareEditorInput) editorInput).getLeftElement();
 					if (null == targetElement) {
 						return false;
 					}
-					R4EItem parentItem = null;
+					//R4EItem parentItem = null;
 					final ITypedElement element = ((R4ECompareEditorInput) editorInput).getLeftElement();
-					if (element instanceof R4EFileRevisionTypedElement) {
-						parentItem = ((R4EItem) ((R4EFileRevisionTypedElement) element).getFileVersion()
-								.eContainer()
-								.eContainer());
-					} else if (element instanceof R4EFileTypedElement) {
-						parentItem = ((R4EItem) ((R4EFileTypedElement) element).getFileVersion()
-								.eContainer()
-								.eContainer());
-					}
-					if (null != parentItem && null != parentItem.getRepositoryRef()) {
-						return false; //Cannot add review item on a commit
+
+					//NOTE: For now we only support adding new review items from an R4E Compare Editor.
+					//		Eventually this should be enhanced to include any compare editor input
+					if (!(element instanceof R4EFileRevisionTypedElement) && !(element instanceof R4EFileTypedElement)) {
+						return false;
 					}
 				}
 			}

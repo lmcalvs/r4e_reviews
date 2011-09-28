@@ -47,7 +47,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -98,11 +97,7 @@ public class OpenElementHandler extends AbstractHandler {
 								}
 							}
 							element.open();
-
-							//The action is only performed on the first element, so select it
-							final StructuredSelection newSelection = new StructuredSelection(
-									((IStructuredSelection) selection).getFirstElement());
-							R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
+							UIUtils.setNavigatorViewFocus(element);
 						} catch (ResourceHandlingException e) {
 							UIUtils.displayResourceErrorDialog(e);
 

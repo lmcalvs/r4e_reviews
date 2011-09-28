@@ -131,6 +131,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	private boolean fPropertiesLinked;
 
 	/**
+	 * Field fPropertySheetPage - the associated Tabbed Properties view
+	 */
+	protected TabbedPropertySheetPage fPropertySheetPage;
+
+	/**
 	 * Field fPartListener
 	 */
 	private IPartListener fPartListener = null;
@@ -218,6 +223,10 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			fActionSet.dispose();
 		}
 		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
+
+		if (getPropertySheetPage() != null) {
+			getPropertySheetPage().dispose();
+		}
 
 		try {
 			if (project.exists()) {
@@ -694,33 +703,31 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * Method applyDefaultFilters.
 	 */
 	public void applyDefaultFilters() {
-		if (isVisible()) {
-			final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
-			try {
-				((ReviewNavigatorActionGroup) fActionSet).resetAllFilterActions();
-				((ReviewNavigatorActionGroup) fActionSet).runReviewsCompletedFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER));
-				((ReviewNavigatorActionGroup) fActionSet).runReviewsOnlyFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_ONLY_FILTER));
-				((ReviewNavigatorActionGroup) fActionSet).runReviewsMyFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_MY_FILTER));
-				((ReviewNavigatorActionGroup) fActionSet).runReviewsParticipantFilterCommand(store.getString(PreferenceConstants.P_PARTICIPANT_FILTER));
-				((ReviewNavigatorActionGroup) fActionSet).runAnomaliesFilterCommand(store.getBoolean(PreferenceConstants.P_ANOMALIES_ALL_FILTER));
-				((ReviewNavigatorActionGroup) fActionSet).runAnomaliesMyFilterCommand(store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
-				((ReviewNavigatorActionGroup) fActionSet).runReviewElemsFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));
-				((ReviewNavigatorActionGroup) fActionSet).runHideRuleSetsFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_RULE_SETS_FILTER));
-				((ReviewNavigatorActionGroup) fActionSet).runHideDeltasFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_DELTAS_FILTER));
-				getTreeViewer().setComparator(new DateComparator());
-			} catch (ExecutionException e) {
-				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-			} catch (NotDefinedException e) {
-				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-			} catch (NotEnabledException e) {
-				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-			} catch (NotHandledException e) {
-				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-			}
+		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
+		try {
+			((ReviewNavigatorActionGroup) fActionSet).resetAllFilterActions();
+			((ReviewNavigatorActionGroup) fActionSet).runReviewsCompletedFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runReviewsOnlyFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_ONLY_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runReviewsMyFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWS_MY_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runReviewsParticipantFilterCommand(store.getString(PreferenceConstants.P_PARTICIPANT_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runAnomaliesFilterCommand(store.getBoolean(PreferenceConstants.P_ANOMALIES_ALL_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runAnomaliesMyFilterCommand(store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runReviewElemsFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runHideRuleSetsFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_RULE_SETS_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runHideDeltasFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_DELTAS_FILTER));
+			getTreeViewer().setComparator(new DateComparator());
+		} catch (ExecutionException e) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		} catch (NotDefinedException e) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		} catch (NotEnabledException e) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		} catch (NotHandledException e) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		}
 	}
 
@@ -736,9 +743,21 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	public Object getAdapter(@SuppressWarnings("rawtypes")
 	Class adapter) {
 		if (adapter.equals(IPropertySheetPage.class)) {
-			return new TabbedPropertySheetPage(this);
+			return getPropertySheetPage();
 		}
 		return super.getAdapter(adapter);
+	}
+
+	/**
+	 * Method getPropertySheetPage.
+	 * 
+	 * @return TabbedPropertySheetPage
+	 */
+	public TabbedPropertySheetPage getPropertySheetPage() {
+		if (fPropertySheetPage == null || fPropertySheetPage.getControl() == null) {
+			fPropertySheetPage = new TabbedPropertySheetPage(this);
+		}
+		return fPropertySheetPage;
 	}
 
 	/**

@@ -585,6 +585,7 @@ public class UIUtils {
 					.getSite()
 					.getPage()
 					.activate(R4EUIModelController.getNavigatorView());
+			R4EUIModelController.getNavigatorView().getPropertySheetPage().refresh();
 		}
 	}
 }

@@ -106,7 +106,7 @@ public class EditorProxy {
 
 			//Depending on which element was selected in the tree, we make the target file editable
 			//The file is editable if it was opened from the anomaly or comment level, otherwise it is not
-			//Also check to get the position we should put the cursor on and the highlight range in the editor
+			//Check to get the position we should put the cursor on and the highlight range in the editor
 			if (element instanceof R4EUIAnomalyBasic) {
 				position = ((R4EUIAnomalyBasic) element).getPosition();
 			} else if (element instanceof R4EUIComment) {
@@ -136,7 +136,7 @@ public class EditorProxy {
 
 			//Check if the base file is set, if so, we will use the compare editor.  Otherwise we use the normal editor of the appropriate type
 			if (context.isFileVersionsComparable() && !forceSingleEditor) {
-				openCompareEditor(aPage, baseFileVersion, targetFileVersion, position);
+				openCompareEditor(aPage, baseFileVersion, targetFileVersion);
 			} else {
 				if (null != targetFileVersion) {
 					openSingleEditor(aPage, targetFileVersion, position);
@@ -200,7 +200,7 @@ public class EditorProxy {
 	 *            IR4EUIPosition
 	 */
 	private static void openCompareEditor(IWorkbenchPage aPage, R4EFileVersion aBaseFileVersion,
-			R4EFileVersion aTargetFileVersion, IR4EUIPosition aPosition) {
+			R4EFileVersion aTargetFileVersion) {
 
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;

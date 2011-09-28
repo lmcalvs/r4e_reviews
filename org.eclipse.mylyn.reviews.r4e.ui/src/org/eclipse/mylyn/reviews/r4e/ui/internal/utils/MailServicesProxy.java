@@ -27,6 +27,7 @@ import java.util.TimeZone;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -442,16 +443,32 @@ public class MailServicesProxy {
 		final List<R4EUIReviewItem> items = R4EUIModelController.getActiveReview().getReviewItems();
 		for (R4EUIReviewItem item : items) {
 			if (item.isEnabled()) {
-				msgBody.append("Review Item -> " + item.getItem().getDescription() + LINE_FEED_MSG_PART
-						+ LINE_FEED_MSG_PART);
-				msgBody.append("Eclipse Project: File Path Relative to Eclipse Project[: Line range]"
-						+ LINE_FEED_MSG_PART);
+				if (null != item.getItem().getDescription()) {
+					msgBody.append("Review Item -> " + item.getItem().getDescription() + LINE_FEED_MSG_PART);
+				} else {
+					//Always use the name of the file for Resource review items
+					msgBody.append("Review Item -> " + item.getChildren()[0].getName() + " (Resource)"
+							+ LINE_FEED_MSG_PART);
+				}
+				msgBody.append("Eclipse Project: File Path (Repository | Project)[: Line range]" + LINE_FEED_MSG_PART);
 				R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
 				for (R4EUIFileContext context : contexts) {
-					if (context.isEnabled() && null != context.getTargetFileVersion()
-							&& null != context.getTargetFileVersion().getResource()) {
-						msgBody.append(TAB_MSG_PART + context.getTargetFileVersion().getResource().getProject() + ": "
-								+ context.getTargetFileVersion().getResource().getProjectRelativePath());
+					R4EFileVersion fileVersion = context.getTargetFileVersion();
+					if (context.isEnabled() && null != fileVersion) {
+						IResource resource = fileVersion.getResource();
+						msgBody.append(TAB_MSG_PART);
+						//Project
+						if (null != resource) {
+							msgBody.append(resource.getProject());
+						}
+						//Path
+						String path = fileVersion.getRepositoryPath();
+						if (null != path && !(path.equals(""))) {
+							msgBody.append(": " + path + " (Repository)");
+						} else if (null != resource) {
+							msgBody.append(": " + resource.getProjectRelativePath() + " (Project)");
+						}
+						//Line Range
 						if (null != context.getContentsContainerElement()) {
 							R4EUIContent[] contents = (R4EUIContent[]) context.getContentsContainerElement()
 									.getChildren();
@@ -459,9 +476,8 @@ public class MailServicesProxy {
 							for (R4EUIContent content : contents) {
 								msgBody.append(content.getPosition().toString() + ", ");
 							}
-						} else {
-							msgBody.append(LINE_FEED_MSG_PART);
 						}
+						msgBody.append(LINE_FEED_MSG_PART);
 					}
 				}
 				msgBody.append(LINE_FEED_MSG_PART);
@@ -496,13 +512,25 @@ public class MailServicesProxy {
 				if (null != ((R4EItem) component).getDescription()) {
 					msgBody.append("Review Item -> " + ((R4EItem) component).getDescription() + LINE_FEED_MSG_PART);
 				}
-				msgBody.append("Eclipse Project: File Path Relative to Eclipse Project[: Line range]"
-						+ LINE_FEED_MSG_PART);
+				msgBody.append("Eclipse Project: File Path (Repository | Project)[: Line range]" + LINE_FEED_MSG_PART);
 				EList<R4EFileContext> contexts = ((R4EItem) component).getFileContextList();
 				for (R4EFileContext context : contexts) {
-					if (null != context.getTarget() && null != context.getTarget().getResource()) {
-						msgBody.append(TAB_MSG_PART + context.getTarget().getResource().getProject() + ": "
-								+ context.getTarget().getResource().getProjectRelativePath());
+					R4EFileVersion fileVersion = context.getTarget();
+					if (null != fileVersion) {
+						IResource resource = fileVersion.getResource();
+						msgBody.append(TAB_MSG_PART);
+						//Project
+						if (null != resource) {
+							msgBody.append(resource.getProject());
+						}
+						//Path
+						String path = fileVersion.getRepositoryPath();
+						if (null != path && !(path.equals(""))) {
+							msgBody.append(": " + path + " (Repository)");
+						} else if (null != resource) {
+							msgBody.append(": " + resource.getProjectRelativePath() + " (Project)");
+						}
+						//Line Range
 						if (context.getDeltas().size() > 0) {
 							msgBody.append(": ");
 							EList<R4EDelta> deltas = context.getDeltas();
@@ -516,15 +544,27 @@ public class MailServicesProxy {
 				msgBody.append(LINE_FEED_MSG_PART);
 			} else if (component instanceof R4EDelta) {
 				if (!legendAppended) {
-					msgBody.append("Eclipse Project: File Path Relative to Eclipse Project[: Line range]"
+					msgBody.append("Eclipse Project: File Path (Repository | Project)[: Line range]"
 							+ LINE_FEED_MSG_PART);
 					legendAppended = true;
 				}
 				R4EFileContext context = (R4EFileContext) ((R4EDelta) component).eContainer();
-				if (null != context.getTarget() && null != context.getTarget().getResource()) {
-					msgBody.append(context.getTarget().getResource().getProject() + ": "
-							+ context.getTarget().getResource().getProjectRelativePath() + ": "
-							+ buildLineTag((R4EDelta) component) + ", ");
+				R4EFileVersion fileVersion = context.getTarget();
+				if (null != fileVersion) {
+					IResource resource = fileVersion.getResource();
+					msgBody.append(TAB_MSG_PART);
+					//Project
+					if (null != resource) {
+						msgBody.append(resource.getProject());
+					}
+					//Path
+					String path = fileVersion.getRepositoryPath();
+					if (null != path && !(path.equals(""))) {
+						msgBody.append(": " + path + " (Repository)");
+					} else if (null != resource) {
+						msgBody.append(": " + resource.getProjectRelativePath() + " (Project)");
+					}
+					msgBody.append(": " + buildLineTag((R4EDelta) component) + ", ");
 				}
 			}
 			msgBody.append(LINE_FEED_MSG_PART);
@@ -599,16 +639,30 @@ public class MailServicesProxy {
 				context = contexts[i];
 				if (0 == i) {
 					//Add format line
-					msgBody.append("FileContext: " + TAB_MSG_PART
-							+ "Eclipse Project: File Path Relative to Eclipse Project: " + LINE_FEED_MSG_PART);
+					msgBody.append("FileContext: " + TAB_MSG_PART + "Eclipse Project: File Path (Repository | Project)"
+							+ LINE_FEED_MSG_PART);
 				}
 				if (null != (R4EUIAnomalyContainer) context.getAnomalyContainerElement()) {
 					R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) ((R4EUIAnomalyContainer) context.getAnomalyContainerElement()).getChildren();
-					if (null != context.getTargetFileVersion() && null != context.getTargetFileVersion().getResource()) {
-						msgBody.append(context.getTargetFileVersion().getResource().getProject() + ": "
-								+ context.getTargetFileVersion().getResource().getProjectRelativePath()
-								+ LINE_FEED_MSG_PART);
+
+					R4EFileVersion fileVersion = context.getTargetFileVersion();
+					if (context.isEnabled() && null != fileVersion) {
+						IResource resource = fileVersion.getResource();
+						msgBody.append(TAB_MSG_PART);
+						//Project
+						if (null != resource) {
+							msgBody.append(resource.getProject());
+						}
+						//Path
+						String path = fileVersion.getRepositoryPath();
+						if (null != path && !(path.equals(""))) {
+							msgBody.append(": " + path + " (Repository)");
+						} else if (null != resource) {
+							msgBody.append(": " + resource.getProjectRelativePath() + " (Project)");
+						}
+						msgBody.append(LINE_FEED_MSG_PART);
 					}
+
 					for (int j = 0; j < anomalies.length; j++) {
 						anomaly = anomalies[j];
 						if (0 == j) {
@@ -700,15 +754,16 @@ public class MailServicesProxy {
 		if (aSource instanceof R4EUIPostponedAnomaly) {
 			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIPostponedAnomaly) aSource).getParent()).getTargetFileVersion();
 			if (null != file) {
-				if (null != file.getResource()) {
-					aMsgBody.append("Postponed File: " + file.getResource().getProject() + ": "
+				String path = file.getRepositoryPath();
+				if (null != path && !(path.equals(""))) {
+					aMsgBody.append("Postponed File Path (Repository): " + path + LINE_FEED_MSG_PART);
+				} else if (null != file.getResource()) {
+					aMsgBody.append("Postponed File Path (Project): " + file.getResource().getProject() + ": "
 							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
-				} else {
-					aMsgBody.append("Postponed File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 				}
 				aMsgBody.append("Postponed File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
-				aMsgBody.append("Postponed File: "
+				aMsgBody.append("Postponed File (Local): "
 						+ ((R4EUIFileContext) ((R4EUIPostponedAnomaly) aSource).getParent()).getName()
 						+ LINE_FEED_MSG_PART);
 			}
@@ -724,15 +779,16 @@ public class MailServicesProxy {
 				//This is an anomaly tied to specific content
 				final R4EFileVersion file = ((R4EUIFileContext) parent).getTargetFileVersion();
 				if (null != file) {
-					if (null != file.getResource()) {
-						aMsgBody.append("File: " + file.getResource().getProject() + ": "
+					String path = file.getRepositoryPath();
+					if (null != path && !(path.equals(""))) {
+						aMsgBody.append("File Path (Repository): " + path + LINE_FEED_MSG_PART);
+					} else if (null != file.getResource()) {
+						aMsgBody.append("File Path (Project): " + file.getResource().getProject() + ": "
 								+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
-					} else {
-						aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 					}
 					aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 				} else {
-					aMsgBody.append("File: "
+					aMsgBody.append("File (Local): "
 							+ ((R4EUIFileContext) ((R4EUIAnomalyBasic) aSource).getParent().getParent()).getName()
 							+ LINE_FEED_MSG_PART);
 				}
@@ -748,15 +804,16 @@ public class MailServicesProxy {
 			if (parent instanceof R4EUIFileContext) {
 				final R4EFileVersion file = ((R4EUIFileContext) parent).getTargetFileVersion();
 				if (null != file) {
-					if (null != file.getResource()) {
-						aMsgBody.append("File: " + file.getResource().getProject() + ": "
+					String path = file.getRepositoryPath();
+					if (null != path && !(path.equals(""))) {
+						aMsgBody.append("File Path (Repository): " + path + LINE_FEED_MSG_PART);
+					} else if (null != file.getResource()) {
+						aMsgBody.append("File Path (Project): " + file.getResource().getProject() + ": "
 								+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
-					} else {
-						aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 					}
 					aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 				} else {
-					aMsgBody.append("File: "
+					aMsgBody.append("File (Local): "
 							+ ((R4EUIFileContext) ((R4EUIComment) aSource).getParent().getParent().getParent()).getName()
 							+ LINE_FEED_MSG_PART);
 				}
@@ -789,36 +846,45 @@ public class MailServicesProxy {
 		} else if (aSource instanceof R4EUIFileContext) {
 			final R4EFileVersion targetFile = ((R4EUIFileContext) aSource).getTargetFileVersion();
 			if (null != targetFile) {
-				if (null != targetFile.getResource()) {
-					aMsgBody.append("Target File: " + targetFile.getResource().getProject() + ": "
+				String path = targetFile.getRepositoryPath();
+				if (null != path && !(path.equals(""))) {
+					aMsgBody.append("Target File Path (Repository): " + path + LINE_FEED_MSG_PART);
+				} else if (null != targetFile.getResource()) {
+					aMsgBody.append("Target File Path (Project): " + targetFile.getResource().getProject() + ": "
 							+ targetFile.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
-				} else {
-					aMsgBody.append("File: " + targetFile.getRepositoryPath() + LINE_FEED_MSG_PART);
 				}
-				aMsgBody.append("Target Version: " + targetFile.getVersionID() + LINE_FEED_MSG_PART);
+				aMsgBody.append("Target File Version: " + targetFile.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
-				aMsgBody.append("File: " + ((R4EUIFileContext) aSource).getName() + LINE_FEED_MSG_PART);
+				aMsgBody.append("Target File (Local): " + ((R4EUIFileContext) aSource).getName() + LINE_FEED_MSG_PART);
 				aMsgBody.append("Target File Version: None" + LINE_FEED_MSG_PART);
 			}
 			final R4EFileVersion baseFile = ((R4EUIFileContext) aSource).getBaseFileVersion();
-			if (null == baseFile) {
-				aMsgBody.append("Base File Version: None" + LINE_FEED_MSG_PART);
-			} else {
+			if (null != baseFile) {
+				String path = baseFile.getRepositoryPath();
+				if (null != path && !(path.equals(""))) {
+					aMsgBody.append("Base File Path (Repository): " + path + LINE_FEED_MSG_PART);
+				} else if (null != baseFile.getResource()) {
+					aMsgBody.append("Base File Path (Project): " + baseFile.getResource().getProject() + ": "
+							+ baseFile.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+				}
 				aMsgBody.append("Base File Version: " + baseFile.getVersionID() + LINE_FEED_MSG_PART);
+			} else {
+				aMsgBody.append("Base File (Local): " + ((R4EUIFileContext) aSource).getName() + LINE_FEED_MSG_PART);
+				aMsgBody.append("Base File Version: None" + LINE_FEED_MSG_PART);
 			}
-
 		} else if (aSource instanceof R4EUIContent) {
 			final R4EFileVersion file = ((R4EUIFileContext) ((R4EUIContent) aSource).getParent().getParent()).getTargetFileVersion();
 			if (null != file) {
-				if (null != file.getResource()) {
-					aMsgBody.append("File: " + file.getResource().getProject() + ": "
+				String path = file.getRepositoryPath();
+				if (null != path && !(path.equals(""))) {
+					aMsgBody.append("File Path (Repository): " + path + LINE_FEED_MSG_PART);
+				} else if (null != file.getResource()) {
+					aMsgBody.append("File Path (Project): " + file.getResource().getProject() + ": "
 							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
-				} else {
-					aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
 				}
 				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
-				aMsgBody.append("File: "
+				aMsgBody.append("File (Local): "
 						+ ((R4EUIFileContext) ((R4EUIContent) aSource).getParent().getParent()).getName()
 						+ LINE_FEED_MSG_PART);
 			}

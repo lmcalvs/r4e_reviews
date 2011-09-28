@@ -95,7 +95,7 @@ public class RestoreElementHandler extends AbstractHandler {
 									}
 								}
 								element.open();
-								R4EUIModelController.getNavigatorView().getTreeViewer().refresh(); //TODO temporary fix to restore element properly
+								UIUtils.setNavigatorViewFocus(element);
 
 								if (element instanceof R4EUIReviewItem) {
 									addedItems.add(((R4EUIReviewItem) element).getItem());
@@ -108,7 +108,8 @@ public class RestoreElementHandler extends AbstractHandler {
 							} catch (OutOfSyncException e) {
 								UIUtils.displaySyncErrorDialog(e);
 							} catch (FileNotFoundException e) {
-								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage()
+										+ ")");
 								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 							} catch (ReviewVersionsException e) {
 								UIUtils.displayVersionErrorDialog(e);

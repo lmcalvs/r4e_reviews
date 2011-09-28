@@ -100,17 +100,5 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 		final R4EUIAnomalyBasic uiAnomaly = container.createAnomaly(fileContext.getTargetFileVersion(),
 				(R4EUITextPosition) aElement.getPosition());
 		UIUtils.setNavigatorViewFocus(uiAnomaly);
-
-		/*
-		if (null != uiAnomaly) {
-			//Set focus to newly created anomaly comment
-			R4EUIModelController.getNavigatorView()
-					.getTreeViewer()
-					.expandToLevel(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
-			R4EUIModelController.getNavigatorView()
-					.getTreeViewer()
-					.setSelection(new StructuredSelection(uiAnomaly), true);
-		}
-		*/
 	}
 }
