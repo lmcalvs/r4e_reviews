@@ -167,7 +167,7 @@ public class CommandUtils {
 		final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
 		if (null != connector) {
 			final ScmArtifact artifact = connector.getArtifact(aFile);
-			if (null != artifact) {
+			if (null != artifact && null != artifact.getPath()) {
 				//File found in remote repo.  
 
 				//Here we check if the file in the remote repository is different than the input file.
@@ -277,7 +277,7 @@ public class CommandUtils {
 	public static R4EFileVersion copyRemoteFileToLocalRepository(IRFSRegistry aLocalRepository, ScmArtifact aArtifact)
 			throws ReviewsFileStorageException, CoreException {
 
-		if (aArtifact.getPath().equals(INVALID_PATH)) {
+		if (null == aArtifact.getPath() || aArtifact.getPath().equals(INVALID_PATH)) {
 			return null; //File not found in remote repository
 		}
 
@@ -504,7 +504,7 @@ public class CommandUtils {
 	public static void updateFileVersion(R4EFileVersion aTargetFileVer, IFile aSrcFile) {
 
 		aTargetFileVer.setName(aSrcFile.getName());
-		aTargetFileVer.setRepositoryPath(aSrcFile.getLocation().toPortableString());
+		aTargetFileVer.setRepositoryPath(""); //No repositories for workspace files since they are not in source control
 		aTargetFileVer.setResource(aSrcFile);
 		aTargetFileVer.setPlatformURI(ResourceUtils.toPlatformURIStr(aSrcFile));
 	}
