@@ -469,7 +469,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		getSite().getPage().addPartListener(fPartListener = new IPartListener() {
 
 			public void partOpened(IWorkbenchPart part) { // $codepro.audit.disable emptyMethod
-				// No implementation	
+				// No implementation
 			}
 
 			public void partDeactivated(IWorkbenchPart part) { // $codepro.audit.disable emptyMethod
@@ -546,11 +546,17 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	protected void showProperties(ISelection aSelection) {
 		//Force show properties view
 		try {
-			final IViewPart propertiesView = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow()
-					.getActivePage()
-					.showView("org.eclipse.ui.views.PropertySheet");
-			((PropertySheet) propertiesView).selectionChanged(getSite().getPart(), aSelection);
+			final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			final IViewPart propertiesView = page.findView("org.eclipse.ui.views.PropertySheet");
+			if (!page.isPartVisible(propertiesView)) {
+				//Make sure that the properties view references are updated properly before showing it
+				if (null != fPropertySheetPage) {
+					fPropertySheetPage.dispose();
+					fPropertySheetPage = null;
+				}
+				getPropertySheetPage();
+				page.showView("org.eclipse.ui.views.PropertySheet");
+			}
 		} catch (PartInitException e) {
 			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
