@@ -153,6 +153,7 @@ public class NextStateHandler extends AbstractHandler {
 						}
 						R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 						UIUtils.setNavigatorViewFocus(element, false);
+						R4EUIModelController.getNavigatorView().getPropertySheetPage().refresh();
 					}
 				}
 				return Status.OK_STATUS;

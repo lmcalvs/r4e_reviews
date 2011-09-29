@@ -589,7 +589,8 @@ public class UIUtils {
 					.getSite()
 					.getPage()
 					.activate(R4EUIModelController.getNavigatorView());
-			R4EUIModelController.getNavigatorView().getPropertySheetPage().refresh();
+			//TODO removed for now might cause a NPtrExc
+			//R4EUIModelController.getNavigatorView().getPropertySheetPage().refresh();
 		}
 	}
 }

@@ -1257,7 +1257,10 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	@Override
 	public boolean isReportElementCmd() {
 		//Any type of review, is allowed
-		return R4EUIPlugin.isUserReportAvailable();
+		if (isEnabled()) {
+			return R4EUIPlugin.isUserReportAvailable();
+		}
+		return false;
 	}
 
 	/**
@@ -1398,9 +1401,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (!isOpen()
-				&& isEnabled()
-				&& !(((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
+		if (!isOpen() && isEnabled()) {
 			return true;
 		}
 		return false;
@@ -1417,8 +1418,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		if (!(getParent().isEnabled())) {
 			return false;
 		}
-		if (isOpen() || isEnabled()
-				|| ((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+		if (isOpen() || isEnabled()) {
 			return false;
 		}
 		return true;
