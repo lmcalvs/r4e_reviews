@@ -170,8 +170,12 @@ public class CommandUtils {
 			if (null != artifact) {
 				//File found in remote repo.  
 
-				//TODO:  This is a hack because the versions always return the latest file stored.
-				remoteID = artifact.getId();
+				//Here we check if the file in the remote repository is different than the input file.
+				//We cannot use the artifact ID directly and we need to fetch and calculate that SHA of the remote file 
+				//because we do not know which version control system is used.
+				//We need to do this comparison because the versions always return the latest file stored.
+				//remoteID = artifact.getId();
+				remoteID = localRepository.blobIdFor(artifact.getFileRevision(null).getStorage(null).getContents());
 				localID = localRepository.blobIdFor(aFile.getContents());
 				if (localID.equals(remoteID)) {
 					//The files are the same. Copy from the remote repo
@@ -207,13 +211,17 @@ public class CommandUtils {
 			return updateBaseFile(editorFile);
 		} else if (input instanceof R4ECompareEditorInput) {
 			//If we get here, this is because we are trying to act on the compare editor contents
-			//this means that the file we are acting on is already in the local repository
-			//in this case, we only need to provide the versionId of this file
-			final ITypedElement element = ((R4ECompareEditorInput) input).getRightElement();
-			if (element instanceof R4EFileRevisionTypedElement) {
-				return ((R4EFileRevisionTypedElement) element).getFileVersion();
-			} else if (element instanceof R4EFileTypedElement) {
-				return ((R4EFileTypedElement) element).getFileVersion();
+			//We have two cases:
+			//1) The left file is an R4EFileTypedElement. This means that it is a modified file not yet in source control.
+			//	 In this case, the base file file the version that is in source control i.e. the right file version (if it is in source control).
+			//2) The left file is an R4EFileRevisionTypedElement. This means that it is a file in source control.
+			//   In this case, the base file for the new Resource Review item should be the same as the target file i.e. the left file version 
+			ITypedElement leftElement = ((R4ECompareEditorInput) input).getLeftElement();
+			ITypedElement rightElement = ((R4ECompareEditorInput) input).getRightElement();
+			if (leftElement instanceof R4EFileTypedElement && rightElement instanceof R4EFileRevisionTypedElement) {
+				return ((R4EFileRevisionTypedElement) rightElement).getFileVersion();
+			} else if (leftElement instanceof R4EFileRevisionTypedElement) {
+				return ((R4EFileRevisionTypedElement) leftElement).getFileVersion();
 			} else {
 				return null;
 			}
@@ -243,7 +251,7 @@ public class CommandUtils {
 		final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
 		if (null != connector) {
 			final ScmArtifact artifact = connector.getArtifact(aFile);
-			if (null != artifact) {
+			if (null != artifact && null != artifact.getId()) {
 				//File was modified, so we need to fetch the base file from the versions repository and copy it to our own local repository
 				final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
 						.getReview());

@@ -60,11 +60,13 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDelta;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDeltaContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
@@ -395,9 +397,10 @@ public class UIUtils {
 			position = ((R4EUIAnomalyBasic) element).getPosition();
 		} else if (element instanceof R4EUIComment) {
 			position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
-		} else if (element instanceof R4EUIContent) {
+		} else if (element instanceof R4EUISelection) {
 			position = ((R4EUIContent) element).getPosition();
-			final R4EUIContentsContainer container = (R4EUIContentsContainer) ((R4EUIContent) element).getParent();
+		} else if (element instanceof R4EUIDelta) {
+			final R4EUIDeltaContainer container = (R4EUIDeltaContainer) ((R4EUIDelta) element).getParent();
 			selectionIndex = container.getContentsList().indexOf(element);
 		} else {
 			return; //Do nothing if any other element is selected
