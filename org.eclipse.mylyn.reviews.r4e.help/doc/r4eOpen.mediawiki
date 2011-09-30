@@ -43,12 +43,12 @@ if Subversion is to be used, add the subclipse site: http://subclipse.tigris.org
 
 === Install Version Control System Features ===
 R4E uses Mylyn Versions to interact with different version control systems.
-* Git
+* Git: 
 :Git support is provided by interfacing with Egit/Jgit, 
 :Installing the R4E feature automatically installs Egit/Jgit if it's not yet available in the Eclipse installation.
 :So no specific action is needed for Egit installation in this step.
 
-* Subversion (SVN)
+* Subversion (SVN): 
 :If there is a need to interact with an SVN repository, install the subclipse feature.
 :Help -> Install New Software, and select the subclipse site provisioned above.<br>
 <br>
