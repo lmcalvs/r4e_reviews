@@ -92,6 +92,10 @@
 		<p>The filters available are: </p>
 		<ul>
 			<li>
+				<i>Hide Completed Reviews</i>: Hide all the reviews that are in phase 
+				<i>COMPLETED</i>
+			</li>
+			<li>
 				<i>Show Reviews Only</i>: Show only Review Groups and Review elements 
 			</li>
 			<li>
@@ -124,7 +128,7 @@
 			</li>
 		</ul>
 		<p>
-			<br/> 
+			<br/>
 		</p>
 		<h3 id="Setting_Elements_Reviewed_State">Setting Elements Reviewed State</h3>
 		<p>To help Users to keep track of the content that was reviewed it is possible to mark relevant Review Navigator elements as reviewed using the context menu Mark/Unmark as User Reviewed command. This will put a little done decorator 
@@ -134,11 +138,20 @@
 			<br/> 
 		</p>
 		<h3 id="Other_Review_Navigator_Commands">Other Review Navigator Commands</h3>
-		<p>These other commands are also available from the Navigator view toolbar: </p>
+		<p>These other commands are also available from the Navigator view toolbar and/or drop-down menu: </p>
 		<ul>
 			<li>
+				<i>Progress Element</i> 
+				<img border="0" src="images/nxtstate_menu.gif"/>: Change the state of a stateful element (e.g. Review, Anomaly) to its next logical state.  This is a shortcut and can also be done through the R4E Properties view for the element.
+			</li>
+			<li>
+				<i>Regress Element</i> 
+				<img border="0" src="images/prevstate_menu.gif"/>: Change the state of a stateful element (e.g. Review, Anomaly) to its previous logical state.  This is a shortcut and can also be done through the R4E Properties view for the element.  Take note that this is the only way to change the state of a 
+				<i>COMPLETED</i> Review.
+			</li>
+			<li>
 				<i>Collapse Navigator tree</i> 
-				<img border="0" src="images/Clpseall_menu.gif"/>: Collapse the current Navigator tree 
+				<img border="0" src="images/Clpseall_menu.gif"/>: Collapse the current Navigator tree.
 			</li>
 			<li>
 				<i>Expand Navigator tree</i> 
@@ -256,7 +269,7 @@
 			<br/> 
 		</p>
 		<h3 id="Opening_and_Closing_of_Review_Groups_and_Reviews">Opening and Closing of Review Groups and Reviews</h3>
-		<p>In order to be able to see the Review Group child Reviews, a Review Group must be open. Close Review Group are recognized because of the hollow Group icon they show. You can open a closed Review Group by right-clickindgon it and selecting the 
+		<p>In order to be able to see the Review Group child Reviews, a Review Group must be open. Closed Review Group are shown with hollow Group icons. You can open a closed Review Group by right-clicking on it and selecting the 
 			<i>Open Element</i> command, or simply by double-clicking on it. &nbsp;Closing unused Review Groups make navigation easier and free up memory and resources, so the Groups should be closed when they are unused. 
 		</p>
 		<p>Likewise, reviews can also be open and closed using the same mecanism. The only difference is that only one review (called the Active Review) can be open at any given time. Opening another Review closes the currently open one. </p>
@@ -265,7 +278,7 @@
 			<br/>
 		</p>
 		<h3 id="Adding_Participants_to_a_Review">Adding Participants to a Review</h3>
-		<p>Participants are automatically added to the current Review as soon as they add review items to it or create an anomaly. It is also possible to add participants manually. </p>
+		<p>Participants are automatically added to the current Review as soon as they add review items to it or create an anomaly. It is also possible to add them manually. </p>
 		<p>To do so, right click on the parent review and select the 
 			<i>New Participant</i> Command from the R4E Context Menu. 
 		</p>
@@ -310,9 +323,9 @@
 		<p>
 			<br/> 
 		</p>
-		<p>Any field can be entered in the User Information section and by clicking the Search button, an LDAP query will be sent to the database. If any matches are found, the results will be displayed in the Query Results section. </p>
+		<p>Any field can be entered in the User Information section and by clicking the Search button, an LDAP query will be sent to the database, using information filled-in the LDAP configuration section of the R4E Preferences Page. If any matches are found, the results will be displayed in the Query Results section. </p>
 		<p>
-			<br/> 
+			<br/>
 		</p>
 		<h3 id="Creating_a_Review_Item">Creating a Review Item</h3>
 		<p>In R4E, Review Items are a collection of one or more files, or parts of files, that are to be reviewed. There are two types of Review Items that exist: Commit Review Items and Resource Review Items. </p>
@@ -373,7 +386,7 @@
 		<p>
 			<br/> 
 		</p>
-		<p>This will show the Git connector Commit dialog. </p>
+		<p>This will show the Version Control System Commit Dialog (Here shown for the Git connector). </p>
 		<p>
 			<br/> 
 		</p>
@@ -401,7 +414,7 @@
 			<img border="0" src="images/Removr_tsk.png"/> icon Files in the commit that are out of sync i.e. for which the version to review and the version present in the users workspace differ will be shown with the &gt; sign prepended to the filename. Such files can be reviewed, but to use the full navigatability provided by the editors, it is stongly recommended that the files be in sync with the workspace whenever possible. 
 		</p>
 		<p>
-			<br/> 
+			<br/>
 		</p>
 		<h3 id="Creating_an_Anomaly">Creating an Anomaly</h3>
 		<p>R4E Anomalies are raised by reviewers to flag problems or add comments on specific parts of the contents as part of the review process. </p>
@@ -648,8 +661,8 @@
 			<br/>
 		</p>
 		<h2 id="Working_with_R4E_Properties">Working with R4E Properties</h2>
-		<p>Updates to any review elements are performed via the R4E Properties View. If the R4E properties view is linked to the Review Navigator View, it will show up when any Review Navigator element is selected and will show the properties that are associated with this element. </p>
-		<p>The R4E Properties View is a tab properties viw that consists of three tab. </p>
+		<p>Updates to any review elements are performed via the R4E Properties View. The R4E Properties view uses the Generic Eclipse Properties View to display the R4E Properties and will show up when any Review Navigator element is selected to display the properties that are associated with this element. </p>
+		<p>The R4E Properties View is a tabbed properties view that consists of two tabs. </p>
 		<ul>
 			<li>The 
 				<i>Detailed Tab</i> show properties in an custom view where they can be edited.
@@ -725,7 +738,7 @@
 			</li>
 		</ul>
 		<ul>
-			<li>In the Decision Information expandable section
+			<li>In the Decision Information expandable section (Informal/Formal reviews only)
 				<ul>
 					<li>Meeting data for the decision meeting (Subject, Time, Duration, Location). This can be updated at any time using the 
 						<i>Update ''button. The data can be fetched using the ''Refresh</i> button 
@@ -761,12 +774,18 @@
 		</p>
 		<p>Properties for the File Context Element include a section for the base (predecessor) and target (current) files. Each section contains: </p>
 		<ul>
-			<li>The Name of the file </li>
-			<li>The Path to the file </li>
+			<li>The Name of the file.</li>
 			<li>The Version tag or Id for the file.</li>
+			<li>The Path Information for the file.
+				<ul>
+					<li>The Repository path show the path to the remote version-controlled repository where the file is located.</li>
+					<li>The Absolute path show the local absolute path to the file.</li>
+					<li>The Project Relative Path show the relative path to the file in the Eclipse workspace.</li>
+				</ul>
+			</li>
 		</ul>
 		<p>
-			<br/> 
+			<br/>
 		</p>
 		<h3 id="Working_with_Selections_and_Deltas_Properties">Working with Selections and Deltas Properties</h3>
 		<p>
@@ -991,8 +1010,108 @@
 		</p>
 		<p>The meeting info stored in the system can be retrive at all time by using the ''Refresh ''button in the Extra property tab, under the Decision Information section, for the selected Review element. </p>
 		<p>
+			<br/>
+		</p>
+		<h2 id="Using_Statistical_Reports">Using Statistical Reports</h2>
+		<p>Statistical reports provide useful information to analyze the efficiency of one or several reviews.</p>
+		<h3 id="Generating_Reports">Generating Reports</h3>
+		<p>To generate a statistical report, select in the Review Navigator view one or more review, the right click and select "Generate Report"</p>
+		<p>
+			<img border="0" src="images/GenerateReport.png"/>
+		</p>
+		<p>Two types of report can be generated.</p>
+		<ul>
+			<li>Inspection record: when you select only one review to generate a report, this type of report will be initiated. You will see a list of anomalies at the end of the report.</li>
+		</ul>
+		<ul>
+			<li>Global report: when two or more review are selected. It gives a summary of information based on the selected reviews.</li>
+		</ul>
+		<p>The report folder is located under the group folder. The group folder is specified in the R4E Preferences,</p>
+		<p>If the user is not allowed to create a report in the existing group report directory, a new pop-up allows the user to select or to create a new directory to save the requested report. The user can enter a path or select the Browse button to select a location where to store the report. </p>
+		<p>
 			<br/> 
 		</p>
+		<p>
+			<img border="0" src="images/r4e_report_dir_selection.png"/> 
+		</p>
+		<p>
+			<br/> 
+		</p>
+		<p>When the report generation is completed, a pop-up window will indicate where the report was stored.</p>
+		<p>
+			<br/> 
+		</p>
+		<p>
+			<img border="0" src="images/GeneratingReport.png"/> 
+		</p>
+		<p>
+			<br/> 
+		</p>
+		<p>Once the OK button is clicked, the HTML report will be displayed in the default web browser or in the Eclipse web browser depending on the Eclipse web browsing preferences.</p>
+		<h3 id="Report_Contents">Report Contents</h3>
+		<p>
+			<br/> 
+		</p>
+		<p>
+			<img border="0" src="images/Inspection1.png"/> 
+		</p>
+		<p>
+			<br/>
+		</p>
+		<h4 id="Report_Summary">Report Summary</h4>
+		<p>This section lists the reviews that were selected for the report. The review name, group, component, review item type, review type and project information are displayed for each review. The total number of reviews is also displayed at the bottom of this section when more than one review was selected.</p>
+		<h4 id="Review_Anomaly_Statistics">Review Anomaly Statistics</h4>
+		<p>This section provides the following anomaly counts.</p>
+		<ul>
+			<li>Totals: Total number of anomalies. </li>
+			<li>Ranking: Breakdown of minor and major anomalies. </li>
+			<li>Class: Breakdown of anomalies per class. </li>
+			<li>State: Breakdown of anomalies per state. </li>
+		</ul>
+		<h4 id="Review_Efficiency_Statistics">Review Efficiency Statistics</h4>
+		<p>This section provides several interesting review efficiency statistics divided in the following groups.</p>
+		<h5 id="Review_Items">Review Items</h5>
+		<ul>
+			<li>Total number of files: Total number of files for which review items have been specified. </li>
+			<li>Total Review Items: Total number of review items. </li>
+			<li>Total LOC: Total number of reviewed lines of code as specified by the review items. This total includes blank lines and lines with comments. </li>
+			<li>Number of Participants: Total number of participants. </li>
+			<li>LOC / Participant: Number of reviewed lines of code per participant. </li>
+			<li>Preparation Review Rate: Number of reviewed lines of code per hour spent to perform the examination of review items (preparation time). </li>
+			<li>Decision Review Rate: Number of reviewed lines of code per hour spent at the decision meeting. </li>
+		</ul>
+		<h5 id="Review_Anomalies">Review Anomalies</h5>
+		<ul>
+			<li>Preparation Review Rate: Number of created anomalies per hour spent to perform the examination of review items (preparation time). </li>
+			<li>Decision Review Rate: Number of created and imported anomalies per hour spent at the decision meeting. The decision time is based on the meeting time multiplied by the number of meeting participants. For example, if a decision meeting lasts 1 hour and has 3 participants, the decision time is 3 hours. </li>
+			<li>Defect Density: Number of accepted anomalies (in states Accepted, Fixed and Verified) per reviewed lines of code. </li>
+			<li>Anomaly / Participant: Number of created anomalies per participant. </li>
+		</ul>
+		<h5 id="Average_Time_Line">Average Time Line</h5>
+		<ul>
+			<li>Review Start: Review start date. This is only valid when only one review was selected for the report. </li>
+			<li>Review Completion: Review completion date. This is only valid when only one review was selected for the report. </li>
+			<li>Review Cycle: Average number of days for a review cycle (all review phases). </li>
+			<li>Planning Phase: Average number of days spent in the planning phase. This statistic is only valid for formal reviews. </li>
+			<li>Preparation Phase: Average number of days spent in the preparation phase. This statistic is only valid for formal reviews. </li>
+			<li>Decision Phase: Average number of days spent in the decision phase. This statistic is only valid for formal reviews. </li>
+			<li>Rework Phase: Average number of days spent in the rework phase. This statistic is only valid for formal reviews. </li>
+		</ul>
+		<h5 id="Average_Effort_per_Participant">Average Effort per Participant</h5>
+		<ul>
+			<li>Preparation Time: Average time spent to perform examination of review items per participant. </li>
+			<li>Decision Time: Average time spent at the decision meeting in hours per participant who participated in the meeting. </li>
+			<li>Average Review Time: Average review time spent per participant.</li>
+		</ul>
+		<h5 id="Total_Review_Effort">Total Review Effort</h5>
+		<ul>
+			<li>Preparation Time: Total time spent to perform examination of review items (preparation time). </li>
+			<li>Decision Time: Total time spent at the decision meeting. The decision time is based on the meeting time multiplied by the number of meeting participants. For example, if a decision meeting lasts 1 hour and has 3 participants, the decision time is 3 hours. </li>
+			<li>Total Review Time: Total review time.</li>
+		</ul>
+		<h5 id="List_of_Anomalies">List of Anomalies</h5>
+		<p>This section is only available for the inspection record. The list of anomalies raised during the review with the following information:
+			File Name, line range, tile of the anomaly, class, ranking and the due date.</p>
 		<h2 id="Performing_Reviews">Performing Reviews</h2>
 		<h3 id="Performing_Basic_Reviews">Performing Basic Reviews</h3>
 		<p>In R4E, basic reviews are the simplest form of reviews available. Basic reviews are stateless and the anomalies that are raised are also stateless. This means the the participants must track progress of the Review and of the raised Anomaly externally. </p>

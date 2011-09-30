@@ -2,14 +2,21 @@
 <toc topic="help/Reviews/R4E/User_Guide/User-Guide.html" label="R4E Documentation">
 	<topic href="help/Reviews/R4E/User_Guide/User-Guide.html" label="R4E User Guide">
 		<topic href="help/Reviews/R4E/User_Guide/User-Guide.html" label="Getting Started">
-			<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Overview" label="Overview"></topic>
+			<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Overview" label="Overview">
+				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#R4E_main_interfaces" label="R4E main interfaces"></topic>
+			</topic>
 			<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Installing_R4E" label="Installing R4E">
+				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Provision_Software_Sites" label="Provision Software Sites"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Install_Version_Control_System_Features" label="Install Version Control System Features"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Install_R4E_feature" label="Install R4E feature"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Install_Versions_Connectors" label="Install Versions Connectors"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Starting_R4E" label="Starting R4E"></topic>
 			</topic>
 			<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#R4E_Configuration" label="R4E Configuration">
 				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#R4E_General_Preferences" label="R4E General Preferences"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#R4E_LDAP_Settings" label="R4E LDAP Settings"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#SMTP_Hosts_Definitions" label="SMTP Hosts Definitions"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#R4E_Capabilities" label="R4E Capabilities"></topic>
 			</topic>
 			<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Eclipse_Project_Configuration" label="Eclipse Project Configuration"></topic>
 			<topic href="help/Reviews/R4E/User_Guide/User-Guide.html#Tutorials" label="Tutorials">
@@ -109,6 +116,21 @@
 			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Using_Notifications" label="Using Notifications">
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Using_Email_Notifications" label="Using Email Notifications"></topic>
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Using_Meeting_Notifications" label="Using Meeting Notifications"></topic>
+			</topic>
+			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Using_Statistical_Reports" label="Using Statistical Reports">
+				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Generating_Reports" label="Generating Reports"></topic>
+				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Report_Contents" label="Report Contents">
+					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Report_Summary" label="Report Summary"></topic>
+					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Review_Anomaly_Statistics" label="Review Anomaly Statistics"></topic>
+					<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Review_Efficiency_Statistics" label="Review Efficiency Statistics">
+						<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Review_Items" label="Review Items"></topic>
+						<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Review_Anomalies" label="Review Anomalies"></topic>
+						<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Average_Time_Line" label="Average Time Line"></topic>
+						<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Average_Effort_per_Participant" label="Average Effort per Participant"></topic>
+						<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Total_Review_Effort" label="Total Review Effort"></topic>
+						<topic href="help/Reviews/R4E/User_Guide/Tasks.html#List_of_Anomalies" label="List of Anomalies"></topic>
+					</topic>
+				</topic>
 			</topic>
 			<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Performing_Reviews" label="Performing Reviews">
 				<topic href="help/Reviews/R4E/User_Guide/Tasks.html#Performing_Basic_Reviews" label="Performing Basic Reviews"></topic>

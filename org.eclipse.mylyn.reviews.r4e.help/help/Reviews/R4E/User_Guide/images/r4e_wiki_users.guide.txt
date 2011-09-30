@@ -1,0 +1,83 @@
+= Getting Started =   
+==Overview==
+Review for Eclipse (R4E) is a set of Eclipse plugins that provide eclipse-integrated code and text review functionality.  R4E supports reviewing files associated to Eclipse projects and optionally included under a Version Control System.  Three review workflows are included (Basic, Informal and IEEE standard 28-compatible Formal reviews).  
+
+The main purpose of R4E is to review Source Code, especially Java and C/C++ Source code.  Eventually, support for reviewing Data Models (based on EMF) will be included.  R4E also aims to support multiple Version Control Systems (via Eclipse Team Providers). Git (implemented in Eclipse through EGit/JGit) is the only one supported in the initial version.
+
+The R4E User Interface includes three main components:  R4E Review Navigator View, R4E Properties View and R4E Context Menus
+
+
+[[Image:R4E_main.png]]
+
+The R4E Review Navigator View is the main interface to R4E.  It shows all the R4E elements in a hierarchical tree structure
+The R4E Properties view presents the properties and attributes attached to each R4E element represented in the Review Navigator view.  Some elements values can be altered after creation, and some other or read-only and settable at creation time.
+The R4E Context Menu appears in Eclipse Context menus whenever it is possible to use R4E command is this particular context.  Please refer to [section] below for more information
+
+
+== Starting R4E ==
+
+The start up R4E, show the Review Navigator View using the Eclipse Show View menu:
+
+[[Image:R4E_show_view.png]]
+
+
+== R4E Configuration  ==
+
+The R4E Configuration can be entered by accessing the R4E Preferences Pages, which are part of the Eclipse Global Preferences.  There are three R4E Preference Pages:  R4E General Preferences, R4E LDAP Settings, and SMTP Hosts definitions.
+
+=== R4E General Preferences ===
+R4E General Preferences page is split up into 4 tab sections.
+
+
+*User Tab
+
+[[Image:R4E_preferences_general_user.png]]
+
+This is used to enter the current user details.  The User ID is set by default to the login ID of the current session and can be modified to any String that can be used to identify the user.
+The User Email should be set to a valid email for the user.  This is used to notify the user information about reviews he is currently part of.  Take note that if the LDAP Preferences are filled-in (see below) the a corresponding LDAP database can be resolved, then this field will be automatically be set based on the User ID entered.
+
+
+*Groups Tab
+
+[[Image:R4E_preferences_general_groups.png]]
+
+This is used to specify the location of the data files that contain Review Group information.  See below [link] for more information on Review Group.  The Name and Description fields show additional information attached to the selected Review Group file.  Typically, all R4E data files will be located on a shared network drive.
+Users can add one or multiple files to their Workspace as needed using the Add Button.  Files can be removed from the Workspace by pressing the Remove Button.  Files can be moved up or down in the list by clicking the corresponding button.  This will affect the order in which the Groups are displayed in the Review Navigator [link]
+
+
+*Rule Sets Tab
+
+[[Image:R4E_preferences_general_ruleSets.png]]
+
+This is used to specify the location of the data files that contain Rule Set information.  See below [link] for more information on Rule Sets.  The Name and Version fields show additional information attached to the selected Rule Set file.  Typically, all R4E data files will be located on a shared network drive.
+Users can add one or multiple files to their Workspace as needed using the Add Button.  Files can be removed from the Workspace by pressing the Remove Button.  Files can be moved up or down in the list by clicking the corresponding button.  This will affect the order in which the Rule Sets are displayed in the Review Navigator [link]
+
+
+*Filter Tabs
+
+[[Image:R4E_preferences_general_filters.png]]
+
+This is used to set-up default filters that will be applied to the Review Navigator view.  See the Filter section below [link] for the various filters description
+
+
+
+=== R4E LDAP Settings ===
+
+[[Image:R4E_preferences_ldap.png]]
+
+This is used the specify configuration for an available LDAP database server that contains information about the users.
+The Server Information part contains LDAP server information (Host, Port, DN (Distinguished Name), and Login User Name and Password) to use.
+The Mandatory Parameters part contains mapping values for LDAP attributes that maps the User Id, Name and E-Mail parameters
+The Optional Parameters part contains mapping values for LDAP attributes that maps optional parameters that could exists in the database.
+
+This is optional.  If no information is entered, LDAP funxtionality will be unavailable, but will not affect R4E otherwise
+
+
+=== SMTP Hosts Definitions ===
+
+[[Image:R4E_preferences_smtp.png]]
+
+This is used to specify the mail server(s) that will be used to send manual and automatic email notifications to the users.  More than one server can be specified.
+Users can add one or multiple servers to their Workspace as needed using the Add Button.  Servers can be removed from the Workspace by pressing the Remove Button.  Servers can be moved up or down in the list by clicking the corresponding button.  The primary server should always be the first on the list.
+
+
