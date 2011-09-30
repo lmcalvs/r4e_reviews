@@ -146,6 +146,8 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 				final R4EReviewDecision decision = ((R4EUIReviewBasic) getElement()).getReview().getDecision();
 				if (null != decision) {
 					return Integer.valueOf(decision.getValue().getValue());
+				} else {
+					return 0;
 				}
 			} else if (REVIEW_DECISION_TIME_SPENT_ID.equals(aId)) {
 				final R4EReviewDecision decision = ((R4EUIReviewBasic) getElement()).getReview().getDecision();

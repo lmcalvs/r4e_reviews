@@ -551,7 +551,6 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			if (!page.isPartVisible(propertiesView)) {
 				//Make sure that the properties view references are updated properly before showing it
 				if (null != fPropertySheetPage) {
-					fPropertySheetPage.dispose();
 					fPropertySheetPage = null;
 				}
 				getPropertySheetPage();
