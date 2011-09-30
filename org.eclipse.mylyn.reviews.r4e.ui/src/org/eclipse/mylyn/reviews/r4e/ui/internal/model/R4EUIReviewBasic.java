@@ -382,7 +382,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			participant = (R4EParticipant) fReview.getUsersMap().get(aParticipant);
 			if (aCreate && !participant.isEnabled()) {
 				try {
-					fParticipantsContainer.getParticipant(participant).setEnabled(true);
+					if (null != fParticipantsContainer.getParticipant(participant)) {
+						fParticipantsContainer.getParticipant(participant).setEnabled(true);
+					}
 				} catch (OutOfSyncException e) {
 					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 					R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
