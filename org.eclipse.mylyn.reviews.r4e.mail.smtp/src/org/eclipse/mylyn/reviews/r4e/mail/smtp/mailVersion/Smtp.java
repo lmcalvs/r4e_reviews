@@ -279,7 +279,9 @@ public class Smtp extends NotificationsConnector {
 		props.setProperty("mail.smtp.host", aSMTPServer);
 		final Session session = Session.getInstance(props, null);
 		final Message msg = new MimeMessage(session);
-		msg.setFrom(new InternetAddress(aFrom));
+		if (aFrom != null && aFrom != "") {
+			msg.setFrom(new InternetAddress(aFrom));			
+		}
 
 		for (int i = 0; i < aEmails.length; i++) {
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(aEmails[i]));
