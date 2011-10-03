@@ -35,6 +35,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
@@ -307,7 +308,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 			OutOfSyncException {
 
 		final R4EUIComment uiComment = aUIAnomaly.createComment();
-		UIUtils.setNavigatorViewFocus(uiComment, true);
+		UIUtils.setNavigatorViewFocus(uiComment, AbstractTreeViewer.ALL_LEVELS);
 	}
 
 	/**
@@ -327,7 +328,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 		final R4EUIAnomalyBasic uiAnomaly = aContainer.createAnomaly(aTargetFileVersion,
 				(R4EUITextPosition) aUIPosition);
-		UIUtils.setNavigatorViewFocus(uiAnomaly, true);
+		UIUtils.setNavigatorViewFocus(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
 	}
 
 	/**
@@ -366,7 +367,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 			final R4EUIAnomalyBasic uiAnomaly = uiAnomalyContainer.createAnomalyFromDetached(aTargetFileVersion,
 					tempAnomaly, (R4EUITextPosition) aUIPosition);
-			UIUtils.setNavigatorViewFocus(uiAnomaly, true);
+			UIUtils.setNavigatorViewFocus(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
 		}
 	}
 }

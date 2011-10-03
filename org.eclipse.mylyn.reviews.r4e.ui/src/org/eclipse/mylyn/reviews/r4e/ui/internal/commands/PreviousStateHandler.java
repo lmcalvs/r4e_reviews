@@ -98,8 +98,7 @@ public class PreviousStateHandler extends AbstractHandler {
 							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 						}
 						R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
-						UIUtils.setNavigatorViewFocus(element, false);
-						R4EUIModelController.getNavigatorView().getPropertySheetPage().refresh();
+						UIUtils.setNavigatorViewFocus(element, 0);
 					}
 				}
 				return Status.OK_STATUS;

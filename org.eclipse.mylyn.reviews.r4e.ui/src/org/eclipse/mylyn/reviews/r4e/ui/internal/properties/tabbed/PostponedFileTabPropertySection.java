@@ -292,7 +292,7 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fReviewNameText.setEnabled(false);
 			fOriginalFileNameText.setEnabled(false);
 			fOriginalFilePathAbsoluteText.setEnabled(false);

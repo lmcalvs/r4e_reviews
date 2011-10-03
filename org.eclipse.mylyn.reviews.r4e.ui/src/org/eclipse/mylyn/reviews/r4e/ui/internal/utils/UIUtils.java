@@ -81,6 +81,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 /**
  * @author lmcdubo
@@ -569,28 +570,31 @@ public class UIUtils {
 	}
 
 	/**
-	 * Method setNavigatorViewFocus.
+	 * Method setNavigatorViewFocus. Set focus to current view/element
 	 * 
 	 * @param aElement
 	 *            R4EUIModelElement
 	 */
-	public static void setNavigatorViewFocus(IR4EUIModelElement aElement, boolean aExpand) {
+	public static void setNavigatorViewFocus(IR4EUIModelElement aElement, int aExpandLevel) {
 		if (null != aElement) {
-			//Set focus to element
-			if (aExpand) {
-				R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(aElement, 1);
-			} else {
-				R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(aElement, 0);
-			}
-			R4EUIModelController.getNavigatorView()
-					.getTreeViewer()
-					.setSelection(new StructuredSelection(aElement), true);
+			//Activate Review Navigator View
 			R4EUIModelController.getNavigatorView()
 					.getSite()
 					.getPage()
 					.activate(R4EUIModelController.getNavigatorView());
-			//TODO removed for now might cause a NPtrExc
-			//R4EUIModelController.getNavigatorView().getPropertySheetPage().refresh();
+
+			//Set selection to current element
+			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(aElement, aExpandLevel);
+			R4EUIModelController.getNavigatorView().getTreeViewer().refresh(); //Make sure tree is refreshed
+			StructuredSelection newSelection = new StructuredSelection(aElement);
+			R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
+
+			//This convoluted code is needed to refresh properly the tabbed properties view and avoid exceptions in TabbedPropertiesSheetPage
+			TabbedPropertySheetPage tabPage = R4EUIModelController.getNavigatorView().getPropertySheetPage();
+			tabPage.selectionChanged(R4EUIModelController.getNavigatorView(), newSelection);
+			if (tabPage.getCurrentTab() != null) { //added to prevent a possible NPtrExc
+				tabPage.refresh();
+			}
 		}
 	}
 }

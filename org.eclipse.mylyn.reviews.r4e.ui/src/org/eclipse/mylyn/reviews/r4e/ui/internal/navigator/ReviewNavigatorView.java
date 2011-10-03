@@ -754,7 +754,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * @return TabbedPropertySheetPage
 	 */
 	public TabbedPropertySheetPage getPropertySheetPage() {
-		if (fPropertySheetPage == null || fPropertySheetPage.getControl() == null) {
+		if (fPropertySheetPage == null || fPropertySheetPage.getControl() == null
+				|| fPropertySheetPage.getCurrentTab() == null) {
 			fPropertySheetPage = new TabbedPropertySheetPage(this);
 		}
 		return fPropertySheetPage;

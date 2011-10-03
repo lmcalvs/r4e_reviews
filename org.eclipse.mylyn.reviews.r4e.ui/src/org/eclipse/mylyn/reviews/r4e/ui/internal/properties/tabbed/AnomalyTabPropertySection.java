@@ -970,7 +970,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fTitleText.setEnabled(false);
 			fAuthorText.setEnabled(false);
 			fCreationDateText.setEnabled(false);

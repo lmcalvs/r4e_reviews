@@ -107,6 +107,7 @@ public class RemoveElementHandler extends AbstractHandler {
 											}
 										}
 									}
+									UIUtils.setNavigatorViewFocus(element.getParent(), 0);
 									element.getParent().removeChildren(element, dialog.getToggleState());
 								} catch (ResourceHandlingException e) {
 									UIUtils.displayResourceErrorDialog(e);

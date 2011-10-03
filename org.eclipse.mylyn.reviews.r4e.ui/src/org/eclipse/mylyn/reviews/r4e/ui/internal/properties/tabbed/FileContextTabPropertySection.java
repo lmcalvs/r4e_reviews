@@ -454,7 +454,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	@Override
 	protected void setEnabledFields() {
-		//Since it is a subclass of this classe we need this here.  This should be improved later
+		//Since it is a subclass of this class we need this here.  This should be improved later
 		//Do not show FileContext elements for the Postponed file.
 		if (fProperties.getElement() instanceof R4EUIPostponedFile) {
 			fBaseFileNameText.getParent().getParent().setVisible(false);
@@ -463,7 +463,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 
 		if (R4EUIModelController.isJobInProgress()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fBaseFileNameText.setEnabled(false);
 			fBaseFilePathRepositoryText.setEnabled(false);
 			fBaseFilePathAbsoluteText.setEnabled(false);

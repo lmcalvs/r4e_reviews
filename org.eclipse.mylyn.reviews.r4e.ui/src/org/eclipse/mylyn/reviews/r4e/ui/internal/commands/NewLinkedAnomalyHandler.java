@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -99,6 +100,6 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 
 		final R4EUIAnomalyBasic uiAnomaly = container.createAnomaly(fileContext.getTargetFileVersion(),
 				(R4EUITextPosition) aElement.getPosition());
-		UIUtils.setNavigatorViewFocus(uiAnomaly, true);
+		UIUtils.setNavigatorViewFocus(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
 	}
 }

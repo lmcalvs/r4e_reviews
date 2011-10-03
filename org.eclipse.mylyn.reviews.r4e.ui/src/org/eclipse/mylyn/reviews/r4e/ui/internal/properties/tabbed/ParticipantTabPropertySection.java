@@ -549,8 +549,9 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fIdText.setEnabled(false);
+			fEmailText.setEnabled(false);
 			fNumItemsText.setEnabled(false);
 			fNumAnomaliesText.setEnabled(false);
 			fNumCommentsText.setEnabled(false);
@@ -559,6 +560,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 			fFocusAreaText.setEnabled(false);
 		} else {
 			fIdText.setEnabled(true);
+			fEmailText.setEnabled(true);
 			fNumItemsText.setEnabled(true);
 			fNumAnomaliesText.setEnabled(true);
 			fNumCommentsText.setEnabled(true);

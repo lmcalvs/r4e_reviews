@@ -293,7 +293,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 										}
 									}
 
-									UIUtils.setNavigatorViewFocus(uiReviewItem, true);
+									UIUtils.setNavigatorViewFocus(uiReviewItem, 1);
 
 									//Notify users if need be
 									final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();

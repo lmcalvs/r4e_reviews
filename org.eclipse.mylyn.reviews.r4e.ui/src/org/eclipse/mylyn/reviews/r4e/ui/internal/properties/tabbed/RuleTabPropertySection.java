@@ -331,7 +331,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isJobInProgress()) {
+		if (R4EUIModelController.isJobInProgress() || !fProperties.getElement().isEnabled()) {
 			fIdText.setEnabled(false);
 			fTitleText.setEnabled(false);
 			fDescriptionText.setEnabled(false);

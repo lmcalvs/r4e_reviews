@@ -97,7 +97,7 @@ public class OpenElementHandler extends AbstractHandler {
 								}
 							}
 							element.open();
-							UIUtils.setNavigatorViewFocus(element, true);
+							UIUtils.setNavigatorViewFocus(element, 1);
 						} catch (ResourceHandlingException e) {
 							UIUtils.displayResourceErrorDialog(e);
 

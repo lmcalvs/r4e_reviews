@@ -504,7 +504,8 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isJobInProgress() || !((R4EUIReviewGroup) fProperties.getElement()).isOpen()) {
+		if (R4EUIModelController.isJobInProgress() || !((R4EUIReviewGroup) fProperties.getElement()).isOpen()
+				|| !fProperties.getElement().isEnabled()) {
 			fNameText.setEnabled(false);
 			fFilePathText.setEnabled(false);
 			fDescriptionText.setEnabled(false);

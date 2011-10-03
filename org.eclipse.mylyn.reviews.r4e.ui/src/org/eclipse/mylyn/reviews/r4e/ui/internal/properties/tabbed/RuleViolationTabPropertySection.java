@@ -135,7 +135,7 @@ public class RuleViolationTabPropertySection extends ModelElementTabPropertySect
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isJobInProgress()) {
+		if (R4EUIModelController.isJobInProgress() || !fProperties.getElement().isEnabled()) {
 			fNameText.setEnabled(false);
 		} else {
 			fNameText.setEnabled(true);

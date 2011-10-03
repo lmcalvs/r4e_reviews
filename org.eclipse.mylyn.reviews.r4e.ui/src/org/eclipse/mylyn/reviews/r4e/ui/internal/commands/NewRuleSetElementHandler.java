@@ -24,6 +24,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -73,7 +74,7 @@ public class NewRuleSetElementHandler extends AbstractHandler {
 
 						//Create actual model element
 						newElement = element.createChildren(tempModelComponent);
-						UIUtils.setNavigatorViewFocus(newElement, true);
+						UIUtils.setNavigatorViewFocus(newElement, AbstractTreeViewer.ALL_LEVELS);
 					}
 				} catch (ResourceHandlingException e) {
 					UIUtils.displayResourceErrorDialog(e);

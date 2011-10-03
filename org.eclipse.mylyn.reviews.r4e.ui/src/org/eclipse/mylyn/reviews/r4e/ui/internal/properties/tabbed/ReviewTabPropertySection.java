@@ -1341,7 +1341,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		if (R4EUIModelController.isJobInProgress()
 				|| (!((R4EUIReviewBasic) fProperties.getElement()).isOpen())
 				|| ((R4EReviewState) ((R4EUIReviewBasic) fProperties.getElement()).getReview().getState()).getState()
-						.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+						.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fNameText.setEnabled(false);
 			fPhaseCombo.setEnabled(false);
 			fDescriptionText.setEnabled(false);
