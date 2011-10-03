@@ -783,4 +783,31 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	public void propertyChanged(Object source, int propId) {
 		((ReviewNavigatorActionGroup) fActionSet).dialogOpenNotify();
 	}
+
+	/**
+	 * Method updateView. Set focus to current view/element
+	 * 
+	 * @param aElement
+	 *            R4EUIModelElement
+	 * @param aExpandLevel
+	 *            int
+	 */
+	public void updateView(IR4EUIModelElement aElement, int aExpandLevel) {
+
+		//Activate View
+		getSite().getPage().activate(this);
+
+		//Set selection to current element
+		fReviewTreeViewer.expandToLevel(aElement, aExpandLevel);
+		fReviewTreeViewer.refresh(); //Make sure tree is refreshed
+
+		//NOTE:  This is a trick to get around TabbedPropertySheetPage problems, we select the parent and
+		//		 then immediately revert back to the current element.  This makes sure the Properties view is 
+		//		 refreshed properly without causing Exceptions
+		StructuredSelection newSelection = new StructuredSelection(aElement.getParent());
+		fReviewTreeViewer.setSelection(newSelection, true);
+		showProperties(newSelection);
+		newSelection = new StructuredSelection(aElement);
+		fReviewTreeViewer.setSelection(newSelection, true);
+	}
 }

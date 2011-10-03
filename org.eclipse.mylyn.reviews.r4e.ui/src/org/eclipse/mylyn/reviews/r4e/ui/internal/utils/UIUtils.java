@@ -40,7 +40,6 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
@@ -81,7 +80,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 /**
  * @author lmcdubo
@@ -574,27 +572,12 @@ public class UIUtils {
 	 * 
 	 * @param aElement
 	 *            R4EUIModelElement
+	 * @param aExpandLevel
+	 *            int
 	 */
 	public static void setNavigatorViewFocus(IR4EUIModelElement aElement, int aExpandLevel) {
 		if (null != aElement) {
-			//Activate Review Navigator View
-			R4EUIModelController.getNavigatorView()
-					.getSite()
-					.getPage()
-					.activate(R4EUIModelController.getNavigatorView());
-
-			//Set selection to current element
-			R4EUIModelController.getNavigatorView().getTreeViewer().expandToLevel(aElement, aExpandLevel);
-			R4EUIModelController.getNavigatorView().getTreeViewer().refresh(); //Make sure tree is refreshed
-			StructuredSelection newSelection = new StructuredSelection(aElement);
-			R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(newSelection, true);
-
-			//This convoluted code is needed to refresh properly the tabbed properties view and avoid exceptions in TabbedPropertiesSheetPage
-			TabbedPropertySheetPage tabPage = R4EUIModelController.getNavigatorView().getPropertySheetPage();
-			tabPage.selectionChanged(R4EUIModelController.getNavigatorView(), newSelection);
-			if (tabPage.getCurrentTab() != null) { //added to prevent a possible NPtrExc
-				tabPage.refresh();
-			}
+			R4EUIModelController.getNavigatorView().updateView(aElement, aExpandLevel);
 		}
 	}
 }
