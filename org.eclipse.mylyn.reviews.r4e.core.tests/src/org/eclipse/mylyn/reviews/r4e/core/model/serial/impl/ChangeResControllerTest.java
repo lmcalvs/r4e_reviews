@@ -19,8 +19,13 @@ import junit.framework.TestCase;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 
 //import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.
@@ -127,6 +132,64 @@ public class ChangeResControllerTest extends TestCase {
 
 	}
 
+	/**
+	 * Invalid null element provided
+	 */
+	public void testCheckOutNull() {
+		Long newBookingNum = 0L;
+		try {
+			newBookingNum = resCont.checkOut(null, USER1);
+		} catch (ResourceHandlingException e) {
+			e.printStackTrace();
+			assertTrue(e.getMessage().contains("Element is null"));
+		}
+
+		//booking shall not take place
+		assertTrue(0L==newBookingNum);
+	}
+	
+	/**
+	 * Null Resource
+	 */
+	public void testCheckOutResNull() {
+		Long newBookingNum = 0L;
+		try {
+			R4EAnomaly anomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
+			newBookingNum = resCont.checkOut(anomaly, USER1);
+		} catch (ResourceHandlingException e) {
+			e.printStackTrace();
+			assertTrue(e.getMessage().contains("The Resource associated to the Element is null"));
+		}
+
+		//booking shall not take place
+		assertTrue(0L==newBookingNum);
+
+	}
+	
+	/**
+	 * Invalid Resource URI
+	 */
+	public void testCheckOutURINull() {
+		Long newBookingNum = 0L;
+		try {
+			R4EAnomaly anomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
+			ResourceSet resSet = new ResourceSetImpl();
+			URI uri = URI.createURI("file:///C:/test.txt");
+			Resource res = resSet.createResource(uri);
+			res.setURI(null);
+			res.getContents().add(anomaly);
+			newBookingNum = resCont.checkOut(anomaly, USER1);
+		} catch (ResourceHandlingException e) {
+			e.printStackTrace();
+			assertTrue(e.getMessage().contains("Element's Resource is null"));
+		}
+
+		//booking shall not take place
+		assertTrue(0L==newBookingNum);
+
+	}
+	
+	
 	/**
 	 * Attempt to checkout a resource already checkout by a different user shall not got through and shal be reported to
 	 * the ui

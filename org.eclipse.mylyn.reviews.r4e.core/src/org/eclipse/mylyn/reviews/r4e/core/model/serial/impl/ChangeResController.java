@@ -90,6 +90,20 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence$ResourceUpdater#checkOut(EObject, R4EParticipant)
 	 */
 	public Long checkOut(EObject aEObject, String usrLoginID) throws ResourceHandlingException {
+		//Validate
+		if (aEObject == null || aEObject.eResource() == null || aEObject.eResource().getURI() == null) {
+			StringBuilder sb = new StringBuilder("Unable to update/save Element");
+			if (aEObject == null) {
+				sb.append(", Element is null");
+			} else if (aEObject.eResource() == null) {
+				sb.append(", The Resource associated to the Element is null, Element: " + aEObject.toString());
+			} else if (aEObject.eResource().getURI() == null) {
+				sb.append(", The URI associated to the Element's Resource is null, Element: " + aEObject.toString());
+			}
+			
+			throw new ResourceHandlingException(sb.toString());
+		}
+		
 		UpdateContext newContext = new UpdateContext(aEObject, usrLoginID);
 		// if resource is already checkedout, return existing booking number
 		Collection<UpdateContext> checkedOutContextList = checkedOutMap.values();
