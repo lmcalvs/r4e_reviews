@@ -124,10 +124,10 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * @param aParticipant
 	 *            R4EParticipant
 	 */
-	public R4EUIParticipant(IR4EUIModelElement aParent, R4EParticipant aParticipant) {
+	public R4EUIParticipant(IR4EUIModelElement aParent, R4EParticipant aParticipant, R4EReviewType aType) {
 		super(aParent, aParticipant.getId(), aParticipant.getEmail());
 		fParticipant = aParticipant;
-		setRoleIcon();
+		setRoleIcon(aType);
 		return;
 	}
 
@@ -167,10 +167,8 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	/**
 	 * Method setRoleIcon. Set particpant icon based on most significant role
 	 */
-	public void setRoleIcon() {
-		if (((R4EUIReviewBasic) getParent().getParent()).getReview()
-				.getType()
-				.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+	public void setRoleIcon(R4EReviewType aType) {
+		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
 			setImage(PARTICIPANT_ICON_FILE);
 		} else {
 			final EList<R4EUserRole> roles = fParticipant.getRoles();

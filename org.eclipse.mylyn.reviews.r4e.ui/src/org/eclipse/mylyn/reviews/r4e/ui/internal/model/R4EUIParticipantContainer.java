@@ -206,7 +206,8 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 						|| R4EUIPlugin.getDefault()
 								.getPreferenceStore()
 								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					addChildren(new R4EUIParticipant(this, participants.get(i)));
+					addChildren(new R4EUIParticipant(this, participants.get(i),
+							((R4EUIReviewBasic) getParent()).getReview().getType()));
 				}
 			}
 		}
@@ -256,7 +257,8 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		final R4EParticipant participant = R4EUIModelController.FModelExt.createR4EParticipant(
 				((R4EUIReviewBasic) getParent()).getReview(), ((R4EParticipant) aModelComponent).getId(),
 				((R4EParticipant) aModelComponent).getRoles());
-		final R4EUIParticipant addedChild = new R4EUIParticipant(this, participant);
+		final R4EUIParticipant addedChild = new R4EUIParticipant(this, participant,
+				((R4EUIReviewBasic) getParent()).getReview().getType());
 		addedChild.setModelData(aModelComponent);
 		addChildren(addedChild);
 		return addedChild;

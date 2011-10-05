@@ -649,7 +649,9 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 						modelParticipant.getRoles().add(role);
 					}
 				}
-				((R4EUIParticipant) fProperties.getElement()).setRoleIcon();
+				((R4EUIParticipant) fProperties.getElement()).setRoleIcon(R4EUIModelController.getActiveReview()
+						.getReview()
+						.getType());
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 			}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);

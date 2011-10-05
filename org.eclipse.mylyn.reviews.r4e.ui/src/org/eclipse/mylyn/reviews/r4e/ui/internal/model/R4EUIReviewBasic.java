@@ -248,11 +248,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				setImage(REVIEW_INFORMAL_ICON_FILE);
 			}
 			fOpen = true;
-			final List<R4EUserRole> role = new ArrayList<R4EUserRole>(1);
+			final List<R4EUserRole> role = new ArrayList<R4EUserRole>(2);
 			role.add(R4EUserRole.R4E_ROLE_LEAD);
+			role.add(R4EUserRole.R4E_ROLE_ORGANIZER);
 			final R4EParticipant participant = R4EUIModelController.FModelExt.createR4EParticipant(fReview,
 					R4EUIModelController.getReviewer(), role);
-			fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer, participant));
+			fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer, participant, aType));
 			final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 			if (null != activeReview) {
 				activeReview.close();
@@ -395,7 +396,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				final List<R4EUserRole> role = new ArrayList<R4EUserRole>(1);
 				role.add(R4EUserRole.R4E_ROLE_REVIEWER);
 				participant = R4EUIModelController.FModelExt.createR4EParticipant(fReview, aParticipant, role);
-				fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer, participant));
+				fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer, participant,
+						fReview.getType()));
 			}
 		}
 		return participant;
