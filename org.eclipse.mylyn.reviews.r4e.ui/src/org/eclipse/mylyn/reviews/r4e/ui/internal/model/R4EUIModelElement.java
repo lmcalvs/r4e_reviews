@@ -503,7 +503,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public void fireAdd(Object aAdded) {
 		for (IR4EUIModelListener listener : fListeners) {
-			listener.addEvent(new R4EUIModelEvent(aAdded));
+			listener.addEvent(new R4EUIModelEvent(aAdded, R4EUIConstants.CHANGE_TYPE_ADD));
 		}
 	}
 
@@ -516,7 +516,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public void fireRemove(Object aRemoved) {
 		for (IR4EUIModelListener listener : fListeners) {
-			listener.removeEvent(new R4EUIModelEvent(aRemoved));
+			listener.removeEvent(new R4EUIModelEvent(aRemoved, R4EUIConstants.CHANGE_TYPE_REMOVE));
 		}
 	}
 
@@ -527,9 +527,9 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 *            Object
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#fireUserReviewStateChanged(Object)
 	 */
-	public void fireUserReviewStateChanged(Object aChanged) {
+	public void fireUserReviewStateChanged(Object aChanged, int aType) {
 		for (IR4EUIModelListener listener : fListeners) {
-			listener.changedEvent(new R4EUIModelEvent(aChanged));
+			listener.changedEvent(new R4EUIModelEvent(aChanged, aType));
 		}
 	}
 

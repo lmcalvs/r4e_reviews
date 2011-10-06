@@ -28,9 +28,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelListener;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelEvent;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 
 /**
  * @author lmcdubo
@@ -172,11 +170,12 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 			return;
 		}
 		final IR4EUIModelElement affectedObject = (IR4EUIModelElement) aEvent.receiver();
-		R4EUIPlugin.Ftracer.traceInfo("Changed event received for element " + affectedObject.getName());
-		if (affectedObject instanceof R4EUIReviewGroup || affectedObject instanceof R4EUIReviewBasic
-				|| affectedObject instanceof R4EUIRuleSet) {
+		final int type = aEvent.type();
 
-			//Open or Close review or review group
+		R4EUIPlugin.Ftracer.traceInfo("Changed event received for element " + affectedObject.getName());
+
+		if (type == R4EUIConstants.CHANGE_TYPE_OPEN || type == R4EUIConstants.CHANGE_TYPE_CLOSE) {
+			//Open or Close element
 			fViewer.collapseToLevel(affectedObject, AbstractTreeViewer.ALL_LEVELS);
 			fViewer.refresh(affectedObject, true);
 		} else {

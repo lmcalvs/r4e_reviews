@@ -309,7 +309,7 @@ public interface IR4EUIModelElement {
 	 * @param aChanged
 	 *            - the changed object
 	 */
-	void fireUserReviewStateChanged(Object aChanged);
+	void fireUserReviewStateChanged(Object aChanged, int aType);
 
 	//Commands
 

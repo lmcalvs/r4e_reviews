@@ -38,7 +38,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.SendNotificationInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -80,7 +79,7 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 								element.setUserReviewed(!(element.isUserReviewed()));
 
 								//If we just completed the review, prompt user for mail sending
-								if (element instanceof R4EUIReviewBasic && element.isUserReviewed()) {
+								if (R4EUIModelController.getActiveReview().isUserReviewed()) {
 
 									Object source = ((EvaluationContext) event.getApplicationContext()).getDefaultVariable();
 									if (source instanceof List) {

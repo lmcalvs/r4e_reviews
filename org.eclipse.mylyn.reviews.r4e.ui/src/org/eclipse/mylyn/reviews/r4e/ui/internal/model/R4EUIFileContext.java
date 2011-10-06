@@ -232,7 +232,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				//Remove check on parent, since at least one children is not set anymore
 				getParent().setUserReviewed(fUserReviewed);
 			}
-			fireUserReviewStateChanged(this);
+			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 
@@ -295,7 +295,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				removeContentReviewed();
 			}
 			fUserReviewed = aReviewed;
-			fireUserReviewStateChanged(this);
+			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 
@@ -322,7 +322,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			fUserReviewed = true;
 			addContentReviewed();
 			getParent().checkToSetUserReviewed();
-			fireUserReviewStateChanged(this);
+			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 

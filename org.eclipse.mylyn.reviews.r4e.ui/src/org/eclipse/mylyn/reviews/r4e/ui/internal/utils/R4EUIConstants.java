@@ -2050,4 +2050,30 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * was raised"")
 	 */
 	public static final String POSTPONED_FILE_VERSION_TOOLTIP = "The Version of the file where the original postponed anomaly was raised";
+
+	//Listeners change types
+	/**
+	 * Field CHANGE_TYPE_ADD. (value is 0)
+	 */
+	public static final int CHANGE_TYPE_ADD = 0;
+
+	/**
+	 * Field CHANGE_TYPE_REMOVE. (value is 1)
+	 */
+	public static final int CHANGE_TYPE_REMOVE = 1;
+
+	/**
+	 * Field CHANGE_TYPE_OPEN. (value is 2)
+	 */
+	public static final int CHANGE_TYPE_OPEN = 2;
+
+	/**
+	 * Field CHANGE_TYPE_CLOSE. (value is 3)
+	 */
+	public static final int CHANGE_TYPE_CLOSE = 3;
+
+	/**
+	 * Field CHANGE_TYPE_REVIEWED_STATE. (value is 4)
+	 */
+	public static final int CHANGE_TYPE_REVIEWED_STATE = 4;
 }

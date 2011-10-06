@@ -34,6 +34,8 @@ public class R4EUIModelEvent {
 	 */
 	private final Object fActedUpon;
 
+	private final int fType;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -44,8 +46,9 @@ public class R4EUIModelEvent {
 	 * @param aReceiver
 	 *            Object
 	 */
-	public R4EUIModelEvent(Object aReceiver) {
+	public R4EUIModelEvent(Object aReceiver, int aType) {
 		fActedUpon = aReceiver;
+		fType = aType;
 	}
 
 	// ------------------------------------------------------------------------
@@ -59,5 +62,14 @@ public class R4EUIModelEvent {
 	 */
 	public Object receiver() {
 		return fActedUpon;
+	}
+
+	/**
+	 * Method type.
+	 * 
+	 * @return Object
+	 */
+	public int type() {
+		return fType;
 	}
 }

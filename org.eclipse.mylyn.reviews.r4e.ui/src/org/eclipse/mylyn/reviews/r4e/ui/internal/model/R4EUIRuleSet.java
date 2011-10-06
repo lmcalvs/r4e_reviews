@@ -289,7 +289,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 		fOpen = false;
 		R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
 		fImage = UIUtils.loadIcon(RULE_SET_CLOSED_ICON_FILE);
-		fireUserReviewStateChanged(this);
+		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_CLOSE);
 	}
 
 	/**
@@ -319,7 +319,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 		}
 		fOpen = true;
 		fImage = UIUtils.loadIcon(RULE_SET_ICON_FILE);
-		fireUserReviewStateChanged(this);
+		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
 	}
 
 	/**

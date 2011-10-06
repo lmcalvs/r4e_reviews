@@ -314,7 +314,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		fOpen = false;
 		R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup); //Notify model
 		fImage = UIUtils.loadIcon(REVIEW_GROUP_CLOSED_ICON_FILE);
-		fireUserReviewStateChanged(this);
+		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_CLOSE);
 	}
 
 	/**
@@ -369,7 +369,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 
 		fOpen = true;
 		fImage = UIUtils.loadIcon(REVIEW_GROUP_ICON_FILE);
-		fireUserReviewStateChanged(this);
+		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
 	}
 
 	/**

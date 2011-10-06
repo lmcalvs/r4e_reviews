@@ -33,6 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ReviewItemProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -137,17 +138,25 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 			for (int i = 0; i < length; i++) {
 				fFileContexts.get(i).setChildUserReviewed(aReviewed);
 			}
+
+			//Check to see if we should mark the parent reviewed as well
+			getParent().checkToSetUserReviewed();
+		} else {
+			//Remove check on parent, since at least one children is not set anymore
+			getParent().setUserReviewed(fUserReviewed);
 		}
-		fireUserReviewStateChanged(this);
+		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 	}
 
 	/**
 	 * Method checkToSetReviewed.
 	 * 
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#checkToSetUserReviewed()
 	 */
 	@Override
-	public void checkToSetUserReviewed() {
+	public void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException {
 		boolean allChildrenReviewed = true;
 		final int length = fFileContexts.size();
 		for (int i = 0; i < length; i++) {
@@ -158,7 +167,8 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 		//If all children are reviewed, mark the parent as reviewed as well
 		if (allChildrenReviewed) {
 			fUserReviewed = true;
-			fireUserReviewStateChanged(this);
+			getParent().checkToSetUserReviewed();
+			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 

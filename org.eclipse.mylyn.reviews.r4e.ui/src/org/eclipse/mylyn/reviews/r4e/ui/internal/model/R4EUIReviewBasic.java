@@ -508,7 +508,38 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				fItems.get(i).setUserReviewed(aReviewed);
 			}
 		}
-		fireUserReviewStateChanged(this);
+		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
+	}
+
+	/**
+	 * Method checkToSetReviewed.
+	 * 
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#checkToSetUserReviewed()
+	 */
+	@Override
+	public void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException {
+		boolean allChildrenReviewed = true;
+		final int length = fItems.size();
+		for (int i = 0; i < length; i++) {
+			if (!(fItems.get(i).isUserReviewed())) {
+				allChildrenReviewed = false;
+			}
+		}
+		//If all children are reviewed, mark the parent as reviewed as well
+		if (allChildrenReviewed) {
+			final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
+			if (null != participant) {
+				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview,
+						R4EUIModelController.getReviewer());
+				participant.setReviewCompleted(true);
+				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+			}
+
+			fUserReviewed = true;
+			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
+		}
 	}
 
 	/**
@@ -542,7 +573,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			fImage = UIUtils.loadIcon(REVIEW_INFORMAL_CLOSED_ICON_FILE);
 		}
 		R4EUIModelController.setActiveReview(null);
-		fireUserReviewStateChanged(this);
+		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_CLOSE);
 	}
 
 	/**
@@ -623,7 +654,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			fImage = UIUtils.loadIcon(REVIEW_INFORMAL_ICON_FILE);
 		}
 		R4EUIModelController.setActiveReview(this);
-		fireUserReviewStateChanged(this);
+		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
 
 		//Automatically import postponed anomalies if set in preferences
 		if (R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_AUTO_IMPORT_POSTPONED)) {

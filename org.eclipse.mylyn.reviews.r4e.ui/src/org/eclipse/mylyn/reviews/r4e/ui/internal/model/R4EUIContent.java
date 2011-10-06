@@ -168,7 +168,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 				//Remove check on parent, since at least one children is not set anymore
 				getParent().getParent().setUserReviewed(fUserReviewed);
 			}
-			fireUserReviewStateChanged(this);
+			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 
@@ -193,7 +193,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 				removeContentReviewed();
 			}
 			fUserReviewed = aReviewed;
-			fireUserReviewStateChanged(this);
+			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 
