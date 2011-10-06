@@ -110,7 +110,7 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 *            R4EDesignRuleArea
 	 */
 	public R4EUIRuleArea(IR4EUIModelElement aParent, R4EDesignRuleArea aArea) {
-		super(aParent, aArea.getName(), null);
+		super(aParent, aArea.getName());
 		fArea = aArea;
 		fViolations = new ArrayList<R4EUIRuleViolation>();
 		setImage(RULE_AREA_ICON_FILE);

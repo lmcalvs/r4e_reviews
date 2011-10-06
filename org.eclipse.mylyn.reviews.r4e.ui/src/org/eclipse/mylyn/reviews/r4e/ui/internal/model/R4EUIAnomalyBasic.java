@@ -121,7 +121,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 *            IR4EUIPosition
 	 */
 	public R4EUIAnomalyBasic(IR4EUIModelElement aParent, R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
-		super(aParent, buildAnomalyName(aAnomaly, aPosition), buildAnomalyToolTip(aAnomaly));
+		super(aParent, buildAnomalyName(aAnomaly, aPosition));
 		fAnomaly = aAnomaly;
 		fComments = new ArrayList<R4EUIComment>();
 		setImage(ANOMALY_ICON_FILE);
@@ -131,6 +131,17 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return buildAnomalyToolTip(fAnomaly);
+	}
 
 	/**
 	 * Method getAdapter.
@@ -219,7 +230,6 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		fAnomaly.setDueDate(((R4EAnomaly) aModelComponent).getDueDate());
 		fAnomaly.setRuleID(((R4EAnomaly) aModelComponent).getRuleID());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		setToolTip(buildAnomalyToolTip(fAnomaly)); //Also set UI tooltip immediately
 	}
 
 	/**

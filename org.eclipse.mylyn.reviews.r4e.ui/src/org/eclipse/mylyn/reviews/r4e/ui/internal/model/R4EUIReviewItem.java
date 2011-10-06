@@ -89,8 +89,8 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	 * @param aTooltip
 	 *            String
 	 */
-	public R4EUIReviewItem(IR4EUIModelElement aParent, R4EItem aItem, String aName, String aTooltip) {
-		super(aParent, aItem, aName, aTooltip);
+	public R4EUIReviewItem(IR4EUIModelElement aParent, R4EItem aItem, String aName) {
+		super(aParent, aItem, aName);
 		setImage(REVIEW_ITEM_ICON_FILE);
 	}
 

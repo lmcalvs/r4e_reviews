@@ -64,14 +64,6 @@ public interface IR4EUIModelElement {
 	String getToolTip();
 
 	/**
-	 * Method setToolTip.
-	 * 
-	 * @param aToolTip
-	 *            String
-	 */
-	void setToolTip(String aToolTip);
-
-	/**
 	 * Get the element image
 	 * 
 	 * @return - the element image

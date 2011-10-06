@@ -92,8 +92,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	 *            IR4EUIPosition
 	 */
 	protected R4EUIContent(IR4EUIModelElement aParent, R4EDelta aDelta, IR4EUIPosition aPosition) {
-		super(aParent, aPosition.toString(), R4EUIConstants.AUTHOR_LABEL
-				+ ((R4EItem) aDelta.eContainer().eContainer()).getAddedBy().getId()); // $codepro.audit.disable methodChainLength
+		super(aParent, aPosition.toString());
 		fContent = aDelta;
 		fPosition = aPosition;
 	}
@@ -101,6 +100,17 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return R4EUIConstants.AUTHOR_LABEL + ((R4EItem) fContent.eContainer().eContainer()).getAddedBy().getId();
+	}
 
 	/**
 	 * Method getAdapter.

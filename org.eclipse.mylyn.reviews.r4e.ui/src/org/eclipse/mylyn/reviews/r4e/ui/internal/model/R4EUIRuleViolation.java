@@ -110,7 +110,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 *            R4EDesignRuleViolation
 	 */
 	public R4EUIRuleViolation(IR4EUIModelElement aParent, R4EDesignRuleViolation aViolation) {
-		super(aParent, aViolation.getName(), null);
+		super(aParent, aViolation.getName());
 		fViolation = aViolation;
 		fRules = new ArrayList<R4EUIRule>();
 		setImage(RULE_VIOLATION_ICON_FILE);

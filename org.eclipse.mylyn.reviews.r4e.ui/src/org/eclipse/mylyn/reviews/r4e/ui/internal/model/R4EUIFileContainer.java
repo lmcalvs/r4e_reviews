@@ -72,8 +72,8 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 	 * @param aTooltip
 	 *            String
 	 */
-	protected R4EUIFileContainer(IR4EUIModelElement aParent, R4EItem aItem, String aName, String aTooltip) {
-		super(aParent, aName, aTooltip);
+	protected R4EUIFileContainer(IR4EUIModelElement aParent, R4EItem aItem, String aName) {
+		super(aParent, aName);
 		fItem = aItem;
 		fFileContexts = new ArrayList<R4EUIFileContext>();
 	}
@@ -81,6 +81,17 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return fItem.getDescription();
+	}
 
 	/**
 	 * Method getItem.

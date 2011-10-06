@@ -85,7 +85,7 @@ public class R4EUIRule extends R4EUIModelElement {
 	 *            R4EDesignRule
 	 */
 	public R4EUIRule(IR4EUIModelElement aParent, R4EDesignRule aRule) {
-		super(aParent, aRule.getId(), aRule.getTitle());
+		super(aParent, aRule.getId());
 		fRule = aRule;
 		setImage(RULE_ICON_FILE);
 	}
@@ -93,6 +93,17 @@ public class R4EUIRule extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return fRule.getTitle();
+	}
 
 	/**
 	 * Method getAdapter.

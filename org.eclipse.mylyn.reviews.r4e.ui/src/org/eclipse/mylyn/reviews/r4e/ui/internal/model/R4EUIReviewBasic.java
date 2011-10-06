@@ -234,7 +234,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	public R4EUIReviewBasic(R4EUIReviewGroup aParent, R4EReview aReview, R4EReviewType aType, boolean aOpen)
 			throws ResourceHandlingException {
-		super(aParent, getReviewDisplayName(aReview.getName(), aType), aReview.getExtraNotes());
+		super(aParent, getReviewDisplayName(aReview.getName(), aType));
 		fReview = aReview;
 		fReviewName = aReview.getName();
 		fParticipantsContainer = new R4EUIParticipantContainer(this, R4EUIConstants.PARTICIPANTS_LABEL);
@@ -272,6 +272,17 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return fReview.getExtraNotes();
+	}
 
 	/**
 	 * Method getAdapter.
@@ -616,7 +627,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						} else {
 							R4EUIPlugin.Ftracer.traceError("Context list empty in a review item, index: " + i); //$NON-NLS-1$
 						}
-						uiItem = new R4EUIReviewItem(this, item, name.toString(), "");
+						uiItem = new R4EUIReviewItem(this, item, name.toString());
 					} else {
 						//Commit
 						String description = item.getDescription();
@@ -625,7 +636,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 								: description.length();
 						String name = "Commit: " + description.substring(R4EUIConstants.START_STRING_INDEX, endIndex)
 								+ "...";
-						uiItem = new R4EUIReviewItem(this, item, name, item.getDescription());
+						uiItem = new R4EUIReviewItem(this, item, name);
 					}
 
 					if (uiItem.isEnabled()) {
@@ -1027,7 +1038,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		final String name = "Resource: " + aFilename;
 
 		//Create and set UI model element
-		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name, "");
+		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name);
 		addChildren(uiReviewItem);
 		return uiReviewItem;
 	}
@@ -1065,7 +1076,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		final String name = "Commit: " + message.substring(R4EUIConstants.START_STRING_INDEX, endIndex) + "...";
 
 		//Create and set UI model element
-		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name, reviewItem.getDescription());
+		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name);
 		addChildren(uiReviewItem);
 		return uiReviewItem;
 	}

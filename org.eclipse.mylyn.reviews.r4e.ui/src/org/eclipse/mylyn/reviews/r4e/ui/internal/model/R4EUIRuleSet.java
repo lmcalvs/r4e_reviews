@@ -134,8 +134,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 *            boolean
 	 */
 	public R4EUIRuleSet(IR4EUIModelElement aParent, R4EDesignRuleCollection aRuleSet, boolean aOpen) {
-		super(aParent, aRuleSet.getName(), R4EUIConstants.FILE_LOCATION_LABEL
-				+ URI.decode(aRuleSet.eResource().getURI().devicePath()));
+		super(aParent, aRuleSet.getName());
 		fRuleSet = aRuleSet;
 		fRuleSetFileURI = aRuleSet.eResource().getURI();
 		fAreas = new ArrayList<R4EUIRuleArea>();
@@ -151,6 +150,17 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return R4EUIConstants.FILE_LOCATION_LABEL + URI.decode(fRuleSetFileURI.devicePath());
+	}
 
 	/**
 	 * Method getAdapter.

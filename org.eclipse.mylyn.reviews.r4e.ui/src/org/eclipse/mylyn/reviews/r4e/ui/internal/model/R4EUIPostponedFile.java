@@ -87,7 +87,6 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 	 */
 	public R4EUIPostponedFile(IR4EUIModelElement aParent, R4EFileContext aFile) {
 		super(aParent, aFile);
-		setToolTip("Original Review: " + aFile.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME));
 		fUiAnomalies = new ArrayList<R4EUIPostponedAnomaly>();
 		setImage(POSTPONED_FILE_ICON_FILE);
 	}
@@ -95,6 +94,17 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return "Original Review: " + fFile.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME);
+	}
 
 	/**
 	 * Method getAdapter.
@@ -330,7 +340,6 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 		uiPosition.setPositionInModel(position);
 		final R4EUIPostponedAnomaly uiAnomaly = new R4EUIPostponedAnomaly(this, anomaly, uiPosition);
 		uiAnomaly.updateState(aPostponedAnomaly.getState());
-		uiAnomaly.setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(anomaly)); //Also set UI tooltip immediately
 		addChildren(uiAnomaly);
 
 		//Disable original creator of the postponed anomaly since he is not part of this review

@@ -125,7 +125,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 *            R4EParticipant
 	 */
 	public R4EUIParticipant(IR4EUIModelElement aParent, R4EParticipant aParticipant, R4EReviewType aType) {
-		super(aParent, aParticipant.getId(), aParticipant.getEmail());
+		super(aParent, aParticipant.getId());
 		fParticipant = aParticipant;
 		setRoleIcon(aType);
 		return;
@@ -134,6 +134,17 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return fParticipant.getEmail();
+	}
 
 	/**
 	 * Method getAdapter.

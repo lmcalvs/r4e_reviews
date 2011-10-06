@@ -69,11 +69,6 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	private String fName;
 
 	/**
-	 * Field fTooltip.
-	 */
-	private String fTooltip;
-
-	/**
 	 * Field fImage.
 	 */
 	protected Image fImage;
@@ -117,9 +112,8 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @param aTooltip
 	 *            String
 	 */
-	protected R4EUIModelElement(IR4EUIModelElement aParent, String aName, String aTooltip) {
+	protected R4EUIModelElement(IR4EUIModelElement aParent, String aName) {
 		fName = aName;
-		fTooltip = aTooltip;
 		fParent = aParent;
 		fOpen = true; // by default
 	}
@@ -177,18 +171,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
 	 */
 	public String getToolTip() {
-		return fTooltip;
-	}
-
-	/**
-	 * Method setToolTip.
-	 * 
-	 * @param aToolTip
-	 *            String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setToolTip(String)
-	 */
-	public void setToolTip(String aToolTip) {
-		fTooltip = aToolTip;
+		return null; //default implementation
 	}
 
 	/**

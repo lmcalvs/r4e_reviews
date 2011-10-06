@@ -70,6 +70,17 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 	// Methods
 	// ------------------------------------------------------------------------
 
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return R4EUIAnomalyBasic.buildAnomalyToolTip(fAnomaly);
+	}
+
 	//Attributes
 
 	/**
@@ -85,7 +96,6 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 		CommandUtils.copyAnomalyData(fAnomaly, aPostponedAnomaly);
 
 		//Update UI model element
-		setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(fAnomaly)); //Also set UI tooltip immediately
 
 		//Disable the anomaly if it is not postponed anymore
 		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)) {

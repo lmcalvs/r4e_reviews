@@ -87,7 +87,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	 *            R4EComment
 	 */
 	public R4EUIComment(IR4EUIModelElement aParent, R4EComment aComment) {
-		super(aParent, aComment.getDescription(), aComment.getUser().getId() + ": " + aComment.getDescription());
+		super(aParent, aComment.getDescription());
 		fComment = aComment;
 		setImage(COMMENT_ICON_FILE);
 	}
@@ -95,6 +95,17 @@ public class R4EUIComment extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return fComment.getUser().getId() + ": " + fComment.getDescription();
+	}
 
 	/**
 	 * Method getAdapter.

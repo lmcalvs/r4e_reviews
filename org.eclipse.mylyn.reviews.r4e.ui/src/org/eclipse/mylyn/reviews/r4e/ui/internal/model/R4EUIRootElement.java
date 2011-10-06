@@ -75,7 +75,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 *            String
 	 */
 	public R4EUIRootElement(IR4EUIModelElement aParent, String aName) {
-		super(aParent, aName, null);
+		super(aParent, aName);
 		fReviewGroups = new ArrayList<R4EUIReviewGroup>();
 		fRuleSets = new ArrayList<R4EUIRuleSet>();
 	}

@@ -158,8 +158,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 *            boolean
 	 */
 	public R4EUIReviewGroup(IR4EUIModelElement aParent, R4EReviewGroup aGroup, boolean aOpen) {
-		super(aParent, aGroup.getName(), R4EUIConstants.FILE_LOCATION_LABEL
-				+ URI.decode(aGroup.eResource().getURI().devicePath()));
+		super(aParent, aGroup.getName());
 		fGroup = aGroup;
 		fGroupFileURI = aGroup.eResource().getURI();
 		fReviews = new ArrayList<R4EUIReviewBasic>();
@@ -176,6 +175,17 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return R4EUIConstants.FILE_LOCATION_LABEL + URI.decode(fGroupFileURI.devicePath());
+	}
 
 	/**
 	 * Method getAdapter.

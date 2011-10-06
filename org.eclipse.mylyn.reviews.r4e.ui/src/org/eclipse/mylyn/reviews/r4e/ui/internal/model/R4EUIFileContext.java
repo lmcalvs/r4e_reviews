@@ -108,7 +108,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 *            R4EFileContext
 	 */
 	public R4EUIFileContext(IR4EUIModelElement aParent, R4EFileContext aFile) {
-		super(aParent, "", getNavigatorTooltip(aFile.getTarget(), aFile.getBase()));
+		super(aParent, "");
 		if (null != aFile.getTarget()) {
 			setName(aFile.getTarget().getName());
 		} else if (null != aFile.getBase()) {
@@ -121,6 +121,17 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getToolTip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
+	 */
+	@Override
+	public String getToolTip() {
+		return getNavigatorTooltip(fFile.getTarget(), fFile.getBase());
+	}
 
 	/**
 	 * Method getAdapter.

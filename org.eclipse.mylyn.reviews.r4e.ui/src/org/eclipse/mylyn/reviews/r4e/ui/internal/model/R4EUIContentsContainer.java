@@ -57,7 +57,7 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 	 *            String
 	 */
 	protected R4EUIContentsContainer(IR4EUIModelElement aParent, String aName) {
-		super(aParent, aName, null);
+		super(aParent, aName);
 		fContents = new ArrayList<R4EUIContent>();
 	}
 

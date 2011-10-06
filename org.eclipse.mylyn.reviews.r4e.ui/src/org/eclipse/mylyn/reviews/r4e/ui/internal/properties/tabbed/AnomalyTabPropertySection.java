@@ -306,9 +306,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						modelAnomaly.setDescription(fDescriptionText.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
-						//Set new UI display
-						fProperties.getElement().setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(modelAnomaly));
-
 						//If this is a postponed anomaly, update original one as well
 						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
 							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
@@ -598,7 +595,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 										R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
 												((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
 							}
-							fProperties.getElement().setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(modelAnomaly));
 
 							//If this is a postponed anomaly, update original one as well
 							if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {

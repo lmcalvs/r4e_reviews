@@ -83,7 +83,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 *            String
 	 */
 	public R4EUIParticipantContainer(IR4EUIModelElement aParent, String aName) {
-		super(aParent, aName, null);
+		super(aParent, aName);
 		fParticipants = new ArrayList<R4EUIParticipant>();
 		setImage(PARTICIPANT_CONTAINER_ICON_FILE);
 	}

@@ -97,7 +97,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 *            String
 	 */
 	public R4EUIAnomalyContainer(IR4EUIModelElement aParent, String aName) {
-		super(aParent, aName, null);
+		super(aParent, aName);
 		fAnomalies = new ArrayList<R4EUIAnomalyBasic>();
 		setImage(ANOMALY_CONTAINER_ICON_FILE);
 	}
@@ -539,7 +539,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			}
 		}
 		aUiPosition.setPositionInModel(position);
-		uiAnomaly.setToolTip(R4EUIAnomalyBasic.buildAnomalyToolTip(aAnomaly)); //Also set UI tooltip immediately
 		addChildren(uiAnomaly);
 		return uiAnomaly;
 	}
