@@ -1121,7 +1121,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
 			throws ResourceHandlingException, OutOfSyncException {
-		if (aChildToRemove instanceof R4EUIFileContainer) {
+		if (aChildToRemove instanceof R4EUIReviewItem) {
 			final R4EUIFileContainer removedElement = (R4EUIFileContainer) aChildToRemove;
 
 			//Also recursively remove all children 
@@ -1138,6 +1138,15 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 
 			//Remove element from UI if the show disabled element option is off
 			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+				fItems.remove(removedElement);
+				aChildToRemove.removeListeners();
+				fireRemove(aChildToRemove);
+			} else {
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+			}
+		} else if (aChildToRemove instanceof R4EUIPostponedContainer) {
+			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+				fPostponedContainer.removeAllChildren(aFileRemove);
 				fPostponedContainer = null;
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
