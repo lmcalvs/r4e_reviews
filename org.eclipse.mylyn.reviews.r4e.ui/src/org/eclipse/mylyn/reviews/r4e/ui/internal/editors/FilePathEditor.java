@@ -26,6 +26,7 @@ import java.util.StringTokenizer;
 import org.eclipse.jface.preference.ListEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.List;
 
 /**
  * @author lmcdubo
@@ -166,6 +167,13 @@ public class FilePathEditor extends ListEditor {
 	 * @return String
 	 */
 	public String getSelection() {
-		return getList().getSelection()[0];
+		List list = getList();
+		if (null != list) {
+			String[] selections = list.getSelection();
+			if (null != selections && 0 < selections.length) {
+				return selections[0];
+			}
+		}
+		return null;
 	}
 }

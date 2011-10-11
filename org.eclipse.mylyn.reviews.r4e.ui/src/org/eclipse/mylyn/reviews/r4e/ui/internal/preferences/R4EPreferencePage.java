@@ -323,13 +323,18 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			@SuppressWarnings("synthetic-access")
 			public void widgetSelected(SelectionEvent aEvent) {
 				final String selectedGroupFile = groupFilesEditor.getSelection();
-				final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
-				if (null != group) {
-					fGroupNameText.setText(group.getName());
-					fGroupDescriptionText.setText(group.getDescription());
-					R4EUIModelController.FModelExt.closeR4EReviewGroup(group);
+				if (null != selectedGroupFile) {
+					final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
+					if (null != group) {
+						fGroupNameText.setText(group.getName());
+						fGroupDescriptionText.setText(group.getDescription());
+						R4EUIModelController.FModelExt.closeR4EReviewGroup(group);
+					} else {
+						fGroupNameText.setText(INVALID_FILE_STR);
+					}
 				} else {
-					fGroupNameText.setText(INVALID_FILE_STR);
+					fGroupNameText.setText("");
+					fGroupDescriptionText.setText("");
 				}
 			}
 
@@ -409,14 +414,19 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			@SuppressWarnings("synthetic-access")
 			public void widgetSelected(SelectionEvent aEvent) {
 				final String selectedRuleSetFile = ruleSetFilesEditor.getSelection();
-				try {
-					final R4EDesignRuleCollection ruleSet = R4EUIModelController.peekRuleSet(selectedRuleSetFile);
-					fRuleSetNameText.setText(ruleSet.getName());
-					fRuleSetVersionText.setText(ruleSet.getVersion());
-					R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(ruleSet);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+				if (null != selectedRuleSetFile) {
+					try {
+						final R4EDesignRuleCollection ruleSet = R4EUIModelController.peekRuleSet(selectedRuleSetFile);
+						fRuleSetNameText.setText(ruleSet.getName());
+						fRuleSetVersionText.setText(ruleSet.getVersion());
+						R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(ruleSet);
+					} catch (ResourceHandlingException e) {
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+					}
+				} else {
+					fRuleSetNameText.setText("");
+					fRuleSetVersionText.setText("");
 				}
 			}
 
