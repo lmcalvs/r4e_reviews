@@ -19,12 +19,10 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 
 import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -80,18 +78,13 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 
 								//If we just completed the review, prompt user for mail sending
 								if (R4EUIModelController.getActiveReview().isUserReviewed()) {
-
-									Object source = ((EvaluationContext) event.getApplicationContext()).getDefaultVariable();
-									if (source instanceof List) {
-										source = ((List<?>) source).get(0); //If this is a list, get first element
-									}
 									R4EUIModelController.setJobInProgress(true);
 
 									final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
 											R4EUIModelController.getNavigatorView()
 													.getSite()
 													.getWorkbenchWindow()
-													.getShell(), source);
+													.getShell(), R4EUIModelController.getActiveReview());
 									dialog.create();
 									final int result = dialog.open();
 									if (result == Window.OK) {
