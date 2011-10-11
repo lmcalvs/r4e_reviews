@@ -456,11 +456,26 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			OutOfSyncException {
 		if (aChildToRemove instanceof R4EUIReviewGroup) {
 			final R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
-			removedElement.removeAllChildren(false);
+			//Close Review Group if open
+			if (removedElement.isOpen()) {
+				IR4EUIModelElement[] reviews = removedElement.getChildren();
+				for (IR4EUIModelElement review : reviews) {
+					//Close Review if open
+					if (review instanceof R4EUIReviewBasic && review.isOpen()) {
+						R4EUIModelController.FModelExt.closeR4EReview(((R4EUIReviewBasic) review).getReview());
+						R4EUIModelController.clearAnomalyMap();
+						R4EUIModelController.setActiveReview(null);
+					}
+				}
+				R4EUIModelController.FModelExt.closeR4EReviewGroup(removedElement.getGroup());
+			}
 			fReviewGroups.remove(removedElement);
 		} else {
 			final R4EUIRuleSet removedElement = fRuleSets.get(fRuleSets.indexOf(aChildToRemove));
-			removedElement.removeAllChildren(false);
+			//Close Rule set if open
+			if (removedElement.isOpen()) {
+				R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(removedElement.getRuleSet());
+			}
 			fRuleSets.remove(removedElement);
 		}
 		aChildToRemove.removeListeners();
