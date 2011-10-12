@@ -126,6 +126,7 @@ public class SendNotificationHandler extends AbstractHandler {
 						case R4EUIConstants.MESSAGE_TYPE_MEETING:
 							//Send question
 							MailServicesProxy.sendMeetingRequest();
+							UIUtils.setNavigatorViewFocus(R4EUIModelController.getActiveReview(), 0);
 							break;
 						default:
 							//Do nothing, should never happen

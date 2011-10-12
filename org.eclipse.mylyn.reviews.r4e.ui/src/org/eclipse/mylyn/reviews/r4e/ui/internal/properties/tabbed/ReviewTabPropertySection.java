@@ -718,6 +718,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					MailServicesProxy.sendMeetingRequest();
+					UIUtils.setNavigatorViewFocus(R4EUIModelController.getActiveReview(), 0);
 				} catch (ResourceHandlingException e1) {
 					UIUtils.displayResourceErrorDialog(e1);
 				} catch (OutOfSyncException e1) {
