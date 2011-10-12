@@ -92,6 +92,17 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	public R4EUIReviewItem(IR4EUIModelElement aParent, R4EItem aItem, String aName) {
 		super(aParent, aItem, aName);
 		setImage(REVIEW_ITEM_ICON_FILE);
+
+		//Remove check on parent, since at least one children is not set anymore
+		try {
+			getParent().setUserReviewed(false);
+		} catch (OutOfSyncException e) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		} catch (ResourceHandlingException e) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		}
 	}
 
 	// ------------------------------------------------------------------------
