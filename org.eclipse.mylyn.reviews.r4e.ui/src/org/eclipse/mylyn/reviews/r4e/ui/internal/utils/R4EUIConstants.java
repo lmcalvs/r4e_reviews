@@ -859,9 +859,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ALPHA_SORTER_MNEMONIC = "s";
 
 	/**
-	 * Field REVIEW_TYPE_SORTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort"")
+	 * Field REVIEW_TYPE_SORTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort"")
 	 */
-	public static final String REVIEW_TYPE_SORTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort";
+	public static final String REVIEW_TYPE_SORTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort";
 
 	/**
 	 * Field REVIEW_TYPE_SORTER_ICON_FILE. (value is ""icons/elcl16/revtypesort_menu.gif"")
