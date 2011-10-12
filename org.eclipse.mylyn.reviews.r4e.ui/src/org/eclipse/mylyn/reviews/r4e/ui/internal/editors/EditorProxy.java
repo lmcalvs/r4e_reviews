@@ -94,7 +94,7 @@ public class EditorProxy {
 			return;
 		}
 
-		IR4EUIModelElement element = null;
+		Object element = null;
 		IR4EUIPosition position = null;
 
 		R4EUIFileContext context = null;
@@ -102,7 +102,11 @@ public class EditorProxy {
 		R4EFileVersion targetFileVersion = null;
 
 		for (final Iterator<?> iterator = ((IStructuredSelection) aSelection).iterator(); iterator.hasNext();) {
-			element = (IR4EUIModelElement) iterator.next();
+
+			element = iterator.next();
+			if (!(element instanceof IR4EUIModelElement)) {
+				continue;
+			}
 
 			//Depending on which element was selected in the tree, we make the target file editable
 			//The file is editable if it was opened from the anomaly or comment level, otherwise it is not
@@ -110,14 +114,14 @@ public class EditorProxy {
 			if (element instanceof R4EUIAnomalyBasic) {
 				position = ((R4EUIAnomalyBasic) element).getPosition();
 			} else if (element instanceof R4EUIComment) {
-				position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
+				position = ((R4EUIAnomalyBasic) ((R4EUIAnomalyBasic) element).getParent()).getPosition();
 			} else if (element instanceof R4EUIContent) {
 				position = ((R4EUIContent) element).getPosition();
 			}
 
 			//Find the parent FileContextElement
 			while (!(element instanceof R4EUIFileContext)) {
-				element = element.getParent();
+				element = ((IR4EUIModelElement) element).getParent();
 				if (null == element) {
 					return;
 				}

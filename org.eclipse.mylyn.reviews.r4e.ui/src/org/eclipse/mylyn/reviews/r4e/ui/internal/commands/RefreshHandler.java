@@ -70,14 +70,17 @@ public class RefreshHandler extends AbstractHandler {
 					try {
 						if (!selection.isEmpty()) {
 
-							final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+							final Object element = ((IStructuredSelection) selection).getFirstElement();
+							if (!(element instanceof IR4EUIModelElement)) {
+								return Status.CANCEL_STATUS;
+							}
 							if (element instanceof R4EUIReviewGroup) {
 								//Refresh whole Review Group
 								((R4EUIReviewGroup) element).close();
 								((R4EUIReviewGroup) element).open();
 							} else {
 								//Refresh Review
-								refreshReview(element);
+								refreshReview((IR4EUIModelElement) element);
 							}
 						} else {
 							//No selection refresh all open review groups

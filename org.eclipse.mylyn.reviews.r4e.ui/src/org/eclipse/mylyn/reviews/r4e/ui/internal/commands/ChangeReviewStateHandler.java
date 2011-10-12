@@ -69,12 +69,16 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 				final ISelection selection = HandlerUtil.getCurrentSelection(event);
 				if (selection instanceof IStructuredSelection) {
 					if (!selection.isEmpty()) {
-						IR4EUIModelElement element = null;
+						Object element = null;
 						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
 							try {
-								element = (IR4EUIModelElement) iterator.next();
-								R4EUIPlugin.Ftracer.traceInfo("Changing review state for element " + element.getName());
-								element.setUserReviewed(!(element.isUserReviewed()));
+								element = iterator.next();
+								if (!(element instanceof IR4EUIModelElement)) {
+									continue;
+								}
+								R4EUIPlugin.Ftracer.traceInfo("Changing review state for element "
+										+ ((IR4EUIModelElement) element).getName());
+								((IR4EUIModelElement) element).setUserReviewed(!(((IR4EUIModelElement) element).isUserReviewed()));
 
 								//If we just completed the review, prompt user for mail sending
 								if (R4EUIModelController.getActiveReview().isUserReviewed()) {
@@ -109,7 +113,7 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 										R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 									}
 								}
-								UIUtils.setNavigatorViewFocus(element, 0);
+								UIUtils.setNavigatorViewFocus((IR4EUIModelElement) element, 0);
 							} catch (ResourceHandlingException e) {
 								UIUtils.displayResourceErrorDialog(e);
 							} catch (OutOfSyncException e) {

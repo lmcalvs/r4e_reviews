@@ -77,7 +77,7 @@ public class RemoveElementHandler extends AbstractHandler {
 				final ISelection selection = HandlerUtil.getCurrentSelection(event);
 				if (selection instanceof IStructuredSelection) {
 					if (!selection.isEmpty()) {
-						IR4EUIModelElement element = null;
+						Object element = null;
 						MessageDialogWithToggle dialog = null;
 						R4EReview review = null;
 						if (null != R4EUIModelController.getActiveReview()) {
@@ -85,8 +85,11 @@ public class RemoveElementHandler extends AbstractHandler {
 						}
 						final List<R4EReviewComponent> removedItems = new ArrayList<R4EReviewComponent>();
 						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
-							element = (IR4EUIModelElement) iterator.next();
-							R4EUIPlugin.Ftracer.traceInfo("Disable element " + element.getName());
+							element = iterator.next();
+							if (!(element instanceof IR4EUIModelElement)) {
+								continue;
+							}
+							R4EUIPlugin.Ftracer.traceInfo("Disable element " + ((IR4EUIModelElement) element).getName());
 							dialog = MessageDialogWithToggle.openOkCancelConfirm(null, "Disable element",
 									"Do you really want to disable this element?",
 									"Also delete from file (not supported yet)", false, null, null);
@@ -98,17 +101,18 @@ public class RemoveElementHandler extends AbstractHandler {
 										removedItems.add(((R4EUIContent) element).getContent());
 									}
 
-									if (element.isOpen()) {
-										element.close();
-										for (IR4EUIModelElement childElement : element.getChildren()) {
+									if (((IR4EUIModelElement) element).isOpen()) {
+										((IR4EUIModelElement) element).close();
+										for (IR4EUIModelElement childElement : ((IR4EUIModelElement) element).getChildren()) {
 											if (null != childElement && childElement.isOpen()) {
 												childElement.close();
 												break;
 											}
 										}
 									}
-									UIUtils.setNavigatorViewFocus(element.getParent(), 0);
-									element.getParent().removeChildren(element, dialog.getToggleState());
+									UIUtils.setNavigatorViewFocus(((IR4EUIModelElement) element).getParent(), 0);
+									((IR4EUIModelElement) element).getParent().removeChildren(
+											(IR4EUIModelElement) element, dialog.getToggleState());
 								} catch (ResourceHandlingException e) {
 									UIUtils.displayResourceErrorDialog(e);
 								} catch (OutOfSyncException e) {

@@ -63,10 +63,11 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 		if (selection instanceof IStructuredSelection) {
 			//Add a linked anomaly to this selection
 			if (!selection.isEmpty()) {
-				final IR4EUIModelElement element = ((IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement());
+				final Object element = ((IStructuredSelection) selection).getFirstElement();
 				if (element instanceof R4EUIContent) {
 					try {
-						R4EUIPlugin.Ftracer.traceInfo("Adding linked anomaly to element " + element.getName());
+						R4EUIPlugin.Ftracer.traceInfo("Adding linked anomaly to element "
+								+ ((IR4EUIModelElement) element).getName());
 						addLinkedAnomaly((R4EUIContent) element);
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);
