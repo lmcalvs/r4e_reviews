@@ -116,7 +116,7 @@ public class Smtp extends NotificationsConnector {
 					StringBuilder sb = new StringBuilder();
 					sb.append("ComponentObjectModelException: ");
 					sb.append(aEex.getMessage());
-					throw new CoreException(new Status(Status.ERROR, SmtpPlugin.FPLUGIN_ID,
+					throw new CoreException(new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID,
 							sb.toString()) {
 					});		
 				} 
@@ -197,14 +197,15 @@ public class Smtp extends NotificationsConnector {
 	}
 
 	/**
-	 * method createMeetingRequest
+	 * method openAndUpdateMeeting
 	 * @param aMeetingData IMeetingData
 	 * @param aSearchFrom Date
-	
+	 * @return IMeetingData
 	 * @see org.eclipse.mylyn.reviews.notifications.NotificationConnector#openAndUpdateMeeting(IMeetingData, Date) */
 	@Override
-	public void openAndUpdateMeeting(IMeetingData aMeetingData, Date aSearchFrom) {
+	public IMeetingData openAndUpdateMeeting(IMeetingData aMeetingData, Date aSearchFrom) {
 	
+		IMeetingData newMeetingData = null;
 		final ScheduleMeetingInputDialog dialog = new ScheduleMeetingInputDialog(getShell());
 		dialog.create();
 
@@ -220,7 +221,6 @@ public class Smtp extends NotificationsConnector {
     	if (result == Window.OK) {
 			final String defaultUserId = System.getProperty("user.name");	
 			
-			IMeetingData newMeetingData = null;
     		//Lets create a Vcalendar
 			try {
 				newMeetingData = NotificationsCore.createMeetingData(
@@ -247,7 +247,8 @@ public class Smtp extends NotificationsConnector {
 					StatusHandler.log(new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID, IStatus.OK, e.toString(), e));
 				}
 			}
-    	} 
+    	}
+    	return newMeetingData;
 	}
 
 	/**

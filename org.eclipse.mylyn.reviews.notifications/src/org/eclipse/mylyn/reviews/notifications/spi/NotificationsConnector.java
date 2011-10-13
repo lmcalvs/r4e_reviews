@@ -76,8 +76,9 @@ public abstract class NotificationsConnector {
 	 * @param aMeetingData
 	 * @param searchFrom
 	 *            - narrow down the search window, 6 months before current date is recommended
+	 * @return IMeetingData
 	 */
-	public abstract void openAndUpdateMeeting(IMeetingData aMeetingData, Date searchFrom);
+	public abstract IMeetingData openAndUpdateMeeting(IMeetingData aMeetingData, Date searchFrom);
 
 	/**
 	 * Fetch the meeting data from the calendar system using the local data
