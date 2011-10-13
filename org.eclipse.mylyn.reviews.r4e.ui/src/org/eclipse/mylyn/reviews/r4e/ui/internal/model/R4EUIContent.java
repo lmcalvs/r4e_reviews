@@ -19,12 +19,10 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ContentsProperties;
@@ -282,15 +280,6 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isAddLinkedAnomalyCmd() {
-		//If this is a formal review, we need to be in the preparation or decision phase
-		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
-					.getType();
-			if (!phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
-					&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-				return false;
-			}
-		}
 		if (isEnabled()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
