@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
@@ -1138,7 +1139,8 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		if (null != meetingData) {
 			fMeetingUpdateButton.setText(R4EUIConstants.UPDATE_LABEL);
 			fMeetingSubjectLabel.setText(meetingData.getSubject());
-			final SimpleDateFormat meetingDateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT_MINUTES);
+			final DateFormat meetingDateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT_MINUTES);
+			meetingDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 			fMeetingStartTimeLabel.setText(meetingDateFormat.format(new Date(meetingData.getStartTime())));
 			fMeetingDurationLabel.setText(Integer.toString(meetingData.getDuration()));
 			fMeetingLocationLabel.setText(meetingData.getLocation());
