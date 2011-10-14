@@ -1,3 +1,4 @@
+__TOC__
 = Getting Started  =
 
 == Overview  ==
@@ -15,7 +16,7 @@ The R4E User Interface includes three main components: '''R4E Review Navigator V
 &nbsp; &nbsp;The '''R4E Review Navigator View''' is the main interface to R4E. It shows all the R4E elements in a hierarchical tree structure The '''R4E Properties view''', using the generic Eclipse Properties View,  presents the properties and attributes attached to each R4E element represented in the Review Navigator view. Some elements values can be altered after creation, and some other or read-only and settable at creation time. The '''R4E Context Menu''' appears in Eclipse Context menus whenever it is possible to use R4E command is this particular context. Please refer to [section] below for more information.<br> 
 <br> 
 === R4E main interfaces ===
-R4E interacts with the follwing features/plugins: 
+R4E interacts with the following features/plugins: 
 
 *Mylyn Versions Connectors for Egit and Svn (via Subclipse)
 *C/C++ Language support: CDT (Optional)
@@ -69,6 +70,7 @@ currently, R4E supports Git and Subclipse connectors.
 
 === Starting R4E  ===
 To start up R4E, show the Review Navigator View e.g. using the Eclipse Window->Show View menu:<br>
+To associate existing review groups see [[#Opening an Existing Review Group]]
  
 [[Image:R4E show view.png]] 
 
@@ -958,7 +960,7 @@ This opens the New Review Group dialog.
 
 === Opening an Existing Review Group  ===
 
-When you create a new Review Group, its references are automatically included in your workspace. To add other Review Group references, open the R4E Preference Group Tab 
+When you create a new Review Group, its references are automatically included in your workspace. To add other Review Group references, open the R4E Preference Group Tab (Window->Preferences->R4E, then switch to tab "Groups")
 
 <br> 
 
@@ -969,7 +971,7 @@ When you create a new Review Group, its references are automatically included in
 *Add a new Review Group reference file by clicking the ''Add ''button and select the appropriate Group File. Take note that all Review Group filename end with "_group_root.xrer" suffix. 
 *The Review Group Name and Description are also shown in the Preferences Group tab.
 
-<br> 
+<br>
 
 === Creating a Review  ===
 
