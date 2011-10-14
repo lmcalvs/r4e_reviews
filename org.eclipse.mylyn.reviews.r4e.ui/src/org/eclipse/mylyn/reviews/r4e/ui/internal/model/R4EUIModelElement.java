@@ -59,6 +59,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public static final String DISABLED_OVERLAY_ICON_FILE = "icons/ovr16/dsbldovr_tsk.gif"; //$NON-NLS-1$
 
+	/**
+	 * Field DISABLED_OVERLAY_ICON_FILE.
+	 */
+	public static final String BOLD_ICON_FILE = "icons/ovr16/bold_icon.gif"; //$NON-NLS-1$
+
+	/**
+	 * Field DISABLED_OVERLAY_ICON_FILE.
+	 */
+	public static final String ITALIC_ICON_FILE = "icons/ovr16/italics_icon.gif"; //$NON-NLS-1$
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------

@@ -409,6 +409,17 @@ public class R4EUILegendControl extends Composite {
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon(R4EUIFileContext.REMOVED_OVERLAY_ICON_FILE));
 		toolkit.createLabel(r4eClient, "Element Removed (File Contexts only)");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon(R4EUIModelElement.BOLD_ICON_FILE));
+		toolkit.createLabel(r4eClient, "(Bold font) Active Review (Reviews Only)");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon(R4EUIModelElement.ITALIC_ICON_FILE));
+		toolkit.createLabel(r4eClient, "(Italic font) Element of a Review User is Participating in");
+
+		imageLabel = toolkit.createLabel(r4eClient, ">"); //$NON-NLS-1$
+		toolkit.createLabel(r4eClient, "File Out of Sync with Worskspace (File Contexts only)");
 	}
 
 	/**
