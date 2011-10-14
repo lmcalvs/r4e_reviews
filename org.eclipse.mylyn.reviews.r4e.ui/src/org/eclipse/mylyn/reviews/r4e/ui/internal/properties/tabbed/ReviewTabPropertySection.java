@@ -358,6 +358,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				if (!fRefreshInProgress) {
 					UIUtils.changeReviewPhase(fProperties.getElement(), phase);
 					refresh();
+					R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 				}
 			}
 
@@ -719,7 +720,8 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					MailServicesProxy.sendMeetingRequest();
-					UIUtils.setNavigatorViewFocus(R4EUIModelController.getActiveReview(), 0);
+					refresh();
+					R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 				} catch (ResourceHandlingException e1) {
 					UIUtils.displayResourceErrorDialog(e1);
 				} catch (OutOfSyncException e1) {
@@ -753,6 +755,8 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					((R4EUIReviewBasic) fProperties.getElement()).refreshMeetingData();
+					refresh();
+					R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 				} catch (OutOfSyncException ex) {
 					UIUtils.displaySyncErrorDialog(ex);
 				} catch (ResourceHandlingException ex) {

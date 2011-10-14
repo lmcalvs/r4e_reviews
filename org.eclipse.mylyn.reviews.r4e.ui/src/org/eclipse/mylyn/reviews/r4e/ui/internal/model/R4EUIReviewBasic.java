@@ -715,7 +715,10 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	public void setMeetingData(IMeetingData aMeetingData) throws ResourceHandlingException, OutOfSyncException {
 		if (null != aMeetingData) {
-			final R4EMeetingData coreMeetingData = R4EUIModelController.FModelExt.createR4EMeetingData(fReview);
+			R4EMeetingData coreMeetingData = fReview.getActiveMeeting();
+			if (null == coreMeetingData) {
+				coreMeetingData = R4EUIModelController.FModelExt.createR4EMeetingData(fReview);
+			}
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(coreMeetingData,
 					R4EUIModelController.getReviewer());
 			coreMeetingData.setId(aMeetingData.getCustomID());

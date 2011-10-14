@@ -516,7 +516,6 @@ public class UIUtils {
 					if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
 							&& null == review.getActiveMeeting()) {
 						MailServicesProxy.sendMeetingRequest();
-						UIUtils.setNavigatorViewFocus(R4EUIModelController.getActiveReview(), 0);
 					}
 					//Prevent changing state to PREPARATION if no Meeting Request was sent out
 					if (null != review.getActiveMeeting()) {
