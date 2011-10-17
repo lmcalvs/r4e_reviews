@@ -110,7 +110,7 @@ public class RemoveElementHandler extends AbstractHandler {
 											}
 										}
 									}
-									UIUtils.setNavigatorViewFocus(((IR4EUIModelElement) element).getParent(), 0);
+									//UIUtils.setNavigatorViewFocus(((IR4EUIModelElement) element).getParent(), 0);
 									((IR4EUIModelElement) element).getParent().removeChildren(
 											(IR4EUIModelElement) element, dialog.getToggleState());
 								} catch (ResourceHandlingException e) {

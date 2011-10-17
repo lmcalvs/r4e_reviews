@@ -426,7 +426,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNewChildElementCmd() {
-		if (getParent().isEnabled()) {
+		if (isEnabled()) {
 			return true;
 		}
 		return false;
