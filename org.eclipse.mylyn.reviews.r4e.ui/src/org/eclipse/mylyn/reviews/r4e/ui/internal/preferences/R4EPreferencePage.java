@@ -36,6 +36,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.FilePathEditor;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
 import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
@@ -86,6 +87,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	// ------------------------------------------------------------------------
 	// Member Variables
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Field fUserEmailTextField.
+	 */
+	private Text fUserEmailTextField = null;
 
 	/**
 	 * Field fUseDeltasButton.
@@ -253,14 +259,22 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			userIdFieldEditor.setEnabled(true, r4EUserPrefsGroup);
 		}
 
-		final StringFieldEditor userEmailFieldEditor = new StringFieldEditor(PreferenceConstants.P_USER_EMAIL,
-				PreferenceConstants.P_USER_EMAIL_LABEL, StringFieldEditor.UNLIMITED, r4EUserPrefsGroup);
-		addField(userEmailFieldEditor);
+		final Label userEmailLabel = new Label(r4EUserPrefsGroup, SWT.FILL);
+		final GridData userEmailLabelData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		userEmailLabel.setText(R4EUIConstants.NAME_LABEL);
+		userEmailLabel.setLayoutData(userEmailLabelData);
+
+		fUserEmailTextField = new Text(r4EUserPrefsGroup, SWT.FILL | SWT.BORDER);
+		final GridData userEmailTextData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		if (R4EUIModelController.isJobInProgress()) {
-			userEmailFieldEditor.setEnabled(false, r4EUserPrefsGroup);
+			fUserEmailTextField.setEnabled(false);
+			fUserEmailTextField.setEditable(false);
 		} else {
-			userEmailFieldEditor.setEnabled(true, r4EUserPrefsGroup);
+			fUserEmailTextField.setEnabled(true);
+			fUserEmailTextField.setEditable(true);
 		}
+		fUserEmailTextField.setLayoutData(userEmailTextData);
+		fUserEmailTextField.setText(store.getString(PreferenceConstants.P_USER_EMAIL));
 
 		//dummy spacer label
 		r4EUserPrefsSpacer = new Label(r4EUserPrefsGroup, SWT.FILL);
@@ -653,7 +667,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 		store.setValue(PreferenceConstants.P_USE_DELTAS, fUseDeltasButton.getSelection());
 		store.setValue(PreferenceConstants.P_AUTO_IMPORT_POSTPONED, fAutoImportPostponedButton.getSelection());
-		if ("".equals(store.getString(PreferenceConstants.P_USER_EMAIL))) {
+		if ("".equals(fUserEmailTextField.getText())) {
 			final String userId = store.getString(PreferenceConstants.P_USER_ID);
 
 			//If no email preferences are set, try to retrieve it from the external DB
@@ -670,6 +684,13 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 				} catch (IOException e) {
 					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
+			}
+		} else {
+			if (CommandUtils.isEmailValid(fUserEmailTextField.getText())) {
+				store.setValue(PreferenceConstants.P_USER_EMAIL, fUserEmailTextField.getText());
+			} else {
+				//Validation of input failed
+				return false;
 			}
 		}
 

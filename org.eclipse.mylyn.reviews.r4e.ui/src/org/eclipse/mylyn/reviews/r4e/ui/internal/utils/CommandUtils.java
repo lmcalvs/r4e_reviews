@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
@@ -36,6 +38,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.ISourceReference;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
@@ -738,5 +741,35 @@ public class CommandUtils {
 		}
 		return participant;
 
+	}
+
+	/**
+	 * Method isEmailValid.
+	 * 
+	 * @param aEmailAddress
+	 *            String
+	 * @return boolean
+	 */
+	public static boolean isEmailValid(String aEmailAddress) {
+
+		//Ignore empty entry
+		if (null == aEmailAddress || aEmailAddress.equals("")) {
+			return true;
+		}
+
+		Pattern pattern = Pattern.compile(
+				"^([\\w]((\\.(?!\\.))|[-!#\\$%'\\*\\+/=\\?\\^`\\{\\}\\|~\\w])*)(?<=[\\w])@(([\\w][-\\w]*[\\w]\\.)+[a-zA-Z]{2,6})$",
+				Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(aEmailAddress);
+		boolean result = matcher.matches();
+
+		//Validation of input failed
+		if (!result) {
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+					"Invalid format for Participant Email", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+							aEmailAddress + " is invalid", null), IStatus.ERROR);
+			dialog.open();
+		}
+		return result;
 	}
 }

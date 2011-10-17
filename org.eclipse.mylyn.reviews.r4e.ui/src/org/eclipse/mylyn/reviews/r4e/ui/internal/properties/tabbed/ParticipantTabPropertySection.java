@@ -40,6 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.IEditableListListener;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -201,6 +202,10 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 			public void focusLost(FocusEvent e) {
 				if (!fRefreshInProgress) {
 					try {
+						if (!CommandUtils.isEmailValid(fEmailText.getText())) {
+							//Validation of input failed
+							return;
+						}
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EParticipant modelParticipant = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant,
