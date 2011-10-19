@@ -298,6 +298,8 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	 * org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry#getIStorage(org.eclipse.core.runtime.IProgressMonitor,
 	 * org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion)
 	 */
+	//NOTE: Right now, only the full path prepended with the repo path and appended with the localId is used.  If there is a need
+	//to get the pure repo path, we could modify or add code to do this.
 	public IStorage getIStorage(IProgressMonitor monitor, R4EFileVersion fileVersion) {
 
 		final IPath path = Path.fromPortableString(fileVersion.getRepositoryPath());
@@ -327,7 +329,7 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 				//bug349739:  Here we first need to prepend the repository name to the artifact path to get the full path to the artifact
 				IPath repoPath = new Path(fRepositoryUtil.getRepositoryName(fRepository));
 				String pathString = path.toPortableString();
-				return repoPath.append(Path.fromPortableString(pathString));
+				return repoPath.append(Path.fromPortableString(pathString + " " + localId.toString()));  //Append localId to differentiate versions in Repo
 			}
 
 			public InputStream getContents() throws CoreException {
