@@ -214,15 +214,23 @@ public class CommandUtils {
 			return updateBaseFile(editorFile);
 		} else if (input instanceof R4ECompareEditorInput) {
 			//If we get here, this is because we are trying to act on the compare editor contents
-			//We have two cases:
-			//1) The left file is an R4EFileTypedElement. This means that it is a modified file not yet in source control.
-			//	 In this case, the base file file the version that is in source control i.e. the right file version (if it is in source control).
-			//2) The left file is an R4EFileRevisionTypedElement. This means that it is a file in source control.
+			//We have three cases:
+			//1) The left file is an R4EFileTypedElement and had no version ID. This means that it is a modified file not yet in source control.
+			//	 In this case, the base file is the version that is in source control i.e. the right file version (if it is in source control).
+			//2) The left file is an R4EFileTypedElement and had a version ID. This means that it is file in source control in sync with the workspace.
+			//   In this case, the base file for the new Resource Review item should be the same as the target file i.e. the left file version 
+			//3) The left file is an R4EFileRevisionTypedElement. This means that it is a file in source control.
 			//   In this case, the base file for the new Resource Review item should be the same as the target file i.e. the left file version 
 			ITypedElement leftElement = ((R4ECompareEditorInput) input).getLeftElement();
 			ITypedElement rightElement = ((R4ECompareEditorInput) input).getRightElement();
 			if (leftElement instanceof R4EFileTypedElement && rightElement instanceof R4EFileRevisionTypedElement) {
-				return ((R4EFileRevisionTypedElement) rightElement).getFileVersion();
+				if (((R4EFileTypedElement) leftElement).getFileVersion()
+						.getVersionID()
+						.equals(NO_SOURCE_CONTROL_ID_TEXT)) {
+					return ((R4EFileRevisionTypedElement) rightElement).getFileVersion();
+				} else {
+					return ((R4EFileTypedElement) leftElement).getFileVersion();
+				}
 			} else if (leftElement instanceof R4EFileRevisionTypedElement) {
 				return ((R4EFileRevisionTypedElement) leftElement).getFileVersion();
 			} else {
