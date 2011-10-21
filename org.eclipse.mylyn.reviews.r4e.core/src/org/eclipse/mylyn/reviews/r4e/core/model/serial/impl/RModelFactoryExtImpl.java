@@ -280,9 +280,10 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		aReviewGroup.getReviews().add(review);
 
 		// CREATE PARTICIPANT resource and save it under the review folder
-		// create the participant role
+		// create the participant default roles
 		List<R4EUserRole> role = new ArrayList<R4EUserRole>();
 		role.add(R4EUserRole.R4E_ROLE_ORGANIZER);
+		role.add(R4EUserRole.R4E_ROLE_LEAD);
 		R4EParticipant participant = (R4EParticipant) createR4EUser(review, aCreatedByUser, role, true);
 
 		// Update pending associations to Review

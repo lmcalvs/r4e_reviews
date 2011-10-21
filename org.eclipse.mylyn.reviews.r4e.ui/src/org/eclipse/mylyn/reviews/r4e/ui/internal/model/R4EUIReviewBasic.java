@@ -248,12 +248,11 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				setImage(REVIEW_INFORMAL_ICON_FILE);
 			}
 			fOpen = true;
-			final List<R4EUserRole> role = new ArrayList<R4EUserRole>(2);
-			role.add(R4EUserRole.R4E_ROLE_LEAD);
-			role.add(R4EUserRole.R4E_ROLE_ORGANIZER);
-			final R4EParticipant participant = R4EUIModelController.FModelExt.createR4EParticipant(fReview,
-					R4EUIModelController.getReviewer(), role);
-			fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer, participant, aType));
+
+			//NOTE:  The default participant that creates this review is already added by default in the model (including default roles)
+			fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer,
+					(R4EParticipant) fReview.getUsersMap().get(R4EUIModelController.getReviewer()), aType));
+
 			final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 			if (null != activeReview) {
 				activeReview.close();
