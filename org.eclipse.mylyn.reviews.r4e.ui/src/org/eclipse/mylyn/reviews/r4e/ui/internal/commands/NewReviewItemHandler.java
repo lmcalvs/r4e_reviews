@@ -237,8 +237,15 @@ public class NewReviewItemHandler extends AbstractHandler {
 				//NOTE:  This is always true because all elements that implement ISourceReference
 				//       also implement ICElement.  The resource is always an IFile
 				//TO Fix this causes an error java.lang.ClassCastException: org.eclipse.core.internal.resources.Project cannot be cast to org.eclipse.core.resources.IFile
-				workspaceFile = (IFile) ((org.eclipse.cdt.core.model.ICElement) aSelection).getParent().getResource();
-				//TODO is that the right file to get the position???
+				org.eclipse.cdt.core.model.ICElement cdtElement = (org.eclipse.cdt.core.model.ICElement) aSelection;
+				while (null != cdtElement) {
+					if (cdtElement.getResource() instanceof IFile) {
+						workspaceFile = (IFile) cdtElement.getResource();
+						break;
+					}
+					cdtElement = cdtElement.getParent();
+				}
+				//NOTE:  When selecting whole CDT File, the position is always set to line 0.  This is what is returned by CDT
 				position = CommandUtils.getPosition((org.eclipse.cdt.core.model.ISourceReference) aSelection,
 						workspaceFile);
 			} else {
