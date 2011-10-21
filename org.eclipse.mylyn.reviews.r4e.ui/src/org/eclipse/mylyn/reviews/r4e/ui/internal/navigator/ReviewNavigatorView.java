@@ -72,6 +72,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
@@ -502,7 +503,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 						for (IR4EUIModelElement group : rootElement.getChildren()) {
 							for (IR4EUIModelElement review : group.getChildren()) {
 								for (IR4EUIModelElement item : review.getChildren()) {
-									for (IR4EUIModelElement navigatorFile : item.getChildren()) {
+									for (final IR4EUIModelElement navigatorFile : item.getChildren()) {
 										if (navigatorFile instanceof R4EUIFileContext) {
 											R4EFileVersion version = ((R4EUIFileContext) navigatorFile).getFileContext()
 													.getTarget();
@@ -522,8 +523,16 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 													}
 												}
 												//selection to the file context corresponding to the editor input
-												fReviewTreeViewer.setSelection(new StructuredSelection(navigatorFile),
-														true);
+												Display.getDefault().asyncExec(new Runnable() {
+													public void run() {
+														while (Display.getDefault().readAndDispatch()) {
+															//wait for events to finish before continue
+														}
+
+														fReviewTreeViewer.setSelection(new StructuredSelection(
+																navigatorFile), true);
+													}
+												});
 												return;
 											}
 										}
