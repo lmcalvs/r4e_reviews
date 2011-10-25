@@ -1791,22 +1791,13 @@ public interface RModelPackage extends EPackage {
 	int R4E_TASK_REFERENCE__REPOSITORY_URL = ModelPackage.TASK_REFERENCE__REPOSITORY_URL;
 
 	/**
-	 * The feature id for the '<em><b>Task</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_TASK_REFERENCE__TASK = ModelPackage.TASK_REFERENCE_FEATURE_COUNT + 0;
-
-	/**
 	 * The number of structural features of the '<em>R4E Task Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_TASK_REFERENCE_FEATURE_COUNT = ModelPackage.TASK_REFERENCE_FEATURE_COUNT + 1;
+	int R4E_TASK_REFERENCE_FEATURE_COUNT = ModelPackage.TASK_REFERENCE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -2775,16 +2766,6 @@ public interface RModelPackage extends EPackage {
 	int R4E_CONTEXT_TYPE = 39;
 
 	/**
-	 * The meta object id for the '<em>Mylyn Task</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.mylyn.tasks.core.ITask
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMylynTask()
-	 * @generated
-	 */
-	int MYLYN_TASK = 40;
-
-	/**
 	 * The meta object id for the '<em>IResource</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2792,7 +2773,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIResource()
 	 * @generated
 	 */
-	int IRESOURCE = 41;
+	int IRESOURCE = 40;
 
 
 	/**
@@ -2803,7 +2784,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getURI()
 	 * @generated
 	 */
-	int URI = 42;
+	int URI = 41;
 
 
 	/**
@@ -2814,7 +2795,7 @@ public interface RModelPackage extends EPackage {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getIFileRevision()
 	 * @generated
 	 */
-	int IFILE_REVISION = 43;
+	int IFILE_REVISION = 42;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup <em>R4E Review Group</em>}'.
@@ -3838,17 +3819,6 @@ public interface RModelPackage extends EPackage {
 	EClass getR4ETaskReference();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference#getTask <em>Task</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Task</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference#getTask()
-	 * @see #getR4ETaskReference()
-	 * @generated
-	 */
-	EAttribute getR4ETaskReference_Task();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState <em>R4E Review State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4749,17 +4719,6 @@ public interface RModelPackage extends EPackage {
 	EEnum getR4EContextType();
 
 	/**
-	 * Returns the meta object for data type '{@link org.eclipse.mylyn.tasks.core.ITask <em>Mylyn Task</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Mylyn Task</em>'.
-	 * @see org.eclipse.mylyn.tasks.core.ITask
-	 * @model instanceClass="org.eclipse.mylyn.tasks.core.ITask"
-	 * @generated
-	 */
-	EDataType getMylynTask();
-
-	/**
 	 * Returns the meta object for data type '{@link org.eclipse.core.resources.IResource <em>IResource</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5593,14 +5552,6 @@ public interface RModelPackage extends EPackage {
 		EClass R4E_TASK_REFERENCE = eINSTANCE.getR4ETaskReference();
 
 		/**
-		 * The meta object literal for the '<em><b>Task</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute R4E_TASK_REFERENCE__TASK = eINSTANCE.getR4ETaskReference_Task();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewStateImpl <em>R4E Review State</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6317,16 +6268,6 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum R4E_CONTEXT_TYPE = eINSTANCE.getR4EContextType();
-
-		/**
-		 * The meta object literal for the '<em>Mylyn Task</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.mylyn.tasks.core.ITask
-		 * @see org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelPackageImpl#getMylynTask()
-		 * @generated
-		 */
-		EDataType MYLYN_TASK = eINSTANCE.getMylynTask();
 
 		/**
 		 * The meta object literal for the '<em>IResource</em>' data type.

@@ -60,7 +60,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
-import org.eclipse.mylyn.tasks.core.ITask;
 import org.eclipse.team.core.history.IFileRevision;
 
 /**
@@ -349,13 +348,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	private EEnum r4EContextTypeEEnum = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EDataType mylynTaskEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1293,15 +1285,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4ETaskReference_Task() {
-		return (EAttribute)r4ETaskReferenceEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getR4EReviewState() {
 		return r4EReviewStateEClass;
 	}
@@ -2049,15 +2032,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EDataType getMylynTask() {
-		return mylynTaskEDataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EDataType getIResource() {
 		return iResourceEDataType;
 	}
@@ -2214,7 +2188,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EAnomalyTypeEClass, R4E_ANOMALY_TYPE__TYPE);
 
 		r4ETaskReferenceEClass = createEClass(R4E_TASK_REFERENCE);
-		createEAttribute(r4ETaskReferenceEClass, R4E_TASK_REFERENCE__TASK);
 
 		r4EReviewStateEClass = createEClass(R4E_REVIEW_STATE);
 		createEAttribute(r4EReviewStateEClass, R4E_REVIEW_STATE__STATE);
@@ -2323,7 +2296,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		r4EContextTypeEEnum = createEEnum(R4E_CONTEXT_TYPE);
 
 		// Create data types
-		mylynTaskEDataType = createEDataType(MYLYN_TASK);
 		iResourceEDataType = createEDataType(IRESOURCE);
 		uriEDataType = createEDataType(URI);
 		iFileRevisionEDataType = createEDataType(IFILE_REVISION);
@@ -2498,7 +2470,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EAnomalyType_Type(), ecorePackage.getEString(), "type", null, 0, 1, R4EAnomalyType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4ETaskReferenceEClass, R4ETaskReference.class, "R4ETaskReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getR4ETaskReference_Task(), this.getMylynTask(), "task", null, 0, 1, R4ETaskReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EReviewStateEClass, R4EReviewState.class, "R4EReviewState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4EReviewState_State(), this.getR4EReviewPhase(), "state", null, 0, 1, R4EReviewState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2641,7 +2612,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_REPLACED);
 
 		// Initialize data types
-		initEDataType(mylynTaskEDataType, ITask.class, "MylynTask", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(iResourceEDataType, IResource.class, "IResource", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(iFileRevisionEDataType, IFileRevision.class, "IFileRevision", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

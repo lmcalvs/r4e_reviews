@@ -50,7 +50,6 @@
       <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContextType/R4E_MODIFIED"/>
       <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContextType/R4E_REPLACED"/>
     </genEnums>
-    <genDataTypes ecoreDataType="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MylynTask"/>
     <genDataTypes ecoreDataType="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//IResource"/>
     <genDataTypes ecoreDataType="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//URI"/>
     <genDataTypes ecoreDataType="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//IFileRevision"/>
@@ -159,9 +158,7 @@
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyType/type"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETaskReference">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETaskReference/task"/>
-    </genClasses>
+    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETaskReference"/>
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewState">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewState/state"/>
     </genClasses>

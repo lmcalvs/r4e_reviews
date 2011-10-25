@@ -183,9 +183,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="R4EAnomalyType" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//CommentType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="R4ETaskReference" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//TaskReference #//R4EReviewComponent">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="task" eType="#//MylynTask"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="R4ETaskReference" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//TaskReference #//R4EReviewComponent"/>
   <eClassifiers xsi:type="ecore:EClass" name="R4EReviewState" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewState">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="#//R4EReviewPhase"/>
   </eClassifiers>
@@ -239,7 +237,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="infoAtt" upperBound="-1"
         eType="#//MapKeyToInfoAttributes" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="MylynTask" instanceClassName="org.eclipse.mylyn.tasks.core.ITask"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IResource" instanceClassName="org.eclipse.core.resources.IResource"/>
   <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"
       serializable="false"/>

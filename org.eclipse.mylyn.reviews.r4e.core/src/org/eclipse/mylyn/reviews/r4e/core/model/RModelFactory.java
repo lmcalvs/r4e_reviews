@@ -17,7 +17,6 @@ package org.eclipse.mylyn.reviews.r4e.core.model;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
-import org.eclipse.mylyn.tasks.core.ITask;
 import org.eclipse.team.core.history.IFileRevision;
 
 /**
@@ -391,26 +390,6 @@ public interface RModelFactory extends EFactory, Persistence.RModelFactoryExt {
 	 * @generated
 	 */
 	String convertR4EContextType(R4EContextType instanceValue);
-
-	/**
-	 * Returns an instance of data type '<em>Mylyn Task</em>' corresponding the given literal.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param literal a literal of the data type.
-	 * @return a new instance value of the data type.
-	 * @generated
-	 */
-	ITask createMylynTask(String literal);
-
-	/**
-	 * Returns a literal representation of an instance of data type '<em>Mylyn Task</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param instanceValue an instance value of the data type.
-	 * @return a literal representation of the instance value.
-	 * @generated
-	 */
-	String convertMylynTask(ITask instanceValue);
 
 	/**
 	 * Returns an instance of data type '<em>IResource</em>' corresponding the given literal.

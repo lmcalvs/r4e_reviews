@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
@@ -70,7 +69,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
-import org.eclipse.mylyn.tasks.core.ITask;
 import org.eclipse.team.core.history.IFileRevision;
 
 /**
@@ -176,8 +174,6 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 				return createR4EReviewTypeFromString(eDataType, initialValue);
 			case RModelPackage.R4E_CONTEXT_TYPE:
 				return createR4EContextTypeFromString(eDataType, initialValue);
-			case RModelPackage.MYLYN_TASK:
-				return createMylynTaskFromString(eDataType, initialValue);
 			case RModelPackage.IRESOURCE:
 				return createIResourceFromString(eDataType, initialValue);
 			case RModelPackage.IFILE_REVISION:
@@ -207,8 +203,6 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 				return convertR4EReviewTypeToString(eDataType, instanceValue);
 			case RModelPackage.R4E_CONTEXT_TYPE:
 				return convertR4EContextTypeToString(eDataType, instanceValue);
-			case RModelPackage.MYLYN_TASK:
-				return convertMylynTaskToString(eDataType, instanceValue);
 			case RModelPackage.IRESOURCE:
 				return convertIResourceToString(eDataType, instanceValue);
 			case RModelPackage.IFILE_REVISION:
@@ -774,42 +768,6 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 */
 	public String convertR4EContextTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ITask createMylynTask(String literal) {
-		return (ITask)super.createFromString(RModelPackage.Literals.MYLYN_TASK, literal);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ITask createMylynTaskFromString(EDataType eDataType, String initialValue) {
-		return (ITask)super.createFromString(eDataType, initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertMylynTask(ITask instanceValue) {
-		return super.convertToString(RModelPackage.Literals.MYLYN_TASK, instanceValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertMylynTaskToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
 	}
 
 	/**
