@@ -30,7 +30,6 @@
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.mylyn.tasks.core" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.resources" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jgit" version="0.9.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.compare" version="3.5.0" match="greaterOrEqual"/>
@@ -40,6 +39,8 @@
       <import plugin="org.eclipse.ui" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.team.core" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.ecore.xmi" version="2.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui" version="3.6.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide" version="3.6.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jface.text" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.mylyn.reviews.frame.core" version="0.1.0" match="greaterOrEqual"/>
@@ -60,8 +61,6 @@
       <import feature="org.eclipse.emf.ecore" version="2.5.0" match="compatible"/>
       <import feature="org.eclipse.egit" version="0.11.1" match="greaterOrEqual"/>
       <import feature="org.eclipse.mylyn.versions" version="0.9.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui" version="3.6.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.ide" version="3.6.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
