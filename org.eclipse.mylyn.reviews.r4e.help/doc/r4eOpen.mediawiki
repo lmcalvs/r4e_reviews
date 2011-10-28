@@ -13,7 +13,9 @@ The R4E User Interface includes three main components: '''R4E Review Navigator V
 
 <br> 
 
-&nbsp; &nbsp;The '''R4E Review Navigator View''' is the main interface to R4E. It shows all the R4E elements in a hierarchical tree structure The '''R4E Properties view''', using the generic Eclipse Properties View,  presents the properties and attributes attached to each R4E element represented in the Review Navigator view. Some elements values can be altered after creation, and some other or read-only and settable at creation time. The '''R4E Context Menu''' appears in Eclipse Context menus whenever it is possible to use R4E command is this particular context. Please refer to [section] below for more information.<br> 
+&nbsp; &nbsp;The '''R4E Review Navigator View''' is the main interface to R4E. It shows all the R4E elements in a hierarchical tree structure The '''R4E Properties view''', using the generic Eclipse Properties View,  presents the properties and attributes attached to each R4E element represented in the Review Navigator view. Some elements values can be altered after creation, and some other or read-only and settable at creation time. The '''R4E Context Menu''' appears in Eclipse Context menus whenever it is possible to use R4E command is this particular context. Please refer to section 3 ("Tasks") below for more information.<br> 
+
+&nbsp; &nbsp;Take note that it is strongly recommended to use the layout shown above for optimal user experience.  This means the the R4E Review Navigator should be positioned on one side of the screen, the editor in the central position, and the R4E Properties view at the bottom.  For instance, it is not recommended to use the Review Navigator and the Properties view as tabbed view together, as selecting an element on the Review Navigation will automatically set the focus on the Properties view.
 <br> 
 === R4E main interfaces ===
 R4E interacts with the following features/plugins: 
