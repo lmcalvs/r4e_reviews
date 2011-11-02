@@ -60,7 +60,7 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class RuleSetInputDialog extends FormDialog {
+public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants

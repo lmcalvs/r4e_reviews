@@ -35,7 +35,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.CommentInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ICommentInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.AnomalyBasicProperties;
@@ -194,10 +195,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		//Get comment from user and set it in model data
 		R4EComment tempComment = null;
 		R4EUIModelController.setJobInProgress(true);
-		final CommentInputDialog dialog = new CommentInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite()
-				.getWorkbenchWindow()
-				.getShell());
+		final ICommentInputDialog dialog = R4EUIDialogFactory.getInstance().getCommentInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
 			tempComment = RModelFactory.eINSTANCE.createR4EComment();
@@ -414,10 +412,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 
 		//Get comment details from user
 		R4EUIModelController.setJobInProgress(true);
-		final CommentInputDialog dialog = new CommentInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite()
-				.getWorkbenchWindow()
-				.getShell());
+		final ICommentInputDialog dialog = R4EUIDialogFactory.getInstance().getCommentInputDialog();
 		final int result = dialog.open();
 
 		if (result == Window.OK) {

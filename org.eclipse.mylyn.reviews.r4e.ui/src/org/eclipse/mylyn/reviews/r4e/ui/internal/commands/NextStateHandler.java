@@ -32,8 +32,10 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ChangeStateDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IChangeStateDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
@@ -85,11 +87,8 @@ public class NextStateHandler extends AbstractHandler {
 								if (newPhasesStr.length > 1) {
 									//Get next phase from user
 									R4EUIModelController.setJobInProgress(true);
-									final ChangeStateDialog dialog = new ChangeStateDialog(
-											R4EUIModelController.getNavigatorView()
-													.getSite()
-													.getWorkbenchWindow()
-													.getShell(), reviewElement);
+									final IChangeStateDialog dialog = R4EUIDialogFactory.getInstance()
+											.getChangeStateDialog(R4EUIReviewBasic.class);
 									dialog.create();
 									dialog.setStates(newPhasesStr);
 
@@ -120,11 +119,8 @@ public class NextStateHandler extends AbstractHandler {
 								String[] newStatesStr = anomalyElement.getNextAvailableStates();
 								if (newStatesStr.length > 1) {
 
-									final ChangeStateDialog dialog = new ChangeStateDialog(
-											R4EUIModelController.getNavigatorView()
-													.getSite()
-													.getWorkbenchWindow()
-													.getShell(), anomalyElement);
+									final IChangeStateDialog dialog = R4EUIDialogFactory.getInstance()
+											.getChangeStateDialog(R4EUIAnomalyBasic.class);
 									dialog.create();
 									dialog.setStates(newStatesStr);
 

@@ -33,7 +33,8 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.SendNotificationInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ISendNotificationInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
@@ -84,11 +85,8 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 								if (R4EUIModelController.getActiveReview().isUserReviewed()) {
 									R4EUIModelController.setJobInProgress(true);
 
-									final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
-											R4EUIModelController.getNavigatorView()
-													.getSite()
-													.getWorkbenchWindow()
-													.getShell(), R4EUIModelController.getActiveReview());
+									final ISendNotificationInputDialog dialog = R4EUIDialogFactory.getInstance()
+											.createSendNotificationInputDialog(R4EUIModelController.getActiveReview());
 									dialog.create();
 									final int result = dialog.open();
 									if (result == Window.OK) {

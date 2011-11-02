@@ -30,7 +30,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.RuleViolationInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IRuleViolationInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.RuleAreaProperties;
@@ -161,10 +162,7 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 		//Get comment from user and set it in model data
 		R4EDesignRuleViolation tempViolation = null;
 		R4EUIModelController.setJobInProgress(true);
-		final RuleViolationInputDialog dialog = new RuleViolationInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite()
-				.getWorkbenchWindow()
-				.getShell());
+		final IRuleViolationInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleViolationInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
 			tempViolation = DRModelFactory.eINSTANCE.createR4EDesignRuleViolation();

@@ -55,7 +55,7 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class CommentInputDialog extends FormDialog {
+public class CommentInputDialog extends FormDialog implements ICommentInputDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants

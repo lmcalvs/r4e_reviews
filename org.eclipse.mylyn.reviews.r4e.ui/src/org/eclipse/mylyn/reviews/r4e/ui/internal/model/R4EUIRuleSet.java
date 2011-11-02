@@ -32,7 +32,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.RuleAreaInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IRuleAreaInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.RuleSetProperties;
@@ -230,10 +231,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 		//Get comment from user and set it in model data
 		R4EDesignRuleArea tempArea = null;
 		R4EUIModelController.setJobInProgress(true);
-		final RuleAreaInputDialog dialog = new RuleAreaInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite()
-				.getWorkbenchWindow()
-				.getShell());
+		final IRuleAreaInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleAreaInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
 			tempArea = DRModelFactory.eINSTANCE.createR4EDesignRuleArea();

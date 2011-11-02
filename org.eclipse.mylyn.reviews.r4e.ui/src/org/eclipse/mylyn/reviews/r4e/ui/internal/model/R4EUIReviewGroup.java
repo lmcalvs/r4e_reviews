@@ -41,7 +41,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ReviewInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ReviewGroupProperties;
@@ -210,11 +211,11 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	//Attributes
 
 	/**
-	 * Method getGroup.
+	 * Method getReviewGroup.
 	 * 
 	 * @return R4EReviewGroup
 	 */
-	public R4EReviewGroup getGroup() {
+	public R4EReviewGroup getReviewGroup() {
 		return fGroup;
 	}
 
@@ -268,10 +269,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		//Get comment from user and set it in model data
 		R4EReview tempReview = null;
 		R4EUIModelController.setJobInProgress(true);
-		final ReviewInputDialog dialog = new ReviewInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite()
-				.getWorkbenchWindow()
-				.getShell(), this);
+		final IReviewInputDialog dialog = R4EUIDialogFactory.getInstance().getReviewInputDialog();
 		dialog.create();
 		final int result = dialog.open();
 		if (result == Window.OK) {
@@ -380,15 +378,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		fOpen = true;
 		fImage = UIUtils.loadIcon(REVIEW_GROUP_ICON_FILE);
 		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
-	}
-
-	/**
-	 * Method getReviewGroup.
-	 * 
-	 * @return R4EReviewGroup
-	 */
-	public R4EReviewGroup getReviewGroup() {
-		return fGroup;
 	}
 
 	/**

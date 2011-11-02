@@ -57,6 +57,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.DateComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.LinePositionComparator;
@@ -290,6 +291,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 		//Apply default filters
 		applyDefaultFilters();
+
+		//Create default dialogs
+		if (UIUtils.TEST_MODE == false) {
+			R4EUIDialogFactory.getInstance().createDialogs();
+		}
 	}
 
 	/**
@@ -620,7 +626,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			//Convert the loaded groups array to array of File Paths
 			final List<String> groupsLoadedPaths = new ArrayList<String>();
 			for (IR4EUIModelElement group : groupsLoaded) {
-				groupsLoadedPaths.add(new File(((R4EUIReviewGroup) group).getGroup().getFolder() + File.separator
+				groupsLoadedPaths.add(new File(((R4EUIReviewGroup) group).getReviewGroup().getFolder() + File.separator
 						+ group.getName() + R4EUIConstants.GROUP_FILE_SUFFIX).getPath());
 			}
 
@@ -640,8 +646,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			final List<IR4EUIModelElement> groupsToRemove = new ArrayList<IR4EUIModelElement>();
 			for (IR4EUIModelElement group : groupsLoaded) {
 				for (String groupPath : result) {
-					if (groupPath.equals(new File(((R4EUIReviewGroup) group).getGroup().getFolder() + File.separator
-							+ group.getName() + R4EUIConstants.GROUP_FILE_SUFFIX).getPath())) {
+					if (groupPath.equals(new File(((R4EUIReviewGroup) group).getReviewGroup().getFolder()
+							+ File.separator + group.getName() + R4EUIConstants.GROUP_FILE_SUFFIX).getPath())) {
 						groupsToRemove.add(group);
 					}
 				}

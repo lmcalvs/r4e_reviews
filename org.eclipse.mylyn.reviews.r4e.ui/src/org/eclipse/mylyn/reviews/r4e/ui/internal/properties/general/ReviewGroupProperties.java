@@ -160,19 +160,19 @@ public class ReviewGroupProperties extends ModelElementProperties {
 	public Object getPropertyValue(Object aId) {
 		if (null != getElement()) {
 			if (GROUP_NAME_ID.equals(aId)) {
-				return ((R4EUIReviewGroup) getElement()).getGroup().getName();
+				return ((R4EUIReviewGroup) getElement()).getReviewGroup().getName();
 			} else if (GROUP_FOLDER_ID.equals(aId)) {
-				return ((R4EUIReviewGroup) getElement()).getGroup().getFolder();
+				return ((R4EUIReviewGroup) getElement()).getReviewGroup().getFolder();
 			} else if (GROUP_DESCRIPTION_ID.equals(aId)) {
-				return ((R4EUIReviewGroup) getElement()).getGroup().getDescription();
+				return ((R4EUIReviewGroup) getElement()).getReviewGroup().getDescription();
 			} else if (GROUP_AVAILABLE_PROJECTS_ID.equals(aId)) {
-				return ((R4EUIReviewGroup) getElement()).getGroup().getAvailableProjects().toString();
+				return ((R4EUIReviewGroup) getElement()).getReviewGroup().getAvailableProjects().toString();
 			} else if (GROUP_AVAILABLE_COMPONENTS_ID.equals(aId)) {
-				return ((R4EUIReviewGroup) getElement()).getGroup().getAvailableComponents().toString();
+				return ((R4EUIReviewGroup) getElement()).getReviewGroup().getAvailableComponents().toString();
 			} else if (GROUP_DEFAULT_ENTRY_CRITERIA_ID.equals(aId)) {
-				return ((R4EUIReviewGroup) getElement()).getGroup().getDefaultEntryCriteria();
+				return ((R4EUIReviewGroup) getElement()).getReviewGroup().getDefaultEntryCriteria();
 			} else if (GROUP_APPLIED_RULE_SETS_ID.equals(aId)) {
-				return ((R4EUIReviewGroup) getElement()).getGroup().getDesignRuleLocations().toString();
+				return ((R4EUIReviewGroup) getElement()).getReviewGroup().getDesignRuleLocations().toString();
 			}
 		}
 		return null;

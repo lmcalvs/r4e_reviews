@@ -411,8 +411,8 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		fRefreshInProgress = true;
 		final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
 		fNameText.setText(modelGroup.getName());
-		if (null != ((R4EUIReviewGroup) fProperties.getElement()).getGroup().eResource()) {
-			fFilePathText.setText(((R4EUIReviewGroup) fProperties.getElement()).getGroup()
+		if (null != ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup().eResource()) {
+			fFilePathText.setText(((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup()
 					.eResource()
 					.getURI()
 					.toFileString());

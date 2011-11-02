@@ -36,8 +36,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ReviewGroupInputDialog;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.RuleSetInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewGroupInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IRuleSetInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -96,10 +97,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 		//Get comment from user and set it in model data
 		R4EReviewGroup tempReviewGroup = null;
 		R4EUIModelController.setJobInProgress(true);
-		final ReviewGroupInputDialog dialog = new ReviewGroupInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite()
-				.getWorkbenchWindow()
-				.getShell(), this);
+		final IReviewGroupInputDialog dialog = R4EUIDialogFactory.getInstance().getReviewGroupInputDialog();
 		dialog.create();
 		final int result = dialog.open();
 		if (result == Window.OK) {
@@ -134,10 +132,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 		//Get comment from user and set it in model data
 		R4EDesignRuleCollection tempRuleSet = null;
 		R4EUIModelController.setJobInProgress(true);
-		final RuleSetInputDialog dialog = new RuleSetInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite()
-				.getWorkbenchWindow()
-				.getShell());
+		final IRuleSetInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleSetInputDialog();
 		dialog.create();
 		final int result = dialog.open();
 		if (result == Window.OK) {
@@ -467,7 +462,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 						R4EUIModelController.setActiveReview(null);
 					}
 				}
-				R4EUIModelController.FModelExt.closeR4EReviewGroup(removedElement.getGroup());
+				R4EUIModelController.FModelExt.closeR4EReviewGroup(removedElement.getReviewGroup());
 			}
 			fReviewGroups.remove(removedElement);
 		} else {

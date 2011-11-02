@@ -70,7 +70,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class FindUserDialog extends FormDialog {
+public class FindUserDialog extends FormDialog implements IFindUserDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -245,7 +245,7 @@ public class FindUserDialog extends FormDialog {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for ParticipantInputDialog.
+	 * Constructor for FindUserDialog.
 	 * 
 	 * @param aParentShell
 	 *            Shell

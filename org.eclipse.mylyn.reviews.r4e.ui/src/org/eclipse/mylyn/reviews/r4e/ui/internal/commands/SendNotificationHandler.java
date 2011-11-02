@@ -33,7 +33,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.SendNotificationInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ISendNotificationInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -98,8 +99,8 @@ public class SendNotificationHandler extends AbstractHandler {
 				}
 				R4EUIModelController.setJobInProgress(true);
 				//if the source is unique and is a Review element, all options are available.  Otherwise, only ask questions is supported
-				final SendNotificationInputDialog dialog = new SendNotificationInputDialog(
-						R4EUIModelController.getNavigatorView().getSite().getWorkbenchWindow().getShell(), obj);
+				final ISendNotificationInputDialog dialog = R4EUIDialogFactory.getInstance()
+						.createSendNotificationInputDialog(obj);
 				dialog.create();
 				final int result = dialog.open();
 				if (result == Window.OK) {

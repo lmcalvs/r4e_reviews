@@ -44,7 +44,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.AnomalyInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
@@ -117,10 +118,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		//Get comment from user and set it in model data
 		R4EAnomaly tempAnomaly = null;
 		R4EUIModelController.setJobInProgress(true);
-		final AnomalyInputDialog dialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite()
-				.getWorkbenchWindow()
-				.getShell());
+		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getAnomalyInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
 			tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
@@ -160,10 +158,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		//Get comment from user and set it in model data
 		R4EAnomaly tempAnomaly = null;
 		R4EUIModelController.setJobInProgress(true);
-		final AnomalyInputDialog dialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite()
-				.getWorkbenchWindow()
-				.getShell());
+		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getAnomalyInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
 			tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
@@ -412,10 +407,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 
 		//Get anomaly details from user
 		R4EUIModelController.setJobInProgress(true);
-		final AnomalyInputDialog dialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite()
-				.getWorkbenchWindow()
-				.getShell());
+		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getAnomalyInputDialog();
 		final int result = dialog.open();
 
 		if (result == Window.OK) {
@@ -444,7 +436,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 *            AnomalyInputDialog
 	 * @return R4EUIAnomalyBasic
 	 */
-	private void setAnomalyWithDialogValues(R4EAnomaly aAnomaly, AnomalyInputDialog aDialog) {
+	private void setAnomalyWithDialogValues(R4EAnomaly aAnomaly, IAnomalyInputDialog aDialog) {
 
 		aAnomaly.setTitle(aDialog.getAnomalyTitleValue());
 		aAnomaly.setDescription(aDialog.getAnomalyDescriptionValue());

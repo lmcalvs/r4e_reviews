@@ -108,6 +108,28 @@ public class UIUtils {
 	 */
 	private static final String DEFAULT_OBJECT_CLASS_NAME = "Object";
 
+	/**
+	 * Field TEST_MODE.
+	 */
+	//This could be replaced by org.eclipse.mylyn.commons.core.CoreUtil#TEST_MODE,
+	//however it's worth repeating as it's a small piece of code
+	public static final boolean TEST_MODE;
+	static {
+		String application = System.getProperty("eclipse.application", ""); //$NON-NLS-1$ //$NON-NLS-2$
+		if (application.length() > 0) {
+			TEST_MODE = application.endsWith("testapplication") || application.endsWith("uitest"); //$NON-NLS-1$ //$NON-NLS-2$
+		} else {
+			String commands = System.getProperty("eclipse.commands", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			TEST_MODE = commands.contains("testapplication\n"); //$NON-NLS-1$
+		}
+		//Do not show Error Dialogs when doing automated testing
+		if (true == TEST_MODE) {
+			ErrorDialog.AUTOMATED_MODE = true;
+		} else {
+			ErrorDialog.AUTOMATED_MODE = false;
+		}
+	}
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------

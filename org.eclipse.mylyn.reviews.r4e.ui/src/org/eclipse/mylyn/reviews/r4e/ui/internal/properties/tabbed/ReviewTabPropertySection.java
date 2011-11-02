@@ -1102,7 +1102,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			fEndDateText.setText(dateFormat.format(modelReview.getEndDate()));
 		}
 
-		final String[] availableProjects = (String[]) ((R4EUIReviewGroup) uiReview.getParent()).getGroup()
+		final String[] availableProjects = (String[]) ((R4EUIReviewGroup) uiReview.getParent()).getReviewGroup()
 				.getAvailableProjects()
 				.toArray();
 		fProjectCombo.setItems(availableProjects);
@@ -1114,7 +1114,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			}
 		}
 
-		fComponents.setEditableValues((String[]) ((R4EUIReviewGroup) uiReview.getParent()).getGroup()
+		fComponents.setEditableValues((String[]) ((R4EUIReviewGroup) uiReview.getParent()).getReviewGroup()
 				.getAvailableComponents()
 				.toArray());
 		final String[] components = (String[]) modelReview.getComponents().toArray();

@@ -71,7 +71,7 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ParticipantInputDialog extends FormDialog {
+public class ParticipantInputDialog extends FormDialog implements IParticipantInputDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -366,10 +366,7 @@ public class ParticipantInputDialog extends FormDialog {
 		}
 		findUserButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				final FindUserDialog dialog = new FindUserDialog(R4EUIModelController.getNavigatorView()
-						.getSite()
-						.getWorkbenchWindow()
-						.getShell());
+				final IFindUserDialog dialog = R4EUIDialogFactory.getInstance().getFindUserDialog();
 				dialog.create();
 				dialog.setDialogsDefaults();
 				final int result = dialog.open();

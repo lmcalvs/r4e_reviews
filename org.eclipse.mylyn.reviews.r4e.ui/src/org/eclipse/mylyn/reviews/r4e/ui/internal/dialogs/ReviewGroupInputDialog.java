@@ -64,7 +64,7 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewGroupInputDialog extends FormDialog {
+public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupInputDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -123,11 +123,6 @@ public class ReviewGroupInputDialog extends FormDialog {
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-
-	/**
-	 * Field fRootElement.
-	 */
-	protected final R4EUIRootElement fRootElement;
 
 	/**
 	 * The input value; the empty string by default.
@@ -213,13 +208,11 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * 
 	 * @param aParentShell
 	 *            Shell
-	 * @param aRootElement
-	 *            R4EUIRootElement
+	
 	 */
-	public ReviewGroupInputDialog(Shell aParentShell, R4EUIRootElement aRootElement) {
+	public ReviewGroupInputDialog(Shell aParentShell) {
 		super(aParentShell);
 		setBlockOnOpen(true);
-		fRootElement = aRootElement;
 		fValidator = new R4EInputValidator();
 	}
 
@@ -232,8 +225,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * 
 	 * @param buttonId
 	 *            int
-	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
-	 */
+	
+	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int) */
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
@@ -329,8 +322,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * 
 	 * @param shell
 	 *            Shell
-	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
-	 */
+	
+	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell) */
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
@@ -517,7 +510,7 @@ public class ReviewGroupInputDialog extends FormDialog {
 		label = toolkit.createLabel(extraSectionClient, ADD_RULE_SETS_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		final List<R4EUIRuleSet> uiRuleSets = fRootElement.getRuleSets();
+		final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement) R4EUIModelController.getRootElement()).getRuleSets();
 		final List<String> ruleLocations = new ArrayList<String>();
 		for (R4EUIRuleSet ruleSet : uiRuleSets) {
 			if (ruleSet.isOpen()) {
@@ -539,8 +532,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * 
 	 * @param parent
 	 *            the parent composite
-	 * @return Control
-	 */
+	
+	 * @return Control */
 	@Override
 	protected Control createButtonBar(Composite parent) {
 		final Control bar = super.createButtonBar(parent);
@@ -551,8 +544,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	/**
 	 * Method folderButtonPressed.
 	 * 
-	 * @return String
-	 */
+	
+	 * @return String */
 	protected String folderButtonPressed() {
 		//Open folder dialog
 		final DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.SHEET);
@@ -570,9 +563,9 @@ public class ReviewGroupInputDialog extends FormDialog {
 	/**
 	 * Method isResizable.
 	 * 
-	 * @return boolean
-	 * @see org.eclipse.jface.dialogs.Dialog#isResizable()
-	 */
+	
+	
+	 * @return boolean * @see org.eclipse.jface.dialogs.Dialog#isResizable() */
 	@Override
 	protected boolean isResizable() {
 		return true;
@@ -581,7 +574,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	 * @return the group name input string
+	
+	 * @return the group name input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewGroupInputDialog#getGroupNameValue()
 	 */
 	public String getGroupNameValue() {
 		return fGroupNameValue;
@@ -590,7 +584,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	 * @return the group folder input string
+	
+	 * @return the group folder input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewGroupInputDialog#getGroupFolderValue()
 	 */
 	public String getGroupFolderValue() {
 		return fGroupFolderValue;
@@ -599,7 +594,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	 * @return the group description input string
+	
+	 * @return the group description input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewGroupInputDialog#getGroupDescriptionValue()
 	 */
 	public String getGroupDescriptionValue() {
 		return fGroupDescriptionValue;
@@ -608,7 +604,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	/**
 	 * Returns the strings typed into this input dialog.
 	 * 
-	 * @return the Available projects input strings
+	
+	 * @return the Available projects input strings * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewGroupInputDialog#getAvailableProjectsValues()
 	 */
 	public String[] getAvailableProjectsValues() {
 		return fAvailableProjectsValues;
@@ -617,7 +614,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	/**
 	 * Returns the strings typed into this input dialog.
 	 * 
-	 * @return the Available components input strings
+	
+	 * @return the Available components input strings * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewGroupInputDialog#getAvailableComponentsValues()
 	 */
 	public String[] getAvailableComponentsValues() {
 		return fAvailableComponentsValues;
@@ -626,7 +624,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	 * @return the Default entry criteria input string
+	
+	 * @return the Default entry criteria input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewGroupInputDialog#getDefaultEntryCriteriaValue()
 	 */
 	public String getDefaultEntryCriteriaValue() {
 		return fDefaultEntryCriteriaValue;
@@ -635,7 +634,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	/**
 	 * Returns the strings typed into this input dialog.
 	 * 
-	 * @return the Rule Set input strings
+	
+	 * @return the Rule Set input strings * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewGroupInputDialog#getRuleSetValues()
 	 */
 	public String[] getRuleSetValues() {
 		return fRuleSetsValues;
@@ -651,8 +651,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * 
 	 * @param aText
 	 *            Text
-	 * @return String
-	 */
+	
+	 * @return String */
 	protected String validateFolderInput(Text aText) {
 		return ((R4EInputValidator) fValidator).isFolderValid(aText.getText());
 	}
@@ -662,8 +662,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * 
 	 * @param aText
 	 *            Text
-	 * @return String
-	 */
+	
+	 * @return String */
 	private String validateGroupExists(Text aText) {
 		return ((R4EInputValidator) fValidator).isFolderEmpty(aText.getText());
 	}
@@ -673,8 +673,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * 
 	 * @param aText
 	 *            Text
-	 * @return String
-	 */
+	
+	 * @return String */
 	private String validateEmptyInput(Text aText) {
 		return fValidator.isValid(aText.getText());
 	}
@@ -684,8 +684,8 @@ public class ReviewGroupInputDialog extends FormDialog {
 	 * 
 	 * @param aString
 	 *            String
-	 * @return String
-	 */
+	
+	 * @return String */
 	private String validateEmptyInput(String aString) {
 		return fValidator.isValid(aString);
 	}

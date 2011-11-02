@@ -19,7 +19,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -39,7 +38,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ChangeStateDialog extends FormDialog {
+public class ChangeStateDialog extends FormDialog implements IChangeStateDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -94,7 +93,7 @@ public class ChangeStateDialog extends FormDialog {
 	/**
 	 * Field fElementType.
 	 */
-	private IR4EUIModelElement fElementType = null;
+	private Class<?> fElementType = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -108,7 +107,7 @@ public class ChangeStateDialog extends FormDialog {
 	 * @param aElementType
 	 *            IR4EUIModelElement
 	 */
-	public ChangeStateDialog(Shell aParentShell, IR4EUIModelElement aElementType) {
+	public ChangeStateDialog(Shell aParentShell, Class<?> aElementType) {
 		super(aParentShell);
 		fElementType = aElementType;
 		setBlockOnOpen(true);
@@ -150,7 +149,7 @@ public class ChangeStateDialog extends FormDialog {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText(fElementType instanceof R4EUIReviewBasic
+		shell.setText(fElementType.equals(R4EUIReviewBasic.class)
 				? NEXT_REVIEW_PHASE_DIALOG_TITLE
 				: NEXT_ANOMALY_STATE_DIALOG_TITLE);
 	}
@@ -173,7 +172,7 @@ public class ChangeStateDialog extends FormDialog {
 		GridData textGridData = null;
 
 		//Next Review Phase
-		final Label label = toolkit.createLabel(composite, fElementType instanceof R4EUIReviewBasic
+		final Label label = toolkit.createLabel(composite, fElementType.equals(R4EUIReviewBasic.class)
 				? NEXT_REVIEW_PHASE_DIALOG_VALUE
 				: NEXT_ANOMALY_STATE_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.REVIEW_TYPE_TOOLTIP);
@@ -181,7 +180,7 @@ public class ChangeStateDialog extends FormDialog {
 		fNewStateCombo = new CCombo(composite, SWT.BORDER | SWT.READ_ONLY);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
-		fNewStateCombo.setToolTipText(fElementType instanceof R4EUIReviewBasic
+		fNewStateCombo.setToolTipText(fElementType.equals(R4EUIReviewBasic.class)
 				? NEXT_REVIEW_PHASE_TOOLTIP
 				: NEXT_ANOMALY_STATE_TOOLTIP);
 		fNewStateCombo.setLayoutData(textGridData);

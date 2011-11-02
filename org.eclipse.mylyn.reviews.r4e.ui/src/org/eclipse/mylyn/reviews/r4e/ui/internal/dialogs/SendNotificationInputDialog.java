@@ -47,7 +47,7 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class SendNotificationInputDialog extends FormDialog {
+public class SendNotificationInputDialog extends FormDialog implements ISendNotificationInputDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -132,7 +132,7 @@ public class SendNotificationInputDialog extends FormDialog {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for R4ECommentInputDialog.
+	 * Constructor for SendNotificationInputDialog.
 	 * 
 	 * @param aParentShell
 	 *            Shell

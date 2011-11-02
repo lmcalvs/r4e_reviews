@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -57,7 +58,7 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewInputDialog extends FormDialog {
+public class ReviewInputDialog extends FormDialog implements IReviewInputDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -127,11 +128,6 @@ public class ReviewInputDialog extends FormDialog {
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-
-	/**
-	 * Field fReviewGroup.
-	 */
-	protected final R4EUIReviewGroup fReviewGroup;
 
 	/**
 	 * Field fReviewType.
@@ -227,13 +223,11 @@ public class ReviewInputDialog extends FormDialog {
 	 * 
 	 * @param aParentShell
 	 *            Shell
-	 * @param aReviewGroup
-	 *            R4EUIReviewGroup
+	
 	 */
-	public ReviewInputDialog(Shell aParentShell, R4EUIReviewGroup aReviewGroup) {
+	public ReviewInputDialog(Shell aParentShell) {
 		super(aParentShell);
 		setBlockOnOpen(true);
-		fReviewGroup = aReviewGroup;
 		fValidator = new R4EInputValidator();
 	}
 
@@ -246,8 +240,8 @@ public class ReviewInputDialog extends FormDialog {
 	 * 
 	 * @param buttonId
 	 *            int
-	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
-	 */
+	
+	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int) */
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
@@ -345,8 +339,8 @@ public class ReviewInputDialog extends FormDialog {
 	 * 
 	 * @param shell
 	 *            Shell
-	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
-	 */
+	
+	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell) */
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
@@ -476,12 +470,17 @@ public class ReviewInputDialog extends FormDialog {
 		extraSectionClient.setLayout(layout);
 		extraSection.setClient(extraSectionClient);
 
+		IStructuredSelection selection = (IStructuredSelection) R4EUIModelController.getNavigatorView()
+				.getTreeViewer()
+				.getSelection();
+		R4EUIReviewGroup parentGroup = (R4EUIReviewGroup) selection.getFirstElement();
+
 		//Project
 		label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_PROJECT_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fProjectsCombo = new CCombo(extraSectionClient, SWT.BORDER | SWT.READ_ONLY);
-		final String[] projects = (String[]) fReviewGroup.getReviewGroup().getAvailableProjects().toArray();
+		final String[] projects = (String[]) parentGroup.getReviewGroup().getAvailableProjects().toArray();
 		if (0 == projects.length) {
 			fProjectsCombo.setEnabled(false);
 		}
@@ -495,7 +494,7 @@ public class ReviewInputDialog extends FormDialog {
 		label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_COMPONENTS_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.REVIEW_COMPONENTS_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		final String[] components = (String[]) fReviewGroup.getReviewGroup().getAvailableComponents().toArray();
+		final String[] components = (String[]) parentGroup.getReviewGroup().getAvailableComponents().toArray();
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fComponents = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
@@ -510,8 +509,8 @@ public class ReviewInputDialog extends FormDialog {
 		label.setToolTipText(R4EUIConstants.REVIEW_ENTRY_CRITERIA_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fEntryCriteriaTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL | SWT.BORDER);
-		if (null != fReviewGroup.getGroup().getDefaultEntryCriteria()) {
-			fEntryCriteriaTextField.setText(fReviewGroup.getGroup().getDefaultEntryCriteria());
+		if (null != parentGroup.getReviewGroup().getDefaultEntryCriteria()) {
+			fEntryCriteriaTextField.setText(parentGroup.getReviewGroup().getDefaultEntryCriteria());
 		}
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
@@ -547,8 +546,8 @@ public class ReviewInputDialog extends FormDialog {
 	 * 
 	 * @param parent
 	 *            the parent composite
-	 * @return Control
-	 */
+	
+	 * @return Control */
 	@Override
 	protected Control createButtonBar(Composite parent) {
 		final Control bar = super.createButtonBar(parent);
@@ -559,9 +558,9 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Method isResizable.
 	 * 
-	 * @return boolean
-	 * @see org.eclipse.jface.dialogs.Dialog#isResizable()
-	 */
+	
+	
+	 * @return boolean * @see org.eclipse.jface.dialogs.Dialog#isResizable() */
 	@Override
 	protected boolean isResizable() {
 		return true;
@@ -570,7 +569,8 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Returns the text area.
 	 * 
-	 * @return the review name text area
+	
+	 * @return the review name text area * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReviewTypeValue()
 	 */
 	public R4EReviewType getReviewTypeValue() {
 		return fReviewTypeValue;
@@ -579,7 +579,8 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	 * @return the review name input string
+	
+	 * @return the review name input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReviewNameValue()
 	 */
 	public String getReviewNameValue() {
 		return fReviewNameValue;
@@ -588,7 +589,8 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	 * @return the review description input string
+	
+	 * @return the review description input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReviewDescriptionValue()
 	 */
 	public String getReviewDescriptionValue() {
 		return fReviewDescriptionValue;
@@ -597,7 +599,8 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	 * @return the project input string
+	
+	 * @return the project input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getProjectValue()
 	 */
 	public String getProjectValue() {
 		return fProjectValue;
@@ -606,7 +609,8 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Returns the strings typed into this input dialog.
 	 * 
-	 * @return the components input strings
+	
+	 * @return the components input strings * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getComponentsValues()
 	 */
 	public String[] getComponentsValues() {
 		return fComponentsValues;
@@ -615,7 +619,8 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	 * @return the entry criteria input string
+	
+	 * @return the entry criteria input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getEntryCriteriaValue()
 	 */
 	public String getEntryCriteriaValue() {
 		return fEntryCriteriaValue;
@@ -624,7 +629,8 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	 * @return the objectives input string
+	
+	 * @return the objectives input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getObjectivesValue()
 	 */
 	public String getObjectivesValue() {
 		return fObjectivesValue;
@@ -633,7 +639,8 @@ public class ReviewInputDialog extends FormDialog {
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	 * @return the reference material input string
+	
+	 * @return the reference material input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReferenceMaterialValue()
 	 */
 	public String getReferenceMaterialValue() {
 		return fReferenceMaterialValue;
@@ -644,8 +651,8 @@ public class ReviewInputDialog extends FormDialog {
 	 * 
 	 * @param aText
 	 *            Text
-	 * @return String
-	 */
+	
+	 * @return String */
 	private String validateEmptyInput(Text aText) {
 		return fValidator.isValid(aText.getText());
 	}
@@ -655,8 +662,8 @@ public class ReviewInputDialog extends FormDialog {
 	 * 
 	 * @param aString
 	 *            String
-	 * @return String
-	 */
+	
+	 * @return String */
 	private String validateEmptyInput(String aString) {
 		return fValidator.isValid(aString);
 	}

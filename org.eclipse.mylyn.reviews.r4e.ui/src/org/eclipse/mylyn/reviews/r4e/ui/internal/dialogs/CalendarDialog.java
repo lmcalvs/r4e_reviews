@@ -35,7 +35,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class CalendarDialog extends FormDialog {
+public class CalendarDialog extends FormDialog implements ICalendarDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants

@@ -89,7 +89,7 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AnomalyInputDialog extends FormDialog {
+public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -445,10 +445,7 @@ public class AnomalyInputDialog extends FormDialog {
 		calendarButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		calendarButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				final CalendarDialog dialog = new CalendarDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-						getSite()
-						.getWorkbenchWindow()
-						.getShell(), false);
+				final ICalendarDialog dialog = R4EUIDialogFactory.getInstance().getCalendarDialog();
 				final int result = dialog.open();
 				if (result == Window.OK) {
 					final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
@@ -727,6 +724,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * Returns the string typed into this input dialog.
 	 * 
 	 * @return the anomaly title input string
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#getAnomalyTitleValue()
 	 */
 	public String getAnomalyTitleValue() {
 		return fAnomalyTitleValue;
@@ -736,6 +734,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * Returns the string typed into this input dialog.
 	 * 
 	 * @return the anomaly description input string
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#getAnomalyDescriptionValue()
 	 */
 	public String getAnomalyDescriptionValue() {
 		return fAnomalyDescriptionValue;
@@ -745,6 +744,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * Returns the string typed into this input dialog.
 	 * 
 	 * @return the R4EUIRule reference (if any)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#getRuleReferenceValue()
 	 */
 	public R4EUIRule getRuleReferenceValue() {
 		return fRuleReferenceValue;
@@ -778,6 +778,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * Method open.
 	 * 
 	 * @return int
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#open()
 	 */
 	@Override
 	public int open() {
@@ -824,7 +825,9 @@ public class AnomalyInputDialog extends FormDialog {
 	/**
 	 * Method setClass_.
 	 * 
-	 * @param R4EDesignRuleClass
+	 * @param aClass
+	 *            R4EDesignRuleClass
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#setClass_(R4EDesignRuleClass)
 	 */
 	public void setClass_(R4EDesignRuleClass aClass) {
 		fAnomalyClassValue = aClass;
@@ -837,6 +840,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * Method getClass_.
 	 * 
 	 * @return R4EDesignRuleClass
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#getClass_()
 	 */
 	public R4EDesignRuleClass getClass_() {
 		return fAnomalyClassValue;
@@ -864,7 +868,9 @@ public class AnomalyInputDialog extends FormDialog {
 	/**
 	 * Method setRank.
 	 * 
-	 * @param R4EDesignRuleRank
+	 * @param aRank
+	 *            R4EDesignRuleRank
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#setRank(R4EDesignRuleRank)
 	 */
 	public void setRank(R4EDesignRuleRank aRank) {
 		fAnomalyRankValue = aRank;
@@ -877,6 +883,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * Method getRank.
 	 * 
 	 * @return R4EDesignRuleRank
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#getRank()
 	 */
 	public R4EDesignRuleRank getRank() {
 		return fAnomalyRankValue;
@@ -885,7 +892,9 @@ public class AnomalyInputDialog extends FormDialog {
 	/**
 	 * Method setDueDate.
 	 * 
-	 * @param Date
+	 * @param aDate
+	 *            Date
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#setDueDate(Date)
 	 */
 	public void setDueDate(Date aDate) {
 		fAnomalyDueDateValue = aDate;
@@ -899,6 +908,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * Method getDueDate.
 	 * 
 	 * @return Date
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#getDueDate()
 	 */
 	public Date getDueDate() {
 		return fAnomalyDueDateValue;
@@ -909,6 +919,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * 
 	 * @param aTitle
 	 *            String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#setTitle(String)
 	 */
 	public void setTitle(String aTitle) {
 		fAnomalyTitleInputTextField.setText(aTitle);
@@ -919,6 +930,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * 
 	 * @param aDescription
 	 *            String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#setDescription(String)
 	 */
 	public void setDescription(String aDescription) {
 		fAnomalyDescriptionInputTextField.setText(aDescription);
@@ -929,6 +941,7 @@ public class AnomalyInputDialog extends FormDialog {
 	 * 
 	 * @param aId
 	 *            String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#setRuleID(String)
 	 */
 	public void setRuleID(String aId) {
 		List<R4EUIRuleSet> ruleSets = ((R4EUIRootElement) R4EUIModelController.getRootElement()).getRuleSets();

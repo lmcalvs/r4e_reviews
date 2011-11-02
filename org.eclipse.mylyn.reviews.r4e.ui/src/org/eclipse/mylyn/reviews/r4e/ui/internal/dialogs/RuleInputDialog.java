@@ -58,7 +58,7 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class RuleInputDialog extends FormDialog {
+public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -163,7 +163,7 @@ public class RuleInputDialog extends FormDialog {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for RuleViolationInputDialog.
+	 * Constructor for RuleInputDialog.
 	 * 
 	 * @param aParentShell
 	 *            Shell

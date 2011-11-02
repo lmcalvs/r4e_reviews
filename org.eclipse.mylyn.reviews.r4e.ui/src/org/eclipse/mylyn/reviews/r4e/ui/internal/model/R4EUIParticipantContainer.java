@@ -32,7 +32,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ParticipantInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 
@@ -104,10 +105,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		//Get comment from user and set it in model data
 		R4EParticipant tempParticipant = null;
 		R4EUIModelController.setJobInProgress(true);
-		final ParticipantInputDialog dialog = new ParticipantInputDialog(R4EUIModelController.getNavigatorView(). // $codepro.audit.disable methodChainLength
-				getSite()
-				.getWorkbenchWindow()
-				.getShell());
+		final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
 			tempParticipant = RModelFactory.eINSTANCE.createR4EParticipant();
