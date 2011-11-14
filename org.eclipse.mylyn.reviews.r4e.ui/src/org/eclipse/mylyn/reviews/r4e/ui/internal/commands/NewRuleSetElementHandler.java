@@ -25,7 +25,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -33,6 +32,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
@@ -60,9 +60,15 @@ public class NewRuleSetElementHandler extends AbstractHandler {
 	public Object execute(final ExecutionEvent event) {
 
 		final UIJob job = new UIJob("Adding New Rule Set...") {
+			public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
+
+			@Override
+			public boolean belongsTo(Object family) {
+				return familyName.equals(family);
+			}
+
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
-				final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
 				final IR4EUIModelElement element = R4EUIModelController.getRootElement();
 				IR4EUIModelElement newElement = null;
 

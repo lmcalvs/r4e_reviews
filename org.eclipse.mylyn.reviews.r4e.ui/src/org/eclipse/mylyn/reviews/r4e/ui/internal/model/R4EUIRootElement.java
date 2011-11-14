@@ -140,8 +140,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			tempRuleSet.setVersion(dialog.getVersionValue());
 			tempRuleSet.setFolder(dialog.getFolderValue());
 			tempRuleSet.setName(dialog.getNameValue());
-		} else if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
+		}
+		if (result != Window.CANCEL) {
+			R4EUIModelController.setJobInProgress(false); //Re-Enable commands
 		}
 		return tempRuleSet;
 	}

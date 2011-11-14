@@ -2076,4 +2076,8 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field CHANGE_TYPE_REVIEWED_STATE. (value is 4)
 	 */
 	public static final int CHANGE_TYPE_REVIEWED_STATE = 4;
+
+	//Test Constants
+	public static String R4E_UI_JOB_FAMILY = "R4EUI";
+
 }
