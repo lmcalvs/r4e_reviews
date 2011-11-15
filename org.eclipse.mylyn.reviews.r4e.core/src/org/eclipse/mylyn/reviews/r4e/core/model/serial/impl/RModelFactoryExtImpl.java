@@ -404,7 +404,9 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		Resource ureviewsRes = null;
 		if (uReviews == null) {
 			uReviews = RModelFactory.eINSTANCE.createR4EUserReviews();
-			URI uri = fWriter.createResourceURI(aCreatedByUser, groupFilePath, ResourceType.USER_GROUP);
+			//create a user URI
+			URI uri = defineParticipantResURI(aCreatedByUser, groupFilePath);
+		
 			ureviewsRes = resSet.createResource(uri);
 			ureviewsRes.getContents().add(uReviews);
 			uReviews.setName(participant.getId());
@@ -422,6 +424,30 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 
 		uReviews.getInvitedToMap().put(review.getName(), review);
 		return ureviewsRes;
+	}
+
+	/**
+	 * Makes sure an existing resource file is not removed e.g. when having user
+	 * id's with different string case e.g. All capitals
+	 * 
+	 * @param aCreatedByUser
+	 * @param groupFilePath
+	 * @return
+	 */
+	private URI defineParticipantResURI(String aCreatedByUser, URI groupFilePath) {
+		String userSuffix = "";
+		
+		URI uri = fWriter.createResourceURI(aCreatedByUser, groupFilePath, ResourceType.USER_GROUP);
+		File file = new File(uri.devicePath());
+		int i = 0;
+		while (file.exists()) {
+			i++;
+			userSuffix = Integer.toString(i);
+			uri = fWriter.createResourceURI(aCreatedByUser + "_" + userSuffix, groupFilePath, ResourceType.USER_GROUP);
+			file = new File(uri.devicePath());
+		}
+		
+		return uri;
 	}
 
 	public R4EReview openR4EReview(R4EReviewGroup aReviewGroup, String aReviewName) throws ResourceHandlingException {

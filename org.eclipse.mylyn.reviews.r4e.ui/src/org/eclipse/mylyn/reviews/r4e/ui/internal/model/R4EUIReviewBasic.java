@@ -502,7 +502,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public void setUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
-		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
+		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), false);
 		if (null != participant) {
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview,
 					R4EUIModelController.getReviewer());
