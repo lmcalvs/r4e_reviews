@@ -328,6 +328,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			public void focusLost(FocusEvent e) {
 				if (R4EUIModelController.isUserQueryAvailable()) {
 					if (fParticipantIdInputTextField.getText().length() > 0) {
+						fParticipantIdInputTextField.setText(fParticipantIdInputTextField.getText().toLowerCase());
 						getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 						getUserInfo();
 						getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));

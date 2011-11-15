@@ -29,7 +29,6 @@ import javax.naming.NamingException;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -42,6 +41,8 @@ import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
 import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -87,6 +88,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	// ------------------------------------------------------------------------
 	// Member Variables
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Field fUserIdTextField.
+	 */
+	private Text fUserIdTextField = null;
 
 	/**
 	 * Field fUserEmailTextField.
@@ -250,14 +256,58 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4EUserPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4EUserPrefsSpacer.setLayoutData(r4EUserPrefsSpacerData);
 
-		final StringFieldEditor userIdFieldEditor = new StringFieldEditor(PreferenceConstants.P_USER_ID,
-				PreferenceConstants.P_USER_ID_LABEL, StringFieldEditor.UNLIMITED, r4EUserPrefsGroup);
-		addField(userIdFieldEditor);
+		final Label userIdLabel = new Label(r4EUserPrefsGroup, SWT.FILL);
+		final GridData userIdLabelData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		userIdLabel.setText(R4EUIConstants.NAME_LABEL);
+		userIdLabel.setLayoutData(userIdLabelData);
+
+		fUserIdTextField = new Text(r4EUserPrefsGroup, SWT.FILL | SWT.BORDER);
+		final GridData userIdTextData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		if (R4EUIModelController.isJobInProgress()) {
-			userIdFieldEditor.setEnabled(false, r4EUserPrefsGroup);
+			fUserIdTextField.setEnabled(false);
+			fUserIdTextField.setEditable(false);
 		} else {
-			userIdFieldEditor.setEnabled(true, r4EUserPrefsGroup);
+			fUserIdTextField.setEnabled(true);
+			fUserIdTextField.setEditable(true);
 		}
+		fUserIdTextField.setLayoutData(userIdTextData);
+		fUserIdTextField.setText(store.getString(PreferenceConstants.P_USER_ID));
+		fUserIdTextField.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				fUserEmailTextField.setText("");
+				if (R4EUIModelController.isUserQueryAvailable()) {
+					if (fUserIdTextField.getText().length() > 0) {
+						fUserIdTextField.setText(fUserIdTextField.getText().toLowerCase());
+						getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+
+						final IQueryUser query = new QueryUserFactory().getInstance();
+						try {
+							final java.util.List<IUserInfo> users = query.searchByUserId(fUserIdTextField.getText());
+
+							//Set user Email if found
+							for (IUserInfo user : users) {
+								if (user.getUserId().equals(fUserIdTextField.getText())) {
+									fUserEmailTextField.setText(user.getEmail());
+									break;
+								}
+							}
+						} catch (NamingException ex) {
+							R4EUIPlugin.Ftracer.traceError("Exception: " + ex.toString() + " (" + ex.getMessage() + ")");
+							R4EUIPlugin.getDefault().logError("Exception: " + ex.toString(), ex);
+						} catch (IOException ex) {
+							R4EUIPlugin.Ftracer.traceError("Exception: " + ex.toString() + " (" + ex.getMessage() + ")");
+							R4EUIPlugin.getDefault().logError("Exception: " + ex.toString(), ex);
+						} finally {
+							getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+						}
+					}
+				}
+			}
+
+			public void focusGained(FocusEvent e) {
+				//Nothing to do
+			}
+		});
 
 		final Label userEmailLabel = new Label(r4EUserPrefsGroup, SWT.FILL);
 		final GridData userEmailLabelData = new GridData(GridData.FILL, GridData.FILL, false, false);
@@ -638,6 +688,9 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	public boolean performOk() {
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 
+		//Set curerent User Id
+		store.setValue(PreferenceConstants.P_USER_ID, fUserIdTextField.getText());
+
 		//Set preferences for default filters and apply them
 		store.setValue(PreferenceConstants.P_SHOW_DISABLED, fReviewShowDisabledButton.getSelection());
 		store.setValue(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER, fReviewsCompletedFilterButton.getSelection());
@@ -645,7 +698,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		store.setValue(PreferenceConstants.P_ANOMALIES_MY_FILTER, fAnomaliesMyFilterButton.getSelection());
 		store.setValue(PreferenceConstants.P_REVIEWS_MY_FILTER, fReviewMyFilterButton.getSelection());
 		if (fParticipantFilterButton.getSelection()) {
-			final String filterUserId = fParticipantIdText.getText();
+			final String filterUserId = fParticipantIdText.getText().toLowerCase();
 			if (filterUserId.equals(store.getString(PreferenceConstants.P_USER_ID))) {
 				//Set my filter instead
 				store.setValue(PreferenceConstants.P_REVIEWS_MY_FILTER, true);
@@ -667,31 +720,12 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 		store.setValue(PreferenceConstants.P_USE_DELTAS, fUseDeltasButton.getSelection());
 		store.setValue(PreferenceConstants.P_AUTO_IMPORT_POSTPONED, fAutoImportPostponedButton.getSelection());
-		if ("".equals(fUserEmailTextField.getText())) {
-			final String userId = store.getString(PreferenceConstants.P_USER_ID);
 
-			//If no email preferences are set, try to retrieve it from the external DB
-			if (null != userId && R4EUIModelController.isUserQueryAvailable()) {
-				try {
-					//Get detailed info from DB if available
-					final IQueryUser query = new QueryUserFactory().getInstance();
-					final java.util.List<IUserInfo> userInfos = query.searchByUserId(userId);
-					if (userInfos.size() > 0) {
-						store.setValue(PreferenceConstants.P_USER_EMAIL, userInfos.get(0).getEmail());
-					}
-				} catch (NamingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				} catch (IOException e) {
-					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-				}
-			}
+		if (CommandUtils.isEmailValid(fUserEmailTextField.getText())) {
+			store.setValue(PreferenceConstants.P_USER_EMAIL, fUserEmailTextField.getText());
 		} else {
-			if (CommandUtils.isEmailValid(fUserEmailTextField.getText())) {
-				store.setValue(PreferenceConstants.P_USER_EMAIL, fUserEmailTextField.getText());
-			} else {
-				//Validation of input failed
-				return false;
-			}
+			//Validation of input failed
+			return false;
 		}
 
 		//For field editors
