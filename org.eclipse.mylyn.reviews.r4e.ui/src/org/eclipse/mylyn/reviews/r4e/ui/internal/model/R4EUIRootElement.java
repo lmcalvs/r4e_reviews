@@ -115,7 +115,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 				tempReviewGroup.getDesignRuleLocations().add(ruleSetLocation);
 			}
 			tempReviewGroup.setDefaultEntryCriteria(dialog.getDefaultEntryCriteriaValue());
-		} else if (result != Window.CANCEL) {
+		}
+
+		if (result != Window.CANCEL) {
 			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
 		return tempReviewGroup;

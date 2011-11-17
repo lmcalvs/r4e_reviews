@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
@@ -54,6 +55,14 @@ public class CloseElementHandler extends AbstractHandler {
 	public Object execute(final ExecutionEvent event) {
 
 		final UIJob job = new UIJob("Closing Element...") {
+
+			public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
+
+			@Override
+			public boolean belongsTo(Object family) {
+				return familyName.equals(family);
+			}
+
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				final ISelection selection = HandlerUtil.getCurrentSelection(event);

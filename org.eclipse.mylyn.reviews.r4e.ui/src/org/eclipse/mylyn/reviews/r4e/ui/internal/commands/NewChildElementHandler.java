@@ -33,6 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ToolItem;
@@ -74,6 +75,13 @@ public class NewChildElementHandler extends AbstractHandler {
 
 					//Create actual model element
 					final UIJob job = new UIJob("Adding New Child Element...") {
+						public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
+
+						@Override
+						public boolean belongsTo(Object family) {
+							return familyName.equals(family);
+						}
+
 						@Override
 						public IStatus runInUIThread(IProgressMonitor monitor) {
 							IR4EUIModelElement newElement = null;

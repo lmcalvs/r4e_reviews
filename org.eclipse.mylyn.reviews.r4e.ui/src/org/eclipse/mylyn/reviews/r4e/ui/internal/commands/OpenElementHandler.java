@@ -81,6 +81,14 @@ public class OpenElementHandler extends AbstractHandler {
 	public Object execute(final ExecutionEvent event) {
 
 		final UIJob job = new UIJob("Opening Element...") {
+
+			public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
+
+			@Override
+			public boolean belongsTo(Object family) {
+				return familyName.equals(family);
+			}
+
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				final ISelection selection = HandlerUtil.getCurrentSelection(event);
