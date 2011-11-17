@@ -286,7 +286,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 							//Set user Email if found
 							for (IUserInfo user : users) {
-								if (user.getUserId().equals(fUserIdTextField.getText())) {
+								if (user.getUserId().toLowerCase().equals(fUserIdTextField.getText())) {
 									fUserEmailTextField.setText(user.getEmail());
 									break;
 								}
@@ -689,7 +689,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 
 		//Set curerent User Id
-		store.setValue(PreferenceConstants.P_USER_ID, fUserIdTextField.getText());
+		store.setValue(PreferenceConstants.P_USER_ID, fUserIdTextField.getText().toLowerCase());
 
 		//Set preferences for default filters and apply them
 		store.setValue(PreferenceConstants.P_SHOW_DISABLED, fReviewShowDisabledButton.getSelection());

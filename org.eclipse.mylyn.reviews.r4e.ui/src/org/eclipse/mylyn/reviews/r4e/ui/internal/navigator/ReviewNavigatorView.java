@@ -296,6 +296,10 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		if (UIUtils.TEST_MODE == false) {
 			R4EUIDialogFactory.getInstance().createDialogs();
 		}
+
+		//Make sure that the User Id in preferences is set to lower case
+		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
+		store.setDefault(PreferenceConstants.P_USER_ID, store.getString(PreferenceConstants.P_USER_ID).toLowerCase());
 	}
 
 	/**

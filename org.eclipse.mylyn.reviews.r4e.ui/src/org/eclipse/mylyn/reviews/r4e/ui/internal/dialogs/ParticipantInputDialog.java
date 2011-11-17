@@ -190,6 +190,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				return;
 			}
 			//Check if participant already exists
+			fParticipantIdInputTextField.setText(fParticipantIdInputTextField.getText().toLowerCase());
 			if (R4EUIModelController.getActiveReview()
 					.getParticipantIDs()
 					.contains(fParticipantIdInputTextField.getText())) {
