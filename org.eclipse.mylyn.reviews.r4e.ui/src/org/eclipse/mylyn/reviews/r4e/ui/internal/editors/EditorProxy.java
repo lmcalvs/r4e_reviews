@@ -114,7 +114,7 @@ public class EditorProxy {
 			if (element instanceof R4EUIAnomalyBasic) {
 				position = ((R4EUIAnomalyBasic) element).getPosition();
 			} else if (element instanceof R4EUIComment) {
-				position = ((R4EUIAnomalyBasic) ((R4EUIAnomalyBasic) element).getParent()).getPosition();
+				position = ((R4EUIAnomalyBasic) ((R4EUIComment) element).getParent()).getPosition();
 			} else if (element instanceof R4EUIContent) {
 				position = ((R4EUIContent) element).getPosition();
 			}
