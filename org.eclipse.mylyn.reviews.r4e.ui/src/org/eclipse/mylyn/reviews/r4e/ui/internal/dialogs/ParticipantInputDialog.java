@@ -552,7 +552,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 
 			//Fill info with first user
 			for (IUserInfo user : users) {
-				if (user.getUserId().equals(fParticipantIdInputTextField.getText())) {
+				if (user.getUserId().toLowerCase().equals(fParticipantIdInputTextField.getText())) {
 					fParticipantEmailInputTextField.setText(user.getEmail());
 					fParticipantDetailsInputTextField.setText(UIUtils.buildUserDetailsString(user));
 					return;

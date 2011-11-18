@@ -258,7 +258,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 		final Label userIdLabel = new Label(r4EUserPrefsGroup, SWT.FILL);
 		final GridData userIdLabelData = new GridData(GridData.FILL, GridData.FILL, false, false);
-		userIdLabel.setText(R4EUIConstants.NAME_LABEL);
+		userIdLabel.setText(PreferenceConstants.P_USER_ID_LABEL);
 		userIdLabel.setLayoutData(userIdLabelData);
 
 		fUserIdTextField = new Text(r4EUserPrefsGroup, SWT.FILL | SWT.BORDER);
@@ -311,7 +311,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 		final Label userEmailLabel = new Label(r4EUserPrefsGroup, SWT.FILL);
 		final GridData userEmailLabelData = new GridData(GridData.FILL, GridData.FILL, false, false);
-		userEmailLabel.setText(R4EUIConstants.NAME_LABEL);
+		userEmailLabel.setText(PreferenceConstants.P_USER_EMAIL_LABEL);
 		userEmailLabel.setLayoutData(userEmailLabelData);
 
 		fUserEmailTextField = new Text(r4EUserPrefsGroup, SWT.FILL | SWT.BORDER);
