@@ -187,8 +187,6 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
-			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-
 			//Validate Id
 			String validateResult = validateEmptyInput(fIdInputTextField);
 			if (null != validateResult) {
@@ -197,7 +195,6 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 						"No input given for Rule Id", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fIdValue = fIdInputTextField.getText();
@@ -210,7 +207,6 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 						"No input given for Rule Title", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fTitleValue = fTitleInputTextField.getText();
@@ -229,7 +225,6 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 						"No input given for Rule Description", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fDescriptionValue = fDescriptionInputTextField.getText();

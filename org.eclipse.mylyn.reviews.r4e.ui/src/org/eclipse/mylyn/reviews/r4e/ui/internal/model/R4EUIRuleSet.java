@@ -237,10 +237,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 			tempArea = DRModelFactory.eINSTANCE.createR4EDesignRuleArea();
 			tempArea.setName(dialog.getNameValue());
 		}
-
-		if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
-		}
+		R4EUIModelController.setJobInProgress(false); //Enable view
 		return tempArea;
 	}
 

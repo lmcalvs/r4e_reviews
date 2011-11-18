@@ -172,10 +172,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 			tempRule.setRank(dialog.getRankValue());
 			tempRule.setClass(dialog.getClassValue());
 		}
-
-		if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
-		}
+		R4EUIModelController.setJobInProgress(false); //Enable view
 		return tempRule;
 	}
 

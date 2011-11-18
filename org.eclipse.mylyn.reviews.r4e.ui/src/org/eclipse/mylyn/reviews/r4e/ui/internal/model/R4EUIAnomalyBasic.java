@@ -200,9 +200,8 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		if (result == Window.OK) {
 			tempComment = RModelFactory.eINSTANCE.createR4EComment();
 			tempComment.setDescription(dialog.getCommentValue());
-		} else if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
+		R4EUIModelController.setJobInProgress(false); //Enable view
 		return tempComment;
 	}
 
@@ -430,9 +429,8 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 			//Create and set UI model element
 			uiComment = new R4EUIComment(this, comment);
 			addChildren(uiComment);
-		} else if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
+		R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		return uiComment;
 	}
 

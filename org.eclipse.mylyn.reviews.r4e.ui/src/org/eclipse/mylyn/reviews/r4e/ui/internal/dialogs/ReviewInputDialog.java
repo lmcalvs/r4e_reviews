@@ -223,7 +223,6 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	 * 
 	 * @param aParentShell
 	 *            Shell
-	
 	 */
 	public ReviewInputDialog(Shell aParentShell) {
 		super(aParentShell);
@@ -240,13 +239,11 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	 * 
 	 * @param buttonId
 	 *            int
-	
-	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int) */
+	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
+	 */
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
-			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-
 			//Review type (no validation needed as this is a read-only combo box
 			if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_FORMAL)) {
 				fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_FORMAL;
@@ -260,7 +257,6 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 						"No input given for Review Type", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, null,
 								null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 
@@ -272,7 +268,6 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 						"No input given for Review Name", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fReviewNameValue = fReviewNameInputTextField.getText();
@@ -329,8 +324,6 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 			fObjectivesValue = null;
 			fReferenceMaterialValue = null;
 		}
-		R4EUIModelController.setJobInProgress(false); //Do this here to refresh the view properly
-		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 		super.buttonPressed(buttonId);
 	}
 
@@ -339,8 +332,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	 * 
 	 * @param shell
 	 *            Shell
-	
-	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell) */
+	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
+	 */
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
@@ -546,8 +539,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	 * 
 	 * @param parent
 	 *            the parent composite
-	
-	 * @return Control */
+	 * @return Control
+	 */
 	@Override
 	protected Control createButtonBar(Composite parent) {
 		final Control bar = super.createButtonBar(parent);
@@ -558,9 +551,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	/**
 	 * Method isResizable.
 	 * 
-	
-	
-	 * @return boolean * @see org.eclipse.jface.dialogs.Dialog#isResizable() */
+	 * @return boolean * @see org.eclipse.jface.dialogs.Dialog#isResizable()
+	 */
 	@Override
 	protected boolean isResizable() {
 		return true;
@@ -569,8 +561,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	/**
 	 * Returns the text area.
 	 * 
-	
-	 * @return the review name text area * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReviewTypeValue()
+	 * @return the review name text area * @see
+	 *         org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReviewTypeValue()
 	 */
 	public R4EReviewType getReviewTypeValue() {
 		return fReviewTypeValue;
@@ -579,8 +571,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	
-	 * @return the review name input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReviewNameValue()
+	 * @return the review name input string * @see
+	 *         org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReviewNameValue()
 	 */
 	public String getReviewNameValue() {
 		return fReviewNameValue;
@@ -589,8 +581,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	
-	 * @return the review description input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReviewDescriptionValue()
+	 * @return the review description input string * @see
+	 *         org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReviewDescriptionValue()
 	 */
 	public String getReviewDescriptionValue() {
 		return fReviewDescriptionValue;
@@ -599,8 +591,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	
-	 * @return the project input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getProjectValue()
+	 * @return the project input string * @see
+	 *         org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getProjectValue()
 	 */
 	public String getProjectValue() {
 		return fProjectValue;
@@ -609,8 +601,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	/**
 	 * Returns the strings typed into this input dialog.
 	 * 
-	
-	 * @return the components input strings * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getComponentsValues()
+	 * @return the components input strings * @see
+	 *         org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getComponentsValues()
 	 */
 	public String[] getComponentsValues() {
 		return fComponentsValues;
@@ -619,8 +611,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	
-	 * @return the entry criteria input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getEntryCriteriaValue()
+	 * @return the entry criteria input string * @see
+	 *         org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getEntryCriteriaValue()
 	 */
 	public String getEntryCriteriaValue() {
 		return fEntryCriteriaValue;
@@ -629,8 +621,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	
-	 * @return the objectives input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getObjectivesValue()
+	 * @return the objectives input string * @see
+	 *         org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getObjectivesValue()
 	 */
 	public String getObjectivesValue() {
 		return fObjectivesValue;
@@ -639,8 +631,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	
-	 * @return the reference material input string * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReferenceMaterialValue()
+	 * @return the reference material input string * @see
+	 *         org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getReferenceMaterialValue()
 	 */
 	public String getReferenceMaterialValue() {
 		return fReferenceMaterialValue;
@@ -651,8 +643,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	 * 
 	 * @param aText
 	 *            Text
-	
-	 * @return String */
+	 * @return String
+	 */
 	private String validateEmptyInput(Text aText) {
 		return fValidator.isValid(aText.getText());
 	}
@@ -662,8 +654,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	 * 
 	 * @param aString
 	 *            String
-	
-	 * @return String */
+	 * @return String
+	 */
 	private String validateEmptyInput(String aString) {
 		return fValidator.isValid(aString);
 	}

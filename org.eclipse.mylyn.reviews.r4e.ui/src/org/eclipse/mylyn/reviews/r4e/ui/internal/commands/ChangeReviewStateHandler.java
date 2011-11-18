@@ -107,9 +107,8 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 										} finally {
 											R4EUIModelController.setJobInProgress(false);
 										}
-									} else if (result != Window.CANCEL) {
-										R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 									}
+									R4EUIModelController.setJobInProgress(false); //Enable view
 								}
 								UIUtils.setNavigatorViewFocus((IR4EUIModelElement) element, 0);
 							} catch (ResourceHandlingException e) {

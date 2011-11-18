@@ -159,8 +159,6 @@ public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialo
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
-			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-
 			//Validate Version
 			String validateResult = validateEmptyInput(fVersionInputTextField);
 			if (null != validateResult) {
@@ -169,7 +167,6 @@ public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialo
 						"No input given for Rule Set Version", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fVersionValue = fVersionInputTextField.getText();
@@ -182,7 +179,6 @@ public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialo
 						"Invalid input folder", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult,
 								null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 
@@ -194,7 +190,6 @@ public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialo
 						"Rule Set file already exists", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fFolderValue = fFolderInputTextField.getText();
@@ -207,7 +202,6 @@ public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialo
 						"No input given for Rule Set Name", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fNameValue = fNameInputTextField.getText();

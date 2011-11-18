@@ -116,10 +116,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			}
 			tempReviewGroup.setDefaultEntryCriteria(dialog.getDefaultEntryCriteriaValue());
 		}
-
-		if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
-		}
+		R4EUIModelController.setJobInProgress(false); //Enable View
 		return tempReviewGroup;
 	}
 
@@ -143,9 +140,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			tempRuleSet.setFolder(dialog.getFolderValue());
 			tempRuleSet.setName(dialog.getNameValue());
 		}
-		if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Re-Enable commands
-		}
+		R4EUIModelController.setJobInProgress(false); //Enable View
 		return tempRuleSet;
 	}
 

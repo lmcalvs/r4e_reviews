@@ -235,8 +235,6 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
-			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-
 			//Validate Anomaly Title
 			String validateResult = validateEmptyInput(fAnomalyTitleInputTextField);
 			if (null != validateResult) {
@@ -245,7 +243,6 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 						"No input given for Anomaly Title", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fAnomalyTitleValue = fAnomalyTitleInputTextField.getText();
@@ -258,7 +255,6 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 						"No input given for Anomaly Comment", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fAnomalyDescriptionValue = fAnomalyDescriptionInputTextField.getText();
@@ -282,8 +278,6 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 			fAnomalyClassValue = null;
 			fAnomalyDueDateValue = null;
 		}
-		R4EUIModelController.setJobInProgress(false); //Do this here to refresh the view properly
-		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 		super.buttonPressed(buttonId);
 	}
 

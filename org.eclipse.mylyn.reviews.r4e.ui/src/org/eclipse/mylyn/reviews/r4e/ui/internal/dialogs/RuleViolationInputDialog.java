@@ -123,7 +123,6 @@ public class RuleViolationInputDialog extends FormDialog implements IRuleViolati
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
-			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 
 			//Validate Name
 			final String validateResult = validateEmptyInput(fNameInputTextField);
@@ -133,7 +132,6 @@ public class RuleViolationInputDialog extends FormDialog implements IRuleViolati
 						"No input given for Rule Violation Name", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fNameValue = fNameInputTextField.getText();

@@ -123,8 +123,6 @@ public class RuleAreaInputDialog extends FormDialog implements IRuleAreaInputDia
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
-			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-
 			//Validate Name
 			final String validateResult = validateEmptyInput(fNameInputTextField);
 			if (null != validateResult) {
@@ -133,7 +131,6 @@ public class RuleAreaInputDialog extends FormDialog implements IRuleAreaInputDia
 						"No input given for Rule Area Name", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fNameValue = fNameInputTextField.getText();

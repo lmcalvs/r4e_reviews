@@ -1107,13 +1107,14 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				.toArray();
 		fProjectCombo.setItems(availableProjects);
 		final String project = modelReview.getProject();
-		for (int i = 0; i < availableProjects.length; i++) {
-			if (project.equals(availableProjects[i])) {
-				fProjectCombo.select(i);
-				break;
+		if (null != project) {
+			for (int i = 0; i < availableProjects.length; i++) {
+				if (project.equals(availableProjects[i])) {
+					fProjectCombo.select(i);
+					break;
+				}
 			}
 		}
-
 		fComponents.setEditableValues((String[]) ((R4EUIReviewGroup) uiReview.getParent()).getReviewGroup()
 				.getAvailableComponents()
 				.toArray());
@@ -1135,9 +1136,15 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			item.setText(component);
 		}
 
-		fEntryCriteriaText.setText(modelReview.getEntryCriteria());
-		fObjectivesText.setText(modelReview.getObjectives());
-		fReferenceMaterialText.setText(modelReview.getReferenceMaterial());
+		if (null != modelReview.getEntryCriteria()) {
+			fEntryCriteriaText.setText(modelReview.getEntryCriteria());
+		}
+		if (null != modelReview.getObjectives()) {
+			fObjectivesText.setText(modelReview.getObjectives());
+		}
+		if (null != modelReview.getReferenceMaterial()) {
+			fReferenceMaterialText.setText(modelReview.getReferenceMaterial());
+		}
 
 		final R4EMeetingData meetingData = modelReview.getActiveMeeting();
 		if (null != meetingData) {

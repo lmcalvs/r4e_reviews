@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -300,6 +301,9 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		//Make sure that the User Id in preferences is set to lower case
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 		store.setValue(PreferenceConstants.P_USER_ID, store.getString(PreferenceConstants.P_USER_ID).toLowerCase());
+
+		//Make sure Navigator View is enabled at startup
+		R4EUIModelController.setJobInProgress(false);
 	}
 
 	/**
@@ -834,5 +838,26 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		showProperties(newSelection);
 		newSelection = new StructuredSelection(aElement);
 		fReviewTreeViewer.setSelection(newSelection, true);
+	}
+
+	/**
+	 * Method refreshItems. Refresh view elements states
+	 */
+	public void refreshItems() {
+		//Toolbar items
+		IContributionItem[] items = R4EUIModelController.getNavigatorView()
+				.getViewSite()
+				.getActionBars()
+				.getToolBarManager()
+				.getItems();
+		for (IContributionItem item : items) {
+			item.update();
+		}
+
+		//Menu items
+		items = R4EUIModelController.getNavigatorView().getViewSite().getActionBars().getMenuManager().getItems();
+		for (IContributionItem item : items) {
+			item.update();
+		}
 	}
 }

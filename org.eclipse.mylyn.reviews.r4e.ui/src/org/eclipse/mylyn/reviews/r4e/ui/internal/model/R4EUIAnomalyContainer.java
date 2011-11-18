@@ -142,9 +142,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 					tempAnomaly.setRank(dialog.getRank());
 				}
 			}
-		} else if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
+		R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		return tempAnomaly;
 	}
 
@@ -163,9 +162,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		if (result == Window.OK) {
 			tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
 			setAnomalyWithDialogValues(tempAnomaly, dialog);
-		} else if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
+		R4EUIModelController.setJobInProgress(false); //Enable view
 		return tempAnomaly;
 	}
 
@@ -421,9 +419,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 			uiAnomaly = createAnomalyDetails(anomaly, aAnomalyTempFileVersion, aUiPosition);
-		} else if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
+		R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		return uiAnomaly;
 	}
 

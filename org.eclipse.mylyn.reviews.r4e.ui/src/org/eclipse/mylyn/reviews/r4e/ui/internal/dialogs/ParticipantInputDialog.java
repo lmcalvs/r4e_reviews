@@ -176,7 +176,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
-			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 
 			//Validate Participant Id
 			String validateResult = validateEmptyInput(fParticipantIdInputTextField);
@@ -186,7 +185,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 						"No input given for Participant Id", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			//Check if participant already exists
@@ -198,7 +196,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 						"Cannot Add Participant", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								"Participant already part of this Review", null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fParticipantIdValue = fParticipantIdInputTextField.getText();
@@ -211,11 +208,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 						"No input given for Participant Email", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			if (!CommandUtils.isEmailValid(fParticipantEmailInputTextField.getText())) {
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fParticipantEmailValue = fParticipantEmailInputTextField.getText();
@@ -260,8 +255,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			fParticipantEmailValue = null;
 			fParticipantDetailsValue = null;
 		}
-		R4EUIModelController.setJobInProgress(false); //Do this here to refresh the view properly
-		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 		super.buttonPressed(buttonId);
 	}
 

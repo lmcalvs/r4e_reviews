@@ -605,9 +605,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						}
 					}
 					refresh();
-				} else if (result != Window.CANCEL) {
-					R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 				}
+				R4EUIModelController.setJobInProgress(false); //Enable view
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -635,6 +634,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fCalendarButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		fCalendarButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
+				R4EUIModelController.setJobInProgress(true);
 				final ICalendarDialog dialog = R4EUIDialogFactory.getInstance().getCalendarDialog();
 				final int result = dialog.open();
 				if (result == Window.OK) {
@@ -661,6 +661,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					}
 					refresh();
 				}
+				R4EUIModelController.setJobInProgress(false);
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod

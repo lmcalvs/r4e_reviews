@@ -168,10 +168,7 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 			tempViolation = DRModelFactory.eINSTANCE.createR4EDesignRuleViolation();
 			tempViolation.setName(dialog.getNameValue());
 		}
-
-		if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
-		}
+		R4EUIModelController.setJobInProgress(false); //Enable view
 		return tempViolation;
 	}
 

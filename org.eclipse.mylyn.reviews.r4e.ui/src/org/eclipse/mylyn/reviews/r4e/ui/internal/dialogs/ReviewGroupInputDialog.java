@@ -229,7 +229,6 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
-			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 			//Validate Name
 			String validateResult = validateEmptyInput(fGroupNameInputTextField);
 			if (null != validateResult) {
@@ -238,7 +237,6 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 						"No input given for Group Name", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								validateResult, null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fGroupNameValue = fGroupNameInputTextField.getText();
@@ -251,7 +249,6 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 						"Invalid input folder", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult,
 								null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 
@@ -262,7 +259,6 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 						"Invalid input folder", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult,
 								null), IStatus.ERROR);
 				dialog.open();
-				this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				return;
 			}
 			fGroupFolderValue = fGroupFolderInputTextField.getText();

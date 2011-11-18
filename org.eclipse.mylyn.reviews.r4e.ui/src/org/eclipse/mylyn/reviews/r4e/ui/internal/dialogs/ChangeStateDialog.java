@@ -19,7 +19,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
@@ -127,15 +126,11 @@ public class ChangeStateDialog extends FormDialog implements IChangeStateDialog 
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
-			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-
 			//Next Review Phase (no validation needed as this is a read-only combo box
 			fNewState = fNewStateCombo.getText();
 		} else {
 			fNewState = null;
 		}
-		R4EUIModelController.setJobInProgress(false); //Do this here to refresh the view properly
-		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 		super.buttonPressed(buttonId);
 	}
 

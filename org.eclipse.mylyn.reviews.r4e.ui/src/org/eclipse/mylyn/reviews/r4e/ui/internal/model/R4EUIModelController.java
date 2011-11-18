@@ -217,6 +217,8 @@ public class R4EUIModelController {
 	public static void setJobInProgress(boolean aIsDialogOpen) {
 		FIsDialogOpen = aIsDialogOpen;
 		FView.getTreeViewer().getTree().setEnabled(!aIsDialogOpen); //Also enable/disable operations on UI Tree
+		R4EUIModelController.getNavigatorView().refreshItems();
+
 	}
 
 	/**

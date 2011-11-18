@@ -291,9 +291,8 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			tempReview.setEntryCriteria(dialog.getEntryCriteriaValue());
 			tempReview.setObjectives(dialog.getObjectivesValue());
 			tempReview.setReferenceMaterial(dialog.getReferenceMaterialValue());
-		} else if (result != Window.CANCEL) {
-			R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		}
+		R4EUIModelController.setJobInProgress(false); //Enable view
 		return tempReview;
 	}
 

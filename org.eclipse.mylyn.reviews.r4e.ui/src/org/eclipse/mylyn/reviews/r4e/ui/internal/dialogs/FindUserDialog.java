@@ -269,7 +269,6 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
-			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 			final IStructuredSelection selection = (IStructuredSelection) fUsersTableViewer.getSelection();
 			if (null != selection && null != selection.getFirstElement()) {
 				final IUserInfo userInfo = (IUserInfo) selection.getFirstElement();
@@ -286,7 +285,6 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 			fUserEmailValue = null;
 			fUserDetailsValue = null;
 		}
-		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 		super.buttonPressed(buttonId);
 	}
 
@@ -492,7 +490,9 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		fSearchButton.setLayoutData(searchButtonData);
 		fSearchButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
+				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 				searchUser();
+				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 			}
 		});
 

@@ -96,9 +96,8 @@ public class NextStateHandler extends AbstractHandler {
 									if (result == Window.OK) {
 										R4EReviewPhase newPhase = reviewElement.getPhaseFromString(dialog.getState());
 										UIUtils.changeReviewPhase(element, newPhase);
-									} else if (result != Window.CANCEL) {
-										R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 									}
+									R4EUIModelController.setJobInProgress(false); //Enable view
 								} else {
 									//Only 1 possible value to use
 									R4EReviewPhase newPhase = reviewElement.getPhaseFromString(newPhasesStr[0]);
@@ -128,9 +127,8 @@ public class NextStateHandler extends AbstractHandler {
 									if (result == Window.OK) {
 										R4EAnomalyState newState = R4EUIAnomalyExtended.getStateFromString(dialog.getState());
 										UIUtils.changeAnomalyState(element, newState);
-									} else if (result != Window.CANCEL) {
-										R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 									}
+									R4EUIModelController.setJobInProgress(false); //Enable view
 								} else {
 									//Only 1 possible value to use
 									R4EAnomalyState newState = R4EUIAnomalyExtended.getStateFromString(newStatesStr[0]);

@@ -21,7 +21,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
@@ -160,7 +159,6 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
 			fMessageType = R4EUIConstants.INVALID_VALUE;
-			this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 			if (null != fItemsUpdatedButton && fItemsUpdatedButton.getSelection()) {
 				fMessageType = R4EUIConstants.MESSAGE_TYPE_ITEMS_READY;
 			} else if (null != fProgressButton && fProgressButton.getSelection()) {
@@ -175,8 +173,6 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 		} else {
 			fMessageType = R4EUIConstants.INVALID_VALUE;
 		}
-		R4EUIModelController.setJobInProgress(false); //Do this here to refresh the view properly
-		this.getShell().setCursor(this.getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 		super.buttonPressed(buttonId);
 	}
 
