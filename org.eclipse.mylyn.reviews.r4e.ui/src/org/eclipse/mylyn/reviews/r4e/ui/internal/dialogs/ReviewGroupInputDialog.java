@@ -302,10 +302,10 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 			fGroupDescriptionValue = fGroupDescriptionInputTextField.getText();
 
 		} else {
-			fGroupNameValue = null;
-			fGroupFolderValue = null;
-			fGroupDescriptionValue = null;
-			fDefaultEntryCriteriaValue = null;
+			fGroupNameValue = "";
+			fGroupFolderValue = "";
+			fGroupDescriptionValue = "";
+			fDefaultEntryCriteriaValue = "";
 		}
 		super.buttonPressed(buttonId);
 	}
