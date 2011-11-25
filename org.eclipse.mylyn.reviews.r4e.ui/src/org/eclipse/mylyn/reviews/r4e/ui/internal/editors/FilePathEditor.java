@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import org.eclipse.jface.preference.ListEditor;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.List;
@@ -122,7 +123,7 @@ public class FilePathEditor extends ListEditor {
 	 */
 	@Override
 	protected String getNewInputObject() {
-		final FileDialog dialog = new FileDialog(getShell());
+		final FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
 		dialog.setFilterExtensions(fFileExtensions);
 
 		if (null != fLastFilePath) {
