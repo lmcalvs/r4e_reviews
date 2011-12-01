@@ -233,7 +233,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 		R4EUIPostponedAnomaly uiAnomaly = null;
 		R4EUITextPosition position = null;
 		fAnomalies = R4EUIModelController.getAnomaliesForFile(fFile.getTarget().getLocalVersionID());
-		final int anomaliesSize = fAnomalies.size();
+		int anomaliesSize = (null != fAnomalies) ? fAnomalies.size() : 0;
 		R4EAnomaly anomaly = null;
 		for (int i = 0; i < anomaliesSize; i++) {
 			anomaly = fAnomalies.get(i);
