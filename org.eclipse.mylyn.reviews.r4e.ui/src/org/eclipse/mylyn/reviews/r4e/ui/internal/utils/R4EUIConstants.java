@@ -1344,6 +1344,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String NEW_CHILD_ELEMENT_COMMAND_MNEMONIC = "a";
 
 	/**
+	 * Field NEW_RULE_SET_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement"")
+	 */
+	public static final String NEW_RULE_SET_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement";
+
+	/**
 	 * Field REMOVE_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.removeElement"")
 	 */
 	public static final String REMOVE_ELEMENT_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.removeElement";

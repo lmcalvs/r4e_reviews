@@ -188,9 +188,11 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-						modelRule.setDescription(fDescriptionText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						if (!(modelRule.getDescription().equals(fDescriptionText.getText()))) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
+							modelRule.setDescription(fDescriptionText.getText());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {

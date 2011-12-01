@@ -55,6 +55,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDeltaContainer;
@@ -73,7 +74,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.versions.core.Change;
 import org.eclipse.mylyn.versions.core.ChangeSet;
 import org.eclipse.mylyn.versions.core.ScmArtifact;
-import org.eclipse.mylyn.versions.ui.ScmUi;
 import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
@@ -133,7 +133,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				return null;
 			}
 
-			final ScmConnectorUi uiConnector = ScmUi.getUiConnector(project);
+			final ScmConnectorUi uiConnector = R4EUIDialogFactory.getInstance().getScmUiConnector(project);
 			if (null != uiConnector) {
 				R4EUIPlugin.Ftracer.traceDebug("Resolved Scm Ui connector: " + uiConnector);
 				R4EUIModelController.setJobInProgress(true); //Disable operations on UI

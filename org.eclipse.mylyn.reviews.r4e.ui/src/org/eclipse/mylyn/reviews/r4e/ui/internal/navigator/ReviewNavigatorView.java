@@ -47,7 +47,6 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DecoratingCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -400,7 +399,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 				if (event.getSelection() instanceof IStructuredSelection) {
 					final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 					if (isPropertiesLinked()) {
-						showProperties(selection);
+						showProperties();
 					}
 
 					if (isEditorLinked()) {
@@ -571,25 +570,28 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * 
 	 * @param aSelection
 	 *            ISelection
+	 * @return IViewPart
 	 */
-	protected void showProperties(ISelection aSelection) {
+	public IViewPart showProperties() {
 		//Force show properties view
+		IViewPart propertiesView = null;
 		try {
 			final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			final IViewPart propertiesView = page.findView("org.eclipse.ui.views.PropertySheet");
+			propertiesView = page.findView("org.eclipse.ui.views.PropertySheet");
 			if (!page.isPartVisible(propertiesView)) {
 				//Make sure that the properties view references are updated properly before showing it
 				if (null != fPropertySheetPage) {
 					fPropertySheetPage = null;
 				}
 				getPropertySheetPage();
-				page.showView("org.eclipse.ui.views.PropertySheet");
+				propertiesView = page.showView("org.eclipse.ui.views.PropertySheet");
 			}
 		} catch (PartInitException e) {
 			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 			// Do nothing
 		}
+		return propertiesView;
 	}
 
 	/**
@@ -835,7 +837,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		//		 refreshed properly without causing Exceptions
 		StructuredSelection newSelection = new StructuredSelection(aElement.getParent());
 		fReviewTreeViewer.setSelection(newSelection, true);
-		showProperties(newSelection);
+		showProperties();
 		newSelection = new StructuredSelection(aElement);
 		fReviewTreeViewer.setSelection(newSelection, true);
 	}

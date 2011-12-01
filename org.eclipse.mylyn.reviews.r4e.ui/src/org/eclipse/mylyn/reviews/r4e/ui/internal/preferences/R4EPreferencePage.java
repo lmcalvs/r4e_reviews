@@ -90,6 +90,31 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field fR4EPreferencesTabFolder.
+	 */
+	private TabFolder fR4EPrefsTabFolder = null;
+
+	/**
+	 * Field fUserPrefsTab.
+	 */
+	private TabItem fUserPrefsTab = null;
+
+	/**
+	 * Field fGroupsPrefsTab.
+	 */
+	private TabItem fGroupsPrefsTab = null;
+
+	/**
+	 * Field fRuleSetsPrefsTab.
+	 */
+	private TabItem fRuleSetsPrefsTab = null;
+
+	/**
+	 * Field fFiltersPrefsTab.
+	 */
+	private TabItem fFiltersPrefsTab = null;
+
+	/**
 	 * Field fUserIdTextField.
 	 */
 	private Text fUserIdTextField = null;
@@ -110,6 +135,16 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private Button fAutoImportPostponedButton = null;
 
 	/**
+	 * Field fR4EGroupPrefsGroup.
+	 */
+	private Group fR4EGroupPrefsGroup = null;
+
+	/**
+	 * Field fGroupFilesEditor.
+	 */
+	private FilePathEditor fGroupFilesEditor = null;
+
+	/**
 	 * Field fGroupNameText.
 	 */
 	private Text fGroupNameText = null;
@@ -118,6 +153,16 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * Field fGroupDescriptionText.
 	 */
 	private Text fGroupDescriptionText = null;
+
+	/**
+	 * Field fR4ERuleSetPrefsGroup.
+	 */
+	private Group fR4ERuleSetPrefsGroup = null;
+
+	/**
+	 * Field fRuleSetFilesEditor.
+	 */
+	private FilePathEditor fRuleSetFilesEditor = null;
 
 	/**
 	 * Field fRuleSetNameText.
@@ -218,14 +263,14 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		final GridLayout prefsLayout = new GridLayout(PREFS_CONTAINER_DATA_SPAN, false);
 		prefsContainer.setLayout(prefsLayout);
 
-		final TabFolder tabFolder = new TabFolder(prefsContainer, SWT.TOP);
+		fR4EPrefsTabFolder = new TabFolder(prefsContainer, SWT.TOP);
 		final GridData tabFolderData = new GridData(GridData.FILL, GridData.FILL, true, true);
-		tabFolder.setLayoutData(tabFolderData);
+		fR4EPrefsTabFolder.setLayoutData(tabFolderData);
 
-		createUserPreferencesTab(tabFolder);
-		createGroupPreferencesTab(tabFolder);
-		createRuleSetsPreferencesTab(tabFolder);
-		createFiltersPreferencesTab(tabFolder);
+		createUserPreferencesTab(fR4EPrefsTabFolder);
+		createGroupPreferencesTab(fR4EPrefsTabFolder);
+		createRuleSetsPreferencesTab(fR4EPrefsTabFolder);
+		createFiltersPreferencesTab(fR4EPrefsTabFolder);
 	}
 
 	/**
@@ -238,12 +283,12 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 
-		final TabItem tabItem = new TabItem(aParent, SWT.NONE);
-		tabItem.setText("User");
+		fUserPrefsTab = new TabItem(aParent, SWT.NONE);
+		fUserPrefsTab.setText("User");
 
 		// Create a Group to hold R4E user preferences
 		final Group r4EUserPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
-		tabItem.setControl(r4EUserPrefsGroup);
+		fUserPrefsTab.setControl(r4EUserPrefsGroup);
 		final GridData r4eUserPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		r4eUserPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4EUserPrefsGroup.setText("User Preferences");
@@ -353,40 +398,40 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 */
 	private void createGroupPreferencesTab(TabFolder aParent) {
 
-		final TabItem tabItem = new TabItem(aParent, SWT.NONE);
-		tabItem.setText("Groups");
+		fGroupsPrefsTab = new TabItem(aParent, SWT.NONE);
+		fGroupsPrefsTab.setText("Groups");
 
 		// Create a Group to hold R4E Group preferences
-		final Group r4EGroupPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
-		tabItem.setControl(r4EGroupPrefsGroup);
+		fR4EGroupPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
+		fGroupsPrefsTab.setControl(fR4EGroupPrefsGroup);
 		final GridData r4EGroupPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		r4EGroupPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
-		r4EGroupPrefsGroup.setText("Group Preferences");
-		r4EGroupPrefsGroup.setLayoutData(r4EGroupPrefsGroupData);
-		r4EGroupPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
+		fR4EGroupPrefsGroup.setText("Group Preferences");
+		fR4EGroupPrefsGroup.setLayoutData(r4EGroupPrefsGroupData);
+		fR4EGroupPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
 		//dummy spacer label
-		final Label r4EGroupPrefsSpacer = new Label(r4EGroupPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
+		final Label r4EGroupPrefsSpacer = new Label(fR4EGroupPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
 		final GridData r4EGroupPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		r4EGroupPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4EGroupPrefsSpacer.setLayoutData(r4EGroupPrefsSpacerData);
 
 		// File Path Editor for Review Groups
 		final String[] extensions = { PreferenceConstants.P_GROUP_FILE_EXT };
-		final FilePathEditor groupFilesEditor = new FilePathEditor(PreferenceConstants.P_GROUP_FILE_PATH,
-				PreferenceConstants.P_GROUP_FILE_PATH_LABEL, extensions, r4EGroupPrefsGroup);
-		addField(groupFilesEditor);
+		fGroupFilesEditor = new FilePathEditor(PreferenceConstants.P_GROUP_FILE_PATH,
+				PreferenceConstants.P_GROUP_FILE_PATH_LABEL, extensions, fR4EGroupPrefsGroup);
+		addField(fGroupFilesEditor);
 		if (R4EUIModelController.isJobInProgress()) {
-			groupFilesEditor.setEnabled(false, r4EGroupPrefsGroup);
+			fGroupFilesEditor.setEnabled(false, fR4EGroupPrefsGroup);
 		} else {
-			groupFilesEditor.setEnabled(true, r4EGroupPrefsGroup);
+			fGroupFilesEditor.setEnabled(true, fR4EGroupPrefsGroup);
 		}
-		final List filesList = groupFilesEditor.getListControl(r4EGroupPrefsGroup);
+		final List filesList = fGroupFilesEditor.getListControl(fR4EGroupPrefsGroup);
 		filesList.addSelectionListener(new SelectionListener() {
 
 			@SuppressWarnings("synthetic-access")
 			public void widgetSelected(SelectionEvent aEvent) {
-				final String selectedGroupFile = groupFilesEditor.getSelection();
+				final String selectedGroupFile = fGroupFilesEditor.getSelection();
 				if (null != selectedGroupFile) {
 					final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
 					if (null != group) {
@@ -408,7 +453,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		});
 
 		//Group details
-		final Composite groupDetailsContainer = new Composite(r4EGroupPrefsGroup, SWT.NONE);
+		final Composite groupDetailsContainer = new Composite(fR4EGroupPrefsGroup, SWT.NONE);
 		final GridData groupDetailsLayoutData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		groupDetailsContainer.setLayoutData(groupDetailsLayoutData);
 		groupDetailsContainer.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
@@ -444,40 +489,40 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 */
 	private void createRuleSetsPreferencesTab(TabFolder aParent) {
 
-		final TabItem tabItem = new TabItem(aParent, SWT.NONE);
-		tabItem.setText("Rule Sets");
+		fRuleSetsPrefsTab = new TabItem(aParent, SWT.NONE);
+		fRuleSetsPrefsTab.setText("Rule Sets");
 
 		// Create a Group to hold R4E Rule Set preferences
-		final Group r4ERuleSetPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
-		tabItem.setControl(r4ERuleSetPrefsGroup);
+		fR4ERuleSetPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
+		fRuleSetsPrefsTab.setControl(fR4ERuleSetPrefsGroup);
 		final GridData r4ERuleSetPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		r4ERuleSetPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
-		r4ERuleSetPrefsGroup.setText("Rule Sets Preferences");
-		r4ERuleSetPrefsGroup.setLayoutData(r4ERuleSetPrefsGroupData);
-		r4ERuleSetPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
+		fR4ERuleSetPrefsGroup.setText("Rule Sets Preferences");
+		fR4ERuleSetPrefsGroup.setLayoutData(r4ERuleSetPrefsGroupData);
+		fR4ERuleSetPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
 		//dummy spacer label
-		final Label r4ERuleSetPrefsSpacer = new Label(r4ERuleSetPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
+		final Label r4ERuleSetPrefsSpacer = new Label(fR4ERuleSetPrefsGroup, SWT.FILL); // $codepro.audit.disable variableUsage
 		final GridData r4ERuleSetPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		r4ERuleSetPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4ERuleSetPrefsSpacer.setLayoutData(r4ERuleSetPrefsSpacerData);
 
 		// File Path Editor for Rule Sets
 		final String[] ruleSetsExtensions = { PreferenceConstants.P_RULE_SET_FILE_EXT };
-		final FilePathEditor ruleSetFilesEditor = new FilePathEditor(PreferenceConstants.P_RULE_SET_FILE_PATH,
-				PreferenceConstants.P_RULE_SET_FILE_PATH_LABEL, ruleSetsExtensions, r4ERuleSetPrefsGroup);
-		addField(ruleSetFilesEditor);
+		fRuleSetFilesEditor = new FilePathEditor(PreferenceConstants.P_RULE_SET_FILE_PATH,
+				PreferenceConstants.P_RULE_SET_FILE_PATH_LABEL, ruleSetsExtensions, fR4ERuleSetPrefsGroup);
+		addField(fRuleSetFilesEditor);
 		if (R4EUIModelController.isJobInProgress()) {
-			ruleSetFilesEditor.setEnabled(false, r4ERuleSetPrefsGroup);
+			fRuleSetFilesEditor.setEnabled(false, fR4ERuleSetPrefsGroup);
 		} else {
-			ruleSetFilesEditor.setEnabled(true, r4ERuleSetPrefsGroup);
+			fRuleSetFilesEditor.setEnabled(true, fR4ERuleSetPrefsGroup);
 		}
-		final List ruleSetfilesList = ruleSetFilesEditor.getListControl(r4ERuleSetPrefsGroup);
+		final List ruleSetfilesList = fRuleSetFilesEditor.getListControl(fR4ERuleSetPrefsGroup);
 		ruleSetfilesList.addSelectionListener(new SelectionListener() {
 
 			@SuppressWarnings("synthetic-access")
 			public void widgetSelected(SelectionEvent aEvent) {
-				final String selectedRuleSetFile = ruleSetFilesEditor.getSelection();
+				final String selectedRuleSetFile = fRuleSetFilesEditor.getSelection();
 				if (null != selectedRuleSetFile) {
 					try {
 						final R4EDesignRuleCollection ruleSet = R4EUIModelController.peekRuleSet(selectedRuleSetFile);
@@ -500,7 +545,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		});
 
 		//Group details
-		final Composite ruleSetDetailsContainer = new Composite(r4ERuleSetPrefsGroup, SWT.NONE);
+		final Composite ruleSetDetailsContainer = new Composite(fR4ERuleSetPrefsGroup, SWT.NONE);
 		final GridData ruleSetDetailsLayoutData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		ruleSetDetailsContainer.setLayoutData(ruleSetDetailsLayoutData);
 		ruleSetDetailsContainer.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
@@ -536,12 +581,12 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 */
 	private void createFiltersPreferencesTab(TabFolder aParent) {
 
-		final TabItem tabItem = new TabItem(aParent, SWT.NONE);
-		tabItem.setText("Filters");
+		fFiltersPrefsTab = new TabItem(aParent, SWT.NONE);
+		fFiltersPrefsTab.setText("Filters");
 
 		// Create a Group to hold R4E Navigator view default filters
 		final Group r4EFilterPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
-		tabItem.setControl(r4EFilterPrefsGroup);
+		fFiltersPrefsTab.setControl(r4EFilterPrefsGroup);
 		final GridData r4EFilterPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		r4EFilterPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4EFilterPrefsGroup.setText("Default Filters");
@@ -730,5 +775,48 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 		//For field editors
 		return super.performOk();
+	}
+
+	//Getters and Setters.  These are used in JUnit testing and could
+	//	also be used in headless mode
+
+	/**
+	 * Method addGroupPrefs.
+	 * 
+	 * @param aGroupPath
+	 */
+	public void addGroupPrefs(String aGroupPath) {
+		fR4EPrefsTabFolder.setSelection(fGroupsPrefsTab);
+		fGroupFilesEditor.getListControl(fR4EGroupPrefsGroup).add(aGroupPath);
+	}
+
+	/**
+	 * Method removeGroupPrefs.
+	 * 
+	 * @param aGroupPath
+	 */
+	public void removeGroupPrefs(String aGroupPath) {
+		fR4EPrefsTabFolder.setSelection(fGroupsPrefsTab);
+		fGroupFilesEditor.getListControl(fR4EGroupPrefsGroup).remove(aGroupPath);
+	}
+
+	/**
+	 * Method addRuleSetPrefs.
+	 * 
+	 * @param aGroupPath
+	 */
+	public void addRuleSetPrefs(String aRuleSetPath) {
+		fR4EPrefsTabFolder.setSelection(fRuleSetsPrefsTab);
+		fRuleSetFilesEditor.getListControl(fR4ERuleSetPrefsGroup).add(aRuleSetPath);
+	}
+
+	/**
+	 * Method removeRuleSetPrefs.
+	 * 
+	 * @param aGroupPath
+	 */
+	public void removeRuleSetPrefs(String aRuleSetPath) {
+		fR4EPrefsTabFolder.setSelection(fRuleSetsPrefsTab);
+		fRuleSetFilesEditor.getListControl(fR4ERuleSetPrefsGroup).remove(aRuleSetPath);
 	}
 }

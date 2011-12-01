@@ -53,6 +53,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorView;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.ModelElementTabPropertySection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 
@@ -130,6 +131,8 @@ public class R4EUIModelController {
 	 * Field fFocusElement.
 	 */
 	private static IR4EUIModelElement FFocusElement = null;
+
+	private static ModelElementTabPropertySection FCurrentPropertySection = null;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -526,5 +529,13 @@ public class R4EUIModelController {
 	 */
 	public static IR4EUIModelElement getCurrentFocusElement() {
 		return FFocusElement;
+	}
+
+	public static void setCurrentPropertySection(ModelElementTabPropertySection aSection) {
+		FCurrentPropertySection = aSection;
+	}
+
+	public static ModelElementTabPropertySection getCurrentPropertySection() {
+		return FCurrentPropertySection;
 	}
 }

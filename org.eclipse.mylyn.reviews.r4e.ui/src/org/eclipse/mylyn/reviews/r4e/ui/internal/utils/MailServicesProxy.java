@@ -53,6 +53,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdat
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
@@ -177,7 +178,7 @@ public class MailServicesProxy {
 	 * @throws ResourceHandlingException
 	 */
 	public static void sendItemsReadyNotification() throws CoreException, ResourceHandlingException {
-		if (null != R4EUIModelController.getMailConnector()) {
+		if (null != R4EUIDialogFactory.getMailConnector()) {
 			final String[] messageDestinations = createItemsUpdatedDestinations();
 			final String messageSubject = createSubject() + " - Items Ready for Review";
 			final String messageBody = createItemsReadyNotificationMessage(false);
@@ -197,7 +198,7 @@ public class MailServicesProxy {
 	 */
 	public static void sendItemsAddedNotification(List<R4EReviewComponent> aAddedElements) throws CoreException,
 			ResourceHandlingException {
-		if (null != R4EUIModelController.getMailConnector()) {
+		if (null != R4EUIDialogFactory.getMailConnector()) {
 			final String[] messageDestinations = createItemsUpdatedDestinations();
 			final String messageSubject = createSubject() + " - Items Added for Review";
 			final String messageBody = createUpdatedItemsNotificationMessage(aAddedElements, true);
@@ -217,7 +218,7 @@ public class MailServicesProxy {
 	 */
 	public static void sendItemsRemovedNotification(List<R4EReviewComponent> aRemovedElements) throws CoreException,
 			ResourceHandlingException {
-		if (null != R4EUIModelController.getMailConnector()) {
+		if (null != R4EUIDialogFactory.getMailConnector()) {
 			final String[] messageDestinations = createItemsUpdatedDestinations();
 			final String messageSubject = createSubject() + " - Items Removed from Review";
 			final String messageBody = createUpdatedItemsNotificationMessage(aRemovedElements, false);
@@ -234,7 +235,7 @@ public class MailServicesProxy {
 	 * @throws ResourceHandlingException
 	 */
 	public static void sendProgressNotification() throws CoreException, ResourceHandlingException {
-		if (null != R4EUIModelController.getMailConnector()) {
+		if (null != R4EUIDialogFactory.getMailConnector()) {
 			final String[] messageDestinations = createProgressDestinations();
 			final String messageSubject = createSubject() + " - Participant Progress";
 			final String messageBody = createProgressNotification(PROGRESS_MESSAGE);
@@ -251,7 +252,7 @@ public class MailServicesProxy {
 	 * @throws ResourceHandlingException
 	 */
 	public static void sendCompletionNotification() throws CoreException, ResourceHandlingException {
-		if (null != R4EUIModelController.getMailConnector()) {
+		if (null != R4EUIDialogFactory.getMailConnector()) {
 			final String[] messageDestinations = createProgressDestinations();
 			final String messageSubject = createSubject() + " - Participant Progress (Completed)";
 			final String messageBody = createProgressNotification(COMPLETION_MESSAGE);
@@ -270,7 +271,7 @@ public class MailServicesProxy {
 	 * @throws ResourceHandlingException
 	 */
 	public static void sendQuestion(Object aSource) throws CoreException, ResourceHandlingException {
-		if (null != R4EUIModelController.getMailConnector()) {
+		if (null != R4EUIDialogFactory.getMailConnector()) {
 			String[] messageDestinations = null;
 			messageDestinations = createQuestionDestinations();
 			final String messageSubject = createSubject() + " - Question regarding review ";
@@ -305,8 +306,8 @@ public class MailServicesProxy {
 			final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 			originatorEmail = store.getString(PreferenceConstants.P_USER_EMAIL);
 		}
-		R4EUIModelController.getMailConnector().sendEmailGraphical(originatorEmail, aDestinations, aSubject, aBody,
-				null, null);
+		R4EUIDialogFactory.getMailConnector().sendEmailGraphical(originatorEmail, aDestinations, aSubject, aBody, null,
+				null);
 	}
 
 	/**
@@ -1063,7 +1064,7 @@ public class MailServicesProxy {
 	 * @throws CoreException
 	 */
 	public static void sendMeetingRequest() throws ResourceHandlingException, OutOfSyncException {
-		if (null != R4EUIModelController.getMailConnector()) {
+		if (null != R4EUIDialogFactory.getMailConnector()) {
 
 			boolean meetingInfoFound = false;
 
@@ -1071,7 +1072,7 @@ public class MailServicesProxy {
 			R4EMeetingData r4eMeetingData = R4EUIModelController.getActiveReview().getReview().getActiveMeeting();
 			IMeetingData meetingData = null;
 			if (null != r4eMeetingData) {
-				meetingData = R4EUIModelController.getMailConnector().openAndUpdateMeeting(
+				meetingData = R4EUIDialogFactory.getMailConnector().openAndUpdateMeeting(
 						createMeetingData(r4eMeetingData),
 						R4EUIModelController.getActiveReview().getReview().getStartDate());
 				if (null != meetingData) {
@@ -1100,7 +1101,7 @@ public class MailServicesProxy {
 				final String messageBody = createItemsReadyNotificationMessage(true);
 
 				try {
-					meetingData = R4EUIModelController.getMailConnector().createMeetingRequest(messageSubject,
+					meetingData = R4EUIDialogFactory.getMailConnector().createMeetingRequest(messageSubject,
 							messageBody, messageDestinations, getDefaultStartTime(), DEFAULT_MEETING_DURATION);
 				} catch (CoreException e) {
 					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");

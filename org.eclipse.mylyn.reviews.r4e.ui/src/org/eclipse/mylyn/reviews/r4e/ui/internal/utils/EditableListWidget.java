@@ -99,6 +99,11 @@ public class EditableListWidget {
 	 */
 	protected String[] fValues = null;
 
+	/**
+	 * Field fEditableControl.
+	 */
+	Control fEditableControl = null;
+
 	// ------------------------------------------------------------------------
 	// Constructor
 	// ------------------------------------------------------------------------
@@ -263,15 +268,14 @@ public class EditableListWidget {
 			public void widgetSelected(SelectionEvent e) {
 				final TableItem newItem = new TableItem(fMainTable, SWT.NONE);
 				fMainTable.showItem(newItem);
-				final Control editableControl;
 				if (aEditableWidgetClass.equals(Text.class)) {
-					editableControl = new Text(fMainTable, SWT.SINGLE | SWT.BORDER);
-					((Text) editableControl).addModifyListener(new ModifyListener() {
+					fEditableControl = new Text(fMainTable, SWT.SINGLE | SWT.BORDER);
+					((Text) fEditableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
-							newItem.setText(((Text) editableControl).getText());
+							newItem.setText(((Text) fEditableControl).getText());
 						}
 					});
-					((Text) editableControl).addKeyListener(new KeyListener() {
+					((Text) fEditableControl).addKeyListener(new KeyListener() {
 
 						public void keyReleased(KeyEvent ke) {
 							if (ke.keyCode == SWT.CR) {
@@ -284,7 +288,7 @@ public class EditableListWidget {
 						}
 					});
 				} else if (aEditableWidgetClass.equals(CCombo.class)) {
-					editableControl = new CCombo(fMainTable, SWT.BORDER | SWT.READ_ONLY);
+					fEditableControl = new CCombo(fMainTable, SWT.BORDER | SWT.READ_ONLY);
 					//Only add the values not already in the table in the CCombo box
 					final List<String> currentValues = new ArrayList<String>();
 					for (String currentValue : fValues) {
@@ -296,29 +300,29 @@ public class EditableListWidget {
 							currentValues.remove(currentItem.getText());
 						}
 					}
-					((CCombo) editableControl).setItems(currentValues.toArray(new String[currentValues.size()]));
-					((CCombo) editableControl).addModifyListener(new ModifyListener() {
+					((CCombo) fEditableControl).setItems(currentValues.toArray(new String[currentValues.size()]));
+					((CCombo) fEditableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
-							newItem.setText(((CCombo) editableControl).getText());
+							newItem.setText(((CCombo) fEditableControl).getText());
 						}
 					});
 				} else if (aEditableWidgetClass.equals(Date.class)) {
-					editableControl = new Text(fMainTable, SWT.NONE);
+					fEditableControl = new Text(fMainTable, SWT.NONE);
 					final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
-					final String[] data = { ((Text) editableControl).getText(),
+					final String[] data = { ((Text) fEditableControl).getText(),
 							dateFormat.format(Calendar.getInstance().getTime()) };
 					newItem.setText(data);
-					((Text) editableControl).addModifyListener(new ModifyListener() {
+					((Text) fEditableControl).addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent me) {
 							//Only accept numbers
-							String newText = ((Text) editableControl).getText();
+							String newText = ((Text) fEditableControl).getText();
 							try {
 								Integer.valueOf(newText);
 							} catch (NumberFormatException nfe) {
 								if (newText.length() > 0) {
 									newText = newText.substring(0, newText.length() - 1);
-									((Text) editableControl).setText(newText);
-									((Text) editableControl).setSelection(newText.length());
+									((Text) fEditableControl).setText(newText);
+									((Text) fEditableControl).setSelection(newText.length());
 								}
 							}
 							newItem.setText(0, newText);
@@ -327,7 +331,7 @@ public class EditableListWidget {
 				} else {
 					return;
 				}
-				editableControl.addFocusListener(new FocusListener() {
+				fEditableControl.addFocusListener(new FocusListener() {
 					public void focusLost(FocusEvent fe) {
 						((Control) fe.getSource()).dispose();
 
@@ -349,11 +353,11 @@ public class EditableListWidget {
 					}
 				});
 
-				editableControl.setFocus();
+				fEditableControl.setFocus();
 				final TableEditor editor = new TableEditor(fMainTable);
 				editor.grabHorizontal = true;
 				editor.grabVertical = true;
-				editor.setEditor(editableControl, newItem, 0);
+				editor.setEditor(fEditableControl, newItem, 0);
 				fRemoveButton.setEnabled(true);
 			}
 
@@ -397,7 +401,7 @@ public class EditableListWidget {
 	}
 
 	/**
-	 * Method clearAll.
+	 * Method removeAll.
 	 */
 	public void removeAll() {
 		fMainTable.removeAll();
@@ -547,6 +551,42 @@ public class EditableListWidget {
 	public void updateTable() {
 		for (TableColumn column : fMainTable.getColumns()) {
 			column.pack();
+		}
+	}
+
+	//Test methods
+	/**
+	 * Method remove.
+	 * 
+	 * @param removeStr
+	 */
+	public void remove(String removeStr) {
+		for (TableItem item : fMainTable.getItems()) {
+			if (item.getText().equals(removeStr)) {
+				fMainTable.setSelection(item);
+			}
+		}
+		fRemoveButton.notifyListeners(SWT.Selection, null);
+	}
+
+	/**
+	 * Method add.
+	 * 
+	 * @param addStr
+	 */
+	public void add(String addStr) {
+		fAddButton.notifyListeners(SWT.Selection, null);
+		if (null != fEditableControl) {
+			if (fEditableControl instanceof Text) {
+				((Text) fEditableControl).setText(addStr);
+			} else if (fEditableControl instanceof CCombo) {
+				String[] items = ((CCombo) fEditableControl).getItems();
+				for (int index = 0; index < items.length; index++) {
+					if (items[index].equals(addStr)) {
+						((CCombo) fEditableControl).select(index);
+					}
+				}
+			}
 		}
 	}
 }

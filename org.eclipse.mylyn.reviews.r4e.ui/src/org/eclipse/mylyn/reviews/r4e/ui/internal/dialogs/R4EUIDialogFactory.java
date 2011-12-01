@@ -17,9 +17,14 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.mylyn.versions.ui.ScmUi;
+import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -107,6 +112,16 @@ public class R4EUIDialogFactory {
 	 */
 	ISendNotificationInputDialog fSendNotificationInputDialog = null;
 
+	/**
+	 * Field fScmConnectorUi.
+	 */
+	ScmConnectorUi fScmConnectorUi = null;
+
+	/**
+	 * Field fNotificationsConnector.
+	 */
+	static NotificationsConnector fNotificationsConnector = null;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -161,10 +176,12 @@ public class R4EUIDialogFactory {
 	 * @return ISendNotificationInputDialog
 	 */
 	public ISendNotificationInputDialog createSendNotificationInputDialog(Object aSource) {
-		fSendNotificationInputDialog = new SendNotificationInputDialog(R4EUIModelController.getNavigatorView()
-				.getSite()
-				.getWorkbenchWindow()
-				.getShell(), aSource);
+		if (UIUtils.TEST_MODE == false) {
+			fSendNotificationInputDialog = new SendNotificationInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell(), aSource);
+		}
 		return fSendNotificationInputDialog;
 	}
 
@@ -425,5 +442,51 @@ public class R4EUIDialogFactory {
 	 */
 	public void setSendNotificationInputDialog(ISendNotificationInputDialog aSendNotificationInputDialog) {
 		fSendNotificationInputDialog = aSendNotificationInputDialog;
+	}
+
+	/**
+	 * Method setScmUIConnector.
+	 * 
+	 * @param aConnectorUi
+	 *            ScmConnectorUi
+	 */
+	public void setScmUIConnector(ScmConnectorUi aConnectorUi) {
+		fScmConnectorUi = aConnectorUi;
+	}
+
+	/**
+	 * Method getScmUiConnector.
+	 * 
+	 * @return ScmConnectorUi
+	 */
+	public ScmConnectorUi getScmUiConnector(IProject aProject) {
+		if (UIUtils.TEST_MODE == false) {
+			return ScmUi.getUiConnector(aProject);
+		} else {
+			return fScmConnectorUi;
+		}
+	}
+
+	/**
+	 * Method setMailConnector.
+	 * 
+	 * @param aConnector
+	 *            NotificationsConnector
+	 */
+	public void setMailConnector(NotificationsConnector aConnector) {
+		fNotificationsConnector = aConnector;
+	}
+
+	/**
+	 * Method getScmUiConnector.
+	 * 
+	 * @return ScmConnectorUi
+	 */
+	public static NotificationsConnector getMailConnector() {
+		if (UIUtils.TEST_MODE == false) {
+			return R4EUIModelController.getMailConnector();
+		} else {
+			return fNotificationsConnector;
+		}
 	}
 }

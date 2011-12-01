@@ -38,6 +38,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
@@ -107,7 +108,7 @@ public class NewReviewItemHandler extends AbstractHandler {
 				if (selection instanceof ITextSelection) {
 					addReviewItemFromText((ITextSelection) selection);
 
-				} else if (selection instanceof ITreeSelection) {
+				} else if (selection instanceof IStructuredSelection) {
 
 					//First remove any editor selection (if open) if we execute the command from the review navigator view
 					final IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow(). // $codepro.audit.disable methodChainLength

@@ -360,6 +360,15 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method getParticipantContainer.
+	 * 
+	 * @return R4EUIParticipantContainer
+	 */
+	public R4EUIParticipantContainer getParticipantContainer() {
+		return fParticipantsContainer;
+	}
+
+	/**
 	 * Method getAnomalyContainer.
 	 * 
 	 * @return R4EUIAnomalyContainer

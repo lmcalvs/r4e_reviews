@@ -497,6 +497,9 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 
 		setEnabledFields();
 		fRefreshInProgress = false;
+
+		//Used only in test mode
+		R4EUIModelController.setCurrentPropertySection(this);
 	}
 
 	/**
@@ -582,5 +585,106 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		} catch (OutOfSyncException e1) {
 			UIUtils.displaySyncErrorDialog(e1);
 		}
+	}
+
+	//Getters and Setters.  These are used in JUnit testing and could
+	//	also be used in headless mode
+
+	/**
+	 * Method setDescription.
+	 * 
+	 * @param aDescription
+	 *            String
+	 */
+	public void setDescription(String aDescription) {
+		refresh();
+		fDescriptionText.setFocus();
+		fDescriptionText.setText(aDescription);
+		fDefaultEntryCriteriaText.setFocus(); //Set focus away to register change
+	}
+
+	/**
+	 * Method setDefaultEntryCriteria.
+	 * 
+	 * @param aCriteria
+	 *            String
+	 */
+	public void setDefaultEntryCriteria(String aCriteria) {
+		refresh();
+		fDefaultEntryCriteriaText.setFocus();
+		fDefaultEntryCriteriaText.setText(aCriteria);
+		fDescriptionText.setFocus(); //Set focus away to register change
+	}
+
+	/**
+	 * Method removeAvailableProject.
+	 * 
+	 * @param aProject
+	 *            String
+	 */
+	public void removeAvailableProject(String aProject) {
+		refresh();
+		fAvailableProjects.remove(aProject);
+		fDescriptionText.setFocus(); //Set focus away to register change
+	}
+
+	/**
+	 * Method addAvailableProject.
+	 * 
+	 * @param aProject
+	 *            String
+	 */
+	public void addAvailableProject(String aProject) {
+		refresh(); //This is needed for JUnit tests
+		fAvailableProjects.add(aProject);
+		fDescriptionText.setFocus(); //Set focus away to register change
+	}
+
+	/**
+	 * Method removeAvailableComponent.
+	 * 
+	 * @param aComponent
+	 *            String
+	 */
+	public void removeAvailableComponent(String aComponent) {
+		refresh();
+		fAvailableComponents.remove(aComponent);
+		fDescriptionText.setFocus(); //Set focus away to register change
+	}
+
+	/**
+	 * Method addAvailableComponent.
+	 * 
+	 * @param aComponent
+	 *            String
+	 */
+	public void addAvailableComponent(String aComponent) {
+		refresh();
+		fAvailableComponents.add(aComponent);
+		fDescriptionText.setFocus(); //Set focus away to register change
+	}
+
+	/**
+	 * Method removeAvailableComponent.
+	 * 
+	 * @param aRuleSet
+	 *            String
+	 */
+	public void removeRuleSet(String aRuleSet) {
+		refresh();
+		fRuleSetLocations.remove(aRuleSet);
+		fDescriptionText.setFocus(); //Set focus away to register change
+	}
+
+	/**
+	 * Method aRuleSet.
+	 * 
+	 * @param aRuleSet
+	 *            String
+	 */
+	public void addRuleSet(String aRuleSet) {
+		refresh();
+		fRuleSetLocations.add(aRuleSet);
+		fDescriptionText.setFocus(); //Set focus away to register change
 	}
 }
