@@ -22,15 +22,14 @@ import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.versions.ui.ScmUi;
 import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
-import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
+@SuppressWarnings("restriction")
 public class R4EUIDialogFactory {
 
 	// ------------------------------------------------------------------------
@@ -45,82 +44,82 @@ public class R4EUIDialogFactory {
 	/**
 	 * Field fAnomalyInputDialog.
 	 */
-	IAnomalyInputDialog fAnomalyInputDialog = null;
+	private IAnomalyInputDialog fAnomalyInputDialog = null;
 
 	/**
 	 * Field fCalendarDialog.
 	 */
-	ICalendarDialog fCalendarDialog = null;
+	private ICalendarDialog fCalendarDialog = null;
 
 	/**
 	 * Field fChangeReviewStateDialog.
 	 */
-	IChangeStateDialog fChangeReviewStateDialog = null;
+	private IChangeStateDialog fChangeReviewStateDialog = null;
 
 	/**
 	 * Field fChangeAnomalyStateDialog.
 	 */
-	IChangeStateDialog fChangeAnomalyStateDialog = null;
+	private IChangeStateDialog fChangeAnomalyStateDialog = null;
 
 	/**
 	 * Field fCommentInputDialog.
 	 */
-	ICommentInputDialog fCommentInputDialog = null;
+	private ICommentInputDialog fCommentInputDialog = null;
 
 	/**
 	 * Field fFindUserDialog.
 	 */
-	IFindUserDialog fFindUserDialog = null;
+	private IFindUserDialog fFindUserDialog = null;
 
 	/**
 	 * Field fParticipantInputDialog.
 	 */
-	IParticipantInputDialog fParticipantInputDialog = null;
+	private IParticipantInputDialog fParticipantInputDialog = null;
 
 	/**
 	 * Field fReviewGroupInputDialog.
 	 */
-	IReviewGroupInputDialog fReviewGroupInputDialog = null;
+	private IReviewGroupInputDialog fReviewGroupInputDialog = null;
 
 	/**
 	 * Field fReviewInputDialog.
 	 */
-	IReviewInputDialog fReviewInputDialog = null;
+	private IReviewInputDialog fReviewInputDialog = null;
 
 	/**
 	 * Field fRuleAreaInputDialog.
 	 */
-	IRuleAreaInputDialog fRuleAreaInputDialog = null;
+	private IRuleAreaInputDialog fRuleAreaInputDialog = null;
 
 	/**
 	 * Field fRuleInputDialog.
 	 */
-	IRuleInputDialog fRuleInputDialog = null;
+	private IRuleInputDialog fRuleInputDialog = null;
 
 	/**
 	 * Field fRuleSetInputDialog.
 	 */
-	IRuleSetInputDialog fRuleSetInputDialog = null;
+	private IRuleSetInputDialog fRuleSetInputDialog = null;
 
 	/**
 	 * Field fRuleViolationInputDialog.
 	 */
-	IRuleViolationInputDialog fRuleViolationInputDialog = null;
+	private IRuleViolationInputDialog fRuleViolationInputDialog = null;
 
 	/**
 	 * Field fSendNotificationInputDialog.
 	 */
-	ISendNotificationInputDialog fSendNotificationInputDialog = null;
+	private ISendNotificationInputDialog fSendNotificationInputDialog = null;
 
 	/**
 	 * Field fScmConnectorUi.
 	 */
-	ScmConnectorUi fScmConnectorUi = null;
+	private ScmConnectorUi fScmConnectorUi = null;
 
 	/**
 	 * Field fNotificationsConnector.
 	 */
-	static NotificationsConnector fNotificationsConnector = null;
+	private NotificationsConnector fNotificationsConnector = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -149,48 +148,17 @@ public class R4EUIDialogFactory {
 	}
 
 	/**
-	 * Method createDialogs.
-	 */
-	public void createDialogs() {
-		Shell shell = R4EUIModelController.getNavigatorView().getSite().getWorkbenchWindow().getShell();
-		fAnomalyInputDialog = new AnomalyInputDialog(shell);
-		fCalendarDialog = new CalendarDialog(shell, false);
-		fChangeReviewStateDialog = new ChangeStateDialog(shell, R4EUIReviewBasic.class);
-		fChangeAnomalyStateDialog = new ChangeStateDialog(shell, R4EUIAnomalyBasic.class);
-		fCommentInputDialog = new CommentInputDialog(shell);
-		fFindUserDialog = new FindUserDialog(shell);
-		fParticipantInputDialog = new ParticipantInputDialog(shell);
-		fReviewGroupInputDialog = new ReviewGroupInputDialog(shell);
-		fReviewInputDialog = new ReviewInputDialog(shell);
-		fRuleAreaInputDialog = new RuleAreaInputDialog(shell);
-		fRuleInputDialog = new RuleInputDialog(shell);
-		fRuleSetInputDialog = new RuleSetInputDialog(shell);
-		fRuleViolationInputDialog = new RuleViolationInputDialog(shell);
-	}
-
-	/**
-	 * Method createSendNotificationInputDialog.
-	 * 
-	 * @param aSource
-	 *            Object
-	 * @return ISendNotificationInputDialog
-	 */
-	public ISendNotificationInputDialog createSendNotificationInputDialog(Object aSource) {
-		if (UIUtils.TEST_MODE == false) {
-			fSendNotificationInputDialog = new SendNotificationInputDialog(R4EUIModelController.getNavigatorView()
-					.getSite()
-					.getWorkbenchWindow()
-					.getShell(), aSource);
-		}
-		return fSendNotificationInputDialog;
-	}
-
-	/**
 	 * Method getAnomalyInputDialog.
 	 * 
 	 * @return IAnomalyInputDialog
 	 */
 	public IAnomalyInputDialog getAnomalyInputDialog() {
+		if (null == fAnomalyInputDialog) {
+			fAnomalyInputDialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
 		return fAnomalyInputDialog;
 	}
 
@@ -210,6 +178,12 @@ public class R4EUIDialogFactory {
 	 * @return ICalendarDialog
 	 */
 	public ICalendarDialog getCalendarDialog() {
+		if (null == fCalendarDialog) {
+			fCalendarDialog = new CalendarDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell(), false);
+		}
 		return fCalendarDialog;
 	}
 
@@ -232,9 +206,21 @@ public class R4EUIDialogFactory {
 	 */
 	public IChangeStateDialog getChangeStateDialog(Class<?> aTargetClass) {
 		if (aTargetClass.equals(R4EUIReviewBasic.class)) {
+			if (null == fChangeReviewStateDialog) {
+				fChangeReviewStateDialog = new ChangeStateDialog(R4EUIModelController.getNavigatorView()
+						.getSite()
+						.getWorkbenchWindow()
+						.getShell(), R4EUIReviewBasic.class);
+			}
 			return fChangeReviewStateDialog;
 		}
 		//Assume AnomalyChangeStateDialog
+		if (null == fChangeAnomalyStateDialog) {
+			fChangeAnomalyStateDialog = new ChangeStateDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell(), R4EUIAnomalyBasic.class);
+		}
 		return fChangeAnomalyStateDialog;
 	}
 
@@ -260,6 +246,12 @@ public class R4EUIDialogFactory {
 	 * @return ICommentInputDialog
 	 */
 	public ICommentInputDialog getCommentInputDialog() {
+		if (null == fCommentInputDialog) {
+			fCommentInputDialog = new CommentInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
 		return fCommentInputDialog;
 	}
 
@@ -279,6 +271,12 @@ public class R4EUIDialogFactory {
 	 * @return IFindUserDialog
 	 */
 	public IFindUserDialog getFindUserDialog() {
+		if (null == fFindUserDialog) {
+			fFindUserDialog = new FindUserDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
 		return fFindUserDialog;
 	}
 
@@ -298,6 +296,12 @@ public class R4EUIDialogFactory {
 	 * @return IParticipantInputDialog
 	 */
 	public IParticipantInputDialog getParticipantInputDialog() {
+		if (null == fParticipantInputDialog) {
+			fParticipantInputDialog = new ParticipantInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
 		return fParticipantInputDialog;
 	}
 
@@ -317,6 +321,12 @@ public class R4EUIDialogFactory {
 	 * @return IReviewGroupInputDialog
 	 */
 	public IReviewGroupInputDialog getReviewGroupInputDialog() {
+		if (null == fReviewGroupInputDialog) {
+			fReviewGroupInputDialog = new ReviewGroupInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
 		return fReviewGroupInputDialog;
 	}
 
@@ -336,6 +346,12 @@ public class R4EUIDialogFactory {
 	 * @return IReviewInputDialog
 	 */
 	public IReviewInputDialog getReviewInputDialog() {
+		if (null == fReviewInputDialog) {
+			fReviewInputDialog = new ReviewInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
 		return fReviewInputDialog;
 	}
 
@@ -355,6 +371,12 @@ public class R4EUIDialogFactory {
 	 * @return IRuleAreaInputDialog
 	 */
 	public IRuleAreaInputDialog getRuleAreaInputDialog() {
+		if (null == fRuleAreaInputDialog) {
+			fRuleAreaInputDialog = new RuleAreaInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
 		return fRuleAreaInputDialog;
 	}
 
@@ -374,6 +396,12 @@ public class R4EUIDialogFactory {
 	 * @return IRuleInputDialog
 	 */
 	public IRuleInputDialog getRuleInputDialog() {
+		if (null == fRuleInputDialog) {
+			fRuleInputDialog = new RuleInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
 		return fRuleInputDialog;
 	}
 
@@ -393,6 +421,12 @@ public class R4EUIDialogFactory {
 	 * @return IRuleSetInputDialog
 	 */
 	public IRuleSetInputDialog getRuleSetInputDialog() {
+		if (null == fRuleSetInputDialog) {
+			fRuleSetInputDialog = new RuleSetInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
 		return fRuleSetInputDialog;
 	}
 
@@ -412,6 +446,12 @@ public class R4EUIDialogFactory {
 	 * @return IRuleViolationInputDialog
 	 */
 	public IRuleViolationInputDialog getRuleViolationInputDialog() {
+		if (null == fRuleViolationInputDialog) {
+			fRuleViolationInputDialog = new RuleViolationInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
 		return fRuleViolationInputDialog;
 	}
 
@@ -431,6 +471,12 @@ public class R4EUIDialogFactory {
 	 * @return ISendNotificationInputDialog
 	 */
 	public ISendNotificationInputDialog getSendNotificationInputDialog() {
+		if (null == fSendNotificationInputDialog) {
+			fSendNotificationInputDialog = new SendNotificationInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
 		return fSendNotificationInputDialog;
 	}
 
@@ -460,11 +506,10 @@ public class R4EUIDialogFactory {
 	 * @return ScmConnectorUi
 	 */
 	public ScmConnectorUi getScmUiConnector(IProject aProject) {
-		if (UIUtils.TEST_MODE == false) {
-			return ScmUi.getUiConnector(aProject);
-		} else {
-			return fScmConnectorUi;
+		if (null == fScmConnectorUi) {
+			fScmConnectorUi = ScmUi.getUiConnector(aProject);
 		}
+		return fScmConnectorUi;
 	}
 
 	/**
@@ -482,11 +527,10 @@ public class R4EUIDialogFactory {
 	 * 
 	 * @return ScmConnectorUi
 	 */
-	public static NotificationsConnector getMailConnector() {
-		if (UIUtils.TEST_MODE == false) {
-			return R4EUIModelController.getMailConnector();
-		} else {
-			return fNotificationsConnector;
+	public NotificationsConnector getMailConnector() {
+		if (null == fNotificationsConnector) {
+			fNotificationsConnector = R4EUIModelController.getMailConnector();
 		}
+		return fNotificationsConnector;
 	}
 }

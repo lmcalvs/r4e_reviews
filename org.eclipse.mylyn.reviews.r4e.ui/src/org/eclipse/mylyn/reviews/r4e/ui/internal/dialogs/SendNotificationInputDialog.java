@@ -92,11 +92,6 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field fSource.
-	 */
-	private Object fSource = null;
-
-	/**
 	 * Field fMessageType.
 	 */
 	private int fMessageType;
@@ -138,10 +133,9 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 	 * @param aSource
 	 *            Object
 	 */
-	public SendNotificationInputDialog(Shell aParentShell, Object aSource) {
+	public SendNotificationInputDialog(Shell aParentShell) {
 		super(aParentShell);
 		setBlockOnOpen(true);
-		fSource = aSource;
 	}
 
 	// ------------------------------------------------------------------------
@@ -225,6 +219,27 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 		basicSectionClient.setLayout(layout);
 		basicSection.setClient(basicSectionClient);
 
+		fCompletionButton = toolkit.createButton(basicSectionClient, REVIEW_COMPLETION, SWT.RADIO);
+		fCompletionButton.setToolTipText(R4EUIConstants.NOTIFICATION_COMPLETION_TOOLTIP);
+		fCompletionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+
+		fQuestionButton = toolkit.createButton(basicSectionClient, QUESTION, SWT.RADIO);
+		fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
+		fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+
+		fItemsUpdatedButton = toolkit.createButton(basicSectionClient, UPDATED_REVIEW_ITEMS, SWT.RADIO);
+		fItemsUpdatedButton.setToolTipText(R4EUIConstants.NOTIFICATION_ITEMS_UPDATED_TOOLTIP);
+		fItemsUpdatedButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+
+		fProgressButton = toolkit.createButton(basicSectionClient, REVIEW_PROGRESS, SWT.RADIO);
+		fProgressButton.setToolTipText(R4EUIConstants.NOTIFICATION_PROGRESS_TOOLTIP);
+		fProgressButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+
+		fMeetingButton = toolkit.createButton(basicSectionClient, MEETING_REQUEST, SWT.RADIO);
+		fMeetingButton.setToolTipText(R4EUIConstants.MEETING_REQUEST_TOOLTIP);
+		fMeetingButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
+
+		/*
 		//Look for Review Element
 		Object elementFound = null;
 		if (fSource instanceof List) {
@@ -267,6 +282,7 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 			fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
 			fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		}
+		*/
 	}
 
 	/**
@@ -286,5 +302,45 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 	 */
 	public int getMessageTypeValue() {
 		return fMessageType;
+	}
+
+	public void adjust(Object aSource) {
+		//Look for Review Element
+		Object elementFound = null;
+		if (aSource instanceof List) {
+			for (Object sourceElement : (List<?>) aSource) {
+				elementFound = sourceElement;
+				if (elementFound instanceof R4EUIReviewBasic) {
+					break;
+				}
+			}
+		} else {
+			elementFound = aSource;
+		}
+
+		if (elementFound instanceof R4EUIReviewBasic) {
+			if (((R4EUIReviewBasic) elementFound).isUserReviewed()) {
+				fCompletionButton.setVisible(true);
+				fCompletionButton.setSelection(true);
+				fQuestionButton.setVisible(false);
+				fItemsUpdatedButton.setVisible(false);
+				fProgressButton.setVisible(false);
+				fMeetingButton.setVisible(false);
+			} else {
+				fCompletionButton.setVisible(false);
+				fQuestionButton.setVisible(true);
+				fItemsUpdatedButton.setVisible(true);
+				fProgressButton.setVisible(true);
+				fProgressButton.setSelection(true);
+				fMeetingButton.setVisible(true);
+			}
+		} else {
+			fCompletionButton.setVisible(false);
+			fQuestionButton.setVisible(true);
+			fQuestionButton.setSelection(true);
+			fItemsUpdatedButton.setVisible(false);
+			fProgressButton.setVisible(false);
+			fMeetingButton.setVisible(false);
+		}
 	}
 }

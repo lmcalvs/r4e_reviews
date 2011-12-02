@@ -100,8 +100,9 @@ public class SendNotificationHandler extends AbstractHandler {
 				R4EUIModelController.setJobInProgress(true);
 				//if the source is unique and is a Review element, all options are available.  Otherwise, only ask questions is supported
 				final ISendNotificationInputDialog dialog = R4EUIDialogFactory.getInstance()
-						.createSendNotificationInputDialog(obj);
+						.getSendNotificationInputDialog();
 				dialog.create();
+				dialog.adjust(obj);
 				final int result = dialog.open();
 				if (result == Window.OK) {
 					final int messageType = dialog.getMessageTypeValue();

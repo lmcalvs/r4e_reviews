@@ -86,8 +86,9 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 									R4EUIModelController.setJobInProgress(true);
 
 									final ISendNotificationInputDialog dialog = R4EUIDialogFactory.getInstance()
-											.createSendNotificationInputDialog(R4EUIModelController.getActiveReview());
+											.getSendNotificationInputDialog();
 									dialog.create();
+									dialog.adjust(R4EUIModelController.getActiveReview());
 									final int result = dialog.open();
 									if (result == Window.OK) {
 										final int messageType = dialog.getMessageTypeValue();

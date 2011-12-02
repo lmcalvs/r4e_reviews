@@ -57,7 +57,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.DateComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.LinePositionComparator;
@@ -291,11 +290,6 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 		//Apply default filters
 		applyDefaultFilters();
-
-		//Create default dialogs
-		if (UIUtils.TEST_MODE == false) {
-			R4EUIDialogFactory.getInstance().createDialogs();
-		}
 
 		//Make sure that the User Id in preferences is set to lower case
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();

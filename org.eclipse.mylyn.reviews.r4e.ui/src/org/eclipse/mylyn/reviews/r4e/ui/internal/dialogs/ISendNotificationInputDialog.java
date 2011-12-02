@@ -35,6 +35,8 @@ public interface ISendNotificationInputDialog {
 	 */
 	int open();
 
+	void adjust(Object aSource);
+
 	/**
 	 * Method getMessageTypeValue
 	 * 
