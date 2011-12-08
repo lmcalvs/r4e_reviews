@@ -347,6 +347,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fReview.setEntryCriteria(((R4EReview) aModelComponent).getEntryCriteria());
 		fReview.setObjectives(((R4EReview) aModelComponent).getObjectives());
 		fReview.setReferenceMaterial(((R4EReview) aModelComponent).getReferenceMaterial());
+		// Set the default exit decision to the model
+		fReview.setDecision(((R4EReview) aModelComponent).getDecision());
+
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
 

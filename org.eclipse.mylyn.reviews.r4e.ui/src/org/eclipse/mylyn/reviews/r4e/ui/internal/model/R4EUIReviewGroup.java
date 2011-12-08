@@ -31,13 +31,16 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.Review;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -291,6 +294,13 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			tempReview.setEntryCriteria(dialog.getEntryCriteriaValue());
 			tempReview.setObjectives(dialog.getObjectivesValue());
 			tempReview.setReferenceMaterial(dialog.getReferenceMaterialValue());
+			//Set default exit decision for INFORMAL review
+			if (type.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+				R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
+				reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED);
+				tempReview.setDecision(reviewDecision);
+
+			}
 		}
 		R4EUIModelController.setJobInProgress(false); //Enable view
 		return tempReview;
