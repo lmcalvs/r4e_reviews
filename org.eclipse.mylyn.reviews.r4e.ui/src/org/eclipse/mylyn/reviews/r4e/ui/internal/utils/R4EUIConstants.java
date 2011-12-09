@@ -34,6 +34,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String SEPARATOR = "/";
 
 	/**
+	 * Field LINE_FEED. (value is "\n" or "\r\n") Depends on operating system
+	 */
+	public static final String LINE_FEED = System.getProperty("line.separator");
+
+	/**
 	 * Field R4E_TEMP_PROJECT. (value is ""R4ETemp"")
 	 */
 	public static final String R4E_TEMP_PROJECT = "R4ETemp";

@@ -32,12 +32,14 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -66,6 +68,24 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * @version $Revision: 1.0 $
  */
 public class NewAnomalyHandler extends AbstractHandler {
+
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+//	fWarningButtonLabels
+	private static final String[] fWarningButtonLabels = { "Continue", "Cancel" }; //$NON-NLS-1$
+
+	private static final String VERSION_STR = "Version: ";
+
+	private static final String QUESTION_TITLE = "R4E question";
+
+	private static final String WORKSPACE_FILE_STR = "Workspace file: ";
+
+	private static final String FILE_VERSION_STR = "Selected file version to review: ";
+
+	private static final String QUESTION_STR = "Are you sure you want to add this anomaly to the workspace file ?";
+
+	private static final String MESSAGE_STR = "You are adding an anomaly to a file version which is different from the one selected for review.";
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -231,6 +251,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 	private void addAnomaly(R4EFileVersion aBaseFileVersion, R4EFileVersion aTargetFileVersion,
 			IR4EUIPosition aUIPosition) {
 
+		R4EUIFileContext tempFileContext = null;
 		try {
 
 			//Check if the file element and/or anomaly already exist
@@ -275,7 +296,30 @@ public class NewAnomalyHandler extends AbstractHandler {
 									+ aUIPosition.toString());
 						}
 						return; //We found the file so we are done here	
+					} else if (null != file.getFileContext().getTarget()) {
+						//Test if we find both file in the workspace
+						String reviewPlatformURI = file.getFileContext().getTarget().getPlatformURI();
+						String targetPlatformURI = aTargetFileVersion.getPlatformURI();
+						if (null != reviewPlatformURI && null != targetPlatformURI) {
+							//Now we can compare the path
+							if (reviewPlatformURI.equals(targetPlatformURI)) {
+								//Found the same file but not the same version
+								tempFileContext = file;
+							}
+						}
 					}
+				}
+			}
+
+			//Ask a question to see if the end-user wants to continue or not
+			if (null != tempFileContext) {
+				//The file exist with a different file version
+				int ret = displayDifferentFileVersionDialog(aTargetFileVersion, tempFileContext);
+				R4EUIPlugin.Ftracer.traceInfo("Info " + "return from the dialogue: " + ret);
+				if (ret == Window.CANCEL) {
+					// Cancel selected, so just exit here before adding an anomaly
+					R4EUIPlugin.Ftracer.traceInfo("Info " + "Cancel selected From dialogue in the loop");
+					return;
 				}
 			}
 
@@ -294,6 +338,46 @@ public class NewAnomalyHandler extends AbstractHandler {
 		} catch (OutOfSyncException e) {
 			UIUtils.displaySyncErrorDialog(e);
 		}
+	}
+
+	/**
+	 * Method displayDifferentFileVersionDialog.
+	 * 
+	 * @param R4EFileVersion
+	 *            workspace target file version
+	 * @param R4EUIFileContext
+	 *            aTempFileContext current review file version
+	 */
+	private int displayDifferentFileVersionDialog(R4EFileVersion aTargetFileVersion, R4EUIFileContext aTempFileContext) {
+
+		//The file exist with a different file version
+		String wsFileName = aTargetFileVersion.getRepositoryPath();
+		String wsFileVersion = aTargetFileVersion.getVersionID();
+		String riFileName = aTempFileContext.getTargetFileVersion().getRepositoryPath();
+		String riFileVersion = aTempFileContext.getTargetFileVersion().getVersionID();
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(MESSAGE_STR + R4EUIConstants.LINE_FEED + R4EUIConstants.LINE_FEED);
+		sb.append(FILE_VERSION_STR);
+		sb.append(riFileName + R4EUIConstants.LINE_FEED);
+		sb.append(VERSION_STR);
+		sb.append(riFileVersion + R4EUIConstants.LINE_FEED + R4EUIConstants.LINE_FEED);
+		sb.append(WORKSPACE_FILE_STR);
+		sb.append(wsFileName + R4EUIConstants.LINE_FEED);
+		sb.append(VERSION_STR);
+		sb.append(wsFileVersion + R4EUIConstants.LINE_FEED + R4EUIConstants.LINE_FEED);
+		sb.append(QUESTION_STR);
+
+		MessageDialog dialog = new MessageDialog(null, // Shell
+				QUESTION_TITLE, // Dialog title
+				null, // Dialog title image message
+				sb.toString(), // Dialog message
+				MessageDialog.WARNING, // Dialog type
+				fWarningButtonLabels, // Dialog button labels
+				Window.OK // Default index (selection)
+		);
+
+		return dialog.open();
 	}
 
 	/**
