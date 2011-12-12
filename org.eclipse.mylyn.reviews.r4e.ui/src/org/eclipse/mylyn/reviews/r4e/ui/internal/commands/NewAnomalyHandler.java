@@ -73,7 +73,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 	// Constants
 	// ------------------------------------------------------------------------
 //	fWarningButtonLabels
-	private static final String[] fWarningButtonLabels = { "Continue", "Cancel" }; //$NON-NLS-1$
+	private static final String[] WARNING_BUTTONS_LABELS = { "Continue", "Cancel" }; //$NON-NLS-1$
 
 	private static final String VERSION_STR = "Version: ";
 
@@ -373,7 +373,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 				null, // Dialog title image message
 				sb.toString(), // Dialog message
 				MessageDialog.WARNING, // Dialog type
-				fWarningButtonLabels, // Dialog button labels
+				WARNING_BUTTONS_LABELS, // Dialog button labels
 				Window.OK // Default index (selection)
 		);
 
