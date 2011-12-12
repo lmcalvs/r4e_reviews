@@ -153,18 +153,20 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * @return the new serialization element object
 	 */
 	@Override
-	public ReviewComponent createChildModelDataElement() {
-		//Get comment from user and set it in model data
-		R4EAnomaly tempAnomaly = null;
+	public List<ReviewComponent> createChildModelDataElement() {
+		//Get Anomaly from user and set it in model data
+		List<ReviewComponent> tempAnomalies = new ArrayList<ReviewComponent>();
+
 		R4EUIModelController.setJobInProgress(true);
 		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getAnomalyInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
+			R4EAnomaly tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
 			setAnomalyWithDialogValues(tempAnomaly, dialog);
+			tempAnomalies.add(tempAnomaly);
 		}
 		R4EUIModelController.setJobInProgress(false); //Enable view
-		return tempAnomaly;
+		return tempAnomalies;
 	}
 
 	//Hierarchy

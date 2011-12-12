@@ -649,7 +649,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 				//Update roles
 				modelParticipant.getRoles().clear();
 				for (Item item : aItems) {
-					R4EUserRole role = ((R4EUIParticipant) fProperties.getElement()).mapStringToRole(item.getText());
+					R4EUserRole role = R4EUIParticipant.mapStringToRole(item.getText());
 					if (null != role) {
 						modelParticipant.getRoles().add(role);
 					}

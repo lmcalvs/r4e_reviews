@@ -93,15 +93,16 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 */
 	@Override
-	public ReviewComponent createChildModelDataElement() {
+	public List<ReviewComponent> createChildModelDataElement() {
 		//Get comment from user and set it in model data
-		R4EReviewGroup tempReviewGroup = null;
+		List<ReviewComponent> tempReviewGroups = new ArrayList<ReviewComponent>();
+
 		R4EUIModelController.setJobInProgress(true);
 		final IReviewGroupInputDialog dialog = R4EUIDialogFactory.getInstance().getReviewGroupInputDialog();
 		dialog.create();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			tempReviewGroup = RModelFactory.eINSTANCE.createR4EReviewGroup();
+			R4EReviewGroup tempReviewGroup = RModelFactory.eINSTANCE.createR4EReviewGroup();
 			tempReviewGroup.setName(dialog.getGroupNameValue());
 			tempReviewGroup.setDescription(dialog.getGroupDescriptionValue());
 			tempReviewGroup.setFolder(dialog.getGroupFolderValue());
@@ -115,9 +116,10 @@ public class R4EUIRootElement extends R4EUIModelElement {
 				tempReviewGroup.getDesignRuleLocations().add(ruleSetLocation);
 			}
 			tempReviewGroup.setDefaultEntryCriteria(dialog.getDefaultEntryCriteriaValue());
+			tempReviewGroups.add(tempReviewGroup);
 		}
 		R4EUIModelController.setJobInProgress(false); //Enable View
-		return tempReviewGroup;
+		return tempReviewGroups;
 	}
 
 	/**

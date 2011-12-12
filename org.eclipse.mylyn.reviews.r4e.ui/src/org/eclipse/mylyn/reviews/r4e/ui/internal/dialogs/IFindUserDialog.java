@@ -17,6 +17,10 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
+import java.util.List;
+
+import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
+
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
@@ -36,25 +40,11 @@ public interface IFindUserDialog {
 	int open();
 
 	/**
-	 * Method getUserIdValue.
+	 * Method getUserInfos.
 	 * 
-	 * @return the user id
+	 * @return the users infos
 	 */
-	String getUserIdValue();
-
-	/**
-	 * Method getUserEmailValue.
-	 * 
-	 * @return the user email
-	 */
-	String getUserEmailValue();
-
-	/**
-	 * Method getUserDetailsValue.
-	 * 
-	 * @return the user details
-	 */
-	String getUserDetailsValue();
+	List<IUserInfo> getUserInfos();
 
 	/**
 	 * Method setFocus.

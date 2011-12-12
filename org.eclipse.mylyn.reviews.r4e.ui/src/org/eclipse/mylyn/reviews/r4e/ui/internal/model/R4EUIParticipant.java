@@ -246,7 +246,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 *            String
 	 * @return R4EUserRole
 	 */
-	public R4EUserRole mapStringToRole(String aRoleStr) {
+	public static R4EUserRole mapStringToRole(String aRoleStr) {
 		if (aRoleStr.equals(R4EUIConstants.USER_ROLE_ORGANIZER)) {
 			return R4EUserRole.R4E_ROLE_ORGANIZER;
 		} else if (aRoleStr.equals(R4EUIConstants.USER_ROLE_LEAD)) {
@@ -256,6 +256,27 @@ public class R4EUIParticipant extends R4EUIModelElement {
 			return R4EUserRole.R4E_ROLE_AUTHOR;
 		} else if (aRoleStr.equals(R4EUIConstants.USER_ROLE_REVIEWER)) {
 			return R4EUserRole.R4E_ROLE_REVIEWER;
+		}
+		return null;
+	}
+
+	/**
+	 * Method mapRoleToString.
+	 * 
+	 * @param aRole
+	 *            R4EUserRole
+	 * @return String
+	 */
+	public static String mapRoleToString(R4EUserRole aRole) {
+		if (aRole.equals(R4EUserRole.R4E_ROLE_ORGANIZER)) {
+			return R4EUIConstants.USER_ROLE_ORGANIZER;
+		} else if (aRole.equals(R4EUserRole.R4E_ROLE_LEAD)) {
+			return R4EUIConstants.USER_ROLE_LEAD;
+		}
+		if (aRole.equals(R4EUserRole.R4E_ROLE_AUTHOR)) {
+			return R4EUIConstants.USER_ROLE_AUTHOR;
+		} else if (aRole.equals(R4EUserRole.R4E_ROLE_REVIEWER)) {
+			return R4EUIConstants.USER_ROLE_REVIEWER;
 		}
 		return null;
 	}

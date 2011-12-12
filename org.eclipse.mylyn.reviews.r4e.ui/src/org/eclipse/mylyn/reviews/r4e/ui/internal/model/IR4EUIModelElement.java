@@ -20,6 +20,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -168,10 +169,10 @@ public interface IR4EUIModelElement {
 	/**
 	 * Create a serialization model element object
 	 * 
-	 * @return the new serialization element object
+	 * @return the new serialization elements objects
 	 * @throws ResourceHandlingException
 	 */
-	ReviewComponent createChildModelDataElement() throws ResourceHandlingException;
+	List<ReviewComponent> createChildModelDataElement() throws ResourceHandlingException;
 
 	/**
 	 * Set serialization model data by copying it from the passed-in object

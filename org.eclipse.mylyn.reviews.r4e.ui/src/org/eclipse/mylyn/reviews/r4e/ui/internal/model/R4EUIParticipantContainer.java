@@ -28,7 +28,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
-import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -55,7 +54,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Participant"")
 	 */
-	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Participant";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Participants";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Participant to the Current Review"")
@@ -101,21 +100,19 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 * @return the new serialization element object
 	 */
 	@Override
-	public ReviewComponent createChildModelDataElement() {
-		//Get comment from user and set it in model data
-		R4EParticipant tempParticipant = null;
+	public List<ReviewComponent> createChildModelDataElement() {
+		//Get Participants from user and set them in model data
+		List<ReviewComponent> tempParticipants = new ArrayList<ReviewComponent>();
 		R4EUIModelController.setJobInProgress(true);
 		final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			tempParticipant = RModelFactory.eINSTANCE.createR4EParticipant();
-			tempParticipant.setId(dialog.getParticipantIdValue());
-			tempParticipant.setEmail(dialog.getParticipantEmailValue());
-			tempParticipant.getRoles().addAll(dialog.getParticipantRolesValue());
-			tempParticipant.setFocusArea(dialog.getFocusAreaValue());
+			for (R4EParticipant participant : dialog.getParticipants()) {
+				tempParticipants.add(participant);
+			}
 		}
 		R4EUIModelController.setJobInProgress(false); //Enable view
-		return tempParticipant;
+		return tempParticipants;
 	}
 
 	//Hierarchy

@@ -19,7 +19,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import java.util.List;
 
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 
 /**
  * @author lmcdubo
@@ -35,38 +35,9 @@ public interface IParticipantInputDialog {
 	int open();
 
 	/**
-	 * Returns the string typed into this input dialog.
+	 * Method getParticpants.
 	 * 
-	 * @return the participant id input string
+	 * @return List<R4EParticipant>
 	 */
-	String getParticipantIdValue();
-
-	/**
-	 * Returns the string typed into this input dialog.
-	 * 
-	 * @return the participant email input string
-	 */
-	String getParticipantEmailValue();
-
-	/**
-	 * Returns the string typed into this input dialog.
-	 * 
-	 * @return the participant details input string
-	 */
-	String getParticipantDetailsValue();
-
-	/**
-	 * Returns the participant role values
-	 * 
-	 * @return the participant roles as a List
-	 */
-	List<R4EUserRole> getParticipantRolesValue();
-
-	/**
-	 * Returns the string typed into this input dialog.
-	 * 
-	 * @return the focus area input string
-	 */
-	String getFocusAreaValue();
-
+	List<R4EParticipant> getParticipants();
 }

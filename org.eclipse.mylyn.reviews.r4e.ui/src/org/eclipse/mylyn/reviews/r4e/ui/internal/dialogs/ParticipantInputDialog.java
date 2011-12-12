@@ -26,16 +26,21 @@ import javax.naming.NamingException;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.window.Window;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
+import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.EditableListWidget;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.IEditableListListener;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
@@ -43,20 +48,19 @@ import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.FormDialog;
 import org.eclipse.ui.forms.IManagedForm;
@@ -71,30 +75,40 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ParticipantInputDialog extends FormDialog implements IParticipantInputDialog {
+public class ParticipantInputDialog extends FormDialog implements IParticipantInputDialog, IEditableListListener {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field ADD_PARTICIPANT_DIALOG_TITLE. (value is ""Enter Review details"")
+	 * Field ADD_PARTICIPANT_DIALOG_TITLE. (value is ""Enter Participants details"")
 	 */
-	private static final String ADD_PARTICIPANT_DIALOG_TITLE = "Enter Participant Details";
+	private static final String ADD_PARTICIPANT_DIALOG_TITLE = "Enter Participants Details";
+
+	/**
+	 * Field PARTICIPANTS_GROUP_LABEL. (value is ""Participants"")
+	 */
+	private static final String PARTICIPANTS_GROUP_LABEL = "Participants";
+
+	/**
+	 * Field ADD_BUTTON_LABEL. (value is ""Add"")
+	 */
+	private static final String ADD_BUTTON_LABEL = "Add";
 
 	/**
 	 * Field FIND_BUTTON_LABEL. (value is ""Find"")
 	 */
 	private static final String FIND_BUTTON_LABEL = "Find";
 
+	/**
+	 * Field CLEAR_BUTTON_LABEL. (value is ""Clear"")
+	 */
+	private static final String CLEAR_BUTTON_LABEL = "Clear";
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
-
-	/**
-	 * Field fParticipantIdValue.
-	 */
-	private String fParticipantIdValue = "";
 
 	/**
 	 * Field fParticipantIdInputTextField.
@@ -107,34 +121,19 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	protected Text fParticipantEmailInputTextField;
 
 	/**
-	 * Field fParticipantEmailValue.
-	 */
-	private String fParticipantEmailValue;
-
-	/**
 	 * Field fParticipantDetailsInputTextField.
 	 */
 	protected Text fParticipantDetailsInputTextField;
 
 	/**
-	 * Field fParticipantDetailsValue.
+	 * Field fParticipantsDetailsValue.
 	 */
-	private String fParticipantDetailsValue;
+	private final List<String> fParticipantsDetailsValues = new ArrayList<String>();;
 
 	/**
-	 * Field fAvailableComponents.
+	 * Field fRoleValues.
 	 */
-	private EditableListWidget fRoleTypes = null;
-
-	/**
-	 * Field fRolesValue.
-	 */
-	private List<R4EUserRole> fRolesValue = null;
-
-	/**
-	 * Field fFocusAreaValue.
-	 */
-	private String fFocusAreaValue = "";
+	private EditableListWidget fRoleValues = null;
 
 	/**
 	 * Field fFocusAreaTextField.
@@ -145,6 +144,36 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 * The input validator, or <code>null</code> if none.
 	 */
 	private final IInputValidator fValidator;
+
+	/**
+	 * Field fAddedParticipantsTable.
+	 */
+	private Table fAddedParticipantsTable;
+
+	/**
+	 * Field fUserToAddCombo.
+	 */
+	private CCombo fUserToAddCombo;
+
+	/**
+	 * Field fParticipants.
+	 */
+	private List<R4EParticipant> fParticipants = new ArrayList<R4EParticipant>();
+
+	/**
+	 * Field fSelectedParticipantIndex.
+	 */
+	protected int fSelectedParticipantIndex = R4EUIConstants.INVALID_VALUE;
+
+	/**
+	 * Field fAddUserButton.
+	 */
+	private Button fAddUserButton;
+
+	/**
+	 * Field fClearParticipantsButton.
+	 */
+	private Button fClearParticipantsButton;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -176,84 +205,60 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
+			List<R4EParticipant> validatedParticipants = new ArrayList<R4EParticipant>();
 
-			//Validate Participant Id
-			String validateResult = validateEmptyInput(fParticipantIdInputTextField);
-			if (null != validateResult) {
-				//Validation of input failed
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"No input given for Participant Id", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
-								validateResult, null), IStatus.ERROR);
-				dialog.open();
-				return;
-			}
-			//Check if participant already exists
-			fParticipantIdInputTextField.setText(fParticipantIdInputTextField.getText().toLowerCase());
-			if (R4EUIModelController.getActiveReview()
-					.getParticipantIDs()
-					.contains(fParticipantIdInputTextField.getText())) {
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Cannot Add Participant", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
-								"Participant already part of this Review", null), IStatus.ERROR);
-				dialog.open();
-				return;
-			}
-			fParticipantIdValue = fParticipantIdInputTextField.getText();
+			for (R4EParticipant participant : fParticipants) {
+				//Validate Participant Id
+				String validateResult = validateEmptyInput(participant.getId());
+				if (null != validateResult) {
+					//Validation of input failed
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+							"No input given for Participant Id", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+									validateResult, null), IStatus.ERROR);
+					dialog.open();
+					continue;
+				}
 
-			//Validate Participant Email
-			validateResult = validateEmptyInput(fParticipantEmailInputTextField);
-			if (null != validateResult) {
-				//Validation of input failed
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"No input given for Participant Email", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
-								validateResult, null), IStatus.ERROR);
-				dialog.open();
-				return;
-			}
-			if (!CommandUtils.isEmailValid(fParticipantEmailInputTextField.getText())) {
-				return;
-			}
-			fParticipantEmailValue = fParticipantEmailInputTextField.getText();
+				//Check if participant already exists
+				if (R4EUIModelController.getActiveReview().getParticipantIDs().contains(participant.getId())) {
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+							"Cannot Add Participant " + participant.getId(), new Status(IStatus.ERROR,
+									R4EUIPlugin.PLUGIN_ID, 0, "Participant already part of this Review", null),
+							IStatus.ERROR);
+					dialog.open();
+					continue;
+				}
 
-			//Validate Roles (optional)
-			fRolesValue = new ArrayList<R4EUserRole>();
-			if (null != fRoleTypes && fRoleTypes.getItems().length > 0) {
-				for (Item item : fRoleTypes.getItems()) {
-					//Review type (no validation needed as this is a read-only combo box
-					if (item.getText().equals(R4EUIConstants.USER_ROLE_LEAD)) {
-						fRolesValue.add(R4EUserRole.R4E_ROLE_LEAD);
-					} else if (item.getText().equals(R4EUIConstants.USER_ROLE_AUTHOR)) {
-						fRolesValue.add(R4EUserRole.R4E_ROLE_AUTHOR);
-					} else if (item.getText().equals(R4EUIConstants.USER_ROLE_REVIEWER)) {
-						fRolesValue.add(R4EUserRole.R4E_ROLE_REVIEWER);
-					} else if (item.getText().equals(R4EUIConstants.USER_ROLE_ORGANIZER)) {
-						fRolesValue.add(R4EUserRole.R4E_ROLE_ORGANIZER);
+				//Validate Participant Email
+				validateResult = validateEmptyInput(participant.getEmail());
+				if (null != validateResult) {
+					//Validation of input failed
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+							"No Email given for Participant " + participant.getId(), new Status(IStatus.ERROR,
+									R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+					dialog.open();
+					continue;
+				}
+				if (!CommandUtils.isEmailValid(participant.getEmail())) {
+					continue;
+				}
+
+				//Validate Roles (optional)
+				if (participant.getRoles().size() == 0) {
+					//If there is no roles defined, put one as default depending on the review type
+					if (R4EUIModelController.getActiveReview()
+							.getReview()
+							.getType()
+							.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+						participant.getRoles().add(R4EUserRole.R4E_ROLE_LEAD);
+					} else {
+						participant.getRoles().add(R4EUserRole.R4E_ROLE_REVIEWER);
 					}
 				}
-			} else {
-				//If there is no roles defined, put one as default depenmding on the review type
-				if (R4EUIModelController.getActiveReview()
-						.getReview()
-						.getType()
-						.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
-					fRolesValue.add(R4EUserRole.R4E_ROLE_LEAD);
-				} else {
-					fRolesValue.add(R4EUserRole.R4E_ROLE_REVIEWER);
-				}
+				validatedParticipants.add(participant);
 			}
-
-			//Validate Focus Area (optional)
-			validateResult = validateEmptyInput(fFocusAreaTextField);
-			if (null == validateResult) {
-				fFocusAreaValue = fFocusAreaTextField.getText();
-			}
-
-			fParticipantDetailsValue = fParticipantDetailsInputTextField.getText(); //No validation needed
-		} else {
-			fParticipantIdValue = null;
-			fFocusAreaValue = null;
-			fParticipantEmailValue = null;
-			fParticipantDetailsValue = null;
+			//Set the participant list to include only the validated participants
+			fParticipants = validatedParticipants;
 		}
 		super.buttonPressed(buttonId);
 	}
@@ -273,6 +278,19 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	}
 
 	/**
+	 * Method open.
+	 * 
+	 * @return int
+	 * @see org.eclipse.ui.forms.FormDialog#open()
+	 */
+	@Override
+	public int open() {
+		fParticipantsDetailsValues.clear();
+		fParticipants.clear();
+		return super.open();
+	}
+
+	/**
 	 * Configures the dialog form and creates form content. Clients should override this method.
 	 * 
 	 * @param mform
@@ -289,14 +307,191 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		composite.setLayout(layout);
 		GridData textGridData = null;
 
+		//Users to Add
+		Group usersToAddGroup = new Group(composite, SWT.NONE);
+		usersToAddGroup.setText(PARTICIPANTS_GROUP_LABEL);
+		usersToAddGroup.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		usersToAddGroup.setLayout(new GridLayout(4, false));
+		final GridData groupGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		usersToAddGroup.setLayoutData(groupGridData);
+
+		fUserToAddCombo = new CCombo(usersToAddGroup, SWT.SINGLE | SWT.BORDER);
+		textGridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+		textGridData.horizontalSpan = 2;
+		fUserToAddCombo.setEditable(true);
+		fUserToAddCombo.setToolTipText(R4EUIConstants.PARTICIPANT_ADD_USER_TOOLTIP);
+		fUserToAddCombo.setLayoutData(textGridData);
+		fUserToAddCombo.addListener(SWT.Modify, new Listener() {
+			public void handleEvent(Event event) {
+				if (fUserToAddCombo.getText().trim().length() > 0) {
+					fAddUserButton.setEnabled(true);
+				} else {
+					fAddUserButton.setEnabled(false);
+				}
+			}
+		});
+
+		fAddUserButton = toolkit.createButton(usersToAddGroup, ADD_BUTTON_LABEL, SWT.NONE);
+		final GridData addButtonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+		addButtonGridData.horizontalSpan = 1;
+		fAddUserButton.setEnabled(false);
+		fAddUserButton.setToolTipText(R4EUIConstants.PARTICIPANT_ADD_USER_TOOLTIP);
+		fAddUserButton.setLayoutData(addButtonGridData);
+		fAddUserButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+
+				//Tokenize the users list
+				String[] users = fUserToAddCombo.getText().split(R4EUIConstants.LIST_SEPARATOR);
+				for (String user : users) {
+
+					//TODO:  Here we need to resolve any group aliases to multiple users
+
+					//Resolve user
+					R4EParticipant participant = getParticipant(user.trim().toLowerCase());
+					if (null == participant) {
+						continue; //Participant already in list
+					}
+					fParticipants.add(participant);
+
+					//Add item to the participants table
+					TableItem item = new TableItem(fAddedParticipantsTable, SWT.NONE);
+					item.setText(participant.getId());
+					fAddedParticipantsTable.showItem(item);
+
+					if (fParticipants.size() > 0) {
+						getButton(IDialogConstants.OK_ID).setEnabled(true);
+						fClearParticipantsButton.setEnabled(true);
+					} else {
+						getButton(IDialogConstants.OK_ID).setEnabled(false);
+					}
+				}
+				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+			}
+		});
+
+		//Find user button
+		final Button findUserButton = toolkit.createButton(usersToAddGroup, FIND_BUTTON_LABEL, SWT.NONE);
+		final GridData findButtonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+		findUserButton.setToolTipText(R4EUIConstants.PARTICIPANT_FIND_USER_TOOLTIP);
+		findUserButton.setLayoutData(findButtonGridData);
+		if (!R4EUIModelController.isUserQueryAvailable()) {
+			findUserButton.setEnabled(false);
+		}
+		findUserButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				final IFindUserDialog dialog = R4EUIDialogFactory.getInstance().getFindUserDialog();
+				dialog.create();
+				dialog.setDialogsDefaults();
+				final int result = dialog.open();
+
+				if (result == Window.OK) {
+					List<IUserInfo> usersInfos = dialog.getUserInfos();
+					//Here for simplicity purposes we just store the user Ids.  Another LDAP
+					//resolution will be done when we add the participants to the participants list
+					fUserToAddCombo.setText(fUserToAddCombo.getText().trim());
+					String existingStr = fUserToAddCombo.getText();
+					StringBuffer buffer;
+					if (existingStr.trim().length() > 0) {
+						buffer = new StringBuffer(
+								fUserToAddCombo.getText()
+										+ ((fUserToAddCombo.getText().charAt(fUserToAddCombo.getText().length() - 1) != R4EUIConstants.LIST_SEPARATOR.charAt(0))
+												? R4EUIConstants.LIST_SEPARATOR
+												: ""));
+					} else {
+						buffer = new StringBuffer();
+					}
+					for (IUserInfo user : usersInfos) {
+						buffer.append(" " + user.getUserId().toLowerCase() + R4EUIConstants.LIST_SEPARATOR);
+					}
+					buffer.trimToSize();
+					fUserToAddCombo.setText(buffer.toString());
+				}
+			}
+		});
+
+		fAddedParticipantsTable = toolkit.createTable(usersToAddGroup, SWT.SINGLE);
+		final GridData tableGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		tableGridData.horizontalSpan = 3;
+		fAddedParticipantsTable.setToolTipText(R4EUIConstants.PARTICIPANTS_ADD_TOOLTIP);
+		fAddedParticipantsTable.setLinesVisible(true);
+		fAddedParticipantsTable.setItemCount(0);
+		fAddedParticipantsTable.setLayoutData(tableGridData);
+		fAddedParticipantsTable.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				fSelectedParticipantIndex = fAddedParticipantsTable.getSelectionIndex();
+				if (fSelectedParticipantIndex >= 0) {
+					R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
+					if (null != participant) {
+						fParticipantIdInputTextField.setText(participant.getId());
+						if (null != participant.getEmail()) {
+							fParticipantEmailInputTextField.setText(participant.getEmail());
+						} else {
+							fParticipantEmailInputTextField.setText("");
+						}
+						if (fSelectedParticipantIndex < fParticipantsDetailsValues.size()) {
+							fParticipantDetailsInputTextField.setText(fParticipantsDetailsValues.get(fSelectedParticipantIndex));
+						} else {
+							fParticipantDetailsInputTextField.setText("");
+						}
+						fRoleValues.removeAll();
+						EList<R4EUserRole> roles = participant.getRoles();
+						for (R4EUserRole role : roles) {
+							Item newItem = fRoleValues.addItem();
+							newItem.setText(R4EUIParticipant.mapRoleToString(role));
+						}
+						if (null != participant.getFocusArea()) {
+							fFocusAreaTextField.setText(participant.getFocusArea());
+						} else {
+							fFocusAreaTextField.setText("");
+						}
+					}
+
+					//Make sure fields are enabled
+					fParticipantIdInputTextField.setEnabled(true);
+					fParticipantEmailInputTextField.setEnabled(true);
+					fParticipantDetailsInputTextField.setEnabled(true);
+					fRoleValues.setEnabled(true);
+					fFocusAreaTextField.setEnabled(true);
+				}
+			}
+		});
+
+		fClearParticipantsButton = toolkit.createButton(usersToAddGroup, CLEAR_BUTTON_LABEL, SWT.NONE);
+		final GridData clearButtonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+		clearButtonGridData.horizontalSpan = 1;
+		fClearParticipantsButton.setEnabled(false);
+		fClearParticipantsButton.setToolTipText(R4EUIConstants.PARTICIPANTS_CLEAR_TOOLTIP);
+		fClearParticipantsButton.setLayoutData(clearButtonGridData);
+		fClearParticipantsButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				fParticipants.clear();
+				fParticipantsDetailsValues.clear();
+				fAddedParticipantsTable.removeAll();
+				fSelectedParticipantIndex = R4EUIConstants.INVALID_VALUE;
+				fParticipantIdInputTextField.setText("");
+				fParticipantIdInputTextField.setEnabled(false);
+				fParticipantEmailInputTextField.setText("");
+				fParticipantEmailInputTextField.setEnabled(false);
+				fParticipantDetailsInputTextField.setText("");
+				fParticipantDetailsInputTextField.setEnabled(false);
+				fRoleValues.removeAll();
+				fRoleValues.setEnabled(false);
+				fFocusAreaTextField.setText("");
+				fFocusAreaTextField.setEnabled(false);
+				fClearParticipantsButton.setEnabled(false);
+				getButton(IDialogConstants.OK_ID).setEnabled(false);
+			}
+		});
+
 		//Basic parameters section
 		final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION
 				| ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		basicSectionGridData.horizontalSpan = 4;
 		basicSection.setLayoutData(basicSectionGridData);
-		basicSection.setText("Basic Parameters");
-		basicSection.setDescription("Enter the mandatory basic parameters for this participant");
+		basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
+		basicSection.setDescription(R4EUIConstants.BASIC_PARAMS_HEADER_DETAILS + "participant");
 		basicSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
@@ -314,67 +509,18 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fParticipantIdInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-		textGridData.horizontalSpan = 2;
+		textGridData.horizontalSpan = 3;
+		fParticipantIdInputTextField.setEditable(false);
+		fParticipantIdInputTextField.setEnabled(false);
 		fParticipantIdInputTextField.setToolTipText(R4EUIConstants.PARTICIPANT_ID_TOOLTIP);
 		fParticipantIdInputTextField.setLayoutData(textGridData);
-		fParticipantIdInputTextField.addFocusListener(new FocusListener() {
-
-			public void focusLost(FocusEvent e) {
-				if (R4EUIModelController.isUserQueryAvailable()) {
-					if (fParticipantIdInputTextField.getText().length() > 0) {
-						fParticipantIdInputTextField.setText(fParticipantIdInputTextField.getText().toLowerCase());
-						getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
-						getUserInfo();
-						getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
-					} else {
-						fParticipantEmailInputTextField.setText("");
-						fParticipantDetailsInputTextField.setText("");
-					}
-
+		fParticipantIdInputTextField.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
+				if (fSelectedParticipantIndex >= 0) {
+					R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
+					participant.setId(fParticipantIdInputTextField.getText());
+					fAddedParticipantsTable.getItem(fSelectedParticipantIndex).setText(participant.getId());
 				}
-			}
-
-			public void focusGained(FocusEvent e) {
-				//Nothing to do
-			}
-		});
-		fParticipantIdInputTextField.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				// ignore
-				if (fParticipantIdInputTextField.getText().length() > 0
-						&& fParticipantEmailInputTextField.getText().length() > 0) {
-					getButton(IDialogConstants.OK_ID).setEnabled(true);
-				} else {
-					getButton(IDialogConstants.OK_ID).setEnabled(false);
-				}
-			}
-		});
-
-		//Find user button
-		final Button findUserButton = toolkit.createButton(basicSectionClient, FIND_BUTTON_LABEL, SWT.NONE);
-		final GridData buttonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-		buttonGridData.horizontalSpan = 1;
-		findUserButton.setToolTipText(R4EUIConstants.PARTICIPANT_FIND_USER_TOOLTIP);
-		findUserButton.setLayoutData(buttonGridData);
-		if (!R4EUIModelController.isUserQueryAvailable()) {
-			findUserButton.setEnabled(false);
-		}
-		findUserButton.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
-				final IFindUserDialog dialog = R4EUIDialogFactory.getInstance().getFindUserDialog();
-				dialog.create();
-				dialog.setDialogsDefaults();
-				final int result = dialog.open();
-
-				if (result == Window.OK) {
-					fParticipantIdInputTextField.setText(dialog.getUserIdValue());
-					fParticipantEmailInputTextField.setText(dialog.getUserEmailValue());
-					fParticipantDetailsInputTextField.setText(dialog.getUserDetailsValue());
-				}
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) {
-				//Nothing to do
 			}
 		});
 
@@ -387,14 +533,12 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		textGridData.horizontalSpan = 3;
 		fParticipantEmailInputTextField.setToolTipText(R4EUIConstants.PARTICIPANT_EMAIL_TOOLTIP);
 		fParticipantEmailInputTextField.setLayoutData(textGridData);
-		fParticipantEmailInputTextField.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				// ignore
-				if (fParticipantIdInputTextField.getText().length() > 0
-						&& fParticipantEmailInputTextField.getText().length() > 0) {
-					getButton(IDialogConstants.OK_ID).setEnabled(true);
-				} else {
-					getButton(IDialogConstants.OK_ID).setEnabled(false);
+		fParticipantEmailInputTextField.setEnabled(false);
+		fParticipantEmailInputTextField.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
+				if (fSelectedParticipantIndex >= 0) {
+					R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
+					participant.setEmail(fParticipantEmailInputTextField.getText());
 				}
 			}
 		});
@@ -408,6 +552,8 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fParticipantDetailsInputTextField.getLineHeight() << 3;
+		fParticipantDetailsInputTextField.setEnabled(false);
+		fParticipantDetailsInputTextField.setEditable(false);
 		fParticipantDetailsInputTextField.setToolTipText(R4EUIConstants.PARTICIPANT_DETAILS_TOOLTIP);
 		fParticipantDetailsInputTextField.setLayoutData(textGridData);
 
@@ -417,8 +563,8 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		final GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		extraSectionGridData.horizontalSpan = 4;
 		extraSection.setLayoutData(extraSectionGridData);
-		extraSection.setText("Extra Parameters");
-		extraSection.setDescription("Enter the optional extra parameters for this participant");
+		extraSection.setText(R4EUIConstants.EXTRA_PARAMS_HEADER);
+		extraSection.setDescription(R4EUIConstants.EXTRA_PARAMS_HEADER_DETAILS + "participant");
 		extraSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
@@ -437,9 +583,11 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 			textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 			textGridData.horizontalSpan = 3;
-			fRoleTypes = new EditableListWidget(toolkit, extraSectionClient, textGridData, null, 0, CCombo.class,
+			fRoleValues = new EditableListWidget(toolkit, extraSectionClient, textGridData, this, 0, CCombo.class,
 					R4EUIConstants.PARTICIPANT_ROLES);
-			fRoleTypes.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
+			fRoleValues.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
+			fRoleValues.setEnabled(false);
+
 		}
 
 		//Focus Area
@@ -450,8 +598,17 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fFocusAreaTextField.getLineHeight() * 3;
+		fFocusAreaTextField.setEnabled(false);
 		fFocusAreaTextField.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
 		fFocusAreaTextField.setLayoutData(textGridData);
+		fFocusAreaTextField.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
+				if (fSelectedParticipantIndex >= 0) {
+					R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
+					participant.setFocusArea(fFocusAreaTextField.getText());
+				}
+			}
+		});
 	}
 
 	/**
@@ -480,83 +637,90 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	}
 
 	/**
-	 * Returns the string typed into this input dialog.
-	 * 
-	 * @return the participant id input string
-	 */
-	public String getParticipantIdValue() {
-		return fParticipantIdValue;
-	}
-
-	/**
-	 * Returns the string typed into this input dialog.
-	 * 
-	 * @return the participant email input string
-	 */
-	public String getParticipantEmailValue() {
-		return fParticipantEmailValue;
-	}
-
-	/**
-	 * Returns the string typed into this input dialog.
-	 * 
-	 * @return the participant details input string
-	 */
-	public String getParticipantDetailsValue() {
-		return fParticipantDetailsValue;
-	}
-
-	/**
-	 * Returns the participant role values
-	 * 
-	 * @return the participant roles as a List
-	 */
-	public List<R4EUserRole> getParticipantRolesValue() {
-		return fRolesValue;
-	}
-
-	/**
-	 * Returns the string typed into this input dialog.
-	 * 
-	 * @return the focus area input string
-	 */
-	public String getFocusAreaValue() {
-		return fFocusAreaValue;
-	}
-
-	/**
 	 * Method validateEmptyInput.
 	 * 
 	 * @param aText
 	 *            Text
 	 * @return String
 	 */
-	private String validateEmptyInput(Text aText) {
-		return fValidator.isValid(aText.getText());
+	private String validateEmptyInput(String aText) {
+		return fValidator.isValid(aText);
 	}
 
 	/**
-	 * Method getUserInfo.
+	 * Method getParticpants.
+	 * 
+	 * @return List<R4EParticipant>
 	 */
-	protected void getUserInfo() {
-		final IQueryUser query = new QueryUserFactory().getInstance();
-		try {
-			final List<IUserInfo> users = query.searchByUserId(fParticipantIdInputTextField.getText());
+	public List<R4EParticipant> getParticipants() {
+		return fParticipants;
+	}
 
-			//Fill info with first user
-			for (IUserInfo user : users) {
-				if (user.getUserId().toLowerCase().equals(fParticipantIdInputTextField.getText())) {
-					fParticipantEmailInputTextField.setText(user.getEmail());
-					fParticipantDetailsInputTextField.setText(UIUtils.buildUserDetailsString(user));
-					return;
+	/**
+	 * Method getParticipant.
+	 * 
+	 * @param aId
+	 *            - String
+	 * @return R4EParticipant
+	 */
+	protected R4EParticipant getParticipant(String aId) {
+		//First check if the participant already exist in the participant list
+		for (R4EParticipant tmpPart : fParticipants) {
+			if (aId.equalsIgnoreCase(tmpPart.getId())) {
+				return null;
+			}
+
+		}
+		R4EParticipant participant = RModelFactory.eINSTANCE.createR4EParticipant();
+		if (R4EUIModelController.isUserQueryAvailable()) {
+			final IQueryUser query = new QueryUserFactory().getInstance();
+			try {
+				final List<IUserInfo> users = query.searchByUserId(aId);
+
+				//Fill info with first user returned
+				for (IUserInfo user : users) {
+					if (user.getUserId().toLowerCase().equals(aId)) {
+						participant.setId(user.getUserId().toLowerCase());
+						participant.setEmail(user.getEmail());
+						fParticipantsDetailsValues.add(UIUtils.buildUserDetailsString(user));
+						return participant;
+					}
+				}
+			} catch (NamingException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			} catch (IOException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			}
+		}
+		participant.setId(aId);
+		fParticipantsDetailsValues.add("");
+		return participant;
+	}
+
+	/**
+	 * Method itemsUpdated.
+	 * 
+	 * @param aItems
+	 *            Item[]
+	 * @param aInstanceId
+	 *            int
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.utils.IEditableListListener#itemsUpdated(Item[], int)
+	 */
+	public void itemsUpdated(Item[] aItems, int aInstanceId) {
+		if (fSelectedParticipantIndex >= 0) {
+			final R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
+			if (0 == aInstanceId) {
+				//Update roles
+				participant.getRoles().clear();
+				for (Item item : aItems) {
+					R4EUserRole role = R4EUIParticipant.mapStringToRole(item.getText());
+					if (null != role) {
+						participant.getRoles().add(role);
+					}
 				}
 			}
-		} catch (NamingException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		} catch (IOException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		}
 	}
 }

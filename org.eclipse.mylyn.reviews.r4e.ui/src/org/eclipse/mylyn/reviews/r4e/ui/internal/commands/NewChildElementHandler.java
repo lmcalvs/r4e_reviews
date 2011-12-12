@@ -18,6 +18,8 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 
+import java.util.List;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -26,7 +28,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -64,13 +65,12 @@ public class NewChildElementHandler extends AbstractHandler {
 	public Object execute(final ExecutionEvent event) {
 
 		final IR4EUIModelElement element = getParentElement(event);
-		final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
 
 		//Get data from user
 		if (null != element) {
 			try {
-				final ReviewComponent tempModelComponent = element.createChildModelDataElement();
-				if (null != tempModelComponent) {
+				final List<ReviewComponent> tempModelComponents = element.createChildModelDataElement();
+				for (final ReviewComponent tempModelComponent : tempModelComponents) {
 					R4EUIPlugin.Ftracer.traceInfo("Adding child to element " + element.getName());
 
 					//Create actual model element

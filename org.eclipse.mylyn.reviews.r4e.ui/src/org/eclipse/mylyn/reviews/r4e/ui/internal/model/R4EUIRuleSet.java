@@ -227,18 +227,20 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * @return the new serialization element object
 	 */
 	@Override
-	public ReviewComponent createChildModelDataElement() {
-		//Get comment from user and set it in model data
-		R4EDesignRuleArea tempArea = null;
+	public List<ReviewComponent> createChildModelDataElement() {
+		//Get Rule Area from user and set it in model data
+		List<ReviewComponent> tempAreas = new ArrayList<ReviewComponent>();
+
 		R4EUIModelController.setJobInProgress(true);
 		final IRuleAreaInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleAreaInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			tempArea = DRModelFactory.eINSTANCE.createR4EDesignRuleArea();
+			R4EDesignRuleArea tempArea = DRModelFactory.eINSTANCE.createR4EDesignRuleArea();
 			tempArea.setName(dialog.getNameValue());
+			tempAreas.add(tempArea);
 		}
 		R4EUIModelController.setJobInProgress(false); //Enable view
-		return tempArea;
+		return tempAreas;
 	}
 
 	//Hierarchy

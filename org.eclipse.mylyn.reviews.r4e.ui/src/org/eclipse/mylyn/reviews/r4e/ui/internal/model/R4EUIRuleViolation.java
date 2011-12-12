@@ -158,22 +158,24 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 * @return the new serialization element object
 	 */
 	@Override
-	public ReviewComponent createChildModelDataElement() {
-		//Get comment from user and set it in model data
-		R4EDesignRule tempRule = null;
+	public List<ReviewComponent> createChildModelDataElement() {
+		//Get Rule from user and set it in model data
+		List<ReviewComponent> tempRules = new ArrayList<ReviewComponent>();
+
 		R4EUIModelController.setJobInProgress(true);
 		final IRuleInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			tempRule = DRModelFactory.eINSTANCE.createR4EDesignRule();
+			R4EDesignRule tempRule = DRModelFactory.eINSTANCE.createR4EDesignRule();
 			tempRule.setId(dialog.getIdValue());
 			tempRule.setTitle(dialog.getTitleValue());
 			tempRule.setDescription(dialog.getDescriptionValue());
 			tempRule.setRank(dialog.getRankValue());
 			tempRule.setClass(dialog.getClassValue());
+			tempRules.add(tempRule);
 		}
 		R4EUIModelController.setJobInProgress(false); //Enable view
-		return tempRule;
+		return tempRules;
 	}
 
 	//Hierarchy

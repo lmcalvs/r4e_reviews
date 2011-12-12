@@ -191,18 +191,20 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
 	@Override
-	public ReviewComponent createChildModelDataElement() {
-		//Get comment from user and set it in model data
-		R4EComment tempComment = null;
+	public List<ReviewComponent> createChildModelDataElement() {
+		//Get Comment from user and set it in model data
+		List<ReviewComponent> tempComments = new ArrayList<ReviewComponent>();
+
 		R4EUIModelController.setJobInProgress(true);
 		final ICommentInputDialog dialog = R4EUIDialogFactory.getInstance().getCommentInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			tempComment = RModelFactory.eINSTANCE.createR4EComment();
+			R4EComment tempComment = RModelFactory.eINSTANCE.createR4EComment();
 			tempComment.setDescription(dialog.getCommentValue());
+			tempComments.add(tempComment);
 		}
 		R4EUIModelController.setJobInProgress(false); //Enable view
-		return tempComment;
+		return tempComments;
 	}
 
 	/**

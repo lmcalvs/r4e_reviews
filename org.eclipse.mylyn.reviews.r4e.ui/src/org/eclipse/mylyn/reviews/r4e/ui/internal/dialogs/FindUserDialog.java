@@ -19,6 +19,8 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -29,17 +31,15 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.FindUsersTableViewerSorter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.reviews.userSearch.query.IQueryUser;
 import org.eclipse.mylyn.reviews.userSearch.query.QueryUserFactory;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
@@ -99,7 +99,7 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	/**
 	 * Field USER_INFORMATION_LABEL. (value is ""User Information"")
 	 */
-	private static final String USER_INFORMATION_LABEL = "User Information";
+	private static final String USER_INFORMATION_LABEL = "Search Filters";
 
 	/**
 	 * Field QUERY_RESULTS_LABEL. (value is ""Query Results"")
@@ -147,6 +147,16 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	private static final String NUM_ENTRIES_LABEL = "Number of Entries: ";
 
 	/**
+	 * Field USERS_ADDED_LABEL. (value is ""Added Users: "")
+	 */
+	private static final String USERS_ADDED_LABEL = "Users: ";
+
+	/**
+	 * Field ADD_USER_BUTTON_LABEL. (value is ""Add Users"")
+	 */
+	private static final String ADD_USER_BUTTON_LABEL = "Add Users";
+
+	/**
 	 * Field NONE.
 	 */
 	protected static final IUserInfo[] NONE = new IUserInfo[] {};
@@ -166,24 +176,14 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	private Group fUserQueyResultsForm = null;
 
 	/**
-	 * Field fUserIdValue.
+	 * Field fUserAddedForm.
 	 */
-	private String fUserIdValue = "";
+	private Group fUserAddedForm = null;
 
 	/**
 	 * Field fUserIdInputTextField.
 	 */
 	protected Text fUserIdInputTextField = null;
-
-	/**
-	 * Field fUserEmailValue.
-	 */
-	private String fUserEmailValue = "";
-
-	/**
-	 * Field fUserDetailsValue.
-	 */
-	private String fUserDetailsValue = "";
 
 	/**
 	 * Field fUserNameInputTextField.
@@ -240,6 +240,21 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	 */
 	protected TableViewer fUsersTableViewer;
 
+	/**
+	 * Field fUserAddedValue.
+	 */
+	protected Text fUserAddedValue = null;
+
+	/**
+	 * Field fAddUserButton.
+	 */
+	private Button fAddUserButton;
+
+	/**
+	 * Field fUserInfos.
+	 */
+	private List<IUserInfo> fUserInfos = new ArrayList<IUserInfo>();
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -253,6 +268,7 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	public FindUserDialog(Shell aParentShell) {
 		super(aParentShell);
 		setBlockOnOpen(true);
+		fUserInfos.clear();
 	}
 
 	// ------------------------------------------------------------------------
@@ -268,23 +284,6 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	 */
 	@Override
 	protected void buttonPressed(int buttonId) {
-		if (buttonId == IDialogConstants.OK_ID) {
-			final IStructuredSelection selection = (IStructuredSelection) fUsersTableViewer.getSelection();
-			if (null != selection && null != selection.getFirstElement()) {
-				final IUserInfo userInfo = (IUserInfo) selection.getFirstElement();
-				fUserIdValue = userInfo.getUserId();
-				fUserEmailValue = userInfo.getEmail();
-				fUserDetailsValue = UIUtils.buildUserDetailsString(userInfo);
-			} else {
-				fUserIdValue = "";
-				fUserEmailValue = "";
-				fUserDetailsValue = "";
-			}
-		} else {
-			fUserIdValue = null;
-			fUserEmailValue = null;
-			fUserDetailsValue = null;
-		}
 		super.buttonPressed(buttonId);
 	}
 
@@ -318,7 +317,8 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		layout.marginWidth = 7;
 		layout.marginHeight = 3;
 		composite.setLayout(layout);
-		createUserDetailsForm(composite, toolkit);
+		createSearchFiltersForm(composite, toolkit);
+		createAddUsersForm(composite, toolkit);
 		createUsersTableForm(composite, toolkit);
 	}
 
@@ -337,14 +337,14 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	}
 
 	/**
-	 * Creates new user details area
+	 * Creates new search filters area
 	 * 
 	 * @param aParent
 	 *            Composite
 	 * @param aToolkit
 	 *            FormToolkit
 	 */
-	private void createUserDetailsForm(Composite aParent, FormToolkit aToolkit) {
+	private void createSearchFiltersForm(Composite aParent, FormToolkit aToolkit) {
 
 		fUserDetailsForm = new Group(aParent, SWT.NONE);
 		fUserDetailsForm.setText(USER_INFORMATION_LABEL);
@@ -374,16 +374,6 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		userIdTextData.width = TEXT_FIELD_WIDTH;
 		fUserIdInputTextField.setToolTipText(R4EUIConstants.USER_ID_TOOLTIP);
 		fUserIdInputTextField.setLayoutData(userIdTextData);
-		fUserIdInputTextField.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				// ignore
-				if (fUserIdInputTextField.getText().length() > 0) {
-					getButton(IDialogConstants.OK_ID).setEnabled(true);
-				} else {
-					getButton(IDialogConstants.OK_ID).setEnabled(false);
-				}
-			}
-		});
 
 		// Name
 		final Label userNameLabel = aToolkit.createLabel(fUserDetailsForm, R4EUIConstants.NAME_LABEL);
@@ -492,6 +482,7 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 			public void handleEvent(Event event) {
 				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 				searchUser();
+				updateTableSelections();
 				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 			}
 		});
@@ -527,7 +518,7 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		userFormData.top = new FormAttachment(fUserDetailsForm, 10, SWT.BOTTOM);
 		userFormData.left = new FormAttachment(0);
 		userFormData.right = new FormAttachment(100);
-		userFormData.bottom = new FormAttachment(100);
+		userFormData.bottom = new FormAttachment(fUserAddedForm);
 
 		fUserQueyResultsForm.setLayoutData(userFormData);
 		final FormLayout layout = new FormLayout();
@@ -536,25 +527,23 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		fUserQueyResultsForm.setLayout(layout);
 
 		// Label for the number of items in the table
-		final Label numEntriesLabel = new Label(fUserQueyResultsForm, SWT.NONE);
-		numEntriesLabel.setText(NUM_ENTRIES_LABEL);
+		final Label numEntriesLabel = aToolkit.createLabel(fUserQueyResultsForm, NUM_ENTRIES_LABEL);
 		final FormData numEntriesLabelData = new FormData();
-		numEntriesLabelData.top = new FormAttachment(fUserQueyResultsForm, 5, SWT.BOTTOM);
 		numEntriesLabelData.left = new FormAttachment(fUserQueyResultsForm, 0, SWT.LEFT);
+		numEntriesLabelData.bottom = new FormAttachment(100);
 		numEntriesLabel.setToolTipText(R4EUIConstants.USER_NUM_ENTRIES_TOOLTIP);
 		numEntriesLabel.setLayoutData(numEntriesLabelData);
 
 		//Count Label
-		fNumEntriesValue = new Label(fUserQueyResultsForm, SWT.NONE);
+		fNumEntriesValue = aToolkit.createLabel(fUserQueyResultsForm, "0");
 		final FormData numEntriesValueData = new FormData();
-		numEntriesValueData.top = new FormAttachment(numEntriesLabel, 0, SWT.TOP);
 		numEntriesValueData.left = new FormAttachment(numEntriesLabel, 10, SWT.RIGHT);
+		numEntriesValueData.bottom = new FormAttachment(100);
 		numEntriesValueData.width = 30;
 		fNumEntriesValue.setToolTipText(R4EUIConstants.USER_NUM_ENTRIES_TOOLTIP);
 		fNumEntriesValue.setLayoutData(numEntriesValueData);
-		fNumEntriesValue.setText("0");
 
-		fUsersTableViewer = new TableViewer(fUserQueyResultsForm, SWT.SINGLE | SWT.FULL_SELECTION);
+		fUsersTableViewer = new TableViewer(fUserQueyResultsForm, SWT.MULTI | SWT.FULL_SELECTION);
 
 		// Define the layout and columns in the table
 		final String[] columnId = UserInformationFactory.getInstance().getAttributeTypes();
@@ -563,7 +552,6 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 			// Create a new column
 			nameColumn = new TableColumn(fUsersTableViewer.getTable(), SWT.LEFT);
 			nameColumn.setText(element);
-			//nameColumn.setWidth(USER_TABLE_COLUMN_WIDTH);
 			nameColumn.setMoveable(true);
 			nameColumn.pack();
 		}
@@ -571,34 +559,110 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		fUsersTableViewer.getTable().setLinesVisible(true);
 
 		final FormData usersTableData = new FormData();
-		usersTableData.top = new FormAttachment(numEntriesLabel, 5);
-		usersTableData.bottom = new FormAttachment(100);
+		usersTableData.top = new FormAttachment(0);
+		usersTableData.bottom = new FormAttachment(numEntriesLabel, -5, SWT.TOP);
 		usersTableData.left = new FormAttachment(0);
 		usersTableData.right = new FormAttachment(100);
 		fUsersTableViewer.getControl().setLayoutData(usersTableData);
-
-		fUsersTableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent event) {
-				if (fUsersTableViewer.getSelection() instanceof IStructuredSelection) {
-					final IStructuredSelection selection = (IStructuredSelection) fUsersTableViewer.getSelection();
-					final IUserInfo userInfo = (IUserInfo) selection.getFirstElement();
-					if (null != userInfo) {
-						fUserIdInputTextField.setText(userInfo.getUserId());
-						fUserNameInputTextField.setText(userInfo.getName());
-						fUserOfficeInputTextField.setText(userInfo.getOffice());
-						fUserCompanyInputTextField.setText(userInfo.getCompany());
-						fUserDepartmentInputTextField.setText(userInfo.getDepartment());
-						fUserCityInputTextField.setText(userInfo.getCity());
-						fUserCountryInputTextField.setText(userInfo.getCountry());
-					}
-				}
-			}
-		});
 
 		// Attach the sorter to the viewer table and to each column with the bind call
 		FindUsersTableViewerSorter.bind(fUsersTableViewer);
 		attachContentProvider(fUsersTableViewer);
 		attachLabelProvider(fUsersTableViewer);
+	}
+
+	/**
+	 * Creates new add users area
+	 * 
+	 * @param aParent
+	 *            Composite
+	 * @param aToolkit
+	 *            FormToolkit
+	 */
+	private void createAddUsersForm(Composite aParent, FormToolkit aToolkit) {
+
+		fUserAddedForm = new Group(aParent, SWT.NONE);
+		fUserAddedForm.setText(USERS_ADDED_LABEL);
+		fUserAddedForm.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		final FormData userFormData = new FormData();
+		userFormData.left = new FormAttachment(0);
+		userFormData.right = new FormAttachment(100);
+		userFormData.bottom = new FormAttachment(100);
+
+		fUserAddedForm.setLayoutData(userFormData);
+		final FormLayout layout = new FormLayout();
+		layout.marginWidth = 7;
+		layout.marginHeight = 3;
+		fUserAddedForm.setLayout(layout);
+
+		//Add Users Button
+		fAddUserButton = aToolkit.createButton(fUserAddedForm, ADD_USER_BUTTON_LABEL, SWT.NONE);
+		final FormData userAddedButtonData = new FormData();
+		userAddedButtonData.top = new FormAttachment(5, 0);
+		userAddedButtonData.left = new FormAttachment(fUserAddedForm, 10, SWT.RIGHT);
+		fAddUserButton.setToolTipText(R4EUIConstants.USER_ADD_TOOLTIP);
+		fAddUserButton.setLayoutData(userAddedButtonData);
+		fAddUserButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				//Add selected Users to the list of Participants to add
+				IStructuredSelection selection = (IStructuredSelection) fUsersTableViewer.getSelection();
+				IUserInfo element = null;
+				boolean userFound = false;
+				for (final Iterator<IUserInfo> iterator = selection.iterator(); iterator.hasNext();) {
+					element = iterator.next();
+					for (IUserInfo userInfo : fUserInfos) {
+						if (element.getUserId().equalsIgnoreCase(userInfo.getUserId())) {
+							userFound = true;
+							break;
+						}
+					}
+					if (!userFound) {
+						fUserInfos.add(element);
+					}
+				}
+				StringBuffer buffer = new StringBuffer();
+				for (IUserInfo userInfo : fUserInfos) {
+					buffer.append(userInfo.getUserId().toLowerCase() + "; ");
+				}
+				fUserAddedValue.setText(buffer.toString());
+			}
+		});
+
+		//Added Users
+		fUserAddedValue = aToolkit.createText(fUserAddedForm, "", SWT.BORDER);
+		final FormData userAddedValueData = new FormData();
+		userAddedValueData.top = new FormAttachment(fAddUserButton, 0, SWT.TOP);
+		userAddedValueData.bottom = new FormAttachment(fAddUserButton, 0, SWT.BOTTOM);
+		userAddedValueData.left = new FormAttachment(fAddUserButton, 10, SWT.RIGHT);
+		userAddedValueData.right = new FormAttachment(100);
+		fUserAddedValue.setToolTipText(R4EUIConstants.USER_ADDED_TOOLTIP);
+		fUserAddedValue.setLayoutData(userAddedValueData);
+		fUserAddedValue.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				if (fUserAddedValue.getText().length() > 0) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+		});
+		fUserAddedValue.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
+				//Update the list of Participants to add
+				List<IUserInfo> updatedInfos = new ArrayList<IUserInfo>();
+				String[] ids = fUserAddedValue.getText().split(R4EUIConstants.LIST_SEPARATOR);
+				for (String id : ids) {
+					for (IUserInfo userInfo : fUserInfos) {
+						if (id.trim().equalsIgnoreCase(userInfo.getUserId())) {
+							updatedInfos.add(userInfo);
+							break;
+						}
+					}
+				}
+				fUserInfos = updatedInfos;
+				updateTableSelections();
+			}
+		});
 	}
 
 	/**
@@ -724,30 +788,12 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	}
 
 	/**
-	 * Method getUserIdValue.
+	 * Method getUserInfos.
 	 * 
-	 * @return the user id
+	 * @return the users infos
 	 */
-	public String getUserIdValue() {
-		return fUserIdValue;
-	}
-
-	/**
-	 * Method getUserEmailValue.
-	 * 
-	 * @return the user email
-	 */
-	public String getUserEmailValue() {
-		return fUserEmailValue;
-	}
-
-	/**
-	 * Method getUserDetailsValue.
-	 * 
-	 * @return the user details
-	 */
-	public String getUserDetailsValue() {
-		return fUserDetailsValue;
+	public List<IUserInfo> getUserInfos() {
+		return fUserInfos;
 	}
 
 	/**
@@ -757,5 +803,23 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		// Set the search button as the default button
 		getShell().setDefaultButton(fSearchButton);
 		getShell().setMinimumSize(DIALOG_MIN_WIDTH, DIALOG_MIN_HEIGHT);
+		fUserInfos.clear();
+	}
+
+	/**
+	 * Method updateTableSelections.
+	 */
+	private void updateTableSelections() {
+		List<IUserInfo> selectedElements = new ArrayList<IUserInfo>();
+		for (IUserInfo userInfo : fUserInfos) {
+			for (int i = 0; i < fUsersTableViewer.getTable().getItemCount(); i++) {
+				IUserInfo tableUserInfo = (IUserInfo) fUsersTableViewer.getElementAt(i);
+				if (userInfo.getUserId().equalsIgnoreCase(tableUserInfo.getUserId())) {
+					selectedElements.add(tableUserInfo);
+				}
+			}
+		}
+		StructuredSelection selection = new StructuredSelection(selectedElements);
+		fUsersTableViewer.setSelection(selection, true);
 	}
 }

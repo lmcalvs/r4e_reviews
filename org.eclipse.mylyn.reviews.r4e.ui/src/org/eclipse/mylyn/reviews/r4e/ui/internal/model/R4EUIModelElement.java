@@ -338,7 +338,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws ResourceHandlingException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
-	public ReviewComponent createChildModelDataElement() {
+	public List<ReviewComponent> createChildModelDataElement() {
 		//default implementation
 		return null;
 	}
