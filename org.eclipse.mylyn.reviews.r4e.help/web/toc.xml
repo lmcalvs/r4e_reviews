@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<toc topic="web/Reviews/R4E/User_Guide/User-Guide.html" label="R4E Documentation">
+	<topic href="web/Reviews/R4E/User_Guide/User-Guide.html" label="R4E User Guide">
+		<topic href="web/Reviews/R4E/User_Guide/User-Guide.html" label="Getting Started">
+			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Overview" label="Overview">
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_main_interfaces" label="R4E main interfaces"></topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Installing_R4E" label="Installing R4E">
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Provision_Software_Sites" label="Provision Software Sites"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Install_Version_Control_System_Features" label="Install Version Control System Features"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Install_R4E_feature" label="Install R4E feature"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Install_Versions_Connectors" label="Install Versions Connectors"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Starting_R4E" label="Starting R4E"></topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_Configuration" label="R4E Configuration">
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_General_Preferences" label="R4E General Preferences"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_LDAP_Settings" label="R4E LDAP Settings"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#SMTP_Hosts_Definitions" label="SMTP Hosts Definitions"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_Capabilities" label="R4E Capabilities"></topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Eclipse_Project_Configuration" label="Eclipse Project Configuration"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Tutorials" label="Tutorials">
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Configuration_and_Set-up" label="Configuration and Set-up"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Tutorial_1:_Performing_a_Basic_Review" label="Tutorial 1: Performing a Basic Review"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Tutorial_2:_Performing_an_Informal_Review" label="Tutorial 2: Performing an Informal Review"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Tutorial_3:_Performing_a_Formal_Review" label="Tutorial 3: Performing a Formal Review"></topic>
+			</topic>
+		</topic>
+		<topic href="web/Reviews/R4E/User_Guide/Concepts.html" label="Concepts">
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Basic_and_Informal_Reviews_workflows" label="Basic and Informal Reviews workflows">
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Create_new_review" label="Create new review"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Identify_what_needs_to_be_reviewed" label="Identify what needs to be reviewed"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Items_ready_for_review" label="Items ready for review"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Review_item_examination.2C_anomaly.2Ftime_logging" label="Review item examination, anomaly/time logging"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Progress_notification" label="Progress notification"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Examine_and_fix.2Freject_anomalies" label="Examine and fix/reject anomalies"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Completion_notification" label="Completion notification"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Examine_and_fix.2Freject_anomalies_2" label="Examine and fix/reject anomalies"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Mark_review_completed" label="Mark review completed"></topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Formal_Review_workflow" label="Formal Review workflow">
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Planning_Phase" label="Planning Phase"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Preparation_Phase" label="Preparation Phase"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Decision_Phase" label="Decision Phase"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Rework_Phase" label="Rework Phase"></topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Author" label="Author"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Anomaly" label="Anomaly"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Comment" label="Comment"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Commit_Review_Item" label="Commit Review Item"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Delta" label="Delta"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#File_Context" label="File Context"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Global_Anomaly" label="Global Anomaly"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Lead" label="Lead"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Organizer" label="Organizer"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Participant" label="Participant"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Postponed_Anomaly" label="Postponed Anomaly"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Resource_Review_Item" label="Resource Review Item"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Reviewer" label="Reviewer"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Review_Group" label="Review Group"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Review" label="Review"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Review_Item" label="Review Item"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Rule" label="Rule"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Rule_Set" label="Rule Set"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Rule_Area" label="Rule Area"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Rule_Violation" label="Rule Violation"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Selection" label="Selection"></topic>
+		</topic>
+		<topic href="web/Reviews/R4E/User_Guide/Tasks.html" label="Tasks">
+			<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_the_Navigator_View" label="Working with the Navigator View">
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Disabling_and_Restoring_Elements" label="Disabling and Restoring Elements"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Sorting_Review_Navigator_Elements" label="Sorting Review Navigator Elements"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Filtering_Review_Navigator_Elements" label="Filtering Review Navigator Elements"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Setting_Elements_Reviewed_State" label="Setting Elements Reviewed State"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Other_Review_Navigator_Commands" label="Other Review Navigator Commands"></topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Handling_Review_Groups_and_Reviews" label="Handling Review Groups and Reviews">
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Review_Group" label="Creating a Review Group"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Opening_an_Existing_Review_Group" label="Opening an Existing Review Group"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Review" label="Creating a Review"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Opening_and_Closing_of_Review_Groups_and_Reviews" label="Opening and Closing of Review Groups and Reviews"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Adding_Participants_to_a_Review" label="Adding Participants to a Review"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Review_Item" label="Creating a Review Item">
+					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Resource_Review_Item" label="Creating a Resource Review Item"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Commit_Review_Item" label="Creating a Commit Review Item"></topic>
+				</topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_an_Anomaly" label="Creating an Anomaly"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_Comments_on_an_existing_Anomaly" label="Creating Comments on an existing Anomaly"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Importing_Postponed_Anomalies" label="Importing Postponed Anomalies"></topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Handling_Design_Rules" label="Handling Design Rules">
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Rule_Set" label="Creating a Rule Set"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Importing_an_Existing_Rule_Set" label="Importing an Existing Rule Set"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Rule_Area" label="Creating a Rule Area"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Rule_Violation" label="Creating a Rule Violation"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Rule" label="Creating a Rule"></topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_Editors" label="Working with Editors"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_R4E_Properties" label="Working with R4E Properties">
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_Review_Groups_Properties" label="Working with Review Groups Properties"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_Reviews_Properties" label="Working with Reviews Properties"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_Review_Items_Properties" label="Working with Review Items Properties"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_File_Contexts_Properties" label="Working with File Contexts Properties"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_Selections_and_Deltas_Properties" label="Working with Selections and Deltas Properties"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_Anomalies_Properties" label="Working with Anomalies Properties"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_Comments_Properties" label="Working with Comments Properties"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_Participant_Properties" label="Working with Participant Properties"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_Rule_Sets_Properties" label="Working with Rule Sets Properties"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_Rule_Areas_and_Rule_Violations_Properties" label="Working with Rule Areas and Rule Violations Properties"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Working_with_Rules_Properties" label="Working with Rules Properties"></topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Using_Key_Bindings_and_Hotkeys" label="Using Key Bindings and Hotkeys">
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Keys" label="Keys"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Bindings" label="Bindings"></topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Using_Notifications" label="Using Notifications">
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Using_Email_Notifications" label="Using Email Notifications"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Using_Meeting_Notifications" label="Using Meeting Notifications"></topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Using_Statistical_Reports" label="Using Statistical Reports">
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Generating_Reports" label="Generating Reports"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Report_Contents" label="Report Contents">
+					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Report_Summary" label="Report Summary"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Review_Anomaly_Statistics" label="Review Anomaly Statistics"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Review_Efficiency_Statistics" label="Review Efficiency Statistics">
+						<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Review_Items" label="Review Items"></topic>
+						<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Review_Anomalies" label="Review Anomalies"></topic>
+						<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Average_Time_Line" label="Average Time Line"></topic>
+						<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Average_Effort_per_Participant" label="Average Effort per Participant"></topic>
+						<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Total_Review_Effort" label="Total Review Effort"></topic>
+						<topic href="web/Reviews/R4E/User_Guide/Tasks.html#List_of_Anomalies" label="List of Anomalies"></topic>
+					</topic>
+				</topic>
+			</topic>
+			<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Performing_Reviews" label="Performing Reviews">
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Performing_Basic_Reviews" label="Performing Basic Reviews"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Performing_Informal_Reviews" label="Performing Informal Reviews"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Performing_Formal_Reviews" label="Performing Formal Reviews">
+					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Planning_Phase_2" label="Planning Phase"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Preparation_Phase_2" label="Preparation Phase"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Decision_Phase_2" label="Decision Phase"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Rework_Phase_2" label="Rework Phase"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Other_Considerations" label="Other Considerations"></topic>
+				</topic>
+			</topic>
+		</topic>
+		<topic href="web/Reviews/R4E/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
+	</topic>
+</toc>

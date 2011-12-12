@@ -39,6 +39,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String LINE_FEED = System.getProperty("line.separator");
 
 	/**
+	 * Field LIST_SEPARATOR. (value is "";"")
+	 */
+	public static final String LIST_SEPARATOR = ";";
+
+	/**
 	 * Field R4E_TEMP_PROJECT. (value is ""R4ETemp"")
 	 */
 	public static final String R4E_TEMP_PROJECT = "R4ETemp";
@@ -645,9 +650,19 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String BASIC_PARAMS_HEADER = "Basic Parameters";
 
 	/**
+	 * Field BASIC_PARAMS_HEADER_DETAILS. (value is ""Enter the mandatory basic parameters for this "")
+	 */
+	public static final String BASIC_PARAMS_HEADER_DETAILS = "Enter the mandatory basic parameters for this ";
+
+	/**
 	 * Field EXTRA_PARAMS_HEADER. (value is ""Extra Parameters"")
 	 */
 	public static final String EXTRA_PARAMS_HEADER = "Extra Parameters";
+
+	/**
+	 * Field EXTRA_PARAMS_HEADER_DETAILS. (value is ""Enter the optional extra parameters for this "")
+	 */
+	public static final String EXTRA_PARAMS_HEADER_DETAILS = "Enter the optional extra parameters for this ";
 
 	//Review types and phases
 
@@ -1616,6 +1631,32 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String PARTICIPANT_ID_TOOLTIP = "A Tag that Identifies this Participant";
 
 	/**
+	 * Field PARTICIPANTS_ADD_TOOLTIP. (value is ""Add User to Participant List"")
+	 */
+	public static final String PARTICIPANTS_ADD_TOOLTIP = "Add User to Participant List";
+
+	/**
+	 * Field PARTICIPANTS_ADDED_TOOLTIP. (value is ""Participants that will be added to the Review"")
+	 */
+	public static final String PARTICIPANTS_ADDED_TOOLTIP = "Participants that will be added to the Review";
+
+	/**
+	 * Field PARTICIPANTS_REMOVE_TOOLTIP. (value is ""Remove selected Participants from list"")
+	 */
+	public static final String PARTICIPANT_REMOVE_TOOLTIP = "Remove selected Participants from list";
+
+	/**
+	 * Field PARTICIPANTS_CLEAR_TOOLTIP. (value is ""Clear Participants list"")
+	 */
+	public static final String PARTICIPANTS_CLEAR_TOOLTIP = "Clear Participants list";
+
+	/**
+	 * Field PARTICIPANT_ADD_USER_TOOLTIP. (value is ""Semicolon-separated List of Users to be added to the Participant
+	 * List"")
+	 */
+	public static final String PARTICIPANT_ADD_USER_TOOLTIP = "Semicolon-separated List of Users to be added to the Participant List";
+
+	/**
 	 * Field PARTICIPANT_FIND_USER_TOOLTIP. (value is ""Search for Users..."")
 	 */
 	public static final String PARTICIPANT_FIND_USER_TOOLTIP = "Search for Users...";
@@ -1997,6 +2038,26 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String USER_NUM_ENTRIES_TOOLTIP = "Number of Matches Found";
 
 	/**
+	 * Field USER_ADD_TOOLTIP. (value is ""Add Selected Users"")
+	 */
+	public static final String USER_ADD_TOOLTIP = "Add Selected Users";
+
+	/**
+	 * Field USER_ADDED_TOOLTIP. (value is ""Semicolon separated List of Users to be added"")
+	 */
+	public static final String USER_ADDED_TOOLTIP = "Semicolon-separated List of Users to be added";
+
+	/**
+	 * Field USER_GROUP_ADD_TOOLTIP. (value is ""Add Users to User Group"")
+	 */
+	public static final String USER_GROUP_ADD_TOOLTIP = "Add Users to User Group";
+
+	/**
+	 * Field USER_GROUP_ADDED_TOOLTIP. (value is ""User Group to add Users to"")
+	 */
+	public static final String USER_GROUP_ADDED_TOOLTIP = "User Group to add Users to";
+
+	/**
 	 * Field NOTIFICATION_COMPLETION_TOOLTIP. (value is ""Send an Automatic Email to Report that we are done reviewing
 	 * the Utems for the Current Review"")
 	 */
@@ -2060,6 +2121,12 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * was raised"")
 	 */
 	public static final String POSTPONED_FILE_VERSION_TOOLTIP = "The Version of the file where the original postponed anomaly was raised";
+
+	/**
+	 * Field USERS_GROUP_TOOLTIP. (value is ""User Groups. User Groups are a bundle of users that can be added at once
+	 * to the reviews"")
+	 */
+	public static final String USERS_GROUP_TOOLTIP = "User Groups.  User Groups are a bundle of users that can be added at once to the reviews";
 
 	//Listeners change types
 	/**
