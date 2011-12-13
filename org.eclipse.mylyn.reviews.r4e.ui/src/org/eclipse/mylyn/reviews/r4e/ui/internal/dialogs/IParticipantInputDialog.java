@@ -35,7 +35,7 @@ public interface IParticipantInputDialog {
 	int open();
 
 	/**
-	 * Method getParticpants.
+	 * Method getParticipants.
 	 * 
 	 * @return List<R4EParticipant>
 	 */

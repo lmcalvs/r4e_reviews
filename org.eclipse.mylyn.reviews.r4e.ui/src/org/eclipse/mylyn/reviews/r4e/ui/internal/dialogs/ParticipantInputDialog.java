@@ -30,6 +30,9 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
@@ -60,6 +63,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.FormDialog;
@@ -92,9 +96,19 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	private static final String PARTICIPANTS_GROUP_LABEL = "Participants";
 
 	/**
+	 * Field PARTICIPANT_LABEL. (value is ""participant"")
+	 */
+	private static final String PARTICIPANT_LABEL = "participant";
+
+	/**
 	 * Field ADD_BUTTON_LABEL. (value is ""Add"")
 	 */
 	private static final String ADD_BUTTON_LABEL = "Add";
+
+	/**
+	 * Field REMOVE_BUTTON_LABEL. (value is ""Erase"")
+	 */
+	private static final String REMOVE_BUTTON_LABEL = "Erase";
 
 	/**
 	 * Field FIND_BUTTON_LABEL. (value is ""Find"")
@@ -153,7 +167,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	/**
 	 * Field fUserToAddCombo.
 	 */
-	private CCombo fUserToAddCombo;
+	private Text fUserToAddCombo;
 
 	/**
 	 * Field fParticipants.
@@ -169,6 +183,16 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 * Field fAddUserButton.
 	 */
 	private Button fAddUserButton;
+
+	/**
+	 * Field fRemoveParticipantsButton.
+	 */
+	private Button fRemoveUserButton;
+
+	/**
+	 * Field fClearParticipantsButton.
+	 */
+	private Button fFindUserButton;
 
 	/**
 	 * Field fClearParticipantsButton.
@@ -305,19 +329,43 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		final Composite composite = sform.getBody();
 		final GridLayout layout = new GridLayout(4, false);
 		composite.setLayout(layout);
-		GridData textGridData = null;
 
+		createParticipantsGroup(toolkit, composite);
+		createBasicParameters(toolkit, composite);
+		createExtraParameters(toolkit, composite);
+	}
+
+	/**
+	 * method createParticipantsGroup
+	 * 
+	 * @param aToolkit
+	 * @param aComposite
+	 */
+	private void createParticipantsGroup(FormToolkit aToolkit, Composite aComposite) {
 		//Users to Add
-		Group usersToAddGroup = new Group(composite, SWT.NONE);
+		Group usersToAddGroup = new Group(aComposite, SWT.NONE);
 		usersToAddGroup.setText(PARTICIPANTS_GROUP_LABEL);
 		usersToAddGroup.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		usersToAddGroup.setLayout(new GridLayout(4, false));
 		final GridData groupGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		usersToAddGroup.setLayoutData(groupGridData);
 
-		fUserToAddCombo = new CCombo(usersToAddGroup, SWT.SINGLE | SWT.BORDER);
-		textGridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-		textGridData.horizontalSpan = 2;
+		//Participants data composite
+		Composite dataComposite = aToolkit.createComposite(usersToAddGroup);
+		dataComposite.setLayout(new GridLayout());
+		final GridData dataCompositeData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		dataCompositeData.horizontalSpan = 3;
+		dataComposite.setLayoutData(dataCompositeData);
+
+		//Participants button composite
+		Composite buttonsComposite = aToolkit.createComposite(usersToAddGroup);
+		buttonsComposite.setLayout(new GridLayout());
+		final GridData buttonsCompositeData = new GridData(GridData.END, GridData.FILL, false, true);
+		buttonsComposite.setLayoutData(buttonsCompositeData);
+
+		//fUserToAddCombo = new CCombo(usersToAddGroup, SWT.SINGLE | SWT.BORDER);  //TODO add later
+		fUserToAddCombo = aToolkit.createText(dataComposite, "", SWT.SINGLE | SWT.BORDER);
+		GridData textGridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 		fUserToAddCombo.setEditable(true);
 		fUserToAddCombo.setToolTipText(R4EUIConstants.PARTICIPANT_ADD_USER_TOOLTIP);
 		fUserToAddCombo.setLayoutData(textGridData);
@@ -330,93 +378,47 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				}
 			}
 		});
-
-		fAddUserButton = toolkit.createButton(usersToAddGroup, ADD_BUTTON_LABEL, SWT.NONE);
-		final GridData addButtonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-		addButtonGridData.horizontalSpan = 1;
-		fAddUserButton.setEnabled(false);
-		fAddUserButton.setToolTipText(R4EUIConstants.PARTICIPANT_ADD_USER_TOOLTIP);
-		fAddUserButton.setLayoutData(addButtonGridData);
-		fAddUserButton.addListener(SWT.Selection, new Listener() {
+		//Trap \R key (Return)
+		fUserToAddCombo.addListener(SWT.KeyDown, new Listener() {
 			public void handleEvent(Event event) {
-				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+				if (event.character == '\r') {
+					getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 
-				//Tokenize the users list
-				String[] users = fUserToAddCombo.getText().split(R4EUIConstants.LIST_SEPARATOR);
-				for (String user : users) {
-
-					//TODO:  Here we need to resolve any group aliases to multiple users
-
-					//Resolve user
-					R4EParticipant participant = getParticipant(user.trim().toLowerCase());
-					if (null == participant) {
-						continue; //Participant already in list
+					//Tokenize the users list
+					String[] users = fUserToAddCombo.getText().split(R4EUIConstants.LIST_SEPARATOR);
+					for (String user : users) {
+						addUserToParticipantList(user);
 					}
-					fParticipants.add(participant);
-
-					//Add item to the participants table
-					TableItem item = new TableItem(fAddedParticipantsTable, SWT.NONE);
-					item.setText(participant.getId());
-					fAddedParticipantsTable.showItem(item);
-
-					if (fParticipants.size() > 0) {
-						getButton(IDialogConstants.OK_ID).setEnabled(true);
-						fClearParticipantsButton.setEnabled(true);
-					} else {
-						getButton(IDialogConstants.OK_ID).setEnabled(false);
-					}
-				}
-				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
-			}
-		});
-
-		//Find user button
-		final Button findUserButton = toolkit.createButton(usersToAddGroup, FIND_BUTTON_LABEL, SWT.NONE);
-		final GridData findButtonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-		findUserButton.setToolTipText(R4EUIConstants.PARTICIPANT_FIND_USER_TOOLTIP);
-		findUserButton.setLayoutData(findButtonGridData);
-		if (!R4EUIModelController.isUserQueryAvailable()) {
-			findUserButton.setEnabled(false);
-		}
-		findUserButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				final IFindUserDialog dialog = R4EUIDialogFactory.getInstance().getFindUserDialog();
-				dialog.create();
-				dialog.setDialogsDefaults();
-				final int result = dialog.open();
-
-				if (result == Window.OK) {
-					List<IUserInfo> usersInfos = dialog.getUserInfos();
-					//Here for simplicity purposes we just store the user Ids.  Another LDAP
-					//resolution will be done when we add the participants to the participants list
-					fUserToAddCombo.setText(fUserToAddCombo.getText().trim());
-					String existingStr = fUserToAddCombo.getText();
-					StringBuffer buffer;
-					if (existingStr.trim().length() > 0) {
-						buffer = new StringBuffer(
-								fUserToAddCombo.getText()
-										+ ((fUserToAddCombo.getText().charAt(fUserToAddCombo.getText().length() - 1) != R4EUIConstants.LIST_SEPARATOR.charAt(0))
-												? R4EUIConstants.LIST_SEPARATOR
-												: ""));
-					} else {
-						buffer = new StringBuffer();
-					}
-					for (IUserInfo user : usersInfos) {
-						buffer.append(" " + user.getUserId().toLowerCase() + R4EUIConstants.LIST_SEPARATOR);
-					}
-					buffer.trimToSize();
-					fUserToAddCombo.setText(buffer.toString());
+					fUserToAddCombo.setText("");
+					getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				}
 			}
 		});
 
-		fAddedParticipantsTable = toolkit.createTable(usersToAddGroup, SWT.SINGLE);
-		final GridData tableGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
-		tableGridData.horizontalSpan = 3;
+		//Participants table
+		final Composite tableComposite = aToolkit.createComposite(dataComposite);
+		final GridData tableCompositeData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		fAddedParticipantsTable = aToolkit.createTable(tableComposite, SWT.FULL_SELECTION | SWT.BORDER);
+		fAddedParticipantsTable.setHeaderVisible(true);
+		fAddedParticipantsTable.setLinesVisible(true);
 		fAddedParticipantsTable.setToolTipText(R4EUIConstants.PARTICIPANTS_ADD_TOOLTIP);
 		fAddedParticipantsTable.setLinesVisible(true);
 		fAddedParticipantsTable.setItemCount(0);
+		final GridData tableGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		fAddedParticipantsTable.setLayoutData(tableGridData);
+
+		final TableColumnLayout tableColumnLayout = new TableColumnLayout();
+		TableColumn idColumn = new TableColumn(fAddedParticipantsTable, SWT.NONE, 0);
+		idColumn.setText(R4EUIConstants.ID_LABEL);
+		TableColumn emailColumn = new TableColumn(fAddedParticipantsTable, SWT.NONE, 1);
+		emailColumn.setText(R4EUIConstants.EMAIL_LABEL);
+
+		tableColumnLayout.setColumnData(idColumn, new ColumnWeightData(30, idColumn.getWidth() * 2, true));
+		tableColumnLayout.setColumnData(emailColumn, new ColumnWeightData(70, emailColumn.getWidth(), true));
+
+		tableComposite.setLayout(tableColumnLayout);
+		tableComposite.setLayoutData(tableCompositeData);
+
 		fAddedParticipantsTable.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				fSelectedParticipantIndex = fAddedParticipantsTable.getSelectionIndex();
@@ -457,9 +459,67 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			}
 		});
 
-		fClearParticipantsButton = toolkit.createButton(usersToAddGroup, CLEAR_BUTTON_LABEL, SWT.NONE);
+		//Add user button
+		fAddUserButton = aToolkit.createButton(buttonsComposite, ADD_BUTTON_LABEL, SWT.NONE);
+		final GridData addButtonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+		fAddUserButton.setEnabled(false);
+		fAddUserButton.setToolTipText(R4EUIConstants.PARTICIPANT_ADD_USER_TOOLTIP);
+		fAddUserButton.setLayoutData(addButtonGridData);
+		fAddUserButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+
+				//Tokenize the users list
+				String[] users = fUserToAddCombo.getText().split(R4EUIConstants.LIST_SEPARATOR);
+				for (String user : users) {
+					addUserToParticipantList(user);
+				}
+				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
+			}
+		});
+
+		fFindUserButton = aToolkit.createButton(buttonsComposite, FIND_BUTTON_LABEL, SWT.NONE);
+		final GridData findButtonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+		fFindUserButton.setToolTipText(R4EUIConstants.PARTICIPANT_FIND_USER_TOOLTIP);
+		fFindUserButton.setLayoutData(findButtonGridData);
+		if (!R4EUIModelController.isUserQueryAvailable()) {
+			fFindUserButton.setEnabled(false);
+		}
+		fFindUserButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				final IFindUserDialog dialog = R4EUIDialogFactory.getInstance().getFindUserDialog();
+				dialog.create();
+				dialog.setDialogsDefaults();
+				final int result = dialog.open();
+				if (result == Window.OK) {
+					List<IUserInfo> usersInfos = dialog.getUserInfos();
+					for (IUserInfo user : usersInfos) {
+						addUserToParticipantList(user);
+					}
+				}
+			}
+		});
+
+		fRemoveUserButton = aToolkit.createButton(buttonsComposite, REMOVE_BUTTON_LABEL, SWT.NONE);
+		final GridData removeButtonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+		fRemoveUserButton.setEnabled(false);
+		fRemoveUserButton.setToolTipText(R4EUIConstants.PARTICIPANT_REMOVE_TOOLTIP);
+		fRemoveUserButton.setLayoutData(removeButtonGridData);
+		if (!R4EUIModelController.isUserQueryAvailable()) {
+			fRemoveUserButton.setEnabled(false);
+		}
+		fRemoveUserButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				fAddedParticipantsTable.remove(fSelectedParticipantIndex);
+				fParticipants.remove(fSelectedParticipantIndex);
+				fParticipantsDetailsValues.remove(fSelectedParticipantIndex);
+				clearParametersFields();
+			}
+		});
+
+		//Clear participants list button
+		fClearParticipantsButton = aToolkit.createButton(buttonsComposite, CLEAR_BUTTON_LABEL, SWT.NONE);
 		final GridData clearButtonGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-		clearButtonGridData.horizontalSpan = 1;
 		fClearParticipantsButton.setEnabled(false);
 		fClearParticipantsButton.setToolTipText(R4EUIConstants.PARTICIPANTS_CLEAR_TOOLTIP);
 		fClearParticipantsButton.setLayoutData(clearButtonGridData);
@@ -469,29 +529,27 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				fParticipantsDetailsValues.clear();
 				fAddedParticipantsTable.removeAll();
 				fSelectedParticipantIndex = R4EUIConstants.INVALID_VALUE;
-				fParticipantIdInputTextField.setText("");
-				fParticipantIdInputTextField.setEnabled(false);
-				fParticipantEmailInputTextField.setText("");
-				fParticipantEmailInputTextField.setEnabled(false);
-				fParticipantDetailsInputTextField.setText("");
-				fParticipantDetailsInputTextField.setEnabled(false);
-				fRoleValues.removeAll();
-				fRoleValues.setEnabled(false);
-				fFocusAreaTextField.setText("");
-				fFocusAreaTextField.setEnabled(false);
-				fClearParticipantsButton.setEnabled(false);
-				getButton(IDialogConstants.OK_ID).setEnabled(false);
+				clearParametersFields();
 			}
 		});
+	}
+
+	/**
+	 * method createBasicParameters
+	 * 
+	 * @param aToolkit
+	 * @param aComposite
+	 */
+	private void createBasicParameters(FormToolkit aToolkit, Composite aComposite) {
 
 		//Basic parameters section
-		final Section basicSection = toolkit.createSection(composite, Section.DESCRIPTION
+		final Section basicSection = aToolkit.createSection(aComposite, Section.DESCRIPTION
 				| ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE | ExpandableComposite.EXPANDED);
 		final GridData basicSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		basicSectionGridData.horizontalSpan = 4;
 		basicSection.setLayoutData(basicSectionGridData);
 		basicSection.setText(R4EUIConstants.BASIC_PARAMS_HEADER);
-		basicSection.setDescription(R4EUIConstants.BASIC_PARAMS_HEADER_DETAILS + "participant");
+		basicSection.setDescription(R4EUIConstants.BASIC_PARAMS_HEADER_DETAILS + PARTICIPANT_LABEL);
 		basicSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
@@ -499,36 +557,29 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			}
 		});
 
-		final Composite basicSectionClient = toolkit.createComposite(basicSection);
+		final Composite basicSectionClient = aToolkit.createComposite(basicSection);
+		final GridLayout layout = new GridLayout(4, false);
 		basicSectionClient.setLayout(layout);
 		basicSection.setClient(basicSectionClient);
 
 		//Participant Id
-		Label label = toolkit.createLabel(basicSectionClient, R4EUIConstants.ID_LABEL);
+		Label label = aToolkit.createLabel(basicSectionClient, R4EUIConstants.ID_LABEL);
 		label.setToolTipText(R4EUIConstants.PARTICIPANT_ID_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fParticipantIdInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
-		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		aToolkit.setBorderStyle(SWT.NULL);
+		fParticipantIdInputTextField = aToolkit.createText(basicSectionClient, "");
+		GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
-		fParticipantIdInputTextField.setEditable(false);
 		fParticipantIdInputTextField.setEnabled(false);
 		fParticipantIdInputTextField.setToolTipText(R4EUIConstants.PARTICIPANT_ID_TOOLTIP);
 		fParticipantIdInputTextField.setLayoutData(textGridData);
-		fParticipantIdInputTextField.addListener(SWT.FocusOut, new Listener() {
-			public void handleEvent(Event event) {
-				if (fSelectedParticipantIndex >= 0) {
-					R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
-					participant.setId(fParticipantIdInputTextField.getText());
-					fAddedParticipantsTable.getItem(fSelectedParticipantIndex).setText(participant.getId());
-				}
-			}
-		});
 
 		//Participant Email
-		label = toolkit.createLabel(basicSectionClient, R4EUIConstants.EMAIL_LABEL);
+		label = aToolkit.createLabel(basicSectionClient, R4EUIConstants.EMAIL_LABEL);
 		label.setToolTipText(R4EUIConstants.PARTICIPANT_EMAIL_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fParticipantEmailInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
+		aToolkit.setBorderStyle(SWT.BORDER);
+		fParticipantEmailInputTextField = aToolkit.createText(basicSectionClient, "", SWT.SINGLE);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fParticipantEmailInputTextField.setToolTipText(R4EUIConstants.PARTICIPANT_EMAIL_TOOLTIP);
@@ -539,15 +590,23 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				if (fSelectedParticipantIndex >= 0) {
 					R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
 					participant.setEmail(fParticipantEmailInputTextField.getText());
+					TableItem item = fAddedParticipantsTable.getItem(fSelectedParticipantIndex);
+					if (null != participant.getEmail()) {
+						item.setFont(JFaceResources.getFontRegistry().get(JFaceResources.DEFAULT_FONT));
+						item.setText(1, participant.getEmail());
+					} else {
+						item.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
+					}
 				}
 			}
 		});
 
 		//User details
-		label = toolkit.createLabel(basicSectionClient, R4EUIConstants.USER_DETAILS_LABEL);
+		label = aToolkit.createLabel(basicSectionClient, R4EUIConstants.USER_DETAILS_LABEL);
 		label.setToolTipText(R4EUIConstants.PARTICIPANT_DETAILS_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fParticipantDetailsInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL
+		aToolkit.setBorderStyle(SWT.NULL);
+		fParticipantDetailsInputTextField = aToolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL
 				| SWT.READ_ONLY);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
@@ -556,15 +615,24 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		fParticipantDetailsInputTextField.setEditable(false);
 		fParticipantDetailsInputTextField.setToolTipText(R4EUIConstants.PARTICIPANT_DETAILS_TOOLTIP);
 		fParticipantDetailsInputTextField.setLayoutData(textGridData);
+	}
+
+	/**
+	 * method createExtraParameters
+	 * 
+	 * @param aToolkit
+	 * @param aComposite
+	 */
+	private void createExtraParameters(FormToolkit aToolkit, Composite aComposite) {
 
 		//Extra parameters section
-		final Section extraSection = toolkit.createSection(composite, Section.DESCRIPTION
+		final Section extraSection = aToolkit.createSection(aComposite, Section.DESCRIPTION
 				| ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
 		final GridData extraSectionGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		extraSectionGridData.horizontalSpan = 4;
 		extraSection.setLayoutData(extraSectionGridData);
 		extraSection.setText(R4EUIConstants.EXTRA_PARAMS_HEADER);
-		extraSection.setDescription(R4EUIConstants.EXTRA_PARAMS_HEADER_DETAILS + "participant");
+		extraSection.setDescription(R4EUIConstants.EXTRA_PARAMS_HEADER_DETAILS + PARTICIPANT_LABEL);
 		extraSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
@@ -572,18 +640,19 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			}
 		});
 
-		final Composite extraSectionClient = toolkit.createComposite(extraSection);
+		final Composite extraSectionClient = aToolkit.createComposite(extraSection);
+		final GridLayout layout = new GridLayout(4, false);
 		extraSectionClient.setLayout(layout);
 		extraSection.setClient(extraSectionClient);
 
 		//Roles
 		if (!R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
-			label = toolkit.createLabel(extraSectionClient, R4EUIConstants.ROLES_LABEL);
+			Label label = aToolkit.createLabel(extraSectionClient, R4EUIConstants.ROLES_LABEL);
 			label.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
 			label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-			textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+			GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 			textGridData.horizontalSpan = 3;
-			fRoleValues = new EditableListWidget(toolkit, extraSectionClient, textGridData, this, 0, CCombo.class,
+			fRoleValues = new EditableListWidget(aToolkit, extraSectionClient, textGridData, this, 0, CCombo.class,
 					R4EUIConstants.PARTICIPANT_ROLES);
 			fRoleValues.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
 			fRoleValues.setEnabled(false);
@@ -591,11 +660,12 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		}
 
 		//Focus Area
-		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.FOCUS_AREA_LABEL);
+		Label label = aToolkit.createLabel(extraSectionClient, R4EUIConstants.FOCUS_AREA_LABEL);
 		label.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fFocusAreaTextField = toolkit.createText(extraSectionClient, "", SWT.SINGLE | SWT.V_SCROLL | SWT.BORDER);
-		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		aToolkit.setBorderStyle(SWT.BORDER);
+		fFocusAreaTextField = aToolkit.createText(extraSectionClient, "", SWT.SINGLE | SWT.V_SCROLL | SWT.BORDER);
+		GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fFocusAreaTextField.getLineHeight() * 3;
 		fFocusAreaTextField.setEnabled(false);
@@ -609,6 +679,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				}
 			}
 		});
+
 	}
 
 	/**
@@ -657,6 +728,103 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	}
 
 	/**
+	 * Method clearParametersFields.
+	 */
+	private void clearParametersFields() {
+		fParticipantIdInputTextField.setText("");
+		fParticipantEmailInputTextField.setText("");
+		fParticipantDetailsInputTextField.setText("");
+		fRoleValues.removeAll();
+		fFocusAreaTextField.setText("");
+		if (fParticipants.size() == 0) {
+			fParticipantDetailsInputTextField.setEnabled(false);
+			fParticipantIdInputTextField.setEnabled(false);
+			fParticipantEmailInputTextField.setEnabled(false);
+			fRoleValues.setEnabled(false);
+			fFocusAreaTextField.setEnabled(false);
+			fClearParticipantsButton.setEnabled(false);
+			fRemoveUserButton.setEnabled(false);
+			getButton(IDialogConstants.OK_ID).setEnabled(false);
+		}
+	}
+
+	/**
+	 * Method addUserToParticipantList.
+	 * 
+	 * @param aUser
+	 *            - String
+	 */
+	private void addUserToParticipantList(String aUser) {
+		//TODO:  Here we need to resolve any group aliases to multiple users
+
+		//Resolve user
+		R4EParticipant participant = getParticipant(aUser.trim().toLowerCase());
+		if (null == participant) {
+			return; //Participant already in list
+		}
+		fParticipants.add(participant);
+
+		updateComponents(participant);
+	}
+
+	/**
+	 * Method addUserToParticipantList.
+	 * 
+	 * @param aUser
+	 *            - String
+	 */
+	private void addUserToParticipantList(IUserInfo aUserInfo) {
+		//TODO:  Here we need to resolve any group aliases to multiple users
+
+		//First check if the participant already exist in the participant list
+		for (R4EParticipant tmpPart : fParticipants) {
+			if (aUserInfo.getUserId().equalsIgnoreCase(tmpPart.getId())) {
+				return;
+			}
+		}
+
+		//Add User to List
+		R4EParticipant participant = RModelFactory.eINSTANCE.createR4EParticipant();
+		participant.setId(aUserInfo.getUserId());
+		participant.setEmail(aUserInfo.getEmail());
+		fParticipantsDetailsValues.add(UIUtils.buildUserDetailsString(aUserInfo));
+		fParticipants.add(participant);
+
+		updateComponents(participant);
+
+	}
+
+	/**
+	 * Method updateComponents.
+	 * 
+	 * @param aParticipant
+	 *            - R4EParticipant
+	 */
+	private void updateComponents(R4EParticipant aParticipant) {
+		//Add item to the participants table
+		TableItem item = new TableItem(fAddedParticipantsTable, SWT.NONE);
+		item.setText(0, aParticipant.getId());
+		if (null != aParticipant.getEmail() && !("".equals(aParticipant.getEmail()))) {
+			item.setFont(JFaceResources.getFontRegistry().get(JFaceResources.DEFAULT_FONT));
+			item.setText(1, aParticipant.getEmail());
+		} else {
+			//Mark table item as not complete
+			item.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
+		}
+		fAddedParticipantsTable.showItem(item);
+
+		if (fParticipants.size() > 0) {
+			fClearParticipantsButton.setEnabled(true);
+			fRemoveUserButton.setEnabled(true);
+			fUserToAddCombo.setText("");
+			getButton(IDialogConstants.OK_ID).setEnabled(true);
+			getButton(IDialogConstants.OK_ID).setSelection(false);
+		} else {
+			getButton(IDialogConstants.OK_ID).setEnabled(false);
+		}
+	}
+
+	/**
 	 * Method getParticipant.
 	 * 
 	 * @param aId
@@ -669,7 +837,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			if (aId.equalsIgnoreCase(tmpPart.getId())) {
 				return null;
 			}
-
 		}
 		R4EParticipant participant = RModelFactory.eINSTANCE.createR4EParticipant();
 		if (R4EUIModelController.isUserQueryAvailable()) {
@@ -722,5 +889,19 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				}
 			}
 		}
+	}
+
+	/**
+	 * This is done to change the default button behavior of the OK button
+	 * 
+	 * @param parent
+	 *            the button bar composite
+	 * @see org.eclipse.jface.dialogs#createButtonsForButtonBar(Composite)
+	 */
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		// create OK and Cancel buttons by default
+		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
+		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 }
