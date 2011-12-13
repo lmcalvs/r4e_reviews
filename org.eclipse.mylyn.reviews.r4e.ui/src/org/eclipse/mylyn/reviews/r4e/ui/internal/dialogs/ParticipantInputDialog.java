@@ -571,6 +571,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fParticipantIdInputTextField.setEnabled(false);
+		fParticipantIdInputTextField.setEditable(false);
 		fParticipantIdInputTextField.setToolTipText(R4EUIConstants.PARTICIPANT_ID_TOOLTIP);
 		fParticipantIdInputTextField.setLayoutData(textGridData);
 
