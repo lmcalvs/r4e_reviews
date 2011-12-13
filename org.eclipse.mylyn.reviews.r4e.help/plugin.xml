@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.help.toc">
       <toc
-            file="help/toc.xml"
+            file="doc/r4eOpen-toc.xml"
             primary="true">
       </toc>
    </extension>

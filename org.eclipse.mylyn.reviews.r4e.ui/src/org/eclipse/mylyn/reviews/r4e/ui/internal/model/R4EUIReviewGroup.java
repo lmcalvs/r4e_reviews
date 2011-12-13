@@ -268,14 +268,17 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
 	@Override
-	public ReviewComponent createChildModelDataElement() {
+	public List<ReviewComponent> createChildModelDataElement() {
 		//Get comment from user and set it in model data
-		R4EReview tempReview = null;
+		List<ReviewComponent> tempReviews = new ArrayList<ReviewComponent>();
+
 		R4EUIModelController.setJobInProgress(true);
 		final IReviewInputDialog dialog = R4EUIDialogFactory.getInstance().getReviewInputDialog();
 		dialog.create();
 		final int result = dialog.open();
 		if (result == Window.OK) {
+			R4EReview tempReview;
+
 			//All reviews
 			final R4EReviewType type = dialog.getReviewTypeValue();
 			if (type.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
@@ -301,9 +304,10 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 				tempReview.setDecision(reviewDecision);
 
 			}
+			tempReviews.add(tempReview);
 		}
 		R4EUIModelController.setJobInProgress(false); //Enable view
-		return tempReview;
+		return tempReviews;
 	}
 
 	/**

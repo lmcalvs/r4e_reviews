@@ -30,6 +30,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -77,19 +79,19 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field TEXT_FIELD_WIDTH. (value is "200")
+	 * Field TEXT_FIELD_WIDTH. (value is "300")
 	 */
 	private static final int TEXT_FIELD_WIDTH = 300;
 
 	/**
-	 * Field DIALOG_MIN_WIDTH. (value is "800")
+	 * Field DIALOG_MIN_WIDTH. (value is "860")
 	 */
 	private static final int DIALOG_MIN_WIDTH = 860;
 
 	/**
-	 * Field DIALOG_MIN_HEIGTH. (value is "400")
+	 * Field DIALOG_MIN_HEIGTH. (value is "550")
 	 */
-	private static final int DIALOG_MIN_HEIGHT = 450;
+	private static final int DIALOG_MIN_HEIGHT = 550;
 
 	/**
 	 * Field FIND_USER_DIALOG_TITLE. (value is ""Find User"")
@@ -268,7 +270,6 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	public FindUserDialog(Shell aParentShell) {
 		super(aParentShell);
 		setBlockOnOpen(true);
-		fUserInfos.clear();
 	}
 
 	// ------------------------------------------------------------------------
@@ -284,6 +285,26 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	 */
 	@Override
 	protected void buttonPressed(int buttonId) {
+		if (buttonId == IDialogConstants.OK_ID) {
+			boolean userFound;
+			String[] ids = fUserAddedValue.getText().trim().split(R4EUIConstants.LIST_SEPARATOR);
+			for (String id : ids) {
+				userFound = false;
+				for (IUserInfo userInfo : fUserInfos) {
+					if (id.trim().equalsIgnoreCase(userInfo.getUserId())) {
+						userFound = true;
+						break;
+					}
+				}
+				if (!userFound) {
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+							"Cannot add User", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, "User " + id.trim()
+									+ " not found in database", null), IStatus.ERROR);
+					dialog.open();
+					continue;
+				}
+			}
+		}
 		super.buttonPressed(buttonId);
 	}
 
@@ -544,6 +565,11 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		fNumEntriesValue.setLayoutData(numEntriesValueData);
 
 		fUsersTableViewer = new TableViewer(fUserQueyResultsForm, SWT.MULTI | SWT.FULL_SELECTION);
+		fUsersTableViewer.addDoubleClickListener(new IDoubleClickListener() {
+			public void doubleClick(DoubleClickEvent event) {
+				addUser();
+			}
+		});
 
 		// Define the layout and columns in the table
 		final String[] columnId = UserInformationFactory.getInstance().getAttributeTypes();
@@ -604,27 +630,7 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		fAddUserButton.setLayoutData(userAddedButtonData);
 		fAddUserButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				//Add selected Users to the list of Participants to add
-				IStructuredSelection selection = (IStructuredSelection) fUsersTableViewer.getSelection();
-				IUserInfo element = null;
-				boolean userFound = false;
-				for (final Iterator<IUserInfo> iterator = selection.iterator(); iterator.hasNext();) {
-					element = iterator.next();
-					for (IUserInfo userInfo : fUserInfos) {
-						if (element.getUserId().equalsIgnoreCase(userInfo.getUserId())) {
-							userFound = true;
-							break;
-						}
-					}
-					if (!userFound) {
-						fUserInfos.add(element);
-					}
-				}
-				StringBuffer buffer = new StringBuffer();
-				for (IUserInfo userInfo : fUserInfos) {
-					buffer.append(userInfo.getUserId().toLowerCase() + "; ");
-				}
-				fUserAddedValue.setText(buffer.toString());
+				addUser();
 			}
 		});
 
@@ -649,13 +655,22 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		fUserAddedValue.addListener(SWT.FocusOut, new Listener() {
 			public void handleEvent(Event event) {
 				//Update the list of Participants to add
+				boolean userFound;
 				List<IUserInfo> updatedInfos = new ArrayList<IUserInfo>();
 				String[] ids = fUserAddedValue.getText().split(R4EUIConstants.LIST_SEPARATOR);
 				for (String id : ids) {
+					userFound = false;
 					for (IUserInfo userInfo : fUserInfos) {
 						if (id.trim().equalsIgnoreCase(userInfo.getUserId())) {
 							updatedInfos.add(userInfo);
+							userFound = true;
 							break;
+						}
+					}
+					if (!userFound) {
+						IUserInfo newUserInfo = getUser(id.trim());
+						if (null != newUserInfo) {
+							updatedInfos.add(newUserInfo);
 						}
 					}
 				}
@@ -726,10 +741,42 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	}
 
 	/**
+	 * Method getUser Queries the external database to get info about a specific user
+	 * 
+	 * @param aUserId
+	 * @return IUserInfo
+	 */
+	protected IUserInfo getUser(String aUserId) {
+		if (null != aUserId && !"".equals(aUserId)) {
+			final IQueryUser query = new QueryUserFactory().getInstance();
+			try {
+				final List<IUserInfo> users = query.searchByUserId(aUserId);
+				if (null != users && users.size() > 0) {
+					return users.get(0); //return first user
+				}
+			} catch (NamingException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			} catch (IOException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Method searchUser Queries the external database for a list of users that are matching given criterias
 	 */
 	protected void searchUser() {
 		try {
+			if (fUserIdInputTextField.getText().equals("") && fUserNameInputTextField.getText().equals("")
+					&& fUserCompanyInputTextField.getText().equals("")
+					&& fUserOfficeInputTextField.getText().equals("")
+					&& fUserDepartmentInputTextField.getText().equals("")
+					&& fUserCountryInputTextField.getText().equals("") && fUserCityInputTextField.getText().equals("")) {
+				return; //No filters selected for query, ignore request
+			}
 			final IQueryUser query = new QueryUserFactory().getInstance();
 			fUsersList = query.search(fUserIdInputTextField.getText().trim(), fUserNameInputTextField.getText().trim(),
 					fUserCompanyInputTextField.getText().trim(), fUserOfficeInputTextField.getText().trim(),
@@ -821,5 +868,32 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 		}
 		StructuredSelection selection = new StructuredSelection(selectedElements);
 		fUsersTableViewer.setSelection(selection, true);
+	}
+
+	/**
+	 * Method addUser.
+	 */
+	public void addUser() {
+		//Add selected Users to the list of Participants to add
+		IStructuredSelection selection = (IStructuredSelection) fUsersTableViewer.getSelection();
+		IUserInfo element = null;
+		boolean userFound = false;
+		for (final Iterator<IUserInfo> iterator = selection.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			for (IUserInfo userInfo : fUserInfos) {
+				if (element.getUserId().equalsIgnoreCase(userInfo.getUserId())) {
+					userFound = true;
+					break;
+				}
+			}
+			if (!userFound) {
+				fUserInfos.add(element);
+			}
+		}
+		StringBuffer buffer = new StringBuffer();
+		for (IUserInfo userInfo : fUserInfos) {
+			buffer.append(userInfo.getUserId().toLowerCase() + R4EUIConstants.LIST_SEPARATOR + " ");
+		}
+		fUserAddedValue.setText(buffer.toString());
 	}
 }
