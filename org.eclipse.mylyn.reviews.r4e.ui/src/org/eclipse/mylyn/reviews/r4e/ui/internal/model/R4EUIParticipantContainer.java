@@ -104,13 +104,14 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		//Get Participants from user and set them in model data
 		List<ReviewComponent> tempParticipants = new ArrayList<ReviewComponent>();
 		R4EUIModelController.setJobInProgress(true);
-		final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog();
+		final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog(true);
 		final int result = dialog.open();
 		if (result == Window.OK) {
 			for (R4EParticipant participant : dialog.getParticipants()) {
 				tempParticipants.add(participant);
 			}
 		}
+		R4EUIDialogFactory.getInstance().removeParticipantInputDialog();
 		R4EUIModelController.setJobInProgress(false); //Enable view
 		return tempParticipants;
 	}

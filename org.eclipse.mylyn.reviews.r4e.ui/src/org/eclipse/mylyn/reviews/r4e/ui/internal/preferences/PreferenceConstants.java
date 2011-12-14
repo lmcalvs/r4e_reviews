@@ -67,6 +67,16 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_USER_EMAIL_LABEL = "User Email:";
 
 	/**
+	 * Field P_USER_GROUPS. (value is ""usersGroup"")
+	 */
+	public static final String P_PARTICIPANTS_LISTS = "participantsLists";
+
+	/**
+	 * Field P_USER_GROUPS_USERS. (value is ""userGroupUsers"")
+	 */
+	public static String P_PARTICIPANTS = "participants";
+
+	/**
 	 * Flag that state whether deltas are created for commit review items
 	 */
 	public static final String P_USE_DELTAS = "useDeltasPreferences";

@@ -687,4 +687,18 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		fRuleSetLocations.add(aRuleSet);
 		fDescriptionText.setFocus(); //Set focus away to register change
 	}
+
+	/**
+	 * Method itemSelected.
+	 * 
+	 * @param aItem
+	 *            Item
+	 * @param aInstanceId
+	 *            int
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.utils.IEditableListListener#itemSelected(Item, int)
+	 */
+	public void itemSelected(Item aItem, int aInstanceId) {
+		// ignore
+
+	}
 }

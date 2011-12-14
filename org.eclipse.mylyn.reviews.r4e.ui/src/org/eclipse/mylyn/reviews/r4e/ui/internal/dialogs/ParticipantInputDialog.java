@@ -41,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.R4EPreferencePage;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.IEditableListListener;
@@ -61,6 +62,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Scrollable;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -167,7 +169,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	/**
 	 * Field fUserToAddCombo.
 	 */
-	private Text fUserToAddCombo;
+	private Scrollable fUserToAddCombo;
 
 	/**
 	 * Field fParticipants.
@@ -199,6 +201,11 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 */
 	private Button fClearParticipantsButton;
 
+	/**
+	 * Field fReviewSource.
+	 */
+	private final boolean fReviewSource;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -209,10 +216,11 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 * @param aParentShell
 	 *            Shell
 	 */
-	public ParticipantInputDialog(Shell aParentShell) {
+	public ParticipantInputDialog(Shell aParentShell, boolean aReviewSource) {
 		super(aParentShell);
 		setBlockOnOpen(true);
 		fValidator = new R4EInputValidator();
+		fReviewSource = aReviewSource;
 	}
 
 	// ------------------------------------------------------------------------
@@ -244,7 +252,8 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				}
 
 				//Check if participant already exists
-				if (R4EUIModelController.getActiveReview().getParticipantIDs().contains(participant.getId())) {
+				if (fReviewSource
+						&& R4EUIModelController.getActiveReview().getParticipantIDs().contains(participant.getId())) {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 							"Cannot Add Participant " + participant.getId(), new Status(IStatus.ERROR,
 									R4EUIPlugin.PLUGIN_ID, 0, "Participant already part of this Review", null),
@@ -268,7 +277,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				}
 
 				//Validate Roles (optional)
-				if (participant.getRoles().size() == 0) {
+				if (fReviewSource && participant.getRoles().size() == 0) {
 					//If there is no roles defined, put one as default depending on the review type
 					if (R4EUIModelController.getActiveReview()
 							.getReview()
@@ -315,6 +324,20 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	}
 
 	/**
+	 * Method close.
+	 * 
+	 * @return int
+	 * @see org.eclipse.ui.forms.FormDialog#close()
+	 */
+	@Override
+	public boolean close() {
+		if (null != fRoleValues) {
+			fRoleValues.dispose();
+		}
+		return super.close();
+	}
+
+	/**
 	 * Configures the dialog form and creates form content. Clients should override this method.
 	 * 
 	 * @param mform
@@ -332,7 +355,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 
 		createParticipantsGroup(toolkit, composite);
 		createBasicParameters(toolkit, composite);
-		createExtraParameters(toolkit, composite);
+		if (fReviewSource) {
+			createExtraParameters(toolkit, composite);
+		}
 	}
 
 	/**
@@ -363,15 +388,27 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		final GridData buttonsCompositeData = new GridData(GridData.END, GridData.FILL, false, true);
 		buttonsComposite.setLayoutData(buttonsCompositeData);
 
-		//fUserToAddCombo = new CCombo(usersToAddGroup, SWT.SINGLE | SWT.BORDER);  //TODO add later
-		fUserToAddCombo = aToolkit.createText(dataComposite, "", SWT.SINGLE | SWT.BORDER);
+		String[] participantsLists = R4EPreferencePage.getParticipantsLists();
+		if (participantsLists.length > 0) {
+			fUserToAddCombo = new CCombo(dataComposite, SWT.SINGLE | SWT.BORDER);
+			((CCombo) fUserToAddCombo).setItems(participantsLists);
+			((CCombo) fUserToAddCombo).setEditable(true);
+		} else {
+			fUserToAddCombo = aToolkit.createText(dataComposite, "", SWT.SINGLE | SWT.BORDER);
+			((Text) fUserToAddCombo).setEditable(true);
+		}
 		GridData textGridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-		fUserToAddCombo.setEditable(true);
 		fUserToAddCombo.setToolTipText(R4EUIConstants.PARTICIPANT_ADD_USER_TOOLTIP);
 		fUserToAddCombo.setLayoutData(textGridData);
 		fUserToAddCombo.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(Event event) {
-				if (fUserToAddCombo.getText().trim().length() > 0) {
+				String widgetStr = null;
+				if (fUserToAddCombo instanceof CCombo) {
+					widgetStr = ((CCombo) fUserToAddCombo).getText();
+				} else {
+					widgetStr = ((Text) fUserToAddCombo).getText();
+				}
+				if (widgetStr.trim().length() > 0) {
 					fAddUserButton.setEnabled(true);
 				} else {
 					fAddUserButton.setEnabled(false);
@@ -381,15 +418,26 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		//Trap \R key (Return)
 		fUserToAddCombo.addListener(SWT.KeyDown, new Listener() {
 			public void handleEvent(Event event) {
-				if (event.character == '\r') {
+				if (event.character == SWT.CR) {
 					getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 
-					//Tokenize the users list
-					String[] users = fUserToAddCombo.getText().split(R4EUIConstants.LIST_SEPARATOR);
-					for (String user : users) {
-						addUserToParticipantList(user);
+					String widgetStr = null;
+					if (fUserToAddCombo instanceof CCombo) {
+						widgetStr = ((CCombo) fUserToAddCombo).getText();
+					} else {
+						widgetStr = ((Text) fUserToAddCombo).getText();
 					}
-					fUserToAddCombo.setText("");
+
+					//Tokenize the users list
+					String[] users = widgetStr.split(R4EUIConstants.LIST_SEPARATOR);
+					for (String user : users) {
+						addUsersToParticipantList(user);
+					}
+					if (fUserToAddCombo instanceof CCombo) {
+						((CCombo) fUserToAddCombo).setText("");
+					} else {
+						((Text) fUserToAddCombo).setText("");
+					}
 					getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 				}
 			}
@@ -436,16 +484,18 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 						} else {
 							fParticipantDetailsInputTextField.setText("");
 						}
-						fRoleValues.removeAll();
-						EList<R4EUserRole> roles = participant.getRoles();
-						for (R4EUserRole role : roles) {
-							Item newItem = fRoleValues.addItem();
-							newItem.setText(R4EUIParticipant.mapRoleToString(role));
-						}
-						if (null != participant.getFocusArea()) {
-							fFocusAreaTextField.setText(participant.getFocusArea());
-						} else {
-							fFocusAreaTextField.setText("");
+						if (fReviewSource) {
+							fRoleValues.removeAll();
+							EList<R4EUserRole> roles = participant.getRoles();
+							for (R4EUserRole role : roles) {
+								Item newItem = fRoleValues.addItem();
+								newItem.setText(R4EUIParticipant.mapRoleToString(role));
+							}
+							if (null != participant.getFocusArea()) {
+								fFocusAreaTextField.setText(participant.getFocusArea());
+							} else {
+								fFocusAreaTextField.setText("");
+							}
 						}
 					}
 
@@ -453,8 +503,10 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 					fParticipantIdInputTextField.setEnabled(true);
 					fParticipantEmailInputTextField.setEnabled(true);
 					fParticipantDetailsInputTextField.setEnabled(true);
-					fRoleValues.setEnabled(true);
-					fFocusAreaTextField.setEnabled(true);
+					if (fReviewSource) {
+						fRoleValues.setEnabled(true);
+						fFocusAreaTextField.setEnabled(true);
+					}
 				}
 			}
 		});
@@ -469,10 +521,17 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			public void handleEvent(Event event) {
 				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
 
+				String widgetStr = null;
+				if (fUserToAddCombo instanceof CCombo) {
+					widgetStr = ((CCombo) fUserToAddCombo).getText();
+				} else {
+					widgetStr = ((Text) fUserToAddCombo).getText();
+				}
+
 				//Tokenize the users list
-				String[] users = fUserToAddCombo.getText().split(R4EUIConstants.LIST_SEPARATOR);
+				String[] users = widgetStr.split(R4EUIConstants.LIST_SEPARATOR);
 				for (String user : users) {
-					addUserToParticipantList(user);
+					addUsersToParticipantList(user);
 				}
 				getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 			}
@@ -735,14 +794,18 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		fParticipantIdInputTextField.setText("");
 		fParticipantEmailInputTextField.setText("");
 		fParticipantDetailsInputTextField.setText("");
-		fRoleValues.removeAll();
-		fFocusAreaTextField.setText("");
+		if (fReviewSource) {
+			fRoleValues.removeAll();
+			fFocusAreaTextField.setText("");
+		}
 		if (fParticipants.size() == 0) {
 			fParticipantDetailsInputTextField.setEnabled(false);
 			fParticipantIdInputTextField.setEnabled(false);
 			fParticipantEmailInputTextField.setEnabled(false);
-			fRoleValues.setEnabled(false);
-			fFocusAreaTextField.setEnabled(false);
+			if (fReviewSource) {
+				fRoleValues.setEnabled(false);
+				fFocusAreaTextField.setEnabled(false);
+			}
 			fClearParticipantsButton.setEnabled(false);
 			fRemoveUserButton.setEnabled(false);
 			getButton(IDialogConstants.OK_ID).setEnabled(false);
@@ -755,17 +818,26 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 * @param aUser
 	 *            - String
 	 */
-	private void addUserToParticipantList(String aUser) {
-		//TODO:  Here we need to resolve any group aliases to multiple users
+	private void addUsersToParticipantList(String aUser) {
+		//Here we first need to resolve any group aliases to multiple users
+		List<String> resolvedUsers = R4EPreferencePage.getParticipantsFromList(aUser.trim());
 
-		//Resolve user
-		R4EParticipant participant = getParticipant(aUser.trim().toLowerCase());
-		if (null == participant) {
-			return; //Participant already in list
+		for (String user : resolvedUsers) {
+			String[] userTokens = user.split(R4EUIConstants.LIST_SEPARATOR);
+
+			//Resolve user in database (if possible)
+			R4EParticipant participant = getParticipant(userTokens[0].toLowerCase());
+			if (null == participant) {
+				return; //Participant already in list
+			}
+
+			//Override email with address defined in users group (if any)
+			if (userTokens.length == 2 && !(userTokens[1].trim().equals(""))) {
+				participant.setEmail(userTokens[1]);
+			}
+			fParticipants.add(participant);
+			updateComponents(participant);
 		}
-		fParticipants.add(participant);
-
-		updateComponents(participant);
 	}
 
 	/**
@@ -775,7 +847,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 *            - String
 	 */
 	private void addUserToParticipantList(IUserInfo aUserInfo) {
-		//TODO:  Here we need to resolve any group aliases to multiple users
 
 		//First check if the participant already exist in the participant list
 		for (R4EParticipant tmpPart : fParticipants) {
@@ -817,7 +888,12 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		if (fParticipants.size() > 0) {
 			fClearParticipantsButton.setEnabled(true);
 			fRemoveUserButton.setEnabled(true);
-			fUserToAddCombo.setText("");
+			String widgetStr = null;
+			if (fUserToAddCombo instanceof CCombo) {
+				((CCombo) fUserToAddCombo).setText("");
+			} else {
+				((Text) fUserToAddCombo).setText("");
+			}
 			getButton(IDialogConstants.OK_ID).setEnabled(true);
 			getButton(IDialogConstants.OK_ID).setSelection(false);
 		} else {
@@ -904,5 +980,19 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		// create OK and Cancel buttons by default
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
 		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+	}
+
+	/**
+	 * Method itemSelected.
+	 * 
+	 * @param aItem
+	 *            Item
+	 * @param aInstanceId
+	 *            int
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.utils.IEditableListListener#itemSelected(Item, int)
+	 */
+	public void itemSelected(Item aItem, int aInstanceId) {
+		// ignore
+
 	}
 }

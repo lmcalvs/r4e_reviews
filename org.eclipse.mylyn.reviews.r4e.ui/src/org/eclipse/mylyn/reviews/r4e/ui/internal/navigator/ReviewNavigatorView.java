@@ -68,6 +68,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.R4EPreferencePage;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -294,6 +295,9 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		//Make sure that the User Id in preferences is set to lower case
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 		store.setValue(PreferenceConstants.P_USER_ID, store.getString(PreferenceConstants.P_USER_ID).toLowerCase());
+
+		//Make sure the Participants Lists map is populated
+		R4EPreferencePage.populateParticipantListMap();
 
 		//Make sure Navigator View is enabled at startup
 		R4EUIModelController.setJobInProgress(false);

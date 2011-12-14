@@ -844,6 +844,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		textGridData.horizontalSpan = 3;
 		fDecisionUsersList = new EditableListWidget(aWidgetFactory, decisionSectionClient, textGridData, this, 2,
 				CCombo.class, participants.toArray(new String[participants.size()]));
+
 		fDecisionUsersList.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_PARTICIPANTS_TOOLTIP);
 
 		//Decision Time Spent
@@ -1566,5 +1567,19 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		} catch (OutOfSyncException e1) {
 			UIUtils.displaySyncErrorDialog(e1);
 		}
+	}
+
+	/**
+	 * Method itemSelected.
+	 * 
+	 * @param aItem
+	 *            Item
+	 * @param aInstanceId
+	 *            int
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.utils.IEditableListListener#itemSelected(Item, int)
+	 */
+	public void itemSelected(Item aItem, int aInstanceId) {
+		// ignore
+
 	}
 }

@@ -2123,10 +2123,15 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String POSTPONED_FILE_VERSION_TOOLTIP = "The Version of the file where the original postponed anomaly was raised";
 
 	/**
-	 * Field USERS_GROUP_TOOLTIP. (value is ""User Groups. User Groups are a bundle of users that can be added at once
-	 * to the reviews"")
+	 * Field PARTICIPANTS_LISTS_TOOLTIP. (value is ""Participants Lists. Participants Lists are a bundle of users that
+	 * can be added at once to the reviews"")
 	 */
-	public static final String USERS_GROUP_TOOLTIP = "User Groups.  User Groups are a bundle of users that can be added at once to the reviews";
+	public static final String PARTICIPANTS_LISTS_TOOLTIP = "Participants Lists.  Participants Lists are a bundle of users that can be added at once to the reviews";
+
+	/**
+	 * Field PARTICIPANTS_TOOLTIP. (value is ""Users that are part of the selected Participants List."")
+	 */
+	public static final String PARTICIPANTS_TOOLTIP = "Users that are part of the selected Participants List.";
 
 	//Listeners change types
 	/**

@@ -22,7 +22,9 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.EList;
@@ -666,5 +668,19 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		} catch (OutOfSyncException e1) {
 			UIUtils.displaySyncErrorDialog(e1);
 		}
+	}
+
+	/**
+	 * Method itemSelected.
+	 * 
+	 * @param aItem
+	 *            Item
+	 * @param aInstanceId
+	 *            int
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.utils.IEditableListListener#itemSelected(Item, int)
+	 */
+	public void itemSelected(Item aItem, int aInstanceId) {
+		// ignore
+
 	}
 }

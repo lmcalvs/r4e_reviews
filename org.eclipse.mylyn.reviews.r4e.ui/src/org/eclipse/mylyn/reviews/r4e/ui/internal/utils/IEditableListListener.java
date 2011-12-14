@@ -34,4 +34,14 @@ public interface IEditableListListener {
 	 *            int
 	 */
 	void itemsUpdated(Item[] aItems, int aInstanceId);
+
+	/**
+	 * Method itemSelected.
+	 * 
+	 * @param aItem
+	 *            Item
+	 * @param aInstanceId
+	 *            int
+	 */
+	void itemSelected(Item aItem, int fInstanceId);
 }

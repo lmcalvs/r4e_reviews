@@ -35,6 +35,13 @@ public interface IParticipantInputDialog {
 	int open();
 
 	/**
+	 * Method close.
+	 * 
+	 * @return boolean
+	 */
+	boolean close();
+
+	/**
 	 * Method getParticipants.
 	 * 
 	 * @return List<R4EParticipant>

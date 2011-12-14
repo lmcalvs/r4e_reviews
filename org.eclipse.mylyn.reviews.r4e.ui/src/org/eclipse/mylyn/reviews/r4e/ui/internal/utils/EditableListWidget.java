@@ -25,12 +25,16 @@ import java.util.List;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.window.Window;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
@@ -46,12 +50,18 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 /**
@@ -129,7 +139,7 @@ public class EditableListWidget {
 	 */
 	public EditableListWidget(FormToolkit aToolkit, Composite aParent, Object aLayoutData,
 			IEditableListListener aListener, int aInstanceId, Class<?> aEditableWidgetClass, String[] aEditableValues) {
-		fMainComposite = aToolkit.createComposite(aParent);
+		fMainComposite = (null != aToolkit) ? aToolkit.createComposite(aParent) : new Composite(aParent, SWT.NONE);
 		fMainComposite.setLayoutData(aLayoutData);
 		fMainComposite.setLayout(new GridLayout(4, false));
 		fListener = aListener;
@@ -161,11 +171,14 @@ public class EditableListWidget {
 	 */
 	public void createEditableListFromTable(FormToolkit aToolkit, final Class<?> aEditableWidgetClass) {
 
-		final Composite tableComposite = aToolkit.createComposite(fMainComposite);
-		fMainTable = aToolkit.createTable(tableComposite, SWT.FULL_SELECTION | SWT.BORDER);
+		final Composite tableComposite = (null != aToolkit) ? aToolkit.createComposite(fMainComposite) : new Composite(
+				fMainComposite, SWT.NONE);
+		fMainTable = (null != aToolkit)
+				? aToolkit.createTable(tableComposite, SWT.FULL_SELECTION | SWT.BORDER)
+				: new Table(tableComposite, SWT.FULL_SELECTION | SWT.BORDER);
 
 		final GridData tableCompositeData = new GridData(GridData.FILL, GridData.FILL, true, true);
-		if (aEditableWidgetClass.equals(Date.class)) {
+		if (aEditableWidgetClass.equals(Date.class) || aEditableWidgetClass.equals(Label.class)) {
 			tableCompositeData.horizontalSpan = 1;
 		} else {
 			tableCompositeData.horizontalSpan = 2;
@@ -177,11 +190,16 @@ public class EditableListWidget {
 		final TableColumn tableColumn2;
 		fMainTable.setLinesVisible(true);
 
-		if (aEditableWidgetClass.equals(Date.class)) {
+		if (aEditableWidgetClass.equals(Date.class) || aEditableWidgetClass.equals(Label.class)) {
 			fMainTable.setHeaderVisible(true);
 			tableColumn2 = new TableColumn(fMainTable, SWT.NONE, 1);
-			tableColumn.setText(R4EUIConstants.SPENT_TIME_COLUMN_HEADER);
-			tableColumn2.setText(R4EUIConstants.ENTRY_TIME_COLUMN_HEADER);
+			if (aEditableWidgetClass.equals(Date.class)) {
+				tableColumn.setText(R4EUIConstants.SPENT_TIME_COLUMN_HEADER);
+				tableColumn2.setText(R4EUIConstants.ENTRY_TIME_COLUMN_HEADER);
+			} else if (aEditableWidgetClass.equals(Label.class)) {
+				tableColumn.setText(R4EUIConstants.ID_LABEL);
+				tableColumn2.setText(R4EUIConstants.EMAIL_LABEL);
+			}
 			tableColumn.pack();
 			tableColumn2.pack();
 			tableColumnLayout.setColumnData(tableColumn, new ColumnWeightData(50, tableColumn.getWidth() * 2, true));
@@ -193,8 +211,7 @@ public class EditableListWidget {
 		}
 		tableComposite.setLayoutData(tableCompositeData);
 
-		fMainComposite.addControlListener(new ControlAdapter() {
-			@Override
+		fMainComposite.addControlListener(new ControlListener() {
 			public void controlResized(ControlEvent e) {
 
 				//TODO:  This does not work 100% as resizing the colums lags when the parent area gets shrinked quickly.
@@ -224,6 +241,10 @@ public class EditableListWidget {
 					tableColumn.setWidth(width);
 				}
 			}
+
+			public void controlMoved(ControlEvent e) {
+				// ignor
+			}
 		});
 
 		fMainTable.addFocusListener(new FocusListener() {
@@ -246,17 +267,29 @@ public class EditableListWidget {
 			}
 		});
 
-		final Composite buttonsComposite = aToolkit.createComposite(fMainComposite);
+		fMainTable.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				fListener.itemSelected(fMainTable.getSelection()[0], fInstanceId); //Only 1 element selected at any given time
+			}
+		});
+
+		final Composite buttonsComposite = (null != aToolkit)
+				? aToolkit.createComposite(fMainComposite)
+				: new Composite(fMainComposite, SWT.NONE);
 		buttonsComposite.setLayout(new GridLayout());
 		buttonsComposite.setLayoutData(new GridData(GridData.CENTER, SWT.TOP, false, false));
 
-		fAddButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_ADD_LABEL, SWT.NONE);
+		fAddButton = (null != aToolkit) ? aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_ADD_LABEL,
+				SWT.NONE) : new Button(buttonsComposite, SWT.NONE);
+		fAddButton.setText(R4EUIConstants.BUTTON_ADD_LABEL);
 		if (aEditableWidgetClass.equals(CCombo.class)) {
 			if (null == fValues || 0 == fValues.length) {
 				fAddButton.setEnabled(false);
 			}
 		}
-		fRemoveButton = aToolkit.createButton(buttonsComposite, R4EUIConstants.BUTTON_REMOVE_LABEL, SWT.NONE);
+		fRemoveButton = (null != aToolkit) ? aToolkit.createButton(buttonsComposite,
+				R4EUIConstants.BUTTON_REMOVE_LABEL, SWT.NONE) : new Button(buttonsComposite, SWT.NONE);
+		fRemoveButton.setText(R4EUIConstants.BUTTON_REMOVE_LABEL);
 		if (0 == fMainTable.getItemCount()) {
 			fRemoveButton.setEnabled(false);
 		} else {
@@ -266,6 +299,45 @@ public class EditableListWidget {
 		fAddButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 		fAddButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
+				if (aEditableWidgetClass.equals(Label.class)) {
+					final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					try {
+						page.showView("org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView");
+
+						final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance()
+								.getParticipantInputDialog(false);
+						final int result = dialog.open();
+						if (result == Window.OK) {
+							TableItem newItem = null;
+							for (R4EParticipant participant : dialog.getParticipants()) {
+								newItem = null;
+								String[] tableStrs = new String[2];
+								tableStrs[0] = participant.getId();
+								tableStrs[1] = participant.getEmail();
+								//Check if values already exist
+								for (TableItem item : fMainTable.getItems()) {
+									if (item.getText(0).equals(tableStrs[0])) {
+										newItem = item;
+									}
+								}
+								if (null == newItem) {
+									newItem = new TableItem(fMainTable, SWT.NONE);
+								}
+								newItem.setText(tableStrs);
+							}
+							if (null != newItem) {
+								fMainTable.showItem(newItem);
+							}
+							fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
+						}
+						R4EUIDialogFactory.getInstance().removeParticipantInputDialog();
+					} catch (PartInitException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					return;
+				}
+
 				final TableItem newItem = new TableItem(fMainTable, SWT.NONE);
 				fMainTable.showItem(newItem);
 				if (aEditableWidgetClass.equals(Text.class)) {
@@ -342,6 +414,19 @@ public class EditableListWidget {
 							for (int i = 0; i < items.length; i++) {
 								if (items[i].getText().trim().length() < 1) {
 									fMainTable.remove(i);
+									return;
+								}
+							}
+
+							//If items are already present, do not consider the duplicates
+							if (items.length > 1) {
+								for (int i = 0; i < items.length; i++) {
+									for (int j = i + 1; j < items.length; j++) {
+										if (items[i].getText().equals(items[j].getText())) {
+											fMainTable.remove(j);
+											return;
+										}
+									}
 								}
 							}
 							fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
@@ -425,6 +510,18 @@ public class EditableListWidget {
 	 */
 	public Item getItem(int aIndex) {
 		return fMainTable.getItem(aIndex);
+	}
+
+	/**
+	 * Method getSelectedItem.
+	 * 
+	 * @return Item
+	 */
+	public Item getSelectedItem() {
+		if (fMainTable.getSelection().length == 0) {
+			return null;
+		}
+		return fMainTable.getSelection()[0]; //Only one element selectable at any given time
 	}
 
 	/**

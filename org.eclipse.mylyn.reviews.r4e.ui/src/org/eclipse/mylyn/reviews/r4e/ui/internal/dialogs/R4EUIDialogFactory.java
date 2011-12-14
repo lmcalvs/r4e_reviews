@@ -295,14 +295,22 @@ public class R4EUIDialogFactory {
 	 * 
 	 * @return IParticipantInputDialog
 	 */
-	public IParticipantInputDialog getParticipantInputDialog() {
+	public IParticipantInputDialog getParticipantInputDialog(boolean aShowExtraParams) {
 		if (null == fParticipantInputDialog) {
 			fParticipantInputDialog = new ParticipantInputDialog(R4EUIModelController.getNavigatorView()
 					.getSite()
 					.getWorkbenchWindow()
-					.getShell());
+					.getShell(), aShowExtraParams);
 		}
 		return fParticipantInputDialog;
+	}
+
+	/**
+	 * Method removeParticipantInputDialog.
+	 */
+	public void removeParticipantInputDialog() {
+		fParticipantInputDialog.close();
+		fParticipantInputDialog = null;
 	}
 
 	/**
