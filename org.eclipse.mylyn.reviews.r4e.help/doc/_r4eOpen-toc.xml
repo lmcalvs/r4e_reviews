@@ -1,28 +1,28 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<toc topic="doc/r4eOpen.html" label="R4E Documentation">
-	<topic href="doc/r4eOpen.html" label="Getting Started">
-		<topic href="doc/r4eOpen.html#Overview" label="Overview">
-			<topic href="doc/r4eOpen.html#R4E_main_interfaces" label="R4E main interfaces"></topic>
+<toc topic="doc/_r4eOpen.html" label="R4E Documentation">
+	<topic href="doc/_r4eOpen.html" label="Getting Started">
+		<topic href="doc/_r4eOpen.html#Overview" label="Overview">
+			<topic href="doc/_r4eOpen.html#R4E_main_interfaces" label="R4E main interfaces"></topic>
 		</topic>
-		<topic href="doc/r4eOpen.html#Installing_R4E" label="Installing R4E">
-			<topic href="doc/r4eOpen.html#Provision_Software_Sites" label="Provision Software Sites"></topic>
-			<topic href="doc/r4eOpen.html#Install_Version_Control_System_Features" label="Install Version Control System Features"></topic>
-			<topic href="doc/r4eOpen.html#Install_R4E_feature" label="Install R4E feature"></topic>
-			<topic href="doc/r4eOpen.html#Install_Versions_Connectors" label="Install Versions Connectors"></topic>
-			<topic href="doc/r4eOpen.html#Starting_R4E" label="Starting R4E"></topic>
+		<topic href="doc/_r4eOpen.html#Installing_R4E" label="Installing R4E">
+			<topic href="doc/_r4eOpen.html#Provision_Software_Sites" label="Provision Software Sites"></topic>
+			<topic href="doc/_r4eOpen.html#Install_Version_Control_System_Features" label="Install Version Control System Features"></topic>
+			<topic href="doc/_r4eOpen.html#Install_R4E_feature" label="Install R4E feature"></topic>
+			<topic href="doc/_r4eOpen.html#Install_Versions_Connectors" label="Install Versions Connectors"></topic>
+			<topic href="doc/_r4eOpen.html#Starting_R4E" label="Starting R4E"></topic>
 		</topic>
-		<topic href="doc/r4eOpen.html#R4E_Configuration" label="R4E Configuration">
-			<topic href="doc/r4eOpen.html#R4E_General_Preferences" label="R4E General Preferences"></topic>
-			<topic href="doc/r4eOpen.html#R4E_LDAP_Settings" label="R4E LDAP Settings"></topic>
-			<topic href="doc/r4eOpen.html#SMTP_Hosts_Definitions" label="SMTP Hosts Definitions"></topic>
-			<topic href="doc/r4eOpen.html#R4E_Capabilities" label="R4E Capabilities"></topic>
+		<topic href="doc/_r4eOpen.html#R4E_Configuration" label="R4E Configuration">
+			<topic href="doc/_r4eOpen.html#R4E_General_Preferences" label="R4E General Preferences"></topic>
+			<topic href="doc/_r4eOpen.html#R4E_LDAP_Settings" label="R4E LDAP Settings"></topic>
+			<topic href="doc/_r4eOpen.html#SMTP_Hosts_Definitions" label="SMTP Hosts Definitions"></topic>
+			<topic href="doc/_r4eOpen.html#R4E_Capabilities" label="R4E Capabilities"></topic>
 		</topic>
-		<topic href="doc/r4eOpen.html#Eclipse_Project_Configuration" label="Eclipse Project Configuration"></topic>
-		<topic href="doc/r4eOpen.html#Tutorials" label="Tutorials">
-			<topic href="doc/r4eOpen.html#Configuration_and_Set-up" label="Configuration and Set-up"></topic>
-			<topic href="doc/r4eOpen.html#Tutorial_1:_Performing_a_Basic_Review" label="Tutorial 1: Performing a Basic Review"></topic>
-			<topic href="doc/r4eOpen.html#Tutorial_2:_Performing_an_Informal_Review" label="Tutorial 2: Performing an Informal Review"></topic>
-			<topic href="doc/r4eOpen.html#Tutorial_3:_Performing_a_Formal_Review" label="Tutorial 3: Performing a Formal Review"></topic>
+		<topic href="doc/_r4eOpen.html#Eclipse_Project_Configuration" label="Eclipse Project Configuration"></topic>
+		<topic href="doc/_r4eOpen.html#Tutorials" label="Tutorials">
+			<topic href="doc/_r4eOpen.html#Configuration_and_Set-up" label="Configuration and Set-up"></topic>
+			<topic href="doc/_r4eOpen.html#Tutorial_1:_Performing_a_Basic_Review" label="Tutorial 1: Performing a Basic Review"></topic>
+			<topic href="doc/_r4eOpen.html#Tutorial_2:_Performing_an_Informal_Review" label="Tutorial 2: Performing an Informal Review"></topic>
+			<topic href="doc/_r4eOpen.html#Tutorial_3:_Performing_a_Formal_Review" label="Tutorial 3: Performing a Formal Review"></topic>
 		</topic>
 	</topic>
 	<topic href="doc/Concepts.html" label="Concepts">
@@ -143,7 +143,7 @@
 			</topic>
 		</topic>
 	</topic>
- <topic href="doc/Updating-This-Document.html" label="Updating This Document">
+ <topic href="doc/_Updating-This-Document.html" label="Updating this document">
  </topic>
  <anchor id="r4emain"/>
 </toc>

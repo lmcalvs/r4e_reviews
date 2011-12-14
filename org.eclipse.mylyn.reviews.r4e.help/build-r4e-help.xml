@@ -21,7 +21,7 @@
 
 	<setproxy proxyhost="!---your proxy server.  If none, remove this line---!" 
 		proxyport="!---your proxy server port---!"/>
-	
+
 	<path id="wikitext.tasks.classpath">
 		<fileset dir="!---your Eclipse installation plugins directory path---!">
 			<include name="org.eclipse.mylyn.wikitext.*core*.jar" />
@@ -35,11 +35,11 @@
 		<sequential>
 			<!-- IMPORTANT NOTE
 				This is now the preferred way to generated the R4E help plugin, using the local
-				r4eOpen.mediawiki file located in the /doc directory.
+				_r4eOpen.mediawiki file located in the /doc directory.
 				After this script is executed.  Do the following:
-				1) In file r4eOpen-toc.xml, add a topic called "Updating This Document" and make it point
-					to the Updating-This-Document.html file located in the doc directory
-				2) In file r4eOpen-toc.xml, add an anchor called "r4emain" under the root toc element
+				1) In file _r4eOpen-toc.xml, add a topic called "_Updating This Document" and make it point
+					to the _Updating-This-Document.html file located in the doc directory
+				2) In file _r4eOpen-toc.xml, add an anchor called "r4emain" under the root toc element
 			-->
 			<wikitext-to-eclipse-help markupLanguage="MediaWiki" 
 				validate="true"
@@ -49,17 +49,16 @@
 				multipleOutputFiles="true"
 				formatoutput="true"
 				navigationImages="true"
-				prependImagePrefix="images"
 				helpPrefix="doc">
 				<fileset dir="${basedir}/doc">
-					<include name="r4eOpen.mediawiki" />
+					<include name="_r4eOpen.mediawiki" />
 				</fileset>
 				<stylesheet url="book.css" />
 			</wikitext-to-eclipse-help>
 			
 			<!-- IMPORTANT NOTE2
 				This is now used for reference only, and to verify if anything was changed on
-				the Eclipse web wiki that needs to be included to the local r4eOpen.mediawiki file.
+				the Eclipse web wiki that needs to be included to the local _r4eOpen.mediawiki file.
 				However, if you still want to generate the help plugin from the Eclipse web wiki.  
 				After this script is executed.  Do the following:
 				1) Change the plugin.xml configuration to point to the toc file "web/toc.xml"
