@@ -323,6 +323,7 @@ public class EditableListWidget {
 								if (null == newItem) {
 									newItem = new TableItem(fMainTable, SWT.NONE);
 								}
+								fMainTable.showItem(newItem);
 								newItem.setText(tableStrs);
 							}
 							if (null != newItem) {

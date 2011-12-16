@@ -248,10 +248,10 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 							"No input given for Participant Id", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 									validateResult, null), IStatus.ERROR);
 					dialog.open();
-					continue;
+					return;
 				}
 
-				//Check if participant already exists
+				//Check if participant already exists (if so ignore but continue)
 				if (fReviewSource
 						&& R4EUIModelController.getActiveReview().getParticipantIDs().contains(participant.getId())) {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
@@ -270,10 +270,10 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 							"No Email given for Participant " + participant.getId(), new Status(IStatus.ERROR,
 									R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
 					dialog.open();
-					continue;
+					return;
 				}
 				if (!CommandUtils.isEmailValid(participant.getEmail())) {
-					continue;
+					return;
 				}
 
 				//Validate Roles (optional)
@@ -569,10 +569,13 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		}
 		fRemoveUserButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				fAddedParticipantsTable.remove(fSelectedParticipantIndex);
-				fParticipants.remove(fSelectedParticipantIndex);
-				fParticipantsDetailsValues.remove(fSelectedParticipantIndex);
-				clearParametersFields();
+				if (fSelectedParticipantIndex >= 0
+						&& fSelectedParticipantIndex < fAddedParticipantsTable.getItemCount()) {
+					fAddedParticipantsTable.remove(fSelectedParticipantIndex);
+					fParticipants.remove(fSelectedParticipantIndex);
+					fParticipantsDetailsValues.remove(fSelectedParticipantIndex);
+					clearParametersFields();
+				}
 			}
 		});
 

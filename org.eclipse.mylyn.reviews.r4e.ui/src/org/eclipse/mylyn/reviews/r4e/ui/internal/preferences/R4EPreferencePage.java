@@ -1075,6 +1075,15 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * @return String[]
 	 */
 	public static String[] getParticipantsLists() {
-		return fParticipantsListsHashMap.keySet().toArray(new String[0]);
+		java.util.List<String> activeParticipantsLists = new ArrayList<String>();
+		Iterator<Map.Entry<String, java.util.List<String>>> participantsLists = fParticipantsListsHashMap.entrySet()
+				.iterator();
+		while (participantsLists.hasNext()) {
+			Map.Entry<String, java.util.List<String>> participantList = participantsLists.next();
+			if (participantList.getValue().size() > 0) {
+				activeParticipantsLists.add(participantList.getKey());
+			}
+		}
+		return activeParticipantsLists.toArray(new String[0]);
 	}
 }

@@ -62,6 +62,20 @@
 						<ol style="list-style: none;">
 							<li>
 								<a href="_r4eOpen.html#R4E_General_Preferences">R4E General Preferences</a>
+								<ol style="list-style: none;">
+									<li>
+										<a href="_r4eOpen.html#User_Tab">User Tab</a>
+									</li>
+									<li>
+										<a href="_r4eOpen.html#Groups_Tab">Groups Tab</a>
+									</li>
+									<li>
+										<a href="_r4eOpen.html#Rule_Sets_Tab">Rule Sets Tab</a>
+									</li>
+									<li>
+										<a href="_r4eOpen.html#Filter_Tabs">Filter Tabs</a>
+									</li>
+								</ol>
 							</li>
 							<li>
 								<a href="_r4eOpen.html#R4E_LDAP_Settings">R4E LDAP Settings</a>
@@ -551,28 +565,42 @@
 			<i>Apply buttons</i> apply to the values displayed in all the tabs
 			<br/> 
 		</p>
-		<ul>
-			<li>User Tab</li>
-		</ul>
+		<h4 id="User_Tab">User Tab</h4>
 		<p>
 			<img border="0" src="R4E_preferences_general_user.png"/> 
 		</p>
 		<p>
 			<br/> 
 		</p>
-		<p>&nbsp; &nbsp;This is used to enter the current user details. The User ID is set by default to the login ID of the current session and can be modified to any String that can be used to identify the user. The User Email should be set to a valid email for the user. The E-mail address is used to notify the user informations about the reviews he is currently part of by Email, as configured in the SMTP Hosts Definitions section. Take note that if the LDAP Preferences are filled-in (see below) and a corresponding LDAP database can be resolved, then this field will be automatically be set based on the User ID entered. The 
-			<i>Create Delta Elements...</i> check box is used to control the display of file differences as elements in the Review Navigator.  The 
-			<i>Update Postponed Anomalies...</i> is used to automatically import outstanding anomalies that were set to postponed in previous versions of files included in the current review.  See Postponed Anomalies section below for more information.
-			<br/> 
-		</p>
+		<p>&nbsp; &nbsp;This is used to enter the current user details. </p>
+		<p>The following elements are configurable</p>
+		<ul>
+			<li>User ID: The User ID is set by default to the login ID of the current session and can be modified to any String that can be used to identify the user. This field is mandatory.</li>
+		</ul>
+		<ul>
+			<li>UserEmail: The User Email should be set to a valid email for the current user. The E-mail address is used to notify the user informations about the reviews he is currently part of by Email, as configured in the SMTP Hosts Definitions section. Take note that if the LDAP Preferences are filled-in (see below) and a corresponding LDAP database can be resolved, then this field will be automatically be set based on the User ID entered. This field is also mandatory.</li>
+		</ul>
+		<ul>
+			<li>Participants Lists and Participants:  Participants Lists are a group of users that can be added together as participant to a review.  To create a new Participant List, use the 
+				<i>Add</i> button for the Participant List table.  The 
+				<i>Remove</i> button can be used to remove a Participant List. Once a participant List is created, specific participants can be added to the selected list and removed by using the 
+				<i>Add</i> and 
+				<i>Remove</i> buttons of the Participants table, respectively .  Using the 
+				<i>Add</i> button will open a New Participant dialog that can be used to specify the users to add.  Refer to the 
+				<a href="/wiki/Adding_Participants_to_a_Review" title="Adding_Participants_to_a_Review">Adding Participants to a Review</a> section for more information on using the New Participants dialog.  After it is set up, a participant list can be used in any New Participant dialog and adding it as a participant will instead add all its participants values to the review.  Take note that participant lists are optional and participants can be added separately to reviews.
+			</li>
+		</ul>
+		<ul>
+			<li>Checkboxes: The 
+				<i>Create Delta Elements...</i> checkbox is used to control the display of file differences as elements in the Review Navigator.  The 
+				<i>Update Postponed Anomalies...</i> checkbox is used to automatically import outstanding anomalies that were set to postponed in previous versions of files included in the current review.  See Postponed Anomalies section below for more information.
+				<br/> 
+			</li>
+		</ul>
 		<p>
 			<br/> 
 		</p>
-		<ul>
-			<li>
-				<b>Groups Tab</b>
-			</li>
-		</ul>
+		<h4 id="Groups_Tab">Groups Tab</h4>
 		<p>
 			<img border="0" src="R4E_preferences_general_groups.png"/> 
 		</p>
@@ -587,11 +615,7 @@
 		<p>
 			<br/> 
 		</p>
-		<ul>
-			<li>
-				<b>Rule Sets Tab</b>
-			</li>
-		</ul>
+		<h4 id="Rule_Sets_Tab">Rule Sets Tab</h4>
 		<p>
 			<img border="0" src="R4E_preferences_general_ruleSets.png"/> 
 		</p>
@@ -604,11 +628,7 @@
 		<p>
 			<br/> 
 		</p>
-		<ul>
-			<li>
-				<b>Filter Tabs</b>
-			</li>
-		</ul>
+		<h4 id="Filter_Tabs">Filter Tabs</h4>
 		<p>
 			<img border="0" src="R4E_preferences_general_filters.png"/> 
 		</p>
@@ -1023,7 +1043,7 @@
 		<p>The Review Navigator view should now show a new Resource Review Item, its children file and the selection, which in this case will span the whole file from the first to the last lines. </p>
 		<ul>
 			<li>Now let's add another reviewer to this review by right-clicking on the participants container icon in the review navigator and selecting the 
-				<i>New Participant</i> command from the context menu
+				<i>New Participants</i> command from the context menu
 			</li>
 		</ul>
 		<p>
@@ -1036,7 +1056,7 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>This will show the New Participant dialog.</li>
+			<li>This will show the New Participants dialog.</li>
 		</ul>
 		<p>
 			<br/> 
@@ -1047,6 +1067,16 @@
 		<p>
 			<br/> 
 		</p>
+		<ul>
+			<li>Let's fill in our participant ID in the top field and press the 
+				<i>Add</i> button.  The particpant is added to the participant list
+			</li>
+		</ul>
+		<ul>
+			<li>We now select the particpant entry in the list and we see all the parameters associated to this particpant in the Basic and Extra Parameters sections.  Fill in the information field as shown and press 
+				<i>OK</i> to add the user as a participant to the current review.
+			</li>
+		</ul>
 		<ul>
 			<li>Note that we added this Participant as a reviewer only. We also set the optional focus area.</li>
 		</ul>
@@ -1299,7 +1329,7 @@
 		</p>
 		<ul>
 			<li>Now, as in the Informal review tutorial, let's add another reviewer to this review by right-clicking on the participants container icon in the review navigator and selecting the 
-				<i>New Participant</i> command from the context menu
+				<i>New Participants</i> command from the context menu
 			</li>
 		</ul>
 		<p>
@@ -1312,7 +1342,7 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>This will show the New Participant dialog.</li>
+			<li>This will show the New Participants dialog.</li>
 		</ul>
 		<p>
 			<br/> 
@@ -1324,7 +1354,7 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>Note that we added this Participant as a reviewer only. We also set to optional focus area.</li>
+			<li>The participant is added exactly the same way it was done in the previous tutorial</li>
 		</ul>
 		<ul>
 			<li>Let's say that we are done adding new items and participants for this review, we can now transition the review phase from ''PLANNING ''to ''PREPARATION ''by selecting the Phase combo box in the R4E Properties to the Review. Note that phases can only be changed if we are the phase owner, which we are in this case. We will now automatically be asked to set up a decision meeting by entering meeting details.</li>

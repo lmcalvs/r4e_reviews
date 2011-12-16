@@ -86,17 +86,27 @@ The R4E Configuration can be entered by accessing the R4E Preferences Pages, whi
 
 R4E General Preferences page is split up into four tab sections.  Take note that the ''Restore Defaults'' and ''Apply buttons'' apply to the values displayed in all the tabs<br> 
 
-*User Tab
+====User Tab====
 
 [[Image:R4E preferences general user.png]] 
 
 <br> 
 
-&nbsp; &nbsp;This is used to enter the current user details. The User ID is set by default to the login ID of the current session and can be modified to any String that can be used to identify the user. The User Email should be set to a valid email for the user. The E-mail address is used to notify the user informations about the reviews he is currently part of by Email, as configured in the SMTP Hosts Definitions section. Take note that if the LDAP Preferences are filled-in (see below) and a corresponding LDAP database can be resolved, then this field will be automatically be set based on the User ID entered. The ''Create Delta Elements...'' check box is used to control the display of file differences as elements in the Review Navigator.  The ''Update Postponed Anomalies...'' is used to automatically import outstanding anomalies that were set to postponed in previous versions of files included in the current review.  See Postponed Anomalies section below for more information.<br> 
+&nbsp; &nbsp;This is used to enter the current user details. 
+
+The following elements are configurable
+
+*User ID: The User ID is set by default to the login ID of the current session and can be modified to any String that can be used to identify the user. This field is mandatory.
+
+*UserEmail: The User Email should be set to a valid email for the current user. The E-mail address is used to notify the user informations about the reviews he is currently part of by Email, as configured in the SMTP Hosts Definitions section. Take note that if the LDAP Preferences are filled-in (see below) and a corresponding LDAP database can be resolved, then this field will be automatically be set based on the User ID entered. This field is also mandatory.
+
+*Participants Lists and Participants:  Participants Lists are a group of users that can be added together as participant to a review.  To create a new Participant List, use the ''Add'' button for the Participant List table.  The ''Remove'' button can be used to remove a Participant List. Once a participant List is created, specific participants can be added to the selected list and removed by using the ''Add'' and ''Remove'' buttons of the Participants table, respectively .  Using the ''Add'' button will open a New Participant dialog that can be used to specify the users to add.  Refer to the ''Adding Participants to a Review'' section for more information on using the New Participants dialog.  After it is set up, a participant list can be used in any New Participant dialog and adding it as a participant will instead add all its participants values to the review.  Take note that participant lists are optional and participants can be added separately to reviews.
+
+*Checkboxes: The ''Create Delta Elements...'' checkbox is used to control the display of file differences as elements in the Review Navigator.  The ''Update Postponed Anomalies...'' checkbox is used to automatically import outstanding anomalies that were set to postponed in previous versions of files included in the current review.  See Postponed Anomalies section below for more information.<br> 
 
 <br> 
 
-*'''Groups Tab'''
+====Groups Tab====
 
 [[Image:R4E preferences general groups.png]] 
 
@@ -109,7 +119,7 @@ See below for more information on Review Groups. The Name and Description fields
 
 <br> 
 
-*'''Rule Sets Tab'''
+====Rule Sets Tab====
 
 [[Image:R4E preferences general ruleSets.png]] 
 
@@ -119,7 +129,7 @@ See below for more information on Review Groups. The Name and Description fields
 
 <br> 
 
-*'''Filter Tabs'''
+====Filter Tabs====
 
 [[Image:R4E preferences general filters.png]] 
 
@@ -395,7 +405,7 @@ This tutorial shows how to use R4E by going through a very simple Informal Revie
 
 The Review Navigator view should now show a new Resource Review Item, its children file and the selection, which in this case will span the whole file from the first to the last lines. 
 
-*Now let's add another reviewer to this review by right-clicking on the participants container icon in the review navigator and selecting the ''New Participant'' command from the context menu
+*Now let's add another reviewer to this review by right-clicking on the participants container icon in the review navigator and selecting the ''New Participants'' command from the context menu
 
 <br> 
 
@@ -403,13 +413,17 @@ The Review Navigator view should now show a new Resource Review Item, its childr
 
 <br> 
 
-*This will show the New Participant dialog.
+*This will show the New Participants dialog.
 
 <br> 
 
 [[Image:TutorialAddParticipantDialog.png]] 
 
 <br> 
+
+*Let's fill in our participant ID in the top field and press the ''Add'' button.  The particpant is added to the participant list
+
+*We now select the particpant entry in the list and we see all the parameters associated to this particpant in the Basic and Extra Parameters sections.  Fill in the information field as shown and press ''OK'' to add the user as a participant to the current review.
 
 *Note that we added this Participant as a reviewer only. We also set the optional focus area.
 
@@ -559,7 +573,7 @@ This tutorial shows how to use R4E by going through a very simple Formal Review.
 
 <br> 
 
-*Now, as in the Informal review tutorial, let's add another reviewer to this review by right-clicking on the participants container icon in the review navigator and selecting the ''New Participant'' command from the context menu
+*Now, as in the Informal review tutorial, let's add another reviewer to this review by right-clicking on the participants container icon in the review navigator and selecting the ''New Participants'' command from the context menu
 
 <br> 
 
@@ -567,7 +581,7 @@ This tutorial shows how to use R4E by going through a very simple Formal Review.
 
 <br> 
 
-*This will show the New Participant dialog.
+*This will show the New Participants dialog.
 
 <br> 
 
@@ -575,7 +589,7 @@ This tutorial shows how to use R4E by going through a very simple Formal Review.
 
 <br> 
 
-*Note that we added this Participant as a reviewer only. We also set to optional focus area.
+*The participant is added exactly the same way it was done in the previous tutorial
 
 *Let's say that we are done adding new items and participants for this review, we can now transition the review phase from ''PLANNING ''to ''PREPARATION ''by selecting the Phase combo box in the R4E Properties to the Review. Note that phases can only be changed if we are the phase owner, which we are in this case. We will now automatically be asked to set up a decision meeting by entering meeting details.
 
@@ -1013,11 +1027,11 @@ Take note that Review Groups and Reviews are automatically open after they are f
 
 <br>
 
-=== Adding Participants to a Review  ===
+=== Adding Participants to a Review ===
 
 Participants are automatically added to the current Review as soon as they add review items to it or create an anomaly. It is also possible to add them manually. 
 
-To do so, right click on the parent review and select the ''New Participant'' Command from the R4E Context Menu. 
+To do so, right click on the parent review and select the ''New Participants'' Command from the R4E Context Menu. 
 
 <br> 
 
@@ -1025,7 +1039,7 @@ To do so, right click on the parent review and select the ''New Participant'' Co
 
 <br> 
 
-This opens the New Participant dialog. 
+This opens the ''Enter Participant details'' dialog. 
 
 <br> 
 
@@ -1033,14 +1047,19 @@ This opens the New Participant dialog.
 
 <br> 
 
-*Add the Participant Id and E-mail address and optionally User Details in the appropriate text fields. 
-*Under the Extra Parameters section, more information can optionally be entered to further caracterize the Participant: 
+The dialog is divided into 3 sections:
+
+*Participants:  This is where the participants are added.  Use the field above to enter the IDs on the participants to add, separated by semicolons (;).  If you defined Participants Lists in the preferences, the list name can be added here.  Once the participants are entered, hit the return key, or use the ''Add'' button to add them to the list of participants.  The participants will now appear in the participants list just below.  If present, participants lists from Preferences are resolved and their contents is added to the list as well.  If an LDAP database is setup up and configured in the preferences, R4E will also try to resolve the added users and automatically fetch the information from the database.  Participants can be removed from the list by using the ''Erase'' button, and the list can be reset by using the ''Clear'' button.  If an LDAP database is set up, it can also be accessed using the ''Find'' button (see below).
+
+*Basic Parameters:  Once participants are added to the participants list.  This section displays the basic information for the currently selected entry in the list.  The email address can be edited, but not the Id or the partcipant details field (which in only filled if an LDAP database is set up and there is information about the user in it).
+
+*Extra Parameters: Once participants are added to the participants list.  This section displays the extra information for the currently selected entry in the list.  Take note that this section is not present if the dialog was triggered from the User Preferences dialog, when creating participants lists.  The user roles and optional focus area fields can be edited to further characterize what the participant will do as part of the review.
 **Roles can be assigned to the participant to restrict actions that can be taken. Take note that Roles are mandatory for Formal Review and Optional for Basic and Informal Review types 
 **Focus Area value can be entered to specify a specific areas this Participant should focus on for this Review
 
 <br> 
 
-If an LDAP database if configured and connected, the user information could be searched and filled-in automatically using the Find User Dialog 
+If an LDAP database if configured and connected, the user information could be searched and filled-in automatically using the ''Find'' button, which will open the Find User Dialog 
 
 <br> 
 
@@ -1048,7 +1067,7 @@ If an LDAP database if configured and connected, the user information could be s
 
 <br> 
 
-Any field can be entered in the User Information section and by clicking the Search button, an LDAP query will be sent to the database, using information filled-in the LDAP configuration section of the R4E Preferences Page. If any matches are found, the results will be displayed in the Query Results section. 
+Any field can be entered in the Search Filters section and by clicking the Search button, an LDAP query will be sent to the database. If any matches are found, the results will be displayed in the Query Results section.   Once the results are in, users can be added by double-clicking on them in the results table, or by selecting them and using the ''Add Users'' button.  Pressing the ''OK'' button will result in the users being added to the New Partcipants dialog participant list.
 
 <br>
 
