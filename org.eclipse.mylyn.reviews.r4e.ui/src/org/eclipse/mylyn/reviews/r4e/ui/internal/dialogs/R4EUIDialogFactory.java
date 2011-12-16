@@ -22,6 +22,7 @@ import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.versions.ui.ScmUi;
 import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
 
@@ -296,13 +297,14 @@ public class R4EUIDialogFactory {
 	 * @return IParticipantInputDialog
 	 */
 	public IParticipantInputDialog getParticipantInputDialog(boolean aShowExtraParams) {
-		if (null == fParticipantInputDialog) {
+		if (!UIUtils.TEST_MODE) {
 			fParticipantInputDialog = new ParticipantInputDialog(R4EUIModelController.getNavigatorView()
 					.getSite()
 					.getWorkbenchWindow()
 					.getShell(), aShowExtraParams);
+			return fParticipantInputDialog;
 		}
-		return fParticipantInputDialog;
+		return fParticipantInputDialog; //Test mode: return mockup reference
 	}
 
 	/**
@@ -514,10 +516,11 @@ public class R4EUIDialogFactory {
 	 * @return ScmConnectorUi
 	 */
 	public ScmConnectorUi getScmUiConnector(IProject aProject) {
-		if (null == fScmConnectorUi) {
+		if (!UIUtils.TEST_MODE) {
 			fScmConnectorUi = ScmUi.getUiConnector(aProject);
+			return fScmConnectorUi;
 		}
-		return fScmConnectorUi;
+		return fScmConnectorUi; //Test mode: return mockup reference
 	}
 
 	/**
@@ -536,9 +539,10 @@ public class R4EUIDialogFactory {
 	 * @return ScmConnectorUi
 	 */
 	public NotificationsConnector getMailConnector() {
-		if (null == fNotificationsConnector) {
+		if (!UIUtils.TEST_MODE) {
 			fNotificationsConnector = R4EUIModelController.getMailConnector();
+			return fNotificationsConnector;
 		}
-		return fNotificationsConnector;
+		return fNotificationsConnector; //Test mode: return mockup reference
 	}
 }
