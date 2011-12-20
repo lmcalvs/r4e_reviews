@@ -857,7 +857,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		store.setValue(PreferenceConstants.P_HIDE_RULE_SETS_FILTER, fHideRuleSetsFilterButton.getSelection());
 		store.setValue(PreferenceConstants.P_HIDE_DELTAS_FILTER, fHideDeltasFilterButton.getSelection());
 
-		if (null != R4EUIModelController.getNavigatorView()) {
+		if (null != R4EUIModelController.getNavigatorView()
+				&& !R4EUIModelController.getNavigatorView().getTreeViewer().getTree().isDisposed()) {
 			R4EUIModelController.getNavigatorView().applyDefaultFilters();
 		}
 
