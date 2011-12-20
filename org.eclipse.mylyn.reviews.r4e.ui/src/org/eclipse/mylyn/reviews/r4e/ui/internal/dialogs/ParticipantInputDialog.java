@@ -485,11 +485,13 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 							fParticipantDetailsInputTextField.setText("");
 						}
 						if (fReviewSource) {
-							fRoleValues.removeAll();
-							EList<R4EUserRole> roles = participant.getRoles();
-							for (R4EUserRole role : roles) {
-								Item newItem = fRoleValues.addItem();
-								newItem.setText(R4EUIParticipant.mapRoleToString(role));
+							if (null != fRoleValues) {
+								fRoleValues.removeAll();
+								EList<R4EUserRole> roles = participant.getRoles();
+								for (R4EUserRole role : roles) {
+									Item newItem = fRoleValues.addItem();
+									newItem.setText(R4EUIParticipant.mapRoleToString(role));
+								}
 							}
 							if (null != participant.getFocusArea()) {
 								fFocusAreaTextField.setText(participant.getFocusArea());
@@ -504,7 +506,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 					fParticipantEmailInputTextField.setEnabled(true);
 					fParticipantDetailsInputTextField.setEnabled(true);
 					if (fReviewSource) {
-						fRoleValues.setEnabled(true);
+						if (null != fRoleValues) {
+							fRoleValues.setEnabled(true);
+						}
 						fFocusAreaTextField.setEnabled(true);
 					}
 				}
@@ -798,7 +802,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		fParticipantEmailInputTextField.setText("");
 		fParticipantDetailsInputTextField.setText("");
 		if (fReviewSource) {
-			fRoleValues.removeAll();
+			if (null != fRoleValues) {
+				fRoleValues.removeAll();
+			}
 			fFocusAreaTextField.setText("");
 		}
 		if (fParticipants.size() == 0) {
@@ -806,7 +812,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			fParticipantIdInputTextField.setEnabled(false);
 			fParticipantEmailInputTextField.setEnabled(false);
 			if (fReviewSource) {
-				fRoleValues.setEnabled(false);
+				if (null != fRoleValues) {
+					fRoleValues.setEnabled(false);
+				}
 				fFocusAreaTextField.setEnabled(false);
 			}
 			fClearParticipantsButton.setEnabled(false);
