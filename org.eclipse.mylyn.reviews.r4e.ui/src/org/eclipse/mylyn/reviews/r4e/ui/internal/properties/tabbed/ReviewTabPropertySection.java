@@ -63,7 +63,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -494,19 +496,27 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		projectLabel.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);
 		projectLabel.setLayoutData(gridData);
 
-		fProjectCombo = aWidgetFactory.createCCombo(reviewDetailsSectionClient, SWT.READ_ONLY);
+		fProjectCombo = aWidgetFactory.createCCombo(reviewDetailsSectionClient);
 		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		gridData.horizontalSpan = 3;
+		fProjectCombo.setEditable(true);
 		fProjectCombo.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);
 		fProjectCombo.setLayoutData(gridData);
-		fProjectCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fProjectCombo.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						modelReview.setProject(fProjectCombo.getText());
+						String project = "";
+						for (String item : fProjectCombo.getItems()) {
+							if (fProjectCombo.getText().equals(item)) {
+								project = fProjectCombo.getText();
+								break;
+							}
+						}
+						modelReview.setProject(project);
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
@@ -515,10 +525,6 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					}
 				}
 				refresh();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				//No implementation needed
 			}
 		});
 		addScrollListener(fProjectCombo);
@@ -1108,14 +1114,8 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				.toArray();
 		fProjectCombo.setItems(availableProjects);
 		final String project = modelReview.getProject();
-		if (null != project) {
-			for (int i = 0; i < availableProjects.length; i++) {
-				if (project.equals(availableProjects[i])) {
-					fProjectCombo.select(i);
-					break;
-				}
-			}
-		}
+		fProjectCombo.setText(project);
+
 		fComponents.setEditableValues((String[]) ((R4EUIReviewGroup) uiReview.getParent()).getReviewGroup()
 				.getAvailableComponents()
 				.toArray());
