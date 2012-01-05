@@ -47,6 +47,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(PreferenceConstants.P_USER_ID, System.getProperty("user.name").toLowerCase());
 		PreferenceConstants.setUserEmailDefaultPreferences();
 		store.setDefault(PreferenceConstants.P_USE_DELTAS, true);
+		store.setDefault(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER, true);
 		store.setDefault(PreferenceConstants.P_HIDE_DELTAS_FILTER, true);
 	}
 }
