@@ -348,6 +348,7 @@ public class ScheduleMeetingInputDialog extends FormDialog {
     public void setStartTime(Long aSt) {
 		final SimpleDateFormat dateFormat = new SimpleDateFormat(SIMPLE_DATE_FORMAT);	
 		fStartTimeInputTextField.setText(dateFormat.format(aSt));
+		fStartTime = aSt;
     }
     
     /**
