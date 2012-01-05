@@ -65,6 +65,11 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	private static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this disabled Comment";
 
+	/**
+	 * Field COMMENT_LABEL_LENGTH. (value is 12)
+	 */
+	private static final int COMMENT_LABEL_LENGTH = 12;
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -87,7 +92,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	 *            R4EComment
 	 */
 	public R4EUIComment(IR4EUIModelElement aParent, R4EComment aComment) {
-		super(aParent, aComment.getDescription());
+		super(aParent, (aComment.getDescription().substring(0, COMMENT_LABEL_LENGTH) + "..."));
 		fComment = aComment;
 		setImage(COMMENT_ICON_FILE);
 	}
