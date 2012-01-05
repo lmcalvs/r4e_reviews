@@ -401,6 +401,8 @@ public class EditableListWidget {
 						if (null != fListener) {
 							//If items are empty, do not consider them
 							final TableItem[] items = fMainTable.getItems();
+							final int numColumns = fMainTable.getColumnCount();
+							boolean isSameItem = false;
 							for (int i = 0; i < items.length; i++) {
 								if (items[i].getText().trim().length() < 1) {
 									fMainTable.remove(i);
@@ -412,7 +414,14 @@ public class EditableListWidget {
 							if (items.length > 1) {
 								for (int i = 0; i < items.length; i++) {
 									for (int j = i + 1; j < items.length; j++) {
-										if (items[i].getText().equals(items[j].getText())) {
+										isSameItem = true;
+										for (int k = 0; k < numColumns; k++) {
+											if (!items[i].getText(k).equals(items[j].getText(k))) {
+												isSameItem = false;
+												break; //at least one column is different go to next item
+											}
+										}
+										if (isSameItem) {
 											fMainTable.remove(j);
 											return;
 										}
