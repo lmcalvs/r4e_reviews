@@ -46,7 +46,7 @@ public class ReviewCompletedFilter extends ViewerFilter {
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 
-		if (element instanceof R4EUIReviewGroup && !((R4EUIReviewGroup) element).isOpen()) {
+		if (element instanceof R4EUIReviewGroup) {
 			return true;
 		}
 
