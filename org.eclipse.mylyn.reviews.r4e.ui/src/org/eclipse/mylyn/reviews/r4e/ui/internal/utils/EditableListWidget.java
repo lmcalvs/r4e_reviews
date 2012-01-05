@@ -59,9 +59,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 /**
@@ -300,42 +297,34 @@ public class EditableListWidget {
 		fAddButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				if (aEditableWidgetClass.equals(Label.class)) {
-					final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-					try {
-						page.showView("org.eclipse.mylyn.reviews.r4e.ui.navigator.ReviewNavigatorView");
-
-						final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance()
-								.getParticipantInputDialog(false);
-						final int result = dialog.open();
-						if (result == Window.OK) {
-							TableItem newItem = null;
-							for (R4EParticipant participant : dialog.getParticipants()) {
-								newItem = null;
-								String[] tableStrs = new String[2];
-								tableStrs[0] = participant.getId();
-								tableStrs[1] = participant.getEmail();
-								//Check if values already exist
-								for (TableItem item : fMainTable.getItems()) {
-									if (item.getText(0).equals(tableStrs[0])) {
-										newItem = item;
-									}
+					final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog(
+							false);
+					final int result = dialog.open();
+					if (result == Window.OK) {
+						TableItem newItem = null;
+						for (R4EParticipant participant : dialog.getParticipants()) {
+							newItem = null;
+							String[] tableStrs = new String[2];
+							tableStrs[0] = participant.getId();
+							tableStrs[1] = participant.getEmail();
+							//Check if values already exist
+							for (TableItem item : fMainTable.getItems()) {
+								if (item.getText(0).equals(tableStrs[0])) {
+									newItem = item;
 								}
-								if (null == newItem) {
-									newItem = new TableItem(fMainTable, SWT.NONE);
-								}
-								fMainTable.showItem(newItem);
-								newItem.setText(tableStrs);
 							}
-							if (null != newItem) {
-								fMainTable.showItem(newItem);
+							if (null == newItem) {
+								newItem = new TableItem(fMainTable, SWT.NONE);
 							}
-							fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
+							fMainTable.showItem(newItem);
+							newItem.setText(tableStrs);
 						}
-						R4EUIDialogFactory.getInstance().removeParticipantInputDialog();
-					} catch (PartInitException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						if (null != newItem) {
+							fMainTable.showItem(newItem);
+						}
+						fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
 					}
+					R4EUIDialogFactory.getInstance().removeParticipantInputDialog();
 					return;
 				}
 
