@@ -111,8 +111,10 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress()
+				|| !fProperties.getElement().isEnabled()
+				|| null == R4EUIModelController.getActiveReview()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			fPositionText.setEnabled(false);
 		} else {
 			fPositionText.setEnabled(true);
