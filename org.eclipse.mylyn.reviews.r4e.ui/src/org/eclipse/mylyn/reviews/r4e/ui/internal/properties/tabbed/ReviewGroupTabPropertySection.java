@@ -464,7 +464,8 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		fDefaultEntryCriteriaText.setText(modelGroup.getDefaultEntryCriteria());
 
 		final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement) ((R4EUIReviewGroup) fProperties.getElement()).getParent()).getRuleSets();
-		final List<String> ruleSetLocations = new ArrayList<String>();
+		final List<String> tmpRuleSetLocations = new ArrayList<String>();
+		final String[] ruleSetsLocations = (String[]) modelGroup.getDesignRuleLocations().toArray();
 		for (R4EUIRuleSet uiRuleSet : uiRuleSets) {
 			if (uiRuleSet.isEnabled()) {
 				if (null == uiRuleSet.getRuleSet().eResource()) {
@@ -474,11 +475,21 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 						UIUtils.displayResourceErrorDialog(e);
 					}
 				}
-				ruleSetLocations.add(uiRuleSet.getRuleSet().eResource().getURI().toFileString());
+				tmpRuleSetLocations.add(uiRuleSet.getRuleSet().eResource().getURI().toFileString());
+
+				//Close rule set if not used
+				boolean ruleSetUsed = false;
+				for (String ruleSet : ruleSetsLocations) {
+					if (ruleSet.equals(uiRuleSet.getRuleSet().eResource().getURI().toFileString())) {
+						ruleSetUsed = true;
+					}
+				}
+				if (!ruleSetUsed) {
+					uiRuleSet.close();
+				}
 			}
 		}
-		fRuleSetLocations.setEditableValues(ruleSetLocations.toArray(new String[ruleSetLocations.size()]));
-		final String[] ruleSetsLocations = (String[]) modelGroup.getDesignRuleLocations().toArray();
+		fRuleSetLocations.setEditableValues(tmpRuleSetLocations.toArray(new String[tmpRuleSetLocations.size()]));
 		fRuleSetLocations.removeAll();
 		item = null;
 		String ruleSet = null;
@@ -566,11 +577,13 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 						ruleSetLocations.add(item.getText());
 						//Update references in R4EUIReviewGroup
 						for (R4EUIRuleSet ruleSet : ((R4EUIRootElement) ((R4EUIReviewGroup) fProperties.getElement()).getParent()).getRuleSets()) {
-							if ((ruleSet.getRuleSet().eResource().getURI().toFileString()).equals(item.getText())) {
-								ruleSet.close();
-								ruleSet.open();
-								((R4EUIReviewGroup) fProperties.getElement()).getRuleSets().add(ruleSet);
-								break;
+							if (null != ruleSet.getRuleSet().eResource()) {
+								if ((ruleSet.getRuleSet().eResource().getURI().toFileString()).equals(item.getText())) {
+									ruleSet.close();
+									ruleSet.open();
+									((R4EUIReviewGroup) fProperties.getElement()).getRuleSets().add(ruleSet);
+									break;
+								}
 							}
 						}
 					}
