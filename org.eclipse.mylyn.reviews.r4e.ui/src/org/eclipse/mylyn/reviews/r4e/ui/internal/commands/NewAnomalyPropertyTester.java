@@ -26,23 +26,17 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.text.TextSelection;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.views.contentoutline.ContentOutline;
 
 /**
  * @author lmcdubo
@@ -66,9 +60,15 @@ public class NewAnomalyPropertyTester extends PropertyTester {
 	 */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 
-		//Command is disabled if the review is completed
+		//Command is disabled if there is no active review
 		final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 		if (null == activeReview) {
+			return false;
+		}
+
+		//Command is disabled if the active review is completed
+		if (((R4EReviewState) activeReview.getReview().getState()).getState().equals(
+				R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;
 		}
 
@@ -83,13 +83,6 @@ public class NewAnomalyPropertyTester extends PropertyTester {
 		}
 
 		if (receiver instanceof AbstractList) {
-			final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-			if (null != window) {
-				final IWorkbenchPage page = window.getActivePage();
-				if (null != page && !(page.getActivePart() instanceof ContentOutline)) {
-					return true; //not an Outline view
-				}
-			}
 			//This happens when the command is selected from the outline view on an external or workspace file
 			final Iterator<?> iterator = ((AbstractList<?>) receiver).iterator();
 			if (!iterator.hasNext()) {
@@ -104,26 +97,6 @@ public class NewAnomalyPropertyTester extends PropertyTester {
 						return false;
 					}
 				}
-			}
-		}
-
-		//For formal reviews, anomalies can only be added by reviewers in all phases except COMPLETED
-		if (activeReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			R4EParticipant reviewer = null;
-			try {
-				reviewer = activeReview.getParticipant(R4EUIModelController.getReviewer(), false);
-			} catch (ResourceHandlingException e) {
-				UIUtils.displayResourceErrorDialog(e);
-				return false;
-			}
-			if (null == reviewer) {
-				return false;
-			}
-
-			if (reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR)
-					|| ((R4EReviewState) activeReview.getReview().getState()).getState().equals(
-							R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-				return false;
 			}
 		}
 		return true;

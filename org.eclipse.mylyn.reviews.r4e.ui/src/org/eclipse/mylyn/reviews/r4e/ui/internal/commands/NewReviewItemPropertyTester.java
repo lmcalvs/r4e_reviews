@@ -44,7 +44,6 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.views.contentoutline.ContentOutline;
 
 /**
  * @author lmcdubo
@@ -68,11 +67,13 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 	 */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 
-		//Command is disabled if the review is completed
+		//Command is disabled if there is no active review
 		final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 		if (null == activeReview) {
 			return false;
 		}
+
+		//Command is disabled if the active review is completed
 		final R4EReviewPhase phase = ((R4EReviewState) activeReview.getReview().getState()).getState();
 		if (activeReview.isUserReviewed() || phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;
@@ -89,13 +90,6 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 		}
 
 		if (receiver instanceof AbstractList) {
-			final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-			if (null != window) {
-				final IWorkbenchPage page = window.getActivePage();
-				if (null != page && !(page.getActivePart() instanceof ContentOutline)) {
-					return true; //not an Outline view
-				}
-			}
 			//This happens when the command is selected from the outline view on an external or workspace file
 			final Iterator<?> iterator = ((AbstractList<?>) receiver).iterator();
 			if (!iterator.hasNext()) {
