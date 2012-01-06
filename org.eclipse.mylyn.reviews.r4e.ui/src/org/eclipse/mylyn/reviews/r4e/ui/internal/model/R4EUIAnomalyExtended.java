@@ -709,6 +709,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 					break;
 
 				case R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED_VALUE:
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
 					break;
 
@@ -798,6 +799,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 					break;
 
 				case R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED_VALUE:
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
 					break;
 
