@@ -670,6 +670,9 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isSendEmailCmd() {
-		return true;
+		if (isEnabled()) {
+			return true;
+		}
+		return false;
 	}
 }

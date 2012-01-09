@@ -298,6 +298,9 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isSendEmailCmd() {
-		return true;
+		if (isEnabled()) {
+			return true;
+		}
+		return false;
 	}
 }

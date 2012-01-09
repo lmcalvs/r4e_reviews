@@ -402,6 +402,9 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isSendEmailCmd() {
-		return true;
+		if (isEnabled()) {
+			return true;
+		}
+		return false;
 	}
 }
