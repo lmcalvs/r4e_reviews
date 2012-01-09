@@ -92,7 +92,9 @@ public class R4EUIComment extends R4EUIModelElement {
 	 *            R4EComment
 	 */
 	public R4EUIComment(IR4EUIModelElement aParent, R4EComment aComment) {
-		super(aParent, (aComment.getDescription().substring(0, COMMENT_LABEL_LENGTH) + "..."));
+		super(aParent, aComment.getDescription().length() > COMMENT_LABEL_LENGTH ? aComment.getDescription().substring(
+				0, COMMENT_LABEL_LENGTH)
+				+ "..." : aComment.getDescription());
 		fComment = aComment;
 		setImage(COMMENT_ICON_FILE);
 	}
