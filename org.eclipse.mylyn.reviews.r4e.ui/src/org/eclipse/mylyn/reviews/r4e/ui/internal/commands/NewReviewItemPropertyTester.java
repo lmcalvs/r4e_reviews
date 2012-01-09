@@ -26,12 +26,8 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.text.TextSelection;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionEditorInput;
@@ -39,7 +35,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedEle
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -105,27 +100,6 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 					}
 				}
 			}
-		}
-
-		//For formal reviews, review items can only be added by reveiwers in the planning and preparation phase
-		if (activeReview.getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			R4EParticipant reviewer = null;
-			try {
-				reviewer = activeReview.getParticipant(R4EUIModelController.getReviewer(), false);
-			} catch (ResourceHandlingException e) {
-				UIUtils.displayResourceErrorDialog(e);
-				return false;
-			}
-			if (null == reviewer) {
-				return false;
-			}
-
-			if (!(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD))
-					&& !(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_AUTHOR))
-					&& !(reviewer.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER))) {
-				return false;
-			}
-
 		}
 		return true;
 	}
