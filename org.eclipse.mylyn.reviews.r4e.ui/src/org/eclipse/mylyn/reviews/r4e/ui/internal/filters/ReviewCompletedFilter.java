@@ -25,6 +25,10 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleArea;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleViolation;
 
 /**
  * @author lmcdubo
@@ -46,7 +50,8 @@ public class ReviewCompletedFilter extends ViewerFilter {
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 
-		if (element instanceof R4EUIReviewGroup) {
+		if (element instanceof R4EUIReviewGroup || element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea
+				|| element instanceof R4EUIRuleViolation || element instanceof R4EUIRule) {
 			return true;
 		}
 
