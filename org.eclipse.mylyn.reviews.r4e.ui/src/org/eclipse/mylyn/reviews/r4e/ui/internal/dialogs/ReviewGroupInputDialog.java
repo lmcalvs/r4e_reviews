@@ -239,15 +239,6 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 				dialog.open();
 				return;
 			}
-			validateResult = validateNameInput(fGroupNameInputTextField);
-			if (null != validateResult) {
-				//Validate of input failed
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Invalid Group Name",
-						new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
-				dialog.open();
-				return;
-			}
 			fGroupNameValue = fGroupNameInputTextField.getText();
 
 			//Validate Folder
@@ -689,16 +680,5 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 	 */
 	private String validateEmptyInput(String aString) {
 		return fValidator.isValid(aString);
-	}
-
-	/**
-	 * Method validateNameInput.
-	 * 
-	 * @param aText
-	 *            Text
-	 * @return String (null = valid, or error string)
-	 */
-	private String validateNameInput(Text aText) {
-		return ((R4EInputValidator) fValidator).isNameValid(aText.getText());
 	}
 }

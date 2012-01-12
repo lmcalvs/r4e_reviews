@@ -204,15 +204,6 @@ public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialo
 				dialog.open();
 				return;
 			}
-			validateResult = validateNameInput(fNameInputTextField);
-			if (null != validateResult) {
-				//Validate of input failed
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Invalid Rule Set Name", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult,
-								null), IStatus.ERROR);
-				dialog.open();
-				return;
-			}
 			fNameValue = fNameInputTextField.getText();
 
 		} else {
@@ -467,16 +458,5 @@ public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialo
 			return fValidator.isValid(aText.getText());
 		}
 		return null;
-	}
-
-	/**
-	 * Method validateNameInput.
-	 * 
-	 * @param aText
-	 *            Text
-	 * @return String
-	 */
-	private String validateNameInput(Text aText) {
-		return ((R4EInputValidator) fValidator).isNameValid(aText.getText());
 	}
 }

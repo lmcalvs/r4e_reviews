@@ -19,7 +19,6 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.navigator;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +34,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -633,9 +634,10 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 			//Convert the loaded groups array to array of File Paths
 			final List<String> groupsLoadedPaths = new ArrayList<String>();
-			for (IR4EUIModelElement group : groupsLoaded) {
-				groupsLoadedPaths.add(new File(((R4EUIReviewGroup) group).getReviewGroup().getFolder() + File.separator
-						+ group.getName() + R4EUIConstants.GROUP_FILE_SUFFIX).getPath());
+			IPath path;
+			for (R4EUIReviewGroup group : groupsLoaded) {
+				path = new Path(group.getReviewGroup().eResource().getURI().devicePath());
+				groupsLoadedPaths.add(path.toOSString());
 			}
 
 			//Groups that are in preferences, but not loaded should be loaded
@@ -654,8 +656,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			final List<IR4EUIModelElement> groupsToRemove = new ArrayList<IR4EUIModelElement>();
 			for (IR4EUIModelElement group : groupsLoaded) {
 				for (String groupPath : result) {
-					if (groupPath.equals(new File(((R4EUIReviewGroup) group).getReviewGroup().getFolder()
-							+ File.separator + group.getName() + R4EUIConstants.GROUP_FILE_SUFFIX).getPath())) {
+					path = new Path(((R4EUIReviewGroup) group).getReviewGroup().eResource().getURI().devicePath());
+					if (groupPath.equals(path.toOSString())) {
 						groupsToRemove.add(group);
 					}
 				}
@@ -681,9 +683,10 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 			//Convert the loaded rule set array to array of File Paths
 			final List<String> ruleSetsLoadedPaths = new ArrayList<String>();
-			for (IR4EUIModelElement ruleSet : ruleSetsLoaded) {
-				ruleSetsLoadedPaths.add(new File(((R4EUIRuleSet) ruleSet).getRuleSet().getFolder() + File.separator
-						+ ruleSet.getName() + R4EUIConstants.RULE_SET_FILE_SUFFIX).getPath());
+			IPath path;
+			for (R4EUIRuleSet ruleSet : ruleSetsLoaded) {
+				path = new Path(ruleSet.getRuleSetFileURI().devicePath());
+				ruleSetsLoadedPaths.add(path.toOSString());
 			}
 
 			//Rule Sets that are in preferences, but not loaded should be loaded
@@ -702,8 +705,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			final List<IR4EUIModelElement> ruleSetsToRemove = new ArrayList<IR4EUIModelElement>();
 			for (IR4EUIModelElement ruleSet : ruleSetsLoaded) {
 				for (String ruleSetPath : result) {
-					if (ruleSetPath.equals(new File(((R4EUIRuleSet) ruleSet).getRuleSet().getFolder() + File.separator
-							+ ruleSet.getName() + R4EUIConstants.RULE_SET_FILE_SUFFIX).getPath())) {
+					path = new Path(((R4EUIRuleSet) ruleSet).getRuleSetFileURI().devicePath());
+					if (ruleSetPath.equals(path.toOSString())) {
 						ruleSetsToRemove.add(ruleSet);
 					}
 				}

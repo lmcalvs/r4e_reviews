@@ -270,15 +270,6 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 				dialog.open();
 				return;
 			}
-			validateResult = validateNameInput(fReviewNameInputTextField);
-			if (null != validateResult) {
-				//Validate of input failed
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Invalid Review Name",
-						new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
-				dialog.open();
-				return;
-			}
 			fReviewNameValue = fReviewNameInputTextField.getText();
 
 			//Validate Review Description
@@ -671,16 +662,5 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	 */
 	private String validateEmptyInput(String aString) {
 		return fValidator.isValid(aString);
-	}
-
-	/**
-	 * Method validateNameInput.
-	 * 
-	 * @param aText
-	 *            Text
-	 * @return String
-	 */
-	private String validateNameInput(Text aText) {
-		return ((R4EInputValidator) fValidator).isNameValid(aText.getText());
 	}
 }

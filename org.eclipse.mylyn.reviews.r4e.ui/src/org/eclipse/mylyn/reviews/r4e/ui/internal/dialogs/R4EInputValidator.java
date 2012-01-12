@@ -59,11 +59,6 @@ public class R4EInputValidator implements IInputValidator {
 	 */
 	private static final String FILE_EXISTS_VALIDATION_ERROR_MESSAGE = "File already exists";
 
-	/**
-	 * Field INVALID_CHARACTER_ERROR_MESSAGE. (value is ""Invalid character '.'"")
-	 */
-	private static final String INVALID_CHARACTER_ERROR_MESSAGE = "Invalid character";
-
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -130,66 +125,6 @@ public class R4EInputValidator implements IInputValidator {
 	public String isValid(String newText) { // $codepro.audit.disable booleanMethodNamingConvention
 		if (null == newText || 0 == newText.length()) {
 			return EMPTY_VALIDATION_ERROR_MESSAGE;
-		}
-		return null;
-	}
-
-	/**
-	 * Method isNameValid.
-	 * 
-	 * @param newText
-	 *            String
-	 * @return String
-	 */
-	public String isNameValid(String text) {
-		if (text.contains(".")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '.'";
-		} else if (text.contains("*")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '*'";
-		} else if (text.contains("<")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '<'";
-		} else if (text.contains(">")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '>'";
-		} else if (text.contains("[")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '['";
-		} else if (text.contains("]")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " ']'";
-		} else if (text.contains("=")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '='";
-		} else if (text.contains("+")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '+'";
-		} else if (text.contains("\"")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '\"'";
-		} else if (text.contains("/")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '/'";
-		} else if (text.contains("\\")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '\\'";
-		} else if (text.contains(",")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " ','";
-		} else if (text.contains(":")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " ':'";
-		} else if (text.contains(";")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " ';'";
-		} else if (text.contains("~")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '~'";
-		} else if (text.contains("#")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '#'";
-		} else if (text.contains("%")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '%'";
-		} else if (text.contains("&")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '&'";
-		} else if (text.contains("{")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '{'";
-		} else if (text.contains("}")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '}'";
-		} else if (text.contains("?")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '?'";
-		} else if (text.contains("|")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '|'";
-		} else if (text.contains("\'")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '\''";
-		} else if (text.contains("^")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE + " '^'";
 		}
 		return null;
 	}
