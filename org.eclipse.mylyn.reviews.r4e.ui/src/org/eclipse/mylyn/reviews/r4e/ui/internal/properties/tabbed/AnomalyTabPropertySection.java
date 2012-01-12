@@ -341,6 +341,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
 		fStateCombo.setToolTipText(R4EUIConstants.ANOMALY_STATE_TOOLTIP);
+		fStateCombo.setVisibleItemCount(6);
 		fStateCombo.setLayoutData(data);
 		fStateCombo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
