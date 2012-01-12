@@ -502,7 +502,6 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		fProjectCombo = aWidgetFactory.createCCombo(reviewDetailsSectionClient);
 		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		gridData.horizontalSpan = 3;
-		fProjectCombo.setEditable(true);
 		fProjectCombo.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);
 		fProjectCombo.setLayoutData(gridData);
 		fProjectCombo.addListener(SWT.FocusOut, new Listener() {
@@ -512,14 +511,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
 						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						String project = "";
-						for (String item : fProjectCombo.getItems()) {
-							if (fProjectCombo.getText().equals(item)) {
-								project = fProjectCombo.getText();
-								break;
-							}
-						}
-						modelReview.setProject(project);
+						modelReview.setProject(fProjectCombo.getText());
 						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
@@ -1123,9 +1115,15 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		final String[] availableProjects = (String[]) ((R4EUIReviewGroup) uiReview.getParent()).getReviewGroup()
 				.getAvailableProjects()
 				.toArray();
-		fProjectCombo.setItems(availableProjects);
+		fProjectCombo.removeAll();
+		fProjectCombo.add("");
+		for (String project : availableProjects) {
+			fProjectCombo.add(project);
+		}
 		final String project = modelReview.getProject();
-		fProjectCombo.setText(project);
+		if (null != project) {
+			fProjectCombo.setText(project);
+		}
 
 		fComponents.setEditableValues((String[]) ((R4EUIReviewGroup) uiReview.getParent()).getReviewGroup()
 				.getAvailableComponents()

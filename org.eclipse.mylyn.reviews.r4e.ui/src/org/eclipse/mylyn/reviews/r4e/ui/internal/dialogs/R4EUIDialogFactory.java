@@ -295,6 +295,8 @@ public class R4EUIDialogFactory {
 	/**
 	 * Method getParticipantInputDialog.
 	 * 
+	 * @param aShowExtraParams
+	 *            boolean
 	 * @return IParticipantInputDialog
 	 */
 	public IParticipantInputDialog getParticipantInputDialog(boolean aShowExtraParams) {

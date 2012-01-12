@@ -484,7 +484,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 						ruleSetUsed = true;
 					}
 				}
-				if (!ruleSetUsed) {
+				if (!ruleSetUsed || !fProperties.getElement().isOpen()) {
 					uiRuleSet.close();
 				}
 			}

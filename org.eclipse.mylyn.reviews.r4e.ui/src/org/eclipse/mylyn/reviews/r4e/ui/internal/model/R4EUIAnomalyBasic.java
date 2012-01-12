@@ -40,6 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.AnomalyBasicProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -87,6 +88,11 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * Field RESTORE_ELEMENT_ACTION_TOOLTIP. (value is ""Restore this disabled Anomaly"")
 	 */
 	private static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this disabled Anomaly";
+
+	/**
+	 * Field ANOMALY_LABEL_TITLE_LENGTH. (value is 20)
+	 */
+	private static final int ANOMALY_LABEL_TITLE_LENGTH = 20;
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -241,7 +247,23 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @return String - the new name
 	 */
 	public static String buildAnomalyName(R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
-		return (null == aPosition) ? aAnomaly.getTitle() : aPosition.toString() + "->" + aAnomaly.getTitle();
+		return (null == aPosition) ? adjustTitleLength(aAnomaly) : aPosition.toString() + "->"
+				+ adjustTitleLength(aAnomaly);
+	}
+
+	/**
+	 * Method adjustTitleLength.
+	 * 
+	 * @param aDescription
+	 *            String
+	 * @return String
+	 */
+	protected static String adjustTitleLength(R4EAnomaly aAnomaly) {
+		if (aAnomaly.getTitle().length() > ANOMALY_LABEL_TITLE_LENGTH) {
+			return aAnomaly.getTitle().substring(0, ANOMALY_LABEL_TITLE_LENGTH) + R4EUIConstants.ELLIPSIS_STR;
+		} else {
+			return aAnomaly.getTitle();
+		}
 	}
 
 	/**

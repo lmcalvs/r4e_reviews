@@ -62,7 +62,7 @@ public class R4EInputValidator implements IInputValidator {
 	/**
 	 * Field INVALID_CHARACTER_ERROR_MESSAGE. (value is ""Invalid character '.'"")
 	 */
-	private static final String INVALID_CHARACTER_ERROR_MESSAGE = "Invalid character '.'";
+	private static final String INVALID_CHARACTER_ERROR_MESSAGE = "Invalid character";
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -143,7 +143,53 @@ public class R4EInputValidator implements IInputValidator {
 	 */
 	public String isNameValid(String text) {
 		if (text.contains(".")) {
-			return INVALID_CHARACTER_ERROR_MESSAGE;
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '.'";
+		} else if (text.contains("*")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '*'";
+		} else if (text.contains("<")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '<'";
+		} else if (text.contains(">")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '>'";
+		} else if (text.contains("[")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '['";
+		} else if (text.contains("]")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " ']'";
+		} else if (text.contains("=")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '='";
+		} else if (text.contains("+")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '+'";
+		} else if (text.contains("\"")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '\"'";
+		} else if (text.contains("/")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '/'";
+		} else if (text.contains("\\")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '\\'";
+		} else if (text.contains(",")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " ','";
+		} else if (text.contains(":")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " ':'";
+		} else if (text.contains(";")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " ';'";
+		} else if (text.contains("~")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '~'";
+		} else if (text.contains("#")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '#'";
+		} else if (text.contains("%")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '%'";
+		} else if (text.contains("&")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '&'";
+		} else if (text.contains("{")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '{'";
+		} else if (text.contains("}")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '}'";
+		} else if (text.contains("?")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '?'";
+		} else if (text.contains("|")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '|'";
+		} else if (text.contains("\'")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '\''";
+		} else if (text.contains("^")) {
+			return INVALID_CHARACTER_ERROR_MESSAGE + " '^'";
 		}
 		return null;
 	}

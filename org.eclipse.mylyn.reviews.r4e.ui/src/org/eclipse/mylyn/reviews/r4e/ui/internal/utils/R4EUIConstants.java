@@ -44,6 +44,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String LIST_SEPARATOR = ";";
 
 	/**
+	 * Field ELLIPSIS_STR. (value is ""..."")
+	 */
+	public static final String ELLIPSIS_STR = "...";
+
+	/**
 	 * Field R4E_TEMP_PROJECT. (value is ""R4ETemp"")
 	 */
 	public static final String R4E_TEMP_PROJECT = "R4ETemp";

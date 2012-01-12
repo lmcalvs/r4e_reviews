@@ -274,8 +274,8 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 			if (null != validateResult) {
 				//Validate of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Invalid Rule Set Name", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult,
-								null), IStatus.ERROR);
+						"Invalid Review Name",
+						new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
 				dialog.open();
 				return;
 			}
@@ -485,8 +485,12 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		final String[] projects = (String[]) parentGroup.getReviewGroup().getAvailableProjects().toArray();
 		if (0 == projects.length) {
 			fProjectsCombo.setEnabled(false);
+		} else {
+			fProjectsCombo.add("");
+			for (String project : projects) {
+				fProjectsCombo.add(project);
+			}
 		}
-		fProjectsCombo.setItems(projects);
 		final GridData data1 = new GridData(GridData.FILL, GridData.FILL, true, false);
 		data1.horizontalSpan = 3;
 		fProjectsCombo.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);

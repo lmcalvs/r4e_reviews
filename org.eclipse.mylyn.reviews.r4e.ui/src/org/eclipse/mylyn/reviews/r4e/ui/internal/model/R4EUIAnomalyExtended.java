@@ -194,9 +194,9 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		String nameLabel = null;
 		if (null == getPosition()) {
-			nameLabel = fAnomaly.getTitle();
+			nameLabel = adjustTitleLength(fAnomaly);
 		} else {
-			nameLabel = getPosition().toString() + "->" + fAnomaly.getTitle();
+			nameLabel = getPosition().toString() + "->" + adjustTitleLength(fAnomaly);
 		}
 		setName(getStateString(aNewState) + ": " + nameLabel);
 	}
@@ -458,6 +458,9 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 				case R4EAnomalyState.R4E_ANOMALY_STATE_FIXED_VALUE:
 					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
 						return R4EAnomalyState.R4E_ANOMALY_STATE_CREATED;
+					}
+					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+						return R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED;
 					}
 					break;
 
@@ -791,9 +794,11 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 
 				case R4EAnomalyState.R4E_ANOMALY_STATE_FIXED_VALUE:
 					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
 					} else {
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
 					}
 					break;

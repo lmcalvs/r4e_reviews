@@ -27,6 +27,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.CommentProperties;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -66,9 +67,9 @@ public class R4EUIComment extends R4EUIModelElement {
 	private static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this disabled Comment";
 
 	/**
-	 * Field COMMENT_LABEL_LENGTH. (value is 12)
+	 * Field COMMENT_LABEL_LENGTH. (value is 25)
 	 */
-	private static final int COMMENT_LABEL_LENGTH = 12;
+	private static final int COMMENT_LABEL_LENGTH = 25;
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -92,9 +93,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	 *            R4EComment
 	 */
 	public R4EUIComment(IR4EUIModelElement aParent, R4EComment aComment) {
-		super(aParent, aComment.getDescription().length() > COMMENT_LABEL_LENGTH ? aComment.getDescription().substring(
-				0, COMMENT_LABEL_LENGTH)
-				+ "..." : aComment.getDescription());
+		super(aParent, buildCommentName(aComment.getDescription()));
 		fComment = aComment;
 		setImage(COMMENT_ICON_FILE);
 	}
@@ -132,6 +131,27 @@ public class R4EUIComment extends R4EUIModelElement {
 			return new CommentProperties(this);
 		}
 		return null;
+	}
+
+	/**
+	 * Method buildCommentName.
+	 * 
+	 * @param aDescription
+	 *            String
+	 * @return String
+	 */
+	private static String buildCommentName(String aDescription) {
+		//Only consider first line
+		String[] lines = aDescription.split(System.getProperty("line.separator"));
+		if (lines[0].length() > COMMENT_LABEL_LENGTH) {
+			return lines[0].substring(0, COMMENT_LABEL_LENGTH) + R4EUIConstants.ELLIPSIS_STR;
+		} else {
+			if (lines.length > 1) {
+				return lines[0] + R4EUIConstants.ELLIPSIS_STR;
+			} else {
+				return lines[0];
+			}
+		}
 	}
 
 	//Attributes

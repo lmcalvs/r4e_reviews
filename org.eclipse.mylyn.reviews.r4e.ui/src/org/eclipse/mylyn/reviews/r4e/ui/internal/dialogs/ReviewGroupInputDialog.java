@@ -652,7 +652,7 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 	 * 
 	 * @param aText
 	 *            Text
-	 * @return String
+	 * @return String (null = valid, or error string)
 	 */
 	protected String validateFolderInput(Text aText) {
 		return ((R4EInputValidator) fValidator).isFolderValid(aText.getText());
@@ -663,7 +663,7 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 	 * 
 	 * @param aText
 	 *            Text
-	 * @return String
+	 * @return String (null = valid, or error string)
 	 */
 	private String validateGroupExists(Text aText) {
 		return ((R4EInputValidator) fValidator).isFolderEmpty(aText.getText());
@@ -674,7 +674,7 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 	 * 
 	 * @param aText
 	 *            Text
-	 * @return String
+	 * @return String (null = valid, or error string)
 	 */
 	private String validateEmptyInput(Text aText) {
 		return fValidator.isValid(aText.getText());
@@ -685,7 +685,7 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 	 * 
 	 * @param aString
 	 *            String
-	 * @return String
+	 * @return String (null = valid, or error string)
 	 */
 	private String validateEmptyInput(String aString) {
 		return fValidator.isValid(aString);
@@ -696,7 +696,7 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 	 * 
 	 * @param aText
 	 *            Text
-	 * @return String
+	 * @return String (null = valid, or error string)
 	 */
 	private String validateNameInput(Text aText) {
 		return ((R4EInputValidator) fValidator).isNameValid(aText.getText());
