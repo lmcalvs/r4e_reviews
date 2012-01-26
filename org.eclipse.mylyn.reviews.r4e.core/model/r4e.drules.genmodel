@@ -13,6 +13,7 @@
       <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleRank/R4E_RANK_NONE"/>
       <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleRank/R4E_RANK_MINOR"/>
       <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleRank/R4E_RANK_MAJOR"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleRank/R4E_RANK_DEPRECATED"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="r4e.design.rules.ecore#//R4EDesignRuleClass">
       <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_ERRONEOUS"/>

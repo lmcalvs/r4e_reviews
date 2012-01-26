@@ -48,7 +48,7 @@ public enum R4EDesignRuleRank implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	R4E_RANK_MINOR(1, "R4E_RANK_MINOR", ""),
+	R4E_RANK_MINOR(1, "R4E_RANK_MINOR", "R4E_RANK_MINOR"),
 
 	/**
 	 * The '<em><b>R4E RANK MAJOR</b></em>' literal object.
@@ -58,7 +58,15 @@ public enum R4EDesignRuleRank implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	R4E_RANK_MAJOR(2, "R4E_RANK_MAJOR", "R4E_RANK_MAJOR");
+	R4E_RANK_MAJOR(2, "R4E_RANK_MAJOR", "R4E_RANK_MAJOR"), /**
+	 * The '<em><b>R4E RANK DEPRECATED</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #R4E_RANK_DEPRECATED_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	R4E_RANK_DEPRECATED(3, "R4E_RANK_DEPRECATED", "");
 
 	/**
 	 * The '<em><b>R4E RANK NONE</b></em>' literal value.
@@ -84,7 +92,7 @@ public enum R4EDesignRuleRank implements Enumerator {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #R4E_RANK_MINOR
-	 * @model literal=""
+	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -106,6 +114,21 @@ public enum R4EDesignRuleRank implements Enumerator {
 	public static final int R4E_RANK_MAJOR_VALUE = 2;
 
 	/**
+	 * The '<em><b>R4E RANK DEPRECATED</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E RANK DEPRECATED</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_RANK_DEPRECATED
+	 * @model literal=""
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_RANK_DEPRECATED_VALUE = 3;
+
+	/**
 	 * An array of all the '<em><b>R4E Design Rule Rank</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -116,6 +139,7 @@ public enum R4EDesignRuleRank implements Enumerator {
 			R4E_RANK_NONE,
 			R4E_RANK_MINOR,
 			R4E_RANK_MAJOR,
+			R4E_RANK_DEPRECATED,
 		};
 
 	/**
@@ -169,6 +193,7 @@ public enum R4EDesignRuleRank implements Enumerator {
 			case R4E_RANK_NONE_VALUE: return R4E_RANK_NONE;
 			case R4E_RANK_MINOR_VALUE: return R4E_RANK_MINOR;
 			case R4E_RANK_MAJOR_VALUE: return R4E_RANK_MAJOR;
+			case R4E_RANK_DEPRECATED_VALUE: return R4E_RANK_DEPRECATED;
 		}
 		return null;
 	}

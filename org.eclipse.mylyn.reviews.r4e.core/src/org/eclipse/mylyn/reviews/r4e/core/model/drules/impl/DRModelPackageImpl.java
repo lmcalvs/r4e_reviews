@@ -431,6 +431,7 @@ public class DRModelPackageImpl extends EPackageImpl implements DRModelPackage {
 		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.R4E_RANK_NONE);
 		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.R4E_RANK_MINOR);
 		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.R4E_RANK_MAJOR);
+		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.R4E_RANK_DEPRECATED);
 
 		initEEnum(r4EDesignRuleClassEEnum, R4EDesignRuleClass.class, "R4EDesignRuleClass");
 		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.R4E_CLASS_ERRONEOUS);

@@ -30,8 +30,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="R4EDesignRuleRank">
     <eLiterals name="R4E_RANK_NONE"/>
-    <eLiterals name="R4E_RANK_MINOR" value="1" literal=""/>
+    <eLiterals name="R4E_RANK_MINOR" value="1" literal="R4E_RANK_MINOR"/>
     <eLiterals name="R4E_RANK_MAJOR" value="2"/>
+    <eLiterals name="R4E_RANK_DEPRECATED" value="3" literal=""/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="R4EDesignRuleClass">
     <eLiterals name="R4E_CLASS_ERRONEOUS"/>
