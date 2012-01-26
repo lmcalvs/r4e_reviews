@@ -18,6 +18,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -207,7 +208,11 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 				return Integer.valueOf(type.getType().getValue());
 			}
 		} else if (ANOMALY_RANK_ID.equals(aId)) {
-			return Integer.valueOf(((R4EUIAnomalyBasic) getElement()).getAnomaly().getRank().getValue());
+			//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
+			int rankValue = ((R4EUIAnomalyBasic) getElement()).getAnomaly().getRank().getValue();
+			return Integer.valueOf(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
+					? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
+					: rankValue);
 		} else if (ANOMALY_RULE_ID_ID.equals(aId)) {
 			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getRuleID();
 		}

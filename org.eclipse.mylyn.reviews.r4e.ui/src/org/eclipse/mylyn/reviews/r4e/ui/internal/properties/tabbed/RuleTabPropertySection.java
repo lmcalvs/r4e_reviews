@@ -20,6 +20,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -316,7 +317,12 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 				fClassCombo.setText("");
 			}
 			fRankCombo.setItems(UIUtils.getRanks());
-			fRankCombo.select(modelRule.getRank().getValue());
+			//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
+			int rankValue = modelRule.getRank().getValue();
+			fRankCombo.select(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
+					? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
+					: rankValue);
+
 			setEnabledFields();
 			fRefreshInProgress = false;
 		} else {

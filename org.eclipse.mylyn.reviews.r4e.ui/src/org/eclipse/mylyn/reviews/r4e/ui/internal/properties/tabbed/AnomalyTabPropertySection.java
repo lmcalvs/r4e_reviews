@@ -28,6 +28,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -921,8 +922,14 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		} else {
 			fClassCombo.setText("");
 		}
+
 		fRankCombo.setItems(UIUtils.getRanks());
-		fRankCombo.select(modelAnomaly.getRank().getValue());
+		//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
+		int rankValue = modelAnomaly.getRank().getValue();
+		fRankCombo.select(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
+				? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
+				: rankValue);
+
 		if (null != modelAnomaly.getRuleID()) {
 			fRuleId.setText(modelAnomaly.getRuleID());
 		}

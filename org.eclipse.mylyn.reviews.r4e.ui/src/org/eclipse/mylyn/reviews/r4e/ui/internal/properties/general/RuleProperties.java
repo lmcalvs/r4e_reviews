@@ -17,6 +17,7 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -146,7 +147,11 @@ public class RuleProperties extends ModelElementProperties {
 			} else if (RULE_CLASS_ID.equals(aId)) {
 				return Integer.valueOf(((R4EUIRule) getElement()).getRule().getClass_().getValue());
 			} else if (RULE_RANK_ID.equals(aId)) {
-				return Integer.valueOf(((R4EUIRule) getElement()).getRule().getRank().getValue());
+				//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
+				int rankValue = ((R4EUIRule) getElement()).getRule().getRank().getValue();
+				return Integer.valueOf(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
+						? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
+						: rankValue);
 			}
 		}
 		return null;
