@@ -586,6 +586,10 @@
   <children xmi:type="notation:Node" xmi:id="_0EcyQMW6Ed-OHt4UvkWdIw" type="1001">
     <children xmi:type="notation:Node" xmi:id="_0EmjQMW6Ed-OHt4UvkWdIw" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_0EmjQcW6Ed-OHt4UvkWdIw" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_9uH7AUXzEeGWe_5Mt5Meuw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewComponent/assignedTo"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_9uH7AkXzEeGWe_5Mt5Meuw"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_0EmjQsW6Ed-OHt4UvkWdIw"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_0EmjQ8W6Ed-OHt4UvkWdIw"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_0EmjRMW6Ed-OHt4UvkWdIw"/>

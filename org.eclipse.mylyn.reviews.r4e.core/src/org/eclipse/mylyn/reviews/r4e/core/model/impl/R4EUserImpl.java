@@ -44,6 +44,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#isEnabled <em>Enabled</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#getAssignedTo <em>Assigned To</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#getGroupPaths <em>Group Paths</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#getSequenceIDCounter <em>Sequence ID Counter</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#getAddedComments <em>Added Comments</em>}</li>
@@ -78,6 +79,16 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	 * @ordered
 	 */
 	protected boolean enabled = ENABLED_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getAssignedTo() <em>Assigned To</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssignedTo()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> assignedTo;
 
 	/**
 	 * The cached value of the '{@link #getGroupPaths() <em>Group Paths</em>}' attribute list.
@@ -256,6 +267,18 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 		enabled = newEnabled;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_USER__ENABLED, oldEnabled, enabled));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getAssignedTo() {
+		if (assignedTo == null) {
+			assignedTo = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_USER__ASSIGNED_TO);
+		}
+		return assignedTo;
 	}
 
 	/**
@@ -474,6 +497,8 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 		switch (featureID) {
 			case RModelPackage.R4E_USER__ENABLED:
 				return isEnabled();
+			case RModelPackage.R4E_USER__ASSIGNED_TO:
+				return getAssignedTo();
 			case RModelPackage.R4E_USER__GROUP_PATHS:
 				return getGroupPaths();
 			case RModelPackage.R4E_USER__SEQUENCE_ID_COUNTER:
@@ -508,6 +533,10 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 		switch (featureID) {
 			case RModelPackage.R4E_USER__ENABLED:
 				setEnabled((Boolean)newValue);
+				return;
+			case RModelPackage.R4E_USER__ASSIGNED_TO:
+				getAssignedTo().clear();
+				getAssignedTo().addAll((Collection<? extends String>)newValue);
 				return;
 			case RModelPackage.R4E_USER__GROUP_PATHS:
 				getGroupPaths().clear();
@@ -554,6 +583,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 			case RModelPackage.R4E_USER__ENABLED:
 				setEnabled(ENABLED_EDEFAULT);
 				return;
+			case RModelPackage.R4E_USER__ASSIGNED_TO:
+				getAssignedTo().clear();
+				return;
 			case RModelPackage.R4E_USER__GROUP_PATHS:
 				getGroupPaths().clear();
 				return;
@@ -595,6 +627,8 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 		switch (featureID) {
 			case RModelPackage.R4E_USER__ENABLED:
 				return enabled != ENABLED_EDEFAULT;
+			case RModelPackage.R4E_USER__ASSIGNED_TO:
+				return assignedTo != null && !assignedTo.isEmpty();
 			case RModelPackage.R4E_USER__GROUP_PATHS:
 				return groupPaths != null && !groupPaths.isEmpty();
 			case RModelPackage.R4E_USER__SEQUENCE_ID_COUNTER:
@@ -632,6 +666,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 		}
 		if (baseClass == R4EReviewComponent.class) {
 			switch (derivedFeatureID) {
+				case RModelPackage.R4E_USER__ASSIGNED_TO: return RModelPackage.R4E_REVIEW_COMPONENT__ASSIGNED_TO;
 				default: return -1;
 			}
 		}
@@ -653,6 +688,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 		}
 		if (baseClass == R4EReviewComponent.class) {
 			switch (baseFeatureID) {
+				case RModelPackage.R4E_REVIEW_COMPONENT__ASSIGNED_TO: return RModelPackage.R4E_USER__ASSIGNED_TO;
 				default: return -1;
 			}
 		}
@@ -671,6 +707,8 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (enabled: ");
 		result.append(enabled);
+		result.append(", assignedTo: ");
+		result.append(assignedTo);
 		result.append(", groupPaths: ");
 		result.append(groupPaths);
 		result.append(", sequenceIDCounter: ");

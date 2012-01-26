@@ -1348,6 +1348,15 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getR4EReviewComponent_AssignedTo() {
+		return (EAttribute)r4EReviewComponentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getR4EFileContext() {
 		return r4EFileContextEClass;
 	}
@@ -2198,6 +2207,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEReference(r4ECommentEClass, R4E_COMMENT__INFO_ATT);
 
 		r4EReviewComponentEClass = createEClass(R4E_REVIEW_COMPONENT);
+		createEAttribute(r4EReviewComponentEClass, R4E_REVIEW_COMPONENT__ASSIGNED_TO);
 
 		r4EFileContextEClass = createEClass(R4E_FILE_CONTEXT);
 		createEReference(r4EFileContextEClass, R4E_FILE_CONTEXT__DELTAS);
@@ -2480,6 +2490,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EComment_InfoAtt(), this.getMapKeyToInfoAttributes(), null, "infoAtt", null, 0, -1, R4EComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EReviewComponentEClass, R4EReviewComponent.class, "R4EReviewComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getR4EReviewComponent_AssignedTo(), ecorePackage.getEString(), "assignedTo", null, 0, -1, R4EReviewComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EFileContextEClass, R4EFileContext.class, "R4EFileContext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getR4EFileContext_Deltas(), this.getR4EDelta(), null, "deltas", null, 0, -1, R4EFileContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

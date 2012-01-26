@@ -14,15 +14,18 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.mylyn.reviews.frame.core.model.User;
@@ -46,6 +49,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getAssignedTo <em>Assigned To</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getCreatedOn <em>Created On</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getAnomaly <em>Anomaly</em>}</li>
@@ -73,6 +77,16 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
  * @generated
  */
 public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
+	/**
+	 * The cached value of the '{@link #getAssignedTo() <em>Assigned To</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssignedTo()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> assignedTo;
+
 	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -400,6 +414,18 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	@Override
 	protected EClass eStaticClass() {
 		return RModelPackage.Literals.R4E_ANOMALY;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getAssignedTo() {
+		if (assignedTo == null) {
+			assignedTo = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_ANOMALY__ASSIGNED_TO);
+		}
+		return assignedTo;
 	}
 
 	/**
@@ -1056,6 +1082,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case RModelPackage.R4E_ANOMALY__ASSIGNED_TO:
+				return getAssignedTo();
 			case RModelPackage.R4E_ANOMALY__ID:
 				if (resolve) return getId();
 				return basicGetId();
@@ -1118,9 +1146,14 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case RModelPackage.R4E_ANOMALY__ASSIGNED_TO:
+				getAssignedTo().clear();
+				getAssignedTo().addAll((Collection<? extends String>)newValue);
+				return;
 			case RModelPackage.R4E_ANOMALY__ID:
 				setId((R4EID)newValue);
 				return;
@@ -1196,6 +1229,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case RModelPackage.R4E_ANOMALY__ASSIGNED_TO:
+				getAssignedTo().clear();
+				return;
 			case RModelPackage.R4E_ANOMALY__ID:
 				setId((R4EID)null);
 				return;
@@ -1271,6 +1307,8 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case RModelPackage.R4E_ANOMALY__ASSIGNED_TO:
+				return assignedTo != null && !assignedTo.isEmpty();
 			case RModelPackage.R4E_ANOMALY__ID:
 				return id != null;
 			case RModelPackage.R4E_ANOMALY__CREATED_ON:
@@ -1326,6 +1364,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
 		if (baseClass == R4EReviewComponent.class) {
 			switch (derivedFeatureID) {
+				case RModelPackage.R4E_ANOMALY__ASSIGNED_TO: return RModelPackage.R4E_REVIEW_COMPONENT__ASSIGNED_TO;
 				default: return -1;
 			}
 		}
@@ -1355,6 +1394,7 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
 		if (baseClass == R4EReviewComponent.class) {
 			switch (baseFeatureID) {
+				case RModelPackage.R4E_REVIEW_COMPONENT__ASSIGNED_TO: return RModelPackage.R4E_ANOMALY__ASSIGNED_TO;
 				default: return -1;
 			}
 		}
@@ -1385,7 +1425,9 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (createdOn: ");
+		result.append(" (assignedTo: ");
+		result.append(assignedTo);
+		result.append(", createdOn: ");
 		result.append(createdOn);
 		result.append(", state: ");
 		result.append(state);

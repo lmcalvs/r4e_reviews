@@ -117,13 +117,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_REVIEW_GROUP__DESCRIPTION = ModelPackage.REVIEW_GROUP__DESCRIPTION;
 
 	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW_GROUP__ASSIGNED_TO = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP__NAME = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 0;
+	int R4E_REVIEW_GROUP__NAME = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Folder</b></em>' attribute.
@@ -132,7 +141,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP__FOLDER = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 1;
+	int R4E_REVIEW_GROUP__FOLDER = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Default Entry Criteria</b></em>' attribute.
@@ -141,7 +150,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP__DEFAULT_ENTRY_CRITERIA = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 2;
+	int R4E_REVIEW_GROUP__DEFAULT_ENTRY_CRITERIA = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Available Projects</b></em>' attribute list.
@@ -150,7 +159,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP__AVAILABLE_PROJECTS = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 3;
+	int R4E_REVIEW_GROUP__AVAILABLE_PROJECTS = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Available Components</b></em>' attribute list.
@@ -159,7 +168,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP__AVAILABLE_COMPONENTS = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 4;
+	int R4E_REVIEW_GROUP__AVAILABLE_COMPONENTS = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Design Rule Locations</b></em>' attribute list.
@@ -168,7 +177,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP__DESIGN_RULE_LOCATIONS = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 5;
+	int R4E_REVIEW_GROUP__DESIGN_RULE_LOCATIONS = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Xml Version</b></em>' attribute.
@@ -177,7 +186,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP__XML_VERSION = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 6;
+	int R4E_REVIEW_GROUP__XML_VERSION = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Available Anomaly Types</b></em>' containment reference list.
@@ -186,7 +195,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 7;
+	int R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Anomaly Type Key To Reference</b></em>' map.
@@ -195,7 +204,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP__ANOMALY_TYPE_KEY_TO_REFERENCE = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 8;
+	int R4E_REVIEW_GROUP__ANOMALY_TYPE_KEY_TO_REFERENCE = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Reviews Map</b></em>' map.
@@ -204,7 +213,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP__REVIEWS_MAP = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 9;
+	int R4E_REVIEW_GROUP__REVIEWS_MAP = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>User Reviews</b></em>' map.
@@ -213,7 +222,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP__USER_REVIEWS = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 10;
+	int R4E_REVIEW_GROUP__USER_REVIEWS = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 11;
 
 	/**
 	 * The number of structural features of the '<em>R4E Review Group</em>' class.
@@ -222,7 +231,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_GROUP_FEATURE_COUNT = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 11;
+	int R4E_REVIEW_GROUP_FEATURE_COUNT = ModelPackage.REVIEW_GROUP_FEATURE_COUNT + 12;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl <em>R4E Review</em>}' class.
@@ -280,13 +289,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_REVIEW__STATE = ModelPackage.REVIEW__STATE;
 
 	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW__ASSIGNED_TO = ModelPackage.REVIEW_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__NAME = ModelPackage.REVIEW_FEATURE_COUNT + 0;
+	int R4E_REVIEW__NAME = ModelPackage.REVIEW_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Project</b></em>' attribute.
@@ -295,7 +313,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__PROJECT = ModelPackage.REVIEW_FEATURE_COUNT + 1;
+	int R4E_REVIEW__PROJECT = ModelPackage.REVIEW_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Components</b></em>' attribute list.
@@ -304,7 +322,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__COMPONENTS = ModelPackage.REVIEW_FEATURE_COUNT + 2;
+	int R4E_REVIEW__COMPONENTS = ModelPackage.REVIEW_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Entry Criteria</b></em>' attribute.
@@ -313,7 +331,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__ENTRY_CRITERIA = ModelPackage.REVIEW_FEATURE_COUNT + 3;
+	int R4E_REVIEW__ENTRY_CRITERIA = ModelPackage.REVIEW_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Extra Notes</b></em>' attribute.
@@ -322,7 +340,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__EXTRA_NOTES = ModelPackage.REVIEW_FEATURE_COUNT + 4;
+	int R4E_REVIEW__EXTRA_NOTES = ModelPackage.REVIEW_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Objectives</b></em>' attribute.
@@ -331,7 +349,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__OBJECTIVES = ModelPackage.REVIEW_FEATURE_COUNT + 5;
+	int R4E_REVIEW__OBJECTIVES = ModelPackage.REVIEW_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Reference Material</b></em>' attribute.
@@ -340,7 +358,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__REFERENCE_MATERIAL = ModelPackage.REVIEW_FEATURE_COUNT + 6;
+	int R4E_REVIEW__REFERENCE_MATERIAL = ModelPackage.REVIEW_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Decision</b></em>' containment reference.
@@ -349,7 +367,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__DECISION = ModelPackage.REVIEW_FEATURE_COUNT + 7;
+	int R4E_REVIEW__DECISION = ModelPackage.REVIEW_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Start Date</b></em>' attribute.
@@ -358,7 +376,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__START_DATE = ModelPackage.REVIEW_FEATURE_COUNT + 8;
+	int R4E_REVIEW__START_DATE = ModelPackage.REVIEW_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>End Date</b></em>' attribute.
@@ -367,7 +385,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__END_DATE = ModelPackage.REVIEW_FEATURE_COUNT + 9;
+	int R4E_REVIEW__END_DATE = ModelPackage.REVIEW_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Xml Version</b></em>' attribute.
@@ -376,7 +394,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__XML_VERSION = ModelPackage.REVIEW_FEATURE_COUNT + 10;
+	int R4E_REVIEW__XML_VERSION = ModelPackage.REVIEW_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Anomaly Template</b></em>' containment reference.
@@ -385,7 +403,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__ANOMALY_TEMPLATE = ModelPackage.REVIEW_FEATURE_COUNT + 11;
+	int R4E_REVIEW__ANOMALY_TEMPLATE = ModelPackage.REVIEW_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -394,7 +412,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__TYPE = ModelPackage.REVIEW_FEATURE_COUNT + 12;
+	int R4E_REVIEW__TYPE = ModelPackage.REVIEW_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Users Map</b></em>' map.
@@ -403,7 +421,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__USERS_MAP = ModelPackage.REVIEW_FEATURE_COUNT + 13;
+	int R4E_REVIEW__USERS_MAP = ModelPackage.REVIEW_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Created By</b></em>' reference.
@@ -412,7 +430,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__CREATED_BY = ModelPackage.REVIEW_FEATURE_COUNT + 14;
+	int R4E_REVIEW__CREATED_BY = ModelPackage.REVIEW_FEATURE_COUNT + 15;
 
 	/**
 	 * The feature id for the '<em><b>Ids Map</b></em>' map.
@@ -421,7 +439,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__IDS_MAP = ModelPackage.REVIEW_FEATURE_COUNT + 15;
+	int R4E_REVIEW__IDS_MAP = ModelPackage.REVIEW_FEATURE_COUNT + 16;
 
 	/**
 	 * The feature id for the '<em><b>Active Meeting</b></em>' containment reference.
@@ -430,7 +448,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__ACTIVE_MEETING = ModelPackage.REVIEW_FEATURE_COUNT + 16;
+	int R4E_REVIEW__ACTIVE_MEETING = ModelPackage.REVIEW_FEATURE_COUNT + 17;
 
 	/**
 	 * The number of structural features of the '<em>R4E Review</em>' class.
@@ -439,7 +457,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_FEATURE_COUNT = ModelPackage.REVIEW_FEATURE_COUNT + 17;
+	int R4E_REVIEW_FEATURE_COUNT = ModelPackage.REVIEW_FEATURE_COUNT + 18;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl <em>R4E Anomaly</em>}' class.
@@ -533,13 +551,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_ANOMALY__TITLE = ModelPackage.TOPIC__TITLE;
 
 	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ANOMALY__ASSIGNED_TO = ModelPackage.TOPIC_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__ID = ModelPackage.TOPIC_FEATURE_COUNT + 0;
+	int R4E_ANOMALY__ID = ModelPackage.TOPIC_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Created On</b></em>' attribute.
@@ -548,7 +575,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__CREATED_ON = ModelPackage.TOPIC_FEATURE_COUNT + 1;
+	int R4E_ANOMALY__CREATED_ON = ModelPackage.TOPIC_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Anomaly</b></em>' reference.
@@ -557,7 +584,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__ANOMALY = ModelPackage.TOPIC_FEATURE_COUNT + 2;
+	int R4E_ANOMALY__ANOMALY = ModelPackage.TOPIC_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Info Att</b></em>' map.
@@ -566,7 +593,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__INFO_ATT = ModelPackage.TOPIC_FEATURE_COUNT + 3;
+	int R4E_ANOMALY__INFO_ATT = ModelPackage.TOPIC_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>State</b></em>' attribute.
@@ -575,7 +602,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__STATE = ModelPackage.TOPIC_FEATURE_COUNT + 4;
+	int R4E_ANOMALY__STATE = ModelPackage.TOPIC_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>User Assigned</b></em>' reference.
@@ -584,7 +611,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__USER_ASSIGNED = ModelPackage.TOPIC_FEATURE_COUNT + 5;
+	int R4E_ANOMALY__USER_ASSIGNED = ModelPackage.TOPIC_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>User Follow Up</b></em>' reference.
@@ -593,7 +620,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__USER_FOLLOW_UP = ModelPackage.TOPIC_FEATURE_COUNT + 6;
+	int R4E_ANOMALY__USER_FOLLOW_UP = ModelPackage.TOPIC_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>User Decision</b></em>' reference.
@@ -602,7 +629,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__USER_DECISION = ModelPackage.TOPIC_FEATURE_COUNT + 7;
+	int R4E_ANOMALY__USER_DECISION = ModelPackage.TOPIC_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Due Date</b></em>' attribute.
@@ -611,7 +638,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__DUE_DATE = ModelPackage.TOPIC_FEATURE_COUNT + 8;
+	int R4E_ANOMALY__DUE_DATE = ModelPackage.TOPIC_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Rank</b></em>' attribute.
@@ -620,7 +647,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__RANK = ModelPackage.TOPIC_FEATURE_COUNT + 9;
+	int R4E_ANOMALY__RANK = ModelPackage.TOPIC_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' reference.
@@ -629,7 +656,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__RULE = ModelPackage.TOPIC_FEATURE_COUNT + 10;
+	int R4E_ANOMALY__RULE = ModelPackage.TOPIC_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Decided By</b></em>' reference.
@@ -638,7 +665,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__DECIDED_BY = ModelPackage.TOPIC_FEATURE_COUNT + 11;
+	int R4E_ANOMALY__DECIDED_BY = ModelPackage.TOPIC_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Fixed By</b></em>' reference.
@@ -647,7 +674,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FIXED_BY = ModelPackage.TOPIC_FEATURE_COUNT + 12;
+	int R4E_ANOMALY__FIXED_BY = ModelPackage.TOPIC_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Followup By</b></em>' reference.
@@ -656,7 +683,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FOLLOWUP_BY = ModelPackage.TOPIC_FEATURE_COUNT + 13;
+	int R4E_ANOMALY__FOLLOWUP_BY = ModelPackage.TOPIC_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Not Accepted Reason</b></em>' attribute.
@@ -665,7 +692,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__NOT_ACCEPTED_REASON = ModelPackage.TOPIC_FEATURE_COUNT + 14;
+	int R4E_ANOMALY__NOT_ACCEPTED_REASON = ModelPackage.TOPIC_FEATURE_COUNT + 15;
 
 	/**
 	 * The feature id for the '<em><b>Is Imported</b></em>' attribute.
@@ -674,7 +701,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__IS_IMPORTED = ModelPackage.TOPIC_FEATURE_COUNT + 15;
+	int R4E_ANOMALY__IS_IMPORTED = ModelPackage.TOPIC_FEATURE_COUNT + 16;
 
 	/**
 	 * The feature id for the '<em><b>Fixed In Version</b></em>' reference.
@@ -683,7 +710,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FIXED_IN_VERSION = ModelPackage.TOPIC_FEATURE_COUNT + 16;
+	int R4E_ANOMALY__FIXED_IN_VERSION = ModelPackage.TOPIC_FEATURE_COUNT + 17;
 
 	/**
 	 * The feature id for the '<em><b>Rule ID</b></em>' attribute.
@@ -692,7 +719,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__RULE_ID = ModelPackage.TOPIC_FEATURE_COUNT + 17;
+	int R4E_ANOMALY__RULE_ID = ModelPackage.TOPIC_FEATURE_COUNT + 18;
 
 	/**
 	 * The feature id for the '<em><b>Decided By ID</b></em>' attribute.
@@ -701,7 +728,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__DECIDED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 18;
+	int R4E_ANOMALY__DECIDED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 19;
 
 	/**
 	 * The feature id for the '<em><b>Fixed By ID</b></em>' attribute.
@@ -710,7 +737,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FIXED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 19;
+	int R4E_ANOMALY__FIXED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 20;
 
 	/**
 	 * The feature id for the '<em><b>Follow Up By ID</b></em>' attribute.
@@ -719,7 +746,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FOLLOW_UP_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 20;
+	int R4E_ANOMALY__FOLLOW_UP_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 21;
 
 	/**
 	 * The number of structural features of the '<em>R4E Anomaly</em>' class.
@@ -728,7 +755,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY_FEATURE_COUNT = ModelPackage.TOPIC_FEATURE_COUNT + 21;
+	int R4E_ANOMALY_FEATURE_COUNT = ModelPackage.TOPIC_FEATURE_COUNT + 22;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl <em>R4E Formal Review</em>}' class.
@@ -784,6 +811,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4E_FORMAL_REVIEW__STATE = R4E_REVIEW__STATE;
+
+	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FORMAL_REVIEW__ASSIGNED_TO = R4E_REVIEW__ASSIGNED_TO;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1123,13 +1159,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_USER__ENABLED = ModelPackage.USER_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_USER__ASSIGNED_TO = ModelPackage.USER_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Group Paths</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_USER__GROUP_PATHS = ModelPackage.USER_FEATURE_COUNT + 1;
+	int R4E_USER__GROUP_PATHS = ModelPackage.USER_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Sequence ID Counter</b></em>' attribute.
@@ -1138,7 +1183,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_USER__SEQUENCE_ID_COUNTER = ModelPackage.USER_FEATURE_COUNT + 2;
+	int R4E_USER__SEQUENCE_ID_COUNTER = ModelPackage.USER_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Added Comments</b></em>' containment reference list.
@@ -1147,7 +1192,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_USER__ADDED_COMMENTS = ModelPackage.USER_FEATURE_COUNT + 3;
+	int R4E_USER__ADDED_COMMENTS = ModelPackage.USER_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Added Items</b></em>' containment reference list.
@@ -1156,7 +1201,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_USER__ADDED_ITEMS = ModelPackage.USER_FEATURE_COUNT + 4;
+	int R4E_USER__ADDED_ITEMS = ModelPackage.USER_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Review Created By Me</b></em>' attribute.
@@ -1165,7 +1210,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_USER__REVIEW_CREATED_BY_ME = ModelPackage.USER_FEATURE_COUNT + 5;
+	int R4E_USER__REVIEW_CREATED_BY_ME = ModelPackage.USER_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Review Instance</b></em>' reference.
@@ -1174,7 +1219,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_USER__REVIEW_INSTANCE = ModelPackage.USER_FEATURE_COUNT + 6;
+	int R4E_USER__REVIEW_INSTANCE = ModelPackage.USER_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Xml Version</b></em>' attribute.
@@ -1183,7 +1228,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_USER__XML_VERSION = ModelPackage.USER_FEATURE_COUNT + 7;
+	int R4E_USER__XML_VERSION = ModelPackage.USER_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Review Completed</b></em>' attribute.
@@ -1192,7 +1237,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_USER__REVIEW_COMPLETED = ModelPackage.USER_FEATURE_COUNT + 8;
+	int R4E_USER__REVIEW_COMPLETED = ModelPackage.USER_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Review Completed Code</b></em>' attribute.
@@ -1201,7 +1246,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_USER__REVIEW_COMPLETED_CODE = ModelPackage.USER_FEATURE_COUNT + 9;
+	int R4E_USER__REVIEW_COMPLETED_CODE = ModelPackage.USER_FEATURE_COUNT + 10;
 
 	/**
 	 * The number of structural features of the '<em>R4E User</em>' class.
@@ -1210,7 +1255,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_USER_FEATURE_COUNT = ModelPackage.USER_FEATURE_COUNT + 10;
+	int R4E_USER_FEATURE_COUNT = ModelPackage.USER_FEATURE_COUNT + 11;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EParticipantImpl <em>R4E Participant</em>}' class.
@@ -1248,6 +1293,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4E_PARTICIPANT__ENABLED = R4E_USER__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_PARTICIPANT__ASSIGNED_TO = R4E_USER__ASSIGNED_TO;
 
 	/**
 	 * The feature id for the '<em><b>Group Paths</b></em>' attribute list.
@@ -1484,13 +1538,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_REVIEW_COMPONENT__ENABLED = ModelPackage.REVIEW_COMPONENT__ENABLED;
 
 	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW_COMPONENT__ASSIGNED_TO = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>R4E Review Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_COMPONENT_FEATURE_COUNT = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 0;
+	int R4E_REVIEW_COMPONENT_FEATURE_COUNT = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EIDComponentImpl <em>R4EID Component</em>}' class.
@@ -1510,6 +1573,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4EID_COMPONENT__ENABLED = R4E_REVIEW_COMPONENT__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4EID_COMPONENT__ASSIGNED_TO = R4E_REVIEW_COMPONENT__ASSIGNED_TO;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
@@ -1537,6 +1609,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4E_ITEM__ENABLED = R4EID_COMPONENT__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ITEM__ASSIGNED_TO = R4EID_COMPONENT__ASSIGNED_TO;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
@@ -1791,13 +1872,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_TASK_REFERENCE__REPOSITORY_URL = ModelPackage.TASK_REFERENCE__REPOSITORY_URL;
 
 	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_TASK_REFERENCE__ASSIGNED_TO = ModelPackage.TASK_REFERENCE_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>R4E Task Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_TASK_REFERENCE_FEATURE_COUNT = ModelPackage.TASK_REFERENCE_FEATURE_COUNT + 0;
+	int R4E_TASK_REFERENCE_FEATURE_COUNT = ModelPackage.TASK_REFERENCE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -1863,13 +1953,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_COMMENT__DESCRIPTION = ModelPackage.COMMENT__DESCRIPTION;
 
 	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_COMMENT__ASSIGNED_TO = ModelPackage.COMMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_COMMENT__ID = ModelPackage.COMMENT_FEATURE_COUNT + 0;
+	int R4E_COMMENT__ID = ModelPackage.COMMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Created On</b></em>' attribute.
@@ -1878,7 +1977,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_COMMENT__CREATED_ON = ModelPackage.COMMENT_FEATURE_COUNT + 1;
+	int R4E_COMMENT__CREATED_ON = ModelPackage.COMMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Anomaly</b></em>' reference.
@@ -1887,7 +1986,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_COMMENT__ANOMALY = ModelPackage.COMMENT_FEATURE_COUNT + 2;
+	int R4E_COMMENT__ANOMALY = ModelPackage.COMMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Info Att</b></em>' map.
@@ -1896,7 +1995,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_COMMENT__INFO_ATT = ModelPackage.COMMENT_FEATURE_COUNT + 3;
+	int R4E_COMMENT__INFO_ATT = ModelPackage.COMMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>R4E Comment</em>' class.
@@ -1905,7 +2004,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_COMMENT_FEATURE_COUNT = ModelPackage.COMMENT_FEATURE_COUNT + 4;
+	int R4E_COMMENT_FEATURE_COUNT = ModelPackage.COMMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl <em>R4E File Context</em>}' class.
@@ -1925,6 +2024,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4E_FILE_CONTEXT__ENABLED = R4EID_COMPONENT__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FILE_CONTEXT__ASSIGNED_TO = R4EID_COMPONENT__ASSIGNED_TO;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
@@ -2007,6 +2115,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4E_DELTA__ENABLED = R4EID_COMPONENT__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_DELTA__ASSIGNED_TO = R4EID_COMPONENT__ASSIGNED_TO;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' containment reference.
@@ -3893,6 +4010,17 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EReviewComponent();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent#getAssignedTo <em>Assigned To</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Assigned To</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent#getAssignedTo()
+	 * @see #getR4EReviewComponent()
+	 * @generated
+	 */
+	EAttribute getR4EReviewComponent_AssignedTo();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext <em>R4E File Context</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5612,6 +5740,14 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass R4E_REVIEW_COMPONENT = eINSTANCE.getR4EReviewComponent();
+
+		/**
+		 * The meta object literal for the '<em><b>Assigned To</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_REVIEW_COMPONENT__ASSIGNED_TO = eINSTANCE.getR4EReviewComponent_AssignedTo();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileContextImpl <em>R4E File Context</em>}' class.

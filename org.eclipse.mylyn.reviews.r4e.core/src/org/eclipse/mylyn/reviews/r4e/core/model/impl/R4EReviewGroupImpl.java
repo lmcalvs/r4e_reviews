@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewGroupImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
@@ -42,6 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAssignedTo <em>Assigned To</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getFolder <em>Folder</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getDefaultEntryCriteria <em>Default Entry Criteria</em>}</li>
@@ -59,6 +61,16 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * @generated
  */
 public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGroup {
+	/**
+	 * The cached value of the '{@link #getAssignedTo() <em>Assigned To</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssignedTo()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> assignedTo;
+
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -226,6 +238,18 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	@Override
 	protected EClass eStaticClass() {
 		return RModelPackage.Literals.R4E_REVIEW_GROUP;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getAssignedTo() {
+		if (assignedTo == null) {
+			assignedTo = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO);
+		}
+		return assignedTo;
 	}
 
 	/**
@@ -424,6 +448,8 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO:
+				return getAssignedTo();
 			case RModelPackage.R4E_REVIEW_GROUP__NAME:
 				return getName();
 			case RModelPackage.R4E_REVIEW_GROUP__FOLDER:
@@ -462,6 +488,10 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO:
+				getAssignedTo().clear();
+				getAssignedTo().addAll((Collection<? extends String>)newValue);
+				return;
 			case RModelPackage.R4E_REVIEW_GROUP__NAME:
 				setName((String)newValue);
 				return;
@@ -511,6 +541,9 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO:
+				getAssignedTo().clear();
+				return;
 			case RModelPackage.R4E_REVIEW_GROUP__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -556,6 +589,8 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO:
+				return assignedTo != null && !assignedTo.isEmpty();
 			case RModelPackage.R4E_REVIEW_GROUP__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case RModelPackage.R4E_REVIEW_GROUP__FOLDER:
@@ -588,11 +623,45 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	 * @generated
 	 */
 	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == R4EReviewComponent.class) {
+			switch (derivedFeatureID) {
+				case RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO: return RModelPackage.R4E_REVIEW_COMPONENT__ASSIGNED_TO;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == R4EReviewComponent.class) {
+			switch (baseFeatureID) {
+				case RModelPackage.R4E_REVIEW_COMPONENT__ASSIGNED_TO: return RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
+		result.append(" (assignedTo: ");
+		result.append(assignedTo);
+		result.append(", name: ");
 		result.append(name);
 		result.append(", folder: ");
 		result.append(folder);

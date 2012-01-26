@@ -194,7 +194,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="infoAtt" upperBound="-1"
         eType="#//MapKeyToInfoAttributes" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="R4EReviewComponent" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewComponent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="R4EReviewComponent" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewComponent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assignedTo" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EFileContext" eSuperTypes="#//R4EIDComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="deltas" upperBound="-1"
         eType="#//R4EDelta" containment="true"/>
