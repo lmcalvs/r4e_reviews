@@ -50,9 +50,9 @@
 		<url>http://build.eclipse.org/orbit/committers/orbit-I/20111224154307/I20111224154307/repository/</url>
 	</repository>
 	<repository>
-		<id>eclipse-mylyn-reviews</id>
+		<id>eclipse-mylyn-reviews-r4e</id>
 		<layout>p2</layout>
-		<url>${mylyn-reviews-repository-url}</url>
+		<url>http://download.eclipse.org/r4e/updates/</url>
 	</repository>
   </repositories>
   <profiles>
