@@ -219,6 +219,16 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private Button fParticipantFilterButton = null;
 
 	/**
+	 * Field fAssignMyFilterButton.
+	 */
+	private Button fAssignMyFilterButton = null;
+
+	/**
+	 * Field fAssignFilterButton.
+	 */
+	private Button fAssignFilterButton = null;
+
+	/**
 	 * Field fAnomaliesFilterButton.
 	 */
 	private Button fAnomaliesFilterButton = null;
@@ -242,6 +252,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * Field fParticipantIdText.
 	 */
 	private Text fParticipantIdText = null;
+
+	/**
+	 * Field fAssignIdText.
+	 */
+	private Text fAssignIdText = null;
 
 	/**
 	 * Field fGroupsList.
@@ -734,6 +749,35 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			}
 		});
 
+		fAssignMyFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fAssignMyFilterButton.setText(R4EUIConstants.ASSIGN_MY_FILTER_NAME);
+		fAssignMyFilterButton.setLayoutData(filtersButtonData);
+		fAssignMyFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_ASSIGN_MY_FILTER));
+
+		fAssignFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fAssignFilterButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		fAssignFilterButton.setText(R4EUIConstants.ASSIGN_FILTER_NAME);
+		fAssignIdText = new Text(r4EFilterPrefsGroup, SWT.BORDER);
+		fAssignIdText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		if (store.getString(PreferenceConstants.P_PARTICIPANT_FILTER).equals("")) {
+			fAssignFilterButton.setSelection(false);
+			fAssignFilterButton.setEnabled(false);
+			fAssignIdText.setText("");
+		} else {
+			fAssignFilterButton.setSelection(true);
+			fAssignIdText.setText(store.getString(PreferenceConstants.P_PARTICIPANT_FILTER));
+		}
+		fAssignIdText.addModifyListener(new ModifyListener() {
+			@SuppressWarnings("synthetic-access")
+			public void modifyText(ModifyEvent e) {
+				if (fAssignIdText.getCharCount() > 0) {
+					fAssignFilterButton.setEnabled(true);
+				} else {
+					fAssignFilterButton.setEnabled(false);
+				}
+			}
+		});
+
 		fAnomaliesFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fAnomaliesFilterButton.setText(R4EUIConstants.ANOMALIES_FILTER_NAME);
 		fAnomaliesFilterButton.setLayoutData(filtersButtonData);
@@ -851,6 +895,19 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		} else {
 			store.setValue(PreferenceConstants.P_PARTICIPANT_FILTER, "");
 			fParticipantIdText.setText("");
+		}
+		store.setValue(PreferenceConstants.P_ASSIGN_MY_FILTER, fAssignMyFilterButton.getSelection());
+		if (fAssignFilterButton.getSelection()) {
+			final String filterUserId = fAssignIdText.getText().toLowerCase();
+			if (filterUserId.equals(store.getString(PreferenceConstants.P_USER_ID))) {
+				//Set my filter instead
+				store.setValue(PreferenceConstants.P_ASSIGN_MY_FILTER, true);
+			} else {
+				store.setValue(PreferenceConstants.P_ASSIGN_FILTER, filterUserId);
+			}
+		} else {
+			store.setValue(PreferenceConstants.P_ASSIGN_FILTER, "");
+			fAssignIdText.setText("");
 		}
 		store.setValue(PreferenceConstants.P_ANOMALIES_ALL_FILTER, fAnomaliesFilterButton.getSelection());
 		store.setValue(PreferenceConstants.P_REVIEWED_ITEMS_FILTER, fReviewedItemsFilterButton.getSelection());

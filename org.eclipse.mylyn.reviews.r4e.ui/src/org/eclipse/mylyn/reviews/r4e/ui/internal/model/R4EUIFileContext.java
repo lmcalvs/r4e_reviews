@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -37,6 +39,8 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.FileContextProperties;
@@ -401,6 +405,67 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		return fFile.isEnabled();
 	}
 
+	/**
+	 * Method setAssignedDialog.
+	 */
+	public void setAssignedDialog() {
+		final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog(false);
+		EList<String> assignedParticipants = fFile.getAssignedTo();
+		dialog.create();
+
+		//Add existing participants to dialog
+		for (String assignedParticipant : assignedParticipants) {
+			R4EParticipant participant;
+			try {
+				participant = ((R4EUIReviewBasic) getParent().getParent()).getParticipant(assignedParticipant, false);
+				dialog.addParticipant(participant.getId() + R4EUIConstants.LIST_SEPARATOR + participant.getEmail());
+			} catch (ResourceHandlingException e) {
+				UIUtils.displayResourceErrorDialog(e);
+			}
+		}
+		final int result = dialog.open();
+		if (result == Window.OK) {
+			setAssigned(dialog.getParticipants());
+		}
+		R4EUIDialogFactory.getInstance().removeParticipantInputDialog();
+	}
+
+	/**
+	 * Method setAssigned.
+	 * 
+	 * @param aParticipants
+	 *            - List<R4EParticipant> aParticipants
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setAssigned(List<R4EParticipant>)
+	 */
+	@Override
+	public void setAssigned(List<R4EParticipant> aParticipants) {
+		try {
+			//Set new partcipants assigned
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fFile,
+					R4EUIModelController.getReviewer());
+			EList<String> assignedParticipants = fFile.getAssignedTo();
+			assignedParticipants.clear(); //Clear existing assigned participants
+			for (R4EParticipant participant : aParticipants) {
+				assignedParticipants.add(participant.getId());
+
+				//If this user is not a participant, add it to the review
+				if (!((R4EUIReviewBasic) getParent().getParent()).isParticipant(participant.getId())) {
+					((R4EUIReviewBasic) getParent().getParent()).getParticipantContainer().createChildren(participant);
+				}
+			}
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		} catch (ResourceHandlingException e1) {
+			UIUtils.displayResourceErrorDialog(e1);
+		} catch (OutOfSyncException e1) {
+			UIUtils.displaySyncErrorDialog(e1);
+		}
+
+		//Also assign children
+		for (R4EUIContent content : fContentsContainer.fContents) {
+			content.setAssigned(aParticipants);
+		}
+	}
+
 	//Hierarchy
 
 	/**
@@ -716,6 +781,21 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isChangeUserReviewStateCmd() {
+		if (isEnabled()
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method isAssignToCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAssignToCmd()
+	 */
+	@Override
+	public boolean isAssignToCmd() {
 		if (isEnabled()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;

@@ -751,6 +751,32 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.ShowUILegend"
             name="Show UI Legend">
       </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
+            description="Assign Review Element to Participant(s)"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.assignElement"
+            name="Assign to Participant">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
+            description="Show Review Elements Assigned to Me"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignMy"
+            name="Show My Assigned Elements">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
+            description="Show Review Elements Assigned to Participant"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignParticipants"
+            name="Show Assigned Elements for Participant... ">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.services">
@@ -1124,6 +1150,33 @@
                       property="org.eclipse.mylyn.reviews.r4e.ui.commands.previousState">
                 </test>
              </and>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.AssignToHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.assignElement">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AssignMyFilterHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignMy">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AssignParticipantFilterHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignParticipants">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
           </enabledWhen>
        </handler>
    </extension>

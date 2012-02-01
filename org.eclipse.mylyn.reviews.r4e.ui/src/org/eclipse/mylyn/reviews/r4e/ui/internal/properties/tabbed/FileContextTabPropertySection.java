@@ -20,6 +20,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -37,8 +38,12 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
@@ -106,6 +111,21 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	 */
 	protected CLabel fTargetFileVersionText = null;
 
+	/**
+	 * Field fAssignedToComposite.
+	 */
+	private Composite fAssignedToComposite;
+
+	/**
+	 * Field fAssignedToText.
+	 */
+	private Text fAssignedToText;
+
+	/**
+	 * Field fAssignedToButton.
+	 */
+	private Button fAssignedToButton;
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -149,6 +169,37 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(targetFileComposite, ITabbedPropertyConstants.VSPACE);
 		baseFileComposite.setLayoutData(data);
+
+		//Assigned To
+		fAssignedToComposite = widgetFactory.createComposite(composite);
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(baseFileComposite, ITabbedPropertyConstants.VSPACE);
+		fAssignedToComposite.setToolTipText(R4EUIConstants.ASSIGNED_TO_TOOLTIP);
+		fAssignedToComposite.setLayoutData(data);
+		fAssignedToComposite.setLayout(new GridLayout(2, false));
+
+		fAssignedToText = widgetFactory.createText(fAssignedToComposite, "", SWT.READ_ONLY);
+		fAssignedToText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		fAssignedToText.setEditable(false);
+		fAssignedToButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
+		fAssignedToButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		fAssignedToButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				((R4EUIFileContext) fProperties.getElement()).setAssignedDialog();
+				refresh();
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+			}
+		});
+
+		final CLabel assignedToLabel = widgetFactory.createCLabel(composite, R4EUIConstants.ASSIGNED_TO_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fAssignedToComposite, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fAssignedToComposite, 0, SWT.CENTER);
+		assignedToLabel.setToolTipText(R4EUIConstants.ASSIGNED_TO_TOOLTIP);
+		assignedToLabel.setLayoutData(data);
 	}
 
 	/**
@@ -445,6 +496,18 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			fTargetFilePathProjectText.setText("");
 			fTargetFileVersionText.setText("");
 		}
+
+		EList<String> assignedParticipants = modelFile.getAssignedTo();
+		if (assignedParticipants.size() > 0) {
+			StringBuffer buffer = new StringBuffer();
+			for (String assignedParticipant : assignedParticipants) {
+				buffer.append(assignedParticipant + R4EUIConstants.LIST_SEPARATOR + " ");
+			}
+			fAssignedToText.setText(buffer.toString().substring(0, buffer.length() - 2));
+		} else {
+			fAssignedToText.setText("");
+		}
+
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -474,6 +537,8 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			fTargetFilePathAbsoluteText.setEnabled(false);
 			fTargetFilePathProjectText.setEnabled(false);
 			fTargetFileVersionText.setEnabled(false);
+			fAssignedToText.setEnabled(false);
+			fAssignedToButton.setEnabled(false);
 		} else {
 			fBaseFileNameText.setEnabled(true);
 			fBaseFilePathRepositoryText.setEnabled(true);
@@ -485,6 +550,8 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			fTargetFilePathAbsoluteText.setEnabled(true);
 			fTargetFilePathProjectText.setEnabled(true);
 			fTargetFileVersionText.setEnabled(true);
+			fAssignedToText.setEnabled(true);
+			fAssignedToButton.setEnabled(true);
 		}
 	}
 }

@@ -205,6 +205,16 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	 */
 	private final IInputValidator fValidator;
 
+	/**
+	 * Field fAssignedToCombo.
+	 */
+	protected CCombo fAssignedToCombo = null;
+
+	/**
+	 * Field fAssignedToParticipant.
+	 */
+	private String fAssignedToParticipant = null;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -270,6 +280,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 
 			fAnomalyRankValue = UIUtils.getRankFromString(fAnomalyRank.getText());
 			fAnomalyClassValue = UIUtils.getClassFromString(fAnomalyClass.getText());
+			fAssignedToParticipant = fAssignedToCombo.getText();
 		} else {
 			fAnomalyTitleValue = null;
 			fAnomalyDescriptionValue = null;
@@ -277,6 +288,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 			fAnomalyRankValue = null;
 			fAnomalyClassValue = null;
 			fAnomalyDueDateValue = null;
+			fAssignedToParticipant = null;
 		}
 		super.buttonPressed(buttonId);
 	}
@@ -417,6 +429,26 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 		textGridData.horizontalSpan = 3;
 		fAnomalyRank.setToolTipText(R4EUIConstants.ANOMALY_CLASS_TOOLTIP);
 		fAnomalyRank.setLayoutData(textGridData);
+
+		//Assigned To
+		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.ASSIGNED_TO_LABEL);
+		textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		textGridData.horizontalSpan = 1;
+		label.setLayoutData(textGridData);
+
+		fAssignedToCombo = new CCombo(extraSectionClient, SWT.BORDER | SWT.READ_ONLY);
+		String[] participants = R4EUIModelController.getActiveReview()
+				.getParticipantIDs()
+				.toArray(new String[R4EUIModelController.getActiveReview().getParticipantIDs().size()]);
+		fAssignedToCombo.removeAll();
+		fAssignedToCombo.add("");
+		for (String participant : participants) {
+			fAssignedToCombo.add(participant);
+		}
+		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		textGridData.horizontalSpan = 3;
+		fAssignedToCombo.setToolTipText(R4EUIConstants.ASSIGNED_TO_TOOLTIP);
+		fAssignedToCombo.setLayoutData(textGridData);
 
 		//Due Date
 		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.DUE_DATE_LABEL);
@@ -953,5 +985,26 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 				}
 			}
 		}
+	}
+
+	/**
+	 * Method getAssignedParticipant.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#getAssigned()
+	 */
+	public String getAssigned() {
+		return fAssignedToParticipant;
+	}
+
+	/**
+	 * Method setAssigned.
+	 * 
+	 * @param aParticipant
+	 *            - String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#setAssigned(String)
+	 */
+	public void setAssigned(String aParticipant) {
+		fAssignedToCombo.setText(aParticipant);
 	}
 }

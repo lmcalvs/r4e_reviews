@@ -22,6 +22,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -39,8 +40,13 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -85,6 +91,21 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	 * Field fDescriptionText.
 	 */
 	protected Text fDescriptionText = null;
+
+	/**
+	 * Field fAssignedToComposite.
+	 */
+	private Composite fAssignedToComposite;
+
+	/**
+	 * Field fAssignedToText.
+	 */
+	private Text fAssignedToText;
+
+	/**
+	 * Field fAssignedToButton.
+	 */
+	private Button fAssignedToButton;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -242,6 +263,37 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		data.top = new FormAttachment(fDescriptionText, 0, SWT.CENTER);
 		descriptionLabel.setToolTipText(R4EUIConstants.REVIEW_ITEM_DESCRIPTION_TOOLTIP);
 		descriptionLabel.setLayoutData(data);
+
+		//Assigned To
+		fAssignedToComposite = widgetFactory.createComposite(composite);
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
+		fAssignedToComposite.setToolTipText(R4EUIConstants.ASSIGNED_TO_TOOLTIP);
+		fAssignedToComposite.setLayoutData(data);
+		fAssignedToComposite.setLayout(new GridLayout(2, false));
+
+		fAssignedToText = widgetFactory.createText(fAssignedToComposite, "", SWT.READ_ONLY);
+		fAssignedToText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		fAssignedToText.setEditable(false);
+		fAssignedToButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
+		fAssignedToButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		fAssignedToButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				((R4EUIReviewItem) fProperties.getElement()).setAssignedDialog();
+				refresh();
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+			}
+		});
+
+		final CLabel assignedToLabel = widgetFactory.createCLabel(composite, R4EUIConstants.ASSIGNED_TO_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fAssignedToComposite, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fAssignedToComposite, 0, SWT.CENTER);
+		assignedToLabel.setToolTipText(R4EUIConstants.ASSIGNED_TO_TOOLTIP);
+		assignedToLabel.setLayoutData(data);
 	}
 
 	/**
@@ -286,6 +338,17 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		} else {
 			fDescriptionText.setText("");
 		}
+
+		EList<String> assignedParticipants = modelItem.getAssignedTo();
+		if (assignedParticipants.size() > 0) {
+			StringBuffer buffer = new StringBuffer();
+			for (String assignedParticipant : assignedParticipants) {
+				buffer.append(assignedParticipant + R4EUIConstants.LIST_SEPARATOR + " ");
+			}
+			fAssignedToText.setText(buffer.toString().substring(0, buffer.length() - 2));
+		} else {
+			fAssignedToText.setText("");
+		}
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -304,6 +367,8 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 			fRepositoryText.setEnabled(false);
 			fDateSubmitted.setEnabled(false);
 			fDescriptionText.setEnabled(false);
+			fAssignedToText.setEnabled(false);
+			fAssignedToButton.setEnabled(false);
 		} else {
 			fAuthorText.setEnabled(true);
 			fAuthorRepText.setEnabled(true);
@@ -311,6 +376,8 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 			fRepositoryText.setEnabled(true);
 			fDateSubmitted.setEnabled(true);
 			fDescriptionText.setEnabled(true);
+			fAssignedToText.setEnabled(true);
+			fAssignedToButton.setEnabled(true);
 		}
 	}
 }

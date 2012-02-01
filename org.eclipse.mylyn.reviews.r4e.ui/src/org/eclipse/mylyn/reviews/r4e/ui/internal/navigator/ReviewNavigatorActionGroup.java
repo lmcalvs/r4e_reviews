@@ -31,6 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.ReviewTypeComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AnomaliesMyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AnomaliesOnlyFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AssignParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.FocusFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.HideDeltasFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.HideRuleSetsFilter;
@@ -107,6 +108,16 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	private final ReviewParticipantFilter fReviewsParticipantFilter;
 
 	/**
+	 * Field fAssignedMyFilter.
+	 */
+	private final AssignParticipantFilter fAssignedMyFilter;
+
+	/**
+	 * Field f1assignedParticipantFilter.
+	 */
+	private final AssignParticipantFilter fAssignedParticipantFilter;
+
+	/**
 	 * Field fReviewsCompletedFilter.
 	 */
 	private final ReviewCompletedFilter fReviewsCompletedFilter;
@@ -159,6 +170,8 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		fReviewsOnlyFilter = new ReviewsOnlyFilter();
 		fReviewsMyFilter = new ReviewParticipantFilter();
 		fReviewsParticipantFilter = new ReviewParticipantFilter();
+		fAssignedMyFilter = new AssignParticipantFilter();
+		fAssignedParticipantFilter = new AssignParticipantFilter();
 		fReviewsCompletedFilter = new ReviewCompletedFilter();
 		fAnomaliesFilter = new AnomaliesOnlyFilter();
 		fReviewedElemsFilter = new ReviewedElemsFilter();
@@ -186,6 +199,8 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		runReviewsOnlyFilterCommand(false);
 		runReviewsMyFilterCommand(false);
 		runReviewsParticipantFilterCommand("");
+		runAssignedMyFilterCommand(false);
+		runAssignedParticipantFilterCommand("");
 		runReviewsCompletedFilterCommand(false);
 		runAnomaliesFilterCommand(false);
 		runAnomaliesMyFilterCommand(false);
@@ -384,7 +399,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	}
 
 	/**
-	 * Method runMyReviewsFilterAction.
+	 * Method runReviewsMyFilterCommand.
 	 * 
 	 * @param aApply
 	 *            boolean
@@ -402,11 +417,11 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	}
 
 	/**
-	 * Method getFilterParticipant.
+	 * Method getReviewFilterParticipant.
 	 * 
 	 * @return String
 	 */
-	public String getFilterParticipant() {
+	public String getReviewFilterParticipant() {
 		return fReviewsParticipantFilter.getParticipant();
 	}
 
@@ -441,7 +456,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	}
 
 	/**
-	 * Method runParticipantFilterAction.
+	 * Method runReviewsParticipantFilterCommand.
 	 * 
 	 * @param aParticipant
 	 *            String
@@ -459,6 +474,114 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		}
 		fReviewsParticipantFilter.setParticipant(aParticipant);
 		fHandlerService.executeCommand(R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND, null);
+	}
+
+	/**
+	 * Method getAssignedMyFilter.
+	 * 
+	 * @return AssignedParticipantFilter
+	 */
+	public AssignParticipantFilter getAssignedMyFilter() {
+		return fAssignedMyFilter;
+	}
+
+	/**
+	 * Method isAssignedMyFilterSet.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isAssignedMyFilterSet() {
+		return ((Boolean) fCommandService.getCommand(R4EUIConstants.ASSIGN_MY_FILTER_COMMAND)
+				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+				.getValue()).booleanValue();
+	}
+
+	/**
+	 * Method resetAssignedMyFilterCommand.
+	 */
+	private void resetAssignedMyFilterCommand() {
+		fView.getTreeViewer().removeFilter(fAssignedMyFilter);
+		fCommandService.getCommand(R4EUIConstants.ASSIGN_MY_FILTER_COMMAND)
+				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+				.setValue(Boolean.valueOf(false));
+	}
+
+	/**
+	 * Method runAssignedMyFilterCommand.
+	 * 
+	 * @param aApply
+	 *            boolean
+	 * @throws NotHandledException
+	 * @throws NotEnabledException
+	 * @throws NotDefinedException
+	 * @throws ExecutionException
+	 */
+	public void runAssignedMyFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
+			NotEnabledException, NotHandledException {
+		resetAssignedMyFilterCommand();
+		if (aApply) {
+			fHandlerService.executeCommand(R4EUIConstants.ASSIGN_MY_FILTER_COMMAND, null);
+		}
+	}
+
+	/**
+	 * Method getAssignedFilterParticipant.
+	 * 
+	 * @return String
+	 */
+	public String getAssignedFilterParticipant() {
+		return fAssignedParticipantFilter.getParticipant();
+	}
+
+	/**
+	 * Method getAssignedParticipantFilter.
+	 * 
+	 * @return AssignedParticipantFilter
+	 */
+	public AssignParticipantFilter getAssignedParticipantFilter() {
+		return fAssignedParticipantFilter;
+	}
+
+	/**
+	 * Method isAssignedParticipantFilterSet.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isAssignedParticipantFilterSet() {
+		return ((Boolean) fCommandService.getCommand(R4EUIConstants.ASSIGN_FILTER_COMMAND)
+				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+				.getValue()).booleanValue();
+	}
+
+	/**
+	 * Method resetAssignedParticipantFilterCommand.
+	 */
+	private void resetAssignedParticipantFilterCommand() {
+		fView.getTreeViewer().removeFilter(fAssignedParticipantFilter);
+		fCommandService.getCommand(R4EUIConstants.ASSIGN_FILTER_COMMAND)
+				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+				.setValue(Boolean.valueOf(false));
+	}
+
+	/**
+	 * Method runAssignedParticipantFilterCommand.
+	 * 
+	 * @param aParticipant
+	 *            String
+	 * @throws NotHandledException
+	 * @throws NotEnabledException
+	 * @throws NotDefinedException
+	 * @throws ExecutionException
+	 */
+	public void runAssignedParticipantFilterCommand(String aParticipant) throws ExecutionException,
+			NotDefinedException, NotEnabledException, NotHandledException {
+		resetAssignedParticipantFilterCommand();
+		if (null == aParticipant || aParticipant.equals("")) {
+			fAssignedParticipantFilter.setParticipant("");
+			return;
+		}
+		fAssignedParticipantFilter.setParticipant(aParticipant);
+		fHandlerService.executeCommand(R4EUIConstants.ASSIGN_FILTER_COMMAND, null);
 	}
 
 	/**

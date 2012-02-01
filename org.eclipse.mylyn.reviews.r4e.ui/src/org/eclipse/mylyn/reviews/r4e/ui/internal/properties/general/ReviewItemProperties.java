@@ -105,6 +105,17 @@ public class ReviewItemProperties extends ModelElementProperties {
 			REVIEW_ITEM_DESCRIPTION_ID, R4EUIConstants.DESCRIPTION_LABEL);
 
 	/**
+	 * Field REVIEW_ITEM_ASSIGNED_TO_ID. (value is ""reviewItemElement.assignedTo"")
+	 */
+	private static final String REVIEW_ITEM_ASSIGNED_TO_ID = "reviewItemElement.assignedTo";
+
+	/**
+	 * Field REVIEW_ITEM_ASSIGNED_TO_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor REVIEW_ITEM_ASSIGNED_TO_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			REVIEW_ITEM_ASSIGNED_TO_ID, R4EUIConstants.ASSIGNED_TO_LABEL);
+
+	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { REVIEW_ITEM_AUTHOR_PROPERTY_DESCRIPTOR,
@@ -180,6 +191,8 @@ public class ReviewItemProperties extends ModelElementProperties {
 			return ((R4EUIReviewItem) getElement()).getItem().getSubmitted();
 		} else if (REVIEW_ITEM_DESCRIPTION_ID.equals(aId)) {
 			return ((R4EUIReviewItem) getElement()).getItem().getDescription();
+		} else if (REVIEW_ITEM_ASSIGNED_TO_ID.equals(aId)) {
+			return ((R4EUIReviewItem) getElement()).getItem().getAssignedTo();
 		}
 		return null;
 	}

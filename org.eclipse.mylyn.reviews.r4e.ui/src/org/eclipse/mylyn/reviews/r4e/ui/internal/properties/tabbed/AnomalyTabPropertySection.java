@@ -19,7 +19,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
@@ -56,6 +55,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
@@ -94,27 +95,27 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	private IR4EUIPosition fPosition;
 
 	/**
-	 * Field FTitleText.
+	 * Field fTitleText.
 	 */
 	protected Text fTitleText = null;
 
 	/**
-	 * Field FAuthorText.
+	 * Field fAuthorText.
 	 */
 	protected CLabel fAuthorText = null;
 
 	/**
-	 * Field FCreationDateText.
+	 * Field fCreationDateText.
 	 */
 	protected CLabel fCreationDateText = null;
 
 	/**
-	 * Field FPositionText.
+	 * Field fPositionText.
 	 */
 	protected CLabel fPositionText = null;
 
 	/**
-	 * Field FDescriptionText.
+	 * Field fDescriptionText.
 	 */
 	protected Text fDescriptionText = null;
 
@@ -197,6 +198,11 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	 * Field fNotAcceptedReasonText.
 	 */
 	protected Text fNotAcceptedReasonText = null;
+
+	/**
+	 * Field fAssignedToCombo.
+	 */
+	private CCombo fAssignedToCombo;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -369,6 +375,44 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fStateLabel.setToolTipText(R4EUIConstants.ANOMALY_STATE_TOOLTIP);
 		fStateLabel.setLayoutData(data);
 
+		//Assigned To
+		fAssignedToCombo = widgetFactory.createCCombo(composite, SWT.READ_ONLY);
+		data = new FormData();
+		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
+		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
+		data.top = new FormAttachment(fStateCombo, ITabbedPropertyConstants.VSPACE);
+		fAssignedToCombo.setToolTipText(R4EUIConstants.ASSIGNED_TO_TOOLTIP);
+		fAssignedToCombo.setLayoutData(data);
+		fAssignedToCombo.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
+						modelAnomaly.getAssignedTo().clear();
+						modelAnomaly.getAssignedTo().add(fAssignedToCombo.getText());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+				refresh();
+			}
+		});
+		addScrollListener(fAssignedToCombo);
+
+		final CLabel assignedToLabel = widgetFactory.createCLabel(composite, R4EUIConstants.ASSIGNED_TO_LABEL);
+		data = new FormData();
+		data.left = new FormAttachment(0, 0);
+		data.right = new FormAttachment(fAssignedToCombo, -ITabbedPropertyConstants.HSPACE);
+		data.top = new FormAttachment(fAssignedToCombo, 0, SWT.CENTER);
+		assignedToLabel.setToolTipText(R4EUIConstants.ASSIGNED_TO_TOOLTIP);
+		assignedToLabel.setLayoutData(data);
+
 		createParticipantDetailsSection(widgetFactory, composite, createAnomalyDetailsSection(widgetFactory, composite));
 	}
 
@@ -389,7 +433,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		final FormData data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fStateCombo, ITabbedPropertyConstants.VSPACE);
+		data.top = new FormAttachment(fAssignedToCombo, ITabbedPropertyConstants.VSPACE);
 		anomalyDetailsSection.setLayoutData(data);
 		anomalyDetailsSection.setText(ANOMALY_DETAILS_SECTION_LABEL);
 		anomalyDetailsSection.addExpansionListener(new ExpansionAdapter() {
@@ -553,6 +597,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				dialog.setTitle(modelAnomaly.getTitle());
 				dialog.setDescription(modelAnomaly.getDescription());
 				dialog.setDueDate(modelAnomaly.getDueDate());
+				dialog.setAssigned(modelAnomaly.getAssignedTo().get(0));
 				if (null != modelAnomaly.getType()) {
 					dialog.setClass_(((R4ECommentType) modelAnomaly.getType()).getType());
 				}
@@ -569,6 +614,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 							modelAnomaly.setTitle(dialog.getAnomalyTitleValue());
 							modelAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
 							modelAnomaly.setDueDate(dialog.getDueDate());
+							modelAnomaly.getAssignedTo().clear();
+							modelAnomaly.getAssignedTo().add(dialog.getAssigned());
 							if (null != dialog.getRuleReferenceValue()) {
 								final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
 								final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
@@ -916,6 +963,20 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		}
 		fDescriptionText.setText(modelAnomaly.getDescription());
 
+		String[] participants = R4EUIModelController.getActiveReview()
+				.getParticipantIDs()
+				.toArray(new String[R4EUIModelController.getActiveReview().getParticipantIDs().size()]);
+		fAssignedToCombo.removeAll();
+		fAssignedToCombo.add("");
+		for (String participant : participants) {
+			fAssignedToCombo.add(participant);
+		}
+		if (modelAnomaly.getAssignedTo().size() > 0) {
+			fAssignedToCombo.setText(modelAnomaly.getAssignedTo().get(0));
+		} else {
+			fAssignedToCombo.setText("");
+		}
+
 		fClassCombo.setItems(UIUtils.getClasses());
 		if (null != modelAnomaly.getType() && null != ((R4ECommentType) modelAnomaly.getType()).getType()) {
 			fClassCombo.select(((R4ECommentType) modelAnomaly.getType()).getType().getValue());
@@ -945,12 +1006,11 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fStateCombo.select(((R4EUIAnomalyExtended) uiModelAnomaly).mapStateToIndex(modelAnomaly.getState()));
 
 			if (null != R4EUIModelController.getActiveReview()) {
-				final List<String> participants = R4EUIModelController.getActiveReview().getParticipantIDs();
-				fDecidedByCombo.setItems(participants.toArray(new String[participants.size()]));
+				fDecidedByCombo.setItems(participants);
 				fDecidedByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getDecidedByID()));
-				fFixedByCombo.setItems(participants.toArray(new String[participants.size()]));
+				fFixedByCombo.setItems(participants);
 				fFixedByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getFixedByID()));
-				fFollowUpByCombo.setItems(participants.toArray(new String[participants.size()]));
+				fFollowUpByCombo.setItems(participants);
 				fFollowUpByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getFollowUpByID()));
 			}
 			if (null != modelAnomaly.getNotAcceptedReason()) {
@@ -987,6 +1047,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fNotAcceptedReasonText.setEnabled(false);
 			fRuleButton.setEnabled(false);
 			fRuleId.setEnabled(false);
+			fAssignedToCombo.setEnabled(false);
 			if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
 				fStateLabel.setVisible(true);
 				fStateCombo.setVisible(true);
@@ -1017,6 +1078,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fDescriptionText.setEnabled(true);
 			fRuleButton.setEnabled(true);
 			fRuleId.setEnabled(true);
+			fAssignedToCombo.setEnabled(true);
 
 			if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
 				final R4EUIAnomalyExtended uiAnomaly = (R4EUIAnomalyExtended) fProperties.getElement();

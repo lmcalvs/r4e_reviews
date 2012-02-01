@@ -600,6 +600,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String RULE_ID_LABEL = "Rule ID: ";
 
 	/**
+	 * Field ASSIGNED_TO_LABEL. (value is ""Assigned to: "")
+	 */
+	public static final String ASSIGNED_TO_LABEL = "Assigned to: ";
+
+	/**
 	 * Field NOT_ACCEPTED_REASON_LABEL. (value is ""Reason for Rejection: "")
 	 */
 	public static final String NOT_ACCEPTED_REASON_LABEL = "Reason for Rejection: ";
@@ -1011,6 +1016,46 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REVIEWS_PARTICIPANT_FILTER_MNEMONIC = "p";
 
 	/**
+	 * Field ASSIGN_MY_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignMy"")
+	 */
+	public static final String ASSIGN_MY_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignMy";
+
+	/**
+	 * Field ASSIGN_MY_FILTER_NAME. (value is ""Show My Assigned Elements"")
+	 */
+	public static final String ASSIGN_MY_FILTER_NAME = "Show My Assigned Elements";
+
+	/**
+	 * Field ASSIGN_MY_FILTER_TOOLTIP. (value is ""Show Review Elements Assigned to Me"")
+	 */
+	public static final String ASSIGN_MY_FILTER_TOOLTIP = "Show Review Elements Assigned to Me";
+
+	/**
+	 * Field ASSIGN_MY_FILTER_MNEMONIC. (value is ""g"")
+	 */
+	public static final String ASSIGN_MY_FILTER_MNEMONIC = "g";
+
+	/**
+	 * Field ASSIGN_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignParticipants"")
+	 */
+	public static final String ASSIGN_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignParticipants";
+
+	/**
+	 * Field ASSIGN_FILTER_NAME. (value is ""Show Assigned Elements for Participant... "")
+	 */
+	public static final String ASSIGN_FILTER_NAME = "Show Assigned Elements for Participant... ";
+
+	/**
+	 * Field ASSIGN_FILTER_TOOLTIP. (value is ""Show Review Elements Assigned to Participant"")
+	 */
+	public static final String ASSIGN_FILTER_TOOLTIP = "Show Review Elements Assigned to Participant";
+
+	/**
+	 * Field ASSIGN_FILTER_MNEMONIC. (value is ""h"")
+	 */
+	public static final String ASSIGN_FILTER_MNEMONIC = "h";
+
+	/**
 	 * Field ANOMALIES_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies"")
 	 */
 	public static final String ANOMALIES_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies";
@@ -1212,6 +1257,31 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field CHANGE_REVIEW_STATE_COMMAND_MNEMONIC. (value is ""c"")
 	 */
 	public static final String CHANGE_REVIEW_STATE_COMMAND_MNEMONIC = "c";
+
+	/**
+	 * Field ASSIGN_TO_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.assignElement"")
+	 */
+	public static final String ASSIGN_TO_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.assignElement";
+
+	/**
+	 * Field ASSIGN_TO_ICON_FILE. (value is ""icons/obj16/assign_tsk.png"")
+	 */
+	public static final String ASSIGN_TO_ICON_FILE = "icons/obj16/assign_tsk.png";
+
+	/**
+	 * Field ASSIGN_TO_COMMAND_NAME. (value is ""Assign to Participant"")
+	 */
+	public static final String ASSIGN_TO_COMMAND_NAME = "Assign to Participant";
+
+	/**
+	 * Field ASSIGN_TO_COMMAND_TOOLTIP. (value is ""Assign Review Element to Participant(s)"")
+	 */
+	public static final String ASSIGN_TO_COMMAND_TOOLTIP = "Assign Review Element to Participant(s)";
+
+	/**
+	 * Field ASSIGN_TO_COMMAND_MNEMONIC. (value is ""a"")
+	 */
+	public static final String ASSIGN_TO_COMMAND_MNEMONIC = "a";
 
 	/**
 	 * Field OPEN_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.openElement"")
@@ -2137,6 +2207,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field PARTICIPANTS_TOOLTIP. (value is ""Users that are part of the selected Participants List."")
 	 */
 	public static final String PARTICIPANTS_TOOLTIP = "Users that are part of the selected Participants List.";
+
+	/**
+	 * Field ASSIGNED_TO_TOOLTIP. (value is ""Participant assigned to Review this element."")
+	 */
+	public static final String ASSIGNED_TO_TOOLTIP = "Participant assigned to Review this element.";
 
 	//Listeners change types
 	/**

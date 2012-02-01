@@ -153,6 +153,16 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_PARTICIPANT_FILTER = "participantFilter";
 
 	/**
+	 * Field P_ASSIGN_MY_FILTER. (value is ""assignMyFilter"")
+	 */
+	public static final String P_ASSIGN_MY_FILTER = "assignMyFilter";
+
+	/**
+	 * Field P_ASSIGN_FILTER. (value is ""assignFilter"")
+	 */
+	public static final String P_ASSIGN_FILTER = "assignFilter";
+
+	/**
 	 * Field P_ANOMALIES_ALL_FILTER. (value is ""anomaliesFilter"")
 	 */
 	public static final String P_ANOMALIES_ALL_FILTER = "anomaliesFilter";

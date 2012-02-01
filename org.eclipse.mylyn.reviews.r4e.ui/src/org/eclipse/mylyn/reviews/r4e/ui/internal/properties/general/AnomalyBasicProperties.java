@@ -138,13 +138,24 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 			ANOMALY_RULE_ID_ID, R4EUIConstants.RULE_ID_LABEL);
 
 	/**
+	 * Field ANOMALY_ASSIGNED_TO_ID. (value is ""anomalyElement.assignedTo"")
+	 */
+	private static final String ANOMALY_ASSIGNED_TO_ID = "anomalyElement.assignedTo";
+
+	/**
+	 * Field ANOMALY_ASSIGNED_TO_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor ANOMALY_ASSIGNED_TO_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			ANOMALY_ASSIGNED_TO_ID, R4EUIConstants.ASSIGNED_TO_LABEL);
+
+	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { ANOMALY_TITLE_PROPERTY_DESCRIPTOR,
 			ANOMALY_POSITION_PROPERTY_DESCRIPTOR, ANOMALY_AUTHOR_PROPERTY_DESCRIPTOR,
 			ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR, ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR,
 			ANOMALY_DUE_DATE_PROPERTY_DESCRIPTOR, ANOMALY_CLASS_PROPERTY_DESCRIPTOR, ANOMALY_RANK_PROPERTY_DESCRIPTOR,
-			ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR };
+			ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR, ANOMALY_ASSIGNED_TO_PROPERTY_DESCRIPTOR };
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -215,6 +226,8 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 					: rankValue);
 		} else if (ANOMALY_RULE_ID_ID.equals(aId)) {
 			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getRuleID();
+		} else if (ANOMALY_ASSIGNED_TO_ID.equals(aId)) {
+			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getAssignedTo();
 		}
 		return null;
 	}

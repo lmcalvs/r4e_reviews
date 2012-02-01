@@ -18,6 +18,9 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -84,6 +87,18 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 		//Create and set UI model element
 		final R4EUISelection uiSelection = new R4EUISelection(this, selection, aUiPosition);
 		addChildren(uiSelection);
+
+		//If parent file is assigned, assign the Selection too
+		EList<String> parentAssignedParticipants = ((R4EUIFileContext) getParent()).getFileContext().getAssignedTo();
+		List<R4EParticipant> participantsToAssign = new ArrayList<R4EParticipant>();
+		for (String parentAssignedParticipant : parentAssignedParticipants) {
+			R4EParticipant participant = R4EUIModelController.getActiveReview().getParticipant(
+					parentAssignedParticipant, false);
+			if (null != participant) {
+				participantsToAssign.add(participant);
+			}
+		}
+		uiSelection.setAssigned(participantsToAssign);
 		return uiSelection;
 	}
 

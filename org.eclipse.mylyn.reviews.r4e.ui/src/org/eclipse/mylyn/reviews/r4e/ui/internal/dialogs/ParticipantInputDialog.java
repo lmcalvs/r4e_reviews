@@ -38,6 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant;
@@ -277,7 +278,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				}
 
 				//Validate Roles (optional)
-				if (fReviewSource && participant.getRoles().size() == 0) {
+				if (participant.getRoles().size() == 0) {
 					//If there is no roles defined, put one as default depending on the review type
 					if (R4EUIModelController.getActiveReview()
 							.getReview()
@@ -317,9 +318,20 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 * @see org.eclipse.ui.forms.FormDialog#open()
 	 */
 	@Override
-	public int open() {
+	public void create() {
 		fParticipantsDetailsValues.clear();
 		fParticipants.clear();
+		super.create();
+	}
+
+	/**
+	 * Method open.
+	 * 
+	 * @return int
+	 * @see org.eclipse.ui.forms.FormDialog#open()
+	 */
+	@Override
+	public int open() {
 		return super.open();
 	}
 
@@ -819,7 +831,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			}
 			fClearParticipantsButton.setEnabled(false);
 			fRemoveUserButton.setEnabled(false);
-			getButton(IDialogConstants.OK_ID).setEnabled(false);
+			if (fReviewSource) {
+				getButton(IDialogConstants.OK_ID).setEnabled(false);
+			}
 		}
 	}
 
@@ -845,6 +859,20 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			//Override email with address defined in users group (if any)
 			if (userTokens.length == 2 && !(userTokens[1].trim().equals(""))) {
 				participant.setEmail(userTokens[1]);
+			}
+
+			//Override email with address defined in current review (if any)
+			if (null != R4EUIModelController.getActiveReview()) {
+				R4EParticipant reviewParticipant;
+				try {
+					reviewParticipant = R4EUIModelController.getActiveReview().getParticipant(participant.getId(),
+							false);
+					if (null != reviewParticipant) {
+						participant.setEmail(reviewParticipant.getEmail());
+					}
+				} catch (ResourceHandlingException e) {
+					UIUtils.displayResourceErrorDialog(e);
+				}
 			}
 			fParticipants.add(participant);
 			updateComponents(participant);
@@ -908,7 +936,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			getButton(IDialogConstants.OK_ID).setEnabled(true);
 			getButton(IDialogConstants.OK_ID).setSelection(false);
 		} else {
-			getButton(IDialogConstants.OK_ID).setEnabled(false);
+			if (fReviewSource) {
+				getButton(IDialogConstants.OK_ID).setEnabled(false);
+			}
 		}
 	}
 
@@ -1005,5 +1035,15 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	public void itemSelected(Item aItem, int aInstanceId) {
 		// ignore
 
+	}
+
+	/**
+	 * Method addParticipant.
+	 * 
+	 * @param aParticipant
+	 *            - String
+	 */
+	public void addParticipant(String aParticipant) {
+		addUsersToParticipantList(aParticipant);
 	}
 }

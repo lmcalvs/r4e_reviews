@@ -126,6 +126,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			tempAnomaly.setTitle(dialog.getAnomalyTitleValue());
 			tempAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
 			tempAnomaly.setDueDate(dialog.getDueDate());
+			tempAnomaly.getAssignedTo().clear();
+			tempAnomaly.getAssignedTo().add(dialog.getAssigned());
 			if (null != dialog.getRuleReferenceValue()) {
 				final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
 				tempCommentType.setType(rule.getClass_());
@@ -440,6 +442,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		aAnomaly.setTitle(aDialog.getAnomalyTitleValue());
 		aAnomaly.setDescription(aDialog.getAnomalyDescriptionValue());
 		aAnomaly.setDueDate(aDialog.getDueDate());
+		aAnomaly.getAssignedTo().clear();
+		aAnomaly.getAssignedTo().add(aDialog.getAssigned());
 		if (null != aDialog.getRuleReferenceValue()) {
 			final R4EDesignRule rule = aDialog.getRuleReferenceValue().getRule();
 			final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();

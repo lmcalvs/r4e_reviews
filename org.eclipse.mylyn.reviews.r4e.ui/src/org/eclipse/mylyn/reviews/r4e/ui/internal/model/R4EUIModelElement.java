@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -308,6 +309,17 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
+	 * Method setAssigned.
+	 * 
+	 * @param aParticipants
+	 *            - List<R4EParticipant> aParticipants
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setAssigned(List<R4EParticipant>)
+	 */
+	public void setAssigned(List<R4EParticipant> aParticipants) {
+		//default implementation
+	}
+
+	/**
 	 * Method setChildUserReviewed.
 	 * 
 	 * @param aReviewed
@@ -555,6 +567,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isChangeUserReviewStateCmd()
 	 */
 	public boolean isChangeUserReviewStateCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method isAssignToCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAssignToCmd()
+	 */
+	public boolean isAssignToCmd() {
 		return false; //default implementation
 	}
 

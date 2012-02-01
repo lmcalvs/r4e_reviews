@@ -28,6 +28,11 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 public interface IParticipantInputDialog {
 
 	/**
+	 * Method create.
+	 */
+	void create();
+
+	/**
 	 * Method open.
 	 * 
 	 * @return int
@@ -47,4 +52,12 @@ public interface IParticipantInputDialog {
 	 * @return List<R4EParticipant>
 	 */
 	List<R4EParticipant> getParticipants();
+
+	/**
+	 * Method addParticipant.
+	 * 
+	 * @param aParticipant
+	 *            - String
+	 */
+	void addParticipant(String aParticipant);
 }

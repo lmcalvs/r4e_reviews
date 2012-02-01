@@ -194,7 +194,7 @@ public class R4EUIModelController {
 				actionGroup.runReviewsMyFilterCommand(true);
 			}
 			if (actionGroup.isParticipantFilterSet()) {
-				actionGroup.runReviewsParticipantFilterCommand(actionGroup.getFilterParticipant());
+				actionGroup.runReviewsParticipantFilterCommand(actionGroup.getReviewFilterParticipant());
 			}
 		} catch (ExecutionException e) {
 			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");

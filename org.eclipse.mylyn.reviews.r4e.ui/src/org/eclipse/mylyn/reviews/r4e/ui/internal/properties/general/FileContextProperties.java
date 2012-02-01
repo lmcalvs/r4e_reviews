@@ -56,10 +56,21 @@ public class FileContextProperties extends ModelElementProperties {
 			FILE_TARGET_VERSION_ID, "Target file");
 
 	/**
+	 * Field FILE_ASSIGNED_TO_ID. (value is ""fileContextElement.assignedTo"")
+	 */
+	private static final String FILE_ASSIGNED_TO_ID = "fileContextElement.assignedTo";
+
+	/**
+	 * Field FILE_ASSIGNED_TO_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor FILE_ASSIGNED_TO_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			FILE_ASSIGNED_TO_ID, R4EUIConstants.ASSIGNED_TO_LABEL);
+
+	/**
 	 * Field DESCRIPTORS.
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { FILE_BASE_VERSION_PROPERTY_DESCRIPTOR,
-			FILE_TARGET_VERSION_PROPERTY_DESCRIPTOR };
+			FILE_TARGET_VERSION_PROPERTY_DESCRIPTOR, FILE_ASSIGNED_TO_PROPERTY_DESCRIPTOR };
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -110,6 +121,8 @@ public class FileContextProperties extends ModelElementProperties {
 				return new FileVersionSourceProperties(((R4EUIFileContext) getElement()).getFileContext().getBase());
 			}
 			return R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE;
+		} else if (FILE_ASSIGNED_TO_ID.equals(aId)) {
+			return ((R4EUIFileContext) getElement()).getFileContext().getAssignedTo();
 		}
 		return null;
 	}

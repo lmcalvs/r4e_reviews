@@ -37,74 +37,74 @@ public interface IAnomalyInputDialog {
 	/**
 	 * Method open.
 	 * 
-	
-	 * @return int */
+	 * @return int
+	 */
 	int open();
 
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	
-	 * @return the anomaly title input string */
+	 * @return the anomaly title input string
+	 */
 	String getAnomalyTitleValue();
 
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	
-	 * @return the anomaly description input string */
+	 * @return the anomaly description input string
+	 */
 	String getAnomalyDescriptionValue();
 
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	
-	 * @return the R4EUIRule reference (if any) */
+	 * @return the R4EUIRule reference (if any)
+	 */
 	R4EUIRule getRuleReferenceValue();
 
 	/**
 	 * Method setClass_.
 	 * 
-	
-	 * @param aClass R4EDesignRuleClass
+	 * @param aClass
+	 *            R4EDesignRuleClass
 	 */
 	void setClass_(R4EDesignRuleClass aClass);
 
 	/**
 	 * Method getClass_.
 	 * 
-	
-	 * @return R4EDesignRuleClass */
+	 * @return R4EDesignRuleClass
+	 */
 	R4EDesignRuleClass getClass_();
 
 	/**
 	 * Method setRank.
 	 * 
-	
-	 * @param aRank R4EDesignRuleRank
+	 * @param aRank
+	 *            R4EDesignRuleRank
 	 */
 	void setRank(R4EDesignRuleRank aRank);
 
 	/**
 	 * Method getRank.
 	 * 
-	
-	 * @return R4EDesignRuleRank */
+	 * @return R4EDesignRuleRank
+	 */
 	R4EDesignRuleRank getRank();
 
 	/**
 	 * Method setDueDate.
 	 * 
-	
-	 * @param aDate Date
+	 * @param aDate
+	 *            Date
 	 */
 	void setDueDate(Date aDate);
 
 	/**
 	 * Method getDueDate.
 	 * 
-	
-	 * @return Date */
+	 * @return Date
+	 */
 	Date getDueDate();
 
 	/**
@@ -131,4 +131,18 @@ public interface IAnomalyInputDialog {
 	 */
 	void setRuleID(String aId);
 
+	/**
+	 * Method getAssigned.
+	 * 
+	 * @return String
+	 */
+	String getAssigned();
+
+	/**
+	 * Method setAssigned.
+	 * 
+	 * @param aParticipant
+	 *            - String
+	 */
+	void setAssigned(String aParticipant);
 }

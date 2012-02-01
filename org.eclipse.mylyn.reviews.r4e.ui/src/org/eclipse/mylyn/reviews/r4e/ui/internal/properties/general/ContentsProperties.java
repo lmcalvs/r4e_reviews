@@ -45,9 +45,21 @@ public class ContentsProperties extends ModelElementProperties {
 			CONTENTS_POSITION_ID, R4EUIConstants.POSITION_LABEL);
 
 	/**
+	 * Field CONTENTS_ASSIGNED_TO_ID. (value is ""contentsElement.assignedTo"")
+	 */
+	private static final String CONTENTS_ASSIGNED_TO_ID = "contentsElement.assignedTo";
+
+	/**
+	 * Field CONTENTS_ASSIGNED_TO_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor CONTENTS_ASSIGNED_TO_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			CONTENTS_ASSIGNED_TO_ID, R4EUIConstants.ASSIGNED_TO_LABEL);
+
+	/**
 	 * Field DESCRIPTORS.
 	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { CONTENTS_POSITION_PROPERTY_DESCRIPTOR };
+	private static final IPropertyDescriptor[] DESCRIPTORS = { CONTENTS_POSITION_PROPERTY_DESCRIPTOR,
+			CONTENTS_ASSIGNED_TO_PROPERTY_DESCRIPTOR };
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -90,6 +102,8 @@ public class ContentsProperties extends ModelElementProperties {
 	public Object getPropertyValue(Object aId) {
 		if (CONTENTS_POSITION_ID.equals(aId)) {
 			return ((R4EUIContent) getElement()).getPosition().toString();
+		} else if (CONTENTS_ASSIGNED_TO_ID.equals(aId)) {
+			return ((R4EUIContent) getElement()).getContent().getAssignedTo();
 		}
 		return null;
 	}

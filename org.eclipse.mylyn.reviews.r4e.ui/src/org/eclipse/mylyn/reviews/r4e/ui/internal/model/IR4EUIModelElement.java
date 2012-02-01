@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
@@ -126,6 +127,14 @@ public interface IR4EUIModelElement {
 	 * @throws OutOfSyncException
 	 */
 	void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException;
+
+	/**
+	 * Sets the assignTo vaslue. Take note that this is not applicable to all model elements
+	 * 
+	 * @param aParticipants
+	 *            - the list of assigned participants
+	 */
+	void setAssigned(List<R4EParticipant> aParticipants);
 
 	/**
 	 * Set this child reviewed state
@@ -326,6 +335,13 @@ public interface IR4EUIModelElement {
 	 * @return boolean
 	 */
 	boolean isChangeUserReviewStateCmd();
+
+	/**
+	 * Method isAssignToCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isAssignToCmd();
 
 	/**
 	 * Method isOpenElementCmd.
