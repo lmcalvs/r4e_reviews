@@ -219,18 +219,19 @@ if (ret != null ) {&#13;
                 </structure>
                 <structure>
                     <property name="name">IdentifyRankOther</property>
-                    <expression name="expression">//Identify  the NONE ranking anomaly, or anything other than MINOR or MAJOR&#13;
-rank = row["rank"];&#13;
-&#13;
-ret =  (rank == null || rank == "" || BirtComp.equalTo(rank.toLowerCase(),&#13;
-                "NONE".toLowerCase()) ) ? 1: 0;</expression>
+                    <expression name="expression">rank = row["rank"];   ret =  (rank == null ||  BirtComp.equalTo(rank != null ? rank.toLowerCase():" -1", "R4E_RANK_NONE".toLowerCase()) ) ? 1: 0;</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">IdentifyRankMinor</property>
+                    <expression name="expression">ret = (row["rank"] == "" || BirtComp.equalTo(row["rank"] != null ? rank.toLowerCase():"-1", "R4E_RANK_MINOR".toLowerCase()) ) ? 1: 0;</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="name">CountRankMinor</property>
                     <expression name="expression">//Count  how many were MINOR&#13;
 &#13;
-Total.sum ( BirtComp.equalTo( row["rank"], "R4E_RANK_MINOR" ));</expression>
+Total.sum ( row["IdentifyRankMinor"] );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -481,76 +482,81 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
                     </structure>
                     <structure>
                         <property name="position">22</property>
-                        <property name="name">CountRankMinor</property>
+                        <property name="name">IdentifyRankMinor</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">23</property>
-                        <property name="name">CountRankMajor</property>
+                        <property name="name">CountRankMinor</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">24</property>
-                        <property name="name">CountRankOther</property>
+                        <property name="name">CountRankMajor</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">25</property>
-                        <property name="name">CountStateCreated</property>
+                        <property name="name">CountRankOther</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">26</property>
-                        <property name="name">CountStateAssigned</property>
+                        <property name="name">CountStateCreated</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">27</property>
-                        <property name="name">CountStateAccepted</property>
+                        <property name="name">CountStateAssigned</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">28</property>
-                        <property name="name">CountStateFixed</property>
+                        <property name="name">CountStateAccepted</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">29</property>
-                        <property name="name">CountStateDuplicated</property>
+                        <property name="name">CountStateFixed</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">30</property>
-                        <property name="name">CountStateRejected</property>
+                        <property name="name">CountStateDuplicated</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">31</property>
-                        <property name="name">CountStateDeferred</property>
+                        <property name="name">CountStateRejected</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">32</property>
-                        <property name="name">CountStateVerified</property>
+                        <property name="name">CountStateDeferred</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">33</property>
-                        <property name="name">CountTotalAnomaly</property>
+                        <property name="name">CountStateVerified</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">34</property>
+                        <property name="name">CountTotalAnomaly</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">35</property>
                         <property name="name">AnomalyDueDate</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">35</property>
+                        <property name="position">36</property>
                         <property name="name">AnomalyState</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">36</property>
+                        <property name="position">37</property>
                         <property name="name">CountStateOthers</property>
                         <property name="dataType">integer</property>
                     </structure>
@@ -563,146 +569,129 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
                     <property name="name">xmi:id</property>
                     <property name="nativeName">xmi:id</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
                     <property name="name">user</property>
                     <property name="nativeName">user</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">3</property>
                     <property name="name">description</property>
                     <property name="nativeName">description</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">4</property>
                     <property name="name">review</property>
                     <property name="nativeName">review</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">5</property>
                     <property name="name">title</property>
                     <property name="nativeName">title</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">6</property>
                     <property name="name">createdOn</property>
                     <property name="nativeName">createdOn</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">7</property>
                     <property name="name">rank</property>
                     <property name="nativeName">rank</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">8</property>
                     <property name="name">ruleID</property>
                     <property name="nativeName">ruleID</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">9</property>
                     <property name="name">xsi:type</property>
                     <property name="nativeName">xsi:type</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">10</property>
                     <property name="name">href</property>
                     <property name="nativeName">href</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">11</property>
                     <property name="name">xsi:type_1</property>
                     <property name="nativeName">xsi:type_1</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">12</property>
                     <property name="name">href_1</property>
                     <property name="nativeName">href_1</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">13</property>
                     <property name="name">href_2</property>
                     <property name="nativeName">href_2</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">14</property>
                     <property name="name">state</property>
                     <property name="nativeName">state</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">15</property>
                     <property name="name">dueDate</property>
                     <property name="nativeName">dueDate</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">16</property>
                     <property name="name">fixedInVersion</property>
                     <property name="nativeName">fixedInVersion</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">17</property>
                     <property name="name">decidedByID</property>
                     <property name="nativeName">decidedByID</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">18</property>
                     <property name="name">fixedByID</property>
                     <property name="nativeName">fixedByID</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">19</property>
                     <property name="name">followUpByID</property>
                     <property name="nativeName">followUpByID</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//r4ecore:R4EAnomaly]#:#{xmi:id;STRING;@xmi:id},{user;STRING;@user},{description;STRING;@description},{review;STRING;@review},{title;STRING;@title},{createdOn;STRING;@createdOn},{rank;STRING;@rank},{ruleID;STRING;@ruleID},{xsi:type;STRING;type/@xsi:type},{href;STRING;type/@href},{xsi:type_1;STRING;location/@xsi:type},{href_1;STRING;location/@href},{href_2;STRING;id/@href},{state;STRING;@state},{dueDate;STRING;@dueDate},{fixedInVersion;STRING;@fixedInVersion},{decidedByID;STRING;@decidedByID},{fixedByID;STRING;@fixedByID},{followUpByID;STRING;@followUpByID}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
-  <Version>1.0</Version>
+  <Version>2.0</Version>
   <design:ResultSets derivedMetaData="true">
     <design:resultSetDefinitions>
       <design:resultSetColumns>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>xmi:id</design:name>
-            <design:position>1</design:position>
+            <design:identifier>
+              <design:name>xmi:id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -715,8 +704,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>user</design:name>
-            <design:position>2</design:position>
+            <design:identifier>
+              <design:name>user</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -729,8 +720,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>description</design:name>
-            <design:position>3</design:position>
+            <design:identifier>
+              <design:name>description</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -743,8 +736,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>review</design:name>
-            <design:position>4</design:position>
+            <design:identifier>
+              <design:name>review</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -757,8 +752,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>title</design:name>
-            <design:position>5</design:position>
+            <design:identifier>
+              <design:name>title</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -771,8 +768,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>createdOn</design:name>
-            <design:position>6</design:position>
+            <design:identifier>
+              <design:name>createdOn</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -785,8 +784,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>rank</design:name>
-            <design:position>7</design:position>
+            <design:identifier>
+              <design:name>rank</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -799,8 +800,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>ruleID</design:name>
-            <design:position>8</design:position>
+            <design:identifier>
+              <design:name>ruleID</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -813,8 +816,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>xsi:type</design:name>
-            <design:position>9</design:position>
+            <design:identifier>
+              <design:name>xsi:type</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -827,8 +832,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>href</design:name>
-            <design:position>10</design:position>
+            <design:identifier>
+              <design:name>href</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -841,8 +848,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>xsi:type_1</design:name>
-            <design:position>11</design:position>
+            <design:identifier>
+              <design:name>xsi:type_1</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -855,8 +864,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>href_1</design:name>
-            <design:position>12</design:position>
+            <design:identifier>
+              <design:name>href_1</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -869,8 +880,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>href_2</design:name>
-            <design:position>13</design:position>
+            <design:identifier>
+              <design:name>href_2</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -883,8 +896,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>state</design:name>
-            <design:position>14</design:position>
+            <design:identifier>
+              <design:name>state</design:name>
+              <design:position>14</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -897,8 +912,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>dueDate</design:name>
-            <design:position>15</design:position>
+            <design:identifier>
+              <design:name>dueDate</design:name>
+              <design:position>15</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -911,8 +928,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>fixedInVersion</design:name>
-            <design:position>16</design:position>
+            <design:identifier>
+              <design:name>fixedInVersion</design:name>
+              <design:position>16</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -925,8 +944,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>decidedByID</design:name>
-            <design:position>17</design:position>
+            <design:identifier>
+              <design:name>decidedByID</design:name>
+              <design:position>17</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -939,8 +960,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>fixedByID</design:name>
-            <design:position>18</design:position>
+            <design:identifier>
+              <design:name>fixedByID</design:name>
+              <design:position>18</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -953,8 +976,10 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>followUpByID</design:name>
-            <design:position>19</design:position>
+            <design:identifier>
+              <design:name>followUpByID</design:name>
+              <design:position>19</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -1960,7 +1985,8 @@ lineRange = start + "-" + end;</expression>
                     <property name="name">ClassErroneous</property>
                     <expression name="expression">//Identify  the ERRONEOUS class anomaly&#13;
                 &#13;
-  Total.count ( BirtComp.equalTo( row["type"], "R4E_CLASS_ERRONEOUS" ) );</expression>
+  //  row["type"]; //Default value, so the field type is not present&#13;
+ Total.count (  (row["xmi:id"] != null  &amp;&amp; row["type"] == null) || BirtComp.equalTo( row["type"], "R4E_CLASS_ERRONEOUS" ) )</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -1985,16 +2011,8 @@ lineRange = start + "-" + end;</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
-                    <property name="name">ClassOthers</property>
-                    <expression name="expression">//Identify  the Others class anomaly&#13;
-                &#13;
-    Total.count ( row["type"] == null ||&#13;
-                      row["type"] == "" ||&#13;
-                     (  !BirtComp.equalTo( row["type"], "R4E_CLASS_ERRONEOUS" )  &amp;&amp; &#13;
-                        !BirtComp.equalTo( row["type"], "R4E_CLASS_IMPROVEMENT" )  &amp;&amp; &#13;
-                        !BirtComp.equalTo( row["type"], "R4E_CLASS_SUPERFLUOUS" )  &amp;&amp; &#13;
-                        !BirtComp.equalTo( row["type"], "R4E_CLASS_QUESTION" )  &#13;
-                         ) );</expression>
+                    <property name="name">ClassAllButOthers</property>
+                    <expression name="expression">ret = ( row["ClassErroneous"] + row["ClassSuperfluous"] + row["ClassImprovement"] + row["ClassQuestion"] );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -2061,7 +2079,7 @@ if (ret != null ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">7</property>
-                        <property name="name">ClassOthers</property>
+                        <property name="name">ClassAllButOthers</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
@@ -2083,27 +2101,27 @@ if (ret != null ) {&#13;
                     <property name="name">xmi:id</property>
                     <property name="nativeName">xmi:id</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
                     <property name="name">type</property>
                     <property name="nativeName">type</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//r4ecore:R4ECommentType]#:#{xmi:id;STRING;@xmi:id},{type;STRING;@type}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
-  <Version>1.0</Version>
+  <Version>2.0</Version>
   <design:ResultSets derivedMetaData="true">
     <design:resultSetDefinitions>
       <design:resultSetColumns>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>xmi:id</design:name>
-            <design:position>1</design:position>
+            <design:identifier>
+              <design:name>xmi:id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -2116,8 +2134,10 @@ if (ret != null ) {&#13;
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>type</design:name>
-            <design:position>2</design:position>
+            <design:identifier>
+              <design:name>type</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -6660,11 +6680,6 @@ if (decisionTime == 0 ) {&#13;
                     <text-property name="displayName">Comment Type::type</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">Comment Type::ClassOthers</property>
-                    <property name="alias">ClassOthers</property>
-                    <text-property name="displayName">Comment Type::ClassOthers</text-property>
-                </structure>
-                <structure>
                     <property name="columnName">Join CommentAnomaly-TextContent::Comment Anomaly::CountStateDuplicated</property>
                     <property name="alias">CountStateDuplicated</property>
                     <text-property name="displayName">Join CommentAnomaly-TextContent::Comment Anomaly::CountStateDuplicated</text-property>
@@ -7083,11 +7098,6 @@ if (decisionTime == 0 ) {&#13;
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">46</property>
-                        <property name="name">ClassOthers</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
                         <property name="position">47</property>
                         <property name="name">CreateHrefFromXmiID</property>
                         <property name="dataType">string</property>
@@ -7485,11 +7495,6 @@ if (ret != null ) {&#13;
                     <property name="columnName">Join FileVersion_TextPosition::Comment FileVersion::localVersionID</property>
                     <property name="alias">localVersionID</property>
                     <text-property name="displayName">Join FileVersion_TextPosition::Comment FileVersion::localVersionID</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">Join Anomaly_TextContent_CommentType::Comment Type::ClassOthers</property>
-                    <property name="alias">ClassOthers</property>
-                    <text-property name="displayName">Join Anomaly_TextContent_CommentType::Comment Type::ClassOthers</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Join Anomaly_TextContent_CommentType::Join CommentAnomaly-TextContent::Comment Anomaly::AnomalyType</property>
@@ -7940,11 +7945,6 @@ if (ret != null ) {&#13;
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">62</property>
-                        <property name="name">ClassOthers</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
                         <property name="position">63</property>
                         <property name="name">CreateHrefFromXmiID</property>
                         <property name="dataType">string</property>
@@ -8207,11 +8207,6 @@ if (ret != null ) {&#13;
                     <property name="columnName">Join FileVersion_TextPos_Anomaly_TextContent::Join FileVersion_TextPosition::Comment FileVersion::localVersionID</property>
                     <property name="alias">localVersionID</property>
                     <text-property name="displayName">Join FileVersion_TextPos_Anomaly_TextContent::Join FileVersion_TextPosition::Comment FileVersion::localVersionID</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">Join FileVersion_TextPos_Anomaly_TextContent::Join Anomaly_TextContent_CommentType::Comment Type::ClassOthers</property>
-                    <property name="alias">ClassOthers</property>
-                    <text-property name="displayName">Join FileVersion_TextPos_Anomaly_TextContent::Join Anomaly_TextContent_CommentType::Comment Type::ClassOthers</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Join FileVersion_TextPos_Anomaly_TextContent::Join Anomaly_TextContent_CommentType::Join CommentAnomaly-TextContent::Comment Anomaly::AnomalyType</property>
@@ -8694,11 +8689,6 @@ if (ret != null ) {&#13;
                     <structure>
                         <property name="position">61</property>
                         <property name="name">ClassQuestion</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">62</property>
-                        <property name="name">ClassOthers</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
@@ -10974,6 +10964,490 @@ value = row["PhaseInfo::type"];&#13;
                 </structure>
             </list-property>
         </joint-data-set>
+        <joint-data-set name="Join CommentAnomaly_CommentType" id="2611">
+            <list-property name="computedColumns">
+                <structure>
+                    <property name="name">CountClassOthers</property>
+                    <expression name="expression">ret = Total.max(row["CountTotalAnomaly"]) - Total.Max(row["Comment Type::ClassAllButOthers"]);</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">Comment Type::CreateHrefFromXmiID</property>
+                    <property name="alias">CreateHrefFromXmiID</property>
+                    <text-property name="displayName">Comment Type::CreateHrefFromXmiID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::fixedByID</property>
+                    <property name="alias">fixedByID</property>
+                    <text-property name="displayName">Comment Anomaly::fixedByID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Type::ClassImprovement</property>
+                    <property name="alias">ClassImprovement</property>
+                    <text-property name="displayName">Comment Type::ClassImprovement</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Type::ClassErroneous</property>
+                    <property name="alias">ClassErroneous</property>
+                    <text-property name="displayName">Comment Type::ClassErroneous</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::fixedInVersion</property>
+                    <property name="alias">fixedInVersion</property>
+                    <text-property name="displayName">Comment Anomaly::fixedInVersion</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::state</property>
+                    <property name="alias">state</property>
+                    <text-property name="displayName">Comment Anomaly::state</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::decidedByID</property>
+                    <property name="alias">decidedByID</property>
+                    <text-property name="displayName">Comment Anomaly::decidedByID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::xsi:type</property>
+                    <property name="alias">xsi:type</property>
+                    <text-property name="displayName">Comment Anomaly::xsi:type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Type::type</property>
+                    <property name="alias">type</property>
+                    <text-property name="displayName">Comment Type::type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountStateDuplicated</property>
+                    <property name="alias">CountStateDuplicated</property>
+                    <text-property name="displayName">Comment Anomaly::CountStateDuplicated</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::AnomalyType</property>
+                    <property name="alias">AnomalyType</property>
+                    <text-property name="displayName">Comment Anomaly::AnomalyType</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountStateAccepted</property>
+                    <property name="alias">CountStateAccepted</property>
+                    <text-property name="displayName">Comment Anomaly::CountStateAccepted</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::rank</property>
+                    <property name="alias">rank</property>
+                    <text-property name="displayName">Comment Anomaly::rank</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::title</property>
+                    <property name="alias">title</property>
+                    <text-property name="displayName">Comment Anomaly::title</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Type::ClassQuestion</property>
+                    <property name="alias">ClassQuestion</property>
+                    <text-property name="displayName">Comment Type::ClassQuestion</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::AnomalyDueDate</property>
+                    <property name="alias">AnomalyDueDate</property>
+                    <text-property name="displayName">Comment Anomaly::AnomalyDueDate</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::href_1</property>
+                    <property name="alias">href_1</property>
+                    <text-property name="displayName">Comment Anomaly::href_1</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::ruleID</property>
+                    <property name="alias">ruleID</property>
+                    <text-property name="displayName">Comment Anomaly::ruleID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::href_2</property>
+                    <property name="alias">href_2</property>
+                    <text-property name="displayName">Comment Anomaly::href_2</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::description</property>
+                    <property name="alias">description</property>
+                    <text-property name="displayName">Comment Anomaly::description</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountStateFixed</property>
+                    <property name="alias">CountStateFixed</property>
+                    <text-property name="displayName">Comment Anomaly::CountStateFixed</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::followUpByID</property>
+                    <property name="alias">followUpByID</property>
+                    <text-property name="displayName">Comment Anomaly::followUpByID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountRankMinor</property>
+                    <property name="alias">CountRankMinor</property>
+                    <text-property name="displayName">Comment Anomaly::CountRankMinor</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountRankMajor</property>
+                    <property name="alias">CountRankMajor</property>
+                    <text-property name="displayName">Comment Anomaly::CountRankMajor</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::AnomalyState</property>
+                    <property name="alias">AnomalyState</property>
+                    <text-property name="displayName">Comment Anomaly::AnomalyState</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Type::ClassSuperfluous</property>
+                    <property name="alias">ClassSuperfluous</property>
+                    <text-property name="displayName">Comment Type::ClassSuperfluous</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::href</property>
+                    <property name="alias">href</property>
+                    <text-property name="displayName">Comment Anomaly::href</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::dueDate</property>
+                    <property name="alias">dueDate</property>
+                    <text-property name="displayName">Comment Anomaly::dueDate</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountStateCreated</property>
+                    <property name="alias">CountStateCreated</property>
+                    <text-property name="displayName">Comment Anomaly::CountStateCreated</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountStateDeferred</property>
+                    <property name="alias">CountStateDeferred</property>
+                    <text-property name="displayName">Comment Anomaly::CountStateDeferred</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountTotalAnomaly</property>
+                    <property name="alias">CountTotalAnomaly</property>
+                    <text-property name="displayName">Comment Anomaly::CountTotalAnomaly</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::xsi:type_1</property>
+                    <property name="alias">xsi:type_1</property>
+                    <text-property name="displayName">Comment Anomaly::xsi:type_1</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountStateOthers</property>
+                    <property name="alias">CountStateOthers</property>
+                    <text-property name="displayName">Comment Anomaly::CountStateOthers</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountStateAssigned</property>
+                    <property name="alias">CountStateAssigned</property>
+                    <text-property name="displayName">Comment Anomaly::CountStateAssigned</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::xmi:id</property>
+                    <property name="alias">Comment Anomaly::xmi:id</property>
+                    <text-property name="displayName">Comment Anomaly::xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::createdOn</property>
+                    <property name="alias">createdOn</property>
+                    <text-property name="displayName">Comment Anomaly::createdOn</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Type::xmi:id</property>
+                    <property name="alias">Comment Type::xmi:id</property>
+                    <text-property name="displayName">Comment Type::xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Type::ClassAllButOthers</property>
+                    <property name="alias">ClassAllButOthers</property>
+                    <text-property name="displayName">Comment Type::ClassAllButOthers</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountStateVerified</property>
+                    <property name="alias">CountStateVerified</property>
+                    <text-property name="displayName">Comment Anomaly::CountStateVerified</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Type::FormatCommentType</property>
+                    <property name="alias">FormatCommentType</property>
+                    <text-property name="displayName">Comment Type::FormatCommentType</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountRankOther</property>
+                    <property name="alias">CountRankOther</property>
+                    <text-property name="displayName">Comment Anomaly::CountRankOther</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::user</property>
+                    <property name="alias">user</property>
+                    <text-property name="displayName">Comment Anomaly::user</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::review</property>
+                    <property name="alias">review</property>
+                    <text-property name="displayName">Comment Anomaly::review</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::CountStateRejected</property>
+                    <property name="alias">CountStateRejected</property>
+                    <text-property name="displayName">Comment Anomaly::CountStateRejected</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment Anomaly::IdentifyRankOther</property>
+                    <property name="alias">IdentifyRankOther</property>
+                    <text-property name="displayName">Comment Anomaly::IdentifyRankOther</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">Comment Anomaly::xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">Comment Anomaly::user</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">Comment Anomaly::description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">Comment Anomaly::review</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">Comment Anomaly::title</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">Comment Anomaly::createdOn</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">Comment Anomaly::rank</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">Comment Anomaly::ruleID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">Comment Anomaly::xsi:type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">Comment Anomaly::href</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">Comment Anomaly::xsi:type_1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">Comment Anomaly::href_1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">Comment Anomaly::href_2</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">Comment Anomaly::state</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">Comment Anomaly::dueDate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">Comment Anomaly::fixedInVersion</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">Comment Anomaly::decidedByID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">Comment Anomaly::fixedByID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">Comment Anomaly::followUpByID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">Comment Anomaly::AnomalyType</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">Comment Anomaly::IdentifyRankOther</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">Comment Anomaly::CountRankMinor</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
+                        <property name="name">Comment Anomaly::CountRankMajor</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">24</property>
+                        <property name="name">Comment Anomaly::CountRankOther</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">25</property>
+                        <property name="name">Comment Anomaly::CountStateCreated</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">26</property>
+                        <property name="name">Comment Anomaly::CountStateAssigned</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">27</property>
+                        <property name="name">Comment Anomaly::CountStateAccepted</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">28</property>
+                        <property name="name">Comment Anomaly::CountStateFixed</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">29</property>
+                        <property name="name">Comment Anomaly::CountStateDuplicated</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">30</property>
+                        <property name="name">Comment Anomaly::CountStateRejected</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">31</property>
+                        <property name="name">Comment Anomaly::CountStateDeferred</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">32</property>
+                        <property name="name">Comment Anomaly::CountStateVerified</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">33</property>
+                        <property name="name">Comment Anomaly::CountTotalAnomaly</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">34</property>
+                        <property name="name">Comment Anomaly::AnomalyDueDate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">35</property>
+                        <property name="name">Comment Anomaly::AnomalyState</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">36</property>
+                        <property name="name">Comment Anomaly::CountStateOthers</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">37</property>
+                        <property name="name">Comment Type::xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">38</property>
+                        <property name="name">Comment Type::type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">39</property>
+                        <property name="name">Comment Type::ClassErroneous</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">40</property>
+                        <property name="name">Comment Type::ClassSuperfluous</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">41</property>
+                        <property name="name">Comment Type::ClassImprovement</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">42</property>
+                        <property name="name">Comment Type::ClassQuestion</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">43</property>
+                        <property name="name">Comment Type::ClassAllButOthers</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">44</property>
+                        <property name="name">Comment Type::CreateHrefFromXmiID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">45</property>
+                        <property name="name">Comment Type::FormatCommentType</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">46</property>
+                        <property name="name">CountClassOthers</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <simple-property-list name="dataSets">
+                <value>Comment Anomaly</value>
+                <value>Comment Type</value>
+            </simple-property-list>
+            <list-property name="joinConditions">
+                <structure>
+                    <property name="joinType">full-out</property>
+                    <property name="joinOperator">eq</property>
+                    <property name="leftDataSet">Comment Anomaly</property>
+                    <property name="rightDataSet">Comment Type</property>
+                    <expression name="leftExpression">dataSetRow["xmi:id"]</expression>
+                    <expression name="rightExpression">dataSetRow["xmi:id"]</expression>
+                </structure>
+            </list-property>
+        </joint-data-set>
     </data-sets>
     <styles>
         <style name="report" id="4">
@@ -11478,7 +11952,7 @@ value = row["PhaseInfo::type"];&#13;
                         <row id="721">
                             <cell id="722">
                                 <label id="739">
-                                    <text-property name="text">SuperFluous:</text-property>
+                                    <text-property name="text">Superfluous:</text-property>
                                 </label>
                             </cell>
                             <cell id="723"/>
@@ -11544,22 +12018,23 @@ value = row["PhaseInfo::type"];&#13;
                         <row id="733">
                             <cell id="734">
                                 <label id="743">
-                                    <text-property name="text">Others:</text-property>
+                                    <text-property name="text">Other:</text-property>
                                 </label>
                             </cell>
                             <cell id="735"/>
                             <cell id="736">
-                                <data id="888">
-                                    <property name="dataSet">Comment Type</property>
+                                <data id="2612">
+                                    <property name="whiteSpace">nowrap</property>
+                                    <property name="dataSet">Join CommentAnomaly_CommentType</property>
                                     <list-property name="boundDataColumns">
                                         <structure>
-                                            <property name="name">ClassOthers</property>
-                                            <text-property name="displayName">ClassOthers</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["ClassOthers"]</expression>
+                                            <property name="name">CountClassOthers</property>
+                                            <text-property name="displayName">CountClassOthers</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["CountClassOthers"]</expression>
                                             <property name="dataType">integer</property>
                                         </structure>
                                     </list-property>
-                                    <property name="resultSetColumn">ClassOthers</property>
+                                    <property name="resultSetColumn">CountClassOthers</property>
                                 </data>
                             </cell>
                         </row>
@@ -11771,7 +12246,7 @@ value = row["PhaseInfo::type"];&#13;
                         <row id="1975">
                             <cell id="1976">
                                 <label id="1980">
-                                    <text-property name="text">Others:</text-property>
+                                    <text-property name="text">Other:</text-property>
                                 </label>
                             </cell>
                             <cell id="1977"/>
@@ -11909,7 +12384,7 @@ value = row["PhaseInfo::type"];&#13;
                         <row id="1292">
                             <cell id="1293">
                                 <label id="1314">
-                                    <text-property name="text">Total review Items</text-property>
+                                    <text-property name="text">Total Changes</text-property>
                                 </label>
                             </cell>
                             <cell id="1294">

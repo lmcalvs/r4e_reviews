@@ -18,6 +18,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -66,8 +67,7 @@ public class ReportElementHandler extends AbstractHandler {
 							IR4EUIModelElement element = null;
 							R4EUIReviewGroup group = null;
 							final IStructuredSelection structSelection = (IStructuredSelection) selection;
-							final int size = structSelection.size();
-							final File[] listSelectReviews = new File[size];
+							ArrayList<File> listSelectedReviews = new ArrayList<File>();
 							final Iterator<?> iter = structSelection.iterator();
 
 							int i = 0;
@@ -77,8 +77,7 @@ public class ReportElementHandler extends AbstractHandler {
 									R4EUIReviewBasic extentElement = (R4EUIReviewBasic) element;
 									R4EUIPlugin.Ftracer.traceInfo("Review name element " //$NON-NLS-1$
 											+ extentElement.getReview().getName());
-									listSelectReviews[i] = new File(extentElement.getReview().getName());
-									i++;
+									listSelectedReviews.add(new File(extentElement.getReview().getName()));
 
 								} else if (element instanceof R4EUIReviewGroup) {
 									group = (R4EUIReviewGroup) element;
@@ -88,7 +87,7 @@ public class ReportElementHandler extends AbstractHandler {
 
 							final org.eclipse.mylyn.reviews.r4e.report.impl.IR4EReport reportGen = org.eclipse.mylyn.reviews.r4e.report.impl.R4EReportFactory.getInstance();
 
-							reportGen.setReviewListSelection(listSelectReviews);
+							reportGen.setReviewListSelection(listSelectedReviews.toArray(new File[listSelectedReviews.size()]));
 //							reportGen.setReportType(reportGen.SINGLE_REPORT_TYPE);
 
 							final String groupFile = groupReview((IR4EUIModelElement) structSelection.getFirstElement());
