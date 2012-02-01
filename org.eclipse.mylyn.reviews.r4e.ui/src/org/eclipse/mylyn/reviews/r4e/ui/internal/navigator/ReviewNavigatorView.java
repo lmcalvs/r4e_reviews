@@ -45,7 +45,6 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
-import org.eclipse.jface.viewers.DecoratingCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -59,8 +58,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.DateComparator;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.LinePositionComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -70,6 +67,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.R4EPreferencePage;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.DateComparator;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.LinePositionComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -109,7 +108,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field reviewTreeViewer.
+	 * Field fReviewTreeViewer.
 	 */
 	private ReviewNavigatorTreeViewer fReviewTreeViewer = null;
 
@@ -210,6 +209,15 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	}
 
 	/**
+	 * Method isDefaultDisplay.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isDefaultDisplay() {
+		return fReviewTreeViewer.isDefaultDisplay();
+	}
+
+	/**
 	 * Method dispose.
 	 * 
 	 * @see org.eclipse.ui.IWorkbenchPart#dispose()
@@ -257,17 +265,16 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		R4EUIPlugin.Ftracer.traceInfo("Build Review Navigator view");
 
 		//Set tree viewer
-		fReviewTreeViewer = new ReviewNavigatorTreeViewer(parent, SWT.MULTI);
+		fReviewTreeViewer = new ReviewNavigatorTreeViewer(parent, SWT.FULL_SELECTION | SWT.MULTI | SWT.H_SCROLL
+				| SWT.V_SCROLL);
 		fReviewTreeViewer.setUseHashlookup(true);
 		fReviewTreeViewer.getTree().setHeaderVisible(true);
 		ColumnViewerToolTipSupport.enableFor(fReviewTreeViewer);
 		fReviewTreeViewer.setContentProvider(new ReviewNavigatorContentProvider());
 
-		final DecoratingCellLabelProvider provider = new DecoratingCellLabelProvider(
-				new ReviewNavigatorLabelProvider(), new ReviewNavigatorDecorator());
-		fReviewTreeViewer.setLabelProvider(provider);
 		fReviewTreeViewer.setComparator(new LinePositionComparator());
 		fReviewTreeViewer.setInput(getInitalInput());
+		fReviewTreeViewer.setDefaultInput(fReviewTreeViewer.getInput());
 		fReviewTreeViewer.setSorter(new LineViewerSorter());
 
 		//Set Context menus
@@ -289,6 +296,9 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		hookListeners();
 		final IEclipsePreferences node = new InstanceScope().getNode(R4EUIPlugin.PLUGIN_ID);
 		node.addPreferenceChangeListener(this);
+
+		//Set default Tree representation
+		fReviewTreeViewer.setViewTree();
 
 		//Apply default filters
 		applyDefaultFilters();

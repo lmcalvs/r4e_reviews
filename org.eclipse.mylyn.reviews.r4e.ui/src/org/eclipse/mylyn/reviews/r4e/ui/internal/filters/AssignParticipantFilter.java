@@ -93,16 +93,20 @@ public class AssignParticipantFilter extends ViewerFilter {
 					if (file.getFileContext().getAssignedTo().contains(fParticipant)) {
 						return true;
 					} else {
-						IR4EUIModelElement[] contents = file.getContentsContainerElement().getChildren();
-						for (IR4EUIModelElement content : contents) {
-							if (((R4EUIContent) content).getContent().getAssignedTo().contains(fParticipant)) {
-								return true;
+						if (null != ((R4EUIFileContext) element).getContentsContainerElement()) {
+							IR4EUIModelElement[] contents = file.getContentsContainerElement().getChildren();
+							for (IR4EUIModelElement content : contents) {
+								if (((R4EUIContent) content).getContent().getAssignedTo().contains(fParticipant)) {
+									return true;
+								}
 							}
 						}
-						IR4EUIModelElement[] anomalies = file.getAnomalyContainerElement().getChildren();
-						for (IR4EUIModelElement anomaly : anomalies) {
-							if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().contains(fParticipant)) {
-								return true;
+						if (null != ((R4EUIFileContext) element).getAnomalyContainerElement()) {
+							IR4EUIModelElement[] anomalies = file.getAnomalyContainerElement().getChildren();
+							for (IR4EUIModelElement anomaly : anomalies) {
+								if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().contains(fParticipant)) {
+									return true;
+								}
 							}
 						}
 					}
@@ -117,18 +121,22 @@ public class AssignParticipantFilter extends ViewerFilter {
 					|| ((R4EUIFileContext) element).getFileContext().getAssignedTo().contains(fParticipant)) {
 				return true;
 			} else {
-				IR4EUIModelElement[] contents = ((R4EUIFileContext) element).getContentsContainerElement()
-						.getChildren();
-				for (IR4EUIModelElement content : contents) {
-					if (((R4EUIContent) content).getContent().getAssignedTo().contains(fParticipant)) {
-						return true;
+				if (null != ((R4EUIFileContext) element).getContentsContainerElement()) {
+					IR4EUIModelElement[] contents = ((R4EUIFileContext) element).getContentsContainerElement()
+							.getChildren();
+					for (IR4EUIModelElement content : contents) {
+						if (((R4EUIContent) content).getContent().getAssignedTo().contains(fParticipant)) {
+							return true;
+						}
 					}
 				}
-				IR4EUIModelElement[] anomalies = ((R4EUIFileContext) element).getAnomalyContainerElement()
-						.getChildren();
-				for (IR4EUIModelElement anomaly : anomalies) {
-					if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().contains(fParticipant)) {
-						return true;
+				if (null != ((R4EUIFileContext) element).getAnomalyContainerElement()) {
+					IR4EUIModelElement[] anomalies = ((R4EUIFileContext) element).getAnomalyContainerElement()
+							.getChildren();
+					for (IR4EUIModelElement anomaly : anomalies) {
+						if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().contains(fParticipant)) {
+							return true;
+						}
 					}
 				}
 			}

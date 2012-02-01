@@ -10,28 +10,26 @@
  * Description:
  * 
  * This class extends the default viewer comparator to compare
- * the TextPosition elements and sort them incrementally by their occurence
- * in a Text file
+ * two string and removing the first "> " sequence of charaters 
+ * before the comparison
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
  *   
  ******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.ui.internal.filters;
+package org.eclipse.mylyn.reviews.r4e.ui.internal.sorters;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class LinePositionComparator extends ViewerComparator {
+public class NavigatorElementComparator extends ViewerComparator {
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -48,6 +46,7 @@ public class LinePositionComparator extends ViewerComparator {
 	 *            Object
 	 * @return int
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {
 
@@ -57,24 +56,27 @@ public class LinePositionComparator extends ViewerComparator {
 			return cat1 - cat2;
 		}
 
-		IR4EUIPosition position1 = null;
-		IR4EUIPosition position2 = null;
-
-		//Only sort Selection and Anomaly elements
-		if (e1 instanceof R4EUIContent) {
-			position1 = ((R4EUIContent) e1).getPosition();
-			position2 = ((R4EUIContent) e2).getPosition();
-		} else if (e1 instanceof R4EUIAnomalyBasic) {
-			position1 = ((R4EUIAnomalyBasic) e1).getPosition();
-			position2 = ((R4EUIAnomalyBasic) e2).getPosition();
-		} else {
+		//If the compared objects are CommentElements, leave them alone
+		if (e1 instanceof R4EUIComment) {
 			return 0;
 		}
 
-		//For now we only support TextPositions comparisons
-		if (position1 instanceof R4EUITextPosition && position2 instanceof R4EUITextPosition) {
-			return ((R4EUITextPosition) position1).getOffset() - ((R4EUITextPosition) position2).getOffset();
+		//Otherwise sort them alphabetically
+		String name1 = ((IR4EUIModelElement) e1).getName();
+		String name2 = ((IR4EUIModelElement) e2).getName();
+
+		if (null == name1 || null == name2) {
+			return 0; //Ignore invalid strings
 		}
-		return 0;
+
+		//Remove the decorator characters form the text label
+		if (name1.startsWith("> ")) {
+			name1 = name1.substring(2); // $codepro.audit.disable numericLiterals
+		}
+		if (name2.startsWith("> ")) {
+			name2 = name2.substring(2); // $codepro.audit.disable numericLiterals
+		}
+		// use the comparator to compare the strings
+		return getComparator().compare(name1, name2);
 	}
 }

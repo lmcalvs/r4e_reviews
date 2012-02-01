@@ -465,9 +465,57 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		}
 
 		//Also assign children
-		for (R4EUIContent content : fContentsContainer.fContents) {
+		if (null != fContentsContainer) {
+			for (R4EUIContent content : fContentsContainer.fContents) {
 			content.removeAssignees(aParticipants);
+			}
 		}
+	}
+
+	/**
+	 * Method getNumChanges.
+	 * 
+	 * @return int
+	 */
+	public int getNumChanges() {
+		IR4EUIModelElement container = getContentsContainerElement();
+		if (null != container) {
+			IR4EUIModelElement[] children = container.getChildren();
+			if (null != children) {
+				return children.length;
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * Method getNumReviewedChanges.
+	 * 
+	 * @return int
+	 */
+	public int getNumReviewedChanges() {
+		//NOTE:  We only check the file and assume all changes are reviewed if the file is, or none if
+		//the file is not
+		if (isUserReviewed()) {
+			return getNumChanges();
+		}
+		return 0;
+	}
+
+	/**
+	 * Method getNumAnomalies.
+	 * 
+	 * @return int
+	 */
+	public int getNumAnomalies() {
+		IR4EUIModelElement container = getAnomalyContainerElement();
+		if (null != container) {
+			IR4EUIModelElement[] children = container.getChildren();
+			if (null != children) {
+				return children.length;
+			}
+		}
+		return 0;
 	}
 
 	//Hierarchy

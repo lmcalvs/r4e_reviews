@@ -355,15 +355,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		}
 
 		EList<String> assignedParticipants = modelItem.getAssignedTo();
-		if (assignedParticipants.size() > 0) {
-			StringBuffer buffer = new StringBuffer();
-			for (String assignedParticipant : assignedParticipants) {
-				buffer.append(assignedParticipant + R4EUIConstants.LIST_SEPARATOR + " ");
-			}
-			fAssignedToText.setText(buffer.toString().substring(0, buffer.length() - 2));
-		} else {
-			fAssignedToText.setText("");
-		}
+		fAssignedToText.setText(UIUtils.formatAssignedParticipants(assignedParticipants));
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}

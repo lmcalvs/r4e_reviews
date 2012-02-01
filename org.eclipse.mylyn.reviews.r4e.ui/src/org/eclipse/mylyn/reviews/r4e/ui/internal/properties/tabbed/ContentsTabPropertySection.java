@@ -165,25 +165,17 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 	@Override
 	public void refresh() {
 		R4EUIContent uiContent = ((R4EUIContent) fProperties.getElement());
+		fRefreshInProgress = true;
 		if (null != uiContent.getPosition()) {
-			fRefreshInProgress = true;
 			fPositionText.setText(uiContent.getPosition().toString());
-			setEnabledFields();
-			fRefreshInProgress = false;
 		} else {
 			fPositionText.setText("");
 		}
 
 		EList<String> assignedParticipants = uiContent.getContent().getAssignedTo();
-		if (assignedParticipants.size() > 0) {
-			StringBuffer buffer = new StringBuffer();
-			for (String assignedParticipant : assignedParticipants) {
-				buffer.append(assignedParticipant + R4EUIConstants.LIST_SEPARATOR + " ");
-			}
-			fAssignedToText.setText(buffer.toString().substring(0, buffer.length() - 2));
-		} else {
-			fAssignedToText.setText("");
-		}
+		fAssignedToText.setText(UIUtils.formatAssignedParticipants(assignedParticipants));
+		setEnabledFields();
+		fRefreshInProgress = false;
 	}
 
 	/**

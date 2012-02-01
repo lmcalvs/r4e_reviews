@@ -36,6 +36,7 @@ import org.eclipse.compare.internal.MergeSourceViewer;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -604,6 +605,25 @@ public class UIUtils {
 	public static void setNavigatorViewFocus(IR4EUIModelElement aElement, int aExpandLevel) {
 		if (null != aElement) {
 			R4EUIModelController.getNavigatorView().updateView(aElement, aExpandLevel);
+		}
+	}
+
+	/**
+	 * Method formatAssignedParticipants. Concatenates assigned participants for UI display
+	 * 
+	 * @param aParticipants
+	 *            EList<String>
+	 * @return String
+	 */
+	public static String formatAssignedParticipants(EList<String> aParticipants) {
+		if (aParticipants.size() > 0) {
+			StringBuffer buffer = new StringBuffer();
+			for (String participants : aParticipants) {
+				buffer.append(participants + R4EUIConstants.LIST_SEPARATOR + " ");
+			}
+			return buffer.toString().substring(0, buffer.length() - 2);
+		} else {
+			return "";
 		}
 	}
 

@@ -214,6 +214,12 @@
                mnemonic="g"
                style="push"
                tooltip="Add a New Review Group">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </visibleWhen>
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement"
@@ -223,6 +229,12 @@
                mnemonic="a"
                style="push"
                tooltip="Add a New Rule Set">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </visibleWhen>
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"
@@ -232,6 +244,12 @@
                mnemonic="r"
                style="push"
                tooltip="Regress the element to its Previous logical State">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </visibleWhen>
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
@@ -241,6 +259,27 @@
                mnemonic="p"
                style="push"
                tooltip="Progress the element to one of its Next logical state">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
+               icon="icons/elcl16/chgdisplay_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
+               label="Change Display Type"
+               mnemonic="d"
+               style="push"
+               tooltip="Toggle Display Type between Global Tree View and Review Tree Table View">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.review.reviewActive">
+               </test>
+            </visibleWhen>
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
@@ -304,6 +343,12 @@
          <menu
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.menu"
                label="Sort by">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </visibleWhen>
             <dynamic
                   class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.SortersContributionItems"
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.items">
@@ -329,6 +374,12 @@
                mnemonic="g"
                style="push"
                tooltip="Add a New Review Group">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </visibleWhen>
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement"
@@ -338,6 +389,12 @@
                mnemonic="a"
                style="push"
                tooltip="Add a New Rule Set">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </visibleWhen>
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"
@@ -347,6 +404,12 @@
                mnemonic="r"
                style="push"
                tooltip="Progress the element to one of its Previous logical State">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </visibleWhen>
          </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
@@ -356,11 +419,32 @@
                mnemonic="p"
                style="push"
                tooltip="Progress the element to one of its Next logical state">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </visibleWhen>
          </command>
          <separator
                name="org.eclipse.mylyn.reviews.r4e.ui.separator2"
                visible="true">
          </separator>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
+               icon="icons/elcl16/chgdisplay_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
+               label="Change Display Type"
+               mnemonic="d"
+               style="push"
+               tooltip="Toggle Display Type between Global Tree View and Review Tree Table View">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.review.reviewActive">
+               </test>
+            </visibleWhen>
+         </command>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
                icon="icons/elcl16/expndall_menu.gif"
@@ -793,6 +877,13 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
+            description="Toggle Display Type between Global Tree View and Review Tree Table View"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
+            name="Change Display Type">
+      </command>
+
    </extension>
    <extension
          point="org.eclipse.ui.services">
@@ -1213,6 +1304,15 @@
              </test>
           </enabledWhen>
        </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ChangeDisplayHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
@@ -1408,6 +1508,20 @@
             properties="previousState"
             type="java.lang.Object">
       </propertyTester>
+      <propertyTester
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.DisplayPropertyTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.defaultDisplayPropertyTester"
+            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.display"
+            properties="defaultDisplay"
+            type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ReviewActivePropertyTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewActivePropertyTester"
+            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.review"
+            properties="reviewActive"
+            type="java.lang.Object">
+      </propertyTester>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
@@ -1476,6 +1590,12 @@
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+4 Z">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+4 D">
       </key>
    </extension>
    <extension

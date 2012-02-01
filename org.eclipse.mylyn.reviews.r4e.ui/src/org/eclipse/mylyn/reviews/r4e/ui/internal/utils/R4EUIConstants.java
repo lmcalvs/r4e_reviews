@@ -119,6 +119,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String GLOBAL_ANOMALIES_LABEL = "Global Anomalies";
 
 	/**
+	 * Field ELEMENTS_LABEL_NAME. (value is ""Elements"")
+	 */
+	public static final String ELEMENTS_LABEL_NAME = "Elements";
+
+	/**
 	 * Field POSTPONED_ELEMENTS_LABEL_NAME. (value is ""Postponed Elements"")
 	 */
 	public static final String POSTPONED_ELEMENTS_LABEL_NAME = "Postponed Elements";
@@ -520,6 +525,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String DATE_SUBMITTED_LABEL = "Date Submitted: ";
 
 	/**
+	 * Field CHANGES_LABEL. (value is ""Changes"")
+	 */
+	public static final String CHANGES_LABEL = "Changes";
+
+	/**
+	 * Field PATH_LABEL. (value is ""Path"")
+	 */
+	public static final String PATH_LABEL = "Path";
+
+	/**
 	 * Field PATH_INFORMATION_LABEL. (value is ""Path Information"")
 	 */
 	public static final String PATH_INFORMATION_LABEL = "Path Information";
@@ -613,6 +628,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field ASSIGNED_TO_LABEL. (value is ""Assigned to: "")
 	 */
 	public static final String ASSIGNED_TO_LABEL = "Assigned to: ";
+
+	/**
+	 * Field ASSIGNED_TO_LABEL2. (value is ""Assigned to"")
+	 */
+	public static final String ASSIGNED_TO_LABEL2 = "Assigned to";
 
 	/**
 	 * Field NOT_ACCEPTED_REASON_LABEL. (value is ""Reason for Rejection: "")

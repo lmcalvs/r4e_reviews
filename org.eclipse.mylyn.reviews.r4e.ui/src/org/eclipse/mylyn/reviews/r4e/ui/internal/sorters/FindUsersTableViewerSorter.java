@@ -17,7 +17,7 @@
  *   
  ******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.ui.internal.filters;
+package org.eclipse.mylyn.reviews.r4e.ui.internal.sorters;
 
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;

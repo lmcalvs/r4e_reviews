@@ -14,10 +14,9 @@
  *   Sebastien Dubois - Created for Mylyn Review R4E project
  *   
  ******************************************************************************/
-package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters;
+package org.eclipse.mylyn.reviews.r4e.ui.internal.sorters;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.NavigatorElementComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 
 /**
@@ -32,7 +31,7 @@ public class ReviewTypeComparator extends NavigatorElementComparator {
 	 * @param element
 	 *            Object
 	 * @return int
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.filters.NavigatorElementComparator#category(Object)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.NavigatorElementComparator#category(Object)
 	 */
 	@Override
 	public int category(Object element) {

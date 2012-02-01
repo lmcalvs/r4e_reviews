@@ -18,8 +18,38 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.navigator;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.jface.layout.TreeColumnLayout;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.DecoratingCellLabelProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jface.viewers.ViewerCell;
+import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.TreeTableFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.TreeTableComparator;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TreeItem;
 
 /**
@@ -29,8 +59,87 @@ import org.eclipse.swt.widgets.TreeItem;
 public class ReviewNavigatorTreeViewer extends TreeViewer {
 
 	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+
+	private static final String INVALID_PATH = "--";
+
+	// ------------------------------------------------------------------------
+	// Member variables
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Field fIsDefaultDisplay.
+	 */
+	private boolean fIsDefaultDisplay;
+
+	/**
+	 * Field fDefaultInput.
+	 */
+	private Object fDefaultInput = null;
+
+	/**
+	 * Field fTreeColumnLayout.
+	 */
+	private TreeColumnLayout fTreeColumnLayout = null;
+
+	/**
+	 * Field fTreeComparator.
+	 */
+	ViewerComparator fTreeComparator = null;
+
+	/**
+	 * Field fTreeTableComparator.
+	 */
+	TreeTableComparator fTreeTableComparator = null;
+
+	/**
+	 * Field fElementColumn.
+	 */
+	private TreeViewerColumn fElementColumn = null;
+
+	/**
+	 * Field fPathColumn.
+	 */
+	private TreeViewerColumn fPathColumn = null;
+
+	/**
+	 * Field fAssignColumn.
+	 */
+	private TreeViewerColumn fAssignColumn = null;
+
+	/**
+	 * Field fNumChangesColumn.
+	 */
+	private TreeViewerColumn fNumChangesColumn = null;
+
+	/**
+	 * Field fNumAnomaliesColumn.
+	 */
+	private TreeViewerColumn fNumAnomaliesColumn = null;
+
+	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method isDefaultDisplay.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isDefaultDisplay() {
+		return fIsDefaultDisplay;
+	}
+
+	/**
+	 * Method setDefaultInput.
+	 * 
+	 * @param aInput
+	 *            - Object
+	 */
+	public void setDefaultInput(Object aInput) {
+		fDefaultInput = aInput;
+	}
 
 	/**
 	 * Constructor for ReviewNavigatorTreeViewer.
@@ -42,6 +151,9 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	 */
 	public ReviewNavigatorTreeViewer(Composite parent, int style) {
 		super(parent, style);
+		fTreeColumnLayout = new TreeColumnLayout();
+		fTreeTableComparator = new TreeTableComparator();
+		parent.setLayout(fTreeColumnLayout);
 	}
 
 	/**
@@ -72,5 +184,431 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 			return aItem;
 		}
 		return newItem;
+	}
+
+	/**
+	 * Method setViewTree.
+	 */
+	public void setViewTree() {
+		createElementsColumn();
+		getTree().setHeaderVisible(false);
+		if (null != fAssignColumn) {
+			fAssignColumn.getColumn().dispose();
+			fAssignColumn = null;
+		}
+		if (null != fPathColumn) {
+			fPathColumn.getColumn().dispose();
+			fPathColumn = null;
+		}
+		if (null != fNumChangesColumn) {
+			fNumChangesColumn.getColumn().dispose();
+			fNumChangesColumn = null;
+		}
+		if (null != fNumAnomaliesColumn) {
+			fNumAnomaliesColumn.getColumn().dispose();
+			fNumAnomaliesColumn = null;
+		}
+		fTreeColumnLayout.setColumnData(fElementColumn.getColumn(), new ColumnWeightData(100, true));
+
+		//Remove Tree Table filters
+		final TreeTableFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
+				.getActionSet()).getTreeTableFilter();
+		this.removeFilter(filter);
+
+		//Restore Tree sorters (if any)
+		setComparator(fTreeComparator);
+
+		//Restore Default Tree input
+		this.setInput(fDefaultInput);
+
+		//Refresh Display	
+		this.getTree().getParent().layout();
+		fIsDefaultDisplay = true;
+	}
+
+	/**
+	 * Method setViewTreeTable.
+	 */
+	public void setViewTreeTable() {
+		//Get currently selected element
+		IR4EUIModelElement currentElement = null;
+		final IStructuredSelection selection = (IStructuredSelection) this.getSelection();
+		if (null != selection) {
+			currentElement = (IR4EUIModelElement) selection.getFirstElement();
+		}
+		//Set a default selected element in TreeTable
+		if (currentElement == null) {
+			currentElement = R4EUIModelController.getActiveReview().getChildren()[0];
+		} else if (currentElement instanceof R4EUIReviewItem || currentElement instanceof R4EUIFileContext) {
+			//do nothing
+		} else if (currentElement instanceof R4EUIContentsContainer) {
+			currentElement = currentElement.getParent();
+		} else if (currentElement instanceof R4EUIContent) {
+			currentElement = currentElement.getParent().getParent();
+		} else if (currentElement instanceof R4EUIAnomalyContainer
+				&& currentElement.getParent() instanceof R4EUIFileContext) {
+			currentElement = currentElement.getParent();
+		} else if (currentElement instanceof R4EUIAnomalyBasic
+				&& currentElement.getParent().getParent() instanceof R4EUIFileContext) {
+			currentElement = currentElement.getParent().getParent();
+		} else if (currentElement instanceof R4EUIComment
+				&& currentElement.getParent().getParent().getParent() instanceof R4EUIFileContext) {
+			currentElement = currentElement.getParent().getParent().getParent();
+		} else {
+			//Set first TreeTable element as default
+			currentElement = R4EUIModelController.getActiveReview().getChildren()[0];
+		}
+		Object[] expandedElements = getExpandedElements();
+
+		//Create Columns
+		createPathColumn();
+		createAssignmentColumn();
+		createNumChangesColumn();
+		createNumAnomaliesColumn();
+		getTree().setHeaderVisible(true);
+
+		//Reset Layout to adjust Columns widths
+		fTreeColumnLayout.setColumnData(fElementColumn.getColumn(), new ColumnWeightData(25, true));
+		fTreeColumnLayout.setColumnData(fPathColumn.getColumn(), new ColumnWeightData(50, true));
+		fTreeColumnLayout.setColumnData(fAssignColumn.getColumn(), new ColumnWeightData(9, true));
+		fTreeColumnLayout.setColumnData(fNumChangesColumn.getColumn(), new ColumnWeightData(8, true));
+		fTreeColumnLayout.setColumnData(fNumAnomaliesColumn.getColumn(), new ColumnWeightData(8, true));
+
+		//Set Tree Table Filters (shows only Review Items and Files for current review
+		final TreeTableFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
+				.getActionSet()).getTreeTableFilter();
+
+		//Save Default Tree input and adjust Tree Table input
+		fDefaultInput = this.getInput();
+		if (fDefaultInput instanceof R4EUIRootElement || fDefaultInput instanceof R4EUIReviewGroup) {
+			this.setInput(R4EUIModelController.getActiveReview());
+		}
+		this.addFilter(filter);
+
+		//Set Default sorter
+		fTreeComparator = getComparator();
+		setComparator(fTreeTableComparator);
+
+		//Refresh Display	
+		this.getTree().getParent().layout();
+		UIUtils.setNavigatorViewFocus(currentElement, 1);
+		setExpandedElements(expandedElements);
+		fIsDefaultDisplay = false;
+	}
+
+	/**
+	 * Method createElementsColumn.
+	 */
+	public void createElementsColumn() {
+		if (null == fElementColumn) {
+			final DecoratingCellLabelProvider provider = new DecoratingCellLabelProvider(
+					new ReviewNavigatorLabelProvider(), new ReviewNavigatorDecorator());
+			fElementColumn = new TreeViewerColumn(this, SWT.NONE);
+			fElementColumn.getColumn().setText(R4EUIConstants.ELEMENTS_LABEL_NAME);
+			fElementColumn.setLabelProvider(provider);
+			fElementColumn.getColumn().setMoveable(false);
+			fElementColumn.getColumn().setResizable(true);
+
+			fElementColumn.getColumn().addListener(SWT.Selection, new Listener() {
+				public void handleEvent(Event event) {
+					if (!isDefaultDisplay()) {
+						fTreeTableComparator.setColumnName(R4EUIConstants.ELEMENTS_LABEL_NAME);
+						getTree().setSortDirection(fTreeTableComparator.getDirection());
+						getTree().setSortColumn(fElementColumn.getColumn());
+						refresh();
+					}
+				}
+			});
+		}
+	}
+
+	/**
+	 * Method createPathColumn.
+	 */
+	private void createPathColumn() {
+		if (null == fPathColumn) {
+			fPathColumn = new TreeViewerColumn(this, SWT.NONE);
+			fPathColumn.getColumn().setText(R4EUIConstants.PATH_LABEL);
+			fTreeColumnLayout.setColumnData(fPathColumn.getColumn(), new ColumnWeightData(0, true));
+			fPathColumn.getColumn().setMoveable(true);
+			fPathColumn.getColumn().setResizable(true);
+			fPathColumn.setLabelProvider(new ColumnLabelProvider() {
+				@Override
+				public String getText(Object element) {
+					if (element instanceof R4EUIFileContext) {
+						R4EFileVersion version = ((R4EUIFileContext) element).getTargetFileVersion();
+						if (null != version) {
+							IResource resource = version.getResource();
+							if (null != resource) {
+								IPath path = resource.getProjectRelativePath();
+								if (null != path) {
+									return path.toPortableString();
+								}
+							}
+						}
+						return INVALID_PATH;
+					} else {
+						return null;
+					}
+				}
+
+				@Override
+				public String getToolTipText(Object element) {
+					if (element instanceof R4EUIFileContext) {
+						return R4EUIConstants.VERSION_LABEL
+								+ ((R4EUIFileContext) element).getTargetFileVersion().getVersionID();
+					}
+					return null;
+				}
+
+				@Override
+				public Point getToolTipShift(Object object) {
+					return new Point(R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_X, R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_Y);
+				}
+
+				@Override
+				public int getToolTipDisplayDelayTime(Object object) {
+					return R4EUIConstants.TOOLTIP_DISPLAY_DELAY;
+				}
+
+				@Override
+				public int getToolTipTimeDisplayed(Object object) {
+					return R4EUIConstants.TOOLTIP_DISPLAY_TIME;
+				}
+
+				@Override
+				public void update(ViewerCell cell) {
+					final Object element = cell.getElement();
+					if (element instanceof R4EUIFileContext) {
+						R4EFileVersion version = ((R4EUIFileContext) element).getTargetFileVersion();
+						if (null != version) {
+							IResource resource = version.getResource();
+							if (null != resource) {
+								IPath path = resource.getProjectRelativePath();
+								if (null != path) {
+									cell.setText(path.toPortableString());
+									return;
+								}
+							}
+						}
+						cell.setText(INVALID_PATH);
+					} else {
+						cell.setText(null);
+					}
+				}
+			});
+
+			fPathColumn.getColumn().addListener(SWT.Selection, new Listener() {
+				public void handleEvent(Event event) {
+					fTreeTableComparator.setColumnName(R4EUIConstants.PATH_LABEL);
+					getTree().setSortDirection(fTreeTableComparator.getDirection());
+					getTree().setSortColumn(fPathColumn.getColumn());
+					refresh();
+				}
+			});
+		}
+	}
+
+	/**
+	 * Method createAssignmentColumn.
+	 */
+	private void createAssignmentColumn() {
+		if (null == fAssignColumn) {
+			fAssignColumn = new TreeViewerColumn(this, SWT.NONE);
+			fAssignColumn.getColumn().setText(R4EUIConstants.ASSIGNED_TO_LABEL2);
+			fTreeColumnLayout.setColumnData(fAssignColumn.getColumn(), new ColumnWeightData(0, true));
+			fAssignColumn.getColumn().setMoveable(true);
+			fAssignColumn.getColumn().setResizable(true);
+			fAssignColumn.setLabelProvider(new ColumnLabelProvider() {
+				@Override
+				public String getText(Object element) {
+					if (element instanceof R4EUIReviewItem) {
+						return UIUtils.formatAssignedParticipants(((R4EUIReviewItem) element).getItem().getAssignedTo());
+					} else if (element instanceof R4EUIFileContext) {
+						return UIUtils.formatAssignedParticipants(((R4EUIFileContext) element).getFileContext()
+								.getAssignedTo());
+					}
+					return null;
+				}
+
+				@Override
+				public String getToolTipText(Object element) {
+					return null;
+				}
+
+				@Override
+				public Point getToolTipShift(Object object) {
+					return new Point(R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_X, R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_Y);
+				}
+
+				@Override
+				public int getToolTipDisplayDelayTime(Object object) {
+					return R4EUIConstants.TOOLTIP_DISPLAY_DELAY;
+				}
+
+				@Override
+				public int getToolTipTimeDisplayed(Object object) {
+					return 0;
+				}
+
+				@Override
+				public void update(ViewerCell cell) {
+					final Object element = cell.getElement();
+					if (element instanceof R4EUIReviewItem) {
+						cell.setText(UIUtils.formatAssignedParticipants(((R4EUIReviewItem) element).getItem()
+								.getAssignedTo()));
+					} else if (element instanceof R4EUIFileContext) {
+						cell.setText(UIUtils.formatAssignedParticipants(((R4EUIFileContext) element).getFileContext()
+								.getAssignedTo()));
+					} else {
+						cell.setText(null);
+					}
+				}
+			});
+
+			fAssignColumn.getColumn().addListener(SWT.Selection, new Listener() {
+				public void handleEvent(Event event) {
+					fTreeTableComparator.setColumnName(R4EUIConstants.ASSIGNED_TO_LABEL2);
+					getTree().setSortDirection(fTreeTableComparator.getDirection());
+					getTree().setSortColumn(fAssignColumn.getColumn());
+					refresh();
+				}
+			});
+		}
+	}
+
+	/**
+	 * Method createNumChangesColumn.
+	 */
+	private void createNumChangesColumn() {
+		if (null == fNumChangesColumn) {
+			fNumChangesColumn = new TreeViewerColumn(this, SWT.NONE);
+			fNumChangesColumn.getColumn().setText(R4EUIConstants.CHANGES_LABEL);
+			fTreeColumnLayout.setColumnData(fNumChangesColumn.getColumn(), new ColumnWeightData(0, true));
+			fNumChangesColumn.getColumn().setMoveable(true);
+			fNumChangesColumn.getColumn().setResizable(true);
+			fNumChangesColumn.setLabelProvider(new ColumnLabelProvider() {
+				@Override
+				public String getText(Object element) {
+					if (element instanceof R4EUIReviewItem) {
+						return Integer.toString(((R4EUIReviewItem) element).getNumReviewedChanges())
+								+ R4EUIConstants.SEPARATOR
+								+ Integer.toString(((R4EUIReviewItem) element).getNumChanges());
+					} else if (element instanceof R4EUIFileContext) {
+						return Integer.toString(((R4EUIFileContext) element).getNumChanges());
+					}
+					return null;
+				}
+
+				@Override
+				public String getToolTipText(Object element) {
+					return null;
+				}
+
+				@Override
+				public Point getToolTipShift(Object object) {
+					return new Point(R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_X, R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_Y);
+				}
+
+				@Override
+				public int getToolTipDisplayDelayTime(Object object) {
+					return R4EUIConstants.TOOLTIP_DISPLAY_DELAY;
+				}
+
+				@Override
+				public int getToolTipTimeDisplayed(Object object) {
+					return 0;
+				}
+
+				@Override
+				public void update(ViewerCell cell) {
+					final Object element = cell.getElement();
+					if (element instanceof R4EUIReviewItem) {
+						cell.setText(Integer.toString(((R4EUIReviewItem) element).getNumReviewedChanges())
+								+ R4EUIConstants.SEPARATOR
+								+ Integer.toString(((R4EUIReviewItem) element).getNumChanges()));
+					} else if (element instanceof R4EUIFileContext) {
+						cell.setText(Integer.toString(((R4EUIFileContext) element).getNumChanges()));
+					} else {
+						cell.setText(null);
+					}
+				}
+			});
+
+			fNumChangesColumn.getColumn().addListener(SWT.Selection, new Listener() {
+				public void handleEvent(Event event) {
+					fTreeTableComparator.setColumnName(R4EUIConstants.CHANGES_LABEL);
+					getTree().setSortDirection(fTreeTableComparator.getDirection());
+					getTree().setSortColumn(fNumChangesColumn.getColumn());
+					refresh();
+				}
+			});
+		}
+	}
+
+	/**
+	 * Method createNumAnomaliesColumn.
+	 */
+	private void createNumAnomaliesColumn() {
+		if (null == fNumAnomaliesColumn) {
+			fNumAnomaliesColumn = new TreeViewerColumn(this, SWT.NONE);
+			fNumAnomaliesColumn.getColumn().setText(R4EUIConstants.ANOMALIES_LABEL);
+			fNumAnomaliesColumn.getColumn().setMoveable(true);
+			fNumAnomaliesColumn.getColumn().setResizable(true);
+			fTreeColumnLayout.setColumnData(fNumAnomaliesColumn.getColumn(), new ColumnWeightData(0, true));
+			fNumAnomaliesColumn.setLabelProvider(new ColumnLabelProvider() {
+				@Override
+				public String getText(Object element) {
+					if (element instanceof R4EUIReviewItem) {
+						return Integer.toString(((R4EUIReviewItem) element).getNumAnomalies());
+					} else if (element instanceof R4EUIFileContext) {
+						return Integer.toString(((R4EUIFileContext) element).getNumAnomalies());
+					}
+					return null;
+				}
+
+				@Override
+				public String getToolTipText(Object element) {
+					return null;
+				}
+
+				@Override
+				public Point getToolTipShift(Object object) {
+					return new Point(R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_X, R4EUIConstants.TOOLTIP_DISPLAY_OFFSET_Y);
+				}
+
+				@Override
+				public int getToolTipDisplayDelayTime(Object object) {
+					return R4EUIConstants.TOOLTIP_DISPLAY_DELAY;
+				}
+
+				@Override
+				public int getToolTipTimeDisplayed(Object object) {
+					return 0;
+				}
+
+				@Override
+				public void update(ViewerCell cell) {
+					final Object element = cell.getElement();
+					if (element instanceof R4EUIReviewItem) {
+						cell.setText(Integer.toString(((R4EUIReviewItem) element).getNumAnomalies()));
+					} else if (element instanceof R4EUIFileContext) {
+						cell.setText(Integer.toString(((R4EUIFileContext) element).getNumAnomalies()));
+					} else {
+						cell.setText(null);
+					}
+				}
+			});
+
+			fNumAnomaliesColumn.getColumn().addListener(SWT.Selection, new Listener() {
+				public void handleEvent(Event event) {
+					// ignore
+					fTreeTableComparator.setColumnName(R4EUIConstants.ANOMALIES_LABEL);
+					getTree().setSortDirection(fTreeTableComparator.getDirection());
+					getTree().setSortColumn(fNumAnomaliesColumn.getColumn());
+					refresh();
+				}
+			});
+		}
 	}
 }

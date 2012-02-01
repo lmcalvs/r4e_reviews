@@ -28,20 +28,21 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.ReviewTypeComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AnomaliesMyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AnomaliesOnlyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AssignParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.FocusFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.HideDeltasFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.HideRuleSetsFilter;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.NavigatorElementComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewCompletedFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewedElemsFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewsOnlyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.UnassignParticipantFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.TreeTableFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.NavigatorElementComparator;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.ReviewTypeComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.ui.actions.ActionGroup;
 import org.eclipse.ui.commands.ICommandService;
@@ -148,6 +149,11 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	private final HideDeltasFilter fHideDeltasFilter;
 
+	/**
+	 * Field fTreeTableFilter.
+	 */
+	private final TreeTableFilter fTreeTableFilter;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -184,6 +190,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		fReviewedElemsFilter = new ReviewedElemsFilter();
 		fHideRuleSetsFilter = new HideRuleSetsFilter();
 		fHideDeltasFilter = new HideDeltasFilter();
+		fTreeTableFilter = new TreeTableFilter();
 
 		final ReviewParticipantFilter filter = new ReviewParticipantFilter();
 		filter.setParticipant(R4EUIModelController.getReviewer());
@@ -823,6 +830,15 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		if (aApply) {
 			fHandlerService.executeCommand(R4EUIConstants.GO_INTO_FILTER_COMMAND, null);
 		}
+	}
+
+	/**
+	 * Method getTreeTableFilter.
+	 * 
+	 * @return TreeTableFilter
+	 */
+	public TreeTableFilter getTreeTableFilter() {
+		return fTreeTableFilter;
 	}
 
 	/**

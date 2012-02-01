@@ -52,7 +52,11 @@ public class RemoveAllFiltersHandler extends AbstractHandler {
 
 		//We need to preserve the expansion state and restore it afterwards
 		final Object[] elements = R4EUIModelController.getNavigatorView().getTreeViewer().getExpandedElements();
-		R4EUIModelController.getNavigatorView().getTreeViewer().setInput(R4EUIModelController.getRootElement());
+		if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
+			R4EUIModelController.getNavigatorView().getTreeViewer().setInput(R4EUIModelController.getRootElement());
+		} else { //Assume TreeTable display
+			R4EUIModelController.getNavigatorView().getTreeViewer().setInput(R4EUIModelController.getActiveReview());
+		}
 		try {
 			((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).resetAllFilterActions();
 		} catch (NotDefinedException e) {

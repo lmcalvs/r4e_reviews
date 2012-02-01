@@ -57,7 +57,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorLabelProvider;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorTreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -491,8 +490,8 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 		textGridData.horizontalSpan = 4;
 		label.setLayoutData(textGridData);
 
-		fRuleTreeViewer = new ReviewNavigatorTreeViewer(extraSectionClient, SWT.FULL_SELECTION | SWT.BORDER
-				| SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL);
+		fRuleTreeViewer = new TreeViewer(extraSectionClient, SWT.FULL_SELECTION | SWT.BORDER | SWT.READ_ONLY
+				| SWT.H_SCROLL | SWT.V_SCROLL);
 		fRuleTreeViewer.setContentProvider(new ReviewNavigatorContentProvider());
 		fRuleTreeViewer.getTree().setHeaderVisible(true);
 		ColumnViewerToolTipSupport.enableFor(fRuleTreeViewer, ToolTip.NO_RECREATE);

@@ -253,6 +253,45 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 		}
 	}
 
+	/**
+	 * Method getNumChanges.
+	 * 
+	 * @return int
+	 */
+	public int getNumChanges() {
+		int numChanges = 0;
+		for (R4EUIFileContext file : fFileContexts) {
+			numChanges += file.getNumChanges();
+		}
+		return numChanges;
+	}
+
+	/**
+	 * Method getNumReviewedChanges.
+	 * 
+	 * @return int
+	 */
+	public int getNumReviewedChanges() {
+		int numReviewedChanges = 0;
+		for (R4EUIFileContext file : fFileContexts) {
+			numReviewedChanges += file.getNumReviewedChanges();
+		}
+		return numReviewedChanges;
+	}
+
+	/**
+	 * Method getNumAnomalies.
+	 * 
+	 * @return int
+	 */
+	public int getNumAnomalies() {
+		int numAnomalies = 0;
+		for (R4EUIFileContext file : fFileContexts) {
+			numAnomalies += file.getNumAnomalies();
+		}
+		return numAnomalies;
+	}
+
 	//Hierarchy
 
 	/**

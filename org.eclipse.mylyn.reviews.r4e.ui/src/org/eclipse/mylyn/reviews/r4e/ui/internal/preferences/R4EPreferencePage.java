@@ -716,6 +716,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fReviewShowDisabledButton.setText(R4EUIConstants.SHOW_DISABLED_FILTER_NAME);
 		fReviewShowDisabledButton.setLayoutData(filtersButtonData);
 		fReviewShowDisabledButton.setSelection(store.getBoolean(PreferenceConstants.P_SHOW_DISABLED));
+		if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
+			fReviewShowDisabledButton.setEnabled(true);
+		} else {
+			fReviewShowDisabledButton.setEnabled(false);
+		}
 
 		fReviewsCompletedFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fReviewsCompletedFilterButton.setText(R4EUIConstants.REVIEWS_COMPLETED_FILTER_NAME);
