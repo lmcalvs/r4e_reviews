@@ -63,7 +63,7 @@ public class DateComparator extends ViewerComparator {
 			return -1;
 		}
 		if (firstDate.after(secondDate)) {
-			return -1;
+			return 1;
 		}
 		return 0;
 	}
