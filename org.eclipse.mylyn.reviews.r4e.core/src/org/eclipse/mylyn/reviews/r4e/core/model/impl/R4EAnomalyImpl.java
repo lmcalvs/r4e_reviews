@@ -55,15 +55,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getAnomaly <em>Anomaly</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getInfoAtt <em>Info Att</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getState <em>State</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getUserAssigned <em>User Assigned</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getUserFollowUp <em>User Follow Up</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getUserDecision <em>User Decision</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getDueDate <em>Due Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getRank <em>Rank</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getRule <em>Rule</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getDecidedBy <em>Decided By</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getFixedBy <em>Fixed By</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getFollowupBy <em>Followup By</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getNotAcceptedReason <em>Not Accepted Reason</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#isIsImported <em>Is Imported</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl#getFixedInVersion <em>Fixed In Version</em>}</li>
@@ -158,36 +152,6 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	protected R4EAnomalyState state = STATE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getUserAssigned() <em>User Assigned</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUserAssigned()
-	 * @generated
-	 * @ordered
-	 */
-	protected User userAssigned;
-
-	/**
-	 * The cached value of the '{@link #getUserFollowUp() <em>User Follow Up</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUserFollowUp()
-	 * @generated
-	 * @ordered
-	 */
-	protected User userFollowUp;
-
-	/**
-	 * The cached value of the '{@link #getUserDecision() <em>User Decision</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUserDecision()
-	 * @generated
-	 * @ordered
-	 */
-	protected User userDecision;
-
-	/**
 	 * The default value of the '{@link #getDueDate() <em>Due Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -236,36 +200,6 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	 * @ordered
 	 */
 	protected R4EDesignRule rule;
-
-	/**
-	 * The cached value of the '{@link #getDecidedBy() <em>Decided By</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDecidedBy()
-	 * @generated
-	 * @ordered
-	 */
-	protected R4EParticipant decidedBy;
-
-	/**
-	 * The cached value of the '{@link #getFixedBy() <em>Fixed By</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getFixedBy()
-	 * @generated
-	 * @ordered
-	 */
-	protected R4EParticipant fixedBy;
-
-	/**
-	 * The cached value of the '{@link #getFollowupBy() <em>Followup By</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getFollowupBy()
-	 * @generated
-	 * @ordered
-	 */
-	protected R4EParticipant followupBy;
 
 	/**
 	 * The default value of the '{@link #getNotAcceptedReason() <em>Not Accepted Reason</em>}' attribute.
@@ -525,120 +459,6 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public User getUserAssigned() {
-		if (userAssigned != null && userAssigned.eIsProxy()) {
-			InternalEObject oldUserAssigned = (InternalEObject)userAssigned;
-			userAssigned = (User)eResolveProxy(oldUserAssigned);
-			if (userAssigned != oldUserAssigned) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_ANOMALY__USER_ASSIGNED, oldUserAssigned, userAssigned));
-			}
-		}
-		return userAssigned;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public User basicGetUserAssigned() {
-		return userAssigned;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setUserAssigned(User newUserAssigned) {
-		User oldUserAssigned = userAssigned;
-		userAssigned = newUserAssigned;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__USER_ASSIGNED, oldUserAssigned, userAssigned));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public User getUserFollowUp() {
-		if (userFollowUp != null && userFollowUp.eIsProxy()) {
-			InternalEObject oldUserFollowUp = (InternalEObject)userFollowUp;
-			userFollowUp = (User)eResolveProxy(oldUserFollowUp);
-			if (userFollowUp != oldUserFollowUp) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_ANOMALY__USER_FOLLOW_UP, oldUserFollowUp, userFollowUp));
-			}
-		}
-		return userFollowUp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public User basicGetUserFollowUp() {
-		return userFollowUp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setUserFollowUp(User newUserFollowUp) {
-		User oldUserFollowUp = userFollowUp;
-		userFollowUp = newUserFollowUp;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__USER_FOLLOW_UP, oldUserFollowUp, userFollowUp));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public User getUserDecision() {
-		if (userDecision != null && userDecision.eIsProxy()) {
-			InternalEObject oldUserDecision = (InternalEObject)userDecision;
-			userDecision = (User)eResolveProxy(oldUserDecision);
-			if (userDecision != oldUserDecision) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_ANOMALY__USER_DECISION, oldUserDecision, userDecision));
-			}
-		}
-		return userDecision;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public User basicGetUserDecision() {
-		return userDecision;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setUserDecision(User newUserDecision) {
-		User oldUserDecision = userDecision;
-		userDecision = newUserDecision;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__USER_DECISION, oldUserDecision, userDecision));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Date getDueDate() {
 		return dueDate;
 	}
@@ -712,120 +532,6 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 		rule = newRule;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__RULE, oldRule, rule));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4EParticipant getDecidedBy() {
-		if (decidedBy != null && decidedBy.eIsProxy()) {
-			InternalEObject oldDecidedBy = (InternalEObject)decidedBy;
-			decidedBy = (R4EParticipant)eResolveProxy(oldDecidedBy);
-			if (decidedBy != oldDecidedBy) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_ANOMALY__DECIDED_BY, oldDecidedBy, decidedBy));
-			}
-		}
-		return decidedBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4EParticipant basicGetDecidedBy() {
-		return decidedBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDecidedBy(R4EParticipant newDecidedBy) {
-		R4EParticipant oldDecidedBy = decidedBy;
-		decidedBy = newDecidedBy;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__DECIDED_BY, oldDecidedBy, decidedBy));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4EParticipant getFixedBy() {
-		if (fixedBy != null && fixedBy.eIsProxy()) {
-			InternalEObject oldFixedBy = (InternalEObject)fixedBy;
-			fixedBy = (R4EParticipant)eResolveProxy(oldFixedBy);
-			if (fixedBy != oldFixedBy) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_ANOMALY__FIXED_BY, oldFixedBy, fixedBy));
-			}
-		}
-		return fixedBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4EParticipant basicGetFixedBy() {
-		return fixedBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setFixedBy(R4EParticipant newFixedBy) {
-		R4EParticipant oldFixedBy = fixedBy;
-		fixedBy = newFixedBy;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__FIXED_BY, oldFixedBy, fixedBy));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4EParticipant getFollowupBy() {
-		if (followupBy != null && followupBy.eIsProxy()) {
-			InternalEObject oldFollowupBy = (InternalEObject)followupBy;
-			followupBy = (R4EParticipant)eResolveProxy(oldFollowupBy);
-			if (followupBy != oldFollowupBy) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_ANOMALY__FOLLOWUP_BY, oldFollowupBy, followupBy));
-			}
-		}
-		return followupBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public R4EParticipant basicGetFollowupBy() {
-		return followupBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setFollowupBy(R4EParticipant newFollowupBy) {
-		R4EParticipant oldFollowupBy = followupBy;
-		followupBy = newFollowupBy;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ANOMALY__FOLLOWUP_BY, oldFollowupBy, followupBy));
 	}
 
 	/**
@@ -1097,15 +803,6 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 				else return getInfoAtt().map();
 			case RModelPackage.R4E_ANOMALY__STATE:
 				return getState();
-			case RModelPackage.R4E_ANOMALY__USER_ASSIGNED:
-				if (resolve) return getUserAssigned();
-				return basicGetUserAssigned();
-			case RModelPackage.R4E_ANOMALY__USER_FOLLOW_UP:
-				if (resolve) return getUserFollowUp();
-				return basicGetUserFollowUp();
-			case RModelPackage.R4E_ANOMALY__USER_DECISION:
-				if (resolve) return getUserDecision();
-				return basicGetUserDecision();
 			case RModelPackage.R4E_ANOMALY__DUE_DATE:
 				return getDueDate();
 			case RModelPackage.R4E_ANOMALY__RANK:
@@ -1113,15 +810,6 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 			case RModelPackage.R4E_ANOMALY__RULE:
 				if (resolve) return getRule();
 				return basicGetRule();
-			case RModelPackage.R4E_ANOMALY__DECIDED_BY:
-				if (resolve) return getDecidedBy();
-				return basicGetDecidedBy();
-			case RModelPackage.R4E_ANOMALY__FIXED_BY:
-				if (resolve) return getFixedBy();
-				return basicGetFixedBy();
-			case RModelPackage.R4E_ANOMALY__FOLLOWUP_BY:
-				if (resolve) return getFollowupBy();
-				return basicGetFollowupBy();
 			case RModelPackage.R4E_ANOMALY__NOT_ACCEPTED_REASON:
 				return getNotAcceptedReason();
 			case RModelPackage.R4E_ANOMALY__IS_IMPORTED:
@@ -1169,15 +857,6 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 			case RModelPackage.R4E_ANOMALY__STATE:
 				setState((R4EAnomalyState)newValue);
 				return;
-			case RModelPackage.R4E_ANOMALY__USER_ASSIGNED:
-				setUserAssigned((User)newValue);
-				return;
-			case RModelPackage.R4E_ANOMALY__USER_FOLLOW_UP:
-				setUserFollowUp((User)newValue);
-				return;
-			case RModelPackage.R4E_ANOMALY__USER_DECISION:
-				setUserDecision((User)newValue);
-				return;
 			case RModelPackage.R4E_ANOMALY__DUE_DATE:
 				setDueDate((Date)newValue);
 				return;
@@ -1186,15 +865,6 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 				return;
 			case RModelPackage.R4E_ANOMALY__RULE:
 				setRule((R4EDesignRule)newValue);
-				return;
-			case RModelPackage.R4E_ANOMALY__DECIDED_BY:
-				setDecidedBy((R4EParticipant)newValue);
-				return;
-			case RModelPackage.R4E_ANOMALY__FIXED_BY:
-				setFixedBy((R4EParticipant)newValue);
-				return;
-			case RModelPackage.R4E_ANOMALY__FOLLOWUP_BY:
-				setFollowupBy((R4EParticipant)newValue);
 				return;
 			case RModelPackage.R4E_ANOMALY__NOT_ACCEPTED_REASON:
 				setNotAcceptedReason((String)newValue);
@@ -1247,15 +917,6 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 			case RModelPackage.R4E_ANOMALY__STATE:
 				setState(STATE_EDEFAULT);
 				return;
-			case RModelPackage.R4E_ANOMALY__USER_ASSIGNED:
-				setUserAssigned((User)null);
-				return;
-			case RModelPackage.R4E_ANOMALY__USER_FOLLOW_UP:
-				setUserFollowUp((User)null);
-				return;
-			case RModelPackage.R4E_ANOMALY__USER_DECISION:
-				setUserDecision((User)null);
-				return;
 			case RModelPackage.R4E_ANOMALY__DUE_DATE:
 				setDueDate(DUE_DATE_EDEFAULT);
 				return;
@@ -1264,15 +925,6 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 				return;
 			case RModelPackage.R4E_ANOMALY__RULE:
 				setRule((R4EDesignRule)null);
-				return;
-			case RModelPackage.R4E_ANOMALY__DECIDED_BY:
-				setDecidedBy((R4EParticipant)null);
-				return;
-			case RModelPackage.R4E_ANOMALY__FIXED_BY:
-				setFixedBy((R4EParticipant)null);
-				return;
-			case RModelPackage.R4E_ANOMALY__FOLLOWUP_BY:
-				setFollowupBy((R4EParticipant)null);
 				return;
 			case RModelPackage.R4E_ANOMALY__NOT_ACCEPTED_REASON:
 				setNotAcceptedReason(NOT_ACCEPTED_REASON_EDEFAULT);
@@ -1319,24 +971,12 @@ public class R4EAnomalyImpl extends TopicImpl implements R4EAnomaly {
 				return infoAtt != null && !infoAtt.isEmpty();
 			case RModelPackage.R4E_ANOMALY__STATE:
 				return state != STATE_EDEFAULT;
-			case RModelPackage.R4E_ANOMALY__USER_ASSIGNED:
-				return userAssigned != null;
-			case RModelPackage.R4E_ANOMALY__USER_FOLLOW_UP:
-				return userFollowUp != null;
-			case RModelPackage.R4E_ANOMALY__USER_DECISION:
-				return userDecision != null;
 			case RModelPackage.R4E_ANOMALY__DUE_DATE:
 				return DUE_DATE_EDEFAULT == null ? dueDate != null : !DUE_DATE_EDEFAULT.equals(dueDate);
 			case RModelPackage.R4E_ANOMALY__RANK:
 				return rank != RANK_EDEFAULT;
 			case RModelPackage.R4E_ANOMALY__RULE:
 				return rule != null;
-			case RModelPackage.R4E_ANOMALY__DECIDED_BY:
-				return decidedBy != null;
-			case RModelPackage.R4E_ANOMALY__FIXED_BY:
-				return fixedBy != null;
-			case RModelPackage.R4E_ANOMALY__FOLLOWUP_BY:
-				return followupBy != null;
 			case RModelPackage.R4E_ANOMALY__NOT_ACCEPTED_REASON:
 				return NOT_ACCEPTED_REASON_EDEFAULT == null ? notAcceptedReason != null : !NOT_ACCEPTED_REASON_EDEFAULT.equals(notAcceptedReason);
 			case RModelPackage.R4E_ANOMALY__IS_IMPORTED:

@@ -641,12 +641,12 @@ public class CommandUtils {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(aTargetAnomaly,
 				R4EUIModelController.getReviewer());
 		aTargetAnomaly.setCreatedOn(aSourceAnomaly.getCreatedOn());
-		aTargetAnomaly.setDecidedBy(aSourceAnomaly.getDecidedBy());
+		aTargetAnomaly.setDecidedByID(aSourceAnomaly.getDecidedByID());
 		aTargetAnomaly.setDescription(aSourceAnomaly.getDescription());
 		aTargetAnomaly.setDueDate(aSourceAnomaly.getDueDate());
-		aTargetAnomaly.setFixedBy(aSourceAnomaly.getFixedBy());
+		aTargetAnomaly.setFixedByID(aSourceAnomaly.getFixedByID());
 		aTargetAnomaly.setFixedInVersion(aSourceAnomaly.getFixedInVersion());
-		aTargetAnomaly.setFollowupBy(aSourceAnomaly.getFollowupBy());
+		aTargetAnomaly.setFollowUpByID(aSourceAnomaly.getFollowUpByID());
 		aTargetAnomaly.setNotAcceptedReason(aSourceAnomaly.getNotAcceptedReason());
 		aTargetAnomaly.setRank(aSourceAnomaly.getRank());
 		aTargetAnomaly.setState(aSourceAnomaly.getState());

@@ -18,6 +18,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -112,6 +113,11 @@ public class R4EUIDialogFactory {
 	 * Field fSendNotificationInputDialog.
 	 */
 	private ISendNotificationInputDialog fSendNotificationInputDialog = null;
+
+	/**
+	 * Field fParticipantFilterInputDialog.
+	 */
+	private InputDialog fParticipantFilterInputDialog = null;
 
 	/**
 	 * Field fScmConnectorUi.
@@ -499,6 +505,29 @@ public class R4EUIDialogFactory {
 	 */
 	public void setSendNotificationInputDialog(ISendNotificationInputDialog aSendNotificationInputDialog) {
 		fSendNotificationInputDialog = aSendNotificationInputDialog;
+	}
+
+	/**
+	 * Method getParticipantFilterInputDialog.
+	 * 
+	 * @return InputDialog
+	 */
+	public InputDialog getParticipantFilterInputDialog() {
+		if (null == fParticipantFilterInputDialog) {
+			fParticipantFilterInputDialog = new InputDialog(Display.getCurrent().getActiveShell(), "Set user name",
+					"Enter user name to filter on", null, null);
+		}
+		return fParticipantFilterInputDialog;
+	}
+
+	/**
+	 * Method setParticipantFilterInputDialog.
+	 * 
+	 * @param aParticipantFilterInputDialog
+	 *            InputDialog
+	 */
+	public void setParticipantFilterInputDialog(InputDialog aParticipantFilterInputDialog) {
+		fParticipantFilterInputDialog = aParticipantFilterInputDialog;
 	}
 
 	/**

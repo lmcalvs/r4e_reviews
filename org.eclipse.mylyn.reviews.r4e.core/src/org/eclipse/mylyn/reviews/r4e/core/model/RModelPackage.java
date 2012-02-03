@@ -605,40 +605,13 @@ public interface RModelPackage extends EPackage {
 	int R4E_ANOMALY__STATE = ModelPackage.TOPIC_FEATURE_COUNT + 5;
 
 	/**
-	 * The feature id for the '<em><b>User Assigned</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_ANOMALY__USER_ASSIGNED = ModelPackage.TOPIC_FEATURE_COUNT + 6;
-
-	/**
-	 * The feature id for the '<em><b>User Follow Up</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_ANOMALY__USER_FOLLOW_UP = ModelPackage.TOPIC_FEATURE_COUNT + 7;
-
-	/**
-	 * The feature id for the '<em><b>User Decision</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_ANOMALY__USER_DECISION = ModelPackage.TOPIC_FEATURE_COUNT + 8;
-
-	/**
 	 * The feature id for the '<em><b>Due Date</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__DUE_DATE = ModelPackage.TOPIC_FEATURE_COUNT + 9;
+	int R4E_ANOMALY__DUE_DATE = ModelPackage.TOPIC_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Rank</b></em>' attribute.
@@ -647,7 +620,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__RANK = ModelPackage.TOPIC_FEATURE_COUNT + 10;
+	int R4E_ANOMALY__RANK = ModelPackage.TOPIC_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' reference.
@@ -656,34 +629,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__RULE = ModelPackage.TOPIC_FEATURE_COUNT + 11;
-
-	/**
-	 * The feature id for the '<em><b>Decided By</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_ANOMALY__DECIDED_BY = ModelPackage.TOPIC_FEATURE_COUNT + 12;
-
-	/**
-	 * The feature id for the '<em><b>Fixed By</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_ANOMALY__FIXED_BY = ModelPackage.TOPIC_FEATURE_COUNT + 13;
-
-	/**
-	 * The feature id for the '<em><b>Followup By</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_ANOMALY__FOLLOWUP_BY = ModelPackage.TOPIC_FEATURE_COUNT + 14;
+	int R4E_ANOMALY__RULE = ModelPackage.TOPIC_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Not Accepted Reason</b></em>' attribute.
@@ -692,7 +638,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__NOT_ACCEPTED_REASON = ModelPackage.TOPIC_FEATURE_COUNT + 15;
+	int R4E_ANOMALY__NOT_ACCEPTED_REASON = ModelPackage.TOPIC_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Is Imported</b></em>' attribute.
@@ -701,7 +647,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__IS_IMPORTED = ModelPackage.TOPIC_FEATURE_COUNT + 16;
+	int R4E_ANOMALY__IS_IMPORTED = ModelPackage.TOPIC_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Fixed In Version</b></em>' reference.
@@ -710,7 +656,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FIXED_IN_VERSION = ModelPackage.TOPIC_FEATURE_COUNT + 17;
+	int R4E_ANOMALY__FIXED_IN_VERSION = ModelPackage.TOPIC_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Rule ID</b></em>' attribute.
@@ -719,7 +665,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__RULE_ID = ModelPackage.TOPIC_FEATURE_COUNT + 18;
+	int R4E_ANOMALY__RULE_ID = ModelPackage.TOPIC_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Decided By ID</b></em>' attribute.
@@ -728,7 +674,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__DECIDED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 19;
+	int R4E_ANOMALY__DECIDED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Fixed By ID</b></em>' attribute.
@@ -737,7 +683,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FIXED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 20;
+	int R4E_ANOMALY__FIXED_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Follow Up By ID</b></em>' attribute.
@@ -746,7 +692,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY__FOLLOW_UP_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 21;
+	int R4E_ANOMALY__FOLLOW_UP_BY_ID = ModelPackage.TOPIC_FEATURE_COUNT + 15;
 
 	/**
 	 * The number of structural features of the '<em>R4E Anomaly</em>' class.
@@ -755,7 +701,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_ANOMALY_FEATURE_COUNT = ModelPackage.TOPIC_FEATURE_COUNT + 22;
+	int R4E_ANOMALY_FEATURE_COUNT = ModelPackage.TOPIC_FEATURE_COUNT + 16;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl <em>R4E Formal Review</em>}' class.
@@ -3264,39 +3210,6 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EAnomaly_State();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserAssigned <em>User Assigned</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>User Assigned</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserAssigned()
-	 * @see #getR4EAnomaly()
-	 * @generated
-	 */
-	EReference getR4EAnomaly_UserAssigned();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserFollowUp <em>User Follow Up</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>User Follow Up</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserFollowUp()
-	 * @see #getR4EAnomaly()
-	 * @generated
-	 */
-	EReference getR4EAnomaly_UserFollowUp();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserDecision <em>User Decision</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>User Decision</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserDecision()
-	 * @see #getR4EAnomaly()
-	 * @generated
-	 */
-	EReference getR4EAnomaly_UserDecision();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDueDate <em>Due Date</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3328,39 +3241,6 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getR4EAnomaly_Rule();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDecidedBy <em>Decided By</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Decided By</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDecidedBy()
-	 * @see #getR4EAnomaly()
-	 * @generated
-	 */
-	EReference getR4EAnomaly_DecidedBy();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedBy <em>Fixed By</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Fixed By</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedBy()
-	 * @see #getR4EAnomaly()
-	 * @generated
-	 */
-	EReference getR4EAnomaly_FixedBy();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFollowupBy <em>Followup By</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Followup By</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFollowupBy()
-	 * @see #getR4EAnomaly()
-	 * @generated
-	 */
-	EReference getR4EAnomaly_FollowupBy();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getNotAcceptedReason <em>Not Accepted Reason</em>}'.
@@ -5164,30 +5044,6 @@ public interface RModelPackage extends EPackage {
 		EAttribute R4E_ANOMALY__STATE = eINSTANCE.getR4EAnomaly_State();
 
 		/**
-		 * The meta object literal for the '<em><b>User Assigned</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference R4E_ANOMALY__USER_ASSIGNED = eINSTANCE.getR4EAnomaly_UserAssigned();
-
-		/**
-		 * The meta object literal for the '<em><b>User Follow Up</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference R4E_ANOMALY__USER_FOLLOW_UP = eINSTANCE.getR4EAnomaly_UserFollowUp();
-
-		/**
-		 * The meta object literal for the '<em><b>User Decision</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference R4E_ANOMALY__USER_DECISION = eINSTANCE.getR4EAnomaly_UserDecision();
-
-		/**
 		 * The meta object literal for the '<em><b>Due Date</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5210,30 +5066,6 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference R4E_ANOMALY__RULE = eINSTANCE.getR4EAnomaly_Rule();
-
-		/**
-		 * The meta object literal for the '<em><b>Decided By</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference R4E_ANOMALY__DECIDED_BY = eINSTANCE.getR4EAnomaly_DecidedBy();
-
-		/**
-		 * The meta object literal for the '<em><b>Fixed By</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference R4E_ANOMALY__FIXED_BY = eINSTANCE.getR4EAnomaly_FixedBy();
-
-		/**
-		 * The meta object literal for the '<em><b>Followup By</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference R4E_ANOMALY__FOLLOWUP_BY = eINSTANCE.getR4EAnomaly_FollowupBy();
 
 		/**
 		 * The meta object literal for the '<em><b>Not Accepted Reason</b></em>' attribute feature.

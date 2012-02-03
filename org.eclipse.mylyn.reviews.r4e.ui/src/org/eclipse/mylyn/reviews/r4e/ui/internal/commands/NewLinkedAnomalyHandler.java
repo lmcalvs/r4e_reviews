@@ -34,7 +34,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -92,13 +91,7 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 	private void addLinkedAnomaly(R4EUIContent aElement) throws ResourceHandlingException, OutOfSyncException {
 
 		final R4EUIFileContext fileContext = (R4EUIFileContext) aElement.getParent().getParent();
-		R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) (fileContext.getAnomalyContainerElement());
-		//Get data from user
-		if (null == container) {
-			container = new R4EUIAnomalyContainer(fileContext, R4EUIConstants.ANOMALIES_LABEL);
-			fileContext.addChildren(container);
-		}
-
+		R4EUIAnomalyContainer container = (fileContext.getAnomalyContainerElement());
 		final R4EUIAnomalyBasic uiAnomaly = container.createAnomaly(fileContext.getTargetFileVersion(),
 				(R4EUITextPosition) aElement.getPosition());
 		UIUtils.setNavigatorViewFocus(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);

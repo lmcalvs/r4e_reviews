@@ -37,10 +37,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -52,6 +54,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
@@ -601,5 +605,33 @@ public class UIUtils {
 		if (null != aElement) {
 			R4EUIModelController.getNavigatorView().updateView(aElement, aExpandLevel);
 		}
+	}
+
+	/**
+	 * Display the dialog used by the user to enter the participant to use as filter criteria
+	 * 
+	 * @return String
+	 */
+	public static String getParticipantFilterInputDialog() {
+		final InputDialog dlg = R4EUIDialogFactory.getInstance().getParticipantFilterInputDialog();
+		if (dlg.open() == Window.OK) {
+			return dlg.getValue();
+		}
+		return ""; //$NON-NLS-1$
+	}
+
+	/**
+	 * Display the dialog used by the user to enter the participant assign/unassign
+	 * 
+	 * @return String
+	 */
+	public static List<R4EParticipant> getAssignParticipants() {
+		final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog(false);
+		dialog.create();
+		final int result = dialog.open();
+		if (result == Window.OK) {
+			return dialog.getParticipants();
+		}
+		return new ArrayList<R4EParticipant>(0); //Cancelled, no participants to use
 	}
 }

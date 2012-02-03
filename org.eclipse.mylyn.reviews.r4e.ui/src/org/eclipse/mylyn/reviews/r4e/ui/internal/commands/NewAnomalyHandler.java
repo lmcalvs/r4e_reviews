@@ -269,23 +269,18 @@ public class NewAnomalyHandler extends AbstractHandler {
 									file.getFileContext().getTarget().getLocalVersionID())) {
 
 						//File already exists, check if anomaly also exists
-						R4EUIAnomalyContainer anomalyContainer = (R4EUIAnomalyContainer) file.getAnomalyContainerElement();
-						if (null != anomalyContainer) {
-							R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) anomalyContainer.getChildren();
-							for (R4EUIAnomalyBasic uiAnomaly : anomalies) {
-								if (uiAnomaly.getPosition().isSameAs(aUIPosition)) {
-									isNewAnomaly = false;
-									addCommentToExistingAnomaly(uiAnomaly);
-									R4EUIPlugin.Ftracer.traceInfo("Added comment to existing anomaly: Target = "
-											+ file.getFileContext().getTarget().getName()
-											+ ((null != file.getFileContext().getBase()) ? "Base = "
-													+ file.getFileContext().getBase().getName() : "") + " Position = "
-											+ aUIPosition.toString());
-								}
+						R4EUIAnomalyContainer anomalyContainer = file.getAnomalyContainerElement();
+						R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) anomalyContainer.getChildren();
+						for (R4EUIAnomalyBasic uiAnomaly : anomalies) {
+							if (uiAnomaly.getPosition().isSameAs(aUIPosition)) {
+								isNewAnomaly = false;
+								addCommentToExistingAnomaly(uiAnomaly);
+								R4EUIPlugin.Ftracer.traceInfo("Added comment to existing anomaly: Target = "
+										+ file.getFileContext().getTarget().getName()
+										+ ((null != file.getFileContext().getBase()) ? "Base = "
+												+ file.getFileContext().getBase().getName() : "") + " Position = "
+										+ aUIPosition.toString());
 							}
-						} else {
-							anomalyContainer = new R4EUIAnomalyContainer(file, R4EUIConstants.ANOMALIES_LABEL);
-							file.addChildren(anomalyContainer);
 						}
 						if (isNewAnomaly) {
 							addAnomalyToExistingFileContext(aTargetFileVersion, anomalyContainer, aUIPosition);
@@ -445,10 +440,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 				return;
 			}
 
-			final R4EUIAnomalyContainer uiAnomalyContainer = new R4EUIAnomalyContainer(uiFileContext,
-					R4EUIConstants.ANOMALIES_LABEL);
-			uiFileContext.addChildren(uiAnomalyContainer);
-
+			final R4EUIAnomalyContainer uiAnomalyContainer = uiFileContext.getAnomalyContainerElement();
 			final R4EUIAnomalyBasic uiAnomaly = uiAnomalyContainer.createAnomalyFromDetached(aTargetFileVersion,
 					tempAnomaly, (R4EUITextPosition) aUIPosition);
 			UIUtils.setNavigatorViewFocus(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);

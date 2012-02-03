@@ -87,15 +87,9 @@
     </genClasses>
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/state"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/userAssigned"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/userFollowUp"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/userDecision"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/dueDate"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/rank"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/rule"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/decidedBy"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/fixedBy"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/followupBy"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/notAcceptedReason"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/isImported"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/fixedInVersion"/>

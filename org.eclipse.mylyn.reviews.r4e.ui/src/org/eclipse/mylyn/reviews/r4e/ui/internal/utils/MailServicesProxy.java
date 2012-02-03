@@ -61,7 +61,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedEle
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
@@ -473,13 +472,10 @@ public class MailServicesProxy {
 							msgBody.append(": " + resource.getProjectRelativePath() + " (Project)");
 						}
 						//Line Range
-						if (null != context.getContentsContainerElement()) {
-							R4EUIContent[] contents = (R4EUIContent[]) context.getContentsContainerElement()
-									.getChildren();
-							msgBody.append(": ");
-							for (R4EUIContent content : contents) {
-								msgBody.append(content.getPosition().toString() + ", ");
-							}
+						R4EUIContent[] contents = (R4EUIContent[]) context.getContentsContainerElement().getChildren();
+						msgBody.append(": ");
+						for (R4EUIContent content : contents) {
+							msgBody.append(content.getPosition().toString() + ", ");
 						}
 						msgBody.append(LINE_FEED_MSG_PART);
 					}
@@ -604,12 +600,11 @@ public class MailServicesProxy {
 					++numReviewedFiles;
 				}
 				++numTotalFiles;
-				if (null != (R4EUIAnomalyContainer) context.getAnomalyContainerElement()) {
-					R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) ((R4EUIAnomalyContainer) context.getAnomalyContainerElement()).getChildren();
-					for (R4EUIAnomalyBasic anomaly : anomalies) {
-						if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
-							++numTotalAnomalies; //Specific anomalies
-						}
+				R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) context.getAnomalyContainerElement()
+						.getChildren();
+				for (R4EUIAnomalyBasic anomaly : anomalies) {
+					if (anomaly.getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer())) {
+						++numTotalAnomalies; //Specific anomalies
 					}
 				}
 			}
@@ -646,8 +641,9 @@ public class MailServicesProxy {
 					msgBody.append("FileContext: " + TAB_MSG_PART + "Eclipse Project: File Path (Repository | Project)"
 							+ LINE_FEED_MSG_PART);
 				}
-				if (null != (R4EUIAnomalyContainer) context.getAnomalyContainerElement()) {
-					R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) ((R4EUIAnomalyContainer) context.getAnomalyContainerElement()).getChildren();
+				if (null != context.getAnomalyContainerElement()) {
+					R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) context.getAnomalyContainerElement()
+							.getChildren();
 
 					R4EFileVersion fileVersion = context.getTargetFileVersion();
 					if (context.isEnabled() && null != fileVersion) {

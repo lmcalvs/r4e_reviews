@@ -129,12 +129,20 @@ public interface IR4EUIModelElement {
 	void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException;
 
 	/**
-	 * Sets the assignTo vaslue. Take note that this is not applicable to all model elements
+	 * Add assignees to review element. Take note that this is not applicable to all model elements
 	 * 
 	 * @param aParticipants
-	 *            - the list of assigned participants
+	 *            - the list of assigned participants to assign
 	 */
-	void setAssigned(List<R4EParticipant> aParticipants);
+	void addAssignees(List<R4EParticipant> aParticipants);
+
+	/**
+	 * Remove assignees from review element. Take note that this is not applicable to all model elements
+	 * 
+	 * @param aParticipants
+	 *            - the list of assigned participants to unassign
+	 */
+	void removeAssignees(List<R4EParticipant> aParticipants);
 
 	/**
 	 * Set this child reviewed state
@@ -342,6 +350,13 @@ public interface IR4EUIModelElement {
 	 * @return boolean
 	 */
 	boolean isAssignToCmd();
+
+	/**
+	 * Method isUnassignToCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isUnassignToCmd();
 
 	/**
 	 * Method isOpenElementCmd.

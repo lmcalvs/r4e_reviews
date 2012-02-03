@@ -20,14 +20,12 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AssignParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -56,41 +54,24 @@ public class AssignParticipantFilterHandler extends AbstractHandler {
 		final AssignParticipantFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
 				.getActionSet()).getAssignedParticipantFilter();
 
-		if (filter.getParticipant().equals("")) {
-			final String participant = getParticipantDialog();
-			if (participant.equals("")) {
+		if (filter.getParticipant().equals("")) { //$NON-NLS-1$
+			final String participant = UIUtils.getParticipantFilterInputDialog();
+			if (participant.equals("")) { //$NON-NLS-1$
 				return null;
 			}
 			filter.setParticipant(participant);
 		}
 
-		final Object[] elements = viewer.getExpandedElements();
 		boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());
-
 		if (!oldValue) {
-			R4EUIPlugin.Ftracer.traceInfo("Apply assigned filter for participant " + filter.getParticipant()
-					+ " to ReviewNavigator");
+			R4EUIPlugin.Ftracer.traceInfo("Apply assigned filter for participant " + filter.getParticipant() //$NON-NLS-1$
+					+ " to ReviewNavigator"); //$NON-NLS-1$
 			viewer.addFilter(filter);
 		} else {
-			R4EUIPlugin.Ftracer.traceInfo("Remove assigned filter from ReviewNavigator");
+			R4EUIPlugin.Ftracer.traceInfo("Remove assigned filter from ReviewNavigator"); //$NON-NLS-1$
 			viewer.removeFilter(filter);
-			filter.setParticipant("");
+			filter.setParticipant(""); //$NON-NLS-1$
 		}
-		R4EUIModelController.getNavigatorView().getTreeViewer().setExpandedElements(elements);
 		return null;
-	}
-
-	/**
-	 * Display the dialog used by the user to enter the participant to use as filter criteria
-	 * 
-	 * @return String
-	 */
-	public String getParticipantDialog() {
-		final InputDialog dlg = new InputDialog(Display.getCurrent().getActiveShell(), "Set user name",
-				"Enter user name to filter on", null, null);
-		if (dlg.open() == Window.OK) {
-			return dlg.getValue();
-		}
-		return "";
 	}
 }

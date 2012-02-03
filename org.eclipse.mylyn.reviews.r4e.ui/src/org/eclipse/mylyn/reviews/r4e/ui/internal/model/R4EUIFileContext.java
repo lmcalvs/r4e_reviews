@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -39,8 +38,6 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantInputDialog;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.FileContextProperties;
@@ -110,14 +107,21 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 *            IR4EUIModelElement
 	 * @param aFile
 	 *            R4EFileContext
+	 * @param aParentItemType
 	 */
-	public R4EUIFileContext(IR4EUIModelElement aParent, R4EFileContext aFile) {
+	public R4EUIFileContext(IR4EUIModelElement aParent, R4EFileContext aFile, int aParentItemType) {
 		super(aParent, "");
 		if (null != aFile.getTarget()) {
 			setName(aFile.getTarget().getName());
 		} else if (null != aFile.getBase()) {
 			setName(aFile.getBase().getName());
 		}
+		if (aParentItemType == R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT) {
+			fContentsContainer = new R4EUIDeltaContainer(this, R4EUIConstants.DELTAS_LABEL);
+		} else {
+			fContentsContainer = new R4EUISelectionContainer(this, R4EUIConstants.SELECTIONS_LABEL);
+		}
+		fAnomalyContainer = new R4EUIAnomalyContainer(this, R4EUIConstants.ANOMALIES_LABEL);
 		fFile = aFile;
 		setImage(FILE_CONTEXT_ICON_FILE);
 	}
@@ -231,11 +235,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				addContentReviewed();
 
 				//Also set the children
-				if (null != fContentsContainer) {
-					final int length = fContentsContainer.getChildren().length;
-					for (int i = 0; i < length; i++) {
-						fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
-					}
+				final int length = fContentsContainer.getChildren().length;
+				for (int i = 0; i < length; i++) {
+					fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
 				}
 
 				//Check to see if we should mark the parent reviewed as well
@@ -299,11 +301,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				addContentReviewed();
 
 				//Also set the children
-				if (null != fContentsContainer) {
-					final int length = fContentsContainer.getChildren().length;
-					for (int i = 0; i < length; i++) {
-						fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
-					}
+				final int length = fContentsContainer.getChildren().length;
+				for (int i = 0; i < length; i++) {
+					fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
 				}
 			} else {
 				//Remove delta from the reviewedContent for this user
@@ -324,12 +324,10 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException {
 		boolean allChildrenReviewed = true;
-		if (null != fContentsContainer) {
-			final int length = fContentsContainer.getChildren().length;
-			for (int i = 0; i < length; i++) {
-				if (!(fContentsContainer.getChildren()[i].isUserReviewed())) {
-					allChildrenReviewed = false;
-				}
+		final int length = fContentsContainer.getChildren().length;
+		for (int i = 0; i < length; i++) {
+			if (!(fContentsContainer.getChildren()[i].isUserReviewed())) {
+				allChildrenReviewed = false;
 			}
 		}
 		//If all children are reviewed, mark the parent as reviewed as well
@@ -406,45 +404,20 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	}
 
 	/**
-	 * Method setAssignedDialog.
-	 */
-	public void setAssignedDialog() {
-		final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog(false);
-		EList<String> assignedParticipants = fFile.getAssignedTo();
-		dialog.create();
-
-		//Add existing participants to dialog
-		for (String assignedParticipant : assignedParticipants) {
-			R4EParticipant participant;
-			try {
-				participant = ((R4EUIReviewBasic) getParent().getParent()).getParticipant(assignedParticipant, false);
-				dialog.addParticipant(participant.getId() + R4EUIConstants.LIST_SEPARATOR + participant.getEmail());
-			} catch (ResourceHandlingException e) {
-				UIUtils.displayResourceErrorDialog(e);
-			}
-		}
-		final int result = dialog.open();
-		if (result == Window.OK) {
-			setAssigned(dialog.getParticipants());
-		}
-		R4EUIDialogFactory.getInstance().removeParticipantInputDialog();
-	}
-
-	/**
-	 * Method setAssigned.
+	 * Method addAssignees.
 	 * 
 	 * @param aParticipants
 	 *            - List<R4EParticipant> aParticipants
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setAssigned(List<R4EParticipant>)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addAssignees(List<R4EParticipant>,
+	 *      boolean)
 	 */
 	@Override
-	public void setAssigned(List<R4EParticipant> aParticipants) {
+	public void addAssignees(List<R4EParticipant> aParticipants) {
 		try {
 			//Set new partcipants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fFile,
 					R4EUIModelController.getReviewer());
 			EList<String> assignedParticipants = fFile.getAssignedTo();
-			assignedParticipants.clear(); //Clear existing assigned participants
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.add(participant.getId());
 
@@ -462,7 +435,37 @@ public class R4EUIFileContext extends R4EUIModelElement {
 
 		//Also assign children
 		for (R4EUIContent content : fContentsContainer.fContents) {
-			content.setAssigned(aParticipants);
+			content.addAssignees(aParticipants);
+		}
+	}
+
+	/**
+	 * Method removeAssignees.
+	 * 
+	 * @param aParticipants
+	 *            - List<R4EParticipant> aParticipants
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeAssignees(List<R4EParticipant>)
+	 */
+	@Override
+	public void removeAssignees(List<R4EParticipant> aParticipants) {
+		try {
+			//Set new partcipants assigned
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fFile,
+					R4EUIModelController.getReviewer());
+			EList<String> assignedParticipants = fFile.getAssignedTo();
+			for (R4EParticipant participant : aParticipants) {
+				assignedParticipants.remove(participant.getId());
+			}
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		} catch (ResourceHandlingException e1) {
+			UIUtils.displayResourceErrorDialog(e1);
+		} catch (OutOfSyncException e1) {
+			UIUtils.displaySyncErrorDialog(e1);
+		}
+
+		//Also assign children
+		for (R4EUIContent content : fContentsContainer.fContents) {
+			content.removeAssignees(aParticipants);
 		}
 	}
 
@@ -477,10 +480,10 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public IR4EUIModelElement[] getChildren() {
 		final List<IR4EUIModelElement> newList = new ArrayList<IR4EUIModelElement>();
-		if (null != fContentsContainer) {
+		if (fContentsContainer.getChildren().length > 0) {
 			newList.add(fContentsContainer);
 		}
-		if (null != fAnomalyContainer) {
+		if (fAnomalyContainer.getChildren().length > 0) {
 			newList.add(fAnomalyContainer);
 		}
 		return newList.toArray(new IR4EUIModelElement[newList.size()]);
@@ -491,7 +494,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * 
 	 * @return IR4EUIModelElement
 	 */
-	public IR4EUIModelElement getContentsContainerElement() {
+	public R4EUIContentsContainer getContentsContainerElement() {
 		return fContentsContainer;
 	}
 
@@ -500,7 +503,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * 
 	 * @return IR4EUIModelElement
 	 */
-	public IR4EUIModelElement getAnomalyContainerElement() {
+	public R4EUIAnomalyContainer getAnomalyContainerElement() {
 		return fAnomalyContainer;
 	}
 
@@ -512,7 +515,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (null == fContentsContainer && null == fAnomalyContainer) {
+		if (0 == fContentsContainer.getChildren().length && 0 == fAnomalyContainer.getChildren().length) {
 			return false;
 		}
 		return true;
@@ -525,14 +528,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public void close() {
-		if (null != fContentsContainer) {
-			fContentsContainer.close();
-		}
-		fContentsContainer = null;
-		if (null != fAnomalyContainer) {
-			fAnomalyContainer.close();
-		}
-		fAnomalyContainer = null;
+		fContentsContainer.close();
+		fAnomalyContainer.close();
 		fOpen = false;
 		removeListeners();
 	}
@@ -598,12 +595,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 
 		//Load child data
 		if (fFile.getDeltas().size() > 0) {
-			if (null == ((R4EUIReviewItem) getParent()).getItem().getRepositoryRef()
-					|| "".equals(((R4EUIReviewItem) getParent()).getItem().getRepositoryRef())) {
-				addChildren(new R4EUISelectionContainer(this, R4EUIConstants.SELECTIONS_LABEL));
-			} else {
-				addChildren(new R4EUIDeltaContainer(this, R4EUIConstants.DELTAS_LABEL));
-			}
 			try {
 				fContentsContainer.open();
 			} catch (FileNotFoundException e) {
@@ -619,7 +610,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		if (null != fFile.getTarget()) {
 			fAnomalies = R4EUIModelController.getAnomaliesForFile(fFile.getTarget().getLocalVersionID());
 			if (null != fAnomalies && fAnomalies.size() > 0) {
-				addChildren(new R4EUIAnomalyContainer(this, R4EUIConstants.ANOMALIES_LABEL));
 				fAnomalyContainer.open();
 			}
 		}
@@ -712,12 +702,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
 		super.addListener(aProvider);
-		if (null != fContentsContainer) {
-			fContentsContainer.addListener(aProvider);
-		}
-		if (null != fAnomalyContainer) {
-			fAnomalyContainer.addListener(aProvider);
-		}
+		fContentsContainer.addListener(aProvider);
+		fAnomalyContainer.addListener(aProvider);
 	}
 
 	/**
@@ -730,12 +716,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void removeListener(ReviewNavigatorContentProvider aProvider) {
 		super.removeListener(aProvider);
-		if (null != fContentsContainer) {
-			fContentsContainer.removeListener(aProvider);
-		}
-		if (null != fAnomalyContainer) {
-			fAnomalyContainer.removeListener(aProvider);
-		}
+		fContentsContainer.removeListener(aProvider);
+		fAnomalyContainer.removeListener(aProvider);
 	}
 
 	//Commands
@@ -798,6 +780,22 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	public boolean isAssignToCmd() {
 		if (isEnabled()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method isUnassignToCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isUnassignToCmd()
+	 */
+	@Override
+	public boolean isUnassignToCmd() {
+		if (isEnabled()
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
+				&& fFile.getAssignedTo().size() > 0) {
 			return true;
 		}
 		return false;

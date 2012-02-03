@@ -536,9 +536,9 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Show My Anomalies"
+            description="Show My Currently Assigned Anomalies"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesMy"
-            name="AnomaliesMy">
+            name="Show My Anomalies">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -546,9 +546,9 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Hide Completed Reviews Filter"
+            description="Hide Completed Reviews"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsCompleted"
-            name="ReviewsCompleted">
+            name="Hide Completed Reviews">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -556,9 +556,9 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Reviews Only Filter"
+            description="Only Show Review Elements"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsOnly"
-            name="ReviewsOnly">
+            name="Show Reviews Only">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -566,9 +566,9 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Show My Reviews"
+            description="Show Reviews I am Participating In"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsMy"
-            name="ReviewsMy">
+            name="Show My Reviews">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -578,7 +578,7 @@
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
             description="Show Reviews for Participant"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsParticipant"
-            name="ReviewsParticipant">
+            name="Show Reviews for Participant...">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -586,7 +586,7 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
-            description="Show Anomalies Only"
+            description="Hide Changes and Only Show Anomalies"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies"
             name="Show Anomalies Only">
          <state
@@ -598,7 +598,7 @@
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
             description="Hide Reviewed Elements"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewedElems"
-            name="HideReviewedElems">
+            name="Hide Reviewed Elements">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -608,7 +608,7 @@
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
             description="Hide Rule Sets"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideRuleSets"
-            name="HideRuleSets">
+            name="Hide Rule Sets">
          <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
@@ -618,7 +618,7 @@
       	categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
         description="Hide Deltas"
         id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideDeltas"
-        name="HideDeltas">
+        name="Hide Deltas">
         <state
             class="org.eclipse.ui.handlers.RegistryToggleState:false"
             id="org.eclipse.ui.commands.toggleState">
@@ -705,7 +705,7 @@
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
             description="Remove All Filters"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.RemoveAll"
-            name="FiltersRemoveAll">
+            name="Remove All Filters">
       </command>
       <category
             description="R4E Navigator View Toolbar Sort Commands"
@@ -756,6 +756,12 @@
             description="Assign Review Element to Participant(s)"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.assignElement"
             name="Assign to Participant">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
+            description="Unassign Review Element from Participant(s)"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.unassignElement"
+            name="Unassign Participant">
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
@@ -1153,8 +1159,17 @@
           </enabledWhen>
        </handler>
        <handler
-             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.AssignToHandler"
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.AddAssignHandler"
              commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.assignElement">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.RemoveAssignHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.unassignElement">
           <enabledWhen>
              <test
                    property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">

@@ -43,7 +43,7 @@ public class AssignParticipantFilter extends ViewerFilter {
 	/**
 	 * Field fParticipant.
 	 */
-	private String fParticipant = "";
+	private String fParticipant = ""; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -59,7 +59,7 @@ public class AssignParticipantFilter extends ViewerFilter {
 	}
 
 	/**
-	 * Gets the currently selected particiant
+	 * Gets the particiant to filter on
 	 * 
 	 * @return String
 	 */

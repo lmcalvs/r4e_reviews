@@ -309,13 +309,25 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
-	 * Method setAssigned.
+	 * Method addAssignees.
 	 * 
 	 * @param aParticipants
 	 *            - List<R4EParticipant> aParticipants
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setAssigned(List<R4EParticipant>)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addAssignees(List<R4EParticipant>,
+	 *      boolean)
 	 */
-	public void setAssigned(List<R4EParticipant> aParticipants) {
+	public void addAssignees(List<R4EParticipant> aParticipants) {
+		//default implementation
+	}
+
+	/**
+	 * Method removeAssignees.
+	 * 
+	 * @param aParticipants
+	 *            - List<R4EParticipant> aParticipants
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeAssignees(List<R4EParticipant>)
+	 */
+	public void removeAssignees(List<R4EParticipant> aParticipants) {
 		//default implementation
 	}
 
@@ -577,6 +589,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAssignToCmd()
 	 */
 	public boolean isAssignToCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method isUnassignToCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isUnassignToCmd()
+	 */
+	public boolean isUnassignToCmd() {
 		return false; //default implementation
 	}
 

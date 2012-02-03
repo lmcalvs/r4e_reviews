@@ -30,15 +30,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getState <em>State</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserAssigned <em>User Assigned</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserFollowUp <em>User Follow Up</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserDecision <em>User Decision</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDueDate <em>Due Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRank <em>Rank</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getRule <em>Rule</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDecidedBy <em>Decided By</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedBy <em>Fixed By</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFollowupBy <em>Followup By</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getNotAcceptedReason <em>Not Accepted Reason</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#isIsImported <em>Is Imported</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedInVersion <em>Fixed In Version</em>}</li>
@@ -82,84 +76,6 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * @generated
 	 */
 	void setState(R4EAnomalyState value);
-
-	/**
-	 * Returns the value of the '<em><b>User Assigned</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>User Assigned</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>User Assigned</em>' reference.
-	 * @see #setUserAssigned(User)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EAnomaly_UserAssigned()
-	 * @model
-	 * @generated
-	 */
-	User getUserAssigned();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserAssigned <em>User Assigned</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>User Assigned</em>' reference.
-	 * @see #getUserAssigned()
-	 * @generated
-	 */
-	void setUserAssigned(User value);
-
-	/**
-	 * Returns the value of the '<em><b>User Follow Up</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>User Follow Up</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>User Follow Up</em>' reference.
-	 * @see #setUserFollowUp(User)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EAnomaly_UserFollowUp()
-	 * @model
-	 * @generated
-	 */
-	User getUserFollowUp();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserFollowUp <em>User Follow Up</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>User Follow Up</em>' reference.
-	 * @see #getUserFollowUp()
-	 * @generated
-	 */
-	void setUserFollowUp(User value);
-
-	/**
-	 * Returns the value of the '<em><b>User Decision</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>User Decision</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>User Decision</em>' reference.
-	 * @see #setUserDecision(User)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EAnomaly_UserDecision()
-	 * @model
-	 * @generated
-	 */
-	User getUserDecision();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getUserDecision <em>User Decision</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>User Decision</em>' reference.
-	 * @see #getUserDecision()
-	 * @generated
-	 */
-	void setUserDecision(User value);
 
 	/**
 	 * Returns the value of the '<em><b>Due Date</b></em>' attribute.
@@ -241,84 +157,6 @@ public interface R4EAnomaly extends Topic, R4EReviewComponent, R4EComment {
 	 * @generated
 	 */
 	void setRule(R4EDesignRule value);
-
-	/**
-	 * Returns the value of the '<em><b>Decided By</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Decided By</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Decided By</em>' reference.
-	 * @see #setDecidedBy(R4EParticipant)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EAnomaly_DecidedBy()
-	 * @model transient="true" derived="true"
-	 * @generated
-	 */
-	R4EParticipant getDecidedBy();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getDecidedBy <em>Decided By</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Decided By</em>' reference.
-	 * @see #getDecidedBy()
-	 * @generated
-	 */
-	void setDecidedBy(R4EParticipant value);
-
-	/**
-	 * Returns the value of the '<em><b>Fixed By</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Fixed By</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Fixed By</em>' reference.
-	 * @see #setFixedBy(R4EParticipant)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EAnomaly_FixedBy()
-	 * @model transient="true" derived="true"
-	 * @generated
-	 */
-	R4EParticipant getFixedBy();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFixedBy <em>Fixed By</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Fixed By</em>' reference.
-	 * @see #getFixedBy()
-	 * @generated
-	 */
-	void setFixedBy(R4EParticipant value);
-
-	/**
-	 * Returns the value of the '<em><b>Followup By</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Followup By</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Followup By</em>' reference.
-	 * @see #setFollowupBy(R4EParticipant)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EAnomaly_FollowupBy()
-	 * @model transient="true" derived="true"
-	 * @generated
-	 */
-	R4EParticipant getFollowupBy();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly#getFollowupBy <em>Followup By</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Followup By</em>' reference.
-	 * @see #getFollowupBy()
-	 * @generated
-	 */
-	void setFollowupBy(R4EParticipant value);
 
 	/**
 	 * Returns the value of the '<em><b>Not Accepted Reason</b></em>' attribute.

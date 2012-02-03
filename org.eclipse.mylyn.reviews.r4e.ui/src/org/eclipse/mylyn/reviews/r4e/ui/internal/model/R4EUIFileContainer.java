@@ -47,6 +47,11 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field fType.
+	 */
+	protected final int fType;
+
+	/**
 	 * Field fItem.
 	 */
 	protected final R4EItem fItem;
@@ -69,12 +74,14 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 	 *            R4EItem
 	 * @param aName
 	 *            String
+	 * @param aReviewType
 	 * @param aTooltip
 	 *            String
 	 */
-	protected R4EUIFileContainer(IR4EUIModelElement aParent, R4EItem aItem, String aName) {
+	protected R4EUIFileContainer(IR4EUIModelElement aParent, R4EItem aItem, String aName, int aItemType) {
 		super(aParent, aName);
 		fItem = aItem;
+		fType = aItemType;
 		fFileContexts = new ArrayList<R4EUIFileContext>();
 	}
 
@@ -186,7 +193,7 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 						|| R4EUIPlugin.getDefault()
 								.getPreferenceStore()
 								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					uiFileContext = new R4EUIFileContext(this, files.get(i));
+					uiFileContext = new R4EUIFileContext(this, files.get(i), fType);
 					addChildren(uiFileContext);
 					if (uiFileContext.isEnabled()) {
 						uiFileContext.open();

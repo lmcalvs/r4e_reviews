@@ -759,10 +759,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fAssignFilterButton.setText(R4EUIConstants.ASSIGN_FILTER_NAME);
 		fAssignIdText = new Text(r4EFilterPrefsGroup, SWT.BORDER);
 		fAssignIdText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
-		if (store.getString(PreferenceConstants.P_PARTICIPANT_FILTER).equals("")) {
+		if (store.getString(PreferenceConstants.P_PARTICIPANT_FILTER).equals("")) { //$NON-NLS-1$
 			fAssignFilterButton.setSelection(false);
 			fAssignFilterButton.setEnabled(false);
-			fAssignIdText.setText("");
+			fAssignIdText.setText(""); //$NON-NLS-1$
 		} else {
 			fAssignFilterButton.setSelection(true);
 			fAssignIdText.setText(store.getString(PreferenceConstants.P_PARTICIPANT_FILTER));

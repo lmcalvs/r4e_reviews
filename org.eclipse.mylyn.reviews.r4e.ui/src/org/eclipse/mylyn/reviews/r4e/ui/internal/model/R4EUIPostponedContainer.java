@@ -80,7 +80,7 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 	 *            String
 	 */
 	public R4EUIPostponedContainer(IR4EUIModelElement aParent, R4EItem aItem, String aName) {
-		super(aParent, aItem, aName);
+		super(aParent, aItem, aName, R4EUIConstants.REVIEW_ITEM_TYPE_POSTPONED);
 		setImage(POSTPONED_CONTAINER_ICON_FILE);
 	}
 

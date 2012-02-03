@@ -126,7 +126,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			tempAnomaly.setTitle(dialog.getAnomalyTitleValue());
 			tempAnomaly.setDescription(dialog.getAnomalyDescriptionValue());
 			tempAnomaly.setDueDate(dialog.getDueDate());
-			tempAnomaly.getAssignedTo().clear();
 			tempAnomaly.getAssignedTo().add(dialog.getAssigned());
 			if (null != dialog.getRuleReferenceValue()) {
 				final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();

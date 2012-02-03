@@ -727,35 +727,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getR4EAnomaly_UserAssigned() {
-		return (EReference)r4EAnomalyEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getR4EAnomaly_UserFollowUp() {
-		return (EReference)r4EAnomalyEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getR4EAnomaly_UserDecision() {
-		return (EReference)r4EAnomalyEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getR4EAnomaly_DueDate() {
-		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -764,7 +737,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EAnomaly_Rank() {
-		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -773,34 +746,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EAnomaly_Rule() {
-		return (EReference)r4EAnomalyEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getR4EAnomaly_DecidedBy() {
-		return (EReference)r4EAnomalyEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getR4EAnomaly_FixedBy() {
-		return (EReference)r4EAnomalyEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getR4EAnomaly_FollowupBy() {
-		return (EReference)r4EAnomalyEClass.getEStructuralFeatures().get(9);
+		return (EReference)r4EAnomalyEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -809,7 +755,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EAnomaly_NotAcceptedReason() {
-		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(10);
+		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -818,7 +764,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EAnomaly_IsImported() {
-		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(11);
+		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -827,7 +773,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EAnomaly_FixedInVersion() {
-		return (EReference)r4EAnomalyEClass.getEStructuralFeatures().get(12);
+		return (EReference)r4EAnomalyEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -836,7 +782,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EAnomaly_RuleID() {
-		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(13);
+		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -845,7 +791,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EAnomaly_DecidedByID() {
-		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(14);
+		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -854,7 +800,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EAnomaly_FixedByID() {
-		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(15);
+		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -863,7 +809,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EAnomaly_FollowUpByID() {
-		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(16);
+		return (EAttribute)r4EAnomalyEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -2125,15 +2071,9 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		r4EAnomalyEClass = createEClass(R4E_ANOMALY);
 		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__STATE);
-		createEReference(r4EAnomalyEClass, R4E_ANOMALY__USER_ASSIGNED);
-		createEReference(r4EAnomalyEClass, R4E_ANOMALY__USER_FOLLOW_UP);
-		createEReference(r4EAnomalyEClass, R4E_ANOMALY__USER_DECISION);
 		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__DUE_DATE);
 		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__RANK);
 		createEReference(r4EAnomalyEClass, R4E_ANOMALY__RULE);
-		createEReference(r4EAnomalyEClass, R4E_ANOMALY__DECIDED_BY);
-		createEReference(r4EAnomalyEClass, R4E_ANOMALY__FIXED_BY);
-		createEReference(r4EAnomalyEClass, R4E_ANOMALY__FOLLOWUP_BY);
 		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__NOT_ACCEPTED_REASON);
 		createEAttribute(r4EAnomalyEClass, R4E_ANOMALY__IS_IMPORTED);
 		createEReference(r4EAnomalyEClass, R4E_ANOMALY__FIXED_IN_VERSION);
@@ -2408,15 +2348,9 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		initEClass(r4EAnomalyEClass, R4EAnomaly.class, "R4EAnomaly", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4EAnomaly_State(), this.getR4EAnomalyState(), "state", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getR4EAnomaly_UserAssigned(), theModelPackage.getUser(), null, "userAssigned", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getR4EAnomaly_UserFollowUp(), theModelPackage.getUser(), null, "userFollowUp", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getR4EAnomaly_UserDecision(), theModelPackage.getUser(), null, "userDecision", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EAnomaly_DueDate(), ecorePackage.getEDate(), "dueDate", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EAnomaly_Rank(), theDRModelPackage.getR4EDesignRuleRank(), "rank", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EAnomaly_Rule(), theDRModelPackage.getR4EDesignRule(), null, "rule", null, 0, 1, R4EAnomaly.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getR4EAnomaly_DecidedBy(), this.getR4EParticipant(), null, "decidedBy", null, 0, 1, R4EAnomaly.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getR4EAnomaly_FixedBy(), this.getR4EParticipant(), null, "fixedBy", null, 0, 1, R4EAnomaly.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getR4EAnomaly_FollowupBy(), this.getR4EParticipant(), null, "followupBy", null, 0, 1, R4EAnomaly.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EAnomaly_NotAcceptedReason(), ecorePackage.getEString(), "notAcceptedReason", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EAnomaly_IsImported(), ecorePackage.getEBoolean(), "isImported", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EAnomaly_FixedInVersion(), this.getR4EFileVersion(), null, "fixedInVersion", null, 0, 1, R4EAnomaly.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

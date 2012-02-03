@@ -638,7 +638,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						} else {
 							R4EUIPlugin.Ftracer.traceError("Context list empty in a review item, index: " + i); //$NON-NLS-1$
 						}
-						uiItem = new R4EUIReviewItem(this, item, name.toString());
+						uiItem = new R4EUIReviewItem(this, item, name.toString(),
+								R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE);
 					} else {
 						//Commit
 						String description = item.getDescription();
@@ -647,7 +648,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 								: description.length();
 						String name = "Commit: " + description.substring(R4EUIConstants.START_STRING_INDEX, endIndex)
 								+ "...";
-						uiItem = new R4EUIReviewItem(this, item, name);
+						uiItem = new R4EUIReviewItem(this, item, name, R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT);
 					}
 
 					if (uiItem.isEnabled()) {
@@ -1052,7 +1053,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		final String name = "Resource: " + aFilename;
 
 		//Create and set UI model element
-		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name);
+		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name,
+				R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE);
 		addChildren(uiReviewItem);
 		return uiReviewItem;
 	}
@@ -1090,7 +1092,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		final String name = "Commit: " + message.substring(R4EUIConstants.START_STRING_INDEX, endIndex) + "...";
 
 		//Create and set UI model element
-		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name);
+		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name,
+				R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT);
 		addChildren(uiReviewItem);
 		return uiReviewItem;
 	}
@@ -1760,8 +1763,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			for (R4EUIReviewItem item : fItems) {
 				R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
 				for (R4EUIFileContext context : contexts) {
-					R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
-					if (null != container && !(container.checkCompletionStatus(resultMsg))) {
+					R4EUIAnomalyContainer container = context.getAnomalyContainerElement();
+					if (!(container.checkCompletionStatus(resultMsg))) {
 						if (resultOk) {
 							sb.append("Phase cannot be changed to " + R4EUIConstants.REVIEW_PHASE_COMPLETED
 									+ " as some anomalies are in the wrong state:"

@@ -310,20 +310,15 @@ public class NewReviewItemHandler extends AbstractHandler {
 										.equals(file.getFileContext().getBase().getLocalVersionID()))) {
 							//File already exists, check if selection also exists
 							R4EUIContentsContainer contentContainer = (R4EUIContentsContainer) file.getContentsContainerElement();
-							if (null != contentContainer) {
-								if (!(contentContainer instanceof R4EUISelectionContainer)) {
-									//If this is a Commit element, we skip it
-									continue;
+							if (!(contentContainer instanceof R4EUISelectionContainer)) {
+								//If this is a Commit element, we skip it
+								continue;
+							}
+							R4EUIContent[] contentElements = (R4EUIContent[]) contentContainer.getChildren();
+							for (R4EUIContent contentElement : contentElements) {
+								if (contentElement.getPosition().isSameAs(aUIPosition)) {
+									newSelection = false;
 								}
-								R4EUIContent[] contentElements = (R4EUIContent[]) contentContainer.getChildren();
-								for (R4EUIContent contentElement : contentElements) {
-									if (contentElement.getPosition().isSameAs(aUIPosition)) {
-										newSelection = false;
-									}
-								}
-							} else {
-								contentContainer = new R4EUISelectionContainer(file, R4EUIConstants.SELECTIONS_LABEL);
-								file.addChildren(contentContainer);
 							}
 							if (newSelection) {
 								addReviewItemToExistingFileContext((R4EUISelectionContainer) contentContainer,
@@ -413,10 +408,7 @@ public class NewReviewItemHandler extends AbstractHandler {
 			return;
 		}
 
-		final R4EUISelectionContainer uiSelectionContainer = new R4EUISelectionContainer(uiFileContext,
-				R4EUIConstants.SELECTIONS_LABEL);
-		uiFileContext.addChildren(uiSelectionContainer);
-
+		final R4EUISelectionContainer uiSelectionContainer = (R4EUISelectionContainer) uiFileContext.getContentsContainerElement();
 		final R4EUISelection uiSelection = uiSelectionContainer.createSelection((R4EUITextPosition) aUIPosition);
 		UIUtils.setNavigatorViewFocus(uiReviewItem, 1);
 

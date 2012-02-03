@@ -275,11 +275,6 @@ public class FindReviewItemsHandler extends AbstractHandler {
 											for (IR4EUIPosition position : file.getPositions()) {
 												//Lazily create the Delta container if not already done
 												R4EUIDeltaContainer deltaContainer = (R4EUIDeltaContainer) uiFileContext.getContentsContainerElement();
-												if (null == deltaContainer) {
-													deltaContainer = new R4EUIDeltaContainer(uiFileContext,
-															R4EUIConstants.DELTAS_LABEL);
-													uiFileContext.addChildren(deltaContainer);
-												}
 												deltaContainer.createDelta((R4EUITextPosition) position);
 											}
 										} catch (OutOfSyncException e) {

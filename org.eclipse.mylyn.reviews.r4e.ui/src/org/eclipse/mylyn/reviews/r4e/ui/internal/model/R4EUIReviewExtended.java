@@ -617,18 +617,15 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 		for (R4EUIReviewItem item : fItems) {
 			R4EUIFileContext[] contexts = (R4EUIFileContext[]) item.getChildren();
 			for (R4EUIFileContext context : contexts) {
-				R4EUIAnomalyContainer container = (R4EUIAnomalyContainer) context.getAnomalyContainerElement();
-				if (null != container) {
-					if (!(container.checkReworkStatus(resultMsg))) {
-						if (resultOk) {
-							sb.append("Phase cannot be changed to " + REVIEW_PHASE_REWORK
-									+ " as some anomalies are in the wrong state:"
-									+ System.getProperty("line.separator"));
-							resultOk = false;
-						}
-						if (null != resultMsg) {
-							sb.append(resultMsg);
-						}
+				R4EUIAnomalyContainer container = context.getAnomalyContainerElement();
+				if (!(container.checkReworkStatus(resultMsg))) {
+					if (resultOk) {
+						sb.append("Phase cannot be changed to " + REVIEW_PHASE_REWORK
+								+ " as some anomalies are in the wrong state:" + System.getProperty("line.separator"));
+						resultOk = false;
+					}
+					if (null != resultMsg) {
+						sb.append(resultMsg);
 					}
 				}
 			}

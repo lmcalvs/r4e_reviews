@@ -59,18 +59,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EAnomaly" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Topic #//R4EReviewComponent #//R4EComment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="#//R4EAnomalyState"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="userAssigned" eType="ecore:EClass ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//User"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="userFollowUp" eType="ecore:EClass ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//User"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="userDecision" eType="ecore:EClass ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dueDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="rank" eType="ecore:EEnum r4e.design.rules.ecore#//R4EDesignRuleRank"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rule" eType="ecore:EClass r4e.design.rules.ecore#//R4EDesignRule"
-        transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="decidedBy" eType="#//R4EParticipant"
-        transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fixedBy" eType="#//R4EParticipant"
-        transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="followupBy" eType="#//R4EParticipant"
         transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="notAcceptedReason" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImported" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>

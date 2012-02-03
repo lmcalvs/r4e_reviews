@@ -20,14 +20,11 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewCompletedFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -68,19 +65,5 @@ public class ReviewsCompletedFilterHandler extends AbstractHandler {
 		}
 		R4EUIModelController.getNavigatorView().getTreeViewer().setExpandedElements(elements);
 		return null;
-	}
-
-	/**
-	 * Display the dialog used by the user to enter the participant to use as filter criteria
-	 * 
-	 * @return String
-	 */
-	public String getParticipantDialog() {
-		final InputDialog dlg = new InputDialog(Display.getCurrent().getActiveShell(), "Set user name",
-				"Enter user name to filter on", null, null);
-		if (dlg.open() == Window.OK) {
-			return dlg.getValue();
-		}
-		return "";
 	}
 }

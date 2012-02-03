@@ -107,6 +107,11 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	 */
 	private Button fAssignedToButton;
 
+	/**
+	 * Field fUnassignedFromButton.
+	 */
+	private Button fUnassignedFromButton;
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -272,16 +277,26 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
 		fAssignedToComposite.setToolTipText(R4EUIConstants.ASSIGNED_TO_TOOLTIP);
 		fAssignedToComposite.setLayoutData(data);
-		fAssignedToComposite.setLayout(new GridLayout(2, false));
+		fAssignedToComposite.setLayout(new GridLayout(3, false));
 
 		fAssignedToText = widgetFactory.createText(fAssignedToComposite, "", SWT.READ_ONLY);
 		fAssignedToText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 		fAssignedToText.setEditable(false);
-		fAssignedToButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
+		fAssignedToButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.ADD_LABEL, SWT.NONE);
 		fAssignedToButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		fAssignedToButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				((R4EUIReviewItem) fProperties.getElement()).setAssignedDialog();
+				((R4EUIReviewItem) fProperties.getElement()).addAssignees(UIUtils.getAssignParticipants());
+				refresh();
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
+			}
+		});
+
+		fUnassignedFromButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.REMOVE_LABEL, SWT.NONE);
+		fUnassignedFromButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		fUnassignedFromButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				((R4EUIReviewItem) fProperties.getElement()).removeAssignees(UIUtils.getAssignParticipants());
 				refresh();
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 			}
@@ -369,6 +384,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 			fDescriptionText.setEnabled(false);
 			fAssignedToText.setEnabled(false);
 			fAssignedToButton.setEnabled(false);
+			fUnassignedFromButton.setEnabled(false);
 		} else {
 			fAuthorText.setEnabled(true);
 			fAuthorRepText.setEnabled(true);
@@ -378,6 +394,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 			fDescriptionText.setEnabled(true);
 			fAssignedToText.setEnabled(true);
 			fAssignedToButton.setEnabled(true);
+			fUnassignedFromButton.setEnabled(true);
 		}
 	}
 }

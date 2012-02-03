@@ -152,7 +152,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	public ReviewNavigatorActionGroup(ReviewNavigatorView aView) {
 		super();
-		R4EUIPlugin.Ftracer.traceInfo("Create Action Group for view " + aView.getPartName());
+		R4EUIPlugin.Ftracer.traceInfo("Create Action Group for view " + aView.getPartName()); //$NON-NLS-1$
 		fView = aView;
 		fCommandService = (ICommandService) fView.getSite().getWorkbenchWindow().getService(ICommandService.class);
 		fHandlerService = (IHandlerService) fView.getSite().getWorkbenchWindow().getService(IHandlerService.class);
@@ -198,9 +198,9 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 			NotHandledException {
 		runReviewsOnlyFilterCommand(false);
 		runReviewsMyFilterCommand(false);
-		runReviewsParticipantFilterCommand("");
+		runReviewsParticipantFilterCommand(""); //$NON-NLS-1$
 		runAssignedMyFilterCommand(false);
-		runAssignedParticipantFilterCommand("");
+		runAssignedParticipantFilterCommand(""); //$NON-NLS-1$
 		runReviewsCompletedFilterCommand(false);
 		runAnomaliesFilterCommand(false);
 		runAnomaliesMyFilterCommand(false);
@@ -468,8 +468,8 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runReviewsParticipantFilterCommand(String aParticipant) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetReviewsParticipantFilterCommand();
-		if (null == aParticipant || aParticipant.equals("")) {
-			fReviewsParticipantFilter.setParticipant("");
+		if (null == aParticipant || aParticipant.equals("")) { //$NON-NLS-1$
+			fReviewsParticipantFilter.setParticipant(""); //$NON-NLS-1$
 			return;
 		}
 		fReviewsParticipantFilter.setParticipant(aParticipant);
@@ -576,8 +576,8 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runAssignedParticipantFilterCommand(String aParticipant) throws ExecutionException,
 			NotDefinedException, NotEnabledException, NotHandledException {
 		resetAssignedParticipantFilterCommand();
-		if (null == aParticipant || aParticipant.equals("")) {
-			fAssignedParticipantFilter.setParticipant("");
+		if (null == aParticipant || aParticipant.equals("")) { //$NON-NLS-1$
+			fAssignedParticipantFilter.setParticipant(""); //$NON-NLS-1$
 			return;
 		}
 		fAssignedParticipantFilter.setParticipant(aParticipant);

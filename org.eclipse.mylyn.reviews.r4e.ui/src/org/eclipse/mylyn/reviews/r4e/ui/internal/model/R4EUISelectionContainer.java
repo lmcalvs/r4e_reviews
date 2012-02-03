@@ -98,7 +98,7 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 				participantsToAssign.add(participant);
 			}
 		}
-		uiSelection.setAssigned(participantsToAssign);
+		uiSelection.addAssignees(participantsToAssign);
 		return uiSelection;
 	}
 

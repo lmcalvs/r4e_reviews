@@ -86,7 +86,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 	 *            R4EFileContext
 	 */
 	public R4EUIPostponedFile(IR4EUIModelElement aParent, R4EFileContext aFile) {
-		super(aParent, aFile);
+		super(aParent, aFile, R4EUIConstants.REVIEW_ITEM_TYPE_POSTPONED);
 		fUiAnomalies = new ArrayList<R4EUIPostponedAnomaly>();
 		setImage(POSTPONED_FILE_ICON_FILE);
 	}

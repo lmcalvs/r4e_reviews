@@ -139,6 +139,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String UPDATE_LABEL = "Update";
 
 	/**
+	 * Field ADD_LABEL. (value is ""Add"")
+	 */
+	public static final String ADD_LABEL = "Add";
+
+	/**
+	 * Field REMOVE_LABEL. (value is ""Remove"")
+	 */
+	public static final String REMOVE_LABEL = "Remove";
+
+	/**
 	 * Field REFRESH_LABEL. (value is ""Refresh"")
 	 */
 	public static final String REFRESH_LABEL = "Refresh";
@@ -713,6 +723,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final int REVIEW_ITEM_TYPE_COMMIT = 1;
 
+	/**
+	 * Field REVIEW_ITEM_TYPE_POSTPONED. (value is 2)
+	 */
+	public static final int REVIEW_ITEM_TYPE_POSTPONED = 2;
+
 	//User Roles
 
 	/**
@@ -924,16 +939,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ANOMALIES_MY_FILTER_NAME = "Show My Anomalies";
 
 	/**
-	 * Field ANOMALIES_MY_FILTER_TOOLTIP. (value is ""Show my Currently Assigned Anomalies"")
-	 */
-	public static final String ANOMALIES_MY_FILTER_TOOLTIP = "Show My Currently Assigned Anomalies";
-
-	/**
-	 * Field ANOMALIES_MY_REVIEW_FILTER_MNEMONIC. (value is ""z"")
-	 */
-	public static final String ANOMALIES_MY_FILTER_MNEMONIC = "z";
-
-	/**
 	 * Field REVIEWS_COMPLETED_FILTER_COMMAND. (value is
 	 * ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsCompleted"")
 	 */
@@ -943,16 +948,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REVIEWS_COMPLETED_FILTER_NAME. (value is ""Hide Completed Reviews"")
 	 */
 	public static final String REVIEWS_COMPLETED_FILTER_NAME = "Hide Completed Reviews";
-
-	/**
-	 * Field REVIEWS_COMPLETED_FILTER_TOOLTIP. (value is ""Hide Completed Reviews"")
-	 */
-	public static final String REVIEWS_COMPLETED_FILTER_TOOLTIP = "Hide Completed Reviews";
-
-	/**
-	 * Field REVIEWS_COMPLETED_FILTER_MNEMONIC. (value is ""c"")
-	 */
-	public static final String REVIEWS_COMPLETED_FILTER_MNEMONIC = "c";
 
 	/**
 	 * Field REVIEWS_ONLY_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsOnly"")
@@ -965,16 +960,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REVIEWS_ONLY_FILTER_NAME = "Show Reviews Only";
 
 	/**
-	 * Field REVIEWS_ONLY_FILTER_TOOLTIP. (value is ""Only show reviews"")
-	 */
-	public static final String REVIEWS_ONLY_FILTER_TOOLTIP = "Only Show Review Elements";
-
-	/**
-	 * Field REVIEWS_ONLY_FILTER_MNEMONIC. (value is ""o"")
-	 */
-	public static final String REVIEWS_ONLY_FILTER_MNEMONIC = "o";
-
-	/**
 	 * Field REVIEWS_MY_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsMy"")
 	 */
 	public static final String REVIEWS_MY_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsMy";
@@ -983,16 +968,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REVIEWS_MY_FILTER_NAME. (value is ""Show my reviews"")
 	 */
 	public static final String REVIEWS_MY_FILTER_NAME = "Show My Reviews";
-
-	/**
-	 * Field REVIEWS_MY_FILTER_TOOLTIP. (value is ""Show reviews I am participating in"")
-	 */
-	public static final String REVIEWS_MY_FILTER_TOOLTIP = "Show Reviews I am Participating In";
-
-	/**
-	 * Field REVIEWS_MY_FILTER_MNEMONIC. (value is ""m"")
-	 */
-	public static final String REVIEWS_MY_FILTER_MNEMONIC = "m";
 
 	/**
 	 * Field REVIEWS_PARTICIPANT_FILTER_COMMAND. (value is
@@ -1026,16 +1001,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ASSIGN_MY_FILTER_NAME = "Show My Assigned Elements";
 
 	/**
-	 * Field ASSIGN_MY_FILTER_TOOLTIP. (value is ""Show Review Elements Assigned to Me"")
-	 */
-	public static final String ASSIGN_MY_FILTER_TOOLTIP = "Show Review Elements Assigned to Me";
-
-	/**
-	 * Field ASSIGN_MY_FILTER_MNEMONIC. (value is ""g"")
-	 */
-	public static final String ASSIGN_MY_FILTER_MNEMONIC = "g";
-
-	/**
 	 * Field ASSIGN_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignParticipants"")
 	 */
 	public static final String ASSIGN_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignParticipants";
@@ -1046,16 +1011,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ASSIGN_FILTER_NAME = "Show Assigned Elements for Participant... ";
 
 	/**
-	 * Field ASSIGN_FILTER_TOOLTIP. (value is ""Show Review Elements Assigned to Participant"")
-	 */
-	public static final String ASSIGN_FILTER_TOOLTIP = "Show Review Elements Assigned to Participant";
-
-	/**
-	 * Field ASSIGN_FILTER_MNEMONIC. (value is ""h"")
-	 */
-	public static final String ASSIGN_FILTER_MNEMONIC = "h";
-
-	/**
 	 * Field ANOMALIES_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies"")
 	 */
 	public static final String ANOMALIES_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies";
@@ -1064,16 +1019,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field ANOMALIES_FILTER_NAME. (value is ""Hide selections"")
 	 */
 	public static final String ANOMALIES_FILTER_NAME = "Show Anomalies Only";
-
-	/**
-	 * Field ANOMALIES_FILTER_TOOLTIP. (value is ""Hide selections and only show anomalies"")
-	 */
-	public static final String ANOMALIES_FILTER_TOOLTIP = "Hide Selections and Only Show Anomalies";
-
-	/**
-	 * Field ANOMALIES_FILTER_MNEMONIC. (value is ""a"")
-	 */
-	public static final String ANOMALIES_FILTER_MNEMONIC = "a";
 
 	/**
 	 * Field REVIEWED_ELEMS_FILTER_COMMAND. (value is
@@ -1087,16 +1032,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REVIEWED_ELEMS_FILTER_NAME = "Hide Reviewed Elements";
 
 	/**
-	 * Field REVIEWED_ELEMS_FILTER_TOOLTIP. (value is ""Hide reviewed elements"")
-	 */
-	public static final String REVIEWED_ELEMS_FILTER_TOOLTIP = "Hide Reviewed Elements";
-
-	/**
-	 * Field REVIEWED_ELEMS_FILTER_MNEMONIC. (value is ""e"")
-	 */
-	public static final String REVIEWED_ELEMS_FILTER_MNEMONIC = "e";
-
-	/**
 	 * Field HIDE_RULE_SETS_FILTER_COMMAND. (value is
 	 * ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideRuleSets"")
 	 */
@@ -1106,16 +1041,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field HIDE_RULE_SETS_FILTER_NAME. (value is ""HideRuleSets"")
 	 */
 	public static final String HIDE_RULE_SETS_FILTER_NAME = "Hide Rule Sets";
-
-	/**
-	 * Field HIDE_RULE_SETS_FILTER_TOOLTIP. (value is ""Hide Rule Sets"")
-	 */
-	public static final String HIDE_RULE_SETS_FILTER_TOOLTIP = "Hide Rule Sets";
-
-	/**
-	 * Field HIDE_RULE_SETS_FILTER_MNEMONIC. (value is ""n"")
-	 */
-	public static final String HIDE_RULE_SETS_FILTER_MNEMONIC = "n";
 
 	/**
 	 * Field HIDE_DELTAS_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideDeltas"")
@@ -1128,14 +1053,14 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String HIDE_DELTAS_FILTER_NAME = "Hide Deltas";
 
 	/**
-	 * Field HIDE_DELTAS_FILTER_TOOLTIP. (value is ""Hide Deltas"")
+	 * Field ASSIGN_FILTER_TOOLTIP. (value is ""Show Review Elements Assigned to Participant"")
 	 */
-	public static final String HIDE_DELTAS_FILTER_TOOLTIP = "Hide Deltas";
+	public static final String ASSIGN_FILTER_TOOLTIP = "Show Review Elements Assigned to Participant";
 
 	/**
-	 * Field HIDE_DELTAS_FILTER_MNEMONIC. (value is ""d"")
+	 * Field ASSIGN_FILTER_MNEMONIC. (value is ""h"")
 	 */
-	public static final String HIDE_DELTAS_FILTER_MNEMONIC = "d";
+	public static final String ASSIGN_FILTER_MNEMONIC = "h";
 
 	/**
 	 * Field GO_INTO_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.GoInto"")
@@ -1148,16 +1073,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String GO_INTO_FILTER_NAME = "Go Into";
 
 	/**
-	 * Field GO_INTO_FILTER_TOOLTIP. (value is ""Go Into and Set Focus on Current Element"")
-	 */
-	public static final String GO_INTO_FILTER_TOOLTIP = "Go Into and Set Focus on Current Element";
-
-	/**
-	 * Field GO_INTO_FILTER_MNEMONIC. (value is ""f"")
-	 */
-	public static final String GO_INTO_FILTER_MNEMONIC = "f";
-
-	/**
 	 * Field REMOVE_ALL_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.RemoveAll"")
 	 */
 	public static final String REMOVE_ALL_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.RemoveAll";
@@ -1166,16 +1081,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REMOVE_ALL_FILTER_NAME. (value is ""Remove all filters"")
 	 */
 	public static final String REMOVE_ALL_FILTER_NAME = "Remove All Filters";
-
-	/**
-	 * Field REMOVE_ALL_FILTER_TOOLTIP. (value is ""Remove all applied filters"")
-	 */
-	public static final String REMOVE_ALL_FILTER_TOOLTIP = "Remove All Applied Filters";
-
-	/**
-	 * Field REMOVE_ALL_FILTER_MNEMONIC. (value is ""r"")
-	 */
-	public static final String REMOVE_ALL_FILTER_MNEMONIC = "r";
 
 	/**
 	 * Field NEW_LINKED_ANOMALY_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly"")
@@ -1282,6 +1187,31 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field ASSIGN_TO_COMMAND_MNEMONIC. (value is ""a"")
 	 */
 	public static final String ASSIGN_TO_COMMAND_MNEMONIC = "a";
+
+	/**
+	 * Field UNASSIGN_TO_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.unassignElement"")
+	 */
+	public static final String UNASSIGN_TO_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.unassignElement";
+
+	/**
+	 * Field UNASSIGN_TO_ICON_FILE. (value is ""icons/obj16/unassign_tsk.png"")
+	 */
+	public static final String UNASSIGN_TO_ICON_FILE = "icons/obj16/unassign_tsk.png";
+
+	/**
+	 * Field UNASSIGN_TO_COMMAND_NAME. (value is ""Unassign Participant"")
+	 */
+	public static final String UNASSIGN_TO_COMMAND_NAME = "Unassign Participant";
+
+	/**
+	 * Field UNASSIGN_TO_COMMAND_TOOLTIP. (value is ""Unassign Review Element from Participant(s)"")
+	 */
+	public static final String UNASSIGN_TO_COMMAND_TOOLTIP = "Unassign Review Element from Participant(s)";
+
+	/**
+	 * Field UNASSIGN_TO_COMMAND_MNEMONIC. (value is ""u"")
+	 */
+	public static final String UNASSIGN_TO_COMMAND_MNEMONIC = "u";
 
 	/**
 	 * Field OPEN_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.openElement"")
