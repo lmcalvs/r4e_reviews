@@ -21,6 +21,8 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,6 +47,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -653,5 +656,28 @@ public class UIUtils {
 			return dialog.getParticipants();
 		}
 		return new ArrayList<R4EParticipant>(0); //Cancelled, no participants to use
+	}
+
+	/**
+	 * Gets the project path for the given file version
+	 * 
+	 * @param aFileVersion
+	 *            - R4EFileVersion
+	 * @return String
+	 */
+	public static String getProjectPath(R4EFileVersion aFileVersion) {
+		String path = ""; //$NON-NLS-1$
+		try {
+			if (null != aFileVersion.getPlatformURI()) {
+				URI uri = new URI(aFileVersion.getPlatformURI());
+				String uriPath = uri.getPath();
+				if (null != uriPath) {
+					path = uriPath.substring(uriPath.indexOf(R4EUIConstants.SEPARATOR, 1) + 1);
+				}
+			}
+		} catch (URISyntaxException e) {
+			// Ignore
+		}
+		return path;
 	}
 }

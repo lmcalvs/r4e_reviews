@@ -47,13 +47,13 @@ public class ChangeDisplayHandler extends AbstractHandler {
 	/**
 	 * Method execute.
 	 * 
-	 * @param event
+	 * @param aEvent
 	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(final ExecutionEvent event) {
+	public Object execute(final ExecutionEvent aEvent) {
 
 		final UIJob job = new UIJob("Changing Display...") {
 			@Override
@@ -71,7 +71,7 @@ public class ChangeDisplayHandler extends AbstractHandler {
 
 					try {
 						final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
-								event)
+								aEvent)
 								.getService(IEvaluationService.class);
 						evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement");
 						evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement");

@@ -147,7 +147,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 		for (R4EUIReviewItem item : items) {
 			List<R4EUIFileContext> files = item.getFileContexts();
 			for (R4EUIFileContext file : files) {
-				if (!(file instanceof R4EUIPostponedFile)
+				if (!(file instanceof R4EUIPostponedFile) && null != file.getTargetFileVersion()
 						&& file.getTargetFileVersion().getPlatformURI().equals(fFile.getTarget().getPlatformURI())) {
 					return file.getTargetFileVersion();
 				}

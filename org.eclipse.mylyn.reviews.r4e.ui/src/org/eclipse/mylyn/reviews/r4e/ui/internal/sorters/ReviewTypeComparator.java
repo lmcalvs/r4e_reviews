@@ -28,17 +28,17 @@ public class ReviewTypeComparator extends NavigatorElementComparator {
 	/**
 	 * Method category.
 	 * 
-	 * @param element
+	 * @param aElement
 	 *            Object
 	 * @return int
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.NavigatorElementComparator#category(Object)
 	 */
 	@Override
-	public int category(Object element) {
-		if (element instanceof R4EUIReviewBasic) {
-			if (((R4EUIReviewBasic) element).getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+	public int category(Object aElement) {
+		if (aElement instanceof R4EUIReviewBasic) {
+			if (((R4EUIReviewBasic) aElement).getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
 				return 0;
-			} else if (((R4EUIReviewBasic) element).getReview()
+			} else if (((R4EUIReviewBasic) aElement).getReview()
 					.getType()
 					.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
 				return 1;

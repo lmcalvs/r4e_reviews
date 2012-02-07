@@ -19,8 +19,6 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.sorters;
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -121,24 +119,26 @@ public class TreeTableComparator extends ViewerComparator {
 			if (e1 instanceof R4EUIFileContext && e2 instanceof R4EUIFileContext) {
 				String str1 = "";
 				String str2 = "";
-				R4EFileVersion version = ((R4EUIFileContext) e1).getTargetFileVersion();
-				if (null != version) {
-					IResource resource = version.getResource();
-					if (null != resource) {
-						IPath path = resource.getProjectRelativePath();
-						if (null != path) {
-							str1 = path.toPortableString();
-						}
+				//First try target file version
+				R4EFileVersion fileVersion = ((R4EUIFileContext) e1).getTargetFileVersion();
+				if (null != fileVersion) {
+					str1 = UIUtils.getProjectPath(fileVersion);
+				} else {
+					//Try base file version
+					fileVersion = ((R4EUIFileContext) e1).getBaseFileVersion();
+					if (null != fileVersion) {
+						str1 = UIUtils.getProjectPath(fileVersion);
 					}
 				}
-				version = ((R4EUIFileContext) e2).getTargetFileVersion();
-				if (null != version) {
-					IResource resource = version.getResource();
-					if (null != resource) {
-						IPath path = resource.getProjectRelativePath();
-						if (null != path) {
-							str2 = path.toPortableString();
-						}
+
+				fileVersion = ((R4EUIFileContext) e2).getTargetFileVersion();
+				if (null != fileVersion) {
+					str2 = UIUtils.getProjectPath(fileVersion);
+				} else {
+					//Try base file version
+					fileVersion = ((R4EUIFileContext) e2).getBaseFileVersion();
+					if (null != fileVersion) {
+						str2 = UIUtils.getProjectPath(fileVersion);
 					}
 				}
 				compareResult = str1.compareTo(str2);

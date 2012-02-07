@@ -309,7 +309,7 @@ public class NewReviewItemHandler extends AbstractHandler {
 								|| (null != file.getFileContext().getBase() && null != aBaseFileVersion && aBaseFileVersion.getLocalVersionID()
 										.equals(file.getFileContext().getBase().getLocalVersionID()))) {
 							//File already exists, check if selection also exists
-							R4EUIContentsContainer contentContainer = (R4EUIContentsContainer) file.getContentsContainerElement();
+							R4EUIContentsContainer contentContainer = file.getContentsContainerElement();
 							if (!(contentContainer instanceof R4EUISelectionContainer)) {
 								//If this is a Commit element, we skip it
 								continue;
@@ -409,7 +409,7 @@ public class NewReviewItemHandler extends AbstractHandler {
 		}
 
 		final R4EUISelectionContainer uiSelectionContainer = (R4EUISelectionContainer) uiFileContext.getContentsContainerElement();
-		final R4EUISelection uiSelection = uiSelectionContainer.createSelection((R4EUITextPosition) aUIPosition);
+		uiSelectionContainer.createSelection((R4EUITextPosition) aUIPosition);
 		UIUtils.setNavigatorViewFocus(uiReviewItem, 1);
 
 		//Send email notification if needed

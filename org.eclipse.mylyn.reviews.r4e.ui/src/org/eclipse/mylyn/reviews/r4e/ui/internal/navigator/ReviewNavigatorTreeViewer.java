@@ -18,8 +18,6 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.navigator;
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -39,6 +37,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
@@ -62,7 +61,46 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	// Constants
 	// ------------------------------------------------------------------------
 
-	private static final String INVALID_PATH = "--";
+	/**
+	 * Field REVIEW_COLUMN_LABEL. (value is ""Review: "")
+	 */
+	private static final String REVIEW_COLUMN_LABEL = "Review-> "; //$NON-NLS-1$
+
+	/**
+	 * Field REVIEW_GROUP_COLUMN_TOOLTIP. (value is ""Group: "")
+	 */
+	private static final String REVIEW_GROUP_COLUMN_TOOLTIP = "Group-> "; //$NON-NLS-1$
+
+	/**
+	 * Field INVALID_PATH. (value is ""--"")
+	 */
+	private static final String INVALID_PATH = "--"; //$NON-NLS-1$
+
+	/**
+	 * Field VERSION_TARGET_LABEL. (value is ""Target Version: "")
+	 */
+	private static final String VERSION_TARGET_LABEL = "Target Version: "; //$NON-NLS-1$
+
+	/**
+	 * Field VERSION_BASE_LABEL. (value is ""Base Version: "")
+	 */
+	private static final String VERSION_BASE_LABEL = "Base Version: "; //$NON-NLS-1$
+
+	/**
+	 * Field NUM_CHANGES_ITEM_COLUMN_TOOLTIP. (value is ""Number of Reviewed Changes / Number of Changes for this Review
+	 * Item"")
+	 */
+	private static final String NUM_CHANGES_ITEM_COLUMN_TOOLTIP = "Number of Reviewed Changes / Number of Changes for this Review Item"; //$NON-NLS-1$
+
+	/**
+	 * Field NUM_CHANGES_FILE_COLUMN_TOOLTIP. (value is ""Number of Changes for this File"")
+	 */
+	private static final String NUM_CHANGES_FILE_COLUMN_TOOLTIP = "Number of Changes for this File"; //$NON-NLS-1$
+
+	/**
+	 * Field NUM_ANOMALIES_COLUMN_TOOLTIP. (value is ""Number of Anomalies written for this File"")
+	 */
+	private static final String NUM_ANOMALIES_COLUMN_TOOLTIP = "Number of Anomalies written for this File"; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -71,7 +109,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	/**
 	 * Field fIsDefaultDisplay.
 	 */
-	private boolean fIsDefaultDisplay;
+	private boolean fIsDefaultDisplay = true;
 
 	/**
 	 * Field fDefaultInput.
@@ -144,16 +182,16 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	/**
 	 * Constructor for ReviewNavigatorTreeViewer.
 	 * 
-	 * @param parent
+	 * @param aParent
 	 *            Composite
-	 * @param style
+	 * @param aStyle
 	 *            int
 	 */
-	public ReviewNavigatorTreeViewer(Composite parent, int style) {
-		super(parent, style);
+	public ReviewNavigatorTreeViewer(Composite aParent, int aStyle) {
+		super(aParent, aStyle);
 		fTreeColumnLayout = new TreeColumnLayout();
 		fTreeTableComparator = new TreeTableComparator();
-		parent.setLayout(fTreeColumnLayout);
+		aParent.setLayout(fTreeColumnLayout);
 	}
 
 	/**
@@ -273,6 +311,11 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		fTreeColumnLayout.setColumnData(fAssignColumn.getColumn(), new ColumnWeightData(9, true));
 		fTreeColumnLayout.setColumnData(fNumChangesColumn.getColumn(), new ColumnWeightData(8, true));
 		fTreeColumnLayout.setColumnData(fNumAnomaliesColumn.getColumn(), new ColumnWeightData(8, true));
+		R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
+		if (null != activeReview) {
+			fElementColumn.getColumn().setText(REVIEW_COLUMN_LABEL + activeReview.getName());
+			fElementColumn.getColumn().setToolTipText(REVIEW_GROUP_COLUMN_TOOLTIP + activeReview.getParent().getName());
+		}
 
 		//Set Tree Table Filters (shows only Review Items and Files for current review
 		final TreeTableFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
@@ -304,7 +347,6 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 			final DecoratingCellLabelProvider provider = new DecoratingCellLabelProvider(
 					new ReviewNavigatorLabelProvider(), new ReviewNavigatorDecorator());
 			fElementColumn = new TreeViewerColumn(this, SWT.NONE);
-			fElementColumn.getColumn().setText(R4EUIConstants.ELEMENTS_LABEL_NAME);
 			fElementColumn.setLabelProvider(provider);
 			fElementColumn.getColumn().setMoveable(false);
 			fElementColumn.getColumn().setResizable(true);
@@ -336,17 +378,19 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 				@Override
 				public String getText(Object element) {
 					if (element instanceof R4EUIFileContext) {
+						//First try target file version
 						R4EFileVersion version = ((R4EUIFileContext) element).getTargetFileVersion();
 						if (null != version) {
-							IResource resource = version.getResource();
-							if (null != resource) {
-								IPath path = resource.getProjectRelativePath();
-								if (null != path) {
-									return path.toPortableString();
-								}
+							return UIUtils.getProjectPath(version);
+						} else {
+							//Try base file version
+							version = ((R4EUIFileContext) element).getBaseFileVersion();
+							if (null != version) {
+								return UIUtils.getProjectPath(version);
+							} else {
+								return INVALID_PATH;
 							}
 						}
-						return INVALID_PATH;
 					} else {
 						return null;
 					}
@@ -354,9 +398,24 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 
 				@Override
 				public String getToolTipText(Object element) {
+					StringBuffer buffer = new StringBuffer();
 					if (element instanceof R4EUIFileContext) {
-						return R4EUIConstants.VERSION_LABEL
-								+ ((R4EUIFileContext) element).getTargetFileVersion().getVersionID();
+						R4EFileVersion targetVersion = ((R4EUIFileContext) element).getTargetFileVersion();
+						buffer.append(VERSION_TARGET_LABEL);
+						if (null == targetVersion) {
+							buffer.append(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
+						} else {
+							buffer.append(targetVersion.getVersionID());
+						}
+						R4EFileVersion baseVersion = ((R4EUIFileContext) element).getBaseFileVersion();
+						buffer.append(System.getProperty("line.separator")); //$NON-NLS-1$
+						buffer.append(VERSION_BASE_LABEL);
+						if (null == baseVersion) {
+							buffer.append(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
+						} else {
+							buffer.append(baseVersion.getVersionID());
+						}
+						return buffer.toString();
 					}
 					return null;
 				}
@@ -380,18 +439,19 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 				public void update(ViewerCell cell) {
 					final Object element = cell.getElement();
 					if (element instanceof R4EUIFileContext) {
+						//First try target file version
 						R4EFileVersion version = ((R4EUIFileContext) element).getTargetFileVersion();
 						if (null != version) {
-							IResource resource = version.getResource();
-							if (null != resource) {
-								IPath path = resource.getProjectRelativePath();
-								if (null != path) {
-									cell.setText(path.toPortableString());
-									return;
-								}
+							cell.setText(UIUtils.getProjectPath(version));
+						} else {
+							//Try base file version
+							version = ((R4EUIFileContext) element).getBaseFileVersion();
+							if (null != version) {
+								cell.setText(UIUtils.getProjectPath(version));
+							} else {
+								cell.setText(INVALID_PATH);
 							}
 						}
-						cell.setText(INVALID_PATH);
 					} else {
 						cell.setText(null);
 					}
@@ -502,7 +562,11 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 
 				@Override
 				public String getToolTipText(Object element) {
-					return null;
+					if (element instanceof R4EUIReviewItem) {
+						return NUM_CHANGES_ITEM_COLUMN_TOOLTIP;
+					} else { //Assume File
+						return NUM_CHANGES_FILE_COLUMN_TOOLTIP;
+					}
 				}
 
 				@Override
@@ -517,7 +581,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 
 				@Override
 				public int getToolTipTimeDisplayed(Object object) {
-					return 0;
+					return R4EUIConstants.TOOLTIP_DISPLAY_TIME;
 				}
 
 				@Override
@@ -569,7 +633,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 
 				@Override
 				public String getToolTipText(Object element) {
-					return null;
+					return NUM_ANOMALIES_COLUMN_TOOLTIP;
 				}
 
 				@Override
@@ -584,7 +648,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 
 				@Override
 				public int getToolTipTimeDisplayed(Object object) {
-					return 0;
+					return R4EUIConstants.TOOLTIP_DISPLAY_TIME;
 				}
 
 				@Override

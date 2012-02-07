@@ -463,20 +463,19 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		final R4EFileContext modelFile = ((R4EUIFileContext) fProperties.getElement()).getFileContext();
 		final R4EFileVersion baseVersion = modelFile.getBase();
 		if (null != modelFile.getBase()) {
-			fBaseFileNameText.setText(baseVersion.getName());
-			final IResource baseResource = baseVersion.getResource();
 			//The properties shows the absolute, project relative and repository path
+			fBaseFileNameText.setText(baseVersion.getName());
 			fBaseFilePathRepositoryText.setText(baseVersion.getRepositoryPath());
+			fBaseFilePathProjectText.setText(UIUtils.getProjectPath(baseVersion));
+			final IResource baseResource = baseVersion.getResource();
 			if (null != baseResource) {
 				if (CommandUtils.useWorkspaceResource(baseVersion)) {
 					fBaseFilePathAbsoluteText.setText(baseResource.getLocation().toPortableString());
 				} else {
 					fBaseFilePathAbsoluteText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
 				}
-				fBaseFilePathProjectText.setText(baseResource.getProjectRelativePath().toPortableString());
 			} else {
 				fBaseFilePathAbsoluteText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
-				fBaseFilePathProjectText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
 			}
 			fBaseFileVersionText.setText(baseVersion.getVersionID());
 		} else {
@@ -489,20 +488,19 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 
 		final R4EFileVersion targetVersion = modelFile.getTarget();
 		if (null != targetVersion) {
-			fTargetFileNameText.setText(targetVersion.getName());
-			final IResource targetResource = targetVersion.getResource();
 			//The properties shows the absolute, project relative and repository path
+			fTargetFileNameText.setText(targetVersion.getName());
 			fTargetFilePathRepositoryText.setText(targetVersion.getRepositoryPath());
+			fTargetFilePathProjectText.setText(UIUtils.getProjectPath(targetVersion));
+			final IResource targetResource = targetVersion.getResource();
 			if (null != targetResource) {
 				if (CommandUtils.useWorkspaceResource(targetVersion)) {
 					fTargetFilePathAbsoluteText.setText(targetResource.getLocation().toPortableString());
 				} else {
 					fTargetFilePathAbsoluteText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
 				}
-				fTargetFilePathProjectText.setText(targetResource.getProjectRelativePath().toPortableString());
 			} else {
 				fTargetFilePathAbsoluteText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
-				fTargetFilePathProjectText.setText(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
 			}
 			fTargetFileVersionText.setText(targetVersion.getVersionID());
 		} else {

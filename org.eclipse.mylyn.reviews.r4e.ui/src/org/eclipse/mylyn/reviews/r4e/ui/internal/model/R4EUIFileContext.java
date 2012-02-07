@@ -467,7 +467,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		//Also assign children
 		if (null != fContentsContainer) {
 			for (R4EUIContent content : fContentsContainer.fContents) {
-			content.removeAssignees(aParticipants);
+				content.removeAssignees(aParticipants);
 			}
 		}
 	}
@@ -564,7 +564,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean hasChildren() {
-		if (0 == fContentsContainer.getChildren().length && 0 == fAnomalyContainer.getChildren().length) {
+		//Children are only present only when the Tree view is displayed, if there are changes and/or anomalies.
+		if ((0 == fContentsContainer.getChildren().length && 0 == fAnomalyContainer.getChildren().length)
+				|| !R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
 			return false;
 		}
 		return true;

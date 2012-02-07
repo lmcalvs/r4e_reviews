@@ -35,18 +35,18 @@ public class DisplayPropertyTester extends PropertyTester {
 	/**
 	 * Method test.
 	 * 
-	 * @param receiver
+	 * @param aReceiver
 	 *            Object
-	 * @param property
+	 * @param aProperty
 	 *            String
-	 * @param args
+	 * @param aArgs
 	 *            Object[]
-	 * @param expectedValue
+	 * @param eaEpectedValue
 	 *            Object
 	 * @return boolean
 	 * @see org.eclipse.core.expressions.IPropertyTester#test(Object, String, Object[], Object)
 	 */
-	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
+	public boolean test(Object aReceiver, String aProperty, Object[] aArgs, Object eExpectedValue) {
 		return R4EUIModelController.getNavigatorView().isDefaultDisplay();
 	}
 }

@@ -43,13 +43,13 @@ public class GoIntoFilterHandler extends AbstractHandler {
 	/**
 	 * Method execute.
 	 * 
-	 * @param event
+	 * @param aEvent
 	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	public Object execute(ExecutionEvent aEvent) throws ExecutionException {
 
 		//We need to preserve the expansion state and restore it afterwards
 		final ReviewNavigatorTreeViewer viewer = (ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView()
@@ -58,7 +58,7 @@ public class GoIntoFilterHandler extends AbstractHandler {
 		final FocusFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).getFocusFilter();
 
 		//Set current element as root level for the navigator tree
-		final Command command = event.getCommand();
+		final Command command = aEvent.getCommand();
 		boolean oldValue = HandlerUtil.toggleCommandState(command);
 		if (!oldValue) {
 			final IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
