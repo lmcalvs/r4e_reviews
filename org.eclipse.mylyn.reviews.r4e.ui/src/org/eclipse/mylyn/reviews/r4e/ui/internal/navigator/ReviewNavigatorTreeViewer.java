@@ -313,8 +313,10 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		fTreeColumnLayout.setColumnData(fNumAnomaliesColumn.getColumn(), new ColumnWeightData(8, true));
 		R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 		if (null != activeReview) {
-			fElementColumn.getColumn().setText(REVIEW_COLUMN_LABEL + activeReview.getName());
-			fElementColumn.getColumn().setToolTipText(REVIEW_GROUP_COLUMN_TOOLTIP + activeReview.getParent().getName());
+			fElementColumn.getColumn().setText(activeReview.getReview().getName());
+			fElementColumn.getColumn().setToolTipText(
+					REVIEW_GROUP_COLUMN_TOOLTIP + activeReview.getParent().getName() + R4EUIConstants.LINE_FEED
+							+ REVIEW_COLUMN_LABEL + activeReview.getName());
 		}
 
 		//Set Tree Table Filters (shows only Review Items and Files for current review
