@@ -10,7 +10,7 @@
  * Description:
  * 
  * This class implements the Navigator View filter used to display the 
- * unassigned review elements.
+ * review elements unassigned to participants.
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -44,23 +44,23 @@ public class UnassignParticipantFilter extends ViewerFilter {
 	/**
 	 * Method select.
 	 * 
-	 * @param viewer
+	 * @param aViewer
 	 *            Viewer
-	 * @param parentElement
+	 * @param aParentElement
 	 *            Object
-	 * @param element
+	 * @param aElement
 	 *            Object
 	 * @return boolean
 	 */
 	@Override
-	public boolean select(Viewer viewer, Object parentElement, Object element) {
+	public boolean select(Viewer aViewer, Object aParentElement, Object aElement) {
 
 		//Only Review elements that are unassigned are shown
-		if (element instanceof R4EUIReviewItem) {
-			if (((R4EUIReviewItem) element).getItem().getAssignedTo().size() == 0) {
+		if (aElement instanceof R4EUIReviewItem) {
+			if (((R4EUIReviewItem) aElement).getItem().getAssignedTo().size() == 0) {
 				return true;
 			} else {
-				List<R4EUIFileContext> files = ((R4EUIReviewItem) element).getFileContexts();
+				List<R4EUIFileContext> files = ((R4EUIReviewItem) aElement).getFileContexts();
 				for (R4EUIFileContext file : files) {
 					if (file.getFileContext().getAssignedTo().size() == 0) {
 						return true;
@@ -81,21 +81,21 @@ public class UnassignParticipantFilter extends ViewerFilter {
 				}
 			}
 			return false;
-		} else if (element instanceof R4EUIFileContext) {
-			if (element instanceof R4EUIPostponedFile) {
+		} else if (aElement instanceof R4EUIFileContext) {
+			if (aElement instanceof R4EUIPostponedFile) {
 				return true;
 			}
-			if (((R4EUIFileContext) element).getFileContext().getAssignedTo().size() == 0) {
+			if (((R4EUIFileContext) aElement).getFileContext().getAssignedTo().size() == 0) {
 				return true;
 			} else {
-				IR4EUIModelElement[] contents = ((R4EUIFileContext) element).getContentsContainerElement()
+				IR4EUIModelElement[] contents = ((R4EUIFileContext) aElement).getContentsContainerElement()
 						.getChildren();
 				for (IR4EUIModelElement content : contents) {
 					if (((R4EUIContent) content).getContent().getAssignedTo().size() == 0) {
 						return true;
 					}
 				}
-				IR4EUIModelElement[] anomalies = ((R4EUIFileContext) element).getAnomalyContainerElement()
+				IR4EUIModelElement[] anomalies = ((R4EUIFileContext) aElement).getAnomalyContainerElement()
 						.getChildren();
 				for (IR4EUIModelElement anomaly : anomalies) {
 					if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().size() == 0) {
@@ -104,21 +104,21 @@ public class UnassignParticipantFilter extends ViewerFilter {
 				}
 			}
 			return false;
-		} else if (element instanceof R4EUIContentsContainer) {
-			IR4EUIModelElement[] contents = ((IR4EUIModelElement) element).getChildren();
+		} else if (aElement instanceof R4EUIContentsContainer) {
+			IR4EUIModelElement[] contents = ((IR4EUIModelElement) aElement).getChildren();
 			for (IR4EUIModelElement content : contents) {
 				if (((R4EUIContent) content).getContent().getAssignedTo().size() == 0) {
 					return true;
 				}
 			}
 			return false;
-		} else if (element instanceof R4EUIContent) {
-			if (((R4EUIContent) element).getContent().getAssignedTo().size() == 0) {
+		} else if (aElement instanceof R4EUIContent) {
+			if (((R4EUIContent) aElement).getContent().getAssignedTo().size() == 0) {
 				return true;
 			}
 			return false;
-		} else if (element instanceof R4EUIAnomalyBasic) {
-			if (((R4EUIAnomalyBasic) element).getAnomaly().getAssignedTo().size() == 0) {
+		} else if (aElement instanceof R4EUIAnomalyBasic) {
+			if (((R4EUIAnomalyBasic) aElement).getAnomaly().getAssignedTo().size() == 0) {
 				return true;
 			}
 			return false;

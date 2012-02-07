@@ -708,7 +708,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		if (aChildToRemove instanceof R4EUIContentsContainer) {
 			fContentsContainer.removeAllChildren(aFileRemove);
 			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
-				fContentsContainer = null;
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
 			} else {
@@ -717,7 +716,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		} else if (aChildToRemove instanceof R4EUIAnomalyContainer) {
 			fAnomalyContainer.removeAllChildren(aFileRemove);
 			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
-				fAnomalyContainer = null;
 				aChildToRemove.removeListeners();
 				fireRemove(aChildToRemove);
 			} else {

@@ -40,13 +40,13 @@ public class UnassignFilterHandler extends AbstractHandler {
 	/**
 	 * Method execute.
 	 * 
-	 * @param event
+	 * @param aEvent
 	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	public Object execute(ExecutionEvent aEvent) throws ExecutionException {
 
 		//We need to preserve the expansion state and restore it afterwards
 		final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
@@ -54,7 +54,7 @@ public class UnassignFilterHandler extends AbstractHandler {
 				.getActionSet()).getUnassignedFilter();
 
 		final Object[] elements = viewer.getExpandedElements();
-		boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());
+		boolean oldValue = HandlerUtil.toggleCommandState(aEvent.getCommand());
 
 		if (!oldValue) {
 			R4EUIPlugin.Ftracer.traceInfo("Apply unassigned filter to ReviewNavigator");

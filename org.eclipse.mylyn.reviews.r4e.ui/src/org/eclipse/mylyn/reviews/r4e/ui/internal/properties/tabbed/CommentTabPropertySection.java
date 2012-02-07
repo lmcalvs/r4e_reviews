@@ -155,6 +155,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 		fAuthorText.setText(modelComment.getUser().getId());
 		fCreationDateText.setText(modelComment.getCreatedOn().toString());
 		fDescriptionText.setText(modelComment.getDescription());
+		fDescriptionText.getParent().layout();
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
