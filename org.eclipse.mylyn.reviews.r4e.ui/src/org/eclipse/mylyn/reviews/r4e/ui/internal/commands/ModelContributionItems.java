@@ -221,13 +221,15 @@ public class ModelContributionItems extends CompoundContributionItem {
 			}
 		} else {
 			//When no element is selected, contribute add review group command
-			params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-					R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND, R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND, null,
-					PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD), null,
-					null, R4EUIConstants.NEW_REVIEW_GROUP_COMMAND_NAME,
-					R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_MNEMONIC, R4EUIConstants.NEW_REVIEW_GROUP_COMMAND_TOOLTIP,
-					CommandContributionItem.STYLE_PUSH, null, true);
-			list.add(new CommandContributionItem(params));
+			if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
+				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+						R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND, R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND, null,
+						PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_ADD),
+						null, null, R4EUIConstants.NEW_REVIEW_GROUP_COMMAND_NAME,
+						R4EUIConstants.NEW_CHILD_ELEMENT_COMMAND_MNEMONIC,
+						R4EUIConstants.NEW_REVIEW_GROUP_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
+				list.add(new CommandContributionItem(params));
+			}
 		}
 		return list.toArray(new IContributionItem[list.size()]);
 	}
