@@ -285,7 +285,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	@Override
 	public void addAssignees(List<R4EParticipant> aParticipants) {
 		try {
-			//Set new partcipants assigned
+			//Set new participants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fContent,
 					R4EUIModelController.getReviewer());
 			EList<String> assignedParticipants = fContent.getAssignedTo();

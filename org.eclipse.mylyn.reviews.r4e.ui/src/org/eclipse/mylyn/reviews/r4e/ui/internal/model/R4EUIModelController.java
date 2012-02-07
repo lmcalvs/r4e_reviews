@@ -408,7 +408,7 @@ public class R4EUIModelController {
 	private static String buildReviewGroupsStr(List<String> aReviewGroups) {
 		final StringBuffer newPathsStr = new StringBuffer(R4EUIConstants.REVIEW_GROUP_PATHS_LENGTH);
 		for (String group : aReviewGroups) {
-			newPathsStr.append(group + System.getProperty("line.separator"));
+			newPathsStr.append(group + R4EUIConstants.LINE_FEED);
 		}
 		return newPathsStr.toString();
 	}

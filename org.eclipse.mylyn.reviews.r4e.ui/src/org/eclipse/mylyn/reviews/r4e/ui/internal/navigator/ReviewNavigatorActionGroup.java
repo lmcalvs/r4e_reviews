@@ -40,6 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewCompletedFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewedElemsFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewsOnlyFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.UnassignParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.ui.actions.ActionGroup;
@@ -118,6 +119,11 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	private final AssignParticipantFilter fAssignedParticipantFilter;
 
 	/**
+	 * Field fUnassignedFilter.
+	 */
+	private final UnassignParticipantFilter fUnassignedFilter;
+
+	/**
 	 * Field fReviewsCompletedFilter.
 	 */
 	private final ReviewCompletedFilter fReviewsCompletedFilter;
@@ -172,6 +178,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		fReviewsParticipantFilter = new ReviewParticipantFilter();
 		fAssignedMyFilter = new AssignParticipantFilter();
 		fAssignedParticipantFilter = new AssignParticipantFilter();
+		fUnassignedFilter = new UnassignParticipantFilter();
 		fReviewsCompletedFilter = new ReviewCompletedFilter();
 		fAnomaliesFilter = new AnomaliesOnlyFilter();
 		fReviewedElemsFilter = new ReviewedElemsFilter();
@@ -201,6 +208,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		runReviewsParticipantFilterCommand(""); //$NON-NLS-1$
 		runAssignedMyFilterCommand(false);
 		runAssignedParticipantFilterCommand(""); //$NON-NLS-1$
+		runUnassignedFilterCommand(false);
 		runReviewsCompletedFilterCommand(false);
 		runAnomaliesFilterCommand(false);
 		runAnomaliesMyFilterCommand(false);
@@ -582,6 +590,54 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		}
 		fAssignedParticipantFilter.setParticipant(aParticipant);
 		fHandlerService.executeCommand(R4EUIConstants.ASSIGN_FILTER_COMMAND, null);
+	}
+
+	/**
+	 * Method getUnassignedFilter.
+	 * 
+	 * @return UnassignParticipantFilter
+	 */
+	public UnassignParticipantFilter getUnassignedFilter() {
+		return fUnassignedFilter;
+	}
+
+	/**
+	 * Method isUnassignedFilterSet.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isUnassignedFilterSet() {
+		return ((Boolean) fCommandService.getCommand(R4EUIConstants.UNASSIGN_FILTER_COMMAND)
+				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+				.getValue()).booleanValue();
+	}
+
+	/**
+	 * Method resetUnassignedFilterCommand.
+	 */
+	private void resetUnassignedFilterCommand() {
+		fView.getTreeViewer().removeFilter(fAssignedMyFilter);
+		fCommandService.getCommand(R4EUIConstants.UNASSIGN_FILTER_COMMAND)
+				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+				.setValue(Boolean.valueOf(false));
+	}
+
+	/**
+	 * Method runUnassignedFilterCommand.
+	 * 
+	 * @param aApply
+	 *            boolean
+	 * @throws NotHandledException
+	 * @throws NotEnabledException
+	 * @throws NotDefinedException
+	 * @throws ExecutionException
+	 */
+	public void runUnassignedFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
+			NotEnabledException, NotHandledException {
+		resetUnassignedFilterCommand();
+		if (aApply) {
+			fHandlerService.executeCommand(R4EUIConstants.UNASSIGN_FILTER_COMMAND, null);
+		}
 	}
 
 	/**

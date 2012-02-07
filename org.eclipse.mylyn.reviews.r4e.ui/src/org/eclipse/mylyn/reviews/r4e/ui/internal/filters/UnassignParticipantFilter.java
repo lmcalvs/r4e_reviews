@@ -10,7 +10,7 @@
  * Description:
  * 
  * This class implements the Navigator View filter used to display the 
- * review elements assigned to selected participants
+ * unassigned review elements.
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -26,6 +26,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
@@ -34,38 +35,11 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class AssignParticipantFilter extends ViewerFilter {
-
-	// ------------------------------------------------------------------------
-	// Member variables
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Field fParticipant.
-	 */
-	private String fParticipant = ""; //$NON-NLS-1$
+public class UnassignParticipantFilter extends ViewerFilter {
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-
-	/**
-	 * Sets the current participant to filter on
-	 * 
-	 * @param aParticipant
-	 */
-	public void setParticipant(String aParticipant) {
-		fParticipant = aParticipant;
-	}
-
-	/**
-	 * Gets the participant to filter on
-	 * 
-	 * @return String
-	 */
-	public String getParticipant() {
-		return fParticipant;
-	}
 
 	/**
 	 * Method select.
@@ -81,27 +55,25 @@ public class AssignParticipantFilter extends ViewerFilter {
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 
-		//Only Review elements that are unassigned, or assigned to the participant
-		//and anomalies created by the participant are shown
+		//Only Review elements that are unassigned are shown
 		if (element instanceof R4EUIReviewItem) {
-			if (((R4EUIReviewItem) element).getItem().getAssignedTo().size() == 0
-					|| ((R4EUIReviewItem) element).getItem().getAssignedTo().contains(fParticipant)) {
+			if (((R4EUIReviewItem) element).getItem().getAssignedTo().size() == 0) {
 				return true;
 			} else {
 				List<R4EUIFileContext> files = ((R4EUIReviewItem) element).getFileContexts();
 				for (R4EUIFileContext file : files) {
-					if (file.getFileContext().getAssignedTo().contains(fParticipant)) {
+					if (file.getFileContext().getAssignedTo().size() == 0) {
 						return true;
 					} else {
 						IR4EUIModelElement[] contents = file.getContentsContainerElement().getChildren();
 						for (IR4EUIModelElement content : contents) {
-							if (((R4EUIContent) content).getContent().getAssignedTo().contains(fParticipant)) {
+							if (((R4EUIContent) content).getContent().getAssignedTo().size() == 0) {
 								return true;
 							}
 						}
 						IR4EUIModelElement[] anomalies = file.getAnomalyContainerElement().getChildren();
 						for (IR4EUIModelElement anomaly : anomalies) {
-							if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().contains(fParticipant)) {
+							if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().size() == 0) {
 								return true;
 							}
 						}
@@ -113,36 +85,40 @@ public class AssignParticipantFilter extends ViewerFilter {
 			if (element instanceof R4EUIPostponedFile) {
 				return true;
 			}
-			if (((R4EUIFileContext) element).getFileContext().getAssignedTo().size() == 0
-					|| ((R4EUIFileContext) element).getFileContext().getAssignedTo().contains(fParticipant)) {
+			if (((R4EUIFileContext) element).getFileContext().getAssignedTo().size() == 0) {
 				return true;
 			} else {
 				IR4EUIModelElement[] contents = ((R4EUIFileContext) element).getContentsContainerElement()
 						.getChildren();
 				for (IR4EUIModelElement content : contents) {
-					if (((R4EUIContent) content).getContent().getAssignedTo().contains(fParticipant)) {
+					if (((R4EUIContent) content).getContent().getAssignedTo().size() == 0) {
 						return true;
 					}
 				}
 				IR4EUIModelElement[] anomalies = ((R4EUIFileContext) element).getAnomalyContainerElement()
 						.getChildren();
 				for (IR4EUIModelElement anomaly : anomalies) {
-					if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().contains(fParticipant)) {
+					if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().size() == 0) {
 						return true;
 					}
 				}
 			}
 			return false;
+		} else if (element instanceof R4EUIContentsContainer) {
+			IR4EUIModelElement[] contents = ((IR4EUIModelElement) element).getChildren();
+			for (IR4EUIModelElement content : contents) {
+				if (((R4EUIContent) content).getContent().getAssignedTo().size() == 0) {
+					return true;
+				}
+			}
+			return false;
 		} else if (element instanceof R4EUIContent) {
-			if (((R4EUIContent) element).getContent().getAssignedTo().size() == 0
-					|| ((R4EUIContent) element).getContent().getAssignedTo().contains(fParticipant)) {
+			if (((R4EUIContent) element).getContent().getAssignedTo().size() == 0) {
 				return true;
 			}
 			return false;
 		} else if (element instanceof R4EUIAnomalyBasic) {
-			if (((R4EUIAnomalyBasic) element).getAnomaly().getAssignedTo().size() == 0
-					|| ((R4EUIAnomalyBasic) element).getAnomaly().getAssignedTo().contains(fParticipant)
-					|| ((R4EUIAnomalyBasic) element).getAnomaly().getUser().getId().equals(fParticipant)) {
+			if (((R4EUIAnomalyBasic) element).getAnomaly().getAssignedTo().size() == 0) {
 				return true;
 			}
 			return false;

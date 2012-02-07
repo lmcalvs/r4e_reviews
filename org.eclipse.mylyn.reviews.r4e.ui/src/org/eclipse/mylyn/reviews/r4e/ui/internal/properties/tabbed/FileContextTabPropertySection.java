@@ -28,7 +28,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -204,7 +203,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		fUnassignedFromButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		fUnassignedFromButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				((R4EUIReviewItem) fProperties.getElement()).removeAssignees(UIUtils.getAssignParticipants());
+				((R4EUIFileContext) fProperties.getElement()).removeAssignees(UIUtils.getAssignParticipants());
 				refresh();
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 			}

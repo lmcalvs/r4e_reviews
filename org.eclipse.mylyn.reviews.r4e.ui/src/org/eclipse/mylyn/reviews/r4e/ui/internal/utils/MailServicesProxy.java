@@ -89,7 +89,7 @@ public class MailServicesProxy {
 	/**
 	 * Field LINE_FEED_MSG_PART.
 	 */
-	private static final String LINE_FEED_MSG_PART = System.getProperty("line.separator");
+	private static final String LINE_FEED_MSG_PART = R4EUIConstants.LINE_FEED;
 
 	/**
 	 * Field TAB_MSG_PART. (value is ""\t"")

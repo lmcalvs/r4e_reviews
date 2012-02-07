@@ -1755,7 +1755,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			boolean resultOk = true;
 			if (!(fAnomalyContainer.checkCompletionStatus(resultMsg))) {
 				sb.append("Phase cannot be changed to " + R4EUIConstants.REVIEW_PHASE_COMPLETED
-						+ " as some anomalies are in the wrong state:" + System.getProperty("line.separator"));
+						+ " as some anomalies are in the wrong state:" + R4EUIConstants.LINE_FEED);
 				sb.append(resultMsg);
 				resultOk = false;
 			}
@@ -1767,8 +1767,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					if (!(container.checkCompletionStatus(resultMsg))) {
 						if (resultOk) {
 							sb.append("Phase cannot be changed to " + R4EUIConstants.REVIEW_PHASE_COMPLETED
-									+ " as some anomalies are in the wrong state:"
-									+ System.getProperty("line.separator"));
+									+ " as some anomalies are in the wrong state:" + R4EUIConstants.LINE_FEED);
 							resultOk = false;
 						}
 						if (null != resultMsg) {

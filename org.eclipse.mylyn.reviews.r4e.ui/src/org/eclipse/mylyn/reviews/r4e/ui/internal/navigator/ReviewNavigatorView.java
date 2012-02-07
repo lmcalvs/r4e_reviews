@@ -744,6 +744,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			((ReviewNavigatorActionGroup) fActionSet).runReviewsParticipantFilterCommand(store.getString(PreferenceConstants.P_PARTICIPANT_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runAssignedMyFilterCommand(store.getBoolean(PreferenceConstants.P_ASSIGN_MY_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runAssignedParticipantFilterCommand(store.getString(PreferenceConstants.P_ASSIGN_FILTER));
+			((ReviewNavigatorActionGroup) fActionSet).runUnassignedFilterCommand(store.getBoolean(PreferenceConstants.P_UNASSIGN_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runAnomaliesFilterCommand(store.getBoolean(PreferenceConstants.P_ANOMALIES_ALL_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runAnomaliesMyFilterCommand(store.getBoolean(PreferenceConstants.P_ANOMALIES_MY_FILTER));
 			((ReviewNavigatorActionGroup) fActionSet).runReviewElemsFilterCommand(store.getBoolean(PreferenceConstants.P_REVIEWED_ITEMS_FILTER));

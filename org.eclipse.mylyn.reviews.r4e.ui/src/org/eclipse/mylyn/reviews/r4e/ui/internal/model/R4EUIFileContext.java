@@ -108,6 +108,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * @param aFile
 	 *            R4EFileContext
 	 * @param aParentItemType
+	 *            - int
 	 */
 	public R4EUIFileContext(IR4EUIModelElement aParent, R4EFileContext aFile, int aParentItemType) {
 		super(aParent, "");
@@ -273,7 +274,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		} else {
 			tooltip.append("(not present)");
 		}
-		tooltip.append(System.getProperty("line.separator"));
+		tooltip.append(R4EUIConstants.LINE_FEED);
 		tooltip.append("Target Version: ");
 		if (null != aTarget) {
 			tooltip.append(aTarget.getVersionID());
@@ -414,7 +415,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void addAssignees(List<R4EParticipant> aParticipants) {
 		try {
-			//Set new partcipants assigned
+			//Set new participants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fFile,
 					R4EUIModelController.getReviewer());
 			EList<String> assignedParticipants = fFile.getAssignedTo();
@@ -449,7 +450,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public void removeAssignees(List<R4EParticipant> aParticipants) {
 		try {
-			//Set new partcipants assigned
+			//Set new participants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fFile,
 					R4EUIModelController.getReviewer());
 			EList<String> assignedParticipants = fFile.getAssignedTo();

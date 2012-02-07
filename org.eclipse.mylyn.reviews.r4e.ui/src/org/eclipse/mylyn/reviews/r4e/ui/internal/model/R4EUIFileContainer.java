@@ -74,7 +74,7 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 	 *            R4EItem
 	 * @param aName
 	 *            String
-	 * @param aReviewType
+	 * @param aItemType - int
 	 * @param aTooltip
 	 *            String
 	 */

@@ -91,7 +91,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	 *            R4EItem
 	 * @param aName
 	 *            String
-	 * @param aReviewType
+	 * @param aItemType - int
 	 * @param aTooltip
 	 *            String
 	 */
@@ -247,7 +247,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 			UIUtils.displaySyncErrorDialog(e1);
 		}
 
-		//Also assign children
+		//Also unassign children
 		for (R4EUIFileContext file : fFileContexts) {
 			file.removeAssignees(aParticipants);
 		}

@@ -1011,6 +1011,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ASSIGN_FILTER_NAME = "Show Assigned Elements for Participant... ";
 
 	/**
+	 * Field UNASSIGN_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Unassign"")
+	 */
+	public static final String UNASSIGN_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Unassign";
+
+	/**
+	 * Field UNASSIGN_FILTER_NAME. (value is ""Show Unassigned Elements"")
+	 */
+	public static final String UNASSIGN_FILTER_NAME = "Show Unassigned Elements";
+
+	/**
 	 * Field ANOMALIES_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies"")
 	 */
 	public static final String ANOMALIES_FILTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies";

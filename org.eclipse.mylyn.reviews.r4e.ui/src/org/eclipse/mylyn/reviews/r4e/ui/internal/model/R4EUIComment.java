@@ -142,7 +142,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	private static String buildCommentName(String aDescription) {
 		//Only consider first line
-		String[] lines = aDescription.split(System.getProperty("line.separator"));
+		String[] lines = aDescription.split(R4EUIConstants.LINE_FEED);
 		if (lines[0].length() > COMMENT_LABEL_LENGTH) {
 			return lines[0].substring(0, COMMENT_LABEL_LENGTH) + R4EUIConstants.ELLIPSIS_STR;
 		} else {

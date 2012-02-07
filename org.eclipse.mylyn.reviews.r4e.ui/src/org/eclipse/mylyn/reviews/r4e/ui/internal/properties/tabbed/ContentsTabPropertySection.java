@@ -24,7 +24,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -143,7 +142,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 		fUnassignedFromButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		fUnassignedFromButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				((R4EUIReviewItem) fProperties.getElement()).removeAssignees(UIUtils.getAssignParticipants());
+				((R4EUIContent) fProperties.getElement()).removeAssignees(UIUtils.getAssignParticipants());
 				refresh();
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 			}

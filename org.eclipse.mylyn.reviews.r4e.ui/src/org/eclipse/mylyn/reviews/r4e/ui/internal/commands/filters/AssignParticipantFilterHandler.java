@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Ericsson Research Canada
+ * Copyright (c) 2012 Ericsson Research Canada
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -9,7 +9,7 @@
  * Description:
  * 
  * This class implements the navigator view toolbar command to apply the 
- * review participant filter
+ * Assign participant filter
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
@@ -41,13 +41,13 @@ public class AssignParticipantFilterHandler extends AbstractHandler {
 	/**
 	 * Method execute.
 	 * 
-	 * @param event
+	 * @param aEvent
 	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	public Object execute(ExecutionEvent aEvent) throws ExecutionException {
 
 		//We need to preserve the expansion state and restore it afterwards
 		final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
@@ -62,7 +62,7 @@ public class AssignParticipantFilterHandler extends AbstractHandler {
 			filter.setParticipant(participant);
 		}
 
-		boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());
+		boolean oldValue = HandlerUtil.toggleCommandState(aEvent.getCommand());
 		if (!oldValue) {
 			R4EUIPlugin.Ftracer.traceInfo("Apply assigned filter for participant " + filter.getParticipant() //$NON-NLS-1$
 					+ " to ReviewNavigator"); //$NON-NLS-1$
@@ -73,5 +73,14 @@ public class AssignParticipantFilterHandler extends AbstractHandler {
 			filter.setParticipant(""); //$NON-NLS-1$
 		}
 		return null;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		if (((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).isAssignedMyFilterSet()
+				|| ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).isUnassignedFilterSet()) {
+			return false;
+		}
+		return true;
 	}
 }

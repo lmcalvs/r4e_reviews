@@ -257,7 +257,7 @@ public class UIUtils {
 		final List<String> stringArray = new ArrayList<String>();
 		if (null != aStringList) {
 			final StringTokenizer st = new StringTokenizer(aStringList, File.pathSeparator
-					+ System.getProperty("line.separator"));
+					+ R4EUIConstants.LINE_FEED);
 			while (st.hasMoreElements()) {
 				stringArray.add((String) st.nextElement());
 			}
@@ -400,7 +400,7 @@ public class UIUtils {
 		final int numAttributeTypes = aUserInfo.getAttributeTypes().length;
 		for (int i = 0; i < numAttributeTypes; i++) {
 			tempStr.append(aUserInfo.getAttributeTypes()[i] + " = " + aUserInfo.getAttributeValues()[i]
-					+ System.getProperty("line.separator"));
+					+ R4EUIConstants.LINE_FEED);
 		}
 		return tempStr.toString();
 	}

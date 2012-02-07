@@ -303,17 +303,16 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			final IPreferenceStore preferenceStore = R4EUIPlugin.getDefault().getPreferenceStore();
 			final String newGroup = reviewGroup.eResource().getURI().toFileString();
 			final String prefGroupsStr = preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH);
-			final String[] prefGroups = prefGroupsStr.split(System.getProperty("line.separator"));
+			final String[] prefGroups = prefGroupsStr.split(R4EUIConstants.LINE_FEED);
 			for (String prefGroup : prefGroups) {
 				if (prefGroup.equals(newGroup + ";")) {
 					return addedChild; //Do not put group reference in preferences if it is already there
 				}
 			}
 
-			preferenceStore.setValue(
-					PreferenceConstants.P_GROUP_FILE_PATH,
-					preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH)
-							+ System.getProperty("line.separator") + newGroup);
+			preferenceStore.setValue(PreferenceConstants.P_GROUP_FILE_PATH,
+					preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH) + R4EUIConstants.LINE_FEED
+							+ newGroup);
 			return addedChild;
 		} else if (aModelComponent instanceof R4EDesignRuleCollection) {
 			final String ruleSetName = ((R4EDesignRuleCollection) aModelComponent).getName();
@@ -337,17 +336,16 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			final IPreferenceStore preferenceStore = R4EUIPlugin.getDefault().getPreferenceStore();
 			final String newSet = ruleSet.eResource().getURI().toFileString();
 			final String prefSetsStr = preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH);
-			final String[] prefSets = prefSetsStr.split(System.getProperty("line.separator"));
+			final String[] prefSets = prefSetsStr.split(R4EUIConstants.LINE_FEED);
 			for (String prefSet : prefSets) {
 				if (prefSet.equals(newSet)) {
 					return addedChild; //Do not put group reference in preferences if it is already there
 				}
 			}
 
-			preferenceStore.setValue(
-					PreferenceConstants.P_RULE_SET_FILE_PATH,
-					preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH)
-							+ System.getProperty("line.separator") + newSet);
+			preferenceStore.setValue(PreferenceConstants.P_RULE_SET_FILE_PATH,
+					preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH) + R4EUIConstants.LINE_FEED
+							+ newSet);
 			return addedChild;
 		} else {
 			return null; //should never happen

@@ -783,6 +783,16 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.filtersCategory"
+            description="Show Unassigned Elements"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Unassign"
+            name="Show Unassigned Elements">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.services">
@@ -1188,6 +1198,15 @@
        <handler
              class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AssignParticipantFilterHandler"
              commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignParticipants">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.UnassignFilterHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Unassign">
           <enabledWhen>
              <test
                    property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">

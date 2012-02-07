@@ -57,10 +57,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.TableItem;
@@ -227,6 +229,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * Field fAssignFilterButton.
 	 */
 	private Button fAssignFilterButton = null;
+
+	/**
+	 * Field fUnassignFilterButton.
+	 */
+	private Button fUnassignFilterButton = null;
 
 	/**
 	 * Field fAnomaliesFilterButton.
@@ -753,6 +760,23 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fAssignMyFilterButton.setText(R4EUIConstants.ASSIGN_MY_FILTER_NAME);
 		fAssignMyFilterButton.setLayoutData(filtersButtonData);
 		fAssignMyFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_ASSIGN_MY_FILTER));
+		fAssignMyFilterButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				if (fAssignMyFilterButton.getSelection()) {
+					fAssignIdText.setEnabled(false);
+					fAssignFilterButton.setEnabled(false);
+					fUnassignFilterButton.setEnabled(false);
+				} else {
+					fAssignIdText.setEnabled(true);
+					if (fAssignIdText.getCharCount() > 0) {
+						fAssignFilterButton.setEnabled(true);
+					} else {
+						fAssignFilterButton.setEnabled(false);
+					}
+					fUnassignFilterButton.setEnabled(true);
+				}
+			}
+		});
 
 		fAssignFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
 		fAssignFilterButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
@@ -774,6 +798,39 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 					fAssignFilterButton.setEnabled(true);
 				} else {
 					fAssignFilterButton.setEnabled(false);
+				}
+			}
+		});
+		fAssignFilterButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				if (fAssignFilterButton.getSelection()) {
+					fAssignMyFilterButton.setEnabled(false);
+					fUnassignFilterButton.setEnabled(false);
+				} else {
+					fAssignMyFilterButton.setEnabled(true);
+					fUnassignFilterButton.setEnabled(true);
+				}
+			}
+		});
+
+		fUnassignFilterButton = new Button(r4EFilterPrefsGroup, SWT.CHECK);
+		fUnassignFilterButton.setText(R4EUIConstants.UNASSIGN_FILTER_NAME);
+		fUnassignFilterButton.setLayoutData(filtersButtonData);
+		fUnassignFilterButton.setSelection(store.getBoolean(PreferenceConstants.P_UNASSIGN_FILTER));
+		fUnassignFilterButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				if (fUnassignFilterButton.getSelection()) {
+					fAssignMyFilterButton.setEnabled(false);
+					fAssignIdText.setEnabled(false);
+					fAssignFilterButton.setEnabled(false);
+				} else {
+					fAssignMyFilterButton.setEnabled(true);
+					fAssignIdText.setEnabled(true);
+					if (fAssignIdText.getCharCount() > 0) {
+						fAssignFilterButton.setEnabled(true);
+					} else {
+						fAssignFilterButton.setEnabled(false);
+					}
 				}
 			}
 		});
@@ -909,6 +966,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			store.setValue(PreferenceConstants.P_ASSIGN_FILTER, "");
 			fAssignIdText.setText("");
 		}
+		store.setValue(PreferenceConstants.P_UNASSIGN_FILTER, fUnassignFilterButton.getSelection());
+
 		store.setValue(PreferenceConstants.P_ANOMALIES_ALL_FILTER, fAnomaliesFilterButton.getSelection());
 		store.setValue(PreferenceConstants.P_REVIEWED_ITEMS_FILTER, fReviewedItemsFilterButton.getSelection());
 		store.setValue(PreferenceConstants.P_HIDE_RULE_SETS_FILTER, fHideRuleSetsFilterButton.getSelection());
