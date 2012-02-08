@@ -13,7 +13,12 @@
 				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Starting_R4E" label="Starting R4E"></topic>
 			</topic>
 			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_Configuration" label="R4E Configuration">
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_General_Preferences" label="R4E General Preferences"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_General_Preferences" label="R4E General Preferences">
+					<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#User_Tab" label="User Tab"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Groups_Tab" label="Groups Tab"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Rule_Sets_Tab" label="Rule Sets Tab"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Filter_Tabs" label="Filter Tabs"></topic>
+				</topic>
 				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_LDAP_Settings" label="R4E LDAP Settings"></topic>
 				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#SMTP_Hosts_Definitions" label="SMTP Hosts Definitions"></topic>
 				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_Capabilities" label="R4E Capabilities"></topic>

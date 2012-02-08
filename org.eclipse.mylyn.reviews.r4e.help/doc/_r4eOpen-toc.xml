@@ -58,6 +58,7 @@
 		<topic href="doc/Concepts.html#Lead" label="Lead"></topic>
 		<topic href="doc/Concepts.html#Organizer" label="Organizer"></topic>
 		<topic href="doc/Concepts.html#Participant" label="Participant"></topic>
+		<topic href="doc/Concepts.html#Participants_List" label="Participants List"></topic>
 		<topic href="doc/Concepts.html#Postponed_Anomaly" label="Postponed Anomaly"></topic>
 		<topic href="doc/Concepts.html#Resource_Review_Item" label="Resource Review Item"></topic>
 		<topic href="doc/Concepts.html#Reviewer" label="Reviewer"></topic>
@@ -88,6 +89,7 @@
 				<topic href="doc/Tasks.html#Creating_a_Resource_Review_Item" label="Creating a Resource Review Item"></topic>
 				<topic href="doc/Tasks.html#Creating_a_Commit_Review_Item" label="Creating a Commit Review Item"></topic>
 			</topic>
+			<topic href="doc/Tasks.html#Assigning_Review_Elements" label="Assigning Review Elements"></topic>
 			<topic href="doc/Tasks.html#Creating_an_Anomaly" label="Creating an Anomaly"></topic>
 			<topic href="doc/Tasks.html#Creating_Comments_on_an_existing_Anomaly" label="Creating Comments on an existing Anomaly"></topic>
 			<topic href="doc/Tasks.html#Importing_Postponed_Anomalies" label="Importing Postponed Anomalies"></topic>
@@ -148,7 +150,7 @@
 			</topic>
 		</topic>
 	</topic>
- <topic href="doc/_Updating-This-Document.html" label="Updating-this-Document">
+ <topic href="doc/_Updating-This-Document.html" label="_Updating This Document">
  </topic>
  <anchor id="r4emain"/>
 </toc>

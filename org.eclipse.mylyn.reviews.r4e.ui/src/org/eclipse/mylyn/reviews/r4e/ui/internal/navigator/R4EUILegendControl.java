@@ -472,6 +472,10 @@ public class R4EUILegendControl extends Composite {
 		toolkit.createLabel(r4eClient, "Regress (Rewind) Element State");
 
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon("icons/elcl16/chgdisplay_menu.gif"));
+		toolkit.createLabel(r4eClient, "Change Display Type");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon("icons/elcl16/expndall_menu.gif"));
 		toolkit.createLabel(r4eClient, "Expand Navigator Tree");
 
@@ -564,6 +568,14 @@ public class R4EUILegendControl extends Composite {
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon(R4EUIConstants.CHANGE_REVIEW_STATE_ICON_FILE));
 		toolkit.createLabel(r4eClient, "Toggle Element's User Review State (Reviewed/Not Reviewed");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon(R4EUIConstants.ASSIGN_TO_ICON_FILE));
+		toolkit.createLabel(r4eClient, "Assign element to Participant");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon(R4EUIConstants.UNASSIGN_TO_ICON_FILE));
+		toolkit.createLabel(r4eClient, "Unassign Participant");
 
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon(R4EUIConstants.IMPORT_POSTPONED_ICON_FILE));

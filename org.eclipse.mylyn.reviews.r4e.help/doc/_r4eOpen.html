@@ -193,6 +193,9 @@
 						<a href="Concepts.html#Participant">Participant</a>
 					</li>
 					<li>
+						<a href="Concepts.html#Participants_List">Participants List</a>
+					</li>
+					<li>
 						<a href="Concepts.html#Postponed_Anomaly">Postponed Anomaly</a>
 					</li>
 					<li>
@@ -278,6 +281,9 @@
 										<a href="Tasks.html#Creating_a_Commit_Review_Item">Creating a Commit Review Item</a>
 									</li>
 								</ol>
+							</li>
+							<li>
+								<a href="Tasks.html#Assigning_Review_Elements">Assigning Review Elements</a>
 							</li>
 							<li>
 								<a href="Tasks.html#Creating_an_Anomaly">Creating an Anomaly</a>
@@ -466,12 +472,12 @@
 			<br/> 
 		</p>
 		<p>&nbsp; &nbsp;The 
-			<b>R4E Review Navigator View</b> is the main interface to R4E. It shows all the R4E elements in a hierarchical tree structure The 
-			<b>R4E Properties view</b>, using the generic Eclipse Properties View,  presents the properties and attributes attached to each R4E element represented in the Review Navigator view. Some elements values can be altered after creation, and some other or read-only and settable at creation time. The 
+			<b>R4E Review Navigator View</b> is the main interface to R4E. It shows all the R4E elements in a hierarchical tree structure, or alternatively in a table-like structure for the elements under the currently active Review only.  The 
+			<b>R4E Properties view</b>, using the generic Eclipse Properties View,  presents the properties and attributes attached to each R4E element represented in the Review Navigator view. Some elements values can be altered after creation, and some other are read-only and settable at creation time. The 
 			<b>R4E Context Menu</b> appears in Eclipse Context menus whenever it is possible to use R4E command is this particular context. Please refer to section 3 ("Tasks") below for more information.
 			<br/> 
 		</p>
-		<p>&nbsp; &nbsp;Take note that it is strongly recommended to use the layout shown above for optimal user experience.  This means the the R4E Review Navigator should be positioned on one side of the screen, the editor in the central position, and the R4E Properties view at the bottom.  For instance, it is not recommended to use the Review Navigator and the Properties view as tabbed view together, as selecting an element on the Review Navigation will automatically set the focus on the Properties view.
+		<p>&nbsp; &nbsp;Take note that it is strongly recommended to use the layout shown above for optimal user experience.  This means the R4E Review Navigator should be positioned on one side of the screen, the editor in the central position, and the R4E Properties view at the bottom.  For instance, it is not recommended to use the Review Navigator and the Properties view as tabbed view together, as selecting an element on the Review Navigation will automatically set the focus on the Properties view.
 
 			<br/> 
 		</p>
@@ -501,8 +507,8 @@
 		<p>Mylyn Versions nightly: 
 			<a href="http://download.eclipse.org/mylyn/snapshots/nightly/versions/">http://download.eclipse.org/mylyn/snapshots/nightly/versions/</a>
 		</p>
-		<p>Mylyn Reviews nightly: 
-			<a href="http://download.eclipse.org/mylyn/snapshots/nightly/reviews/">http://download.eclipse.org/mylyn/snapshots/nightly/reviews/</a> 
+		<p>Mylyn Reviews R4E Updates: 
+			<a href="http://download.eclipse.org/r4e/updates/">http://download.eclipse.org/r4e/updates/</a> 
 		</p>
 		<p>if Subversion is to be used, add the subclipse site: 
 			<a href="http://subclipse.tigris.org/update_1.6.x">http://subclipse.tigris.org/update_1.6.x</a>
@@ -578,7 +584,7 @@
 			<li>User ID: The User ID is set by default to the login ID of the current session and can be modified to any String that can be used to identify the user. This field is mandatory.</li>
 		</ul>
 		<ul>
-			<li>UserEmail: The User Email should be set to a valid email for the current user. The E-mail address is used to notify the user informations about the reviews he is currently part of by Email, as configured in the SMTP Hosts Definitions section. Take note that if the LDAP Preferences are filled-in (see below) and a corresponding LDAP database can be resolved, then this field will be automatically be set based on the User ID entered. This field is also mandatory.</li>
+			<li>UserEmail: The User Email should be set to a valid email for the current user. The E-mail address is used to notify the user information about the reviews he is currently part of by Email, as configured in the SMTP Hosts Definitions section. Take note that if the LDAP Preferences are filled-in (see below) and a corresponding LDAP database can be resolved, then this field will be automatically be set based on the User ID entered. This field is also mandatory.</li>
 		</ul>
 		<ul>
 			<li>Participants Lists and Participants:  Participants Lists are a group of users that can be added together as participant to a review.  To create a new Participant List, use the 
@@ -587,13 +593,13 @@
 				<i>Add</i> and 
 				<i>Remove</i> buttons of the Participants table, respectively .  Using the 
 				<i>Add</i> button will open a New Participant dialog that can be used to specify the users to add.  Refer to the 
-				<a href="/wiki/Adding_Participants_to_a_Review" title="Adding_Participants_to_a_Review">Adding Participants to a Review</a> section for more information on using the New Participants dialog.  After it is set up, a participant list can be used in any New Participant dialog and adding it as a participant will instead add all its participants values to the review.  Take note that participant lists are optional and participants can be added separately to reviews.
+				<i>Adding Participants to a Review</i> section for more information on using the New Participants dialog.  After it is set up, a participant list can be used in any New Participant dialog and adding it as a participant will instead add all its participants values to the review.  Take note that participant lists are optional and participants can be added separately to reviews.
 			</li>
 		</ul>
 		<ul>
 			<li>Checkboxes: The 
 				<i>Create Delta Elements...</i> checkbox is used to control the display of file differences as elements in the Review Navigator.  The 
-				<i>Update Postponed Anomalies...</i> checkbox is used to automatically import outstanding anomalies that were set to postponed in previous versions of files included in the current review.  See Postponed Anomalies section below for more information.
+				<i>Update Postponed Anomalies...</i> checkbox is used to automatically import outstanding anomalies that were set to POSTPONED state in previous versions of files included in the current review.  See Postponed Anomalies section below for more information.
 				<br/> 
 			</li>
 		</ul>
@@ -622,7 +628,7 @@
 		<p>
 			<br/> 
 		</p>
-		<p>&nbsp; &nbsp;This is used to specify the location of the data files that contain Rule Set information. See below for more information on Rule Sets. The Name and Version fields show additional information attached to the selected Rule Set file. Typically, all R4E data files will be located on a shared network drive. Users can add one or multiple referecnes to Rule Set files to their workspace as needed using the 
+		<p>&nbsp; &nbsp;This is used to specify the location of the data files that contain Rule Set information. See below for more information on Rule Sets. The Name and Version fields show additional information attached to the selected Rule Set file. Typically, all R4E data files will be located on a shared network drive. Users can add one or multiple references to Rule Set files to their workspace as needed using the 
 			<i>Add ''button. Files can be removed from the workspace by pressing the ''Remove</i> button. Files can be moved up or down in the list by clicking the corresponding button. This will affect the order in which the Rule Sets are displayed in the Review Navigator. 
 		</p>
 		<p>
@@ -677,7 +683,7 @@
 			<li>R4E can be used to create reviews that include files present in given Eclipse Projects.</li>
 		</ul>
 		<ul>
-			<li>While R4E can operate on stand-alone Eclipse projects (i.e. outside of any Version Control System), it is recommended that it is used in conjuction with projects that are held within Revision Control. Currently, R4E supports Version-Controlled projects that are associated with Egit and Subclipse as team provider., For Git, the 
+			<li>While R4E can operate on stand-alone Eclipse projects (i.e. outside of any Version Control System), it is recommended that it is used in conjunction with projects that are held within Revision Control. Currently, R4E supports Version-Controlled projects that are associated with Egit and Subclipse as team provider., For Git, the 
 				<a href="http://wiki.eclipse.org/EGit/User_Guide">"EGit/User Guide"</a> is the best place to find the information on how to create new repositories, work with existing repositories and importing Eclipse projects under and existing repositories into the Eclipse workspace.
 				<br/>
 			</li>
@@ -692,7 +698,7 @@
 			<br/>
 		</p>
 		<h2 id="Tutorials">Tutorials</h2>
-		<p>To familiarize yourself with how R4E operates, three tutorials are provided, which focus on the different review types and their respective workflows. As we progress in doing the tutorials, more common functionalities are introduced (such as Notifications, Meeting Requests, Setting reviewed state, Disabling elements etc.). </p>
+		<p>To familiarize yourself with how R4E operates, three tutorials are provided, which focus on the different review types and their respective workflows. As we progress in doing the tutorials, more common functionalities are introduced (such as Notifications, Meeting Requests, Setting reviewed state, Disabling elements, Assigning participants etc.). </p>
 		<h4 id="Configuration_and_Set-up">Configuration and Set-up</h4>
 		<p>Before doing any of the tutorials, we will set-up R4E and configure it to do reviews. </p>
 		<ul>
@@ -701,7 +707,7 @@
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="TutorialShowView.png"/> 
+			<img border="0" src="TutorialShowView.png"/>
 		</p>
 		<p>
 			<br/> 
@@ -715,7 +721,7 @@
 			<br/> 
 		</p>
 		<p>
-			<img border="0" src="TutorialShowViewDialog.png"/> 
+			<img border="0" src="R4E_show_view.png"/>
 		</p>
 		<p>
 			<br/> 
@@ -770,8 +776,8 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>We will now create some Design rules that can be used during reviews. First create a new Rule Set by slecting the 
-				<i>New Rule Set</i> icon in the Review Navigato toolbar. This should open the New Rule Set dialog.
+			<li>We will now create some Design rules that can be used during reviews. First create a new Rule Set by selecting the 
+				<i>New Rule Set</i> icon in the Review Navigator toolbar. This should open the New Rule Set dialog.
 			</li>
 		</ul>
 		<p>
@@ -941,7 +947,7 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>We will now pick the current Commit and add it to the review. The Review Navigator view should now show a new Commit Review Item, its children files and their deltas (changes).  NOTE:  If you do not see the deltas, make sure that the 
+			<li>We will now pick the current Commit and add it to the review. The Review Navigator view should now show a new Commit Review Item, its children files and their deltas (changes).  Take note that if you do not see the deltas, make sure that the 
 				<i>Hide Deltas</i> filter is not set in the Review Navigator Drop-Down menu, 
 				<i>Filters</i> sub-menu.
 			</li>
@@ -1020,7 +1026,8 @@
 		</p>
 		<ul>
 			<li>As in the basic Review tutorial above, the Review Navigator tree is updated with the new elements.  You will also notice that the current participant roles in the Participant Extra Properties tab are set to 
-				<b>Organizer '''and '''Lead</b>. This is the default and it can be changed if needed. Take note that the icons representing the participants in the Navigator View will change depending on the primary role of the participant. 
+				<b>Organizer</b> and 
+				<b>Lead</b>. This is the default and it can be changed if needed. Take note that the icons representing the participants in the Navigator View will change depending on the primary role of the participant. 
 			</li>
 		</ul>
 		<ul>
@@ -1069,21 +1076,43 @@
 		</p>
 		<ul>
 			<li>Let's fill in our participant ID in the top field and press the 
-				<i>Add</i> button.  The particpant is added to the participant list
+				<i>Add</i> button.  The participant is added to the participant list
 			</li>
 		</ul>
 		<ul>
-			<li>We now select the particpant entry in the list and we see all the parameters associated to this particpant in the Basic and Extra Parameters sections.  Fill in the information field as shown and press 
+			<li>We now select the participant entry in the list and we see all the parameters associated to this participant in the Basic and Extra Parameters sections.  Fill in the information field as shown and press 
 				<i>OK</i> to add the user as a participant to the current review.
 			</li>
 		</ul>
 		<ul>
-			<li>Note that we added this Participant as a reviewer only. We also set the optional focus area.</li>
+			<li>Note that we added this Participant as a reviewer only. We've also set the optional focus area.</li>
+		</ul>
+		<ul>
+			<li>Now that we have added a participant, we will assign the review item we imported for him to review.  To do this, right-click on the Review Item and select 
+				<i>Assign to Participant</i> command.
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="TutorialAssignParticipant.png"/>
+		</p>
+		<ul>
+			<li>This will trigger the 
+				<i>Assign Participant</i> dialog, which is similar to the previous 
+				<i>Add Participant</i> dialog and works in the same way.  We will enter the participant details.  Take note that assigning review elements to participants is optional.
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="TutorialAssignParticipantDialog.png"/>
+		</p>
+		<ul>
+			<li>Once this is done, in the Review Item properties and all its children elements properties, you will note that the 
+				<i>Assign To</i> property is now set to the participant.
+			</li>
 		</ul>
 		<ul>
 			<li>Let's say we are now done adding review items. We will now notify the new Participant we added that the items are ready for review. To do this, right-click on the current review and choose the 
 				<i>Send Email/Notification</i> command. When the subsequent dialog appears, select the 
-				<i>Notify Particpants of New Items ready for Review</i>.
+				<i>Notify Participants of New Items ready for Review</i>.
 			</li>
 		</ul>
 		<p>
@@ -1114,7 +1143,24 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>Once this is done, the reviewer should receive the email and can start reviewing the code. So, let's say we are now the reviewer and we want to log a general anomaly on the review. We right-click on the Global anomaly container icon in the Review Navigator view and we select the 
+			<li>Once this is done, the reviewer should receive the email and can start reviewing the code. So, let's say we are now the reviewer.  If we want, we can change the display of the Navigator View to show the current review in a more compact and table-like fashion.  To do this, select the 
+				<i>Change Display</i> command, located in the view menu.
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="TutorialChangeDisplay.png"/>
+		</p>
+		<ul>
+			<li>The view should now look like this:</li>
+		</ul>
+		<p>
+			<img border="0" src="TutorialTreeTableDisplay.png"/>
+		</p>
+		<ul>
+			<li>We see now that the Review elements to be reviewed are shown in an alternate way, with columns displaying file paths, assignees, number of changes and number of anomalies written on the review elements.  This display could be used at any time.  For now, we will return the original default Tree display using the same command again.</li>
+		</ul>
+		<ul>
+			<li>We now want to log a general anomaly on the review. We right-click on the Global anomaly container icon in the Review Navigator view and we select the 
 				<i>New Anomaly</i> command from the context menu
 			</li>
 		</ul>
@@ -1141,7 +1187,8 @@
 		</p>
 		<ul>
 			<li>Now we should see that the Anomaly was added to the Review Navigator view, prepended with the Anomaly state (which is 
-				<i>ASSIGNED ''at this point). If we do not have any other anomalies to enter, we can indicate that we are done reviewing by setting the review as reviewed by us. To do so, right-click on the Review icon in the Review Navigator and use the ''Mark as User Reviewed</i> command.
+				<i>ASSIGNED</i> at this point). If we do not have any other anomalies to enter, we can indicate that we are done reviewing by setting the review as reviewed by us. To do so, right-click on the Review icon in the Review Navigator and use the 
+				<i>Mark as User Reviewed</i> command.
 			</li>
 		</ul>
 		<p>
@@ -1154,7 +1201,7 @@
 			<br/> 
 		</p>
 		<ul>
-			<li>Since we are done reviewing, a popup dialog appears to ask us to send a Completion Notification to the Review Owner (Lead). Click OK and send the notification email out. The Review Navigator view should now look like this (notice the little check marks that appeared on the review item and its children elements):</li>
+			<li>Since we are done reviewing, a popup dialog appears to ask us to send a Completion Notification to the Review Owner (Lead). Click OK and send the notification email out. The Review Navigator view should now look like this (notice the little checkmarks that appeared on the Review and its children elements):</li>
 		</ul>
 		<p>
 			<br/> 
@@ -1286,7 +1333,7 @@
 		</ul>
 		<ul>
 			<li>If you look at the Review Properties Detailed tab, you will notice that is display a 
-				<i>Phase Map</i> table. The phase map is only displayed for formal reviews and is used to track the progress of the review. At review creation, the ''PLANNING ''phase is the active one.
+				<i>Phase Map</i> table. The phase map is only displayed for formal reviews and is used to track the progress of the review. At review creation, the ''PLANNING ''phase is the active one (highlighted in blue).
 			</li>
 		</ul>
 		<ul>
@@ -1357,7 +1404,10 @@
 			<li>The participant is added exactly the same way it was done in the previous tutorial</li>
 		</ul>
 		<ul>
-			<li>Let's say that we are done adding new items and participants for this review, we can now transition the review phase from ''PLANNING ''to ''PREPARATION ''by selecting the Phase combo box in the R4E Properties to the Review. Note that phases can only be changed if we are the phase owner, which we are in this case. We will now automatically be asked to set up a decision meeting by entering meeting details.</li>
+			<li>Let's say that we are done adding new items and participants for this review, we can now transition the review phase from 
+				<i>PLANNING</i> to 
+				<i>PREPARATION</i> by selecting the Phase combo box in the R4E Properties to the Review. Note that phases can only be changed if we are the phase owner, which we are in this case. We will now automatically be asked to set up a decision meeting by entering meeting details.
+			</li>
 		</ul>
 		<p>
 			<br/> 
@@ -1373,7 +1423,8 @@
 		</ul>
 		<ul>
 			<li>Now, in 
-				<i>PREPARATION ''phase, the users can review the included items. Reviewers can send progress notification or ask questions to other participant by right-clicking on a Review Navigator element and using the ''Send Email/Notification</i> command. Anybody can also add new Review Items to the review, which will automatically notify other particpants with a 
+				<i>PREPARATION</i> phase, the users can review the included items. Reviewers can send progress notification or ask questions to other participant by right-clicking on a Review Navigator element and using the 
+				<i>Send Email/Notification</i> command. Anybody can also add new Review Items to the review, which will automatically notify other participants with a 
 				<i>New Item Ready for Review</i> notification.
 			</li>
 		</ul>
@@ -1393,7 +1444,7 @@
 		</p>
 		<ul>
 			<li>This will show the 
-				<i>New Anomaly</i> dialog. For this anomaly, we will refer to an existing design rule. Expand the Extra parameters section and select the first design rule from the tree. Note that the text fields are set to the value of the anomaly selected.
+				<i>New Anomaly</i> dialog. For this anomaly, we will refer to an existing design rule. Expand the Extra parameters section and select the first design rule from the tree. Note that the text fields are set to the value of the anomaly selected.  We will also assign the anomaly and set a due date for it. 
 			</li>
 		</ul>
 		<p>
@@ -1423,10 +1474,14 @@
 			<li>As in the informal review tutorial, we now mark the review as User completed, which will trigger the sending of the completion notification to the review lead.</li>
 		</ul>
 		<ul>
-			<li>The review lead can now move the Review Phase to ''DECISION ''in the same way the previous transition was done.</li>
+			<li>The review lead can now move the Review Phase to 
+				<i>DECISION</i> in the same way the previous transition was done.
+			</li>
 		</ul>
 		<ul>
-			<li>In the decision phase, it is time to assess anomalies and if necessary assign them to particpants so that they can be handled and fixed. Let's set our Anomaly to ''ACCEPTED ''and assign it to a participant. We do this by setting the appropriate values the the R4E Properties Extra tab for the selected anomaly.</li>
+			<li>In the decision phase, it is time to assess anomalies and if necessary assign them to participants so that they can be handled and fixed. Let's set our Anomaly to 
+				<i>ACCEPTED</i> and assign it to a participant. We do this by setting the appropriate values the R4E Properties Extra tab for the selected anomaly.
+			</li>
 		</ul>
 		<p>
 			<br/> 
@@ -1452,7 +1507,7 @@
 		<ul>
 			<li>We set the 
 				<i>Exit decision</i> to 
-				<i>Accepted with follow-up</i>, since some anomalies need to be fixed. We also enter the decision participants and decision time spent values.
+				<i>Accepted with follow-up</i>, since some anomalies need to be fixed. We also enter the decision participants and decision time spent values.  We now move the Review phase to REWORK in the same way we moved it previously.  The author can now start working on the anomaly raised.
 			</li>
 		</ul>
 		<ul>

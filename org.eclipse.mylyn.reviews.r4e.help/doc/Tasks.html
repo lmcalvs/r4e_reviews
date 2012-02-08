@@ -37,6 +37,18 @@
 		<p>
 			<br/> 
 		</p>
+		<p>When a Review is open, the Navigator view can focus on and display the Review elements in an alternate display that show them in a more compact and table-like way.  Both representations can be toggled on by using the 
+			<i>Change Display</i> toolbar command.
+		</p>
+		<p>
+			<br/> 
+		</p>
+		<p>
+			<img border="0" src="ReviewNavigatorViewAlt.png"/>
+		</p>
+		<p>
+			<br/> 
+		</p>
 		<h3 id="Disabling_and_Restoring_Elements">Disabling and Restoring Elements</h3>
 		<p>When Review Navigator elements are not relevant anymore (e.g. completed reviews), they can be removed from the view by using the ''Disable ''command from the element's context menu. </p>
 		<p>
@@ -53,7 +65,10 @@
 			<i>Show Disabled Elements</i> checkbox and apply the preferences. The disabled elements will show in the Navigator grayed out and with the little disabled decorator icon 
 			<img border="0" src="Dsbldovr_tsk.gif"/> 
 		</p>
-		<p>Ideally, disabled elements should never be shown, but there could be a need to restore mistakenly disabled elements. To do so, select the ''Restore ''command from the disabled element context menu </p>
+		<p>Ideally, disabled elements should never be shown, but there could be a need to restore mistakenly disabled elements. To do so, first go to the Eclipse preferences R4E page, on the 
+			<i>Filters</i> tab and enable the 
+			<i>Show Disabled Elements</i> filter, then return to the Navigator view and select the ''Restore ''command from the disabled element context menu 
+		</p>
 		<p>
 			<br/> 
 		</p>
@@ -88,23 +103,32 @@
 		<p>The filters available are: </p>
 		<ul>
 			<li>
-				<i>Hide Completed Reviews</i>: Hide all the reviews that are in phase 
-				<i>COMPLETED</i>
-			</li>
-			<li>
 				<i>Show Reviews Only</i>: Show only Review Groups and Review elements 
 			</li>
 			<li>
 				<i>Show My Reviews</i>: Show only Review Groups and Review elements in which the current user is a Participant 
 			</li>
 			<li>
-				<i>Show Reviews for Participant...</i>: Opens a dialog box where a User ID can be specified. The Navigator will then show only Review Groups and Review elements in which this User is a Participant 
+				<i>Show Reviews for Participant...</i>: Opens a dialog box where a User ID can be specified. The Navigator will then show only Reviews in which this User is a Participant 
+			</li>
+			<li>
+				<i>Show My Assigned Elements</i>: Show review elements that are unassigned or assigned to the current User 
+			</li>
+			<li>
+				<i>Show Assigned Elements for Participant...</i>: Opens a dialog box where a User ID can be specified. The Navigator will then show only Review elements that are unassigned or assigned to the specified participant.
+			</li>
+			<li>
+				<i>Show Unassigned Elements</i>: Show only review elements that are not currently assigned to any participant.
 			</li>
 			<li>
 				<i>Show Anomalies Only</i>: Only show the Anomalies for the currently open Review and their parent containers 
 			</li>
 			<li>
 				<i>Show My Anomalies</i>: Only show the Anomalies for the currently open Review that the current User created and their parent containers 
+			</li>
+			<li>
+				<i>Hide Completed Reviews</i>: Hide all the reviews that are in phase 
+				<i>COMPLETED</i>
 			</li>
 			<li>
 				<i>Hide Reviewed Elements</i>: This filter will hide all elements that have been marked as Review by the current User 
@@ -114,10 +138,6 @@
 			</li>
 			<li>
 				<i>Hide Deltas</i>: This filter will hide all Selection and Delta elements. 
-			</li>
-			<li>
-				<i>Go Into</i>: This filter is a special filter that will take the selected element of the Navigator and put it at the root of the Navigator tree. This is useful to focus on a particular element and its children. It is also possible to set up this filter directly from the View toolbar using the 
-				<img border="0" src="Focus_menu.gif"/> icon. 
 			</li>
 			<li>
 				<i>Remove All Filters</i>: Remove all currently applied filters and restores the full display of all enabled elements in the Navigator tree.
@@ -146,6 +166,10 @@
 				<i>COMPLETED</i> Review.
 			</li>
 			<li>
+				<i>Go Into</i> 
+				<img border="0" src="Focus_menu.gif"/>: This is a special filter that will take the selected element of the Navigator and put it at the root of the Navigator tree. This is useful to focus on a particular element and its children.
+			</li>
+			<li>
 				<i>Collapse Navigator tree</i> 
 				<img border="0" src="Clpseall_menu.gif"/>: Collapse the current Navigator tree.
 			</li>
@@ -172,7 +196,9 @@
 		</ul>
 		<p><div>
 			<br/></div> 
-
+		</p>
+		<p>Take note that not all filters and toolbar commands are available on all Review Navigator representations.</p>
+		<p>
 			<br/>
 		</p>
 		<h2 id="Handling_Review_Groups_and_Reviews">Handling Review Groups and Reviews</h2>
@@ -204,7 +230,7 @@
 		<ul>
 			<li>Add the Review Group Name and (optionally) a brief description in the appropriate text fields. </li>
 			<li>Select a shared folder location where team members have access and write permissions (i.e. Review Group shared folder) </li>
-			<li>Under the Extra Parameters section, more information can optionally be entered to further caracterize the Group: Default Project, Default Components and Default Entry Criteria values will be available for all Reviews created under this Review Group. Rule Sets defines the available Rule Sets for Review created under this Review Group (see Rule Sets below).</li>
+			<li>Under the Extra Parameters section, more information can optionally be entered to further characterize the Group: Default Project, Default Components and Default Entry Criteria values will be available for all Reviews created under this Review Group. Rule Sets defines the available Rule Sets for Review created under this Review Group (see Rule Sets below).</li>
 		</ul>
 		<p>
 			<br/> 
@@ -253,7 +279,7 @@
 		</p>
 		<ul>
 			<li>Add the Review Name and a brief description in the appropriate text fields. </li>
-			<li>Under the Extra Parameters section, more information can optionally be entered to further caracterize the Review: 
+			<li>Under the Extra Parameters section, more information can optionally be entered to further characterize the Review: 
 				<ul>
 					<li>Project and Components values can be selected from the values entered in the parent Review Group Default Projects and Default Components respectively </li>
 					<li>Entry Criteria is taken by default from the parent Review Group value </li>
@@ -268,7 +294,7 @@
 		<p>In order to be able to see the Review Group child Reviews, a Review Group must be open. Closed Review Group are shown with hollow Group icons. You can open a closed Review Group by right-clicking on it and selecting the 
 			<i>Open Element</i> command, or simply by double-clicking on it. &nbsp;Closing unused Review Groups make navigation easier and free up memory and resources, so the Groups should be closed when they are unused. 
 		</p>
-		<p>Likewise, reviews can also be open and closed using the same mecanism. The only difference is that only one review (called the Active Review) can be open at any given time. Opening another Review closes the currently open one. </p>
+		<p>Likewise, reviews can also be open and closed using the same mechanism. The only difference is that only one review (called the Active Review) can be open at any given time. Opening another Review closes the currently open one. </p>
 		<p>Take note that Review Groups and Reviews are automatically open after they are first created. </p>
 		<p>
 			<br/>
@@ -287,7 +313,9 @@
 		<p>
 			<br/> 
 		</p>
-		<p>This opens the New Participants dialog. </p>
+		<p>This opens the 
+			<i>Enter Participant details</i> dialog. 
+		</p>
 		<p>
 			<br/> 
 		</p>
@@ -305,11 +333,8 @@
 				<i>Clear</i> button.  If an LDAP database is set up, it can also be accessed using the 
 				<i>Find</i> button (see below).
 			</li>
-		</ul>
-		<ul>
-			<li>Basic Parameters:  Once participants are added to the participants list.  This section displays the basic information for the currently selected entry in the list.  The email address can be edited, but not the Id or the partcipant details field (which in only filled if an LDAP database is set up and there is information about the user in it).</li>
-		</ul>
-		<ul>
+			<li>The participant id entered within the R4E review data will be in lower case and R4E will enforce that (this to prevent duplicated users Ids for the same user).</li>
+			<li>Basic Parameters:  Once participants are added to the participants list.  This section displays the basic information for the currently selected entry in the list.  The email address can be edited, but not the Id or the participant details field (which in only filled if an LDAP database is set up and there is information about the user in it).</li>
 			<li>Extra Parameters: Once participants are added to the participants list.  This section displays the extra information for the currently selected entry in the list.  Take note that this section is not present if the dialog was triggered from the User Preferences dialog, when creating participants lists.  The user roles and optional focus area fields can be edited to further characterize what the participant will do as part of the review.
 				<ul>
 					<li>Roles can be assigned to the participant to restrict actions that can be taken. Take note that Roles are mandatory for Formal Review and Optional for Basic and Informal Review types </li>
@@ -320,7 +345,7 @@
 		<p>
 			<br/> 
 		</p>
-		<p>If an LDAP database if configured and connected, the user information could be searched and filled-in automatically using the 
+		<p>If an LDAP database is configured and connected, the user information could be searched and filled-in automatically using the 
 			<i>Find</i> button, which will open the Find User Dialog 
 		</p>
 		<p>
@@ -334,7 +359,7 @@
 		</p>
 		<p>Any field can be entered in the Search Filters section and by clicking the Search button, an LDAP query will be sent to the database. If any matches are found, the results will be displayed in the Query Results section.   Once the results are in, users can be added by double-clicking on them in the results table, or by selecting them and using the 
 			<i>Add Users</i> button.  Pressing the 
-			<i>OK</i> button will result in the users being added to the New Partcipants dialog participant list.
+			<i>OK</i> button will result in the users being added to the New Participants dialog participant list.
 		</p>
 		<p>
 			<br/>
@@ -423,11 +448,26 @@
 		</p>
 		<p>The icons for the files that are new and were added in the commit will be shown decorated with a little 
 			<img border="0" src="Addovr_tsk.png"/> icon The icons for the files that were removed in the commit will be shown decorated with a little 
-			<img border="0" src="Removr_tsk.png"/> icon Files in the commit that are out of sync i.e. for which the version to review and the version present in the users workspace differ will be shown with the &gt; sign prepended to the filename. Such files can be reviewed, but to use the full navigatability provided by the editors, it is stongly recommended that the files be in sync with the workspace whenever possible. 
+			<img border="0" src="Removr_tsk.png"/> icon Files in the commit that are out of sync i.e. for which the version to review and the version present in the users workspace differ will be shown with the &gt; sign prepended to the filename. Such files can be reviewed, but to use the full navigatability provided by the editors, it is strongly recommended that the files be in sync with the workspace whenever possible. 
 		</p>
 		<p>
 			<br/>
 		</p>
+		<h3 id="Assigning_Review_Elements">Assigning Review Elements</h3>
+		<p>It is possible to assign specific review  elements (i.e. Review Items, File Contexts, Selections and Deltas) to specific participants.  To do so, use the context command 
+			<i>Assign to Participant</i> for the desired elements.  
+		</p>
+		<p>
+			<img border="0" src="AssignParticipant.png"/>
+		</p>
+		<p>To remove an assignment, use the context command 
+			<i>Unassign Participant</i>.
+		</p>
+		<p>
+			<img border="0" src="UnassignParticipant.png"/>
+		</p>
+		<p>Take note that if a parent is assigned to given participants, then all its children will also be assigned.  It is possible to override the parent's values and to change the children's assignments by operating on the child element directly.</p>
+		<p>Assignments can also be managed by using the Properties view for the selected element.</p>
 		<h3 id="Creating_an_Anomaly">Creating an Anomaly</h3>
 		<p>R4E Anomalies are raised by reviewers to flag problems or add comments on specific parts of the contents as part of the review process. </p>
 		<p>Anomalies are added in a similar way Resource Review Items are, either from a selected Resource or from a portion/range of a resource, by selecting the 
@@ -478,7 +518,7 @@
 		</p>
 		<ul>
 			<li>Add the Anomaly Title and Description in the appropriate text fields. </li>
-			<li>Under the Extra Parameters section, if Rule Sets are associated to the parent Review Group, the Rule Sets hierarchy will be shown and, optionally, a design rule can be selected and applied to this anomaly. This will set the Anomaly values with the selected rule values.</li>
+			<li>Under the Extra Parameters section, you can also specify the class, rank, due date and participant that will be assigned to this anomaly.  If Rule Sets are associated to the parent Review Group, the Rule Sets hierarchy will be shown and, optionally, a design rule can be selected and applied to this anomaly. This will override the Anomaly values with the selected rule values.</li>
 		</ul>
 		<p>
 			<br/> 
@@ -508,7 +548,7 @@
 		</p>
 		<h3 id="Importing_Postponed_Anomalies">Importing Postponed Anomalies</h3>
 		<p>Postponed Anomalies are Anomalies that were written in previous Informal/Formal Reviews, but were not handled then and were instead set to 
-			<i>POSTPONED</i> state.  If the current Review include files on which these anomalies were written, whether it is the same or a different version of a file, it is possible to import them in the currrent review so that they can be addressed.  Currently, only Postponed Anomalies that belong to Reviews under the same Review Group can be imported.  Also, take note that Global Anomalies cannot be imported.
+			<i>POSTPONED</i> state.  If the current Review include files on which these anomalies were written, whether it is the same or a different version of a file, it is possible to import them in the current review so that they can be addressed.  Currently, only Postponed Anomalies that belong to Reviews under the same Review Group can be imported.  Also, take note that Global Anomalies cannot be imported.
 		</p>
 		<p>To import Postponed Anomalies, just select the current Review in the Navigator View and use the context menu:</p>
 		<p>
@@ -517,13 +557,10 @@
 		<p>R4E will scan all Reviews under the current Review Group and will copy all Anomalies in 
 			<i>POSTPONED</i> state that were written on files also included in the current Review.  Once the command is done, the imported elements will appear on their own container element under the Review element in the Review Navigator tree.
 		</p>
-		<p>
-			<img border="0" src="ImportAnomaliesView.png"/>
-		</p>
 		<p>From then on, Postponed anomalies behave like any other Anomaly and can be handled in the same way.  When a Postponed Anomaly is modified, the changes will also be reflected in the original Anomaly (i.e. the one filed in the previous Review).  Likewise, any changes that are done by other users on the original Anomaly can be seen in the current review by refreshing the imported Anomalies, by re-issuing the Import command.  Take note that Postponed Anomalies that have their state changed from POSTPONED will be disabled.  If they are set back to Postponed, they will be restored as Postponed elements.</p>
 		<h2 id="Handling_Design_Rules">Handling Design Rules</h2>
 		<h3 id="Creating_a_Rule_Set">Creating a Rule Set</h3>
-		<p>R4E support the use of Design Rules, to help reviewers enforce consistent design conventions and rules. A Rule Set is a container that includes multiple related Rule. Rule Sets are independently defined and can be shared among multiple Review Groups. Take note that the use of Design Rules is completely optional. </p>
+		<p>R4E support the use of Design Rules, to help reviewers enforce consistent design conventions and rules. A Rule Set is a container that includes multiple related Rules. Rule Sets are independently defined and can be shared among multiple Review Groups. Take note that the use of Design Rules is completely optional. </p>
 		<p>To create a new Rule Set, select the New Group icon in the Review Navigator Toolbar. </p>
 		<p>
 			<br/> 
@@ -656,7 +693,7 @@
 		</p>
 		<h2 id="Working_with_Editors">Working with Editors</h2>
 		<p>Once the Navigator view is open and Review Items are present. The items can be reviewed. Files are reviewed using various editor views to browse the content. Currently R4E is fully integrated with the Java JDT and C/C++ CDT editors and will take advantage of the special features these editors provide. &nbsp; </p>
-		<p>Files can be open in editors by double-clicking on them or their children in the Review Navigator. By default, files belonging to resource review items will be open in single-file editors, whereas files belonging to commit review items will be open in a compare editor. If the file is open using the child Selection/Delta/Anomaly element, then the cursor will automatically be positionned to the start of the line range that corresponds to the element. Files and also be open in the single-file editor by using the 
+		<p>Files can be open in editors by double-clicking on them or their children in the Review Navigator. By default, files belonging to resource review items will be open in single-file editors, whereas files belonging to commit review items will be open in a compare editor. If the file is open using the child Selection/Delta/Anomaly element, then the cursor will automatically be positioned to the start of the line range that corresponds to the element. Files and also be open in the single-file editor by using the 
 			<i>Open File in Editor</i> command from the selected element context menu. 
 		</p>
 		<p>
@@ -677,13 +714,13 @@
 		<p>The R4E Properties View is a tabbed properties view that consists of two tabs. </p>
 		<ul>
 			<li>The 
-				<i>Detailed Tab</i> show properties in an custom view where they can be edited.
+				<i>Detailed Tab</i> show properties in a custom view where they can be edited.
 			</li>
 			<li>The 
 				<i>Classic Tab</i> displays all properties at a glance, using the default Eclipse properties layout. Take note all properties will be read-only in this tab.
 			</li>
 		</ul>
-		<p>Editable properties can be changed directly in the properties view. Take note that some properties can only be set when the element is created, while others could be editable only under specific circumbstances (e.g. a specific element state or review phase for Formal Reviews). </p>
+		<p>Editable properties can be changed directly in the properties view. Take note that some properties can only be set when the element is created, while others could be editable only under specific circumstances (e.g. a specific element state or review phase for Formal Reviews). </p>
 		<p>A more detailed description of the properties for each element is shown below. </p>
 		<h3 id="Working_with_Review_Groups_Properties">Working with Review Groups Properties</h3>
 		<p>
@@ -696,7 +733,7 @@
 					<li>The Group name </li>
 					<li>The location of the root folder where the information is stored on disk </li>
 					<li>The Group description</li>
-					<li>The Default Entry Criteria that will be set when creating chil reviews </li>
+					<li>The Default Entry Criteria that will be set when creating child reviews </li>
 				</ul>
 			</li>
 		</ul>
@@ -728,7 +765,7 @@
 				<ul>
 					<li>The Review name. </li>
 					<li>The current Review phase. Basic and Informal reviews can have only 2 phases, 
-						<i>Started ''and ''Completed</i>. Formal reviews have multiple phase. Refer to the formal review section for more information. 
+						<i>Started ''and ''Completed</i>. Formal reviews have multiple phases. Refer to the formal review section for more information. 
 					</li>
 					<li>A brief description of the review. </li>
 				</ul>
@@ -776,6 +813,7 @@
 			<li>The Id of the change e.g. he commit Id. This is only applicable for Commit Review Items. </li>
 			<li>The date the change was included e.g. the commit date. This is only applicable for Commit Review Items. </li>
 			<li>A brief description of the changes. For Commit Review Items, this is set to the commit message.</li>
+			<li>The participants this Review Item is assigned to for review purposes.</li>
 		</ul>
 		<p>
 			<br/> 
@@ -795,6 +833,7 @@
 					<li>The Project Relative Path show the relative path to the file in the Eclipse workspace.</li>
 				</ul>
 			</li>
+			<li>The participants this File is assigned to for review purposes.</li>
 		</ul>
 		<p>
 			<br/>
@@ -803,7 +842,7 @@
 		<p>
 			<img border="0" src="ContentsProperties.png"/> 
 		</p>
-		<p>Properties for the Selection and Delta Elements only include the Position (i.e. the line range) where the selection or delta is located within the parent file. </p>
+		<p>Properties for the Selection and Delta Elements include the Position (i.e. the line range) where the selection or delta is located within the parent file and the participants it is assigned to for review purposes. </p>
 		<p>
 			<br/> 
 		</p>
@@ -818,6 +857,7 @@
 					<li>The Anomaly title. If this anomaly includes a design rule, this will be set to the title of the design rule by default. </li>
 					<li>The Description of the Anomaly. If this anomaly includes a design rule, this will be set to the description of the design rule by default.</li>
 					<li>The Anomaly current state (Informal and Formal reviews only).</li>
+					<li>The participant this Anomaly is assigned to for rework purposes.</li>
 				</ul>
 			</li>
 		</ul>
@@ -825,9 +865,9 @@
 			<li>In the Anomaly Details expandable section
 				<ul>
 					<li>The Creation Date for this Anomaly.</li>
-					<li>The Position (i.e the line range) where this Anomaly is located within its parent file. This is not applicable for Global Anomalies.</li>
+					<li>The Position (i.e. the line range) where this Anomaly is located within its parent file. This is not applicable for Global Anomalies.</li>
 					<li>The Anomaly Class. The class describes the type of problem that is highlighted by this Anomaly (Informal and Formal reviews only).</li>
-					<li>The Anomal rank. The rank sets the seriousness of the problem highlighted by this Anomaly (Informal and Formal reviews only).</li>
+					<li>The Anomaly rank. The rank sets the seriousness of the problem highlighted by this Anomaly (Informal and Formal reviews only).</li>
 					<li>The Rule ID that Anomaly uses, if any (Informal and Formal reviews only).</li>
 					<li>The Due Date for this anomaly to be resolved or addressed (Informal and Formal reviews only).</li>
 					<li>The Reason for Rejection. This is only applicable for anomaly that are rejected (Informal and Formal reviews only).</li>
@@ -934,7 +974,7 @@
 		</p>
 		<h2 id="Using_Key_Bindings_and_Hotkeys">Using Key Bindings and Hotkeys</h2>
 		<h4 id="Keys">Keys</h4>
-		<p>Eclipse allows you to customise your keyboard using 
+		<p>Eclipse allows you to customize your keyboard using 
 			<i>General&gt;Keys</i> preference page. Within Eclipse, key strokes and key sequences are assigned to invoke a command. 
 		</p>
 		<h4 id="Bindings">Bindings</h4>
@@ -948,6 +988,7 @@
 		<ul>
 			<li>ALT +4 A&nbsp;: Add Review Anomaly. Available from any editor View. There must be a selection in the editor to create a new Anomaly. </li>
 			<li>ALT +4 C&nbsp;: Collapses the Review Navigator View tree. </li>
+			<li>ALT +4 D&nbsp;: Change Display type.  Toggles between the Tree and Tree Table displays for the Review Navigator View. </li>
 			<li>ALT +4 E&nbsp;: Expand all elements of the Review Navigator View tree. </li>
 			<li>ALT +4 F&nbsp;: Opens a dialog used with the Version Control System connector to Find new Review Items. A Project needs to be selected first before using this shortcut. </li>
 			<li>ALT +4 I&nbsp;: Add Review Item. Available from any editor View. There must be a selection in the editor to create a new Review Item. </li>
@@ -1020,7 +1061,7 @@
 		<p>
 			<img border="0" src="MeetingInfoDate.png"/> 
 		</p>
-		<p>The meeting info stored in the system can be retrive at all time by using the ''Refresh ''button in the Extra property tab, under the Decision Information section, for the selected Review element. </p>
+		<p>The meeting info stored in the system can be retrieved at all times by using the ''Refresh ''button in the Extra property tab, under the Decision Information section, for the selected Review element. </p>
 		<p>
 			<br/>
 		</p>
@@ -1126,13 +1167,14 @@
 			File Name, line range, tile of the anomaly, class, ranking and the due date.</p>
 		<h2 id="Performing_Reviews">Performing Reviews</h2>
 		<h3 id="Performing_Basic_Reviews">Performing Basic Reviews</h3>
-		<p>In R4E, basic reviews are the simplest form of reviews available. Basic reviews are stateless and the anomalies that are raised are also stateless. This means the the participants must track progress of the Review and of the raised Anomaly externally. </p>
+		<p>In R4E, basic reviews are the simplest form of reviews available. Basic reviews are stateless and the anomalies that are raised are also stateless. This means the participants must track progress of the Review and of the raised Anomaly externally. </p>
 		<p>Typically, the workflow of a basic review will go as follows: </p>
 		<ol>
 			<li>Review is created </li>
-			<li>Review Items are added, either by manually selecting reources or by automatically selecting files committed using the Find Review Items commmand on the target project </li>
+			<li>Review Items are added, either by manually selecting resources or by automatically selecting files committed using the Find Review Items command on the target project .</li>
+			<li>Optionally, review elements are assigned to specific participants.</li>
 			<li>Organizer/Lead notifies reviewers that the items are ready for review. his can be done externally or by using the Email notification functionality provided by R4E </li>
-			<li>Reviewers review the items and raise anomalies as they encounter them. </li>
+			<li>Reviewers review their items and raise anomalies as they encounter them. </li>
 			<li>At any time there could be communication between the reviewers and the authors of the code under review. Since there is no anomaly state tracking, they will have to agree on how to handle the anomalies raised. </li>
 			<li>Once all the reviewers are done and the anomalies are fixed, the review can be set as completed.</li>
 		</ol>
@@ -1150,13 +1192,13 @@
 			<li>Deferred: The Anomaly will is valid but will not be fixed now, but at a later time </li>
 			<li>Duplicated: The Anomaly is a duplicate of another one </li>
 			<li>Rejected: The Anomaly is invalid and will not be fixed </li>
-			<li>Fixed: The Anomaly is valid and was fixed. This is normally a terminal state, unless the Revew Exit Decision is set to Accepted with Follow-up, in which case the Verified state is the terminal one. </li>
+			<li>Fixed: The Anomaly is valid and was fixed. This is normally a terminal state, unless the Review Exit Decision is set to Accepted with Follow-up, in which case the Verified state is the terminal one. </li>
 			<li>Verified: The Anomaly was fixed and verified by the participant that raised it. This state is normally optional, but all Anomalies that are fixed should be subsequently set to verified is the Review Exit Decision is set to Accepted with Follow-up.</li>
 		</ul>
 		<p>
 			<br/> 
 		</p>
-		<p>Once all the Anomalies are in a terminal state, the review can then be closed as it is done the a Basic Review. </p>
+		<p>Once all the Anomalies are in a terminal state, the review can then be closed as it is done for Basic Reviews. </p>
 		<p>
 			<br/> 
 		</p>
@@ -1167,11 +1209,11 @@
 			<img border="0" src="FormalReviewStates.png"/> 
 		</p>
 		<h4 id="Planning_Phase_2">Planning Phase</h4>
-		<p>The Planning phase is the active phase when the review is initially created. In this phase, the Review Organizer and/or Lead adds the contents that is to be reviewed, either manually or by selecting items from the Version Control System and adds participant that will be part of the review. At the nend of this phase, a notification is sent to the participant that the items are ready to be reviewed, and an invitation to a decision meeting set-up by the Organizer/Lead. Once this phase is completed, it is impossible to go back to it. </p>
+		<p>The Planning phase is the active phase when the review is initially created. In this phase, the Review Organizer and/or Lead adds the contents that is to be reviewed, either manually or by selecting items from the Version Control System and adds participant that will be part of the review. Optionally, review elements are assigned to specific participants.  At the end of this phase, a notification is sent to the participant that the items are ready to be reviewed, and an invitation to a decision meeting set-up by the Organizer/Lead. Once this phase is completed, it is impossible to go back to it. </p>
 		<h4 id="Preparation_Phase_2">Preparation Phase</h4>
-		<p>The Preparation phase is the phase where participants review the items included in the review and potentially raise anomalies. Once all reviewers have completed their tasks (and notified the Organozer/Lead), then the review can progress to the next phase. </p>
+		<p>The Preparation phase is the phase where participants review the items included in the review and potentially raise anomalies. Once all reviewers have completed their tasks (and notified the Organizer/Lead), then the review can progress to the next phase. </p>
 		<h4 id="Decision_Phase_2">Decision Phase</h4>
-		<p>The Decision phase is where all the anomalies that were logged are analyzed and a decision is made on each of them on how to handle them. Potential outcomes include fixing the problem flagged by the anomaly, deferring it, or rejecting it if it is not valid. Once all the Anomalies are examined, a decision can be taken on how to close the review. The possible outcomes for the review at this stage is that it could be rejected and more reviewing/rework is necessary, it could be accepted as is, or it could be conditionnaly accepted, provided that the outstanding anomalies are fixed. </p>
+		<p>The Decision phase is where all the anomalies that were logged are analyzed and a decision is made on each of them on how to handle them. Potential outcomes include fixing the problem flagged by the anomaly, deferring it, or rejecting it if it is not valid. Once all the Anomalies are examined, a decision can be taken on how to close the review. The possible outcomes for the review at this stage is that it could be rejected and more reviewing/rework is necessary, it could be accepted as is, or it could be conditionally accepted, provided that the outstanding anomalies are fixed. </p>
 		<h4 id="Rework_Phase_2">Rework Phase</h4>
 		<p>The Rework phase is an optional phase, only used when a review is conditionally accepted, in which valid anomalies are fixed. Once the fixed are included, the anomalies will need to be re-checked to verify that the fixes are acceptable. When all the fixes are verified, the Review can be completed. </p>
 		<h4 id="Other_Considerations">Other Considerations</h4>
