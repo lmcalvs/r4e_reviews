@@ -398,4 +398,15 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	public String getNewChildElementCmdTooltip() {
 		return NEW_CHILD_ELEMENT_COMMAND_TOOLTIP;
 	}
+
+	/**
+	 * Method isShowPropertiesCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isShowPropertiesCmd()
+	 */
+	@Override
+	public boolean isShowPropertiesCmd() {
+		return false;
+	}
 }

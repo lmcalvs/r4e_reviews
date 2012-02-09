@@ -861,4 +861,14 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	public boolean isImportPostponedCmd() {
 		return false; //default implementation
 	}
+
+	/**
+	 * Method isShowPropertiesCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isShowPropertiesCmd()
+	 */
+	public boolean isShowPropertiesCmd() {
+		return true; //default implementation
+	}
 }

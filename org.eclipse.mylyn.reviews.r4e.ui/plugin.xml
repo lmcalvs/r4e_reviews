@@ -446,6 +446,15 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
+               icon="icons/elcl16/lnkprop_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
+               label="Link with Properties"
+               mnemonic="p"
+               style="toggle"
+               tooltip="LInk the R4E Navigator view with thew Properties view">
+         </command>
+         <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
                icon="icons/elcl16/expndall_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
@@ -883,6 +892,12 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
             name="Change Display Type">
       </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"
+            description="Show Element Properties in Properties View"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.showProperties"
+            name="Show Properties">
+      </command>
 
    </extension>
    <extension
@@ -1307,6 +1322,15 @@
        <handler
              class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ChangeDisplayHandler"
              commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.ShowPropertiesHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.showProperties">
           <enabledWhen>
              <test
                    property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">

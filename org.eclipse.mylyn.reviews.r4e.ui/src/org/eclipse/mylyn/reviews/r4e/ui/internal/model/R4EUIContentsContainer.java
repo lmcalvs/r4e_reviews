@@ -243,4 +243,17 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 			}
 		}
 	}
+
+	//Commands
+
+	/**
+	 * Method isShowPropertiesCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isShowPropertiesCmd()
+	 */
+	@Override
+	public boolean isShowPropertiesCmd() {
+		return false;
+	}
 }

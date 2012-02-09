@@ -219,6 +219,17 @@ public class ModelContributionItems extends CompoundContributionItem {
 						R4EUIConstants.UNASSIGN_TO_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
 				list.add(new CommandContributionItem(params));
 			}
+
+			if (element.isShowPropertiesCmd()) {
+				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+						R4EUIConstants.SHOW_PROPERTIES_COMMAND, R4EUIConstants.SHOW_PROPERTIES_COMMAND, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.SHOW_PROPERTIES_ICON_FILE)), null, null,
+						R4EUIConstants.SHOW_PROPERTIES_COMMAND_NAME, R4EUIConstants.SHOW_PROPERTIES_COMMAND_MNEMONIC,
+						R4EUIConstants.SHOW_PROPERTIES_COMMAND_TOOLTIP, CommandContributionItem.STYLE_PUSH, null, true);
+				list.add(new CommandContributionItem(params));
+			}
 		} else {
 			//When no element is selected, contribute add review group command
 			if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {

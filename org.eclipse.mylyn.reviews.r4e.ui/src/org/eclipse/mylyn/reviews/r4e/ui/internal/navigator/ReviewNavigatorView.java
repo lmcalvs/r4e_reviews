@@ -47,6 +47,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -846,13 +847,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		fReviewTreeViewer.expandToLevel(aElement, aExpandLevel);
 		fReviewTreeViewer.refresh(); //Make sure tree is refreshed
 
-		//NOTE:  This is a trick to get around TabbedPropertySheetPage problems, we select the parent and
-		//		 then immediately revert back to the current element.  This makes sure the Properties view is 
+		//NOTE:  This is a trick to get around TabbedPropertySheetPage problems, we unselect the current selection and
+		//		 then immediately select it back.  This makes sure the Properties view is 
 		//		 refreshed properly without causing Exceptions
-		StructuredSelection newSelection = new StructuredSelection(aElement.getParent());
-		fReviewTreeViewer.setSelection(newSelection, true);
-		showProperties();
-		newSelection = new StructuredSelection(aElement);
+		fReviewTreeViewer.setSelection(null);
+		ISelection newSelection = new StructuredSelection(aElement);
 		fReviewTreeViewer.setSelection(newSelection, true);
 	}
 

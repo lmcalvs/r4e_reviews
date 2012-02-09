@@ -539,4 +539,11 @@ public interface IR4EUIModelElement {
 	 * @return boolean
 	 */
 	boolean isImportPostponedCmd();
+
+	/**
+	 * Method isShowPropertiesCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isShowPropertiesCmd();
 }

@@ -1500,6 +1500,31 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String NEW_REVIEW_ITEM_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.NewReviewItem";
 
 	/**
+	 * Field SHOW_PROPERTIES_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.showProperties"")
+	 */
+	public static final String SHOW_PROPERTIES_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.showProperties";
+
+	/**
+	 * Field SHOW_PROPERTIES_ICON_FILE. (value is ""icons/obj16/showProps_tsk.gif"")
+	 */
+	public static final String SHOW_PROPERTIES_ICON_FILE = "icons/obj16/showProps_tsk.gif";
+
+	/**
+	 * Field SHOW_PROPERTIES_COMMAND_NAME. (value is ""Show Properties"")
+	 */
+	public static final String SHOW_PROPERTIES_COMMAND_NAME = "Show Properties";
+
+	/**
+	 * Field SHOW_PROPERTIES_COMMAND_TOOLTIP. (value is ""Show Element Properties in Properties View"")
+	 */
+	public static final String SHOW_PROPERTIES_COMMAND_TOOLTIP = "Show Element Properties in Properties View";
+
+	/**
+	 * Field SHOW_PROPERTIES_COMMAND_MNEMONIC. (value is ""p"")
+	 */
+	public static final String SHOW_PROPERTIES_COMMAND_MNEMONIC = "p";
+
+	/**
 	 * Field START_STRING_INDEX. (value is 0)
 	 */
 	public static final int START_STRING_INDEX = 0;
