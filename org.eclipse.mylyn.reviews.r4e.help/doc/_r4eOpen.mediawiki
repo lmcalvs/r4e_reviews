@@ -1399,6 +1399,15 @@ The R4E Properties View is a tabbed properties view that consists of two tabs.
 
 Editable properties can be changed directly in the properties view. Take note that some properties can only be set when the element is created, while others could be editable only under specific circumstances (e.g. a specific element state or review phase for Formal Reviews). 
 
+By default, the Properties view is linked with the Review Navigator.  This means that if an element of the Review Navigator is selected, the Properties view will be activated and will show the element's properties.  It is possible, to remove this link by toggling on and off the ''Link with Properties'' command, which is located in the Navigator View drop-down menu.  
+
+[[Image:LinkProperties.png]]
+
+When the Navigator view in unlinked, the Properties view will not be started automatically upon element selection.  To activate the Properties view and see the element's properties in this case, right-click on the element and use the ''Show Properties'' contextual command.
+
+[[Image:ShowProperties.png]]
+
+
 A more detailed description of the properties for each element is shown below. 
 
 === Working with Review Groups Properties  ===
