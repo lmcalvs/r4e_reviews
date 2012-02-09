@@ -847,6 +847,12 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				&& fFile.getAssignedTo().size() > 0) {
 			return true;
 		}
+		//If at least on children has participants assigned, enable the command
+		for (IR4EUIModelElement content : fContentsContainer.getChildren()) {
+			if (content.isUnassignToCmd()) {
+				return true;
+			}
+		}
 		return false;
 	}
 

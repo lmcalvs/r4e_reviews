@@ -40,6 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
+import org.eclipse.ui.services.IEvaluationService;
 
 /**
  * @author lmcdubo
@@ -54,42 +55,51 @@ public class RefreshHandler extends AbstractHandler {
 	/**
 	 * Method execute.
 	 * 
-	 * @param event
+	 * @param aEvent
 	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(final ExecutionEvent event) {
+	public Object execute(final ExecutionEvent aEvent) {
 
 		final UIJob job = new UIJob("Refreshing View...") {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
-				final ISelection selection = HandlerUtil.getCurrentSelection(event);
+				final ISelection selection = HandlerUtil.getCurrentSelection(aEvent);
 				if (selection instanceof IStructuredSelection) {
 					try {
-						if (!selection.isEmpty()) {
+						if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
+							if (!selection.isEmpty()) {
 
-							final Object element = ((IStructuredSelection) selection).getFirstElement();
-							if (!(element instanceof IR4EUIModelElement)) {
-								return Status.CANCEL_STATUS;
-							}
-							if (element instanceof R4EUIReviewGroup) {
-								//Refresh whole Review Group
-								((R4EUIReviewGroup) element).close();
-								((R4EUIReviewGroup) element).open();
+								final Object element = ((IStructuredSelection) selection).getFirstElement();
+								if (!(element instanceof IR4EUIModelElement)) {
+									return Status.CANCEL_STATUS;
+								}
+								if (element instanceof R4EUIReviewGroup) {
+									//Refresh whole Review Group
+									((R4EUIReviewGroup) element).close();
+									((R4EUIReviewGroup) element).open();
+								} else {
+									//Refresh Review
+									refreshReview((IR4EUIModelElement) element);
+								}
 							} else {
-								//Refresh Review
-								refreshReview((IR4EUIModelElement) element);
+								//No selection refresh all open review groups
+								final IR4EUIModelElement[] groups = R4EUIModelController.getRootElement().getChildren();
+								for (IR4EUIModelElement group : groups) {
+									if (group.isOpen()) {
+										group.close();
+										group.open();
+									}
+								}
 							}
 						} else {
-							//No selection refresh all open review groups
-							final IR4EUIModelElement[] groups = R4EUIModelController.getRootElement().getChildren();
-							for (IR4EUIModelElement group : groups) {
-								if (group.isOpen()) {
-									group.close();
-									group.open();
-								}
+							//For the Tree table, only refresh the parent review
+							R4EUIReviewBasic review = R4EUIModelController.getActiveReview();
+							if (null != review) {
+								review.close();
+								review.open();
 							}
 						}
 					} catch (ResourceHandlingException e) {
@@ -99,6 +109,15 @@ public class RefreshHandler extends AbstractHandler {
 						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 					} catch (ReviewVersionsException e) {
 						UIUtils.displayVersionErrorDialog(e);
+					}
+
+					try {
+						final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
+								aEvent)
+								.getService(IEvaluationService.class);
+						evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.review.reviewActive");
+					} catch (ExecutionException e) {
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 					}
 				}
 				return Status.OK_STATUS;

@@ -295,8 +295,8 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		fUnassignedFromButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.REMOVE_LABEL, SWT.NONE);
 		fUnassignedFromButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		fUnassignedFromButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				((R4EUIReviewItem) fProperties.getElement()).removeAssignees(UIUtils.getAssignParticipants());
+			public void handleEvent(Event aEvent) {
+				((R4EUIReviewItem) fProperties.getElement()).removeAssignees(UIUtils.getUnassignParticipants(fProperties.getElement()));
 				refresh();
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 			}
@@ -356,6 +356,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 
 		EList<String> assignedParticipants = modelItem.getAssignedTo();
 		fAssignedToText.setText(UIUtils.formatAssignedParticipants(assignedParticipants));
+
 		setEnabledFields();
 		fRefreshInProgress = false;
 	}
@@ -386,7 +387,11 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 			fDescriptionText.setEnabled(true);
 			fAssignedToText.setEnabled(true);
 			fAssignedToButton.setEnabled(true);
-			fUnassignedFromButton.setEnabled(true);
+			if (fAssignedToText.getText().length() > 0) {
+				fUnassignedFromButton.setEnabled(true);
+			} else {
+				fUnassignedFromButton.setEnabled(false);
+			}
 		}
 	}
 }

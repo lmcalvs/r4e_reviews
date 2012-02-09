@@ -139,19 +139,19 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Method createControls.
 	 * 
-	 * @param parent
+	 * @param aParent
 	 *            Composite
 	 * @param aTabbedPropertySheetPage
 	 *            TabbedPropertySheetPage
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(Composite, TabbedPropertySheetPage)
 	 */
 	@Override
-	public void createControls(Composite parent, TabbedPropertySheetPage aTabbedPropertySheetPage) {
-		super.createControls(parent, aTabbedPropertySheetPage);
+	public void createControls(Composite aParent, TabbedPropertySheetPage aTabbedPropertySheetPage) {
+		super.createControls(aParent, aTabbedPropertySheetPage);
 
 		//Tell element to build its own detailed tab layout
 		final TabbedPropertySheetWidgetFactory widgetFactory = aTabbedPropertySheetPage.getWidgetFactory();
-		final Composite composite = widgetFactory.createFlatFormComposite(parent);
+		final Composite composite = widgetFactory.createFlatFormComposite(aParent);
 		FormData data = null;
 
 		//Target File Version composite (read-only)
@@ -192,7 +192,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		fAssignedToButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.ADD_LABEL, SWT.NONE);
 		fAssignedToButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		fAssignedToButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
+			public void handleEvent(Event aEvent) {
 				((R4EUIFileContext) fProperties.getElement()).addAssignees(UIUtils.getAssignParticipants());
 				refresh();
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -202,8 +202,8 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		fUnassignedFromButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.REMOVE_LABEL, SWT.NONE);
 		fUnassignedFromButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		fUnassignedFromButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				((R4EUIFileContext) fProperties.getElement()).removeAssignees(UIUtils.getAssignParticipants());
+			public void handleEvent(Event aEvent) {
+				((R4EUIFileContext) fProperties.getElement()).removeAssignees(UIUtils.getUnassignParticipants(fProperties.getElement()));
 				refresh();
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 			}
@@ -273,7 +273,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		pathSection.setText(R4EUIConstants.PATH_INFORMATION_LABEL);
 		pathSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
-			public void expansionStateChanged(ExpansionEvent e) {
+			public void expansionStateChanged(ExpansionEvent aEvent) {
 				final ScrolledComposite scrolledParent = (ScrolledComposite) aParent.getParent()
 						.getParent()
 						.getParent()
@@ -391,7 +391,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		pathSection.setText(R4EUIConstants.PATH_INFORMATION_LABEL);
 		pathSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
-			public void expansionStateChanged(ExpansionEvent e) {
+			public void expansionStateChanged(ExpansionEvent aEvent) {
 				final ScrolledComposite scrolledParent = (ScrolledComposite) aParent.getParent()
 						.getParent()
 						.getParent()
@@ -559,7 +559,11 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			fTargetFileVersionText.setEnabled(true);
 			fAssignedToText.setEnabled(true);
 			fAssignedToButton.setEnabled(true);
-			fUnassignedFromButton.setEnabled(true);
+			if (fAssignedToText.getText().length() > 0) {
+				fUnassignedFromButton.setEnabled(true);
+			} else {
+				fUnassignedFromButton.setEnabled(false);
+			}
 		}
 	}
 }

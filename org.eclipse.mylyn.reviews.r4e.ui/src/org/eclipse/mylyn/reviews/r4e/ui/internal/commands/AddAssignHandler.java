@@ -75,13 +75,16 @@ public class AddAssignHandler extends AbstractHandler {
 						List<R4EParticipant> participants = UIUtils.getAssignParticipants();
 
 						//Assign them
-						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
-							element = iterator.next();
-							if (!(element instanceof IR4EUIModelElement)) {
-								continue;
+						if (participants.size() > 0) {
+							for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
+								element = iterator.next();
+								if (!(element instanceof IR4EUIModelElement)) {
+									continue;
+								}
+								R4EUIPlugin.Ftracer.traceInfo("add assignees..."
+										+ ((IR4EUIModelElement) element).getName());
+								((IR4EUIModelElement) element).addAssignees(participants);
 							}
-							R4EUIPlugin.Ftracer.traceInfo("add assignees..." + ((IR4EUIModelElement) element).getName());
-							((IR4EUIModelElement) element).addAssignees(participants);
 						}
 						element = ((IStructuredSelection) selection).getFirstElement();
 						UIUtils.setNavigatorViewFocus((IR4EUIModelElement) element, 0);

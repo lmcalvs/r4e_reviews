@@ -378,15 +378,15 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 			fPathColumn.getColumn().setResizable(true);
 			fPathColumn.setLabelProvider(new ColumnLabelProvider() {
 				@Override
-				public String getText(Object element) {
-					if (element instanceof R4EUIFileContext) {
+				public String getText(Object aElement) {
+					if (aElement instanceof R4EUIFileContext) {
 						//First try target file version
-						R4EFileVersion version = ((R4EUIFileContext) element).getTargetFileVersion();
+						R4EFileVersion version = ((R4EUIFileContext) aElement).getTargetFileVersion();
 						if (null != version) {
 							return UIUtils.getProjectPath(version);
 						} else {
 							//Try base file version
-							version = ((R4EUIFileContext) element).getBaseFileVersion();
+							version = ((R4EUIFileContext) aElement).getBaseFileVersion();
 							if (null != version) {
 								return UIUtils.getProjectPath(version);
 							} else {
@@ -399,17 +399,17 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 				}
 
 				@Override
-				public String getToolTipText(Object element) {
+				public String getToolTipText(Object aElement) {
 					StringBuffer buffer = new StringBuffer();
-					if (element instanceof R4EUIFileContext) {
-						R4EFileVersion targetVersion = ((R4EUIFileContext) element).getTargetFileVersion();
+					if (aElement instanceof R4EUIFileContext) {
+						R4EFileVersion targetVersion = ((R4EUIFileContext) aElement).getTargetFileVersion();
 						buffer.append(VERSION_TARGET_LABEL);
 						if (null == targetVersion) {
 							buffer.append(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
 						} else {
 							buffer.append(targetVersion.getVersionID());
 						}
-						R4EFileVersion baseVersion = ((R4EUIFileContext) element).getBaseFileVersion();
+						R4EFileVersion baseVersion = ((R4EUIFileContext) aElement).getBaseFileVersion();
 						buffer.append(System.getProperty("line.separator")); //$NON-NLS-1$
 						buffer.append(VERSION_BASE_LABEL);
 						if (null == baseVersion) {

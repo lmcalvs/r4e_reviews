@@ -73,13 +73,13 @@ public class ChangeDisplayHandler extends AbstractHandler {
 						final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
 								aEvent)
 								.getService(IEvaluationService.class);
-						evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement");
-						evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement");
+						evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay");
 						evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState");
 						evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.NextState");
 					} catch (ExecutionException e) {
 						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 					}
+
 					R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 					final IStructuredSelection selection = (IStructuredSelection) R4EUIModelController.getNavigatorView()
 							.getTreeViewer()

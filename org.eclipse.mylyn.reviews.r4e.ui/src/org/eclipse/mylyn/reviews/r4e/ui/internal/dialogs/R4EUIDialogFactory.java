@@ -20,6 +20,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
@@ -78,6 +79,11 @@ public class R4EUIDialogFactory {
 	 * Field fParticipantInputDialog.
 	 */
 	private IParticipantInputDialog fParticipantInputDialog = null;
+
+	/**
+	 * Field fParticipantUnassignDialog.
+	 */
+	private IParticipantUnassignDialog fParticipantUnassignDialog = null;
 
 	/**
 	 * Field fReviewGroupInputDialog.
@@ -330,6 +336,38 @@ public class R4EUIDialogFactory {
 	 */
 	public void setParticipantInputDialog(IParticipantInputDialog aParticipantInputDialog) {
 		fParticipantInputDialog = aParticipantInputDialog;
+	}
+
+	/**
+	 * Method getParticipantUnassignDialog.
+	 * 
+	 * @param aElement - IR4EUIModelElement
+	 * @return IParticipantUnassignDialog
+	 */
+	public IParticipantUnassignDialog getParticipantUnassignDialog(IR4EUIModelElement aElement) {
+		if (!UIUtils.TEST_MODE) {
+			fParticipantUnassignDialog = new ParticipantUnassignDialog(Display.getCurrent().getActiveShell(), aElement);
+			return fParticipantUnassignDialog;
+		}
+		return fParticipantUnassignDialog; //Test mode: return mockup reference
+	}
+
+	/**
+	 * Method removeParticipantUnassignDialog.
+	 */
+	public void removeParticipantUnassignDialog() {
+		fParticipantUnassignDialog.close();
+		fParticipantUnassignDialog = null;
+	}
+
+	/**
+	 * Method setParticipantUnassignDialog.
+	 * 
+	 * @param aParticipantUnassignDialog
+	 *            IParticipantUnassignDialog
+	 */
+	public void setParticipantUnassignDialog(IParticipantUnassignDialog aParticipantUnassignDialog) {
+		fParticipantUnassignDialog = aParticipantUnassignDialog;
 	}
 
 	/**

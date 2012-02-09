@@ -72,21 +72,24 @@ public class RemoveAssignHandler extends AbstractHandler {
 						}
 
 						//Get participants to assign
-						List<R4EParticipant> participants = UIUtils.getAssignParticipants();
+						List<R4EParticipant> participants = UIUtils.getUnassignParticipants((IR4EUIModelElement) element);
 
 						//Unassign them
-						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
-							element = iterator.next();
-							if (!(element instanceof IR4EUIModelElement)) {
-								continue;
+						if (participants.size() > 0) {
+
+							for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
+								element = iterator.next();
+								if (!(element instanceof IR4EUIModelElement)) {
+									continue;
+								}
+								R4EUIPlugin.Ftracer.traceInfo("remove assignees..."
+										+ ((IR4EUIModelElement) element).getName());
+								((IR4EUIModelElement) element).removeAssignees(participants);
 							}
-							R4EUIPlugin.Ftracer.traceInfo("remove assignees..."
-									+ ((IR4EUIModelElement) element).getName());
-							((IR4EUIModelElement) element).removeAssignees(participants);
 						}
 						element = ((IStructuredSelection) selection).getFirstElement();
 						UIUtils.setNavigatorViewFocus((IR4EUIModelElement) element, 0);
-						R4EUIDialogFactory.getInstance().removeParticipantInputDialog();
+						R4EUIDialogFactory.getInstance().removeParticipantUnassignDialog();
 					}
 				}
 				return Status.OK_STATUS;

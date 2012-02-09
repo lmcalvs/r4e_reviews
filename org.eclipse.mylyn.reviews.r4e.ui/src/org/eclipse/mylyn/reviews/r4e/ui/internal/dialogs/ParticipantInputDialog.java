@@ -145,7 +145,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	/**
 	 * Field fParticipantsDetailsValue.
 	 */
-	private final List<String> fParticipantsDetailsValues = new ArrayList<String>();;
+	private final List<String> fParticipantsDetailsValues = new ArrayList<String>();
 
 	/**
 	 * Field fRoleValues.

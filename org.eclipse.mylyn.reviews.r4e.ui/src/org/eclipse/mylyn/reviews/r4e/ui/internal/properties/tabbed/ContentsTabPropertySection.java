@@ -142,7 +142,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 		fUnassignedFromButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		fUnassignedFromButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				((R4EUIContent) fProperties.getElement()).removeAssignees(UIUtils.getAssignParticipants());
+				((R4EUIContent) fProperties.getElement()).removeAssignees(UIUtils.getUnassignParticipants(fProperties.getElement()));
 				refresh();
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 			}
@@ -196,7 +196,11 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 			fPositionText.setEnabled(true);
 			fAssignedToText.setEnabled(true);
 			fAssignedToButton.setEnabled(true);
-			fUnassignedFromButton.setEnabled(true);
+			if (fAssignedToText.getText().length() > 0) {
+				fUnassignedFromButton.setEnabled(true);
+			} else {
+				fUnassignedFromButton.setEnabled(false);
+			}
 		}
 	}
 }

@@ -91,9 +91,8 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	 *            R4EItem
 	 * @param aName
 	 *            String
-	 * @param aItemType - int
-	 * @param aTooltip
-	 *            String
+	 * @param aItemType
+	 *            - int
 	 */
 	public R4EUIReviewItem(IR4EUIModelElement aParent, R4EItem aItem, String aName, int aItemType) {
 		super(aParent, aItem, aName, aItemType);
@@ -431,6 +430,12 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
 				&& fItem.getAssignedTo().size() > 0) {
 			return true;
+		}
+		//If at least on children has participants assigned, enable the command
+		for (IR4EUIModelElement file : getChildren()) {
+			if (file.isUnassignToCmd()) {
+				return true;
+			}
 		}
 		return false;
 	}

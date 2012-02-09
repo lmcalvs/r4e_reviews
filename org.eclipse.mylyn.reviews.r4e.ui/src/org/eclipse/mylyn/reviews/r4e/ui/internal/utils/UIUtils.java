@@ -59,6 +59,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantUnassignDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
@@ -260,8 +261,7 @@ public class UIUtils {
 	public static List<String> parseStringList(String aStringList) {
 		final List<String> stringArray = new ArrayList<String>();
 		if (null != aStringList) {
-			final StringTokenizer st = new StringTokenizer(aStringList, File.pathSeparator
-					+ R4EUIConstants.LINE_FEED);
+			final StringTokenizer st = new StringTokenizer(aStringList, File.pathSeparator + R4EUIConstants.LINE_FEED);
 			while (st.hasMoreElements()) {
 				stringArray.add((String) st.nextElement());
 			}
@@ -644,12 +644,28 @@ public class UIUtils {
 	}
 
 	/**
-	 * Display the dialog used by the user to enter the participant assign/unassign
+	 * Display the dialog used by the user to enter the participant to assign
 	 * 
 	 * @return String
 	 */
 	public static List<R4EParticipant> getAssignParticipants() {
 		final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog(false);
+		dialog.create();
+		final int result = dialog.open();
+		if (result == Window.OK) {
+			return dialog.getParticipants();
+		}
+		return new ArrayList<R4EParticipant>(0); //Cancelled, no participants to use
+	}
+
+	/**
+	 * Display the dialog used by the user to enter the participant unassign
+	 * @param aElement - IR4EUIModelElement
+	 * @return String
+	 */
+	public static List<R4EParticipant> getUnassignParticipants(IR4EUIModelElement aElement) {
+		final IParticipantUnassignDialog dialog = R4EUIDialogFactory.getInstance().getParticipantUnassignDialog(
+				aElement);
 		dialog.create();
 		final int result = dialog.open();
 		if (result == Window.OK) {
