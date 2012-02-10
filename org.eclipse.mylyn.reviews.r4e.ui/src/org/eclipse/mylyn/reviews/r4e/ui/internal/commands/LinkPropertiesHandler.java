@@ -38,17 +38,17 @@ public class LinkPropertiesHandler extends AbstractHandler {
 	/**
 	 * Method execute.
 	 * 
-	 * @param event
+	 * @param aEvent
 	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	public Object execute(ExecutionEvent aEvent) throws ExecutionException {
 
 		//We need to preserve the expansion state and restore it afterwards
 		final Object[] elements = R4EUIModelController.getNavigatorView().getTreeViewer().getExpandedElements();
-		final Command command = event.getCommand();
+		final Command command = aEvent.getCommand();
 		boolean oldValue = HandlerUtil.toggleCommandState(command);
 
 		if (!oldValue) {

@@ -211,7 +211,7 @@
                icon="icons/obj16/revgrp_obj.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement"
                label="New Review Group"
-               mnemonic="g"
+               mnemonic="G"
                style="push"
                tooltip="Add a New Review Group">
             <visibleWhen
@@ -226,7 +226,7 @@
                icon="icons/obj16/ruleset_obj.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement"
                label="New Rule Set"
-               mnemonic="a"
+               mnemonic="S"
                style="push"
                tooltip="Add a New Rule Set">
             <visibleWhen
@@ -241,7 +241,7 @@
                icon="icons/elcl16/prevstate_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"
                label="Regress State"
-               mnemonic="r"
+               mnemonic="R"
                style="push"
                tooltip="Regress the element to its Previous logical State">
             <visibleWhen
@@ -256,7 +256,7 @@
                icon="icons/elcl16/nxtstate_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
                label="Progress State"
-               mnemonic="p"
+               mnemonic="P"
                style="push"
                tooltip="Progress the element to one of its Next logical state">
             <visibleWhen
@@ -271,7 +271,7 @@
                icon="icons/elcl16/chgdisplay_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
                label="Change Display Type"
-               mnemonic="d"
+               mnemonic="D"
                style="push"
                tooltip="Toggle Display Type between Global Tree View and Review Tree Table View">
             <visibleWhen
@@ -286,7 +286,7 @@
                icon="icons/elcl16/expndall_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
                label="Expand All"
-               mnemonic="e"
+               mnemonic="E"
                style="push"
                tooltip="Expand All Elements of the Review Navigator Tree">
          </command>
@@ -295,7 +295,7 @@
                icon="icons/elcl16/clpseall_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
                label="Collapse All"
-               mnemonic="c"
+               mnemonic="C"
                style="push"
                tooltip="Collapse All Elements of the Review Navigator Tree">
          </command>
@@ -304,7 +304,7 @@
                icon="icons/elcl16/focus_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.GoInto"
                label="Go Into"
-               mnemonic="f"
+               mnemonic="G"
                style="toggle"
                tooltip="Go Into and Set Focus on Current Element">
          </command>
@@ -314,7 +314,7 @@
                icon="icons/elcl16/nxtelem_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext"
                label="Select Next"
-               mnemonic="n"
+               mnemonic="N"
                style="push"
                tooltip="Select and Open Next Element in Editor">
          </command>
@@ -324,7 +324,7 @@
                icon="icons/elcl16/prvelem_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectPrevious"
                label="Select Previous"
-               mnemonic="p"
+               mnemonic="P"
                style="push"
                tooltip="Select and Open Previous Element in Editor">
          </command>
@@ -333,7 +333,7 @@
                icon="icons/elcl16/refrsh_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
                label="Refresh"
-               mnemonic="r"
+               mnemonic="R"
                style="push"
                tooltip="Refresh Data">
          </command>
@@ -371,7 +371,7 @@
                icon="icons/obj16/revgrp_obj.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewChildElement"
                label="New Review Group"
-               mnemonic="g"
+               mnemonic="G"
                style="push"
                tooltip="Add a New Review Group">
             <visibleWhen
@@ -386,7 +386,7 @@
                icon="icons/obj16/ruleset_obj.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement"
                label="New Rule Set"
-               mnemonic="a"
+               mnemonic="S"
                style="push"
                tooltip="Add a New Rule Set">
             <visibleWhen
@@ -401,7 +401,7 @@
                icon="icons/elcl16/prevstate_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState"
                label="Regress State"
-               mnemonic="r"
+               mnemonic="R"
                style="push"
                tooltip="Progress the element to one of its Previous logical State">
             <visibleWhen
@@ -416,7 +416,7 @@
                icon="icons/elcl16/nxtstate_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
                label="Progress State"
-               mnemonic="p"
+               mnemonic="P"
                style="push"
                tooltip="Progress the element to one of its Next logical state">
             <visibleWhen
@@ -435,7 +435,7 @@
                icon="icons/elcl16/chgdisplay_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
                label="Change Display Type"
-               mnemonic="d"
+               mnemonic="D"
                style="push"
                tooltip="Toggle Display Type between Global Tree View and Review Tree Table View">
             <visibleWhen
@@ -450,16 +450,29 @@
                icon="icons/elcl16/lnkprop_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
                label="Link with Properties"
-               mnemonic="p"
+               mnemonic="P"
                style="toggle"
                tooltip="LInk the R4E Navigator view with thew Properties view">
          </command>
+         <command
+               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
+               icon="icons/elcl16/refrsh_menu.gif"
+               id="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
+               label="Refresh"
+               mnemonic="R"
+               style="push"
+               tooltip="Refresh Data">
+         </command>
+         <separator
+               name="org.eclipse.mylyn.reviews.r4e.ui.separator3"
+               visible="true">
+         </separator>
          <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
                icon="icons/elcl16/expndall_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
                label="Expand All"
-               mnemonic="e"
+               mnemonic="E"
                style="push"
                tooltip="Expand All Elements of the Review Navigator Tree">
          </command>
@@ -468,7 +481,7 @@
                icon="icons/elcl16/clpseall_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
                label="Collapse All"
-               mnemonic="c"
+               mnemonic="C"
                style="push"
                tooltip="Collapse All Elements of the Review Navigator Tree">
          </command>
@@ -477,7 +490,7 @@
                icon="icons/elcl16/focus_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Go Into"
                label="Go Into"
-               mnemonic="f"
+               mnemonic="G"
                style="toggle"
                tooltip="Go Into and Set Focus on Current Element">
          </command>
@@ -487,7 +500,7 @@
                icon="icons/elcl16/nxtelem_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectNext"
                label="Select Next"
-               mnemonic="n"
+               mnemonic="N"
                style="push"
                tooltip="Select and Open Next Element in Editor">
          </command>
@@ -497,21 +510,12 @@
                icon="icons/elcl16/prvelem_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.SelectPrevious"
                label="Select Previous"
-               mnemonic="p"
+               mnemonic="P"
                style="push"
                tooltip="Select and Open Previous Element in Editor">
          </command>
-         <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
-               icon="icons/elcl16/refrsh_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.Refresh"
-               label="Refresh"
-               mnemonic="r"
-               style="push"
-               tooltip="Refresh Data">
-         </command>
          <separator
-               name="org.eclipse.mylyn.reviews.r4e.ui.separator3"
+               name="org.eclipse.mylyn.reviews.r4e.ui.separator4"
                visible="true">
          </separator>
          <command
@@ -519,7 +523,7 @@
                icon="icons/view16/icons-legend.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.ShowUILegend"
                label="Show UI Legend"
-               mnemonic="l"
+               mnemonic="L"
                style="push"
                tooltip="Show UI Legend">
          </command>

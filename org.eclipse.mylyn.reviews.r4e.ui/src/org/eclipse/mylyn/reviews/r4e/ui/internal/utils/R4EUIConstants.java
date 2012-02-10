@@ -919,9 +919,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ALPHA_SORTER_TOOLTIP = "Sort Alphabetically";
 
 	/**
-	 * Field ALPHA_SORTER_MNEMONIC. (value is ""s"")
+	 * Field ALPHA_SORTER_MNEMONIC. (value is ""S"")
 	 */
-	public static final String ALPHA_SORTER_MNEMONIC = "s";
+	public static final String ALPHA_SORTER_MNEMONIC = "S";
 
 	/**
 	 * Field REVIEW_TYPE_SORTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort"")
@@ -944,9 +944,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REVIEW_TYPE_SORTER_TOOLTIP = "Sort Reviews by Review Type";
 
 	/**
-	 * Field REVIEW_TYPE_SORTER_MNEMONIC. (value is ""t"")
+	 * Field REVIEW_TYPE_SORTER_MNEMONIC. (value is ""T"")
 	 */
-	public static final String REVIEW_TYPE_SORTER_MNEMONIC = "t";
+	public static final String REVIEW_TYPE_SORTER_MNEMONIC = "T";
 
 	/**
 	 * Field ANOMALIES_MY_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesMy"")
@@ -1006,9 +1006,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REVIEWS_PARTICIPANT_FILTER_TOOLTIP = "Show Reviews the Given Participant is Participating In";
 
 	/**
-	 * Field REVIEWS_PARTICIPANT_FILTER_MNEMONIC. (value is ""p"")
+	 * Field REVIEWS_PARTICIPANT_FILTER_MNEMONIC. (value is ""P"")
 	 */
-	public static final String REVIEWS_PARTICIPANT_FILTER_MNEMONIC = "p";
+	public static final String REVIEWS_PARTICIPANT_FILTER_MNEMONIC = "P";
 
 	/**
 	 * Field ASSIGN_MY_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignMy"")
@@ -1088,9 +1088,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ASSIGN_FILTER_TOOLTIP = "Show Review Elements Assigned to Participant";
 
 	/**
-	 * Field ASSIGN_FILTER_MNEMONIC. (value is ""h"")
+	 * Field ASSIGN_FILTER_MNEMONIC. (value is ""A"")
 	 */
-	public static final String ASSIGN_FILTER_MNEMONIC = "h";
+	public static final String ASSIGN_FILTER_MNEMONIC = "A";
 
 	/**
 	 * Field GO_INTO_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.GoInto"")
@@ -1128,9 +1128,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String NEW_LINKED_ANOMALY_TOOLTIP = "Add a New Anomaly that is Linked to this Content";
 
 	/**
-	 * Field NEW_LINKED_ANOMALY_MNEMONIC. (value is ""l"")
+	 * Field NEW_LINKED_ANOMALY_MNEMONIC. (value is ""L"")
 	 */
-	public static final String NEW_LINKED_ANOMALY_MNEMONIC = "l";
+	public static final String NEW_LINKED_ANOMALY_MNEMONIC = "L";
 
 	/**
 	 * Field OPEN_EDITOR_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.openEditor"")
@@ -1154,9 +1154,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String OPEN_EDITOR_COMMAND_TOOLTIP = "Open the Parent File with the Matching Editor and Locate Element";
 
 	/**
-	 * Field OPEN_EDITOR_COMMAND_MNEMONIC. (value is ""e"")
+	 * Field OPEN_EDITOR_COMMAND_MNEMONIC. (value is ""E"")
 	 */
-	public static final String OPEN_EDITOR_COMMAND_MNEMONIC = "e";
+	public static final String OPEN_EDITOR_COMMAND_MNEMONIC = "E";
 
 	/**
 	 * Field CHANGE_REVIEW_STATE_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState"")
@@ -1189,9 +1189,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String UNMARK_REVIEW_STATE_COMMAND_TOOLTIP = "Unmark this Element as Reviewed by Participant";
 
 	/**
-	 * Field CHANGE_REVIEW_STATE_COMMAND_MNEMONIC. (value is ""c"")
+	 * Field CHANGE_REVIEW_STATE_COMMAND_MNEMONIC. (value is ""U"")
 	 */
-	public static final String CHANGE_REVIEW_STATE_COMMAND_MNEMONIC = "c";
+	public static final String CHANGE_REVIEW_STATE_COMMAND_MNEMONIC = "U";
 
 	/**
 	 * Field ASSIGN_TO_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.assignElement"")
@@ -1214,9 +1214,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ASSIGN_TO_COMMAND_TOOLTIP = "Assign Review Element to Participant(s)";
 
 	/**
-	 * Field ASSIGN_TO_COMMAND_MNEMONIC. (value is ""a"")
+	 * Field ASSIGN_TO_COMMAND_MNEMONIC. (value is ""A"")
 	 */
-	public static final String ASSIGN_TO_COMMAND_MNEMONIC = "a";
+	public static final String ASSIGN_TO_COMMAND_MNEMONIC = "A";
 
 	/**
 	 * Field UNASSIGN_TO_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.unassignElement"")
@@ -1239,9 +1239,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String UNASSIGN_TO_COMMAND_TOOLTIP = "Unassign Review Element from Participant(s)";
 
 	/**
-	 * Field UNASSIGN_TO_COMMAND_MNEMONIC. (value is ""u"")
+	 * Field UNASSIGN_TO_COMMAND_MNEMONIC. (value is ""U"")
 	 */
-	public static final String UNASSIGN_TO_COMMAND_MNEMONIC = "u";
+	public static final String UNASSIGN_TO_COMMAND_MNEMONIC = "U";
 
 	/**
 	 * Field OPEN_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.openElement"")
@@ -1264,9 +1264,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String OPEN_ELEMENT_COMMAND_TOOLTIP = "Open and Load Data for this Element";
 
 	/**
-	 * Field OPEN_ELEMENT_COMMAND_MNEMONIC. (value is ""o"")
+	 * Field OPEN_ELEMENT_COMMAND_MNEMONIC. (value is ""O"")
 	 */
-	public static final String OPEN_ELEMENT_COMMAND_MNEMONIC = "o";
+	public static final String OPEN_ELEMENT_COMMAND_MNEMONIC = "O";
 
 	/**
 	 * Field REPORT_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.reportElement"")
@@ -1289,9 +1289,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REPORT_ELEMENT_COMMAND_TOOLTIP = "Generate a Report for this Element";
 
 	/**
-	 * Field REPORT_ELEMENT_COMMAND_MNEMONIC. (value is ""r"")
+	 * Field REPORT_ELEMENT_COMMAND_MNEMONIC. (value is ""R"")
 	 */
-	public static final String REPORT_ELEMENT_COMMAND_MNEMONIC = "r";
+	public static final String REPORT_ELEMENT_COMMAND_MNEMONIC = "R";
 
 	/**
 	 * Field CLOSE_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.closeElement"")
@@ -1314,9 +1314,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String CLOSE_ELEMENT_COMMAND_TOOLTIP = "Close and Unload Data for this Element";
 
 	/**
-	 * Field CLOSE_ELEMENT_COMMAND_MNEMONIC. (value is ""c"")
+	 * Field CLOSE_ELEMENT_COMMAND_MNEMONIC. (value is ""C"")
 	 */
-	public static final String CLOSE_ELEMENT_COMMAND_MNEMONIC = "c";
+	public static final String CLOSE_ELEMENT_COMMAND_MNEMONIC = "C";
 
 	/**
 	 * Field NEXT_STATE_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"")
@@ -1394,9 +1394,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String NEW_REVIEW_GROUP_COMMAND_TOOLTIP = "Add a New Review Group Element";
 
 	/**
-	 * Field NEW_CHILD_ELEMENT_COMMAND_MNEMONIC. (value is ""a"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_MNEMONIC. (value is ""A"")
 	 */
-	public static final String NEW_CHILD_ELEMENT_COMMAND_MNEMONIC = "a";
+	public static final String NEW_CHILD_ELEMENT_COMMAND_MNEMONIC = "A";
 
 	/**
 	 * Field NEW_RULE_SET_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.NewRuleSetElement"")
@@ -1419,9 +1419,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Element";
 
 	/**
-	 * Field REMOVE_ELEMENT_COMMAND_MNEMONIC. (value is ""x"")
+	 * Field REMOVE_ELEMENT_COMMAND_MNEMONIC. (value is ""D"")
 	 */
-	public static final String REMOVE_ELEMENT_COMMAND_MNEMONIC = "x";
+	public static final String REMOVE_ELEMENT_COMMAND_MNEMONIC = "D";
 
 	/**
 	 * Field RESTORE_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.restoreElement"")
@@ -1439,9 +1439,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String RESTORE_ELEMENT_COMMAND_TOOLTIP = "Restore this Disabled Element";
 
 	/**
-	 * Field RESTORE_ELEMENT_COMMAND_MNEMONIC. (value is ""r"")
+	 * Field RESTORE_ELEMENT_COMMAND_MNEMONIC. (value is ""R"")
 	 */
-	public static final String RESTORE_ELEMENT_COMMAND_MNEMONIC = "r";
+	public static final String RESTORE_ELEMENT_COMMAND_MNEMONIC = "R";
 
 	/**
 	 * Field SEND_EMAIL_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.restoreElement"")
@@ -1520,9 +1520,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String SHOW_PROPERTIES_COMMAND_TOOLTIP = "Show Element Properties in Properties View";
 
 	/**
-	 * Field SHOW_PROPERTIES_COMMAND_MNEMONIC. (value is ""p"")
+	 * Field SHOW_PROPERTIES_COMMAND_MNEMONIC. (value is ""P"")
 	 */
-	public static final String SHOW_PROPERTIES_COMMAND_MNEMONIC = "p";
+	public static final String SHOW_PROPERTIES_COMMAND_MNEMONIC = "P";
 
 	/**
 	 * Field START_STRING_INDEX. (value is 0)

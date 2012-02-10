@@ -220,7 +220,7 @@ public class ModelContributionItems extends CompoundContributionItem {
 				list.add(new CommandContributionItem(params));
 			}
 
-			if (element.isShowPropertiesCmd()) {
+			if (!R4EUIModelController.getNavigatorView().isPropertiesLinked() && element.isShowPropertiesCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.SHOW_PROPERTIES_COMMAND, R4EUIConstants.SHOW_PROPERTIES_COMMAND, null,
 						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
