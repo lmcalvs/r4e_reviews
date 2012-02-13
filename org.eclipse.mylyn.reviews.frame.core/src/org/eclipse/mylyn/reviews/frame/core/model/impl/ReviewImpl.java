@@ -26,6 +26,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.Item;
 import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
 import org.eclipse.mylyn.reviews.frame.core.model.Review;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewState;
+import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
 import org.eclipse.mylyn.reviews.frame.core.model.TaskReference;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 
@@ -36,6 +37,9 @@ import org.eclipse.mylyn.reviews.frame.core.model.Topic;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getFragmentVersion <em>Fragment Version</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getCompatibility <em>Compatibility</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getApplicationVersion <em>Application Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getTopics <em>Topics</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getReviewItems <em>Review Items</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getReviewTask <em>Review Task</em>}</li>
@@ -46,6 +50,84 @@ import org.eclipse.mylyn.reviews.frame.core.model.Topic;
  * @generated
  */
 public class ReviewImpl extends ReviewComponentImpl implements Review {
+	/**
+	 * The default value of the '{@link #getFragmentVersion() <em>Fragment Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFragmentVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String FRAGMENT_VERSION_EDEFAULT = "1.0.0";
+
+	/**
+	 * The cached value of the '{@link #getFragmentVersion() <em>Fragment Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFragmentVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected String fragmentVersion = FRAGMENT_VERSION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getCompatibility() <em>Compatibility</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCompatibility()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int COMPATIBILITY_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getCompatibility() <em>Compatibility</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCompatibility()
+	 * @generated
+	 * @ordered
+	 */
+	protected int compatibility = COMPATIBILITY_EDEFAULT;
+
+	/**
+	 * This is true if the Compatibility attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean compatibilityESet;
+
+	/**
+	 * The default value of the '{@link #getApplicationVersion() <em>Application Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getApplicationVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String APPLICATION_VERSION_EDEFAULT = "1.0.0";
+
+	/**
+	 * The cached value of the '{@link #getApplicationVersion() <em>Application Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getApplicationVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected String applicationVersion = APPLICATION_VERSION_EDEFAULT;
+
+	/**
+	 * This is true if the Application Version attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean applicationVersionESet;
+
 	/**
 	 * The cached value of the '{@link #getTopics() <em>Topics</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -103,6 +185,119 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	@Override
 	protected EClass eStaticClass() {
 		return ModelPackage.Literals.REVIEW;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getFragmentVersion() {
+		return fragmentVersion;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFragmentVersion(String newFragmentVersion) {
+		String oldFragmentVersion = fragmentVersion;
+		fragmentVersion = newFragmentVersion;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.REVIEW__FRAGMENT_VERSION, oldFragmentVersion, fragmentVersion));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getCompatibility() {
+		return compatibility;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCompatibility(int newCompatibility) {
+		int oldCompatibility = compatibility;
+		compatibility = newCompatibility;
+		boolean oldCompatibilityESet = compatibilityESet;
+		compatibilityESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.REVIEW__COMPATIBILITY, oldCompatibility, compatibility, !oldCompatibilityESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetCompatibility() {
+		int oldCompatibility = compatibility;
+		boolean oldCompatibilityESet = compatibilityESet;
+		compatibility = COMPATIBILITY_EDEFAULT;
+		compatibilityESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ModelPackage.REVIEW__COMPATIBILITY, oldCompatibility, COMPATIBILITY_EDEFAULT, oldCompatibilityESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetCompatibility() {
+		return compatibilityESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getApplicationVersion() {
+		return applicationVersion;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setApplicationVersion(String newApplicationVersion) {
+		String oldApplicationVersion = applicationVersion;
+		applicationVersion = newApplicationVersion;
+		boolean oldApplicationVersionESet = applicationVersionESet;
+		applicationVersionESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.REVIEW__APPLICATION_VERSION, oldApplicationVersion, applicationVersion, !oldApplicationVersionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetApplicationVersion() {
+		String oldApplicationVersion = applicationVersion;
+		boolean oldApplicationVersionESet = applicationVersionESet;
+		applicationVersion = APPLICATION_VERSION_EDEFAULT;
+		applicationVersionESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ModelPackage.REVIEW__APPLICATION_VERSION, oldApplicationVersion, APPLICATION_VERSION_EDEFAULT, oldApplicationVersionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetApplicationVersion() {
+		return applicationVersionESet;
 	}
 
 	/**
@@ -285,6 +480,12 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case ModelPackage.REVIEW__FRAGMENT_VERSION:
+				return getFragmentVersion();
+			case ModelPackage.REVIEW__COMPATIBILITY:
+				return getCompatibility();
+			case ModelPackage.REVIEW__APPLICATION_VERSION:
+				return getApplicationVersion();
 			case ModelPackage.REVIEW__TOPICS:
 				return getTopics();
 			case ModelPackage.REVIEW__REVIEW_ITEMS:
@@ -308,6 +509,15 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case ModelPackage.REVIEW__FRAGMENT_VERSION:
+				setFragmentVersion((String)newValue);
+				return;
+			case ModelPackage.REVIEW__COMPATIBILITY:
+				setCompatibility((Integer)newValue);
+				return;
+			case ModelPackage.REVIEW__APPLICATION_VERSION:
+				setApplicationVersion((String)newValue);
+				return;
 			case ModelPackage.REVIEW__TOPICS:
 				getTopics().clear();
 				getTopics().addAll((Collection<? extends Topic>)newValue);
@@ -334,6 +544,15 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case ModelPackage.REVIEW__FRAGMENT_VERSION:
+				setFragmentVersion(FRAGMENT_VERSION_EDEFAULT);
+				return;
+			case ModelPackage.REVIEW__COMPATIBILITY:
+				unsetCompatibility();
+				return;
+			case ModelPackage.REVIEW__APPLICATION_VERSION:
+				unsetApplicationVersion();
+				return;
 			case ModelPackage.REVIEW__TOPICS:
 				getTopics().clear();
 				return;
@@ -358,6 +577,12 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case ModelPackage.REVIEW__FRAGMENT_VERSION:
+				return FRAGMENT_VERSION_EDEFAULT == null ? fragmentVersion != null : !FRAGMENT_VERSION_EDEFAULT.equals(fragmentVersion);
+			case ModelPackage.REVIEW__COMPATIBILITY:
+				return isSetCompatibility();
+			case ModelPackage.REVIEW__APPLICATION_VERSION:
+				return isSetApplicationVersion();
 			case ModelPackage.REVIEW__TOPICS:
 				return topics != null && !topics.isEmpty();
 			case ModelPackage.REVIEW__REVIEW_ITEMS:
@@ -368,6 +593,62 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 				return state != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == SubModelRoot.class) {
+			switch (derivedFeatureID) {
+				case ModelPackage.REVIEW__FRAGMENT_VERSION: return ModelPackage.SUB_MODEL_ROOT__FRAGMENT_VERSION;
+				case ModelPackage.REVIEW__COMPATIBILITY: return ModelPackage.SUB_MODEL_ROOT__COMPATIBILITY;
+				case ModelPackage.REVIEW__APPLICATION_VERSION: return ModelPackage.SUB_MODEL_ROOT__APPLICATION_VERSION;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == SubModelRoot.class) {
+			switch (baseFeatureID) {
+				case ModelPackage.SUB_MODEL_ROOT__FRAGMENT_VERSION: return ModelPackage.REVIEW__FRAGMENT_VERSION;
+				case ModelPackage.SUB_MODEL_ROOT__COMPATIBILITY: return ModelPackage.REVIEW__COMPATIBILITY;
+				case ModelPackage.SUB_MODEL_ROOT__APPLICATION_VERSION: return ModelPackage.REVIEW__APPLICATION_VERSION;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (fragmentVersion: ");
+		result.append(fragmentVersion);
+		result.append(", compatibility: ");
+		if (compatibilityESet) result.append(compatibility); else result.append("<unset>");
+		result.append(", applicationVersion: ");
+		if (applicationVersionESet) result.append(applicationVersion); else result.append("<unset>");
+		result.append(')');
+		return result.toString();
 	}
 
 } //ReviewImpl

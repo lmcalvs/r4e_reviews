@@ -17,8 +17,6 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="designRuleLocations" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="1.0.0"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="availableAnomalyTypes"
         upperBound="-1" eType="#//R4EAnomalyType" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="anomalyTypeKeyToReference"
@@ -42,8 +40,6 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="1.0.0"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="anomalyTemplate" lowerBound="1"
         eType="#//R4EAnomaly" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//R4EReviewType"
@@ -129,8 +125,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reviewCreatedByMe" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reviewInstance" lowerBound="1"
         eType="#//R4EReview"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="1.0.0"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reviewCompleted" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reviewCompletedCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
@@ -145,8 +139,6 @@
         eType="#//MapDateToDuration" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EItem" eSuperTypes="#//R4EIDComponent ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//Item">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="1.0.0"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addedById" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="fileContextList" upperBound="-1"
@@ -249,8 +241,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="group" eType="#//R4EReviewGroup"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="createdReviews" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="1.0.0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EIDComponent" eSuperTypes="#//R4EReviewComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="id" eType="#//R4EID" containment="true"/>

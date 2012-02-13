@@ -35,6 +35,7 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.FilePathEditor;
@@ -636,6 +637,9 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 						fRuleSetVersionText.setText(ruleSet.getVersion());
 						R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(ruleSet);
 					} catch (ResourceHandlingException e) {
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+					} catch (CompatibilityException e) {
 						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
 					}

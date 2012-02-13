@@ -44,6 +44,7 @@ import org.eclipse.jface.window.ToolTip;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -677,6 +678,10 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 										+ ")");
 								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 							} catch (ReviewVersionsException e) {
+								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage()
+										+ ")");
+								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+							} catch (CompatibilityException e) {
 								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage()
 										+ ")");
 								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);

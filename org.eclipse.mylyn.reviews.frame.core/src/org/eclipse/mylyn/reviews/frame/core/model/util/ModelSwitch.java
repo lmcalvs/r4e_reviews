@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.mylyn.reviews.frame.core.model.*;
 import org.eclipse.mylyn.reviews.frame.core.model.Comment;
 import org.eclipse.mylyn.reviews.frame.core.model.CommentType;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
@@ -95,6 +96,7 @@ public class ModelSwitch<T> {
 				Review review = (Review)theEObject;
 				T result = caseReview(review);
 				if (result == null) result = caseReviewComponent(review);
+				if (result == null) result = caseSubModelRoot(review);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -142,6 +144,7 @@ public class ModelSwitch<T> {
 				ReviewGroup reviewGroup = (ReviewGroup)theEObject;
 				T result = caseReviewGroup(reviewGroup);
 				if (result == null) result = caseReviewComponent(reviewGroup);
+				if (result == null) result = caseSubModelRoot(reviewGroup);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -162,6 +165,12 @@ public class ModelSwitch<T> {
 			case ModelPackage.REVIEW_COMPONENT: {
 				ReviewComponent reviewComponent = (ReviewComponent)theEObject;
 				T result = caseReviewComponent(reviewComponent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ModelPackage.SUB_MODEL_ROOT: {
+				SubModelRoot subModelRoot = (SubModelRoot)theEObject;
+				T result = caseSubModelRoot(subModelRoot);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -331,6 +340,21 @@ public class ModelSwitch<T> {
 	 * @generated
 	 */
 	public T caseReviewComponent(ReviewComponent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Sub Model Root</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Sub Model Root</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSubModelRoot(SubModelRoot object) {
 		return null;
 	}
 

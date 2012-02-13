@@ -38,6 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelReader;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IRWUserBasedRes.ResourceType;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.Activator;
@@ -130,9 +131,10 @@ public class ModelTransformImpl implements ModelTransform {
 	 * resource
 	 * 
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 */
 	public ReviewRes transformReview(URI origReviewGroup, URI destReviewGroup, String origReviewName)
-			throws ResourceHandlingException {
+			throws ResourceHandlingException, CompatibilityException {
 		//Open original model
 		R4EReviewGroup origGroup = RModelFactoryExt.eINSTANCE.openR4EReviewGroup(origReviewGroup);
 
@@ -300,7 +302,7 @@ public class ModelTransformImpl implements ModelTransform {
 		destReview.setProject(origReview.getProject());
 		destReview.setReferenceMaterial(origReview.getReferenceMaterial());
 		destReview.setStartDate(origReview.getStartDate());
-		destReview.setXmlVersion(origReview.getXmlVersion());
+		destReview.setFragmentVersion(origReview.getFragmentVersion());
 
 		//copy review components
 		EList<String> components = origReview.getComponents();

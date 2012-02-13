@@ -54,6 +54,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
@@ -676,9 +677,10 @@ public class CommandUtils {
 	 *            R4EUIReviewBasic
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
+	 * @throws CompatibilityException
 	 */
 	public static void showPostponedElements(R4EUIReviewBasic aReview) throws ResourceHandlingException,
-			OutOfSyncException {
+			OutOfSyncException, CompatibilityException {
 		final R4EUIPostponedContainer container = aReview.getPostponedContainer();
 		if (null != container) {
 			boolean containerEnabled = false;

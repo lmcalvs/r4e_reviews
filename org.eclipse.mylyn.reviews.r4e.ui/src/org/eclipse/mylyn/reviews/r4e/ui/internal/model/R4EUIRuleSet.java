@@ -29,6 +29,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -305,9 +306,10 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * Method open.
 	 * 
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 */
 	@Override
-	public void open() throws ResourceHandlingException {
+	public void open() throws ResourceHandlingException, CompatibilityException {
 		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRuleSetFileURI);
 		final List<R4EDesignRuleArea> areas = fRuleSet.getAreas();
 		if (null != areas) {
@@ -338,10 +340,12 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
-	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException,
+			CompatibilityException {
 		//NOTE we need to open the model element temporarly to be able to set the enabled state
 		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRuleSetFileURI);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRuleSet,

@@ -400,6 +400,7 @@ public class DRModelPackageImpl extends EPackageImpl implements DRModelPackage {
 
 		// Add supertypes to classes
 		r4EDesignRuleCollectionEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
+		r4EDesignRuleCollectionEClass.getESuperTypes().add(theModelPackage.getSubModelRoot());
 		r4EDesignRuleEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
 		r4EDesignRuleAreaEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
 		r4EDesignRuleViolationEClass.getESuperTypes().add(theModelPackage.getReviewComponent());

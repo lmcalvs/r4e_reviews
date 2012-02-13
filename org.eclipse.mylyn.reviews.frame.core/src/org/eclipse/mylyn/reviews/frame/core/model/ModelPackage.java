@@ -114,13 +114,40 @@ public interface ModelPackage extends EPackage {
 	int REVIEW__ENABLED = REVIEW_COMPONENT__ENABLED;
 
 	/**
+	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW__FRAGMENT_VERSION = REVIEW_COMPONENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Compatibility</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW__COMPATIBILITY = REVIEW_COMPONENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Application Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW__APPLICATION_VERSION = REVIEW_COMPONENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Topics</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW__TOPICS = REVIEW_COMPONENT_FEATURE_COUNT + 0;
+	int REVIEW__TOPICS = REVIEW_COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Review Items</b></em>' reference list.
@@ -129,7 +156,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW__REVIEW_ITEMS = REVIEW_COMPONENT_FEATURE_COUNT + 1;
+	int REVIEW__REVIEW_ITEMS = REVIEW_COMPONENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Review Task</b></em>' containment reference.
@@ -138,7 +165,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW__REVIEW_TASK = REVIEW_COMPONENT_FEATURE_COUNT + 2;
+	int REVIEW__REVIEW_TASK = REVIEW_COMPONENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>State</b></em>' containment reference.
@@ -147,7 +174,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW__STATE = REVIEW_COMPONENT_FEATURE_COUNT + 3;
+	int REVIEW__STATE = REVIEW_COMPONENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of structural features of the '<em>Review</em>' class.
@@ -156,7 +183,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_FEATURE_COUNT = REVIEW_COMPONENT_FEATURE_COUNT + 4;
+	int REVIEW_FEATURE_COUNT = REVIEW_COMPONENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.frame.core.model.impl.CommentImpl <em>Comment</em>}' class.
@@ -409,13 +436,40 @@ public interface ModelPackage extends EPackage {
 	int REVIEW_GROUP__ENABLED = REVIEW_COMPONENT__ENABLED;
 
 	/**
+	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_GROUP__FRAGMENT_VERSION = REVIEW_COMPONENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Compatibility</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_GROUP__COMPATIBILITY = REVIEW_COMPONENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Application Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_GROUP__APPLICATION_VERSION = REVIEW_COMPONENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Reviews</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_GROUP__REVIEWS = REVIEW_COMPONENT_FEATURE_COUNT + 0;
+	int REVIEW_GROUP__REVIEWS = REVIEW_COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Review Group Task</b></em>' containment reference.
@@ -424,7 +478,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_GROUP__REVIEW_GROUP_TASK = REVIEW_COMPONENT_FEATURE_COUNT + 1;
+	int REVIEW_GROUP__REVIEW_GROUP_TASK = REVIEW_COMPONENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -433,7 +487,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_GROUP__DESCRIPTION = REVIEW_COMPONENT_FEATURE_COUNT + 2;
+	int REVIEW_GROUP__DESCRIPTION = REVIEW_COMPONENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Review Group</em>' class.
@@ -442,7 +496,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_GROUP_FEATURE_COUNT = REVIEW_COMPONENT_FEATURE_COUNT + 3;
+	int REVIEW_GROUP_FEATURE_COUNT = REVIEW_COMPONENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.frame.core.model.impl.CommentTypeImpl <em>Comment Type</em>}' class.
@@ -562,6 +616,52 @@ public interface ModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOPIC_FEATURE_COUNT = COMMENT_FEATURE_COUNT + 5;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.frame.core.model.impl.SubModelRootImpl <em>Sub Model Root</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.SubModelRootImpl
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.ModelPackageImpl#getSubModelRoot()
+	 * @generated
+	 */
+	int SUB_MODEL_ROOT = 11;
+
+	/**
+	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_MODEL_ROOT__FRAGMENT_VERSION = 0;
+
+	/**
+	 * The feature id for the '<em><b>Compatibility</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_MODEL_ROOT__COMPATIBILITY = 1;
+
+	/**
+	 * The feature id for the '<em><b>Application Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_MODEL_ROOT__APPLICATION_VERSION = 2;
+
+	/**
+	 * The number of structural features of the '<em>Sub Model Root</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_MODEL_ROOT_FEATURE_COUNT = 3;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.frame.core.model.Review <em>Review</em>}'.
@@ -916,6 +1016,49 @@ public interface ModelPackage extends EPackage {
 	EAttribute getReviewComponent_Enabled();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot <em>Sub Model Root</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Sub Model Root</em>'.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot
+	 * @generated
+	 */
+	EClass getSubModelRoot();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot#getFragmentVersion <em>Fragment Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Fragment Version</em>'.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot#getFragmentVersion()
+	 * @see #getSubModelRoot()
+	 * @generated
+	 */
+	EAttribute getSubModelRoot_FragmentVersion();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot#getCompatibility <em>Compatibility</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Compatibility</em>'.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot#getCompatibility()
+	 * @see #getSubModelRoot()
+	 * @generated
+	 */
+	EAttribute getSubModelRoot_Compatibility();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot#getApplicationVersion <em>Application Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Application Version</em>'.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot#getApplicationVersion()
+	 * @see #getSubModelRoot()
+	 * @generated
+	 */
+	EAttribute getSubModelRoot_ApplicationVersion();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1222,6 +1365,40 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute REVIEW_COMPONENT__ENABLED = eINSTANCE.getReviewComponent_Enabled();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.frame.core.model.impl.SubModelRootImpl <em>Sub Model Root</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.SubModelRootImpl
+		 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.ModelPackageImpl#getSubModelRoot()
+		 * @generated
+		 */
+		EClass SUB_MODEL_ROOT = eINSTANCE.getSubModelRoot();
+
+		/**
+		 * The meta object literal for the '<em><b>Fragment Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SUB_MODEL_ROOT__FRAGMENT_VERSION = eINSTANCE.getSubModelRoot_FragmentVersion();
+
+		/**
+		 * The meta object literal for the '<em><b>Compatibility</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SUB_MODEL_ROOT__COMPATIBILITY = eINSTANCE.getSubModelRoot_Compatibility();
+
+		/**
+		 * The meta object literal for the '<em><b>Application Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SUB_MODEL_ROOT__APPLICATION_VERSION = eINSTANCE.getSubModelRoot_ApplicationVersion();
 
 	}
 

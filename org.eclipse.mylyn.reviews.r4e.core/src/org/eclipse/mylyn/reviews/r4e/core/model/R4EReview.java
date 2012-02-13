@@ -38,7 +38,6 @@ import org.eclipse.mylyn.reviews.frame.core.model.Review;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDecision <em>Decision</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEndDate <em>End Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getXmlVersion <em>Xml Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getAnomalyTemplate <em>Anomaly Template</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getUsersMap <em>Users Map</em>}</li>
@@ -302,33 +301,6 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * @generated
 	 */
 	void setEndDate(Date value);
-
-	/**
-	 * Returns the value of the '<em><b>Xml Version</b></em>' attribute.
-	 * The default value is <code>"1.0.0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Xml Version</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Xml Version</em>' attribute.
-	 * @see #setXmlVersion(String)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_XmlVersion()
-	 * @model default="1.0.0"
-	 * @generated
-	 */
-	String getXmlVersion();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getXmlVersion <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Xml Version</em>' attribute.
-	 * @see #getXmlVersion()
-	 * @generated
-	 */
-	void setXmlVersion(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Anomaly Template</b></em>' containment reference.

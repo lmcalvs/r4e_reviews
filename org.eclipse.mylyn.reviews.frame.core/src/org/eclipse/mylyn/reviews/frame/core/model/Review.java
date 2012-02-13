@@ -34,7 +34,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Review extends ReviewComponent {
+public interface Review extends ReviewComponent, SubModelRoot {
 	/**
 	 * Returns the value of the '<em><b>Topics</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.frame.core.model.Topic}.

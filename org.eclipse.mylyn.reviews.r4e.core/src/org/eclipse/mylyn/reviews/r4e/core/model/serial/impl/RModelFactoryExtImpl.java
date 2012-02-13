@@ -65,6 +65,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.ReviewsRFSProxy;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
+import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.UserPermission;
 
 /**
@@ -96,6 +97,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		// create a new ResourceSet and resource for the given group
 		Resource resource = fWriter.createResourceSetWithResource(fileGroupURI);
 		R4EReviewGroup group = RModelFactory.eINSTANCE.createR4EReviewGroup();
+		// Set the revision level fragment and sub model version start at the same level
+		group.setFragmentVersion(Roots.GROUP.getVersion());
 		resource.getContents().add(group);
 
 		URI uri = group.eResource().getURI().trimSegments(1);
@@ -135,8 +138,16 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.GroupResFactory#openR4EReviewGroup(org.eclipse.emf
 	 * .common.util.URI)
 	 */
-	public R4EReviewGroup openR4EReviewGroup(URI aResourcePath) throws ResourceHandlingException {
+	public R4EReviewGroup openR4EReviewGroup(URI aResourcePath) throws ResourceHandlingException,
+			CompatibilityException {
 		R4EReviewGroup group = fReader.deserializeTopElement(aResourcePath, R4EReviewGroup.class);
+
+		// read group meta-data version from the loaded group
+		String fragmentVersion = group.getFragmentVersion();
+		String appVersionLevel = Roots.GROUP.getVersion();
+
+		// validate if the group just opened is compatible with the current application
+		validateCompatibility(Roots.GROUP, group.getName(), fragmentVersion, appVersionLevel);
 
 		// Load resources from all participants
 		URI folder = ResourceUtils.getFolderPath(aResourcePath);
@@ -166,6 +177,25 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		}
 
 		return group;
+	}
+
+	private void validateCompatibility(Roots aRoot, String aName, String aFragmentVersionInDisk, String appVersionLevel)
+			throws CompatibilityException {
+		int compatibility = VersionUtils.compareVersions(appVersionLevel, aFragmentVersionInDisk);
+		if (compatibility < 0) {
+			// Attempting to load a serialised model with a higher model version than the current one supported by the
+			// application
+			StringBuilder sb = new StringBuilder(
+					"The "
+							+ aRoot.getName()
+							+ " \""
+							+ aName
+					+ "\" is using a newer data format, please upgrade the application to the latest version");
+			sb.append("\n\"" + aName + "\" meta-data version: " + aFragmentVersionInDisk
+					+ ", Application meta-data version: " + appVersionLevel);
+
+			throw new CompatibilityException(sb.toString());
+		}
 	}
 
 	/**
@@ -268,7 +298,10 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		URI groupFilePath = groupResource.getURI();
 		groupFilePath = ResourceUtils.getFolderPath(groupFilePath); /* To directory */
 
-		// CREATE REVIEW - and associate it to a resource
+		// Set the revision level for the fragment and track the current one for the application
+		review.setFragmentVersion(Roots.REVIEW.getVersion());
+
+		// Associate review to a resource
 		review.setName(aReviewName);
 		URI reviewURI = fWriter.createResourceURI(aReviewName, groupFilePath, ResourceType.REVIEW);
 		Resource reviewResource = resSet.createResource(reviewURI);
@@ -450,7 +483,8 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		return uri;
 	}
 
-	public R4EReview openR4EReview(R4EReviewGroup aReviewGroup, String aReviewName) throws ResourceHandlingException {
+	public R4EReview openR4EReview(R4EReviewGroup aReviewGroup, String aReviewName) throws ResourceHandlingException,
+			CompatibilityException {
 		if (aReviewGroup == null) {
 			return null;
 		}
@@ -468,6 +502,12 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 			StringBuilder sb = new StringBuilder("The review was not added.. already present in parent group");
 			Activator.fTracer.traceDebug(sb.toString());
 		}
+
+		// read review meta-data version from the loaded review
+		String fragmentVersion = review.getFragmentVersion();
+		String appVersionLevel = Roots.REVIEW.getVersion();
+		// Validate compatibility of the review data just loaded against the current version level of the application
+		validateCompatibility(Roots.REVIEW, review.getName(), fragmentVersion, appVersionLevel);
 
 		URI folder = ResourceUtils.getFolderPath(review.eResource().getURI());
 		// Load resources from all participants
@@ -1416,6 +1456,9 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		R4EDesignRuleCollection ruleSet = DRModelFactory.eINSTANCE.createR4EDesignRuleCollection();
 		resource.getContents().add(ruleSet);
 		
+		// Set the revision level fragment and sub model version start at the same level
+		ruleSet.setFragmentVersion(Roots.RULESET.getVersion());
+
 		// Update the resource
 		ruleSet.setName(aRuleCollectionName);
 
@@ -1433,13 +1476,20 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#openR4EDesignRuleCollection(org.eclipse
 	 * .emf.common.util.URI)
 	 */
-	public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException {
+	public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException,
+			CompatibilityException {
 		R4EDesignRuleCollection ruleSet = fReader.deserializeTopElement(aResourcePath, R4EDesignRuleCollection.class);
 
 		URI resUri = ruleSet.eResource().getURI().trimSegments(1);
 		// update the transient value of folder
 		ruleSet.setFolder(URI.decode(resUri.devicePath().toString()));
 		
+		// read the rule set meta-data version just loaded
+		String fragmentVersion = ruleSet.getFragmentVersion();
+		String appVersionLevel = Roots.RULESET.getVersion();
+		// Validate compatibility of the rule set data just loaded against the current version level of the application
+		validateCompatibility(Roots.RULESET, ruleSet.getName(), fragmentVersion, appVersionLevel);
+
 		return ruleSet;
 	}
 

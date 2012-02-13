@@ -51,7 +51,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#getAddedItems <em>Added Items</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#isReviewCreatedByMe <em>Review Created By Me</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#getReviewInstance <em>Review Instance</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#getXmlVersion <em>Xml Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#isReviewCompleted <em>Review Completed</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserImpl#getReviewCompletedCode <em>Review Completed Code</em>}</li>
  * </ul>
@@ -168,26 +167,6 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	 * @ordered
 	 */
 	protected R4EReview reviewInstance;
-
-	/**
-	 * The default value of the '{@link #getXmlVersion() <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getXmlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String XML_VERSION_EDEFAULT = "1.0.0";
-
-	/**
-	 * The cached value of the '{@link #getXmlVersion() <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getXmlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected String xmlVersion = XML_VERSION_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isReviewCompleted() <em>Review Completed</em>}' attribute.
@@ -402,27 +381,6 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getXmlVersion() {
-		return xmlVersion;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setXmlVersion(String newXmlVersion) {
-		String oldXmlVersion = xmlVersion;
-		xmlVersion = newXmlVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_USER__XML_VERSION, oldXmlVersion, xmlVersion));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isReviewCompleted() {
 		return reviewCompleted;
 	}
@@ -512,8 +470,6 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 			case RModelPackage.R4E_USER__REVIEW_INSTANCE:
 				if (resolve) return getReviewInstance();
 				return basicGetReviewInstance();
-			case RModelPackage.R4E_USER__XML_VERSION:
-				return getXmlVersion();
 			case RModelPackage.R4E_USER__REVIEW_COMPLETED:
 				return isReviewCompleted();
 			case RModelPackage.R4E_USER__REVIEW_COMPLETED_CODE:
@@ -559,9 +515,6 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 			case RModelPackage.R4E_USER__REVIEW_INSTANCE:
 				setReviewInstance((R4EReview)newValue);
 				return;
-			case RModelPackage.R4E_USER__XML_VERSION:
-				setXmlVersion((String)newValue);
-				return;
 			case RModelPackage.R4E_USER__REVIEW_COMPLETED:
 				setReviewCompleted((Boolean)newValue);
 				return;
@@ -604,9 +557,6 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 			case RModelPackage.R4E_USER__REVIEW_INSTANCE:
 				setReviewInstance((R4EReview)null);
 				return;
-			case RModelPackage.R4E_USER__XML_VERSION:
-				setXmlVersion(XML_VERSION_EDEFAULT);
-				return;
 			case RModelPackage.R4E_USER__REVIEW_COMPLETED:
 				setReviewCompleted(REVIEW_COMPLETED_EDEFAULT);
 				return;
@@ -641,8 +591,6 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 				return reviewCreatedByMe != REVIEW_CREATED_BY_ME_EDEFAULT;
 			case RModelPackage.R4E_USER__REVIEW_INSTANCE:
 				return reviewInstance != null;
-			case RModelPackage.R4E_USER__XML_VERSION:
-				return XML_VERSION_EDEFAULT == null ? xmlVersion != null : !XML_VERSION_EDEFAULT.equals(xmlVersion);
 			case RModelPackage.R4E_USER__REVIEW_COMPLETED:
 				return reviewCompleted != REVIEW_COMPLETED_EDEFAULT;
 			case RModelPackage.R4E_USER__REVIEW_COMPLETED_CODE:
@@ -715,8 +663,6 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 		result.append(sequenceIDCounter);
 		result.append(", reviewCreatedByMe: ");
 		result.append(reviewCreatedByMe);
-		result.append(", xmlVersion: ");
-		result.append(xmlVersion);
 		result.append(", reviewCompleted: ");
 		result.append(reviewCompleted);
 		result.append(", reviewCompletedCode: ");

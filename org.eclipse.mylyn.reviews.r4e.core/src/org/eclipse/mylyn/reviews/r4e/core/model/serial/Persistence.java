@@ -43,6 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 
@@ -51,6 +52,29 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
  *
  */
 public interface Persistence {
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+	public enum Roots {
+		GROUP("Group", "1.0.0"), REVIEW("Review", "1.1.0"), RULESET("RuleSet", "1.0.0");
+
+		private String	fName;
+		private String	fVersion;
+
+		Roots(String aName, String aVersion) {
+			fName = aName;
+			fVersion = aVersion;
+		}
+
+		public String getVersion() {
+			return fVersion;
+		}
+
+		public String getName() {
+			return fName;
+		}
+	}
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -91,8 +115,10 @@ public interface Persistence {
 		 * @param aRresourcePath
 		 * @return R4EReviewGroup or null if loading fails
 		 * @throws ResourceHandlingException
+		 * @throws CompatibilityException
 		 */
-		public R4EReviewGroup openR4EReviewGroup(URI aResourcePath) throws ResourceHandlingException;
+		public R4EReviewGroup openR4EReviewGroup(URI aResourcePath) throws ResourceHandlingException,
+				CompatibilityException;
 
 		/**
 		 * The review group structure shall unload the associated resources and remove any references, the application is
@@ -162,8 +188,10 @@ public interface Persistence {
 		 * @param aReviewName
 		 * @return
 		 * @throws ResourceHandlingException
+		 * @throws CompatibilityException
 		 */
-		public R4EReview openR4EReview(R4EReviewGroup aRreviewGroup, String aReviewName) throws ResourceHandlingException;
+		public R4EReview openR4EReview(R4EReviewGroup aRreviewGroup, String aReviewName)
+				throws ResourceHandlingException, CompatibilityException;
 
 		/**
 		 * The review structure shall unload the associated resources and remove any references, the application is
@@ -420,8 +448,10 @@ public interface Persistence {
 		 * @param aRresourcePath
 		 * @return R4EDesignRuleCollection or null if loading fails
 		 * @throws ResourceHandlingException
+		 * @throws CompatibilityException
 		 */
-		public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException;
+		public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException,
+				CompatibilityException;
 
 		/**
 		 * The R4EDesignRuleCollection structure shall unload the associated resources and remove any references, the

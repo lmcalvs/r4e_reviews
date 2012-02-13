@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.mylyn.reviews.frame.core.model.*;
 import org.eclipse.mylyn.reviews.frame.core.model.Comment;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 import org.eclipse.mylyn.reviews.frame.core.model.ModelFactory;
@@ -81,6 +82,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 			case ModelPackage.REVIEW_GROUP: return createReviewGroup();
 			case ModelPackage.TOPIC: return createTopic();
 			case ModelPackage.REVIEW_COMPONENT: return createReviewComponent();
+			case ModelPackage.SUB_MODEL_ROOT: return createSubModelRoot();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -164,6 +166,16 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	public ReviewComponent createReviewComponent() {
 		ReviewComponentImpl reviewComponent = new ReviewComponentImpl();
 		return reviewComponent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SubModelRoot createSubModelRoot() {
+		SubModelRootImpl subModelRoot = new SubModelRootImpl();
+		return subModelRoot;
 	}
 
 	/**

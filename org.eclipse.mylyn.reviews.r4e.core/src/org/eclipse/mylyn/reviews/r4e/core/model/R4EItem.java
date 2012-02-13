@@ -28,7 +28,6 @@ import org.eclipse.mylyn.reviews.frame.core.model.Item;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getXmlVersion <em>Xml Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getDescription <em>Description</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getAddedById <em>Added By Id</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getFileContextList <em>File Context List</em>}</li>
@@ -45,33 +44,6 @@ import org.eclipse.mylyn.reviews.frame.core.model.Item;
  * @generated
  */
 public interface R4EItem extends R4EIDComponent, Item {
-	/**
-	 * Returns the value of the '<em><b>Xml Version</b></em>' attribute.
-	 * The default value is <code>"1.0.0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Xml Version</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Xml Version</em>' attribute.
-	 * @see #setXmlVersion(String)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EItem_XmlVersion()
-	 * @model default="1.0.0"
-	 * @generated
-	 */
-	String getXmlVersion();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EItem#getXmlVersion <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Xml Version</em>' attribute.
-	 * @see #getXmlVersion()
-	 * @generated
-	 */
-	void setXmlVersion(String value);
-
 	/**
 	 * Returns the value of the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->

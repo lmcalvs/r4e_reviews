@@ -34,6 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
@@ -141,10 +142,12 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 * @throws ResourceHandlingException
 	 * @throws ReviewVersionsException
 	 * @throws FileNotFoundException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#open()
 	 */
 	@Override
-	public void open() throws ResourceHandlingException, FileNotFoundException, ReviewVersionsException {
+	public void open() throws ResourceHandlingException, FileNotFoundException, ReviewVersionsException,
+			CompatibilityException {
 		super.open();
 		setImage(REVIEW_FORMAL_ICON_FILE);
 	}

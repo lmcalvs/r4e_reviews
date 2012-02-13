@@ -31,7 +31,6 @@ import org.eclipse.mylyn.reviews.frame.core.model.User;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getAddedItems <em>Added Items</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#isReviewCreatedByMe <em>Review Created By Me</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getReviewInstance <em>Review Instance</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getXmlVersion <em>Xml Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#isReviewCompleted <em>Review Completed</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getReviewCompletedCode <em>Review Completed Code</em>}</li>
  * </ul>
@@ -175,33 +174,6 @@ public interface R4EUser extends User, R4EReviewComponent {
 	 * @generated
 	 */
 	void setReviewInstance(R4EReview value);
-
-	/**
-	 * Returns the value of the '<em><b>Xml Version</b></em>' attribute.
-	 * The default value is <code>"1.0.0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Xml Version</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Xml Version</em>' attribute.
-	 * @see #setXmlVersion(String)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EUser_XmlVersion()
-	 * @model default="1.0.0"
-	 * @generated
-	 */
-	String getXmlVersion();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getXmlVersion <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Xml Version</em>' attribute.
-	 * @see #getXmlVersion()
-	 * @generated
-	 */
-	void setXmlVersion(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Review Completed</b></em>' attribute.

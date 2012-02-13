@@ -24,10 +24,15 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
+import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
 import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewComponentImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.Roots;
+import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,6 +41,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl#getFragmentVersion <em>Fragment Version</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl#getCompatibility <em>Compatibility</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl#getApplicationVersion <em>Application Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl#getAreas <em>Areas</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl#getFolder <em>Folder</em>}</li>
@@ -46,6 +54,84 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
  * @generated
  */
 public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements R4EDesignRuleCollection {
+	/**
+	 * The default value of the '{@link #getFragmentVersion() <em>Fragment Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFragmentVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String FRAGMENT_VERSION_EDEFAULT = "1.0.0";
+
+	/**
+	 * The cached value of the '{@link #getFragmentVersion() <em>Fragment Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFragmentVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected String fragmentVersion = FRAGMENT_VERSION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getCompatibility() <em>Compatibility</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCompatibility()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int COMPATIBILITY_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getCompatibility() <em>Compatibility</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCompatibility()
+	 * @generated
+	 * @ordered
+	 */
+	protected int compatibility = COMPATIBILITY_EDEFAULT;
+
+	/**
+	 * This is true if the Compatibility attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean compatibilityESet;
+
+	/**
+	 * The default value of the '{@link #getApplicationVersion() <em>Application Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getApplicationVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String APPLICATION_VERSION_EDEFAULT = "1.0.0";
+
+	/**
+	 * The cached value of the '{@link #getApplicationVersion() <em>Application Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getApplicationVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected String applicationVersion = APPLICATION_VERSION_EDEFAULT;
+
+	/**
+	 * This is true if the Application Version attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean applicationVersionESet;
+
 	/**
 	 * The cached value of the '{@link #getAreas() <em>Areas</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -133,6 +219,119 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	@Override
 	protected EClass eStaticClass() {
 		return DRModelPackage.Literals.R4E_DESIGN_RULE_COLLECTION;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getFragmentVersion() {
+		return fragmentVersion;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFragmentVersion(String newFragmentVersion) {
+		String oldFragmentVersion = fragmentVersion;
+		fragmentVersion = newFragmentVersion;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FRAGMENT_VERSION, oldFragmentVersion, fragmentVersion));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot#getCompatibility()
+	 */
+	public int getCompatibility() {
+		return VersionUtils.compareVersions(Roots.RULESET.getVersion(), fragmentVersion);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot#getApplicationVersion()
+	 */
+	public String getApplicationVersion() {
+		return Persistence.Roots.RULESET.getVersion();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCompatibility(int newCompatibility) {
+		int oldCompatibility = compatibility;
+		compatibility = newCompatibility;
+		boolean oldCompatibilityESet = compatibilityESet;
+		compatibilityESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DRModelPackage.R4E_DESIGN_RULE_COLLECTION__COMPATIBILITY, oldCompatibility, compatibility, !oldCompatibilityESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetCompatibility() {
+		int oldCompatibility = compatibility;
+		boolean oldCompatibilityESet = compatibilityESet;
+		compatibility = COMPATIBILITY_EDEFAULT;
+		compatibilityESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, DRModelPackage.R4E_DESIGN_RULE_COLLECTION__COMPATIBILITY, oldCompatibility, COMPATIBILITY_EDEFAULT, oldCompatibilityESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetCompatibility() {
+		return compatibilityESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setApplicationVersion(String newApplicationVersion) {
+		String oldApplicationVersion = applicationVersion;
+		applicationVersion = newApplicationVersion;
+		boolean oldApplicationVersionESet = applicationVersionESet;
+		applicationVersionESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DRModelPackage.R4E_DESIGN_RULE_COLLECTION__APPLICATION_VERSION, oldApplicationVersion, applicationVersion, !oldApplicationVersionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetApplicationVersion() {
+		String oldApplicationVersion = applicationVersion;
+		boolean oldApplicationVersionESet = applicationVersionESet;
+		applicationVersion = APPLICATION_VERSION_EDEFAULT;
+		applicationVersionESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, DRModelPackage.R4E_DESIGN_RULE_COLLECTION__APPLICATION_VERSION, oldApplicationVersion, APPLICATION_VERSION_EDEFAULT, oldApplicationVersionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetApplicationVersion() {
+		return applicationVersionESet;
 	}
 
 	/**
@@ -232,6 +431,12 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FRAGMENT_VERSION:
+				return getFragmentVersion();
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__COMPATIBILITY:
+				return getCompatibility();
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__APPLICATION_VERSION:
+				return getApplicationVersion();
 			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__AREAS:
 				return getAreas();
 			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__VERSION:
@@ -253,6 +458,15 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FRAGMENT_VERSION:
+				setFragmentVersion((String)newValue);
+				return;
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__COMPATIBILITY:
+				setCompatibility((Integer)newValue);
+				return;
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__APPLICATION_VERSION:
+				setApplicationVersion((String)newValue);
+				return;
 			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__AREAS:
 				getAreas().clear();
 				getAreas().addAll((Collection<? extends R4EDesignRuleArea>)newValue);
@@ -278,6 +492,15 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FRAGMENT_VERSION:
+				setFragmentVersion(FRAGMENT_VERSION_EDEFAULT);
+				return;
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__COMPATIBILITY:
+				unsetCompatibility();
+				return;
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__APPLICATION_VERSION:
+				unsetApplicationVersion();
+				return;
 			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__AREAS:
 				getAreas().clear();
 				return;
@@ -302,6 +525,12 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FRAGMENT_VERSION:
+				return FRAGMENT_VERSION_EDEFAULT == null ? fragmentVersion != null : !FRAGMENT_VERSION_EDEFAULT.equals(fragmentVersion);
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__COMPATIBILITY:
+				return isSetCompatibility();
+			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__APPLICATION_VERSION:
+				return isSetApplicationVersion();
 			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__AREAS:
 				return areas != null && !areas.isEmpty();
 			case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__VERSION:
@@ -320,11 +549,53 @@ public class R4EDesignRuleCollectionImpl extends ReviewComponentImpl implements 
 	 * @generated
 	 */
 	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == SubModelRoot.class) {
+			switch (derivedFeatureID) {
+				case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FRAGMENT_VERSION: return ModelPackage.SUB_MODEL_ROOT__FRAGMENT_VERSION;
+				case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__COMPATIBILITY: return ModelPackage.SUB_MODEL_ROOT__COMPATIBILITY;
+				case DRModelPackage.R4E_DESIGN_RULE_COLLECTION__APPLICATION_VERSION: return ModelPackage.SUB_MODEL_ROOT__APPLICATION_VERSION;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == SubModelRoot.class) {
+			switch (baseFeatureID) {
+				case ModelPackage.SUB_MODEL_ROOT__FRAGMENT_VERSION: return DRModelPackage.R4E_DESIGN_RULE_COLLECTION__FRAGMENT_VERSION;
+				case ModelPackage.SUB_MODEL_ROOT__COMPATIBILITY: return DRModelPackage.R4E_DESIGN_RULE_COLLECTION__COMPATIBILITY;
+				case ModelPackage.SUB_MODEL_ROOT__APPLICATION_VERSION: return DRModelPackage.R4E_DESIGN_RULE_COLLECTION__APPLICATION_VERSION;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (version: ");
+		result.append(" (fragmentVersion: ");
+		result.append(fragmentVersion);
+		result.append(", compatibility: ");
+		if (compatibilityESet) result.append(compatibility); else result.append("<unset>");
+		result.append(", applicationVersion: ");
+		if (applicationVersionESet) result.append(applicationVersion); else result.append("<unset>");
+		result.append(", version: ");
 		result.append(version);
 		result.append(", folder: ");
 		result.append(folder);

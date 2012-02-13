@@ -34,6 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
@@ -127,6 +128,9 @@ public class PersistenceTest extends TestCase {
 		} catch (ResourceHandlingException e1) {
 			e1.printStackTrace();
 			fail("Exception");
+		} catch (CompatibilityException e) {
+			e.printStackTrace();
+			fail("Exception");
 		}
 
 		R4EUser user = (R4EUser) review.getUsersMap().values().iterator().next();
@@ -167,6 +171,9 @@ public class PersistenceTest extends TestCase {
 			fGroup = fResFactory.openR4EReviewGroup(groupURI);
 			review = fResFactory.openR4EReview(fGroup, revName);
 		} catch (ResourceHandlingException e) {
+			e.printStackTrace();
+			fail("Exception");
+		} catch (CompatibilityException e) {
 			e.printStackTrace();
 			fail("Exception");
 		}

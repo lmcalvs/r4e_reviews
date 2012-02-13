@@ -33,6 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -384,11 +385,12 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 *            - also remove from file (hard remove)
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
-			throws ResourceHandlingException, OutOfSyncException {
+			throws ResourceHandlingException, OutOfSyncException, CompatibilityException {
 		if (aChildToRemove instanceof R4EUIReviewGroup) {
 			final R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
 
@@ -482,10 +484,12 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 *            boolean
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override
-	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException,
+			CompatibilityException {
 		//Recursively remove all children
 		for (R4EUIReviewGroup group : fReviewGroups) {
 			removeChildren(group, aFileRemove);

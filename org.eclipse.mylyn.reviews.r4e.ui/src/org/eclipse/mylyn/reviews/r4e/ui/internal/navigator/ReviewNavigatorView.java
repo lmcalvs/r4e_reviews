@@ -54,6 +54,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
@@ -349,6 +350,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 					} catch (ReviewVersionsException e) {
 						UIUtils.displayVersionErrorDialog(e);
+					} catch (CompatibilityException e) {
+						UIUtils.displayCompatibilityErrorDialog(e);
 					}
 					break;
 				}

@@ -37,6 +37,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
@@ -113,6 +114,8 @@ public class RestoreElementHandler extends AbstractHandler {
 								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 							} catch (ReviewVersionsException e) {
 								UIUtils.displayVersionErrorDialog(e);
+							} catch (CompatibilityException e) {
+								UIUtils.displayCompatibilityErrorDialog(e);
 							}
 						}
 						//Send email notification if needed

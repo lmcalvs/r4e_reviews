@@ -33,7 +33,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface ReviewGroup extends ReviewComponent {
+public interface ReviewGroup extends ReviewComponent, SubModelRoot {
 	/**
 	 * Returns the value of the '<em><b>Reviews</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.frame.core.model.Review}.

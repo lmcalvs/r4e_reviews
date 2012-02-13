@@ -46,6 +46,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -257,6 +258,8 @@ public class R4EUIModelController {
 			group = FModelExt.openR4EReviewGroup(URI.createFileURI(filePath));
 		} catch (ResourceHandlingException e) {
 			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+		} catch (CompatibilityException e) {
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 		}
 		return group;
 	}
@@ -268,8 +271,10 @@ public class R4EUIModelController {
 	 *            String
 	 * @return R4EDesignRuleCollection
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 */
-	public static R4EDesignRuleCollection peekRuleSet(String filePath) throws ResourceHandlingException {
+	public static R4EDesignRuleCollection peekRuleSet(String filePath) throws ResourceHandlingException,
+			CompatibilityException {
 		FModelExt = SerializeFactory.getModelExtension();
 		return FModelExt.openR4EDesignRuleCollection(URI.createFileURI(filePath));
 	}
@@ -338,6 +343,8 @@ public class R4EUIModelController {
 					newGroupPaths.remove(groupPath);
 				}
 				*/
+			} catch (CompatibilityException e) {
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			}
 		}
 
@@ -387,6 +394,8 @@ public class R4EUIModelController {
 					newRuleSetPaths.remove(ruleSetPath);
 				}
 				 */
+			} catch (CompatibilityException e) {
+				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			}
 		}
 

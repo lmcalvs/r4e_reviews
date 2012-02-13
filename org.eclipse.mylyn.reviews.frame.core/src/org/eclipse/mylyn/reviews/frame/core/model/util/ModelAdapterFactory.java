@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.mylyn.reviews.frame.core.model.*;
 import org.eclipse.mylyn.reviews.frame.core.model.Comment;
 import org.eclipse.mylyn.reviews.frame.core.model.CommentType;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
@@ -129,6 +130,10 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseReviewComponent(ReviewComponent object) {
 				return createReviewComponentAdapter();
+			}
+			@Override
+			public Adapter caseSubModelRoot(SubModelRoot object) {
+				return createSubModelRootAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -301,6 +306,20 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createReviewComponentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot <em>Sub Model Root</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot
+	 * @generated
+	 */
+	public Adapter createSubModelRootAdapter() {
 		return null;
 	}
 

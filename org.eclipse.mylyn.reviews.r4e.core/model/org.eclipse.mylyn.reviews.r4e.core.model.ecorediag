@@ -27,10 +27,6 @@
         <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/designRuleLocations"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_e5hl-rX-Ed-Xj-3H8XK7WQ"/>
       </children>
-      <children xmi:type="notation:Node" xmi:id="_mvUaQLa-Ed-HcNahxkfV5A" type="2001">
-        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/xmlVersion"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_mvUaQba-Ed-HcNahxkfV5A"/>
-      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_e5XN4rX-Ed-Xj-3H8XK7WQ"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_e5XN47X-Ed-Xj-3H8XK7WQ"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_e5XN5LX-Ed-Xj-3H8XK7WQ"/>
@@ -47,10 +43,6 @@
   <children xmi:type="notation:Node" xmi:id="_e5dUgrX-Ed-Xj-3H8XK7WQ" type="1001">
     <children xmi:type="notation:Node" xmi:id="_e5d7kLX-Ed-Xj-3H8XK7WQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_e5d7kbX-Ed-Xj-3H8XK7WQ" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_3Moq0LbKEd-HcNahxkfV5A" type="2001">
-        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/xmlVersion"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_3Moq0bbKEd-HcNahxkfV5A"/>
-      </children>
       <children xmi:type="notation:Node" xmi:id="_e5eipLX-Ed-Xj-3H8XK7WQ" type="2001">
         <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/name"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_e5eipbX-Ed-Xj-3H8XK7WQ"/>
@@ -341,10 +333,6 @@
         <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser/reviewCreatedByMe"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_HfXqUeqQEd-9SopSv7VwjA"/>
       </children>
-      <children xmi:type="notation:Node" xmi:id="_pwWT0PC9Ed-liaMDr_sRiA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser/xmlVersion"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_pwW64PC9Ed-liaMDr_sRiA"/>
-      </children>
       <children xmi:type="notation:Node" xmi:id="_qvXWoPEGEd-liaMDr_sRiA" type="2001">
         <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser/reviewCompleted"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_qvXWofEGEd-liaMDr_sRiA"/>
@@ -399,10 +387,6 @@
   <children xmi:type="notation:Node" xmi:id="_NjunULqqEd-6aOwQ22t3_g" type="1001">
     <children xmi:type="notation:Node" xmi:id="_NjunU7qqEd-6aOwQ22t3_g" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_NjunVLqqEd-6aOwQ22t3_g" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_n7DZALqtEd-6aOwQ22t3_g" type="2001">
-        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EItem/xmlVersion"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_n7DZAbqtEd-6aOwQ22t3_g"/>
-      </children>
       <children xmi:type="notation:Node" xmi:id="_t62i0LquEd-6aOwQ22t3_g" type="2001">
         <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EItem/description"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_t62i0bquEd-6aOwQ22t3_g"/>
@@ -835,10 +819,6 @@
       <children xmi:type="notation:Node" xmi:id="_vEfaYOqQEd-9SopSv7VwjA" type="2001">
         <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserReviews/createdReviews"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_vEfaYeqQEd-9SopSv7VwjA"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_ZjgRwPC9Ed-liaMDr_sRiA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserReviews/xmlVersion"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_ZjgRwfC9Ed-liaMDr_sRiA"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_AxiIYuknEd--FZQPkuXOdg"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_AxiIY-knEd--FZQPkuXOdg"/>

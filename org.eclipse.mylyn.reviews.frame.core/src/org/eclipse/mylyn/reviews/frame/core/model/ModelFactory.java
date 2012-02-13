@@ -105,6 +105,15 @@ public interface ModelFactory extends EFactory {
 	ReviewComponent createReviewComponent();
 
 	/**
+	 * Returns a new object of class '<em>Sub Model Root</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Sub Model Root</em>'.
+	 * @generated
+	 */
+	SubModelRoot createSubModelRoot();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

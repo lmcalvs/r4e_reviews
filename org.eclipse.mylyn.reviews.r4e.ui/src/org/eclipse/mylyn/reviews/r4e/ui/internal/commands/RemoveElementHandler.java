@@ -38,6 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -117,6 +118,8 @@ public class RemoveElementHandler extends AbstractHandler {
 									UIUtils.displayResourceErrorDialog(e);
 								} catch (OutOfSyncException e) {
 									UIUtils.displaySyncErrorDialog(e);
+								} catch (CompatibilityException e) {
+									UIUtils.displayCompatibilityErrorDialog(e);
 								}
 							}
 						}

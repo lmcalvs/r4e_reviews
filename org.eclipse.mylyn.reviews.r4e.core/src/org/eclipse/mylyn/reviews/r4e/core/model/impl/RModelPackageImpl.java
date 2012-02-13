@@ -502,17 +502,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EReviewGroup_XmlVersion() {
-		return (EAttribute)r4EReviewGroupEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getR4EReviewGroup_AvailableAnomalyTypes() {
-		return (EReference)r4EReviewGroupEClass.getEStructuralFeatures().get(7);
+		return (EReference)r4EReviewGroupEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -521,7 +512,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReviewGroup_AnomalyTypeKeyToReference() {
-		return (EReference)r4EReviewGroupEClass.getEStructuralFeatures().get(8);
+		return (EReference)r4EReviewGroupEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -530,7 +521,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReviewGroup_ReviewsMap() {
-		return (EReference)r4EReviewGroupEClass.getEStructuralFeatures().get(9);
+		return (EReference)r4EReviewGroupEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -539,7 +530,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReviewGroup_UserReviews() {
-		return (EReference)r4EReviewGroupEClass.getEStructuralFeatures().get(10);
+		return (EReference)r4EReviewGroupEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -646,17 +637,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EReview_XmlVersion() {
-		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(10);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getR4EReview_AnomalyTemplate() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(11);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -665,7 +647,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EReview_Type() {
-		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(12);
+		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -674,7 +656,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_UsersMap() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(13);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -683,7 +665,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_IdsMap() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(15);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(14);
 	}
 
 	/**
@@ -692,7 +674,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_ActiveMeeting() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(16);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(15);
 	}
 
 	/**
@@ -701,7 +683,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_CreatedBy() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(14);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -988,7 +970,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EUser_XmlVersion() {
+	public EAttribute getR4EUser_ReviewCompleted() {
 		return (EAttribute)r4EUserEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -997,17 +979,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EUser_ReviewCompleted() {
-		return (EAttribute)r4EUserEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getR4EUser_ReviewCompletedCode() {
-		return (EAttribute)r4EUserEClass.getEStructuralFeatures().get(8);
+		return (EAttribute)r4EUserEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -1078,7 +1051,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EItem_XmlVersion() {
+	public EAttribute getR4EItem_Description() {
 		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1087,7 +1060,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EItem_Description() {
+	public EAttribute getR4EItem_AddedById() {
 		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -1096,17 +1069,8 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EItem_AddedById() {
-		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getR4EItem_FileContextList() {
-		return (EReference)r4EItemEClass.getEStructuralFeatures().get(3);
+		return (EReference)r4EItemEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1115,7 +1079,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EItem_RepositoryRef() {
-		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1124,7 +1088,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EItem_ProjectURIs() {
-		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -1133,7 +1097,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EItem_AuthorRep() {
-		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(6);
+		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -1142,7 +1106,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EItem_Submitted() {
-		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(7);
+		return (EAttribute)r4EItemEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -1151,7 +1115,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EItem_InfoAtt() {
-		return (EReference)r4EItemEClass.getEStructuralFeatures().get(8);
+		return (EReference)r4EItemEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -1645,15 +1609,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EUserReviews_XmlVersion() {
-		return (EAttribute)r4EUserReviewsEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getR4EIDComponent() {
 		return r4EIDComponentEClass;
 	}
@@ -2044,7 +1999,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EReviewGroupEClass, R4E_REVIEW_GROUP__AVAILABLE_PROJECTS);
 		createEAttribute(r4EReviewGroupEClass, R4E_REVIEW_GROUP__AVAILABLE_COMPONENTS);
 		createEAttribute(r4EReviewGroupEClass, R4E_REVIEW_GROUP__DESIGN_RULE_LOCATIONS);
-		createEAttribute(r4EReviewGroupEClass, R4E_REVIEW_GROUP__XML_VERSION);
 		createEReference(r4EReviewGroupEClass, R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES);
 		createEReference(r4EReviewGroupEClass, R4E_REVIEW_GROUP__ANOMALY_TYPE_KEY_TO_REFERENCE);
 		createEReference(r4EReviewGroupEClass, R4E_REVIEW_GROUP__REVIEWS_MAP);
@@ -2061,7 +2015,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEReference(r4EReviewEClass, R4E_REVIEW__DECISION);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__START_DATE);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__END_DATE);
-		createEAttribute(r4EReviewEClass, R4E_REVIEW__XML_VERSION);
 		createEReference(r4EReviewEClass, R4E_REVIEW__ANOMALY_TEMPLATE);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__TYPE);
 		createEReference(r4EReviewEClass, R4E_REVIEW__USERS_MAP);
@@ -2104,7 +2057,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEReference(r4EUserEClass, R4E_USER__ADDED_ITEMS);
 		createEAttribute(r4EUserEClass, R4E_USER__REVIEW_CREATED_BY_ME);
 		createEReference(r4EUserEClass, R4E_USER__REVIEW_INSTANCE);
-		createEAttribute(r4EUserEClass, R4E_USER__XML_VERSION);
 		createEAttribute(r4EUserEClass, R4E_USER__REVIEW_COMPLETED);
 		createEAttribute(r4EUserEClass, R4E_USER__REVIEW_COMPLETED_CODE);
 
@@ -2116,7 +2068,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEReference(r4EParticipantEClass, R4E_PARTICIPANT__TIME_LOG);
 
 		r4EItemEClass = createEClass(R4E_ITEM);
-		createEAttribute(r4EItemEClass, R4E_ITEM__XML_VERSION);
 		createEAttribute(r4EItemEClass, R4E_ITEM__DESCRIPTION);
 		createEAttribute(r4EItemEClass, R4E_ITEM__ADDED_BY_ID);
 		createEReference(r4EItemEClass, R4E_ITEM__FILE_CONTEXT_LIST);
@@ -2196,7 +2147,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEReference(r4EUserReviewsEClass, R4E_USER_REVIEWS__INVITED_TO_MAP);
 		createEReference(r4EUserReviewsEClass, R4E_USER_REVIEWS__GROUP);
 		createEAttribute(r4EUserReviewsEClass, R4E_USER_REVIEWS__CREATED_REVIEWS);
-		createEAttribute(r4EUserReviewsEClass, R4E_USER_REVIEWS__XML_VERSION);
 
 		r4EIDComponentEClass = createEClass(R4EID_COMPONENT);
 		createEReference(r4EIDComponentEClass, R4EID_COMPONENT__ID);
@@ -2321,7 +2271,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EReviewGroup_AvailableProjects(), ecorePackage.getEString(), "availableProjects", null, 0, -1, R4EReviewGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReviewGroup_AvailableComponents(), ecorePackage.getEString(), "availableComponents", null, 0, -1, R4EReviewGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReviewGroup_DesignRuleLocations(), ecorePackage.getEString(), "designRuleLocations", null, 0, -1, R4EReviewGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EReviewGroup_XmlVersion(), ecorePackage.getEString(), "xmlVersion", "1.0.0", 0, 1, R4EReviewGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EReviewGroup_AvailableAnomalyTypes(), this.getR4EAnomalyType(), null, "availableAnomalyTypes", null, 0, -1, R4EReviewGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EReviewGroup_AnomalyTypeKeyToReference(), this.getMapToAnomalyType(), null, "anomalyTypeKeyToReference", null, 0, -1, R4EReviewGroup.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EReviewGroup_ReviewsMap(), this.getMapNameToReview(), null, "reviewsMap", null, 0, -1, R4EReviewGroup.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
@@ -2338,7 +2287,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EReview_Decision(), this.getR4EReviewDecision(), null, "decision", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_StartDate(), ecorePackage.getEDate(), "startDate", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_EndDate(), ecorePackage.getEDate(), "endDate", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EReview_XmlVersion(), ecorePackage.getEString(), "xmlVersion", "1.0.0", 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EReview_AnomalyTemplate(), this.getR4EAnomaly(), null, "anomalyTemplate", null, 1, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_Type(), this.getR4EReviewType(), "type", "", 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EReview_UsersMap(), this.getMapToUsers(), null, "usersMap", null, 0, -1, R4EReview.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
@@ -2381,7 +2329,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EUser_AddedItems(), this.getR4EItem(), null, "addedItems", null, 0, -1, R4EUser.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EUser_ReviewCreatedByMe(), ecorePackage.getEBoolean(), "reviewCreatedByMe", null, 0, 1, R4EUser.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EUser_ReviewInstance(), this.getR4EReview(), null, "reviewInstance", null, 1, 1, R4EUser.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EUser_XmlVersion(), ecorePackage.getEString(), "xmlVersion", "1.0.0", 0, 1, R4EUser.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EUser_ReviewCompleted(), ecorePackage.getEBoolean(), "reviewCompleted", null, 0, 1, R4EUser.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EUser_ReviewCompletedCode(), ecorePackage.getEInt(), "reviewCompletedCode", null, 0, 1, R4EUser.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -2393,7 +2340,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EParticipant_TimeLog(), this.getMapDateToDuration(), null, "timeLog", null, 0, -1, R4EParticipant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EItemEClass, R4EItem.class, "R4EItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getR4EItem_XmlVersion(), ecorePackage.getEString(), "xmlVersion", "1.0.0", 0, 1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EItem_Description(), ecorePackage.getEString(), "description", null, 0, 1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EItem_AddedById(), ecorePackage.getEString(), "addedById", null, 0, 1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EItem_FileContextList(), this.getR4EFileContext(), null, "fileContextList", null, 0, -1, R4EItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2473,7 +2419,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EUserReviews_InvitedToMap(), this.getMapNameToReview(), null, "invitedToMap", null, 0, -1, R4EUserReviews.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EUserReviews_Group(), this.getR4EReviewGroup(), null, "group", null, 0, 1, R4EUserReviews.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EUserReviews_CreatedReviews(), ecorePackage.getEString(), "createdReviews", null, 0, -1, R4EUserReviews.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EUserReviews_XmlVersion(), ecorePackage.getEString(), "xmlVersion", "1.0.0", 0, 1, R4EUserReviews.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EIDComponentEClass, R4EIDComponent.class, "R4EIDComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getR4EIDComponent_Id(), this.getR4EID(), null, "id", null, 0, 1, R4EIDComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

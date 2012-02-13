@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -92,6 +93,22 @@ public class NewRuleSetElementHandler extends AbstractHandler {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
+					}
+
+				} catch (CompatibilityException e) {
+					UIUtils.displayCompatibilityErrorDialog(e);
+
+					//Remove object if partially created
+					try {
+						element.removeChildren(newElement, true);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
 					}
 
 				} catch (OutOfSyncException e) {
@@ -104,6 +121,8 @@ public class NewRuleSetElementHandler extends AbstractHandler {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
 					}
 				}
 

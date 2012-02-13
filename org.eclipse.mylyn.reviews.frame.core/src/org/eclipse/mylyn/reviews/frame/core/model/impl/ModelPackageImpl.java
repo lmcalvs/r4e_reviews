@@ -28,6 +28,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.Review;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewState;
+import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
 import org.eclipse.mylyn.reviews.frame.core.model.TaskReference;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.frame.core.model.User;
@@ -115,6 +116,13 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * @generated
 	 */
 	private EClass reviewComponentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass subModelRootEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -479,6 +487,42 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getSubModelRoot() {
+		return subModelRootEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSubModelRoot_FragmentVersion() {
+		return (EAttribute)subModelRootEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSubModelRoot_Compatibility() {
+		return (EAttribute)subModelRootEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSubModelRoot_ApplicationVersion() {
+		return (EAttribute)subModelRootEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ModelFactory getModelFactory() {
 		return (ModelFactory)getEFactoryInstance();
 	}
@@ -545,6 +589,11 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
 		reviewComponentEClass = createEClass(REVIEW_COMPONENT);
 		createEAttribute(reviewComponentEClass, REVIEW_COMPONENT__ENABLED);
+
+		subModelRootEClass = createEClass(SUB_MODEL_ROOT);
+		createEAttribute(subModelRootEClass, SUB_MODEL_ROOT__FRAGMENT_VERSION);
+		createEAttribute(subModelRootEClass, SUB_MODEL_ROOT__COMPATIBILITY);
+		createEAttribute(subModelRootEClass, SUB_MODEL_ROOT__APPLICATION_VERSION);
 	}
 
 	/**
@@ -576,11 +625,13 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
 		// Add supertypes to classes
 		reviewEClass.getESuperTypes().add(this.getReviewComponent());
+		reviewEClass.getESuperTypes().add(this.getSubModelRoot());
 		commentEClass.getESuperTypes().add(this.getReviewComponent());
 		itemEClass.getESuperTypes().add(this.getReviewComponent());
 		taskReferenceEClass.getESuperTypes().add(this.getReviewComponent());
 		reviewStateEClass.getESuperTypes().add(this.getReviewComponent());
 		reviewGroupEClass.getESuperTypes().add(this.getReviewComponent());
+		reviewGroupEClass.getESuperTypes().add(this.getSubModelRoot());
 		topicEClass.getESuperTypes().add(this.getComment());
 
 		// Initialize classes and features; add operations and parameters
@@ -627,6 +678,11 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
 		initEClass(reviewComponentEClass, ReviewComponent.class, "ReviewComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getReviewComponent_Enabled(), ecorePackage.getEBoolean(), "enabled", "true", 0, 1, ReviewComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(subModelRootEClass, SubModelRoot.class, "SubModelRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSubModelRoot_FragmentVersion(), ecorePackage.getEString(), "fragmentVersion", "1.0.0", 0, 1, SubModelRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSubModelRoot_Compatibility(), ecorePackage.getEInt(), "compatibility", null, 0, 1, SubModelRoot.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSubModelRoot_ApplicationVersion(), ecorePackage.getEString(), "applicationVersion", "1.0.0", 0, 1, SubModelRoot.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

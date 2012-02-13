@@ -20,6 +20,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.Review;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup;
 
+import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
@@ -108,6 +109,7 @@ public class TransResSwitch<T> {
 				if (result == null) result = caseReviewGroup(reviewGroupRes);
 				if (result == null) result = caseR4EReviewComponent(reviewGroupRes);
 				if (result == null) result = caseReviewComponent(reviewGroupRes);
+				if (result == null) result = caseSubModelRoot(reviewGroupRes);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -119,6 +121,7 @@ public class TransResSwitch<T> {
 				if (result == null) result = caseReview(reviewRes);
 				if (result == null) result = caseR4EReviewComponent(reviewRes);
 				if (result == null) result = caseReviewComponent(reviewRes);
+				if (result == null) result = caseSubModelRoot(reviewRes);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -168,6 +171,21 @@ public class TransResSwitch<T> {
 	 * @generated
 	 */
 	public T caseReviewComponent(ReviewComponent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Sub Model Root</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Sub Model Root</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSubModelRoot(SubModelRoot object) {
 		return null;
 	}
 

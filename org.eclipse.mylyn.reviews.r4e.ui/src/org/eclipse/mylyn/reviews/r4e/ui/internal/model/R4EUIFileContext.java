@@ -30,6 +30,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
@@ -655,6 +656,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				UIUtils.displayResourceErrorDialog(e);
 			} catch (ReviewVersionsException e) {
 				UIUtils.displayVersionErrorDialog(e);
+			} catch (CompatibilityException e) {
+				UIUtils.displayCompatibilityErrorDialog(e);
 			}
 		}
 

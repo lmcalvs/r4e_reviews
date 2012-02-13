@@ -239,6 +239,9 @@ public class ChangeResControllerTest extends TestCase {
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			fail("Exception");
+		} catch (CompatibilityException e) {
+			e.printStackTrace();
+			fail("Exception");
 		}
 
 		// validate updated value read from disk

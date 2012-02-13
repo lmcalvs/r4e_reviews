@@ -49,6 +49,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
@@ -604,10 +605,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 * @throws ReviewVersionsException
 	 * @throws FileNotFoundException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#open()
 	 */
 	@Override
-	public void open() throws ResourceHandlingException, FileNotFoundException, ReviewVersionsException {
+	public void open() throws ResourceHandlingException, FileNotFoundException, ReviewVersionsException,
+			CompatibilityException {
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup) getParent()).getReviewGroup(),
 				fReviewName);
 
@@ -692,10 +695,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
-	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException,
+			CompatibilityException {
 		//NOTE we need to open the model element temporarly to be able to set the enabled state
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup) getParent()).getReviewGroup(),
 				fReviewName);

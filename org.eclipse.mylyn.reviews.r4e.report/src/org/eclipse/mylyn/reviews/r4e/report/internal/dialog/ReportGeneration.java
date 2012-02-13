@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
+
 import org.eclipse.birt.report.engine.api.EngineConfig;
 import org.eclipse.birt.report.engine.api.EngineException;
 import org.eclipse.birt.report.engine.api.HTMLRenderOption;
@@ -49,6 +50,7 @@ import org.eclipse.jface.resource.StringConverter;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.ModelTransform;
@@ -609,6 +611,9 @@ public class ReportGeneration implements IR4EReport {
 			Activator.FTracer.traceInfo
 			("ReportGeneration.prepareReport() ResourceHandlingException : "
 					+ e);
+		} catch (CompatibilityException e) {
+			e.printStackTrace();
+			Activator.FTracer.traceInfo("ReportGeneration.prepareReport() CompatibilityException : " + e);
 		}
 		// Need to destroy the engine
 		engine.destroy();
@@ -624,11 +629,14 @@ public class ReportGeneration implements IR4EReport {
 
 	/**
 	 * Create the output transformation file needed to query for the report
+	 * 
 	 * @param destinationDir
 	 * @return
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 */
-	private ReviewGroupRes prepareReportSourceFiles (File aDestinationDir, File[] aSelectedReview) throws ResourceHandlingException {
+	private ReviewGroupRes prepareReportSourceFiles(File aDestinationDir, File[] aSelectedReview)
+			throws ResourceHandlingException, CompatibilityException {
 
 		URI origURI = URI.createFileURI(getGroupFile());
 		floadedGroup = fFactory.openR4EReviewGroup(origURI);
@@ -1341,8 +1349,10 @@ public class ReportGeneration implements IR4EReport {
 				("ReportGeneration.prepareReport() ResourceHandlingException : "
 						+ e);
 			
+			} catch (CompatibilityException e) {
+				e.printStackTrace();
+				Activator.FTracer.traceInfo("ReportGeneration.prepareReport() CompatibilityException : " + e);
 			}
-
 		}
 		// Remove the progress bar
 		notifyProgressComplete();

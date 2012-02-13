@@ -41,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -342,10 +343,11 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 * Open the model element (i.e. enable it)
 	 * 
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#open()
 	 */
 	@Override
-	public void open() throws ResourceHandlingException {
+	public void open() throws ResourceHandlingException, CompatibilityException {
 		//Load model information
 		fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(fGroupFileURI);
 		final EList<Review> reviews = fGroup.getReviews();
@@ -400,10 +402,12 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
-	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException,
+			CompatibilityException {
 		//NOTE we need to open the model element temporarly to be able to set the enabled state
 		fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(fGroupFileURI);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup, R4EUIModelController.getReviewer());
@@ -521,11 +525,12 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 *            - also remove from file (hard remove)
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
-			throws ResourceHandlingException, OutOfSyncException {
+			throws ResourceHandlingException, OutOfSyncException, CompatibilityException {
 		//This was the current review, so tell the controller that no review is now active
 		if (((R4EUIReviewBasic) aChildToRemove).isOpen()) {
 			R4EUIModelController.setActiveReview(null);
@@ -556,10 +561,12 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 *            boolean
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override
-	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException {
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException,
+			CompatibilityException {
 		//Recursively remove all children
 		for (R4EUIReviewBasic review : fReviews) {
 			removeChildren(review, aFileRemove);

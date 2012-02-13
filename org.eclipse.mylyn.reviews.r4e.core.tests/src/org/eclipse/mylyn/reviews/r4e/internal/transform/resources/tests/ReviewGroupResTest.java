@@ -23,6 +23,7 @@ import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.tests.GoldenStubHandler;
@@ -144,6 +145,9 @@ public class ReviewGroupResTest extends TestCase {
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			fail("Exception");
+		} catch (CompatibilityException e) {
+			e.printStackTrace();
+			fail("Exception");
 		}
 
 		URI origURI = loadedGroup.eResource().getURI();
@@ -171,6 +175,9 @@ public class ReviewGroupResTest extends TestCase {
 				fFactory.openR4EReview(loadedGroup, reviewName);
 				dReview = ModelTransform.instance.transformReview(origURI, destURI, reviewName);
 			} catch (ResourceHandlingException e) {
+				e.printStackTrace();
+				fail("Exception");
+			} catch (CompatibilityException e) {
 				e.printStackTrace();
 				fail("Exception");
 			}

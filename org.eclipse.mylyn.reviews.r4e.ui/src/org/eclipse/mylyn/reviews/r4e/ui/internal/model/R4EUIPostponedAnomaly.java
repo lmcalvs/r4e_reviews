@@ -27,6 +27,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
@@ -117,8 +118,9 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 	 * 
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
+	 * @throws CompatibilityException
 	 */
-	public void updateOriginalAnomaly() throws ResourceHandlingException, OutOfSyncException {
+	public void updateOriginalAnomaly() throws ResourceHandlingException, OutOfSyncException, CompatibilityException {
 
 		//Open original review
 		final String origReviewName = ((R4EUIPostponedFile) getParent()).getFileContext()
@@ -191,11 +193,12 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 	 * @return IR4EUIModelElement
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(R4EReviewComponent)
 	 */
 	@Override
 	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
-			OutOfSyncException {
+			OutOfSyncException, CompatibilityException {
 
 		//First create the children on the original anomaly...
 		R4EComment origComment = null;

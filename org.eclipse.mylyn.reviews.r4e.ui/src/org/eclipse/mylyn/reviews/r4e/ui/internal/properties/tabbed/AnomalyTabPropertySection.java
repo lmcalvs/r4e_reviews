@@ -29,6 +29,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog;
@@ -275,6 +276,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
 					}
 				}
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -322,6 +325,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
 					}
 				}
 				refresh();
@@ -515,6 +520,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
 					}
 				}
 				refresh();
@@ -556,6 +563,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
 					}
 				}
 				refresh();
@@ -651,6 +660,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 							UIUtils.displayResourceErrorDialog(e1);
 						} catch (OutOfSyncException e1) {
 							UIUtils.displaySyncErrorDialog(e1);
+						} catch (CompatibilityException e1) {
+							UIUtils.displayCompatibilityErrorDialog(e1);
 						}
 					}
 					refresh();
@@ -706,6 +717,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 							UIUtils.displayResourceErrorDialog(e1);
 						} catch (OutOfSyncException e1) {
 							UIUtils.displaySyncErrorDialog(e1);
+						} catch (CompatibilityException e1) {
+							UIUtils.displayCompatibilityErrorDialog(e1);
 						}
 					}
 					refresh();
@@ -749,6 +762,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
 					}
 				}
 				refresh();
@@ -847,6 +862,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
 					}
 				}
 				refresh();
@@ -888,6 +905,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
 					}
 				}
 				refresh();
@@ -930,6 +949,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
 					}
 				}
 				refresh();

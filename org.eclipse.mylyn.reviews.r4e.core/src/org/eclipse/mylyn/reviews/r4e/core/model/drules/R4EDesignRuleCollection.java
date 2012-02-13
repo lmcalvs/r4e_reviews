@@ -16,6 +16,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model.drules;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +37,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
  * @model
  * @generated
  */
-public interface R4EDesignRuleCollection extends ReviewComponent {
+public interface R4EDesignRuleCollection extends ReviewComponent, SubModelRoot {
 	/**
 	 * Returns the value of the '<em><b>Areas</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea}.

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.*;
 
 /**
@@ -100,6 +101,7 @@ public class DRModelSwitch<T> {
 				R4EDesignRuleCollection r4EDesignRuleCollection = (R4EDesignRuleCollection)theEObject;
 				T result = caseR4EDesignRuleCollection(r4EDesignRuleCollection);
 				if (result == null) result = caseReviewComponent(r4EDesignRuleCollection);
+				if (result == null) result = caseSubModelRoot(r4EDesignRuleCollection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -200,6 +202,21 @@ public class DRModelSwitch<T> {
 	 * @generated
 	 */
 	public T caseReviewComponent(ReviewComponent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Sub Model Root</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Sub Model Root</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSubModelRoot(SubModelRoot object) {
 		return null;
 	}
 

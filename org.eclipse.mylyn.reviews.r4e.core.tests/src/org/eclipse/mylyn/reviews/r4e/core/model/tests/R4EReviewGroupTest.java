@@ -33,6 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelReader;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.junit.Test;
@@ -155,7 +156,8 @@ public class R4EReviewGroupTest extends TestCase {
 		try {
 			group = fFactory.openR4EReviewGroup(uri);
 		} catch (ResourceHandlingException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CompatibilityException e) {
 			e.printStackTrace();
 		}
 
@@ -181,6 +183,9 @@ public class R4EReviewGroupTest extends TestCase {
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			fail("Exception");
+		} catch (CompatibilityException e) {
+			e.printStackTrace();
+			fail("Exception");
 		}
 
 		uri = review.eResource().getURI();
@@ -188,6 +193,9 @@ public class R4EReviewGroupTest extends TestCase {
 		try {
 			review = fFactory.openR4EReview(group, review.getName());
 		} catch (ResourceHandlingException e) {
+			e.printStackTrace();
+			fail("Exception");
+		} catch (CompatibilityException e) {
 			e.printStackTrace();
 			fail("Exception");
 		}
@@ -463,6 +471,9 @@ public class R4EReviewGroupTest extends TestCase {
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			fail("Exception");
+		} catch (CompatibilityException e) {
+			e.printStackTrace();
+			fail("Exception");
 		}
 
 		// initialise local refs
@@ -478,6 +489,9 @@ public class R4EReviewGroupTest extends TestCase {
 		try {
 			nReview = fFactory.openR4EReview(loadedGroup, dReviewName);
 		} catch (ResourceHandlingException e) {
+			e.printStackTrace();
+			fail("Exception");
+		} catch (CompatibilityException e) {
 			e.printStackTrace();
 			fail("Exception");
 		}

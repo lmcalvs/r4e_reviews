@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
@@ -246,9 +247,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws ResourceHandlingException
 	 * @throws ReviewVersionsException
 	 * @throws FileNotFoundException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#open()
 	 */
-	public void open() throws ResourceHandlingException, ReviewVersionsException, FileNotFoundException { // $codepro.audit.disable unnecessaryExceptions
+	public void open() throws ResourceHandlingException, ReviewVersionsException, FileNotFoundException,
+			CompatibilityException { // $codepro.audit.disable unnecessaryExceptions
 		fOpen = true;
 	}
 
@@ -302,9 +305,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
-	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
+	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException,
+			CompatibilityException { // $codepro.audit.disable emptyMethod
 		//default implementation
 	}
 
@@ -429,10 +434,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @return IR4EUIModelElement
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(R4EReviewComponent)
 	 */
 	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
-			OutOfSyncException { // $codepro.audit.disable unnecessaryExceptions
+			OutOfSyncException, CompatibilityException { // $codepro.audit.disable unnecessaryExceptions
 		return null;
 		// default implementation
 	}
@@ -457,11 +463,12 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 *            - also remove from file (hard remove)
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement,
 	 *      boolean)
 	 */
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
-			throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
+			throws ResourceHandlingException, OutOfSyncException, CompatibilityException { // $codepro.audit.disable emptyMethod
 		// default implementation
 	}
 
@@ -472,9 +479,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 *            boolean
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
-	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod -->
+	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException,
+			CompatibilityException { // $codepro.audit.disable emptyMethod -->
 		//default implementation
 	}
 

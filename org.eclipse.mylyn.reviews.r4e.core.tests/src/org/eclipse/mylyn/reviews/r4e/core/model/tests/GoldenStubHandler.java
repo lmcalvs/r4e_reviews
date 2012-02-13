@@ -25,6 +25,7 @@ import org.eclipse.mylyn.reviews.r4e.core.TstGeneral;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.impl.SampleR4EModel;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 
@@ -124,6 +125,8 @@ public class GoldenStubHandler extends TestCase {
 			loadGolden();
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
+		} catch (CompatibilityException e) {
+			e.printStackTrace();
 		}
 
 		// Check against published golden directory
@@ -136,7 +139,7 @@ public class GoldenStubHandler extends TestCase {
 	}
 
 
-	public static R4EReviewGroup serializeStub() throws ResourceHandlingException {
+	public static R4EReviewGroup serializeStub() throws ResourceHandlingException, CompatibilityException {
 		if (fGroupPath == null) {
 			init();
 		}
@@ -158,8 +161,9 @@ public class GoldenStubHandler extends TestCase {
 	/**
 	 * @return
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 */
-	public static R4EReviewGroup loadGolden() throws ResourceHandlingException {
+	public static R4EReviewGroup loadGolden() throws ResourceHandlingException, CompatibilityException {
 		// Load Group
 		R4EReviewGroup loadedGroup = null;
 		loadedGroup = fFactory.openR4EReviewGroup(TstGeneral.GOLDEN_GROUP_FILE);
@@ -171,8 +175,9 @@ public class GoldenStubHandler extends TestCase {
 	 * @param groupFileURI
 	 * @return
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 */
-	public static R4EReviewGroup loadStub(URI groupFileURI) throws ResourceHandlingException {
+	public static R4EReviewGroup loadStub(URI groupFileURI) throws ResourceHandlingException, CompatibilityException {
 		// Load Group
 		R4EReviewGroup loadedGroup = null;
 		loadedGroup = fFactory.openR4EReviewGroup(groupFileURI);

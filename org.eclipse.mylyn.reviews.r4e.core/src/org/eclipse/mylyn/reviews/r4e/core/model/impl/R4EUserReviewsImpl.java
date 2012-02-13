@@ -48,7 +48,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getInvitedToMap <em>Invited To Map</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getGroup <em>Group</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getCreatedReviews <em>Created Reviews</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EUserReviewsImpl#getXmlVersion <em>Xml Version</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,26 +103,6 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	 * @ordered
 	 */
 	protected EList<String> createdReviews;
-
-	/**
-	 * The default value of the '{@link #getXmlVersion() <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getXmlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String XML_VERSION_EDEFAULT = "1.0.0";
-
-	/**
-	 * The cached value of the '{@link #getXmlVersion() <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getXmlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected String xmlVersion = XML_VERSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -232,27 +211,6 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getXmlVersion() {
-		return xmlVersion;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setXmlVersion(String newXmlVersion) {
-		String oldXmlVersion = xmlVersion;
-		xmlVersion = newXmlVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_USER_REVIEWS__XML_VERSION, oldXmlVersion, xmlVersion));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -280,8 +238,6 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 				return basicGetGroup();
 			case RModelPackage.R4E_USER_REVIEWS__CREATED_REVIEWS:
 				return getCreatedReviews();
-			case RModelPackage.R4E_USER_REVIEWS__XML_VERSION:
-				return getXmlVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -308,9 +264,6 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 				getCreatedReviews().clear();
 				getCreatedReviews().addAll((Collection<? extends String>)newValue);
 				return;
-			case RModelPackage.R4E_USER_REVIEWS__XML_VERSION:
-				setXmlVersion((String)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -335,9 +288,6 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 			case RModelPackage.R4E_USER_REVIEWS__CREATED_REVIEWS:
 				getCreatedReviews().clear();
 				return;
-			case RModelPackage.R4E_USER_REVIEWS__XML_VERSION:
-				setXmlVersion(XML_VERSION_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -358,8 +308,6 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 				return group != null;
 			case RModelPackage.R4E_USER_REVIEWS__CREATED_REVIEWS:
 				return createdReviews != null && !createdReviews.isEmpty();
-			case RModelPackage.R4E_USER_REVIEWS__XML_VERSION:
-				return XML_VERSION_EDEFAULT == null ? xmlVersion != null : !XML_VERSION_EDEFAULT.equals(xmlVersion);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -378,8 +326,6 @@ public class R4EUserReviewsImpl extends EObjectImpl implements R4EUserReviews {
 		result.append(name);
 		result.append(", createdReviews: ");
 		result.append(createdReviews);
-		result.append(", xmlVersion: ");
-		result.append(xmlVersion);
 		result.append(')');
 		return result.toString();
 	}

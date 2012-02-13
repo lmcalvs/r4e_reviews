@@ -25,6 +25,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AssignParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorView;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -70,7 +71,9 @@ public class AssignMyFilterHandler extends AbstractHandler {
 
 	@Override
 	public boolean isEnabled() {
-		if (((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).isAssignedParticipantFilterSet()
+		ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
+		if (view == null
+				|| ((ReviewNavigatorActionGroup) view.getActionSet()).isAssignedParticipantFilterSet()
 				|| ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).isUnassignedFilterSet()) {
 			return false;
 		}

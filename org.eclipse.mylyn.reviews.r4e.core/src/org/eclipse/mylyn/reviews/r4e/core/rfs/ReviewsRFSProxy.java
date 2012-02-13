@@ -153,11 +153,13 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 				//The file was not registered in the local repo
 				throw new ReviewsFileStorageException(e);
 			} else {
-				Activator.getDefault().fTracer.traceError("IOException while registering content however it's already available in the local repository, " + e.getMessage());
+				Activator.fTracer
+						.traceError("IOException while registering content however it's already available in the local repository, "
+								+ e.getMessage());
 				try {
 					is.close();
 				} catch (IOException e1) {
-					Activator.getDefault().fTracer.traceError("IOException while closing probe stream, " + e1.getMessage());
+					Activator.fTracer.traceError("IOException while closing probe stream, " + e1.getMessage());
 				}
 			}
 		} finally {

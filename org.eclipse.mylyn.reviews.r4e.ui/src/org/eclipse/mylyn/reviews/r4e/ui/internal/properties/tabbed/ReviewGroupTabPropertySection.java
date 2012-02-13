@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -473,6 +474,8 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 						uiRuleSet.open();
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);
+					} catch (CompatibilityException e) {
+						UIUtils.displayCompatibilityErrorDialog(e);
 					}
 				}
 				tmpRuleSetLocations.add(uiRuleSet.getRuleSet().eResource().getURI().toFileString());
@@ -597,6 +600,8 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 			UIUtils.displayResourceErrorDialog(e1);
 		} catch (OutOfSyncException e1) {
 			UIUtils.displaySyncErrorDialog(e1);
+		} catch (CompatibilityException e) {
+			UIUtils.displayCompatibilityErrorDialog(e);
 		}
 	}
 

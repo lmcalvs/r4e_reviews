@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews#getInvitedToMap <em>Invited To Map</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews#getGroup <em>Group</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews#getCreatedReviews <em>Created Reviews</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews#getXmlVersion <em>Xml Version</em>}</li>
  * </ul>
  * </p>
  *
@@ -124,32 +123,5 @@ public interface R4EUserReviews extends EObject {
 	 * @generated
 	 */
 	EList<String> getCreatedReviews();
-
-	/**
-	 * Returns the value of the '<em><b>Xml Version</b></em>' attribute.
-	 * The default value is <code>"1.0.0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Xml Version</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Xml Version</em>' attribute.
-	 * @see #setXmlVersion(String)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EUserReviews_XmlVersion()
-	 * @model default="1.0.0"
-	 * @generated
-	 */
-	String getXmlVersion();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews#getXmlVersion <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Xml Version</em>' attribute.
-	 * @see #getXmlVersion()
-	 * @generated
-	 */
-	void setXmlVersion(String value);
 
 } // R4EUserReviews

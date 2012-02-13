@@ -40,6 +40,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.Roots;
+import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 
 /**
  * <!-- begin-user-doc -->
@@ -59,7 +62,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getDecision <em>Decision</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getEndDate <em>End Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getXmlVersion <em>Xml Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getAnomalyTemplate <em>Anomaly Template</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getUsersMap <em>Users Map</em>}</li>
@@ -261,26 +263,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	 * @ordered
 	 */
 	protected Date endDate = END_DATE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getXmlVersion() <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getXmlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String XML_VERSION_EDEFAULT = "1.0.0";
-
-	/**
-	 * The cached value of the '{@link #getXmlVersion() <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getXmlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected String xmlVersion = XML_VERSION_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getAnomalyTemplate() <em>Anomaly Template</em>}' containment reference.
@@ -634,27 +616,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getXmlVersion() {
-		return xmlVersion;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setXmlVersion(String newXmlVersion) {
-		String oldXmlVersion = xmlVersion;
-		xmlVersion = newXmlVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW__XML_VERSION, oldXmlVersion, xmlVersion));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public R4EAnomaly getAnomalyTemplate() {
 		if (anomalyTemplate != null && anomalyTemplate.eIsProxy()) {
 			InternalEObject oldAnomalyTemplate = (InternalEObject)anomalyTemplate;
@@ -918,8 +879,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 				return getStartDate();
 			case RModelPackage.R4E_REVIEW__END_DATE:
 				return getEndDate();
-			case RModelPackage.R4E_REVIEW__XML_VERSION:
-				return getXmlVersion();
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				if (resolve) return getAnomalyTemplate();
 				return basicGetAnomalyTemplate();
@@ -985,9 +944,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 			case RModelPackage.R4E_REVIEW__END_DATE:
 				setEndDate((Date)newValue);
 				return;
-			case RModelPackage.R4E_REVIEW__XML_VERSION:
-				setXmlVersion((String)newValue);
-				return;
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				setAnomalyTemplate((R4EAnomaly)newValue);
 				return;
@@ -1051,9 +1007,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 			case RModelPackage.R4E_REVIEW__END_DATE:
 				setEndDate(END_DATE_EDEFAULT);
 				return;
-			case RModelPackage.R4E_REVIEW__XML_VERSION:
-				setXmlVersion(XML_VERSION_EDEFAULT);
-				return;
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				setAnomalyTemplate((R4EAnomaly)null);
 				return;
@@ -1106,8 +1059,6 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 				return START_DATE_EDEFAULT == null ? startDate != null : !START_DATE_EDEFAULT.equals(startDate);
 			case RModelPackage.R4E_REVIEW__END_DATE:
 				return END_DATE_EDEFAULT == null ? endDate != null : !END_DATE_EDEFAULT.equals(endDate);
-			case RModelPackage.R4E_REVIEW__XML_VERSION:
-				return XML_VERSION_EDEFAULT == null ? xmlVersion != null : !XML_VERSION_EDEFAULT.equals(xmlVersion);
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				return anomalyTemplate != null;
 			case RModelPackage.R4E_REVIEW__TYPE:
@@ -1186,11 +1137,27 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 		result.append(startDate);
 		result.append(", endDate: ");
 		result.append(endDate);
-		result.append(", xmlVersion: ");
-		result.append(xmlVersion);
 		result.append(", type: ");
 		result.append(type);
 		result.append(')');
 		return result.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getCompatibility()
+	 */
+	public int getCompatibility() {
+		return VersionUtils.compareVersions(Roots.REVIEW.getVersion(), fragmentVersion);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewImpl#getApplicationVersion()
+	 */
+	public String getApplicationVersion() {
+		return Persistence.Roots.REVIEW.getVersion();
 	}
 } //R4EReviewImpl

@@ -67,6 +67,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.SerializeFactory;
 import org.eclipse.team.core.history.IFileRevision;
@@ -880,7 +881,8 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.GroupResFactory#openR4EReviewGroup(org.eclipse.emf
 	 * .common.util.URI)
 	 */
-	public R4EReviewGroup openR4EReviewGroup(URI aResourcePath) throws ResourceHandlingException {
+	public R4EReviewGroup openR4EReviewGroup(URI aResourcePath) throws ResourceHandlingException,
+			CompatibilityException {
 		return factoryExtension.openR4EReviewGroup(aResourcePath);
 	}
 
@@ -948,7 +950,8 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ReviewResFactory#openR4EReview(org.eclipse.mylyn.
 	 * reviews.r4e.core.model.R4EReviewGroup, java.lang.String)
 	 */
-	public R4EReview openR4EReview(R4EReviewGroup aRreviewGroup, String aReviewName) throws ResourceHandlingException {
+	public R4EReview openR4EReview(R4EReviewGroup aRreviewGroup, String aReviewName) throws ResourceHandlingException,
+			CompatibilityException {
 		return factoryExtension.openR4EReview(aRreviewGroup, aReviewName);
 	}
 
@@ -1214,7 +1217,8 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.DRulesFactory#openR4EDesignRuleCollection(org.eclipse
 	 * .emf.common.util.URI)
 	 */
-	public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException {
+	public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException,
+			CompatibilityException {
 		return factoryExtension.openR4EDesignRuleCollection(aResourcePath);
 	}
 

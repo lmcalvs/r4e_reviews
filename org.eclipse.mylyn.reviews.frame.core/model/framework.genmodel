@@ -49,5 +49,10 @@
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewComponent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewComponent/enabled"/>
     </genClasses>
+    <genClasses ecoreClass="org.eclipse.mylyn.reviews.frame.core.model.ecore#//SubModelRoot">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.frame.core.model.ecore#//SubModelRoot/fragmentVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.frame.core.model.ecore#//SubModelRoot/compatibility"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.frame.core.model.ecore#//SubModelRoot/applicationVersion"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

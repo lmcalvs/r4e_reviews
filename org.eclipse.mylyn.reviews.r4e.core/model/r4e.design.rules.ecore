@@ -3,7 +3,7 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="drules"
     nsURI="http://org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore/1.0" nsPrefix="org.eclipse.mylyn.reviews.r4e.core.model.drules.ecore">
-  <eClassifiers xsi:type="ecore:EClass" name="R4EDesignRuleCollection" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewComponent">
+  <eClassifiers xsi:type="ecore:EClass" name="R4EDesignRuleCollection" eSuperTypes="../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//ReviewComponent ../../org.eclipse.mylyn.reviews.frame.core/model/org.eclipse.mylyn.reviews.frame.core.model.ecore#//SubModelRoot">
     <eStructuralFeatures xsi:type="ecore:EReference" name="areas" upperBound="-1"
         eType="#//R4EDesignRuleArea" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

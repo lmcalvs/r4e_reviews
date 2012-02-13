@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
@@ -125,8 +126,9 @@ public interface IR4EUIModelElement {
 	 *            - the enable flag (true/false)
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
+	 * @throws CompatibilityException
 	 */
-	void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException;
+	void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException, CompatibilityException;
 
 	/**
 	 * Add assignees to review element. Take note that this is not applicable to all model elements
@@ -168,8 +170,10 @@ public interface IR4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 * @throws ReviewVersionsException
 	 * @throws FileNotFoundException
+	 * @throws CompatibilityException
 	 */
-	void open() throws ResourceHandlingException, ReviewVersionsException, FileNotFoundException;
+	void open() throws ResourceHandlingException, ReviewVersionsException, FileNotFoundException,
+			CompatibilityException;
 
 	/**
 	 * Checks whether an element is open or close
@@ -239,9 +243,10 @@ public interface IR4EUIModelElement {
 	 * @return IR4EUIModelElement
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
+	 * @throws CompatibilityException
 	 */
 	IR4EUIModelElement createChildren(ReviewComponent tempModelComponent) throws ResourceHandlingException,
-			OutOfSyncException;
+			OutOfSyncException, CompatibilityException;
 
 	/**
 	 * Method addChildren.
@@ -260,9 +265,10 @@ public interface IR4EUIModelElement {
 	 *            - also remove from file (hard remove)
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 */
 	void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException,
-			OutOfSyncException;
+			OutOfSyncException, CompatibilityException;
 
 	/**
 	 * Method removeAllChildren.
@@ -271,8 +277,10 @@ public interface IR4EUIModelElement {
 	 *            boolean
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 */
-	void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException;
+	void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException,
+			CompatibilityException;
 
 	//Listeners
 

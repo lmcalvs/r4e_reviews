@@ -47,6 +47,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -94,8 +95,9 @@ public class OpenElementHandler extends AbstractHandler {
 				final ISelection selection = HandlerUtil.getCurrentSelection(event);
 				if (selection instanceof IStructuredSelection) {
 					if (!selection.isEmpty()) {
+						IR4EUIModelElement element = null;
 						try {
-							final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+							element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
 
 							if (element instanceof R4EUIReviewBasic) {
 								R4EUIPlugin.Ftracer.traceInfo("Opening element " + element.getName());
@@ -108,7 +110,16 @@ public class OpenElementHandler extends AbstractHandler {
 							UIUtils.setNavigatorViewFocus(element, 1);
 						} catch (ResourceHandlingException e) {
 							UIUtils.displayResourceErrorDialog(e);
-
+							//make sure the element is released from memory
+							if (element != null && element instanceof R4EUIReviewBasic) {
+								element.close();
+							}
+						} catch (CompatibilityException e) {
+							UIUtils.displayCompatibilityErrorDialog(e);
+							//make sure the element is released from memory
+							if (element != null && element instanceof R4EUIReviewBasic) {
+								element.close();
+							}
 						} catch (ReviewVersionsException e) {
 							UIUtils.displayVersionErrorDialog(e);
 

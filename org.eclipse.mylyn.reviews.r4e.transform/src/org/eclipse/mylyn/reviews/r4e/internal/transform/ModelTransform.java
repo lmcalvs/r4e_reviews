@@ -12,6 +12,7 @@
 package org.eclipse.mylyn.reviews.r4e.internal.transform;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.impl.ModelTransformImpl;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes;
@@ -67,7 +68,8 @@ public interface ModelTransform {
 	 *            - R4EReview name in origReviewGroup
 	 * @return - Resulting transformed review or null if not able to transform
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 */
 	public ReviewRes transformReview(URI origReviewGroup, URI destReviewGroup, String origReviewName)
-			throws ResourceHandlingException;
+			throws ResourceHandlingException, CompatibilityException;
 }

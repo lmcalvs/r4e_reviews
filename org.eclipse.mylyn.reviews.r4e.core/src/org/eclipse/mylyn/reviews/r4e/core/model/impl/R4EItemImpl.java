@@ -46,7 +46,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getAddedBy <em>Added By</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getReview <em>Review</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getXmlVersion <em>Xml Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getAddedById <em>Added By Id</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getFileContextList <em>File Context List</em>}</li>
@@ -80,26 +79,6 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * @ordered
 	 */
 	protected Review review;
-
-	/**
-	 * The default value of the '{@link #getXmlVersion() <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getXmlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String XML_VERSION_EDEFAULT = "1.0.0";
-
-	/**
-	 * The cached value of the '{@link #getXmlVersion() <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getXmlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected String xmlVersion = XML_VERSION_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
@@ -331,27 +310,6 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getXmlVersion() {
-		return xmlVersion;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setXmlVersion(String newXmlVersion) {
-		String oldXmlVersion = xmlVersion;
-		xmlVersion = newXmlVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ITEM__XML_VERSION, oldXmlVersion, xmlVersion));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getDescription() {
 		return description;
 	}
@@ -518,8 +476,6 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 			case RModelPackage.R4E_ITEM__REVIEW:
 				if (resolve) return getReview();
 				return basicGetReview();
-			case RModelPackage.R4E_ITEM__XML_VERSION:
-				return getXmlVersion();
 			case RModelPackage.R4E_ITEM__DESCRIPTION:
 				return getDescription();
 			case RModelPackage.R4E_ITEM__ADDED_BY_ID:
@@ -555,9 +511,6 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 				return;
 			case RModelPackage.R4E_ITEM__REVIEW:
 				setReview((Review)newValue);
-				return;
-			case RModelPackage.R4E_ITEM__XML_VERSION:
-				setXmlVersion((String)newValue);
 				return;
 			case RModelPackage.R4E_ITEM__DESCRIPTION:
 				setDescription((String)newValue);
@@ -603,9 +556,6 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 			case RModelPackage.R4E_ITEM__REVIEW:
 				setReview((Review)null);
 				return;
-			case RModelPackage.R4E_ITEM__XML_VERSION:
-				setXmlVersion(XML_VERSION_EDEFAULT);
-				return;
 			case RModelPackage.R4E_ITEM__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
@@ -646,8 +596,6 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 				return addedBy != null;
 			case RModelPackage.R4E_ITEM__REVIEW:
 				return review != null;
-			case RModelPackage.R4E_ITEM__XML_VERSION:
-				return XML_VERSION_EDEFAULT == null ? xmlVersion != null : !XML_VERSION_EDEFAULT.equals(xmlVersion);
 			case RModelPackage.R4E_ITEM__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case RModelPackage.R4E_ITEM__ADDED_BY_ID:
@@ -712,9 +660,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (xmlVersion: ");
-		result.append(xmlVersion);
-		result.append(", description: ");
+		result.append(" (description: ");
 		result.append(description);
 		result.append(", addedById: ");
 		result.append(addedById);

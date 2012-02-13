@@ -15,18 +15,15 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * The <b>Package</b> for the model.
- * It contains accessors for the meta objects to represent
+ * <!-- begin-user-doc --> The <b>Package</b> for the model. It contains accessors for the meta objects to represent
  * <ul>
- *   <li>each class,</li>
- *   <li>each feature of each class,</li>
- *   <li>each enum,</li>
- *   <li>and each data type</li>
+ * <li>each class,</li>
+ * <li>each feature of each class,</li>
+ * <li>each enum,</li>
+ * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
  * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResFactory
@@ -36,40 +33,35 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 public interface TransResPackage extends EPackage {
 	/**
 	 * The package name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNAME = "resources";
 
 	/**
 	 * The package namespace URI.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNS_URI = "http://org.eclipse.mylyn.reviews.r4e.model.transform/1.0";
 
 	/**
 	 * The package namespace name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNS_PREFIX = "ResTrans";
 
 	/**
 	 * The singleton instance of the package.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	TransResPackage eINSTANCE = org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.TransResPackageImpl.init();
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewGroupResImpl <em>Review Group Res</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewGroupResImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.TransResPackageImpl#getReviewGroupRes()
 	 * @generated
@@ -78,17 +70,34 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int REVIEW_GROUP_RES__ENABLED = RModelPackage.R4E_REVIEW_GROUP__ENABLED;
 
 	/**
-	 * The feature id for the '<em><b>Reviews</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_GROUP_RES__FRAGMENT_VERSION = RModelPackage.R4E_REVIEW_GROUP__FRAGMENT_VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Compatibility</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_GROUP_RES__COMPATIBILITY = RModelPackage.R4E_REVIEW_GROUP__COMPATIBILITY;
+
+	/**
+	 * The feature id for the '<em><b>Reviews</b></em>' containment reference list.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -96,8 +105,8 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review Group Task</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -105,17 +114,24 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int REVIEW_GROUP_RES__DESCRIPTION = RModelPackage.R4E_REVIEW_GROUP__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_GROUP_RES__ASSIGNED_TO = RModelPackage.R4E_REVIEW_GROUP__ASSIGNED_TO;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -123,8 +139,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Folder</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -132,8 +147,8 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Default Entry Criteria</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -141,8 +156,8 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Available Projects</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -150,8 +165,8 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Available Components</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -159,26 +174,17 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Design Rule Locations</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int REVIEW_GROUP_RES__DESIGN_RULE_LOCATIONS = RModelPackage.R4E_REVIEW_GROUP__DESIGN_RULE_LOCATIONS;
 
 	/**
-	 * The feature id for the '<em><b>Xml Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REVIEW_GROUP_RES__XML_VERSION = RModelPackage.R4E_REVIEW_GROUP__XML_VERSION;
-
-	/**
 	 * The feature id for the '<em><b>Available Anomaly Types</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -186,8 +192,8 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Anomaly Type Key To Reference</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -195,8 +201,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Reviews Map</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -204,8 +209,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>User Reviews</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -213,8 +217,8 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Reviews Res</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -222,8 +226,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Files Prefix</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -231,8 +234,8 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Review Group Res</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -240,8 +243,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewResImpl <em>Review Res</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewResImpl
 	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.TransResPackageImpl#getReviewRes()
 	 * @generated
@@ -250,26 +252,42 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int REVIEW_RES__ENABLED = RModelPackage.R4E_FORMAL_REVIEW__ENABLED;
 
 	/**
-	 * The feature id for the '<em><b>Topics</b></em>' reference list.
+	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_RES__FRAGMENT_VERSION = RModelPackage.R4E_FORMAL_REVIEW__FRAGMENT_VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Compatibility</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_RES__COMPATIBILITY = RModelPackage.R4E_FORMAL_REVIEW__COMPATIBILITY;
+
+	/**
+	 * The feature id for the '<em><b>Topics</b></em>' reference list.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int REVIEW_RES__TOPICS = RModelPackage.R4E_FORMAL_REVIEW__TOPICS;
 
 	/**
-	 * The feature id for the '<em><b>Review Items</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Review Items</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -277,26 +295,34 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Review Task</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int REVIEW_RES__REVIEW_TASK = RModelPackage.R4E_FORMAL_REVIEW__REVIEW_TASK;
 
 	/**
-	 * The feature id for the '<em><b>State</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>State</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int REVIEW_RES__STATE = RModelPackage.R4E_FORMAL_REVIEW__STATE;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Assigned To</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REVIEW_RES__ASSIGNED_TO = RModelPackage.R4E_FORMAL_REVIEW__ASSIGNED_TO;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -304,8 +330,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Project</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -313,8 +338,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Components</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -322,8 +346,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Entry Criteria</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -331,8 +354,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Extra Notes</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -340,17 +362,16 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Objectives</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int REVIEW_RES__OBJECTIVES = RModelPackage.R4E_FORMAL_REVIEW__OBJECTIVES;
 
 	/**
-	 * The feature id for the '<em><b>Reference Material</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Reference Material</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -358,8 +379,8 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Decision</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -367,8 +388,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Start Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -376,26 +396,16 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>End Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int REVIEW_RES__END_DATE = RModelPackage.R4E_FORMAL_REVIEW__END_DATE;
 
 	/**
-	 * The feature id for the '<em><b>Xml Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REVIEW_RES__XML_VERSION = RModelPackage.R4E_FORMAL_REVIEW__XML_VERSION;
-
-	/**
 	 * The feature id for the '<em><b>Anomaly Template</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -403,8 +413,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -412,8 +421,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Users Map</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -421,8 +429,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Created By</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -430,8 +437,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Ids Map</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -439,8 +445,8 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Active Meeting</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -448,8 +454,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Phase Owner</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -457,8 +462,8 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Phases</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -466,8 +471,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Current</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -475,27 +479,25 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Users Res</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int REVIEW_RES__USERS_RES = RModelPackage.R4E_FORMAL_REVIEW_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Review Res</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>Review Res</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int REVIEW_RES_FEATURE_COUNT = RModelPackage.R4E_FORMAL_REVIEW_FEATURE_COUNT + 1;
 
-
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes <em>Review Group Res</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Review Group Res</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes
 	 * @generated
@@ -504,8 +506,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes#getReviewsRes <em>Reviews Res</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Reviews Res</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes#getReviewsRes()
 	 * @see #getReviewGroupRes()
@@ -515,8 +516,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes#getFilesPrefix <em>Files Prefix</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Files Prefix</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes#getFilesPrefix()
 	 * @see #getReviewGroupRes()
@@ -526,8 +526,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes <em>Review Res</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Review Res</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes
 	 * @generated
@@ -536,8 +535,7 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes#getUsersRes <em>Users Res</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Users Res</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes#getUsersRes()
 	 * @see #getReviewRes()
@@ -547,21 +545,19 @@ public interface TransResPackage extends EPackage {
 
 	/**
 	 * Returns the factory that creates the instances of the model.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
 	TransResFactory getTransResFactory();
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * Defines literals for the meta objects that represent
+	 * <!-- begin-user-doc --> Defines literals for the meta objects that represent
 	 * <ul>
-	 *   <li>each class,</li>
-	 *   <li>each feature of each class,</li>
-	 *   <li>each enum,</li>
-	 *   <li>and each data type</li>
+	 * <li>each class,</li>
+	 * <li>each feature of each class,</li>
+	 * <li>each enum,</li>
+	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -569,8 +565,7 @@ public interface TransResPackage extends EPackage {
 	interface Literals {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewGroupResImpl <em>Review Group Res</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewGroupResImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.TransResPackageImpl#getReviewGroupRes()
 		 * @generated
@@ -578,9 +573,9 @@ public interface TransResPackage extends EPackage {
 		EClass REVIEW_GROUP_RES = eINSTANCE.getReviewGroupRes();
 
 		/**
-		 * The meta object literal for the '<em><b>Reviews Res</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Reviews Res</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference REVIEW_GROUP_RES__REVIEWS_RES = eINSTANCE.getReviewGroupRes_ReviewsRes();
@@ -595,8 +590,7 @@ public interface TransResPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewResImpl <em>Review Res</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.ReviewResImpl
 		 * @see org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl.TransResPackageImpl#getReviewRes()
 		 * @generated
@@ -604,9 +598,9 @@ public interface TransResPackage extends EPackage {
 		EClass REVIEW_RES = eINSTANCE.getReviewRes();
 
 		/**
-		 * The meta object literal for the '<em><b>Users Res</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Users Res</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference REVIEW_RES__USERS_RES = eINSTANCE.getReviewRes_UsersRes();

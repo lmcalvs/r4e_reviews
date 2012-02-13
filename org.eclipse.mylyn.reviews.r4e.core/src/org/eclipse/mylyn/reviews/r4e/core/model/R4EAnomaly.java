@@ -17,7 +17,6 @@ package org.eclipse.mylyn.reviews.r4e.core.model;
 import java.util.Date;
 
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
-import org.eclipse.mylyn.reviews.frame.core.model.User;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 

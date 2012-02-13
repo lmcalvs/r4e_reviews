@@ -32,7 +32,6 @@ import org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableProjects <em>Available Projects</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableComponents <em>Available Components</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getDesignRuleLocations <em>Design Rule Locations</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getXmlVersion <em>Xml Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAvailableAnomalyTypes <em>Available Anomaly Types</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getAnomalyTypeKeyToReference <em>Anomaly Type Key To Reference</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getReviewsMap <em>Reviews Map</em>}</li>
@@ -170,33 +169,6 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * @generated
 	 */
 	EList<String> getDesignRuleLocations();
-
-	/**
-	 * Returns the value of the '<em><b>Xml Version</b></em>' attribute.
-	 * The default value is <code>"1.0.0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Xml Version</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Xml Version</em>' attribute.
-	 * @see #setXmlVersion(String)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReviewGroup_XmlVersion()
-	 * @model default="1.0.0"
-	 * @generated
-	 */
-	String getXmlVersion();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup#getXmlVersion <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Xml Version</em>' attribute.
-	 * @see #getXmlVersion()
-	 * @generated
-	 */
-	void setXmlVersion(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Available Anomaly Types</b></em>' containment reference list.

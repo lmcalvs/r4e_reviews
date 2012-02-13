@@ -35,6 +35,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.Roots;
+import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 
 /**
  * <!-- begin-user-doc -->
@@ -50,7 +53,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAvailableProjects <em>Available Projects</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAvailableComponents <em>Available Components</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getDesignRuleLocations <em>Design Rule Locations</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getXmlVersion <em>Xml Version</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAvailableAnomalyTypes <em>Available Anomaly Types</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getAnomalyTypeKeyToReference <em>Anomaly Type Key To Reference</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl#getReviewsMap <em>Reviews Map</em>}</li>
@@ -160,26 +162,6 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	 * @ordered
 	 */
 	protected EList<String> designRuleLocations;
-
-	/**
-	 * The default value of the '{@link #getXmlVersion() <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getXmlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String XML_VERSION_EDEFAULT = "1.0.0";
-
-	/**
-	 * The cached value of the '{@link #getXmlVersion() <em>Xml Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getXmlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected String xmlVersion = XML_VERSION_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getAvailableAnomalyTypes() <em>Available Anomaly Types</em>}' containment reference list.
@@ -356,27 +338,6 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getXmlVersion() {
-		return xmlVersion;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setXmlVersion(String newXmlVersion) {
-		String oldXmlVersion = xmlVersion;
-		xmlVersion = newXmlVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW_GROUP__XML_VERSION, oldXmlVersion, xmlVersion));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<R4EAnomalyType> getAvailableAnomalyTypes() {
 		if (availableAnomalyTypes == null) {
 			availableAnomalyTypes = new EObjectContainmentEList.Resolving<R4EAnomalyType>(R4EAnomalyType.class, this, RModelPackage.R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES);
@@ -462,8 +423,6 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 				return getAvailableComponents();
 			case RModelPackage.R4E_REVIEW_GROUP__DESIGN_RULE_LOCATIONS:
 				return getDesignRuleLocations();
-			case RModelPackage.R4E_REVIEW_GROUP__XML_VERSION:
-				return getXmlVersion();
 			case RModelPackage.R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES:
 				return getAvailableAnomalyTypes();
 			case RModelPackage.R4E_REVIEW_GROUP__ANOMALY_TYPE_KEY_TO_REFERENCE:
@@ -513,9 +472,6 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 				getDesignRuleLocations().clear();
 				getDesignRuleLocations().addAll((Collection<? extends String>)newValue);
 				return;
-			case RModelPackage.R4E_REVIEW_GROUP__XML_VERSION:
-				setXmlVersion((String)newValue);
-				return;
 			case RModelPackage.R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES:
 				getAvailableAnomalyTypes().clear();
 				getAvailableAnomalyTypes().addAll((Collection<? extends R4EAnomalyType>)newValue);
@@ -562,9 +518,6 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 			case RModelPackage.R4E_REVIEW_GROUP__DESIGN_RULE_LOCATIONS:
 				getDesignRuleLocations().clear();
 				return;
-			case RModelPackage.R4E_REVIEW_GROUP__XML_VERSION:
-				setXmlVersion(XML_VERSION_EDEFAULT);
-				return;
 			case RModelPackage.R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES:
 				getAvailableAnomalyTypes().clear();
 				return;
@@ -603,8 +556,6 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 				return availableComponents != null && !availableComponents.isEmpty();
 			case RModelPackage.R4E_REVIEW_GROUP__DESIGN_RULE_LOCATIONS:
 				return designRuleLocations != null && !designRuleLocations.isEmpty();
-			case RModelPackage.R4E_REVIEW_GROUP__XML_VERSION:
-				return XML_VERSION_EDEFAULT == null ? xmlVersion != null : !XML_VERSION_EDEFAULT.equals(xmlVersion);
 			case RModelPackage.R4E_REVIEW_GROUP__AVAILABLE_ANOMALY_TYPES:
 				return availableAnomalyTypes != null && !availableAnomalyTypes.isEmpty();
 			case RModelPackage.R4E_REVIEW_GROUP__ANOMALY_TYPE_KEY_TO_REFERENCE:
@@ -673,10 +624,26 @@ public class R4EReviewGroupImpl extends ReviewGroupImpl implements R4EReviewGrou
 		result.append(availableComponents);
 		result.append(", designRuleLocations: ");
 		result.append(designRuleLocations);
-		result.append(", xmlVersion: ");
-		result.append(xmlVersion);
 		result.append(')');
 		return result.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewGroupImpl#getCompatibility()
+	 */
+	public int getCompatibility() {
+		return VersionUtils.compareVersions(Roots.GROUP.getVersion(), fragmentVersion);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewGroupImpl#getApplicationVersion()
+	 */
+	public String getApplicationVersion() {
+		return Persistence.Roots.GROUP.getVersion();
 	}
 
 } //R4EReviewGroupImpl

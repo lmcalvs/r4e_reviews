@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -109,6 +110,8 @@ public class RefreshHandler extends AbstractHandler {
 						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 					} catch (ReviewVersionsException e) {
 						UIUtils.displayVersionErrorDialog(e);
+					} catch (CompatibilityException e1) {
+						UIUtils.displayCompatibilityErrorDialog(e1);
 					}
 
 					try {
@@ -159,6 +162,8 @@ public class RefreshHandler extends AbstractHandler {
 					"File not found error detected while refreshing review item ", new Status(IStatus.ERROR,
 							R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 			dialog.open();
+		} catch (CompatibilityException e) {
+			UIUtils.displayCompatibilityErrorDialog(e);
 		}
 	}
 }
