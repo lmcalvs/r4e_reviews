@@ -55,7 +55,7 @@ public class PreviousStatePropertyTester extends PropertyTester {
 	 */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 
-		if (null != R4EUIModelController.getActiveReview()) {
+		if (null != R4EUIModelController.getActiveReview() && !R4EUIModelController.getActiveReview().isReadOnly()) {
 			if (receiver instanceof AbstractList && ((AbstractList) receiver).size() > 0) {
 				final Object element = ((AbstractList) receiver).get(0);
 				if (element instanceof R4EUIReviewExtended) {

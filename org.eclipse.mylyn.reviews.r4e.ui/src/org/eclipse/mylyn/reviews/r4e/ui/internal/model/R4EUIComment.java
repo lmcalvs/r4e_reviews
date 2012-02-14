@@ -94,6 +94,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	public R4EUIComment(IR4EUIModelElement aParent, R4EComment aComment) {
 		super(aParent, buildCommentName(aComment.getDescription()));
+		fReadOnly = aParent.isReadOnly();
 		fComment = aComment;
 		setImage(COMMENT_ICON_FILE);
 	}
@@ -244,6 +245,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	@Override
 	public boolean isRemoveElementCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -284,6 +286,7 @@ public class R4EUIComment extends R4EUIModelElement {
 			return false;
 		}
 		if (isEnabled()
+				|| isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;

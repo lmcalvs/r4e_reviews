@@ -130,6 +130,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	public R4EUIAnomalyBasic(IR4EUIModelElement aParent, R4EAnomaly aAnomaly, IR4EUIPosition aPosition) {
 		super(aParent, buildAnomalyName(aAnomaly, aPosition));
+		fReadOnly = aParent.isReadOnly();
 		fAnomaly = aAnomaly;
 		fComments = new ArrayList<R4EUIComment>();
 		setImage(ANOMALY_ICON_FILE);
@@ -580,6 +581,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	@Override
 	public boolean isNewChildElementCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -617,6 +619,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	@Override
 	public boolean isRemoveElementCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -657,6 +660,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 			return false;
 		}
 		if (isEnabled()
+				|| isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;

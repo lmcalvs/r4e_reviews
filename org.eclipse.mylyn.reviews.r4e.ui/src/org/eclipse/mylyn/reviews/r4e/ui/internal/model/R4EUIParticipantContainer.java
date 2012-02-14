@@ -84,6 +84,7 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	public R4EUIParticipantContainer(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName);
+		fReadOnly = aParent.isReadOnly();
 		fParticipants = new ArrayList<R4EUIParticipant>();
 		setImage(PARTICIPANT_CONTAINER_ICON_FILE);
 	}
@@ -218,6 +219,15 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	@Override
 	public boolean isEnabled() {
 		return getParent().isEnabled();
+	}
+
+	/**
+	 * Method setReadOnly.
+	 * 
+	 * @param boolean
+	 */
+	public void setReadOnly(boolean aReadOnly) {
+		fReadOnly = aReadOnly;
 	}
 
 	/**
@@ -361,18 +371,23 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNewChildElementCmd() {
-		//If this is a formal review, we need to be in the planning, preparation or decision phase
-		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
-					.getType();
-			if (!phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)
-					&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
-					&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-				return false;
+		if (!isReadOnly()) {
+			//If this is a formal review, we need to be in the planning, preparation or decision phase
+			if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
+						.getType();
+				if (!phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)
+						&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
+						&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+					return false;
+				}
 			}
-		}
-		if (getParent().isEnabled()) {
-			return true;
+			if (getParent().isEnabled()) {
+				return true;
+			}
 		}
 		return false;
 	}

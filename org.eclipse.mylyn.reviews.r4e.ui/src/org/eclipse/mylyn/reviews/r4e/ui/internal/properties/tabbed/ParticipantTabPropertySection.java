@@ -22,9 +22,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.EList;
@@ -555,6 +553,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress()
+				|| fProperties.getElement().isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fIdText.setEnabled(false);

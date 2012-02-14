@@ -110,6 +110,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	protected boolean fOpen = true;
 
+	/**
+	 * Field fReadOnly.
+	 */
+	protected boolean fReadOnly = false;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -229,6 +234,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public boolean isEnabled() {
 		return true; //default implementation
+	}
+
+	/**
+	 * Method isReadOnly.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isReadOnly()
+	 */
+	public boolean isReadOnly() {
+		return fReadOnly;
 	}
 
 	/**

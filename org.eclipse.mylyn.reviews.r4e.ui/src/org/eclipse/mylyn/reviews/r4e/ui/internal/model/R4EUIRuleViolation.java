@@ -112,6 +112,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 */
 	public R4EUIRuleViolation(IR4EUIModelElement aParent, R4EDesignRuleViolation aViolation) {
 		super(aParent, aViolation.getName());
+		fReadOnly = aParent.isReadOnly();
 		fViolation = aViolation;
 		fRules = new ArrayList<R4EUIRule>();
 		setImage(RULE_VIOLATION_ICON_FILE);
@@ -425,7 +426,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNewChildElementCmd() {
-		if (isEnabled()) {
+		if (isEnabled() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -461,7 +462,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (isEnabled()) {
+		if (isEnabled() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -497,7 +498,7 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isEnabled()) {
+		if (isEnabled() || isReadOnly()) {
 			return false;
 		}
 		return true;

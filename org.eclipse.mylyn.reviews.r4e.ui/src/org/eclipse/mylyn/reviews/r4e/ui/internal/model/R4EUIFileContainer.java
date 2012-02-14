@@ -74,12 +74,14 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 	 *            R4EItem
 	 * @param aName
 	 *            String
-	 * @param aItemType - int
+	 * @param aItemType
+	 *            - int
 	 * @param aTooltip
 	 *            String
 	 */
 	protected R4EUIFileContainer(IR4EUIModelElement aParent, R4EItem aItem, String aName, int aItemType) {
 		super(aParent, aName);
+		fReadOnly = aParent.isReadOnly();
 		fItem = aItem;
 		fType = aItemType;
 		fFileContexts = new ArrayList<R4EUIFileContext>();
@@ -371,6 +373,7 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 	@Override
 	public boolean isRemoveElementCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -389,6 +392,7 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 			return false;
 		}
 		if (isEnabled()
+				|| isReadOnly()
 				|| ((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;

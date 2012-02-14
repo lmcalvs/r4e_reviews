@@ -19,8 +19,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +46,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -215,6 +214,11 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	 */
 	private String fAssignedToParticipant = null;
 
+	/**
+	 * Field fOpenRuleSets.
+	 */
+	private final List<R4EUIRuleSet> fOpenRuleSets = new ArrayList<R4EUIRuleSet>();
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -290,6 +294,10 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 			fAnomalyDueDateValue = null;
 			fAssignedToParticipant = null;
 		}
+		for (R4EUIRuleSet ruleset : fOpenRuleSets) {
+			ruleset.close();
+		}
+		fOpenRuleSets.clear();
 		super.buttonPressed(buttonId);
 	}
 
@@ -508,6 +516,18 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 				}
 				return null;
 			}
+
+			@Override
+			public void update(ViewerCell cell) {
+				IR4EUIModelElement element = (IR4EUIModelElement) cell.getElement();
+				if (element instanceof R4EUIRuleSet && !element.isOpen()) {
+					cell.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
+				} else {
+					cell.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_BLACK));
+				}
+				cell.setText(element.getName());
+				cell.setImage(element.getImage());
+			}
 		});
 
 		final TreeViewerColumn titleColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
@@ -664,20 +684,13 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 						}
 						parentRuleSetElement = parentRuleSetElement.getParent();
 					}
-					//If the current reveiw group contains a reference to this Rule Set, display it
+					//If the current review group contains a reference to this Rule Set, display it
 					if ((((R4EUIReviewGroup) R4EUIModelController.getActiveReview().getParent()).getRuleSets().contains(parentRuleSetElement))) {
 						if (!parentRuleSetElement.isOpen()) {
 							try {
-								parentRuleSetElement.open();
-							} catch (FileNotFoundException e) {
-								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage()
-										+ ")");
-								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+								((R4EUIRuleSet) parentRuleSetElement).openReadOnly();
+								fOpenRuleSets.add((R4EUIRuleSet) parentRuleSetElement);
 							} catch (ResourceHandlingException e) {
-								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage()
-										+ ")");
-								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-							} catch (ReviewVersionsException e) {
 								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage()
 										+ ")");
 								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);

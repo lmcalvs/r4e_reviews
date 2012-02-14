@@ -397,6 +397,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	@Override
 	public boolean isChangeUserReviewStateCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -412,6 +413,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	@Override
 	public boolean isAssignToCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -427,6 +429,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	@Override
 	public boolean isUnassignToCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
 				&& fItem.getAssignedTo().size() > 0) {
 			return true;

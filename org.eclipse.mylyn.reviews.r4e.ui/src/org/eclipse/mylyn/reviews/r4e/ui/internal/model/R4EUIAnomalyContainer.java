@@ -99,6 +99,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 */
 	public R4EUIAnomalyContainer(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName);
+		fReadOnly = aParent.isReadOnly();
 		fAnomalies = new ArrayList<R4EUIAnomalyBasic>();
 		setImage(ANOMALY_CONTAINER_ICON_FILE);
 	}
@@ -334,6 +335,15 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Method setReadOnly.
+	 * 
+	 * @param boolean
+	 */
+	public void setReadOnly(boolean aReadOnly) {
+		fReadOnly = aReadOnly;
 	}
 
 	/**
@@ -642,15 +652,20 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNewChildElementCmd() {
-		//If this is a formal review, we need to be in the preparation phase
-		if (R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-			if (!(((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION))) {
-				return false;
+		if (!isReadOnly()) {
+			//If this is a formal review, we need to be in the preparation phase
+			if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+				if (!(((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION))) {
+					return false;
+				}
 			}
-		}
-		if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isUserReviewed())) {
-			if (getParent() instanceof R4EUIReviewBasic) {
-				return true;
+			if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isUserReviewed())) {
+				if (getParent() instanceof R4EUIReviewBasic) {
+					return true;
+				}
 			}
 		}
 		return false;

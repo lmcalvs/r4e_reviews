@@ -688,7 +688,13 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 				}
 			}
 			if (groupsToLoad.size() > 0) {
-				R4EUIModelController.loadReviewGroups(groupsToLoad);
+				List<String> loadErrors = new ArrayList<String>();
+				loadErrors = R4EUIModelController.loadReviewGroups(groupsToLoad, loadErrors);
+
+				//Report elements that failed to load
+				if (loadErrors.size() > 0) {
+					UIUtils.displayFailedLoadDialog(loadErrors);
+				}
 			}
 		} else if (event.getKey().equals(PreferenceConstants.P_RULE_SET_FILE_PATH)) {
 			//Check what is currently loaded vs. what is in the preferences.  Adjust input accordingly
@@ -737,7 +743,13 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 				}
 			}
 			if (ruleSetsToLoad.size() > 0) {
-				R4EUIModelController.loadRuleSets(ruleSetsToLoad);
+				List<String> loadErrors = new ArrayList<String>();
+				loadErrors = R4EUIModelController.loadRuleSets(ruleSetsToLoad, loadErrors);
+
+				//Report elements that failed to load
+				if (loadErrors.size() > 0) {
+					UIUtils.displayFailedLoadDialog(loadErrors);
+				}
 			}
 		} else if (event.getKey().equals(PreferenceConstants.P_SHOW_DISABLED)) {
 			resetInput();

@@ -29,6 +29,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field VERSION_APPLICATION_OLDER. (value is -1)
+	 */
+	public static final int VERSION_APPLICATION_OLDER = -1;
+
+	/**
+	 * Field VERSION_APPLICATION_NEWER. (value is 1)
+	 */
+	public static final int VERSION_APPLICATION_NEWER = 1;
+
+	/**
 	 * Field SEPARATOR. (value is ""/"")
 	 */
 	public static final String SEPARATOR = "/";
@@ -239,6 +249,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field DIALOG_NO. (value is 1)
 	 */
 	public static final int DIALOG_NO = 1;
+
+	/**
+	 * Field OPEN_NORMAL. (value is 0)
+	 */
+	public static final int OPEN_NORMAL = 0;
+
+	/**
+	 * Field OPEN_READONLY. (value is 1)
+	 */
+	public static final int OPEN_READONLY = 1;
 
 	//Icons
 

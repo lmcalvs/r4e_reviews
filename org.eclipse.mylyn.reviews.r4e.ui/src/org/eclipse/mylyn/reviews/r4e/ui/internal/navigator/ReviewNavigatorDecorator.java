@@ -225,6 +225,10 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 				&& ((R4EReviewState) ((R4EUIReviewBasic) aElement).getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY);
+		} else if (aElement instanceof IR4EUIModelElement) {
+			if (((IR4EUIModelElement) aElement).isReadOnly()) {
+				return Display.getCurrent().getSystemColor(SWT.COLOR_RED);
+			}
 		}
 		return null;
 	}

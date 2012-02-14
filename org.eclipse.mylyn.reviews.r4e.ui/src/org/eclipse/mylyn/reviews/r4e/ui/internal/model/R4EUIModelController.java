@@ -249,19 +249,13 @@ public class R4EUIModelController {
 	 * @param filePath
 	 *            String
 	 * @return R4EReviewGroup
+	 * @throws CompatibilityException
 	 * @throws ResourceHandlingException
 	 */
-	public static R4EReviewGroup peekReviewGroup(String filePath) {
+	public static R4EReviewGroup peekReviewGroup(String filePath) throws ResourceHandlingException,
+			CompatibilityException {
 		FModelExt = SerializeFactory.getModelExtension();
-		R4EReviewGroup group = null;
-		try {
-			group = FModelExt.openR4EReviewGroup(URI.createFileURI(filePath));
-		} catch (ResourceHandlingException e) {
-			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		} catch (CompatibilityException e) {
-			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		}
-		return group;
+		return FModelExt.openR4EReviewGroup(URI.createFileURI(filePath));
 	}
 
 	/**
@@ -292,14 +286,20 @@ public class R4EUIModelController {
 		//Add root for Review Navigator
 		FRootElement = new R4EUIRootElement(null, "R4E");
 
-		//Load Review Groups
+		//Load Review Elements
+		List<String> loadErrors = new ArrayList<String>();
 		final IPreferenceStore preferenceStore = R4EUIPlugin.getDefault().getPreferenceStore();
 		final String groupPaths = preferenceStore.getString(PreferenceConstants.P_GROUP_FILE_PATH);
 		final List<String> groupPathsList = UIUtils.parseStringList(groupPaths);
-		loadReviewGroups(groupPathsList);
+		loadErrors = loadReviewGroups(groupPathsList, loadErrors);
 		final String ruleSetPaths = preferenceStore.getString(PreferenceConstants.P_RULE_SET_FILE_PATH);
 		final List<String> ruleSetPathsList = UIUtils.parseStringList(ruleSetPaths);
-		loadRuleSets(ruleSetPathsList);
+		loadErrors = loadRuleSets(ruleSetPathsList, loadErrors);
+
+		//Report elements that failed to load
+		if (loadErrors.size() > 0) {
+			UIUtils.displayFailedLoadDialog(loadErrors);
+		}
 
 		//Verify Mail Connectivity
 		FMailConnector = NotificationsCore.getFirstEnabled(MAIL_CONNECTOR_IDS);
@@ -311,12 +311,12 @@ public class R4EUIModelController {
 	 * @param aGroupPaths
 	 *            List<String>
 	 */
-	public static void loadReviewGroups(List<String> aGroupPaths) {
+	public static List<String> loadReviewGroups(List<String> aGroupPaths, List<String> aErrors) {
 
-		final boolean changePrefsPaths = false;
+		//final boolean changePrefsPaths = false;
 		R4EReviewGroup reviewGroup = null;
-		final List<String> newGroupPaths = new ArrayList<String>();
-		newGroupPaths.addAll(aGroupPaths);
+		//final List<String> newGroupPaths = new ArrayList<String>();
+		//newGroupPaths.addAll(aGroupPaths);
 
 		for (String groupPath : aGroupPaths) {
 			reviewGroup = null;
@@ -325,9 +325,14 @@ public class R4EUIModelController {
 			//If it fails, then create it
 			try {
 				reviewGroup = FModelExt.openR4EReviewGroup(URI.createFileURI(groupPath));
-				FRootElement.loadReviewGroup(reviewGroup);
+				if (null != reviewGroup) {
+					FRootElement.loadReviewGroup(reviewGroup);
+				} else {
+					aErrors.add("Invalid Group Path " + groupPath + R4EUIConstants.LINE_FEED);
+				}
 			} catch (ResourceHandlingException e) {
 				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				aErrors.add(e.getMessage() + R4EUIConstants.LINE_FEED);
 
 				//Bug 347780:  Remove this code for now.  Later we will implement to validate the group files
 				/*
@@ -345,15 +350,19 @@ public class R4EUIModelController {
 				*/
 			} catch (CompatibilityException e) {
 				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				aErrors.add(e.getMessage() + R4EUIConstants.LINE_FEED);
 			}
 		}
 
+		/*
 		//Adjust review group paths in preferences
 		if (changePrefsPaths) {
 			R4EUIPlugin.getDefault()
 					.getPreferenceStore()
 					.setValue(PreferenceConstants.P_GROUP_FILE_PATH, buildReviewGroupsStr(newGroupPaths));
 		}
+		*/
+		return aErrors;
 	}
 
 	/**
@@ -362,12 +371,12 @@ public class R4EUIModelController {
 	 * @param aRuleSetPaths
 	 *            List<String>
 	 */
-	public static void loadRuleSets(List<String> aRuleSetPaths) {
+	public static List<String> loadRuleSets(List<String> aRuleSetPaths, List<String> aErrors) {
 
-		final boolean changePrefsPaths = false;
+		//final boolean changePrefsPaths = false;
 		R4EDesignRuleCollection ruleSet = null;
-		final List<String> newRuleSetPaths = new ArrayList<String>();
-		newRuleSetPaths.addAll(aRuleSetPaths);
+		//final List<String> newRuleSetPaths = new ArrayList<String>();
+		//newRuleSetPaths.addAll(aRuleSetPaths);
 
 		for (String ruleSetPath : aRuleSetPaths) {
 			ruleSet = null;
@@ -376,9 +385,14 @@ public class R4EUIModelController {
 			//If it fails, then create it
 			try {
 				ruleSet = FModelExt.openR4EDesignRuleCollection(URI.createFileURI(ruleSetPath));
-				FRootElement.loadRuleSet(ruleSet);
+				if (null != ruleSet) {
+					FRootElement.loadRuleSet(ruleSet);
+				} else {
+					aErrors.add("Invalid Ruleset Path " + ruleSetPath + R4EUIConstants.LINE_FEED);
+				}
 			} catch (ResourceHandlingException e) {
 				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				aErrors.add(e.getMessage() + R4EUIConstants.LINE_FEED);
 
 				//Bug 347780:  Remove this code for now.  Later we will implement to validate the group files
 				/*
@@ -396,15 +410,19 @@ public class R4EUIModelController {
 				 */
 			} catch (CompatibilityException e) {
 				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				aErrors.add(e.getMessage() + R4EUIConstants.LINE_FEED);
 			}
 		}
 
+		/*
 		//Adjust review group paths in preferences
 		if (changePrefsPaths) {
 			R4EUIPlugin.getDefault()
 					.getPreferenceStore()
 					.setValue(PreferenceConstants.P_RULE_SET_FILE_PATH, buildReviewGroupsStr(newRuleSetPaths));
 		}
+		*/
+		return aErrors;
 	}
 
 	/**

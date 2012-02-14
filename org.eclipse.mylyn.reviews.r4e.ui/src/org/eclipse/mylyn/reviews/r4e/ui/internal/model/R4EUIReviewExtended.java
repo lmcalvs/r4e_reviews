@@ -162,7 +162,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 */
 	@Override
 	public boolean isNextStateElementCmd() {
-		if (isOpen() && 0 < getNextAvailablePhases().length) {
+		if (isOpen() && !isReadOnly() && 0 < getNextAvailablePhases().length) {
 			return true;
 		}
 		return false;
@@ -176,7 +176,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 */
 	@Override
 	public boolean isPreviousStateElementCmd() {
-		if (isOpen() && null != getPreviousPhase()) {
+		if (isOpen() && !isReadOnly() && null != getPreviousPhase()) {
 			return true;
 		}
 		return false;

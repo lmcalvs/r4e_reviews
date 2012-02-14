@@ -537,18 +537,27 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			@SuppressWarnings("synthetic-access")
 			public void widgetSelected(SelectionEvent aEvent) {
 				final String selectedGroupFile = fGroupFilesEditor.getSelection();
+				fGroupNameText.setText("");
+				fGroupDescriptionText.setText("");
 				if (null != selectedGroupFile) {
-					final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
-					if (null != group) {
-						fGroupNameText.setText(group.getName());
-						fGroupDescriptionText.setText(group.getDescription());
-						R4EUIModelController.FModelExt.closeR4EReviewGroup(group);
-					} else {
-						fGroupNameText.setText(INVALID_FILE_STR);
+					try {
+						final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
+						if (null != group) {
+							fGroupNameText.setText(group.getName());
+							fGroupDescriptionText.setText(group.getDescription());
+							R4EUIModelController.FModelExt.closeR4EReviewGroup(group);
+						} else {
+							fGroupNameText.setText(INVALID_FILE_STR);
+						}
+					} catch (ResourceHandlingException e) {
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+						fGroupDescriptionText.setText("<Error:  Resource Error>");
+					} catch (CompatibilityException e) {
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+						fGroupDescriptionText.setText("<Error:  Version Mismatch>");
 					}
-				} else {
-					fGroupNameText.setText("");
-					fGroupDescriptionText.setText("");
 				}
 			}
 
@@ -630,22 +639,27 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			@SuppressWarnings("synthetic-access")
 			public void widgetSelected(SelectionEvent aEvent) {
 				final String selectedRuleSetFile = fRuleSetFilesEditor.getSelection();
+				fRuleSetNameText.setText("");
+				fRuleSetVersionText.setText("");
 				if (null != selectedRuleSetFile) {
 					try {
 						final R4EDesignRuleCollection ruleSet = R4EUIModelController.peekRuleSet(selectedRuleSetFile);
-						fRuleSetNameText.setText(ruleSet.getName());
-						fRuleSetVersionText.setText(ruleSet.getVersion());
-						R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(ruleSet);
+						if (null != ruleSet) {
+							fRuleSetNameText.setText(ruleSet.getName());
+							fRuleSetVersionText.setText(ruleSet.getVersion());
+							R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(ruleSet);
+						} else {
+							fRuleSetNameText.setText(INVALID_FILE_STR);
+						}
 					} catch (ResourceHandlingException e) {
 						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+						fRuleSetVersionText.setText("<Error:  Resource Error>");
 					} catch (CompatibilityException e) {
 						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+						fRuleSetVersionText.setText("<Error:  Version Mismatch>");
 					}
-				} else {
-					fRuleSetNameText.setText("");
-					fRuleSetVersionText.setText("");
 				}
 			}
 
@@ -720,7 +734,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fReviewShowDisabledButton.setText(R4EUIConstants.SHOW_DISABLED_FILTER_NAME);
 		fReviewShowDisabledButton.setLayoutData(filtersButtonData);
 		fReviewShowDisabledButton.setSelection(store.getBoolean(PreferenceConstants.P_SHOW_DISABLED));
-		if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
+		if (null != R4EUIModelController.getNavigatorView()
+				&& R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
 			fReviewShowDisabledButton.setEnabled(true);
 		} else {
 			fReviewShowDisabledButton.setEnabled(false);

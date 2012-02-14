@@ -1363,6 +1363,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress()
+				|| fProperties.getElement().isReadOnly()
 				|| (!((R4EUIReviewBasic) fProperties.getElement()).isOpen())
 				|| ((R4EReviewState) ((R4EUIReviewBasic) fProperties.getElement()).getReview().getState()).getState()
 						.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {

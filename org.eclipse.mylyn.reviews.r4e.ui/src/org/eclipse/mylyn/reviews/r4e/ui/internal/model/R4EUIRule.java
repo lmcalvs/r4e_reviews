@@ -86,6 +86,7 @@ public class R4EUIRule extends R4EUIModelElement {
 	 */
 	public R4EUIRule(IR4EUIModelElement aParent, R4EDesignRule aRule) {
 		super(aParent, aRule.getId());
+		fReadOnly = aParent.isReadOnly();
 		fRule = aRule;
 		setImage(RULE_ICON_FILE);
 	}
@@ -195,7 +196,7 @@ public class R4EUIRule extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (isEnabled()) {
+		if (isEnabled() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -231,7 +232,7 @@ public class R4EUIRule extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isEnabled()) {
+		if (isEnabled() || isReadOnly()) {
 			return false;
 		}
 		return true;

@@ -95,6 +95,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	 */
 	protected R4EUIContent(IR4EUIModelElement aParent, R4EDelta aDelta, IR4EUIPosition aPosition) {
 		super(aParent, aPosition.toString());
+		fReadOnly = aParent.isReadOnly();
 		fContent = aDelta;
 		fPosition = aPosition;
 	}
@@ -343,6 +344,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	@Override
 	public boolean isAddLinkedAnomalyCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -372,6 +374,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	@Override
 	public boolean isChangeUserReviewStateCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -387,6 +390,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	@Override
 	public boolean isAssignToCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -402,6 +406,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	@Override
 	public boolean isUnassignToCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
 				&& fContent.getAssignedTo().size() > 0) {
 			return true;
@@ -418,6 +423,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	@Override
 	public boolean isRemoveElementCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -458,6 +464,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 			return false;
 		}
 		if (isEnabled()
+				|| isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;

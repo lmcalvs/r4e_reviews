@@ -184,6 +184,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress()
+				|| fProperties.getElement().isReadOnly()
 				|| !fProperties.getElement().isEnabled()
 				|| null == R4EUIModelController.getActiveReview()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(

@@ -164,6 +164,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	public R4EUIReviewGroup(IR4EUIModelElement aParent, R4EReviewGroup aGroup, boolean aOpen) {
 		super(aParent, aGroup.getName());
+		fReadOnly = false;
 		fGroup = aGroup;
 		fGroupFileURI = aGroup.eResource().getURI();
 		fReviews = new ArrayList<R4EUIReviewBasic>();
@@ -350,49 +351,90 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	public void open() throws ResourceHandlingException, CompatibilityException {
 		//Load model information
 		fGroup = R4EUIModelController.FModelExt.openR4EReviewGroup(fGroupFileURI);
-		final EList<Review> reviews = fGroup.getReviews();
-		if (null != reviews) {
-			final int reviewsSize = reviews.size();
-			R4EReview review = null;
-			R4EUIReviewBasic uiReview = null;
+		if (checkCompatibility()) {
+			final EList<Review> reviews = fGroup.getReviews();
+			if (null != reviews) {
+				final int reviewsSize = reviews.size();
+				R4EReview review = null;
+				R4EUIReviewBasic uiReview = null;
 
-			for (int i = 0; i < reviewsSize; i++) {
-				review = (R4EReview) reviews.get(i);
-				if (review.isEnabled()
-						|| R4EUIPlugin.getDefault()
-								.getPreferenceStore()
-								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					uiReview = null;
-					if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-						uiReview = new R4EUIReviewExtended(this, review, review.getType(), false);
-						((R4EUIReviewExtended) uiReview).setName(((R4EUIReviewExtended) uiReview).getPhaseString(((R4EReviewState) review.getState()).getState())
-								+ ": " + uiReview.getName());
-					} else {
-						uiReview = new R4EUIReviewBasic(this, review, review.getType(), false);
+				for (int i = 0; i < reviewsSize; i++) {
+					review = (R4EReview) reviews.get(i);
+					if (review.isEnabled()
+							|| R4EUIPlugin.getDefault()
+									.getPreferenceStore()
+									.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						uiReview = null;
+						if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+							uiReview = new R4EUIReviewExtended(this, review, review.getType(), false);
+							((R4EUIReviewExtended) uiReview).setName(((R4EUIReviewExtended) uiReview).getPhaseString(((R4EReviewState) review.getState()).getState())
+									+ ": " + uiReview.getName());
+						} else {
+							uiReview = new R4EUIReviewBasic(this, review, review.getType(), false);
+						}
+						addChildren(uiReview);
 					}
-					addChildren(uiReview);
 				}
 			}
-		}
 
-		//Close and Reopen the RulesSet to make sure we have the latest information
-		final List<String> ruleSetlocations = fGroup.getDesignRuleLocations();
-		for (String ruleSetlocation : ruleSetlocations) {
-			for (R4EUIRuleSet ruleSet : ((R4EUIRootElement) getParent()).getRuleSets()) {
-				if (!ruleSet.isOpen()) {
-					ruleSet.open();
+			//Close and Reopen the RulesSet to make sure we have the latest information
+			final List<String> ruleSetlocations = fGroup.getDesignRuleLocations();
+			for (String ruleSetlocation : ruleSetlocations) {
+				for (R4EUIRuleSet ruleSet : ((R4EUIRootElement) getParent()).getRuleSets()) {
+					if (ruleSet.getRuleSet().getName().equals(ruleSetlocation)) {
+						fRuleSets.add(ruleSet);
+						break;
+					}
 				}
-				if (ruleSet.getRuleSet().eResource().getURI().toFileString().equals(ruleSetlocation)) {
-					fRuleSets.add(ruleSet);
-					break;
-				}
-				ruleSet.close();
 			}
+			fOpen = true;
+			fImage = UIUtils.loadIcon(REVIEW_GROUP_ICON_FILE);
+			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
+		} else {
+			R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup); //Notify model
 		}
+	}
 
-		fOpen = true;
-		fImage = UIUtils.loadIcon(REVIEW_GROUP_ICON_FILE);
-		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
+	/**
+	 * Check version compatibility between the element(s) to load and the current R4E application
+	 */
+	private boolean checkCompatibility() {
+		int checkResult = fGroup.getCompatibility();
+		switch (checkResult) {
+		case R4EUIConstants.VERSION_APPLICATION_OLDER:
+			UIUtils.displayCompatibilityErrorDialog();
+			return false;
+		case R4EUIConstants.VERSION_APPLICATION_NEWER:
+			int result = UIUtils.displayCompatibilityWarningDialog(fGroup.getFragmentVersion(),
+					fGroup.getApplicationVersion());
+			switch (result) {
+			case R4EUIConstants.OPEN_NORMAL:
+				//Upgrade version immediately
+				try {
+					Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup,
+							R4EUIModelController.getReviewer());
+					fGroup.setFragmentVersion(fGroup.getApplicationVersion());
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				} catch (ResourceHandlingException e) {
+					UIUtils.displayResourceErrorDialog(e);
+					return false;
+				} catch (OutOfSyncException e) {
+					UIUtils.displaySyncErrorDialog(e);
+					return false;
+				}
+				fReadOnly = false;
+				return true;
+			case R4EUIConstants.OPEN_READONLY:
+				fReadOnly = true;
+				return true;
+			default:
+				//Assume Cancel
+				return false;
+			}
+		default:
+			//Normal case, do nothing
+			return true;
+		}
 	}
 
 	/**
@@ -695,7 +737,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNewChildElementCmd() {
-		if (isEnabled() && isOpen()) {
+		if (isEnabled() && isOpen() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -731,7 +773,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (!isOpen() && isEnabled()) {
+		if (!isOpen() && isEnabled() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -767,7 +809,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isOpen() || isEnabled()) {
+		if (isOpen() || isEnabled() || isReadOnly()) {
 			return false;
 		}
 		return true;

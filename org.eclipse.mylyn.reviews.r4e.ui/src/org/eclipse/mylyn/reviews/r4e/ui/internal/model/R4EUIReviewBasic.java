@@ -236,6 +236,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public R4EUIReviewBasic(R4EUIReviewGroup aParent, R4EReview aReview, R4EReviewType aType, boolean aOpen)
 			throws ResourceHandlingException {
 		super(aParent, getReviewDisplayName(aReview.getName(), aType));
+		fReadOnly = false;
 		fReview = aReview;
 		fReviewName = aReview.getName();
 		fParticipantsContainer = new R4EUIParticipantContainer(this, R4EUIConstants.PARTICIPANTS_LABEL);
@@ -613,78 +614,126 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			CompatibilityException {
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup) getParent()).getReviewGroup(),
 				fReviewName);
+		if (checkCompatibility()) {
+			final EList<Item> items = fReview.getReviewItems();
+			if (null != items) {
 
-		final EList<Item> items = fReview.getReviewItems();
-		if (null != items) {
+				IR4EUIModelElement uiItem = null;
 
-			IR4EUIModelElement uiItem = null;
+				R4EUIModelController.mapAnomalies(fReview);
+				final int itemsSize = items.size();
+				R4EItem item = null;
+				for (int i = 0; i < itemsSize; i++) {
+					item = (R4EItem) items.get(i);
+					if (item.isEnabled()
+							|| R4EUIPlugin.getDefault()
+									.getPreferenceStore()
+									.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 
-			R4EUIModelController.mapAnomalies(fReview);
-			final int itemsSize = items.size();
-			R4EItem item = null;
-			for (int i = 0; i < itemsSize; i++) {
-				item = (R4EItem) items.get(i);
-				if (item.isEnabled()
-						|| R4EUIPlugin.getDefault()
-								.getPreferenceStore()
-								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-
-					if (R4EUIConstants.TRUE_ATTR_VALUE_STR.equals(item.getInfoAtt().get(
-							R4EUIConstants.POSTPONED_ATTR_STR))) {
-						uiItem = new R4EUIPostponedContainer(this, item, R4EUIConstants.POSTPONED_ELEMENTS_LABEL_NAME);
-					} else if (null == item.getRepositoryRef() || "".equals(item.getRepositoryRef())) {
-						//Resource
-						EList<R4EFileContext> contextList = item.getFileContextList();
-						StringBuilder name = new StringBuilder("Resource: "); //$NON-NLS-1$
-						if (contextList.size() > 0) {
-							name = name.append(item.getFileContextList().get(0).getTarget().getName());
+						if (R4EUIConstants.TRUE_ATTR_VALUE_STR.equals(item.getInfoAtt().get(
+								R4EUIConstants.POSTPONED_ATTR_STR))) {
+							uiItem = new R4EUIPostponedContainer(this, item,
+									R4EUIConstants.POSTPONED_ELEMENTS_LABEL_NAME);
+						} else if (null == item.getRepositoryRef() || "".equals(item.getRepositoryRef())) {
+							//Resource
+							EList<R4EFileContext> contextList = item.getFileContextList();
+							StringBuilder name = new StringBuilder("Resource: "); //$NON-NLS-1$
+							if (contextList.size() > 0) {
+								name = name.append(item.getFileContextList().get(0).getTarget().getName());
+							} else {
+								R4EUIPlugin.Ftracer.traceError("Context list empty in a review item, index: " + i); //$NON-NLS-1$
+							}
+							uiItem = new R4EUIReviewItem(this, item, name.toString(),
+									R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE);
 						} else {
-							R4EUIPlugin.Ftracer.traceError("Context list empty in a review item, index: " + i); //$NON-NLS-1$
+							//Commit
+							String description = item.getDescription();
+							int endIndex = (description.length() > R4EUIConstants.END_STRING_NAME_INDEX)
+									? R4EUIConstants.END_STRING_NAME_INDEX
+									: description.length();
+							String name = "Commit: "
+									+ description.substring(R4EUIConstants.START_STRING_INDEX, endIndex) + "...";
+							uiItem = new R4EUIReviewItem(this, item, name, R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT);
 						}
-						uiItem = new R4EUIReviewItem(this, item, name.toString(),
-								R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE);
-					} else {
-						//Commit
-						String description = item.getDescription();
-						int endIndex = (description.length() > R4EUIConstants.END_STRING_NAME_INDEX)
-								? R4EUIConstants.END_STRING_NAME_INDEX
-								: description.length();
-						String name = "Commit: " + description.substring(R4EUIConstants.START_STRING_INDEX, endIndex)
-								+ "...";
-						uiItem = new R4EUIReviewItem(this, item, name, R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT);
-					}
 
-					if (uiItem.isEnabled()) {
-						uiItem.open();
+						if (uiItem.isEnabled()) {
+							uiItem.open();
+						}
+						addChildren(uiItem);
 					}
-					addChildren(uiItem);
 				}
 			}
+
+			fAnomalyContainer.setReadOnly(fReadOnly);
+			fAnomalyContainer.open();
+			fParticipantsContainer.setReadOnly(fReadOnly);
+			fParticipantsContainer.open();
+
+			//Check if we should show the postponed elements
+			try {
+				CommandUtils.showPostponedElements(this);
+			} catch (OutOfSyncException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			}
+
+			fOpen = true;
+			if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+				fImage = UIUtils.loadIcon(REVIEW_BASIC_ICON_FILE);
+			} else if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+				fImage = UIUtils.loadIcon(REVIEW_INFORMAL_ICON_FILE);
+			}
+			R4EUIModelController.setActiveReview(this);
+			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
+
+			//Automatically import postponed anomalies if set in preferences
+			if (R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_AUTO_IMPORT_POSTPONED)) {
+				ImportPostponedHandler.importPostponedElements();
+			}
+		} else {
+			R4EUIModelController.FModelExt.closeR4EReview(fReview); //Notify model
 		}
+	}
 
-		fAnomalyContainer.open();
-		fParticipantsContainer.open();
-
-		//Check if we should show the postponed elements
-		try {
-			CommandUtils.showPostponedElements(this);
-		} catch (OutOfSyncException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		}
-
-		fOpen = true;
-		if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
-			fImage = UIUtils.loadIcon(REVIEW_BASIC_ICON_FILE);
-		} else if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
-			fImage = UIUtils.loadIcon(REVIEW_INFORMAL_ICON_FILE);
-		}
-		R4EUIModelController.setActiveReview(this);
-		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
-
-		//Automatically import postponed anomalies if set in preferences
-		if (R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_AUTO_IMPORT_POSTPONED)) {
-			ImportPostponedHandler.importPostponedElements();
+	/**
+	 * Check version compatibility between the element(s) to load and the current R4E application
+	 */
+	private boolean checkCompatibility() {
+		int checkResult = fReview.getCompatibility();
+		switch (checkResult) {
+		case R4EUIConstants.VERSION_APPLICATION_OLDER:
+			UIUtils.displayCompatibilityErrorDialog();
+			return false;
+		case R4EUIConstants.VERSION_APPLICATION_NEWER:
+			int result = UIUtils.displayCompatibilityWarningDialog(fReview.getFragmentVersion(),
+					fReview.getApplicationVersion());
+			switch (result) {
+			case R4EUIConstants.OPEN_NORMAL:
+				//Upgrade version immediately
+				try {
+					Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview,
+							R4EUIModelController.getReviewer());
+					fReview.setFragmentVersion(fReview.getApplicationVersion());
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				} catch (ResourceHandlingException e) {
+					UIUtils.displayResourceErrorDialog(e);
+					return false;
+				} catch (OutOfSyncException e) {
+					UIUtils.displaySyncErrorDialog(e);
+					return false;
+				}
+				fReadOnly = false;
+				return true;
+			case R4EUIConstants.OPEN_READONLY:
+				fReadOnly = true;
+				return true;
+			default:
+				//Assume Cancel
+				return false;
+			}
+		default:
+			//Normal case, do nothing
+			return true;
 		}
 	}
 
@@ -1283,6 +1332,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public boolean isChangeUserReviewStateCmd() {
 		if (isEnabled()
 				&& isOpen()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -1395,7 +1445,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNextStateElementCmd() {
-		if (isOpen()) {
+		if (isOpen() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -1431,7 +1481,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isPreviousStateElementCmd() {
-		if (isOpen()) {
+		if (isOpen() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -1478,7 +1528,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (!isOpen() && isEnabled()) {
+		if (!isOpen() && isEnabled() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -1495,7 +1545,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		if (!(getParent().isEnabled())) {
 			return false;
 		}
-		if (isOpen() || isEnabled()) {
+		if (isOpen() || isEnabled() || isReadOnly()) {
 			return false;
 		}
 		return true;
@@ -1547,6 +1597,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public boolean isImportPostponedCmd() {
 		if ((!getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC))
 				&& isOpen()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}

@@ -112,6 +112,7 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 */
 	public R4EUIRuleArea(IR4EUIModelElement aParent, R4EDesignRuleArea aArea) {
 		super(aParent, aArea.getName());
+		fReadOnly = aParent.isReadOnly();
 		fArea = aArea;
 		fViolations = new ArrayList<R4EUIRuleViolation>();
 		setImage(RULE_AREA_ICON_FILE);
@@ -423,7 +424,7 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNewChildElementCmd() {
-		if (isEnabled()) {
+		if (isEnabled() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -459,7 +460,7 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (isEnabled()) {
+		if (isEnabled() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -495,7 +496,7 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isEnabled()) {
+		if (isEnabled() || isReadOnly()) {
 			return false;
 		}
 		return true;

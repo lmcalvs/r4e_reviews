@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -140,6 +141,30 @@ public class UIUtils {
 		}
 	}
 
+	/**
+	 * Field COMPATIBILITY_ERROR_MESSAGE. (value is ""Cannot use older version of R4E to open newer element version"")
+	 */
+	private static final String COMPATIBILITY_ERROR_MESSAGE = "Cannot use older version of R4E to open newer element version";
+
+	/**
+	 * Field COMPATIBILITY_WARNING_DIALOG_TITLE. (value is ""Version Mismatch Detected"")
+	 */
+	private static final String COMPATIBILITY_WARNING_DIALOG_TITLE = "Version Mismatch Detected";
+
+	/**
+	 * Field COMPATIBILITY_WARNING_MESSAGE. (value is ""You are trying to open an older version of the element than the
+	 * one ucrrently handled by this version of R4E.\n You can open the element normally, which will upgrade its version
+	 * to the current one, or in Read-only mode, which will preserve its version.\n"")
+	 */
+	private static final String COMPATIBILITY_WARNING_MESSAGE = "You are trying to open an older version of the element than the one currently handled by this version of R4E.\n"
+			+ "You can open the element normally, which will upgrade its version to the current one, or in Read-only mode, which will preserve its version.\n";
+
+	/**
+	 * Field COMPATIBILITY_WARNING_DIALOG_BUTTONS.
+	 */
+	private static final String[] COMPATIBILITY_WARNING_DIALOG_BUTTONS = { "Open Normally", "Open in Read-Only Mode",
+			"Cancel" };
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -190,6 +215,31 @@ public class UIUtils {
 				"Compatibility problem Detected",
 				new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
 		dialog.open();
+	}
+
+	/**
+	 * Method displayCompatibilityErrorDialog.
+	 */
+	public static void displayCompatibilityErrorDialog() {
+		R4EUIPlugin.Ftracer.traceError(COMPATIBILITY_ERROR_MESSAGE);
+		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+				"Compatibility problem Detected", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+						COMPATIBILITY_ERROR_MESSAGE, null), IStatus.ERROR);
+		dialog.open();
+	}
+
+	/**
+	 * Method displayCompatibilityWarningDialog.
+	 * 
+	 * @return boolean
+	 */
+	public static int displayCompatibilityWarningDialog(String aDataVersion, String aApplVersionl) {
+		R4EUIPlugin.Ftracer.traceWarning(COMPATIBILITY_WARNING_MESSAGE);
+		final MessageDialog dialog = new MessageDialog(null, COMPATIBILITY_WARNING_DIALOG_TITLE, null,
+				COMPATIBILITY_WARNING_MESSAGE + "Data Version: " + aDataVersion + R4EUIConstants.LINE_FEED
+						+ "Application Version: " + aApplVersionl, MessageDialog.QUESTION_WITH_CANCEL,
+				COMPATIBILITY_WARNING_DIALOG_BUTTONS, 0);
+		return dialog.open();
 	}
 
 	/**
@@ -250,6 +300,24 @@ public class UIUtils {
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 				"Eclipse Runtime Core Error Detected", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 						e.getMessage(), e), IStatus.ERROR);
+		dialog.open();
+	}
+
+	/**
+	 * Method displayFailedLoadDialog.
+	 * 
+	 * @param aLoadErrors
+	 *            List<String>
+	 */
+	public static void displayFailedLoadDialog(List<String> aLoadErrors) {
+		final StringBuilder errorMsgs = new StringBuilder();
+		errorMsgs.append("The following errors were reported:" + R4EUIConstants.LINE_FEED);
+		for (String msg : aLoadErrors) {
+			errorMsgs.append(msg);
+		}
+		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+				"Some elements failed to load", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+						errorMsgs.toString(), null), IStatus.ERROR);
 		dialog.open();
 	}
 
@@ -678,7 +746,9 @@ public class UIUtils {
 
 	/**
 	 * Display the dialog used by the user to enter the participant unassign
-	 * @param aElement - IR4EUIModelElement
+	 * 
+	 * @param aElement
+	 *            - IR4EUIModelElement
 	 * @return String
 	 */
 	public static List<R4EParticipant> getUnassignParticipants(IR4EUIModelElement aElement) {

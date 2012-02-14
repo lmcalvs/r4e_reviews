@@ -110,6 +110,13 @@ public interface IR4EUIModelElement {
 	boolean isEnabled();
 
 	/**
+	 * Checks if the corresponding model element is read-only
+	 * 
+	 * @return boolean
+	 */
+	boolean isReadOnly();
+
+	/**
 	 * Sets the reviewed flag. Take note that this is not applicable to all model elements
 	 * 
 	 * @param aReviewed

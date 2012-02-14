@@ -606,7 +606,9 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				dialog.setTitle(modelAnomaly.getTitle());
 				dialog.setDescription(modelAnomaly.getDescription());
 				dialog.setDueDate(modelAnomaly.getDueDate());
-				dialog.setAssigned(modelAnomaly.getAssignedTo().get(0));
+				if (modelAnomaly.getAssignedTo().size() > 0) {
+					dialog.setAssigned(modelAnomaly.getAssignedTo().get(0));
+				}
 				if (null != modelAnomaly.getType()) {
 					dialog.setClass_(((R4ECommentType) modelAnomaly.getType()).getType());
 				}
@@ -1050,6 +1052,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress()
+				|| fProperties.getElement().isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fTitleText.setEnabled(false);

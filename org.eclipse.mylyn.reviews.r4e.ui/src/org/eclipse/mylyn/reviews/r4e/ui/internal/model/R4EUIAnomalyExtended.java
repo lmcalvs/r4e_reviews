@@ -230,7 +230,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 */
 	@Override
 	public boolean isNextStateElementCmd() {
-		if (isEnabled() && 0 < getNextAvailableStates().length) {
+		if (isEnabled() && !isReadOnly() && 0 < getNextAvailableStates().length) {
 			return true;
 		}
 		return false;
@@ -266,7 +266,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 */
 	@Override
 	public boolean isPreviousStateElementCmd() {
-		if (isEnabled() && null != getPreviousState()) {
+		if (isEnabled() && !isReadOnly() && null != getPreviousState()) {
 			return true;
 		}
 		return false;

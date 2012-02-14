@@ -137,6 +137,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	public R4EUIRuleSet(IR4EUIModelElement aParent, R4EDesignRuleCollection aRuleSet, boolean aOpen) {
 		super(aParent, aRuleSet.getName());
+		fReadOnly = false;
 		fRuleSet = aRuleSet;
 		fRuleSetFileURI = aRuleSet.eResource().getURI();
 		fAreas = new ArrayList<R4EUIRuleArea>();
@@ -311,26 +312,111 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	@Override
 	public void open() throws ResourceHandlingException, CompatibilityException {
 		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRuleSetFileURI);
-		final List<R4EDesignRuleArea> areas = fRuleSet.getAreas();
-		if (null != areas) {
-			R4EUIRuleArea uiArea = null;
-			final int areaSize = areas.size();
-			for (int i = 0; i < areaSize; i++) {
-				if (areas.get(i).isEnabled()
-						|| R4EUIPlugin.getDefault()
-								.getPreferenceStore()
-								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					uiArea = new R4EUIRuleArea(this, areas.get(i));
-					addChildren(uiArea);
-					if (uiArea.isEnabled()) {
-						uiArea.open();
+		if (checkCompatibility()) {
+			final List<R4EDesignRuleArea> areas = fRuleSet.getAreas();
+			if (null != areas) {
+				R4EUIRuleArea uiArea = null;
+				final int areaSize = areas.size();
+				for (int i = 0; i < areaSize; i++) {
+					if (areas.get(i).isEnabled()
+							|| R4EUIPlugin.getDefault()
+									.getPreferenceStore()
+									.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						uiArea = new R4EUIRuleArea(this, areas.get(i));
+						addChildren(uiArea);
+						if (uiArea.isEnabled()) {
+							uiArea.open();
+						}
 					}
 				}
 			}
+			fOpen = true;
+			fImage = UIUtils.loadIcon(RULE_SET_ICON_FILE);
+			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
+		} else {
+			R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
 		}
-		fOpen = true;
-		fImage = UIUtils.loadIcon(RULE_SET_ICON_FILE);
-		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
+	}
+
+	/**
+	 * Method openReadOnly.
+	 * 
+	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
+	 */
+	public boolean openReadOnly() throws ResourceHandlingException, CompatibilityException {
+		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRuleSetFileURI);
+		int checkResult = fRuleSet.getCompatibility();
+		if (checkResult == R4EUIConstants.VERSION_APPLICATION_OLDER) {
+			R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
+			return false;
+		} else {
+			fReadOnly = true;
+
+			final List<R4EDesignRuleArea> areas = fRuleSet.getAreas();
+			if (null != areas) {
+				R4EUIRuleArea uiArea = null;
+				final int areaSize = areas.size();
+				for (int i = 0; i < areaSize; i++) {
+					if (areas.get(i).isEnabled()
+							|| R4EUIPlugin.getDefault()
+									.getPreferenceStore()
+									.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+						uiArea = new R4EUIRuleArea(this, areas.get(i));
+						addChildren(uiArea);
+						if (uiArea.isEnabled()) {
+							uiArea.open();
+						}
+					}
+				}
+			}
+			fOpen = true;
+			fImage = UIUtils.loadIcon(RULE_SET_ICON_FILE);
+			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
+			return true;
+		}
+	}
+
+	/**
+	 * Check version compatibility between the element(s) to load and the current R4E application
+	 */
+	private boolean checkCompatibility() {
+		int checkResult = fRuleSet.getCompatibility();
+		switch (checkResult) {
+		case R4EUIConstants.VERSION_APPLICATION_OLDER:
+			UIUtils.displayCompatibilityErrorDialog();
+			return false;
+		case R4EUIConstants.VERSION_APPLICATION_NEWER:
+			int result = UIUtils.displayCompatibilityWarningDialog(fRuleSet.getFragmentVersion(),
+					fRuleSet.getApplicationVersion());
+			switch (result) {
+			case R4EUIConstants.OPEN_NORMAL:
+				//Upgrade version immediately
+				try {
+					Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRuleSet,
+							R4EUIModelController.getReviewer());
+					fRuleSet.setFragmentVersion(fRuleSet.getApplicationVersion());
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				} catch (ResourceHandlingException e) {
+					UIUtils.displayResourceErrorDialog(e);
+					return false;
+				} catch (OutOfSyncException e) {
+					UIUtils.displaySyncErrorDialog(e);
+					return false;
+				}
+				fReadOnly = false;
+				return true;
+			case R4EUIConstants.OPEN_READONLY:
+				fReadOnly = true;
+				return true;
+			default:
+				//Assume Cancel
+				return false;
+			}
+		default:
+			//Normal case, do nothing
+			return true;
+		}
 	}
 
 	/**
@@ -577,7 +663,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNewChildElementCmd() {
-		if (isEnabled() && isOpen()) {
+		if (isEnabled() && isOpen() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -613,7 +699,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRemoveElementCmd() {
-		if (!isOpen() && isEnabled()) {
+		if (!isOpen() && isEnabled() && !isReadOnly()) {
 			return true;
 		}
 		return false;
@@ -627,7 +713,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isRestoreElementCmd() {
-		if (isEnabled()) {
+		if (isEnabled() || isReadOnly()) {
 			return false;
 		}
 		return true;

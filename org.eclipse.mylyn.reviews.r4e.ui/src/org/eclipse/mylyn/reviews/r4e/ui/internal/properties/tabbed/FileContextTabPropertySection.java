@@ -531,6 +531,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		}
 
 		if (R4EUIModelController.isJobInProgress()
+				|| fProperties.getElement().isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fBaseFileNameText.setEnabled(false);

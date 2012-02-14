@@ -113,6 +113,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	public R4EUIFileContext(IR4EUIModelElement aParent, R4EFileContext aFile, int aParentItemType) {
 		super(aParent, "");
+		fReadOnly = aParent.isReadOnly();
 		if (null != aFile.getTarget()) {
 			setName(aFile.getTarget().getName());
 		} else if (null != aFile.getBase()) {
@@ -816,6 +817,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public boolean isChangeUserReviewStateCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -831,6 +833,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public boolean isAssignToCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -846,6 +849,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	@Override
 	public boolean isUnassignToCmd() {
 		if (isEnabled()
+				&& !isReadOnly()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
 				&& fFile.getAssignedTo().size() > 0) {
 			return true;

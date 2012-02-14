@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -469,27 +468,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		final String[] ruleSetsLocations = (String[]) modelGroup.getDesignRuleLocations().toArray();
 		for (R4EUIRuleSet uiRuleSet : uiRuleSets) {
 			if (uiRuleSet.isEnabled()) {
-				if (null == uiRuleSet.getRuleSet().eResource()) {
-					try {
-						uiRuleSet.open();
-					} catch (ResourceHandlingException e) {
-						UIUtils.displayResourceErrorDialog(e);
-					} catch (CompatibilityException e) {
-						UIUtils.displayCompatibilityErrorDialog(e);
-					}
-				}
-				tmpRuleSetLocations.add(uiRuleSet.getRuleSet().eResource().getURI().toFileString());
-
-				//Close rule set if not used
-				boolean ruleSetUsed = false;
-				for (String ruleSet : ruleSetsLocations) {
-					if (ruleSet.equals(uiRuleSet.getRuleSet().eResource().getURI().toFileString())) {
-						ruleSetUsed = true;
-					}
-				}
-				if (!ruleSetUsed || !fProperties.getElement().isOpen()) {
-					uiRuleSet.close();
-				}
+				tmpRuleSetLocations.add(uiRuleSet.getName());
 			}
 		}
 		fRuleSetLocations.setEditableValues(tmpRuleSetLocations.toArray(new String[tmpRuleSetLocations.size()]));
@@ -522,7 +501,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 	@Override
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress() || !((R4EUIReviewGroup) fProperties.getElement()).isOpen()
-				|| !fProperties.getElement().isEnabled()) {
+				|| !fProperties.getElement().isEnabled() || fProperties.getElement().isReadOnly()) {
 			fNameText.setEnabled(false);
 			fFilePathText.setEnabled(false);
 			fDescriptionText.setEnabled(false);
@@ -580,13 +559,9 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 						ruleSetLocations.add(item.getText());
 						//Update references in R4EUIReviewGroup
 						for (R4EUIRuleSet ruleSet : ((R4EUIRootElement) ((R4EUIReviewGroup) fProperties.getElement()).getParent()).getRuleSets()) {
-							if (null != ruleSet.getRuleSet().eResource()) {
-								if ((ruleSet.getRuleSet().eResource().getURI().toFileString()).equals(item.getText())) {
-									ruleSet.close();
-									ruleSet.open();
-									((R4EUIReviewGroup) fProperties.getElement()).getRuleSets().add(ruleSet);
-									break;
-								}
+							if (ruleSet.getName().equals(item.getText())) {
+								((R4EUIReviewGroup) fProperties.getElement()).getRuleSets().add(ruleSet);
+								break;
 							}
 						}
 					}
@@ -600,8 +575,6 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 			UIUtils.displayResourceErrorDialog(e1);
 		} catch (OutOfSyncException e1) {
 			UIUtils.displaySyncErrorDialog(e1);
-		} catch (CompatibilityException e) {
-			UIUtils.displayCompatibilityErrorDialog(e);
 		}
 	}
 

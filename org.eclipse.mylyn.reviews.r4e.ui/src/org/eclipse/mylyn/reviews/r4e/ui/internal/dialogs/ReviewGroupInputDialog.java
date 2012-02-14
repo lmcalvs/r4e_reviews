@@ -506,9 +506,7 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 		final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement) R4EUIModelController.getRootElement()).getRuleSets();
 		final List<String> ruleLocations = new ArrayList<String>();
 		for (R4EUIRuleSet ruleSet : uiRuleSets) {
-			if (ruleSet.isOpen()) {
-				ruleLocations.add(ruleSet.getRuleSet().eResource().getURI().toFileString());
-			}
+			ruleLocations.add(ruleSet.getRuleSet().getName());
 		}
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
