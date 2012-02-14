@@ -253,6 +253,10 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 				return createR4EMeetingDataAdapter();
 			}
 			@Override
+			public Adapter caseR4EModelPosition(R4EModelPosition object) {
+				return createR4EModelPositionAdapter();
+			}
+			@Override
 			public Adapter caseReviewComponent(ReviewComponent object) {
 				return createReviewComponentAdapter();
 			}
@@ -793,6 +797,20 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createR4EMeetingDataAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition <em>R4E Model Position</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition
+	 * @generated
+	 */
+	public Adapter createR4EModelPositionAdapter() {
 		return null;
 	}
 

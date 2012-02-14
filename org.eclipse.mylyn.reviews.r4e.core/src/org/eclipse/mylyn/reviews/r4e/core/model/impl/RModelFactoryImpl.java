@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
@@ -44,6 +45,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -150,6 +152,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 			case RModelPackage.MAP_KEY_TO_INFO_ATTRIBUTES: return (EObject)createMapKeyToInfoAttributes();
 			case RModelPackage.R4E_REVIEW_PHASE_INFO: return createR4EReviewPhaseInfo();
 			case RModelPackage.R4E_MEETING_DATA: return createR4EMeetingData();
+			case RModelPackage.R4E_MODEL_POSITION: return createR4EModelPosition();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -511,6 +514,16 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	public R4EMeetingData createR4EMeetingData() {
 		R4EMeetingDataImpl r4EMeetingData = new R4EMeetingDataImpl();
 		return r4EMeetingData;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public R4EModelPosition createR4EModelPosition() {
+		R4EModelPositionImpl r4EModelPosition = new R4EModelPositionImpl();
+		return r4EModelPosition;
 	}
 
 	/**
@@ -1277,6 +1290,14 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 */
 	public R4EReview copyR4EReview(URI origGroup, URI destGroup, String origReviewName, String destReviewName) {
 		return factoryExtension.copyR4EReview(origGroup, destGroup, origReviewName, destReviewName);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserItemResFactory#createR4EModelPosition(org.eclipse.mylyn.reviews.r4e.core.model.R4EContent)
+	 */
+	public R4EModelPosition createR4EModelPosition(R4EContent content)
+			throws ResourceHandlingException {
+		return factoryExtension.createR4EModelPosition(content);
 	}
 
 } //RModelFactoryImpl

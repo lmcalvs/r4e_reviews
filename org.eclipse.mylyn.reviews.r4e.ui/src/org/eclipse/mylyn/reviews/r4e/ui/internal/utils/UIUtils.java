@@ -25,6 +25,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -39,6 +40,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.compare.ui.services.CompareServices;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -73,6 +75,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDelta;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDeltaContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
@@ -90,6 +93,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
@@ -541,6 +546,32 @@ public class UIUtils {
 		return tempStr.toString();
 	}
 
+	public static void selectElementInEditor(IEditorPart editor) {
+
+		final IR4EUIModelElement element = getR4EUIElement();
+		if (element instanceof R4EUIContent) {
+			final IR4EUIPosition position = ((R4EUIContent) element).getPosition();
+			if (position instanceof R4EUIModelPosition) {
+				selectElementInCompareModelEditor(editor, (R4EUIModelPosition) position);
+			} else {
+				final IEditorInput aInput = editor.getEditorInput();
+				selectElementInEditor((R4ECompareEditorInput) aInput);
+			}
+		}
+	}
+
+	public static void selectElementInCompareModelEditor(IEditorPart editor, R4EUIModelPosition pos) {
+		final String id = pos.getObjectID();
+		final List<String> ids = Arrays.asList(id);
+		CompareServices.setSelection(ids, editor);
+	}
+
+	private static IR4EUIModelElement getR4EUIElement() {
+		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+		return element;
+	}
+
 	/**
 	 * Method selectElementInEditor.
 	 * 
@@ -548,9 +579,7 @@ public class UIUtils {
 	 *            R4ECompareEditorInput
 	 */
 	public static void selectElementInEditor(R4ECompareEditorInput aInput) {
-
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
-		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+		final IR4EUIModelElement element = getR4EUIElement();
 		IR4EUIPosition position = null;
 		int selectionIndex = -1;
 

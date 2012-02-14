@@ -33,6 +33,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * @author lmcdubo
@@ -282,8 +285,17 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	public Control createContents(Composite aParent) {
 		final Control control = super.createContents(aParent);
 
-		//Go to the correct element in the compare editor
-		UIUtils.selectElementInEditor(this);
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		if (page != null) {
+			IEditorPart editor = page.findEditor(this);
+			if (editor != null) {
+				UIUtils.selectElementInEditor(editor);
+			}
+		} else {
+			//Go to the correct element in the compare editor
+			UIUtils.selectElementInEditor(this);
+		}
+
 		return control;
 	}
 }

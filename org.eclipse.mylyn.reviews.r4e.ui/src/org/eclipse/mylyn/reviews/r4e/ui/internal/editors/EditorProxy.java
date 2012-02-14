@@ -214,7 +214,7 @@ public class EditorProxy {
 			aPage.activate(editor); //Simply provide focus to editor
 
 			//Go to the correct element in the compare editor
-			UIUtils.selectElementInEditor((R4ECompareEditorInput) editor.getEditorInput());
+			UIUtils.selectElementInEditor(editor);
 		} else {
 			input = CommandUtils.createCompareEditorInput(aBaseFileVersion, aTargetFileVersion);
 			input.setTitle(R4E_COMPARE_EDITOR_TITLE); // Adjust the compare title

@@ -34,6 +34,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.frame.core.model.User;
 import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
@@ -45,12 +46,15 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent;
@@ -103,6 +107,9 @@ public class RModelSwitch<T> {
 	public T doSwitch(EObject theEObject) {
 		return doSwitch(theEObject.eClass(), theEObject);
 	}
+
+
+
 
 	/**
 	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
@@ -390,6 +397,13 @@ public class RModelSwitch<T> {
 			case RModelPackage.R4E_MEETING_DATA: {
 				R4EMeetingData r4EMeetingData = (R4EMeetingData)theEObject;
 				T result = caseR4EMeetingData(r4EMeetingData);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case RModelPackage.R4E_MODEL_POSITION: {
+				R4EModelPosition r4EModelPosition = (R4EModelPosition)theEObject;
+				T result = caseR4EModelPosition(r4EModelPosition);
+				if (result == null) result = caseR4EPosition(r4EModelPosition);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -908,6 +922,21 @@ public class RModelSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>R4E Model Position</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>R4E Model Position</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseR4EModelPosition(R4EModelPosition object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Review Component</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1073,6 +1102,21 @@ public class RModelSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch, but this is the last case anyway.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
+	 * @generated
+	 */
+	public T defaultCase(EObject object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Location</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1087,19 +1131,5 @@ public class RModelSwitch<T> {
 		return null;
 	}
 
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch, but this is the last case anyway.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
-	 * @generated
-	 */
-	public T defaultCase(EObject object) {
-		return null;
-	}
 
 } //RModelSwitch
