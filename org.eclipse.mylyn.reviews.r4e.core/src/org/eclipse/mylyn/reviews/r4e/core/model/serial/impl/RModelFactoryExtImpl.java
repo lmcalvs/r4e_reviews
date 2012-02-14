@@ -41,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -1647,6 +1648,24 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		//		Copier copier = new Copier();
 
 		return null;
+	}
+
+	public R4EModelPosition createR4EModelPosition(R4EContent content) throws ResourceHandlingException {
+		R4EModelPosition modelPosition = null;
+		if (!(isAssociatedToResource(content))) {
+			StringBuilder sb = new StringBuilder(
+					"Can not create a ModelLocation from a Content not associated to a Resource");
+			throw new ResourceHandlingException(sb.toString());
+		}
+
+		modelPosition = RModelFactoryExt.eINSTANCE.createR4EModelPosition();
+		content.setLocation(modelPosition);
+
+		// Associate to resource and save
+		content.eResource().getContents().add(modelPosition);
+		fWriter.saveResource(modelPosition.eResource());
+
+		return modelPosition;
 	}
 
 }

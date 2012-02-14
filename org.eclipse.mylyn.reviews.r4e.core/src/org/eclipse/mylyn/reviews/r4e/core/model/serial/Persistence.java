@@ -31,6 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -296,6 +297,13 @@ public interface Persistence {
 		 * @throws ResourceHandlingException
 		 */
 		public R4ETextPosition createR4ETextPosition(R4ETextContent content) throws ResourceHandlingException;
+		
+		/**
+		 * @param content
+		 * @return
+		 * @throws ResourceHandlingException
+		 */
+		public R4EModelPosition createR4EModelPosition(R4EContent content) throws ResourceHandlingException;
 
 	}
 

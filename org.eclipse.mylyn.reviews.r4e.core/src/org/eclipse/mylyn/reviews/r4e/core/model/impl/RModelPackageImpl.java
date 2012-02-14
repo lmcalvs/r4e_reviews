@@ -41,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -306,6 +307,13 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	private EClass r4EMeetingDataEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass r4EModelPositionEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1888,6 +1896,33 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getR4EModelPosition() {
+		return r4EModelPositionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EModelPosition_ObjectID() {
+		return (EAttribute)r4EModelPositionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EModelPosition_DifferenceDescription() {
+		return (EAttribute)r4EModelPositionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getR4EAnomalyState() {
 		return r4EAnomalyStateEEnum;
 	}
@@ -2187,6 +2222,10 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__RECEIVERS);
 		createEAttribute(r4EMeetingDataEClass, R4E_MEETING_DATA__BODY);
 
+		r4EModelPositionEClass = createEClass(R4E_MODEL_POSITION);
+		createEAttribute(r4EModelPositionEClass, R4E_MODEL_POSITION__OBJECT_ID);
+		createEAttribute(r4EModelPositionEClass, R4E_MODEL_POSITION__DIFFERENCE_DESCRIPTION);
+
 		// Create enums
 		r4EAnomalyStateEEnum = createEEnum(R4E_ANOMALY_STATE);
 		r4EReviewPhaseEEnum = createEEnum(R4E_REVIEW_PHASE);
@@ -2262,6 +2301,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		r4EContentEClass.getESuperTypes().add(theModelPackage.getLocation());
 		r4EIDComponentEClass.getESuperTypes().add(this.getR4EReviewComponent());
 		r4EAnomalyTextPositionEClass.getESuperTypes().add(this.getR4ETextPosition());
+		r4EModelPositionEClass.getESuperTypes().add(this.getR4EPosition());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(r4EReviewGroupEClass, R4EReviewGroup.class, "R4EReviewGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2458,6 +2498,10 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EMeetingData_Sender(), ecorePackage.getEString(), "sender", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EMeetingData_Receivers(), ecorePackage.getEString(), "receivers", null, 0, -1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EMeetingData_Body(), ecorePackage.getEString(), "body", null, 0, 1, R4EMeetingData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(r4EModelPositionEClass, R4EModelPosition.class, "R4EModelPosition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getR4EModelPosition_ObjectID(), ecorePackage.getEString(), "objectID", null, 0, 1, R4EModelPosition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EModelPosition_DifferenceDescription(), ecorePackage.getEString(), "differenceDescription", null, 0, 1, R4EModelPosition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(r4EAnomalyStateEEnum, R4EAnomalyState.class, "R4EAnomalyState");

@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.compare.diff.metamodel.DiffElement;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -69,6 +70,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedEle
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
@@ -369,6 +371,18 @@ public class CommandUtils {
 	 */
 	public static R4EUITextPosition getPosition(int aOffset, int aLength, IDocument aDoc) { // $codepro.audit.disable overloadedMethods
 		final R4EUITextPosition position = new R4EUITextPosition(aOffset, aLength, aDoc);
+		return position;
+	}
+
+	/**
+	 * Method getPosition. Get position based on a IDiffElement.
+	 * 
+	 * @param aDiff
+	 *            IDiffElement
+	 * @return R4EUIModelPosition
+	 */
+	public static R4EUIModelPosition getPosition(DiffElement aDiff) {
+		final R4EUIModelPosition position = new R4EUIModelPosition(aDiff);
 		return position;
 	}
 
