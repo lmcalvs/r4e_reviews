@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
 import org.eclipse.mylyn.reviews.r4e.core.Activator;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
@@ -147,14 +148,20 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		String appVersionLevel = Roots.GROUP.getVersion();
 
 		// validate if the group just opened is compatible with the current application
-		validateCompatibility(Roots.GROUP, group.getName(), fragmentVersion, appVersionLevel);
+		validateCompatibility(Roots.GROUP, group.getName(), fragmentVersion, appVersionLevel, group);
 
 		// Load resources from all participants
 		URI folder = ResourceUtils.getFolderPath(aResourcePath);
 
 		List<URI> usrGroupFiles = fReader.selectUsrReviewGroupRes(folder);
-		for (URI uri : usrGroupFiles) {
-			loadUsrReviews(group, uri);
+		try {
+			for (URI uri : usrGroupFiles) {
+				loadUsrReviews(group, uri);
+			}
+		} catch (ResourceHandlingException e) {
+			// Attempt to close the group
+			closeR4EReviewGroup(group);
+			throw e;
 		}
 
 		// Build the mapping references to anomaly types
@@ -173,16 +180,32 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		try {
 			checkOrCreateRepo(groupFolder);
 		} catch (ReviewsFileStorageException e) {
+			// Attempt to close the group
+			closeR4EReviewGroup(group);
 			throw new ResourceHandlingException(e);
 		}
 
 		return group;
 	}
 
-	private void validateCompatibility(Roots aRoot, String aName, String aFragmentVersionInDisk, String appVersionLevel)
+	private void validateCompatibility(Roots aRoot, String aName, String aFragmentVersionInDisk,
+			String appVersionLevel, SubModelRoot root)
 			throws CompatibilityException {
 		int compatibility = VersionUtils.compareVersions(appVersionLevel, aFragmentVersionInDisk);
 		if (compatibility < 0) {
+			// Not able to continue, not forward compatible
+			// attempt to close what ever was opened from the element
+			if (root instanceof R4EReviewGroup) {
+				R4EReviewGroup group = (R4EReviewGroup) root;
+				closeR4EReviewGroup(group);
+			} else if (root instanceof R4EReview) {
+				R4EReview review = (R4EReview) root;
+				closeR4EReview(review);
+			} else if (root instanceof R4EDesignRuleCollection) {
+				R4EDesignRuleCollection ruleSet = (R4EDesignRuleCollection) root;
+				closeR4EDesignRuleCollection(ruleSet);
+			}
+
 			// Attempting to load a serialised model with a higher model version than the current one supported by the
 			// application
 			StringBuilder sb = new StringBuilder(
@@ -507,13 +530,19 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		String fragmentVersion = review.getFragmentVersion();
 		String appVersionLevel = Roots.REVIEW.getVersion();
 		// Validate compatibility of the review data just loaded against the current version level of the application
-		validateCompatibility(Roots.REVIEW, review.getName(), fragmentVersion, appVersionLevel);
+		validateCompatibility(Roots.REVIEW, review.getName(), fragmentVersion, appVersionLevel, review);
 
 		URI folder = ResourceUtils.getFolderPath(review.eResource().getURI());
 		// Load resources from all participants
 		List<URI> usrFiles = fReader.selectUsrCommentsRes(folder);
-		for (URI uri : usrFiles) {
-			loadUsrData(review, uri);
+		try {
+			for (URI uri : usrFiles) {
+				loadUsrData(review, uri);
+			}			
+		} catch (ResourceHandlingException e) {
+			//try to close the partly opened review
+			closeR4EReview(review);
+			throw e;
 		}
 
 		return review;
@@ -1478,6 +1507,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 */
 	public R4EDesignRuleCollection openR4EDesignRuleCollection(URI aResourcePath) throws ResourceHandlingException,
 			CompatibilityException {
+
 		R4EDesignRuleCollection ruleSet = fReader.deserializeTopElement(aResourcePath, R4EDesignRuleCollection.class);
 
 		URI resUri = ruleSet.eResource().getURI().trimSegments(1);
@@ -1488,7 +1518,7 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		String fragmentVersion = ruleSet.getFragmentVersion();
 		String appVersionLevel = Roots.RULESET.getVersion();
 		// Validate compatibility of the rule set data just loaded against the current version level of the application
-		validateCompatibility(Roots.RULESET, ruleSet.getName(), fragmentVersion, appVersionLevel);
+		validateCompatibility(Roots.RULESET, ruleSet.getName(), fragmentVersion, appVersionLevel, ruleSet);
 
 		return ruleSet;
 	}
