@@ -133,16 +133,16 @@ public class ModelTransformImpl implements ModelTransform {
 	 * @throws ResourceHandlingException
 	 * @throws CompatibilityException
 	 */
-	public ReviewRes transformReview(URI origReviewGroup, URI destReviewGroup, String origReviewName)
+	public ReviewRes transformReview(URI aOigReviewGroup, URI aDstReviewGroup, String aOigReviewName)
 			throws ResourceHandlingException, CompatibilityException {
 		//Open original model
-		R4EReviewGroup origGroup = RModelFactoryExt.eINSTANCE.openR4EReviewGroup(origReviewGroup);
+		R4EReviewGroup origGroup = RModelFactoryExt.eINSTANCE.openR4EReviewGroup(aOigReviewGroup);
 
 		//Open original review
-		R4EReview origReview = RModelFactoryExt.eINSTANCE.openR4EReview(origGroup, origReviewName);
+		R4EReview origReview = RModelFactoryExt.eINSTANCE.openR4EReview(origGroup, aOigReviewName);
 
 		//Open destination group
-		ReviewGroupRes destGroup = openReviewGroupRes(destReviewGroup);
+		ReviewGroupRes destGroup = openReviewGroupRes(aDstReviewGroup);
 		ResourceSet destResSet = destGroup.eResource().getResourceSet();
 
 		//Retrieve the file prefix, selected for the group
@@ -152,9 +152,9 @@ public class ModelTransformImpl implements ModelTransform {
 		EList<ReviewRes> existingReviews = destGroup.getReviewsRes();
 		for (Object element : existingReviews) {
 			ReviewRes reviewRes = (ReviewRes) element;
-			if (reviewRes.getName().equals(origReviewName)) {
+			if (reviewRes.getName().equals(aOigReviewName)) {
 				StringBuilder sb = new StringBuilder("A review with this name already exists in destination Group: " //$NON-NLS-1$
-						+ origReviewName);
+						+ aOigReviewName);
 				throw new ResourceHandlingException(sb.toString());
 			}
 		}

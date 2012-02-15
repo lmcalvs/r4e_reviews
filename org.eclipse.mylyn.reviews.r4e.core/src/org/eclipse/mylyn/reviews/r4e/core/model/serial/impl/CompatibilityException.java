@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson
+ * Copyright (c) 2012 Ericsson
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Description:
+ * Description: A Data format newer than the one supported in the current application is detected
  * 
  * Contributors:
  *   Alvaro Sanchez-Leon - Initial Implementation
@@ -29,27 +29,27 @@ public class CompatibilityException extends Exception {
 	// Constructors
 	// ------------------------------------------------------------------------
 	/**
-	 * @param message
+	 * @param aMessage
 	 */
-	public CompatibilityException(String message) {
-		super(message);
+	public CompatibilityException(String aMessage) {
+		super(aMessage);
 	}
 
 	/**
-	 * @param message
-	 * @param chainedExc
+	 * @param aMessage
+	 * @param aChainedExc
 	 *            - Original chained Exception
 	 */
-	public CompatibilityException(String message, Throwable chainedExc) {
-		super(message, chainedExc);
+	public CompatibilityException(String aMessage, Throwable aChainedExc) {
+		super(aMessage, aChainedExc);
 	}
 
 	/**
-	 * @param chainedExc
+	 * @param aChainedExc
 	 *            Original chained Exception
 	 */
-	CompatibilityException(Throwable chainedExc) {
-		super(chainedExc);
+	CompatibilityException(Throwable aChainedExc) {
+		super(aChainedExc);
 	}
 
 }

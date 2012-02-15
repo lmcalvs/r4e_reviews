@@ -60,16 +60,16 @@ public interface ModelTransform {
 	 * Transform a review from the R4E core model resource structure to resource serialisation per type ans serialise it
 	 * in the given location.
 	 * 
-	 * @param origReviewGroup
+	 * @param aOrigReviewGroup
 	 *            - Group instance of R4EReviewGroup
-	 * @param destReviewGroup
+	 * @param aDestReviewGroup
 	 *            - Group instance of ReviewGroupRes
-	 * @param origReviewName
+	 * @param aOrigReviewName
 	 *            - R4EReview name in origReviewGroup
 	 * @return - Resulting transformed review or null if not able to transform
 	 * @throws ResourceHandlingException
 	 * @throws CompatibilityException
 	 */
-	public ReviewRes transformReview(URI origReviewGroup, URI destReviewGroup, String origReviewName)
+	public ReviewRes transformReview(URI aOrigReviewGroup, URI aDestReviewGroup, String aOrigReviewName)
 			throws ResourceHandlingException, CompatibilityException;
 }

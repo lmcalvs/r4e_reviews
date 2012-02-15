@@ -139,6 +139,12 @@ public class GoldenStubHandler extends TestCase {
 	}
 
 
+	/**
+	 * Creating a sample model stub
+	 * @return
+	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
+	 */
 	public static R4EReviewGroup serializeStub() throws ResourceHandlingException, CompatibilityException {
 		if (fGroupPath == null) {
 			init();
