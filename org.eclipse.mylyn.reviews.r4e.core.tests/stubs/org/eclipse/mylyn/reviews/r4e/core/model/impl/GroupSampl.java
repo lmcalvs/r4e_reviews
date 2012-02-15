@@ -36,7 +36,7 @@ public class GroupSampl {
 	// ------------------------------------------------------------------------
 	private static String								_GROUP_ROOT;
 	private final static String							_DEFAULT_ENTRY_CRITERIA		= "-Entry Criteria";
-	private final static String							_VERSION					= "1.0.0";
+	private final static String							_VERSION					= "0.8.0";
 	private final static String[]						_AVAILABLE_PROJECTS			= new String[] { "P1", "P2", "P3" };
 	private final static String[]						_AVAILABLE_COMPONENTS		= new String[] { "Component1",
 			"Component2", "Component3"												};

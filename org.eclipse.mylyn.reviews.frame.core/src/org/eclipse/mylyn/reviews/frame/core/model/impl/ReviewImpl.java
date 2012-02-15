@@ -58,7 +58,7 @@ public class ReviewImpl extends ReviewComponentImpl implements Review {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String FRAGMENT_VERSION_EDEFAULT = "1.0.0";
+	protected static final String FRAGMENT_VERSION_EDEFAULT = "0.8.0";
 
 	/**
 	 * The cached value of the '{@link #getFragmentVersion() <em>Fragment Version</em>}' attribute.

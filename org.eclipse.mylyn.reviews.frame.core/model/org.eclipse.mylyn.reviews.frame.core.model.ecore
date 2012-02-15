@@ -67,7 +67,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SubModelRoot">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fragmentVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="1.0.0"/>
+        defaultValueLiteral="0.8.0"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="compatibility" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         transient="true" unsettable="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="applicationVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"

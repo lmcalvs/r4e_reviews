@@ -64,7 +64,7 @@ public class VersionId implements Comparable<VersionId> {
 			return +1;
 		}
 
-		// mircro
+		// micro
 		if (fMicro < aOther.getfMicro()) {
 			return -1;
 		}

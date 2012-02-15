@@ -196,14 +196,11 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 			// Not able to continue, not forward compatible
 			// attempt to close what ever was opened from the element
 			if (root instanceof R4EReviewGroup) {
-				R4EReviewGroup group = (R4EReviewGroup) root;
-				closeR4EReviewGroup(group);
+				closeR4EReviewGroup((R4EReviewGroup) root);
 			} else if (root instanceof R4EReview) {
-				R4EReview review = (R4EReview) root;
-				closeR4EReview(review);
+				closeR4EReview((R4EReview) root);
 			} else if (root instanceof R4EDesignRuleCollection) {
-				R4EDesignRuleCollection ruleSet = (R4EDesignRuleCollection) root;
-				closeR4EDesignRuleCollection(ruleSet);
+				closeR4EDesignRuleCollection((R4EDesignRuleCollection) root);
 			}
 
 			// Attempting to load a serialised model with a higher model version than the current one supported by the

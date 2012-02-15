@@ -680,7 +680,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEAttribute(getReviewComponent_Enabled(), ecorePackage.getEBoolean(), "enabled", "true", 0, 1, ReviewComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(subModelRootEClass, SubModelRoot.class, "SubModelRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSubModelRoot_FragmentVersion(), ecorePackage.getEString(), "fragmentVersion", "1.0.0", 0, 1, SubModelRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSubModelRoot_FragmentVersion(), ecorePackage.getEString(), "fragmentVersion", "0.8.0", 0, 1, SubModelRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSubModelRoot_Compatibility(), ecorePackage.getEInt(), "compatibility", null, 0, 1, SubModelRoot.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSubModelRoot_ApplicationVersion(), ecorePackage.getEString(), "applicationVersion", "1.0.0", 0, 1, SubModelRoot.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 

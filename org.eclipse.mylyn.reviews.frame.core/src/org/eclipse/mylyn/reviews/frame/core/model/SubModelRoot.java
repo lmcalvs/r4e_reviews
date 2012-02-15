@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface SubModelRoot extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Fragment Version</b></em>' attribute.
-	 * The default value is <code>"1.0.0"</code>.
+	 * The default value is <code>"0.8.0"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Fragment Version</em>' attribute isn't clear,
@@ -46,7 +46,7 @@ public interface SubModelRoot extends EObject {
 	 * @return the value of the '<em>Fragment Version</em>' attribute.
 	 * @see #setFragmentVersion(String)
 	 * @see org.eclipse.mylyn.reviews.frame.core.model.ModelPackage#getSubModelRoot_FragmentVersion()
-	 * @model default="1.0.0"
+	 * @model default="0.8.0"
 	 * @generated
 	 */
 	String getFragmentVersion();
