@@ -100,7 +100,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 
 		//Remove check on parent, since at least one children is not set anymore
 		try {
-			getParent().setUserReviewed(false);
+			getParent().setUserReviewed(false, false);
 		} catch (OutOfSyncException e) {
 			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
@@ -141,25 +141,30 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	 * 
 	 * @param aReviewed
 	 *            boolean
+	 * @param aSetChildren
+	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
-	public void setUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
+	public void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws ResourceHandlingException,
+			OutOfSyncException {
 		fUserReviewed = aReviewed;
 		if (fUserReviewed) {
+			//Check to see if we should mark the parent reviewed as well
+			getParent().checkToSetUserReviewed();
+		} else {
+			//Remove check on parent, since at least one children is not set anymore
+			getParent().setUserReviewed(fUserReviewed, false);
+		}
+
+		if (aSetChildren) {
 			//Also set the children
 			final int length = fFileContexts.size();
 			for (int i = 0; i < length; i++) {
 				fFileContexts.get(i).setChildUserReviewed(aReviewed);
 			}
-
-			//Check to see if we should mark the parent reviewed as well
-			getParent().checkToSetUserReviewed();
-		} else {
-			//Remove check on parent, since at least one children is not set anymore
-			getParent().setUserReviewed(fUserReviewed);
 		}
 		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 	}

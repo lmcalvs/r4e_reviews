@@ -225,23 +225,20 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * 
 	 * @param aReviewed
 	 *            boolean
+	 * @param aSetChildren
+	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
-	public void setUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
+	public void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws ResourceHandlingException,
+			OutOfSyncException {
 		if (fUserReviewed != aReviewed) { //Reviewed state is changed
 			fUserReviewed = aReviewed;
 			if (fUserReviewed) {
 				//Add delta to the reviewedContent for this user
 				addContentReviewed();
-
-				//Also set the children
-				final int length = fContentsContainer.getChildren().length;
-				for (int i = 0; i < length; i++) {
-					fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
-				}
 
 				//Check to see if we should mark the parent reviewed as well
 				getParent().checkToSetUserReviewed();
@@ -250,7 +247,15 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				removeContentReviewed();
 
 				//Remove check on parent, since at least one children is not set anymore
-				getParent().setUserReviewed(fUserReviewed);
+				getParent().setUserReviewed(fUserReviewed, false);
+			}
+
+			if (aSetChildren) {
+				//Also set the children
+				final int length = fContentsContainer.getChildren().length;
+				for (int i = 0; i < length; i++) {
+					fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
+				}
 			}
 			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
@@ -302,15 +307,14 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			if (aReviewed) {
 				//Add delta to the reviewedContent for this user
 				addContentReviewed();
-
-				//Also set the children
-				final int length = fContentsContainer.getChildren().length;
-				for (int i = 0; i < length; i++) {
-					fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
-				}
 			} else {
 				//Remove delta from the reviewedContent for this user
 				removeContentReviewed();
+			}
+			//Also set the children
+			final int length = fContentsContainer.getChildren().length;
+			for (int i = 0; i < length; i++) {
+				fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
 			}
 			fUserReviewed = aReviewed;
 			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
@@ -496,12 +500,13 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * @return int
 	 */
 	public int getNumReviewedChanges() {
-		//NOTE:  We only check the file and assume all changes are reviewed if the file is, or none if
-		//the file is not
-		if (isUserReviewed()) {
-			return getNumChanges();
+		int numReviewedChanges = 0;
+		for (IR4EUIModelElement changes : fContentsContainer.getChildren()) {
+			if (((R4EUIContent) changes).isUserReviewed()) {
+				++numReviewedChanges;
+			}
 		}
-		return 0;
+		return numReviewedChanges;
 	}
 
 	/**

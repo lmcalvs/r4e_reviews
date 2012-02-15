@@ -160,12 +160,15 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	 * 
 	 * @param aReviewed
 	 *            boolean
+	 * @param aSetChildren
+	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
 	@Override
-	public void setUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
+	public void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws ResourceHandlingException,
+			OutOfSyncException {
 		if (fUserReviewed != aReviewed) { //Reviewed state is changed
 			fUserReviewed = aReviewed;
 			if (fUserReviewed) {
@@ -179,7 +182,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 				removeContentReviewed();
 
 				//Remove check on parent, since at least one children is not set anymore
-				getParent().getParent().setUserReviewed(fUserReviewed);
+				getParent().getParent().setUserReviewed(fUserReviewed, false);
 			}
 			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}

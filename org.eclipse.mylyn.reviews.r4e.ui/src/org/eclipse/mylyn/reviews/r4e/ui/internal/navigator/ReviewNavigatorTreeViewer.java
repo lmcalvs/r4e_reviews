@@ -557,7 +557,9 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 								+ R4EUIConstants.SEPARATOR
 								+ Integer.toString(((R4EUIReviewItem) element).getNumChanges());
 					} else if (element instanceof R4EUIFileContext) {
-						return Integer.toString(((R4EUIFileContext) element).getNumChanges());
+						return Integer.toString(((R4EUIFileContext) element).getNumReviewedChanges())
+								+ R4EUIConstants.SEPARATOR
+								+ Integer.toString(((R4EUIFileContext) element).getNumChanges());
 					}
 					return null;
 				}
@@ -594,7 +596,9 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 								+ R4EUIConstants.SEPARATOR
 								+ Integer.toString(((R4EUIReviewItem) element).getNumChanges()));
 					} else if (element instanceof R4EUIFileContext) {
-						cell.setText(Integer.toString(((R4EUIFileContext) element).getNumChanges()));
+						cell.setText(Integer.toString(((R4EUIFileContext) element).getNumReviewedChanges())
+								+ R4EUIConstants.SEPARATOR
+								+ Integer.toString(((R4EUIFileContext) element).getNumChanges()));
 					} else {
 						cell.setText(null);
 					}

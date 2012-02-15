@@ -79,7 +79,8 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 								}
 								R4EUIPlugin.Ftracer.traceInfo("Changing review state for element "
 										+ ((IR4EUIModelElement) element).getName());
-								((IR4EUIModelElement) element).setUserReviewed(!(((IR4EUIModelElement) element).isUserReviewed()));
+								((IR4EUIModelElement) element).setUserReviewed(
+										!(((IR4EUIModelElement) element).isUserReviewed()), true);
 
 								//If we just completed the review, prompt user for mail sending
 								if (R4EUIModelController.getActiveReview().isUserReviewed()) {

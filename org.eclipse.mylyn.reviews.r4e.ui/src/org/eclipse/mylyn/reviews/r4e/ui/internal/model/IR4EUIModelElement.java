@@ -121,10 +121,12 @@ public interface IR4EUIModelElement {
 	 * 
 	 * @param aReviewed
 	 *            - the reviewed flag (true/false)
+	 * @param aSetChildren
+	 *            - flag that is used to see whether we should also update child elements
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	void setUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException;
+	void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws ResourceHandlingException, OutOfSyncException;
 
 	/**
 	 * Sets the enabled flag. Take note that this is not applicable to all model elements

@@ -121,7 +121,7 @@ public class R4EUIDeltaContainer extends R4EUIContentsContainer {
 					//Check if the file contexts are part of the reviewed content
 					for (R4EUIContent uiDelta : fContents) {
 						if (user.getReviewedContent().contains(uiDelta.getContent().getId())) {
-							uiDelta.setUserReviewed(true);
+							uiDelta.setUserReviewed(true, true);
 						}
 					}
 				}

@@ -305,11 +305,14 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * 
 	 * @param aReviewed
 	 *            boolean
+	 * @param aSetChildren
+	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
-	public void setUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+	public void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws ResourceHandlingException,
+			OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
 		//default implementation
 	}
 
