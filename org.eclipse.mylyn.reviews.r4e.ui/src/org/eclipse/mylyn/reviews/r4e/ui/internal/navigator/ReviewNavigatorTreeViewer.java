@@ -156,6 +156,31 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	 */
 	private TreeViewerColumn fNumAnomaliesColumn = null;
 
+	/**
+	 * Field fElementColumnWeight.
+	 */
+	private int fElementColumnWeight = 25;
+
+	/**
+	 * Field fPathColumnWeight.
+	 */
+	private int fPathColumnWeight = 50;
+
+	/**
+	 * Field fAssignColumnWeigth.
+	 */
+	private int fAssignColumnWeight = 9;
+
+	/**
+	 * Field fNumChangesColumnWeight.
+	 */
+	private int fNumChangesColumnWeight = 8;
+
+	/**
+	 * Field fNumAnomaliesColumnWeigth.
+	 */
+	private int fNumAnomaliesColumnWeight = 8;
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -228,25 +253,52 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	 * Method setViewTree.
 	 */
 	public void setViewTree() {
+		double elementColumnWidth = R4EUIConstants.INVALID_VALUE;
+		double pathColumnWidth = R4EUIConstants.INVALID_VALUE;
+		double assignColumnWidth = R4EUIConstants.INVALID_VALUE;
+		double numChangesColumnWidth = R4EUIConstants.INVALID_VALUE;
+		double numAnomaliesColumnWidth = R4EUIConstants.INVALID_VALUE;
+
+		if (null != fElementColumn) {
+			elementColumnWidth = fElementColumn.getColumn().getWidth();
+		}
 		createElementsColumn();
 		getTree().setHeaderVisible(false);
-		if (null != fAssignColumn) {
-			fAssignColumn.getColumn().dispose();
-			fAssignColumn = null;
-		}
 		if (null != fPathColumn) {
+			pathColumnWidth = fPathColumn.getColumn().getWidth();
 			fPathColumn.getColumn().dispose();
 			fPathColumn = null;
 		}
+		if (null != fAssignColumn) {
+			assignColumnWidth = fAssignColumn.getColumn().getWidth();
+			fAssignColumn.getColumn().dispose();
+			fAssignColumn = null;
+		}
 		if (null != fNumChangesColumn) {
+			numChangesColumnWidth = fNumChangesColumn.getColumn().getWidth();
 			fNumChangesColumn.getColumn().dispose();
 			fNumChangesColumn = null;
 		}
 		if (null != fNumAnomaliesColumn) {
+			numAnomaliesColumnWidth = fNumAnomaliesColumn.getColumn().getWidth();
 			fNumAnomaliesColumn.getColumn().dispose();
 			fNumAnomaliesColumn = null;
 		}
 		fTreeColumnLayout.setColumnData(fElementColumn.getColumn(), new ColumnWeightData(100, true));
+
+		//Caculate column weights to preserve (if any)
+		if (elementColumnWidth != R4EUIConstants.INVALID_VALUE && pathColumnWidth != R4EUIConstants.INVALID_VALUE
+				&& assignColumnWidth != R4EUIConstants.INVALID_VALUE
+				&& numChangesColumnWidth != R4EUIConstants.INVALID_VALUE
+				&& numAnomaliesColumnWidth != R4EUIConstants.INVALID_VALUE) {
+			double totalWidth = elementColumnWidth + pathColumnWidth + assignColumnWidth + numChangesColumnWidth
+					+ numAnomaliesColumnWidth;
+			fElementColumnWeight = (int) ((elementColumnWidth / totalWidth) * 100);
+			fPathColumnWeight = (int) ((pathColumnWidth / totalWidth) * 100);
+			fAssignColumnWeight = (int) ((assignColumnWidth / totalWidth) * 100);
+			fNumChangesColumnWeight = (int) ((numChangesColumnWidth / totalWidth) * 100);
+			fNumAnomaliesColumnWeight = (int) ((numAnomaliesColumnWidth / totalWidth) * 100);
+		}
 
 		//Remove Tree Table filters
 		final TreeTableFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
@@ -306,11 +358,14 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		getTree().setHeaderVisible(true);
 
 		//Reset Layout to adjust Columns widths
-		fTreeColumnLayout.setColumnData(fElementColumn.getColumn(), new ColumnWeightData(25, true));
-		fTreeColumnLayout.setColumnData(fPathColumn.getColumn(), new ColumnWeightData(50, true));
-		fTreeColumnLayout.setColumnData(fAssignColumn.getColumn(), new ColumnWeightData(9, true));
-		fTreeColumnLayout.setColumnData(fNumChangesColumn.getColumn(), new ColumnWeightData(8, true));
-		fTreeColumnLayout.setColumnData(fNumAnomaliesColumn.getColumn(), new ColumnWeightData(8, true));
+		fTreeColumnLayout.setColumnData(fElementColumn.getColumn(), new ColumnWeightData(fElementColumnWeight, true));
+		fTreeColumnLayout.setColumnData(fPathColumn.getColumn(), new ColumnWeightData(fPathColumnWeight, true));
+		fTreeColumnLayout.setColumnData(fAssignColumn.getColumn(), new ColumnWeightData(fAssignColumnWeight, true));
+		fTreeColumnLayout.setColumnData(fNumChangesColumn.getColumn(), new ColumnWeightData(fNumChangesColumnWeight,
+				true));
+		fTreeColumnLayout.setColumnData(fNumAnomaliesColumn.getColumn(), new ColumnWeightData(
+				fNumAnomaliesColumnWeight, true));
+
 		R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 		if (null != activeReview) {
 			fElementColumn.getColumn().setText(activeReview.getReview().getName());
