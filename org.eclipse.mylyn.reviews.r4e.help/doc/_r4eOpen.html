@@ -55,6 +55,9 @@
 							<li>
 								<a href="_r4eOpen.html#Starting_R4E">Starting R4E</a>
 							</li>
+							<li>
+								<a href="_r4eOpen.html#Version_Compatibility">Version Compatibility</a>
+							</li>
 						</ol>
 					</li>
 					<li>
@@ -559,6 +562,23 @@
 		<p>
 			<br/>
 		</p>
+		<h3 id="Version_Compatibility">Version Compatibility</h3>
+		<p>In order to prevent compatibility problems between versions, R4E now implements a compatibility check.  This will prevent older versions of R4E opening new versions of the R4E metadata files.  Compatibility is checked independently for the Review Group, Rule Set and Review element when opening the element.  There are basically three cases that can occur:</p>
+		<ul>
+			<li>Metadata version and R4E plugins version are the same:  In this case R4E opens the element normally.</li>
+		</ul>
+		<ul>
+			<li>Metadata version is more recent than the R4E plugins version:  This means that the element was created with a more recent version of R4E than the one currently being used.  In this case an Error message dialog is displayed and the element cannot be used.  The solution to this is typically to upgrade the R4E version to the latest one available.</li>
+		</ul>
+		<p>
+			<img border="0" src="versionMismatchError.png"/>
+		</p>
+		<ul>
+			<li>Metadata version is older than the R4E plugins version:  This means that the element was created with an older version of R4E than the one currently being used.  In this case an information dialog is displayed to highlight the fact and ask the user how to proceed.  The user can then choose to cancel the action, upgrade the file version to the current R4E version, which will permanently change the file version for all users, or keep the older file version and open the element in read-only mode.  When the element is open in read-only mode it is displayed in red in the Review Navigator View.</li>
+		</ul>
+		<p>
+			<img border="0" src="versionMismatchInfo.png"/>
+		</p>
 		<h2 id="R4E_Configuration">R4E Configuration</h2>
 		<p>The R4E Configuration can be entered by accessing the R4E Preferences Pages, which are part of the Eclipse Global Preferences. There are three R4E Preference Pages: 
 			<b>R4E General Preferences</b>, 
@@ -614,7 +634,8 @@
 			<br/> 
 		</p>
 		<p>&nbsp; &nbsp;This is used to specify the location of the data files that contain Review Group information. 
-			See below for more information on Review Groups. The Name and Description fields show additional information attached to the selected Review Group file. Typically, all R4E data files will be located on a shared network drive. Users can add one or multiple references to Group files to their workspace as needed using the ''Add ''button. Files can be removed from the workspace by pressing the ''Remove ''button. Files can be moved up or down in the list by clicking the corresponding button. This will affect the order in which the Groups are displayed in the Review Navigator. </p>
+			See below for more information on Review Groups. The Name and Description fields show additional information attached to the selected Review Group file. Typically, all R4E data files will be located on a shared network drive. Users can add one or multiple references to Group files to their workspace as needed using the ''Add ''button. Files can be removed from the workspace by pressing the ''Remove ''button. Files can be moved up or down in the list by clicking the corresponding button. This will affect the order in which the Groups are displayed in the Review Navigator.</p>
+		<p>&nbsp; &nbsp;If there is a version compatibility problem between the version of the Group file and the current R4E plugin version, where the R4E version is older than the Group file version, then this group cannot be used and the description field will show a version mismatch error.  Such errors can typically be fixed by upgrading the R4E plugins to their later version.</p>
 		<p>
 			<b>Note: Make sure the defined directory location is accessible and configured with read/write permissions for the team members involved in the review.</b> 
 		</p>
@@ -631,6 +652,7 @@
 		<p>&nbsp; &nbsp;This is used to specify the location of the data files that contain Rule Set information. See below for more information on Rule Sets. The Name and Version fields show additional information attached to the selected Rule Set file. Typically, all R4E data files will be located on a shared network drive. Users can add one or multiple references to Rule Set files to their workspace as needed using the 
 			<i>Add ''button. Files can be removed from the workspace by pressing the ''Remove</i> button. Files can be moved up or down in the list by clicking the corresponding button. This will affect the order in which the Rule Sets are displayed in the Review Navigator. 
 		</p>
+		<p>&nbsp; &nbsp;If there is a version compatibility problem between the version of the Rule Set file and the current R4E plugin version, where the R4E version is older than the Rule Set file version, then this ruleset cannot be used and the description field will show a version mismatch error.  Such errors can typically be fixed by upgrading the R4E plugins to their later version.</p>
 		<p>
 			<br/> 
 		</p>
