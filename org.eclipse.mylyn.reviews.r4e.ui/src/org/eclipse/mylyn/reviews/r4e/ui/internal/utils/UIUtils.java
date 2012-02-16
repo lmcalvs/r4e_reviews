@@ -157,7 +157,7 @@ public class UIUtils {
 	 * to the current one, or in Read-only mode, which will preserve its version.\n"")
 	 */
 	private static final String COMPATIBILITY_WARNING_MESSAGE = "You are trying to open an older version of the element than the one currently handled by this version of R4E.\n"
-			+ "You can open the element normally, which will upgrade its version to the current one, or in Read-only mode, which will preserve its version.\n";
+			+ "You can open the element normally, which will upgrade its version to the current one, or in Read-only mode, which will preserve its version.";
 
 	/**
 	 * Field COMPATIBILITY_WARNING_DIALOG_BUTTONS.
@@ -236,9 +236,9 @@ public class UIUtils {
 	public static int displayCompatibilityWarningDialog(String aDataVersion, String aApplVersionl) {
 		R4EUIPlugin.Ftracer.traceWarning(COMPATIBILITY_WARNING_MESSAGE);
 		final MessageDialog dialog = new MessageDialog(null, COMPATIBILITY_WARNING_DIALOG_TITLE, null,
-				COMPATIBILITY_WARNING_MESSAGE + "Data Version: " + aDataVersion + R4EUIConstants.LINE_FEED
-						+ "Application Version: " + aApplVersionl, MessageDialog.QUESTION_WITH_CANCEL,
-				COMPATIBILITY_WARNING_DIALOG_BUTTONS, 0);
+				COMPATIBILITY_WARNING_MESSAGE + R4EUIConstants.LINE_FEED + "Element meta-data Version: " + aDataVersion
+						+ R4EUIConstants.LINE_FEED + "Application meta-data Version: " + aApplVersionl,
+				MessageDialog.QUESTION_WITH_CANCEL, COMPATIBILITY_WARNING_DIALOG_BUTTONS, 0);
 		return dialog.open();
 	}
 
@@ -783,5 +783,18 @@ public class UIUtils {
 			// Ignore
 		}
 		return path;
+	}
+
+	/**
+	 * Method formatNumChanges. formats the NumChanges value for UI display
+	 * 
+	 * @param aNumChanges
+	 *            int
+	 * @param aNumReviewedChanges
+	 *            int
+	 * @return String
+	 */
+	public static String formatNumChanges(int aNumChanges, int aNumReviewedChanges) {
+		return Integer.toString(aNumReviewedChanges) + R4EUIConstants.SEPARATOR + Integer.toString(aNumChanges);
 	}
 }

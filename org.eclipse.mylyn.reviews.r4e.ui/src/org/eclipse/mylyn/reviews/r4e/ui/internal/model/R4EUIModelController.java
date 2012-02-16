@@ -173,7 +173,7 @@ public class R4EUIModelController {
 	 * 
 	 * @return the root R4E element
 	 */
-	public static IR4EUIModelElement getRootElement() {
+	public static R4EUIRootElement getRootElement() {
 		return FRootElement;
 	}
 

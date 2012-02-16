@@ -486,6 +486,18 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 				}
 			}
 			item.setText(ruleSet);
+
+			//Decorate rule set item if it is not loaded
+			item.setImage(null);
+			List<R4EUIRuleSet> loadedRuleSets = R4EUIModelController.getRootElement().getRuleSets();
+			for (R4EUIRuleSet loadedRuleSet : loadedRuleSets) {
+				if (ruleSet.equals(loadedRuleSet.getName())) {
+					item.setImage(fProperties.getElement().getUserReviewedImage());
+				}
+			}
+			if (null == item.getImage()) {
+				item.setImage(fProperties.getElement().getDisabledImage());
+			}
 		}
 
 		setEnabledFields();

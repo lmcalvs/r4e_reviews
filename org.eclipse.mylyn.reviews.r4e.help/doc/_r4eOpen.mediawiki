@@ -1446,7 +1446,7 @@ Properties for the Review Group Element includes:
 **The Available Components that can be used in child reviews 
 
 *In the Rule Sets expandable section:
-**The Applied Rule Sets that specify Design Rules that can be used when creating anomalies in child reviews
+**The Applied Rule Sets that specify Design Rules that can be used when creating anomalies in child reviews.  If the ruleset is not loaded, a little disabled icon will appear besides its name in the table.  Otherwise a little checkmark icon will be displayed.
 
 <br>
 

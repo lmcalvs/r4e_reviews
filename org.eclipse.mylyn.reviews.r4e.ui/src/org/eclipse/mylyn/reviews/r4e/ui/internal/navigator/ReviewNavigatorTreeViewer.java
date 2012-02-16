@@ -286,7 +286,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		}
 		fTreeColumnLayout.setColumnData(fElementColumn.getColumn(), new ColumnWeightData(100, true));
 
-		//Caculate column weights to preserve (if any)
+		//Calculate column weights to preserve (if any)
 		if (elementColumnWidth != R4EUIConstants.INVALID_VALUE && pathColumnWidth != R4EUIConstants.INVALID_VALUE
 				&& assignColumnWidth != R4EUIConstants.INVALID_VALUE
 				&& numChangesColumnWidth != R4EUIConstants.INVALID_VALUE
@@ -458,14 +458,23 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 					StringBuffer buffer = new StringBuffer();
 					if (aElement instanceof R4EUIFileContext) {
 						R4EFileVersion targetVersion = ((R4EUIFileContext) aElement).getTargetFileVersion();
+						R4EFileVersion baseVersion = ((R4EUIFileContext) aElement).getBaseFileVersion();
+						buffer.append(R4EUIConstants.FILE_LABEL);
+						if (null != targetVersion) {
+							buffer.append(UIUtils.getProjectPath(targetVersion));
+						} else if (null != baseVersion) {
+							buffer.append(UIUtils.getProjectPath(baseVersion));
+						} else {
+							buffer.append(INVALID_PATH);
+						}
+						buffer.append(R4EUIConstants.LINE_FEED);
 						buffer.append(VERSION_TARGET_LABEL);
 						if (null == targetVersion) {
 							buffer.append(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
 						} else {
 							buffer.append(targetVersion.getVersionID());
 						}
-						R4EFileVersion baseVersion = ((R4EUIFileContext) aElement).getBaseFileVersion();
-						buffer.append(System.getProperty("line.separator")); //$NON-NLS-1$
+						buffer.append(R4EUIConstants.LINE_FEED);
 						buffer.append(VERSION_BASE_LABEL);
 						if (null == baseVersion) {
 							buffer.append(R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE);
@@ -608,13 +617,11 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 				@Override
 				public String getText(Object element) {
 					if (element instanceof R4EUIReviewItem) {
-						return Integer.toString(((R4EUIReviewItem) element).getNumReviewedChanges())
-								+ R4EUIConstants.SEPARATOR
-								+ Integer.toString(((R4EUIReviewItem) element).getNumChanges());
+						return UIUtils.formatNumChanges(((R4EUIReviewItem) element).getNumChanges(),
+								((R4EUIReviewItem) element).getNumReviewedChanges());
 					} else if (element instanceof R4EUIFileContext) {
-						return Integer.toString(((R4EUIFileContext) element).getNumReviewedChanges())
-								+ R4EUIConstants.SEPARATOR
-								+ Integer.toString(((R4EUIFileContext) element).getNumChanges());
+						return UIUtils.formatNumChanges(((R4EUIFileContext) element).getNumChanges(),
+								((R4EUIFileContext) element).getNumReviewedChanges());
 					}
 					return null;
 				}
@@ -647,13 +654,11 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 				public void update(ViewerCell cell) {
 					final Object element = cell.getElement();
 					if (element instanceof R4EUIReviewItem) {
-						cell.setText(Integer.toString(((R4EUIReviewItem) element).getNumReviewedChanges())
-								+ R4EUIConstants.SEPARATOR
-								+ Integer.toString(((R4EUIReviewItem) element).getNumChanges()));
+						cell.setText(UIUtils.formatNumChanges(((R4EUIReviewItem) element).getNumChanges(),
+								((R4EUIReviewItem) element).getNumReviewedChanges()));
 					} else if (element instanceof R4EUIFileContext) {
-						cell.setText(Integer.toString(((R4EUIFileContext) element).getNumReviewedChanges())
-								+ R4EUIConstants.SEPARATOR
-								+ Integer.toString(((R4EUIFileContext) element).getNumChanges()));
+						cell.setText(UIUtils.formatNumChanges(((R4EUIFileContext) element).getNumChanges(),
+								((R4EUIFileContext) element).getNumReviewedChanges()));
 					} else {
 						cell.setText(null);
 					}
