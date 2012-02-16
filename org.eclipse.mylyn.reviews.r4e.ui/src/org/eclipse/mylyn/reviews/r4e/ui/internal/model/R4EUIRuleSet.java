@@ -298,6 +298,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 		}
 		fAreas.clear();
 		fOpen = false;
+		fReadOnly = false;
 		R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
 		fImage = UIUtils.loadIcon(RULE_SET_CLOSED_ICON_FILE);
 		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_CLOSE);
@@ -415,6 +416,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 			}
 		default:
 			//Normal case, do nothing
+			fReadOnly = false;
 			return true;
 		}
 	}

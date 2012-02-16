@@ -67,7 +67,7 @@ public class NewAnomalyPropertyTester extends PropertyTester {
 		}
 
 		//Command is disabled if active review is Read-Only
-		if (R4EUIModelController.getActiveReview().isReadOnly()) {
+		if (activeReview.isReadOnly()) {
 			return false;
 		}
 

@@ -381,7 +381,7 @@ public class R4EUIModelController {
 		for (String ruleSetPath : aRuleSetPaths) {
 			ruleSet = null;
 
-			//First try to open the review group file as entrered in the preferences
+			//First try to open the review group file as entered in the preferences
 			//If it fails, then create it
 			try {
 				ruleSet = FModelExt.openR4EDesignRuleCollection(URI.createFileURI(ruleSetPath));

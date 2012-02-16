@@ -335,6 +335,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		fReviews.clear();
 		fRuleSets.clear();
 		fOpen = false;
+		fReadOnly = false;
 		R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup); //Notify model
 		fImage = UIUtils.loadIcon(REVIEW_GROUP_CLOSED_ICON_FILE);
 		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_CLOSE);
@@ -433,6 +434,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			}
 		default:
 			//Normal case, do nothing
+			fReadOnly = false;
 			return true;
 		}
 	}

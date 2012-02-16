@@ -69,7 +69,7 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 		}
 
 		//Command is disabled if active review is Read-Only
-		if (R4EUIModelController.getActiveReview().isReadOnly()) {
+		if (activeReview.isReadOnly()) {
 			return false;
 		}
 

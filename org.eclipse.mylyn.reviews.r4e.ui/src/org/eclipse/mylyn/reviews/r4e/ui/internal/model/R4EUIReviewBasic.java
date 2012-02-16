@@ -592,6 +592,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 
 		fItems.clear();
 		fOpen = false;
+		fReadOnly = false;
 		R4EUIModelController.FModelExt.closeR4EReview(fReview); //Notify model
 		R4EUIModelController.clearAnomalyMap();
 		if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
@@ -736,6 +737,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			}
 		default:
 			//Normal case, do nothing
+			fReadOnly = false;
 			return true;
 		}
 	}
