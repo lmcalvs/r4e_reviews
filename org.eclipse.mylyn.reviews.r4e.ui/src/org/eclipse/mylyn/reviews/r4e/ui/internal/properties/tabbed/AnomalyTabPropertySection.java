@@ -971,7 +971,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		for (String participant : participants) {
 			fAssignedToCombo.add(participant);
 		}
-		if (modelAnomaly.getAssignedTo().size() > 0) {
+		if (modelAnomaly.getAssignedTo().size() > 0 && null != modelAnomaly.getAssignedTo().get(0)) {
 			fAssignedToCombo.setText(modelAnomaly.getAssignedTo().get(0));
 		} else {
 			fAssignedToCombo.setText("");
