@@ -24,10 +24,9 @@ import java.util.List;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -371,21 +370,11 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNewChildElementCmd() {
-		if (!isReadOnly()) {
-			//If this is a formal review, we need to be in the planning, preparation or decision phase
-			if (R4EUIModelController.getActiveReview()
+		if (!isReadOnly() && getParent().isEnabled()) {
+			final R4EReviewPhase phase = ((R4EReviewState) R4EUIModelController.getActiveReview()
 					.getReview()
-					.getType()
-					.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-				final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
-						.getType();
-				if (!phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)
-						&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
-						&& !phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-					return false;
-				}
-			}
-			if (getParent().isEnabled()) {
+					.getState()).getState();
+			if (!phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 				return true;
 			}
 		}
