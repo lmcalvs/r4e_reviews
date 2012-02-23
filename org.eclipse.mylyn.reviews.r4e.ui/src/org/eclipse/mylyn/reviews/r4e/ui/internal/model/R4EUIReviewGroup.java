@@ -275,7 +275,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		List<ReviewComponent> tempReviews = new ArrayList<ReviewComponent>();
 
 		R4EUIModelController.setJobInProgress(true);
-		final IReviewInputDialog dialog = R4EUIDialogFactory.getInstance().getReviewInputDialog();
+		final IReviewInputDialog dialog = R4EUIDialogFactory.getInstance().getReviewInputDialog(this);
 		dialog.create();
 		final int result = dialog.open();
 		if (result == Window.OK) {

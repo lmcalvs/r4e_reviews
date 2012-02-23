@@ -22,6 +22,9 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 import java.io.File;
 
 import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.mylyn.reviews.frame.core.model.Review;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.WildcardFileFilter;
 
 /**
@@ -58,6 +61,12 @@ public class R4EInputValidator implements IInputValidator {
 	 * Field FILE_EXISTS_VALIDATION_ERROR_MESSAGE. (value is ""File already exists"")
 	 */
 	private static final String FILE_EXISTS_VALIDATION_ERROR_MESSAGE = "File already exists";
+
+	/**
+	 * Field REVIEW_EXISTS_VALIDATION_ERROR_MESSAGE. (value is ""A Review with the same name already exists within this
+	 * Review Group"")
+	 */
+	private static final String REVIEW_EXISTS_VALIDATION_ERROR_MESSAGE = "A Review with the same name already exists within this Review Group";
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -125,6 +134,24 @@ public class R4EInputValidator implements IInputValidator {
 	public String isValid(String newText) { // $codepro.audit.disable booleanMethodNamingConvention
 		if (null == newText || 0 == newText.length()) {
 			return EMPTY_VALIDATION_ERROR_MESSAGE;
+		}
+		return null;
+	}
+
+	/**
+	 * Method isReviewExists.
+	 * 
+	 * @param aReviewName
+	 *            String
+	 * @param aParentGroup
+	 *            R4EUIReviewGroup
+	 * @return String
+	 */
+	public String isReviewExists(String aReviewName, R4EUIReviewGroup aParentGroup) { // $codepro.audit.disable booleanMethodNamingConvention	
+		for (Review review : aParentGroup.getReviewGroup().getReviews()) {
+			if (((R4EReview) review).getName().equalsIgnoreCase(aReviewName)) {
+				return REVIEW_EXISTS_VALIDATION_ERROR_MESSAGE;
+			}
 		}
 		return null;
 	}

@@ -24,6 +24,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.versions.ui.ScmUi;
 import org.eclipse.mylyn.versions.ui.spi.ScmConnectorUi;
@@ -341,7 +342,8 @@ public class R4EUIDialogFactory {
 	/**
 	 * Method getParticipantUnassignDialog.
 	 * 
-	 * @param aElement - IR4EUIModelElement
+	 * @param aElement
+	 *            - IR4EUIModelElement
 	 * @return IParticipantUnassignDialog
 	 */
 	public IParticipantUnassignDialog getParticipantUnassignDialog(IR4EUIModelElement aElement) {
@@ -398,14 +400,16 @@ public class R4EUIDialogFactory {
 	/**
 	 * Method getReviewInputDialog.
 	 * 
+	 * @param aParentGroup
+	 *            R4EUIReviewGroup
 	 * @return IReviewInputDialog
 	 */
-	public IReviewInputDialog getReviewInputDialog() {
+	public IReviewInputDialog getReviewInputDialog(R4EUIReviewGroup aParentGroup) {
 		if (null == fReviewInputDialog) {
 			fReviewInputDialog = new ReviewInputDialog(R4EUIModelController.getNavigatorView()
 					.getSite()
 					.getWorkbenchWindow()
-					.getShell());
+					.getShell(), aParentGroup);
 		}
 		return fReviewInputDialog;
 	}

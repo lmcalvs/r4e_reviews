@@ -130,6 +130,11 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field fParentGroup.
+	 */
+	private R4EUIReviewGroup fParentGroup = null;
+
+	/**
 	 * Field fReviewType.
 	 */
 	private CCombo fReviewType = null;
@@ -223,11 +228,14 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	 * 
 	 * @param aParentShell
 	 *            Shell
+	 * @param aParentGroup
+	 *            R4EUIReviewGroup
 	 */
-	public ReviewInputDialog(Shell aParentShell) {
+	public ReviewInputDialog(Shell aParentShell, R4EUIReviewGroup aParentGroup) {
 		super(aParentShell);
 		setBlockOnOpen(true);
 		fValidator = new R4EInputValidator();
+		fParentGroup = aParentGroup;
 	}
 
 	// ------------------------------------------------------------------------
@@ -270,10 +278,20 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 				dialog.open();
 				return;
 			}
+			//Check if review already exist
+			validateResult = validateReviewExists(fReviewNameInputTextField, fParentGroup);
+			if (null != validateResult) {
+				//Validate of input failed
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+						"Review already exists", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, validateResult,
+								null), IStatus.ERROR);
+				dialog.open();
+				return;
+			}
 			fReviewNameValue = fReviewNameInputTextField.getText();
 
 			//Validate Review Description
-			validateResult = validateEmptyInput(fReviewNameInputTextField);
+			validateResult = validateEmptyInput(fReviewDescriptionInputTextField);
 			if (null != validateResult) {
 				//Validation of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
@@ -662,5 +680,18 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	 */
 	private String validateEmptyInput(String aString) {
 		return fValidator.isValid(aString);
+	}
+
+	/**
+	 * Method validateReviewExists.
+	 * 
+	 * @param aReviewName
+	 *            Text
+	 * @param aParentGroup
+	 *            R4EUIReviewGroup
+	 * @return String (null = valid, or error string)
+	 */
+	private String validateReviewExists(Text aReviewName, R4EUIReviewGroup aParentGroup) {
+		return ((R4EInputValidator) fValidator).isReviewExists(aReviewName.getText(), aParentGroup);
 	}
 }
