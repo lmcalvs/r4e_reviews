@@ -674,10 +674,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 				switch (aCurrentState.getValue()) {
 				case R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED_VALUE:
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
-					if (getParent() instanceof R4EUIPostponedFile
-							|| getParent().getParent() instanceof R4EUIFileContext) {
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
-					}
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
@@ -693,19 +690,13 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 
 				case R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED_VALUE:
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
-					if (getParent() instanceof R4EUIPostponedFile
-							|| getParent().getParent() instanceof R4EUIFileContext) {
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
-					}
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
 					break;
 
 				case R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED_VALUE:
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
-					if (getParent() instanceof R4EUIPostponedFile
-							|| getParent().getParent() instanceof R4EUIFileContext) {
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
-					}
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 					break;
 
@@ -732,10 +723,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 							|| phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-						if (getParent() instanceof R4EUIPostponedFile
-								|| getParent().getParent() instanceof R4EUIFileContext) {
-							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
-						}
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 					} else {
@@ -759,10 +747,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)
 							|| phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-						if (getParent() instanceof R4EUIPostponedFile
-								|| getParent().getParent() instanceof R4EUIFileContext) {
-							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
-						}
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
 					} else {
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
@@ -773,10 +758,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)
 							|| phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-						if (getParent() instanceof R4EUIPostponedFile
-								|| getParent().getParent() instanceof R4EUIFileContext) {
-							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
-						}
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 					} else {
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
@@ -788,19 +770,13 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-						if (getParent() instanceof R4EUIPostponedFile
-								|| getParent().getParent() instanceof R4EUIFileContext) {
-							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
-						}
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 					} else if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-						if (getParent() instanceof R4EUIPostponedFile
-								|| getParent().getParent() instanceof R4EUIFileContext) {
-							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
-						}
+						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
 					} else {
@@ -850,10 +826,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 				switch (aCurrentState.getValue()) {
 				case R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED_VALUE:
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
-					if (getParent() instanceof R4EUIPostponedFile
-							|| getParent().getParent() instanceof R4EUIFileContext) {
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
-					}
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
 					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 					break;
@@ -870,26 +843,10 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 						.getType();
 				switch (aCurrentState.getValue()) {
 				case R4EAnomalyState.R4E_ANOMALY_STATE_CREATED_VALUE:
-					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
-						if (getParent() instanceof R4EUIPostponedFile
-								|| getParent().getParent() instanceof R4EUIFileContext) {
-							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
-						}
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-					}
-					if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
-						if (getParent() instanceof R4EUIPostponedFile
-								|| getParent().getParent() instanceof R4EUIFileContext) {
-							states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED); //not for global anomalies
-						}
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-						states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-					}
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
+					states.add(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
 					break;
 
 				case R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED_VALUE:
