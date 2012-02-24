@@ -35,9 +35,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
@@ -652,21 +652,10 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isNewChildElementCmd() {
-		if (!isReadOnly()) {
-			//If this is a formal review, we need to be in the preparation phase
-			if (R4EUIModelController.getActiveReview()
-					.getReview()
-					.getType()
-					.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-				if (!(((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION))) {
-					return false;
-				}
-			}
-			if (getParent().isEnabled() && !(R4EUIModelController.getActiveReview().isUserReviewed())) {
-				if (getParent() instanceof R4EUIReviewBasic) {
-					return true;
-				}
-			}
+		if (!isReadOnly()
+				&& !((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) && getParent().isEnabled()) {
+			return true;
 		}
 		return false;
 	}

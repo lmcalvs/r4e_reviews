@@ -75,7 +75,7 @@ public class NewReviewItemPropertyTester extends PropertyTester {
 
 		//Command is disabled if the active review is completed
 		final R4EReviewPhase phase = ((R4EReviewState) activeReview.getReview().getState()).getState();
-		if (activeReview.isUserReviewed() || phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+		if (phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
 			return false;
 		}
 

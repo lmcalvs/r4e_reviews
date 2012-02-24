@@ -319,20 +319,15 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 		}
 
 		if (elementFound instanceof R4EUIReviewBasic) {
+			fCompletionButton.setVisible(true);
+			fQuestionButton.setVisible(true);
+			fItemsUpdatedButton.setVisible(true);
+			fProgressButton.setVisible(true);
+			fMeetingButton.setVisible(true);
 			if (((R4EUIReviewBasic) elementFound).isUserReviewed()) {
-				fCompletionButton.setVisible(true);
 				fCompletionButton.setSelection(true);
-				fQuestionButton.setVisible(false);
-				fItemsUpdatedButton.setVisible(false);
-				fProgressButton.setVisible(false);
-				fMeetingButton.setVisible(false);
 			} else {
-				fCompletionButton.setVisible(false);
-				fQuestionButton.setVisible(true);
-				fItemsUpdatedButton.setVisible(true);
-				fProgressButton.setVisible(true);
 				fProgressButton.setSelection(true);
-				fMeetingButton.setVisible(true);
 			}
 		} else {
 			fCompletionButton.setVisible(false);
