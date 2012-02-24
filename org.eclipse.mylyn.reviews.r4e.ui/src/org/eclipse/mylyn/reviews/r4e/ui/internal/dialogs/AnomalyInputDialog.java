@@ -50,7 +50,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleArea;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
@@ -218,6 +217,11 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	 * Field fOpenRuleSets.
 	 */
 	private final List<R4EUIRuleSet> fOpenRuleSets = new ArrayList<R4EUIRuleSet>();
+
+	/**
+	 * Field fSelectedRule.
+	 */
+	R4EUIRule fSelectedRule = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -504,7 +508,6 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 		fRuleTreeViewer.setContentProvider(new ReviewNavigatorContentProvider());
 		fRuleTreeViewer.getTree().setHeaderVisible(true);
 		ColumnViewerToolTipSupport.enableFor(fRuleTreeViewer, ToolTip.NO_RECREATE);
-
 		final TreeViewerColumn elementColumn = new TreeViewerColumn(fRuleTreeViewer, SWT.NONE);
 		elementColumn.getColumn().setText("Rule Tree");
 		elementColumn.getColumn().setWidth(DEFAULT_ELEMENT_COLUMN_WIDTH);
@@ -712,7 +715,6 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		textGridData.horizontalSpan = 4;
 		fRuleTreeViewer.getTree().setLayoutData(textGridData);
-
 		fRuleTreeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				//Only Rules are selectable
@@ -722,18 +724,24 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 					}
 					if (((IStructuredSelection) event.getSelection()).getFirstElement() instanceof R4EUIRule) {
 						final R4EUIRule rule = (R4EUIRule) ((IStructuredSelection) event.getSelection()).getFirstElement();
-						fAnomalyTitleInputTextField.setText(rule.getRule().getTitle());
-						fAnomalyDescriptionInputTextField.setText(rule.getRule().getDescription());
-						fAnomalyClass.select(rule.getRule().getClass_().getValue());
-						fAnomalyRank.select(rule.getRule().getRank().getValue());
-						fAnomalyClass.setEnabled(false);
-						fAnomalyRank.setEnabled(false);
-						return;
+						if (!rule.equals(fSelectedRule)) { //toggle selection
+							fAnomalyTitleInputTextField.setText(rule.getRule().getTitle());
+							fAnomalyDescriptionInputTextField.setText(rule.getRule().getDescription());
+							fAnomalyClass.select(rule.getRule().getClass_().getValue());
+							fAnomalyRank.select(rule.getRule().getRank().getValue());
+							fAnomalyClass.setEnabled(false);
+							fAnomalyRank.setEnabled(false);
+							fAnomalyTitleInputTextField.setEnabled(false);
+							fSelectedRule = rule;
+							return;
+						}
 					}
 				}
 				fRuleTreeViewer.setSelection(null);
 				fAnomalyClass.setEnabled(true);
 				fAnomalyRank.setEnabled(true);
+				fAnomalyTitleInputTextField.setEnabled(true);
+				fSelectedRule = null;
 			}
 		});
 	}
@@ -989,7 +997,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#setRuleID(String)
 	 */
 	public void setRuleID(String aId) {
-		List<R4EUIRuleSet> ruleSets = ((R4EUIRootElement) R4EUIModelController.getRootElement()).getRuleSets();
+		List<R4EUIRuleSet> ruleSets = R4EUIModelController.getRootElement().getRuleSets();
 		for (R4EUIRuleSet ruleSet : ruleSets) {
 			for (IR4EUIModelElement area : ruleSet.getChildren()) {
 				for (IR4EUIModelElement violation : area.getChildren()) {

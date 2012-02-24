@@ -703,4 +703,55 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		}
 		return false;
 	}
+
+	/**
+	 * Method isTitleEnabled.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isTitleEnabled() {
+		if (null != R4EUIModelController.getActiveReview()) {
+			if (null == fAnomaly.getRuleID() || fAnomaly.getRuleID().equals("")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Method isClassEnabled.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isClassEnabled() {
+		if (null != R4EUIModelController.getActiveReview()) {
+			if (null == fAnomaly.getRuleID() || fAnomaly.getRuleID().equals("")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Method isRankEnabled.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isRankEnabled() {
+		if (null != R4EUIModelController.getActiveReview()) {
+			if (null == fAnomaly.getRuleID() || fAnomaly.getRuleID().equals("")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Method isDueDateEnabled.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isDueDateEnabled() {
+		return true;
+	}
 }

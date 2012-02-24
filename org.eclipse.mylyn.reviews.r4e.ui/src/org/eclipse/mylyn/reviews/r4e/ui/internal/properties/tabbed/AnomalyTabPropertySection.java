@@ -667,6 +667,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 						}
 					}
 					refresh();
+					R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 				}
 				R4EUIModelController.setJobInProgress(false); //Enable view
 			}
@@ -1095,7 +1096,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				fFollowUpByCombo.setVisible(false);
 			}
 		} else {
-			fTitleText.setEnabled(true);
 			fAuthorText.setEnabled(true);
 			fCreationDateText.setEnabled(true);
 			fPositionText.setEnabled(true);
@@ -1104,35 +1104,42 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fRuleId.setEnabled(true);
 			fAssignedToCombo.setEnabled(true);
 
+			final R4EUIAnomalyBasic uiAnomaly = (R4EUIAnomalyBasic) fProperties.getElement();
+
+			if (uiAnomaly.isTitleEnabled()) {
+				fTitleText.setEnabled(true);
+			} else {
+				fTitleText.setEnabled(false);
+			}
+
+			if (uiAnomaly.isDueDateEnabled()) {
+				fDateText.setEnabled(true);
+				fCalendarButton.setEnabled(true);
+			} else {
+				fDateText.setEnabled(false);
+				fCalendarButton.setEnabled(false);
+			}
+
+			if (uiAnomaly.isClassEnabled()) {
+				fClassCombo.setEnabled(true);
+			} else {
+				fClassCombo.setEnabled(false);
+			}
+
+			if (uiAnomaly.isRankEnabled()) {
+				fRankCombo.setEnabled(true);
+			} else {
+				fRankCombo.setEnabled(false);
+			}
+
 			if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
-				final R4EUIAnomalyExtended uiAnomaly = (R4EUIAnomalyExtended) fProperties.getElement();
 				fStateLabel.setVisible(true);
 				fStateCombo.setVisible(true);
 				fStateCombo.setEnabled(true);
 
-				if (uiAnomaly.isDueDateEnabled()) {
-					fDateText.setEnabled(true);
-					fCalendarButton.setEnabled(true);
-				} else {
-					fDateText.setEnabled(false);
-					fCalendarButton.setEnabled(false);
-				}
-
-				if (uiAnomaly.isClassEnabled()) {
-					fClassCombo.setEnabled(true);
-				} else {
-					fClassCombo.setEnabled(false);
-				}
-
-				if (uiAnomaly.isRankEnabled()) {
-					fRankCombo.setEnabled(true);
-				} else {
-					fRankCombo.setEnabled(false);
-				}
-
 				fDecidedByLabel.setVisible(true);
 				fDecidedByCombo.setVisible(true);
-				if (uiAnomaly.isDecidedByEnabled()) {
+				if (((R4EUIAnomalyExtended) uiAnomaly).isDecidedByEnabled()) {
 					fDecidedByCombo.setEnabled(true);
 				} else {
 					fDecidedByCombo.setEnabled(false);
@@ -1140,7 +1147,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 
 				fFixedByLabel.setVisible(true);
 				fFixedByCombo.setVisible(true);
-				if (uiAnomaly.isFixedByEnabled()) {
+				if (((R4EUIAnomalyExtended) uiAnomaly).isFixedByEnabled()) {
 					fFixedByCombo.setEnabled(true);
 				} else {
 					fFixedByCombo.setEnabled(false);
@@ -1148,7 +1155,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 
 				fFollowUpByLabel.setVisible(true);
 				fFollowUpByCombo.setVisible(true);
-				if (uiAnomaly.isFollowUpByEnabled()) {
+				if (((R4EUIAnomalyExtended) uiAnomaly).isFollowUpByEnabled()) {
 					fFollowUpByCombo.setEnabled(true);
 				} else {
 					fFollowUpByCombo.setEnabled(false);
@@ -1156,7 +1163,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 
 				fNotAcceptedReasonLabel.setVisible(true);
 				fNotAcceptedReasonText.setVisible(true);
-				if (uiAnomaly.isNotAcceptedReasonEnabled()) {
+				if (((R4EUIAnomalyExtended) uiAnomaly).isNotAcceptedReasonEnabled()) {
 					fNotAcceptedReasonText.setEnabled(true);
 					fNotAcceptedReasonText.setEditable(true);
 				} else {
@@ -1165,12 +1172,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			} else {
 				fStateLabel.setVisible(false);
 				fStateCombo.setVisible(false);
-
-				fClassCombo.setEnabled(true);
-				fRankCombo.setEnabled(true);
-				fDateText.setEnabled(true);
-				fCalendarButton.setEnabled(true);
-
 				fDecidedByCombo.setEnabled(false);
 				fFixedByCombo.setEnabled(false);
 				fFollowUpByCombo.setEnabled(false);

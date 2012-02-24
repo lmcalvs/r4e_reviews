@@ -507,21 +507,24 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * 
 	 * @return boolean
 	 */
+	@Override
 	public boolean isClassEnabled() {
 		if (null != R4EUIModelController.getActiveReview()) {
-			if (R4EUIModelController.getActiveReview()
-					.getReview()
-					.getType()
-					.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
-				if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
-					return true;
-				}
-			} else if (R4EUIModelController.getActiveReview()
-					.getReview()
-					.getType()
-					.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-				if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
-					return true;
+			if (super.isClassEnabled()) {
+				if (R4EUIModelController.getActiveReview()
+						.getReview()
+						.getType()
+						.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+					if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
+						return true;
+					}
+				} else if (R4EUIModelController.getActiveReview()
+						.getReview()
+						.getType()
+						.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+					if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
+						return true;
+					}
 				}
 			}
 		}
@@ -533,22 +536,24 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * 
 	 * @return boolean
 	 */
+	@Override
 	public boolean isRankEnabled() {
 		if (null != R4EUIModelController.getActiveReview()) {
-
-			if (R4EUIModelController.getActiveReview()
-					.getReview()
-					.getType()
-					.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
-				if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
-					return true;
-				}
-			} else if (R4EUIModelController.getActiveReview()
-					.getReview()
-					.getType()
-					.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-				if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
-					return true;
+			if (super.isRankEnabled()) {
+				if (R4EUIModelController.getActiveReview()
+						.getReview()
+						.getType()
+						.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+					if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
+						return true;
+					}
+				} else if (R4EUIModelController.getActiveReview()
+						.getReview()
+						.getType()
+						.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+					if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
+						return true;
+					}
 				}
 			}
 		}

@@ -1246,7 +1246,7 @@ This opens the New Anomaly dialog.
 <br> 
 
 *Add the Anomaly Title and Description in the appropriate text fields. 
-*Under the Extra Parameters section, you can also specify the class, rank, due date and participant that will be assigned to this anomaly.  If Rule Sets are associated to the parent Review Group, the Rule Sets hierarchy will be shown and, optionally, a design rule can be selected and applied to this anomaly. This will override the Anomaly values with the selected rule values.
+*Under the Extra Parameters section, you can also specify the class, rank, due date and participant that will be assigned to this anomaly.  If Rule Sets are associated to the parent Review Group, the Rule Sets hierarchy will be shown and, optionally, a design rule can be toggled selected/de-selected and if selected its values will be applied to this anomaly. This will override the previous Anomaly values.
 
 <br> 
 
