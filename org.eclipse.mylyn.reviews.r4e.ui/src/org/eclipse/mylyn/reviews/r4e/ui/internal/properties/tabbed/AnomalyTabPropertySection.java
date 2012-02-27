@@ -20,8 +20,13 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
 import java.text.SimpleDateFormat;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
@@ -32,12 +37,14 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactory
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ICalendarDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -189,16 +196,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	 * Field fFollowUpByCombo.
 	 */
 	protected CCombo fFollowUpByCombo = null;
-
-	/**
-	 * Field fNotAcceptedReasonLabel.
-	 */
-	private CLabel fNotAcceptedReasonLabel = null;
-
-	/**
-	 * Field fNotAcceptedReasonText.
-	 */
-	protected Text fNotAcceptedReasonText = null;
 
 	/**
 	 * Field fAssignedToCombo.
@@ -356,11 +353,37 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fStateCombo.setVisibleItemCount(6);
 		fStateCombo.setLayoutData(data);
 		fStateCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+			public void widgetSelected(SelectionEvent aEvent) {
 				if (!fRefreshInProgress) {
 
-					UIUtils.changeAnomalyState(fProperties.getElement(),
-							R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText()));
+					R4EAnomalyState newState = R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText());
+					if (newState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)
+							&& !((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly()
+									.getState()
+									.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)) {
+						//Force the user to enter a comment if the state is changed to REJECTED
+						try {
+							final R4EUIComment uiComment = ((R4EUIAnomalyBasic) fProperties.getElement()).createComment();
+							if (null == uiComment) {
+								final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+										"Cannot change Anomaly State", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
+												0, "Please enter a reason for rejecting this anomaly", null),
+										IStatus.ERROR);
+								dialog.open();
+								refresh();
+								return;
+							} else {
+								UIUtils.changeAnomalyState(fProperties.getElement(), newState);
+								UIUtils.setNavigatorViewFocus(uiComment, AbstractTreeViewer.ALL_LEVELS);
+								return;
+							}
+						} catch (OutOfSyncException e) {
+							UIUtils.displaySyncErrorDialog(e);
+						} catch (ResourceHandlingException e) {
+							UIUtils.displayResourceErrorDialog(e);
+						}
+					}
+					UIUtils.changeAnomalyState(fProperties.getElement(), newState);
 				}
 				refresh();
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
@@ -734,50 +757,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			}
 		});
 
-		//Not accepted reason
-		fNotAcceptedReasonLabel = aWidgetFactory.createCLabel(anomalyDetailsSectionClient,
-				R4EUIConstants.NOT_ACCEPTED_REASON_LABEL);
-		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
-		gridData.horizontalSpan = 1;
-		fNotAcceptedReasonLabel.setToolTipText(R4EUIConstants.ANOMALY_NOT_ACCEPTED_REASON_TOOLTIP);
-		fNotAcceptedReasonLabel.setLayoutData(gridData);
-
-		fNotAcceptedReasonText = aWidgetFactory.createText(anomalyDetailsSectionClient, "", SWT.READ_ONLY);
-		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
-		gridData.horizontalSpan = 3;
-		fNotAcceptedReasonText.setToolTipText(R4EUIConstants.ANOMALY_NOT_ACCEPTED_REASON_TOOLTIP);
-		fNotAcceptedReasonText.setLayoutData(gridData);
-		fNotAcceptedReasonText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress) {
-					try {
-						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-						modelAnomaly.setNotAcceptedReason(fNotAcceptedReasonText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-						//If this is a postponed anomaly, update original one as well
-						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
-							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
-						}
-					} catch (ResourceHandlingException e1) {
-						UIUtils.displayResourceErrorDialog(e1);
-					} catch (OutOfSyncException e1) {
-						UIUtils.displaySyncErrorDialog(e1);
-					} catch (CompatibilityException e1) {
-						UIUtils.displayCompatibilityErrorDialog(e1);
-					}
-				}
-				refresh();
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
-			}
-		});
-		UIUtils.addTabbedPropertiesTextResizeListener(fNotAcceptedReasonText);
-
 		return anomalyDetailsSection;
 	}
 
@@ -1037,11 +1016,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				fFollowUpByCombo.setItems(participants);
 				fFollowUpByCombo.select(UIUtils.mapParticipantToIndex(modelAnomaly.getFollowUpByID()));
 			}
-			if (null != modelAnomaly.getNotAcceptedReason()) {
-				fNotAcceptedReasonText.setText(modelAnomaly.getNotAcceptedReason());
-			} else {
-				fNotAcceptedReasonText.setText("");
-			}
 		}
 		setEnabledFields();
 		fRefreshInProgress = false;
@@ -1069,14 +1043,12 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fDecidedByCombo.setEnabled(false);
 			fFixedByCombo.setEnabled(false);
 			fFollowUpByCombo.setEnabled(false);
-			fNotAcceptedReasonText.setEnabled(false);
 			fRuleButton.setEnabled(false);
 			fRuleId.setEnabled(false);
 			fAssignedToCombo.setEnabled(false);
 			if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
 				fStateLabel.setVisible(true);
 				fStateCombo.setVisible(true);
-				fNotAcceptedReasonLabel.setVisible(true);
 				fDecidedByLabel.setVisible(true);
 				fDecidedByCombo.setVisible(true);
 				fFixedByLabel.setVisible(true);
@@ -1086,8 +1058,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			} else {
 				fStateLabel.setVisible(false);
 				fStateCombo.setVisible(false);
-				fNotAcceptedReasonLabel.setVisible(false);
-				fNotAcceptedReasonText.setEnabled(false);
 				fDecidedByLabel.setVisible(false);
 				fDecidedByCombo.setVisible(false);
 				fFixedByLabel.setVisible(false);
@@ -1161,22 +1131,12 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					fFollowUpByCombo.setEnabled(false);
 				}
 
-				fNotAcceptedReasonLabel.setVisible(true);
-				fNotAcceptedReasonText.setVisible(true);
-				if (((R4EUIAnomalyExtended) uiAnomaly).isNotAcceptedReasonEnabled()) {
-					fNotAcceptedReasonText.setEnabled(true);
-					fNotAcceptedReasonText.setEditable(true);
-				} else {
-					fNotAcceptedReasonText.setEnabled(false);
-				}
 			} else {
 				fStateLabel.setVisible(false);
 				fStateCombo.setVisible(false);
 				fDecidedByCombo.setEnabled(false);
 				fFixedByCombo.setEnabled(false);
 				fFollowUpByCombo.setEnabled(false);
-				fNotAcceptedReasonLabel.setVisible(false);
-				fNotAcceptedReasonText.setVisible(false);
 				fDecidedByLabel.setVisible(false);
 				fDecidedByCombo.setVisible(false);
 				fFixedByLabel.setVisible(false);

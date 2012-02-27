@@ -26,17 +26,22 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IChangeStateDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
@@ -126,7 +131,32 @@ public class NextStateHandler extends AbstractHandler {
 									final int result = dialog.open();
 									if (result == Window.OK) {
 										R4EAnomalyState newState = R4EUIAnomalyExtended.getStateFromString(dialog.getState());
-										UIUtils.changeAnomalyState(element, newState);
+										if (newState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)) {
+											//Force the user to enter a comment if the state is changed to REJECTED
+											try {
+												final R4EUIComment uiComment = anomalyElement.createComment();
+												if (null == uiComment) {
+													final ErrorDialog commentErrorDialog = new ErrorDialog(null,
+															R4EUIConstants.DIALOG_TITLE_ERROR,
+															"Cannot change Anomaly State", new Status(IStatus.ERROR,
+																	R4EUIPlugin.PLUGIN_ID, 0,
+																	"Please enter a reason for rejecting this anomaly",
+																	null), IStatus.ERROR);
+													commentErrorDialog.open();
+												} else {
+													UIUtils.changeAnomalyState(element, newState);
+													UIUtils.setNavigatorViewFocus(uiComment,
+															AbstractTreeViewer.ALL_LEVELS);
+													return Status.OK_STATUS;
+												}
+											} catch (OutOfSyncException e) {
+												UIUtils.displaySyncErrorDialog(e);
+											} catch (ResourceHandlingException e) {
+												UIUtils.displayResourceErrorDialog(e);
+											}
+										} else {
+											UIUtils.changeAnomalyState(element, newState);
+										}
 									}
 									R4EUIModelController.setJobInProgress(false); //Enable view
 								} else {
