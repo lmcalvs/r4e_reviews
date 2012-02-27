@@ -36,6 +36,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
@@ -47,7 +48,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -65,12 +65,12 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	/**
 	 * Field fAuthorText.
 	 */
-	private CLabel fAuthorText = null;
+	private StyledText fAuthorText = null;
 
 	/**
 	 * Field fAuthorRepText.
 	 */
-	private CLabel fAuthorRepText = null;
+	private StyledText fAuthorRepText = null;
 
 	/**
 	 * Field fProjectIdList.
@@ -80,17 +80,17 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	/**
 	 * Field fRepositoryText.
 	 */
-	private CLabel fRepositoryText = null;
+	private StyledText fRepositoryText = null;
 
 	/**
 	 * Field fDateSubmitted.
 	 */
-	private CLabel fDateSubmitted = null;
+	private StyledText fDateSubmitted = null;
 
 	/**
 	 * Field fDescriptionText.
 	 */
-	protected Text fDescriptionText = null;
+	protected StyledText fDescriptionText = null;
 
 	/**
 	 * Field fAssignedToComposite.
@@ -100,7 +100,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	/**
 	 * Field fAssignedToText.
 	 */
-	private Text fAssignedToText;
+	private StyledText fAssignedToText;
 
 	/**
 	 * Field fAssignedToButton.
@@ -146,11 +146,12 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		FormData data = null;
 
 		//Author (read-only)
-		fAuthorText = widgetFactory.createCLabel(composite, "");
+		fAuthorText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fAuthorText.setEditable(false);
 		fAuthorText.setToolTipText(R4EUIConstants.REVIEW_ITEM_AUTHOR_TOOLTIP);
 		fAuthorText.setLayoutData(data);
 
@@ -163,11 +164,12 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		authorLabel.setLayoutData(data);
 
 		//AuthorRep (read-only)
-		fAuthorRepText = widgetFactory.createCLabel(composite, "");
+		fAuthorRepText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fAuthorText, ITabbedPropertyConstants.VSPACE);
+		fAuthorRepText.setEditable(false);
 		fAuthorRepText.setToolTipText(R4EUIConstants.REVIEW_ITEM_AUTHOR_REP_TOOLTIP);
 		fAuthorRepText.setLayoutData(data);
 
@@ -197,11 +199,12 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		projectIdLabel.setLayoutData(data);
 
 		//Change Id (read-only)
-		fRepositoryText = widgetFactory.createCLabel(composite, "");
+		fRepositoryText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fProjectIdList, ITabbedPropertyConstants.VSPACE);
+		fRepositoryText.setEditable(false);
 		fRepositoryText.setToolTipText(R4EUIConstants.REVIEW_ITEM_CHANGE_ID_TOOLTIP);
 		fRepositoryText.setLayoutData(data);
 
@@ -214,11 +217,12 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		repositoryLabel.setLayoutData(data);
 
 		//Date Submitted (read-only)
-		fDateSubmitted = widgetFactory.createCLabel(composite, "");
+		fDateSubmitted = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fRepositoryText, ITabbedPropertyConstants.VSPACE);
+		fDateSubmitted.setEditable(false);
 		fDateSubmitted.setToolTipText(R4EUIConstants.REVIEW_ITEM_DATE_SUBMITTED_TOOLTIP);
 		fDateSubmitted.setLayoutData(data);
 
@@ -231,7 +235,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		dateSubmittedLabel.setLayoutData(data);
 
 		//Description
-		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
+		fDescriptionText = new StyledText(composite, SWT.MULTI | SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -240,7 +244,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		fDescriptionText.setLayoutData(data);
 		fDescriptionText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress) {
+				if (!fRefreshInProgress && fDescriptionText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EItem modelItem = ((R4EUIReviewItem) fProperties.getElement()).getItem();
@@ -279,11 +283,11 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		fAssignedToComposite.setLayoutData(data);
 		fAssignedToComposite.setLayout(new GridLayout(3, false));
 
-		fAssignedToText = widgetFactory.createText(fAssignedToComposite, "", SWT.READ_ONLY);
-		fAssignedToText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		fAssignedToText = new StyledText(fAssignedToComposite, SWT.BORDER);
+		fAssignedToText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		fAssignedToText.setEditable(false);
 		fAssignedToButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.ADD_LABEL, SWT.NONE);
-		fAssignedToButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		fAssignedToButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		fAssignedToButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				((R4EUIReviewItem) fProperties.getElement()).addAssignees(UIUtils.getAssignParticipants());
@@ -293,7 +297,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		});
 
 		fUnassignedFromButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.REMOVE_LABEL, SWT.NONE);
-		fUnassignedFromButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		fUnassignedFromButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		fUnassignedFromButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event aEvent) {
 				((R4EUIReviewItem) fProperties.getElement()).removeAssignees(UIUtils.getUnassignParticipants(fProperties.getElement()));
@@ -341,7 +345,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 			}
 		}
 		fProjectIdList.setItems((String[]) modelItem.getProjectURIs().toArray());
-		fRepositoryText.setText(modelItem.getRepositoryRef());
+		fRepositoryText.setText(null != modelItem.getRepositoryRef() ? modelItem.getRepositoryRef() : "");
 		if (null != modelItem.getSubmitted()) {
 			final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
 			fDateSubmitted.setText(dateFormat.format(modelItem.getSubmitted()));
@@ -370,23 +374,25 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 				|| fProperties.getElement().isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
-			fAuthorText.setEnabled(false);
-			fAuthorRepText.setEnabled(false);
+			fAuthorText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fAuthorRepText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fRepositoryText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fDateSubmitted.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fProjectIdList.setEnabled(false);
-			fRepositoryText.setEnabled(false);
-			fDateSubmitted.setEnabled(false);
-			fDescriptionText.setEnabled(false);
-			fAssignedToText.setEnabled(false);
+			fDescriptionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fDescriptionText.setEditable(false);
+			fAssignedToText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fAssignedToButton.setEnabled(false);
 			fUnassignedFromButton.setEnabled(false);
 		} else {
-			fAuthorText.setEnabled(true);
-			fAuthorRepText.setEnabled(true);
+			fAuthorText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fAuthorRepText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fRepositoryText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fDateSubmitted.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fProjectIdList.setEnabled(true);
-			fRepositoryText.setEnabled(true);
-			fDateSubmitted.setEnabled(true);
-			fDescriptionText.setEnabled(true);
-			fAssignedToText.setEnabled(true);
+			fDescriptionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fDescriptionText.setEditable(true);
+			fAssignedToText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fAssignedToButton.setEnabled(true);
 			if (fAssignedToText.getText().length() > 0) {
 				fUnassignedFromButton.setEnabled(true);

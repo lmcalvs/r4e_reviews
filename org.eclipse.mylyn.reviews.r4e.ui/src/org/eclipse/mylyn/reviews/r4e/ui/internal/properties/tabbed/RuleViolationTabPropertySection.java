@@ -19,17 +19,13 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleViolation;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
@@ -50,7 +46,7 @@ public class RuleViolationTabPropertySection extends ModelElementTabPropertySect
 	/**
 	 * Field fNameText.
 	 */
-	protected CLabel fNameText = null;
+	protected StyledText fNameText = null;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -75,34 +71,14 @@ public class RuleViolationTabPropertySection extends ModelElementTabPropertySect
 		FormData data = null;
 
 		//Name
-		fNameText = widgetFactory.createCLabel(composite, "");
+		fNameText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fNameText.setEditable(false);
 		fNameText.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
 		fNameText.setLayoutData(data);
-		fNameText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress) {
-					try {
-						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EDesignRuleViolation modelViolation = ((R4EUIRuleViolation) fProperties.getElement()).getViolation();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelViolation, currentUser);
-						modelViolation.setName(fNameText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-					} catch (ResourceHandlingException e1) {
-						UIUtils.displayResourceErrorDialog(e1);
-					} catch (OutOfSyncException e1) {
-						UIUtils.displaySyncErrorDialog(e1);
-					}
-				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
-			}
-		});
 
 		final CLabel nameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.NAME_LABEL);
 		data = new FormData();
@@ -137,9 +113,9 @@ public class RuleViolationTabPropertySection extends ModelElementTabPropertySect
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress() || !fProperties.getElement().isEnabled()
 				|| fProperties.getElement().isReadOnly()) {
-			fNameText.setEnabled(false);
+			fNameText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 		} else {
-			fNameText.setEnabled(true);
+			fNameText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 		}
 	}
 }

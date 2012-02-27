@@ -28,6 +28,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
@@ -36,7 +37,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -54,7 +54,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field fPositionText.
 	 */
-	private CLabel fPositionText = null;
+	private StyledText fPositionText = null;
 
 	/**
 	 * Field fAssignedToComposite.
@@ -64,7 +64,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field fAssignedToText.
 	 */
-	private Text fAssignedToText;
+	private StyledText fAssignedToText;
 
 	/**
 	 * Field fAssignedToButton.
@@ -99,11 +99,12 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 		FormData data = null;
 
 		//Position (read-only)
-		fPositionText = widgetFactory.createCLabel(composite, "");
+		fPositionText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fPositionText.setEditable(false);
 		fPositionText.setToolTipText(R4EUIConstants.CONTENTS_POSITION_TOOLTIP);
 		fPositionText.setLayoutData(data);
 
@@ -112,6 +113,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fPositionText, -ITabbedPropertyConstants.HSPACE);
 		data.top = new FormAttachment(fPositionText, 0, SWT.CENTER);
+
 		positionLabel.setToolTipText(R4EUIConstants.CONTENTS_POSITION_TOOLTIP);
 		positionLabel.setLayoutData(data);
 
@@ -125,11 +127,11 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 		fAssignedToComposite.setLayoutData(data);
 		fAssignedToComposite.setLayout(new GridLayout(3, false));
 
-		fAssignedToText = widgetFactory.createText(fAssignedToComposite, "", SWT.READ_ONLY);
-		fAssignedToText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		fAssignedToText = new StyledText(fAssignedToComposite, SWT.BORDER);
+		fAssignedToText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		fAssignedToText.setEditable(false);
 		fAssignedToButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.ADD_LABEL, SWT.NONE);
-		fAssignedToButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		fAssignedToButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		fAssignedToButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				((R4EUIContent) fProperties.getElement()).addAssignees(UIUtils.getAssignParticipants());
@@ -139,7 +141,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 		});
 
 		fUnassignedFromButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.REMOVE_LABEL, SWT.NONE);
-		fUnassignedFromButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		fUnassignedFromButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		fUnassignedFromButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				((R4EUIContent) fProperties.getElement()).removeAssignees(UIUtils.getUnassignParticipants(fProperties.getElement()));
@@ -189,13 +191,13 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 				|| null == R4EUIModelController.getActiveReview()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-			fPositionText.setEnabled(false);
-			fAssignedToText.setEnabled(false);
+			fPositionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fAssignedToText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fAssignedToButton.setEnabled(false);
 			fUnassignedFromButton.setEnabled(false);
 		} else {
-			fPositionText.setEnabled(true);
-			fAssignedToText.setEnabled(true);
+			fPositionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fAssignedToText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fAssignedToButton.setEnabled(true);
 			if (fAssignedToText.getText().length() > 0) {
 				fUnassignedFromButton.setEnabled(true);

@@ -81,11 +81,14 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -164,6 +167,16 @@ public class UIUtils {
 	 */
 	private static final String[] COMPATIBILITY_WARNING_DIALOG_BUTTONS = { "Open Normally", "Open in Read-Only Mode",
 			"Cancel" };
+
+	/**
+	 * Field DISABLED_FONT_COLOR.
+	 */
+	public static final Color DISABLED_FONT_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY);
+
+	/**
+	 * Field ENABLED_FONT_COLOR.
+	 */
+	public static final Color ENABLED_FONT_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -386,6 +399,41 @@ public class UIUtils {
 
 					//If the text falls outside of the display scroll down to reposition
 					if ((aText.getLocation().y + aText.getCaretLocation().y + aText.getLineHeight()) > (scrolledParent.getClientArea().y + scrolledParent.getClientArea().height)) {
+
+						final Point origin = ((ScrolledComposite) scrolledParent).getOrigin();
+						origin.y += heightDiff;
+
+						((ScrolledComposite) scrolledParent).setOrigin(origin);
+					}
+				}
+			}
+		});
+	}
+
+	public static void addTabbedPropertiesTextResizeListener(final StyledText aText) {
+		aText.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				//compute new Text field size
+				final Point newSize = aText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				final Point oldSize = aText.getSize();
+				final int heightDiff = newSize.y - oldSize.y;
+				if (0 != heightDiff && 0 != oldSize.y) {
+					aText.setSize(newSize);
+					aText.getParent().layout();
+
+					//Set scrollable height so that scrollbar appear if needed
+					Composite scrolledParent = aText.getParent();
+					while (!(scrolledParent instanceof ScrolledComposite)) {
+						scrolledParent = scrolledParent.getParent();
+						if (null == scrolledParent) {
+							return;
+						}
+					}
+					((ScrolledComposite) scrolledParent).setMinSize(aText.getParent().computeSize(SWT.DEFAULT,
+							SWT.DEFAULT));
+
+					//If the text falls outside of the display scroll down to reposition
+					if ((aText.getLocation().y + aText.getCaretOffset() + aText.getLineHeight()) > (scrolledParent.getClientArea().y + scrolledParent.getClientArea().height)) {
 
 						final Point origin = ((ScrolledComposite) scrolledParent).getOrigin();
 						origin.y += heightDiff;

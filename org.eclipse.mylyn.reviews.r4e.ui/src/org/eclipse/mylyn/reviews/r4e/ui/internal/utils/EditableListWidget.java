@@ -111,6 +111,11 @@ public class EditableListWidget {
 	 */
 	Control fEditableControl = null;
 
+	/**
+	 * Field fEnabled.
+	 */
+	protected boolean fEnabled;
+
 	// ------------------------------------------------------------------------
 	// Constructor
 	// ------------------------------------------------------------------------
@@ -246,16 +251,18 @@ public class EditableListWidget {
 
 		fMainTable.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-				//Send items updated notification
-				if (null != fListener) {
-					//If items are empty, do not consider them
-					final TableItem[] items = fMainTable.getItems();
-					for (int i = 0; i < items.length; i++) {
-						if (items[i].getText().trim().length() < 1) {
-							fMainTable.remove(i);
+				if (fEnabled) {
+					//Send items updated notification
+					if (null != fListener) {
+						//If items are empty, do not consider them
+						final TableItem[] items = fMainTable.getItems();
+						for (int i = 0; i < items.length; i++) {
+							if (items[i].getText().trim().length() < 1) {
+								fMainTable.remove(i);
+							}
 						}
+						fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
 					}
-					fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
 				}
 			}
 
@@ -548,8 +555,14 @@ public class EditableListWidget {
 	 *            - boolean
 	 */
 	public void setEnabled(boolean aEnabled) {
-		fMainComposite.setEnabled(aEnabled);
-		fMainTable.setEnabled(aEnabled);
+		fEnabled = aEnabled;
+		for (TableItem item : fMainTable.getItems()) {
+			if (aEnabled) {
+				item.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			} else {
+				item.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			}
+		}
 		if (!aEnabled) {
 			fAddButton.setEnabled(aEnabled);
 			fRemoveButton.setEnabled(aEnabled);

@@ -49,6 +49,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
@@ -59,7 +60,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
@@ -99,32 +99,32 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field FIdText.
 	 */
-	private CLabel fIdText = null;
+	private StyledText fIdText = null;
 
 	/**
 	 * Field fEmailText.
 	 */
-	protected Text fEmailText = null;
+	protected StyledText fEmailText = null;
 
 	/**
 	 * Field FNumItemsText.
 	 */
-	private CLabel fNumItemsText = null;
+	private StyledText fNumItemsText = null;
 
 	/**
 	 * Field FNumAnomaliesText.
 	 */
-	private CLabel fNumAnomaliesText = null;
+	private StyledText fNumAnomaliesText = null;
 
 	/**
 	 * Field FNumCommentsText.
 	 */
-	private CLabel fNumCommentsText = null;
+	private StyledText fNumCommentsText = null;
 
 	/**
 	 * Field fDetailsText.
 	 */
-	private CLabel fDetailsText = null;
+	private StyledText fDetailsText = null;
 
 	/**
 	 * Field fTimeSection.
@@ -149,7 +149,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fFocusAreaText.
 	 */
-	protected Text fFocusAreaText = null;
+	protected StyledText fFocusAreaText = null;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -174,11 +174,12 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		FormData data = null;
 
 		//Author (read-only)
-		fIdText = widgetFactory.createCLabel(mainForm, "");
+		fIdText = new StyledText(mainForm, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fIdText.setEditable(false);
 		fIdText.setToolTipText(R4EUIConstants.PARTICIPANT_ID_TOOLTIP);
 		fIdText.setLayoutData(data);
 
@@ -191,7 +192,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		idLabel.setLayoutData(data);
 
 		//Email
-		fEmailText = widgetFactory.createText(mainForm, "", SWT.BORDER);
+		fEmailText = new StyledText(mainForm, SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -200,7 +201,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		fEmailText.setLayoutData(data);
 		fEmailText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress) {
+				if (!fRefreshInProgress && fEmailText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						if (!CommandUtils.isEmailValid(fEmailText.getText())) {
 							//Validation of input failed
@@ -235,12 +236,13 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		emailLabel.setLayoutData(data);
 
 		//Number of Review Items added (read-only)
-		fNumItemsText = widgetFactory.createCLabel(mainForm, "");
+		fNumItemsText = new StyledText(mainForm, SWT.NULL);
 		fNumItemsText.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fIdText, ITabbedPropertyConstants.VSPACE);
+		fNumItemsText.setEditable(false);
 		fNumItemsText.setToolTipText(R4EUIConstants.PARTICIPANT_NUM_ITEMS_TOOLTIP);
 		fNumItemsText.setLayoutData(data);
 
@@ -253,11 +255,12 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		numItemsLabel.setLayoutData(data);
 
 		//Number of Anomalies added (read-only)
-		fNumAnomaliesText = widgetFactory.createCLabel(mainForm, "");
+		fNumAnomaliesText = new StyledText(mainForm, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fNumItemsText, ITabbedPropertyConstants.VSPACE);
+		fNumAnomaliesText.setEditable(false);
 		fNumAnomaliesText.setToolTipText(R4EUIConstants.PARTICIPANT_NUM_ANOMALIES_TOOLTIP);
 		fNumAnomaliesText.setLayoutData(data);
 
@@ -270,11 +273,12 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		numAnomaliesLabel.setLayoutData(data);
 
 		//Number of Comments added (read-only)
-		fNumCommentsText = widgetFactory.createCLabel(mainForm, "");
+		fNumCommentsText = new StyledText(mainForm, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fNumAnomaliesText, ITabbedPropertyConstants.VSPACE);
+		fNumCommentsText.setEditable(false);
 		fNumCommentsText.setToolTipText(R4EUIConstants.PARTICIPANT_NUM_COMMENTS_TOOLTIP);
 		fNumCommentsText.setLayoutData(data);
 
@@ -287,7 +291,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		numCommentsLabel.setLayoutData(data);
 
 		//Focus Area
-		fFocusAreaText = widgetFactory.createText(mainForm, "", SWT.BORDER);
+		fFocusAreaText = new StyledText(mainForm, SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -296,7 +300,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		fFocusAreaText.setLayoutData(data);
 		fFocusAreaText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress) {
+				if (!fRefreshInProgress && fFocusAreaText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EParticipant modelReview = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
@@ -373,9 +377,10 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		detailsLabel.setToolTipText(R4EUIConstants.PARTICIPANT_DETAILS_TOOLTIP);
 		detailsLabel.setLayoutData(gridData);
 
-		fDetailsText = aWidgetFactory.createCLabel(partDetailsSectionClient, "");
+		fDetailsText = new StyledText(partDetailsSectionClient, SWT.NULL);
 		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		gridData.horizontalSpan = 3;
+		fDetailsText.setEditable(false);
 		fDetailsText.setToolTipText(R4EUIConstants.PARTICIPANT_DETAILS_TOOLTIP);
 		fDetailsText.setLayoutData(gridData);
 
@@ -556,20 +561,25 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 				|| fProperties.getElement().isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
-			fIdText.setEnabled(false);
-			fEmailText.setEnabled(false);
-			fNumItemsText.setEnabled(false);
-			fNumAnomaliesText.setEnabled(false);
-			fNumCommentsText.setEnabled(false);
+			fIdText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fEmailText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fEmailText.setEditable(false);
+			fNumItemsText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fNumAnomaliesText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fNumCommentsText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fDetailsText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fTimeSpentDetailedList.setEnabled(false);
 			fRolesList.setEnabled(false);
-			fFocusAreaText.setEnabled(false);
+			fFocusAreaText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fFocusAreaText.setEditable(false);
 		} else {
-			fIdText.setEnabled(true);
-			fEmailText.setEnabled(true);
-			fNumItemsText.setEnabled(true);
-			fNumAnomaliesText.setEnabled(true);
-			fNumCommentsText.setEnabled(true);
+			fIdText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fEmailText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fEmailText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fNumItemsText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fNumAnomaliesText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fNumCommentsText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fDetailsText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 
 			if (R4EUIModelController.getActiveReview() instanceof R4EUIReviewExtended) {
 				final R4EUIReviewExtended uiReview = (R4EUIReviewExtended) R4EUIModelController.getActiveReview();
@@ -584,10 +594,12 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 
 				if (uiReview.isParticipantExtraDetailsEnabled()) {
 					fRolesList.setEnabled(true);
-					fFocusAreaText.setEnabled(true);
+					fFocusAreaText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+					fFocusAreaText.setEditable(true);
 				} else {
 					fRolesList.setEnabled(false);
-					fFocusAreaText.setEnabled(false);
+					fFocusAreaText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+					fFocusAreaText.setEditable(false);
 				}
 			} else {
 				if (R4EUIModelController.getActiveReview()
@@ -602,8 +614,8 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 					fTimeSpentDetailedList.setEnabled(true);
 					fRolesList.setEnabled(true);
 				}
-
-				fFocusAreaText.setEnabled(true);
+				fFocusAreaText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+				fFocusAreaText.setEditable(true);
 			}
 		}
 	}

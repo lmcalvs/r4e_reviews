@@ -20,17 +20,13 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
@@ -51,17 +47,17 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field fVersionText.
 	 */
-	protected CLabel fVersionText = null;
+	protected StyledText fVersionText = null;
 
 	/**
 	 * Field fNameText.
 	 */
-	private CLabel fNameText = null;
+	private StyledText fNameText = null;
 
 	/**
 	 * Field fFilePathText.
 	 */
-	private CLabel fFilePathText = null;
+	private StyledText fFilePathText = null;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -86,11 +82,12 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 		FormData data = null;
 
 		//Name
-		fNameText = widgetFactory.createCLabel(composite, "");
+		fNameText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fNameText.setEditable(false);
 		fNameText.setToolTipText(R4EUIConstants.RULESET_NAME_TOOLTIP);
 		fNameText.setLayoutData(data);
 
@@ -103,11 +100,12 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 		nameLabel.setLayoutData(data);
 
 		//File Path (read-only)
-		fFilePathText = widgetFactory.createCLabel(composite, "");
+		fFilePathText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+		fFilePathText.setEditable(false);
 		fFilePathText.setToolTipText(R4EUIConstants.RULESET_FILE_PATH_TOOLTIP);
 		fFilePathText.setLayoutData(data);
 
@@ -120,34 +118,14 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 		filePathLabel.setLayoutData(data);
 
 		//Version
-		fVersionText = widgetFactory.createCLabel(composite, "");
+		fVersionText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fFilePathText, ITabbedPropertyConstants.VSPACE);
+		fVersionText.setEditable(false);
 		fVersionText.setToolTipText(R4EUIConstants.RULESET_VERSION_TOOLTIP);
 		fVersionText.setLayoutData(data);
-		fVersionText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress) {
-					try {
-						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EDesignRuleCollection modelRuleSet = ((R4EUIRuleSet) fProperties.getElement()).getRuleSet();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRuleSet, currentUser);
-						modelRuleSet.setVersion(fVersionText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-					} catch (ResourceHandlingException e1) {
-						UIUtils.displayResourceErrorDialog(e1);
-					} catch (OutOfSyncException e1) {
-						UIUtils.displaySyncErrorDialog(e1);
-					}
-				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
-			}
-		});
 
 		final CLabel versionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.VERSION_LABEL);
 		data = new FormData();
@@ -184,15 +162,15 @@ public class RuleSetTabPropertySection extends ModelElementTabPropertySection {
 	 */
 	@Override
 	protected void setEnabledFields() {
-		if (R4EUIModelController.isJobInProgress() || !fProperties.getElement().isEnabled()
-				|| fProperties.getElement().isReadOnly()) {
-			fVersionText.setEnabled(false);
-			fNameText.setEnabled(false);
-			fFilePathText.setEnabled(false);
+		if (R4EUIModelController.isJobInProgress() || !((R4EUIRuleSet) fProperties.getElement()).isOpen()
+				|| !fProperties.getElement().isEnabled() || fProperties.getElement().isReadOnly()) {
+			fNameText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fFilePathText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fVersionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 		} else {
-			fVersionText.setEnabled(true);
-			fNameText.setEnabled(true);
-			fFilePathText.setEnabled(true);
+			fNameText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fFilePathText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fVersionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 		}
 	}
 }

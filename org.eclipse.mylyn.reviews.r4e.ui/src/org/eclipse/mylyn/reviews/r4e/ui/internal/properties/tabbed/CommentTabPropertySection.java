@@ -24,8 +24,10 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
@@ -46,17 +48,17 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field FAuthorText.
 	 */
-	private CLabel fAuthorText = null;
+	private StyledText fAuthorText = null;
 
 	/**
 	 * Field FCreationDateText.
 	 */
-	private CLabel fCreationDateText = null;
+	private StyledText fCreationDateText = null;
 
 	/**
 	 * Field FDescriptionText.
 	 */
-	protected CLabel fDescriptionText = null;
+	protected StyledText fDescriptionText = null;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -92,11 +94,12 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 		FormData data = null;
 
 		//Author (read-only)
-		fAuthorText = widgetFactory.createCLabel(composite, "");
+		fAuthorText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fAuthorText.setEditable(false);
 		fAuthorText.setToolTipText(R4EUIConstants.COMMENT_AUTHOR_TOOLTIP);
 		fAuthorText.setLayoutData(data);
 
@@ -109,11 +112,12 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 		authorLabel.setLayoutData(data);
 
 		//Creation Date (read-only)
-		fCreationDateText = widgetFactory.createCLabel(composite, "");
+		fCreationDateText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fAuthorText, ITabbedPropertyConstants.VSPACE);
+		fCreationDateText.setEditable(false);
 		fCreationDateText.setToolTipText(R4EUIConstants.COMMENT_CREATION_DATE_TOOLTIP);
 		fCreationDateText.setLayoutData(data);
 
@@ -126,11 +130,12 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 		creationDateLabel.setLayoutData(data);
 
 		//Description (read-only)
-		fDescriptionText = widgetFactory.createCLabel(composite, "");
+		fDescriptionText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fCreationDateText, ITabbedPropertyConstants.VSPACE);
+		fDescriptionText.setEditable(false);
 		fDescriptionText.setToolTipText(R4EUIConstants.COMMENT_DESCRIPTION_TOOLTIP);
 		fDescriptionText.setLayoutData(data);
 
@@ -138,7 +143,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fDescriptionText, 0, SWT.TOP);
+		data.top = new FormAttachment(fDescriptionText, 0, SWT.CENTER);
 		descriptionLabel.setToolTipText(R4EUIConstants.COMMENT_DESCRIPTION_TOOLTIP);
 		descriptionLabel.setLayoutData(data);
 	}
@@ -169,13 +174,13 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 				|| fProperties.getElement().isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
-			fAuthorText.setEnabled(false);
-			fCreationDateText.setEnabled(false);
-			fDescriptionText.setEnabled(false);
+			fAuthorText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fCreationDateText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fDescriptionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 		} else {
-			fAuthorText.setEnabled(true);
-			fCreationDateText.setEnabled(true);
-			fDescriptionText.setEnabled(true);
+			fAuthorText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fCreationDateText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fDescriptionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 		}
 	}
 }

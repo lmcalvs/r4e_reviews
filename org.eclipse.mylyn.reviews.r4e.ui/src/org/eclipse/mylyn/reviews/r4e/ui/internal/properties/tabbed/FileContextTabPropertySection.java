@@ -34,6 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -44,7 +45,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
@@ -65,52 +65,52 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fBaseFileNameText.
 	 */
-	protected CLabel fBaseFileNameText = null;
+	protected StyledText fBaseFileNameText = null;
 
 	/**
 	 * Field fBaseFilePathAbsoluteText.
 	 */
-	protected CLabel fBaseFilePathAbsoluteText = null;
+	protected StyledText fBaseFilePathAbsoluteText = null;
 
 	/**
 	 * Field fBaseFilePathProjectText.
 	 */
-	protected CLabel fBaseFilePathProjectText = null;
+	protected StyledText fBaseFilePathProjectText = null;
 
 	/**
 	 * Field fBaseFilePathRepositoryText.
 	 */
-	protected CLabel fBaseFilePathRepositoryText = null;
+	protected StyledText fBaseFilePathRepositoryText = null;
 
 	/**
 	 * Field fBaseFileVersionText.
 	 */
-	protected CLabel fBaseFileVersionText = null;
+	protected StyledText fBaseFileVersionText = null;
 
 	/**
 	 * Field fTargetFileNameText.
 	 */
-	protected CLabel fTargetFileNameText = null;
+	protected StyledText fTargetFileNameText = null;
 
 	/**
 	 * Field fTargetFilePathAbsoluteText.
 	 */
-	protected CLabel fTargetFilePathAbsoluteText = null;
+	protected StyledText fTargetFilePathAbsoluteText = null;
 
 	/**
 	 * Field fTargetFilePathProjectText.
 	 */
-	protected CLabel fTargetFilePathProjectText = null;
+	protected StyledText fTargetFilePathProjectText = null;
 
 	/**
 	 * Field fTargetFilePathRepositoryText.
 	 */
-	protected CLabel fTargetFilePathRepositoryText = null;
+	protected StyledText fTargetFilePathRepositoryText = null;
 
 	/**
 	 * Field fTargetFileVersionText.
 	 */
-	protected CLabel fTargetFileVersionText = null;
+	protected StyledText fTargetFileVersionText = null;
 
 	/**
 	 * Field fAssignedToComposite.
@@ -120,7 +120,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fAssignedToText.
 	 */
-	private Text fAssignedToText;
+	private StyledText fAssignedToText;
 
 	/**
 	 * Field fAssignedToButton.
@@ -186,11 +186,11 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		fAssignedToComposite.setLayoutData(data);
 		fAssignedToComposite.setLayout(new GridLayout(3, false));
 
-		fAssignedToText = widgetFactory.createText(fAssignedToComposite, "", SWT.READ_ONLY);
-		fAssignedToText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		fAssignedToText = new StyledText(fAssignedToComposite, SWT.BORDER);
+		fAssignedToText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		fAssignedToText.setEditable(false);
 		fAssignedToButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.ADD_LABEL, SWT.NONE);
-		fAssignedToButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		fAssignedToButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		fAssignedToButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event aEvent) {
 				((R4EUIFileContext) fProperties.getElement()).addAssignees(UIUtils.getAssignParticipants());
@@ -200,7 +200,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		});
 
 		fUnassignedFromButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.REMOVE_LABEL, SWT.NONE);
-		fUnassignedFromButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		fUnassignedFromButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		fUnassignedFromButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event aEvent) {
 				((R4EUIFileContext) fProperties.getElement()).removeAssignees(UIUtils.getUnassignParticipants(fProperties.getElement()));
@@ -229,11 +229,12 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	private void createBaseFileVersionComposite(final Composite aParent, TabbedPropertySheetWidgetFactory aWidgetFactory) {
 
 		//File Name (read-only)
-		fBaseFileNameText = aWidgetFactory.createCLabel(aParent, "");
+		fBaseFileNameText = new StyledText(aParent, SWT.NULL);
 		FormData data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(aParent, ITabbedPropertyConstants.VSPACE);
+		fBaseFileNameText.setEditable(false);
 		fBaseFileNameText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_NAME_TOOLTIP);
 		fBaseFileNameText.setLayoutData(data);
 
@@ -246,11 +247,12 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		fileNameLabel.setLayoutData(data);
 
 		//File Version (read-only)
-		fBaseFileVersionText = aWidgetFactory.createCLabel(aParent, "");
+		fBaseFileVersionText = new StyledText(aParent, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fBaseFileNameText, ITabbedPropertyConstants.VSPACE);
+		fBaseFileVersionText.setEditable(false);
 		fBaseFileVersionText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_VERSION_TOOLTIP);
 		fBaseFileVersionText.setLayoutData(data);
 
@@ -258,7 +260,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fBaseFileVersionText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fBaseFileVersionText, 0, SWT.TOP);
+		data.top = new FormAttachment(fBaseFileVersionText, 0, SWT.CENTER);
 		fileVersionLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_VERSION_TOOLTIP);
 		fileVersionLabel.setLayoutData(data);
 
@@ -287,49 +289,52 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		pathSection.setLayout(new GridLayout(1, false));
 
 		final Composite pathSectionClient = aWidgetFactory.createComposite(pathSection);
-		pathSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		pathSectionClient.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		pathSectionClient.setLayout(new GridLayout(4, false));
 		pathSection.setClient(pathSectionClient);
 
 		//Repository File Path (read-only)
 		final CLabel filePathRepositoryLabel = aWidgetFactory.createCLabel(pathSectionClient,
 				R4EUIConstants.PATH_REPOSITORY_LABEL);
-		GridData gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gridData.horizontalSpan = 1;
 		filePathRepositoryLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP);
 		filePathRepositoryLabel.setLayoutData(gridData);
 
-		fBaseFilePathRepositoryText = aWidgetFactory.createCLabel(pathSectionClient, "");
-		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		fBaseFilePathRepositoryText = new StyledText(pathSectionClient, SWT.NULL);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
+		fBaseFilePathRepositoryText.setEditable(false);
 		fBaseFilePathRepositoryText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP);
 		fBaseFilePathRepositoryText.setLayoutData(gridData);
 
 		//Absolute File Path (read-only)
 		final CLabel filePathAbsoluteLabel = aWidgetFactory.createCLabel(pathSectionClient,
 				R4EUIConstants.PATH_ABSOLUTE_LABEL);
-		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gridData.horizontalSpan = 1;
 		filePathAbsoluteLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP);
 		filePathAbsoluteLabel.setLayoutData(gridData);
 
-		fBaseFilePathAbsoluteText = aWidgetFactory.createCLabel(pathSectionClient, "");
-		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		fBaseFilePathAbsoluteText = new StyledText(pathSectionClient, SWT.NULL);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
+		fBaseFilePathAbsoluteText.setEditable(false);
 		fBaseFilePathAbsoluteText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP);
 		fBaseFilePathAbsoluteText.setLayoutData(gridData);
 
 		//Project Relative File Path (read-only)
 		final CLabel filePathProjectLabel = aWidgetFactory.createCLabel(pathSectionClient,
 				R4EUIConstants.PATH_PROJECT_LABEL);
-		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gridData.horizontalSpan = 1;
 		filePathProjectLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP);
 		filePathProjectLabel.setLayoutData(gridData);
 
-		fBaseFilePathProjectText = aWidgetFactory.createCLabel(pathSectionClient, "");
-		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		fBaseFilePathProjectText = new StyledText(pathSectionClient, SWT.NULL);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
+		fBaseFilePathProjectText.setEditable(false);
 		fBaseFilePathProjectText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP);
 		fBaseFilePathProjectText.setLayoutData(gridData);
 	}
@@ -347,11 +352,12 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		FormData data = null;
 
 		//File Name (read-only)
-		fTargetFileNameText = aWidgetFactory.createCLabel(aParent, "");
+		fTargetFileNameText = new StyledText(aParent, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(aParent, ITabbedPropertyConstants.VSPACE);
+		fTargetFileNameText.setEditable(false);
 		fTargetFileNameText.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_NAME_TOOLTIP);
 		fTargetFileNameText.setLayoutData(data);
 
@@ -364,11 +370,12 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		fileNameLabel.setLayoutData(data);
 
 		//File Version (read-only)
-		fTargetFileVersionText = aWidgetFactory.createCLabel(aParent, "");
+		fTargetFileVersionText = new StyledText(aParent, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fTargetFileNameText, ITabbedPropertyConstants.VSPACE);
+		fTargetFileVersionText.setEditable(false);
 		fTargetFileVersionText.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_VERSION_TOOLTIP);
 		fTargetFileVersionText.setLayoutData(data);
 
@@ -376,7 +383,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fTargetFileVersionText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fTargetFileVersionText, 0, SWT.TOP);
+		data.top = new FormAttachment(fTargetFileVersionText, 0, SWT.CENTER);
 		fileVersionLabel.setToolTipText(R4EUIConstants.FILECONTEXT_TARGET_FILE_VERSION_TOOLTIP);
 		fileVersionLabel.setLayoutData(data);
 
@@ -405,49 +412,52 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		pathSection.setLayout(new GridLayout(1, false));
 
 		final Composite pathSectionClient = aWidgetFactory.createComposite(pathSection);
-		pathSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		pathSectionClient.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		pathSectionClient.setLayout(new GridLayout(4, false));
 		pathSection.setClient(pathSectionClient);
 
 		//Repository File Path (read-only)
 		final CLabel filePathRepositoryLabel = aWidgetFactory.createCLabel(pathSectionClient,
 				R4EUIConstants.PATH_REPOSITORY_LABEL);
-		GridData gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gridData.horizontalSpan = 1;
 		filePathRepositoryLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP);
 		filePathRepositoryLabel.setLayoutData(gridData);
 
-		fTargetFilePathRepositoryText = aWidgetFactory.createCLabel(pathSectionClient, "");
-		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		fTargetFilePathRepositoryText = new StyledText(pathSectionClient, SWT.NULL);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
+		fTargetFilePathRepositoryText.setEditable(false);
 		fTargetFilePathRepositoryText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP);
 		fTargetFilePathRepositoryText.setLayoutData(gridData);
 
 		//Absolute File Path (read-only)
 		final CLabel filePathAbsoluteLabel = aWidgetFactory.createCLabel(pathSectionClient,
 				R4EUIConstants.PATH_ABSOLUTE_LABEL);
-		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gridData.horizontalSpan = 1;
 		filePathAbsoluteLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP);
 		filePathAbsoluteLabel.setLayoutData(gridData);
 
-		fTargetFilePathAbsoluteText = aWidgetFactory.createCLabel(pathSectionClient, "");
-		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		fTargetFilePathAbsoluteText = new StyledText(pathSectionClient, SWT.NULL);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
+		fTargetFilePathAbsoluteText.setEditable(false);
 		fTargetFilePathAbsoluteText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP);
 		fTargetFilePathAbsoluteText.setLayoutData(gridData);
 
 		//Project Relative File Path (read-only)
 		final CLabel filePathProjectLabel = aWidgetFactory.createCLabel(pathSectionClient,
 				R4EUIConstants.PATH_PROJECT_LABEL);
-		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gridData.horizontalSpan = 1;
 		filePathProjectLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP);
 		filePathProjectLabel.setLayoutData(gridData);
 
-		fTargetFilePathProjectText = aWidgetFactory.createCLabel(pathSectionClient, "");
-		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		fTargetFilePathProjectText = new StyledText(pathSectionClient, SWT.NULL);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
+		fTargetFilePathProjectText.setEditable(false);
 		fTargetFilePathProjectText.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP);
 		fTargetFilePathProjectText.setLayoutData(gridData);
 	}
@@ -534,31 +544,31 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 				|| fProperties.getElement().isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
-			fBaseFileNameText.setEnabled(false);
-			fBaseFilePathRepositoryText.setEnabled(false);
-			fBaseFilePathAbsoluteText.setEnabled(false);
-			fBaseFilePathProjectText.setEnabled(false);
-			fBaseFileVersionText.setEnabled(false);
-			fTargetFileNameText.setEnabled(false);
-			fTargetFilePathRepositoryText.setEnabled(true);
-			fTargetFilePathAbsoluteText.setEnabled(false);
-			fTargetFilePathProjectText.setEnabled(false);
-			fTargetFileVersionText.setEnabled(false);
-			fAssignedToText.setEnabled(false);
+			fBaseFileNameText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fBaseFilePathRepositoryText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fBaseFilePathAbsoluteText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fBaseFilePathProjectText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fBaseFileVersionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fTargetFileNameText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fTargetFilePathRepositoryText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fTargetFilePathAbsoluteText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fTargetFilePathProjectText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fTargetFileVersionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fAssignedToText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fAssignedToButton.setEnabled(false);
 			fUnassignedFromButton.setEnabled(false);
 		} else {
-			fBaseFileNameText.setEnabled(true);
-			fBaseFilePathRepositoryText.setEnabled(true);
-			fBaseFilePathAbsoluteText.setEnabled(true);
-			fBaseFilePathProjectText.setEnabled(true);
-			fBaseFileVersionText.setEnabled(true);
-			fTargetFileNameText.setEnabled(true);
-			fTargetFilePathRepositoryText.setEnabled(true);
-			fTargetFilePathAbsoluteText.setEnabled(true);
-			fTargetFilePathProjectText.setEnabled(true);
-			fTargetFileVersionText.setEnabled(true);
-			fAssignedToText.setEnabled(true);
+			fBaseFileNameText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fBaseFilePathRepositoryText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fBaseFilePathAbsoluteText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fBaseFilePathProjectText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fBaseFileVersionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fTargetFileNameText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fTargetFilePathRepositoryText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fTargetFilePathAbsoluteText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fTargetFilePathProjectText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fTargetFileVersionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fAssignedToText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fAssignedToButton.setEnabled(true);
 			if (fAssignedToText.getText().length() > 0) {
 				fUnassignedFromButton.setEnabled(true);

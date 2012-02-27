@@ -46,6 +46,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -111,9 +112,14 @@ public class RemoveElementHandler extends AbstractHandler {
 											}
 										}
 									}
-									//UIUtils.setNavigatorViewFocus(((IR4EUIModelElement) element).getParent(), 0);
 									((IR4EUIModelElement) element).getParent().removeChildren(
 											(IR4EUIModelElement) element, dialog.getToggleState());
+									//Update properties if the element is still visible
+									if (R4EUIPlugin.getDefault()
+											.getPreferenceStore()
+											.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
+										UIUtils.setNavigatorViewFocus((IR4EUIModelElement) element, 0);
+									}
 								} catch (ResourceHandlingException e) {
 									UIUtils.displayResourceErrorDialog(e);
 								} catch (OutOfSyncException e) {

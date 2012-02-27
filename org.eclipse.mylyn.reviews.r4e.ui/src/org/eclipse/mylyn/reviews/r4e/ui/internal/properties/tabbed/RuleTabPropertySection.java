@@ -30,6 +30,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -37,7 +38,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -55,17 +55,17 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field fIdText.
 	 */
-	protected CLabel fIdText = null;
+	protected StyledText fIdText = null;
 
 	/**
 	 * Field fTitleText.
 	 */
-	protected CLabel fTitleText = null;
+	protected StyledText fTitleText = null;
 
 	/**
 	 * Field fDescriptionText.
 	 */
-	protected Text fDescriptionText = null;
+	protected StyledText fDescriptionText = null;
 
 	/**
 	 * Field fClassCombo.
@@ -100,34 +100,14 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		FormData data = null;
 
 		//ID
-		fIdText = widgetFactory.createCLabel(composite, "");
+		fIdText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fIdText.setEditable(false);
 		fIdText.setToolTipText(R4EUIConstants.RULE_ID_TOOLTIP);
 		fIdText.setLayoutData(data);
-		fIdText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress) {
-					try {
-						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-						modelRule.setId(fIdText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-					} catch (ResourceHandlingException e1) {
-						UIUtils.displayResourceErrorDialog(e1);
-					} catch (OutOfSyncException e1) {
-						UIUtils.displaySyncErrorDialog(e1);
-					}
-				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
-			}
-		});
 
 		final CLabel idLabel = widgetFactory.createCLabel(composite, R4EUIConstants.ID_LABEL);
 		data = new FormData();
@@ -138,34 +118,14 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		idLabel.setLayoutData(data);
 
 		//Title
-		fTitleText = widgetFactory.createCLabel(composite, "");
+		fTitleText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fIdText, ITabbedPropertyConstants.VSPACE);
+		fTitleText.setEditable(false);
 		fTitleText.setToolTipText(R4EUIConstants.RULE_TITLE_TOOLTIP);
 		fTitleText.setLayoutData(data);
-		fTitleText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress) {
-					try {
-						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-						modelRule.setTitle(fTitleText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-					} catch (ResourceHandlingException e1) {
-						UIUtils.displayResourceErrorDialog(e1);
-					} catch (OutOfSyncException e1) {
-						UIUtils.displaySyncErrorDialog(e1);
-					}
-				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
-			}
-		});
 
 		final CLabel titleLabel = widgetFactory.createCLabel(composite, R4EUIConstants.TITLE_LABEL);
 		data = new FormData();
@@ -176,7 +136,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		titleLabel.setLayoutData(data);
 
 		//Description
-		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
+		fDescriptionText = new StyledText(composite, SWT.MULTI | SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -185,7 +145,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		fDescriptionText.setLayoutData(data);
 		fDescriptionText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress) {
+				if (!fRefreshInProgress && fDescriptionText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
@@ -341,15 +301,17 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress() || !fProperties.getElement().isEnabled()
 				|| fProperties.getElement().isReadOnly()) {
-			fIdText.setEnabled(false);
-			fTitleText.setEnabled(false);
-			fDescriptionText.setEnabled(false);
+			fIdText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fTitleText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fDescriptionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fDescriptionText.setEditable(false);
 			fClassCombo.setEnabled(false);
 			fRankCombo.setEnabled(false);
 		} else {
-			fIdText.setEnabled(true);
-			fTitleText.setEnabled(true);
-			fDescriptionText.setEnabled(true);
+			fIdText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fTitleText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fDescriptionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fDescriptionText.setEditable(true);
 			fClassCombo.setEnabled(true);
 			fRankCombo.setEnabled(true);
 		}

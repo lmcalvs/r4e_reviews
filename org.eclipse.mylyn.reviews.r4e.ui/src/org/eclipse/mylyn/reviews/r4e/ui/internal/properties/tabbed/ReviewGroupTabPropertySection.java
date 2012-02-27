@@ -38,6 +38,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
@@ -81,17 +82,17 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fNameText.
 	 */
-	private CLabel fNameText = null;
+	private StyledText fNameText = null;
 
 	/**
 	 * Field fFolderText.
 	 */
-	private CLabel fFilePathText = null;
+	private StyledText fFilePathText = null;
 
 	/**
 	 * Field fDescriptionText.
 	 */
-	protected Text fDescriptionText = null;
+	protected StyledText fDescriptionText = null;
 
 	/**
 	 * Field fAvailableProjects.
@@ -106,7 +107,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fDefaultEntryCriteriaText.
 	 */
-	protected Text fDefaultEntryCriteriaText = null;
+	protected StyledText fDefaultEntryCriteriaText = null;
 
 	/**
 	 * Field fRuleSets.
@@ -162,12 +163,13 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		final Composite composite = widgetFactory.createFlatFormComposite(parent);
 		FormData data = null;
 
-		//Group Name (Read-only for now)
-		fNameText = widgetFactory.createCLabel(composite, "");
+		//Group Name (Read-only)
+		fNameText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
+		fNameText.setEditable(false);
 		fNameText.setToolTipText(R4EUIConstants.REVIEW_GROUP_NAME_TOOLTIP);
 		fNameText.setLayoutData(data);
 
@@ -180,11 +182,12 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		nameLabel.setLayoutData(data);
 
 		//Group Folder (read-only)
-		fFilePathText = widgetFactory.createCLabel(composite, "");
+		fFilePathText = new StyledText(composite, SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
+		fFilePathText.setEditable(false);
 		fFilePathText.setToolTipText(R4EUIConstants.REVIEW_GROUP_FILE_PATH_TOOLTIP);
 		fFilePathText.setLayoutData(data);
 
@@ -197,7 +200,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		folderLabel.setLayoutData(data);
 
 		//Group Description
-		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
+		fDescriptionText = new StyledText(composite, SWT.MULTI | SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -206,7 +209,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		fDescriptionText.setLayoutData(data);
 		fDescriptionText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress) {
+				if (!fRefreshInProgress && fDescriptionText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
@@ -231,12 +234,12 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fDescriptionText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fDescriptionText, 0, SWT.TOP);
+		data.top = new FormAttachment(fDescriptionText, 0, SWT.CENTER);
 		descriptionLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
 		descriptionLabel.setLayoutData(data);
 
 		//Entry Criteria
-		fDefaultEntryCriteriaText = widgetFactory.createText(composite, "", SWT.MULTI | SWT.BORDER);
+		fDefaultEntryCriteriaText = new StyledText(composite, SWT.MULTI | SWT.BORDER);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -245,7 +248,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		fDefaultEntryCriteriaText.setLayoutData(data);
 		fDefaultEntryCriteriaText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress) {
+				if (!fRefreshInProgress && fDefaultEntryCriteriaText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
@@ -271,7 +274,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(fDefaultEntryCriteriaText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fDefaultEntryCriteriaText, 0, SWT.TOP);
+		data.top = new FormAttachment(fDefaultEntryCriteriaText, 0, SWT.CENTER);
 		entryCriteriaLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP);
 		entryCriteriaLabel.setLayoutData(data);
 
@@ -313,19 +316,19 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		projCompSection.setLayout(new GridLayout(1, false));
 
 		final Composite projCompSectionClient = aWidgetFactory.createComposite(projCompSection);
-		projCompSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		projCompSectionClient.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		projCompSectionClient.setLayout(new GridLayout(4, false));
 		projCompSection.setClient(projCompSectionClient);
 
 		//Projects
 		final CLabel projectsLabel = aWidgetFactory.createCLabel(projCompSectionClient,
 				R4EUIConstants.AVAILABLE_PROJECTS_LABEL);
-		GridData gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gridData.horizontalSpan = 1;
 		projectsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_PROJECTS_TOOLTIP);
 		projectsLabel.setLayoutData(gridData);
 
-		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fAvailableProjects = new EditableListWidget(aWidgetFactory, projCompSectionClient, gridData, this, 1,
 				Text.class, null);
@@ -334,12 +337,12 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		//Components
 		final CLabel componentsLabel = aWidgetFactory.createCLabel(projCompSectionClient,
 				R4EUIConstants.AVAILABLE_COMPONENTS_LABEL);
-		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gridData.horizontalSpan = 1;
 		componentsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_COMPONENTS_TOOLTIP);
 		componentsLabel.setLayoutData(gridData);
 
-		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fAvailableComponents = new EditableListWidget(aWidgetFactory, projCompSectionClient, gridData, this, 2,
 				Text.class, null);
@@ -383,18 +386,18 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		ruleSetsSection.setLayout(new GridLayout(1, false));
 
 		final Composite ruleSetSectionClient = aWidgetFactory.createComposite(ruleSetsSection);
-		ruleSetSectionClient.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		ruleSetSectionClient.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		ruleSetSectionClient.setLayout(new GridLayout(4, false));
 		ruleSetsSection.setClient(ruleSetSectionClient);
 
 		//Rule Sets
 		final CLabel ruleSetsLabel = aWidgetFactory.createCLabel(ruleSetSectionClient, R4EUIConstants.RULE_SETS_LABEL);
-		GridData gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gridData.horizontalSpan = 1;
 		ruleSetsLabel.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
 		ruleSetsLabel.setLayoutData(gridData);
 
-		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fRuleSetLocations = new EditableListWidget(aWidgetFactory, ruleSetSectionClient, gridData, this, 3,
 				CCombo.class, null);
@@ -416,8 +419,6 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 					.eResource()
 					.getURI()
 					.toFileString());
-		} else {
-			fFilePathText.setText("");
 		}
 		if (null != modelGroup.getDescription()) {
 			fDescriptionText.setText(modelGroup.getDescription());
@@ -514,20 +515,24 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress() || !((R4EUIReviewGroup) fProperties.getElement()).isOpen()
 				|| !fProperties.getElement().isEnabled() || fProperties.getElement().isReadOnly()) {
-			fNameText.setEnabled(false);
-			fFilePathText.setEnabled(false);
-			fDescriptionText.setEnabled(false);
+			fNameText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fFilePathText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fDescriptionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fDescriptionText.setEditable(false);
+			fDefaultEntryCriteriaText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fDefaultEntryCriteriaText.setEditable(false);
 			fAvailableProjects.setEnabled(false);
 			fAvailableComponents.setEnabled(false);
-			fDefaultEntryCriteriaText.setEnabled(false);
 			fRuleSetLocations.setEnabled(false);
 		} else {
-			fNameText.setEnabled(true);
-			fFilePathText.setEnabled(true);
-			fDescriptionText.setEnabled(true);
+			fNameText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fFilePathText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fDescriptionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fDescriptionText.setEditable(true);
+			fDefaultEntryCriteriaText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fDefaultEntryCriteriaText.setEditable(true);
 			fAvailableProjects.setEnabled(true);
 			fAvailableComponents.setEnabled(true);
-			fDefaultEntryCriteriaText.setEnabled(true);
 			fRuleSetLocations.setEnabled(true);
 		}
 	}
