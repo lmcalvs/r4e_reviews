@@ -25,10 +25,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -46,7 +46,7 @@ public class RuleViolationTabPropertySection extends ModelElementTabPropertySect
 	/**
 	 * Field fNameText.
 	 */
-	protected StyledText fNameText = null;
+	protected Text fNameText = null;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -71,7 +71,8 @@ public class RuleViolationTabPropertySection extends ModelElementTabPropertySect
 		FormData data = null;
 
 		//Name
-		fNameText = new StyledText(composite, SWT.NULL);
+		widgetFactory.setBorderStyle(SWT.NULL);
+		fNameText = widgetFactory.createText(composite, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -87,6 +88,7 @@ public class RuleViolationTabPropertySection extends ModelElementTabPropertySect
 		data.top = new FormAttachment(fNameText, 0, SWT.CENTER);
 		nameLabel.setToolTipText(R4EUIConstants.RULE_VIOLATION_NAME_TOOLTIP);
 		nameLabel.setLayoutData(data);
+		widgetFactory.setBorderStyle(SWT.BORDER);
 	}
 
 	/**

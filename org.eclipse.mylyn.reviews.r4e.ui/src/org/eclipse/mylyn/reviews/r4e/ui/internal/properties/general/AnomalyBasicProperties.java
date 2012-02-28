@@ -23,10 +23,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
-import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
 /**
  * @author lmcdubo
@@ -46,7 +44,7 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 	/**
 	 * Field ANOMALY_TITLE_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor ANOMALY_TITLE_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor ANOMALY_TITLE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_TITLE_ID, R4EUIConstants.TITLE_LABEL);
 
 	/**
@@ -90,7 +88,7 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 	/**
 	 * Field ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			ANOMALY_DESCRIPTION_ID, R4EUIConstants.DESCRIPTION_LABEL);
 
 	/**
@@ -112,8 +110,8 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 	/**
 	 * Field ANOMALY_CLASS_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final ComboBoxPropertyDescriptor ANOMALY_CLASS_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_CLASS_ID, R4EUIConstants.CLASS_LABEL, UIUtils.getClasses());
+	protected static final PropertyDescriptor ANOMALY_CLASS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			ANOMALY_CLASS_ID, R4EUIConstants.CLASS_LABEL);
 
 	/**
 	 * Field ANOMALY_RANK_ID. (value is ""anomalyElement.rank"")
@@ -123,8 +121,8 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 	/**
 	 * Field ANOMALY_RANK_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final ComboBoxPropertyDescriptor ANOMALY_RANK_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_RANK_ID, R4EUIConstants.RANK_LABEL, UIUtils.getRanks());
+	protected static final PropertyDescriptor ANOMALY_RANK_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			ANOMALY_RANK_ID, R4EUIConstants.RANK_LABEL);
 
 	/**
 	 * Field ANOMALY_RULE_ID_ID. (value is ""anomalyElement.ruleId"")
@@ -216,14 +214,15 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 		} else if (ANOMALY_CLASS_ID.equals(aId)) {
 			final R4ECommentType type = (R4ECommentType) ((R4EUIAnomalyBasic) getElement()).getAnomaly().getType();
 			if (null != type) {
-				return Integer.valueOf(type.getType().getValue());
+				return UIUtils.getClasses()[Integer.valueOf(type.getType().getValue())];
 			}
 		} else if (ANOMALY_RANK_ID.equals(aId)) {
 			//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
 			int rankValue = ((R4EUIAnomalyBasic) getElement()).getAnomaly().getRank().getValue();
-			return Integer.valueOf(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
+			int intValue = Integer.valueOf(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
 					? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
 					: rankValue);
+			return UIUtils.getRanks()[intValue];
 		} else if (ANOMALY_RULE_ID_ID.equals(aId)) {
 			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getRuleID();
 		} else if (ANOMALY_ASSIGNED_TO_ID.equals(aId)) {

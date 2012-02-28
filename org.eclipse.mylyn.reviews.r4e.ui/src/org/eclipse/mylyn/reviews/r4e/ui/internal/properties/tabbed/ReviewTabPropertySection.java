@@ -54,7 +54,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -73,6 +72,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
@@ -112,7 +112,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 	/**
 	 * Field fNameText.
 	 */
-	private StyledText fNameText = null;
+	private Text fNameText = null;
 
 	/**
 	 * Field fPhaseCombo.
@@ -122,17 +122,17 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 	/**
 	 * Field fStartDateText.
 	 */
-	private StyledText fStartDateText = null;
+	private Text fStartDateText = null;
 
 	/**
 	 * Field fEndDateText.
 	 */
-	private StyledText fEndDateText = null;
+	private Text fEndDateText = null;
 
 	/**
 	 * Field fDescriptionText.
 	 */
-	protected StyledText fDescriptionText = null;
+	protected Text fDescriptionText = null;
 
 	/**
 	 * Field fColumnPhase.
@@ -217,17 +217,17 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 	/**
 	 * Field FEntryCriteriaText.
 	 */
-	protected StyledText fEntryCriteriaText = null;
+	protected Text fEntryCriteriaText = null;
 
 	/**
 	 * Field FObjectivesText.
 	 */
-	protected StyledText fObjectivesText = null;
+	protected Text fObjectivesText = null;
 
 	/**
 	 * Field FReferenceMaterialText.
 	 */
-	protected StyledText fReferenceMaterialText = null;
+	protected Text fReferenceMaterialText = null;
 
 	/**
 	 * Field fDecisionSection.
@@ -252,7 +252,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 	/**
 	 * Field fDecisionTimeSpentText.
 	 */
-	protected StyledText fDecisionTimeSpentText = null;
+	protected Text fDecisionTimeSpentText = null;
 
 	/**
 	 * Field fDecisionTimeSpentLabel.
@@ -277,22 +277,22 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 	/**
 	 * Field fMeetingSubjectLabel.
 	 */
-	protected StyledText fMeetingSubjectLabel = null;
+	protected Text fMeetingSubjectLabel = null;
 
 	/**
 	 * Field fMeetingStartTimeLabel.
 	 */
-	protected StyledText fMeetingStartTimeLabel = null;
+	protected Text fMeetingStartTimeLabel = null;
 
 	/**
 	 * Field fMeetingEndTimeLabel.
 	 */
-	protected StyledText fMeetingDurationLabel = null;
+	protected Text fMeetingDurationLabel = null;
 
 	/**
 	 * Field fMeetingLocationLabel.
 	 */
-	protected StyledText fMeetingLocationLabel = null;
+	protected Text fMeetingLocationLabel = null;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -328,7 +328,8 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		FormData data = null;
 
 		//Review Name (read-only)
-		fNameText = new StyledText(mainForm, SWT.NULL);
+		widgetFactory.setBorderStyle(SWT.NULL);
+		fNameText = widgetFactory.createText(mainForm, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -346,6 +347,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		nameLabel.setLayoutData(data);
 
 		//Phase
+		widgetFactory.setBorderStyle(SWT.BORDER);
 		fPhaseCombo = widgetFactory.createCCombo(mainForm, SWT.READ_ONLY);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
@@ -383,7 +385,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		phaseLabel.setLayoutData(data);
 
 		//Review Description
-		fDescriptionText = new StyledText(mainForm, SWT.MULTI | SWT.BORDER);
+		fDescriptionText = widgetFactory.createText(mainForm, "", SWT.MULTI);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -472,7 +474,8 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		startDateLabel.setToolTipText(R4EUIConstants.REVIEW_START_DATE_TOOLTIP);
 		startDateLabel.setLayoutData(gridData);
 
-		fStartDateText = new StyledText(reviewDetailsSectionClient, SWT.NULL);
+		aWidgetFactory.setBorderStyle(SWT.NULL);
+		fStartDateText = aWidgetFactory.createText(reviewDetailsSectionClient, "", SWT.NULL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fStartDateText.setEditable(false);
@@ -487,7 +490,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		endDateLabel.setToolTipText(R4EUIConstants.REVIEW_END_DATE_TOOLTIP);
 		endDateLabel.setLayoutData(gridData);
 
-		fEndDateText = new StyledText(reviewDetailsSectionClient, SWT.NULL);
+		fEndDateText = aWidgetFactory.createText(reviewDetailsSectionClient, "", SWT.NULL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fEndDateText.setEditable(false);
@@ -502,6 +505,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		projectLabel.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);
 		projectLabel.setLayoutData(gridData);
 
+		aWidgetFactory.setBorderStyle(SWT.BORDER);
 		fProjectCombo = aWidgetFactory.createCCombo(reviewDetailsSectionClient);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
@@ -549,7 +553,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		entryCriteriaLabel.setToolTipText(R4EUIConstants.REVIEW_ENTRY_CRITERIA_TOOLTIP);
 		entryCriteriaLabel.setLayoutData(gridData);
 
-		fEntryCriteriaText = new StyledText(reviewDetailsSectionClient, SWT.MULTI | SWT.BORDER);
+		fEntryCriteriaText = aWidgetFactory.createText(reviewDetailsSectionClient, "", SWT.MULTI);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fEntryCriteriaText.setToolTipText(R4EUIConstants.REVIEW_ENTRY_CRITERIA_TOOLTIP);
@@ -585,7 +589,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		objectivesLabel.setToolTipText(R4EUIConstants.REVIEW_OBJECTIVES_TOOLTIP);
 		objectivesLabel.setLayoutData(gridData);
 
-		fObjectivesText = new StyledText(reviewDetailsSectionClient, SWT.MULTI | SWT.BORDER);
+		fObjectivesText = aWidgetFactory.createText(reviewDetailsSectionClient, "", SWT.MULTI);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fObjectivesText.setToolTipText(R4EUIConstants.REVIEW_OBJECTIVES_TOOLTIP);
@@ -621,7 +625,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		referenceMaterialLabel.setToolTipText(R4EUIConstants.REVIEW_REFERENCE_MATERIAL_TOOLTIP);
 		referenceMaterialLabel.setLayoutData(gridData);
 
-		fReferenceMaterialText = new StyledText(reviewDetailsSectionClient, SWT.MULTI | SWT.BORDER);
+		fReferenceMaterialText = aWidgetFactory.createText(reviewDetailsSectionClient, "", SWT.MULTI);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fReferenceMaterialText.setToolTipText(R4EUIConstants.REVIEW_REFERENCE_MATERIAL_TOOLTIP);
@@ -710,7 +714,8 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		final CLabel meetingSubjectLabel = aWidgetFactory.createCLabel(fMeetingComposite, R4EUIConstants.SUBJECT_LABEL);
 		meetingSubjectLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_SUBJECT_TOOLTIP);
 		meetingSubjectLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
-		fMeetingSubjectLabel = new StyledText(fMeetingComposite, SWT.NONE);
+		aWidgetFactory.setBorderStyle(SWT.NULL);
+		fMeetingSubjectLabel = aWidgetFactory.createText(fMeetingComposite, "", SWT.NULL);
 		textGridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		textGridData.horizontalSpan = 2;
 		fMeetingSubjectLabel.setEditable(false);
@@ -746,7 +751,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				R4EUIConstants.START_TIME_LABEL);
 		meetingStartTimeLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_TIME_TOOLTIP);
 		meetingStartTimeLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
-		fMeetingStartTimeLabel = new StyledText(fMeetingComposite, SWT.NONE);
+		fMeetingStartTimeLabel = aWidgetFactory.createText(fMeetingComposite, "", SWT.NULL);
 		textGridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		textGridData.horizontalSpan = 2;
 		fMeetingStartTimeLabel.setEditable(false);
@@ -780,7 +785,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				R4EUIConstants.DURATION_LABEL);
 		meetingDurationLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_DURATION_TOOLTIP);
 		meetingDurationLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
-		fMeetingDurationLabel = new StyledText(fMeetingComposite, SWT.NONE);
+		fMeetingDurationLabel = aWidgetFactory.createText(fMeetingComposite, "", SWT.NULL);
 		textGridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		textGridData.horizontalSpan = 2;
 		fMeetingDurationLabel.setEditable(false);
@@ -793,7 +798,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				R4EUIConstants.LOCATION_LABEL);
 		meetingLocationLabel.setToolTipText(R4EUIConstants.REVIEW_MEETING_LOCATION_TOOLTIP);
 		meetingLocationLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
-		fMeetingLocationLabel = new StyledText(fMeetingComposite, SWT.NONE);
+		fMeetingLocationLabel = aWidgetFactory.createText(fMeetingComposite, "", SWT.NULL);
 		textGridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		textGridData.horizontalSpan = 2;
 		fMeetingLocationLabel.setEditable(false);
@@ -807,6 +812,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		exitDecisionLabel.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_TOOLTIP);
 		exitDecisionLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 
+		aWidgetFactory.setBorderStyle(SWT.BORDER);
 		fExitDecisionCombo = aWidgetFactory.createCCombo(decisionSectionClient, SWT.READ_ONLY);
 		textGridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		textGridData.horizontalSpan = 3;
@@ -860,8 +866,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				R4EUIConstants.DECISION_TIME_SPENT_LABEL);
 		fDecisionTimeSpentLabel.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_TIME_SPENT_TOOLTIP);
 		fDecisionTimeSpentLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
-
-		fDecisionTimeSpentText = new StyledText(decisionSectionClient, SWT.BORDER);
+		fDecisionTimeSpentText = aWidgetFactory.createText(decisionSectionClient, "");
 		textGridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		textGridData.horizontalSpan = 3;
 		fDecisionTimeSpentText.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_TIME_SPENT_TOOLTIP);

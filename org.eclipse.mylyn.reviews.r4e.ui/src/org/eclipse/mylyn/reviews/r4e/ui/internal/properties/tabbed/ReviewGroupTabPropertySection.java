@@ -38,7 +38,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
@@ -82,17 +81,17 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fNameText.
 	 */
-	private StyledText fNameText = null;
+	private Text fNameText = null;
 
 	/**
 	 * Field fFolderText.
 	 */
-	private StyledText fFilePathText = null;
+	private Text fFilePathText = null;
 
 	/**
 	 * Field fDescriptionText.
 	 */
-	protected StyledText fDescriptionText = null;
+	protected Text fDescriptionText = null;
 
 	/**
 	 * Field fAvailableProjects.
@@ -107,7 +106,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fDefaultEntryCriteriaText.
 	 */
-	protected StyledText fDefaultEntryCriteriaText = null;
+	protected Text fDefaultEntryCriteriaText = null;
 
 	/**
 	 * Field fRuleSets.
@@ -164,7 +163,8 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		FormData data = null;
 
 		//Group Name (Read-only)
-		fNameText = new StyledText(composite, SWT.NULL);
+		widgetFactory.setBorderStyle(SWT.NULL);
+		fNameText = widgetFactory.createText(composite, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -182,7 +182,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		nameLabel.setLayoutData(data);
 
 		//Group Folder (read-only)
-		fFilePathText = new StyledText(composite, SWT.NULL);
+		fFilePathText = widgetFactory.createText(composite, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -200,7 +200,8 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		folderLabel.setLayoutData(data);
 
 		//Group Description
-		fDescriptionText = new StyledText(composite, SWT.MULTI | SWT.BORDER);
+		widgetFactory.setBorderStyle(SWT.BORDER);
+		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -239,7 +240,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		descriptionLabel.setLayoutData(data);
 
 		//Entry Criteria
-		fDefaultEntryCriteriaText = new StyledText(composite, SWT.MULTI | SWT.BORDER);
+		fDefaultEntryCriteriaText = widgetFactory.createText(composite, "", SWT.MULTI);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

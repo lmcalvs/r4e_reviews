@@ -22,7 +22,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
-import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 
@@ -77,8 +76,8 @@ public class RuleProperties extends ModelElementProperties {
 	/**
 	 * Field RULE_CLASS_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final ComboBoxPropertyDescriptor RULE_CLASS_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			RULE_CLASS_ID, R4EUIConstants.CLASS_LABEL, UIUtils.getClasses());
+	protected static final PropertyDescriptor RULE_CLASS_PROPERTY_DESCRIPTOR = new PropertyDescriptor(RULE_CLASS_ID,
+			R4EUIConstants.CLASS_LABEL);
 
 	/**
 	 * Field RULE_RANK_ID. (value is ""ruleElement.rank"")
@@ -88,8 +87,8 @@ public class RuleProperties extends ModelElementProperties {
 	/**
 	 * Field RULE_RANK_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final ComboBoxPropertyDescriptor RULE_RANK_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			RULE_RANK_ID, R4EUIConstants.RANK_LABEL, UIUtils.getRanks());
+	protected static final PropertyDescriptor RULE_RANK_PROPERTY_DESCRIPTOR = new PropertyDescriptor(RULE_RANK_ID,
+			R4EUIConstants.RANK_LABEL);
 
 	/**
 	 * Field DESCRIPTORS.
@@ -145,13 +144,14 @@ public class RuleProperties extends ModelElementProperties {
 			} else if (RULE_DESCRIPTION_ID.equals(aId)) {
 				return ((R4EUIRule) getElement()).getRule().getDescription();
 			} else if (RULE_CLASS_ID.equals(aId)) {
-				return Integer.valueOf(((R4EUIRule) getElement()).getRule().getClass_().getValue());
+				return UIUtils.getClasses()[Integer.valueOf(((R4EUIRule) getElement()).getRule().getClass_().getValue())];
 			} else if (RULE_RANK_ID.equals(aId)) {
 				//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
 				int rankValue = ((R4EUIRule) getElement()).getRule().getRank().getValue();
-				return Integer.valueOf(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
+				int intValue = Integer.valueOf(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
 						? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
 						: rankValue);
+				return UIUtils.getRanks()[intValue];
 			}
 		}
 		return null;

@@ -53,7 +53,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -66,6 +65,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
@@ -105,27 +105,27 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field fTitleText.
 	 */
-	protected StyledText fTitleText = null;
+	protected Text fTitleText = null;
 
 	/**
 	 * Field fAuthorText.
 	 */
-	protected StyledText fAuthorText = null;
+	protected Text fAuthorText = null;
 
 	/**
 	 * Field fCreationDateText.
 	 */
-	protected StyledText fCreationDateText = null;
+	protected Text fCreationDateText = null;
 
 	/**
 	 * Field fPositionText.
 	 */
-	protected StyledText fPositionText = null;
+	protected Text fPositionText = null;
 
 	/**
 	 * Field fDescriptionText.
 	 */
-	protected StyledText fDescriptionText = null;
+	protected Text fDescriptionText = null;
 
 	/**
 	 * Field fStateLabel.
@@ -150,7 +150,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field fRuleId.
 	 */
-	protected StyledText fRuleId = null;
+	protected Text fRuleId = null;
 
 	/**
 	 * Field fRuleButton.
@@ -160,7 +160,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field fDateText.
 	 */
-	protected StyledText fDateText = null;
+	protected Text fDateText = null;
 
 	/**
 	 * Field fCalendarButton.
@@ -236,7 +236,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		FormData data = null;
 
 		//Anomaly title
-		fTitleText = new StyledText(composite, SWT.MULTI | SWT.BORDER);
+		widgetFactory.setBorderStyle(SWT.BORDER);
+		fTitleText = widgetFactory.createText(composite, "", SWT.MULTI);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -296,7 +297,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		titleLabel.setLayoutData(data);
 
 		//Anomaly Description
-		fDescriptionText = new StyledText(composite, SWT.MULTI | SWT.BORDER);
+		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -491,7 +492,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		creationDateLabel.setToolTipText(R4EUIConstants.ANOMALY_CREATION_DATE_TOOLTIP);
 		creationDateLabel.setLayoutData(gridData);
 
-		fCreationDateText = new StyledText(anomalyDetailsSectionClient, SWT.NULL);
+		aWidgetFactory.setBorderStyle(SWT.NULL);
+		fCreationDateText = aWidgetFactory.createText(anomalyDetailsSectionClient, "", SWT.NULL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fCreationDateText.setEditable(false);
@@ -506,7 +508,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		positionLabel.setToolTipText(R4EUIConstants.ANOMALY_POSITION_TOOLTIP);
 		positionLabel.setLayoutData(gridData);
 
-		fPositionText = new StyledText(anomalyDetailsSectionClient, SWT.NULL);
+		fPositionText = aWidgetFactory.createText(anomalyDetailsSectionClient, "", SWT.NULL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fPositionText.setEditable(false);
@@ -520,6 +522,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		classLabel.setToolTipText(R4EUIConstants.ANOMALY_CLASS_TOOLTIP);
 		classLabel.setLayoutData(gridData);
 
+		aWidgetFactory.setBorderStyle(SWT.BORDER);
 		fClassCombo = aWidgetFactory.createCCombo(anomalyDetailsSectionClient, SWT.READ_ONLY);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
@@ -616,7 +619,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		ruleComposite.setLayoutData(gridData);
 		ruleComposite.setLayout(new GridLayout(2, false));
 
-		fRuleId = new StyledText(ruleComposite, SWT.BORDER);
+		fRuleId = aWidgetFactory.createText(ruleComposite, "", SWT.NULL);
 		fRuleId.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		fRuleId.setEditable(false);
 		fRuleButton = aWidgetFactory.createButton(ruleComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
@@ -715,7 +718,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		dateComposite.setLayoutData(gridData);
 		dateComposite.setLayout(new GridLayout(2, false));
 
-		fDateText = new StyledText(dateComposite, SWT.BORDER);
+		fDateText = aWidgetFactory.createText(dateComposite, "", SWT.NULL);
 		fDateText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		fDateText.setEditable(false);
 		fCalendarButton = aWidgetFactory.createButton(dateComposite, "...", SWT.NONE);
@@ -810,7 +813,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		authorLabel.setToolTipText(R4EUIConstants.ANOMALY_AUTHOR_TOOLTIP);
 		authorLabel.setLayoutData(gridData);
 
-		fAuthorText = new StyledText(participantDetailsSectionClient, SWT.NULL);
+		aWidgetFactory.setBorderStyle(SWT.NULL);
+		fAuthorText = aWidgetFactory.createText(participantDetailsSectionClient, "", SWT.NULL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fAuthorText.setEditable(false);
@@ -818,6 +822,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fAuthorText.setLayoutData(gridData);
 
 		//Decided by
+		aWidgetFactory.setBorderStyle(SWT.BORDER);
 		fDecidedByLabel = aWidgetFactory.createCLabel(participantDetailsSectionClient, R4EUIConstants.DECIDED_BY_LABEL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gridData.horizontalSpan = 1;
@@ -1048,9 +1053,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fDecidedByCombo.setEnabled(false);
 			fFixedByCombo.setEnabled(false);
 			fFollowUpByCombo.setEnabled(false);
-			fNotAcceptedReasonText.setEditable(false);
 			fRuleButton.setEnabled(false);
-			fRuleId.setEnabled(false);
+			fRuleId.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fAssignedToCombo.setEnabled(false);
 			if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
 				fStateLabel.setVisible(true);
@@ -1078,7 +1082,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fDescriptionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fDescriptionText.setEditable(true);
 			fRuleButton.setEnabled(true);
-			fRuleId.setEnabled(true);
+			fRuleId.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fAssignedToCombo.setEnabled(true);
 
 			final R4EUIAnomalyBasic uiAnomaly = (R4EUIAnomalyBasic) fProperties.getElement();
@@ -1139,8 +1143,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				} else {
 					fFollowUpByCombo.setEnabled(false);
 				}
-
-					fNotAcceptedReasonText.setEditable(false);
 			} else {
 				fStateLabel.setVisible(false);
 				fStateCombo.setVisible(false);

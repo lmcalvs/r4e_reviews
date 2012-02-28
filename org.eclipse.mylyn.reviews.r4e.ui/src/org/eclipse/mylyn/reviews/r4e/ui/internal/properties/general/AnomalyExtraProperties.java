@@ -19,7 +19,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
-import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 
@@ -41,8 +40,8 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 	/**
 	 * Field ANOMALY_STATE_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final ComboBoxPropertyDescriptor ANOMALY_STATE_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			ANOMALY_STATE_ID, R4EUIConstants.STATE_LABEL, R4EUIAnomalyExtended.getStates());
+	protected static final PropertyDescriptor ANOMALY_STATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			ANOMALY_STATE_ID, R4EUIConstants.STATE_LABEL);
 
 	/**
 	 * Field ANOMALY_NOT_ACCEPTED_REASON_ID. (value is ""anomalyElement.notAcceptedReason"")
@@ -143,7 +142,9 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 			return result;
 		}
 		if (ANOMALY_STATE_ID.equals(aId)) {
-			return Integer.valueOf(((R4EUIAnomalyExtended) getElement()).getAnomaly().getState().getValue());
+			return R4EUIAnomalyExtended.getStates()[Integer.valueOf(((R4EUIAnomalyExtended) getElement()).getAnomaly()
+					.getState()
+					.getValue())];
 		} else if (ANOMALY_NOT_ACCEPTED_REASON_ID.equals(aId)) {
 			if (null != ((R4EUIAnomalyExtended) getElement()).getAnomaly().getNotAcceptedReason()) {
 				return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getNotAcceptedReason();

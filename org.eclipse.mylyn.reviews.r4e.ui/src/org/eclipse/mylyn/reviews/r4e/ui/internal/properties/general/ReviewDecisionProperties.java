@@ -25,7 +25,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
-import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 
@@ -69,8 +68,8 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 	/**
 	 * Field REVIEW_EXIT_DECISION_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final ComboBoxPropertyDescriptor REVIEW_EXIT_DECISION_PROPERTY_DESCRIPTOR = new ComboBoxPropertyDescriptor(
-			REVIEW_EXIT_DECISION_ID, R4EUIConstants.EXIT_DECISION_LABEL, R4EUIReviewBasic.getExitDecisionValues());
+	protected static final PropertyDescriptor REVIEW_EXIT_DECISION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			REVIEW_EXIT_DECISION_ID, R4EUIConstants.EXIT_DECISION_LABEL);
 
 	/**
 	 * Field REVIEW_DECISION_TIME_SPENT_ID. (value is ""reviewElement.decisionTimeSpent"")
@@ -144,10 +143,11 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 				return decisionParticipantIds;
 			} else if (REVIEW_EXIT_DECISION_ID.equals(aId)) {
 				final R4EReviewDecision decision = ((R4EUIReviewBasic) getElement()).getReview().getDecision();
+				String[] values = R4EUIReviewBasic.getExitDecisionValues();
 				if (null != decision) {
-					return Integer.valueOf(decision.getValue().getValue());
+					return values[Integer.valueOf(decision.getValue().getValue())];
 				} else {
-					return 0;
+					return values[0];
 				}
 			} else if (REVIEW_DECISION_TIME_SPENT_ID.equals(aId)) {
 				final R4EReviewDecision decision = ((R4EUIReviewBasic) getElement()).getReview().getDecision();

@@ -22,7 +22,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
 /**
  * @author lmcdubo
@@ -64,7 +63,7 @@ public class ReviewGroupProperties extends ModelElementProperties {
 	/**
 	 * Field GROUP_DESCRIPTION_PROPERTY_DESCRIPTOR.
 	 */
-	protected static final TextPropertyDescriptor GROUP_DESCRIPTION_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	protected static final PropertyDescriptor GROUP_DESCRIPTION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			GROUP_DESCRIPTION_ID, R4EUIConstants.DESCRIPTION_LABEL);
 
 	/**

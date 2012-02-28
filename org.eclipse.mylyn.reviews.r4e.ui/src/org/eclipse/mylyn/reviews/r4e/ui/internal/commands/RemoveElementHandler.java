@@ -65,18 +65,18 @@ public class RemoveElementHandler extends AbstractHandler {
 	/**
 	 * Method execute.
 	 * 
-	 * @param event
+	 * @param aEvent
 	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(final ExecutionEvent event) {
+	public Object execute(final ExecutionEvent aEvent) {
 
 		final UIJob job = new UIJob("Removing Element...") {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
-				final ISelection selection = HandlerUtil.getCurrentSelection(event);
+				final ISelection selection = HandlerUtil.getCurrentSelection(aEvent);
 				if (selection instanceof IStructuredSelection) {
 					if (!selection.isEmpty()) {
 						Object element = null;

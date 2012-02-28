@@ -27,10 +27,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -48,17 +48,17 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field FAuthorText.
 	 */
-	private StyledText fAuthorText = null;
+	private Text fAuthorText = null;
 
 	/**
 	 * Field FCreationDateText.
 	 */
-	private StyledText fCreationDateText = null;
+	private Text fCreationDateText = null;
 
 	/**
 	 * Field FDescriptionText.
 	 */
-	protected StyledText fDescriptionText = null;
+	protected Text fDescriptionText = null;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -94,7 +94,8 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 		FormData data = null;
 
 		//Author (read-only)
-		fAuthorText = new StyledText(composite, SWT.NULL);
+		widgetFactory.setBorderStyle(SWT.NULL);
+		fAuthorText = widgetFactory.createText(composite, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -112,7 +113,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 		authorLabel.setLayoutData(data);
 
 		//Creation Date (read-only)
-		fCreationDateText = new StyledText(composite, SWT.NULL);
+		fCreationDateText = widgetFactory.createText(composite, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -130,7 +131,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 		creationDateLabel.setLayoutData(data);
 
 		//Description (read-only)
-		fDescriptionText = new StyledText(composite, SWT.NULL);
+		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -146,6 +147,7 @@ public class CommentTabPropertySection extends ModelElementTabPropertySection {
 		data.top = new FormAttachment(fDescriptionText, 0, SWT.CENTER);
 		descriptionLabel.setToolTipText(R4EUIConstants.COMMENT_DESCRIPTION_TOOLTIP);
 		descriptionLabel.setLayoutData(data);
+		widgetFactory.setBorderStyle(SWT.BORDER);
 	}
 
 	/**

@@ -30,7 +30,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -38,6 +37,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -55,17 +55,17 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 	/**
 	 * Field fIdText.
 	 */
-	protected StyledText fIdText = null;
+	protected Text fIdText = null;
 
 	/**
 	 * Field fTitleText.
 	 */
-	protected StyledText fTitleText = null;
+	protected Text fTitleText = null;
 
 	/**
 	 * Field fDescriptionText.
 	 */
-	protected StyledText fDescriptionText = null;
+	protected Text fDescriptionText = null;
 
 	/**
 	 * Field fClassCombo.
@@ -100,7 +100,8 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		FormData data = null;
 
 		//ID
-		fIdText = new StyledText(composite, SWT.NULL);
+		widgetFactory.setBorderStyle(SWT.NULL);
+		fIdText = widgetFactory.createText(composite, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -118,7 +119,7 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		idLabel.setLayoutData(data);
 
 		//Title
-		fTitleText = new StyledText(composite, SWT.NULL);
+		fTitleText = widgetFactory.createText(composite, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -136,7 +137,8 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		titleLabel.setLayoutData(data);
 
 		//Description
-		fDescriptionText = new StyledText(composite, SWT.MULTI | SWT.BORDER);
+		widgetFactory.setBorderStyle(SWT.BORDER);
+		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals

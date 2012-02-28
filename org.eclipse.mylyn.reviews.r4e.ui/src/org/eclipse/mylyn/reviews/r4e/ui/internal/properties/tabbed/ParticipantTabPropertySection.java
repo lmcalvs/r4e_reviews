@@ -49,7 +49,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
@@ -60,6 +59,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
@@ -99,32 +99,32 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field FIdText.
 	 */
-	private StyledText fIdText = null;
+	private Text fIdText = null;
 
 	/**
 	 * Field fEmailText.
 	 */
-	protected StyledText fEmailText = null;
+	protected Text fEmailText = null;
 
 	/**
 	 * Field FNumItemsText.
 	 */
-	private StyledText fNumItemsText = null;
+	private Text fNumItemsText = null;
 
 	/**
 	 * Field FNumAnomaliesText.
 	 */
-	private StyledText fNumAnomaliesText = null;
+	private Text fNumAnomaliesText = null;
 
 	/**
 	 * Field FNumCommentsText.
 	 */
-	private StyledText fNumCommentsText = null;
+	private Text fNumCommentsText = null;
 
 	/**
 	 * Field fDetailsText.
 	 */
-	private StyledText fDetailsText = null;
+	private Text fDetailsText = null;
 
 	/**
 	 * Field fTimeSection.
@@ -149,7 +149,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fFocusAreaText.
 	 */
-	protected StyledText fFocusAreaText = null;
+	protected Text fFocusAreaText = null;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -174,7 +174,8 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		FormData data = null;
 
 		//Author (read-only)
-		fIdText = new StyledText(mainForm, SWT.NULL);
+		widgetFactory.setBorderStyle(SWT.NULL);
+		fIdText = widgetFactory.createText(mainForm, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -192,7 +193,8 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		idLabel.setLayoutData(data);
 
 		//Email
-		fEmailText = new StyledText(mainForm, SWT.BORDER);
+		widgetFactory.setBorderStyle(SWT.BORDER);
+		fEmailText = widgetFactory.createText(mainForm, "");
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -236,7 +238,8 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		emailLabel.setLayoutData(data);
 
 		//Number of Review Items added (read-only)
-		fNumItemsText = new StyledText(mainForm, SWT.NULL);
+		widgetFactory.setBorderStyle(SWT.NULL);
+		fNumItemsText = widgetFactory.createText(mainForm, "", SWT.NULL);
 		fNumItemsText.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
@@ -255,7 +258,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		numItemsLabel.setLayoutData(data);
 
 		//Number of Anomalies added (read-only)
-		fNumAnomaliesText = new StyledText(mainForm, SWT.NULL);
+		fNumAnomaliesText = widgetFactory.createText(mainForm, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -273,7 +276,7 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		numAnomaliesLabel.setLayoutData(data);
 
 		//Number of Comments added (read-only)
-		fNumCommentsText = new StyledText(mainForm, SWT.NULL);
+		fNumCommentsText = widgetFactory.createText(mainForm, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -291,7 +294,8 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		numCommentsLabel.setLayoutData(data);
 
 		//Focus Area
-		fFocusAreaText = new StyledText(mainForm, SWT.BORDER);
+		widgetFactory.setBorderStyle(SWT.BORDER);
+		fFocusAreaText = widgetFactory.createText(mainForm, "");
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -377,12 +381,14 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		detailsLabel.setToolTipText(R4EUIConstants.PARTICIPANT_DETAILS_TOOLTIP);
 		detailsLabel.setLayoutData(gridData);
 
-		fDetailsText = new StyledText(partDetailsSectionClient, SWT.NULL);
+		aWidgetFactory.setBorderStyle(SWT.NULL);
+		fDetailsText = aWidgetFactory.createText(partDetailsSectionClient, "", SWT.MULTI);
 		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		gridData.horizontalSpan = 3;
 		fDetailsText.setEditable(false);
 		fDetailsText.setToolTipText(R4EUIConstants.PARTICIPANT_DETAILS_TOOLTIP);
 		fDetailsText.setLayoutData(gridData);
+		aWidgetFactory.setBorderStyle(SWT.BORDER);
 
 		//Roles section
 		fRolesSection = aWidgetFactory.createExpandableComposite(aComposite, ExpandableComposite.TWISTIE);

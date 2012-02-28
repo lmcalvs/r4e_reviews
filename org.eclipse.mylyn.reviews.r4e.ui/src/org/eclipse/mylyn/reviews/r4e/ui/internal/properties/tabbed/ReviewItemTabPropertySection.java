@@ -36,7 +36,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
@@ -48,6 +47,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
@@ -65,12 +65,12 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	/**
 	 * Field fAuthorText.
 	 */
-	private StyledText fAuthorText = null;
+	private Text fAuthorText = null;
 
 	/**
 	 * Field fAuthorRepText.
 	 */
-	private StyledText fAuthorRepText = null;
+	private Text fAuthorRepText = null;
 
 	/**
 	 * Field fProjectIdList.
@@ -80,17 +80,17 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	/**
 	 * Field fRepositoryText.
 	 */
-	private StyledText fRepositoryText = null;
+	private Text fRepositoryText = null;
 
 	/**
 	 * Field fDateSubmitted.
 	 */
-	private StyledText fDateSubmitted = null;
+	private Text fDateSubmitted = null;
 
 	/**
 	 * Field fDescriptionText.
 	 */
-	protected StyledText fDescriptionText = null;
+	protected Text fDescriptionText = null;
 
 	/**
 	 * Field fAssignedToComposite.
@@ -100,7 +100,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 	/**
 	 * Field fAssignedToText.
 	 */
-	private StyledText fAssignedToText;
+	private Text fAssignedToText;
 
 	/**
 	 * Field fAssignedToButton.
@@ -146,7 +146,8 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		FormData data = null;
 
 		//Author (read-only)
-		fAuthorText = new StyledText(composite, SWT.NULL);
+		widgetFactory.setBorderStyle(SWT.NULL);
+		fAuthorText = widgetFactory.createText(composite, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -164,7 +165,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		authorLabel.setLayoutData(data);
 
 		//AuthorRep (read-only)
-		fAuthorRepText = new StyledText(composite, SWT.NULL);
+		fAuthorRepText = widgetFactory.createText(composite, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -199,7 +200,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		projectIdLabel.setLayoutData(data);
 
 		//Change Id (read-only)
-		fRepositoryText = new StyledText(composite, SWT.NULL);
+		fRepositoryText = widgetFactory.createText(composite, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -217,7 +218,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		repositoryLabel.setLayoutData(data);
 
 		//Date Submitted (read-only)
-		fDateSubmitted = new StyledText(composite, SWT.NULL);
+		fDateSubmitted = widgetFactory.createText(composite, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -235,7 +236,8 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		dateSubmittedLabel.setLayoutData(data);
 
 		//Description
-		fDescriptionText = new StyledText(composite, SWT.MULTI | SWT.BORDER);
+		widgetFactory.setBorderStyle(SWT.BORDER);
+		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -283,7 +285,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		fAssignedToComposite.setLayoutData(data);
 		fAssignedToComposite.setLayout(new GridLayout(3, false));
 
-		fAssignedToText = new StyledText(fAssignedToComposite, SWT.BORDER);
+		fAssignedToText = widgetFactory.createText(fAssignedToComposite, "");
 		fAssignedToText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		fAssignedToText.setEditable(false);
 		fAssignedToButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.ADD_LABEL, SWT.NONE);

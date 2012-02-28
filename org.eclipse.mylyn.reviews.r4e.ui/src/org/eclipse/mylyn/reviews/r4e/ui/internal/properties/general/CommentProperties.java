@@ -22,7 +22,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
 /**
  * @author lmcdubo
@@ -64,7 +63,7 @@ public class CommentProperties extends ModelElementProperties {
 	/**
 	 * Field COMMENT_DESCRIPTION_PROPERTY_DESCRIPTOR.
 	 */
-	private static final TextPropertyDescriptor COMMENT_DESCRIPTION_PROPERTY_DESCRIPTOR = new TextPropertyDescriptor(
+	private static final PropertyDescriptor COMMENT_DESCRIPTION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
 			COMMENT_DESCRIPTION_ID, R4EUIConstants.DESCRIPTION_LABEL);
 
 	/**

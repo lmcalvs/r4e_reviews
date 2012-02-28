@@ -34,7 +34,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -45,6 +44,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
@@ -65,52 +65,52 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fBaseFileNameText.
 	 */
-	protected StyledText fBaseFileNameText = null;
+	protected Text fBaseFileNameText = null;
 
 	/**
 	 * Field fBaseFilePathAbsoluteText.
 	 */
-	protected StyledText fBaseFilePathAbsoluteText = null;
+	protected Text fBaseFilePathAbsoluteText = null;
 
 	/**
 	 * Field fBaseFilePathProjectText.
 	 */
-	protected StyledText fBaseFilePathProjectText = null;
+	protected Text fBaseFilePathProjectText = null;
 
 	/**
 	 * Field fBaseFilePathRepositoryText.
 	 */
-	protected StyledText fBaseFilePathRepositoryText = null;
+	protected Text fBaseFilePathRepositoryText = null;
 
 	/**
 	 * Field fBaseFileVersionText.
 	 */
-	protected StyledText fBaseFileVersionText = null;
+	protected Text fBaseFileVersionText = null;
 
 	/**
 	 * Field fTargetFileNameText.
 	 */
-	protected StyledText fTargetFileNameText = null;
+	protected Text fTargetFileNameText = null;
 
 	/**
 	 * Field fTargetFilePathAbsoluteText.
 	 */
-	protected StyledText fTargetFilePathAbsoluteText = null;
+	protected Text fTargetFilePathAbsoluteText = null;
 
 	/**
 	 * Field fTargetFilePathProjectText.
 	 */
-	protected StyledText fTargetFilePathProjectText = null;
+	protected Text fTargetFilePathProjectText = null;
 
 	/**
 	 * Field fTargetFilePathRepositoryText.
 	 */
-	protected StyledText fTargetFilePathRepositoryText = null;
+	protected Text fTargetFilePathRepositoryText = null;
 
 	/**
 	 * Field fTargetFileVersionText.
 	 */
-	protected StyledText fTargetFileVersionText = null;
+	protected Text fTargetFileVersionText = null;
 
 	/**
 	 * Field fAssignedToComposite.
@@ -120,7 +120,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	/**
 	 * Field fAssignedToText.
 	 */
-	private StyledText fAssignedToText;
+	private Text fAssignedToText;
 
 	/**
 	 * Field fAssignedToButton.
@@ -155,6 +155,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		FormData data = null;
 
 		//Target File Version composite (read-only)
+		widgetFactory.setBorderStyle(SWT.NULL);
 		final Composite targetFileComposite = widgetFactory.createGroup(composite, "Target File");
 		final FormLayout targetFileLayout = new FormLayout();
 		targetFileComposite.setLayout(targetFileLayout);
@@ -186,7 +187,8 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		fAssignedToComposite.setLayoutData(data);
 		fAssignedToComposite.setLayout(new GridLayout(3, false));
 
-		fAssignedToText = new StyledText(fAssignedToComposite, SWT.BORDER);
+		widgetFactory.setBorderStyle(SWT.BORDER);
+		fAssignedToText = widgetFactory.createText(fAssignedToComposite, "");
 		fAssignedToText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		fAssignedToText.setEditable(false);
 		fAssignedToButton = widgetFactory.createButton(fAssignedToComposite, R4EUIConstants.ADD_LABEL, SWT.NONE);
@@ -229,7 +231,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 	private void createBaseFileVersionComposite(final Composite aParent, TabbedPropertySheetWidgetFactory aWidgetFactory) {
 
 		//File Name (read-only)
-		fBaseFileNameText = new StyledText(aParent, SWT.NULL);
+		fBaseFileNameText = aWidgetFactory.createText(aParent, "", SWT.NULL);
 		FormData data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -247,7 +249,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		fileNameLabel.setLayoutData(data);
 
 		//File Version (read-only)
-		fBaseFileVersionText = new StyledText(aParent, SWT.NULL);
+		fBaseFileVersionText = aWidgetFactory.createText(aParent, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -301,7 +303,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		filePathRepositoryLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP);
 		filePathRepositoryLabel.setLayoutData(gridData);
 
-		fBaseFilePathRepositoryText = new StyledText(pathSectionClient, SWT.NULL);
+		fBaseFilePathRepositoryText = aWidgetFactory.createText(pathSectionClient, "", SWT.NULL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fBaseFilePathRepositoryText.setEditable(false);
@@ -316,7 +318,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		filePathAbsoluteLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP);
 		filePathAbsoluteLabel.setLayoutData(gridData);
 
-		fBaseFilePathAbsoluteText = new StyledText(pathSectionClient, SWT.NULL);
+		fBaseFilePathAbsoluteText = aWidgetFactory.createText(pathSectionClient, "", SWT.NULL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fBaseFilePathAbsoluteText.setEditable(false);
@@ -331,7 +333,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		filePathProjectLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP);
 		filePathProjectLabel.setLayoutData(gridData);
 
-		fBaseFilePathProjectText = new StyledText(pathSectionClient, SWT.NULL);
+		fBaseFilePathProjectText = aWidgetFactory.createText(pathSectionClient, "", SWT.NULL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fBaseFilePathProjectText.setEditable(false);
@@ -352,7 +354,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		FormData data = null;
 
 		//File Name (read-only)
-		fTargetFileNameText = new StyledText(aParent, SWT.NULL);
+		fTargetFileNameText = aWidgetFactory.createText(aParent, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -370,7 +372,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		fileNameLabel.setLayoutData(data);
 
 		//File Version (read-only)
-		fTargetFileVersionText = new StyledText(aParent, SWT.NULL);
+		fTargetFileVersionText = aWidgetFactory.createText(aParent, "", SWT.NULL);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
@@ -424,7 +426,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		filePathRepositoryLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_REPOSITORY_TOOLTIP);
 		filePathRepositoryLabel.setLayoutData(gridData);
 
-		fTargetFilePathRepositoryText = new StyledText(pathSectionClient, SWT.NULL);
+		fTargetFilePathRepositoryText = aWidgetFactory.createText(pathSectionClient, "", SWT.NULL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fTargetFilePathRepositoryText.setEditable(false);
@@ -439,7 +441,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		filePathAbsoluteLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_ABSOLUTE_TOOLTIP);
 		filePathAbsoluteLabel.setLayoutData(gridData);
 
-		fTargetFilePathAbsoluteText = new StyledText(pathSectionClient, SWT.NULL);
+		fTargetFilePathAbsoluteText = aWidgetFactory.createText(pathSectionClient, "", SWT.NULL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fTargetFilePathAbsoluteText.setEditable(false);
@@ -454,7 +456,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 		filePathProjectLabel.setToolTipText(R4EUIConstants.FILECONTEXT_BASE_FILE_PATH_PROJECT_TOOLTIP);
 		filePathProjectLabel.setLayoutData(gridData);
 
-		fTargetFilePathProjectText = new StyledText(pathSectionClient, SWT.NULL);
+		fTargetFilePathProjectText = aWidgetFactory.createText(pathSectionClient, "", SWT.NULL);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fTargetFilePathProjectText.setEditable(false);
