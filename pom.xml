@@ -47,7 +47,7 @@
 	<repository>
 		<id>eclipse-mylyn-orbit-committers</id>
 		<layout>p2</layout>
-		<url>http://build.eclipse.org/orbit/committers/orbit-I/20111224154307/I20111224154307/repository/</url>
+		<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository/</url>
 	</repository>
 	<repository>
 		<id>eclipse-mylyn-reviews-r4e</id>
