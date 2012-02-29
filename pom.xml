@@ -85,6 +85,8 @@
 		<module>org.eclipse.mylyn.reviews.r4e.transform</module>
 		<module>org.eclipse.mylyn.reviews.r4e.ui</module>
 		<module>org.eclipse.mylyn.reviews.VCalendar</module>
+		<module>org.eclipse.mylyn.reviews.r4e.emf.compare.detection</module>
+		<module>org.eclipse.mylyn.reviews.r4e.emf.compare-feature</module>
 	  </modules>
 	</profile>
   </profiles>

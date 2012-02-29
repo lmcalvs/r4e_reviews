@@ -21,16 +21,13 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.compare.IStreamContentAccessor;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.rangedifferencer.RangeDifference;
-import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -40,18 +37,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.compare.diff.metamodel.ComparisonResourceSetSnapshot;
-import org.eclipse.emf.compare.diff.metamodel.ComparisonResourceSnapshot;
-import org.eclipse.emf.compare.diff.metamodel.ComparisonSnapshot;
-import org.eclipse.emf.compare.diff.metamodel.DiffElement;
-import org.eclipse.emf.compare.diff.metamodel.DiffModel;
-import org.eclipse.emf.compare.diff.metamodel.DiffResourceSet;
-import org.eclipse.emf.compare.ui.ModelCompareInput;
-import org.eclipse.emf.compare.ui.internal.ModelComparator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -81,7 +69,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDeltaContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
@@ -90,6 +77,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.Diff;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.DiffUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIEMFCompareUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.versions.core.Change;
 import org.eclipse.mylyn.versions.core.ChangeSet;
@@ -346,16 +334,6 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		}
 	}
 
-	private Object retrieveInputFromSnapshot(final ComparisonSnapshot comparisonResult) {
-		Object retrievedInput = null;
-		if (comparisonResult instanceof ComparisonResourceSnapshot) {
-			retrievedInput = ((ComparisonResourceSnapshot) comparisonResult).getDiff();
-		} else {
-			retrievedInput = ((ComparisonResourceSetSnapshot) comparisonResult).getDiffResourceSet();
-		}
-		return retrievedInput;
-	}
-
 	/**
 	 * Method updateFilesWithDeltas.
 	 * 
@@ -365,70 +343,17 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	 */
 	private void updateFilesWithDeltas(final TempFileContext aFile) throws CoreException {
 
-		//Find all differecences between Base and Target files
+		//Find all differences between Base and Target files
 		final R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(aFile.getBase(), aFile.getTarget());
 		input.prepareCompareInputNoEditor();
 
-		if (isModelResource(input)) {
-			// Model part
-			try {
-				input.run(new NullProgressMonitor());
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if (UIUtils.isEMFCompareActive() && isModelResource(input)) {
+			//Create model deltas
+			List<IR4EUIPosition> positions = UIEMFCompareUtils.createModelDeltas(input);
+			for (IR4EUIPosition position : positions) {
+				aFile.getPositions().add(position);
 			}
-			Object diffModel = null;
-			// Model
-			final ModelComparator comparator;
-			Object in = input.getCompareResult();
-			if (in instanceof ICompareInput) {
-				comparator = ModelComparator.getComparator(input.getCompareConfiguration(), (ICompareInput) in);
-			} else {
-				comparator = ModelComparator.getComparator(input.getCompareConfiguration());
-			}
-
-			ComparisonSnapshot snapshot = null;
-			if (in instanceof ModelCompareInput) {
-				snapshot = ((ModelCompareInput) in).getComparisonSnapshot();
-			} else if (in instanceof ComparisonSnapshot) {
-				snapshot = (ComparisonSnapshot) in;
-			}
-
-			if (snapshot instanceof ComparisonResourceSnapshot) {
-				diffModel = ((ComparisonResourceSnapshot) snapshot).getDiff();
-			} else if (snapshot instanceof ComparisonResourceSetSnapshot) {
-				diffModel = ((ComparisonResourceSetSnapshot) snapshot).getDiffResourceSet();
-			} else if (comparator.getComparisonResult() != null) {
-				diffModel = retrieveInputFromSnapshot(comparator.getComparisonResult());
-			} else if (in instanceof ModelCompareInput) {
-				diffModel = ((ModelCompareInput) in).getDiff();
-			} else if (in instanceof ICompareInput) {
-				comparator.loadResources((ICompareInput) in);
-				diffModel = retrieveInputFromSnapshot(comparator.compareSilentlyInThreadUI(input.getCompareConfiguration()));
-			}
-
-			if (diffModel instanceof DiffModel) {
-				for (DiffElement adiff : ((DiffModel) diffModel).getDifferences()) {
-					R4EUIModelPosition position = CommandUtils.getPosition(adiff);
-					aFile.getPositions().add(position);
-				}
-			} else if (diffModel instanceof DiffResourceSet) {
-				Iterator<DiffModel> it = ((DiffResourceSet) diffModel).getDiffModels().iterator();
-				//Add Deltas from the list of differences
-				while (it.hasNext()) {
-					DiffModel currentDiffModel = it.next();
-					for (DiffElement adiff : currentDiffModel.getDifferences()) {
-						R4EUIModelPosition position = CommandUtils.getPosition(adiff);
-						aFile.getPositions().add(position);
-					}
-				}
-			}
-
 		} else {
-
 			final DiffUtils diffUtils = new DiffUtils();
 			final List<Diff> diffs;
 
@@ -451,15 +376,21 @@ public class FindReviewItemsHandler extends AbstractHandler {
 
 	private boolean isModelResource(final R4ECompareEditorInput input) throws CoreException {
 		ITypedElement elt = input.getLeftElement();
-		if (elt instanceof IStreamContentAccessor) {
+		if (elt != null && elt instanceof IStreamContentAccessor) {
 			InputStream is = ((IStreamContentAccessor) elt).getContents();
+			if (is == null) {
+				return false;
+			}
 			ResourceSet resourceSet = new ResourceSetImpl();
 			Resource resource = resourceSet.createResource(URI.createURI("test.resource.type"));
 			try {
 				resource.load(is, Collections.EMPTY_MAP);
 				resource.unload();
+				R4EUIPlugin.Ftracer.traceInfo("A model resource found: ");
 				return true;
 			} catch (IOException e) {
+				R4EUIPlugin.Ftracer.traceDebug("IOException while trying to load model");
+				e.printStackTrace();
 			}
 		}
 		return false;

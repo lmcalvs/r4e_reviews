@@ -25,7 +25,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -40,7 +39,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.compare.ui.services.CompareServices;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -560,10 +558,12 @@ public class UIUtils {
 		}
 	}
 
-	public static void selectElementInCompareModelEditor(IEditorPart editor, R4EUIModelPosition pos) {
-		final String id = pos.getObjectID();
-		final List<String> ids = Arrays.asList(id);
-		CompareServices.setSelection(ids, editor);
+	private static void selectElementInCompareModelEditor(IEditorPart editor, R4EUIModelPosition pos) {
+		if (isEMFCompareActive()) {
+			UIEMFCompareUtils.selectElementInCompareModelEditor(editor, pos);
+		} else {
+			R4EUIPlugin.Ftracer.traceDebug("EMF Compare is not available or does not meet minimum requirements"); //$NON-NLS-1$
+		}
 	}
 
 	private static IR4EUIModelElement getR4EUIElement() {
@@ -873,5 +873,29 @@ public class UIUtils {
 	 */
 	public static String formatNumChanges(int aNumChanges, int aNumReviewedChanges) {
 		return Integer.toString(aNumReviewedChanges) + R4EUIConstants.SEPARATOR + Integer.toString(aNumChanges);
+	}
+
+	/**
+	 * Check if the requirements to use model compare are met
+	 * 
+	 * @return
+	 */
+	public static boolean isEMFCompareActive() {
+		boolean active = false;
+		try {
+			Class emfCompareCheck = Class.forName("org.eclipse.mylyn.reviews.r4e.emf.EMFCompareCheck.java"); //$NON-NLS-1$
+			Object obj = emfCompareCheck.newInstance();
+			if (obj != null) {
+				active = true;
+			}
+		} catch (ClassNotFoundException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java class not found"); //$NON-NLS-1$
+		} catch (InstantiationException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Initiation Exception"); //$NON-NLS-1$
+		} catch (IllegalAccessException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Illegal Access Exception"); //$NON-NLS-1$
+		}
+
+		return active;
 	}
 }
