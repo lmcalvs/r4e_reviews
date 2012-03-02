@@ -343,16 +343,24 @@
          <menu
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.menu"
                label="Sort by">
-            <visibleWhen
-                  checkEnabled="false">
-               <test
-                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
-               </test>
-            </visibleWhen>
-            <dynamic
-                  class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.SortersContributionItems"
-                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.items">
-            </dynamic>
+            <command
+                  commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort"
+                  icon="icons/elcl16/alphasort_menu.gif"
+                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort"
+                  label="Element name"
+                  mnemonic="E"
+                  style="toggle"
+                  tooltip="Sort Elements Alphabetically">
+            </command>
+            <command
+                  commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort"
+                  icon="icons/elcl16/revtypesort_menu.gif"
+                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort"
+                  label="Review Type"
+                  mnemonic="R"
+                  style="toggle"
+                  tooltip="Sort Reviews by Type">
+            </command>
          </menu>
          <menu
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.filter.menu"
@@ -1002,8 +1010,63 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.RemoveAllFiltersHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.RemoveAll">
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewsOnlyFilterHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsOnly">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewsMyFilterHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsMy">
+         <enabledWhen>
+            <and>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+               </test>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </and>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewsParticipantFilterHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsParticipant">
+         <enabledWhen>
+            <and>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+               </test>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </and>
+         </enabledWhen>
+      </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AssignMyFilterHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignMy">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.UnassignFilterHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Unassign">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AnomaliesOnlyFilterHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
@@ -1023,27 +1086,14 @@
             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewsCompletedFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsCompleted">
          <enabledWhen>
-            <test
-                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-            </test>
-         </enabledWhen>
-      </handler>
-      <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewsOnlyFilterHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsOnly">
-         <enabledWhen>
-            <test
-                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-            </test>
-         </enabledWhen>
-      </handler>
-      <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AnomaliesOnlyFilterHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Anomalies">
-         <enabledWhen>
-            <test
-                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-            </test>
+            <and>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+               </test>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </and>
          </enabledWhen>
       </handler>
       <handler
@@ -1056,35 +1106,45 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewsMyFilterHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsMy">
-         <enabledWhen>
-            <test
-                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-            </test>
-         </enabledWhen>
-      </handler>
-      <handler
-            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.ReviewsParticipantFilterHandler"
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.ReviewsParticipant">
-         <enabledWhen>
-            <test
-                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-            </test>
-         </enabledWhen>
-      </handler>
-      <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.HideRuleSetsFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideRuleSets">
          <enabledWhen>
-            <test
-                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-            </test>
+            <and>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+               </test>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </and>
          </enabledWhen>
       </handler>
       <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.HideDeltasFilterHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.HideDeltas">
+         <enabledWhen>
+            <and>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+               </test>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </and>
+         </enabledWhen>
+      </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AssignParticipantFilterHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignParticipants">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.RemoveAllFiltersHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.RemoveAll">
          <enabledWhen>
             <test
                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
@@ -1095,20 +1155,45 @@
             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.AlphaSortHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.AlphaSort">
          <enabledWhen>
-            <test
-                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-            </test>
+            <and>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+               </test>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.alphaSorterApplied">
+               </test>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </and>
          </enabledWhen>
       </handler>
       <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.ReviewTypeSortHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort">
          <enabledWhen>
-            <test
-                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-            </test>
+            <and>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+               </test>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.typeSorterApplied">
+               </test>
+               <test
+                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay">
+               </test>
+            </and>
          </enabledWhen>
       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.AddAssignHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.assignElement">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
       <handler
             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.NewLinkedAnomalyHandler"
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly">
@@ -1279,44 +1364,8 @@
           </enabledWhen>
        </handler>
        <handler
-             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.AddAssignHandler"
-             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.assignElement">
-          <enabledWhen>
-             <test
-                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-             </test>
-          </enabledWhen>
-       </handler>
-       <handler
              class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.RemoveAssignHandler"
              commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.unassignElement">
-          <enabledWhen>
-             <test
-                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-             </test>
-          </enabledWhen>
-       </handler>
-       <handler
-             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AssignMyFilterHandler"
-             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignMy">
-          <enabledWhen>
-             <test
-                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-             </test>
-          </enabledWhen>
-       </handler>
-       <handler
-             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.AssignParticipantFilterHandler"
-             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AssignParticipants">
-          <enabledWhen>
-             <test
-                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-             </test>
-          </enabledWhen>
-       </handler>
-       <handler
-             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters.UnassignFilterHandler"
-             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.filters.Unassign">
           <enabledWhen>
              <test
                    property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
@@ -1548,6 +1597,20 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewActivePropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.review"
             properties="reviewActive"
+            type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.TypeSorterTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.typeSorterApplied"
+            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter"
+            properties="typeSorterApplied"
+            type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.sorters.AlphaSorterTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter.alphaSorterApplied"
+            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.sorter"
+            properties="alphaSorterApplied"
             type="java.lang.Object">
       </propertyTester>
    </extension>

@@ -40,23 +40,18 @@ public class RemoveAllFiltersHandler extends AbstractHandler {
 	/**
 	 * Method execute.
 	 * 
-	 * @param event
+	 * @param aEvent
 	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	public Object execute(ExecutionEvent aEvent) throws ExecutionException {
 
 		R4EUIPlugin.Ftracer.traceInfo("Remove all filters");
 
 		//We need to preserve the expansion state and restore it afterwards
 		final Object[] elements = R4EUIModelController.getNavigatorView().getTreeViewer().getExpandedElements();
-		if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
-			R4EUIModelController.getNavigatorView().getTreeViewer().setInput(R4EUIModelController.getRootElement());
-		} else { //Assume TreeTable display
-			R4EUIModelController.getNavigatorView().getTreeViewer().setInput(R4EUIModelController.getActiveReview());
-		}
 		try {
 			((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).resetAllFilterActions();
 		} catch (NotDefinedException e) {

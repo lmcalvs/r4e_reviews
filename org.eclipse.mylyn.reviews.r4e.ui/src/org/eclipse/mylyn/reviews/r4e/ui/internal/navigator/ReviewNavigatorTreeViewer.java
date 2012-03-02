@@ -18,11 +18,13 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.navigator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DecoratingCellLabelProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
@@ -30,11 +32,6 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.TreeTableFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
@@ -253,6 +250,8 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	 * Method setViewTree.
 	 */
 	public void setViewTree() {
+		Object[] expandedElements = getExpandedElements();
+
 		double elementColumnWidth = R4EUIConstants.INVALID_VALUE;
 		double pathColumnWidth = R4EUIConstants.INVALID_VALUE;
 		double assignColumnWidth = R4EUIConstants.INVALID_VALUE;
@@ -313,6 +312,24 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 
 		//Refresh Display	
 		this.getTree().getParent().layout();
+
+		//Set Expanded states correctly
+		List<Object> updatedExpandedElements = new ArrayList<Object>();
+		if (expandedElements.length > 0) {
+			updatedExpandedElements.add(((IR4EUIModelElement) expandedElements[0]).getParent().getParent());
+			updatedExpandedElements.add(((IR4EUIModelElement) expandedElements[0]).getParent());
+			for (Object expandedElement : expandedElements) {
+				updatedExpandedElements.add(expandedElement);
+			}
+		} else {
+			R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
+			if (null != activeReview) {
+				updatedExpandedElements.add(activeReview.getParent());
+				updatedExpandedElements.add(activeReview);
+			}
+		}
+		setExpandedElements(updatedExpandedElements.toArray(new Object[updatedExpandedElements.size()]));
+
 		fIsDefaultDisplay = true;
 	}
 
@@ -320,34 +337,6 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	 * Method setViewTreeTable.
 	 */
 	public void setViewTreeTable() {
-		//Get currently selected element
-		IR4EUIModelElement currentElement = null;
-		final IStructuredSelection selection = (IStructuredSelection) this.getSelection();
-		if (null != selection) {
-			currentElement = (IR4EUIModelElement) selection.getFirstElement();
-		}
-		//Set a default selected element in TreeTable
-		if (currentElement == null) {
-			currentElement = R4EUIModelController.getActiveReview().getChildren()[0];
-		} else if (currentElement instanceof R4EUIReviewItem || currentElement instanceof R4EUIFileContext) {
-			//do nothing
-		} else if (currentElement instanceof R4EUIContentsContainer) {
-			currentElement = currentElement.getParent();
-		} else if (currentElement instanceof R4EUIContent) {
-			currentElement = currentElement.getParent().getParent();
-		} else if (currentElement instanceof R4EUIAnomalyContainer
-				&& currentElement.getParent() instanceof R4EUIFileContext) {
-			currentElement = currentElement.getParent();
-		} else if (currentElement instanceof R4EUIAnomalyBasic
-				&& currentElement.getParent().getParent() instanceof R4EUIFileContext) {
-			currentElement = currentElement.getParent().getParent();
-		} else if (currentElement instanceof R4EUIComment
-				&& currentElement.getParent().getParent().getParent() instanceof R4EUIFileContext) {
-			currentElement = currentElement.getParent().getParent().getParent();
-		} else {
-			//Set first TreeTable element as default
-			currentElement = R4EUIModelController.getActiveReview().getChildren()[0];
-		}
 		Object[] expandedElements = getExpandedElements();
 
 		//Create Columns
@@ -391,7 +380,6 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 
 		//Refresh Display	
 		this.getTree().getParent().layout();
-		UIUtils.setNavigatorViewFocus(currentElement, 1);
 		setExpandedElements(expandedElements);
 		fIsDefaultDisplay = false;
 	}

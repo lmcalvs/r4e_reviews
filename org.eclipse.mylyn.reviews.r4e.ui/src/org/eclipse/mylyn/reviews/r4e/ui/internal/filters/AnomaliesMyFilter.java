@@ -26,12 +26,11 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipantContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleArea;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
@@ -50,46 +49,40 @@ public class AnomaliesMyFilter extends ViewerFilter {
 	/**
 	 * Method select.
 	 * 
-	 * @param viewer
+	 * @param aViewer
 	 *            Viewer
-	 * @param parentElement
+	 * @param aParentElement
 	 *            Object
-	 * @param element
+	 * @param aElement
 	 *            Object
 	 * @return boolean
 	 */
 	@Override
-	public boolean select(Viewer viewer, Object parentElement, Object element) {
+	public boolean select(Viewer aViewer, Object aParentElement, Object aElement) {
 
-		//Only show currently open review
-		if (element instanceof R4EUIReviewBasic) {
-			if (!((R4EUIReviewBasic) element).isOpen()) {
-				return false;
-			}
-		}
-		//Only show anomalies and comments
-		if (element instanceof R4EUIContentsContainer || element instanceof R4EUIContent
-				|| element instanceof R4EUIParticipantContainer || element instanceof R4EUIParticipant
-				|| element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea
-				|| element instanceof R4EUIRuleViolation || element instanceof R4EUIRule) {
-			return false;
+		//Always elements not directly related to anomalies
+		if (aElement instanceof R4EUIReviewGroup || aElement instanceof R4EUIReviewBasic
+				|| aElement instanceof R4EUIParticipantContainer || aElement instanceof R4EUIParticipant
+				|| aElement instanceof R4EUIRuleSet || aElement instanceof R4EUIRuleArea
+				|| aElement instanceof R4EUIRuleViolation || aElement instanceof R4EUIRule) {
+			return true;
 		}
 
 		//always show comments
-		if (element instanceof R4EUIComment) {
+		if (aElement instanceof R4EUIComment) {
 			return true;
 		}
 
-		//For basic reviews, show all anomalies, For other review types, only show anomalies assigned to us
-		if (element instanceof R4EUIAnomalyExtended) {
-			if (!(((R4EUIAnomalyBasic) element).getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer()))) {
+		//For basic reviews, show all anomalies, For other review types, only show anomalies created by us
+		if (aElement instanceof R4EUIAnomalyExtended) {
+			if (!(((R4EUIAnomalyBasic) aElement).getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer()))) {
 				return false;
 			}
-		} else if (element instanceof R4EUIAnomalyBasic) {
+		} else if (aElement instanceof R4EUIAnomalyBasic) {
 			return true;
 		} else {
 			//For other elements, we only show the if they are a parent of one of our anomalies
-			return isChildrenMyAnomaly((IR4EUIModelElement) element);
+			return isChildrenMyAnomaly((IR4EUIModelElement) aElement);
 		}
 		return true;
 	}

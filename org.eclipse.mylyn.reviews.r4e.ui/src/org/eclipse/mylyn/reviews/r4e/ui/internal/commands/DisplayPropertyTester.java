@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorView;
 
 /**
  * @author lmcdubo
@@ -47,6 +48,10 @@ public class DisplayPropertyTester extends PropertyTester {
 	 * @see org.eclipse.core.expressions.IPropertyTester#test(Object, String, Object[], Object)
 	 */
 	public boolean test(Object aReceiver, String aProperty, Object[] aArgs, Object eExpectedValue) {
-		return R4EUIModelController.getNavigatorView().isDefaultDisplay();
+		ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
+		if (null != view) {
+			return view.isDefaultDisplay();
+		}
+		return false;
 	}
 }

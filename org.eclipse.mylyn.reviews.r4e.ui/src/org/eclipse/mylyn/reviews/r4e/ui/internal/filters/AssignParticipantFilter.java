@@ -25,7 +25,9 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
@@ -144,6 +146,23 @@ public class AssignParticipantFilter extends ViewerFilter {
 					|| ((R4EUIAnomalyBasic) aElement).getAnomaly().getAssignedTo().contains(fParticipant)
 					|| ((R4EUIAnomalyBasic) aElement).getAnomaly().getUser().getId().equals(fParticipant)) {
 				return true;
+			}
+			return false;
+		} else if (aElement instanceof R4EUIContentsContainer) {
+			for (IR4EUIModelElement child : ((R4EUIContentsContainer) aElement).getChildren()) {
+				if (((R4EUIContent) child).getContent().getAssignedTo().size() == 0
+						|| ((R4EUIContent) child).getContent().getAssignedTo().contains(fParticipant)) {
+					return true;
+				}
+			}
+			return false;
+		} else if (aElement instanceof R4EUIAnomalyContainer) {
+			for (IR4EUIModelElement child : ((R4EUIAnomalyContainer) aElement).getChildren()) {
+				if (((R4EUIAnomalyBasic) child).getAnomaly().getAssignedTo().size() == 0
+						|| ((R4EUIAnomalyBasic) child).getAnomaly().getAssignedTo().contains(fParticipant)
+						|| ((R4EUIAnomalyBasic) child).getAnomaly().getUser().getId().equals(fParticipant)) {
+					return true;
+				}
 			}
 			return false;
 		}

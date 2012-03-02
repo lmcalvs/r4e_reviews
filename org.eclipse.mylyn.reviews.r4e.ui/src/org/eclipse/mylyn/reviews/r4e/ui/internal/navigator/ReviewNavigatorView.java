@@ -65,7 +65,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.R4EPreferencePage;
@@ -304,6 +303,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 		//Apply default filters
 		applyDefaultFilters();
+		R4EUIModelController.getNavigatorView().getTreeViewer().setComparator(null);
 
 		//Make sure that the User Id in preferences is set to lower case
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
@@ -643,7 +643,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			}
 		} else if (event.getKey().equals(PreferenceConstants.P_GROUP_FILE_PATH)) {
 			//Check what is currently loaded vs. what is in the preferences.  Adjust input accordingly
-			final List<R4EUIReviewGroup> groupsLoaded = Arrays.asList(((R4EUIRootElement) R4EUIModelController.getRootElement()).getGroups());
+			final List<R4EUIReviewGroup> groupsLoaded = Arrays.asList(R4EUIModelController.getRootElement().getGroups());
 			final List<String> groupsPreferencesPaths = UIUtils.parseStringList((String) event.getNewValue());
 
 			//Convert the loaded groups array to array of File Paths
@@ -680,7 +680,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			//Adjust loaded groups
 			for (IR4EUIModelElement groupToRemove : groupsToRemove) {
 				try {
-					((R4EUIRootElement) R4EUIModelController.getRootElement()).removeChildrenFromUI(groupToRemove);
+					R4EUIModelController.getRootElement().removeChildrenFromUI(groupToRemove);
 				} catch (ResourceHandlingException e) {
 					UIUtils.displayResourceErrorDialog(e);
 				} catch (OutOfSyncException e) {
@@ -698,7 +698,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			}
 		} else if (event.getKey().equals(PreferenceConstants.P_RULE_SET_FILE_PATH)) {
 			//Check what is currently loaded vs. what is in the preferences.  Adjust input accordingly
-			final List<R4EUIRuleSet> ruleSetsLoaded = ((R4EUIRootElement) R4EUIModelController.getRootElement()).getRuleSets();
+			final List<R4EUIRuleSet> ruleSetsLoaded = R4EUIModelController.getRootElement().getRuleSets();
 			final List<String> ruleSetsPreferencesPaths = UIUtils.parseStringList((String) event.getNewValue());
 
 			//Convert the loaded rule set array to array of File Paths
@@ -735,7 +735,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			//Adjust loaded groups
 			for (IR4EUIModelElement ruleSetToRemove : ruleSetsToRemove) {
 				try {
-					((R4EUIRootElement) R4EUIModelController.getRootElement()).removeChildrenFromUI(ruleSetToRemove);
+					R4EUIModelController.getRootElement().removeChildrenFromUI(ruleSetToRemove);
 				} catch (ResourceHandlingException e) {
 					UIUtils.displayResourceErrorDialog(e);
 				} catch (OutOfSyncException e) {

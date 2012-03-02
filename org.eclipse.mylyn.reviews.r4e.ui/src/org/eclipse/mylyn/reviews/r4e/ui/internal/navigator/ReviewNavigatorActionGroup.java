@@ -38,8 +38,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewCompletedFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewedElemsFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewsOnlyFilter;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.UnassignParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.TreeTableFilter;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.UnassignParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.NavigatorElementComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.ReviewTypeComparator;
@@ -222,7 +222,6 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		runReviewElemsFilterCommand(false);
 		runHideRuleSetsFilterCommand(false);
 		runHideDeltasFilterCommand(false);
-		runFocusFilterCommand(false);
 	}
 
 	/**
@@ -623,7 +622,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 * Method resetUnassignedFilterCommand.
 	 */
 	private void resetUnassignedFilterCommand() {
-		fView.getTreeViewer().removeFilter(fAssignedMyFilter);
+		fView.getTreeViewer().removeFilter(fUnassignedFilter);
 		fCommandService.getCommand(R4EUIConstants.UNASSIGN_FILTER_COMMAND)
 				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
 				.setValue(Boolean.valueOf(false));

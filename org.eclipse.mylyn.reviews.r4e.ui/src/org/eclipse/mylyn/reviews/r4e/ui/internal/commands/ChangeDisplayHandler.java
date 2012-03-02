@@ -24,12 +24,10 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorTreeViewer;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.services.IEvaluationService;
@@ -68,25 +66,28 @@ public class ChangeDisplayHandler extends AbstractHandler {
 					} else {
 						((ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView().getTreeViewer()).setViewTree();
 					}
+					R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 
 					try {
 						final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
 								aEvent)
 								.getService(IEvaluationService.class);
 						evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay");
-						evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.PreviousState");
-						evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.NextState");
+						evService.requestEvaluation(R4EUIConstants.PREVIOUS_STATE_ELEMENT_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.NEXT_STATE_ELEMENT_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.ALPHA_SORTER_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.REVIEW_TYPE_SORTER_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.REVIEWS_MY_FILTER_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.ANOMALIES_FILTER_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.REVIEWS_COMPLETED_FILTER_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND);
+						evService.requestEvaluation(R4EUIConstants.REMOVE_ALL_FILTER_COMMAND);
 					} catch (ExecutionException e) {
 						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					}
-
-					R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
-					final IStructuredSelection selection = (IStructuredSelection) R4EUIModelController.getNavigatorView()
-							.getTreeViewer()
-							.getSelection();
-					if (null != selection) {
-						final IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
-						UIUtils.setNavigatorViewFocus(element, 0);
 					}
 				}
 				return Status.OK_STATUS;

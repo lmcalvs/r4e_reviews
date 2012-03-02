@@ -929,21 +929,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ALPHA_SORTER_ICON_FILE = "icons/elcl16/alphasort_menu.gif";
 
 	/**
-	 * Field ALPHA_SORTER_NAME. (value is ""Element name"")
-	 */
-	public static final String ALPHA_SORTER_NAME = "Element Name";
-
-	/**
-	 * Field ALPHA_SORTER_TOOLTIP. (value is ""Sort alphabetically"")
-	 */
-	public static final String ALPHA_SORTER_TOOLTIP = "Sort Alphabetically";
-
-	/**
-	 * Field ALPHA_SORTER_MNEMONIC. (value is ""S"")
-	 */
-	public static final String ALPHA_SORTER_MNEMONIC = "S";
-
-	/**
 	 * Field REVIEW_TYPE_SORTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort"")
 	 */
 	public static final String REVIEW_TYPE_SORTER_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.sorters.ReviewTypeSort";
@@ -952,21 +937,6 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REVIEW_TYPE_SORTER_ICON_FILE. (value is ""icons/elcl16/revtypesort_menu.gif"")
 	 */
 	public static final String REVIEW_TYPE_SORTER_ICON_FILE = "icons/elcl16/revtypesort_menu.gif";
-
-	/**
-	 * Field REVIEW_TYPE_SORTER_NAME. (value is ""Review Type"")
-	 */
-	public static final String REVIEW_TYPE_SORTER_NAME = "Review Type";
-
-	/**
-	 * Field REVIEW_TYPE_SORTER_TOOLTIP. (value is ""Sort Reviews by Review Type"")
-	 */
-	public static final String REVIEW_TYPE_SORTER_TOOLTIP = "Sort Reviews by Review Type";
-
-	/**
-	 * Field REVIEW_TYPE_SORTER_MNEMONIC. (value is ""T"")
-	 */
-	public static final String REVIEW_TYPE_SORTER_MNEMONIC = "T";
 
 	/**
 	 * Field ANOMALIES_MY_FILTER_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.filters.AnomaliesMy"")

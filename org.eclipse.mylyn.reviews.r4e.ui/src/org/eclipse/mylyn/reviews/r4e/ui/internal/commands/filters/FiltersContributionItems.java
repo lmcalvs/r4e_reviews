@@ -43,32 +43,31 @@ public class FiltersContributionItems extends CompoundContributionItem {
 	@Override
 	protected IContributionItem[] getContributionItems() {
 
+		//TODO:  Eventually when we find out how to dynamically change the command label from the plugin.xml, we could migrate these
+		//		 Contributions to it and remove this class
 		final List<IContributionItem> list = new ArrayList<IContributionItem>();
 		CommandContributionItemParameter params;
-		if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
 
-			params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-					R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND, R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND,
-					CommandContributionItem.STYLE_CHECK);
-			list.add(new CommandContributionItem(params));
-			params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-					R4EUIConstants.REVIEWS_MY_FILTER_COMMAND, R4EUIConstants.REVIEWS_MY_FILTER_COMMAND,
-					CommandContributionItem.STYLE_CHECK);
-			list.add(new CommandContributionItem(params));
+		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+				R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND, R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND,
+				CommandContributionItem.STYLE_CHECK);
+		list.add(new CommandContributionItem(params));
+		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+				R4EUIConstants.REVIEWS_MY_FILTER_COMMAND, R4EUIConstants.REVIEWS_MY_FILTER_COMMAND,
+				CommandContributionItem.STYLE_CHECK);
+		list.add(new CommandContributionItem(params));
 
-			final String reviewParticipant = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
-					.getActionSet()).getReviewFilterParticipant();
-			params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-					R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND,
-					R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND, null, null, null, null,
-					R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_NAME
-							+ (!reviewParticipant.equals("") ? " (" + reviewParticipant + ") " : ""),
-					R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_MNEMONIC,
-					R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_TOOLTIP, CommandContributionItem.STYLE_CHECK, null, false);
-			list.add(new CommandContributionItem(params));
+		final String reviewParticipant = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
+				.getActionSet()).getReviewFilterParticipant();
+		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+				R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND, R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND,
+				null, null, null, null, R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_NAME
+						+ (!reviewParticipant.equals("") ? " (" + reviewParticipant + ") " : ""),
+				R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_MNEMONIC, R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_TOOLTIP,
+				CommandContributionItem.STYLE_CHECK, null, false);
+		list.add(new CommandContributionItem(params));
 
-			list.add(new Separator());
-		}
+		list.add(new Separator());
 
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 				R4EUIConstants.ASSIGN_MY_FILTER_COMMAND, R4EUIConstants.ASSIGN_MY_FILTER_COMMAND,
@@ -92,19 +91,22 @@ public class FiltersContributionItems extends CompoundContributionItem {
 
 		list.add(new Separator());
 
-		if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
+		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+				R4EUIConstants.ANOMALIES_FILTER_COMMAND, R4EUIConstants.ANOMALIES_FILTER_COMMAND,
+				CommandContributionItem.STYLE_CHECK);
+		list.add(new CommandContributionItem(params));
 
-			params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-					R4EUIConstants.ANOMALIES_FILTER_COMMAND, R4EUIConstants.ANOMALIES_FILTER_COMMAND,
-					CommandContributionItem.STYLE_CHECK);
-			list.add(new CommandContributionItem(params));
+		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+				R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND, R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND,
+				CommandContributionItem.STYLE_CHECK);
+		list.add(new CommandContributionItem(params));
 
-			params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-					R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND, R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND,
-					CommandContributionItem.STYLE_CHECK);
-			list.add(new CommandContributionItem(params));
-			list.add(new Separator());
-		}
+		list.add(new Separator());
+
+		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+				R4EUIConstants.REVIEWED_ELEMS_FILTER_COMMAND, R4EUIConstants.REVIEWED_ELEMS_FILTER_COMMAND,
+				CommandContributionItem.STYLE_CHECK);
+		list.add(new CommandContributionItem(params));
 
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 				R4EUIConstants.REVIEWS_COMPLETED_FILTER_COMMAND, R4EUIConstants.REVIEWS_COMPLETED_FILTER_COMMAND,
@@ -112,24 +114,17 @@ public class FiltersContributionItems extends CompoundContributionItem {
 		list.add(new CommandContributionItem(params));
 
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-				R4EUIConstants.REVIEWED_ELEMS_FILTER_COMMAND, R4EUIConstants.REVIEWED_ELEMS_FILTER_COMMAND,
+				R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND, R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND,
 				CommandContributionItem.STYLE_CHECK);
 		list.add(new CommandContributionItem(params));
 
-		if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
+		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+				R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND, R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND,
+				CommandContributionItem.STYLE_CHECK);
+		list.add(new CommandContributionItem(params));
 
-			params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-					R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND, R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND,
-					CommandContributionItem.STYLE_CHECK);
-			list.add(new CommandContributionItem(params));
+		list.add(new Separator());
 
-			params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-					R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND, R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND,
-					CommandContributionItem.STYLE_CHECK);
-			list.add(new CommandContributionItem(params));
-
-			list.add(new Separator());
-		}
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 				R4EUIConstants.REMOVE_ALL_FILTER_COMMAND, R4EUIConstants.REMOVE_ALL_FILTER_COMMAND,
 				CommandContributionItem.STYLE_PUSH);

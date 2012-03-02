@@ -25,11 +25,10 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipantContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleArea;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
@@ -48,37 +47,31 @@ public class AnomaliesOnlyFilter extends ViewerFilter {
 	/**
 	 * Method select.
 	 * 
-	 * @param viewer
+	 * @param aViewer
 	 *            Viewer
-	 * @param parentElement
+	 * @param aParentElement
 	 *            Object
-	 * @param element
+	 * @param aElement
 	 *            Object
 	 * @return boolean
 	 */
 	@Override
-	public boolean select(Viewer viewer, Object parentElement, Object element) {
+	public boolean select(Viewer aViewer, Object aParentElement, Object aElement) {
 
-		//Only show currently open review
-		if (element instanceof R4EUIReviewBasic) {
-			if (!((R4EUIReviewBasic) element).isOpen()) {
-				return false;
-			}
-		}
-		//Only show anomalies
-		if (element instanceof R4EUIContentsContainer || element instanceof R4EUIContent
-				|| element instanceof R4EUIParticipantContainer || element instanceof R4EUIParticipant
-				|| element instanceof R4EUIRuleSet || element instanceof R4EUIRuleArea
-				|| element instanceof R4EUIRuleViolation || element instanceof R4EUIRule) {
-			return false;
+		//Always elements not directly related to anomalies
+		if (aElement instanceof R4EUIReviewGroup || aElement instanceof R4EUIReviewBasic
+				|| aElement instanceof R4EUIParticipantContainer || aElement instanceof R4EUIParticipant
+				|| aElement instanceof R4EUIRuleSet || aElement instanceof R4EUIRuleArea
+				|| aElement instanceof R4EUIRuleViolation || aElement instanceof R4EUIRule) {
+			return true;
 		}
 
 		//If these this is an anomaly, show it
-		if (element instanceof R4EUIAnomalyBasic || element instanceof R4EUIComment) {
+		if (aElement instanceof R4EUIAnomalyBasic || aElement instanceof R4EUIComment) {
 			return true;
 		}
 		//For other elements, we only show the if they are a parent of one of our anomalies
-		return isChildrenAnomaly((IR4EUIModelElement) element);
+		return isChildrenAnomaly((IR4EUIModelElement) aElement);
 	}
 
 	/**
