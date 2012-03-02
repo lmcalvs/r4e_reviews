@@ -73,6 +73,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDelta;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDeltaContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
@@ -90,6 +91,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
@@ -541,6 +544,34 @@ public class UIUtils {
 		return tempStr.toString();
 	}
 
+	public static void selectElementInEditor(IEditorPart editor) {
+
+		final IR4EUIModelElement element = getR4EUIElement();
+		if (element instanceof R4EUIContent) {
+			final IR4EUIPosition position = ((R4EUIContent) element).getPosition();
+			if (position instanceof R4EUIModelPosition) {
+				selectElementInCompareModelEditor(editor, (R4EUIModelPosition) position);
+			} else {
+				final IEditorInput aInput = editor.getEditorInput();
+				selectElementInEditor((R4ECompareEditorInput) aInput);
+			}
+		}
+	}
+
+	private static void selectElementInCompareModelEditor(IEditorPart editor, R4EUIModelPosition pos) {
+		if (isEMFCompareActive()) {
+			UIEMFCompareUtils.selectElementInCompareModelEditor(editor, pos);
+		} else {
+			R4EUIPlugin.Ftracer.traceDebug("EMF Compare is not available or does not meet minimum requirements"); //$NON-NLS-1$
+		}
+	}
+
+	private static IR4EUIModelElement getR4EUIElement() {
+		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+		return element;
+	}
+
 	/**
 	 * Method selectElementInEditor.
 	 * 
@@ -548,9 +579,7 @@ public class UIUtils {
 	 *            R4ECompareEditorInput
 	 */
 	public static void selectElementInEditor(R4ECompareEditorInput aInput) {
-
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
-		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+		final IR4EUIModelElement element = getR4EUIElement();
 		IR4EUIPosition position = null;
 		int selectionIndex = -1;
 
@@ -844,5 +873,29 @@ public class UIUtils {
 	 */
 	public static String formatNumChanges(int aNumChanges, int aNumReviewedChanges) {
 		return Integer.toString(aNumReviewedChanges) + R4EUIConstants.SEPARATOR + Integer.toString(aNumChanges);
+	}
+
+	/**
+	 * Check if the requirements to use model compare are met
+	 * 
+	 * @return
+	 */
+	public static boolean isEMFCompareActive() {
+		boolean active = false;
+		try {
+			Class emfCompareCheck = Class.forName("org.eclipse.mylyn.reviews.r4e.internal.emf.compare.EMFCompareCheck.java"); //$NON-NLS-1$
+			Object obj = emfCompareCheck.newInstance();
+			if (obj != null) {
+				active = true;
+			}
+		} catch (ClassNotFoundException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java class not found"); //$NON-NLS-1$
+		} catch (InstantiationException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Initiation Exception"); //$NON-NLS-1$
+		} catch (IllegalAccessException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Illegal Access Exception"); //$NON-NLS-1$
+		}
+
+		return active;
 	}
 }

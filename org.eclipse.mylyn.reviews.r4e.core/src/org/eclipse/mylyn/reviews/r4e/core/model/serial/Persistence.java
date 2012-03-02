@@ -31,6 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -56,7 +57,7 @@ public interface Persistence {
 	// Constants
 	// ------------------------------------------------------------------------
 	public enum Roots {
-		GROUP("Group", "0.8.0"), REVIEW("Review", "0.9.0"), RULESET("RuleSet", "0.8.0");
+		GROUP("Group", "0.8.0"), REVIEW("Review", "0.9.1"), RULESET("RuleSet", "0.8.0");
 
 		private String	fName;
 		private String	fVersion;
@@ -296,6 +297,13 @@ public interface Persistence {
 		 * @throws ResourceHandlingException
 		 */
 		public R4ETextPosition createR4ETextPosition(R4ETextContent content) throws ResourceHandlingException;
+		
+		/**
+		 * @param content
+		 * @return
+		 * @throws ResourceHandlingException
+		 */
+		public R4EModelPosition createR4EModelPosition(R4EContent content) throws ResourceHandlingException;
 
 	}
 
