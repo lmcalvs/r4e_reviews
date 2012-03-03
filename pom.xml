@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.eclipse.mylyn</groupId>
@@ -14,15 +14,15 @@
   <packaging>pom</packaging>
   <mailingLists>
     <mailingList>
-      <name>Mylyn Versions Mailing List</name>
-      <post>mylyn-versions-dev@eclipse.org</post>
-      <subscribe>https://dev.eclipse.org/mailman/listinfo/mylyn-versions-dev</subscribe>
-      <unsubscribe>https://dev.eclipse.org/mailman/listinfo/mylyn-versions-dev</unsubscribe>
-      <archive>http://dev.eclipse.org/mhonarc/lists/mylyn-versions-dev</archive>
+      <name>Mylyn Reviews Mailing List</name>
+      <post>mylyn-reviews-dev@eclipse.org</post>
+      <subscribe>https://dev.eclipse.org/mailman/listinfo/mylyn-reviews-dev</subscribe>
+      <unsubscribe>https://dev.eclipse.org/mailman/listinfo/mylyn-reviews-dev</unsubscribe>
+      <archive>http://dev.eclipse.org/mhonarc/lists/mylyn-reviews-dev</archive>
     </mailingList>
   </mailingLists>
   <issueManagement>
-    <url>https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;classification=Mylyn;product=Mylyn%20Versions</url>
+    <url>https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;classification=Mylyn;product=Mylyn%20Reviews%20R4E</url>
     <system>Bugzilla</system>
   </issueManagement>
   <repositories>
@@ -39,53 +39,53 @@
       <url>http://download.eclipse.org/mylyn/maven/releases</url>
       <layout>default</layout>
     </repository>
-	<repository>
-		<id>eclipse-mylyn-versions</id>
-		<layout>p2</layout>
-		<url>${mylyn-versions-repository-url}</url>
-	</repository>
-	<repository>
-		<id>eclipse-mylyn-orbit-committers</id>
-		<layout>p2</layout>
-		<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository/</url>
-	</repository>
-	<repository>
-		<id>eclipse-mylyn-reviews-r4e</id>
-		<layout>p2</layout>
-		<url>http://download.eclipse.org/r4e/updates/</url>
-	</repository>
+    <repository>
+      <id>eclipse-mylyn-versions</id>
+      <layout>p2</layout>
+      <url>${mylyn-versions-repository-url}</url>
+    </repository>
+    <repository>
+      <id>eclipse-mylyn-orbit-committers</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository/</url>
+    </repository>
+    <repository>
+      <id>eclipse-mylyn-reviews-r4e</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/r4e/updates/</url>
+    </repository>
   </repositories>
   <profiles>
-	<profile>
-	  <id>implicit-target</id>
+    <profile>
+      <id>implicit-target</id>
       <activation>
-		<property>
-		  <name>!explicit-target</name>
-		</property>
+        <property>
+          <name>!explicit-target</name>
+        </property>
       </activation>
-	  <repositories>
-		<repository>
-		  <id>eclipse-mylyn-commons</id>
-		  <layout>p2</layout>
-		  <url>${mylyn-commons-repository-url}</url>
-		</repository>
-	  </repositories>
-	  <modules>
-		<module>org.eclipse.mylyn.reviews.frame.core</module>
-		<module>org.eclipse.mylyn.reviews.r4e.ldap</module>
-		<module>org.eclipse.mylyn.reviews.notifications</module>
-		<module>org.eclipse.mylyn.reviews.r4e-site</module>
-		<module>org.eclipse.mylyn.reviews.r4e.core</module>
-		<module>org.eclipse.mylyn.reviews.r4e.core.tests</module>
-		<module>org.eclipse.mylyn.reviews.r4e.feature</module>
-		<module>org.eclipse.mylyn.reviews.r4e.help</module>
-		<module>org.eclipse.mylyn.reviews.r4e.mail.smtp</module>
-		<module>org.eclipse.mylyn.reviews.r4e.report</module>
-		<module>org.eclipse.mylyn.reviews.r4e.reports-feature</module>
-		<module>org.eclipse.mylyn.reviews.r4e.transform</module>
-		<module>org.eclipse.mylyn.reviews.r4e.ui</module>
-		<module>org.eclipse.mylyn.reviews.VCalendar</module>
-	  </modules>
-	</profile>
+      <repositories>
+        <repository>
+          <id>eclipse-mylyn-commons</id>
+          <layout>p2</layout>
+          <url>${mylyn-commons-repository-url}</url>
+        </repository>
+      </repositories>
+      <modules>
+        <module>org.eclipse.mylyn.reviews.frame.core</module>
+        <module>org.eclipse.mylyn.reviews.r4e.ldap</module>
+        <module>org.eclipse.mylyn.reviews.notifications</module>
+        <module>org.eclipse.mylyn.reviews.r4e-site</module>
+        <module>org.eclipse.mylyn.reviews.r4e.core</module>
+        <module>org.eclipse.mylyn.reviews.r4e.core.tests</module>
+        <module>org.eclipse.mylyn.reviews.r4e.feature</module>
+        <module>org.eclipse.mylyn.reviews.r4e.help</module>
+        <module>org.eclipse.mylyn.reviews.r4e.mail.smtp</module>
+        <module>org.eclipse.mylyn.reviews.r4e.report</module>
+        <module>org.eclipse.mylyn.reviews.r4e.reports-feature</module>
+        <module>org.eclipse.mylyn.reviews.r4e.transform</module>
+        <module>org.eclipse.mylyn.reviews.r4e.ui</module>
+        <module>org.eclipse.mylyn.reviews.VCalendar</module>
+      </modules>
+    </profile>
   </profiles>
 </project>
