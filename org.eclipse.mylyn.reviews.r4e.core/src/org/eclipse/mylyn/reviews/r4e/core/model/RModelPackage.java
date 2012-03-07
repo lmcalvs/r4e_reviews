@@ -1021,13 +1021,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_POSITION = 21;
 
 	/**
+	 * The feature id for the '<em><b>Anomaly File</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_POSITION__ANOMALY_FILE = 0;
+
+	/**
 	 * The number of structural features of the '<em>R4E Position</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_POSITION_FEATURE_COUNT = 0;
+	int R4E_POSITION_FEATURE_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4ETextPositionImpl <em>R4E Text Position</em>}' class.
@@ -1038,6 +1047,15 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 */
 	int R4E_TEXT_POSITION = 4;
+
+	/**
+	 * The feature id for the '<em><b>Anomaly File</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_TEXT_POSITION__ANOMALY_FILE = R4E_POSITION__ANOMALY_FILE;
 
 	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
@@ -2504,6 +2522,15 @@ public interface RModelPackage extends EPackage {
 	int R4E_ANOMALY_TEXT_POSITION = 29;
 
 	/**
+	 * The feature id for the '<em><b>Anomaly File</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_ANOMALY_TEXT_POSITION__ANOMALY_FILE = R4E_TEXT_POSITION__ANOMALY_FILE;
+
+	/**
 	 * The feature id for the '<em><b>Start Position</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2540,7 +2567,7 @@ public interface RModelPackage extends EPackage {
 	int R4E_ANOMALY_TEXT_POSITION__END_LINE = R4E_TEXT_POSITION__END_LINE;
 
 	/**
-	 * The feature id for the '<em><b>File</b></em>' containment reference.
+	 * The feature id for the '<em><b>File</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2797,6 +2824,15 @@ public interface RModelPackage extends EPackage {
 	int R4E_MODEL_POSITION = 34;
 
 	/**
+	 * The feature id for the '<em><b>Anomaly File</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_MODEL_POSITION__ANOMALY_FILE = R4E_POSITION__ANOMALY_FILE;
+
+	/**
 	 * The feature id for the '<em><b>Object ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2806,13 +2842,13 @@ public interface RModelPackage extends EPackage {
 	int R4E_MODEL_POSITION__OBJECT_ID = R4E_POSITION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Difference Description</b></em>' attribute.
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_MODEL_POSITION__DIFFERENCE_DESCRIPTION = R4E_POSITION_FEATURE_COUNT + 1;
+	int R4E_MODEL_POSITION__DESCRIPTION = R4E_POSITION_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>R4E Model Position</em>' class.
@@ -4106,6 +4142,17 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EPosition();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition#getAnomalyFile <em>Anomaly File</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Anomaly File</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition#getAnomalyFile()
+	 * @see #getR4EPosition()
+	 * @generated
+	 */
+	EReference getR4EPosition_AnomalyFile();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion <em>R4E File Version</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4425,10 +4472,10 @@ public interface RModelPackage extends EPackage {
 	EClass getR4EAnomalyTextPosition();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition#getFile <em>File</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition#getFile <em>File</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>File</em>'.
+	 * @return the meta object for the reference '<em>File</em>'.
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition#getFile()
 	 * @see #getR4EAnomalyTextPosition()
 	 * @generated
@@ -4688,15 +4735,15 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EModelPosition_ObjectID();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition#getDifferenceDescription <em>Difference Description</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition#getDescription <em>Description</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Difference Description</em>'.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition#getDifferenceDescription()
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition#getDescription()
 	 * @see #getR4EModelPosition()
 	 * @generated
 	 */
-	EAttribute getR4EModelPosition_DifferenceDescription();
+	EAttribute getR4EModelPosition_Description();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}'.
@@ -5738,6 +5785,14 @@ public interface RModelPackage extends EPackage {
 		EClass R4E_POSITION = eINSTANCE.getR4EPosition();
 
 		/**
+		 * The meta object literal for the '<em><b>Anomaly File</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference R4E_POSITION__ANOMALY_FILE = eINSTANCE.getR4EPosition_AnomalyFile();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFileVersionImpl <em>R4E File Version</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5986,7 +6041,7 @@ public interface RModelPackage extends EPackage {
 		EClass R4E_ANOMALY_TEXT_POSITION = eINSTANCE.getR4EAnomalyTextPosition();
 
 		/**
-		 * The meta object literal for the '<em><b>File</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>File</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -6188,12 +6243,12 @@ public interface RModelPackage extends EPackage {
 		EAttribute R4E_MODEL_POSITION__OBJECT_ID = eINSTANCE.getR4EModelPosition_ObjectID();
 
 		/**
-		 * The meta object literal for the '<em><b>Difference Description</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute R4E_MODEL_POSITION__DIFFERENCE_DESCRIPTION = eINSTANCE.getR4EModelPosition_DifferenceDescription();
+		EAttribute R4E_MODEL_POSITION__DESCRIPTION = eINSTANCE.getR4EModelPosition_Description();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState <em>R4E Anomaly State</em>}' enum.

@@ -21,7 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition#getObjectID <em>Object ID</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition#getDifferenceDescription <em>Difference Description</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  *
@@ -57,29 +57,29 @@ public interface R4EModelPosition extends R4EPosition {
 	void setObjectID(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Difference Description</b></em>' attribute.
+	 * Returns the value of the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Difference Description</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Difference Description</em>' attribute.
-	 * @see #setDifferenceDescription(String)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EModelPosition_DifferenceDescription()
+	 * @return the value of the '<em>Description</em>' attribute.
+	 * @see #setDescription(String)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EModelPosition_Description()
 	 * @model
 	 * @generated
 	 */
-	String getDifferenceDescription();
+	String getDescription();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition#getDifferenceDescription <em>Difference Description</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition#getDescription <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Difference Description</em>' attribute.
-	 * @see #getDifferenceDescription()
+	 * @param value the new value of the '<em>Description</em>' attribute.
+	 * @see #getDescription()
 	 * @generated
 	 */
-	void setDifferenceDescription(String value);
+	void setDescription(String value);
 
 } // R4EModelPosition

@@ -41,6 +41,8 @@ import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
@@ -457,8 +459,16 @@ public class R4EUIModelController {
 
 			locations = anomaly.getLocation();
 			for (Location location : locations) {
-				targetFileVersion = ((R4EAnomalyTextPosition) ((R4EContent) location).getLocation()).getFile()
-						.getLocalVersionID();
+				R4EPosition position = ((R4EContent) location).getLocation();
+				R4EFileVersion fileVersion = position.getAnomalyFile();
+				//TODO: Remove this code when the deprecated R4EAnomalyTextPosition is removed from the model
+				if (fileVersion == null && position instanceof R4EAnomalyTextPosition) {
+					fileVersion = ((R4EAnomalyTextPosition) position).getFile();
+				} else {
+					continue;
+				}
+
+				targetFileVersion = fileVersion.getLocalVersionID();
 				if (FFileAnomalyMap.containsKey(targetFileVersion)) {
 					//Add anomaly for this file version if not already present
 					List<R4EAnomaly> anomalyList = FFileAnomalyMap.get(targetFileVersion); // $codepro.audit.disable variableDeclaredInLoop

@@ -32,7 +32,6 @@ import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
 import org.eclipse.mylyn.reviews.frame.core.model.TaskReference;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.frame.core.model.User;
-import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
@@ -97,6 +96,7 @@ public class RModelSwitch<T> {
 		}
 	}
 
+
 	/**
 	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
 	 * <!-- begin-user-doc -->
@@ -107,8 +107,6 @@ public class RModelSwitch<T> {
 	public T doSwitch(EObject theEObject) {
 		return doSwitch(theEObject.eClass(), theEObject);
 	}
-
-
 
 
 	/**
@@ -130,6 +128,7 @@ public class RModelSwitch<T> {
 					doSwitch(eSuperTypes.get(0), theEObject);
 		}
 	}
+
 
 	/**
 	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
@@ -410,6 +409,7 @@ public class RModelSwitch<T> {
 			default: return defaultCase(theEObject);
 		}
 	}
+
 
 	/**
 	 * Returns the result of interpreting the object as an instance of '<em>R4E Review Group</em>'.
@@ -1115,6 +1115,7 @@ public class RModelSwitch<T> {
 	public T defaultCase(EObject object) {
 		return null;
 	}
+
 
 	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Location</em>'.

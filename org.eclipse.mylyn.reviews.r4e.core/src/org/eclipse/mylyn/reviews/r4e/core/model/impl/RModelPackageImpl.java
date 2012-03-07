@@ -1437,6 +1437,15 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getR4EPosition_AnomalyFile() {
+		return (EReference)r4EPositionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getR4EFileVersion() {
 		return r4EFileVersionEClass;
 	}
@@ -1914,7 +1923,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getR4EModelPosition_DifferenceDescription() {
+	public EAttribute getR4EModelPosition_Description() {
 		return (EAttribute)r4EModelPositionEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -2158,6 +2167,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EContentEClass, R4E_CONTENT__INFO);
 
 		r4EPositionEClass = createEClass(R4E_POSITION);
+		createEReference(r4EPositionEClass, R4E_POSITION__ANOMALY_FILE);
 
 		r4EFileVersionEClass = createEClass(R4E_FILE_VERSION);
 		createEAttribute(r4EFileVersionEClass, R4E_FILE_VERSION__PLATFORM_URI);
@@ -2224,7 +2234,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		r4EModelPositionEClass = createEClass(R4E_MODEL_POSITION);
 		createEAttribute(r4EModelPositionEClass, R4E_MODEL_POSITION__OBJECT_ID);
-		createEAttribute(r4EModelPositionEClass, R4E_MODEL_POSITION__DIFFERENCE_DESCRIPTION);
+		createEAttribute(r4EModelPositionEClass, R4E_MODEL_POSITION__DESCRIPTION);
 
 		// Create enums
 		r4EAnomalyStateEEnum = createEEnum(R4E_ANOMALY_STATE);
@@ -2435,6 +2445,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EContent_Info(), ecorePackage.getEString(), "info", null, 0, 1, R4EContent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EPositionEClass, R4EPosition.class, "R4EPosition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getR4EPosition_AnomalyFile(), this.getR4EFileVersion(), null, "anomalyFile", null, 0, 1, R4EPosition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EFileVersionEClass, R4EFileVersion.class, "R4EFileVersion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4EFileVersion_PlatformURI(), ecorePackage.getEString(), "platformURI", null, 0, 1, R4EFileVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2472,7 +2483,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getMapUserIDToUserReviews_Value(), this.getR4EUserReviews(), null, "value", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EAnomalyTextPositionEClass, R4EAnomalyTextPosition.class, "R4EAnomalyTextPosition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getR4EAnomalyTextPosition_File(), this.getR4EFileVersion(), null, "file", null, 0, 1, R4EAnomalyTextPosition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EAnomalyTextPosition_File(), this.getR4EFileVersion(), null, "file", null, 0, 1, R4EAnomalyTextPosition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mapDateToDurationEClass, Map.Entry.class, "MapDateToDuration", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getMapDateToDuration_Key(), ecorePackage.getEDate(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2501,7 +2512,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		initEClass(r4EModelPositionEClass, R4EModelPosition.class, "R4EModelPosition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getR4EModelPosition_ObjectID(), ecorePackage.getEString(), "objectID", null, 0, 1, R4EModelPosition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getR4EModelPosition_DifferenceDescription(), ecorePackage.getEString(), "differenceDescription", null, 0, 1, R4EModelPosition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EModelPosition_Description(), ecorePackage.getEString(), "description", null, 0, 1, R4EModelPosition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(r4EAnomalyStateEEnum, R4EAnomalyState.class, "R4EAnomalyState");

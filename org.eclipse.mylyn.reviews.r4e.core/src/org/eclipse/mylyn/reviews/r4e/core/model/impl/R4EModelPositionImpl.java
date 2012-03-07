@@ -28,7 +28,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EModelPositionImpl#getObjectID <em>Object ID</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EModelPositionImpl#getDifferenceDescription <em>Difference Description</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EModelPositionImpl#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  *
@@ -56,24 +56,24 @@ public class R4EModelPositionImpl extends R4EPositionImpl implements R4EModelPos
 	protected String objectID = OBJECT_ID_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getDifferenceDescription() <em>Difference Description</em>}' attribute.
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDifferenceDescription()
+	 * @see #getDescription()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String DIFFERENCE_DESCRIPTION_EDEFAULT = null;
+	protected static final String DESCRIPTION_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getDifferenceDescription() <em>Difference Description</em>}' attribute.
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDifferenceDescription()
+	 * @see #getDescription()
 	 * @generated
 	 * @ordered
 	 */
-	protected String differenceDescription = DIFFERENCE_DESCRIPTION_EDEFAULT;
+	protected String description = DESCRIPTION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -120,8 +120,8 @@ public class R4EModelPositionImpl extends R4EPositionImpl implements R4EModelPos
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getDifferenceDescription() {
-		return differenceDescription;
+	public String getDescription() {
+		return description;
 	}
 
 	/**
@@ -129,11 +129,11 @@ public class R4EModelPositionImpl extends R4EPositionImpl implements R4EModelPos
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setDifferenceDescription(String newDifferenceDescription) {
-		String oldDifferenceDescription = differenceDescription;
-		differenceDescription = newDifferenceDescription;
+	public void setDescription(String newDescription) {
+		String oldDescription = description;
+		description = newDescription;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_MODEL_POSITION__DIFFERENCE_DESCRIPTION, oldDifferenceDescription, differenceDescription));
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_MODEL_POSITION__DESCRIPTION, oldDescription, description));
 	}
 
 	/**
@@ -146,8 +146,8 @@ public class R4EModelPositionImpl extends R4EPositionImpl implements R4EModelPos
 		switch (featureID) {
 			case RModelPackage.R4E_MODEL_POSITION__OBJECT_ID:
 				return getObjectID();
-			case RModelPackage.R4E_MODEL_POSITION__DIFFERENCE_DESCRIPTION:
-				return getDifferenceDescription();
+			case RModelPackage.R4E_MODEL_POSITION__DESCRIPTION:
+				return getDescription();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -163,8 +163,8 @@ public class R4EModelPositionImpl extends R4EPositionImpl implements R4EModelPos
 			case RModelPackage.R4E_MODEL_POSITION__OBJECT_ID:
 				setObjectID((String)newValue);
 				return;
-			case RModelPackage.R4E_MODEL_POSITION__DIFFERENCE_DESCRIPTION:
-				setDifferenceDescription((String)newValue);
+			case RModelPackage.R4E_MODEL_POSITION__DESCRIPTION:
+				setDescription((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -181,8 +181,8 @@ public class R4EModelPositionImpl extends R4EPositionImpl implements R4EModelPos
 			case RModelPackage.R4E_MODEL_POSITION__OBJECT_ID:
 				setObjectID(OBJECT_ID_EDEFAULT);
 				return;
-			case RModelPackage.R4E_MODEL_POSITION__DIFFERENCE_DESCRIPTION:
-				setDifferenceDescription(DIFFERENCE_DESCRIPTION_EDEFAULT);
+			case RModelPackage.R4E_MODEL_POSITION__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -198,8 +198,8 @@ public class R4EModelPositionImpl extends R4EPositionImpl implements R4EModelPos
 		switch (featureID) {
 			case RModelPackage.R4E_MODEL_POSITION__OBJECT_ID:
 				return OBJECT_ID_EDEFAULT == null ? objectID != null : !OBJECT_ID_EDEFAULT.equals(objectID);
-			case RModelPackage.R4E_MODEL_POSITION__DIFFERENCE_DESCRIPTION:
-				return DIFFERENCE_DESCRIPTION_EDEFAULT == null ? differenceDescription != null : !DIFFERENCE_DESCRIPTION_EDEFAULT.equals(differenceDescription);
+			case RModelPackage.R4E_MODEL_POSITION__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -216,8 +216,8 @@ public class R4EModelPositionImpl extends R4EPositionImpl implements R4EModelPos
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (objectID: ");
 		result.append(objectID);
-		result.append(", differenceDescription: ");
-		result.append(differenceDescription);
+		result.append(", description: ");
+		result.append(description);
 		result.append(')');
 		return result.toString();
 	}

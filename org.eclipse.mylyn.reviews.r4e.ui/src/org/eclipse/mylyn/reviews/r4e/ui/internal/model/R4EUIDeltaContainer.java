@@ -23,6 +23,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -117,9 +118,9 @@ public class R4EUIDeltaContainer extends R4EUIContentsContainer {
 								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					R4EPosition position = deltas.get(i).getTarget().getLocation();
 					if (position instanceof R4EModelPosition) {
-						uiPosition = new R4EUIModelPosition(position);
-					} else {
-						uiPosition = new R4EUITextPosition(position);
+						uiPosition = new R4EUIModelPosition((R4EModelPosition) position);
+					} else if (position instanceof R4ETextPosition) {
+						uiPosition = new R4EUITextPosition((R4ETextPosition) position);
 					}
 					newDelta = new R4EUIDelta(this, deltas.get(i), uiPosition);
 					addChildren(newDelta);

@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
 import org.eclipse.mylyn.reviews.r4e.core.Activator;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
@@ -43,6 +42,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -1322,22 +1322,54 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 		return txtContent;
 	}
 
-	public R4EAnomalyTextPosition createR4EAnomalyTextPosition(R4EContent content) throws ResourceHandlingException {
-		R4EAnomalyTextPosition textPosition = null;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EAnomalyTextPosition
+	 * (org.eclipse.mylyn.reviews.r4e.core.model.R4EContent)
+	 */
+	public R4ETextPosition createR4EAnomalyTextPosition(R4EContent content) throws ResourceHandlingException {
+		R4ETextPosition position = null;
 		if (!(isAssociatedToResource(content))) {
 			StringBuilder sb = new StringBuilder(
-					"Can not create an R4EAnomalyTextPosition from a Content not associated to a Resource");
+					"Can not create an R4ETextPosition from a Content not associated to a Resource");
 			throw new ResourceHandlingException(sb.toString());
 		}
 
-		textPosition = RModelFactoryExt.eINSTANCE.createR4EAnomalyTextPosition();
-		content.setLocation(textPosition);
+		position = RModelFactoryExt.eINSTANCE.createR4ETextPosition();
+		content.setLocation(position);
 
 		// Associate to resource and save
-		content.eResource().getContents().add(textPosition);
-		fWriter.saveResource(textPosition.eResource());
+		content.eResource().getContents().add(position);
+		fWriter.saveResource(position.eResource());
 
-		return textPosition;
+		return position;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EAnomalyModelPosition
+	 * (org.eclipse.mylyn.reviews.r4e.core.model.R4EContent)
+	 */
+	public R4EModelPosition createR4EAnomalyModelPosition(R4EContent content) throws ResourceHandlingException {
+		R4EModelPosition position = null;
+		if (!(isAssociatedToResource(content))) {
+			StringBuilder sb = new StringBuilder(
+					"Can not create an R4EModelPosition from a Content not associated to a Resource");
+			throw new ResourceHandlingException(sb.toString());
+		}
+
+		position = RModelFactoryExt.eINSTANCE.createR4EModelPosition();
+		content.setLocation(position);
+
+		// Associate to resource and save
+		content.eResource().getContents().add(position);
+		fWriter.saveResource(position.eResource());
+
+		return position;
 	}
 
 	/*
@@ -1347,18 +1379,18 @@ public class RModelFactoryExtImpl implements Persistence.RModelFactoryExt {
 	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EFileVersion(org.eclipse
 	 * .mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition)
 	 */
-	public R4EFileVersion createR4EFileVersion(R4EAnomalyTextPosition txtPosition) throws ResourceHandlingException {
+	public R4EFileVersion createR4EFileVersion(R4EPosition aPosition) throws ResourceHandlingException {
 		R4EFileVersion fileVersion = null;
-		if (!(isAssociatedToResource(txtPosition))) {
+		if (!(isAssociatedToResource(aPosition))) {
 			StringBuilder sb = new StringBuilder(
-					"Can not create FileVersion from an txtPosition not associated to a Resource");
+					"Can not create FileVersion from an position not associated to a Resource");
 			throw new ResourceHandlingException(sb.toString());
 		}
 
 		fileVersion = RModelFactoryExt.eINSTANCE.createR4EFileVersion();
-		txtPosition.eResource().getContents().add(fileVersion);
+		aPosition.eResource().getContents().add(fileVersion);
 
-		txtPosition.setFile(fileVersion);
+		aPosition.setAnomalyFile(fileVersion);
 		fWriter.saveResource(fileVersion.eResource());
 		return fileVersion;
 	}

@@ -132,12 +132,12 @@ public class R4EUITextPosition implements IR4EUIPosition {
 	 * @param aModelPosition
 	 *            R4EPosition
 	 */
-	public R4EUITextPosition(R4EPosition aModelPosition) {
-		fPosition = (R4ETextPosition) aModelPosition;
-		fOffset = ((R4ETextPosition) aModelPosition).getStartPosition();
-		fLength = ((R4ETextPosition) aModelPosition).getLength();
-		fStartLine = ((R4ETextPosition) aModelPosition).getStartLine();
-		fEndLine = ((R4ETextPosition) aModelPosition).getEndLine();
+	public R4EUITextPosition(R4ETextPosition aModelPosition) {
+		fPosition = aModelPosition;
+		fOffset = aModelPosition.getStartPosition();
+		fLength = aModelPosition.getLength();
+		fStartLine = aModelPosition.getStartLine();
+		fEndLine = aModelPosition.getEndLine();
 		fName = ((R4EContent) fPosition.eContainer()).getInfo();
 	}
 
@@ -308,10 +308,13 @@ public class R4EUITextPosition implements IR4EUIPosition {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition#isSameAs(IR4EUIPosition)
 	 */
 	public boolean isSameAs(IR4EUIPosition aPosition) {
-		if (fOffset == ((R4EUITextPosition) aPosition).getOffset()
-				&& fLength == ((R4EUITextPosition) aPosition).getLength()) {
-			return true;
+		if (aPosition instanceof R4EUITextPosition) {
+			if (fOffset == ((R4EUITextPosition) aPosition).getOffset()
+					&& fLength == ((R4EUITextPosition) aPosition).getLength()) {
+				return true;
+			}
 		}
+
 		return false;
 	}
 

@@ -41,21 +41,21 @@ public class R4EUIModelPosition implements IR4EUIPosition {
 
 	private final String fObjectID;
 
-	private final String fDifferenceDescription;
+	private final String fDescription;
 
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	public R4EUIModelPosition(R4EPosition aModelPosition) {
-		fPosition = (R4EModelPosition) aModelPosition;
-		fObjectID = ((R4EModelPosition) aModelPosition).getObjectID();
-		fDifferenceDescription = ((R4EModelPosition) aModelPosition).getDifferenceDescription();
+	public R4EUIModelPosition(R4EModelPosition aModelPosition) {
+		fPosition = aModelPosition;
+		fObjectID = aModelPosition.getObjectID();
+		fDescription = aModelPosition.getDescription();
 	}
 
 	public R4EUIModelPosition(DiffElement aDiff) {
 		EObject obj = DiffUtil.getElement(aDiff, Side.LEFT, EObject.class);
 		fObjectID = obj.eResource().getURIFragment(obj);
-		fDifferenceDescription = AdapterUtils.getItemProviderText(aDiff);
+		fDescription = AdapterUtils.getItemProviderText(aDiff);
 	}
 
 	// ------------------------------------------------------------------------
@@ -81,7 +81,7 @@ public class R4EUIModelPosition implements IR4EUIPosition {
 		fPosition = (R4EModelPosition) aModelPosition;
 		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fPosition, R4EUIModelController.getReviewer());
 		fPosition.setObjectID(fObjectID);
-		fPosition.setDifferenceDescription(fDifferenceDescription);
+		fPosition.setDescription(fDescription);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 		final R4EContent content = (R4EContent) fPosition.eContainer();
@@ -99,7 +99,11 @@ public class R4EUIModelPosition implements IR4EUIPosition {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition#isSameAs(IR4EUIPosition)
 	 */
 	public boolean isSameAs(IR4EUIPosition aPosition) {
-		return fObjectID.equals(((R4EModelPosition) aPosition).getObjectID());
+		if (!(aPosition instanceof R4EUIModelPosition)) {
+			return false;
+		}
+
+		return fObjectID.equals(((R4EUIModelPosition) aPosition).getObjectID());
 	}
 
 	/**
@@ -110,6 +114,6 @@ public class R4EUIModelPosition implements IR4EUIPosition {
 	 */
 	@Override
 	public String toString() {
-		return fDifferenceDescription;
+		return fDescription;
 	}
 }

@@ -210,7 +210,9 @@
         eType="#//R4EPosition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="info" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="R4EPosition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="R4EPosition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="anomalyFile" eType="#//R4EFileVersion"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EFileVersion">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="platformURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="versionID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -254,8 +256,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" eType="#//R4EUserReviews"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EAnomalyTextPosition" eSuperTypes="#//R4ETextPosition">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="file" eType="#//R4EFileVersion"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="file" eType="#//R4EFileVersion"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="R4EContextType">
     <eLiterals name="R4E_UNDEFINED" value="4"/>
@@ -293,7 +294,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="R4EModelPosition" eSuperTypes="#//R4EPosition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="objectID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="differenceDescription"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -23,7 +23,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -113,7 +115,7 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 	public void open() {
 		final EList<R4EDelta> selections = ((R4EUIFileContext) getParent()).getFileContext().getDeltas();
 		if (null != selections) {
-			R4EUITextPosition position = null;
+			IR4EUIPosition uiPosition = null;
 			R4EUISelection newSelection = null;
 			final int selectionsSize = selections.size();
 			R4EDelta selection = null;
@@ -123,8 +125,13 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 						|| R4EUIPlugin.getDefault()
 								.getPreferenceStore()
 								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-					position = new R4EUITextPosition(selections.get(i).getTarget().getLocation());
-					newSelection = new R4EUISelection(this, selections.get(i), position);
+					R4EPosition pos = selections.get(i).getTarget().getLocation();
+					if (pos instanceof R4ETextPosition) {
+						uiPosition = new R4EUITextPosition(((R4ETextPosition) pos));
+					} else if (pos instanceof R4EModelPosition) {
+						uiPosition = new R4EUIModelPosition((R4EModelPosition) pos);
+					}
+					newSelection = new R4EUISelection(this, selections.get(i), uiPosition);
 					addChildren(newSelection);
 				}
 			}

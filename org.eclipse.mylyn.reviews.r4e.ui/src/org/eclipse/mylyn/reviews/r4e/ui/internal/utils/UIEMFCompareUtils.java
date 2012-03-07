@@ -128,7 +128,7 @@ public class UIEMFCompareUtils {
 	 *            IDiffElement
 	 * @return R4EUIModelPosition
 	 */
-	private static R4EUIModelPosition getPosition(DiffElement aDiff) {
+	public static R4EUIModelPosition getPosition(DiffElement aDiff) {
 		final R4EUIModelPosition position = new R4EUIModelPosition(aDiff);
 		return position;
 	}

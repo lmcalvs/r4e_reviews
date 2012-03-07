@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
@@ -1147,14 +1146,11 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 		return factoryExtension.createR4ETextContent(anomaly);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#creeateR4EAnomalyTextPosition
-	 * (org.eclipse.mylyn.reviews.r4e.core.model.R4EContent)
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EAnomalyTextPosition(org.eclipse.mylyn.reviews.r4e.core.model.R4EContent)
 	 */
-	public R4EAnomalyTextPosition createR4EAnomalyTextPosition(R4EContent content) throws ResourceHandlingException {
+	public R4ETextPosition createR4EAnomalyTextPosition(R4EContent content) throws ResourceHandlingException {
 		return factoryExtension.createR4EAnomalyTextPosition(content);
 	}
 
@@ -1162,11 +1158,22 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#creeateR4EFileVersion(org.eclipse
-	 * .mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition)
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EAnomalyTextPosition
+	 * (org.eclipse.mylyn.reviews.r4e.core.model.R4EContent)
 	 */
-	public R4EFileVersion createR4EFileVersion(R4EAnomalyTextPosition fileVersion) throws ResourceHandlingException {
-		return factoryExtension.createR4EFileVersion(fileVersion);
+	public R4EModelPosition createR4EAnomalyModelPosition(R4EContent content) throws ResourceHandlingException {
+		return factoryExtension.createR4EAnomalyModelPosition(content);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.UserCommentResFactory#createR4EFileVersion(org.eclipse
+	 * .mylyn.reviews.r4e.core.model.R4EPosition)
+	 */
+	public R4EFileVersion createR4EFileVersion(R4EPosition position) throws ResourceHandlingException {
+		return factoryExtension.createR4EFileVersion(position);
 	}
 
 	/*

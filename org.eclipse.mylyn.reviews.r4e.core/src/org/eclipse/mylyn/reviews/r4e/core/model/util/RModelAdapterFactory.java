@@ -16,7 +16,6 @@ package org.eclipse.mylyn.reviews.r4e.core.model.util;
 
 import java.util.Date;
 import java.util.Map;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
@@ -34,30 +33,6 @@ import org.eclipse.mylyn.reviews.frame.core.model.TaskReference;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.frame.core.model.User;
 import org.eclipse.mylyn.reviews.r4e.core.model.*;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewDecision;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ETaskReference;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextContent;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
@@ -322,7 +297,6 @@ public class RModelAdapterFactory extends AdapterFactoryImpl {
 	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject)target);
 	}
-
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup <em>R4E Review Group</em>}'.

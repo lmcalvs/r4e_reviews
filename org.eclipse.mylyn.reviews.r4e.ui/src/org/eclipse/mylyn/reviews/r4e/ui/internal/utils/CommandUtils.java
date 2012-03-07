@@ -50,6 +50,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
@@ -594,18 +595,16 @@ public class CommandUtils {
 	}
 
 	/**
-	 * Method getAnomalyPosition.
+	 * Method getAnomalyPosition
 	 * 
 	 * @param aAnomaly
-	 *            R4EAnomaly
-	 * @return R4EAnomalyTextPosition
+	 * @return
 	 */
-	public static R4EAnomalyTextPosition getAnomalyPosition(R4EAnomaly aAnomaly) {
+	public static R4EPosition getAnomalyPosition(R4EAnomaly aAnomaly) {
 		final EList<Location> location = aAnomaly.getLocation();
 		if (location.size() > 0) {
 			final R4EContent content = (R4EContent) location.get(0); //look at first location only
-			final R4EAnomalyTextPosition position = (R4EAnomalyTextPosition) content.getLocation();
-			return position;
+			return content.getLocation();
 		}
 		return null;
 	}
@@ -621,8 +620,13 @@ public class CommandUtils {
 		final EList<Location> location = aAnomaly.getLocation();
 		if (location.size() > 0) {
 			final R4EContent content = (R4EContent) location.get(0); //look at first location only
-			final R4EAnomalyTextPosition position = (R4EAnomalyTextPosition) content.getLocation();
-			return position.getFile();
+			final R4EPosition position = content.getLocation();
+			R4EFileVersion fileVersion = position.getAnomalyFile();
+			//TODO: Keep for backward compatibility until the deprecated R4EAnomalyTextPosition is removed from the core model
+			if (fileVersion == null && position instanceof R4EAnomalyTextPosition) {
+				fileVersion = ((R4EAnomalyTextPosition) position).getFile();
+			}
+			return fileVersion;
 		}
 		return null;
 	}

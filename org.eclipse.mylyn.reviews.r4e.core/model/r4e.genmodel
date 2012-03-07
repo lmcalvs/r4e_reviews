@@ -182,7 +182,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContent/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContent/info"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EPosition"/>
+    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EPosition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EPosition/anomalyFile"/>
+    </genClasses>
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion/platformURI"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion/versionID"/>
@@ -248,7 +250,7 @@
     </genClasses>
     <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EModelPosition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EModelPosition/objectID"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EModelPosition/differenceDescription"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EModelPosition/description"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

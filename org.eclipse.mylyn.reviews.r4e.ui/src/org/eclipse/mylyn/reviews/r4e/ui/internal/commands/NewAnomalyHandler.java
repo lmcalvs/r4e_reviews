@@ -29,6 +29,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.compare.diff.metamodel.DiffElement;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -57,6 +58,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIEMFCompareUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -110,10 +112,8 @@ public class NewAnomalyHandler extends AbstractHandler {
 		//Act differently depending on the type of selection we get
 		final ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof ITextSelection) {
-			addAnomalyFromText((ITextSelection) selection);
-
+			addAnomalyFromEditor(CommandUtils.getPosition((ITextSelection) selection));
 		} else if (selection instanceof ITreeSelection) {
-
 			//First remove any editor selection (if open) if we execute the command from the review navigator view
 			if (null != editorPart && editorPart instanceof ITextEditor) {
 				((ITextEditor) editorPart).getSelectionProvider().setSelection(null);
@@ -121,8 +121,16 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 			//Then iterate through all selections	
 			for (final Iterator<?> iterator = ((ITreeSelection) selection).iterator(); iterator.hasNext();) {
-				addAnomalyFromTree(iterator.next());
+				Object sel = iterator.next();
+				if (sel instanceof DiffElement) {
+					System.out.println("a diffelement detected here");
+					//Selection of emf compare delta structure
+					addAnomalyFromEditor(UIEMFCompareUtils.getPosition((DiffElement) sel));
+				} else {
+					addAnomalyFromTree(iterator.next());
+				}
 			}
+
 		} else if (selection.isEmpty()) {
 			//Try to get the active editor highlighted range and set it as the editor's selection
 			if (null != editorPart) {
@@ -132,7 +140,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 							((ITextEditor) editorPart).getDocumentProvider().getDocument(editorPart.getEditorInput()),
 							region.getOffset(), region.getLength());
 					((ITextEditor) editorPart).getSelectionProvider().setSelection(selectedText);
-					addAnomalyFromText(selectedText);
+					addAnomalyFromEditor(CommandUtils.getPosition(selectedText));
 				}
 			}
 		}
@@ -145,17 +153,16 @@ public class NewAnomalyHandler extends AbstractHandler {
 	 * @param aSelection
 	 *            ITextSelection
 	 */
-	private void addAnomalyFromText(ITextSelection aSelection) {
+	private void addAnomalyFromEditor(IR4EUIPosition aUIPosition) {
 		//This is a text selection in a text editor, we need to get the file path and
 		//the position of the selection within the file
 		try {
-			final R4EUITextPosition position = CommandUtils.getPosition(aSelection);
 			final R4EFileVersion baseVersion = CommandUtils.getBaseFileData();
 			final R4EFileVersion targetVersion = CommandUtils.getTargetFileData();
 
 			//Add anomaly to model
 			if (null != targetVersion) {
-				addAnomaly(baseVersion, targetVersion, position);
+				addAnomaly(baseVersion, targetVersion, aUIPosition);
 			} else {
 				R4EUIPlugin.Ftracer.traceWarning("Trying to add review item to base file");
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
@@ -405,8 +412,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 	private void addAnomalyToExistingFileContext(R4EFileVersion aTargetFileVersion, R4EUIAnomalyContainer aContainer,
 			IR4EUIPosition aUIPosition) throws ResourceHandlingException, OutOfSyncException {
 
-		final R4EUIAnomalyBasic uiAnomaly = aContainer.createAnomaly(aTargetFileVersion,
-				(R4EUITextPosition) aUIPosition);
+		final R4EUIAnomalyBasic uiAnomaly = aContainer.createAnomaly(aTargetFileVersion, aUIPosition);
 		UIUtils.setNavigatorViewFocus(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
 	}
 

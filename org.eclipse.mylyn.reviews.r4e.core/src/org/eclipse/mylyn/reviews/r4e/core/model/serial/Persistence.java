@@ -22,7 +22,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
@@ -33,6 +32,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EModelPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhaseInfo;
@@ -367,19 +367,31 @@ public interface Persistence {
 				throws ResourceHandlingException;
 
 		/**
+		 * Create an R4EPosition element for text content
+		 * 
 		 * @param content
 		 * @return
 		 * @throws ResourceHandlingException
 		 */
-		public R4EAnomalyTextPosition createR4EAnomalyTextPosition(R4EContent content)
-				throws ResourceHandlingException;
+		public R4ETextPosition createR4EAnomalyTextPosition(R4EContent content) throws ResourceHandlingException;
 
 		/**
-		 * @param txtPosition
+		 * Create a R4EPosition for model content
+		 * 
+		 * @param content
 		 * @return
 		 * @throws ResourceHandlingException
 		 */
-		public R4EFileVersion createR4EFileVersion(R4EAnomalyTextPosition txtPosition)
+		public R4EModelPosition createR4EAnomalyModelPosition(R4EContent content)
+				throws ResourceHandlingException;
+
+
+		/**
+		 * @param aPosition
+		 * @return
+		 * @throws ResourceHandlingException
+		 */
+		public R4EFileVersion createR4EFileVersion(R4EPosition aPosition)
 				throws ResourceHandlingException;
 
 		/**
