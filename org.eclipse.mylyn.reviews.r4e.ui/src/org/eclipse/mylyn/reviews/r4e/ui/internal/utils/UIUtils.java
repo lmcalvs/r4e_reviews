@@ -545,16 +545,19 @@ public class UIUtils {
 	}
 
 	public static void selectElementInEditor(IEditorPart editor) {
-
 		final IR4EUIModelElement element = getR4EUIElement();
+		IR4EUIPosition position = null;
 		if (element instanceof R4EUIContent) {
-			final IR4EUIPosition position = ((R4EUIContent) element).getPosition();
-			if (position instanceof R4EUIModelPosition) {
-				selectElementInCompareModelEditor(editor, (R4EUIModelPosition) position);
-			} else {
-				final IEditorInput aInput = editor.getEditorInput();
-				selectElementInEditor((R4ECompareEditorInput) aInput);
-			}
+			position = ((R4EUIContent) element).getPosition();
+		} else if (element instanceof R4EUIAnomalyBasic) {
+			position = ((R4EUIAnomalyBasic) element).getPosition();
+		}
+
+		if (position instanceof R4EUIModelPosition) {
+			selectElementInCompareModelEditor(editor, (R4EUIModelPosition) position);
+		} else {
+			final IEditorInput aInput = editor.getEditorInput();
+			selectElementInEditor((R4ECompareEditorInput) aInput);
 		}
 	}
 
@@ -881,20 +884,21 @@ public class UIUtils {
 	 * @return
 	 */
 	public static boolean isEMFCompareActive() {
-		boolean active = false;
-		try {
-			Class emfCompareCheck = Class.forName("org.eclipse.mylyn.reviews.r4e.internal.emf.compare.EMFCompareCheck.java"); //$NON-NLS-1$
-			Object obj = emfCompareCheck.newInstance();
-			if (obj != null) {
-				active = true;
-			}
-		} catch (ClassNotFoundException e) {
-			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java class not found"); //$NON-NLS-1$
-		} catch (InstantiationException e) {
-			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Initiation Exception"); //$NON-NLS-1$
-		} catch (IllegalAccessException e) {
-			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Illegal Access Exception"); //$NON-NLS-1$
-		}
+		boolean active = true;
+		//TODO: Fix me
+//		try {
+//			Class emfCompareCheck = Class.forName("org.eclipse.mylyn.reviews.r4e.internal.emf.compare.EMFCompareCheck.java"); //$NON-NLS-1$
+//			Object obj = emfCompareCheck.newInstance();
+//			if (obj != null) {
+//				active = true;
+//			}
+//		} catch (ClassNotFoundException e) {
+//			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java class not found"); //$NON-NLS-1$
+//		} catch (InstantiationException e) {
+//			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Initiation Exception"); //$NON-NLS-1$
+//		} catch (IllegalAccessException e) {
+//			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Illegal Access Exception"); //$NON-NLS-1$
+//		}
 
 		return active;
 	}
