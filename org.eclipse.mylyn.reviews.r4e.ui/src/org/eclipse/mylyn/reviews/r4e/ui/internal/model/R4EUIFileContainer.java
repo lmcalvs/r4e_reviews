@@ -202,28 +202,36 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 					}
 				}
 			}
-
-			try {
-				final R4EUIReviewBasic review = (R4EUIReviewBasic) getParent();
-				final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
-
-				if (null != user) {
-					//Check if the file contexts are part of the reviewed content
-					for (R4EUIFileContext uiFile : fFileContexts) {
-						if (user.getReviewedContent().contains(uiFile.getFileContext().getId())) {
-							uiFile.setUserReviewed(true, true);
-						}
-					}
-				}
-			} catch (ResourceHandlingException e) {
-				UIUtils.displayResourceErrorDialog(e);
-
-			} catch (OutOfSyncException e) {
-				UIUtils.displaySyncErrorDialog(e);
-
-			}
 		}
 		fOpen = true;
+	}
+
+	/**
+	 * Method verifyUserReviewed.
+	 */
+	public void verifyUserReviewed() {
+		try {
+			final R4EUIReviewBasic review = (R4EUIReviewBasic) getParent();
+			final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
+
+			if (null != user) {
+
+				//Check if the file contexts are part of the reviewed content
+				for (R4EUIFileContext uiFile : fFileContexts) {
+					uiFile.verifyUserReviewed();
+				}
+				for (R4EUIFileContext uiFile : fFileContexts) {
+					if (user.getReviewedContent().contains(uiFile.getFileContext().getId())) {
+						uiFile.setUserReviewed(true, true);
+					}
+				}
+			}
+		} catch (ResourceHandlingException e) {
+			UIUtils.displayResourceErrorDialog(e);
+
+		} catch (OutOfSyncException e) {
+			UIUtils.displaySyncErrorDialog(e);
+		}
 	}
 
 	/**

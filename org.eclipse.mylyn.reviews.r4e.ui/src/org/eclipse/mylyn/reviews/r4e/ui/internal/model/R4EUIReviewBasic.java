@@ -666,6 +666,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						addChildren(uiItem);
 					}
 				}
+
+				//Verify if children should be marked as user reviewed
+				for (R4EUIReviewItem checkItem : fItems) {
+					checkItem.verifyUserReviewed();
+				}
+
 			}
 
 			fAnomalyContainer.setReadOnly(fReadOnly);

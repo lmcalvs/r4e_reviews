@@ -748,6 +748,13 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		removeChildren(fAnomalyContainer, aFileRemove);
 	}
 
+	/**
+	 * Method verifyUserReviewed.
+	 */
+	public void verifyUserReviewed() {
+		fContentsContainer.verifyUserReviewed();
+	}
+
 	//Listeners
 
 	/**

@@ -29,7 +29,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 
 /**
  * @author lmcdubo
@@ -127,26 +126,6 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 					newSelection = new R4EUISelection(this, selections.get(i), position);
 					addChildren(newSelection);
 				}
-			}
-
-			try {
-				final R4EUIReviewBasic review = (R4EUIReviewBasic) getParent().getParent().getParent();
-				final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
-
-				if (null != user) {
-					//Check if the file contexts are part of the reviewed content
-					for (R4EUIContent uiSelection : fContents) {
-						if (user.getReviewedContent().contains(uiSelection.getContent().getId())) {
-							uiSelection.setUserReviewed(true, true);
-						}
-					}
-				}
-			} catch (ResourceHandlingException e) {
-				UIUtils.displayResourceErrorDialog(e);
-
-			} catch (OutOfSyncException e) {
-				UIUtils.displaySyncErrorDialog(e);
-
 			}
 		}
 		fOpen = true;

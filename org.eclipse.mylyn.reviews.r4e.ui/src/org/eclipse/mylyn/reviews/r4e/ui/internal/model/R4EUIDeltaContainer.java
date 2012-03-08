@@ -20,13 +20,11 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
-import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 
 /**
  * @author lmcdubo
@@ -111,25 +109,6 @@ public class R4EUIDeltaContainer extends R4EUIContentsContainer {
 					newDelta = new R4EUIDelta(this, deltas.get(i), position);
 					addChildren(newDelta);
 				}
-			}
-
-			try {
-				final R4EUIReviewBasic review = (R4EUIReviewBasic) getParent().getParent().getParent();
-				final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
-
-				if (null != user) {
-					//Check if the file contexts are part of the reviewed content
-					for (R4EUIContent uiDelta : fContents) {
-						if (user.getReviewedContent().contains(uiDelta.getContent().getId())) {
-							uiDelta.setUserReviewed(true, true);
-						}
-					}
-				}
-			} catch (ResourceHandlingException e) {
-				UIUtils.displayResourceErrorDialog(e);
-
-			} catch (OutOfSyncException e) {
-				UIUtils.displaySyncErrorDialog(e);
 			}
 		}
 		fOpen = true;

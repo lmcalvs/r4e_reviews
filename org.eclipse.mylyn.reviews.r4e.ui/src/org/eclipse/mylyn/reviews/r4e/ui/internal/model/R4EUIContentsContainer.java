@@ -23,11 +23,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 
 /**
  * @author lmcdubo
@@ -202,6 +204,30 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 		//Recursively remove all children
 		for (R4EUIContent content : fContents) {
 			removeChildren(content, aFileRemove);
+		}
+	}
+
+	/**
+	 * Method verifyUserReviewed.
+	 */
+	public void verifyUserReviewed() {
+		try {
+			final R4EUIReviewBasic review = (R4EUIReviewBasic) getParent().getParent().getParent();
+			final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), false);
+
+			if (null != user) {
+				//Check if the file contexts are part of the reviewed content
+				for (R4EUIContent uiContent : fContents) {
+					if (user.getReviewedContent().contains(uiContent.getContent().getId())) {
+						uiContent.setUserReviewed(true, true);
+					}
+				}
+			}
+		} catch (ResourceHandlingException e) {
+			UIUtils.displayResourceErrorDialog(e);
+
+		} catch (OutOfSyncException e) {
+			UIUtils.displaySyncErrorDialog(e);
 		}
 	}
 
