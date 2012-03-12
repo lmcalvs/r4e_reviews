@@ -884,21 +884,21 @@ public class UIUtils {
 	 * @return
 	 */
 	public static boolean isEMFCompareActive() {
-		boolean active = true;
-		//TODO: Fix me
-//		try {
-//			Class emfCompareCheck = Class.forName("org.eclipse.mylyn.reviews.r4e.internal.emf.compare.EMFCompareCheck.java"); //$NON-NLS-1$
-//			Object obj = emfCompareCheck.newInstance();
-//			if (obj != null) {
-//				active = true;
-//			}
-//		} catch (ClassNotFoundException e) {
-//			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java class not found"); //$NON-NLS-1$
-//		} catch (InstantiationException e) {
-//			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Initiation Exception"); //$NON-NLS-1$
-//		} catch (IllegalAccessException e) {
-//			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Illegal Access Exception"); //$NON-NLS-1$
-//		}
+		boolean active = false;
+
+		try {
+			Class emfCompareCheck = Class.forName("org.eclipse.mylyn.reviews.r4e.internal.emf.compare.EMFCompareCheck"); //$NON-NLS-1$
+			Object obj = emfCompareCheck.newInstance();
+			if (obj != null) {
+				active = true;
+			}
+		} catch (ClassNotFoundException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java class not found"); //$NON-NLS-1$
+		} catch (InstantiationException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Initiation Exception"); //$NON-NLS-1$
+		} catch (IllegalAccessException e) {
+			R4EUIPlugin.Ftracer.traceInfo("EMF Compare is not active i.e.EMFCompareCheck.java Illegal Access Exception"); //$NON-NLS-1$
+		}
 
 		return active;
 	}

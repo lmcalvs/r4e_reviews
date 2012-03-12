@@ -123,7 +123,6 @@ public class NewAnomalyHandler extends AbstractHandler {
 			for (final Iterator<?> iterator = ((ITreeSelection) selection).iterator(); iterator.hasNext();) {
 				Object sel = iterator.next();
 				if (sel instanceof DiffElement) {
-					System.out.println("a diffelement detected here");
 					//Selection of emf compare delta structure
 					addAnomalyFromEditor(UIEMFCompareUtils.getPosition((DiffElement) sel));
 				} else {
