@@ -906,32 +906,43 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 		PreferenceConstants.setUserEmailDefaultPreferences();
 
+		//Set default filters and options
 		store.setValue(PreferenceConstants.P_USE_DELTAS, true);
 		fUseDeltasButton.setSelection(true);
+		store.setValue(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER, true);
+		fReviewsCompletedFilterButton.setSelection(true);
+		store.setValue(PreferenceConstants.P_HIDE_DELTAS_FILTER, true);
+		fHideDeltasFilterButton.setSelection(true);
 		fAutoImportPostponedButton.setSelection(false);
 
-		//Remove all Filters
+		//Remove non-default Filters
 		store.setValue(PreferenceConstants.P_SHOW_DISABLED, false);
 		fReviewShowDisabledButton.setSelection(false);
-		store.setValue(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER, false);
-		fReviewsCompletedFilterButton.setSelection(false);
 		store.setValue(PreferenceConstants.P_REVIEWS_ONLY_FILTER, false);
 		fReviewsOnlyFilterButton.setSelection(false);
-		store.setValue(PreferenceConstants.P_ANOMALIES_MY_FILTER, false);
-		fAnomaliesMyFilterButton.setSelection(false);
 		store.setValue(PreferenceConstants.P_REVIEWS_MY_FILTER, false);
 		fReviewMyFilterButton.setSelection(false);
-		store.setValue(PreferenceConstants.P_PARTICIPANT_FILTER, "");
+		store.setValue(PreferenceConstants.P_PARTICIPANT_FILTER, ""); //$NON-NLS-1$
 		fParticipantFilterButton.setSelection(false);
-		fParticipantIdText.setText("");
+		fParticipantIdText.setText(""); //$NON-NLS-1$
+		store.setValue(PreferenceConstants.P_ASSIGN_MY_FILTER, false);
+		fAssignMyFilterButton.setSelection(false);
+		fAssignMyFilterButton.setEnabled(true);
+		store.setValue(PreferenceConstants.P_ASSIGN_FILTER, false);
+		fAssignFilterButton.setSelection(false);
+		fAssignIdText.setEnabled(true);
+		fAssignIdText.setText(""); //$NON-NLS-1$
+		store.setValue(PreferenceConstants.P_UNASSIGN_FILTER, false);
+		fUnassignFilterButton.setSelection(false);
+		fUnassignFilterButton.setEnabled(true);
 		store.setValue(PreferenceConstants.P_ANOMALIES_ALL_FILTER, false);
 		fAnomaliesFilterButton.setSelection(false);
+		store.setValue(PreferenceConstants.P_ANOMALIES_MY_FILTER, false);
+		fAnomaliesMyFilterButton.setSelection(false);
 		store.setValue(PreferenceConstants.P_REVIEWED_ITEMS_FILTER, false);
 		fReviewedItemsFilterButton.setSelection(false);
 		store.setValue(PreferenceConstants.P_HIDE_RULE_SETS_FILTER, false);
 		fHideRuleSetsFilterButton.setSelection(false);
-		store.setValue(PreferenceConstants.P_HIDE_DELTAS_FILTER, true);
-		fHideDeltasFilterButton.setSelection(true);
 
 		//For field editors
 		super.performDefaults();
