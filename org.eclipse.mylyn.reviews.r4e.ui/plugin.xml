@@ -43,7 +43,7 @@
                   commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems"
                   icon="icons/view16/finditms_tsk.gif"
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems"
-                  label="Find Review Items"
+                  label="Find Review Items..."
                   mnemonic="F"
                   style="push"
                   tooltip="Find Review Items from a given Project in Workspace">
@@ -118,7 +118,7 @@
                   commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly"
                   icon="icons/view16/newanmly_tsk.png"
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly"
-                  label="New Anomaly"
+                  label="New Anomaly..."
                   mnemonic="A"
                   style="push"
                   tooltip="Add a New Anomaly to the Current Review">
@@ -154,7 +154,7 @@
                   commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification"
                   icon="icons/view16/sendmail_tsk.gif"
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification"
-                  label="Send Email/Notification"
+                  label="Send Email/Notification..."
                   mnemonic="N"
                   style="push"
                   tooltip="Send Email or Notification">
@@ -255,7 +255,7 @@
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
                icon="icons/elcl16/nxtstate_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
-               label="Progress State"
+               label="Progress State..."
                mnemonic="P"
                style="push"
                tooltip="Progress the element to one of its Next logical state">
@@ -272,7 +272,7 @@
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
                label="Change Display Type"
                mnemonic="D"
-               style="push"
+               style="toggle"
                tooltip="Toggle Display Type between Global Tree View and Review Tree Table View">
             <visibleWhen
                   checkEnabled="false">
@@ -423,7 +423,7 @@
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
                icon="icons/elcl16/nxtstate_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"
-               label="Progress State"
+               label="Progress State..."
                mnemonic="P"
                style="push"
                tooltip="Progress the element to one of its Next logical state">
@@ -444,7 +444,7 @@
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
                label="Change Display Type"
                mnemonic="D"
-               style="push"
+               style="toggle"
                tooltip="Toggle Display Type between Global Tree View and Review Tree Table View">
             <visibleWhen
                   checkEnabled="false">
@@ -903,6 +903,10 @@
             description="Toggle Display Type between Global Tree View and Review Tree Table View"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
             name="Change Display Type">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorElementCategory"

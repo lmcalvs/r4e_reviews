@@ -75,9 +75,9 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	public static final String REVIEW_GROUP_CLOSED_ICON_FILE = "icons/obj16/revgrpclsd_obj.gif";
 
 	/**
-	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Review"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""New Review..."")
 	 */
-	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Review";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Review...";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a new review to the current review group"")

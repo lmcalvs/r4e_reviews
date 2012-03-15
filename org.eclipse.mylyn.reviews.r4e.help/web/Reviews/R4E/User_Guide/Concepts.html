@@ -32,8 +32,8 @@
 		<h1 id="Concepts">Concepts</h1>
 		<h2 id="Basic_and_Informal_Reviews_workflows">Basic and Informal Reviews workflows</h2>
 		<p>R4E basic and informal reviews use a lightweight review process and can help to save time while performing reviews involving a small number of participants. It is also recommended to use them when using an agile methodology as development process. </p>
-		<p>The main difference between Basic and Informal Reviews is that there is no Anomaly state tracking in Basic reviews, while anomalies in Informal review are stateful and need to be closed in one way of another before the review can be completed. </p>
-		<p>The main differences of Basic and Informal compared to Formal reviews are: </p>
+		<p>The main difference between Basic and Informal Reviews is that there is no Anomaly state tracking in Basic reviews, while anomalies in Informal reviews are stateful and need to be closed in one way of another before the review can be completed. </p>
+		<p>The main differences of Basic and Informal reviews compared to Formal reviews are: </p>
 		<ul>
 			<li>There are no review phases. Reviews are either Active or Completed. </li>
 			<li>Anomalies can be created as long as the review is Active. For example, the author can create anomalies as soon as the review is created. </li>
@@ -98,7 +98,7 @@
 		<p>
 			<br/> 
 		</p>
-		<p>During the Decision phase, review participants meet and analyse all submitted anomalies. Together they agree on which anomalies should be accepted and fixed in this particular phase of the project. Anomalies can be rejected because they are invalid or duplicated. They can also be postponed to another project. All accepted anomalies are assigned to the relevant authors for the Rework phase. </p>
+		<p>During the Decision phase, review participants meet and analyze all submitted anomalies. Together they agree on which anomalies should be accepted and fixed in this particular phase of the project. Anomalies can be rejected because they are invalid or duplicated. They can also be postponed to another project. All accepted anomalies are assigned to the relevant authors for the Rework phase. </p>
 		<p>
 			<br/> 
 		</p>
@@ -130,11 +130,13 @@
 		<h2 id="Global_Anomaly">Global Anomaly</h2>
 		<p>In the context of R4E, Global Anomalies are Anomalies that do not tie to a specific file or part of a file, but are rather applicable to the whole review or are general comments. </p>
 		<h2 id="Lead">Lead</h2>
-		<p>A Lead is an R4E Participant that is responsible to monitor the progress of the review is coordinate the wok of the various participants. It should also be the person that has the final say on the closure of the review. </p>
+		<p>A Lead is an R4E Participant that is responsible to monitor the progress of the review and coordinate the work of the various participants. It should also be the person that has the final say on the closure of the review. </p>
 		<h2 id="Organizer">Organizer</h2>
 		<p>An Organizer is an R4E Participant that create the review and puts together the Review contents. Most of the time, the lead and the organizer are the same person. </p>
 		<h2 id="Participant">Participant</h2>
 		<p>A Participant is a user that is part at any given point of a review. A Participant can have one or more roles within the review. Possible roles includes Author, Lead, Organizer, or Reviewer </p>
+		<h2 id="Participants_List">Participants List</h2>
+		<p>A Participant List is a collection of multiple potential users, with their IDs and emails, which can be grouped together and added as a unit to a review.</p>
 		<h2 id="Postponed_Anomaly">Postponed Anomaly</h2>
 		<p>A Postponed Anomaly is an Anomaly that has been written in a previous review and that was set to state POSTPONED (i.e. it was not fixed/addressed then).  Postponed anomalies can be imported in subsequent reviews to be addressed.</p>
 		<h2 id="Resource_Review_Item">Resource Review Item</h2>
@@ -146,7 +148,7 @@
 		<h2 id="Review">Review</h2>
 		<p>A Review is a collection of Review Items that are to be reviewed together, by the same reviewers, within a given time period. </p>
 		<h2 id="Review_Item">Review Item</h2>
-		<p>A Review Item is a collection of file versions that will be reviewed as part of the current review. There are two types of Review Items currently supported: Commit Review Items and Resource Review Items. </p>
+		<p>A Review Item is a collection of file contexts that will be reviewed as part of the current review. There are two types of Review Items currently supported: Commit Review Items and Resource Review Items. </p>
 		<h2 id="Rule">Rule</h2>
 		<p>A Rule represents a Design Rule that is to be enforced in the code. Design Rules should be enforced by the reviewers at review time. When a Rule is used in creating an anomaly, its values become the default values for the anomaly. </p>
 		<h2 id="Rule_Set">Rule Set</h2>

@@ -96,6 +96,13 @@ public interface IR4EUIModelElement {
 	Image getDisabledImage();
 
 	/**
+	 * Gets the overlay image that indicate that the element is read-only
+	 * 
+	 * @return Image
+	 */
+	Image getReadOnlyImage();
+
+	/**
 	 * Gets the reviewed flag. Take note that this is not applicable to all model elements
 	 * 
 	 * @return true/false

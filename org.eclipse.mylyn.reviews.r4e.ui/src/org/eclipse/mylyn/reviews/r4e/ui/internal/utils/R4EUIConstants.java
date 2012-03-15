@@ -144,24 +144,24 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String PARTICIPANTS_LABEL = "Participants";
 
 	/**
-	 * Field CREATE_LABEL. (value is ""Create"")
+	 * Field CREATE_LABEL. (value is ""Create..."")
 	 */
-	public static final String CREATE_LABEL = "Create";
+	public static final String CREATE_LABEL = "Create...";
 
 	/**
-	 * Field UPDATE_LABEL. (value is ""Update"")
+	 * Field UPDATE_LABEL. (value is ""Update..."")
 	 */
-	public static final String UPDATE_LABEL = "Update";
+	public static final String UPDATE_LABEL = "Update...";
 
 	/**
-	 * Field ADD_LABEL. (value is ""Add"")
+	 * Field ADD_LABEL. (value is ""Add..."")
 	 */
-	public static final String ADD_LABEL = "Add";
+	public static final String ADD_LABEL = "Add...";
 
 	/**
-	 * Field REMOVE_LABEL. (value is ""Remove"")
+	 * Field REMOVE_LABEL. (value is ""Remove..."")
 	 */
-	public static final String REMOVE_LABEL = "Remove";
+	public static final String REMOVE_LABEL = "Remove...";
 
 	/**
 	 * Field REFRESH_LABEL. (value is ""Refresh"")
@@ -1108,9 +1108,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String NEW_LINKED_ANOMALY_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly";
 
 	/**
-	 * Field NEW_LINKED_ANOMALY_NAME. (value is ""New linked anomaly"")
+	 * Field NEW_LINKED_ANOMALY_NAME. (value is ""New Linked Anomaly..."")
 	 */
-	public static final String NEW_LINKED_ANOMALY_NAME = "New Linked Anomaly";
+	public static final String NEW_LINKED_ANOMALY_NAME = "New Linked Anomaly...";
 
 	/**
 	 * Field NEW_LINKED_ANOMALY_TOOLTIP. (value is ""Add a new anomaly that is linked to this selection"")
@@ -1194,9 +1194,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ASSIGN_TO_ICON_FILE = "icons/obj16/assign_tsk.png";
 
 	/**
-	 * Field ASSIGN_TO_COMMAND_NAME. (value is ""Assign to Participant"")
+	 * Field ASSIGN_TO_COMMAND_NAME. (value is ""Assign to Participant..."")
 	 */
-	public static final String ASSIGN_TO_COMMAND_NAME = "Assign to Participant";
+	public static final String ASSIGN_TO_COMMAND_NAME = "Assign to Participant...";
 
 	/**
 	 * Field ASSIGN_TO_COMMAND_TOOLTIP. (value is ""Assign Review Element to Participant(s)"")
@@ -1219,9 +1219,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String UNASSIGN_TO_ICON_FILE = "icons/obj16/unassign_tsk.png";
 
 	/**
-	 * Field UNASSIGN_TO_COMMAND_NAME. (value is ""Unassign Participant"")
+	 * Field UNASSIGN_TO_COMMAND_NAME. (value is ""Unassign Participant..."")
 	 */
-	public static final String UNASSIGN_TO_COMMAND_NAME = "Unassign Participant";
+	public static final String UNASSIGN_TO_COMMAND_NAME = "Unassign Participant...";
 
 	/**
 	 * Field UNASSIGN_TO_COMMAND_TOOLTIP. (value is ""Unassign Review Element from Participant(s)"")
@@ -1374,9 +1374,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String NEW_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Child Element";
 
 	/**
-	 * Field NEW_REVIEW_GROUP_COMMAND_NAME. (value is ""New Review Group"")
+	 * Field NEW_REVIEW_GROUP_COMMAND_NAME. (value is ""New Review Group..."")
 	 */
-	public static final String NEW_REVIEW_GROUP_COMMAND_NAME = "New Review Group";
+	public static final String NEW_REVIEW_GROUP_COMMAND_NAME = "New Review Group...";
 
 	/**
 	 * Field NEW_REVIEW_GROUP_COMMAND_TOOLTIP. (value is ""Add a New Review Group Element"")
@@ -1434,7 +1434,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String RESTORE_ELEMENT_COMMAND_MNEMONIC = "R";
 
 	/**
-	 * Field SEND_EMAIL_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.restoreElement"")
+	 * Field SEND_EMAIL_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification"")
 	 */
 	public static final String SEND_EMAIL_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification";
 
@@ -1444,9 +1444,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String SEND_EMAIL_ICON_FILE = "icons/view16/sendmail_tsk.gif";
 
 	/**
-	 * Field SEND_EMAIL_COMMAND_NAME. (value is ""Send Email/Notification"")
+	 * Field SEND_EMAIL_COMMAND_NAME. (value is ""Send Email/Notification..."")
 	 */
-	public static final String SEND_EMAIL_COMMAND_NAME = "Send Email/Notification";
+	public static final String SEND_EMAIL_COMMAND_NAME = "Send Email/Notification...";
 
 	/**
 	 * Field SEND_EMAIL_COMMAND_TOOLTIP. (value is ""Send Email or Notification"")

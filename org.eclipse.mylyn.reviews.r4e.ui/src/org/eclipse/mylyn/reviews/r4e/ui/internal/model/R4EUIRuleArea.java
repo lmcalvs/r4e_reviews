@@ -53,9 +53,9 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	public static final String RULE_AREA_ICON_FILE = "icons/obj16/rulearea_obj.gif";
 
 	/**
-	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Rule Violation"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""New Rule Violation..."")
 	 */
-	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Rule Violation";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Rule Violation...";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Rule Area to the Current Rule Set"")

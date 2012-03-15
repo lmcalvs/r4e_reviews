@@ -11,6 +11,7 @@
 				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Install_R4E_feature" label="Install R4E feature"></topic>
 				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Install_Versions_Connectors" label="Install Versions Connectors"></topic>
 				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Starting_R4E" label="Starting R4E"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Version_Compatibility" label="Version Compatibility"></topic>
 			</topic>
 			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_Configuration" label="R4E Configuration">
 				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_General_Preferences" label="R4E General Preferences">
@@ -59,6 +60,7 @@
 			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Lead" label="Lead"></topic>
 			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Organizer" label="Organizer"></topic>
 			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Participant" label="Participant"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Participants_List" label="Participants List"></topic>
 			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Postponed_Anomaly" label="Postponed Anomaly"></topic>
 			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Resource_Review_Item" label="Resource Review Item"></topic>
 			<topic href="web/Reviews/R4E/User_Guide/Concepts.html#Reviewer" label="Reviewer"></topic>
@@ -89,6 +91,7 @@
 					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Resource_Review_Item" label="Creating a Resource Review Item"></topic>
 					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_a_Commit_Review_Item" label="Creating a Commit Review Item"></topic>
 				</topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Assigning_Review_Elements" label="Assigning Review Elements"></topic>
 				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_an_Anomaly" label="Creating an Anomaly"></topic>
 				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_Comments_on_an_existing_Anomaly" label="Creating Comments on an existing Anomaly"></topic>
 				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Importing_Postponed_Anomalies" label="Importing Postponed Anomalies"></topic>

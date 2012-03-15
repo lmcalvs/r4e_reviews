@@ -159,14 +159,15 @@ public class UIUtils {
 	 * one ucrrently handled by this version of R4E.\n You can open the element normally, which will upgrade its version
 	 * to the current one, or in Read-only mode, which will preserve its version.\n"")
 	 */
-	private static final String COMPATIBILITY_WARNING_MESSAGE = "You are trying to open an older version of the element than the one currently handled by this version of R4E.\n"
-			+ "You can open the element normally, which will upgrade its version to the current one, or in Read-only mode, which will preserve its version.";
+	private static final String COMPATIBILITY_WARNING_MESSAGE = "You are trying to open an older version of the element than the one currently handled by this version of R4E."
+			+ R4EUIConstants.LINE_FEED
+			+ "You can open the element normally, which will convert its version to the current application meta-data, or in Read-only mode, which will preserve its version.";
 
 	/**
 	 * Field COMPATIBILITY_WARNING_DIALOG_BUTTONS.
 	 */
-	private static final String[] COMPATIBILITY_WARNING_DIALOG_BUTTONS = { "Open Normally", "Open in Read-Only Mode",
-			"Cancel" };
+	private static final String[] COMPATIBILITY_WARNING_DIALOG_BUTTONS = { "Open (Convert Version)",
+			"Open in Read-Only Mode (Preserve Version)", "Cancel" };
 
 	/**
 	 * Field DISABLED_FONT_COLOR.

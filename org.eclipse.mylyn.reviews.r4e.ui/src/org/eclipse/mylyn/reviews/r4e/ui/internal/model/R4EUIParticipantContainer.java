@@ -51,9 +51,9 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	public static final String PARTICIPANT_CONTAINER_ICON_FILE = "icons/obj16/partcont_obj.png";
 
 	/**
-	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Participant"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""New Participants..."")
 	 */
-	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Participants";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Participants...";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Participant to the Current Review"")

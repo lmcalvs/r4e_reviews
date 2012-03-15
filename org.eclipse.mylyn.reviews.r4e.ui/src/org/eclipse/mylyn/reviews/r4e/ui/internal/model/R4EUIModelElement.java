@@ -71,6 +71,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public static final String ITALIC_ICON_FILE = "icons/ovr16/italics_icon.gif"; //$NON-NLS-1$
 
+	/**
+	 * Field DISABLED_OVERLAY_ICON_FILE.
+	 */
+	public static final String READONLY_OVERLAY_ICON_FILE = "icons/ovr16/readonlyovr_tsk.gif"; //$NON-NLS-1$
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -298,6 +303,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public Image getDisabledImage() {
 		return UIUtils.loadIcon(DISABLED_OVERLAY_ICON_FILE);
+	}
+
+	/**
+	 * Method getReadOnlyImage.
+	 * 
+	 * @return Image
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getReadOnlyImage()
+	 */
+	public Image getReadOnlyImage() {
+		return UIUtils.loadIcon(READONLY_OVERLAY_ICON_FILE);
 	}
 
 	/**

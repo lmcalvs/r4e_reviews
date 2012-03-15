@@ -60,9 +60,9 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	public static final String ANOMALY_ICON_FILE = "icons/obj16/anmly_obj.gif";
 
 	/**
-	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Comment"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""New Comment..."")
 	 */
-	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Comment";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Comment...";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New comment to the current anomaly"")

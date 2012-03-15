@@ -102,43 +102,39 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 */
 	public Image decorateImage(Image aBaseImage, Object aElement) { // $codepro.audit.disable
 
+		Image currentOverlayImage = aBaseImage;
 		OverlayImageIcon overlayIcon = null;
 		//Disabled element decorator
 		if (!((IR4EUIModelElement) aElement).isEnabled()) {
-			overlayIcon = new OverlayImageIcon(aBaseImage, ((IR4EUIModelElement) aElement).getDisabledImage(),
+			overlayIcon = new OverlayImageIcon(currentOverlayImage, ((IR4EUIModelElement) aElement).getDisabledImage(),
 					OverlayImageIcon.BOTTOM_RIGHT);
 			return overlayIcon.getImage(); //No need to check for other decorators
-		}
-
-		//Completed element decoraor
-		if (((IR4EUIModelElement) aElement).isUserReviewed()) {
-			overlayIcon = new OverlayImageIcon(aBaseImage, ((IR4EUIModelElement) aElement).getUserReviewedImage(),
-					OverlayImageIcon.BOTTOM_RIGHT);
+		} else if (((IR4EUIModelElement) aElement).isUserReviewed()) {
+			//Completed element decorator
+			overlayIcon = new OverlayImageIcon(currentOverlayImage,
+					((IR4EUIModelElement) aElement).getUserReviewedImage(), OverlayImageIcon.BOTTOM_RIGHT);
 		}
 
 		//Added, Removed or Modified file
+		currentOverlayImage = ((null == overlayIcon) ? currentOverlayImage : overlayIcon.getImage());
 		if (aElement instanceof R4EUIFileContext) {
 			if (null == ((R4EUIFileContext) aElement).getBaseFileVersion()
 					&& null != ((R4EUIFileContext) aElement).getTargetFileVersion()) {
 				//Only target present, file was added
-				if (null == overlayIcon) {
-					overlayIcon = new OverlayImageIcon(aBaseImage, ((R4EUIFileContext) aElement).getAddedImage(),
-							OverlayImageIcon.BOTTOM_LEFT);
-				} else {
-					overlayIcon = new OverlayImageIcon(overlayIcon.getImage(),
-							((R4EUIFileContext) aElement).getAddedImage(), OverlayImageIcon.BOTTOM_LEFT);
-				}
+				overlayIcon = new OverlayImageIcon(currentOverlayImage, ((R4EUIFileContext) aElement).getAddedImage(),
+						OverlayImageIcon.BOTTOM_LEFT);
 			} else if (null != ((R4EUIFileContext) aElement).getBaseFileVersion()
 					&& null == ((R4EUIFileContext) aElement).getTargetFileVersion()) {
 				//Only base present, file was removed
-				if (null == overlayIcon) {
-					overlayIcon = new OverlayImageIcon(aBaseImage, ((R4EUIFileContext) aElement).getRemovedImage(),
-							OverlayImageIcon.BOTTOM_LEFT);
-				} else {
-					overlayIcon = new OverlayImageIcon(overlayIcon.getImage(),
-							((R4EUIFileContext) aElement).getRemovedImage(), OverlayImageIcon.BOTTOM_LEFT);
-				}
+				overlayIcon = new OverlayImageIcon(currentOverlayImage,
+						((R4EUIFileContext) aElement).getRemovedImage(), OverlayImageIcon.BOTTOM_LEFT);
 			} //else modified file
+		}
+
+		//Read-Only
+		if (((IR4EUIModelElement) aElement).isReadOnly()) {
+			overlayIcon = new OverlayImageIcon(currentOverlayImage, ((IR4EUIModelElement) aElement).getReadOnlyImage(),
+					OverlayImageIcon.TOP_RIGHT);
 		}
 		return (Image) ((null == overlayIcon) ? overlayIcon : overlayIcon.getImage());
 	}
@@ -227,7 +223,7 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 			return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY);
 		} else if (aElement instanceof IR4EUIModelElement) {
 			if (((IR4EUIModelElement) aElement).isReadOnly()) {
-				return Display.getCurrent().getSystemColor(SWT.COLOR_RED);
+				return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY);
 			}
 		}
 		return null;

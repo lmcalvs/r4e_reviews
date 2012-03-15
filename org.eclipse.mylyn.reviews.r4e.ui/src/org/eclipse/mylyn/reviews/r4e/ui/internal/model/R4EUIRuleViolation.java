@@ -53,9 +53,9 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	public static final String RULE_VIOLATION_ICON_FILE = "icons/obj16/ruleviolation_obj.gif";
 
 	/**
-	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Rule"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""New Rule..."")
 	 */
-	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Rule";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Rule...";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Rule to the Current Rule Violation"")

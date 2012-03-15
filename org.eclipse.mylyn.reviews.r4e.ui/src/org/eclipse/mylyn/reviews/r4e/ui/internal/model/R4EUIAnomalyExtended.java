@@ -42,9 +42,9 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field NEXT_STATE_ELEMENT_COMMAND_NAME. (value is ""Progress Anomaly"")
+	 * Field NEXT_STATE_ELEMENT_COMMAND_NAME. (value is ""Progress Anomaly..."")
 	 */
-	private static final String NEXT_STATE_ELEMENT_COMMAND_NAME = "Progress Anomaly";
+	private static final String NEXT_STATE_ELEMENT_COMMAND_NAME = "Progress Anomaly...";
 
 	/**
 	 * Field NEXT_STATE_ELEMENT_COMMAND_TOOLTIP. (value is ""Progress Anomaly to Next State"")
@@ -565,6 +565,7 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	 * 
 	 * @return boolean
 	 */
+	@Override
 	public boolean isDueDateEnabled() {
 		if (null != R4EUIModelController.getActiveReview()) {
 			if (R4EUIModelController.getActiveReview()

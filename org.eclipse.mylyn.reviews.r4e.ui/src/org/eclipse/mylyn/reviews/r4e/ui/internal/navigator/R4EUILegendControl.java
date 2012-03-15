@@ -399,6 +399,10 @@ public class R4EUILegendControl extends Composite {
 		toolkit.createLabel(r4eClient, "Element Disabled");
 
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon(R4EUIModelElement.READONLY_OVERLAY_ICON_FILE));
+		toolkit.createLabel(r4eClient, "Element Read-Only");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon(R4EUIModelElement.REVIEWED_OVERLAY_ICON_FILE));
 		toolkit.createLabel(r4eClient, "Element Reviewed by User");
 

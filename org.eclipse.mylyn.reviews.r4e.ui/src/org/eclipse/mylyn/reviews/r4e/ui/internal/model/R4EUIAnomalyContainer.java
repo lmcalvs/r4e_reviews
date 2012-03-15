@@ -67,9 +67,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	public static final String ANOMALY_CONTAINER_ICON_FILE = "icons/obj16/anmlycont_obj.gif";
 
 	/**
-	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Anomaly"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""New Anomaly..."")
 	 */
-	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Anomaly";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Anomaly...";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Global Anomaly to the Current Review Item"")
@@ -654,7 +654,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	public boolean isNewChildElementCmd() {
 		if (!isReadOnly()
 				&& !((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) && getParent().isEnabled()) {
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) && getParent().isEnabled()
+				&& getParent() instanceof R4EUIReviewBasic) {
 			return true;
 		}
 		return false;

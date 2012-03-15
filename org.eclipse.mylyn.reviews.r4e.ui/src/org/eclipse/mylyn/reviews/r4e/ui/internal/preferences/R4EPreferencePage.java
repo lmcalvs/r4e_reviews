@@ -59,7 +59,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
@@ -154,7 +153,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	/**
 	 * Field fR4EGroupPrefsGroup.
 	 */
-	private Group fR4EGroupPrefsGroup = null;
+	private Composite fR4EGroupPrefsGroup = null;
 
 	/**
 	 * Field fGroupFilesEditor.
@@ -174,7 +173,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	/**
 	 * Field fR4ERuleSetPrefsGroup.
 	 */
-	private Group fR4ERuleSetPrefsGroup = null;
+	private Composite fR4ERuleSetPrefsGroup = null;
 
 	/**
 	 * Field fRuleSetFilesEditor.
@@ -306,7 +305,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	@Override
 	public void createFieldEditors() {
 
-		R4EUIPlugin.Ftracer.traceInfo("Build R4E Preference page");
+		R4EUIPlugin.Ftracer.traceInfo("Build R4E Preference page"); //$NON-NLS-1$
 
 		//The Main preferences composite
 		final Composite prefsContainer = new Composite(getFieldEditorParent(), SWT.NONE);
@@ -340,11 +339,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fUserPrefsTab.setText("User");
 
 		// Create a Group to hold R4E user preferences
-		final Group r4EUserPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
+		final Composite r4EUserPrefsGroup = new Composite(aParent, SWT.NONE);
 		fUserPrefsTab.setControl(r4EUserPrefsGroup);
 		final GridData r4eUserPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		r4eUserPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
-		r4EUserPrefsGroup.setText("User Preferences");
 		r4EUserPrefsGroup.setLayoutData(r4eUserPrefsGroupData);
 		r4EUserPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
@@ -374,7 +372,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fUserIdTextField.setText(store.getString(PreferenceConstants.P_USER_ID));
 		fUserIdTextField.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
-				fUserEmailTextField.setText("");
+				fUserEmailTextField.setText(""); //$NON-NLS-1$
 				if (R4EUIModelController.isUserQueryAvailable()) {
 					if (fUserIdTextField.getText().length() > 0) {
 						fUserIdTextField.setText(fUserIdTextField.getText().toLowerCase());
@@ -392,11 +390,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 								}
 							}
 						} catch (NamingException ex) {
-							R4EUIPlugin.Ftracer.traceError("Exception: " + ex.toString() + " (" + ex.getMessage() + ")");
-							R4EUIPlugin.getDefault().logError("Exception: " + ex.toString(), ex);
+							R4EUIPlugin.Ftracer.traceError("Exception: " + ex.toString() + " (" + ex.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							R4EUIPlugin.getDefault().logError("Exception: " + ex.toString(), ex); //$NON-NLS-1$
 						} catch (IOException ex) {
-							R4EUIPlugin.Ftracer.traceError("Exception: " + ex.toString() + " (" + ex.getMessage() + ")");
-							R4EUIPlugin.getDefault().logError("Exception: " + ex.toString(), ex);
+							R4EUIPlugin.Ftracer.traceError("Exception: " + ex.toString() + " (" + ex.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							R4EUIPlugin.getDefault().logError("Exception: " + ex.toString(), ex); //$NON-NLS-1$
 						} finally {
 							getShell().setCursor(getShell().getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 						}
@@ -449,7 +447,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		String participantsListStr = null;
 		for (int i = 0; i < participantsListsStr.length; i++) {
 			participantsListStr = participantsListsStr[i];
-			if (null != participantsListStr && !(("").equals(participantsListStr))) {
+			if (null != participantsListStr && !("".equals(participantsListStr))) {
 				if (i >= fParticipantsLists.getItemCount()) {
 					item = fParticipantsLists.addItem();
 				} else {
@@ -504,14 +502,13 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private void createGroupPreferencesTab(TabFolder aParent) {
 
 		fGroupsPrefsTab = new TabItem(aParent, SWT.NONE);
-		fGroupsPrefsTab.setText("Groups");
+		fGroupsPrefsTab.setText("Review Groups");
 
 		// Create a Group to hold R4E Group preferences
-		fR4EGroupPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
+		fR4EGroupPrefsGroup = new Composite(aParent, SWT.NONE);
 		fGroupsPrefsTab.setControl(fR4EGroupPrefsGroup);
 		final GridData r4EGroupPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		r4EGroupPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
-		fR4EGroupPrefsGroup.setText("Group Preferences");
 		fR4EGroupPrefsGroup.setLayoutData(r4EGroupPrefsGroupData);
 		fR4EGroupPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
@@ -537,8 +534,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			@SuppressWarnings("synthetic-access")
 			public void widgetSelected(SelectionEvent aEvent) {
 				final String selectedGroupFile = fGroupFilesEditor.getSelection();
-				fGroupNameText.setText("");
-				fGroupDescriptionText.setText("");
+				fGroupNameText.setText(""); //$NON-NLS-1$
+				fGroupDescriptionText.setText(""); //$NON-NLS-1$
 				if (null != selectedGroupFile) {
 					try {
 						final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
@@ -550,12 +547,12 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 							fGroupNameText.setText(INVALID_FILE_STR);
 						}
 					} catch (ResourceHandlingException e) {
-						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
 						fGroupDescriptionText.setText("<Error:  Resource Error>");
 					} catch (CompatibilityException e) {
-						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
 						fGroupDescriptionText.setText("<Error:  Version Mismatch>");
 					}
 				}
@@ -609,11 +606,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fRuleSetsPrefsTab.setText("Rule Sets");
 
 		// Create a Group to hold R4E Rule Set preferences
-		fR4ERuleSetPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
+		fR4ERuleSetPrefsGroup = new Composite(aParent, SWT.NONE);
 		fRuleSetsPrefsTab.setControl(fR4ERuleSetPrefsGroup);
 		final GridData r4ERuleSetPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		r4ERuleSetPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
-		fR4ERuleSetPrefsGroup.setText("Rule Sets Preferences");
 		fR4ERuleSetPrefsGroup.setLayoutData(r4ERuleSetPrefsGroupData);
 		fR4ERuleSetPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
@@ -639,8 +635,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			@SuppressWarnings("synthetic-access")
 			public void widgetSelected(SelectionEvent aEvent) {
 				final String selectedRuleSetFile = fRuleSetFilesEditor.getSelection();
-				fRuleSetNameText.setText("");
-				fRuleSetVersionText.setText("");
+				fRuleSetNameText.setText(""); //$NON-NLS-1$
+				fRuleSetVersionText.setText(""); //$NON-NLS-1$
 				if (null != selectedRuleSetFile) {
 					try {
 						final R4EDesignRuleCollection ruleSet = R4EUIModelController.peekRuleSet(selectedRuleSetFile);
@@ -652,12 +648,12 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 							fRuleSetNameText.setText(INVALID_FILE_STR);
 						}
 					} catch (ResourceHandlingException e) {
-						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
 						fRuleSetVersionText.setText("<Error:  Resource Error>");
 					} catch (CompatibilityException e) {
-						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
 						fRuleSetVersionText.setText("<Error:  Version Mismatch>");
 					}
 				}
@@ -708,14 +704,13 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private void createFiltersPreferencesTab(TabFolder aParent) {
 
 		fFiltersPrefsTab = new TabItem(aParent, SWT.NONE);
-		fFiltersPrefsTab.setText("Filters");
+		fFiltersPrefsTab.setText("Default Filters");
 
 		// Create a Group to hold R4E Navigator view default filters
-		final Group r4EFilterPrefsGroup = new Group(aParent, SWT.BORDER_SOLID);
+		final Composite r4EFilterPrefsGroup = new Composite(aParent, SWT.NONE);
 		fFiltersPrefsTab.setControl(r4EFilterPrefsGroup);
 		final GridData r4EFilterPrefsGroupData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		r4EFilterPrefsGroupData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
-		r4EFilterPrefsGroup.setText("Default Filters");
 		r4EFilterPrefsGroup.setLayoutData(r4EFilterPrefsGroupData);
 		r4EFilterPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
@@ -761,10 +756,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fParticipantFilterButton.setText(R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_NAME);
 		fParticipantIdText = new Text(r4EFilterPrefsGroup, SWT.BORDER);
 		fParticipantIdText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
-		if (store.getString(PreferenceConstants.P_PARTICIPANT_FILTER).equals("")) {
+		if (store.getString(PreferenceConstants.P_PARTICIPANT_FILTER).equals("")) { //$NON-NLS-1$
 			fParticipantFilterButton.setSelection(false);
 			fParticipantFilterButton.setEnabled(false);
-			fParticipantIdText.setText("");
+			fParticipantIdText.setText(""); //$NON-NLS-1$
 		} else {
 			fParticipantFilterButton.setSelection(true);
 			fParticipantIdText.setText(store.getString(PreferenceConstants.P_PARTICIPANT_FILTER));
@@ -985,8 +980,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 				store.setValue(PreferenceConstants.P_PARTICIPANT_FILTER, filterUserId);
 			}
 		} else {
-			store.setValue(PreferenceConstants.P_PARTICIPANT_FILTER, "");
-			fParticipantIdText.setText("");
+			store.setValue(PreferenceConstants.P_PARTICIPANT_FILTER, ""); //$NON-NLS-1$
+			fParticipantIdText.setText(""); //$NON-NLS-1$
 		}
 		store.setValue(PreferenceConstants.P_ASSIGN_MY_FILTER, fAssignMyFilterButton.getSelection());
 		if (fAssignFilterButton.getSelection()) {
@@ -998,8 +993,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 				store.setValue(PreferenceConstants.P_ASSIGN_FILTER, filterUserId);
 			}
 		} else {
-			store.setValue(PreferenceConstants.P_ASSIGN_FILTER, "");
-			fAssignIdText.setText("");
+			store.setValue(PreferenceConstants.P_ASSIGN_FILTER, ""); //$NON-NLS-1$
+			fAssignIdText.setText(""); //$NON-NLS-1$
 		}
 		store.setValue(PreferenceConstants.P_UNASSIGN_FILTER, fUnassignFilterButton.getSelection());
 
@@ -1165,7 +1160,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 		String[] participantListStrs = store.getString(PreferenceConstants.P_PARTICIPANTS).split(
 				R4EUIConstants.LIST_SEPARATOR);
-		if (null != participantListStrs && null != participantListStrs[0] && !("".equals(participantListStrs[0]))) {
+		if (null != participantListStrs && null != participantListStrs[0] && !("".equals(participantListStrs[0]))) { //$NON-NLS-1$
 			int readIndex = 0;
 			int numLists = Integer.parseInt(participantListStrs[readIndex++]);
 			for (int i = 0; i < numLists; i++) {

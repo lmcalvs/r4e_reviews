@@ -88,7 +88,7 @@ In order to prevent compatibility problems between versions, R4E now implements 
 
 [[Image:versionMismatchError.png]]
 
-*Metadata version is older than the R4E plugins version:  This means that the element was created with an older version of R4E than the one currently being used.  In this case an information dialog is displayed to highlight the fact and ask the user how to proceed.  The user can then choose to cancel the action, upgrade the file version to the current R4E version, which will permanently change the file version for all users, or keep the older file version and open the element in read-only mode.  When the element is open in read-only mode it is displayed in red in the Review Navigator View.
+*Metadata version is older than the R4E plugins version:  This means that the element was created with an older version of R4E than the one currently being used.  In this case an information dialog is displayed to highlight the fact and ask the user how to proceed.  The user can then choose to cancel the action, upgrade the file version to the current R4E version, which will permanently change the file version for all users, or keep the older file version and open the element in read-only mode.  When the element is open in read-only mode it is displayed with a top-right lock decorator in the Review Navigator View.
 
 [[Image:versionMismatchInfo.png]]
 

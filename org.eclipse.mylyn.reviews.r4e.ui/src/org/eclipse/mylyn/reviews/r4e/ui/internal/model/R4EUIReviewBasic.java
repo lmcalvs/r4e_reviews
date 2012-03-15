@@ -115,9 +115,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	private static final String CLOSE_ELEMENT_COMMAND_TOOLTIP = "Close and Unload Data for this Review";
 
 	/**
-	 * Field NEXT_STATE_ELEMENT_COMMAND_NAME. (value is ""Progress Review"")
+	 * Field NEXT_STATE_ELEMENT_COMMAND_NAME. (value is ""Progress Review..."")
 	 */
-	private static final String NEXT_STATE_ELEMENT_COMMAND_NAME = "Progress Review";
+	private static final String NEXT_STATE_ELEMENT_COMMAND_NAME = "Progress Review...";
 
 	/**
 	 * Field NEXT_STATE_ELEMENT_COMMAND_TOOLTIP. (value is ""Progress Review to Next Phase"")

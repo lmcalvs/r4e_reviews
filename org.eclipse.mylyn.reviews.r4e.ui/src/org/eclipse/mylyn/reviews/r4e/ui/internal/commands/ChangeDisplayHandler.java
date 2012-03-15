@@ -19,6 +19,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands;
 
 import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -61,14 +62,16 @@ public class ChangeDisplayHandler extends AbstractHandler {
 
 					//Change Display Type (Global Tree / Review TreeTable)
 					R4EUIPlugin.Ftracer.traceInfo("Changing Display Type");
-					if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
-						((ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView().getTreeViewer()).setViewTreeTable();
-					} else {
-						((ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView().getTreeViewer()).setViewTree();
-					}
-					R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
-
+					final Command command = aEvent.getCommand();
 					try {
+						HandlerUtil.toggleCommandState(command);
+						if (R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
+							((ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView().getTreeViewer()).setViewTreeTable();
+						} else {
+							((ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView().getTreeViewer()).setViewTree();
+						}
+						R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
+
 						final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
 								aEvent)
 								.getService(IEvaluationService.class);

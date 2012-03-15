@@ -63,9 +63,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	public static final String RULE_SET_CLOSED_ICON_FILE = "icons/obj16/rulesetclsd_obj.gif";
 
 	/**
-	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""Add a New Rule Area"")
+	 * Field NEW_CHILD_ELEMENT_COMMAND_NAME. (value is ""New Rule Area..."")
 	 */
-	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Rule Area";
+	private static final String NEW_CHILD_ELEMENT_COMMAND_NAME = "New Rule Area...";
 
 	/**
 	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Rule Area to the Current Rule Set"")
