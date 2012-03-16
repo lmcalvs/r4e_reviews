@@ -288,7 +288,7 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 				dialog.open();
 				return;
 			}
-			fReviewNameValue = fReviewNameInputTextField.getText();
+			fReviewNameValue = fReviewNameInputTextField.getText().trim();
 
 			//Validate Review Description
 			validateResult = validateEmptyInput(fReviewDescriptionInputTextField);
@@ -299,7 +299,7 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 								validateResult, null), IStatus.WARNING);
 				dialog.open();
 			}
-			fReviewDescriptionValue = fReviewDescriptionInputTextField.getText();
+			fReviewDescriptionValue = fReviewDescriptionInputTextField.getText().trim();
 
 			//Validate Project (optional)
 			validateResult = validateEmptyInput(fProjectsCombo.getText());
@@ -320,19 +320,19 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 			//Validate Entry Criteria (optional)
 			validateResult = validateEmptyInput(fEntryCriteriaTextField);
 			if (null == validateResult) {
-				fEntryCriteriaValue = fEntryCriteriaTextField.getText();
+				fEntryCriteriaValue = fEntryCriteriaTextField.getText().trim();
 			}
 
 			//Validate Objectives (optional)
 			validateResult = validateEmptyInput(fObjectivesTextField);
 			if (null == validateResult) {
-				fObjectivesValue = fObjectivesTextField.getText();
+				fObjectivesValue = fObjectivesTextField.getText().trim();
 			}
 
 			//Validate ReferenceMaterial (optional)
 			validateResult = validateEmptyInput(fReferenceMaterialTextField);
 			if (null == validateResult) {
-				fReferenceMaterialValue = fReferenceMaterialTextField.getText();
+				fReferenceMaterialValue = fReferenceMaterialTextField.getText().trim();
 			}
 		} else {
 			fReviewNameValue = null;

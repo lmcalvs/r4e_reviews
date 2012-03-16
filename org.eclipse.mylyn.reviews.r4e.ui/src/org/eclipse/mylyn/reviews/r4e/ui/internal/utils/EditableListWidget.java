@@ -246,8 +246,8 @@ public class EditableListWidget {
 			}
 		});
 
-		fMainTable.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fMainTable.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (fEnabled) {
 					//Send items updated notification
 					if (null != fListener) {
@@ -261,10 +261,6 @@ public class EditableListWidget {
 						fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
 					}
 				}
-			}
-
-			public void focusGained(FocusEvent e) {
-				//Do nothing
 			}
 		});
 

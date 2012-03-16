@@ -36,8 +36,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
@@ -244,25 +242,25 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 		data.top = new FormAttachment(fDateSubmitted, ITabbedPropertyConstants.VSPACE);
 		fDescriptionText.setToolTipText(R4EUIConstants.REVIEW_ITEM_DESCRIPTION_TOOLTIP);
 		fDescriptionText.setLayoutData(data);
-		fDescriptionText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fDescriptionText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fDescriptionText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EItem modelItem = ((R4EUIReviewItem) fProperties.getElement()).getItem();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelItem, currentUser);
-						modelItem.setDescription(fDescriptionText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						String newValue = fDescriptionText.getText().trim();
+						if (!newValue.equals(modelItem.getDescription())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelItem, currentUser);
+							modelItem.setDescription(newValue);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
+						fDescriptionText.setText(newValue);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
 			}
 		});
 		UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);

@@ -22,8 +22,13 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -36,7 +41,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
@@ -49,15 +53,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
@@ -201,30 +205,30 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		data.top = new FormAttachment(fIdText, ITabbedPropertyConstants.VSPACE);
 		fEmailText.setToolTipText(R4EUIConstants.PARTICIPANT_EMAIL_TOOLTIP);
 		fEmailText.setLayoutData(data);
-		fEmailText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fEmailText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fEmailText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
-						if (!CommandUtils.isEmailValid(fEmailText.getText())) {
+						String newValue = fEmailText.getText().trim();
+						if (!CommandUtils.isEmailValid(newValue)) {
 							//Validation of input failed
 							return;
 						}
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EParticipant modelParticipant = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant,
-								currentUser);
-						modelParticipant.setEmail(fEmailText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						if (!newValue.equals(modelParticipant.getEmail())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant,
+									currentUser);
+							modelParticipant.setEmail(newValue);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
+						fEmailText.setText(newValue);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
 			}
 		});
 		UIUtils.addTabbedPropertiesTextResizeListener(fEmailText);
@@ -302,25 +306,26 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		data.top = new FormAttachment(fNumCommentsText, ITabbedPropertyConstants.VSPACE);
 		fFocusAreaText.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
 		fFocusAreaText.setLayoutData(data);
-		fFocusAreaText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fFocusAreaText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fFocusAreaText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EParticipant modelReview = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						modelReview.setFocusArea(fFocusAreaText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						final R4EParticipant modelParticipant = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
+						String newValue = fFocusAreaText.getText().trim();
+						if (!newValue.equals(modelParticipant.getFocusArea())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant,
+									currentUser);
+							modelParticipant.setFocusArea(newValue);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
+						fFocusAreaText.setText(newValue);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
 			}
 		});
 		UIUtils.addTabbedPropertiesTextResizeListener(fFocusAreaText);
@@ -639,46 +644,85 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		try {
 			final R4EParticipant modelParticipant = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
 			final String currentUser = R4EUIModelController.getReviewer();
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant, currentUser);
 
 			if (1 == aInstanceId) {
 				//Update spent time
 				final EMap<Date, Integer> timeMap = modelParticipant.getTimeLog();
 				final DateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.DEFAULT_DATE_FORMAT);
-				timeMap.clear();
+				Map<Date, Integer> newAddTimes = new HashMap<Date, Integer>();
+				Map<Date, Integer> newDeleteTimes = new HashMap<Date, Integer>();
+				Map<Date, Integer> storedTimes = new HashMap<Date, Integer>();
+				storedTimes.putAll(modelParticipant.getTimeLog().map());
 				for (Item item : aItems) {
 					try {
-						if (!((TableItem) item).getText(1).equals("")) {
-							timeMap.put(dateFormat.parse(((TableItem) item).getText(1)),
-									Integer.valueOf(((TableItem) item).getText(0)));
-						}
-					} catch (NumberFormatException e) {
-						//skip this entry
-						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
-						continue;
+						newAddTimes.put(dateFormat.parse(((TableItem) item).getText(1)),
+								Integer.valueOf(((TableItem) item).getText(0)));
+						newDeleteTimes.put(dateFormat.parse(((TableItem) item).getText(1)),
+								Integer.valueOf(((TableItem) item).getText(0)));
 					} catch (ParseException e) {
-						//skip this entry
-						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+						//just ignore this entry
 						continue;
 					}
+				}
+
+				//Add all new elements
+				Set<Date> storedKeys = storedTimes.keySet();
+				for (Date storedKey : storedKeys) {
+					newAddTimes.remove(storedKey);
+				}
+				if (newAddTimes.size() > 0) {
+					Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant, currentUser);
+					timeMap.putAll(newAddTimes);
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				}
+
+				//Delete old elements to remove
+				Set<Date> deleteKeys = newDeleteTimes.keySet();
+				for (Date deleteKey : deleteKeys) {
+					storedTimes.remove(deleteKey);
+				}
+				if (storedTimes.size() > 0) {
+					Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant, currentUser);
+					for (Date storedKey : storedTimes.keySet()) {
+						timeMap.remove(storedKey);
+					}
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 				}
 			} else if (2 == aInstanceId) {
 				//Update roles
-				modelParticipant.getRoles().clear();
+				List<R4EUserRole> newAddUserRoles = new ArrayList<R4EUserRole>();
+				List<R4EUserRole> newDeleteUserRoles = new ArrayList<R4EUserRole>();
+				List<R4EUserRole> storedUserRoles = new ArrayList<R4EUserRole>();
+				storedUserRoles.addAll(modelParticipant.getRoles());
 				for (Item item : aItems) {
 					R4EUserRole role = R4EUIParticipant.mapStringToRole(item.getText());
 					if (null != role) {
-						modelParticipant.getRoles().add(role);
+						newAddUserRoles.add(role);
+						newDeleteUserRoles.add(role);
 					}
 				}
+
+				//Add all new elements
+				newAddUserRoles.removeAll(storedUserRoles);
+				if (newAddUserRoles.size() > 0) {
+					Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant, currentUser);
+					modelParticipant.getRoles().addAll(newAddUserRoles);
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				}
+
+				//Delete old elements to remove
+				storedUserRoles.removeAll(newDeleteUserRoles);
+				if (storedUserRoles.size() > 0) {
+					Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelParticipant, currentUser);
+					modelParticipant.getRoles().removeAll(storedUserRoles);
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				}
+
 				((R4EUIParticipant) fProperties.getElement()).setRoleIcon(R4EUIModelController.getActiveReview()
 						.getReview()
 						.getType());
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 			}
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 			refresh();
 		} catch (ResourceHandlingException e1) {
 			UIUtils.displayResourceErrorDialog(e1);

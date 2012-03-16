@@ -134,7 +134,7 @@ public class CommentInputDialog extends FormDialog implements ICommentInputDialo
 				dialog.open();
 				return;
 			}
-			fCommentValue = fCommentInputTextField.getText();
+			fCommentValue = fCommentInputTextField.getText().trim();
 		} else {
 			fCommentValue = null;
 		}

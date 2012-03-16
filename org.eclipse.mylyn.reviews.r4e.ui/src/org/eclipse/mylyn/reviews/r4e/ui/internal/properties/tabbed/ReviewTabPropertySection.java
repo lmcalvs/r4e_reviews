@@ -55,8 +55,6 @@ import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
@@ -355,8 +353,8 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		data.top = new FormAttachment(fNameText, ITabbedPropertyConstants.VSPACE);
 		fPhaseCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_TOOLTIP);
 		fPhaseCombo.setLayoutData(data);
-		fPhaseCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fPhaseCombo.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				R4EReviewPhase phase = null;
 				if (fProperties.getElement() instanceof R4EUIReviewExtended) {
 					phase = ((R4EUIReviewExtended) fProperties.getElement()).getPhaseFromString(fPhaseCombo.getText());
@@ -368,10 +366,6 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					refresh();
 					R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 				}
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				//No implementation needed
 			}
 		});
 		addScrollListener(fPhaseCombo);
@@ -392,25 +386,26 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		data.top = new FormAttachment(fPhaseCombo, ITabbedPropertyConstants.VSPACE);
 		fDescriptionText.setToolTipText(R4EUIConstants.REVIEW_DESCRIPTION_TOOLTIP);
 		fDescriptionText.setLayoutData(data);
-		fDescriptionText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fDescriptionText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fDescriptionText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						modelReview.setExtraNotes(fDescriptionText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						String newValue = fDescriptionText.getText().trim();
+						if (!newValue.equals(modelReview.getExtraNotes())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
+							modelReview.setExtraNotes(newValue);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
+						fDescriptionText.setText(newValue);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
 			}
 		});
 		UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
@@ -511,15 +506,18 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		gridData.horizontalSpan = 3;
 		fProjectCombo.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);
 		fProjectCombo.setLayoutData(gridData);
-		fProjectCombo.addListener(SWT.FocusOut, new Listener() {
+		fProjectCombo.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						modelReview.setProject(fProjectCombo.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						if (!fProjectCombo.getText().equals(modelReview.getProject())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
+							modelReview.setProject(fProjectCombo.getText());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -558,25 +556,26 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		gridData.horizontalSpan = 3;
 		fEntryCriteriaText.setToolTipText(R4EUIConstants.REVIEW_ENTRY_CRITERIA_TOOLTIP);
 		fEntryCriteriaText.setLayoutData(gridData);
-		fEntryCriteriaText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fEntryCriteriaText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fEntryCriteriaText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						modelReview.setEntryCriteria(fEntryCriteriaText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						String newValue = fEntryCriteriaText.getText().trim();
+						if (!newValue.equals(modelReview.getEntryCriteria())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
+							modelReview.setEntryCriteria(newValue);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
+						fEntryCriteriaText.setText(newValue);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
 			}
 		});
 		UIUtils.addTabbedPropertiesTextResizeListener(fEntryCriteriaText);
@@ -594,25 +593,26 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		gridData.horizontalSpan = 3;
 		fObjectivesText.setToolTipText(R4EUIConstants.REVIEW_OBJECTIVES_TOOLTIP);
 		fObjectivesText.setLayoutData(gridData);
-		fObjectivesText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fObjectivesText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fObjectivesText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						modelReview.setObjectives(fObjectivesText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						String newValue = fObjectivesText.getText().trim();
+						if (!newValue.equals(modelReview.getObjectives())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
+							modelReview.setObjectives(newValue);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
+						fObjectivesText.setText(newValue);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
 			}
 		});
 		UIUtils.addTabbedPropertiesTextResizeListener(fObjectivesText);
@@ -630,25 +630,26 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		gridData.horizontalSpan = 3;
 		fReferenceMaterialText.setToolTipText(R4EUIConstants.REVIEW_REFERENCE_MATERIAL_TOOLTIP);
 		fReferenceMaterialText.setLayoutData(gridData);
-		fReferenceMaterialText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fReferenceMaterialText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fReferenceMaterialText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						modelReview.setReferenceMaterial(fReferenceMaterialText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						String newValue = fReferenceMaterialText.getText().trim();
+						if (!newValue.equals(modelReview.getReferenceMaterial())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
+							modelReview.setReferenceMaterial(newValue);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
+						fReferenceMaterialText.setText(newValue);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
 			}
 		});
 		UIUtils.addTabbedPropertiesTextResizeListener(fReferenceMaterialText);
@@ -816,15 +817,21 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		textGridData.horizontalSpan = 3;
 		fExitDecisionCombo.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_TOOLTIP);
 		fExitDecisionCombo.setLayoutData(textGridData);
-		fExitDecisionCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fExitDecisionCombo.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						modelReview.setDecision(R4EUIReviewBasic.getDecisionValueFromString(fExitDecisionCombo.getText()));
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						R4EReviewDecision newDecision = R4EUIReviewBasic.getDecisionValueFromString(fExitDecisionCombo.getText());
+						R4EDecision newDecisionValue = newDecision.getValue();
+						R4EDecision oldDecisionValue = modelReview.getDecision().getValue();
+						if (!newDecisionValue.equals(oldDecisionValue)) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
+							modelReview.setDecision(newDecision);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -832,10 +839,6 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					}
 				}
 				refresh();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				//No implementation needed
 			}
 		});
 		addScrollListener(fExitDecisionCombo);
@@ -869,12 +872,12 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		textGridData.horizontalSpan = 3;
 		fDecisionTimeSpentText.setToolTipText(R4EUIConstants.REVIEW_EXIT_DECISION_TIME_SPENT_TOOLTIP);
 		fDecisionTimeSpentText.setLayoutData(textGridData);
-		fDecisionTimeSpentText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fDecisionTimeSpentText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fDecisionTimeSpentText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					Integer timeSpent;
 					try {
-						timeSpent = Integer.valueOf(fDecisionTimeSpentText.getText());
+						timeSpent = Integer.valueOf(fDecisionTimeSpentText.getText().trim());
 					} catch (NumberFormatException e1) {
 						//Set field to 0
 						timeSpent = 0;
@@ -882,17 +885,21 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewExtended) fProperties.getElement()).getReview();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+						if (null == modelReview.getDecision()
+								|| timeSpent.intValue() != modelReview.getDecision().getSpentTime()) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
 
-						//Create decision if it does not already exists
-						if (null == modelReview.getDecision()) {
-							final R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
-							reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_NONE);
-							modelReview.setDecision(reviewDecision);
+							//Create decision if it does not already exists
+							if (null == modelReview.getDecision()) {
+								final R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
+								reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_NONE);
+								modelReview.setDecision(reviewDecision);
+							}
+
+							modelReview.getDecision().setSpentTime(timeSpent.intValue());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 						}
-
-						modelReview.getDecision().setSpentTime(timeSpent.intValue());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -900,17 +907,12 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					}
 				}
 			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
-			}
 		});
-
 		return fDecisionSection;
 	}
 
 	/**
-	 * Method createDecisionSection.
+	 * Method createPhaseTable.
 	 * 
 	 * @param aWidgetFactory
 	 *            TabbedPropertySheetWidgetFactory
@@ -968,20 +970,20 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		//Add Control for planning phase owner
 		fPlanningPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
 		fPlanningPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
-		fPlanningPhaseOwnerCombo.addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {
-				//Nothing to do
-			}
-
-			public void focusLost(FocusEvent e) {
+		fPlanningPhaseOwnerCombo.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewExtended) fProperties.getElement()).getReview();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						((R4EFormalReview) modelReview).getCurrent().setPhaseOwnerID(
-								(fPlanningPhaseOwnerCombo).getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						if (!fPlanningPhaseOwnerCombo.getText().equals(
+								((R4EFormalReview) modelReview).getCurrent().getPhaseOwnerID())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
+							((R4EFormalReview) modelReview).getCurrent().setPhaseOwnerID(
+									fPlanningPhaseOwnerCombo.getText());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -1000,20 +1002,20 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		//Add Controls for preparation phase owner
 		fPreparationPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
 		fPreparationPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
-		fPreparationPhaseOwnerCombo.addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {
-				//Nothing to do
-			}
-
-			public void focusLost(FocusEvent e) {
+		fPreparationPhaseOwnerCombo.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewExtended) fProperties.getElement()).getReview();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						((R4EFormalReview) modelReview).getCurrent().setPhaseOwnerID(
-								(fPreparationPhaseOwnerCombo).getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						if (!fPreparationPhaseOwnerCombo.getText().equals(
+								((R4EFormalReview) modelReview).getCurrent().getPhaseOwnerID())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
+							((R4EFormalReview) modelReview).getCurrent().setPhaseOwnerID(
+									fPreparationPhaseOwnerCombo.getText());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -1032,20 +1034,20 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		//Add Controls for decision phase owner
 		fDecisionPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
 		fDecisionPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
-		fDecisionPhaseOwnerCombo.addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {
-				//Nothing to do
-			}
-
-			public void focusLost(FocusEvent e) {
+		fDecisionPhaseOwnerCombo.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewExtended) fProperties.getElement()).getReview();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						((R4EFormalReview) modelReview).getCurrent().setPhaseOwnerID(
-								(fDecisionPhaseOwnerCombo).getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						if (!fDecisionPhaseOwnerCombo.getText().equals(
+								((R4EFormalReview) modelReview).getCurrent().getPhaseOwnerID())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
+							((R4EFormalReview) modelReview).getCurrent().setPhaseOwnerID(
+									fDecisionPhaseOwnerCombo.getText());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -1064,20 +1066,20 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		//Add Controls for rework phase owner
 		fReworkPhaseOwnerCombo = new CCombo(fPhaseTable, SWT.BORDER | SWT.READ_ONLY);
 		fReworkPhaseOwnerCombo.setToolTipText(R4EUIConstants.REVIEW_PHASE_OWNER_TOOLTIP);
-		fReworkPhaseOwnerCombo.addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {
-				//Nothing to do
-			}
-
-			public void focusLost(FocusEvent e) {
+		fReworkPhaseOwnerCombo.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewExtended) fProperties.getElement()).getReview();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-						((R4EFormalReview) modelReview).getCurrent()
-								.setPhaseOwnerID((fReworkPhaseOwnerCombo).getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						if (!fReworkPhaseOwnerCombo.getText().equals(
+								((R4EFormalReview) modelReview).getCurrent().getPhaseOwnerID())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
+							((R4EFormalReview) modelReview).getCurrent().setPhaseOwnerID(
+									fReworkPhaseOwnerCombo.getText());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -1576,30 +1578,69 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		try {
 			final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
 			final String currentUser = R4EUIModelController.getReviewer();
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
 
 			if (1 == aInstanceId) {
 				//Update components
-				modelReview.getComponents().clear();
+				List<String> newAddComponents = new ArrayList<String>();
+				List<String> newDeleteComponents = new ArrayList<String>();
+				List<String> storedComponents = new ArrayList<String>();
+				storedComponents.addAll(modelReview.getComponents());
 				for (Item item : aItems) {
-					modelReview.getComponents().add(item.getText());
+					newAddComponents.add(item.getText());
+					newDeleteComponents.add(item.getText());
+				}
+
+				//Add all new elements
+				newAddComponents.removeAll(storedComponents);
+				if (newAddComponents.size() > 0) {
+					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+					modelReview.getComponents().addAll(newAddComponents);
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				}
+
+				//Delete old elements to remove
+				storedComponents.removeAll(newDeleteComponents);
+				if (storedComponents.size() > 0) {
+					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+					modelReview.getComponents().removeAll(storedComponents);
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 				}
 			} else { //aInstanceId == 2
-				//Reset all values first
-				final Collection<R4EUser> users = modelReview.getUsersMap().values();
-				for (R4EUser user : users) {
-					if (user instanceof R4EParticipant) {
-						((R4EParticipant) user).setIsPartOfDecision(false);
+				//Update components
+				List<String> newAddParticipants = new ArrayList<String>();
+				List<String> newDeleteParticipants = new ArrayList<String>();
+				List<String> storedParticipants = new ArrayList<String>();
+				Collection<R4EUser> storedUsers = modelReview.getUsersMap().values();
+				for (R4EUser storedUser : storedUsers) {
+					if (((R4EParticipant) storedUser).isIsPartOfDecision()) {
+						storedParticipants.add(storedUser.getId());
 					}
 				}
 				for (Item item : aItems) {
-					R4EParticipant participant = (R4EParticipant) modelReview.getUsersMap().get(item.getText());
-					if (null != participant) {
-						participant.setIsPartOfDecision(true);
+					newAddParticipants.add(item.getText());
+					newDeleteParticipants.add(item.getText());
+				}
+
+				//Add all new elements
+				newAddParticipants.removeAll(storedParticipants);
+				if (newAddParticipants.size() > 0) {
+					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+					for (String participant : newAddParticipants) {
+						((R4EParticipant) modelReview.getUsersMap().get(participant)).setIsPartOfDecision(true);
 					}
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				}
+
+				//Delete old elements to remove
+				storedParticipants.removeAll(newDeleteParticipants);
+				if (storedParticipants.size() > 0) {
+					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+					for (String participant : storedParticipants) {
+						((R4EParticipant) modelReview.getUsersMap().get(participant)).setIsPartOfDecision(false);
+					}
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 				}
 			}
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 			refresh();
 		} catch (ResourceHandlingException e1) {
 			UIUtils.displayResourceErrorDialog(e1);

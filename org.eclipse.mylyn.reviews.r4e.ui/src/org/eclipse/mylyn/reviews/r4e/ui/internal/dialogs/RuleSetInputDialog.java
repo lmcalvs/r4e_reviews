@@ -169,7 +169,7 @@ public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialo
 				dialog.open();
 				return;
 			}
-			fVersionValue = fVersionInputTextField.getText();
+			fVersionValue = fVersionInputTextField.getText().trim();
 
 			//Validate Folder
 			validateResult = validateFolderInput(fFolderInputTextField);
@@ -192,7 +192,7 @@ public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialo
 				dialog.open();
 				return;
 			}
-			fFolderValue = fFolderInputTextField.getText();
+			fFolderValue = fFolderInputTextField.getText().trim();
 
 			//Validate Name
 			validateResult = validateEmptyInput(fNameInputTextField);
@@ -204,7 +204,7 @@ public class RuleSetInputDialog extends FormDialog implements IRuleSetInputDialo
 				dialog.open();
 				return;
 			}
-			fNameValue = fNameInputTextField.getText();
+			fNameValue = fNameInputTextField.getText().trim();
 
 		} else {
 			fVersionValue = null;

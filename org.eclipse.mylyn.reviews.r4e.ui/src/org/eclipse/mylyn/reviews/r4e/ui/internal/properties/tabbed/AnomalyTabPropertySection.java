@@ -31,6 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
@@ -51,10 +52,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
@@ -243,32 +240,37 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
 		fTitleText.setToolTipText(R4EUIConstants.ANOMALY_TITLE_TOOLTIP);
 		fTitleText.setLayoutData(data);
-		fTitleText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fTitleText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fTitleText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						//Set new model data
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-						modelAnomaly.setTitle(fTitleText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						String newValue = fTitleText.getText().trim();
+						if (!newValue.equals(modelAnomaly.getTitle())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
+									currentUser);
+							modelAnomaly.setTitle(newValue);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
-						//Set new UI display
-						if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
-							fProperties.getElement().setName(
-									R4EUIAnomalyExtended.buildAnomalyExtName(modelAnomaly,
-											((R4EUIAnomalyExtended) fProperties.getElement()).getPosition()));
-						} else {
-							fProperties.getElement().setName(
-									R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
-											((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
-						}
+							//Set new UI display
+							if (fProperties.getElement() instanceof R4EUIAnomalyExtended) {
+								fProperties.getElement().setName(
+										R4EUIAnomalyExtended.buildAnomalyExtName(modelAnomaly,
+												((R4EUIAnomalyExtended) fProperties.getElement()).getPosition()));
+							} else {
+								fProperties.getElement().setName(
+										R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
+												((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
+							}
 
-						//If this is a postponed anomaly, update original one as well
-						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
-							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							//If this is a postponed anomaly, update original one as well
+							if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							}
 						}
+						fTitleText.setText(newValue);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -279,10 +281,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				}
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 				refresh();
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
 			}
 		});
 		UIUtils.addTabbedPropertiesTextResizeListener(fTitleText);
@@ -295,45 +293,16 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		titleLabel.setToolTipText(R4EUIConstants.ANOMALY_TITLE_TOOLTIP);
 		titleLabel.setLayoutData(data);
 
-		//Anomaly Description
+		//Anomaly Description (Read-Only)
+		widgetFactory.setBorderStyle(SWT.NULL);
 		fDescriptionText = widgetFactory.createText(composite, "", SWT.MULTI);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
 		data.top = new FormAttachment(fTitleText, ITabbedPropertyConstants.VSPACE);
+		fDescriptionText.setEditable(false);
 		fDescriptionText.setLayoutData(data);
 		fDescriptionText.setToolTipText(R4EUIConstants.ANOMALY_DESCRIPTION_TOOLTIP);
-		fDescriptionText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
-				if (!fRefreshInProgress && fDescriptionText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
-					try {
-						//Set new model data
-						final String currentUser = R4EUIModelController.getReviewer();
-						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-						modelAnomaly.setDescription(fDescriptionText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-						//If this is a postponed anomaly, update original one as well
-						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
-							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
-						}
-					} catch (ResourceHandlingException e1) {
-						UIUtils.displayResourceErrorDialog(e1);
-					} catch (OutOfSyncException e1) {
-						UIUtils.displaySyncErrorDialog(e1);
-					} catch (CompatibilityException e1) {
-						UIUtils.displayCompatibilityErrorDialog(e1);
-					}
-				}
-				refresh();
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
-			}
-		});
-		UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
 
 		final CLabel descriptionLabel = widgetFactory.createCLabel(composite, R4EUIConstants.DESCRIPTION_LABEL);
 		data = new FormData();
@@ -344,6 +313,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		descriptionLabel.setLayoutData(data);
 
 		//State
+		widgetFactory.setBorderStyle(SWT.BORDER);
 		fStateCombo = widgetFactory.createCCombo(composite, SWT.READ_ONLY);
 		data = new FormData();
 		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
@@ -352,40 +322,38 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fStateCombo.setToolTipText(R4EUIConstants.ANOMALY_STATE_TOOLTIP);
 		fStateCombo.setVisibleItemCount(6);
 		fStateCombo.setLayoutData(data);
-		fStateCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent aEvent) {
+		fStateCombo.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
-
 					final R4EAnomalyState newState = R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText());
-					if (newState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)
-							&& !((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly()
-									.getState()
-									.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)) {
-						final boolean commentResult = ((R4EUIAnomalyBasic) fProperties.getElement()).createComment(true);
-						if (commentResult) {
-							UIUtils.changeAnomalyState(fProperties.getElement(), newState);
-							return;
-						} else {
-							final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-									"Cannot change Anomaly State", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
-											"Please enter a reason for rejecting this anomaly", null), IStatus.ERROR);
-							Display.getDefault().syncExec(new Runnable() {
-								public void run() {
-									dialog.open();
-								}
-							});
-							refresh();
-							return;
+					final R4EAnomalyState oldState = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly()
+							.getState();
+					if (!newState.equals(oldState)) {
+						if (newState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)
+								&& !oldState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)) {
+							final boolean commentResult = ((R4EUIAnomalyBasic) fProperties.getElement()).createComment(true);
+							if (commentResult) {
+								UIUtils.changeAnomalyState(fProperties.getElement(), newState);
+								return;
+							} else {
+								final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+										"Cannot change Anomaly State", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
+												0, "Please enter a reason for rejecting this anomaly", null),
+										IStatus.ERROR);
+								Display.getDefault().syncExec(new Runnable() {
+									public void run() {
+										dialog.open();
+									}
+								});
+								refresh();
+								return;
+							}
 						}
+						UIUtils.changeAnomalyState(fProperties.getElement(), newState);
 					}
-					UIUtils.changeAnomalyState(fProperties.getElement(), newState);
 				}
 				refresh();
 				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				//No implementation needed
 			}
 		});
 		addScrollListener(fStateCombo);
@@ -412,10 +380,13 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-						modelAnomaly.getAssignedTo().clear();
-						modelAnomaly.getAssignedTo().add(fAssignedToCombo.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						if (!modelAnomaly.getAssignedTo().contains(fAssignedToCombo.getText())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
+									currentUser);
+							modelAnomaly.getAssignedTo().clear();
+							modelAnomaly.getAssignedTo().add(fAssignedToCombo.getText());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -522,21 +493,29 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		gridData.horizontalSpan = 3;
 		fClassCombo.setToolTipText(R4EUIConstants.ANOMALY_CLASS_TOOLTIP);
 		fClassCombo.setLayoutData(gridData);
-		fClassCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fClassCombo.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-						final R4ECommentType type = RModelFactoryExt.eINSTANCE.createR4ECommentType();
-						type.setType(UIUtils.getClassFromString(fClassCombo.getText()));
-						modelAnomaly.setType(type);
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						R4EDesignRuleClass newClass = UIUtils.getClassFromString(fClassCombo.getText());
+						R4EDesignRuleClass oldClass = null;
+						if (null != modelAnomaly.getType()) {
+							oldClass = ((R4ECommentType) modelAnomaly.getType()).getType();
+						}
+						if (!newClass.equals(oldClass)) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
+									currentUser);
+							final R4ECommentType type = RModelFactoryExt.eINSTANCE.createR4ECommentType();
+							type.setType(newClass);
+							modelAnomaly.setType(type);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
-						//If this is a postponed anomaly, update original one as well
-						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
-							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							//If this is a postponed anomaly, update original one as well
+							if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							}
 						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
@@ -547,10 +526,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					}
 				}
 				refresh();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				//No implementation needed
 			}
 		});
 		addScrollListener(fClassCombo);
@@ -567,19 +542,24 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fRankCombo.setLayoutData(gridData);
-		fRankCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fRankCombo.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-						modelAnomaly.setRank(UIUtils.getRankFromString(fRankCombo.getText()));
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						R4EDesignRuleRank newRank = UIUtils.getRankFromString(fRankCombo.getText());
+						R4EDesignRuleRank oldRank = modelAnomaly.getRank();
+						if (!newRank.equals(oldRank)) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
+									currentUser);
+							modelAnomaly.setRank(newRank);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
-						//If this is a postponed anomaly, update original one as well
-						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
-							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							//If this is a postponed anomaly, update original one as well
+							if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							}
 						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
@@ -590,10 +570,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					}
 				}
 				refresh();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				//No implementation needed
 			}
 		});
 		addScrollListener(fRankCombo);
@@ -618,8 +594,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fRuleId.setEditable(false);
 		fRuleButton = aWidgetFactory.createButton(ruleComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
 		fRuleButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		fRuleButton.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fRuleButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				//Modify anomaly
 				R4EUIModelController.setJobInProgress(true);
 				final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
@@ -693,10 +669,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				}
 				R4EUIModelController.setJobInProgress(false); //Enable view
 			}
-
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// No implementation needed
-			}
 		});
 
 		//Due Date
@@ -717,8 +689,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fDateText.setEditable(false);
 		fCalendarButton = aWidgetFactory.createButton(dateComposite, "...", SWT.NONE);
 		fCalendarButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		fCalendarButton.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fCalendarButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				final ICalendarDialog dialog = R4EUIDialogFactory.getInstance().getCalendarDialog();
 				final int result = dialog.open();
 				if (result == Window.OK) {
@@ -747,10 +719,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					}
 					refresh();
 				}
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				// No implementation needed
 			}
 		});
 
@@ -826,19 +794,23 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		gridData.horizontalSpan = 3;
 		fDecidedByCombo.setToolTipText(R4EUIConstants.ANOMALY_DECIDED_BY_TOOLTIP);
 		fDecidedByCombo.setLayoutData(gridData);
-		fDecidedByCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fDecidedByCombo.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-						modelAnomaly.setDecidedByID(fDecidedByCombo.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
-						//If this is a postponed anomaly, update original one as well
-						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
-							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+						if (!fDecidedByCombo.getText().equals(modelAnomaly.getDecidedByID())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
+									currentUser);
+							modelAnomaly.setDecidedByID(fDecidedByCombo.getText());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+							//If this is a postponed anomaly, update original one as well
+							if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							}
 						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
@@ -849,10 +821,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					}
 				}
 				refresh();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				//No implementation needed
 			}
 		});
 		addScrollListener(fDecidedByCombo);
@@ -869,19 +837,22 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		gridData.horizontalSpan = 3;
 		fFixedByCombo.setToolTipText(R4EUIConstants.ANOMALY_FIXED_BY_TOOLTIP);
 		fFixedByCombo.setLayoutData(gridData);
-		fFixedByCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fFixedByCombo.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-						modelAnomaly.setFixedByID(fFixedByCombo.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						if (!fFixedByCombo.getText().equals(modelAnomaly.getFixedByID())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
+									currentUser);
+							modelAnomaly.setFixedByID(fFixedByCombo.getText());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
-						//If this is a postponed anomaly, update original one as well
-						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
-							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							//If this is a postponed anomaly, update original one as well
+							if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							}
 						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
@@ -892,10 +863,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					}
 				}
 				refresh();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				//No implementation needed
 			}
 		});
 		addScrollListener(fFixedByCombo);
@@ -913,19 +880,22 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		gridData.horizontalSpan = 3;
 		fFollowUpByCombo.setToolTipText(R4EUIConstants.ANOMALY_FOLLOWUP_BY_TOOLTIP);
 		fFollowUpByCombo.setLayoutData(gridData);
-		fFollowUpByCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fFollowUpByCombo.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyExtended) fProperties.getElement()).getAnomaly();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
-						modelAnomaly.setFollowUpByID(fFollowUpByCombo.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						if (!fFollowUpByCombo.getText().equals(modelAnomaly.getFollowUpByID())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
+									currentUser);
+							modelAnomaly.setFollowUpByID(fFollowUpByCombo.getText());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
-						//If this is a postponed anomaly, update original one as well
-						if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
-							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							//If this is a postponed anomaly, update original one as well
+							if (fProperties.getElement() instanceof R4EUIPostponedAnomaly) {
+								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
+							}
 						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
@@ -936,10 +906,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					}
 				}
 				refresh();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				//No implementation needed
 			}
 		});
 		addScrollListener(fFollowUpByCombo);
@@ -1036,7 +1002,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fCreationDateText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fPositionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fDescriptionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
-			fDescriptionText.setEditable(false);
 			fStateCombo.setEnabled(false);
 			fClassCombo.setEnabled(false);
 			fRankCombo.setEnabled(false);
@@ -1072,7 +1037,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fCreationDateText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fPositionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fDescriptionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
-			fDescriptionText.setEditable(true);
 			fRuleButton.setEnabled(true);
 			fRuleId.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fAssignedToCombo.setEnabled(true);

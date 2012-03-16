@@ -40,6 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.FilePathEditor;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorTreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.IEditableListListener;
@@ -430,7 +431,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		Label label = new Label(r4EUserPrefsGroup, SWT.NONE);
 		label.setText(PARTICIPANTS_LISTS_LABEL);
 		label.setToolTipText(R4EUIConstants.PARTICIPANTS_LISTS_TOOLTIP);
-		final GridData participantsListsLabelGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+		final GridData participantsListsLabelGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false,
+				false);
 		participantsListsLabelGridData.horizontalSpan = 1;
 		label.setLayoutData(participantsListsLabelGridData);
 		final GridData participantsListsGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
@@ -941,6 +943,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 		//For field editors
 		super.performDefaults();
+
+		//Here, since we erase all group data, we need to make sure that we are in the default display view
+		((ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView().getTreeViewer()).setViewTree();
+		R4EUIModelController.getNavigatorView().resetInput();
 	}
 
 	/**
@@ -1017,6 +1023,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			//Validation of input failed
 			return false;
 		}
+
+		//Here, since we might erase group data, we need to make sure that we are in the default display view
+		//TODO:  This could be improved later to only do this if the parent group of the current review is being removed
+		((ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView().getTreeViewer()).setViewTree();
+		R4EUIModelController.getNavigatorView().resetInput();
 
 		//For field editors
 		return super.performOk();

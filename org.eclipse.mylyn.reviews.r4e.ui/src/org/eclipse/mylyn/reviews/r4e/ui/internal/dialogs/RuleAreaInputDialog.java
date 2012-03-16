@@ -133,7 +133,7 @@ public class RuleAreaInputDialog extends FormDialog implements IRuleAreaInputDia
 				dialog.open();
 				return;
 			}
-			fNameValue = fNameInputTextField.getText();
+			fNameValue = fNameInputTextField.getText().trim();
 		} else {
 			fNameValue = null;
 		}

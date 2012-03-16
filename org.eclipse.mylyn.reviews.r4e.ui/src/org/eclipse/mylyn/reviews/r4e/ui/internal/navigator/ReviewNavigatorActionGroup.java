@@ -292,7 +292,9 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runReviewsCompletedFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetReviewsCompletedFilterCommand();
-		if (aApply) {
+		if (aApply
+				&& fCommandService.getCommand(R4EUIConstants.REVIEWS_COMPLETED_FILTER_COMMAND).getHandler().isEnabled()) {
+
 			fHandlerService.executeCommand(R4EUIConstants.REVIEWS_COMPLETED_FILTER_COMMAND, null);
 		}
 	}
@@ -329,7 +331,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runReviewsOnlyFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetReviewsOnlyFilterCommand();
-		if (aApply) {
+		if (aApply && fCommandService.getCommand(R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND).getHandler().isEnabled()) {
 			fHandlerService.executeCommand(R4EUIConstants.REVIEWS_ONLY_FILTER_COMMAND, null);
 		}
 	}
@@ -377,7 +379,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runAnomaliesMyFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetAnomaliesMyFilterCommand();
-		if (aApply) {
+		if (aApply && fCommandService.getCommand(R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND).getHandler().isEnabled()) {
 			fHandlerService.executeCommand(R4EUIConstants.ANOMALIES_MY_FILTER_COMMAND, null);
 		}
 	}
@@ -425,7 +427,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runReviewsMyFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetReviewsMyFilterCommand();
-		if (aApply) {
+		if (aApply && fCommandService.getCommand(R4EUIConstants.REVIEWS_MY_FILTER_COMMAND).getHandler().isEnabled()) {
 			fHandlerService.executeCommand(R4EUIConstants.REVIEWS_MY_FILTER_COMMAND, null);
 		}
 	}
@@ -482,12 +484,14 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runReviewsParticipantFilterCommand(String aParticipant) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetReviewsParticipantFilterCommand();
-		if (null == aParticipant || aParticipant.equals("")) { //$NON-NLS-1$
-			fReviewsParticipantFilter.setParticipant(""); //$NON-NLS-1$
-			return;
+		if (fCommandService.getCommand(R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND).getHandler().isEnabled()) {
+			if (null == aParticipant || aParticipant.equals("")) { //$NON-NLS-1$
+				fReviewsParticipantFilter.setParticipant(""); //$NON-NLS-1$
+				return;
+			}
+			fReviewsParticipantFilter.setParticipant(aParticipant);
+			fHandlerService.executeCommand(R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND, null);
 		}
-		fReviewsParticipantFilter.setParticipant(aParticipant);
-		fHandlerService.executeCommand(R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND, null);
 	}
 
 	/**
@@ -533,7 +537,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runAssignedMyFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetAssignedMyFilterCommand();
-		if (aApply) {
+		if (aApply && fCommandService.getCommand(R4EUIConstants.ASSIGN_MY_FILTER_COMMAND).getHandler().isEnabled()) {
 			fHandlerService.executeCommand(R4EUIConstants.ASSIGN_MY_FILTER_COMMAND, null);
 		}
 	}
@@ -590,12 +594,14 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runAssignedParticipantFilterCommand(String aParticipant) throws ExecutionException,
 			NotDefinedException, NotEnabledException, NotHandledException {
 		resetAssignedParticipantFilterCommand();
-		if (null == aParticipant || aParticipant.equals("")) { //$NON-NLS-1$
-			fAssignedParticipantFilter.setParticipant(""); //$NON-NLS-1$
-			return;
+		if (fCommandService.getCommand(R4EUIConstants.ASSIGN_FILTER_COMMAND).getHandler().isEnabled()) {
+			if (null == aParticipant || aParticipant.equals("")) { //$NON-NLS-1$
+				fAssignedParticipantFilter.setParticipant(""); //$NON-NLS-1$
+				return;
+			}
+			fAssignedParticipantFilter.setParticipant(aParticipant);
+			fHandlerService.executeCommand(R4EUIConstants.ASSIGN_FILTER_COMMAND, null);
 		}
-		fAssignedParticipantFilter.setParticipant(aParticipant);
-		fHandlerService.executeCommand(R4EUIConstants.ASSIGN_FILTER_COMMAND, null);
 	}
 
 	/**
@@ -641,7 +647,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runUnassignedFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetUnassignedFilterCommand();
-		if (aApply) {
+		if (aApply && fCommandService.getCommand(R4EUIConstants.UNASSIGN_FILTER_COMMAND).getHandler().isEnabled()) {
 			fHandlerService.executeCommand(R4EUIConstants.UNASSIGN_FILTER_COMMAND, null);
 		}
 	}
@@ -678,7 +684,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runAnomaliesFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetAnomaliesFilterCommand();
-		if (aApply) {
+		if (aApply && fCommandService.getCommand(R4EUIConstants.ANOMALIES_FILTER_COMMAND).getHandler().isEnabled()) {
 			fHandlerService.executeCommand(R4EUIConstants.ANOMALIES_FILTER_COMMAND, null);
 		}
 	}
@@ -715,7 +721,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runReviewElemsFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetReviewedElemsFilterCommand();
-		if (aApply) {
+		if (aApply && fCommandService.getCommand(R4EUIConstants.REVIEWED_ELEMS_FILTER_COMMAND).getHandler().isEnabled()) {
 			fHandlerService.executeCommand(R4EUIConstants.REVIEWED_ELEMS_FILTER_COMMAND, null);
 		}
 	}
@@ -752,7 +758,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runHideRuleSetsFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetHideRuleSetsFilterCommand();
-		if (aApply) {
+		if (aApply && fCommandService.getCommand(R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND).getHandler().isEnabled()) {
 			fHandlerService.executeCommand(R4EUIConstants.HIDE_RULE_SETS_FILTER_COMMAND, null);
 		}
 	}
@@ -789,7 +795,7 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void runHideDeltasFilterCommand(boolean aApply) throws ExecutionException, NotDefinedException,
 			NotEnabledException, NotHandledException {
 		resetHideDeltasFilterCommand();
-		if (aApply) {
+		if (aApply && fCommandService.getCommand(R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND).getHandler().isEnabled()) {
 			fHandlerService.executeCommand(R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND, null);
 		}
 	}

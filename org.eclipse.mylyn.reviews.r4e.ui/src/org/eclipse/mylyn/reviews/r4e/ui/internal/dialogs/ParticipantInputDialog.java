@@ -419,7 +419,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				if (fUserToAddCombo instanceof CCombo) {
 					widgetStr = ((CCombo) fUserToAddCombo).getText();
 				} else {
-					widgetStr = ((Text) fUserToAddCombo).getText();
+					widgetStr = ((Text) fUserToAddCombo).getText().trim();
 				}
 				if (widgetStr.trim().length() > 0) {
 					fAddUserButton.setEnabled(true);
@@ -669,7 +669,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			public void handleEvent(Event event) {
 				if (fSelectedParticipantIndex >= 0) {
 					final R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
-					participant.setEmail(fParticipantEmailInputTextField.getText());
+					participant.setEmail(fParticipantEmailInputTextField.getText().trim());
 					final TableItem item = fAddedParticipantsTable.getItem(fSelectedParticipantIndex);
 					if (null != participant.getEmail()) {
 						item.setFont(JFaceResources.getFontRegistry().get(JFaceResources.DEFAULT_FONT));
@@ -755,7 +755,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			public void handleEvent(Event event) {
 				if (fSelectedParticipantIndex >= 0) {
 					final R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
-					participant.setFocusArea(fFocusAreaTextField.getText());
+					participant.setFocusArea(fFocusAreaTextField.getText().trim());
 				}
 			}
 		});

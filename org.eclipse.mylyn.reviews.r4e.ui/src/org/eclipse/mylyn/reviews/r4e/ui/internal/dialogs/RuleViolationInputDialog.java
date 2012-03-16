@@ -134,7 +134,7 @@ public class RuleViolationInputDialog extends FormDialog implements IRuleViolati
 				dialog.open();
 				return;
 			}
-			fNameValue = fNameInputTextField.getText();
+			fNameValue = fNameInputTextField.getText().trim();
 		} else {
 			fNameValue = null;
 		}

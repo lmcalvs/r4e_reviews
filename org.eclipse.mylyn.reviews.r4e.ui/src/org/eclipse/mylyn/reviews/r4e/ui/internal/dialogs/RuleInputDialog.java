@@ -197,7 +197,7 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 				dialog.open();
 				return;
 			}
-			fIdValue = fIdInputTextField.getText();
+			fIdValue = fIdInputTextField.getText().trim();
 
 			//Validate Title
 			validateResult = validateEmptyInput(fTitleInputTextField);
@@ -209,7 +209,7 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 				dialog.open();
 				return;
 			}
-			fTitleValue = fTitleInputTextField.getText();
+			fTitleValue = fTitleInputTextField.getText().trim();
 
 			//Validate Class (no validation needed as this is a read-only combo box
 			fClassValue = UIUtils.getClassFromString(fClassCombo.getText());
@@ -227,7 +227,7 @@ public class RuleInputDialog extends FormDialog implements IRuleInputDialog {
 				dialog.open();
 				return;
 			}
-			fDescriptionValue = fDescriptionInputTextField.getText();
+			fDescriptionValue = fDescriptionInputTextField.getText().trim();
 
 		} else {
 			fIdValue = null;

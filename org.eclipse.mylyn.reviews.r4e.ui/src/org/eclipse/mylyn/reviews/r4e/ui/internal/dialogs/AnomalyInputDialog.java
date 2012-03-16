@@ -263,7 +263,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 				dialog.open();
 				return;
 			}
-			fAnomalyTitleValue = fAnomalyTitleInputTextField.getText();
+			fAnomalyTitleValue = fAnomalyTitleInputTextField.getText().trim();
 
 			//Validate Anomaly Comment
 			validateResult = validateEmptyInput(fAnomalyDescriptionInputTextField);
@@ -275,7 +275,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 				dialog.open();
 				return;
 			}
-			fAnomalyDescriptionValue = fAnomalyDescriptionInputTextField.getText();
+			fAnomalyDescriptionValue = fAnomalyDescriptionInputTextField.getText().trim();
 
 			//Validate R4EUIRule (if present)
 			fRuleReferenceValue = null;

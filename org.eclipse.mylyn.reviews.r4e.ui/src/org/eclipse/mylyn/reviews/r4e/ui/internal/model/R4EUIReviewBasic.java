@@ -1642,15 +1642,18 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	public void updatePhase(R4EReviewPhase aNewPhase) throws ResourceHandlingException, OutOfSyncException {
 		//Update review state
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
-		((R4EReviewState) fReview.getState()).setState(aNewPhase);
-		//Set end date when the review is completed
-		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-			R4EUIModelController.getActiveReview().getReview().setEndDate(Calendar.getInstance().getTime());
-		} else {
-			R4EUIModelController.getActiveReview().getReview().setEndDate(null);
+		if (!(((R4EReviewState) fReview.getState()).getState().equals(aNewPhase))) {
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview,
+					R4EUIModelController.getReviewer());
+			((R4EReviewState) fReview.getState()).setState(aNewPhase);
+			//Set end date when the review is completed
+			if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+				R4EUIModelController.getActiveReview().getReview().setEndDate(Calendar.getInstance().getTime());
+			} else {
+				R4EUIModelController.getActiveReview().getReview().setEndDate(null);
+			}
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}
-		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
 
 	/**

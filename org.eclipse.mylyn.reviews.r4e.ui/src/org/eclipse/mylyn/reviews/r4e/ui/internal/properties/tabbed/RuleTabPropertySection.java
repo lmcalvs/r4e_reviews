@@ -20,6 +20,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -30,13 +31,11 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -145,27 +144,25 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		data.top = new FormAttachment(fTitleText, ITabbedPropertyConstants.VSPACE);
 		fDescriptionText.setToolTipText(R4EUIConstants.RULE_DESCRIPTION_TOOLTIP);
 		fDescriptionText.setLayoutData(data);
-		fDescriptionText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fDescriptionText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fDescriptionText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
-						if (!(modelRule.getDescription().equals(fDescriptionText.getText()))) {
+						String newValue = fDescriptionText.getText().trim();
+						if (!(newValue.equals(modelRule.getDescription()))) {
 							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-							modelRule.setDescription(fDescriptionText.getText());
+							modelRule.setDescription(newValue);
 							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 						}
+						fDescriptionText.setText(newValue);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
 			}
 		});
 		UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
@@ -186,15 +183,19 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
 		fClassCombo.setToolTipText(R4EUIConstants.RULE_CLASS_TOOLTIP);
 		fClassCombo.setLayoutData(data);
-		fClassCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fClassCombo.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-						modelRule.setClass(UIUtils.getClassFromString(fClassCombo.getText()));
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						R4EDesignRuleClass newClass = UIUtils.getClassFromString(fClassCombo.getText());
+						R4EDesignRuleClass oldClass = modelRule.getClass_();
+						if (!newClass.equals(oldClass)) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
+							modelRule.setClass(newClass);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -202,10 +203,6 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 					}
 				}
 				refresh();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				//No implementation needed
 			}
 		});
 		addScrollListener(fClassCombo);
@@ -226,15 +223,19 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 		data.top = new FormAttachment(fClassCombo, ITabbedPropertyConstants.VSPACE);
 		fRankCombo.setToolTipText(R4EUIConstants.RULE_RANK_TOOLTIP);
 		fRankCombo.setLayoutData(data);
-		fRankCombo.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
+		fRankCombo.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EDesignRule modelRule = ((R4EUIRule) fProperties.getElement()).getRule();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
-						modelRule.setRank(UIUtils.getRankFromString(fRankCombo.getText()));
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						R4EDesignRuleRank newRank = UIUtils.getRankFromString(fRankCombo.getText());
+						R4EDesignRuleRank oldRank = modelRule.getRank();
+						if (!newRank.equals(oldRank)) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelRule, currentUser);
+							modelRule.setRank(UIUtils.getRankFromString(fRankCombo.getText()));
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
@@ -242,10 +243,6 @@ public class RuleTabPropertySection extends ModelElementTabPropertySection {
 					}
 				}
 				refresh();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
-				//No implementation needed
 			}
 		});
 		addScrollListener(fRankCombo);

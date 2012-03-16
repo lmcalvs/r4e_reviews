@@ -531,15 +531,17 @@ public class CommandUtils {
 	public static boolean useWorkspaceResource(R4EFileVersion aVersion) {
 		// Get handle to local storage repository
 		try {
-			final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
-					.getReview());
+			if (null != R4EUIModelController.getActiveReview()) {
+				final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
+						.getReview());
 
-			//If resource is available in the workspace, use it.  Otherwise use the local repo version
-			if (null != aVersion && null != aVersion.getResource()) {
-				final String workspaceFileId = localRepository.blobIdFor(((IFile) aVersion.getResource()).getContents());
-				final String repoFileId = aVersion.getLocalVersionID();
-				if (workspaceFileId.equals((repoFileId))) {
-					return true;
+				//If resource is available in the workspace, use it.  Otherwise use the local repo version
+				if (null != aVersion && null != aVersion.getResource()) {
+					final String workspaceFileId = localRepository.blobIdFor(((IFile) aVersion.getResource()).getContents());
+					final String repoFileId = aVersion.getLocalVersionID();
+					if (workspaceFileId.equals((repoFileId))) {
+						return true;
+					}
 				}
 			}
 		} catch (ReviewsFileStorageException e) {

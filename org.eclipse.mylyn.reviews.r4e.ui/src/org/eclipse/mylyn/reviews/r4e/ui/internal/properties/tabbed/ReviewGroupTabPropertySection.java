@@ -22,7 +22,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -38,14 +37,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
@@ -208,25 +207,25 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		data.top = new FormAttachment(fFilePathText, ITabbedPropertyConstants.VSPACE);
 		fDescriptionText.setToolTipText(R4EUIConstants.REVIEW_GROUP_DESCRIPTION_TOOLTIP);
 		fDescriptionText.setLayoutData(data);
-		fDescriptionText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fDescriptionText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fDescriptionText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
-						modelGroup.setDescription(fDescriptionText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						String newValue = fDescriptionText.getText().trim();
+						if (!newValue.equals(modelGroup.getDescription())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+							modelGroup.setDescription(newValue);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
+						fDescriptionText.setText(newValue);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
 			}
 		});
 		UIUtils.addTabbedPropertiesTextResizeListener(fDescriptionText);
@@ -247,25 +246,25 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 		data.top = new FormAttachment(fDescriptionText, ITabbedPropertyConstants.VSPACE);
 		fDefaultEntryCriteriaText.setToolTipText(R4EUIConstants.REVIEW_GROUP_ENTRY_CRITERIA_TOOLTIP);
 		fDefaultEntryCriteriaText.setLayoutData(data);
-		fDefaultEntryCriteriaText.addFocusListener(new FocusListener() {
-			public void focusLost(FocusEvent e) {
+		fDefaultEntryCriteriaText.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event event) {
 				if (!fRefreshInProgress && fDefaultEntryCriteriaText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
 					try {
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
-						modelGroup.setDefaultEntryCriteria(fDefaultEntryCriteriaText.getText());
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						String newValue = fDefaultEntryCriteriaText.getText().trim();
+						if (!newValue.equals(modelGroup.getDefaultEntryCriteria())) {
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+							modelGroup.setDefaultEntryCriteria(newValue);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						}
+						fDefaultEntryCriteriaText.setText(newValue);
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
 				}
-			}
-
-			public void focusGained(FocusEvent e) { // $codepro.audit.disable emptyMethod
-				//Nothing to do
 			}
 		});
 		UIUtils.addTabbedPropertiesTextResizeListener(fDefaultEntryCriteriaText);
@@ -553,29 +552,88 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 			if (!fRefreshInProgress) {
 				final String currentUser = R4EUIModelController.getReviewer();
 				final R4EReviewGroup modelGroup = ((R4EUIReviewGroup) fProperties.getElement()).getReviewGroup();
-				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
 				if (1 == aInstanceId) {
 					//First widget: available projects
-					final EList<String> projects = modelGroup.getAvailableProjects();
-					projects.clear();
+					List<String> newAddProjects = new ArrayList<String>();
+					List<String> newDeleteProjects = new ArrayList<String>();
+					List<String> storedProjects = new ArrayList<String>();
+					storedProjects.addAll(modelGroup.getAvailableProjects());
 					for (Item item : aItems) {
-						projects.add(item.getText());
+						newAddProjects.add(item.getText());
+						newDeleteProjects.add(item.getText());
+					}
+
+					//Add all new elements
+					newAddProjects.removeAll(storedProjects);
+					if (newAddProjects.size() > 0) {
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+						modelGroup.getAvailableProjects().addAll(newAddProjects);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					}
+
+					//Delete old elements to remove
+					storedProjects.removeAll(newDeleteProjects);
+					if (storedProjects.size() > 0) {
+						Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+						modelGroup.getAvailableProjects().removeAll(storedProjects);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 					}
 				} else if (2 == aInstanceId) {
 					//Second widget: available components
-					final EList<String> components = modelGroup.getAvailableComponents();
-					components.clear();
+					List<String> newAddComponents = new ArrayList<String>();
+					List<String> newDeleteComponents = new ArrayList<String>();
+					List<String> storedComponents = new ArrayList<String>();
+					storedComponents.addAll(modelGroup.getAvailableComponents());
 					for (Item item : aItems) {
-						components.add(item.getText());
+						newAddComponents.add(item.getText());
+						newDeleteComponents.add(item.getText());
+					}
+
+					//Add all new elements
+					newAddComponents.removeAll(storedComponents);
+					if (newAddComponents.size() > 0) {
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+						modelGroup.getAvailableComponents().addAll(newAddComponents);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					}
+
+					//Delete old elements to remove
+					storedComponents.removeAll(newDeleteComponents);
+					if (storedComponents.size() > 0) {
+						Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+						modelGroup.getAvailableComponents().removeAll(storedComponents);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 					}
 				} else if (3 == aInstanceId) {
 					//Third widget: applied Rule Sets
-					final EList<String> ruleSetLocations = modelGroup.getDesignRuleLocations();
-					ruleSetLocations.clear();
+					List<String> newAddRuleSets = new ArrayList<String>();
+					List<String> newDeleteRuleSets = new ArrayList<String>();
+					List<String> storedRuleSets = new ArrayList<String>();
+					storedRuleSets.addAll(modelGroup.getDesignRuleLocations());
+					for (Item item : aItems) {
+						newAddRuleSets.add(item.getText());
+						newDeleteRuleSets.add(item.getText());
+					}
+
+					//Add all new elements
+					newAddRuleSets.removeAll(storedRuleSets);
+					if (newAddRuleSets.size() > 0) {
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+						modelGroup.getDesignRuleLocations().addAll(newAddRuleSets);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					}
+
+					//Delete old elements to remove
+					storedRuleSets.removeAll(newDeleteRuleSets);
+					if (storedRuleSets.size() > 0) {
+						Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelGroup, currentUser);
+						modelGroup.getDesignRuleLocations().removeAll(storedRuleSets);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					}
+
+					//Update references in R4EUIReviewGroup
 					((R4EUIReviewGroup) fProperties.getElement()).getRuleSets().clear();
 					for (Item item : aItems) {
-						ruleSetLocations.add(item.getText());
-						//Update references in R4EUIReviewGroup
 						for (R4EUIRuleSet ruleSet : ((R4EUIRootElement) ((R4EUIReviewGroup) fProperties.getElement()).getParent()).getRuleSets()) {
 							if (ruleSet.getName().equals(item.getText())) {
 								((R4EUIReviewGroup) fProperties.getElement()).getRuleSets().add(ruleSet);
@@ -583,9 +641,7 @@ public class ReviewGroupTabPropertySection extends ModelElementTabPropertySectio
 							}
 						}
 					}
-
 				}
-				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 				refresh();
 			}
 

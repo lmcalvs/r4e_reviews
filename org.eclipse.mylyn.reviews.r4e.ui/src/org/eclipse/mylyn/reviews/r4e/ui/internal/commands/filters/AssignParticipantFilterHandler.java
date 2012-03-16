@@ -77,7 +77,7 @@ public class AssignParticipantFilterHandler extends AbstractHandler {
 				if (filter.getParticipant().equals("")) { //$NON-NLS-1$
 					final String participant = UIUtils.getParticipantFilterInputDialog();
 					if (participant.equals("")) { //$NON-NLS-1$
-						return null;
+						return Status.CANCEL_STATUS;
 					}
 					filter.setParticipant(participant);
 				}

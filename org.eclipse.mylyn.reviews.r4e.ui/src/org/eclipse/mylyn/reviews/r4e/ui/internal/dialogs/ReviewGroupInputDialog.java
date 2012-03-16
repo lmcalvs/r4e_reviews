@@ -238,7 +238,7 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 				dialog.open();
 				return;
 			}
-			fGroupNameValue = fGroupNameInputTextField.getText();
+			fGroupNameValue = fGroupNameInputTextField.getText().trim();
 
 			//Validate Folder
 			validateResult = validateFolderInput(fGroupFolderInputTextField);
@@ -260,7 +260,7 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 				dialog.open();
 				return;
 			}
-			fGroupFolderValue = fGroupFolderInputTextField.getText();
+			fGroupFolderValue = fGroupFolderInputTextField.getText().trim();
 
 			//Validate Projects (optional)
 			final ArrayList<String> projectsValues = new ArrayList<String>();
@@ -298,7 +298,7 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 			}
 			fRuleSetsValues = ruleSetLocationsValues.toArray(new String[ruleSetLocationsValues.size()]);
 
-			fGroupDescriptionValue = fGroupDescriptionInputTextField.getText();
+			fGroupDescriptionValue = fGroupDescriptionInputTextField.getText().trim();
 
 		} else {
 			fGroupNameValue = "";
