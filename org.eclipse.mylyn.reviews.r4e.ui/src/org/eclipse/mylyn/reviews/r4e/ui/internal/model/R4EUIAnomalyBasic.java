@@ -19,9 +19,13 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.Comment;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
@@ -38,10 +42,11 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ICommentInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.AnomalyBasicProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -94,6 +99,11 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * Field ANOMALY_LABEL_TITLE_LENGTH. (value is 20)
 	 */
 	private static final int ANOMALY_LABEL_TITLE_LENGTH = 20;
+
+	/**
+	 * Field CREATE_COMMENT_MESSAGE. (value is ""Creating New Comment..."")
+	 */
+	private static final String CREATE_COMMENT_MESSAGE = "Creating New Comment...";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -201,17 +211,17 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	@Override
 	public List<ReviewComponent> createChildModelDataElement() {
 		//Get Comment from user and set it in model data
-		List<ReviewComponent> tempComments = new ArrayList<ReviewComponent>();
-
+		final List<ReviewComponent> tempComments = new ArrayList<ReviewComponent>();
 		R4EUIModelController.setJobInProgress(true);
+
 		final ICommentInputDialog dialog = R4EUIDialogFactory.getInstance().getCommentInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			R4EComment tempComment = RModelFactory.eINSTANCE.createR4EComment();
+			final R4EComment tempComment = RModelFactory.eINSTANCE.createR4EComment();
 			tempComment.setDescription(dialog.getCommentValue());
 			tempComments.add(tempComment);
 		}
-		R4EUIModelController.setJobInProgress(false); //Enable view
+		R4EUIModelController.setJobInProgress(false);
 		return tempComments;
 	}
 
@@ -256,8 +266,8 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	/**
 	 * Method adjustTitleLength.
 	 * 
-	 * @param aDescription
-	 *            String
+	 * @param aAnomaly
+	 *            R4EAnomaly
 	 * @return String
 	 */
 	protected static String adjustTitleLength(R4EAnomaly aAnomaly) {
@@ -294,7 +304,6 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 				R4EUIModelController.getReviewer());
 		fAnomaly.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
 	/**
@@ -352,11 +361,12 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		}
 		fComments.clear();
 		fOpen = false;
-		removeListeners();
 	}
 
 	/**
 	 * Method open. Load the serialization model data into UI model
+	 * 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#open()
 	 */
 	@Override
 	public void open() {
@@ -387,10 +397,6 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		fComments.add((R4EUIComment) aChildToAdd);
-		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.getContentProvider());
-		fireAdd(aChildToAdd);
 	}
 
 	/**
@@ -428,37 +434,69 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	/**
 	 * Method createComment.
 	 * 
-	 * @return R4EUIComment
-	 * @throws ResourceHandlingException
-	 * @throws OutOfSyncException
+	 * @param aRejectionComment
+	 *            - boolean
+	 * @return boolean
 	 */
-	public R4EUIComment createComment() throws ResourceHandlingException, OutOfSyncException {
-
-		R4EUIComment uiComment = null;
+	public boolean createComment(boolean aRejectionComment) {
 
 		//Get comment details from user
-		R4EUIModelController.setJobInProgress(true);
 		final ICommentInputDialog dialog = R4EUIDialogFactory.getInstance().getCommentInputDialog();
-		final int result = dialog.open();
+		final IR4EUIModelElement commentParent = this;
+		final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				result[0] = dialog.open();
+			}
+		});
 
-		if (result == Window.OK) {
+		if (result[0] == Window.OK) {
+			final Job job = new Job(CREATE_COMMENT_MESSAGE) {
+				public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
 
-			//Create comment model element
-			final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
-			final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(), true);
+				@Override
+				public boolean belongsTo(Object family) {
+					return familyName.equals(family);
+				}
 
-			final R4EComment comment = R4EUIModelController.FModelExt.createR4EComment(participant, fAnomaly);
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(comment,
-					R4EUIModelController.getReviewer());
-			comment.setDescription(dialog.getCommentValue());
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				@Override
+				public IStatus run(IProgressMonitor monitor) {
 
-			//Create and set UI model element
-			uiComment = new R4EUIComment(this, comment);
-			addChildren(uiComment);
+					try {
+						//Create comment model element
+						final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
+						final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(),
+								true);
+
+						final R4EComment comment = R4EUIModelController.FModelExt.createR4EComment(participant,
+								fAnomaly);
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(comment,
+								R4EUIModelController.getReviewer());
+						comment.setDescription(dialog.getCommentValue());
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+						//Create and set UI model element
+						final R4EUIComment uiComment = new R4EUIComment(commentParent, comment);
+						addChildren(uiComment);
+						R4EUIModelController.setJobInProgress(false);
+						UIUtils.setNavigatorViewFocus(uiComment, AbstractTreeViewer.ALL_LEVELS);
+					} catch (ResourceHandlingException e) {
+						UIUtils.displayResourceErrorDialog(e);
+					} catch (OutOfSyncException e) {
+						UIUtils.displaySyncErrorDialog(e);
+					}
+					monitor.done();
+					return Status.OK_STATUS;
+				}
+			};
+			job.setUser(true);
+			job.schedule();
+		} else {
+			if (aRejectionComment) {
+				return false;
+			}
 		}
-		R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
-		return uiComment;
+		return true;
 	}
 
 	/**
@@ -468,8 +506,8 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 *            IR4EUIModelElement
 	 * @param aFileRemove
 	 *            - also remove from file (hard remove)
-	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
@@ -489,10 +527,6 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fComments.remove(removedElement);
-			aChildToRemove.removeListeners();
-			fireRemove(aChildToRemove);
-		} else {
-			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 		}
 	}
 
@@ -501,8 +535,8 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * 
 	 * @param aFileRemove
 	 *            boolean
-	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override
@@ -510,46 +544,6 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		//Recursively remove all children
 		for (R4EUIComment comment : fComments) {
 			removeChildren(comment, aFileRemove);
-		}
-	}
-
-	//Listeners
-
-	/**
-	 * Method addListener.
-	 * 
-	 * @param aProvider
-	 *            ReviewNavigatorContentProvider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
-	 */
-	@Override
-	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		super.addListener(aProvider);
-		if (null != fComments) {
-			R4EUIComment element = null;
-			for (final Iterator<R4EUIComment> iterator = fComments.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.addListener(aProvider);
-			}
-		}
-	}
-
-	/**
-	 * Method removeListener.
-	 * 
-	 * @param aProvider
-	 *            - the treeviewer content provider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
-	 */
-	@Override
-	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-		super.removeListener(aProvider);
-		if (null != fComments) {
-			R4EUIComment element = null;
-			for (final Iterator<R4EUIComment> iterator = fComments.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.removeListener(aProvider);
-			}
 		}
 	}
 

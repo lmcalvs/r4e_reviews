@@ -287,7 +287,7 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
 			boolean userFound;
-			String[] ids = fUserAddedValue.getText().trim().split(R4EUIConstants.LIST_SEPARATOR);
+			final String[] ids = fUserAddedValue.getText().trim().split(R4EUIConstants.LIST_SEPARATOR);
 			for (String id : ids) {
 				userFound = false;
 				for (IUserInfo userInfo : fUserInfos) {
@@ -656,8 +656,8 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 			public void handleEvent(Event event) {
 				//Update the list of Participants to add
 				boolean userFound;
-				List<IUserInfo> updatedInfos = new ArrayList<IUserInfo>();
-				String[] ids = fUserAddedValue.getText().split(R4EUIConstants.LIST_SEPARATOR);
+				final List<IUserInfo> updatedInfos = new ArrayList<IUserInfo>();
+				final String[] ids = fUserAddedValue.getText().split(R4EUIConstants.LIST_SEPARATOR);
 				for (String id : ids) {
 					userFound = false;
 					for (IUserInfo userInfo : fUserInfos) {
@@ -857,7 +857,7 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	 * Method updateTableSelections.
 	 */
 	private void updateTableSelections() {
-		List<IUserInfo> selectedElements = new ArrayList<IUserInfo>();
+		final List<IUserInfo> selectedElements = new ArrayList<IUserInfo>();
 		for (IUserInfo userInfo : fUserInfos) {
 			for (int i = 0; i < fUsersTableViewer.getTable().getItemCount(); i++) {
 				IUserInfo tableUserInfo = (IUserInfo) fUsersTableViewer.getElementAt(i);
@@ -866,7 +866,7 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 				}
 			}
 		}
-		StructuredSelection selection = new StructuredSelection(selectedElements);
+		final StructuredSelection selection = new StructuredSelection(selectedElements);
 		fUsersTableViewer.setSelection(selection, true);
 	}
 
@@ -875,7 +875,7 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 	 */
 	public void addUser() {
 		//Add selected Users to the list of Participants to add
-		IStructuredSelection selection = (IStructuredSelection) fUsersTableViewer.getSelection();
+		final IStructuredSelection selection = (IStructuredSelection) fUsersTableViewer.getSelection();
 		IUserInfo element = null;
 		boolean userFound = false;
 		for (final Iterator<IUserInfo> iterator = selection.iterator(); iterator.hasNext();) {
@@ -890,7 +890,7 @@ public class FindUserDialog extends FormDialog implements IFindUserDialog {
 				fUserInfos.add(element);
 			}
 		}
-		StringBuffer buffer = new StringBuffer();
+		final StringBuffer buffer = new StringBuffer();
 		for (IUserInfo userInfo : fUserInfos) {
 			buffer.append(userInfo.getUserId().toLowerCase() + R4EUIConstants.LIST_SEPARATOR + " ");
 		}

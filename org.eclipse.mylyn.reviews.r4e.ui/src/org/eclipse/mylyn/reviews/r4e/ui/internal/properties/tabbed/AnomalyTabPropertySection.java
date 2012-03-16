@@ -23,7 +23,6 @@ import java.text.SimpleDateFormat;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
@@ -44,7 +43,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -63,6 +61,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
@@ -357,31 +356,26 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			public void widgetSelected(SelectionEvent aEvent) {
 				if (!fRefreshInProgress) {
 
-					R4EAnomalyState newState = R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText());
+					final R4EAnomalyState newState = R4EUIAnomalyExtended.getStateFromString(fStateCombo.getText());
 					if (newState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)
 							&& !((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly()
 									.getState()
 									.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)) {
-						//Force the user to enter a comment if the state is changed to REJECTED
-						try {
-							final R4EUIComment uiComment = ((R4EUIAnomalyBasic) fProperties.getElement()).createComment();
-							if (null == uiComment) {
-								final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-										"Cannot change Anomaly State", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
-												0, "Please enter a reason for rejecting this anomaly", null),
-										IStatus.ERROR);
-								dialog.open();
-								refresh();
-								return;
-							} else {
-								UIUtils.changeAnomalyState(fProperties.getElement(), newState);
-								UIUtils.setNavigatorViewFocus(uiComment, AbstractTreeViewer.ALL_LEVELS);
-								return;
-							}
-						} catch (OutOfSyncException e) {
-							UIUtils.displaySyncErrorDialog(e);
-						} catch (ResourceHandlingException e) {
-							UIUtils.displayResourceErrorDialog(e);
+						final boolean commentResult = ((R4EUIAnomalyBasic) fProperties.getElement()).createComment(true);
+						if (commentResult) {
+							UIUtils.changeAnomalyState(fProperties.getElement(), newState);
+							return;
+						} else {
+							final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+									"Cannot change Anomaly State", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+											"Please enter a reason for rejecting this anomaly", null), IStatus.ERROR);
+							Display.getDefault().syncExec(new Runnable() {
+								public void run() {
+									dialog.open();
+								}
+							});
+							refresh();
+							return;
 						}
 					}
 					UIUtils.changeAnomalyState(fProperties.getElement(), newState);
@@ -725,7 +719,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fCalendarButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		fCalendarButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				R4EUIModelController.setJobInProgress(true);
 				final ICalendarDialog dialog = R4EUIDialogFactory.getInstance().getCalendarDialog();
 				final int result = dialog.open();
 				if (result == Window.OK) {
@@ -754,7 +747,6 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					}
 					refresh();
 				}
-				R4EUIModelController.setJobInProgress(false);
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
@@ -974,7 +966,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		}
 		fDescriptionText.setText(modelAnomaly.getDescription());
 
-		String[] participants = R4EUIModelController.getActiveReview()
+		final String[] participants = R4EUIModelController.getActiveReview()
 				.getParticipantIDs()
 				.toArray(new String[R4EUIModelController.getActiveReview().getParticipantIDs().size()]);
 		fAssignedToCombo.removeAll();
@@ -997,7 +989,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 
 		fRankCombo.setItems(UIUtils.getRanks());
 		//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
-		int rankValue = modelAnomaly.getRank().getValue();
+		final int rankValue = modelAnomaly.getRank().getValue();
 		fRankCombo.select(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
 				? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
 				: rankValue);

@@ -21,8 +21,8 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.filters;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDelta;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDeltaContainer;
 
 /**
  * @author lmcdubo
@@ -47,7 +47,7 @@ public class HideDeltasFilter extends ViewerFilter {
 	 */
 	@Override
 	public boolean select(Viewer aViewer, Object aParentElement, Object aElement) {
-		if (aElement instanceof R4EUIContentsContainer || aElement instanceof R4EUIContent) {
+		if (aElement instanceof R4EUIDeltaContainer || aElement instanceof R4EUIDelta) {
 			return false;
 		}
 		return true;

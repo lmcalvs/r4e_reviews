@@ -20,7 +20,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -41,7 +40,6 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.PostponedFileProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
@@ -189,7 +187,6 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 		}
 		fUiAnomalies.clear();
 		fOpen = false;
-		removeListeners();
 	}
 
 	/**
@@ -233,7 +230,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 		R4EUIPostponedAnomaly uiAnomaly = null;
 		R4EUITextPosition position = null;
 		fAnomalies = R4EUIModelController.getAnomaliesForFile(fFile.getTarget().getLocalVersionID());
-		int anomaliesSize = (null != fAnomalies) ? fAnomalies.size() : 0;
+		final int anomaliesSize = (null != fAnomalies) ? fAnomalies.size() : 0;
 		R4EAnomaly anomaly = null;
 		for (int i = 0; i < anomaliesSize; i++) {
 			anomaly = fAnomalies.get(i);
@@ -289,10 +286,6 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 		if (aChildToAdd instanceof R4EUIPostponedAnomaly) {
 			fUiAnomalies.add((R4EUIPostponedAnomaly) aChildToAdd);
 		}
-		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.getContentProvider());
-		fireAdd(aChildToAdd);
 	}
 
 	/**
@@ -381,10 +374,6 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 
 			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fUiAnomalies.remove(removedElement);
-				aChildToRemove.removeListeners();
-				fireRemove(aChildToRemove);
-			} else {
-				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 			}
 		}
 	}
@@ -408,43 +397,45 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 
 	//Listeners
 
-	/**
+/*	*//**
 	 * Method addListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
 	 */
+	/*
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		super.addListener(aProvider);
-		if (null != fUiAnomalies) {
-			R4EUIPostponedAnomaly element = null;
-			for (final Iterator<R4EUIPostponedAnomaly> iterator = fUiAnomalies.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.addListener(aProvider);
-			}
+	super.addListener(aProvider);
+	if (null != fUiAnomalies) {
+		R4EUIPostponedAnomaly element = null;
+		for (final Iterator<R4EUIPostponedAnomaly> iterator = fUiAnomalies.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.addListener(aProvider);
 		}
 	}
+	}
 
-	/**
+	*//**
 	 * Method removeListener.
 	 * 
 	 * @param aProvider
 	 *            - the treeviewer content provider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
 	 */
+	/*
 	@Override
 	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-		super.removeListener(aProvider);
-		if (null != fUiAnomalies) {
-			R4EUIPostponedAnomaly element = null;
-			for (final Iterator<R4EUIPostponedAnomaly> iterator = fUiAnomalies.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.removeListener(aProvider);
-			}
+	super.removeListener(aProvider);
+	if (null != fUiAnomalies) {
+		R4EUIPostponedAnomaly element = null;
+		for (final Iterator<R4EUIPostponedAnomaly> iterator = fUiAnomalies.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.removeListener(aProvider);
 		}
 	}
+	}*/
 
 	//Commands
 

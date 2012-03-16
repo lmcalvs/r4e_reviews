@@ -20,6 +20,9 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AssignParticipantFilter;
@@ -28,12 +31,22 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorAction
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorView;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
 public class AssignParticipantFilterHandler extends AbstractHandler {
+
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Field COMMAND_MESSAGE. (value is ""Applying Participant Assigned Elements Filter..."")
+	 */
+	private static final String COMMAND_MESSAGE = "Applying Participant Assigned Elements Filter...";
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -45,41 +58,69 @@ public class AssignParticipantFilterHandler extends AbstractHandler {
 	 * @param aEvent
 	 *            ExecutionEvent
 	 * @return Object
-	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent aEvent) throws ExecutionException {
+	public Object execute(final ExecutionEvent aEvent) {
 
-		//We need to preserve the expansion state and restore it afterwards
-		final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
-		final AssignParticipantFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
-				.getActionSet()).getAssignedParticipantFilter();
+		final UIJob job = new UIJob(COMMAND_MESSAGE) {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				monitor.beginTask(COMMAND_MESSAGE, 1);
 
-		if (filter.getParticipant().equals("")) { //$NON-NLS-1$
-			final String participant = UIUtils.getParticipantFilterInputDialog();
-			if (participant.equals("")) { //$NON-NLS-1$
-				return null;
+				//We need to preserve the expansion state and restore it afterwards
+				final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
+				final Object[] elements = viewer.getExpandedElements();
+
+				final AssignParticipantFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
+						.getActionSet()).getAssignedParticipantFilter();
+
+				if (filter.getParticipant().equals("")) { //$NON-NLS-1$
+					final String participant = UIUtils.getParticipantFilterInputDialog();
+					if (participant.equals("")) { //$NON-NLS-1$
+						return null;
+					}
+					filter.setParticipant(participant);
+				}
+
+				boolean oldValue;
+				try {
+					oldValue = HandlerUtil.toggleCommandState(aEvent.getCommand());
+				} catch (ExecutionException e) {
+					monitor.done();
+					return Status.CANCEL_STATUS;
+				}
+
+				if (!oldValue) {
+					R4EUIPlugin.Ftracer.traceInfo("Apply assigned filter for participant " + filter.getParticipant() //$NON-NLS-1$
+							+ " to ReviewNavigator"); //$NON-NLS-1$
+					viewer.addFilter(filter);
+				} else {
+					R4EUIPlugin.Ftracer.traceInfo("Remove assigned filter from ReviewNavigator"); //$NON-NLS-1$
+					viewer.removeFilter(filter);
+					filter.setParticipant(""); //$NON-NLS-1$
+				}
+				R4EUIModelController.getNavigatorView().getTreeViewer().setExpandedElements(elements);
+
+				monitor.worked(1);
+				monitor.done();
+				return Status.OK_STATUS;
 			}
-			filter.setParticipant(participant);
-		}
-
-		boolean oldValue = HandlerUtil.toggleCommandState(aEvent.getCommand());
-		if (!oldValue) {
-			R4EUIPlugin.Ftracer.traceInfo("Apply assigned filter for participant " + filter.getParticipant() //$NON-NLS-1$
-					+ " to ReviewNavigator"); //$NON-NLS-1$
-			viewer.addFilter(filter);
-		} else {
-			R4EUIPlugin.Ftracer.traceInfo("Remove assigned filter from ReviewNavigator"); //$NON-NLS-1$
-			viewer.removeFilter(filter);
-			filter.setParticipant(""); //$NON-NLS-1$
-		}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 
+	/**
+	 * Method isEnabled.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.core.commands.AbstractHandler#isEnabled()
+	 */
 	@Override
 	public boolean isEnabled() {
-		ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
-		if (view == null
+		final ReviewNavigatorView view = R4EUIModelController.getNavigatorView();
+		if (null == view
 				|| ((ReviewNavigatorActionGroup) view.getActionSet()).isAssignedMyFilterSet()
 				|| ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).isUnassignedFilterSet()) {
 			return false;

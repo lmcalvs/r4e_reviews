@@ -196,7 +196,6 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 				//Remove check on parent, since at least one children is not set anymore
 				getParent().getParent().setUserReviewed(fUserReviewed, false);
 			}
-			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 
@@ -221,7 +220,6 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 				removeContentReviewed();
 			}
 			fUserReviewed = aReviewed;
-			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 
@@ -276,7 +274,6 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 				R4EUIModelController.getReviewer());
 		fContent.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
 	/**
@@ -304,7 +301,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 			//Set new participants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fContent,
 					R4EUIModelController.getReviewer());
-			EList<String> assignedParticipants = fContent.getAssignedTo();
+			final EList<String> assignedParticipants = fContent.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.add(participant.getId());
 
@@ -336,7 +333,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 			//Set new partcipants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fContent,
 					R4EUIModelController.getReviewer());
-			EList<String> assignedParticipants = fContent.getAssignedTo();
+			final EList<String> assignedParticipants = fContent.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.remove(participant.getId());
 			}

@@ -165,7 +165,7 @@ public class ReviewItemProperties extends ModelElementProperties {
 		if (REVIEW_ITEM_AUTHOR_ID.equals(aId)) {
 			return ((R4EUIReviewItem) getElement()).getItem().getAddedById();
 		} else if (REVIEW_ITEM_AUTHOR_REP_ID.equals(aId)) {
-			R4EItem modelItem = ((R4EUIReviewItem) getElement()).getItem();
+			final R4EItem modelItem = ((R4EUIReviewItem) getElement()).getItem();
 			if (null != modelItem.getAuthorRep()) {
 				return modelItem.getAuthorRep();
 			} else {

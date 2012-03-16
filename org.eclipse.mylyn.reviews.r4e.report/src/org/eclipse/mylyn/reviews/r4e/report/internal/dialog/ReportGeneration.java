@@ -42,6 +42,8 @@ import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
@@ -227,65 +229,19 @@ public class ReportGeneration implements IR4EReport {
 	/**
 	 * Generate the selected report
 	 * @param String agroupFile File of the Group
+	 * @param IProgressMonitor aMonitor File of the Group
 	 */
-	public void handleReportGeneration(final String  agroupFile) {
+	public void handleReportGeneration(final String agroupFile, IProgressMonitor aMonitor) {
 		
 		//Keep a copy of the original group file
-		setGroupFile (agroupFile);
+		setGroupFile(agroupFile);
+		
 		// Get the file directory of the selected review
-		
 		final File groupFile = new File(agroupFile);
-		
-		File rootDir = null;
-		
-		if (groupFile != null ) {
-			rootDir = groupFile.getParentFile();
-		}
-
+		File rootDir = groupFile.getParentFile();
 		if (rootDir != null) {
-
-			//Should think to use a progress bar here
-			
-//			// Generate a pop-up dialog to notify the report generation
-//			final Shell s = new Shell(SWT.MODELESS);
-//
-//			String message = R4EReportString.getString("Popup.messageOneMoment");
-//			final MessageDialog dialog = new MessageDialog(
-//					s,
-//					R4EReportString.getString("Popup.messageTitle"),
-//					null, // accept
-//					// the
-//					// default
-//					// window
-//					// icon
-//					message, MessageDialog.INFORMATION,
-//					new String[] { IDialogConstants.OK_LABEL }, 0);
-//			// ok is the default
-
-			// Thread to generate the report while the window is still
-			// editable
-			final File rootDirFinal = rootDir;
-			new Thread() {
-				public void run() {
-					setDesignReportTemplate();
-					if (fCurrent_report_num == fSINGLE_REPORT_NUM) {
-						// Generate a list of reports
-						prepareMultiReport(rootDirFinal);
-
-					} else {
-						prepareReport(rootDirFinal);
-					}
-				}
-			}.start();
-
-			// Open the wait window
-			//dialog.open();
-//			Activator.FTracer.traceInfo
-//					("After the dialog close ret: "
-//							+ dialog.getReturnCode());
-
+			prepareReport(rootDir, aMonitor);
 		}
-
 	}
 		
 
@@ -497,10 +453,12 @@ public class ReportGeneration implements IR4EReport {
 	 * 
 	 * @param aRootDir
 	 *            File current directory for the review files
+	 * @param aMonitor
+	 *            IProgressMonitor
 	 */
-	private void prepareReport(File aRootDir) {
+	@SuppressWarnings("restriction")
+	private void prepareReport(File aRootDir, IProgressMonitor aMonitor) {
 		File workingDir = aRootDir;
-		Boolean displayReport = true;
 		Activator.FTracer.traceInfo
 				("ReportGeneration.prepareReport() Parent report Directory: "
 						+ workingDir);
@@ -517,7 +475,7 @@ public class ReportGeneration implements IR4EReport {
 		workingDir = createReportDir(aRootDir, workingStr.toString());
 
 		// Build the report directory
-		Boolean ok = BuildReportDir(aRootDir);
+		boolean ok = BuildReportDir(aRootDir);
 
 		// Verify if we can proceed to generate a report
 		if (!ok) {
@@ -557,9 +515,11 @@ public class ReportGeneration implements IR4EReport {
 			//Set the default  report type based on the number of review selected
 			if (nbReview == 1) {
 				//Select the Inspection Record
+				aMonitor.subTask("Preparing Inspection Report...");
 				setReportType(fINSPECTION_RECORD_TYPE);
 			} else {
 				//Select the Global report
+				aMonitor.subTask("Preparing Global Report...");
 				setReportType(fGLOBAL_REPORT_TYPE);				
 			}
 			//Need to set the template in case it is different for the default
@@ -572,7 +532,7 @@ public class ReportGeneration implements IR4EReport {
 			.getModuleHandle();
 
 			//Build the file needed for the report
-			ReviewGroupRes destGroup = prepareReportSourceFiles (workingDir, selectedReview);
+			prepareReportSourceFiles(workingDir, selectedReview);
 
 			File[] destFile = workingDir.listFiles();
 			
@@ -582,6 +542,7 @@ public class ReportGeneration implements IR4EReport {
 						destFile[count].getName());	
 				if (destFile[count].isFile()) {
 					//Register the Group file for the report
+					aMonitor.subTask("Processing file " + destFile[count].getName());
 					prepareDataSource(destFile[count], reportDesignHandle, workingDir);
 				}
 				File [] revFile = destFile[count].listFiles();
@@ -595,6 +556,7 @@ public class ReportGeneration implements IR4EReport {
 			
 			// Prepare the report output
 			// Decide here if we generate HTML or PDF format report
+			aMonitor.subTask("Preparing Output File...");
 			IRunAndRenderTask renderTask = prepareOutputFile(runnable,
 					engine, fOutputFormat);
 			// Execute the preparation of the report
@@ -617,14 +579,13 @@ public class ReportGeneration implements IR4EReport {
 		}
 		// Need to destroy the engine
 		engine.destroy();
+		
 		// Clean the directory maintaining the data used for the report
 		// after the report is generated
 		cleanReportDirectory(workingDir);
 
 		// Pop-up the report file
-		if (displayReport) {
-			displayReport();
-		}
+		displayReport();
 	}
 
 	/**
@@ -975,21 +936,18 @@ public class ReportGeneration implements IR4EReport {
 	 * @param aRootDir
 	 *            directory for the current review
 	 */
-	private Boolean BuildReportDir(File aRootDir) {
-		Boolean ok = true;
+	private boolean BuildReportDir(File aRootDir) {
+		boolean ok = true;
 		File parentDir = aRootDir.getParentFile();
-//		Activator.FTracer.traceInfo
-//				("ReportGeneration.BuildReportDir() Parent report Directory: "
-//						+ parentDir);
 		fReportDir = createReportDir(parentDir, fPROJECT_REPORT_DIR);
 
 		// Verify if we can write the report in this directory
-		Boolean b = verifyWritePermission(fReportDir);
+		boolean b = verifyWritePermission(fReportDir);
 		// If not allowed, offer the user to select a new directory
 		if (!b) {
 			// Need to create a new path to save the report
 			fReportDir = createSaveDirectory(fReportDir);
-			Boolean bo = verifyWritePermission(fReportDir);
+			boolean bo = verifyWritePermission(fReportDir);
 			// If the user select another directory not allowed, just put a
 			// pop-up now
 			if (!bo) {
@@ -1005,8 +963,8 @@ public class ReportGeneration implements IR4EReport {
 	 * @param aDir
 	 * @return Boolean
 	 */
-	private Boolean verifyWritePermission(File aDir) {
-		Boolean b = true;
+	private boolean verifyWritePermission(File aDir) {
+		boolean b = true;
 		if (aDir != null) {
 			Activator.FTracer.traceInfo("ReportGeneration.verifyWritePermission() BEGIN:  "
 					+ aDir.getAbsolutePath());
@@ -1035,7 +993,6 @@ public class ReportGeneration implements IR4EReport {
 			// False, it is a null directory
 			b = false;
 		}
-
 		return b;
 	}
 
@@ -1093,19 +1050,18 @@ public class ReportGeneration implements IR4EReport {
 	 * open the report in the workbench editor
 	 */
 	private void displayReport() {
-
-		Runnable runnable = new Runnable() {
-
+		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				String msg = " The following report has been generated: \n"
-						+ getReportName();
-				Popup.info(null, msg);
+				String[] buttonLabels = {"OK"};
+				final MessageDialog dialog = new MessageDialog(null, "Report Generated", null,
+						"The following report has been generated: \n" + getReportName(),
+						MessageDialog.INFORMATION, buttonLabels, 0);
+				dialog.open();
+				
 				// To open in the workspace file editor
 				openFile();
 			}
-
-		};
-		Display.getDefault().asyncExec(runnable);
+		});
 	}
 
 	//
@@ -1466,7 +1422,7 @@ public class ReportGeneration implements IR4EReport {
 		reportGen.setReviewListSelection(listSelectReviews);
 		reportGen.setReportType(reportGen.fGLOBAL_REPORT_TYPE);
 		reportGen.setOuputFormat(reportGen.fHTML_EXTENSION);
-		reportGen.handleReportGeneration(groupFile);
+		reportGen.handleReportGeneration(groupFile, new NullProgressMonitor());
 	}
 
 }

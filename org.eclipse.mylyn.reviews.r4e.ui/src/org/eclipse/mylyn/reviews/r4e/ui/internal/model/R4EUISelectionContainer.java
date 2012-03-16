@@ -88,8 +88,8 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 		addChildren(uiSelection);
 
 		//If parent file is assigned, assign the Selection too
-		EList<String> parentAssignedParticipants = ((R4EUIFileContext) getParent()).getFileContext().getAssignedTo();
-		List<R4EParticipant> participantsToAssign = new ArrayList<R4EParticipant>();
+		final EList<String> parentAssignedParticipants = ((R4EUIFileContext) getParent()).getFileContext().getAssignedTo();
+		final List<R4EParticipant> participantsToAssign = new ArrayList<R4EParticipant>();
 		for (String parentAssignedParticipant : parentAssignedParticipants) {
 			R4EParticipant participant = R4EUIModelController.getActiveReview().getParticipant(
 					parentAssignedParticipant, false);

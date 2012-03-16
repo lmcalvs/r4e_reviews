@@ -91,8 +91,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 */
-	public R4EUIReviewExtended(R4EUIReviewGroup aParent, R4EReview aReview, R4EReviewType aType, boolean aOpen)
-			throws ResourceHandlingException {
+	public R4EUIReviewExtended(R4EUIReviewGroup aParent, R4EReview aReview, R4EReviewType aType, boolean aOpen) {
 		super(aParent, aReview, aType, aOpen);
 		if (aOpen) {
 			setImage(REVIEW_FORMAL_ICON_FILE);

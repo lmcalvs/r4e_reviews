@@ -35,6 +35,12 @@ public interface ISendNotificationInputDialog {
 	 */
 	int open();
 
+	/**
+	 * Method adjust.
+	 * 
+	 * @param aSource
+	 *            Object
+	 */
 	void adjust(Object aSource);
 
 	/**

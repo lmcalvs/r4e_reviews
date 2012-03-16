@@ -904,6 +904,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	//Commands
 
 	/**
+	 * Field ACTIVE_REVIEW_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.review.reviewActive"")
+	 */
+	public static final String ACTIVE_REVIEW_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.review.reviewActive";
+
+	/**
+	 * Field JOB_IN_PROGRESS_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen"")
+	 */
+	public static final String JOB_IN_PROGRESS_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.dialogOpen";
+
+	/**
 	 * Field TOGGLE_STATE_COMMAND_KEY. (value is ""org.eclipse.ui.commands.toggleState"")
 	 */
 	public static final String TOGGLE_STATE_COMMAND_KEY = "org.eclipse.ui.commands.toggleState";
@@ -2215,6 +2225,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final int CHANGE_TYPE_REVIEWED_STATE = 4;
 
 	//Test Constants
+	/**
+	 * Field R4E_UI_JOB_FAMILY.
+	 */
 	public static String R4E_UI_JOB_FAMILY = "R4EUI";
 
 }

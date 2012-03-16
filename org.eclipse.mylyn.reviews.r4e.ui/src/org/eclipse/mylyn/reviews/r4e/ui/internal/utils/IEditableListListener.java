@@ -43,5 +43,5 @@ public interface IEditableListListener {
 	 * @param aInstanceId
 	 *            int
 	 */
-	void itemSelected(Item aItem, int fInstanceId);
+	void itemSelected(Item aItem, int aInstanceId);
 }

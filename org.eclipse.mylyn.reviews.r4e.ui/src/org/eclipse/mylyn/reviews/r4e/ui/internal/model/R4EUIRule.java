@@ -172,7 +172,6 @@ public class R4EUIRule extends R4EUIModelElement {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRule, R4EUIModelController.getReviewer());
 		fRule.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
 	/**

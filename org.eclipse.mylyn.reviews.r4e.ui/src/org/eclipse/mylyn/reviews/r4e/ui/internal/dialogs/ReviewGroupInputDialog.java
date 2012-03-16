@@ -29,7 +29,6 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRootElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRuleSet;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -503,7 +502,7 @@ public class ReviewGroupInputDialog extends FormDialog implements IReviewGroupIn
 		label = toolkit.createLabel(extraSectionClient, ADD_RULE_SETS_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.REVIEW_GROUP_RULESET_REFERENCE_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		final List<R4EUIRuleSet> uiRuleSets = ((R4EUIRootElement) R4EUIModelController.getRootElement()).getRuleSets();
+		final List<R4EUIRuleSet> uiRuleSets = (R4EUIModelController.getRootElement()).getRuleSets();
 		final List<String> ruleLocations = new ArrayList<String>();
 		for (R4EUIRuleSet ruleSet : uiRuleSets) {
 			ruleLocations.add(ruleSet.getRuleSet().getName());

@@ -143,8 +143,8 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	private static String buildCommentName(String aDescription) {
 		//Only consider first line
-		if (aDescription != null) {
-			String[] lines = aDescription.split(R4EUIConstants.LINE_FEED);
+		if (null != aDescription) {
+			final String[] lines = aDescription.split(R4EUIConstants.LINE_FEED);
 			if (lines[0].length() > COMMENT_LABEL_LENGTH) {
 				return lines[0].substring(0, COMMENT_LABEL_LENGTH) + R4EUIConstants.ELLIPSIS_STR;
 			} else {
@@ -202,7 +202,6 @@ public class R4EUIComment extends R4EUIModelElement {
 				R4EUIModelController.getReviewer());
 		fComment.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
 	/**

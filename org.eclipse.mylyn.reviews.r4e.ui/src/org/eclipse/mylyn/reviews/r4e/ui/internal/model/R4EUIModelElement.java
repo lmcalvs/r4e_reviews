@@ -21,7 +21,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -32,11 +31,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityExcepti
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ModelElementProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -76,6 +73,12 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public static final String READONLY_OVERLAY_ICON_FILE = "icons/ovr16/readonlyovr_tsk.gif"; //$NON-NLS-1$
 
+	/**
+	 * Field SET_IMAGE_MESSAGE.
+	 */
+	public static final String SET_IMAGE_MESSAGE = "Setting Images"; //$NON-NLS-1$
+
+	
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -99,11 +102,6 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * Field fParent.
 	 */
 	private final IR4EUIModelElement fParent;
-
-	/**
-	 * Field fListener.
-	 */
-	protected List<IR4EUIModelListener> fListeners = new ArrayList<IR4EUIModelListener>();
 
 	/**
 	 * Field fUserReviewed.
@@ -130,8 +128,6 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @param aParent
 	 *            IR4EUIModelElement
 	 * @param aName
-	 *            String
-	 * @param aTooltip
 	 *            String
 	 */
 	protected R4EUIModelElement(IR4EUIModelElement aParent, String aName) {
@@ -216,9 +212,9 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 *            String
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setImage(String)
 	 */
-	public final void setImage(String aLocation) {
+	public final void setImage(final String aLocation) {
 		fImage = UIUtils.loadIcon(aLocation);
-		fDisabledImage = new Image(null, fImage, SWT.IMAGE_DISABLE);
+		fDisabledImage = UIUtils.loadDisabledIcon(aLocation);
 	}
 
 	/**
@@ -258,7 +254,6 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public void close() {
 		fOpen = false;
-		removeListeners();
 	}
 
 	/**
@@ -270,8 +265,8 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#open()
 	 */
-	public void open() throws ResourceHandlingException, ReviewVersionsException, FileNotFoundException,
-			CompatibilityException { // $codepro.audit.disable unnecessaryExceptions
+	public void open() throws CompatibilityException, ResourceHandlingException, FileNotFoundException,
+			ReviewVersionsException { // $codepro.audit.disable unnecessaryExceptions
 		fOpen = true;
 	}
 
@@ -326,8 +321,8 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
 	 */
-	public void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws ResourceHandlingException,
-			OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+	public void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws OutOfSyncException,
+			ResourceHandlingException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
 		//default implementation
 	}
 
@@ -470,8 +465,8 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(R4EReviewComponent)
 	 */
-	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
-			OutOfSyncException, CompatibilityException { // $codepro.audit.disable unnecessaryExceptions
+	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws OutOfSyncException,
+			CompatibilityException, ResourceHandlingException { // $codepro.audit.disable unnecessaryExceptions
 		return null;
 		// default implementation
 	}
@@ -518,78 +513,6 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	public void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException,
 			CompatibilityException { // $codepro.audit.disable emptyMethod -->
 		//default implementation
-	}
-
-	// Listeners
-
-	/**
-	 * Method addListener.
-	 * 
-	 * @param aProvider
-	 *            ReviewNavigatorContentProvider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
-	 */
-	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		fListeners.add(aProvider);
-	}
-
-	/**
-	 * Method removeListener.
-	 * 
-	 * @param aProvider
-	 *            ReviewNavigatorContentProvider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
-	 */
-	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-		fListeners.remove(aProvider);
-	}
-
-	/**
-	 * Method removeListeners.
-	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListeners()
-	 */
-	public void removeListeners() {
-		fListeners.clear();
-	}
-
-	/**
-	 * Method fireAdd.
-	 * 
-	 * @param aAdded
-	 *            Object
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#fireAdd(Object)
-	 */
-	public void fireAdd(Object aAdded) {
-		for (IR4EUIModelListener listener : fListeners) {
-			listener.addEvent(new R4EUIModelEvent(aAdded, R4EUIConstants.CHANGE_TYPE_ADD));
-		}
-	}
-
-	/**
-	 * Method fireRemove.
-	 * 
-	 * @param aRemoved
-	 *            Object
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#fireRemove(Object)
-	 */
-	public void fireRemove(Object aRemoved) {
-		for (IR4EUIModelListener listener : fListeners) {
-			listener.removeEvent(new R4EUIModelEvent(aRemoved, R4EUIConstants.CHANGE_TYPE_REMOVE));
-		}
-	}
-
-	/**
-	 * Method fireUserReviewStateChanged.
-	 * 
-	 * @param aChanged
-	 *            Object
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#fireUserReviewStateChanged(Object)
-	 */
-	public void fireUserReviewStateChanged(Object aChanged, int aType) {
-		for (IR4EUIModelListener listener : fListeners) {
-			listener.changedEvent(new R4EUIModelEvent(aChanged, aType));
-		}
 	}
 
 	//Commands

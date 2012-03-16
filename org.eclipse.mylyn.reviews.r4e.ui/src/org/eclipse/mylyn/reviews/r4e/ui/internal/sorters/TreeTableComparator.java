@@ -39,6 +39,9 @@ public class TreeTableComparator extends ViewerComparator {
 	// Constants
 	// ------------------------------------------------------------------------
 
+	/**
+	 * Field DESCENDING. (value is 1)
+	 */
 	private static final int DESCENDING = 1;
 
 	// ------------------------------------------------------------------------
@@ -59,6 +62,9 @@ public class TreeTableComparator extends ViewerComparator {
 	// Constructors
 	// ------------------------------------------------------------------------
 
+	/**
+	 * Constructor for TreeTableComparator.
+	 */
 	public TreeTableComparator() {
 		fDirection = DESCENDING;
 	}
@@ -67,10 +73,21 @@ public class TreeTableComparator extends ViewerComparator {
 	// Methods
 	// ------------------------------------------------------------------------
 
+	/**
+	 * Method getDirection.
+	 * 
+	 * @return int
+	 */
 	public int getDirection() {
-		return fDirection == 1 ? SWT.DOWN : SWT.UP;
+		return 1 == fDirection ? SWT.DOWN : SWT.UP;
 	}
 
+	/**
+	 * Method setColumnName.
+	 * 
+	 * @param aColumnName
+	 *            String
+	 */
 	public void setColumnName(String aColumnName) {
 		if (null != fColumnName && aColumnName.equals(fColumnName)) {
 			// Same column as last sort; toggle the direction
@@ -108,8 +125,8 @@ public class TreeTableComparator extends ViewerComparator {
 		if (R4EUIConstants.ELEMENTS_LABEL_NAME.equals(fColumnName)) {
 			//Sort by element name
 			if (e1 instanceof IR4EUIModelElement && e2 instanceof IR4EUIModelElement) {
-				String str1 = ((IR4EUIModelElement) e1).getName();
-				String str2 = ((IR4EUIModelElement) e2).getName();
+				final String str1 = ((IR4EUIModelElement) e1).getName();
+				final String str2 = ((IR4EUIModelElement) e2).getName();
 				compareResult = str1.compareTo(str2);
 			} else {
 				compareResult = 0;
@@ -148,13 +165,13 @@ public class TreeTableComparator extends ViewerComparator {
 		} else if (R4EUIConstants.ASSIGNED_TO_LABEL2.equals(fColumnName)) {
 			//Sort by assignees
 			if (e1 instanceof R4EUIReviewItem && e2 instanceof R4EUIReviewItem) {
-				String str1 = UIUtils.formatAssignedParticipants(((R4EUIReviewItem) e1).getItem().getAssignedTo());
-				String str2 = UIUtils.formatAssignedParticipants(((R4EUIReviewItem) e2).getItem().getAssignedTo());
+				final String str1 = UIUtils.formatAssignedParticipants(((R4EUIReviewItem) e1).getItem().getAssignedTo());
+				final String str2 = UIUtils.formatAssignedParticipants(((R4EUIReviewItem) e2).getItem().getAssignedTo());
 				compareResult = str1.compareTo(str2);
 			} else if (e1 instanceof R4EUIFileContext && e2 instanceof R4EUIFileContext) {
-				String str1 = UIUtils.formatAssignedParticipants(((R4EUIFileContext) e1).getFileContext()
+				final String str1 = UIUtils.formatAssignedParticipants(((R4EUIFileContext) e1).getFileContext()
 						.getAssignedTo());
-				String str2 = UIUtils.formatAssignedParticipants(((R4EUIFileContext) e2).getFileContext()
+				final String str2 = UIUtils.formatAssignedParticipants(((R4EUIFileContext) e2).getFileContext()
 						.getAssignedTo());
 				compareResult = str1.compareTo(str2);
 			} else {
@@ -163,12 +180,12 @@ public class TreeTableComparator extends ViewerComparator {
 		} else if (R4EUIConstants.CHANGES_LABEL.equals(fColumnName)) {
 			//Sort by number of changes
 			if (e1 instanceof R4EUIReviewItem && e2 instanceof R4EUIReviewItem) {
-				int num1 = ((R4EUIReviewItem) e1).getNumChanges();
-				int num2 = ((R4EUIReviewItem) e2).getNumChanges();
+				final int num1 = ((R4EUIReviewItem) e1).getNumChanges();
+				final int num2 = ((R4EUIReviewItem) e2).getNumChanges();
 				compareResult = num1 - num2;
 			} else if (e1 instanceof R4EUIFileContext && e2 instanceof R4EUIFileContext) {
-				int num1 = ((R4EUIFileContext) e1).getNumChanges();
-				int num2 = ((R4EUIFileContext) e2).getNumChanges();
+				final int num1 = ((R4EUIFileContext) e1).getNumChanges();
+				final int num2 = ((R4EUIFileContext) e2).getNumChanges();
 				compareResult = num1 - num2;
 			} else {
 				compareResult = 0; //should never happen
@@ -176,12 +193,12 @@ public class TreeTableComparator extends ViewerComparator {
 		} else if (R4EUIConstants.ANOMALIES_LABEL.equals(fColumnName)) {
 			//Sort by number of anomalies
 			if (e1 instanceof R4EUIReviewItem && e2 instanceof R4EUIReviewItem) {
-				int num1 = ((R4EUIReviewItem) e1).getNumAnomalies();
-				int num2 = ((R4EUIReviewItem) e2).getNumAnomalies();
+				final int num1 = ((R4EUIReviewItem) e1).getNumAnomalies();
+				final int num2 = ((R4EUIReviewItem) e2).getNumAnomalies();
 				compareResult = num1 - num2;
 			} else if (e1 instanceof R4EUIFileContext && e2 instanceof R4EUIFileContext) {
-				int num1 = ((R4EUIFileContext) e1).getNumAnomalies();
-				int num2 = ((R4EUIFileContext) e2).getNumAnomalies();
+				final int num1 = ((R4EUIFileContext) e1).getNumAnomalies();
+				final int num2 = ((R4EUIFileContext) e2).getNumAnomalies();
 				compareResult = num1 - num2;
 			} else {
 				compareResult = 0; //should never happen

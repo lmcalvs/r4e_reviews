@@ -142,9 +142,8 @@ public class AnomalyExtraProperties extends AnomalyBasicProperties {
 			return result;
 		}
 		if (ANOMALY_STATE_ID.equals(aId)) {
-			return R4EUIAnomalyExtended.getStates()[Integer.valueOf(((R4EUIAnomalyExtended) getElement()).getAnomaly()
-					.getState()
-					.getValue())];
+			return R4EUIAnomalyExtended.getStates()[Integer.valueOf(
+					((R4EUIAnomalyExtended) getElement()).getAnomaly().getState().getValue()).intValue()];
 		} else if (ANOMALY_NOT_ACCEPTED_REASON_ID.equals(aId)) {
 			if (null != ((R4EUIAnomalyExtended) getElement()).getAnomaly().getNotAcceptedReason()) {
 				return ((R4EUIAnomalyExtended) getElement()).getAnomaly().getNotAcceptedReason();

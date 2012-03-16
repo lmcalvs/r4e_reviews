@@ -20,12 +20,16 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.HideRuleSetsFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
@@ -34,36 +38,64 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class HideRuleSetsFilterHandler extends AbstractHandler {
 
 	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Field COMMAND_MESSAGE. (value is ""Applying Hide Rule Sets Filter..."")
+	 */
+	private static final String COMMAND_MESSAGE = "Applying Hide Rule Sets Filter...";
+
+	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 
 	/**
 	 * Method execute.
 	 * 
-	 * @param event
+	 * @param aEvent
 	 *            ExecutionEvent
 	 * @return Object
-	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	public Object execute(final ExecutionEvent aEvent) {
 
-		//We need to preserve the expansion state and restore it afterwards
-		final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
-		final HideRuleSetsFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
-				.getActionSet()).getHideRuleSetsFilter();
+		final UIJob job = new UIJob(COMMAND_MESSAGE) {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				monitor.beginTask(COMMAND_MESSAGE, 1);
 
-		final Object[] elements = viewer.getExpandedElements();
-		boolean oldValue = HandlerUtil.toggleCommandState(event.getCommand());
+				//We need to preserve the expansion state and restore it afterwards
+				final TreeViewer viewer = R4EUIModelController.getNavigatorView().getTreeViewer();
+				final Object[] elements = viewer.getExpandedElements();
 
-		if (!oldValue) {
-			R4EUIPlugin.Ftracer.traceInfo("Apply hide Rule Sets elements filter to ReviewNavigator");
-			viewer.addFilter(filter);
-		} else {
-			R4EUIPlugin.Ftracer.traceInfo("Remove hide Rule Sets elements filter from ReviewNavigator");
-			viewer.removeFilter(filter);
-		}
-		R4EUIModelController.getNavigatorView().getTreeViewer().setExpandedElements(elements);
+				final HideRuleSetsFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
+						.getActionSet()).getHideRuleSetsFilter();
+
+				boolean oldValue;
+				try {
+					oldValue = HandlerUtil.toggleCommandState(aEvent.getCommand());
+				} catch (ExecutionException e) {
+					monitor.done();
+					return Status.CANCEL_STATUS;
+				}
+
+				if (!oldValue) {
+					R4EUIPlugin.Ftracer.traceInfo("Apply Hide Rule Sets elements filter to ReviewNavigator"); //$NON-NLS-1$
+					viewer.addFilter(filter);
+				} else {
+					R4EUIPlugin.Ftracer.traceInfo("Remove Hide Rule Sets elements filter from ReviewNavigator"); //$NON-NLS-1$
+					viewer.removeFilter(filter);
+				}
+				R4EUIModelController.getNavigatorView().getTreeViewer().setExpandedElements(elements);
+
+				monitor.worked(1);
+				monitor.done();
+				return Status.OK_STATUS;
+			}
+		};
+		job.setUser(true);
+		job.schedule();
 		return null;
 	}
 }

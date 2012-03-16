@@ -19,7 +19,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
@@ -27,7 +26,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 
@@ -120,7 +118,6 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 		}
 		fContents.clear();
 		fOpen = false;
-		removeListeners();
 	}
 
 	/**
@@ -146,14 +143,11 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 	 * 
 	 * @param aChildToAdd
 	 *            IR4EUIModelElement
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addChildren(IR4EUIModelElement)
 	 */
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		fContents.add((R4EUIContent) aChildToAdd);
-		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.getContentProvider());
-		fireAdd(aChildToAdd);
 	}
 
 	/**
@@ -183,10 +177,6 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fContents.remove(removedElement);
-			aChildToRemove.removeListeners();
-			fireRemove(aChildToRemove);
-		} else {
-			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 		}
 	}
 
@@ -233,43 +223,45 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 
 	//Listeners
 
-	/**
+/*	*//**
 	 * Method addListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
 	 */
+	/*
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		super.addListener(aProvider);
-		if (null != fContents) {
-			R4EUIContent element = null;
-			for (final Iterator<R4EUIContent> iterator = fContents.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.addListener(aProvider);
-			}
+	super.addListener(aProvider);
+	if (null != fContents) {
+		R4EUIContent element = null;
+		for (final Iterator<R4EUIContent> iterator = fContents.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.addListener(aProvider);
 		}
 	}
+	}
 
-	/**
+	*//**
 	 * Method removeListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
 	 */
+	/*
 	@Override
 	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-		super.removeListener(aProvider);
-		if (null != fContents) {
-			R4EUIContent element = null;
-			for (final Iterator<R4EUIContent> iterator = fContents.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.removeListener(aProvider);
-			}
+	super.removeListener(aProvider);
+	if (null != fContents) {
+		R4EUIContent element = null;
+		for (final Iterator<R4EUIContent> iterator = fContents.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.removeListener(aProvider);
 		}
 	}
+	}*/
 
 	//Commands
 

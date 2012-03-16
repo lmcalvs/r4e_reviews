@@ -86,11 +86,11 @@ public class AssignParticipantFilter extends ViewerFilter {
 		//Only Review elements that are unassigned, or assigned to the participant
 		//and anomalies created by the participant are shown
 		if (aElement instanceof R4EUIReviewItem) {
-			if (((R4EUIReviewItem) aElement).getItem().getAssignedTo().size() == 0
+			if (0 == ((R4EUIReviewItem) aElement).getItem().getAssignedTo().size()
 					|| ((R4EUIReviewItem) aElement).getItem().getAssignedTo().contains(fParticipant)) {
 				return true;
 			} else {
-				List<R4EUIFileContext> files = ((R4EUIReviewItem) aElement).getFileContexts();
+				final List<R4EUIFileContext> files = ((R4EUIReviewItem) aElement).getFileContexts();
 				for (R4EUIFileContext file : files) {
 					if (file.getFileContext().getAssignedTo().contains(fParticipant)) {
 						return true;
@@ -115,18 +115,18 @@ public class AssignParticipantFilter extends ViewerFilter {
 			if (aElement instanceof R4EUIPostponedFile) {
 				return true;
 			}
-			if (((R4EUIFileContext) aElement).getFileContext().getAssignedTo().size() == 0
+			if (0 == ((R4EUIFileContext) aElement).getFileContext().getAssignedTo().size()
 					|| ((R4EUIFileContext) aElement).getFileContext().getAssignedTo().contains(fParticipant)) {
 				return true;
 			} else {
-				IR4EUIModelElement[] contents = ((R4EUIFileContext) aElement).getContentsContainerElement()
+				final IR4EUIModelElement[] contents = ((R4EUIFileContext) aElement).getContentsContainerElement()
 						.getChildren();
 				for (IR4EUIModelElement content : contents) {
 					if (((R4EUIContent) content).getContent().getAssignedTo().contains(fParticipant)) {
 						return true;
 					}
 				}
-				IR4EUIModelElement[] anomalies = ((R4EUIFileContext) aElement).getAnomalyContainerElement()
+				final IR4EUIModelElement[] anomalies = ((R4EUIFileContext) aElement).getAnomalyContainerElement()
 						.getChildren();
 				for (IR4EUIModelElement anomaly : anomalies) {
 					if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().contains(fParticipant)) {
@@ -136,13 +136,13 @@ public class AssignParticipantFilter extends ViewerFilter {
 			}
 			return false;
 		} else if (aElement instanceof R4EUIContent) {
-			if (((R4EUIContent) aElement).getContent().getAssignedTo().size() == 0
+			if (0 == ((R4EUIContent) aElement).getContent().getAssignedTo().size()
 					|| ((R4EUIContent) aElement).getContent().getAssignedTo().contains(fParticipant)) {
 				return true;
 			}
 			return false;
 		} else if (aElement instanceof R4EUIAnomalyBasic) {
-			if (((R4EUIAnomalyBasic) aElement).getAnomaly().getAssignedTo().size() == 0
+			if (0 == ((R4EUIAnomalyBasic) aElement).getAnomaly().getAssignedTo().size()
 					|| ((R4EUIAnomalyBasic) aElement).getAnomaly().getAssignedTo().contains(fParticipant)
 					|| ((R4EUIAnomalyBasic) aElement).getAnomaly().getUser().getId().equals(fParticipant)) {
 				return true;
@@ -150,7 +150,7 @@ public class AssignParticipantFilter extends ViewerFilter {
 			return false;
 		} else if (aElement instanceof R4EUIContentsContainer) {
 			for (IR4EUIModelElement child : ((R4EUIContentsContainer) aElement).getChildren()) {
-				if (((R4EUIContent) child).getContent().getAssignedTo().size() == 0
+				if (0 == ((R4EUIContent) child).getContent().getAssignedTo().size()
 						|| ((R4EUIContent) child).getContent().getAssignedTo().contains(fParticipant)) {
 					return true;
 				}
@@ -158,7 +158,7 @@ public class AssignParticipantFilter extends ViewerFilter {
 			return false;
 		} else if (aElement instanceof R4EUIAnomalyContainer) {
 			for (IR4EUIModelElement child : ((R4EUIAnomalyContainer) aElement).getChildren()) {
-				if (((R4EUIAnomalyBasic) child).getAnomaly().getAssignedTo().size() == 0
+				if (0 == ((R4EUIAnomalyBasic) child).getAnomaly().getAssignedTo().size()
 						|| ((R4EUIAnomalyBasic) child).getAnomaly().getAssignedTo().contains(fParticipant)
 						|| ((R4EUIAnomalyBasic) child).getAnomaly().getUser().getId().equals(fParticipant)) {
 					return true;

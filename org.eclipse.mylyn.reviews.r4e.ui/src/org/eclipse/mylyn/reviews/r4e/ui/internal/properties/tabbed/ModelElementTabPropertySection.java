@@ -25,7 +25,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IPropertyListener;
@@ -33,7 +32,6 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.internal.forms.widgets.FormUtil;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
-import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 /**
  * @author lmcdubo
@@ -58,30 +56,6 @@ public class ModelElementTabPropertySection extends AbstractPropertySection impl
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-
-	/**
-	 * Method dispose.
-	 * 
-	 * @see org.eclipse.ui.views.properties.tabbed.ISection#dispose()
-	 */
-	@Override
-	public void dispose() {
-		super.dispose();
-	}
-
-	/**
-	 * Method createControls.
-	 * 
-	 * @param parent
-	 *            Composite
-	 * @param aTabbedPropertySheetPage
-	 *            TabbedPropertySheetPage
-	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(Composite, TabbedPropertySheetPage)
-	 */
-	@Override
-	public void createControls(Composite parent, TabbedPropertySheetPage aTabbedPropertySheetPage) {
-		super.createControls(parent, aTabbedPropertySheetPage);
-	}
 
 	/**
 	 * Method setInput.

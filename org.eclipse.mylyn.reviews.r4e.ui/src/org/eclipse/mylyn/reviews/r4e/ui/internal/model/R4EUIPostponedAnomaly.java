@@ -110,7 +110,6 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 			close();
 		}
 		updateState(aPostponedAnomaly.getState());
-		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
 	/**

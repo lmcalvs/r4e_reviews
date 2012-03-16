@@ -123,6 +123,8 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 *            IR4EUIModelElement
 	 * @param aParticipant
 	 *            R4EParticipant
+	 * @param aType
+	 *            R4EReviewType
 	 */
 	public R4EUIParticipant(IR4EUIModelElement aParent, R4EParticipant aParticipant, R4EReviewType aType) {
 		super(aParent, aParticipant.getId());
@@ -178,6 +180,9 @@ public class R4EUIParticipant extends R4EUIModelElement {
 
 	/**
 	 * Method setRoleIcon. Set particpant icon based on most significant role
+	 * 
+	 * @param aType
+	 *            R4EReviewType
 	 */
 	public void setRoleIcon(R4EReviewType aType) {
 		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
@@ -308,7 +313,6 @@ public class R4EUIParticipant extends R4EUIModelElement {
 				R4EUIModelController.getReviewer());
 		fParticipant.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
 	/**

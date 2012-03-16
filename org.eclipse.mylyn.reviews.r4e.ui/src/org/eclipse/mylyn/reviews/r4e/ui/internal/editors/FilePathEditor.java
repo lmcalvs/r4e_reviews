@@ -168,9 +168,9 @@ public class FilePathEditor extends ListEditor {
 	 * @return String
 	 */
 	public String getSelection() {
-		List list = getList();
+		final List list = getList();
 		if (null != list) {
-			String[] selections = list.getSelection();
+			final String[] selections = list.getSelection();
 			if (null != selections && 0 < selections.length) {
 				return selections[0];
 			}

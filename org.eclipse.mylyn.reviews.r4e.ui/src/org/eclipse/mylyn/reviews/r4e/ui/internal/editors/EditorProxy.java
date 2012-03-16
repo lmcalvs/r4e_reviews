@@ -200,8 +200,6 @@ public class EditorProxy {
 	 *            R4EFileVersion - the base (or reference) file version
 	 * @param aTargetFileVersion
 	 *            R4EFileVersion - the target (or current) file version
-	 * @param aPosition
-	 *            IR4EUIPosition
 	 */
 	private static void openCompareEditor(IWorkbenchPage aPage, R4EFileVersion aBaseFileVersion,
 			R4EFileVersion aTargetFileVersion) {

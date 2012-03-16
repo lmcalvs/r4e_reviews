@@ -19,7 +19,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.window.Window;
@@ -161,13 +160,12 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	@Override
 	public List<ReviewComponent> createChildModelDataElement() {
 		//Get Rule from user and set it in model data
-		List<ReviewComponent> tempRules = new ArrayList<ReviewComponent>();
+		final List<ReviewComponent> tempRules = new ArrayList<ReviewComponent>();
 
-		R4EUIModelController.setJobInProgress(true);
 		final IRuleInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			R4EDesignRule tempRule = DRModelFactory.eINSTANCE.createR4EDesignRule();
+			final R4EDesignRule tempRule = DRModelFactory.eINSTANCE.createR4EDesignRule();
 			tempRule.setId(dialog.getIdValue());
 			tempRule.setTitle(dialog.getTitleValue());
 			tempRule.setDescription(dialog.getDescriptionValue());
@@ -175,7 +173,6 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 			tempRule.setClass(dialog.getClassValue());
 			tempRules.add(tempRule);
 		}
-		R4EUIModelController.setJobInProgress(false); //Enable view
 		return tempRules;
 	}
 
@@ -232,7 +229,6 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 		}
 		fRules.clear();
 		fOpen = false;
-		removeListeners();
 	}
 
 	/**
@@ -272,7 +268,6 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 				R4EUIModelController.getReviewer());
 		fViolation.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
 	/**
@@ -291,14 +286,11 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	 * 
 	 * @param aChildToAdd
 	 *            IR4EUIModelElement
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addChildren(IR4EUIModelElement)
 	 */
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		fRules.add((R4EUIRule) aChildToAdd);
-		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.getContentProvider());
-		fireAdd(aChildToAdd);
 	}
 
 	/**
@@ -352,10 +344,6 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fRules.remove(removedElement);
-			aChildToRemove.removeListeners();
-			fireRemove(aChildToRemove);
-		} else {
-			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 		}
 	}
 
@@ -378,43 +366,45 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 
 	//Listeners
 
-	/**
+/*	*//**
 	 * Method addListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
 	 */
+	/*
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		super.addListener(aProvider);
-		if (null != fRules) {
-			R4EUIRule element = null;
-			for (final Iterator<R4EUIRule> iterator = fRules.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.addListener(aProvider);
-			}
+	super.addListener(aProvider);
+	if (null != fRules) {
+		R4EUIRule element = null;
+		for (final Iterator<R4EUIRule> iterator = fRules.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.addListener(aProvider);
 		}
 	}
+	}
 
-	/**
+	*//**
 	 * Method removeListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
 	 */
+	/*
 	@Override
 	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-		super.removeListener(aProvider);
-		if (null != fRules) {
-			R4EUIRule element = null;
-			for (final Iterator<R4EUIRule> iterator = fRules.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.removeListener(aProvider);
-			}
+	super.removeListener(aProvider);
+	if (null != fRules) {
+		R4EUIRule element = null;
+		for (final Iterator<R4EUIRule> iterator = fRules.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.removeListener(aProvider);
 		}
 	}
+	}*/
 
 	//Commands
 

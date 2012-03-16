@@ -216,6 +216,8 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 * 
 	 * @param aParentShell
 	 *            Shell
+	 * @param aReviewSource
+	 *            boolean
 	 */
 	public ParticipantInputDialog(Shell aParentShell, boolean aReviewSource) {
 		super(aParentShell);
@@ -238,7 +240,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
-			List<R4EParticipant> validatedParticipants = new ArrayList<R4EParticipant>();
+			final List<R4EParticipant> validatedParticipants = new ArrayList<R4EParticipant>();
 
 			for (R4EParticipant participant : fParticipants) {
 				//Validate Participant Id
@@ -278,7 +280,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				}
 
 				//Validate Roles (optional)
-				if (participant.getRoles().size() == 0) {
+				if (0 == participant.getRoles().size()) {
 					//If there is no roles defined, put one as default depending on the review type
 					if (R4EUIModelController.getActiveReview()
 							.getReview()
@@ -314,7 +316,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	/**
 	 * Method open.
 	 * 
-	 * @return int
 	 * @see org.eclipse.ui.forms.FormDialog#open()
 	 */
 	@Override
@@ -380,7 +381,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 */
 	private void createParticipantsGroup(FormToolkit aToolkit, Composite aComposite) {
 		//Users to Add
-		Group usersToAddGroup = new Group(aComposite, SWT.NONE);
+		final Group usersToAddGroup = new Group(aComposite, SWT.NONE);
 		usersToAddGroup.setText(PARTICIPANTS_GROUP_LABEL);
 		usersToAddGroup.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		usersToAddGroup.setLayout(new GridLayout(4, false));
@@ -388,19 +389,19 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		usersToAddGroup.setLayoutData(groupGridData);
 
 		//Participants data composite
-		Composite dataComposite = aToolkit.createComposite(usersToAddGroup);
+		final Composite dataComposite = aToolkit.createComposite(usersToAddGroup);
 		dataComposite.setLayout(new GridLayout());
 		final GridData dataCompositeData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		dataCompositeData.horizontalSpan = 3;
 		dataComposite.setLayoutData(dataCompositeData);
 
 		//Participants button composite
-		Composite buttonsComposite = aToolkit.createComposite(usersToAddGroup);
+		final Composite buttonsComposite = aToolkit.createComposite(usersToAddGroup);
 		buttonsComposite.setLayout(new GridLayout());
 		final GridData buttonsCompositeData = new GridData(GridData.END, GridData.FILL, false, true);
 		buttonsComposite.setLayoutData(buttonsCompositeData);
 
-		String[] participantsLists = R4EPreferencePage.getParticipantsLists();
+		final String[] participantsLists = R4EPreferencePage.getParticipantsLists();
 		if (participantsLists.length > 0) {
 			fUserToAddCombo = new CCombo(dataComposite, SWT.SINGLE | SWT.BORDER);
 			((CCombo) fUserToAddCombo).setItems(participantsLists);
@@ -409,7 +410,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			fUserToAddCombo = aToolkit.createText(dataComposite, "", SWT.SINGLE | SWT.BORDER);
 			((Text) fUserToAddCombo).setEditable(true);
 		}
-		GridData textGridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+		final GridData textGridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
 		fUserToAddCombo.setToolTipText(R4EUIConstants.PARTICIPANT_ADD_USER_TOOLTIP);
 		fUserToAddCombo.setLayoutData(textGridData);
 		fUserToAddCombo.addListener(SWT.Modify, new Listener() {
@@ -441,7 +442,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 					}
 
 					//Tokenize the users list
-					String[] users = widgetStr.split(R4EUIConstants.LIST_SEPARATOR);
+					final String[] users = widgetStr.split(R4EUIConstants.LIST_SEPARATOR);
 					for (String user : users) {
 						addUsersToParticipantList(user);
 					}
@@ -468,9 +469,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		fAddedParticipantsTable.setLayoutData(tableGridData);
 
 		final TableColumnLayout tableColumnLayout = new TableColumnLayout();
-		TableColumn idColumn = new TableColumn(fAddedParticipantsTable, SWT.NONE, 0);
+		final TableColumn idColumn = new TableColumn(fAddedParticipantsTable, SWT.NONE, 0);
 		idColumn.setText(R4EUIConstants.ID_LABEL);
-		TableColumn emailColumn = new TableColumn(fAddedParticipantsTable, SWT.NONE, 1);
+		final TableColumn emailColumn = new TableColumn(fAddedParticipantsTable, SWT.NONE, 1);
 		emailColumn.setText(R4EUIConstants.EMAIL_LABEL);
 
 		tableColumnLayout.setColumnData(idColumn, new ColumnWeightData(30, idColumn.getWidth() * 2, true));
@@ -483,7 +484,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			public void handleEvent(Event event) {
 				fSelectedParticipantIndex = fAddedParticipantsTable.getSelectionIndex();
 				if (fSelectedParticipantIndex >= 0) {
-					R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
+					final R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
 					if (null != participant) {
 						fParticipantIdInputTextField.setText(participant.getId());
 						if (null != participant.getEmail()) {
@@ -499,7 +500,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 						if (fReviewSource) {
 							if (null != fRoleValues) {
 								fRoleValues.removeAll();
-								EList<R4EUserRole> roles = participant.getRoles();
+								final EList<R4EUserRole> roles = participant.getRoles();
 								for (R4EUserRole role : roles) {
 									Item newItem = fRoleValues.addItem();
 									newItem.setText(R4EUIParticipant.mapRoleToString(role));
@@ -545,7 +546,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				}
 
 				//Tokenize the users list
-				String[] users = widgetStr.split(R4EUIConstants.LIST_SEPARATOR);
+				final String[] users = widgetStr.split(R4EUIConstants.LIST_SEPARATOR);
 				for (String user : users) {
 					addUsersToParticipantList(user);
 				}
@@ -567,7 +568,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				dialog.setDialogsDefaults();
 				final int result = dialog.open();
 				if (result == Window.OK) {
-					List<IUserInfo> usersInfos = dialog.getUserInfos();
+					final List<IUserInfo> usersInfos = dialog.getUserInfos();
 					for (IUserInfo user : usersInfos) {
 						addUserToParticipantList(user);
 					}
@@ -667,9 +668,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		fParticipantEmailInputTextField.addListener(SWT.FocusOut, new Listener() {
 			public void handleEvent(Event event) {
 				if (fSelectedParticipantIndex >= 0) {
-					R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
+					final R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
 					participant.setEmail(fParticipantEmailInputTextField.getText());
-					TableItem item = fAddedParticipantsTable.getItem(fSelectedParticipantIndex);
+					final TableItem item = fAddedParticipantsTable.getItem(fSelectedParticipantIndex);
 					if (null != participant.getEmail()) {
 						item.setFont(JFaceResources.getFontRegistry().get(JFaceResources.DEFAULT_FONT));
 						item.setText(1, participant.getEmail());
@@ -726,10 +727,10 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 
 		//Roles
 		if (!R4EUIModelController.getActiveReview().getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
-			Label label = aToolkit.createLabel(extraSectionClient, R4EUIConstants.ROLES_LABEL);
+			final Label label = aToolkit.createLabel(extraSectionClient, R4EUIConstants.ROLES_LABEL);
 			label.setToolTipText(R4EUIConstants.PARTICIPANT_ROLES_TOOLTIP);
 			label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-			GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+			final GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 			textGridData.horizontalSpan = 3;
 			fRoleValues = new EditableListWidget(aToolkit, extraSectionClient, textGridData, this, 0, CCombo.class,
 					R4EUIConstants.PARTICIPANT_ROLES);
@@ -739,12 +740,12 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		}
 
 		//Focus Area
-		Label label = aToolkit.createLabel(extraSectionClient, R4EUIConstants.FOCUS_AREA_LABEL);
+		final Label label = aToolkit.createLabel(extraSectionClient, R4EUIConstants.FOCUS_AREA_LABEL);
 		label.setToolTipText(R4EUIConstants.PARTICIPANT_FOCUS_AREA_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		aToolkit.setBorderStyle(SWT.BORDER);
 		fFocusAreaTextField = aToolkit.createText(extraSectionClient, "", SWT.SINGLE | SWT.V_SCROLL | SWT.BORDER);
-		GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		final GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fFocusAreaTextField.getLineHeight() * 3;
 		fFocusAreaTextField.setEnabled(false);
@@ -753,7 +754,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		fFocusAreaTextField.addListener(SWT.FocusOut, new Listener() {
 			public void handleEvent(Event event) {
 				if (fSelectedParticipantIndex >= 0) {
-					R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
+					final R4EParticipant participant = fParticipants.get(fSelectedParticipantIndex);
 					participant.setFocusArea(fFocusAreaTextField.getText());
 				}
 			}
@@ -819,7 +820,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			}
 			fFocusAreaTextField.setText("");
 		}
-		if (fParticipants.size() == 0) {
+		if (0 == fParticipants.size()) {
 			fParticipantDetailsInputTextField.setEnabled(false);
 			fParticipantIdInputTextField.setEnabled(false);
 			fParticipantEmailInputTextField.setEnabled(false);
@@ -845,7 +846,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 */
 	private void addUsersToParticipantList(String aUser) {
 		//Here we first need to resolve any group aliases to multiple users
-		List<String> resolvedUsers = R4EPreferencePage.getParticipantsFromList(aUser.trim());
+		final List<String> resolvedUsers = R4EPreferencePage.getParticipantsFromList(aUser.trim());
 
 		for (String user : resolvedUsers) {
 			String[] userTokens = user.split(R4EUIConstants.LIST_SEPARATOR);
@@ -857,7 +858,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 			}
 
 			//Override email with address defined in users group (if any)
-			if (userTokens.length == 2 && !(userTokens[1].trim().equals(""))) {
+			if (2 == userTokens.length && !(userTokens[1].trim().equals(""))) {
 				participant.setEmail(userTokens[1]);
 			}
 
@@ -882,8 +883,8 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	/**
 	 * Method addUserToParticipantList.
 	 * 
-	 * @param aUser
-	 *            - String
+	 * @param aUserInfo
+	 *            - IUserInfo
 	 */
 	private void addUserToParticipantList(IUserInfo aUserInfo) {
 
@@ -895,7 +896,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		}
 
 		//Add User to List
-		R4EParticipant participant = RModelFactory.eINSTANCE.createR4EParticipant();
+		final R4EParticipant participant = RModelFactory.eINSTANCE.createR4EParticipant();
 		participant.setId(aUserInfo.getUserId());
 		participant.setEmail(aUserInfo.getEmail());
 		fParticipantsDetailsValues.add(UIUtils.buildUserDetailsString(aUserInfo));
@@ -913,7 +914,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	 */
 	private void updateComponents(R4EParticipant aParticipant) {
 		//Add item to the participants table
-		TableItem item = new TableItem(fAddedParticipantsTable, SWT.NONE);
+		final TableItem item = new TableItem(fAddedParticipantsTable, SWT.NONE);
 		item.setText(0, aParticipant.getId());
 		if (null != aParticipant.getEmail() && !("".equals(aParticipant.getEmail()))) {
 			item.setFont(JFaceResources.getFontRegistry().get(JFaceResources.DEFAULT_FONT));
@@ -927,7 +928,6 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		if (fParticipants.size() > 0) {
 			fClearParticipantsButton.setEnabled(true);
 			fRemoveUserButton.setEnabled(true);
-			String widgetStr = null;
 			if (fUserToAddCombo instanceof CCombo) {
 				((CCombo) fUserToAddCombo).setText("");
 			} else {
@@ -956,7 +956,7 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				return null;
 			}
 		}
-		R4EParticipant participant = RModelFactory.eINSTANCE.createR4EParticipant();
+		final R4EParticipant participant = RModelFactory.eINSTANCE.createR4EParticipant();
 		if (R4EUIModelController.isUserQueryAvailable()) {
 			final IQueryUser query = new QueryUserFactory().getInstance();
 			try {

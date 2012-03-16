@@ -37,7 +37,6 @@ import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ReviewItemProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -97,17 +96,6 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	public R4EUIReviewItem(IR4EUIModelElement aParent, R4EItem aItem, String aName, int aItemType) {
 		super(aParent, aItem, aName, aItemType);
 		setImage(REVIEW_ITEM_ICON_FILE);
-
-		//Remove check on parent, since at least one children is not set anymore
-		try {
-			getParent().setUserReviewed(false, false);
-		} catch (OutOfSyncException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		} catch (ResourceHandlingException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		}
 	}
 
 	// ------------------------------------------------------------------------
@@ -166,7 +154,6 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 				fFileContexts.get(i).setChildUserReviewed(aReviewed);
 			}
 		}
-		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 	}
 
 	/**
@@ -189,7 +176,6 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 		if (allChildrenReviewed) {
 			fUserReviewed = true;
 			getParent().checkToSetUserReviewed();
-			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 
@@ -205,8 +191,8 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	public void addAssignees(List<R4EParticipant> aParticipants) {
 		try {
 			//assign participants
-			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
-			EList<String> assignedParticipants = fItem.getAssignedTo();
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
+			final EList<String> assignedParticipants = fItem.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.add(participant.getId());
 
@@ -239,8 +225,8 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	public void removeAssignees(List<R4EParticipant> aParticipants) {
 		try {
 			//unassign participants
-			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
-			EList<String> assignedParticipants = fItem.getAssignedTo();
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
+			final EList<String> assignedParticipants = fItem.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.remove(participant.getId());
 			}

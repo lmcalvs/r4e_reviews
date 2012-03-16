@@ -360,7 +360,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 			fDescriptionText.setText("");
 		}
 
-		EList<String> assignedParticipants = modelItem.getAssignedTo();
+		final EList<String> assignedParticipants = modelItem.getAssignedTo();
 		fAssignedToText.setText(UIUtils.formatAssignedParticipants(assignedParticipants));
 
 		setEnabledFields();

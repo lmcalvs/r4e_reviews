@@ -523,7 +523,7 @@ public class FileContextTabPropertySection extends ModelElementTabPropertySectio
 			fTargetFileVersionText.setText("");
 		}
 
-		EList<String> assignedParticipants = modelFile.getAssignedTo();
+		final EList<String> assignedParticipants = modelFile.getAssignedTo();
 		fAssignedToText.setText(UIUtils.formatAssignedParticipants(assignedParticipants));
 
 		setEnabledFields();

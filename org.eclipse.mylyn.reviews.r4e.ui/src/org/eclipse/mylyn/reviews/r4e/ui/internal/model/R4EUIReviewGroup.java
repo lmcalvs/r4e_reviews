@@ -20,7 +20,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
@@ -47,11 +46,11 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ReviewGroupProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -272,9 +271,8 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public List<ReviewComponent> createChildModelDataElement() {
 		//Get comment from user and set it in model data
-		List<ReviewComponent> tempReviews = new ArrayList<ReviewComponent>();
+		final List<ReviewComponent> tempReviews = new ArrayList<ReviewComponent>();
 
-		R4EUIModelController.setJobInProgress(true);
 		final IReviewInputDialog dialog = R4EUIDialogFactory.getInstance().getReviewInputDialog(this);
 		dialog.create();
 		final int result = dialog.open();
@@ -301,14 +299,13 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			tempReview.setReferenceMaterial(dialog.getReferenceMaterialValue());
 			//Set default exit decision for INFORMAL review
 			if (type.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
-				R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
+				final R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
 				reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED);
 				tempReview.setDecision(reviewDecision);
 
 			}
 			tempReviews.add(tempReview);
 		}
-		R4EUIModelController.setJobInProgress(false); //Enable view
 		return tempReviews;
 	}
 
@@ -329,8 +326,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 				continue; //skip reviews that are already closed
 			}
 			review.close();
-			review.removeListeners();
-			fireRemove(review);
 		}
 		fReviews.clear();
 		fRuleSets.clear();
@@ -338,7 +333,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		fReadOnly = false;
 		R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup); //Notify model
 		fImage = UIUtils.loadIcon(REVIEW_GROUP_CLOSED_ICON_FILE);
-		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_CLOSE);
 	}
 
 	/**
@@ -390,7 +384,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			}
 			fOpen = true;
 			fImage = UIUtils.loadIcon(REVIEW_GROUP_ICON_FILE);
-			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
 		} else {
 			R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup); //Notify model
 		}
@@ -398,21 +391,23 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 
 	/**
 	 * Check version compatibility between the element(s) to load and the current R4E application
+	 * 
+	 * @return boolean
 	 */
 	private boolean checkCompatibility() {
-		int checkResult = fGroup.getCompatibility();
+		final int checkResult = fGroup.getCompatibility();
 		switch (checkResult) {
 		case R4EUIConstants.VERSION_APPLICATION_OLDER:
 			UIUtils.displayCompatibilityErrorDialog();
 			return false;
 		case R4EUIConstants.VERSION_APPLICATION_NEWER:
-			int result = UIUtils.displayCompatibilityWarningDialog(fGroup.getFragmentVersion(),
+			final int result = UIUtils.displayCompatibilityWarningDialog(fGroup.getFragmentVersion(),
 					fGroup.getApplicationVersion());
 			switch (result) {
 			case R4EUIConstants.OPEN_NORMAL:
 				//Upgrade version immediately
 				try {
-					Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup,
+					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fGroup,
 							R4EUIModelController.getReviewer());
 					fGroup.setFragmentVersion(fGroup.getApplicationVersion());
 					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -458,7 +453,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		fGroup.setEnabled(aEnabled);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		R4EUIModelController.FModelExt.closeR4EReviewGroup(fGroup);
-		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
 	/**
@@ -524,7 +518,11 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 						"Error while creating new review ", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 								"Review " + reviewName + " already exists", null), IStatus.ERROR);
-				dialog.open();
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						dialog.open();
+					}
+				});
 				return null;
 			}
 		}
@@ -554,10 +552,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		fReviews.add((R4EUIReviewBasic) aChildToAdd);
-		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.getContentProvider());
-		fireAdd(aChildToAdd);
 	}
 
 	/**
@@ -593,8 +587,6 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fReviews.remove(removedElement);
-			aChildToRemove.removeListeners();
-			fireRemove(aChildToRemove);
 		}
 	}
 
@@ -619,43 +611,45 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 
 	//Listeners
 
-	/**
+/*	*//**
 	 * Method addListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
 	 */
+	/*
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		super.addListener(aProvider);
-		if (null != fReviews) {
-			R4EUIReviewBasic element = null;
-			for (final Iterator<R4EUIReviewBasic> iterator = fReviews.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.addListener(aProvider);
-			}
+	super.addListener(aProvider);
+	if (null != fReviews) {
+		R4EUIReviewBasic element = null;
+		for (final Iterator<R4EUIReviewBasic> iterator = fReviews.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.addListener(aProvider);
 		}
 	}
+	}
 
-	/**
+	*//**
 	 * Method removeListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
 	 */
+	/*
 	@Override
 	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-		super.removeListener(aProvider);
-		if (null != fReviews) {
-			R4EUIReviewBasic element = null;
-			for (final Iterator<R4EUIReviewBasic> iterator = fReviews.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.removeListener(aProvider);
-			}
+	super.removeListener(aProvider);
+	if (null != fReviews) {
+		R4EUIReviewBasic element = null;
+		for (final Iterator<R4EUIReviewBasic> iterator = fReviews.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.removeListener(aProvider);
 		}
 	}
+	}*/
 
 	//Commands
 

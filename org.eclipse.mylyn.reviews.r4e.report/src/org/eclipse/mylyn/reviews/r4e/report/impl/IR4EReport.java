@@ -18,6 +18,8 @@ package org.eclipse.mylyn.reviews.r4e.report.impl;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 /**
  * @author Jacques Bouthillier
  *
@@ -57,8 +59,9 @@ public interface IR4EReport {
 	/**
 	 * Generate the selected report
 	 * @param String agroupFile File of the Group
+	 * @param IProgressMonitor aMonitor File of the Group
 	 */
-	public void handleReportGeneration(final String  agroupFile);
+	public void handleReportGeneration(final String agroupFile, IProgressMonitor aMonitor);
 	
 	/**
 	 * Test if the report type selected is an inspection record

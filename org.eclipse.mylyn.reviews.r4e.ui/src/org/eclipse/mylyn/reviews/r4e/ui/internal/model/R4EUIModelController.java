@@ -57,6 +57,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.ModelElementTabPropertySection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.services.IEvaluationService;
 
 /**
  * @author lmcdubo
@@ -133,6 +135,9 @@ public class R4EUIModelController {
 	 */
 	private static IR4EUIModelElement FFocusElement = null;
 
+	/**
+	 * Field FCurrentPropertySection.
+	 */
 	private static ModelElementTabPropertySection FCurrentPropertySection = null;
 
 	// ------------------------------------------------------------------------
@@ -218,11 +223,16 @@ public class R4EUIModelController {
 	 * @param aIsDialogOpen
 	 *            boolean
 	 */
-	public static void setJobInProgress(boolean aIsDialogOpen) {
+	public static void setJobInProgress(final boolean aIsDialogOpen) {
 		FIsDialogOpen = aIsDialogOpen;
-		FView.getTreeViewer().getTree().setEnabled(!aIsDialogOpen); //Also enable/disable operations on UI Tree
-		R4EUIModelController.getNavigatorView().refreshItems();
+		final IEvaluationService service = (IEvaluationService) FView.getSite().getService(IEvaluationService.class);
 
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				service.requestEvaluation(R4EUIConstants.JOB_IN_PROGRESS_COMMAND);
+				R4EUIModelController.getNavigatorView().refreshItems();
+			}
+		});
 	}
 
 	/**
@@ -249,8 +259,8 @@ public class R4EUIModelController {
 	 * @param filePath
 	 *            String
 	 * @return R4EReviewGroup
-	 * @throws CompatibilityException
 	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
 	 */
 	public static R4EReviewGroup peekReviewGroup(String filePath) throws ResourceHandlingException,
 			CompatibilityException {
@@ -310,6 +320,9 @@ public class R4EUIModelController {
 	 * 
 	 * @param aGroupPaths
 	 *            List<String>
+	 * @param aErrors
+	 *            List<String>
+	 * @return List<String>
 	 */
 	public static List<String> loadReviewGroups(List<String> aGroupPaths, List<String> aErrors) {
 
@@ -370,6 +383,9 @@ public class R4EUIModelController {
 	 * 
 	 * @param aRuleSetPaths
 	 *            List<String>
+	 * @param aErrors
+	 *            List<String>
+	 * @return List<String>
 	 */
 	public static List<String> loadRuleSets(List<String> aRuleSetPaths, List<String> aErrors) {
 
@@ -423,21 +439,6 @@ public class R4EUIModelController {
 		}
 		*/
 		return aErrors;
-	}
-
-	/**
-	 * Method buildReviewGroupsStr.
-	 * 
-	 * @param aReviewGroups
-	 *            String[]
-	 * @return String
-	 */
-	private static String buildReviewGroupsStr(List<String> aReviewGroups) {
-		final StringBuffer newPathsStr = new StringBuffer(R4EUIConstants.REVIEW_GROUP_PATHS_LENGTH);
-		for (String group : aReviewGroups) {
-			newPathsStr.append(group + R4EUIConstants.LINE_FEED);
-		}
-		return newPathsStr.toString();
 	}
 
 	/**
@@ -558,10 +559,21 @@ public class R4EUIModelController {
 		return FFocusElement;
 	}
 
+	/**
+	 * Method setCurrentPropertySection.
+	 * 
+	 * @param aSection
+	 *            ModelElementTabPropertySection
+	 */
 	public static void setCurrentPropertySection(ModelElementTabPropertySection aSection) {
 		FCurrentPropertySection = aSection;
 	}
 
+	/**
+	 * Method getCurrentPropertySection.
+	 * 
+	 * @return ModelElementTabPropertySection
+	 */
 	public static ModelElementTabPropertySection getCurrentPropertySection() {
 		return FCurrentPropertySection;
 	}

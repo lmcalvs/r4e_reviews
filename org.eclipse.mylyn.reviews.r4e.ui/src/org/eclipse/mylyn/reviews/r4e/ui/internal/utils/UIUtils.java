@@ -81,7 +81,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Color;
@@ -129,15 +128,15 @@ public class UIUtils {
 	//however it's worth repeating as it's a small piece of code
 	public static final boolean TEST_MODE;
 	static {
-		String application = System.getProperty("eclipse.application", ""); //$NON-NLS-1$ //$NON-NLS-2$
+		final String application = System.getProperty("eclipse.application", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		if (application.length() > 0) {
 			TEST_MODE = application.endsWith("testapplication") || application.endsWith("uitest"); //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
-			String commands = System.getProperty("eclipse.commands", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			final String commands = System.getProperty("eclipse.commands", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			TEST_MODE = commands.contains("testapplication\n"); //$NON-NLS-1$
 		}
 		//Do not show Error Dialogs when doing automated testing
-		if (true == TEST_MODE) {
+		if (TEST_MODE) {
 			ErrorDialog.AUTOMATED_MODE = true;
 		} else {
 			ErrorDialog.AUTOMATED_MODE = false;
@@ -184,20 +183,47 @@ public class UIUtils {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Load the current image and add it to the image registry
+	 * Get the current image and add it to the image registry if necessary
 	 * 
-	 * @param url
-	 *            - the localtion of the image to load
+	 * @param aUrl
+	 *            - the location of the image to load
 	 * @return Image
 	 */
-	public static Image loadIcon(String url) {
+	public static Image loadIcon(String aUrl) {
 		final R4EUIPlugin plugin = R4EUIPlugin.getDefault();
-		Image icon = plugin.getImageRegistry().get(url);
+		Image icon = plugin.getImageRegistry().get(aUrl);
 		if (null == icon) {
-			final URL imageURL = plugin.getBundle().getEntry(url);
+			final URL imageURL = plugin.getBundle().getEntry(aUrl);
 			final ImageDescriptor descriptor = ImageDescriptor.createFromURL(imageURL);
 			icon = descriptor.createImage();
-			plugin.getImageRegistry().put(url, icon);
+			plugin.getImageRegistry().put(aUrl, icon);
+		}
+		return icon;
+	}
+
+	/**
+	 * Get adisabled version of the current image and add it to the image registry if necessary
+	 * 
+	 * @param aUrl
+	 *            - the location of the original image
+	 * @return Image
+	 */
+	public static Image loadDisabledIcon(final String aUrl) {
+		final R4EUIPlugin plugin = R4EUIPlugin.getDefault();
+		Image icon = plugin.getImageRegistry().get(aUrl + "_disabled");
+		if (null == icon) {
+			final URL imageURL = plugin.getBundle().getEntry(aUrl);
+			final ImageDescriptor originalDescriptor = ImageDescriptor.createFromURL(imageURL);
+			final ImageDescriptor disabledDescriptor = ImageDescriptor.createWithFlags(originalDescriptor,
+					SWT.IMAGE_DISABLE);
+			//NOTE:  Here we block while creating the new Imake because we need to return it from this method
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					final Image newIcon = disabledDescriptor.createImage();
+					plugin.getImageRegistry().put(aUrl + "_disabled", newIcon);
+				}
+			});
+			icon = plugin.getImageRegistry().get(aUrl + "_disabled");
 		}
 		return icon;
 	}
@@ -213,7 +239,11 @@ public class UIUtils {
 		R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Resource Error Detected",
 				new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-		dialog.open();
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				dialog.open();
+			}
+		});
 	}
 
 	/**
@@ -228,7 +258,11 @@ public class UIUtils {
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 				"Compatibility problem Detected",
 				new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-		dialog.open();
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				dialog.open();
+			}
+		});
 	}
 
 	/**
@@ -239,21 +273,36 @@ public class UIUtils {
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 				"Compatibility problem Detected", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 						COMPATIBILITY_ERROR_MESSAGE, null), IStatus.ERROR);
-		dialog.open();
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				dialog.open();
+			}
+		});
 	}
 
 	/**
 	 * Method displayCompatibilityWarningDialog.
 	 * 
-	 * @return boolean
+	 * @param aDataVersion
+	 *            String
+	 * @param aApplVersionl
+	 *            String
+	 * @return int
 	 */
-	public static int displayCompatibilityWarningDialog(String aDataVersion, String aApplVersionl) {
+	public static int displayCompatibilityWarningDialog(final String aDataVersion, final String aApplVersionl) {
 		R4EUIPlugin.Ftracer.traceWarning(COMPATIBILITY_WARNING_MESSAGE);
-		final MessageDialog dialog = new MessageDialog(null, COMPATIBILITY_WARNING_DIALOG_TITLE, null,
-				COMPATIBILITY_WARNING_MESSAGE + R4EUIConstants.LINE_FEED + "Element meta-data Version: " + aDataVersion
-						+ R4EUIConstants.LINE_FEED + "Application meta-data Version: " + aApplVersionl,
-				MessageDialog.QUESTION_WITH_CANCEL, COMPATIBILITY_WARNING_DIALOG_BUTTONS, 0);
-		return dialog.open();
+		final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				final MessageDialog dialog = new MessageDialog(null, COMPATIBILITY_WARNING_DIALOG_TITLE, null,
+						COMPATIBILITY_WARNING_MESSAGE + R4EUIConstants.LINE_FEED + "Element meta-data Version: "
+								+ aDataVersion + R4EUIConstants.LINE_FEED + "Application meta-data Version: "
+								+ aApplVersionl, MessageDialog.QUESTION_WITH_CANCEL,
+						COMPATIBILITY_WARNING_DIALOG_BUTTONS, 0);
+				result[0] = dialog.open();
+			}
+		});
+		return result[0];
 	}
 
 	/**
@@ -269,7 +318,11 @@ public class UIUtils {
 				R4EUIConstants.DIALOG_TITLE_ERROR,
 				"Synchronization Error Detected" + "Please refresh the review navigator view and try the command again",
 				new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-		dialog.open();
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				dialog.open();
+			}
+		});
 		// TODO later we will want to do this automatically
 	}
 
@@ -284,7 +337,11 @@ public class UIUtils {
 		R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Version Error Detected",
 				new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-		dialog.open();
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				dialog.open();
+			}
+		});
 	}
 
 	/**
@@ -299,7 +356,11 @@ public class UIUtils {
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 				"Local Review Storage Error Detected", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 						e.getMessage(), e), IStatus.ERROR);
-		dialog.open();
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				dialog.open();
+			}
+		});
 	}
 
 	/**
@@ -314,7 +375,11 @@ public class UIUtils {
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 				"Eclipse Runtime Core Error Detected", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 						e.getMessage(), e), IStatus.ERROR);
-		dialog.open();
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				dialog.open();
+			}
+		});
 	}
 
 	/**
@@ -332,7 +397,11 @@ public class UIUtils {
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 				"Some elements failed to load", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 						errorMsgs.toString(), null), IStatus.ERROR);
-		dialog.open();
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				dialog.open();
+			}
+		});
 	}
 
 	/**
@@ -400,41 +469,6 @@ public class UIUtils {
 
 					//If the text falls outside of the display scroll down to reposition
 					if ((aText.getLocation().y + aText.getCaretLocation().y + aText.getLineHeight()) > (scrolledParent.getClientArea().y + scrolledParent.getClientArea().height)) {
-
-						final Point origin = ((ScrolledComposite) scrolledParent).getOrigin();
-						origin.y += heightDiff;
-
-						((ScrolledComposite) scrolledParent).setOrigin(origin);
-					}
-				}
-			}
-		});
-	}
-
-	public static void addTabbedPropertiesTextResizeListener(final StyledText aText) {
-		aText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				//compute new Text field size
-				final Point newSize = aText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-				final Point oldSize = aText.getSize();
-				final int heightDiff = newSize.y - oldSize.y;
-				if (0 != heightDiff && 0 != oldSize.y) {
-					aText.setSize(newSize);
-					aText.getParent().layout();
-
-					//Set scrollable height so that scrollbar appear if needed
-					Composite scrolledParent = aText.getParent();
-					while (!(scrolledParent instanceof ScrolledComposite)) {
-						scrolledParent = scrolledParent.getParent();
-						if (null == scrolledParent) {
-							return;
-						}
-					}
-					((ScrolledComposite) scrolledParent).setMinSize(aText.getParent().computeSize(SWT.DEFAULT,
-							SWT.DEFAULT));
-
-					//If the text falls outside of the display scroll down to reposition
-					if ((aText.getLocation().y + aText.getCaretOffset() + aText.getLineHeight()) > (scrolledParent.getClientArea().y + scrolledParent.getClientArea().height)) {
 
 						final Point origin = ((ScrolledComposite) scrolledParent).getOrigin();
 						origin.y += heightDiff;
@@ -639,7 +673,11 @@ public class UIUtils {
 				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Invalid location",
 						new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-				dialog.open();
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						dialog.open();
+					}
+				});
 			}
 		}
 		final String generatedId = "org.eclipse.mylyn.web.browser-" + Calendar.getInstance().getTimeInMillis(); //$NON-NLS-1$
@@ -653,7 +691,11 @@ public class UIUtils {
 			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 					"Error opening Browser", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e),
 					IStatus.ERROR);
-			dialog.open();
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					dialog.open();
+				}
+			});
 		}
 	}
 
@@ -671,14 +713,28 @@ public class UIUtils {
 			if (null != aResultMsg.get()) {
 				final ErrorDialog dialog = new ErrorDialog(null, "Warning", aResultMsg.get(), new Status(
 						IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0, null, null), IStatus.WARNING);
-				dialog.open();
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						dialog.open();
+					}
+				});
 			}
 			try {
 				if (aReview instanceof R4EUIReviewExtended) {
 					final R4EFormalReview review = ((R4EFormalReview) ((R4EUIReviewExtended) aReview).getReview());
 					if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
 							&& null == review.getActiveMeeting()) {
-						MailServicesProxy.sendMeetingRequest();
+						Display.getDefault().syncExec(new Runnable() {
+							public void run() {
+								try {
+									MailServicesProxy.sendMeetingRequest();
+								} catch (ResourceHandlingException e) {
+									displayResourceErrorDialog(e);
+								} catch (OutOfSyncException e) {
+									displaySyncErrorDialog(e);
+								}
+							}
+						});
 					}
 					//Prevent changing state to PREPARATION if no Meeting Request was sent out
 					if (null != review.getActiveMeeting()) {
@@ -687,7 +743,11 @@ public class UIUtils {
 						final ErrorDialog dialog = new ErrorDialog(null, "Error", "No Meeting Data present",
 								new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 										"Please allow sending out a Meeting Request", null), IStatus.ERROR);
-						dialog.open();
+						Display.getDefault().syncExec(new Runnable() {
+							public void run() {
+								dialog.open();
+							}
+						});
 					}
 				} else {
 					((R4EUIReviewBasic) aReview).updatePhase(aNewPhase);
@@ -696,14 +756,16 @@ public class UIUtils {
 				UIUtils.displayResourceErrorDialog(e1);
 			} catch (OutOfSyncException e1) {
 				UIUtils.displaySyncErrorDialog(e1);
-			} finally {
-				R4EUIModelController.setJobInProgress(false);
 			}
 		} else {
 			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.REVIEW_NOT_COMPLETED_ERROR,
 					"Review phase cannot be changed", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 							aResultMsg.get(), null), IStatus.ERROR);
-			dialog.open();
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					dialog.open();
+				}
+			});
 		}
 	}
 
@@ -755,7 +817,7 @@ public class UIUtils {
 	 */
 	public static String formatAssignedParticipants(EList<String> aParticipants) {
 		if (aParticipants.size() > 0) {
-			StringBuffer buffer = new StringBuffer();
+			final StringBuffer buffer = new StringBuffer();
 			for (String participants : aParticipants) {
 				buffer.append(participants + R4EUIConstants.LIST_SEPARATOR + " ");
 			}
@@ -784,11 +846,22 @@ public class UIUtils {
 	 * @return String
 	 */
 	public static List<R4EParticipant> getAssignParticipants() {
-		final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog(false);
-		dialog.create();
-		final int result = dialog.open();
-		if (result == Window.OK) {
-			return dialog.getParticipants();
+		final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
+		final List<R4EParticipant> resultParticipants = new ArrayList<R4EParticipant>();
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance()
+						.getParticipantInputDialog(false);
+				dialog.create();
+				result[0] = dialog.open();
+				for (R4EParticipant participant : dialog.getParticipants()) {
+					resultParticipants.add(participant);
+				}
+				R4EUIDialogFactory.getInstance().removeParticipantInputDialog();
+			}
+		});
+		if (result[0] == Window.OK) {
+			return resultParticipants;
 		}
 		return new ArrayList<R4EParticipant>(0); //Cancelled, no participants to use
 	}
@@ -800,13 +873,22 @@ public class UIUtils {
 	 *            - IR4EUIModelElement
 	 * @return String
 	 */
-	public static List<R4EParticipant> getUnassignParticipants(IR4EUIModelElement aElement) {
-		final IParticipantUnassignDialog dialog = R4EUIDialogFactory.getInstance().getParticipantUnassignDialog(
-				aElement);
-		dialog.create();
-		final int result = dialog.open();
-		if (result == Window.OK) {
-			return dialog.getParticipants();
+	public static List<R4EParticipant> getUnassignParticipants(final IR4EUIModelElement aElement) {
+		final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
+		final List<R4EParticipant> resultParticipants = new ArrayList<R4EParticipant>();
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				final IParticipantUnassignDialog dialog = R4EUIDialogFactory.getInstance()
+						.getParticipantUnassignDialog(aElement);
+				dialog.create();
+				result[0] = dialog.open();
+				for (R4EParticipant participant : dialog.getParticipants()) {
+					resultParticipants.add(participant);
+				}
+			}
+		});
+		if (result[0] == Window.OK) {
+			return resultParticipants;
 		}
 		return new ArrayList<R4EParticipant>(0); //Cancelled, no participants to use
 	}
@@ -822,8 +904,8 @@ public class UIUtils {
 		String path = ""; //$NON-NLS-1$
 		try {
 			if (null != aFileVersion.getPlatformURI()) {
-				URI uri = new URI(aFileVersion.getPlatformURI());
-				String uriPath = uri.getPath();
+				final URI uri = new URI(aFileVersion.getPlatformURI());
+				final String uriPath = uri.getPath();
 				if (null != uriPath) {
 					path = uriPath.substring(uriPath.indexOf(R4EUIConstants.SEPARATOR, 1) + 1);
 				}

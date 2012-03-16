@@ -481,10 +481,10 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		extraSectionClient.setLayout(layout);
 		extraSection.setClient(extraSectionClient);
 
-		IStructuredSelection selection = (IStructuredSelection) R4EUIModelController.getNavigatorView()
+		final IStructuredSelection selection = (IStructuredSelection) R4EUIModelController.getNavigatorView()
 				.getTreeViewer()
 				.getSelection();
-		R4EUIReviewGroup parentGroup = (R4EUIReviewGroup) selection.getFirstElement();
+		final R4EUIReviewGroup parentGroup = (R4EUIReviewGroup) selection.getFirstElement();
 
 		//Project
 		label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_PROJECT_DIALOG_VALUE);

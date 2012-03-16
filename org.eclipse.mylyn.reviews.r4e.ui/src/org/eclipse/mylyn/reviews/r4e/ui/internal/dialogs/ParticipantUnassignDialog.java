@@ -144,10 +144,9 @@ public class ParticipantUnassignDialog extends FormDialog implements IParticipan
 	}
 
 	/**
-	 * Method open.
+	 * Method create.
 	 * 
-	 * @return int
-	 * @see org.eclipse.ui.forms.FormDialog#open()
+	 * @see org.eclipse.ui.forms.FormDialog#create()
 	 */
 	@Override
 	public void create() {
@@ -199,7 +198,7 @@ public class ParticipantUnassignDialog extends FormDialog implements IParticipan
 		fParticipantsTable.setLayoutData(tableData);
 		fParticipantsTable.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				TableItem[] items = fParticipantsTable.getItems();
+				final TableItem[] items = fParticipantsTable.getItems();
 				getButton(IDialogConstants.OK_ID).setEnabled(false);
 				for (TableItem item : items) {
 					if (item.getChecked()) {

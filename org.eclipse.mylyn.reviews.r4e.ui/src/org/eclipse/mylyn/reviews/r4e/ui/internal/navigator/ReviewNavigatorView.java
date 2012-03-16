@@ -55,7 +55,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
-import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -237,7 +236,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		}
 		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(R4EUIConstants.R4E_TEMP_PROJECT);
 
-		if (fPropertySheetPage != null) {
+		if (null != fPropertySheetPage) {
 			fPropertySheetPage.dispose();
 		}
 
@@ -581,8 +580,6 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	/**
 	 * Method showProperties.
 	 * 
-	 * @param aSelection
-	 *            ISelection
 	 * @return IViewPart
 	 */
 	public IViewPart showProperties() {
@@ -679,13 +676,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 			//Adjust loaded groups
 			for (IR4EUIModelElement groupToRemove : groupsToRemove) {
-				try {
-					R4EUIModelController.getRootElement().removeChildrenFromUI(groupToRemove);
-				} catch (ResourceHandlingException e) {
-					UIUtils.displayResourceErrorDialog(e);
-				} catch (OutOfSyncException e) {
-					UIUtils.displaySyncErrorDialog(e);
-				}
+				R4EUIModelController.getRootElement().removeChildrenFromUI(groupToRemove);
 			}
 			if (groupsToLoad.size() > 0) {
 				List<String> loadErrors = new ArrayList<String>();
@@ -696,6 +687,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 					UIUtils.displayFailedLoadDialog(loadErrors);
 				}
 			}
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					fReviewTreeViewer.refresh();
+				}
+			});
 		} else if (event.getKey().equals(PreferenceConstants.P_RULE_SET_FILE_PATH)) {
 			//Check what is currently loaded vs. what is in the preferences.  Adjust input accordingly
 			final List<R4EUIRuleSet> ruleSetsLoaded = R4EUIModelController.getRootElement().getRuleSets();
@@ -734,13 +730,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 			//Adjust loaded groups
 			for (IR4EUIModelElement ruleSetToRemove : ruleSetsToRemove) {
-				try {
-					R4EUIModelController.getRootElement().removeChildrenFromUI(ruleSetToRemove);
-				} catch (ResourceHandlingException e) {
-					UIUtils.displayResourceErrorDialog(e);
-				} catch (OutOfSyncException e) {
-					UIUtils.displaySyncErrorDialog(e);
-				}
+				R4EUIModelController.getRootElement().removeChildrenFromUI(ruleSetToRemove);
 			}
 			if (ruleSetsToLoad.size() > 0) {
 				List<String> loadErrors = new ArrayList<String>();
@@ -751,8 +741,14 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 					UIUtils.displayFailedLoadDialog(loadErrors);
 				}
 			}
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					fReviewTreeViewer.refresh();
+				}
+			});
+
 		} else if (event.getKey().equals(PreferenceConstants.P_SHOW_DISABLED)) {
-			resetInput();
+			resetInput(); //TODO This needs to be changed to not reload the model all the time
 		}
 
 	}
@@ -815,8 +811,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * @return TabbedPropertySheetPage
 	 */
 	public TabbedPropertySheetPage getPropertySheetPage() {
-		if (fPropertySheetPage == null || fPropertySheetPage.getControl() == null
-				|| fPropertySheetPage.getCurrentTab() == null) {
+		if (null == fPropertySheetPage || null == fPropertySheetPage.getControl()
+				|| null == fPropertySheetPage.getCurrentTab()) {
 			fPropertySheetPage = new TabbedPropertySheetPage(this);
 		}
 		return fPropertySheetPage;
@@ -853,21 +849,24 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * @param aExpandLevel
 	 *            int
 	 */
-	public void updateView(IR4EUIModelElement aElement, int aExpandLevel) {
+	public void updateView(final IR4EUIModelElement aElement, final int aExpandLevel) {
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				//Activate View
+				getSite().getPage().activate(R4EUIModelController.getNavigatorView());
 
-		//Activate View
-		getSite().getPage().activate(this);
+				//Set selection to current element
+				fReviewTreeViewer.expandToLevel(aElement, aExpandLevel);
+				fReviewTreeViewer.refresh(); //Make sure tree is refreshed
 
-		//Set selection to current element
-		fReviewTreeViewer.expandToLevel(aElement, aExpandLevel);
-		fReviewTreeViewer.refresh(); //Make sure tree is refreshed
-
-		//NOTE:  This is a trick to get around TabbedPropertySheetPage problems, we unselect the current selection and
-		//		 then immediately select it back.  This makes sure the Properties view is 
-		//		 refreshed properly without causing Exceptions
-		fReviewTreeViewer.setSelection(null);
-		ISelection newSelection = new StructuredSelection(aElement);
-		fReviewTreeViewer.setSelection(newSelection, true);
+				//NOTE:  This is a trick to get around TabbedPropertySheetPage problems, we unselect the current selection and
+				//		 then immediately select it back.  This makes sure the Properties view is 
+				//		 refreshed properly without causing Exceptions
+				fReviewTreeViewer.setSelection(null);
+				final ISelection newSelection = new StructuredSelection(aElement);
+				fReviewTreeViewer.setSelection(newSelection, true);
+			}
+		});
 	}
 
 	/**

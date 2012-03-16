@@ -70,6 +70,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -158,11 +159,6 @@ public class MailServicesProxy {
 	 * Field DEFAULT_MEETING_DURATION. (value is "60")
 	 */
 	private static final Integer DEFAULT_MEETING_DURATION = new Integer(60);
-
-	/**
-	 * Field DEFAULT_MEETING_LOCATION. (value is """")
-	 */
-	private static final String DEFAULT_MEETING_LOCATION = "";
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -332,7 +328,7 @@ public class MailServicesProxy {
 	 */
 	private static boolean isEmailValid(R4EParticipant aParticipant) {
 		if (aParticipant.isEnabled() && !R4EUIModelController.getReviewer().equals(aParticipant.getId())) {
-			String emailStr = aParticipant.getEmail();
+			final String emailStr = aParticipant.getEmail();
 			if (null != emailStr && !("".equals(emailStr))) {
 				return true;
 			}
@@ -763,7 +759,7 @@ public class MailServicesProxy {
 				file = ((R4EUIFileContext) ((R4EUIPostponedAnomaly) aSource).getParent()).getBaseFileVersion();
 			}
 			if (null != file) {
-				String path = file.getRepositoryPath();
+				final String path = file.getRepositoryPath();
 				if (null != path && !(path.equals(""))) {
 					aMsgBody.append("Postponed File Path (Repository): " + path + LINE_FEED_MSG_PART);
 				} else if (null != file.getResource()) {
@@ -791,7 +787,7 @@ public class MailServicesProxy {
 					file = ((R4EUIFileContext) parent).getBaseFileVersion();
 				}
 				if (null != file) {
-					String path = file.getRepositoryPath();
+					final String path = file.getRepositoryPath();
 					if (null != path && !(path.equals(""))) {
 						aMsgBody.append("File Path (Repository): " + path + LINE_FEED_MSG_PART);
 					} else if (null != file.getResource()) {
@@ -819,7 +815,7 @@ public class MailServicesProxy {
 					file = ((R4EUIFileContext) parent).getBaseFileVersion();
 				}
 				if (null != file) {
-					String path = file.getRepositoryPath();
+					final String path = file.getRepositoryPath();
 					if (null != path && !(path.equals(""))) {
 						aMsgBody.append("File Path (Repository): " + path + LINE_FEED_MSG_PART);
 					} else if (null != file.getResource()) {
@@ -859,9 +855,9 @@ public class MailServicesProxy {
 			}
 
 		} else if (aSource instanceof R4EUIFileContext) {
-			R4EFileVersion file = ((R4EUIFileContext) aSource).getTargetFileVersion();
+			final R4EFileVersion file = ((R4EUIFileContext) aSource).getTargetFileVersion();
 			if (null != file) {
-				String path = file.getRepositoryPath();
+				final String path = file.getRepositoryPath();
 				if (null != path && !(path.equals(""))) {
 					aMsgBody.append("Target File Path (Repository): " + path + LINE_FEED_MSG_PART);
 				} else if (null != file.getResource()) {
@@ -875,7 +871,7 @@ public class MailServicesProxy {
 			}
 			final R4EFileVersion baseFile = ((R4EUIFileContext) aSource).getBaseFileVersion();
 			if (null != baseFile) {
-				String path = baseFile.getRepositoryPath();
+				final String path = baseFile.getRepositoryPath();
 				if (null != path && !(path.equals(""))) {
 					aMsgBody.append("Base File Path (Repository): " + path + LINE_FEED_MSG_PART);
 				} else if (null != baseFile.getResource()) {
@@ -893,7 +889,7 @@ public class MailServicesProxy {
 				file = ((R4EUIFileContext) ((R4EUIContent) aSource).getParent().getParent()).getBaseFileVersion();
 			}
 			if (null != file) {
-				String path = file.getRepositoryPath();
+				final String path = file.getRepositoryPath();
 				if (null != path && !(path.equals(""))) {
 					aMsgBody.append("File Path (Repository): " + path + LINE_FEED_MSG_PART);
 				} else if (null != file.getResource()) {
@@ -1084,7 +1080,7 @@ public class MailServicesProxy {
 			boolean meetingInfoFound = false;
 
 			//Check if a meeting request already exist.  If so, update it.  Otherwise create a new one
-			R4EMeetingData r4eMeetingData = R4EUIModelController.getActiveReview().getReview().getActiveMeeting();
+			final R4EMeetingData r4eMeetingData = R4EUIModelController.getActiveReview().getReview().getActiveMeeting();
 			IMeetingData meetingData = null;
 			if (null != r4eMeetingData) {
 				meetingData = R4EUIDialogFactory.getInstance()
@@ -1100,11 +1096,15 @@ public class MailServicesProxy {
 				final String[] messageDestinations = createItemsUpdatedDestinations();
 
 				//Notify user if request cannot be sent when no valid destinations defined
-				if (messageDestinations.length == 0) {
+				if (0 == messageDestinations.length) {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 							"Cannot Send Meeting Request", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
 									"No valid destinations for participants defined", null), IStatus.ERROR);
-					dialog.open();
+					Display.getDefault().syncExec(new Runnable() {
+						public void run() {
+							dialog.open();
+						}
+					});
 					return;
 				}
 
@@ -1183,7 +1183,11 @@ public class MailServicesProxy {
 				"No Email connector detected"
 						+ "Take note that no Automatic Email can be sent because no Mail Services Connector is Present",
 				new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0, null, null), IStatus.WARNING);
-		dialog.open();
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				dialog.open();
+			}
+		});
 	}
 
 	/**
@@ -1208,6 +1212,13 @@ public class MailServicesProxy {
 		return "";
 	}
 
+	/**
+	 * Method createMeetingData
+	 * 
+	 * @param aR4EMeetingData
+	 *            R4EMeetingData
+	 * @return IMeetingData
+	 */
 	private static IMeetingData createMeetingData(final R4EMeetingData aR4EMeetingData) {
 
 		final ResourceUpdater resUpdater = R4EUIModelController.FResourceUpdater;

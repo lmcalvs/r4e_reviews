@@ -250,7 +250,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	 * Method setViewTree.
 	 */
 	public void setViewTree() {
-		Object[] expandedElements = getExpandedElements();
+		final Object[] expandedElements = getExpandedElements();
 
 		double elementColumnWidth = R4EUIConstants.INVALID_VALUE;
 		double pathColumnWidth = R4EUIConstants.INVALID_VALUE;
@@ -290,7 +290,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 				&& assignColumnWidth != R4EUIConstants.INVALID_VALUE
 				&& numChangesColumnWidth != R4EUIConstants.INVALID_VALUE
 				&& numAnomaliesColumnWidth != R4EUIConstants.INVALID_VALUE) {
-			double totalWidth = elementColumnWidth + pathColumnWidth + assignColumnWidth + numChangesColumnWidth
+			final double totalWidth = elementColumnWidth + pathColumnWidth + assignColumnWidth + numChangesColumnWidth
 					+ numAnomaliesColumnWidth;
 			fElementColumnWeight = (int) ((elementColumnWidth / totalWidth) * 100);
 			fPathColumnWeight = (int) ((pathColumnWidth / totalWidth) * 100);
@@ -314,7 +314,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		this.getTree().getParent().layout();
 
 		//Set Expanded states correctly
-		List<Object> updatedExpandedElements = new ArrayList<Object>();
+		final List<Object> updatedExpandedElements = new ArrayList<Object>();
 		if (expandedElements.length > 0) {
 			updatedExpandedElements.add(((IR4EUIModelElement) expandedElements[0]).getParent().getParent());
 			updatedExpandedElements.add(((IR4EUIModelElement) expandedElements[0]).getParent());
@@ -322,7 +322,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 				updatedExpandedElements.add(expandedElement);
 			}
 		} else {
-			R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
+			final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 			if (null != activeReview) {
 				updatedExpandedElements.add(activeReview.getParent());
 				updatedExpandedElements.add(activeReview);
@@ -337,7 +337,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 	 * Method setViewTreeTable.
 	 */
 	public void setViewTreeTable() {
-		Object[] expandedElements = getExpandedElements();
+		final Object[] expandedElements = getExpandedElements();
 
 		//Create Columns
 		createPathColumn();
@@ -355,7 +355,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		fTreeColumnLayout.setColumnData(fNumAnomaliesColumn.getColumn(), new ColumnWeightData(
 				fNumAnomaliesColumnWeight, true));
 
-		R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
+		final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 		if (null != activeReview) {
 			fElementColumn.getColumn().setText(activeReview.getReview().getName());
 			fElementColumn.getColumn().setToolTipText(
@@ -443,10 +443,10 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 
 				@Override
 				public String getToolTipText(Object aElement) {
-					StringBuffer buffer = new StringBuffer();
+					final StringBuffer buffer = new StringBuffer();
 					if (aElement instanceof R4EUIFileContext) {
-						R4EFileVersion targetVersion = ((R4EUIFileContext) aElement).getTargetFileVersion();
-						R4EFileVersion baseVersion = ((R4EUIFileContext) aElement).getBaseFileVersion();
+						final R4EFileVersion targetVersion = ((R4EUIFileContext) aElement).getTargetFileVersion();
+						final R4EFileVersion baseVersion = ((R4EUIFileContext) aElement).getBaseFileVersion();
 						buffer.append(R4EUIConstants.FILE_LABEL);
 						if (null != targetVersion) {
 							buffer.append(UIUtils.getProjectPath(targetVersion));

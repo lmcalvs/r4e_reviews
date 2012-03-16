@@ -143,9 +143,9 @@ public class ReviewDecisionProperties extends ModelElementProperties {
 				return decisionParticipantIds;
 			} else if (REVIEW_EXIT_DECISION_ID.equals(aId)) {
 				final R4EReviewDecision decision = ((R4EUIReviewBasic) getElement()).getReview().getDecision();
-				String[] values = R4EUIReviewBasic.getExitDecisionValues();
+				final String[] values = R4EUIReviewBasic.getExitDecisionValues();
 				if (null != decision) {
-					return values[Integer.valueOf(decision.getValue().getValue())];
+					return values[Integer.valueOf(decision.getValue().getValue()).intValue()];
 				} else {
 					return values[0];
 				}

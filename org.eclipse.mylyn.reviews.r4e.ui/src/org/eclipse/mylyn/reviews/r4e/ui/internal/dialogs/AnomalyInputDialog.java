@@ -301,6 +301,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 		for (R4EUIRuleSet ruleset : fOpenRuleSets) {
 			ruleset.close();
 		}
+		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 		fOpenRuleSets.clear();
 		super.buttonPressed(buttonId);
 	}
@@ -449,7 +450,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 		label.setLayoutData(textGridData);
 
 		fAssignedToCombo = new CCombo(extraSectionClient, SWT.BORDER | SWT.READ_ONLY);
-		String[] participants = R4EUIModelController.getActiveReview()
+		final String[] participants = R4EUIModelController.getActiveReview()
 				.getParticipantIDs()
 				.toArray(new String[R4EUIModelController.getActiveReview().getParticipantIDs().size()]);
 		fAssignedToCombo.removeAll();
@@ -479,7 +480,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 		fDateText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 		fDateText.setEditable(false);
 
-		Button calendarButton = toolkit.createButton(dateComposite, "...", SWT.NONE);
+		final Button calendarButton = toolkit.createButton(dateComposite, "...", SWT.NONE);
 		calendarButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		calendarButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -522,7 +523,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 
 			@Override
 			public void update(ViewerCell cell) {
-				IR4EUIModelElement element = (IR4EUIModelElement) cell.getElement();
+				final IR4EUIModelElement element = (IR4EUIModelElement) cell.getElement();
 				if (element instanceof R4EUIRuleSet && !element.isOpen()) {
 					cell.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
 				} else {
@@ -997,7 +998,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#setRuleID(String)
 	 */
 	public void setRuleID(String aId) {
-		List<R4EUIRuleSet> ruleSets = R4EUIModelController.getRootElement().getRuleSets();
+		final List<R4EUIRuleSet> ruleSets = R4EUIModelController.getRootElement().getRuleSets();
 		for (R4EUIRuleSet ruleSet : ruleSets) {
 			for (IR4EUIModelElement area : ruleSet.getChildren()) {
 				for (IR4EUIModelElement violation : area.getChildren()) {

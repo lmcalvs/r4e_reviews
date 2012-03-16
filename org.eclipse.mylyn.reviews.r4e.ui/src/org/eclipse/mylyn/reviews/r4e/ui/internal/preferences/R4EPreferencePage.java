@@ -278,7 +278,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	/**
 	 * Field fUsersGroupsHashMap.
 	 */
-	private static Map<String, java.util.List<String>> fParticipantsListsHashMap = new HashMap<String, java.util.List<String>>();
+	private static final Map<String, java.util.List<String>> FParticipantsListsHashMap = new HashMap<String, java.util.List<String>>();
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -347,8 +347,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4EUserPrefsGroup.setLayout(new GridLayout(GROUP_PREFS_CONTAINER_DATA_SPAN, false));
 
 		//dummy spacer label
-		Label r4EUserPrefsSpacer = new Label(r4EUserPrefsGroup, SWT.FILL);
-		GridData r4EUserPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		final Label r4EUserPrefsSpacer = new Label(r4EUserPrefsGroup, SWT.FILL);
+		final GridData r4EUserPrefsSpacerData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		r4EUserPrefsSpacerData.horizontalSpan = GROUP_PREFS_CONTAINER_DATA_SPAN;
 		r4EUserPrefsSpacer.setLayoutData(r4EUserPrefsSpacerData);
 
@@ -430,10 +430,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		Label label = new Label(r4EUserPrefsGroup, SWT.NONE);
 		label.setText(PARTICIPANTS_LISTS_LABEL);
 		label.setToolTipText(R4EUIConstants.PARTICIPANTS_LISTS_TOOLTIP);
-		GridData participantsListsLabelGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+		final GridData participantsListsLabelGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
 		participantsListsLabelGridData.horizontalSpan = 1;
 		label.setLayoutData(participantsListsLabelGridData);
-		GridData participantsListsGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
+		final GridData participantsListsGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		participantsListsGridData.horizontalSpan = 3;
 		fParticipantsLists = new EditableListWidget(null, r4EUserPrefsGroup, participantsListsGridData, this, 0,
 				Text.class, null);
@@ -465,10 +465,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		label = new Label(r4EUserPrefsGroup, SWT.NONE);
 		label.setText(R4EUIConstants.PARTICIPANTS_LABEL);
 		label.setToolTipText(R4EUIConstants.PARTICIPANTS_TOOLTIP);
-		GridData participantsLabelGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, true);
+		final GridData participantsLabelGridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, true);
 		participantsLabelGridData.horizontalSpan = 1;
 		label.setLayoutData(participantsLabelGridData);
-		GridData participantsGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		final GridData participantsGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		participantsGridData.horizontalSpan = 3;
 		fParticipantsList = new EditableListWidget(null, r4EUserPrefsGroup, participantsGridData, this, 1, Label.class,
 				null);
@@ -957,8 +957,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		store.setValue(PreferenceConstants.P_USER_ID, fUserIdTextField.getText().toLowerCase());
 
 		//Set current groups and groups users
-		Item[] groupItems = fParticipantsLists.getItems();
-		StringBuffer buffer = new StringBuffer();
+		final Item[] groupItems = fParticipantsLists.getItems();
+		final StringBuffer buffer = new StringBuffer();
 		for (Item item : groupItems) {
 			buffer.append(item.getText() + R4EUIConstants.LIST_SEPARATOR);
 		}
@@ -1048,7 +1048,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	/**
 	 * Method addRuleSetPrefs.
 	 * 
-	 * @param aGroupPath
+	 * @param aRuleSetPath
+	 *            String
 	 */
 	public void addRuleSetPrefs(String aRuleSetPath) {
 		fR4EPrefsTabFolder.setSelection(fRuleSetsPrefsTab);
@@ -1058,7 +1059,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	/**
 	 * Method removeRuleSetPrefs.
 	 * 
-	 * @param aGroupPath
+	 * @param aRuleSetPath
+	 *            String
 	 */
 	public void removeRuleSetPrefs(String aRuleSetPath) {
 		fR4EPrefsTabFolder.setSelection(fRuleSetsPrefsTab);
@@ -1074,7 +1076,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	public void itemsUpdated(Item[] aItems, int aInstanceId) {
 		if (0 == aInstanceId) {
 			//Iterate the map and remove elements that are not present anymore
-			Iterator<Map.Entry<String, java.util.List<String>>> entries = fParticipantsListsHashMap.entrySet()
+			final Iterator<Map.Entry<String, java.util.List<String>>> entries = FParticipantsListsHashMap.entrySet()
 					.iterator();
 			boolean itemFound;
 			while (entries.hasNext()) {
@@ -1087,7 +1089,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 					}
 				}
 				if (!itemFound) {
-					fParticipantsListsHashMap.remove(entry.getKey());
+					FParticipantsListsHashMap.remove(entry.getKey());
 				}
 			}
 
@@ -1097,10 +1099,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 				fParticipantsList.setEnabled(false);
 			}
 		} else if (1 == aInstanceId) {
-			Item selectedGroup = fParticipantsLists.getSelectedItem();
+			final Item selectedGroup = fParticipantsLists.getSelectedItem();
 			if (null != selectedGroup) {
-				fParticipantsListsHashMap.remove(selectedGroup.getText());
-				java.util.List<String> newParticipants = new ArrayList<String>(aItems.length);
+				FParticipantsListsHashMap.remove(selectedGroup.getText());
+				final java.util.List<String> newParticipants = new ArrayList<String>(aItems.length);
 				for (Item item : aItems) {
 					StringBuffer buffer = new StringBuffer();
 					int numColumns = ((TableItem) item).getParent().getColumnCount();
@@ -1110,7 +1112,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 					buffer.deleteCharAt(buffer.length() - 1); //Strip last separator
 					newParticipants.add(buffer.toString());
 				}
-				fParticipantsListsHashMap.put(selectedGroup.getText(), newParticipants);
+				FParticipantsListsHashMap.put(selectedGroup.getText(), newParticipants);
 			}
 		}
 	}
@@ -1130,7 +1132,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 				return;
 			}
 			//Populate the users table for the selected participant list
-			final java.util.List<String> participantsStr = fParticipantsListsHashMap.get(aItem.getText());
+			final java.util.List<String> participantsStr = FParticipantsListsHashMap.get(aItem.getText());
 			fParticipantsList.removeAll();
 			Item item = null;
 			String participantStr = null;
@@ -1158,11 +1160,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	public static void populateParticipantListMap() {
 		//Format in preferences is <number of lists>;<list1 name>;<number of participant included>;<participant1>;...;<participantN>;...;<listN name>...
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
-		String[] participantListStrs = store.getString(PreferenceConstants.P_PARTICIPANTS).split(
+		final String[] participantListStrs = store.getString(PreferenceConstants.P_PARTICIPANTS).split(
 				R4EUIConstants.LIST_SEPARATOR);
 		if (null != participantListStrs && null != participantListStrs[0] && !("".equals(participantListStrs[0]))) { //$NON-NLS-1$
 			int readIndex = 0;
-			int numLists = Integer.parseInt(participantListStrs[readIndex++]);
+			final int numLists = Integer.parseInt(participantListStrs[readIndex++]);
 			for (int i = 0; i < numLists; i++) {
 				String participantListName = participantListStrs[readIndex++];
 				int numParticipants = Integer.parseInt(participantListStrs[readIndex++]);
@@ -1171,20 +1173,22 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 					users.add(participantListStrs[readIndex++] + R4EUIConstants.LIST_SEPARATOR
 							+ participantListStrs[readIndex++]); //UserId;User Email
 				}
-				fParticipantsListsHashMap.put(participantListName, users);
+				FParticipantsListsHashMap.put(participantListName, users);
 			}
 		}
 	}
 
 	/**
 	 * Method formatParticipantsListsPreferences
+	 * 
+	 * @return String
 	 */
 	private String formatParticipantsListsPreferences() {
 		//Format in preferences is <number of lists>;<list1 name>;<number of participant included>;<participant1>;...;<participantN>;...;<listN name>...
-		StringBuffer buffer = new StringBuffer();
+		final StringBuffer buffer = new StringBuffer();
 
-		buffer.append(fParticipantsListsHashMap.size() + R4EUIConstants.LIST_SEPARATOR);
-		Iterator<Map.Entry<String, java.util.List<String>>> participantsLists = fParticipantsListsHashMap.entrySet()
+		buffer.append(FParticipantsListsHashMap.size() + R4EUIConstants.LIST_SEPARATOR);
+		final Iterator<Map.Entry<String, java.util.List<String>>> participantsLists = FParticipantsListsHashMap.entrySet()
 				.iterator();
 		while (participantsLists.hasNext()) {
 			Map.Entry<String, java.util.List<String>> participantList = participantsLists.next();
@@ -1206,11 +1210,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * @return java.util.List<String>
 	 */
 	public static java.util.List<String> getParticipantsFromList(String aQueryStr) {
-		java.util.List<String> participants = fParticipantsListsHashMap.get(aQueryStr);
+		java.util.List<String> participants = FParticipantsListsHashMap.get(aQueryStr);
 		if (null == participants) {
 			participants = new ArrayList<String>();
 		}
-		if (participants.size() == 0) {
+		if (0 == participants.size()) {
 			participants.add(aQueryStr); //No group exists with this name, just piggyback the query
 		}
 		return participants;
@@ -1222,8 +1226,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * @return String[]
 	 */
 	public static String[] getParticipantsLists() {
-		java.util.List<String> activeParticipantsLists = new ArrayList<String>();
-		Iterator<Map.Entry<String, java.util.List<String>>> participantsLists = fParticipantsListsHashMap.entrySet()
+		final java.util.List<String> activeParticipantsLists = new ArrayList<String>();
+		final Iterator<Map.Entry<String, java.util.List<String>>> participantsLists = FParticipantsListsHashMap.entrySet()
 				.iterator();
 		while (participantsLists.hasNext()) {
 			Map.Entry<String, java.util.List<String>> participantList = participantsLists.next();

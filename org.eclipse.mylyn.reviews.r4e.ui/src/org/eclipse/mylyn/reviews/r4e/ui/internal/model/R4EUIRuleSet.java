@@ -19,7 +19,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
@@ -231,17 +230,15 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	@Override
 	public List<ReviewComponent> createChildModelDataElement() {
 		//Get Rule Area from user and set it in model data
-		List<ReviewComponent> tempAreas = new ArrayList<ReviewComponent>();
+		final List<ReviewComponent> tempAreas = new ArrayList<ReviewComponent>();
 
-		R4EUIModelController.setJobInProgress(true);
 		final IRuleAreaInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleAreaInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			R4EDesignRuleArea tempArea = DRModelFactory.eINSTANCE.createR4EDesignRuleArea();
+			final R4EDesignRuleArea tempArea = DRModelFactory.eINSTANCE.createR4EDesignRuleArea();
 			tempArea.setName(dialog.getNameValue());
 			tempAreas.add(tempArea);
 		}
-		R4EUIModelController.setJobInProgress(false); //Enable view
 		return tempAreas;
 	}
 
@@ -282,7 +279,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	}
 
 	/**
-	 * Close the model element (i.e. disable it)
+	 * Close the model element
 	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#close()
 	 */
@@ -301,7 +298,6 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 		fReadOnly = false;
 		R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
 		fImage = UIUtils.loadIcon(RULE_SET_CLOSED_ICON_FILE);
-		fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_CLOSE);
 	}
 
 	/**
@@ -333,7 +329,6 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 			}
 			fOpen = true;
 			fImage = UIUtils.loadIcon(RULE_SET_ICON_FILE);
-			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
 		} else {
 			R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
 		}
@@ -342,12 +337,13 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	/**
 	 * Method openReadOnly.
 	 * 
+	 * @return boolean
 	 * @throws ResourceHandlingException
 	 * @throws CompatibilityException
 	 */
 	public boolean openReadOnly() throws ResourceHandlingException, CompatibilityException {
 		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRuleSetFileURI);
-		int checkResult = fRuleSet.getCompatibility();
+		final int checkResult = fRuleSet.getCompatibility();
 		if (checkResult == R4EUIConstants.VERSION_APPLICATION_OLDER) {
 			R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
 			return false;
@@ -373,28 +369,30 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 			}
 			fOpen = true;
 			fImage = UIUtils.loadIcon(RULE_SET_ICON_FILE);
-			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_OPEN);
+			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 			return true;
 		}
 	}
 
 	/**
 	 * Check version compatibility between the element(s) to load and the current R4E application
+	 * 
+	 * @return boolean
 	 */
 	private boolean checkCompatibility() {
-		int checkResult = fRuleSet.getCompatibility();
+		final int checkResult = fRuleSet.getCompatibility();
 		switch (checkResult) {
 		case R4EUIConstants.VERSION_APPLICATION_OLDER:
 			UIUtils.displayCompatibilityErrorDialog();
 			return false;
 		case R4EUIConstants.VERSION_APPLICATION_NEWER:
-			int result = UIUtils.displayCompatibilityWarningDialog(fRuleSet.getFragmentVersion(),
+			final int result = UIUtils.displayCompatibilityWarningDialog(fRuleSet.getFragmentVersion(),
 					fRuleSet.getApplicationVersion());
 			switch (result) {
 			case R4EUIConstants.OPEN_NORMAL:
 				//Upgrade version immediately
 				try {
-					Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRuleSet,
+					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRuleSet,
 							R4EUIModelController.getReviewer());
 					fRuleSet.setFragmentVersion(fRuleSet.getApplicationVersion());
 					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
@@ -440,7 +438,6 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 				R4EUIModelController.getReviewer());
 		fRuleSet.setEnabled(aEnabled);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
 	/**
@@ -459,14 +456,11 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * 
 	 * @param aChildToAdd
 	 *            IR4EUIModelElement
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addChildren(IR4EUIModelElement)
 	 */
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		fAreas.add((R4EUIRuleArea) aChildToAdd);
-		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.getContentProvider());
-		fireAdd(aChildToAdd);
 	}
 
 	/**
@@ -519,10 +513,6 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fAreas.remove(removedElement);
-			aChildToRemove.removeListeners();
-			fireRemove(aChildToRemove);
-		} else {
-			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 		}
 	}
 
@@ -545,43 +535,45 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 
 	//Listeners
 
-	/**
+/*	*//**
 	 * Method addListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
 	 */
+	/*
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		super.addListener(aProvider);
-		if (null != fAreas) {
-			R4EUIRuleArea element = null;
-			for (final Iterator<R4EUIRuleArea> iterator = fAreas.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.addListener(aProvider);
-			}
+	super.addListener(aProvider);
+	if (null != fAreas) {
+		R4EUIRuleArea element = null;
+		for (final Iterator<R4EUIRuleArea> iterator = fAreas.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.addListener(aProvider);
 		}
 	}
+	}
 
-	/**
+	*//**
 	 * Method removeListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
 	 */
+	/*
 	@Override
 	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-		super.removeListener(aProvider);
-		if (null != fAreas) {
-			R4EUIRuleArea element = null;
-			for (final Iterator<R4EUIRuleArea> iterator = fAreas.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.removeListener(aProvider);
-			}
+	super.removeListener(aProvider);
+	if (null != fAreas) {
+		R4EUIRuleArea element = null;
+		for (final Iterator<R4EUIRuleArea> iterator = fAreas.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.removeListener(aProvider);
 		}
 	}
+	}*/
 
 	//Commands
 

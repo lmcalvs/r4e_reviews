@@ -39,8 +39,6 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.FileContextProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -124,7 +122,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		} else {
 			fContentsContainer = new R4EUISelectionContainer(this, R4EUIConstants.SELECTIONS_LABEL);
 		}
-		fAnomalyContainer = new R4EUIAnomalyContainer(this, R4EUIConstants.ANOMALIES_LABEL);
+		addChildren(new R4EUIAnomalyContainer(this, R4EUIConstants.ANOMALIES_LABEL));
 		fFile = aFile;
 		setImage(FILE_CONTEXT_ICON_FILE);
 	}
@@ -257,7 +255,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 					fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
 				}
 			}
-			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 
@@ -317,7 +314,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
 			}
 			fUserReviewed = aReviewed;
-			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 
@@ -342,7 +338,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			fUserReviewed = true;
 			addContentReviewed();
 			getParent().checkToSetUserReviewed();
-			fireUserReviewStateChanged(this, R4EUIConstants.CHANGE_TYPE_REVIEWED_STATE);
 		}
 	}
 
@@ -396,7 +391,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fFile, R4EUIModelController.getReviewer());
 		fFile.setEnabled(true);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
 	/**
@@ -424,7 +418,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			//Set new participants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fFile,
 					R4EUIModelController.getReviewer());
-			EList<String> assignedParticipants = fFile.getAssignedTo();
+			final EList<String> assignedParticipants = fFile.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.add(participant.getId());
 
@@ -459,7 +453,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			//Set new participants assigned
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fFile,
 					R4EUIModelController.getReviewer());
-			EList<String> assignedParticipants = fFile.getAssignedTo();
+			final EList<String> assignedParticipants = fFile.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.remove(participant.getId());
 			}
@@ -484,9 +478,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * @return int
 	 */
 	public int getNumChanges() {
-		IR4EUIModelElement container = getContentsContainerElement();
+		final IR4EUIModelElement container = getContentsContainerElement();
 		if (null != container) {
-			IR4EUIModelElement[] children = container.getChildren();
+			final IR4EUIModelElement[] children = container.getChildren();
 			if (null != children) {
 				return children.length;
 			}
@@ -515,9 +509,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * @return int
 	 */
 	public int getNumAnomalies() {
-		IR4EUIModelElement container = getAnomalyContainerElement();
+		final IR4EUIModelElement container = getAnomalyContainerElement();
 		if (null != container) {
-			IR4EUIModelElement[] children = container.getChildren();
+			final IR4EUIModelElement[] children = container.getChildren();
 			if (null != children) {
 				return children.length;
 			}
@@ -589,7 +583,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		fContentsContainer.close();
 		fAnomalyContainer.close();
 		fOpen = false;
-		removeListeners();
 	}
 
 	/**
@@ -694,10 +687,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		} else {
 			return;
 		}
-		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.getContentProvider());
-		fireAdd(aChildToAdd);
 	}
 
 	/**
@@ -716,20 +705,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			throws ResourceHandlingException, OutOfSyncException {
 		if (aChildToRemove instanceof R4EUIContentsContainer) {
 			fContentsContainer.removeAllChildren(aFileRemove);
-			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
-				aChildToRemove.removeListeners();
-				fireRemove(aChildToRemove);
-			} else {
-				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
-			}
 		} else if (aChildToRemove instanceof R4EUIAnomalyContainer) {
 			fAnomalyContainer.removeAllChildren(aFileRemove);
-			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
-				aChildToRemove.removeListeners();
-				fireRemove(aChildToRemove);
-			} else {
-				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
-			}
 		}
 	}
 
@@ -757,33 +734,35 @@ public class R4EUIFileContext extends R4EUIModelElement {
 
 	//Listeners
 
-	/**
+/*	*//**
 	 * Method addListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
 	 */
+	/*
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		super.addListener(aProvider);
-		fContentsContainer.addListener(aProvider);
-		fAnomalyContainer.addListener(aProvider);
+	super.addListener(aProvider);
+	fContentsContainer.addListener(aProvider);
+	fAnomalyContainer.addListener(aProvider);
 	}
 
-	/**
+	*//**
 	 * Method removeListener.
 	 * 
 	 * @param aProvider
 	 *            - the treeviewer content provider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
 	 */
+	/*
 	@Override
 	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-		super.removeListener(aProvider);
-		fContentsContainer.removeListener(aProvider);
-		fAnomalyContainer.removeListener(aProvider);
-	}
+	super.removeListener(aProvider);
+	fContentsContainer.removeListener(aProvider);
+	fAnomalyContainer.removeListener(aProvider);
+	}*/
 
 	//Commands
 

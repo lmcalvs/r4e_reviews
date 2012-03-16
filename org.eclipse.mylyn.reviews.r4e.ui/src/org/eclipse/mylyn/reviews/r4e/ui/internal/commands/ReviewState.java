@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.AbstractSourceProvider;
 import org.eclipse.ui.ISources;
 
@@ -89,7 +90,11 @@ public class ReviewState extends AbstractSourceProvider {
 	 * @param aOpenReview
 	 *            ReviewElement
 	 */
-	public void setCurrentReview(R4EUIReviewBasic aOpenReview) {
-		fireSourceChanged(ISources.WORKBENCH, REVIEW_CURRENT, aOpenReview);
+	public void setCurrentReview(final R4EUIReviewBasic aOpenReview) {
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				fireSourceChanged(ISources.WORKBENCH, REVIEW_CURRENT, aOpenReview);
+			}
+		});
 	}
 }

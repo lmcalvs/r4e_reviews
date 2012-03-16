@@ -28,7 +28,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityExcepti
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -297,53 +296,6 @@ public interface IR4EUIModelElement {
 	 */
 	void removeAllChildren(boolean aFileRemove) throws ResourceHandlingException, OutOfSyncException,
 			CompatibilityException;
-
-	//Listeners
-
-	/**
-	 * Add a listener to the current element
-	 * 
-	 * @param aProvider
-	 *            - the treeviewer content provider
-	 */
-	void addListener(ReviewNavigatorContentProvider aProvider);
-
-	/**
-	 * Remove the listener from the current element
-	 * 
-	 * @param aProvider
-	 *            - the treeviewer content provider
-	 */
-	void removeListener(ReviewNavigatorContentProvider aProvider);
-
-	/**
-	 * Remove all listeners from the current element
-	 */
-	void removeListeners();
-
-	/**
-	 * Fire an add event to notify the UI of the model change
-	 * 
-	 * @param aAdded
-	 *            - the added object
-	 */
-	void fireAdd(Object aAdded);
-
-	/**
-	 * Fire a remove event to notify the UI of the model change
-	 * 
-	 * @param aRemoved
-	 *            - the removed object
-	 */
-	void fireRemove(Object aRemoved);
-
-	/**
-	 * Fire a review state changed event to notify the UI of the model change
-	 * 
-	 * @param aChanged
-	 *            - the changed object
-	 */
-	void fireUserReviewStateChanged(Object aChanged, int aType);
 
 	//Commands
 

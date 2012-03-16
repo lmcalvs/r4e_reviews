@@ -25,11 +25,8 @@ import java.util.List;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantInputDialog;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableEditor;
@@ -273,7 +270,9 @@ public class EditableListWidget {
 
 		fMainTable.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				fListener.itemSelected(fMainTable.getSelection()[0], fInstanceId); //Only 1 element selected at any given time
+				if (null != fListener) {
+					fListener.itemSelected(fMainTable.getSelection()[0], fInstanceId); //Only 1 element selected at any given time
+				}
 			}
 		});
 
@@ -304,34 +303,32 @@ public class EditableListWidget {
 		fAddButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				if (aEditableWidgetClass.equals(Label.class)) {
-					final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog(
-							false);
-					final int result = dialog.open();
-					if (result == Window.OK) {
-						TableItem newItem = null;
-						for (R4EParticipant participant : dialog.getParticipants()) {
-							newItem = null;
-							String[] tableStrs = new String[2];
-							tableStrs[0] = participant.getId();
-							tableStrs[1] = participant.getEmail();
-							//Check if values already exist
-							for (TableItem item : fMainTable.getItems()) {
-								if (item.getText(0).equals(tableStrs[0])) {
-									newItem = item;
-								}
+					//Get participants to assign
+					final List<R4EParticipant> participants = UIUtils.getAssignParticipants();
+					TableItem newItem = null;
+					for (R4EParticipant participant : participants) {
+						newItem = null;
+						String[] tableStrs = new String[2];
+						tableStrs[0] = participant.getId();
+						tableStrs[1] = participant.getEmail();
+						//Check if values already exist
+						for (TableItem item : fMainTable.getItems()) {
+							if (item.getText(0).equals(tableStrs[0])) {
+								newItem = item;
 							}
-							if (null == newItem) {
-								newItem = new TableItem(fMainTable, SWT.NONE);
-							}
-							fMainTable.showItem(newItem);
-							newItem.setText(tableStrs);
 						}
-						if (null != newItem) {
-							fMainTable.showItem(newItem);
+						if (null == newItem) {
+							newItem = new TableItem(fMainTable, SWT.NONE);
 						}
+						fMainTable.showItem(newItem);
+						newItem.setText(tableStrs);
+					}
+					if (null != newItem) {
+						fMainTable.showItem(newItem);
+					}
+					if (null != fListener) {
 						fListener.itemsUpdated(fMainTable.getItems(), fInstanceId);
 					}
-					R4EUIDialogFactory.getInstance().removeParticipantInputDialog();
 					return;
 				}
 
@@ -524,7 +521,7 @@ public class EditableListWidget {
 	 * @return Item
 	 */
 	public Item getSelectedItem() {
-		if (fMainTable.getSelection().length == 0) {
+		if (0 == fMainTable.getSelection().length) {
 			return null;
 		}
 		return fMainTable.getSelection()[0]; //Only one element selectable at any given time
@@ -689,7 +686,7 @@ public class EditableListWidget {
 			if (fEditableControl instanceof Text) {
 				((Text) fEditableControl).setText(addStr);
 			} else if (fEditableControl instanceof CCombo) {
-				String[] items = ((CCombo) fEditableControl).getItems();
+				final String[] items = ((CCombo) fEditableControl).getItems();
 				for (int index = 0; index < items.length; index++) {
 					if (items[index].equals(addStr)) {
 						((CCombo) fEditableControl).select(index);

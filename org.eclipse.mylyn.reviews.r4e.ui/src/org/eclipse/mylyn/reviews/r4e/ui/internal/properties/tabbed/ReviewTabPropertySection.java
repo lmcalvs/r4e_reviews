@@ -736,8 +736,6 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 					UIUtils.displayResourceErrorDialog(e1);
 				} catch (OutOfSyncException e1) {
 					UIUtils.displaySyncErrorDialog(e1);
-				} finally {
-					R4EUIModelController.setJobInProgress(false);
 				}
 			}
 

@@ -19,7 +19,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
@@ -43,6 +42,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * @author lmcdubo
@@ -96,14 +96,13 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	@Override
 	public List<ReviewComponent> createChildModelDataElement() {
 		//Get comment from user and set it in model data
-		List<ReviewComponent> tempReviewGroups = new ArrayList<ReviewComponent>();
+		final List<ReviewComponent> tempReviewGroups = new ArrayList<ReviewComponent>();
 
-		R4EUIModelController.setJobInProgress(true);
 		final IReviewGroupInputDialog dialog = R4EUIDialogFactory.getInstance().getReviewGroupInputDialog();
 		dialog.create();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			R4EReviewGroup tempReviewGroup = RModelFactory.eINSTANCE.createR4EReviewGroup();
+			final R4EReviewGroup tempReviewGroup = RModelFactory.eINSTANCE.createR4EReviewGroup();
 			tempReviewGroup.setName(dialog.getGroupNameValue());
 			tempReviewGroup.setDescription(dialog.getGroupDescriptionValue());
 			tempReviewGroup.setFolder(dialog.getGroupFolderValue());
@@ -119,7 +118,6 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			tempReviewGroup.setDefaultEntryCriteria(dialog.getDefaultEntryCriteriaValue());
 			tempReviewGroups.add(tempReviewGroup);
 		}
-		R4EUIModelController.setJobInProgress(false); //Enable View
 		return tempReviewGroups;
 	}
 
@@ -133,7 +131,6 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	public ReviewComponent createRuleSetElement() {
 		//Get comment from user and set it in model data
 		R4EDesignRuleCollection tempRuleSet = null;
-		R4EUIModelController.setJobInProgress(true);
 		final IRuleSetInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleSetInputDialog();
 		dialog.create();
 		final int result = dialog.open();
@@ -143,7 +140,6 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			tempRuleSet.setFolder(dialog.getFolderValue());
 			tempRuleSet.setName(dialog.getNameValue());
 		}
-		R4EUIModelController.setJobInProgress(false); //Enable View
 		return tempRuleSet;
 	}
 
@@ -164,8 +160,6 @@ public class R4EUIRootElement extends R4EUIModelElement {
 				continue; //skip reviews groups that are already closed
 			}
 			reviewGroup.close();
-			reviewGroup.removeListeners();
-			fireRemove(reviewGroup);
 		}
 		fReviewGroups.clear();
 
@@ -178,8 +172,6 @@ public class R4EUIRootElement extends R4EUIModelElement {
 				continue; //skip rule sets that are already closed
 			}
 			ruleSet.close();
-			ruleSet.removeListeners();
-			fireRemove(ruleSet);
 		}
 		fRuleSets.clear();
 		fOpen = false;
@@ -290,7 +282,11 @@ public class R4EUIRootElement extends R4EUIModelElement {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 							"Error while creating new Review Group ", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID,
 									0, "Review Group " + groupName + " already exists", null), IStatus.ERROR);
-					dialog.open();
+					Display.getDefault().syncExec(new Runnable() {
+						public void run() {
+							dialog.open();
+						}
+					});
 					return null;
 				}
 			}
@@ -323,7 +319,11 @@ public class R4EUIRootElement extends R4EUIModelElement {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 							"Error while creating new Rule Set  ", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 									"Rule Set " + ruleSetName + " already exists", null), IStatus.ERROR);
-					dialog.open();
+					Display.getDefault().syncExec(new Runnable() {
+						public void run() {
+							dialog.open();
+						}
+					});
 					return null;
 				}
 			}
@@ -370,10 +370,6 @@ public class R4EUIRootElement extends R4EUIModelElement {
 		} else {
 			return;
 		}
-		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.getContentProvider());
-		fireAdd(aChildToAdd);
 	}
 
 	/**
@@ -405,8 +401,6 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			//Remove element from UI if the show disabled element option is off
 			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fReviewGroups.remove(removedElement);
-				aChildToRemove.removeListeners();
-				fireRemove(aChildToRemove);
 			}
 		} else if (aChildToRemove instanceof R4EUIRuleSet) {
 			final R4EUIRuleSet removedElement = fRuleSets.get(fRuleSets.indexOf(aChildToRemove));
@@ -417,7 +411,11 @@ public class R4EUIRootElement extends R4EUIModelElement {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 							"Rule Set cannot be removed because it is being used", new Status(IStatus.ERROR,
 									R4EUIPlugin.PLUGIN_ID, "Rule Set used in Group " + group.getName()), IStatus.ERROR);
-					dialog.open();
+					Display.getDefault().syncExec(new Runnable() {
+						public void run() {
+							dialog.open();
+						}
+					});
 					return;
 				}
 			}
@@ -433,8 +431,6 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			//Remove element from UI if the show disabled element option is off
 			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 				fRuleSets.remove(removedElement);
-				aChildToRemove.removeListeners();
-				fireRemove(aChildToRemove);
 			}
 		}
 	}
@@ -447,13 +443,12 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
 	 */
-	public void removeChildrenFromUI(IR4EUIModelElement aChildToRemove) throws ResourceHandlingException,
-			OutOfSyncException {
+	public void removeChildrenFromUI(IR4EUIModelElement aChildToRemove) {
 		if (aChildToRemove instanceof R4EUIReviewGroup) {
 			final R4EUIReviewGroup removedElement = fReviewGroups.get(fReviewGroups.indexOf(aChildToRemove));
 			//Close Review Group if open
 			if (removedElement.isOpen()) {
-				IR4EUIModelElement[] reviews = removedElement.getChildren();
+				final IR4EUIModelElement[] reviews = removedElement.getChildren();
 				for (IR4EUIModelElement review : reviews) {
 					//Close Review if open
 					if (review instanceof R4EUIReviewBasic && review.isOpen()) {
@@ -473,8 +468,6 @@ public class R4EUIRootElement extends R4EUIModelElement {
 			}
 			fRuleSets.remove(removedElement);
 		}
-		aChildToRemove.removeListeners();
-		fireRemove(aChildToRemove);
 	}
 
 	/**
@@ -501,57 +494,59 @@ public class R4EUIRootElement extends R4EUIModelElement {
 
 	//Listeners
 
-	/**
+/*	*//**
 	 * Method addListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
 	 */
+	/*
 	@Override
 	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		super.addListener(aProvider);
-		if (null != fReviewGroups) {
-			R4EUIReviewGroup element = null;
-			for (final Iterator<R4EUIReviewGroup> iterator = fReviewGroups.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.addListener(aProvider);
-			}
-		}
-		if (null != fRuleSets) {
-			R4EUIRuleSet element = null;
-			for (final Iterator<R4EUIRuleSet> iterator = fRuleSets.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.addListener(aProvider);
-			}
+	super.addListener(aProvider);
+	if (null != fReviewGroups) {
+		R4EUIReviewGroup element = null;
+		for (final Iterator<R4EUIReviewGroup> iterator = fReviewGroups.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.addListener(aProvider);
 		}
 	}
+	if (null != fRuleSets) {
+		R4EUIRuleSet element = null;
+		for (final Iterator<R4EUIRuleSet> iterator = fRuleSets.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.addListener(aProvider);
+		}
+	}
+	}
 
-	/**
+	*//**
 	 * Method removeListener.
 	 * 
 	 * @param aProvider
 	 *            ReviewNavigatorContentProvider
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
 	 */
+	/*
 	@Override
 	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-		super.removeListener(aProvider);
-		if (null != fReviewGroups) {
-			R4EUIReviewGroup element = null;
-			for (final Iterator<R4EUIReviewGroup> iterator = fReviewGroups.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.removeListener(aProvider);
-			}
-		}
-		if (null != fRuleSets) {
-			R4EUIRuleSet element = null;
-			for (final Iterator<R4EUIRuleSet> iterator = fRuleSets.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.removeListener(aProvider);
-			}
+	super.removeListener(aProvider);
+	if (null != fReviewGroups) {
+		R4EUIReviewGroup element = null;
+		for (final Iterator<R4EUIReviewGroup> iterator = fReviewGroups.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.removeListener(aProvider);
 		}
 	}
+	if (null != fRuleSets) {
+		R4EUIRuleSet element = null;
+		for (final Iterator<R4EUIRuleSet> iterator = fRuleSets.iterator(); iterator.hasNext();) {
+			element = iterator.next();
+			element.removeListener(aProvider);
+		}
+	}
+	}*/
 
 	//Commands
 

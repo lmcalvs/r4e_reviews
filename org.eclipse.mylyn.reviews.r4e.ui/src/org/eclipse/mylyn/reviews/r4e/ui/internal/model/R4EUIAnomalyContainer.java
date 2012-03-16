@@ -19,11 +19,15 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
@@ -50,6 +54,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorConten
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * @author lmcdubo
@@ -75,6 +81,11 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New Global Anomaly to the Current Review Item"")
 	 */
 	private static final String NEW_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Global Anomaly to the Current Review Item";
+
+	/**
+	 * Field CREATE_ANOMALY_MESSAGE. (value is ""Creating New Anomaly..."")
+	 */
+	public static final String CREATE_ANOMALY_MESSAGE = "Creating New Anomaly...";
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -118,10 +129,15 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	public static R4EAnomaly createDetachedAnomaly() {
 		//Get comment from user and set it in model data
 		R4EAnomaly tempAnomaly = null;
-		R4EUIModelController.setJobInProgress(true);
 		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getAnomalyInputDialog();
-		final int result = dialog.open();
-		if (result == Window.OK) {
+		final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				result[0] = dialog.open();
+			}
+		});
+
+		if (result[0] == Window.OK) {
 			tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
 			final R4ECommentType tempCommentType = RModelFactory.eINSTANCE.createR4ECommentType();
 			tempAnomaly.setTitle(dialog.getAnomalyTitleValue());
@@ -145,7 +161,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				}
 			}
 		}
-		R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
 		return tempAnomaly;
 	}
 
@@ -153,21 +168,23 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * Create a serialization model element object
 	 * 
 	 * @return the new serialization element object
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildModelDataElement()
 	 */
 	@Override
 	public List<ReviewComponent> createChildModelDataElement() {
 		//Get Anomaly from user and set it in model data
-		List<ReviewComponent> tempAnomalies = new ArrayList<ReviewComponent>();
-
+		final List<ReviewComponent> tempAnomalies = new ArrayList<ReviewComponent>();
 		R4EUIModelController.setJobInProgress(true);
+
 		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getAnomalyInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
-			R4EAnomaly tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
+			final R4EAnomaly tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
 			setAnomalyWithDialogValues(tempAnomaly, dialog);
 			tempAnomalies.add(tempAnomaly);
 		}
-		R4EUIModelController.setJobInProgress(false); //Enable view
+		R4EUIModelController.setJobInProgress(false);
+
 		return tempAnomalies;
 	}
 
@@ -216,11 +233,12 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		}
 		fAnomalies.clear();
 		fOpen = false;
-		removeListeners();
 	}
 
 	/**
 	 * Method open. Load the serialization model data into UI model
+	 * 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#open()
 	 */
 	@Override
 	public void open() {
@@ -340,7 +358,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	/**
 	 * Method setReadOnly.
 	 * 
-	 * @param boolean
+	 * @param aReadOnly
+	 *            boolean
 	 */
 	public void setReadOnly(boolean aReadOnly) {
 		fReadOnly = aReadOnly;
@@ -356,10 +375,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		fAnomalies.add((R4EUIAnomalyBasic) aChildToAdd);
-		aChildToAdd.addListener((ReviewNavigatorContentProvider) R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.getContentProvider());
-		fireAdd(aChildToAdd);
 	}
 
 	/**
@@ -407,34 +422,57 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 *            R4EFileVersion
 	 * @param aUiPosition
 	 *            - the position of the anomaly to create
-	 * @return R4EUIAnomalyBasic
-	 * @throws ResourceHandlingException
-	 * @throws OutOfSyncException
 	 */
-	public R4EUIAnomalyBasic createAnomaly(R4EFileVersion aAnomalyTempFileVersion, R4EUITextPosition aUiPosition)
-			throws ResourceHandlingException, OutOfSyncException {
-
-		R4EUIAnomalyBasic uiAnomaly = null;
+	public void createAnomaly(final R4EFileVersion aAnomalyTempFileVersion, final R4EUITextPosition aUiPosition) {
 
 		//Get anomaly details from user
-		R4EUIModelController.setJobInProgress(true);
 		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getAnomalyInputDialog();
-		final int result = dialog.open();
+		final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				result[0] = dialog.open();
+			}
+		});
 
-		if (result == Window.OK) {
+		//Create actual model element
+		if (result[0] == Window.OK) {
+			final Job job = new Job(CREATE_ANOMALY_MESSAGE) {
+				public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
 
-			//Create anomaly model element
-			final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
-			final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(), true);
-			final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
-			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, R4EUIModelController.getReviewer());
-			setAnomalyWithDialogValues(anomaly, dialog);
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				@Override
+				public boolean belongsTo(Object family) {
+					return familyName.equals(family);
+				}
 
-			uiAnomaly = createAnomalyDetails(anomaly, aAnomalyTempFileVersion, aUiPosition);
+				@Override
+				public IStatus run(IProgressMonitor monitor) {
+
+					//Create anomaly model element
+					try {
+						final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
+						final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(),
+								true);
+						final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly,
+								R4EUIModelController.getReviewer());
+						setAnomalyWithDialogValues(anomaly, dialog);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						final R4EUIAnomalyBasic uiAnomaly = createAnomalyDetails(anomaly, aAnomalyTempFileVersion,
+								aUiPosition);
+						R4EUIModelController.setJobInProgress(false);
+						UIUtils.setNavigatorViewFocus(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
+					} catch (ResourceHandlingException e) {
+						UIUtils.displayResourceErrorDialog(e);
+					} catch (OutOfSyncException e) {
+						UIUtils.displaySyncErrorDialog(e);
+					}
+					monitor.done();
+					return Status.OK_STATUS;
+				}
+			};
+			job.setUser(true);
+			job.schedule();
 		}
-		R4EUIModelController.setJobInProgress(false); //Enable commands in case of error
-		return uiAnomaly;
 	}
 
 	/**
@@ -444,7 +482,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 *            R4EAnomaly
 	 * @param aDialog
 	 *            AnomalyInputDialog
-	 * @return R4EUIAnomalyBasic
 	 */
 	private void setAnomalyWithDialogValues(R4EAnomaly aAnomaly, IAnomalyInputDialog aDialog) {
 
@@ -491,11 +528,11 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		final String user = R4EUIModelController.getReviewer();
 		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(R4EUIModelController.getActiveReview()
 				.getParticipant(user, true));
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, R4EUIModelController.getReviewer());
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, R4EUIModelController.getReviewer());
 		anomaly.setTitle(aModelComponent.getTitle()); //This is needed as the anomaly title is displayed in the navigator view
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
-		R4EUIAnomalyBasic uiAnomaly = createAnomalyDetails(anomaly, aAnomalyTempFileVersion, aUiPosition);
+		final R4EUIAnomalyBasic uiAnomaly = createAnomalyDetails(anomaly, aAnomalyTempFileVersion, aUiPosition);
 		uiAnomaly.setModelData(aModelComponent);
 		return uiAnomaly;
 	}
@@ -507,8 +544,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 *            R4EFileVersion
 	 * @param aAnomaly
 	 *            R4EAnomaly
-	 * @param aAnomalyTempFileVersion
-	 *            R4EFileVersion
 	 * @param aUiPosition
 	 *            R4EUITextPosition
 	 * @return R4EUIAnomalyBasic
@@ -554,8 +589,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 *            IR4EUIModelElement
 	 * @param aFileRemove
 	 *            - also remove from file (hard remove)
-	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
 	 */
 	@Override
@@ -578,10 +613,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fAnomalies.remove(removedElement);
-			aChildToRemove.removeListeners();
-			fireRemove(aChildToRemove);
-		} else {
-			R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 		}
 	}
 
@@ -590,8 +621,8 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * 
 	 * @param aFileRemove
 	 *            boolean
-	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeAllChildren(boolean)
 	 */
 	@Override
@@ -599,46 +630,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		//Recursively remove all children
 		for (R4EUIAnomalyBasic anomaly : fAnomalies) {
 			removeChildren(anomaly, aFileRemove);
-		}
-	}
-
-	//Listeners
-
-	/**
-	 * Method addListener.
-	 * 
-	 * @param aProvider
-	 *            ReviewNavigatorContentProvider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
-	 */
-	@Override
-	public void addListener(ReviewNavigatorContentProvider aProvider) {
-		super.addListener(aProvider);
-		if (null != fAnomalies) {
-			R4EUIAnomalyBasic element = null;
-			for (final Iterator<R4EUIAnomalyBasic> iterator = fAnomalies.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.addListener(aProvider);
-			}
-		}
-	}
-
-	/**
-	 * Method removeListener
-	 * 
-	 * @param aProvider
-	 *            - the treeviewer content provider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
-	 */
-	@Override
-	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-		super.removeListener(aProvider);
-		if (null != fAnomalies) {
-			R4EUIAnomalyBasic element = null;
-			for (final Iterator<R4EUIAnomalyBasic> iterator = fAnomalies.iterator(); iterator.hasNext();) {
-				element = iterator.next();
-				element.removeListener(aProvider);
-			}
 		}
 	}
 

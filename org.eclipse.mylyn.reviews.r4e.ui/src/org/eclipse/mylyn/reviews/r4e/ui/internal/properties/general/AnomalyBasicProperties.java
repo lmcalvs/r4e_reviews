@@ -214,12 +214,12 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 		} else if (ANOMALY_CLASS_ID.equals(aId)) {
 			final R4ECommentType type = (R4ECommentType) ((R4EUIAnomalyBasic) getElement()).getAnomaly().getType();
 			if (null != type) {
-				return UIUtils.getClasses()[Integer.valueOf(type.getType().getValue())];
+				return UIUtils.getClasses()[Integer.valueOf(type.getType().getValue()).intValue()];
 			}
 		} else if (ANOMALY_RANK_ID.equals(aId)) {
 			//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
-			int rankValue = ((R4EUIAnomalyBasic) getElement()).getAnomaly().getRank().getValue();
-			int intValue = Integer.valueOf(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
+			final int rankValue = ((R4EUIAnomalyBasic) getElement()).getAnomaly().getRank().getValue();
+			final int intValue = Integer.valueOf(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
 					? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
 					: rankValue);
 			return UIUtils.getRanks()[intValue];

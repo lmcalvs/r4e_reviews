@@ -314,7 +314,7 @@ public class R4EUIDialogFactory {
 	 */
 	public IParticipantInputDialog getParticipantInputDialog(boolean aShowExtraParams) {
 		if (!UIUtils.TEST_MODE) {
-			fParticipantInputDialog = new ParticipantInputDialog(Display.getCurrent().getActiveShell(),
+			fParticipantInputDialog = new ParticipantInputDialog(Display.getDefault().getActiveShell(),
 					aShowExtraParams);
 			return fParticipantInputDialog;
 		}
@@ -585,6 +585,8 @@ public class R4EUIDialogFactory {
 	/**
 	 * Method getScmUiConnector.
 	 * 
+	 * @param aProject
+	 *            IProject
 	 * @return ScmConnectorUi
 	 */
 	public ScmConnectorUi getScmUiConnector(IProject aProject) {

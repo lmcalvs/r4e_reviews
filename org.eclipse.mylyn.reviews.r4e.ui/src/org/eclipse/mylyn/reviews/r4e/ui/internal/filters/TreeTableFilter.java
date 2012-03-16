@@ -24,8 +24,19 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 
+/**
+ * @author lmcdubo
+ * @version $Revision: 1.0 $
+ */
 public class TreeTableFilter extends ViewerFilter {
 
+	/**
+	 * Method select.
+	 * @param viewer Viewer
+	 * @param parentElement Object
+	 * @param element Object
+	 * @return boolean
+	 */
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 

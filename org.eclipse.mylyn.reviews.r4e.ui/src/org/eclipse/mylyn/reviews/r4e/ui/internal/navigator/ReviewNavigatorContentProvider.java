@@ -20,30 +20,15 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.navigator;
 
 import java.util.Arrays;
 
-import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelListener;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelEvent;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4EUIModelListener {
-
-	// ------------------------------------------------------------------------
-	// Member variables
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Field fViewer.
-	 */
-	private TreeViewer fViewer;
+public class ReviewNavigatorContentProvider implements ITreeContentProvider {
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -113,94 +98,14 @@ public class ReviewNavigatorContentProvider implements ITreeContentProvider, IR4
 	/**
 	 * Method inputChanged.
 	 * 
-	 * @param aViewer
+	 * @param viewer
 	 *            Viewer
-	 * @param aOldInput
+	 * @param oldInput
 	 *            Object
-	 * @param aNewInput
+	 * @param newInput
 	 *            Object
-	 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(Viewer, Object, Object)
 	 */
-	public void inputChanged(Viewer aViewer, Object aOldInput, Object aNewInput) {
-		R4EUIPlugin.Ftracer.traceInfo("Input changed");
-		fViewer = (TreeViewer) aViewer;
-		if (null != aOldInput) {
-			removeListenerFrom((IR4EUIModelElement) aOldInput);
-		}
-		if (null != aNewInput) {
-			addListenerTo((IR4EUIModelElement) aNewInput);
-		}
-	}
-
-	/**
-	 * Method addEvent.
-	 * 
-	 * @param aEvent
-	 *            ReviewModelEvent
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelListener#addEvent(R4EUIModelEvent)
-	 */
-	public void addEvent(R4EUIModelEvent aEvent) {
-		R4EUIPlugin.Ftracer.traceInfo("Add event received for element "
-				+ ((IR4EUIModelElement) aEvent.receiver()).getName());
-		fViewer.refresh(((IR4EUIModelElement) aEvent.receiver()).getParent(), false);
-	}
-
-	/**
-	 * Method removeEvent.
-	 * 
-	 * @param aEvent
-	 *            ReviewModelEvent
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelListener#removeEvent(R4EUIModelEvent)
-	 */
-	public void removeEvent(R4EUIModelEvent aEvent) {
-		R4EUIPlugin.Ftracer.traceInfo("Remove event received for element "
-				+ ((IR4EUIModelElement) aEvent.receiver()).getName());
-		fViewer.refresh(((IR4EUIModelElement) aEvent.receiver()).getParent(), false);
-	}
-
-	/**
-	 * Method changedEvent.
-	 * 
-	 * @param aEvent
-	 *            ReviewModelEvent
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelListener#changedEvent(R4EUIModelEvent)
-	 */
-	public void changedEvent(R4EUIModelEvent aEvent) {
-		if (null == fViewer) {
-			return;
-		}
-		final IR4EUIModelElement affectedObject = (IR4EUIModelElement) aEvent.receiver();
-		final int type = aEvent.type();
-
-		R4EUIPlugin.Ftracer.traceInfo("Changed event received for element " + affectedObject.getName());
-
-		if (type == R4EUIConstants.CHANGE_TYPE_OPEN || type == R4EUIConstants.CHANGE_TYPE_CLOSE) {
-			//Open or Close element
-			fViewer.collapseToLevel(affectedObject, AbstractTreeViewer.ALL_LEVELS);
-			fViewer.refresh(affectedObject, true);
-		} else {
-			//Change review state
-			fViewer.refresh(affectedObject.getParent(), true);
-		}
-	}
-
-	/**
-	 * Add a listener to the element
-	 * 
-	 * @param aElement
-	 *            - the element to act upon
-	 */
-	private void addListenerTo(IR4EUIModelElement aElement) {
-		aElement.addListener(this);
-	}
-
-	/**
-	 * Remove the listener from the element
-	 * 
-	 * @param aElement
-	 *            - the element to act upon
-	 */
-	private void removeListenerFrom(IR4EUIModelElement aElement) {
-		aElement.removeListener(this);
+	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+		// ignore
 	}
 }

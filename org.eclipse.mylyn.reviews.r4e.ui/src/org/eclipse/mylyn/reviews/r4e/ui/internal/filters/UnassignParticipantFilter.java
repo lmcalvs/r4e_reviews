@@ -58,23 +58,23 @@ public class UnassignParticipantFilter extends ViewerFilter {
 
 		//Only Review elements that are unassigned are shown
 		if (aElement instanceof R4EUIReviewItem) {
-			if (((R4EUIReviewItem) aElement).getItem().getAssignedTo().size() == 0) {
+			if (0 == ((R4EUIReviewItem) aElement).getItem().getAssignedTo().size()) {
 				return true;
 			} else {
-				List<R4EUIFileContext> files = ((R4EUIReviewItem) aElement).getFileContexts();
+				final List<R4EUIFileContext> files = ((R4EUIReviewItem) aElement).getFileContexts();
 				for (R4EUIFileContext file : files) {
-					if (file.getFileContext().getAssignedTo().size() == 0) {
+					if (0 == file.getFileContext().getAssignedTo().size()) {
 						return true;
 					} else {
 						IR4EUIModelElement[] contents = file.getContentsContainerElement().getChildren();
 						for (IR4EUIModelElement content : contents) {
-							if (((R4EUIContent) content).getContent().getAssignedTo().size() == 0) {
+							if (0 == ((R4EUIContent) content).getContent().getAssignedTo().size()) {
 								return true;
 							}
 						}
 						IR4EUIModelElement[] anomalies = file.getAnomalyContainerElement().getChildren();
 						for (IR4EUIModelElement anomaly : anomalies) {
-							if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().size() == 0) {
+							if (0 == ((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().size()) {
 								return true;
 							}
 						}
@@ -86,59 +86,59 @@ public class UnassignParticipantFilter extends ViewerFilter {
 			if (aElement instanceof R4EUIPostponedFile) {
 				return true;
 			}
-			if (((R4EUIFileContext) aElement).getFileContext().getAssignedTo().size() == 0) {
+			if (0 == ((R4EUIFileContext) aElement).getFileContext().getAssignedTo().size()) {
 				return true;
 			} else {
-				IR4EUIModelElement[] contents = ((R4EUIFileContext) aElement).getContentsContainerElement()
+				final IR4EUIModelElement[] contents = ((R4EUIFileContext) aElement).getContentsContainerElement()
 						.getChildren();
 				for (IR4EUIModelElement content : contents) {
-					if (((R4EUIContent) content).getContent().getAssignedTo().size() == 0) {
+					if (0 == ((R4EUIContent) content).getContent().getAssignedTo().size()) {
 						return true;
 					}
 				}
-				IR4EUIModelElement[] anomalies = ((R4EUIFileContext) aElement).getAnomalyContainerElement()
+				final IR4EUIModelElement[] anomalies = ((R4EUIFileContext) aElement).getAnomalyContainerElement()
 						.getChildren();
 				for (IR4EUIModelElement anomaly : anomalies) {
-					if (((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().size() == 0) {
+					if (0 == ((R4EUIAnomalyBasic) anomaly).getAnomaly().getAssignedTo().size()) {
 						return true;
 					}
 				}
 			}
 			return false;
 		} else if (aElement instanceof R4EUIContentsContainer) {
-			IR4EUIModelElement[] contents = ((IR4EUIModelElement) aElement).getChildren();
+			final IR4EUIModelElement[] contents = ((IR4EUIModelElement) aElement).getChildren();
 			for (IR4EUIModelElement content : contents) {
-				if (((R4EUIContent) content).getContent().getAssignedTo().size() == 0) {
+				if (0 == ((R4EUIContent) content).getContent().getAssignedTo().size()) {
 					return true;
 				}
 			}
 			return false;
 		} else if (aElement instanceof R4EUIContent) {
-			if (((R4EUIContent) aElement).getContent().getAssignedTo().size() == 0) {
+			if (0 == ((R4EUIContent) aElement).getContent().getAssignedTo().size()) {
 				return true;
 			}
 			return false;
 		} else if (aElement instanceof R4EUIAnomalyBasic) {
-			if (((R4EUIAnomalyBasic) aElement).getAnomaly().getAssignedTo().size() == 0) {
+			if (0 == ((R4EUIAnomalyBasic) aElement).getAnomaly().getAssignedTo().size()) {
 				return true;
 			}
 			return false;
 		} else if (aElement instanceof R4EUIContentsContainer) {
-			if (((R4EUIContentsContainer) aElement).getChildren().length == 0) {
+			if (0 == ((R4EUIContentsContainer) aElement).getChildren().length) {
 				return false;
 			}
 			for (IR4EUIModelElement child : ((R4EUIContentsContainer) aElement).getChildren()) {
-				if (((R4EUIContent) child).getContent().getAssignedTo().size() == 0) {
+				if (0 == ((R4EUIContent) child).getContent().getAssignedTo().size()) {
 					return true;
 				}
 			}
 			return false;
 		} else if (aElement instanceof R4EUIAnomalyContainer) {
-			if (((R4EUIAnomalyContainer) aElement).getChildren().length == 0) {
+			if (0 == ((R4EUIAnomalyContainer) aElement).getChildren().length) {
 				return false;
 			}
 			for (IR4EUIModelElement child : ((R4EUIAnomalyContainer) aElement).getChildren()) {
-				if (((R4EUIAnomalyBasic) child).getAnomaly().getAssignedTo().size() == 0) {
+				if (0 == ((R4EUIAnomalyBasic) child).getAnomaly().getAssignedTo().size()) {
 					return true;
 				}
 			}

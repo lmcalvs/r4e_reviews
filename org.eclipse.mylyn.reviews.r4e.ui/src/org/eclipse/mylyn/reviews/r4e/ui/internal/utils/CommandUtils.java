@@ -77,10 +77,10 @@ import org.eclipse.mylyn.versions.core.ChangeType;
 import org.eclipse.mylyn.versions.core.ScmArtifact;
 import org.eclipse.mylyn.versions.core.ScmCore;
 import org.eclipse.mylyn.versions.core.spi.ScmConnector;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * @author lmcdubo
@@ -109,28 +109,26 @@ public class CommandUtils {
 	/**
 	 * Method getTargetFileURI.
 	 * 
+	 * @param aInput
+	 *            - IEditorInput
 	 * @return URI
 	 * @throws URISyntaxException
 	 * @throws CoreException
 	 * @throws ReviewsFileStorageException
 	 */
-	public static R4EFileVersion getTargetFileData() throws CoreException, ReviewsFileStorageException {
-		final IEditorInput input = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow()
-				.getActivePage()
-				.getActiveEditor()
-				.getEditorInput(); // $codepro.audit.disable methodChainLength
+	public static R4EFileVersion getTargetFileData(IEditorInput aInput) throws CoreException,
+			ReviewsFileStorageException {
 		IFile editorFile = null; //The file we use in the current editor/workspace
-		if (input instanceof IFileEditorInput) {
-			editorFile = ((IFileEditorInput) input).getFile();
+		if (aInput instanceof IFileEditorInput) {
+			editorFile = ((IFileEditorInput) aInput).getFile();
 			//Now we have the file in editor, we need to use the versions interface to see if we should copy it
 			//to the local repo and update model info
 			return updateTargetFile(editorFile);
-		} else if (input instanceof R4ECompareEditorInput) {
+		} else if (aInput instanceof R4ECompareEditorInput) {
 			//If we get here, this is because we are trying to act on the compare editor contents
 			//this means that the file we are acting on is already in the local repository
 			//in this case, we only need to provide the versionId of this file
-			final ITypedElement element = ((R4ECompareEditorInput) input).getLeftElement();
+			final ITypedElement element = ((R4ECompareEditorInput) aInput).getLeftElement();
 			if (element instanceof R4EFileRevisionTypedElement) {
 				return ((R4EFileRevisionTypedElement) element).getFileVersion();
 			} else if (element instanceof R4EFileTypedElement) {
@@ -138,14 +136,14 @@ public class CommandUtils {
 			} else {
 				return null;
 			}
-		} else if (input instanceof R4EFileRevisionEditorInput) {
-			return ((R4EFileRevisionEditorInput) input).getFileVersion();
-		} else if (input instanceof R4EFileEditorInput) {
-			return ((R4EFileEditorInput) input).getFileVersion();
+		} else if (aInput instanceof R4EFileRevisionEditorInput) {
+			return ((R4EFileRevisionEditorInput) aInput).getFileVersion();
+		} else if (aInput instanceof R4EFileEditorInput) {
+			return ((R4EFileEditorInput) aInput).getFileVersion();
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, IStatus.OK, "Invalid input "
-					+ input.getClass().toString(), null));
+					+ aInput.getClass().toString(), null));
 		}
 	}
 
@@ -196,24 +194,26 @@ public class CommandUtils {
 	/**
 	 * Method getBaseFileURI.
 	 * 
+	 * @param aInput
+	 *            - IEditorInput
 	 * @return IFile
 	 * @throws URISyntaxException
 	 * @throws CoreException
 	 * @throws ReviewsFileStorageException
 	 */
-	public static R4EFileVersion getBaseFileData() throws CoreException, ReviewsFileStorageException {
-		final IEditorInput input = PlatformUI.getWorkbench()
+	public static R4EFileVersion getBaseFileData(IEditorInput aInput) throws CoreException, ReviewsFileStorageException {
+/*		final IEditorInput input = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow()
 				.getActivePage()
 				.getActiveEditor()
 				.getEditorInput(); // $codepro.audit.disable methodChainLength
-		IFile editorFile = null; //The file we use in the current editor/workspace
-		if (input instanceof IFileEditorInput) {
-			editorFile = ((IFileEditorInput) input).getFile();
+*/		IFile editorFile = null; //The file we use in the current editor/workspace
+		if (aInput instanceof IFileEditorInput) {
+			editorFile = ((IFileEditorInput) aInput).getFile();
 			//Now we have the file in editor, we need to use the versions interface to see if we should copy it
 			//to the local repo and update model info
 			return updateBaseFile(editorFile);
-		} else if (input instanceof R4ECompareEditorInput) {
+		} else if (aInput instanceof R4ECompareEditorInput) {
 			//If we get here, this is because we are trying to act on the compare editor contents
 			//We have three cases:
 			//1) The left file is an R4EFileTypedElement and had no version ID. This means that it is a modified file not yet in source control.
@@ -222,8 +222,8 @@ public class CommandUtils {
 			//   In this case, the base file for the new Resource Review item should be the same as the target file i.e. the left file version 
 			//3) The left file is an R4EFileRevisionTypedElement. This means that it is a file in source control.
 			//   In this case, the base file for the new Resource Review item should be the same as the target file i.e. the left file version 
-			ITypedElement leftElement = ((R4ECompareEditorInput) input).getLeftElement();
-			ITypedElement rightElement = ((R4ECompareEditorInput) input).getRightElement();
+			final ITypedElement leftElement = ((R4ECompareEditorInput) aInput).getLeftElement();
+			final ITypedElement rightElement = ((R4ECompareEditorInput) aInput).getRightElement();
 			if (leftElement instanceof R4EFileTypedElement && rightElement instanceof R4EFileRevisionTypedElement) {
 				if (((R4EFileTypedElement) leftElement).getFileVersion()
 						.getVersionID()
@@ -237,14 +237,14 @@ public class CommandUtils {
 			} else {
 				return null;
 			}
-		} else if (input instanceof R4EFileRevisionEditorInput) {
-			return ((R4EFileRevisionEditorInput) input).getFileVersion();
-		} else if (input instanceof R4EFileEditorInput) {
-			return ((R4EFileEditorInput) input).getFileVersion();
+		} else if (aInput instanceof R4EFileRevisionEditorInput) {
+			return ((R4EFileRevisionEditorInput) aInput).getFileVersion();
+		} else if (aInput instanceof R4EFileEditorInput) {
+			return ((R4EFileEditorInput) aInput).getFileVersion();
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, IStatus.OK, "Invalid input "
-					+ input.getClass().toString(), null));
+					+ aInput.getClass().toString(), null));
 		}
 	}
 
@@ -699,7 +699,7 @@ public class CommandUtils {
 			}
 			if (!containerEnabled) {
 				container.close();
-				aReview.removeChildren(container, false);
+				//aReview.removeChildren(container, false);  TODO this is temporary
 			}
 		}
 	}
@@ -767,18 +767,23 @@ public class CommandUtils {
 			return true;
 		}
 
-		Pattern pattern = Pattern.compile(
+		final Pattern pattern = Pattern.compile(
 				"^([\\w]((\\.(?!\\.))|[-!#\\$%'\\*\\+/=\\?\\^`\\{\\}\\|~\\w])*)(?<=[\\w])@(([\\w][-\\w]*[\\w]\\.)+[a-zA-Z]{2,6})$",
 				Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(aEmailAddress);
+		final Matcher matcher = pattern.matcher(aEmailAddress);
 		boolean result = matcher.matches();
 
 		//Validation of input failed
 		if (!result) {
+
 			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
 					"Invalid format for Participant Email", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
 							aEmailAddress + " is invalid", null), IStatus.ERROR);
-			dialog.open();
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					dialog.open();
+				}
+			});
 		}
 		return result;
 	}

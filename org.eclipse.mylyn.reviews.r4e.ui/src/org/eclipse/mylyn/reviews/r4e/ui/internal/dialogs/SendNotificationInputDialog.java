@@ -130,8 +130,6 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 	 * 
 	 * @param aParentShell
 	 *            Shell
-	 * @param aSource
-	 *            Object
 	 */
 	public SendNotificationInputDialog(Shell aParentShell) {
 		super(aParentShell);
@@ -304,6 +302,12 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 		return fMessageType;
 	}
 
+	/**
+	 * Method adjust.
+	 * 
+	 * @param aSource
+	 *            Object
+	 */
 	public void adjust(Object aSource) {
 		//Look for Review Element
 		Object elementFound = null;

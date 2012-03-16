@@ -168,7 +168,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 	 */
 	@Override
 	public void refresh() {
-		R4EUIContent uiContent = ((R4EUIContent) fProperties.getElement());
+		final R4EUIContent uiContent = ((R4EUIContent) fProperties.getElement());
 		fRefreshInProgress = true;
 		if (null != uiContent.getPosition()) {
 			fPositionText.setText(uiContent.getPosition().toString());
@@ -176,7 +176,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 			fPositionText.setText("");
 		}
 
-		EList<String> assignedParticipants = uiContent.getContent().getAssignedTo();
+		final EList<String> assignedParticipants = uiContent.getContent().getAssignedTo();
 		fAssignedToText.setText(UIUtils.formatAssignedParticipants(assignedParticipants));
 		setEnabledFields();
 		fRefreshInProgress = false;
