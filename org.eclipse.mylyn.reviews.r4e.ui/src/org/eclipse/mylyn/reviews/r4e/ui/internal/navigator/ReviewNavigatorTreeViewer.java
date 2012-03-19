@@ -316,19 +316,28 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		//Set Expanded states correctly
 		final List<Object> updatedExpandedElements = new ArrayList<Object>();
 		if (expandedElements.length > 0) {
-			updatedExpandedElements.add(((IR4EUIModelElement) expandedElements[0]).getParent().getParent());
-			updatedExpandedElements.add(((IR4EUIModelElement) expandedElements[0]).getParent());
+			if (null != expandedElements[0] && null != ((IR4EUIModelElement) expandedElements[0]).getParent()) {
+				updatedExpandedElements.add(((IR4EUIModelElement) expandedElements[0]).getParent());
+				if (null != ((IR4EUIModelElement) expandedElements[0]).getParent().getParent()) {
+					updatedExpandedElements.add(((IR4EUIModelElement) expandedElements[0]).getParent().getParent());
+				}
+			}
 			for (Object expandedElement : expandedElements) {
-				updatedExpandedElements.add(expandedElement);
+				if (null != expandedElement) {
+					updatedExpandedElements.add(expandedElement);
+				}
 			}
 		} else {
 			final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
 			if (null != activeReview) {
-				updatedExpandedElements.add(activeReview.getParent());
 				updatedExpandedElements.add(activeReview);
+				if (null != activeReview.getParent()) {
+					updatedExpandedElements.add(activeReview.getParent());
+				}
 			}
 		}
-		setExpandedElements(updatedExpandedElements.toArray(new Object[updatedExpandedElements.size()]));
+		Object[] elementsToExpand = updatedExpandedElements.toArray(new Object[updatedExpandedElements.size()]);
+		setExpandedElements(elementsToExpand);
 
 		fIsDefaultDisplay = true;
 	}
