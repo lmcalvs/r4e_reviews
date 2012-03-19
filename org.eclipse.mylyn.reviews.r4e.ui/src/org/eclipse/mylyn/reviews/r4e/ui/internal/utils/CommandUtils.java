@@ -654,7 +654,7 @@ public class CommandUtils {
 		aTargetAnomaly.setRank(aSourceAnomaly.getRank());
 		aTargetAnomaly.setState(aSourceAnomaly.getState());
 		aTargetAnomaly.setTitle(aSourceAnomaly.getTitle());
-
+		aTargetAnomaly.getAssignedTo().addAll(aSourceAnomaly.getAssignedTo());
 		if (null != aSourceAnomaly.getType()) {
 			final R4ECommentType oldCommentType = (R4ECommentType) aSourceAnomaly.getType();
 			R4ECommentType commentType = (R4ECommentType) aTargetAnomaly.getType();

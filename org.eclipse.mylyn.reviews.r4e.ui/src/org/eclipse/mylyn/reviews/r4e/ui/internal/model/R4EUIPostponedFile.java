@@ -94,17 +94,6 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Method getToolTip.
-	 * 
-	 * @return String
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTip()
-	 */
-	@Override
-	public String getToolTip() {
-		return "Original Review: " + fFile.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME);
-	}
-
-	/**
 	 * Method getAdapter.
 	 * 
 	 * @param adapter
@@ -146,6 +135,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 			List<R4EUIFileContext> files = item.getFileContexts();
 			for (R4EUIFileContext file : files) {
 				if (!(file instanceof R4EUIPostponedFile) && null != file.getTargetFileVersion()
+						&& null != file.getTargetFileVersion().getPlatformURI()
 						&& file.getTargetFileVersion().getPlatformURI().equals(fFile.getTarget().getPlatformURI())) {
 					return file.getTargetFileVersion();
 				}
@@ -293,12 +283,14 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 	 * 
 	 * @param aPostponedAnomaly
 	 *            R4EFileVersion
+	 * @param aOrigReviewName
+	 *            String
 	 * @return R4EUIPostponedAnomaly
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	public R4EUIPostponedAnomaly createAnomaly(R4EAnomaly aPostponedAnomaly) throws ResourceHandlingException,
-			OutOfSyncException {
+	public R4EUIPostponedAnomaly createAnomaly(R4EAnomaly aPostponedAnomaly, String aOrigReviewName)
+			throws ResourceHandlingException, OutOfSyncException {
 
 		//Check if the creator of the postponed anomaly is a participant of the current review.  If not, it will be 
 		//created and disabled after the postponed anomaly is created
@@ -310,34 +302,62 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 			isParticipant = false;
 		}
 
-		//Copy anomaly information from postponed anomaly model element
-		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
-		CommandUtils.copyAnomalyData(anomaly, aPostponedAnomaly);
-		final EMap<String, String> info = anomaly.getInfoAtt(); //We use the R4EAnomaly attribute map to store the original anomaly ID
-		info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID, aPostponedAnomaly.getId().getUserID()
-				+ R4EUIConstants.SEPARATOR + aPostponedAnomaly.getId().getSequenceID());
+		//Copy anomaly information from postponed anomaly model element if Anomaly does not already exist.  Otherwise it means it is disabled so restore it
+		List<R4EAnomaly> savedAnomalies = R4EUIModelController.getAnomaliesForFile(fFile.getTarget()
+				.getLocalVersionID());
+		R4EAnomaly anomaly = null;
+		R4EUITextPosition uiPosition = null;
+		if (null != savedAnomalies) {
+			for (R4EAnomaly savedAnomaly : savedAnomalies) {
+				if (null == savedAnomaly.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
+					//This is a genuine anomaly, not a postponed one, so we ignore it
+					continue;
+				} else {
+					String postponedAnomalyId = aPostponedAnomaly.getId().getUserID() + R4EUIConstants.SEPARATOR
+							+ aPostponedAnomaly.getId().getSequenceID();
+					if (postponedAnomalyId.equals(savedAnomaly.getInfoAtt().get(
+							R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID))) {
+						//Postponed anomaly existed but was disabled, restore it
+						anomaly = savedAnomaly;
+						uiPosition = new R4EUITextPosition(CommandUtils.getAnomalyPosition(anomaly));
+					}
+				}
+			}
+		}
 
-		//Set position data
-		final R4EAnomalyTextPosition position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(R4EUIModelController.FModelExt.createR4ETextContent(anomaly));
-		final R4EUITextPosition uiPosition = new R4EUITextPosition(CommandUtils.getAnomalyPosition(aPostponedAnomaly));
+		if (null == anomaly) {
+			//Brand new imported anomaly, set data
+			anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
+			CommandUtils.copyAnomalyData(anomaly, aPostponedAnomaly);
+			final EMap<String, String> info = anomaly.getInfoAtt(); //We use the R4EAnomaly attribute map to store the original anomaly ID
+			info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID, aPostponedAnomaly.getId().getUserID()
+					+ R4EUIConstants.SEPARATOR + aPostponedAnomaly.getId().getSequenceID());
+			info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME, aOrigReviewName);
 
-		//Set File version data
-		final R4EFileVersion postponedAnomalyFileVersion = CommandUtils.getAnomalyParentFile(aPostponedAnomaly);
-		final R4EFileVersion anomalyFileVersion = R4EUIModelController.FModelExt.createR4EFileVersion(position);
-		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomalyFileVersion,
-				R4EUIModelController.getReviewer());
-		CommandUtils.copyFileVersionData(anomalyFileVersion, postponedAnomalyFileVersion);
-		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+			//Set position data
+			final R4EAnomalyTextPosition position = R4EUIModelController.FModelExt.createR4EAnomalyTextPosition(R4EUIModelController.FModelExt.createR4ETextContent(anomaly));
+			uiPosition = new R4EUITextPosition(CommandUtils.getAnomalyPosition(aPostponedAnomaly));
+			uiPosition.setPositionInModel(position);
+
+			//Set File version data
+			final R4EFileVersion postponedAnomalyFileVersion = CommandUtils.getAnomalyParentFile(aPostponedAnomaly);
+			final R4EFileVersion anomalyFileVersion = R4EUIModelController.FModelExt.createR4EFileVersion(position);
+			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomalyFileVersion,
+					R4EUIModelController.getReviewer());
+			CommandUtils.copyFileVersionData(anomalyFileVersion, postponedAnomalyFileVersion);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+		}
 
 		//Create and set UI model element
-		uiPosition.setPositionInModel(position);
 		final R4EUIPostponedAnomaly uiAnomaly = new R4EUIPostponedAnomaly(this, anomaly, uiPosition);
 		uiAnomaly.updateState(aPostponedAnomaly.getState());
+		uiAnomaly.setEnabled(true);
 		addChildren(uiAnomaly);
 
 		//Disable original creator of the postponed anomaly since he is not part of this review
 		if (!isParticipant) {
-			bookNum = R4EUIModelController.FResourceUpdater.checkOut(participant, R4EUIModelController.getReviewer());
+			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(participant,
+					R4EUIModelController.getReviewer());
 			participant.setEnabled(false);
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}

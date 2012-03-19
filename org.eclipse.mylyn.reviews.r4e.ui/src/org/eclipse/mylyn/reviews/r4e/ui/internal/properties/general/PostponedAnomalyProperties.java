@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Ericsson Research Canada
+ * Copyright (c) 2012 Ericsson Research Canada
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -8,17 +8,16 @@
  * 
  * Description:
  * 
- * This class encapsulates the properties for the PostponedFile UI model element
+ * This class encapsulates the properties for the Postponed Anomaly UI model element
  * 
  * Contributors:
  *   Sebastien Dubois - Created for Mylyn Review R4E project
  *   
  ******************************************************************************/
-
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general;
 
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -27,39 +26,46 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class PostponedFileProperties extends ModelElementProperties {
+public class PostponedAnomalyProperties extends AnomalyExtraProperties {
 
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field POSTPONED_FILE_VERSION_ID. (value is ""postponedFileElement.version"")
+	 * Field POSTPONED_ANOMALY_REVIEW_ID. (value is ""postponedAnomalyElement.reviewName"")
 	 */
-	private static final String POSTPONED_FILE_VERSION_ID = "postponedFileElement.version";
+	protected static final String POSTPONED_ANOMALY_REVIEW_ID = "postponedAnomalyElement.reviewName";
 
 	/**
-	 * Field POSTPONED_FILE_VERSION_PROPERTY_DESCRIPTOR.
+	 * Field POSTPONED_ANOMALY_REVIEW_PROPERTY_DESCRIPTOR.
 	 */
-	private static final PropertyDescriptor POSTPONED_FILE_VERSION_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
-			POSTPONED_FILE_VERSION_ID, "Original File");
+	protected static final PropertyDescriptor POSTPONED_ANOMALY_REVIEW_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			POSTPONED_ANOMALY_REVIEW_ID, R4EUIConstants.ORIGINAL_REVIEW_LABEL);
 
 	/**
 	 * Field DESCRIPTORS.
 	 */
-	private static final IPropertyDescriptor[] DESCRIPTORS = { POSTPONED_FILE_VERSION_PROPERTY_DESCRIPTOR };
+	private static final IPropertyDescriptor[] DESCRIPTORS = { POSTPONED_ANOMALY_REVIEW_PROPERTY_DESCRIPTOR,
+			ANOMALY_TITLE_PROPERTY_DESCRIPTOR, ANOMALY_POSITION_PROPERTY_DESCRIPTOR,
+			ANOMALY_AUTHOR_PROPERTY_DESCRIPTOR, ANOMALY_CREATION_DATE_PROPERTY_DESCRIPTOR,
+			ANOMALY_DESCRIPTION_PROPERTY_DESCRIPTOR, ANOMALY_STATE_PROPERTY_DESCRIPTOR,
+			ANOMALY_DUE_DATE_PROPERTY_DESCRIPTOR, ANOMALY_CLASS_PROPERTY_DESCRIPTOR, ANOMALY_RANK_PROPERTY_DESCRIPTOR,
+			ANOMALY_RULE_ID_PROPERTY_DESCRIPTOR, ANOMALY_NOT_ACCEPTED_REASON_PROPERTY_DESCRIPTOR,
+			ANOMALY_DECIDED_BY_PROPERTY_DESCRIPTOR, ANOMALY_FIXED_BY_PROPERTY_DESCRIPTOR,
+			ANOMALY_FOLLOWUP_BY_PROPERTY_DESCRIPTOR };
 
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for FileContextProperties.
+	 * Constructor for AnomalyProperties.
 	 * 
 	 * @param aElement
 	 *            R4EUIModelElement
 	 */
-	public PostponedFileProperties(R4EUIModelElement aElement) {
+	public PostponedAnomalyProperties(R4EUIModelElement aElement) {
 		super(aElement);
 	}
 
@@ -88,13 +94,14 @@ public class PostponedFileProperties extends ModelElementProperties {
 	 */
 	@Override
 	public Object getPropertyValue(Object aId) {
-		if (POSTPONED_FILE_VERSION_ID.equals(aId)) {
-			if (null != ((R4EUIPostponedFile) getElement()).getFileContext().getTarget()) {
-				return new FileVersionSourceProperties(((R4EUIPostponedFile) getElement()).getFileContext().getTarget());
-			}
-			return R4EUIConstants.NO_VERSION_PROPERTY_MESSAGE;
-			//TODO:  Add later review item description, this is not trivial...
+		final Object result = super.getPropertyValue(aId);
+		if (null != result) {
+			return result;
+		}
+		if (POSTPONED_ANOMALY_REVIEW_ID.equals(aId)) {
+			return ((R4EUIPostponedAnomaly) getElement()).getOriginalReviewName();
 		}
 		return null;
 	}
+	//NOTE:  Since state management for anomalies is complex, the value are only editable using the tabbed properties view
 }

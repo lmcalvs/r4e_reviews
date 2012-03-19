@@ -80,11 +80,6 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 	 */
 	protected Text fOriginalFileVersionText = null;
 
-	/**
-	 * Field fReviewNameText.
-	 */
-	private Text fReviewNameText = null;
-
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -107,25 +102,6 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 		final Composite composite = widgetFactory.createFlatFormComposite(parent);
 		FormData data = null;
 
-		//File Name (read-only)
-		widgetFactory.setBorderStyle(SWT.NULL);
-		fReviewNameText = widgetFactory.createText(composite, "", SWT.NULL);
-		data = new FormData();
-		data.left = new FormAttachment(0, R4EUIConstants.TABBED_PROPERTY_LABEL_WIDTH);
-		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(composite, ITabbedPropertyConstants.VSPACE);
-		fReviewNameText.setEditable(false);
-		fReviewNameText.setToolTipText(R4EUIConstants.PARENT_REVIEW_TOOLTIP);
-		fReviewNameText.setLayoutData(data);
-
-		final CLabel reviewNameLabel = widgetFactory.createCLabel(composite, R4EUIConstants.PARENT_REVIEW_LABEL);
-		data = new FormData();
-		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(fReviewNameText, -ITabbedPropertyConstants.HSPACE);
-		data.top = new FormAttachment(fReviewNameText, 0, SWT.CENTER);
-		reviewNameLabel.setToolTipText(R4EUIConstants.PARENT_REVIEW_TOOLTIP);
-		reviewNameLabel.setLayoutData(data);
-
 		//Target File Version composite (read-only)
 		final Composite targetFileComposite = widgetFactory.createGroup(composite, "Original File");
 		final FormLayout targetFileLayout = new FormLayout();
@@ -134,7 +110,7 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(100, 0); // $codepro.audit.disable numericLiterals
-		data.top = new FormAttachment(fReviewNameText, ITabbedPropertyConstants.VSPACE);
+		data.top = new FormAttachment(0, ITabbedPropertyConstants.VSPACE);
 		targetFileComposite.setLayoutData(data);
 		widgetFactory.setBorderStyle(SWT.BORDER);
 
@@ -273,8 +249,6 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 		fRefreshInProgress = true;
 		final R4EFileContext modelFile = ((R4EUIFileContext) fProperties.getElement()).getFileContext();
 
-		fReviewNameText.setText(modelFile.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME));
-
 		final R4EFileVersion targetVersion = modelFile.getTarget();
 		if (null != targetVersion) {
 			fOriginalFileNameText.setText(targetVersion.getName());
@@ -304,12 +278,10 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 				|| fProperties.getElement().isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
-			fReviewNameText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fOriginalFileNameText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fOriginalFilePathAbsoluteText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fOriginalFileVersionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 		} else {
-			fReviewNameText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fOriginalFileNameText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fOriginalFilePathAbsoluteText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fOriginalFileVersionText.setForeground(UIUtils.ENABLED_FONT_COLOR);

@@ -117,6 +117,11 @@ public class UIUtils {
 	private static final String COMPARE_EDITOR_TEXT_FIELD_LEFT = "fLeft";
 
 	/**
+	 * Field COMPARE_EDITOR_TEXT_FIELD_RIGHT. (value is ""fRight"")
+	 */
+	private static final String COMPARE_EDITOR_TEXT_FIELD_RIGHT = "fRight";
+
+	/**
 	 * Field DEFAULT_OBJECT_CLASS_NAME. (value is ""Object"")
 	 */
 	private static final String DEFAULT_OBJECT_CLASS_NAME = "Object";
@@ -155,7 +160,7 @@ public class UIUtils {
 
 	/**
 	 * Field COMPATIBILITY_WARNING_MESSAGE. (value is ""You are trying to open an older version of the element than the
-	 * one ucrrently handled by this version of R4E.\n You can open the element normally, which will upgrade its version
+	 * one currently handled by this version of R4E.\n You can open the element normally, which will upgrade its version
 	 * to the current one, or in Read-only mode, which will preserve its version.\n"")
 	 */
 	private static final String COMPATIBILITY_WARNING_MESSAGE = "You are trying to open an older version of the element than the one currently handled by this version of R4E."
@@ -588,9 +593,13 @@ public class UIUtils {
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
 		IR4EUIPosition position = null;
 		int selectionIndex = -1;
+		boolean isLeftPane = true;
 
 		if (element instanceof R4EUIAnomalyBasic) {
 			position = ((R4EUIAnomalyBasic) element).getPosition();
+			if (element instanceof R4EUIPostponedAnomaly) {
+				isLeftPane = false; //Use right pane for postponed anomalies
+			}
 		} else if (element instanceof R4EUIComment) {
 			position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
 		} else if (element instanceof R4EUISelection) {
@@ -635,7 +644,12 @@ public class UIUtils {
 								} while (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME));
 							}
 							try {
-								Field field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_LEFT);
+								Field field;
+								if (isLeftPane) {
+									field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_LEFT);
+								} else {
+									field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_RIGHT);
+								}
 								field.setAccessible(true);
 								MergeSourceViewer sourceViewer = (MergeSourceViewer) field.get(textViewer);
 								ITextEditor adapter = (ITextEditor) sourceViewer.getAdapter(ITextEditor.class);

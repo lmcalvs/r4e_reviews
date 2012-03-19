@@ -32,6 +32,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IChangeStateDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
@@ -39,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -104,6 +107,16 @@ public class NextStateHandler extends AbstractHandler {
 							} else if (element instanceof R4EUIReviewBasic) {
 								progressBasicReview((R4EUIReviewBasic) element);
 
+							} else if (element instanceof R4EUIPostponedAnomaly) {
+								try {
+									if (((R4EUIPostponedAnomaly) element).checkCompatibility()) {
+										progressAnomaly((R4EUIPostponedAnomaly) element);
+									}
+								} catch (ResourceHandlingException e) {
+									UIUtils.displayResourceErrorDialog(e);
+								} catch (CompatibilityException e) {
+									UIUtils.displayCompatibilityErrorDialog(e);
+								}
 							} else if (element instanceof R4EUIAnomalyExtended) {
 								progressAnomaly((R4EUIAnomalyExtended) element);
 							}

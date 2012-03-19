@@ -380,6 +380,42 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	//Commands
 
 	/**
+	 * Method isRemoveElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isRemoveElementCmd()
+	 */
+	@Override
+	public boolean isRemoveElementCmd() {
+		if (isEnabled()
+				&& !isReadOnly()
+				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method isRestoreElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#iisRestoreElementCmd()
+	 */
+	@Override
+	public boolean isRestoreElementCmd() {
+		if (!(getParent().isEnabled())) {
+			return false;
+		}
+		if (isEnabled()
+				|| isReadOnly()
+				|| ((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * Method isChangeReviewStateCmd.
 	 * 
 	 * @return boolean

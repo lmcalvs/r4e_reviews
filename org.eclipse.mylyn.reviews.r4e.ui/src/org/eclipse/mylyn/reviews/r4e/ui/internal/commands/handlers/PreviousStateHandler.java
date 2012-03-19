@@ -30,10 +30,13 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -97,9 +100,18 @@ public class PreviousStateHandler extends AbstractHandler {
 							} else if (element instanceof R4EUIReviewBasic) {
 								R4EReviewPhase newPhase = ((R4EUIReviewBasic) element).getPhaseFromString(R4EUIConstants.REVIEW_PHASE_STARTED);
 								UIUtils.changeReviewPhase(element, newPhase);
-
+							} else if (element instanceof R4EUIPostponedAnomaly) {
+								try {
+									if (((R4EUIPostponedAnomaly) element).checkCompatibility()) {
+										R4EAnomalyState newState = ((R4EUIPostponedAnomaly) element).getPreviousState();
+										UIUtils.changeAnomalyState(element, newState);
+									}
+								} catch (ResourceHandlingException e) {
+									UIUtils.displayResourceErrorDialog(e);
+								} catch (CompatibilityException e) {
+									UIUtils.displayCompatibilityErrorDialog(e);
+								}
 							} else if (element instanceof R4EUIAnomalyExtended) {
-								//Get next state (from user if needed)
 								R4EAnomalyState newState = ((R4EUIAnomalyExtended) element).getPreviousState();
 								UIUtils.changeAnomalyState(element, newState);
 							}

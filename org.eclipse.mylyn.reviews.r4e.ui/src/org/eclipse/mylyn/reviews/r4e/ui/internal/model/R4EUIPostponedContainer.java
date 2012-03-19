@@ -20,10 +20,11 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
@@ -108,6 +109,23 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 	//Hierarchy
 
 	/**
+	 * Method getChildren.
+	 * 
+	 * @return IR4EUIModelElement[]
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getChildren()
+	 */
+	@Override
+	public IR4EUIModelElement[] getChildren() {
+		final List<IR4EUIModelElement> newList = new ArrayList<IR4EUIModelElement>();
+		for (IR4EUIModelElement file : fFileContexts) {
+			if (file.getChildren().length > 0) {
+				newList.add(file);
+			}
+		}
+		return newList.toArray(new IR4EUIModelElement[newList.size()]);
+	}
+
+	/**
 	 * Method open.
 	 * 
 	 * @throws ReviewVersionsException
@@ -134,13 +152,11 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 	 * 
 	 * @param aTargetTempFileVersion
 	 *            R4EFileVersion
-	 * @param aOrigReviewName
-	 *            String
 	 * @return R4EUIPostponedFile
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	public R4EUIPostponedFile createFileContext(R4EFileVersion aTargetTempFileVersion, String aOrigReviewName)
+	public R4EUIPostponedFile createFileContext(R4EFileVersion aTargetTempFileVersion)
 			throws ResourceHandlingException, OutOfSyncException {
 
 		IRFSRegistry revRegistry = null;
@@ -158,8 +174,6 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(rfileTargetVersion,
 					R4EUIModelController.getReviewer());
 			CommandUtils.copyFileVersionData(rfileTargetVersion, aTargetTempFileVersion);
-			final EMap<String, String> info = fileContext.getInfoAtt(); //We use the R4EFileContext attribute map to store the original review name
-			info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME, aOrigReviewName);
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 			//Add target file version

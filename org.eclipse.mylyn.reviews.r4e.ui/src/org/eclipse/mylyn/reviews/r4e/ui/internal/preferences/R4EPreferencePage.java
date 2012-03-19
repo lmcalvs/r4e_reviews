@@ -147,11 +147,6 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private Button fUseDeltasButton = null;
 
 	/**
-	 * Field fAutoImportPostponedButton.
-	 */
-	private Button fAutoImportPostponedButton = null;
-
-	/**
 	 * Field fR4EGroupPrefsGroup.
 	 */
 	private Composite fR4EGroupPrefsGroup = null;
@@ -486,13 +481,6 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fUseDeltasButton.setText(PreferenceConstants.P_USE_DELTAS_LABEL);
 		fUseDeltasButton.setLayoutData(filtersButtonData);
 		fUseDeltasButton.setSelection(store.getBoolean(PreferenceConstants.P_USE_DELTAS));
-
-		//Automatically import/update postponed anomalies?
-		fAutoImportPostponedButton = new Button(r4EUserPrefsGroup, SWT.CHECK);
-		fAutoImportPostponedButton.setText(PreferenceConstants.P_AUTO_IMPORT_POSTPONED_LABEL);
-		fAutoImportPostponedButton.setLayoutData(filtersButtonData);
-		fAutoImportPostponedButton.setSelection(store.getBoolean(PreferenceConstants.P_AUTO_IMPORT_POSTPONED));
-
 	}
 
 	/**
@@ -910,7 +898,6 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fReviewsCompletedFilterButton.setSelection(true);
 		store.setValue(PreferenceConstants.P_HIDE_DELTAS_FILTER, true);
 		fHideDeltasFilterButton.setSelection(true);
-		fAutoImportPostponedButton.setSelection(false);
 
 		//Remove non-default Filters
 		store.setValue(PreferenceConstants.P_SHOW_DISABLED, false);
@@ -1013,9 +1000,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 				&& !R4EUIModelController.getNavigatorView().getTreeViewer().getTree().isDisposed()) {
 			R4EUIModelController.getNavigatorView().applyDefaultFilters();
 		}
-
 		store.setValue(PreferenceConstants.P_USE_DELTAS, fUseDeltasButton.getSelection());
-		store.setValue(PreferenceConstants.P_AUTO_IMPORT_POSTPONED, fAutoImportPostponedButton.getSelection());
 
 		if (CommandUtils.isEmailValid(fUserEmailTextField.getText())) {
 			store.setValue(PreferenceConstants.P_USER_EMAIL, fUserEmailTextField.getText());

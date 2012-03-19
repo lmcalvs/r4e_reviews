@@ -643,7 +643,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						if (R4EUIConstants.TRUE_ATTR_VALUE_STR.equals(item.getInfoAtt().get(
 								R4EUIConstants.POSTPONED_ATTR_STR))) {
 							uiItem = new R4EUIPostponedContainer(this, item,
-									R4EUIConstants.POSTPONED_ELEMENTS_LABEL_NAME);
+									R4EUIConstants.IMPORTED_ANOMALIES_LABEL_NAME);
 						} else if (null == item.getRepositoryRef() || "".equals(item.getRepositoryRef())) {
 							//Resource
 							EList<R4EFileContext> contextList = item.getFileContextList();
@@ -702,10 +702,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			R4EUIModelController.setActiveReview(this);
 
 			//Automatically import postponed anomalies if set in preferences
-			if (R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_AUTO_IMPORT_POSTPONED)) {
-				ImportPostponedHandler.importPostponedElements((R4EUIReviewGroup) this.getParent(),
-						new NullProgressMonitor());
-			}
+			ImportPostponedHandler.refreshPostponedElements(new NullProgressMonitor());
 		} else {
 			R4EUIModelController.FModelExt.closeR4EReview(fReview); //Notify model
 		}
@@ -1060,10 +1057,10 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		if (isOpen()) {
 			newList.addAll(fItems);
 			newList.add(fAnomalyContainer);
-			newList.add(fParticipantsContainer);
-			if (null != fPostponedContainer) {
+			if (null != fPostponedContainer && fPostponedContainer.getChildren().length > 0) {
 				newList.add(fPostponedContainer);
 			}
+			newList.add(fParticipantsContainer);
 		}
 		return newList.toArray(new IR4EUIModelElement[newList.size()]);
 	}
@@ -1188,7 +1185,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 
 		//Create and set UI model element
 		fPostponedContainer = new R4EUIPostponedContainer(this, reviewItem,
-				R4EUIConstants.POSTPONED_ELEMENTS_LABEL_NAME);
+				R4EUIConstants.IMPORTED_ANOMALIES_LABEL_NAME);
 		addChildren(fPostponedContainer);
 		return fPostponedContainer;
 	}

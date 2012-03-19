@@ -134,9 +134,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ELEMENTS_LABEL_NAME = "Elements";
 
 	/**
-	 * Field POSTPONED_ELEMENTS_LABEL_NAME. (value is ""Postponed Elements"")
+	 * Field POSTPONED_ELEMENTS_LABEL_NAME. (value is ""Imported Anomalies"")
 	 */
-	public static final String POSTPONED_ELEMENTS_LABEL_NAME = "Postponed Elements";
+	public static final String IMPORTED_ANOMALIES_LABEL_NAME = "Imported Anomalies";
 
 	/**
 	 * Field PARTICIPANTS_LABEL_NAME. (value is ""Participants"")
@@ -595,9 +595,9 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String TITLE_LABEL = "Title: ";
 
 	/**
-	 * Field PARENT_REVIEW_LABEL. (value is ""Parent Review: "")
+	 * Field ORIGINAL_REVIEW_LABEL. (value is ""Original Review: "")
 	 */
-	public static final String PARENT_REVIEW_LABEL = "Parent Review: ";
+	public static final String ORIGINAL_REVIEW_LABEL = "Original Review: ";
 
 	/**
 	 * Field PARENT_ITEM_DESCRIPTION_LABEL. (value is ""Parent Item: "")

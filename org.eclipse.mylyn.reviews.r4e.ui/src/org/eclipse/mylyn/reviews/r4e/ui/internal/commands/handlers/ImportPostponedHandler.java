@@ -101,7 +101,7 @@ public class ImportPostponedHandler extends AbstractHandler {
 				monitor.beginTask(COMMAND_MESSAGE, parentGroup.getChildren().length);
 				R4EUIModelController.setJobInProgress(true);
 
-				importPostponedElements(parentGroup, monitor);
+				importPostponedElements(true, monitor);
 				R4EUIModelController.setJobInProgress(false);
 				UIUtils.setNavigatorViewFocus(R4EUIModelController.getActiveReview().getPostponedContainer(),
 						AbstractTreeViewer.ALL_LEVELS);
@@ -117,16 +117,17 @@ public class ImportPostponedHandler extends AbstractHandler {
 	/**
 	 * Method importPostponedElements.
 	 * 
-	 * @param aParentGroup
-	 *            R4EUIReviewGroup
+	 * @param aAddNewAnomalies
+	 *            - boolean
 	 * @param aMonitor
 	 *            IProgressMonitor
 	 */
-	public static void importPostponedElements(R4EUIReviewGroup aParentGroup, IProgressMonitor aMonitor) {
+	public static void importPostponedElements(boolean aAddNewAnomalies, IProgressMonitor aMonitor) {
+		final R4EUIReviewGroup parentGroup = (R4EUIReviewGroup) R4EUIModelController.getActiveReview().getParent();
 
 		//For each review in the parent review group, open it and look for postponed anomalies
 		//If one is found, add it to the imported postponed elements list
-		for (IR4EUIModelElement oldReview : aParentGroup.getChildren()) {
+		for (IR4EUIModelElement oldReview : parentGroup.getChildren()) {
 			try {
 				//Ignore current review
 				if (((R4EUIReviewBasic) oldReview).getName().equals(R4EUIModelController.getActiveReview().getName())) {
@@ -139,7 +140,7 @@ public class ImportPostponedHandler extends AbstractHandler {
 				List<R4EAnomaly> oldAnomalies = getAnomalies((R4EUIReviewBasic) oldReview);
 				for (R4EAnomaly oldAnomaly : oldAnomalies) {
 					try {
-						importAnomaly((R4EUIReviewBasic) oldReview, oldAnomaly, aMonitor);
+						importAnomaly((R4EUIReviewBasic) oldReview, oldAnomaly, aAddNewAnomalies, aMonitor);
 					} catch (ResourceHandlingException e) {
 						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
@@ -230,18 +231,24 @@ public class ImportPostponedHandler extends AbstractHandler {
 	 *            R4EUIReviewBasic
 	 * @param aOldAnomaly
 	 *            R4EAnomaly
+	 * @param aAddNewAnomalies
+	 *            - boolean
 	 * @param aMonitor
 	 *            IProgressMonitor
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	private static void importAnomaly(R4EUIReviewBasic aUiReview, R4EAnomaly aOldAnomaly, IProgressMonitor aMonitor)
-			throws ResourceHandlingException, OutOfSyncException {
+	private static void importAnomaly(R4EUIReviewBasic aUiReview, R4EAnomaly aOldAnomaly, boolean aAddNewAnomalies,
+			IProgressMonitor aMonitor) throws ResourceHandlingException, OutOfSyncException {
 
 		//Lazily create the postponed elements container if not already done
 		R4EUIPostponedContainer uiPostponedContainer = R4EUIModelController.getActiveReview().getPostponedContainer();
 		if (null == uiPostponedContainer) {
-			uiPostponedContainer = R4EUIModelController.getActiveReview().createPostponedContainer();
+			if (aAddNewAnomalies) {
+				uiPostponedContainer = R4EUIModelController.getActiveReview().createPostponedContainer();
+			} else {
+				return; //Refresh only, do not create
+			}
 		}
 
 		//Lazily create the postponed file and add it to the postponed container, if not already done
@@ -259,7 +266,11 @@ public class ImportPostponedHandler extends AbstractHandler {
 			}
 		}
 		if (null == uiPostponedFile) {
-			uiPostponedFile = uiPostponedContainer.createFileContext(oldFile, aUiReview.getReview().getName());
+			if (aAddNewAnomalies) {
+				uiPostponedFile = uiPostponedContainer.createFileContext(oldFile);
+			} else {
+				return; //Refresh only, do not create
+			}
 		}
 
 		//Add postponed anomaly if not already present.  If present just update the anomaly values
@@ -275,16 +286,21 @@ public class ImportPostponedHandler extends AbstractHandler {
 			}
 		}
 		if (null == foundUiAnomaly) {
-			//If the anomaly is new and is postponed, add it
-			if (aOldAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)) {
-				if (null != aMonitor) {
-					aMonitor.subTask("Importing Postponed Anomaly for Review: " + aUiReview.getName());
-				}
-				final R4EUIPostponedAnomaly uiPostponedAnomaly = uiPostponedFile.createAnomaly(aOldAnomaly);
-				//Also add all child comments
-				final EList<Comment> comments = aOldAnomaly.getComments();
-				for (Comment comment : comments) {
-					uiPostponedAnomaly.createComment((R4EComment) comment);
+			if (aAddNewAnomalies) {
+				//If the anomaly is new and is postponed, add it
+				if (aOldAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)) {
+					if (null != aMonitor) {
+						aMonitor.subTask("Importing Postponed Anomaly for Review: " + aUiReview.getName());
+					}
+
+					final R4EUIPostponedAnomaly uiPostponedAnomaly = uiPostponedFile.createAnomaly(aOldAnomaly,
+							aUiReview.getReview().getName());
+
+					//Also add all child comments
+					final EList<Comment> comments = aOldAnomaly.getComments();
+					for (Comment comment : comments) {
+						uiPostponedAnomaly.createComment((R4EComment) comment);
+					}
 				}
 			}
 		} else {
@@ -310,5 +326,12 @@ public class ImportPostponedHandler extends AbstractHandler {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Method refreshPostponedElements.
+	 */
+	public static void refreshPostponedElements(IProgressMonitor aMonitor) {
+		importPostponedElements(false, aMonitor);
 	}
 }

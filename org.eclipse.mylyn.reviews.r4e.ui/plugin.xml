@@ -1489,6 +1489,14 @@
             </input>
          </propertySection>
          <propertySection
+               class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.PostponedAnomalyTabPropertySection"
+               id="org.eclipse.mylyn.reviews.r4e.ui.properties.PostponedAnomalyGeneralSection"
+               tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
+            <input
+                  type="org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly">
+            </input>
+         </propertySection>
+         <propertySection
                class="org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed.CommentTabPropertySection"
                id="org.eclipse.mylyn.reviews.r4e.ui.properties.CommentSection"
                tab="org.eclipse.mylyn.reviews.r4e.ui.properties.propertyDetailedTab">
