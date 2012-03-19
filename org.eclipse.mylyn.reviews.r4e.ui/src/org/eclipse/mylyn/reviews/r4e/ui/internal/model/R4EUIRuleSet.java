@@ -200,8 +200,8 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * 
 	 * @return URI
 	 */
-	public URI getRuleSetFileURI() {
-		return fRuleSetFileURI;
+	public String getRuleSetFile() {
+		return fRuleSetFileURI.devicePath();
 	}
 
 	/**
