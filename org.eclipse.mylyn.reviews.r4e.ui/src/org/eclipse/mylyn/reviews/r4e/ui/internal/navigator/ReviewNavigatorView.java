@@ -647,7 +647,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			final List<String> groupsLoadedPaths = new ArrayList<String>();
 			IPath path;
 			for (R4EUIReviewGroup group : groupsLoaded) {
-				path = new Path(group.getReviewGroup().eResource().getURI().devicePath());
+				path = new Path(group.getGroupFile());
 				groupsLoadedPaths.add(path.toOSString());
 			}
 
@@ -665,9 +665,9 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			result.addAll(groupsLoadedPaths);
 			result.removeAll(groupsPreferencesPaths);
 			final List<IR4EUIModelElement> groupsToRemove = new ArrayList<IR4EUIModelElement>();
-			for (IR4EUIModelElement group : groupsLoaded) {
+			for (R4EUIReviewGroup group : groupsLoaded) {
 				for (String groupPath : result) {
-					path = new Path(((R4EUIReviewGroup) group).getReviewGroup().eResource().getURI().devicePath());
+					path = new Path(group.getGroupFile());
 					if (groupPath.equals(path.toOSString())) {
 						groupsToRemove.add(group);
 					}
@@ -701,7 +701,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			final List<String> ruleSetsLoadedPaths = new ArrayList<String>();
 			IPath path;
 			for (R4EUIRuleSet ruleSet : ruleSetsLoaded) {
-				path = new Path(ruleSet.getRuleSetFileURI().devicePath());
+				path = new Path(ruleSet.getRuleSetFile());
 				ruleSetsLoadedPaths.add(path.toOSString());
 			}
 
@@ -721,7 +721,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			final List<IR4EUIModelElement> ruleSetsToRemove = new ArrayList<IR4EUIModelElement>();
 			for (IR4EUIModelElement ruleSet : ruleSetsLoaded) {
 				for (String ruleSetPath : result) {
-					path = new Path(((R4EUIRuleSet) ruleSet).getRuleSetFileURI().devicePath());
+					path = new Path(((R4EUIRuleSet) ruleSet).getRuleSetFile());
 					if (ruleSetPath.equals(path.toOSString())) {
 						ruleSetsToRemove.add(ruleSet);
 					}
