@@ -114,9 +114,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 	private static final String REMOVE_BUTTON_LABEL = "Erase";
 
 	/**
-	 * Field FIND_BUTTON_LABEL. (value is ""Find"")
+	 * Field FIND_BUTTON_LABEL. (value is ""Find..."")
 	 */
-	private static final String FIND_BUTTON_LABEL = "Find";
+	private static final String FIND_BUTTON_LABEL = "Find...";
 
 	/**
 	 * Field CLEAR_BUTTON_LABEL. (value is ""Clear"")
