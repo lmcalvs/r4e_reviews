@@ -95,12 +95,12 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	/**
 	 * Field INVALID_FILE_STR. (value is ""<File not found>"")
 	 */
-	private static final String INVALID_FILE_STR = "<File not found>";
+	private static final String INVALID_FILE_STR = "<File not found>"; //$NON-NLS-1$
 
 	/**
 	 * Field USERS_GROUPS_LABEL. (value is ""Participants Lists: "")
 	 */
-	private static final String PARTICIPANTS_LISTS_LABEL = "Participants Lists: ";
+	private static final String PARTICIPANTS_LISTS_LABEL = "Participants Lists: "; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Member Variables
@@ -332,7 +332,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 
 		fUserPrefsTab = new TabItem(aParent, SWT.NONE);
-		fUserPrefsTab.setText("User");
+		fUserPrefsTab.setText("User"); //$NON-NLS-1$
 
 		// Create a Group to hold R4E user preferences
 		final Composite r4EUserPrefsGroup = new Composite(aParent, SWT.NONE);
@@ -444,7 +444,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		String participantsListStr = null;
 		for (int i = 0; i < participantsListsStr.length; i++) {
 			participantsListStr = participantsListsStr[i];
-			if (null != participantsListStr && !("".equals(participantsListStr))) {
+			if (null != participantsListStr && !("".equals(participantsListStr))) { //$NON-NLS-1$
 				if (i >= fParticipantsLists.getItemCount()) {
 					item = fParticipantsLists.addItem();
 				} else {
@@ -492,7 +492,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private void createGroupPreferencesTab(TabFolder aParent) {
 
 		fGroupsPrefsTab = new TabItem(aParent, SWT.NONE);
-		fGroupsPrefsTab.setText("Review Groups");
+		fGroupsPrefsTab.setText("Review Groups"); //$NON-NLS-1$
 
 		// Create a Group to hold R4E Group preferences
 		fR4EGroupPrefsGroup = new Composite(aParent, SWT.NONE);
@@ -539,11 +539,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 					} catch (ResourceHandlingException e) {
 						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
-						fGroupDescriptionText.setText("<Error:  Resource Error>");
+						fGroupDescriptionText.setText("<Error:  Resource Error>"); //$NON-NLS-1$
 					} catch (CompatibilityException e) {
 						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
-						fGroupDescriptionText.setText("<Error:  Version Mismatch>");
+						fGroupDescriptionText.setText("<Error:  Version Mismatch>"); //$NON-NLS-1$
 					}
 				}
 			}
@@ -593,7 +593,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private void createRuleSetsPreferencesTab(TabFolder aParent) {
 
 		fRuleSetsPrefsTab = new TabItem(aParent, SWT.NONE);
-		fRuleSetsPrefsTab.setText("Rule Sets");
+		fRuleSetsPrefsTab.setText("Rule Sets"); //$NON-NLS-1$
 
 		// Create a Group to hold R4E Rule Set preferences
 		fR4ERuleSetPrefsGroup = new Composite(aParent, SWT.NONE);
@@ -640,11 +640,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 					} catch (ResourceHandlingException e) {
 						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
-						fRuleSetVersionText.setText("<Error:  Resource Error>");
+						fRuleSetVersionText.setText("<Error:  Resource Error>"); //$NON-NLS-1$
 					} catch (CompatibilityException e) {
 						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
-						fRuleSetVersionText.setText("<Error:  Version Mismatch>");
+						fRuleSetVersionText.setText("<Error:  Version Mismatch>"); //$NON-NLS-1$
 					}
 				}
 			}
@@ -694,7 +694,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private void createFiltersPreferencesTab(TabFolder aParent) {
 
 		fFiltersPrefsTab = new TabItem(aParent, SWT.NONE);
-		fFiltersPrefsTab.setText("Default Filters");
+		fFiltersPrefsTab.setText("Default Filters"); //$NON-NLS-1$
 
 		// Create a Group to hold R4E Navigator view default filters
 		final Composite r4EFilterPrefsGroup = new Composite(aParent, SWT.NONE);
@@ -946,7 +946,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	public boolean performOk() {
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 
-		//Set curerent User Id
+		//Set current User Id
 		store.setValue(PreferenceConstants.P_USER_ID, fUserIdTextField.getText().toLowerCase());
 
 		//Set current groups and groups users
@@ -1011,9 +1011,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 
 		//Here, since we might erase group data, we need to make sure that we are in the default display view
 		//TODO:  This could be improved later to only do this if the parent group of the current review is being removed
-		((ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView().getTreeViewer()).setViewTree();
-		R4EUIModelController.getNavigatorView().resetInput();
-
+		if (null != R4EUIModelController.getNavigatorView()
+				&& !R4EUIModelController.getNavigatorView().getTreeViewer().getTree().isDisposed()) {
+			((ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView().getTreeViewer()).setViewTree();
+			R4EUIModelController.getNavigatorView().resetInput();
+		}
 		//For field editors
 		return super.performOk();
 	}

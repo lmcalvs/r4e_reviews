@@ -174,7 +174,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * Method setEditorLinked.
 	 * 
 	 * @param aEditorLinked
-	 *            booelan - true is the editor is linked, false otherwise
+	 *            boolean - true is the editor is linked, false otherwise
 	 */
 	public void setEditorLinked(boolean aEditorLinked) {
 		fEditorLinked = aEditorLinked;
@@ -193,7 +193,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * Method setPropertiesLinked.
 	 * 
 	 * @param aPropertiesLinked
-	 *            booelan - true is the R4E properties view is linked, false otherwise
+	 *            boolean - true is the R4E properties view is linked, false otherwise
 	 */
 	public void setPropertiesLinked(boolean aPropertiesLinked) {
 		fPropertiesLinked = aPropertiesLinked;
@@ -214,7 +214,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * @return boolean
 	 */
 	public boolean isDefaultDisplay() {
-		return fReviewTreeViewer.isDefaultDisplay();
+		if (fReviewTreeViewer != null) {
+			return fReviewTreeViewer.isDefaultDisplay();
+		}
+		return true;
+
 	}
 
 	/**
@@ -245,8 +249,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 				project.delete(true, null);
 			}
 		} catch (CoreException e) {
-			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
 		} finally {
 			R4EUIModelController.setActiveReview(null);
 			super.dispose();
@@ -262,7 +266,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		R4EUIPlugin.Ftracer.traceInfo("Build Review Navigator view");
+		R4EUIPlugin.Ftracer.traceInfo("Build Review Navigator view"); //$NON-NLS-1$
 
 		//Set tree viewer
 		fReviewTreeViewer = new ReviewNavigatorTreeViewer(parent, SWT.FULL_SELECTION | SWT.MULTI | SWT.H_SCROLL
@@ -345,8 +349,8 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);
 					} catch (FileNotFoundException e) {
-						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
 					} catch (ReviewVersionsException e) {
 						UIUtils.displayVersionErrorDialog(e);
 					} catch (CompatibilityException e) {
@@ -382,7 +386,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	}
 
 	/**
-	 * Get the view's jface tree viever
+	 * Get the view's jface tree viewer
 	 * 
 	 * @return the tree viewer
 	 */
@@ -464,7 +468,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 		fReviewTreeViewer.addDoubleClickListener(new IDoubleClickListener() { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.avoidInnerClasses
 			public void doubleClick(DoubleClickEvent event) {
-				R4EUIPlugin.Ftracer.traceInfo("Double-click event received");
+				R4EUIPlugin.Ftracer.traceInfo("Double-click event received"); //$NON-NLS-1$
 
 				final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 				final IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
@@ -480,17 +484,17 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 							}
 						}
 					} catch (ExecutionException e) {
-						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
 					} catch (NotDefinedException e) {
-						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
 					} catch (NotEnabledException e) {
-						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
 					} catch (NotHandledException e) {
-						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
 					}
 				} else if (isEditorLinked()) {
 					EditorProxy.openEditor(getSite().getPage(), selection, false);
@@ -587,18 +591,18 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		IViewPart propertiesView = null;
 		try {
 			final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			propertiesView = page.findView("org.eclipse.ui.views.PropertySheet");
+			propertiesView = page.findView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
 			if (!page.isPartVisible(propertiesView)) {
 				//Make sure that the properties view references are updated properly before showing it
 				if (null != fPropertySheetPage) {
 					fPropertySheetPage = null;
 				}
 				getPropertySheetPage();
-				propertiesView = page.showView("org.eclipse.ui.views.PropertySheet");
+				propertiesView = page.showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
 			}
 		} catch (PartInitException e) {
-			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
 			// Do nothing
 		}
 		return propertiesView;
@@ -689,7 +693,12 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			}
 			Display.getDefault().syncExec(new Runnable() {
 				public void run() {
-					fReviewTreeViewer.refresh();
+					//test if the tree is disposed first
+					if (!fReviewTreeViewer.getControl().isDisposed()) {
+						fReviewTreeViewer.refresh();
+					} else {
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + "preferenceChange() R4E Tree viewer is DISPOSED , Group path "); //$NON-NLS-1$ //$NON-NLS-2$
+					}
 				}
 			});
 		} else if (event.getKey().equals(PreferenceConstants.P_RULE_SET_FILE_PATH)) {
@@ -743,7 +752,12 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			}
 			Display.getDefault().syncExec(new Runnable() {
 				public void run() {
-					fReviewTreeViewer.refresh();
+					//test if the tree is disposed first
+					if (!fReviewTreeViewer.getControl().isDisposed()) {
+						fReviewTreeViewer.refresh();
+					} else {
+						R4EUIPlugin.Ftracer.traceWarning("Exception: " + "preferenceChange() R4E Tree viewer is DISPOSED , RULES SET PATH "); //$NON-NLS-1$ //$NON-NLS-2$
+					}
 				}
 			});
 
@@ -774,17 +788,17 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			((ReviewNavigatorActionGroup) fActionSet).runHideDeltasFilterCommand(store.getBoolean(PreferenceConstants.P_HIDE_DELTAS_FILTER));
 			getTreeViewer().setComparator(new DateComparator());
 		} catch (ExecutionException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
 		} catch (NotDefinedException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
 		} catch (NotEnabledException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
 		} catch (NotHandledException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
 		}
 	}
 
