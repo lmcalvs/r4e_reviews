@@ -1179,7 +1179,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		}
 
 		final R4EMeetingData meetingData = modelReview.getActiveMeeting();
-		if (null != meetingData) {
+		if (null != meetingData && null != meetingData.eResource()) {
 			fMeetingUpdateButton.setText(R4EUIConstants.UPDATE_LABEL);
 			fMeetingSubjectLabel.setText(meetingData.getSubject());
 			final DateFormat meetingDateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT_MINUTES);
