@@ -298,12 +298,14 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			tempReview.setObjectives(dialog.getObjectivesValue());
 			tempReview.setReferenceMaterial(dialog.getReferenceMaterialValue());
 			//Set default exit decision for INFORMAL review
+			final R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
 			if (type.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
-				final R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
 				reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED);
-				tempReview.setDecision(reviewDecision);
-
+			} else {
+				reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_NONE);
 			}
+
+			tempReview.setDecision(reviewDecision);
 			tempReviews.add(tempReview);
 		}
 		return tempReviews;

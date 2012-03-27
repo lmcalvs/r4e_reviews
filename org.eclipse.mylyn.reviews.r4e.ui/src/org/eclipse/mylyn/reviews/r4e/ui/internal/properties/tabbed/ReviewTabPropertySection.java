@@ -824,9 +824,19 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
 						R4EReviewDecision newDecision = R4EUIReviewBasic.getDecisionValueFromString(fExitDecisionCombo.getText());
-						R4EDecision newDecisionValue = newDecision.getValue();
-						R4EDecision oldDecisionValue = modelReview.getDecision().getValue();
-						if (!newDecisionValue.equals(oldDecisionValue)) {
+
+						//375419: NPE Formal Reviews attempting to update the Exit Decision
+						boolean updateDecision = false;
+						if (modelReview.getDecision() == null) {
+							updateDecision = true;
+						} else {
+							R4EDecision oldDecisionValue = modelReview.getDecision().getValue();
+							if (!newDecision.getValue().equals(oldDecisionValue)) {
+								updateDecision = true;
+							}
+						}
+
+						if (updateDecision) {
 							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
 									currentUser);
 							modelReview.setDecision(newDecision);
