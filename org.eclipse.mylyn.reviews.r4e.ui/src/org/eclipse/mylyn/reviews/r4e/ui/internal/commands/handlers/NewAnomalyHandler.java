@@ -160,10 +160,10 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 				//Act differently depending on the type of selection we get
 				final ISelection selection = HandlerUtil.getCurrentSelection(event);
+				R4EUIModelController.setJobInProgress(true);
+
 				if (selection instanceof ITextSelection) {
 					monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
-					R4EUIModelController.setJobInProgress(true);
-
 					addAnomalyFromText((ITextSelection) selection, input);
 
 				} else if (selection instanceof ITreeSelection) {
