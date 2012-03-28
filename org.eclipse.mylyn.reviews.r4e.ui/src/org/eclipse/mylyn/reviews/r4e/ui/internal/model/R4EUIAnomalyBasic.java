@@ -271,10 +271,15 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @return String
 	 */
 	protected static String adjustTitleLength(R4EAnomaly aAnomaly) {
-		if (aAnomaly.getTitle().length() > ANOMALY_LABEL_TITLE_LENGTH) {
-			return aAnomaly.getTitle().substring(0, ANOMALY_LABEL_TITLE_LENGTH) + R4EUIConstants.ELLIPSIS_STR;
+		String anomalyTitle = aAnomaly.getTitle();
+
+		if (anomalyTitle == null) {
+			return ""; //return an empty string for the null title
+		}
+		if (anomalyTitle.length() > ANOMALY_LABEL_TITLE_LENGTH) {
+			return anomalyTitle.substring(0, ANOMALY_LABEL_TITLE_LENGTH) + R4EUIConstants.ELLIPSIS_STR;
 		} else {
-			return aAnomaly.getTitle();
+			return anomalyTitle;
 		}
 	}
 

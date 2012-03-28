@@ -262,7 +262,7 @@ public class TopicImpl extends CommentImpl implements Topic {
 	 * @generated
 	 */
 	public String getTitle() {
-		return title;
+		return title!= null ? title : "";
 	}
 
 	/**

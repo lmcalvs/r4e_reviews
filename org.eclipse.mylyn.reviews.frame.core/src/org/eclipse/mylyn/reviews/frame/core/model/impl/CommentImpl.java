@@ -191,7 +191,7 @@ public class CommentImpl extends ReviewComponentImpl implements Comment {
 	 * @generated
 	 */
 	public String getDescription() {
-		return description;
+		return description!= null ? description : "";
 	}
 
 	/**
