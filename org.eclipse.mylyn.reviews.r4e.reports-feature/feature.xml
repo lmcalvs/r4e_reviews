@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.mylyn.reviews.r4e.reports"
       label="%featureName"
-      version="0.9.0.qualifier"
+      version="0.10.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.mylyn">
 
@@ -33,7 +33,7 @@
       <import plugin="org.eclipse.core.filesystem"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.editors"/>
-      <import plugin="org.eclipse.mylyn.reviews.frame.core" version="0.8.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.mylyn.reviews.frame.core" version="0.9.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.mylyn.reviews.r4e.core" version="0.9.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.ecore" version="2.5.0" match="greaterOrEqual"/>

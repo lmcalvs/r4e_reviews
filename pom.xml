@@ -5,12 +5,12 @@
   <parent>
     <groupId>org.eclipse.mylyn</groupId>
     <artifactId>org.eclipse.mylyn-parent</artifactId>
-    <version>3.7.0-SNAPSHOT</version>
+    <version>3.8.0-SNAPSHOT</version>
     <relativePath>../org.eclipse.mylyn/org.eclipse.mylyn-parent</relativePath>
   </parent>
   <groupId>org.eclipse.mylyn.reviews.r4e</groupId>
   <artifactId>org.eclipse.mylyn.reviews.r4e-parent</artifactId>
-  <version>0.9.0-SNAPSHOT</version>
+  <version>0.10.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <mailingLists>
     <mailingList>
