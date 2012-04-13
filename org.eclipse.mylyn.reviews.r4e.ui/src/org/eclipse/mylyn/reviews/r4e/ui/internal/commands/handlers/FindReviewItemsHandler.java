@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.compare.rangedifferencer.RangeDifference;
@@ -42,6 +43,7 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
@@ -105,7 +107,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			final Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
 			IProject project = null;
 
-			// NOTE: The valadity testes are done if the ProjectPropertyTester class
+			// NOTE: The validity testes are done if the ProjectPropertyTester class
 			if (selectedElement instanceof IProject) {
 				project = (IProject) selectedElement;
 			} else if (R4EUIPlugin.isJDTAvailable() && selectedElement instanceof IJavaProject) {
@@ -198,6 +200,12 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				public IStatus run(IProgressMonitor monitor) {
 					R4EUIModelController.setJobInProgress(true); //Disable operations on UI
 					monitor.beginTask("Importing Files and Calculating Changes...", aChangeSet.getChanges().size() * 2);
+					Date startUpdatingModel = null;
+					Date startImportingTime = null;
+					if (Tracer.isInfo()) {
+						startImportingTime = new Date();
+					}
+
 					//Since importing files and calculating delta can take a while, we run this in a parallel job.  When it completes
 					//We update the UI with the new elements
 					for (final Change change : aChangeSet.getChanges()) {
@@ -215,12 +223,22 @@ public class FindReviewItemsHandler extends AbstractHandler {
 						}
 					}
 
+					if (startImportingTime != null) {
+						R4EUIPlugin.Ftracer.traceInfo("Total time to Import/Push files and Compute changes is: " //$NON-NLS-1$
+								+ ((new Date()).getTime() - startImportingTime.getTime()));
+					}
+
 					//Now add elements to the UI model if there are any elements to add
 					synchronized (filesToAddlist) {
 						try {
 							final R4EUIReviewItem uiReviewItem;
 							if (filesToAddlist.size() > 0) {
-								monitor.subTask("Adding Review Item to R4E model");
+								String strSubtask = "Adding Review Item to R4E model"; //$NON-NLS-1$
+								monitor.subTask(strSubtask);
+								if (Tracer.isInfo()) {
+									startUpdatingModel = new Date();
+								}
+
 								uiReviewItem = uiReview.createCommitReviewItem(aChangeSet, null);
 
 								for (TempFileContext file : filesToAddlist) {
@@ -273,6 +291,16 @@ public class FindReviewItemsHandler extends AbstractHandler {
 											.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
 										MailServicesProxy.sendItemsAddedNotification(addedItems);
 
+									}
+								}
+
+								if (startUpdatingModel != null) {
+									Date jobEnd = new Date();
+									R4EUIPlugin.Ftracer.traceInfo("Total time to " + strSubtask + " is: " //$NON-NLS-1$ //$NON-NLS-2$
+											+ (jobEnd.getTime() - startUpdatingModel.getTime()));
+									if (startImportingTime != null) {
+										R4EUIPlugin.Ftracer.traceInfo("Total time to fetch files, compute deltas and update model is: " //$NON-NLS-1$
+												+ (jobEnd.getTime() - startImportingTime.getTime()));
 									}
 								}
 							}
@@ -336,7 +364,24 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				//If configured, get deltas for this file
 				if (R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_USE_DELTAS)) {
 					aMonitor.subTask("Computing differences for file " + file.toString());
+					Date startingComputeTime = null;
+					if (Tracer.isInfo()) {
+						startingComputeTime = new Date();
+					}
 					updateFilesWithDeltas(file);
+
+					if (startingComputeTime != null) {
+						R4EFileVersion fileVersion = file.getTarget();
+						if (null == fileVersion) {
+							fileVersion = file.getBase();
+						}
+
+						if (fileVersion != null) {
+							R4EUIPlugin.Ftracer.traceInfo("Computed deltas for: " + fileVersion.getName() + ", (ms): " //$NON-NLS-1$ //$NON-NLS-2$
+									+ (new Date().getTime() - startingComputeTime.getTime()));
+						}
+					}
+
 				}
 			} catch (final ReviewsFileStorageException e) {
 				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");

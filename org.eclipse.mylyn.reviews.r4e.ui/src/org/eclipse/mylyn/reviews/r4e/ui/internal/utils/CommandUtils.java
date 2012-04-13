@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +43,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
+import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
@@ -293,6 +295,11 @@ public class CommandUtils {
 			return null; //File not found in remote repository
 		}
 
+		Date fetchStart = null;
+		if (Tracer.isInfo()) {
+			fetchStart = new Date();
+		}
+
 		final IFileRevision fileRev = aArtifact.getFileRevision(null);
 
 		// Pull file from the version control system
@@ -308,8 +315,21 @@ public class CommandUtils {
 		final R4EFileVersion tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
 		updateFileVersion(tmpFileVersion, aArtifact);
 
+		Date blobRegStart = null;
+		if (fetchStart != null) {
+			blobRegStart = new Date();
+		}
+
 		// Push a local copy to local review repository, and obtain the local id
 		tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(iStream));
+
+		if (fetchStart != null) {
+			long downloadTime = blobRegStart.getTime() - fetchStart.getTime();
+			long uploadTime = (new Date()).getTime() - blobRegStart.getTime();
+
+			R4EUIPlugin.Ftracer.traceInfo("Registered blob for " + fileRev.getName() + " " + aArtifact.getId() + ", fetch (ms): " + downloadTime + ", push (ms) " + uploadTime); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+		}
+
 		try {
 			iStream.close();
 		} catch (IOException e) {
