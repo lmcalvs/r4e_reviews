@@ -91,6 +91,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionContext;
 import org.eclipse.ui.actions.ActionGroup;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.services.IEvaluationService;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
@@ -305,8 +306,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		fReviewTreeViewer.setViewTree();
 
 		//Apply default filters
+		final IEvaluationService evService = (IEvaluationService) getSite().getWorkbenchWindow().getService(
+				IEvaluationService.class);
+		evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay");
 		applyDefaultFilters();
-		R4EUIModelController.getNavigatorView().getTreeViewer().setComparator(null);
+		getTreeViewer().setComparator(null);
 
 		//Make sure that the User Id in preferences is set to lower case
 		final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
