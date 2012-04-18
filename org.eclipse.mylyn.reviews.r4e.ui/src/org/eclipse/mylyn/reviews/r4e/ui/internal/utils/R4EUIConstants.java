@@ -29,6 +29,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field EXCEPTION_MSG. (value is ""Exception: "")
+	 */
+	public static final String EXCEPTION_MSG = "Exception: ";
+
+	/**
 	 * Field VERSION_APPLICATION_OLDER. (value is -1)
 	 */
 	public static final int VERSION_APPLICATION_OLDER = -1;

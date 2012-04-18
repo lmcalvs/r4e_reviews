@@ -25,6 +25,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -171,7 +172,7 @@ public class CommandUtils {
 		final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
 		if (null != connector) {
 			final ScmArtifact artifact = connector.getArtifact(aFile);
-			if (null != artifact && null != artifact.getPath()) {
+			if ((null != artifact) && (null != artifact.getPath())) {
 				//File found in remote repo.  
 
 				//Here we check if the file in the remote repository is different than the input file.
@@ -183,7 +184,7 @@ public class CommandUtils {
 				localID = localRepository.blobIdFor(aFile.getContents());
 				if (localID.equals(remoteID)) {
 					//The files are the same. Copy from the remote repo
-					return copyRemoteFileToLocalRepository(localRepository, artifact);
+					return copyRemoteFileToLocalRepository(new ReentrantLock(), localRepository, artifact);
 				}
 				//The files are different.  This means the current user modified the file in his workspace
 				return copyWorkspaceFileToLocalRepository(localRepository, aFile);
@@ -265,11 +266,11 @@ public class CommandUtils {
 		final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
 		if (null != connector) {
 			final ScmArtifact artifact = connector.getArtifact(aFile);
-			if (null != artifact && null != artifact.getId()) {
+			if ((null != artifact) && (null != artifact.getId())) {
 				//File was modified, so we need to fetch the base file from the versions repository and copy it to our own local repository
 				final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
 						.getReview());
-				return copyRemoteFileToLocalRepository(localRepository, artifact);
+				return copyRemoteFileToLocalRepository(new ReentrantLock(), localRepository, artifact);
 			}
 		} //else file not in source control
 
@@ -280,6 +281,8 @@ public class CommandUtils {
 	/**
 	 * Method copyRemoteFileToLocalRepository.
 	 * 
+	 * @param aLock
+	 *            ReentrantLock
 	 * @param aLocalRepository
 	 *            IRFSRegistry
 	 * @param aArtifact
@@ -288,10 +291,10 @@ public class CommandUtils {
 	 * @throws CoreException
 	 * @throws ReviewsFileStorageException
 	 */
-	public static R4EFileVersion copyRemoteFileToLocalRepository(IRFSRegistry aLocalRepository, ScmArtifact aArtifact)
-			throws ReviewsFileStorageException, CoreException {
+	public static R4EFileVersion copyRemoteFileToLocalRepository(ReentrantLock aLock, IRFSRegistry aLocalRepository,
+			ScmArtifact aArtifact) throws ReviewsFileStorageException, CoreException {
 
-		if (null == aArtifact.getPath() || aArtifact.getPath().equals(INVALID_PATH)) {
+		if ((null == aArtifact.getPath()) || aArtifact.getPath().equals(INVALID_PATH)) {
 			return null; //File not found in remote repository
 		}
 
@@ -321,7 +324,13 @@ public class CommandUtils {
 		}
 
 		// Push a local copy to local review repository, and obtain the local id
-		tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(iStream));
+		aLock.lock();
+		try {
+			tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(iStream));
+		} finally {
+			aLock.unlock();
+		}
+
 
 		if (fetchStart != null) {
 			long downloadTime = blobRegStart.getTime() - fetchStart.getTime();
@@ -333,7 +342,6 @@ public class CommandUtils {
 		try {
 			iStream.close();
 		} catch (IOException e) {
-			R4EUIPlugin.getDefault();
 			R4EUIPlugin.Ftracer.traceWarning("Exception while closing stream, " + e.toString());
 		}
 
@@ -452,9 +460,9 @@ public class CommandUtils {
 	 *            ChangeType
 	 * @return R4EContextType
 	 */
-	public static R4EContextType adaptType(ChangeType changeType) {
+	public static R4EContextType adaptType(ChangeType aChangeType) {
 		R4EContextType dtype = null;
-		switch (changeType) {
+		switch (aChangeType) {
 		case ADDED:
 			dtype = R4EContextType.R4E_ADDED;
 			break;
@@ -556,7 +564,7 @@ public class CommandUtils {
 						.getReview());
 
 				//If resource is available in the workspace, use it.  Otherwise use the local repo version
-				if (null != aVersion && null != aVersion.getResource()) {
+				if ((null != aVersion) && (null != aVersion.getResource())) {
 					final String workspaceFileId = localRepository.blobIdFor(((IFile) aVersion.getResource()).getContents());
 					final String repoFileId = aVersion.getLocalVersionID();
 					if (workspaceFileId.equals((repoFileId))) {
@@ -744,7 +752,7 @@ public class CommandUtils {
 		if (null != origUser) {
 			for (R4EComment anomaly : origUser.getAddedComments()) {
 				if (anomaly instanceof R4EAnomaly
-						&& Integer.valueOf(origIdTokens[1]).intValue() == anomaly.getId().getSequenceID()) {
+						&& (Integer.valueOf(origIdTokens[1]).intValue() == anomaly.getId().getSequenceID())) {
 					return (R4EAnomaly) anomaly;
 				}
 			}
@@ -785,7 +793,7 @@ public class CommandUtils {
 	public static boolean isEmailValid(String aEmailAddress) {
 
 		//Ignore empty entry
-		if (null == aEmailAddress || aEmailAddress.equals("")) {
+		if ((null == aEmailAddress) || aEmailAddress.equals("")) {
 			return true;
 		}
 
