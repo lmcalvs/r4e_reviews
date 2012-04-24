@@ -53,7 +53,7 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	// Constants
 	// ------------------------------------------------------------------------
 
-	private static final String	repoName	= "ReviewsRepo.git";
+	private static final String	DEFAULT_REPO_NAME	= "ReviewsRepo.git";
 	private ObjectInserter		fInserter	= null;
 	protected Repository			fRepository	= null;
 	protected final RepositoryUtil fRepositoryUtil;
@@ -66,7 +66,7 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	 * @throws IOException
 	 */
 	public ReviewsRFSProxy(File aReviewGroupDir, boolean create) throws ReviewsFileStorageException {
-		File repoLoc = new File(aReviewGroupDir, repoName);
+		File repoLoc = new File(aReviewGroupDir, DEFAULT_REPO_NAME);
 		if (create) {
 			fRepository = initializeRepo(repoLoc);
 			// Set writing permissions to the shared location
@@ -94,7 +94,7 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	 * @return
 	 */
 	public static boolean isValidRepo(File dir) {
-		File repoDir = new File(dir, repoName);
+		File repoDir = new File(dir, DEFAULT_REPO_NAME);
 		return FileKey.isGitRepository(repoDir, FS.DETECTED);
 	}
 
@@ -141,7 +141,6 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 		ObjectId objid = null;
 		try {
 			objid = fInserter.insert(Constants.OBJ_BLOB, content);
-			FileSupportCommandFactory.getInstance().grantWritePermission(fRepository.getDirectory().getAbsolutePath());
 			fInserter.flush();
 		} catch (IOException e) {
 			//Check if the file has been registered in the repository if yes record the id, log the exception and continue
@@ -158,8 +157,8 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 								+ e.getMessage());
 				try {
 					is.close();
-				} catch (IOException e1) {
-					Activator.fTracer.traceError("IOException while closing probe stream, " + e1.getMessage());
+				} catch (IOException ex) {
+					Activator.fTracer.traceError("IOException while closing probe stream, " + ex.getMessage());
 				}
 			}
 		} finally {
@@ -209,14 +208,14 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 			throw new ReviewsFileStorageException(e);
 		} finally {
 			fInserter.release();
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					StringBuilder sb = new StringBuilder("Exception: " + e.getMessage());
-					Activator.fTracer.traceDebug(sb.toString());
-				}
+
+			try {
+				stream.close();
+			} catch (IOException e) {
+				StringBuilder sb = new StringBuilder("Exception: " + e.getMessage());
+				Activator.fTracer.traceDebug(sb.toString());
 			}
+
 		}
 
 		if (objid != null) {
@@ -331,7 +330,9 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 				//bug349739:  Here we first need to prepend the repository name to the artifact path to get the full path to the artifact
 				IPath repoPath = new Path(fRepositoryUtil.getRepositoryName(fRepository));
 				String pathString = path.toPortableString();
-				return repoPath.append(Path.fromPortableString(pathString + " " + localId.toString()));  //Append localId to differentiate versions in Repo
+				return repoPath.append(Path.fromPortableString(pathString + " " + localId)); // Append localId to
+																								// differentiate
+																								// versions in Repo
 			}
 
 			public InputStream getContents() throws CoreException {
@@ -408,13 +409,12 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 			throw new ReviewsFileStorageException(e);
 		} finally {
 			fInserter.release();
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					StringBuilder sb = new StringBuilder("Exception: " + e.getMessage());
-					Activator.fTracer.traceDebug(sb.toString());
-				}
+
+			try {
+				stream.close();
+			} catch (IOException e) {
+				StringBuilder sb = new StringBuilder("Exception: " + e.getMessage());
+				Activator.fTracer.traceDebug(sb.toString());
 			}
 		}
 

@@ -93,13 +93,13 @@ public class OpenElementHandler extends AbstractHandler {
 			public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
 
 			@Override
-			public boolean belongsTo(Object family) {
-				return familyName.equals(family);
+			public boolean belongsTo(Object aFamily) {
+				return familyName.equals(aFamily);
 			}
 
 			@Override
-			public IStatus run(IProgressMonitor monitor) {
-				monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
+			public IStatus run(IProgressMonitor aMonitor) {
+				aMonitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 				R4EUIModelController.setJobInProgress(true);
 
 				final ISelection selection = HandlerUtil.getCurrentSelection(aEvent);
@@ -115,6 +115,9 @@ public class OpenElementHandler extends AbstractHandler {
 								if (null != activeReview) {
 									activeReview.close();
 								}
+
+								//Make sure serialization starts as default in all resources
+								R4EUIModelController.resetToDefaultSerialization();
 							}
 							element.open();
 							R4EUIModelController.setJobInProgress(false);
@@ -148,7 +151,7 @@ public class OpenElementHandler extends AbstractHandler {
 					}
 				}
 				R4EUIModelController.setJobInProgress(false);
-				monitor.done();
+				aMonitor.done();
 				return Status.OK_STATUS;
 			}
 		};

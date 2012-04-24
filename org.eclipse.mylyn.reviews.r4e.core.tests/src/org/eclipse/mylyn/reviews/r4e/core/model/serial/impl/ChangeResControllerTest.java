@@ -49,8 +49,9 @@ public class ChangeResControllerTest extends TestCase {
 	 *
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ChangeResController
 	 */
-	private ChangeResController resCont = new ChangeResController();
-	private RModelFactoryExt	fFactory	= SerializeFactory.getModelExtension();
+	private final ChangeResController	fResCont			= new ChangeResController(
+																	new InactiveSerializationRegistry());
+	private final RModelFactoryExt		fFactory			= SerializeFactory.getModelExtension();
 	private final static String	TEST_DIR	= "dir";
 	private final static String	USER1		= "userX";
 	private final static String	USER2		= "userY";
@@ -63,10 +64,10 @@ public class ChangeResControllerTest extends TestCase {
 	/**
 	 * Construct new test instance
 	 *
-	 * @param name the test name
+	 * @param aName the test name
 	 */
-	public ChangeResControllerTest(String name) {
-		super(name);
+	public ChangeResControllerTest(String aName) {
+		super(aName);
 	}
 
 	/**
@@ -84,12 +85,12 @@ public class ChangeResControllerTest extends TestCase {
 		// Create resource and initiate check-out
 		try {
 			fResourceElement = fFactory.createR4EReviewGroup(URI.createURI(TEST_DIR), GROUP_NAME);
-		} catch (ResourceHandlingException e1) {
-			e1.printStackTrace();
+		} catch (ResourceHandlingException ex) {
+			ex.printStackTrace();
 		}
 
 		try {
-			fBookingNumber = resCont.checkOut(fResourceElement, USER1);
+			fBookingNumber = fResCont.checkOut(fResourceElement, USER1);
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 		}
@@ -122,7 +123,7 @@ public class ChangeResControllerTest extends TestCase {
 		// Checking it out by same user should return with same result
 		Long newBookingNum = 0L;
 		try {
-			newBookingNum = resCont.checkOut(fResourceElement, USER1);
+			newBookingNum = fResCont.checkOut(fResourceElement, USER1);
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 		}
@@ -138,7 +139,7 @@ public class ChangeResControllerTest extends TestCase {
 	public void testCheckOutNull() {
 		Long newBookingNum = 0L;
 		try {
-			newBookingNum = resCont.checkOut(null, USER1);
+			newBookingNum = fResCont.checkOut(null, USER1);
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			assertTrue(e.getMessage().contains("Element is null"));
@@ -155,7 +156,7 @@ public class ChangeResControllerTest extends TestCase {
 		Long newBookingNum = 0L;
 		try {
 			R4EAnomaly anomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
-			newBookingNum = resCont.checkOut(anomaly, USER1);
+			newBookingNum = fResCont.checkOut(anomaly, USER1);
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			assertTrue(e.getMessage().contains("The Resource associated to the Element is null"));
@@ -178,7 +179,7 @@ public class ChangeResControllerTest extends TestCase {
 			Resource res = resSet.createResource(uri);
 			res.setURI(null);
 			res.getContents().add(anomaly);
-			newBookingNum = resCont.checkOut(anomaly, USER1);
+			newBookingNum = fResCont.checkOut(anomaly, USER1);
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			assertTrue(e.getMessage().contains("Element's Resource is null"));
@@ -198,7 +199,7 @@ public class ChangeResControllerTest extends TestCase {
 		// Checking it out by same user should return with same result
 		String message = null;
 		try {
-			resCont.checkOut(fResourceElement, USER2);
+			fResCont.checkOut(fResourceElement, USER2);
 		} catch (ResourceHandlingException e) {
 			message = e.getMessage();
 		}
@@ -217,7 +218,7 @@ public class ChangeResControllerTest extends TestCase {
 
 		// attempt checking in with an invalid booking number, no exception generated
 		try {
-			resCont.checkIn(10000L);
+			fResCont.checkIn(10000L);
 		} catch (ResourceHandlingException e) {
 			// Unexpected exception
 			e.printStackTrace();
@@ -225,7 +226,7 @@ public class ChangeResControllerTest extends TestCase {
 
 		// Successful checkIn expected
 		try {
-			resCont.checkIn(fBookingNumber);
+			fResCont.checkIn(fBookingNumber);
 		} catch (ResourceHandlingException e) {
 			// Unexpected exception
 			e.printStackTrace();
@@ -245,12 +246,13 @@ public class ChangeResControllerTest extends TestCase {
 		}
 
 		// validate updated value read from disk
+		assertNotNull(group);
 		assertEquals(newGroupName, group.getName());
 
 		// Validate that the file can be checkout once more i.e. lock is being removed
 		try {
-			Long bookingNum = resCont.checkOut(fResourceElement, USER2);
-			resCont.checkIn(bookingNum);
+			Long bookingNum = fResCont.checkOut(fResourceElement, USER2);
+			fResCont.checkIn(bookingNum);
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			fail("Exception");
@@ -264,7 +266,7 @@ public class ChangeResControllerTest extends TestCase {
 		// attempt undo checkout of invalid booking
 		Long aBookingNumber = 1000L;
 		try {
-			resCont.undoCheckOut(aBookingNumber);
+			fResCont.undoCheckOut(aBookingNumber);
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			fail("Exception");
@@ -272,7 +274,7 @@ public class ChangeResControllerTest extends TestCase {
 
 		// Undo checkout with real booking number
 		try {
-			resCont.undoCheckOut(fBookingNumber);
+			fResCont.undoCheckOut(fBookingNumber);
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			fail("Exception");
@@ -280,8 +282,8 @@ public class ChangeResControllerTest extends TestCase {
 
 		// Validate that the file can be checkout once more i.e. lock is being removed
 		try {
-			Long bookingNum = resCont.checkOut(fResourceElement, USER2);
-			resCont.checkIn(bookingNum);
+			Long bookingNum = fResCont.checkOut(fResourceElement, USER2);
+			fResCont.checkIn(bookingNum);
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 			fail("Exception");

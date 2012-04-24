@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IRWUserBasedRes;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IRWUserBasedRes.ResourceType;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.RWCommon;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.FileSupportCommandFactory;
@@ -39,11 +40,15 @@ public class R4EWriter extends RWCommon implements IModelWriter {
 	// Constants
 	// ------------------------------------------------------------------------
 	protected final Map<ResourceType, String>	fresTypeToTag	= new HashMap<ResourceType, String>();
+	private final Persistence.IResSerializationState	fResState;
 
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	public R4EWriter() {
+	public R4EWriter(Persistence.IResSerializationState aResState) {
+		// Save the resource state lookup interface
+		fResState = aResState;
+
 		// Build a lookup table to facilitate the selection of the proper resource tag
 		fresTypeToTag.put(ResourceType.USER_COMMENT, IRWUserBasedRes.REVIEW_UCOMMENT_TAG);
 		fresTypeToTag.put(ResourceType.USER_ITEM, IRWUserBasedRes.REVIEW_UITEM_TAG);
@@ -79,6 +84,11 @@ public class R4EWriter extends RWCommon implements IModelWriter {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.IModelWriter#saveResource(org.eclipse.emf.ecore.resource.Resource)
 	 */
 	public void saveResource(Resource resource) throws ResourceHandlingException {
+		// If serialization for this resource is marked inactive, nothing to do.
+		if (fResState.isSerializationInactive(resource)) {
+			return;
+		}
+
 		// Indicate to save the schema location within the resource files
 		// options = new HashMap<String, Boolean>();
 		// options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);

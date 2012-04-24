@@ -16,6 +16,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model.serial.impl;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelReader;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
 
@@ -24,15 +25,15 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdat
  * 
  */
 public class SerializeFactory {
-
 	// ------------------------------------------------------------------------
 	// Fields
 	// ------------------------------------------------------------------------
-	private static R4EReader			reader				= null;
-	private static R4EWriter			writer				= null;
-	private static RModelFactoryExtImpl	fFactoryExtension	= null;
-	private static ResourceUpdater		fResUpdater			= null;
-	private static ResourceUpdater		fResSetUpdater		= null;
+	private static R4EReader		reader				= null;
+	private static R4EWriter		writer				= null;
+	private static RModelFactoryExt	fFactoryExtension	= null;
+	private static ResourceUpdater	fResUpdater			= null;
+	private static ResourceUpdater	fResSetUpdater		= null;
+	private static final Persistence.IResSerializationRegistry	fResSerializeRegistry	= new InactiveSerializationRegistry();
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -57,7 +58,7 @@ public class SerializeFactory {
 	 */
 	public static IModelWriter getWriter() {
 		if (writer == null) {
-			writer = new R4EWriter();
+			writer = new R4EWriter(fResSerializeRegistry);
 		}
 		return writer;
 	}
@@ -81,7 +82,7 @@ public class SerializeFactory {
 	 */
 	public static ResourceUpdater getResourceSetUpdater() {
 		if (fResSetUpdater == null) {
-			fResSetUpdater = new ChangeResSetController();
+			fResSetUpdater = new ChangeResSetController(fResSerializeRegistry);
 		}
 		return fResSetUpdater;
 	}
@@ -94,8 +95,17 @@ public class SerializeFactory {
 	 */
 	public static ResourceUpdater getResourceUpdater() {
 		if (fResUpdater == null) {
-			fResUpdater = new ChangeResController();
+			fResUpdater = new ChangeResController(fResSerializeRegistry);
 		}
 		return fResUpdater;
+	}
+
+	/**
+	 * Returns the registry of Resources with deactivated serialization
+	 * 
+	 * @return
+	 */
+	public static Persistence.IResSerializationRegistry getResourceSerializationRegistry() {
+		return fResSerializeRegistry;
 	}
 }

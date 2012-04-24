@@ -47,6 +47,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 	// Constants
 	// ------------------------------------------------------------------------
 	private static final String					LOCK_EXT		= ".lck";
+	protected static final Long						INACTIVE_BOOKING	= -1L;
 	// ------------------------------------------------------------------------
 	// Fields
 	// ------------------------------------------------------------------------
@@ -64,12 +65,14 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 	 */
 	protected IModelWriter							fWriter			= SerializeFactory.getWriter();
 
-	// protected Persistence fPersistence = SerializeFactory.get
+	protected Persistence.IResSerializationState	fResState		= null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	
+	public ChangeResController(Persistence.IResSerializationState aResState) {
+		fResState = aResState;
+	}
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -103,7 +106,11 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 			
 			throw new ResourceHandlingException(sb.toString());
 		}
-		
+
+		if (fResState.isSerializationInactive(aEObject.eResource())) {
+			return INACTIVE_BOOKING;
+		}
+
 		UpdateContext newContext = new UpdateContext(aEObject, usrLoginID);
 		// if resource is already checkedout, return existing booking number
 		Collection<UpdateContext> checkedOutContextList = checkedOutMap.values();
@@ -145,6 +152,10 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence$ResourceUpdater#undoCheckOut(Long)
 	 */
 	public void undoCheckOut(Long aBookingNumber) throws ResourceHandlingException {
+		if (aBookingNumber.equals(INACTIVE_BOOKING)) {
+			// Checked-out while resource serialisation was inactive i.e.nothing to do
+			return;
+		}
 		// Check if part of booking list
 		UpdateContext context = checkedOutMap.remove(aBookingNumber);
 		// if present on record
@@ -170,6 +181,11 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 	public void checkIn(Long aBookingNumber) throws ResourceHandlingException {
 		if (aBookingNumber == null) {
 			Activator.fTracer.traceDebug("CheckIn with booking number set to null");
+			return;
+		}
+
+		if (aBookingNumber.equals(INACTIVE_BOOKING)) {
+			// Checked-out while resource serialisation was inactive i.e.nothing to do
 			return;
 		}
 
@@ -202,7 +218,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		File file = new File(URI.decode(resUri.devicePath()));
 		
 		if (!file.exists()) {
-			throw new ResourceHandlingException("Not able to lock file: " + file.getAbsolutePath().toString()
+			throw new ResourceHandlingException("Not able to lock file: " + file.getAbsolutePath()
 					+ ". file does not exist");
 		}
 
@@ -245,7 +261,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 						}
 					}
 
-					throw new ResourceHandlingException("The Resource is locked: " + file.getAbsolutePath().toString()
+					throw new ResourceHandlingException("The Resource is locked: " + file.getAbsolutePath()
 							+ "\nLock Information:\n" + sb.toString());
 				} catch (FileNotFoundException e) {
 					// Quite unlikely but
@@ -273,9 +289,7 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		} catch (FileNotFoundException e) {
 			throw new ResourceHandlingException(e);
 		} finally {
-			if (writer != null) {
-				writer.close();
-			}
+			writer.close();
 		}
 		
 		Activator.fTracer.traceDebug("Checkout lock created " + file.getAbsolutePath());
@@ -335,8 +349,8 @@ public class ChangeResController implements Persistence.ResourceUpdater {
 		URI resUri = aResource.getURI();
 		File file = new File(URI.decode(resUri.devicePath()));
 		if (!file.exists()) {
-			throw new ResourceHandlingException("Not able to unlock Resource file: "
-					+ file.getAbsolutePath().toString() + ". File does not exist");
+			throw new ResourceHandlingException("Not able to unlock Resource file: " + file.getAbsolutePath()
+					+ ". File does not exist");
 		}
 
 		String fileStr = resUri.toFileString() + LOCK_EXT;

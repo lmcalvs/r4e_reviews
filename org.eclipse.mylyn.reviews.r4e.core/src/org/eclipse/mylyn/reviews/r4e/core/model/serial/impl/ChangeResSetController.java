@@ -15,6 +15,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model.serial.impl;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.IResSerializationState;
 
 /**
  * @author lmcalvs
@@ -29,6 +30,10 @@ public class ChangeResSetController extends ChangeResController {
 	// Constructors
 	// ------------------------------------------------------------------------
 
+	public ChangeResSetController(IResSerializationState aResState) {
+		super(aResState);
+	}
+
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
@@ -38,6 +43,11 @@ public class ChangeResSetController extends ChangeResController {
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ChangeResController#checkIn(java.lang.Long)
 	 */
 	public void checkIn(Long aBookingNumber) throws ResourceHandlingException {
+		if (aBookingNumber.equals(INACTIVE_BOOKING)) {
+			// Checked-out while resource serialisation was inactive i.e.nothing to do
+			return;
+		}
+
 		UpdateContext context = checkedOutMap.remove(aBookingNumber);
 		// Check if booking still on records
 		if (context != null) {

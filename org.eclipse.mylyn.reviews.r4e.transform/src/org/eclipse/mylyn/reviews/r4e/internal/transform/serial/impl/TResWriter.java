@@ -13,6 +13,7 @@
 package org.eclipse.mylyn.reviews.r4e.internal.transform.serial.impl;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.R4EWriter;
 
 /**
@@ -29,7 +30,11 @@ public class TResWriter extends R4EWriter implements IModelWriter {
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
-	public TResWriter() {
+	public TResWriter(Persistence.IResSerializationState aResState) {
+		super(aResState);
+		//TODO: Solution changed and there is no variation with default writer at the moment, 
+		//the instance is left to allow a variation of implementation at a later point.
+		
 		//From parent
 		// Build a lookup table to facilitate the selection of the proper resource tag
 //		fresTypeToTag.put(ResourceType.USER_COMMENT, IRWUserBasedRes.REVIEW_UCOMMENT_TAG);

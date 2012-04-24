@@ -191,7 +191,8 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	public void addAssignees(List<R4EParticipant> aParticipants) {
 		try {
 			//assign participants
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem,
+					R4EUIModelController.getReviewer());
 			final EList<String> assignedParticipants = fItem.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.add(participant.getId());
@@ -225,7 +226,8 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	public void removeAssignees(List<R4EParticipant> aParticipants) {
 		try {
 			//unassign participants
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem,
+					R4EUIModelController.getReviewer());
 			final EList<String> assignedParticipants = fItem.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.remove(participant.getId());
@@ -308,16 +310,16 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 			R4EUIPlugin.Ftracer.traceInfo("Exception: " + e1.toString() + " (" + e1.getMessage() + ")");
 		}
 
+		//Book serialization changes to review item level which traverses all the way to affected containment children
+		Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
+
 		final R4EFileContext fileContext = R4EUIModelController.FModelExt.createR4EFileContext(fItem);
 		fileContext.setType(aType);
 
 		//Get Base version from Version control system and set core model data
 		if (null != aBaseTempFileVersion) {
 			final R4EFileVersion rfileBaseVersion = R4EUIModelController.FModelExt.createR4EBaseFileVersion(fileContext);
-			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(rfileBaseVersion,
-					R4EUIModelController.getReviewer());
 			CommandUtils.copyFileVersionData(rfileBaseVersion, aBaseTempFileVersion);
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 			//Add IFileRevision info
 			if (null != revRegistry) {
@@ -330,25 +332,20 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 			}
 
 			//Add ProjectURI to the review item
-			//TODO:  temporary solution.  We need to have an Iproject member varaible in R4EFileVersion
+			//TODO:  temporary solution.  We need to have an Iproject member variable in R4EFileVersion
 			if (null != rfileBaseVersion.getResource()) {
-				bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
 				final String projPlatformURI = ResourceUtils.toPlatformURIStr(rfileBaseVersion.getResource()
 						.getProject());
 				if (!fItem.getProjectURIs().contains(projPlatformURI)) {
 					fItem.getProjectURIs().add(projPlatformURI);
 				}
-				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 			}
 		}
 
 		//Get Target version from Version control system and set core model data
 		if (null != aTargetTempFileVersion) {
 			final R4EFileVersion rfileTargetVersion = R4EUIModelController.FModelExt.createR4ETargetFileVersion(fileContext);
-			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(rfileTargetVersion,
-					R4EUIModelController.getReviewer());
 			CommandUtils.copyFileVersionData(rfileTargetVersion, aTargetTempFileVersion);
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 			//Add IFileRevision info
 			if (null != revRegistry) {
@@ -362,15 +359,16 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 
 			//Add ProjectURI to the review item
 			if (null != rfileTargetVersion.getResource()) {
-				bookNum = R4EUIModelController.FResourceUpdater.checkOut(fItem, R4EUIModelController.getReviewer());
 				final String projPlatformURI = ResourceUtils.toPlatformURIStr(rfileTargetVersion.getResource()
 						.getProject());
 				if (!fItem.getProjectURIs().contains(projPlatformURI)) {
 					fItem.getProjectURIs().add(projPlatformURI);
 				}
-				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 			}
 		}
+
+		//Check-in to save to disk
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 		final R4EUIFileContext uiFile = new R4EUIFileContext(this, fileContext, fType);
 		addChildren(uiFile);

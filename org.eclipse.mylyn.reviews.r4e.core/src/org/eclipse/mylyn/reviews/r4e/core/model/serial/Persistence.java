@@ -58,8 +58,8 @@ public interface Persistence {
 	public enum Roots {
 		GROUP("Group", "0.8.0"), REVIEW("Review", "0.9.0"), RULESET("RuleSet", "0.8.0");
 
-		private String	fName;
-		private String	fVersion;
+		private final String	fName;
+		private final String	fVersion;
 
 		Roots(String aName, String aVersion) {
 			fName = aName;
@@ -163,11 +163,11 @@ public interface Persistence {
 		/**
 		 * Creates a review phase instance and it's added to the list of phases to the given formal review container
 		 * 
-		 * @param review
+		 * @param aReview
 		 * @return
 		 * @throws ResourceHandlingException
 		 */
-		public R4EReviewPhaseInfo createR4EReviewPhaseInfo(R4EFormalReview review) throws ResourceHandlingException;
+		public R4EReviewPhaseInfo createR4EReviewPhaseInfo(R4EFormalReview aReview) throws ResourceHandlingException;
 
 		/**
 		 * Creates a meeting data instance and it's associated as the active meeting to the given review.
@@ -512,6 +512,30 @@ public interface Persistence {
 			Persistence.UserItemResFactory, Persistence.UserCommentResFactory, Persistence.DRulesFactory,
 			Persistence.ModelAdapter {
 		RModelFactory	eINSTANCE	= org.eclipse.mylyn.reviews.r4e.core.model.impl.RModelFactoryImpl.init();
+	}
+
+	/**
+	 * Interface to resolve the Resource serialization state (Active, Inactive)
+	 * 
+	 * @author lmcalvs
+	 * 
+	 */
+	interface IResSerializationState {
+		public boolean isSerializationInactive(Resource resource);
+	}
+
+	/**
+	 * Interface to control a registry list of resources with serialization state set to inactive
+	 * 
+	 * @author lmcalvs
+	 * 
+	 */
+	interface IResSerializationRegistry extends IResSerializationState {
+		public void addSerializationInactive(Resource resource);
+
+		public void removeSerializationInactive(Resource resource);
+
+		public void clearSerializationInactive();
 	}
 
 }

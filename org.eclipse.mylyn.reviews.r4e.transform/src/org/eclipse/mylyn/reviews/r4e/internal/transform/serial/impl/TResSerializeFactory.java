@@ -14,8 +14,10 @@
 
 package org.eclipse.mylyn.reviews.r4e.internal.transform.serial.impl;
 
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelReader;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.IModelWriter;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ChangeResController;
@@ -34,11 +36,18 @@ public class TResSerializeFactory {
 
 	private static TResWriter writer = null;
 
-	private static RModelFactoryExtImpl fFactoryExtension = null;
+	private static RModelFactoryExt fFactoryExtension = null;
 
 	private static ResourceUpdater fResUpdater = null;
 
 	private static ResourceUpdater fResSetUpdater = null;
+
+	private static final Persistence.IResSerializationState fResSerializationState = new Persistence.IResSerializationState() {
+		//Serialisation is always active for model transformations
+		public boolean isSerializationInactive(Resource aResource) {
+			return false;
+		}
+	};
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -63,7 +72,7 @@ public class TResSerializeFactory {
 	 */
 	public static IModelWriter getWriter() {
 		if (writer == null) {
-			writer = new TResWriter();
+			writer = new TResWriter(fResSerializationState);
 		}
 		return writer;
 	}
@@ -87,7 +96,7 @@ public class TResSerializeFactory {
 	 */
 	public static ResourceUpdater getResourceSetUpdater() {
 		if (fResSetUpdater == null) {
-			fResSetUpdater = new ChangeResSetController();
+			fResSetUpdater = new ChangeResSetController(fResSerializationState);
 		}
 		return fResSetUpdater;
 	}
@@ -100,7 +109,7 @@ public class TResSerializeFactory {
 	 */
 	public static ResourceUpdater getResourceUpdater() {
 		if (fResUpdater == null) {
-			fResUpdater = new ChangeResController();
+			fResUpdater = new ChangeResController(fResSerializationState);
 		}
 		return fResUpdater;
 	}

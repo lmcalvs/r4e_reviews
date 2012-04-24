@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
@@ -93,16 +94,16 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	/**
 	 * Method execute.
 	 * 
-	 * @param event
+	 * @param aEvent
 	 *            ExecutionEvent
 	 * @return Object
 	 * @throws ExecutionException
 	 * @see org.eclipse.core.commands.IHandler#execute(ExecutionEvent)
 	 */
-	public Object execute(final ExecutionEvent event) {
+	public Object execute(final ExecutionEvent aEvent) {
 
 		// Get project to use (use adapters if needed)
-		final ISelection selection = HandlerUtil.getCurrentSelection(event);
+		final ISelection selection = HandlerUtil.getCurrentSelection(aEvent);
 		if (selection instanceof IStructuredSelection) {
 			final Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
 			IProject project = null;
@@ -138,7 +139,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			if (null != uiConnector) {
 				R4EUIPlugin.Ftracer.traceDebug("Resolved Scm Ui connector: " + uiConnector);
 				final ChangeSet changeSet = uiConnector.getChangeSet(null, project);
-				createReviewItem(event, changeSet);
+				createReviewItem(aEvent, changeSet);
 			} else {
 				// We could not find any version control system, thus no items
 				final String strProject = ((null == project) ? "null" : project.getName());
@@ -157,10 +158,10 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	 * 
 	 * @param aChangeSet
 	 *            ChangeSet
-	 * @param event
+	 * @param aEvent
 	 *            ExecutionEvent
 	 */
-	private void createReviewItem(final ExecutionEvent event, final ChangeSet aChangeSet) {
+	private void createReviewItem(final ExecutionEvent aEvent, final ChangeSet aChangeSet) {
 
 		if (null == aChangeSet) {
 			R4EUIPlugin.Ftracer.traceInfo("Received null ChangeSet");
@@ -197,9 +198,10 @@ public class FindReviewItemsHandler extends AbstractHandler {
 
 			final Job job = new Job("Importing Files and Calculating Changes...") {
 				@Override
-				public IStatus run(IProgressMonitor monitor) {
+				public IStatus run(IProgressMonitor aMonitor) {
 					R4EUIModelController.setJobInProgress(true); //Disable operations on UI
-					monitor.beginTask("Importing Files and Calculating Changes...", aChangeSet.getChanges().size() * 2);
+					aMonitor.beginTask("Importing Files and Calculating Changes...", aChangeSet.getChanges().size() * 2);
+					//Prepare to collect performance trace information if enabled.
 					Date startUpdatingModel = null;
 					Date startImportingTime = null;
 					if (Tracer.isInfo()) {
@@ -209,15 +211,15 @@ public class FindReviewItemsHandler extends AbstractHandler {
 					//Since importing files and calculating delta can take a while, we run this in a parallel job.  When it completes
 					//We update the UI with the new elements
 					for (final Change change : aChangeSet.getChanges()) {
-						TempFileContext fetchedFile = fetchFiles(change, localRepository, monitor);
+						TempFileContext fetchedFile = fetchFiles(change, localRepository, aMonitor);
 						if (null != fetchedFile) {
 							filesToAddlist.add(fetchedFile);
 						}
-						monitor.worked(1);
+						aMonitor.worked(1);
 
 						//If the task is cancelled, we break here and set currently imported elements
-						if (monitor.isCanceled()) {
-							monitor.done();
+						if (aMonitor.isCanceled()) {
+							aMonitor.done();
 							R4EUIModelController.setJobInProgress(false);
 							return Status.CANCEL_STATUS;
 						}
@@ -234,12 +236,19 @@ public class FindReviewItemsHandler extends AbstractHandler {
 							final R4EUIReviewItem uiReviewItem;
 							if (filesToAddlist.size() > 0) {
 								String strSubtask = "Adding Review Item to R4E model"; //$NON-NLS-1$
-								monitor.subTask(strSubtask);
+								aMonitor.subTask(strSubtask);
 								if (Tracer.isInfo()) {
 									startUpdatingModel = new Date();
 								}
 
 								uiReviewItem = uiReview.createCommitReviewItem(aChangeSet, null);
+								Resource resource = uiReviewItem.getItem().eResource();
+								//Lock the resource to the user review items to avoid parallel updates from other users
+								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(
+										uiReviewItem.getItem(), R4EUIModelController.getReviewer());
+
+								//Prevent serialization for each individual child element and wait till the end
+								R4EUIModelController.stopSerialization(resource);
 
 								for (TempFileContext file : filesToAddlist) {
 									try {
@@ -251,7 +260,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 										} else {
 											addedFilename = ""; //Should never happen
 										}
-										monitor.subTask("Adding file " + addedFilename + " to R4E model");
+										aMonitor.subTask("Adding file " + addedFilename + " to R4E model");
 										final R4EUIFileContext uiFileContext = uiReviewItem.createFileContext(
 												file.getBase(), file.getTarget(), file.getType());
 
@@ -269,15 +278,22 @@ public class FindReviewItemsHandler extends AbstractHandler {
 												+ e.getMessage() + ")");
 										R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 									}
-									monitor.worked(1);
+									aMonitor.worked(1);
 
 									//If the task is cancelled, we break here and set currently imported elements
-									if (monitor.isCanceled()) {
-										monitor.done();
+									if (aMonitor.isCanceled()) {
+										aMonitor.done();
 										R4EUIModelController.setJobInProgress(false);
 										return Status.CANCEL_STATUS;
 									}
 								}
+
+								//Resume serialization
+								R4EUIModelController.resetToDefaultSerialization();
+
+								//Check-in to serialise the whole commit element with children
+								R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
 								R4EUIModelController.setJobInProgress(false);
 								UIUtils.setNavigatorViewFocus(uiReviewItem, 1);
 
@@ -310,10 +326,13 @@ public class FindReviewItemsHandler extends AbstractHandler {
 							UIUtils.displayResourceErrorDialog(e);
 						} catch (OutOfSyncException e) {
 							UIUtils.displaySyncErrorDialog(e);
+						} finally {
+							//Minimise the possibility to remain with serialization off 
+							R4EUIModelController.resetToDefaultSerialization();
 						}
 					}
 					R4EUIModelController.setJobInProgress(false);
-					monitor.done();
+					aMonitor.done();
 					return Status.OK_STATUS;
 				}
 			};
@@ -432,22 +451,22 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		/**
 		 * Field base.
 		 */
-		private final R4EFileVersion base;
+		private final R4EFileVersion fBase;
 
 		/**
 		 * Field target.
 		 */
-		private final R4EFileVersion target;
+		private final R4EFileVersion fTarget;
 
 		/**
 		 * Field type.
 		 */
-		private final R4EContextType type;
+		private final R4EContextType fType;
 
 		/**
 		 * Field positions.
 		 */
-		private final List<IR4EUIPosition> positions;
+		private final List<IR4EUIPosition> fPositions;
 
 		/**
 		 * Constructor for TempFileContext.
@@ -462,30 +481,30 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		 *            R4EContextType
 		 */
 		TempFileContext(IRFSRegistry aRepository, R4EFileVersion aBase, R4EFileVersion aTarget, R4EContextType aType) {
-			base = aBase;
+			fBase = aBase;
 			//Add IFileRevision info
-			if (null != base && null != aRepository) {
+			if (null != fBase && null != aRepository) {
 				try {
-					final IFileRevision fileRev = aRepository.getIFileRevision(null, base);
-					base.setFileRevision(fileRev);
+					final IFileRevision fileRev = aRepository.getIFileRevision(null, fBase);
+					fBase.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
 					R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
-			target = aTarget;
+			fTarget = aTarget;
 			//Add IFileRevision info
-			if (null != target && null != aRepository) {
+			if (null != fTarget && null != aRepository) {
 				try {
-					final IFileRevision fileRev = aRepository.getIFileRevision(null, target);
-					target.setFileRevision(fileRev);
+					final IFileRevision fileRev = aRepository.getIFileRevision(null, fTarget);
+					fTarget.setFileRevision(fileRev);
 				} catch (ReviewsFileStorageException e) {
 					R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				}
 			}
 
-			type = aType;
-			positions = new ArrayList<IR4EUIPosition>();
+			fType = aType;
+			fPositions = new ArrayList<IR4EUIPosition>();
 		}
 
 		/**
@@ -494,7 +513,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		 * @return R4EFileVersion
 		 */
 		public R4EFileVersion getBase() {
-			return base;
+			return fBase;
 		}
 
 		/**
@@ -503,7 +522,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		 * @return R4EFileVersion
 		 */
 		public R4EFileVersion getTarget() {
-			return target;
+			return fTarget;
 		}
 
 		/**
@@ -512,7 +531,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		 * @return R4EContextType
 		 */
 		public R4EContextType getType() {
-			return type;
+			return fType;
 		}
 
 		/**
@@ -521,7 +540,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		 * @return List<IR4EUIPosition>
 		 */
 		public List<IR4EUIPosition> getPositions() {
-			return positions;
+			return fPositions;
 		}
 	}
 }

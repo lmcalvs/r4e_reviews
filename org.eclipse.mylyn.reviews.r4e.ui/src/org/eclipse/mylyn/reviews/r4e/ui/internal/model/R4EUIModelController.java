@@ -33,6 +33,7 @@ import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
@@ -256,31 +257,31 @@ public class R4EUIModelController {
 	/**
 	 * Method peekReviewGroup.
 	 * 
-	 * @param filePath
+	 * @param aFilePath
 	 *            String
 	 * @return R4EReviewGroup
 	 * @throws ResourceHandlingException
 	 * @throws CompatibilityException
 	 */
-	public static R4EReviewGroup peekReviewGroup(String filePath) throws ResourceHandlingException,
+	public static R4EReviewGroup peekReviewGroup(String aFilePath) throws ResourceHandlingException,
 			CompatibilityException {
 		FModelExt = SerializeFactory.getModelExtension();
-		return FModelExt.openR4EReviewGroup(URI.createFileURI(filePath));
+		return FModelExt.openR4EReviewGroup(URI.createFileURI(aFilePath));
 	}
 
 	/**
 	 * Method peekRuleSet.
 	 * 
-	 * @param filePath
+	 * @param aFilePath
 	 *            String
 	 * @return R4EDesignRuleCollection
 	 * @throws ResourceHandlingException
 	 * @throws CompatibilityException
 	 */
-	public static R4EDesignRuleCollection peekRuleSet(String filePath) throws ResourceHandlingException,
+	public static R4EDesignRuleCollection peekRuleSet(String aFilePath) throws ResourceHandlingException,
 			CompatibilityException {
 		FModelExt = SerializeFactory.getModelExtension();
-		return FModelExt.openR4EDesignRuleCollection(URI.createFileURI(filePath));
+		return FModelExt.openR4EDesignRuleCollection(URI.createFileURI(aFilePath));
 	}
 
 	/**
@@ -576,5 +577,30 @@ public class R4EUIModelController {
 	 */
 	public static ModelElementTabPropertySection getCurrentPropertySection() {
 		return FCurrentPropertySection;
+	}
+
+	/**
+	 * Stop model element serializations for the give resource
+	 * 
+	 * @param resource
+	 */
+	public static void stopSerialization(Resource aResource) {
+		SerializeFactory.getResourceSerializationRegistry().addSerializationInactive(aResource);
+	}
+
+	/**
+	 * Start a previously stopped serialization to the given resource
+	 * 
+	 * @param resource
+	 */
+	public static void startSerialization(Resource aResource) {
+		SerializeFactory.getResourceSerializationRegistry().removeSerializationInactive(aResource);
+	}
+
+	/**
+	 * Remove all previously stop serialization orders and serialize as default
+	 */
+	public static void resetToDefaultSerialization() {
+		SerializeFactory.getResourceSerializationRegistry().clearSerializationInactive();
 	}
 }
