@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.eclipse.compare.rangedifferencer.RangeDifference;
@@ -40,8 +41,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
@@ -162,14 +163,14 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	private final ReentrantLock fLock = new ReentrantLock();
 
 	/**
-	 * Field fMaxConcurrentJobs.
-	 */
-	int fMaxConcurrentJobs = MAX_CONCURRRENT_JOBS;
-
-	/**
 	 * Field fRunningJobs.
 	 */
-	int fRunningJobs;
+	private final AtomicInteger fRunningJobs = new AtomicInteger(0);
+
+	/**
+	 * Field fExceptionError.
+	 */
+	private Exception fExceptionError;
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -186,13 +187,20 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
+		fExceptionError = null;
+
+		//Make sure that Reentrant lock is in the proper state
+		if (fLock.isLocked()) {
+			fLock.unlock();
+		}
+
 		// Get project to use (use adapters if needed)
 		final ISelection selection = HandlerUtil.getCurrentSelection(aEvent);
 		if (selection instanceof IStructuredSelection) {
 			final Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
 			IProject project = null;
 
-			// NOTE: The validity testes are done if the ProjectPropertyTester class
+			// NOTE: The validity tests are done if the ProjectPropertyTester class
 			if (selectedElement instanceof IProject) {
 				project = (IProject) selectedElement;
 			} else if (R4EUIPlugin.isJDTAvailable() && selectedElement instanceof IJavaProject) {
@@ -209,12 +217,13 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			} else {
 				// Should never happen
 				R4EUIPlugin.Ftracer.traceError("No project defined for selection of class " //$NON-NLS-1$
-						+ selectedElement.getClass());
-				R4EUIPlugin.getDefault().logError(
-						"No project defined for selection of class " + selectedElement.getClass(), null); //$NON-NLS-1$
+						+ ((null != selectedElement) ? selectedElement.getClass() : ""));
+				R4EUIPlugin.getDefault()
+						.logError(
+								"No project defined for selection of class " + ((null != selectedElement) ? selectedElement.getClass() : ""), null); //$NON-NLS-1$
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Find Review Item Error", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, //$NON-NLS-1$
-								"No project defined for selection", null), IStatus.ERROR); //$NON-NLS-1$
+						"Find Review Item Error", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
+								"No project defined for selection", null), IStatus.ERROR);
 				dialog.open();
 				return null;
 			}
@@ -229,8 +238,8 @@ public class FindReviewItemsHandler extends AbstractHandler {
 				final String strProject = ((null == project) ? "(no project)" : project.getName()); //$NON-NLS-1$
 				R4EUIPlugin.Ftracer.traceDebug("No Scm Ui connector found for project: " + strProject); //$NON-NLS-1$
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
-						"Cannot find new Review Items", new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0, //$NON-NLS-1$
-								"No SCM Connector detected for Project " + strProject, null), IStatus.WARNING); //$NON-NLS-1$
+						"Cannot find new Review Items", new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0,
+								"No SCM Connector detected for Project " + strProject, null), IStatus.WARNING);
 				dialog.open();
 			}
 		}
@@ -260,15 +269,20 @@ public class FindReviewItemsHandler extends AbstractHandler {
 
 		//Check if Review Item already exists
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
+		if (null == uiReview) {
+			return;
+		}
 		for (R4EUIReviewItem uiItem : uiReview.getReviewItems()) {
-			if (aChangeSet.getId().equals(uiItem.getItem().getRepositoryRef())) {
-				//The commit item already exists so ignore command
-				R4EUIPlugin.Ftracer.traceWarning("Review Item already exists.  Ignoring"); //$NON-NLS-1$
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
-						"Cannot add Review Item", new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0, //$NON-NLS-1$
-								"Review Item already exists", null), IStatus.WARNING); //$NON-NLS-1$
-				dialog.open();
-				return;
+			if (null != uiItem) {
+				if (aChangeSet.getId().equals(uiItem.getItem().getRepositoryRef())) {
+					//The commit item already exists so ignore command
+					R4EUIPlugin.Ftracer.traceWarning("Review Item already exists.  Ignoring");
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_WARNING,
+							"Cannot add Review Item", new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0,
+									"Review Item already exists", null), IStatus.WARNING);
+					dialog.open();
+					return;
+				}
 			}
 		}
 
@@ -280,41 +294,76 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			//Create Synchronized list that will temporarly hold the elements to be added
 			final List<TempFileContext> filesToAddlist = Collections.synchronizedList(new ArrayList<TempFileContext>());
 
-			//The main jobs is the parent of all the child jobs that execute the work
+			//The Main Job is the parent of all the child jobs that execute the work
 			final Job mainJob = new Job(IMPORTING_FILES_MSG) {
 				@Override
 				public IStatus run(final IProgressMonitor aMonitor) {
-
-					R4EUIModelController.setJobInProgress(true); //Disable operations on U
+					if (null == aMonitor) {
+						return Status.CANCEL_STATUS;
+					}
+					R4EUIModelController.setJobInProgress(true); //Disable operations on UI
 					aMonitor.beginTask(IMPORTING_FILES_MSG, 3);
 
 					//First fetch base and target files from remote repository and copy them to the R4E local repository using parallel jobs
 					aMonitor.subTask(FETCHING_FILES_MSG);
 
-					//Prepare to collect performance trace information if enabled.
-					Date startUpdatingModel = null;
+					//Prepare to collect performance trace information (if enabled).
 					Date startImportingTime = null;
+					Date startFetchTime = null;
 					if (Tracer.isInfo()) {
 						startImportingTime = new Date();
+						startFetchTime = new Date();
 					}
 
 					for (final Change change : aChangeSet.getChanges()) {
 
 						final Job fetchJob = new Job(FETCHING_FILE_MSG) {
-							public String familyName = FETCH_JOB_FAMILY;
-
 							@Override
 							public boolean belongsTo(Object aFamily) {
-								return familyName.equals(aFamily);
+								return FETCH_JOB_FAMILY.equals(aFamily);
 							}
 
 							@Override
 							public IStatus run(IProgressMonitor aFetchMonitor) {
+								if (null == aFetchMonitor) {
+									return Status.CANCEL_STATUS;
+								}
+
+								//If the main task is cancelled, abort here
+								if (aMonitor.isCanceled()) {
+									return Status.CANCEL_STATUS;
+								}
+
 								aFetchMonitor.beginTask(FETCHING_FILE_MSG, 2);
-								TempFileContext file = fetchFiles(fLock, change, localRepository, aFetchMonitor);
-								filesToAddlist.add(file);
-								aFetchMonitor.done();
-								return Status.OK_STATUS;
+								try {
+									TempFileContext file = fetchFiles(change, localRepository, aMonitor, aFetchMonitor);
+									filesToAddlist.add(file);
+									aFetchMonitor.done();
+									return Status.OK_STATUS;
+								} catch (final ReviewsFileStorageException e) {
+									R4EUIPlugin.Ftracer.traceError(R4EUIConstants.EXCEPTION_MSG + e.toString()
+											+ " (" + e.getMessage() //$NON-NLS-1$
+											+ ")"); //$NON-NLS-1$
+									R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + e.toString(), e);
+									if (null == fExceptionError) {
+										fExceptionError = e;
+									}
+									aFetchMonitor.done();
+									return Status.CANCEL_STATUS;
+								} catch (final CoreException e) {
+									if (!e.getMessage().equals(R4EUIConstants.CANCEL_EXCEPTION_MSG)) {
+										R4EUIPlugin.Ftracer.traceError(R4EUIConstants.EXCEPTION_MSG + e.toString()
+												+ " (" + e.getMessage() //$NON-NLS-1$
+												+ ")"); //$NON-NLS-1$
+										R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + e.toString(),
+												e);
+										if (null == fExceptionError) {
+											fExceptionError = e;
+										}
+									}
+									aFetchMonitor.done();
+									return Status.CANCEL_STATUS;
+								}
 							}
 						};
 
@@ -324,17 +373,16 @@ public class FindReviewItemsHandler extends AbstractHandler {
 							/* Count the number of running Jobs for the Rule */
 							@Override
 							public void running(IJobChangeEvent aEvent) {
-								if (aEvent.getResult() != Status.CANCEL_STATUS) {
-									fRunningJobs++;
+								if (null == aEvent || (null == aEvent.getResult())
+										|| !aEvent.getResult().equals(Status.CANCEL_STATUS)) {
+									fRunningJobs.getAndIncrement();
 								}
 							}
 
 							/* Update Fields when a Job is Done */
 							@Override
 							public void done(IJobChangeEvent aEvent) {
-								if (aEvent.getResult() != Status.CANCEL_STATUS) {
-									fRunningJobs--;
-								}
+								fRunningJobs.decrementAndGet();
 							}
 						});
 
@@ -349,10 +397,10 @@ public class FindReviewItemsHandler extends AbstractHandler {
 					}
 					try {
 						Job.getJobManager().join(FETCH_JOB_FAMILY, null);
-					} catch (OperationCanceledException e1) {
+					} catch (OperationCanceledException ex) {
 						return Status.CANCEL_STATUS;
-					} catch (InterruptedException e1) {
-						R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + e1.toString(), e1);
+					} catch (InterruptedException ex) {
+						R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + ex.toString(), ex);
 						return Status.CANCEL_STATUS;
 					}
 
@@ -360,29 +408,52 @@ public class FindReviewItemsHandler extends AbstractHandler {
 					if (aMonitor.isCanceled()) {
 						aMonitor.done();
 						R4EUIModelController.setJobInProgress(false);
+						if (null != fExceptionError) {
+							if (fExceptionError instanceof ReviewsFileStorageException) {
+								UIUtils.displayReviewsFileStorageErrorDialog((ReviewsFileStorageException) fExceptionError);
+							} else if (fExceptionError instanceof CoreException) {
+								UIUtils.displayCoreErrorDialog((CoreException) fExceptionError);
+							}
+						}
 						return Status.CANCEL_STATUS;
 					}
 					aMonitor.worked(1);
+
+					//Tracing add fetch time
+					if (startFetchTime != null) {
+						R4EUIPlugin.Ftracer.traceInfo("Total time to Import/Push files is: " //$NON-NLS-1$
+								+ ((new Date()).getTime() - startFetchTime.getTime()));
+					}
+
+					//Reset Tracing benchmark timer
+					Date startingComputeTime = null;
+					if (Tracer.isInfo()) {
+						startingComputeTime = new Date();
+					}
 
 					//Second calculate deltas for all fetched files using parallel jobs (if configured in preferences)
 					if (R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_USE_DELTAS)) {
 						aMonitor.subTask(CALCULATE_DELTAS_MSG);
 						for (final TempFileContext file : filesToAddlist) {
-							final Job deltaJob = new Job(CALCULATE_DELTAS_MSG) {
-								public String familyName = DELTA_JOB_FAMILY;
+							if (null == file) {
+								continue;
+							}
 
+							final Job deltaJob = new Job(CALCULATE_DELTAS_MSG) {
 								@Override
 								public boolean belongsTo(Object aFamily) {
-									return familyName.equals(aFamily);
+									return DELTA_JOB_FAMILY.equals(aFamily);
 								}
 
 								@Override
 								public IStatus run(IProgressMonitor aDeltaMonitor) {
+									if (null == aDeltaMonitor) {
+										return Status.CANCEL_STATUS;
+									}
 									aDeltaMonitor.beginTask(CALCULATE_DELTAS_FILE_MSG + file.toString(), 1);
-					}
 
 									try {
-										updateFilesWithDeltas(fLock, file);
+										updateFilesWithDeltas(file);
 									} catch (CoreException e) {
 										R4EUIPlugin.Ftracer.traceError(R4EUIConstants.EXCEPTION_MSG + e.toString()
 												+ " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -394,10 +465,6 @@ public class FindReviewItemsHandler extends AbstractHandler {
 									return Status.OK_STATUS;
 								}
 							};
-										uiReviewItem.getItem(), R4EUIModelController.getReviewer());
-
-								//Prevent serialization for each individual child element and wait till the end
-								R4EUIModelController.stopSerialization(resource);
 
 							/* Listen to Job's Lifecycle */
 							deltaJob.addJobChangeListener(new JobChangeAdapter() {
@@ -405,17 +472,16 @@ public class FindReviewItemsHandler extends AbstractHandler {
 								/* Count the number of running Jobs for the Rule */
 								@Override
 								public void running(IJobChangeEvent aEvent) {
-									if (aEvent.getResult() != Status.CANCEL_STATUS) {
-										fRunningJobs++;
+									if (null == aEvent || (null == aEvent.getResult())
+											|| !aEvent.getResult().equals(Status.CANCEL_STATUS)) {
+										fRunningJobs.getAndIncrement();
 									}
 								}
 
 								/* Update Fields when a Job is Done */
 								@Override
 								public void done(IJobChangeEvent aEvent) {
-									if (aEvent.getResult() != Status.CANCEL_STATUS) {
-										fRunningJobs--;
-									}
+									fRunningJobs.decrementAndGet();
 								}
 							});
 
@@ -430,45 +496,46 @@ public class FindReviewItemsHandler extends AbstractHandler {
 						}
 						try {
 							Job.getJobManager().join(DELTA_JOB_FAMILY, null);
-						} catch (OperationCanceledException e1) {
+						} catch (OperationCanceledException ex) {
 							return Status.CANCEL_STATUS;
-						} catch (InterruptedException e1) {
-							R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + e1.toString(), e1);
+						} catch (InterruptedException ex) {
+							R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + ex.toString(), ex);
 							return Status.CANCEL_STATUS;
 						}
 					}
 					//If the task is cancelled, exit
 					if (aMonitor.isCanceled()) {
 						aMonitor.done();
-
-								//Check-in to serialise the whole commit element with children
-								R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
 						R4EUIModelController.setJobInProgress(false);
 						return Status.CANCEL_STATUS;
 					}
 					aMonitor.worked(1);
 
-					R4EUIPlugin.Ftracer.traceInfo("Total time to Import/Push files and Compute changes is: " //$NON-NLS-1$
-					    + ((new Date()).getTime() - startImportingTime.getTime()));
-					if (Tracer.isInfo()) {
-					    startUpdatingModel = new Date();
+					//Tracing add calculate changes time
+					if (startingComputeTime != null) {
+						R4EUIPlugin.Ftracer.traceInfo("Total time to Compute changes is: " //$NON-NLS-1$
+								+ ((new Date()).getTime() - startingComputeTime.getTime()));
 					}
 
+					//Reset Tracing benchmark timer
+					Date startUpdatingModel = null;
+					if (Tracer.isInfo()) {
+						startUpdatingModel = new Date();
+					}
 
 					//Third add all elements to the UI model
 					aMonitor.subTask(ADD_ELEMENT_MSG);
 					final Job addJob = new Job(ADD_ELEMENT_MSG) {
-						public String familyName = ADD_JOB_FAMILY;
-
 						@Override
 						public boolean belongsTo(Object aFamily) {
-							return familyName.equals(aFamily);
+							return ADD_JOB_FAMILY.equals(aFamily);
 						}
 
 						@Override
 						public IStatus run(IProgressMonitor aAddMonitor) {
-
+							if (null == aAddMonitor) {
+								return Status.CANCEL_STATUS;
+							}
 							try {
 								final R4EUIReviewItem uiReviewItem;
 								if (filesToAddlist.size() > 0) {
@@ -477,29 +544,26 @@ public class FindReviewItemsHandler extends AbstractHandler {
 									aAddMonitor.subTask(ADD_REVIEW_ITEM_MSG);
 									uiReviewItem = uiReview.createCommitReviewItem(aChangeSet, null);
 									aAddMonitor.worked(1);
-									
+
+									//Lock the resource to the user review items to avoid parallel updates from other users
 									Resource resource = uiReviewItem.getItem().eResource();
-								        //Lock the resource to the user review items to avoid parallel updates from other users
-							  	        final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(
-									     uiReviewItem.getItem(), R4EUIModelController.getReviewer());
+									final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(
+											uiReviewItem.getItem(), R4EUIModelController.getReviewer());
 
-								        //Prevent serialization for each individual child element and wait till the end
-								        R4EUIModelController.stopSerialization(resource);
-
-
+									//Prevent serialization for each individual child element and wait till the end
+									R4EUIModelController.stopSerialization(resource);
 
 									for (TempFileContext file : filesToAddlist) {
 										addFileToModel(uiReviewItem, file, aAddMonitor);
 									}
-									
+
 									//Resume serialization
-							    	        R4EUIModelController.resetToDefaultSerialization();
+									R4EUIModelController.resetToDefaultSerialization();
 
-								        //Check-in to serialise the whole commit element with children
-							   	        R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+									//Check-in to serialise the whole commit element with children
+									R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
-
-                                                                        UIUtils.setNavigatorViewFocus(uiReviewItem, 1);
+									UIUtils.setNavigatorViewFocus(uiReviewItem, 1);
 
 									//Notify users if need be
 									final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
@@ -513,16 +577,6 @@ public class FindReviewItemsHandler extends AbstractHandler {
 
 										}
 									}
-
-								if (startUpdatingModel != null) {
-									Date jobEnd = new Date();
-									R4EUIPlugin.Ftracer.traceInfo("Total time to " + strSubtask + " is: " //$NON-NLS-1$ //$NON-NLS-2$
-											+ (jobEnd.getTime() - startUpdatingModel.getTime()));
-									if (startImportingTime != null) {
-										R4EUIPlugin.Ftracer.traceInfo("Total time to fetch files, compute deltas and update model is: " //$NON-NLS-1$
-												+ (jobEnd.getTime() - startImportingTime.getTime()));
-									}
-								}
 								}
 							} catch (CoreException e) {
 								UIUtils.displayCoreErrorDialog(e);
@@ -530,9 +584,9 @@ public class FindReviewItemsHandler extends AbstractHandler {
 								UIUtils.displayResourceErrorDialog(e);
 							} catch (OutOfSyncException e) {
 								UIUtils.displaySyncErrorDialog(e);
-						} finally {
-							//Minimise the possibility to remain with serialization off 
-							R4EUIModelController.resetToDefaultSerialization();
+							} finally {
+								//Minimize the possibility to remain with serialization off 
+								R4EUIModelController.resetToDefaultSerialization();
 							}
 							return Status.OK_STATUS;
 						}
@@ -541,12 +595,27 @@ public class FindReviewItemsHandler extends AbstractHandler {
 					addJob.schedule();
 					try {
 						Job.getJobManager().join(ADD_JOB_FAMILY, null);
-					} catch (OperationCanceledException e1) {
+					} catch (OperationCanceledException ex) {
 						return Status.CANCEL_STATUS;
-					} catch (InterruptedException e1) {
-						R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + e1.toString(), e1);
+					} catch (InterruptedException ex) {
+						R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + ex.toString(), ex);
 						return Status.CANCEL_STATUS;
 					}
+
+					//Tracing add updating model time
+					if (startUpdatingModel != null) {
+						Date jobEnd = new Date();
+						R4EUIPlugin.Ftracer.traceInfo("Total time to update model is: " //$NON-NLS-1$ 
+								+ (jobEnd.getTime() - startUpdatingModel.getTime()));
+					}
+
+					//Tracing add total time
+					if (startImportingTime != null) {
+						Date jobEnd = new Date();
+						R4EUIPlugin.Ftracer.traceInfo("Total time to fetch files, compute deltas and update model is: " //$NON-NLS-1$
+								+ (jobEnd.getTime() - startImportingTime.getTime()));
+					}
+
 					aMonitor.worked(1);
 					aMonitor.done();
 					R4EUIModelController.setJobInProgress(false);
@@ -563,18 +632,23 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	/**
 	 * Method fetchFiles.
 	 * 
-	 * @param aLock
-	 *            ReentrantLock
 	 * @param aChange
 	 *            Change
 	 * @param aLocalRepository
 	 *            IRFSRegistry
+	 * @param aMainMonitor
+	 *            IProgressMonitor
 	 * @param aSubMonitor
 	 *            IProgressMonitor
 	 * @return TempFileContext
+	 * @throws CoreException
+	 * @throws ReviewsFileStorageException
+	 * @throws SubJobCancelledException
+	 * @throws MainJobCancelledException
 	 */
-	private TempFileContext fetchFiles(ReentrantLock aLock, final Change aChange, IRFSRegistry aLocalRepository,
-			IProgressMonitor aSubMonitor) {
+	private TempFileContext fetchFiles(final Change aChange, IRFSRegistry aLocalRepository,
+			IProgressMonitor aMainMonitor, IProgressMonitor aSubMonitor) throws ReviewsFileStorageException,
+			CoreException {
 
 		R4EFileVersion baseLocalVersion = null;
 		R4EFileVersion targetLocalVersion = null;
@@ -582,54 +656,19 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		//Get Base artifact
 		final ScmArtifact baseArt = aChange.getBase();
 		if (null != baseArt) {
-			try {
-				// Copy to the local repository
-				aSubMonitor.subTask(FETCHING_FILE_MSG + baseArt.getPath() + " (base) from remote repository"); //$NON-NLS-1$
-				baseLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(aLock, aLocalRepository, baseArt);
-			} catch (final ReviewsFileStorageException e) {
-				R4EUIPlugin.Ftracer.traceError(R4EUIConstants.EXCEPTION_MSG + e.toString() + " (" + e.getMessage() //$NON-NLS-1$
-						+ ")"); //$NON-NLS-1$
-				R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + e.toString(), e);
-			} catch (final CoreException e) {
-				R4EUIPlugin.Ftracer.traceError(R4EUIConstants.EXCEPTION_MSG + e.toString() + " (" + e.getMessage() //$NON-NLS-1$
-						+ ")"); //$NON-NLS-1$
-				R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + e.toString(), e);
-			}
+			// Copy to the local repository
+			aSubMonitor.subTask(FETCHING_FILE_MSG + baseArt.getPath() + " (base) from remote repository"); //$NON-NLS-1$
+			baseLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(fLock, aLocalRepository, baseArt,
+					aMainMonitor);
 		}
 		aSubMonitor.worked(1);
 
 		//Get Target artifact
 		final ScmArtifact targetArt = aChange.getTarget();
 		if (null != targetArt) {
-			try {
-				aSubMonitor.subTask(FETCHING_FILE_MSG + targetArt.getPath() + " (target) from remote repository"); //$NON-NLS-1$
-				targetLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(aLock, aLocalRepository, targetArt);
-					Date startingComputeTime = null;
-					if (Tracer.isInfo()) {
-						startingComputeTime = new Date();
-					}
-
-					if (startingComputeTime != null) {
-						R4EFileVersion fileVersion = file.getTarget();
-						if (null == fileVersion) {
-							fileVersion = file.getBase();
-						}
-
-						if (fileVersion != null) {
-							R4EUIPlugin.Ftracer.traceInfo("Computed deltas for: " + fileVersion.getName() + ", (ms): " //$NON-NLS-1$ //$NON-NLS-2$
-									+ (new Date().getTime() - startingComputeTime.getTime()));
-						}
-					}
-
-			} catch (final ReviewsFileStorageException e) {
-				R4EUIPlugin.Ftracer.traceError(R4EUIConstants.EXCEPTION_MSG + e.toString() + " (" + e.getMessage() //$NON-NLS-1$
-						+ ")"); //$NON-NLS-1$
-				R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + e.toString(), e);
-			} catch (final CoreException e) {
-				R4EUIPlugin.Ftracer.traceError(R4EUIConstants.EXCEPTION_MSG + e.toString() + " (" + e.getMessage() //$NON-NLS-1$
-						+ ")"); //$NON-NLS-1$
-				R4EUIPlugin.getDefault().logError(R4EUIConstants.EXCEPTION_MSG + e.toString(), e);
-			}
+			aSubMonitor.subTask(FETCHING_FILE_MSG + targetArt.getPath() + " (target) from remote repository"); //$NON-NLS-1$
+			targetLocalVersion = CommandUtils.copyRemoteFileToLocalRepository(fLock, aLocalRepository, targetArt,
+					aMainMonitor);
 		}
 		aSubMonitor.worked(1);
 
@@ -641,13 +680,11 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	/**
 	 * Method updateFilesWithDeltas.
 	 * 
-	 * @param aLock
-	 *            ReentrantLock
 	 * @param aFile
 	 *            TempFileContext
 	 * @throws CoreException
 	 */
-	private void updateFilesWithDeltas(ReentrantLock aLock, final TempFileContext aFile) throws CoreException {
+	private void updateFilesWithDeltas(final TempFileContext aFile) throws CoreException {
 
 		//Find all differecences between Base and Target files
 		final R4ECompareEditorInput input = CommandUtils.createCompareEditorInput(aFile.getBase(), aFile.getTarget());
@@ -656,11 +693,11 @@ public class FindReviewItemsHandler extends AbstractHandler {
 		final DiffUtils diffUtils = new DiffUtils();
 		final List<Diff> diffs;
 
-		aLock.lock();
+		fLock.lock();
 		try {
 			diffs = diffUtils.doDiff(false, true, input);
 		} finally {
-			aLock.unlock();
+			fLock.unlock();
 		}
 
 		//Add Deltas from the list of differences
@@ -856,7 +893,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 			}
 
 			/* Conflict if number of running Jobs already greater maximum */
-			return FindReviewItemsHandler.this.fRunningJobs >= FindReviewItemsHandler.this.fMaxConcurrentJobs;
+			return FindReviewItemsHandler.this.fRunningJobs.intValue() >= MAX_CONCURRRENT_JOBS;
 		}
 	}
 }

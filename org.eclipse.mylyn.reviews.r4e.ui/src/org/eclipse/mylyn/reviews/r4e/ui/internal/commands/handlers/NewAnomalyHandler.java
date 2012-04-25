@@ -280,6 +280,11 @@ public class NewAnomalyHandler extends AbstractHandler {
 				} else if (aSelection instanceof org.eclipse.cdt.core.model.ICElement) {
 					workspaceFile = (IFile) ((org.eclipse.cdt.core.model.ICElement) aSelection).getParent()
 							.getResource();
+				} else {
+					//This should never happen
+					R4EUIPlugin.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString()
+							+ ".  Ignoring");
+					return;
 				}
 				//TODO is that the right file to get the position???
 				position = CommandUtils.getPosition((org.eclipse.cdt.core.model.ISourceReference) aSelection,

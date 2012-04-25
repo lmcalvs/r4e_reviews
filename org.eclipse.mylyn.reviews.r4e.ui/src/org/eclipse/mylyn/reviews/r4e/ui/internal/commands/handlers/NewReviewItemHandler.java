@@ -232,6 +232,10 @@ public class NewReviewItemHandler extends AbstractHandler {
 					}
 					cdtElement = cdtElement.getParent();
 				}
+				if (null == workspaceFile) {
+					//This should never happen
+					return;
+				}
 				//NOTE:  When selecting whole CDT File, the position is always set to line 0.  This is what is returned by CDT
 				position = CommandUtils.getPosition((org.eclipse.cdt.core.model.ISourceReference) aSelection,
 						workspaceFile);

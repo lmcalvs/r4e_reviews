@@ -34,11 +34,15 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.ISourceRange;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IDocument;
@@ -126,6 +130,9 @@ public class CommandUtils {
 			editorFile = ((IFileEditorInput) aInput).getFile();
 			//Now we have the file in editor, we need to use the versions interface to see if we should copy it
 			//to the local repo and update model info
+			if (null == editorFile) {
+				return null;
+			}
 			return updateTargetFile(editorFile);
 		} else if (aInput instanceof R4ECompareEditorInput) {
 			//If we get here, this is because we are trying to act on the compare editor contents
@@ -146,7 +153,7 @@ public class CommandUtils {
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, IStatus.OK, "Invalid input "
-					+ aInput.getClass().toString(), null));
+					+ ((null != aInput) ? aInput.getClass().toString() : ""), null));
 		}
 	}
 
@@ -161,13 +168,19 @@ public class CommandUtils {
 	 */
 	public static R4EFileVersion updateTargetFile(IFile aFile) throws CoreException, ReviewsFileStorageException {
 
+		if (null == aFile) {
+			return null; //should never happen
+		}
+
 		String remoteID = null;
 		String localID = null;
 
 		// Get handle to local storage repository
 		final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
 				.getReview());
-
+		if (null == localRepository) {
+			return null;
+		}
 		//Get Remote repository file info
 		final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
 		if (null != connector) {
@@ -179,12 +192,18 @@ public class CommandUtils {
 				//We cannot use the artifact ID directly and we need to fetch and calculate that SHA of the remote file 
 				//because we do not know which version control system is used.
 				//We need to do this comparison because the versions always return the latest file stored.
-				//remoteID = artifact.getId();
-				remoteID = localRepository.blobIdFor(artifact.getFileRevision(null).getStorage(null).getContents());
-				localID = localRepository.blobIdFor(aFile.getContents());
-				if (localID.equals(remoteID)) {
-					//The files are the same. Copy from the remote repo
-					return copyRemoteFileToLocalRepository(new ReentrantLock(), localRepository, artifact);
+
+				final IFileRevision fileRev = artifact.getFileRevision(null);
+				if (null != fileRev) {
+					final IStorage fileStore = fileRev.getStorage(null);
+					if (null != fileStore) {
+						remoteID = localRepository.blobIdFor(fileStore.getContents());
+						localID = localRepository.blobIdFor(aFile.getContents());
+						if ((null != remoteID) && remoteID.equals(localID)) {
+							//The files are the same. Copy from the remote repo
+							return copyRemoteFileToLocalRepository(localRepository, artifact);
+						}
+					}
 				}
 				//The files are different.  This means the current user modified the file in his workspace
 				return copyWorkspaceFileToLocalRepository(localRepository, aFile);
@@ -247,7 +266,7 @@ public class CommandUtils {
 		} else {
 			//Should never happen
 			throw new CoreException(new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, IStatus.OK, "Invalid input "
-					+ aInput.getClass().toString(), null));
+					+ ((null != aInput) ? aInput.getClass().toString() : ""), null));
 		}
 	}
 
@@ -261,6 +280,9 @@ public class CommandUtils {
 	 * @throws ReviewsFileStorageException
 	 */
 	public static R4EFileVersion updateBaseFile(IFile aFile) throws CoreException, ReviewsFileStorageException {
+		if (null == aFile) {
+			return null; //should never happen
+		}
 
 		//Get Remote repository file info
 		final ScmConnector connector = ScmCore.getConnector(aFile.getProject());
@@ -270,12 +292,65 @@ public class CommandUtils {
 				//File was modified, so we need to fetch the base file from the versions repository and copy it to our own local repository
 				final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
 						.getReview());
-				return copyRemoteFileToLocalRepository(new ReentrantLock(), localRepository, artifact);
+				return copyRemoteFileToLocalRepository(localRepository, artifact);
 			}
 		} //else file not in source control
 
 		//File was not modified, or No Version Control System or Remote File detected, so there is no base
 		return null;
+	}
+
+	/**
+	 * Method copyRemoteFileToLocalRepository.
+	 * 
+	 * @param aLocalRepository
+	 *            IRFSRegistry
+	 * @param aArtifact
+	 *            ScmArtifact
+	 * @return IFile
+	 * @throws CoreException
+	 * @throws ReviewsFileStorageException
+	 */
+	public static R4EFileVersion copyRemoteFileToLocalRepository(IRFSRegistry aLocalRepository, ScmArtifact aArtifact)
+			throws ReviewsFileStorageException, CoreException {
+
+		if ((null == aArtifact) || (null == aArtifact.getPath()) || aArtifact.getPath().equals(INVALID_PATH)) {
+			return null; //File not found in remote repository
+		}
+		final IFileRevision fileRev = aArtifact.getFileRevision(null);
+		if (null == fileRev) {
+			return null;
+		}
+
+		// Pull file from the version control system
+		InputStream iStream = null;
+		final IStorage fileStore = fileRev.getStorage(null);
+		if (null == fileStore) {
+			return null;
+		}
+		try {
+			iStream = fileStore.getContents();
+		} catch (CoreException e) {
+			R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			return null;
+		}
+
+		//Create and Set value in temporary File version
+		final R4EFileVersion tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
+		if ((null != tmpFileVersion) && (null != aLocalRepository)) {
+			updateFileVersion(tmpFileVersion, aArtifact);
+
+			// Push a local copy to local review repository, and obtain the local id
+			tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(iStream));
+			if (null != iStream) {
+				try {
+					iStream.close();
+				} catch (IOException e) {
+					R4EUIPlugin.Ftracer.traceWarning("Exception while closing stream, " + e.toString());
+				}
+			}
+		}
+		return tmpFileVersion;
 	}
 
 	/**
@@ -287,28 +362,52 @@ public class CommandUtils {
 	 *            IRFSRegistry
 	 * @param aArtifact
 	 *            ScmArtifact
+	 * @param aMainMonitor
+	 *            IProgressMonitor
+	 * @param aSubMonitor
+	 *            IProgressMonitor
 	 * @return IFile
 	 * @throws CoreException
 	 * @throws ReviewsFileStorageException
+	 * @throws MainJobCancelledException
+	 * @throws SubJobCancelledException
 	 */
 	public static R4EFileVersion copyRemoteFileToLocalRepository(ReentrantLock aLock, IRFSRegistry aLocalRepository,
-			ScmArtifact aArtifact) throws ReviewsFileStorageException, CoreException {
+			ScmArtifact aArtifact, IProgressMonitor aMainMonitor) throws ReviewsFileStorageException, CoreException {
+		ReentrantLock lock = aLock;
+		if (null == lock) {
+			lock = new ReentrantLock();
+		}
 
-		if ((null == aArtifact.getPath()) || aArtifact.getPath().equals(INVALID_PATH)) {
+		//Check if Main Job or Sub Job was cancelled before fetching
+		if (aMainMonitor.isCanceled()) {
+			throw new CoreException(new Status(IStatus.CANCEL, R4EUIPlugin.PLUGIN_ID, IStatus.CANCEL,
+					R4EUIConstants.CANCEL_EXCEPTION_MSG, null));
+		}
+
+		if ((null == aArtifact) || (null == aArtifact.getPath()) || aArtifact.getPath().equals(INVALID_PATH)) {
 			return null; //File not found in remote repository
 		}
 
+		//Tracing benchmarks
 		Date fetchStart = null;
 		if (Tracer.isInfo()) {
 			fetchStart = new Date();
 		}
 
 		final IFileRevision fileRev = aArtifact.getFileRevision(null);
+		if (null == fileRev) {
+			return null;
+		}
 
 		// Pull file from the version control system
 		InputStream iStream = null;
+		final IStorage fileStore = fileRev.getStorage(null);
+		if (null == fileStore) {
+			return null;
+		}
 		try {
-			iStream = fileRev.getStorage(null).getContents();
+			iStream = fileStore.getContents();
 		} catch (CoreException e) {
 			R4EUIPlugin.Ftracer.traceInfo("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			return null;
@@ -316,35 +415,44 @@ public class CommandUtils {
 
 		//Create and Set value in temporary File version
 		final R4EFileVersion tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
-		updateFileVersion(tmpFileVersion, aArtifact);
+		if ((null != tmpFileVersion) && (null != aLocalRepository)) {
+			updateFileVersion(tmpFileVersion, aArtifact);
 
-		Date blobRegStart = null;
-		if (fetchStart != null) {
-			blobRegStart = new Date();
+			//Check if Main Job or Sub Job was cancelled before pushing a local copy
+			if (aMainMonitor.isCanceled()) {
+				throw new CoreException(new Status(IStatus.CANCEL, R4EUIPlugin.PLUGIN_ID, IStatus.CANCEL,
+						R4EUIConstants.CANCEL_EXCEPTION_MSG, null));
+			}
+
+			//Tracing benchmarks
+			Date blobRegStart = null;
+			if (fetchStart != null) {
+				blobRegStart = new Date();
+			}
+
+			// Push a local copy to local review repository, and obtain the local id
+			lock.lock();
+			try {
+				tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(iStream));
+			} finally {
+				lock.unlock();
+
+				if (fetchStart != null) {
+					long downloadTime = blobRegStart.getTime() - fetchStart.getTime();
+					long uploadTime = (new Date()).getTime() - blobRegStart.getTime();
+					R4EUIPlugin.Ftracer.traceInfo("Registered blob for " + fileRev.getName() + " " + //$NON-NLS-1$//$NON-NLS-2$
+							aArtifact.getId() + ", fetch (ms): " + downloadTime + ", push (ms) " + uploadTime); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+
+				if (null != iStream) {
+					try {
+						iStream.close();
+					} catch (IOException e) {
+						R4EUIPlugin.Ftracer.traceWarning("Exception while closing stream, " + e.toString());
+					}
+				}
+			}
 		}
-
-		// Push a local copy to local review repository, and obtain the local id
-		aLock.lock();
-		try {
-			tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(iStream));
-		} finally {
-			aLock.unlock();
-		}
-
-
-		if (fetchStart != null) {
-			long downloadTime = blobRegStart.getTime() - fetchStart.getTime();
-			long uploadTime = (new Date()).getTime() - blobRegStart.getTime();
-
-			R4EUIPlugin.Ftracer.traceInfo("Registered blob for " + fileRev.getName() + " " + aArtifact.getId() + ", fetch (ms): " + downloadTime + ", push (ms) " + uploadTime); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-		}
-
-		try {
-			iStream.close();
-		} catch (IOException e) {
-			R4EUIPlugin.Ftracer.traceWarning("Exception while closing stream, " + e.toString());
-		}
-
 		return tmpFileVersion;
 	}
 
@@ -361,14 +469,18 @@ public class CommandUtils {
 	 */
 	public static R4EFileVersion copyWorkspaceFileToLocalRepository(IRFSRegistry aLocalRepository, IFile aFile)
 			throws CoreException, ReviewsFileStorageException {
+		R4EFileVersion tmpFileVersion = null;
+		if ((null != aLocalRepository) && (null != aFile)) {
+			//Create and Set value in temporary File version
+			tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
+			if ((null != tmpFileVersion)) {
+				updateFileVersion(tmpFileVersion, aFile);
 
-		//Create and Set value in temporary File version
-		final R4EFileVersion tmpFileVersion = RModelFactory.eINSTANCE.createR4EFileVersion();
-		updateFileVersion(tmpFileVersion, aFile);
-
-		// Push a local copy to local review repository, and obtain the local id
-		tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(aFile.getContents()));
-		tmpFileVersion.setVersionID(NO_SOURCE_CONTROL_ID_TEXT);
+				// Push a local copy to local review repository, and obtain the local id
+				tmpFileVersion.setLocalVersionID(aLocalRepository.registerReviewBlob(aFile.getContents()));
+				tmpFileVersion.setVersionID(NO_SOURCE_CONTROL_ID_TEXT);
+			}
+		}
 		return tmpFileVersion;
 	}
 
@@ -380,6 +492,9 @@ public class CommandUtils {
 	 * @return TextPosition
 	 */
 	public static R4EUITextPosition getPosition(ITextSelection aSelection) {
+		if (null == aSelection) {
+			return null;
+		}
 		return new R4EUITextPosition(aSelection.getOffset(), (aSelection).getLength(), (aSelection).getStartLine(),
 				(aSelection).getEndLine());
 	}
@@ -409,6 +524,9 @@ public class CommandUtils {
 	 * @throws CoreException
 	 */
 	public static R4EUITextPosition getPosition(IFile aSelectedElement) throws CoreException { // $codepro.audit.disable overloadedMethods
+		if (null == aSelectedElement) {
+			return null;
+		}
 		final R4EUITextPosition position = new R4EUITextPosition(R4EUIConstants.NO_OFFSET,
 				R4EUIConstants.INVALID_VALUE, aSelectedElement);
 		position.setName(aSelectedElement.getName());
@@ -426,9 +544,19 @@ public class CommandUtils {
 	 * @throws CoreException
 	 */
 	public static R4EUITextPosition getPosition(ISourceReference aSelectedElement, IFile aFile) throws CoreException {
-		final R4EUITextPosition position = new R4EUITextPosition(aSelectedElement.getSourceRange().getOffset(),
-				aSelectedElement.getSourceRange().getLength(), aFile);
-		position.setName(((IJavaElement) aSelectedElement).getElementName());
+		int offset = 0;
+		int length = 0;
+		String name = "";
+		if (null != aSelectedElement) {
+			final ISourceRange sourceRange = aSelectedElement.getSourceRange();
+			if (null != sourceRange) {
+				offset = sourceRange.getOffset();
+				length = sourceRange.getLength();
+			}
+			name = ((IJavaElement) aSelectedElement).getElementName();
+		}
+		final R4EUITextPosition position = new R4EUITextPosition(offset, length, aFile);
+		position.setName(name);
 		return position;
 	}
 
@@ -445,18 +573,32 @@ public class CommandUtils {
 	public static R4EUITextPosition getPosition(org.eclipse.cdt.core.model.ISourceReference aSelectedElement,
 			IFile aFile) // $codepro.audit.disable overloadedMethods
 			throws CoreException {
-		final R4EUITextPosition position = new R4EUITextPosition(aSelectedElement.getSourceRange().getStartPos(),
-				aSelectedElement.getSourceRange().getLength(), aFile);
-		position.setStartLine(aSelectedElement.getSourceRange().getStartLine());
-		position.setEndLine(aSelectedElement.getSourceRange().getEndLine());
-		position.setName(((org.eclipse.cdt.core.model.ICElement) aSelectedElement).getElementName());
+		int startPos = 0;
+		int length = 0;
+		int startLine = 0;
+		int endLine = 0;
+		String name = "";
+		if (null != aSelectedElement) {
+			final org.eclipse.cdt.core.model.ISourceRange sourceRange = aSelectedElement.getSourceRange();
+			if (null != sourceRange) {
+				startPos = sourceRange.getStartPos();
+				length = sourceRange.getLength();
+				startLine = sourceRange.getStartLine();
+				endLine = sourceRange.getEndLine();
+			}
+			name = ((org.eclipse.cdt.core.model.ICElement) aSelectedElement).getElementName();
+		}
+		final R4EUITextPosition position = new R4EUITextPosition(startPos, length, aFile);
+		position.setStartLine(startLine);
+		position.setEndLine(endLine);
+		position.setName(name);
 		return position;
 	}
 
 	/**
 	 * Adapt change types from Mylyn Versions to R4E model
 	 * 
-	 * @param changeType
+	 * @param aChangeType
 	 *            ChangeType
 	 * @return R4EContextType
 	 */
@@ -490,12 +632,14 @@ public class CommandUtils {
 	 *            R4EFileVersion
 	 */
 	public static void copyFileVersionData(R4EFileVersion aTargetFileVer, R4EFileVersion aSourceFileVer) {
-		aTargetFileVer.setName(aSourceFileVer.getName());
-		aTargetFileVer.setVersionID(aSourceFileVer.getVersionID());
-		aTargetFileVer.setRepositoryPath(aSourceFileVer.getRepositoryPath());
-		aTargetFileVer.setLocalVersionID(aSourceFileVer.getLocalVersionID());
-		aTargetFileVer.setPlatformURI(aSourceFileVer.getPlatformURI());
-		aTargetFileVer.setResource(aSourceFileVer.getResource());
+		if ((null != aTargetFileVer) && (null != aSourceFileVer)) {
+			aTargetFileVer.setName(aSourceFileVer.getName());
+			aTargetFileVer.setVersionID(aSourceFileVer.getVersionID());
+			aTargetFileVer.setRepositoryPath(aSourceFileVer.getRepositoryPath());
+			aTargetFileVer.setLocalVersionID(aSourceFileVer.getLocalVersionID());
+			aTargetFileVer.setPlatformURI(aSourceFileVer.getPlatformURI());
+			aTargetFileVer.setResource(aSourceFileVer.getResource());
+		}
 	}
 
 	/**
@@ -509,27 +653,36 @@ public class CommandUtils {
 	 */
 	public static void updateFileVersion(R4EFileVersion aTargetFileVer, ScmArtifact aScmArt) throws CoreException {
 
-		aTargetFileVer.setName(aScmArt.getFileRevision(null).getName());
-		aTargetFileVer.setVersionID(aScmArt.getId());
-		aTargetFileVer.setRepositoryPath(aScmArt.getFileRevision(null)
-				.getStorage(null)
-				.getFullPath()
-				.toPortableString());
+		if ((null != aTargetFileVer) && (null != aScmArt)) {
+			aTargetFileVer.setName(aScmArt.getFileRevision(null).getName());
+			aTargetFileVer.setVersionID(aScmArt.getId());
+			final IFileRevision fileRev = aScmArt.getFileRevision(null);
+			if (null != fileRev) {
+				final IStorage fileStore = fileRev.getStorage(null);
+				if (null != fileStore) {
+					final IPath filePath = fileStore.getFullPath();
+					if (null != filePath) {
+						aTargetFileVer.setRepositoryPath(filePath.toPortableString());
+					}
+				}
+			}
 
-		final String fileRelPath = aScmArt.getProjectRelativePath();
-		if (null == fileRelPath) {
-			R4EUIPlugin.Ftracer.traceDebug("Invalid relative file path in scmArtifact with path: " + aScmArt.getPath());
-		}
-		final IProject project = ResourceUtils.getProject(aScmArt.getProjectName());
-		final IResource resource = ResourceUtils.findResource(project, fileRelPath);
+			final String fileRelPath = aScmArt.getProjectRelativePath();
+			if (null == fileRelPath) {
+				R4EUIPlugin.Ftracer.traceDebug("Invalid relative file path in scmArtifact with path: "
+						+ aScmArt.getPath());
+			}
+			final IProject project = ResourceUtils.getProject(aScmArt.getProjectName());
+			final IResource resource = ResourceUtils.findResource(project, fileRelPath);
 
-		aTargetFileVer.setPlatformURI(ResourceUtils.toPlatformURIStr(resource));
-		aTargetFileVer.setResource(resource);
+			aTargetFileVer.setPlatformURI(ResourceUtils.toPlatformURIStr(resource));
+			aTargetFileVer.setResource(resource);
 
-		final String projPlatformURI = ResourceUtils.toPlatformURIStr(project);
-		if (null == projPlatformURI) {
-			R4EUIPlugin.Ftracer.traceDebug("Unable to resolve the project: " + aScmArt.getProjectName()
-					+ " platform's URI, in scmArtifact with path: " + aScmArt.getPath());
+			final String projPlatformURI = ResourceUtils.toPlatformURIStr(project);
+			if (null == projPlatformURI) {
+				R4EUIPlugin.Ftracer.traceDebug("Unable to resolve the project: " + aScmArt.getProjectName()
+						+ " platform's URI, in scmArtifact with path: " + aScmArt.getPath());
+			}
 		}
 	}
 
@@ -542,11 +695,12 @@ public class CommandUtils {
 	 *            IFile
 	 */
 	public static void updateFileVersion(R4EFileVersion aTargetFileVer, IFile aSrcFile) {
-
-		aTargetFileVer.setName(aSrcFile.getName());
-		aTargetFileVer.setRepositoryPath(""); //No repositories for workspace files since they are not in source control
-		aTargetFileVer.setResource(aSrcFile);
-		aTargetFileVer.setPlatformURI(ResourceUtils.toPlatformURIStr(aSrcFile));
+		if ((null != aTargetFileVer) && (null != aSrcFile)) {
+			aTargetFileVer.setName(aSrcFile.getName());
+			aTargetFileVer.setRepositoryPath(""); //No repositories for workspace files since they are not in source control
+			aTargetFileVer.setResource(aSrcFile);
+			aTargetFileVer.setPlatformURI(ResourceUtils.toPlatformURIStr(aSrcFile));
+		}
 	}
 
 	/**
@@ -562,13 +716,14 @@ public class CommandUtils {
 			if (null != R4EUIModelController.getActiveReview()) {
 				final IRFSRegistry localRepository = RFSRegistryFactory.getRegistry(R4EUIModelController.getActiveReview()
 						.getReview());
-
-				//If resource is available in the workspace, use it.  Otherwise use the local repo version
-				if ((null != aVersion) && (null != aVersion.getResource())) {
-					final String workspaceFileId = localRepository.blobIdFor(((IFile) aVersion.getResource()).getContents());
-					final String repoFileId = aVersion.getLocalVersionID();
-					if (workspaceFileId.equals((repoFileId))) {
-						return true;
+				if (null != localRepository) {
+					//If resource is available in the workspace, use it.  Otherwise use the local repo version
+					if ((null != aVersion) && (null != aVersion.getResource())) {
+						final String workspaceFileId = localRepository.blobIdFor(((IFile) aVersion.getResource()).getContents());
+						final String repoFileId = aVersion.getLocalVersionID();
+						if ((null != workspaceFileId) && workspaceFileId.equals((repoFileId))) {
+							return true;
+						}
 					}
 				}
 			}
@@ -631,11 +786,15 @@ public class CommandUtils {
 	 * @return R4EAnomalyTextPosition
 	 */
 	public static R4EAnomalyTextPosition getAnomalyPosition(R4EAnomaly aAnomaly) {
-		final EList<Location> location = aAnomaly.getLocation();
-		if (location.size() > 0) {
-			final R4EContent content = (R4EContent) location.get(0); //look at first location only
-			final R4EAnomalyTextPosition position = (R4EAnomalyTextPosition) content.getLocation();
-			return position;
+		if (null != aAnomaly) {
+			final EList<Location> location = aAnomaly.getLocation();
+			if ((null != location) && (location.size() > 0)) {
+				final R4EContent content = (R4EContent) location.get(0); //look at first location only
+				if (null != content) {
+					final R4EAnomalyTextPosition position = (R4EAnomalyTextPosition) content.getLocation();
+					return position;
+				}
+			}
 		}
 		return null;
 	}
@@ -648,11 +807,17 @@ public class CommandUtils {
 	 * @return R4EFileVersion
 	 */
 	public static R4EFileVersion getAnomalyParentFile(R4EAnomaly aAnomaly) {
-		final EList<Location> location = aAnomaly.getLocation();
-		if (location.size() > 0) {
-			final R4EContent content = (R4EContent) location.get(0); //look at first location only
-			final R4EAnomalyTextPosition position = (R4EAnomalyTextPosition) content.getLocation();
-			return position.getFile();
+		if (null != aAnomaly) {
+			final EList<Location> location = aAnomaly.getLocation();
+			if ((null != location) && (location.size() > 0)) {
+				final R4EContent content = (R4EContent) location.get(0); //look at first location only
+				if (null != content) {
+					final R4EAnomalyTextPosition position = (R4EAnomalyTextPosition) content.getLocation();
+					if (null != position) {
+						return position.getFile();
+					}
+				}
+			}
 		}
 		return null;
 	}
@@ -669,35 +834,41 @@ public class CommandUtils {
 	 */
 	public static void copyAnomalyData(R4EAnomaly aTargetAnomaly, R4EAnomaly aSourceAnomaly)
 			throws ResourceHandlingException, OutOfSyncException {
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(aTargetAnomaly,
-				R4EUIModelController.getReviewer());
-		aTargetAnomaly.setCreatedOn(aSourceAnomaly.getCreatedOn());
-		aTargetAnomaly.setDecidedByID(aSourceAnomaly.getDecidedByID());
-		aTargetAnomaly.setDescription(aSourceAnomaly.getDescription());
-		aTargetAnomaly.setDueDate(aSourceAnomaly.getDueDate());
-		aTargetAnomaly.setFixedByID(aSourceAnomaly.getFixedByID());
-		aTargetAnomaly.setFixedInVersion(aSourceAnomaly.getFixedInVersion());
-		aTargetAnomaly.setFollowUpByID(aSourceAnomaly.getFollowUpByID());
-		aTargetAnomaly.setNotAcceptedReason(aSourceAnomaly.getNotAcceptedReason());
-		aTargetAnomaly.setRank(aSourceAnomaly.getRank());
-		aTargetAnomaly.setState(aSourceAnomaly.getState());
-		aTargetAnomaly.setTitle(aSourceAnomaly.getTitle());
-		aTargetAnomaly.getAssignedTo().addAll(aSourceAnomaly.getAssignedTo());
-		if (null != aSourceAnomaly.getType()) {
-			final R4ECommentType oldCommentType = (R4ECommentType) aSourceAnomaly.getType();
-			R4ECommentType commentType = (R4ECommentType) aTargetAnomaly.getType();
-			if (null == commentType) {
-				commentType = RModelFactory.eINSTANCE.createR4ECommentType();
-				commentType.setType(oldCommentType.getType());
-				aTargetAnomaly.setType(commentType);
-			} else {
-				commentType.setType(oldCommentType.getType());
+		if ((null != aTargetAnomaly) && (null != aSourceAnomaly)) {
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(aTargetAnomaly,
+					R4EUIModelController.getReviewer());
+			aTargetAnomaly.setCreatedOn(aSourceAnomaly.getCreatedOn());
+			aTargetAnomaly.setDecidedByID(aSourceAnomaly.getDecidedByID());
+			aTargetAnomaly.setDescription(aSourceAnomaly.getDescription());
+			aTargetAnomaly.setDueDate(aSourceAnomaly.getDueDate());
+			aTargetAnomaly.setFixedByID(aSourceAnomaly.getFixedByID());
+			aTargetAnomaly.setFixedInVersion(aSourceAnomaly.getFixedInVersion());
+			aTargetAnomaly.setFollowUpByID(aSourceAnomaly.getFollowUpByID());
+			aTargetAnomaly.setNotAcceptedReason(aSourceAnomaly.getNotAcceptedReason());
+			aTargetAnomaly.setRank(aSourceAnomaly.getRank());
+			aTargetAnomaly.setState(aSourceAnomaly.getState());
+			aTargetAnomaly.setTitle(aSourceAnomaly.getTitle());
+			aTargetAnomaly.getAssignedTo().addAll(aSourceAnomaly.getAssignedTo());
+			if (null != aSourceAnomaly.getType()) {
+				final R4ECommentType oldCommentType = (R4ECommentType) aSourceAnomaly.getType();
+				R4ECommentType commentType = (R4ECommentType) aTargetAnomaly.getType();
+				if (null != oldCommentType) {
+					if (null == commentType) {
+						commentType = RModelFactory.eINSTANCE.createR4ECommentType();
+						if (null != commentType) {
+							commentType.setType(oldCommentType.getType());
+						}
+						aTargetAnomaly.setType(commentType);
+					} else {
+						commentType.setType(oldCommentType.getType());
+					}
+				}
 			}
+			if (null != aSourceAnomaly.getRule()) {
+				aTargetAnomaly.setRule(aSourceAnomaly.getRule());
+			}
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}
-		if (null != aSourceAnomaly.getRule()) {
-			aTargetAnomaly.setRule(aSourceAnomaly.getRule());
-		}
-		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
 
 	/**
@@ -711,25 +882,29 @@ public class CommandUtils {
 	 */
 	public static void showPostponedElements(R4EUIReviewBasic aReview) throws ResourceHandlingException,
 			OutOfSyncException, CompatibilityException {
-		final R4EUIPostponedContainer container = aReview.getPostponedContainer();
-		if (null != container) {
-			boolean containerEnabled = false;
-			for (IR4EUIModelElement file : container.getChildren()) {
-				R4EUIPostponedFile postFile = (R4EUIPostponedFile) file;
-				for (IR4EUIModelElement anomaly : postFile.getChildren()) {
-					if (!anomaly.isEnabled()) {
-						file.removeChildren(anomaly, false);
+		if (null != aReview) {
+			final R4EUIPostponedContainer container = aReview.getPostponedContainer();
+			if (null != container) {
+				boolean containerEnabled = false;
+				for (IR4EUIModelElement file : container.getChildren()) {
+					if (null != file) {
+						R4EUIPostponedFile postFile = (R4EUIPostponedFile) file;
+						for (IR4EUIModelElement anomaly : postFile.getChildren()) {
+							if ((null != anomaly) && !anomaly.isEnabled()) {
+								file.removeChildren(anomaly, false);
+							}
+						}
+						if (!file.hasChildren()) {
+							file.close();
+						} else {
+							containerEnabled = true; //At least one file contains postponed anomaly(ies)
+						}
 					}
 				}
-				if (!file.hasChildren()) {
-					file.close();
-				} else {
-					containerEnabled = true; //At least one file contains postponed anomaly(ies)
+				if (!containerEnabled) {
+					container.close();
+					//aReview.removeChildren(container, false);  TODO this is temporary
 				}
-			}
-			if (!containerEnabled) {
-				container.close();
-				//aReview.removeChildren(container, false);  TODO this is temporary
 			}
 		}
 	}
@@ -744,16 +919,24 @@ public class CommandUtils {
 	 * @return R4EAnomaly
 	 */
 	public static R4EAnomaly getOriginalAnomaly(R4EReview aOriginalReview, R4EAnomaly aCurrentAnomaly) {
-		//Loop through all anomalies and find the one whose R4EID is the same as the currently imported one
-		final String[] origIdTokens = aCurrentAnomaly.getInfoAtt()
-				.get(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)
-				.split(R4EUIConstants.SEPARATOR); //First token is user name, second token is sequence number
-		final R4EUser origUser = aOriginalReview.getUsersMap().get(origIdTokens[0]);
-		if (null != origUser) {
-			for (R4EComment anomaly : origUser.getAddedComments()) {
-				if (anomaly instanceof R4EAnomaly
-						&& (Integer.valueOf(origIdTokens[1]).intValue() == anomaly.getId().getSequenceID())) {
-					return (R4EAnomaly) anomaly;
+		if ((null != aOriginalReview) && (null != aCurrentAnomaly)) {
+			//Loop through all anomalies and find the one whose R4EID is the same as the currently imported one
+			final String[] origIdTokens = aCurrentAnomaly.getInfoAtt()
+					.get(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)
+					.split(R4EUIConstants.SEPARATOR); //First token is user name, second token is sequence number
+			if (null != origIdTokens) {
+				final R4EUser origUser = aOriginalReview.getUsersMap().get(origIdTokens[0]);
+				if (null != origUser) {
+					for (R4EComment anomaly : origUser.getAddedComments()) {
+						if (anomaly instanceof R4EAnomaly) {
+							Integer id = Integer.valueOf(origIdTokens[1]);
+							if (null != id) {
+								if (id.intValue() == anomaly.getId().getSequenceID()) {
+									return (R4EAnomaly) anomaly;
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -772,6 +955,9 @@ public class CommandUtils {
 	 */
 	public static R4EParticipant getParticipantForReview(R4EReview aReview, String aParticipantId)
 			throws ResourceHandlingException {
+		if (null == aReview) {
+			return null;
+		}
 		R4EParticipant participant = (R4EParticipant) aReview.getUsersMap().get(aParticipantId);
 		if (null == participant) {
 			//Add the participant
@@ -780,7 +966,6 @@ public class CommandUtils {
 			participant = R4EUIModelController.FModelExt.createR4EParticipant(aReview, aParticipantId, role);
 		}
 		return participant;
-
 	}
 
 	/**
@@ -797,11 +982,16 @@ public class CommandUtils {
 			return true;
 		}
 
+		boolean result = false;
 		final Pattern pattern = Pattern.compile(
 				"^([\\w]((\\.(?!\\.))|[-!#\\$%'\\*\\+/=\\?\\^`\\{\\}\\|~\\w])*)(?<=[\\w])@(([\\w][-\\w]*[\\w]\\.)+[a-zA-Z]{2,6})$",
 				Pattern.CASE_INSENSITIVE);
-		final Matcher matcher = pattern.matcher(aEmailAddress);
-		boolean result = matcher.matches();
+		if (null != pattern) {
+			final Matcher matcher = pattern.matcher(aEmailAddress);
+			if (null != matcher) {
+				result = matcher.matches();
+			}
+		}
 
 		//Validation of input failed
 		if (!result) {
@@ -811,7 +1001,9 @@ public class CommandUtils {
 							aEmailAddress + " is invalid", null), IStatus.ERROR);
 			Display.getDefault().syncExec(new Runnable() {
 				public void run() {
-					dialog.open();
+					if (null != dialog) {
+						dialog.open();
+					}
 				}
 			});
 		}

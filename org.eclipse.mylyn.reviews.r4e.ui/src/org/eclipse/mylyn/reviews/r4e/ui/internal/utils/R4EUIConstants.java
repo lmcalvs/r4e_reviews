@@ -34,6 +34,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String EXCEPTION_MSG = "Exception: ";
 
 	/**
+	 * Field CANCEL_EXCEPTION_MSG. (value is ""Operation cancelled by User"")
+	 */
+	public static final String CANCEL_EXCEPTION_MSG = "Operation cancelled by User";
+
+	/**
 	 * Field VERSION_APPLICATION_OLDER. (value is -1)
 	 */
 	public static final int VERSION_APPLICATION_OLDER = -1;
