@@ -773,6 +773,17 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	}
 
 	/**
+	 * Method isHideDeltasFilterSet.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isHideDeltasFilterSet() {
+		return ((Boolean) fCommandService.getCommand(R4EUIConstants.HIDE_DELTAS_FILTER_COMMAND)
+				.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY)
+				.getValue()).booleanValue();
+	}
+
+	/**
 	 * Method resetHideDeltasFilterCommand.
 	 */
 	private void resetHideDeltasFilterCommand() {
@@ -857,6 +868,20 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	public void openElementCommand() throws ExecutionException, NotDefinedException, NotEnabledException,
 			NotHandledException {
 		fHandlerService.executeCommand(R4EUIConstants.OPEN_ELEMENT_COMMAND, null);
+	}
+
+	/**
+	 * Method openElementCommand.
+	 * 
+	 * @throws NotHandledException
+	 * @throws NotEnabledException
+	 * @throws NotDefinedException
+	 * @throws ExecutionException
+	 */
+
+	public void changeDisplayCommand() throws ExecutionException, NotDefinedException, NotEnabledException,
+			NotHandledException {
+		fHandlerService.executeCommand(R4EUIConstants.CHANGE_DISPLAY_COMMAND, null);
 	}
 
 	/**

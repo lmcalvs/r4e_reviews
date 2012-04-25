@@ -31,6 +31,10 @@ import java.util.Map;
 
 import javax.naming.NamingException;
 
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.NotEnabledException;
+import org.eclipse.core.commands.NotHandledException;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -40,7 +44,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.FilePathEditor;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorTreeViewer;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.EditableListWidget;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.IEditableListListener;
@@ -932,8 +937,9 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		super.performDefaults();
 
 		//Here, since we erase all group data, we need to make sure that we are in the default display view
-		((ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView().getTreeViewer()).setViewTree();
-		R4EUIModelController.getNavigatorView().resetInput();
+		if (!R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
+			checkToChangeDisplay();
+		}
 	}
 
 	/**
@@ -1009,15 +1015,48 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			return false;
 		}
 
-		//Here, since we might erase group data, we need to make sure that we are in the default display view
-		//TODO:  This could be improved later to only do this if the parent group of the current review is being removed
-		if (null != R4EUIModelController.getNavigatorView()
-				&& !R4EUIModelController.getNavigatorView().getTreeViewer().getTree().isDisposed()) {
-			((ReviewNavigatorTreeViewer) R4EUIModelController.getNavigatorView().getTreeViewer()).setViewTree();
-			R4EUIModelController.getNavigatorView().resetInput();
+		if (!R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
+			checkToChangeDisplay();
 		}
+
 		//For field editors
 		return super.performOk();
+	}
+
+	private void checkToChangeDisplay() {
+		//Verify if we are removing the active review's parent group from preferences
+		if (null != R4EUIModelController.getNavigatorView()
+				&& !R4EUIModelController.getNavigatorView().getTreeViewer().getTree().isDisposed()) {
+			boolean parentGroupRemoved = true;
+			if (null != R4EUIModelController.getActiveReview()) {
+				String[] groupFiles = fGroupFilesEditor.getListControl(fR4EGroupPrefsGroup).getItems();
+				for (String groupFile : groupFiles) {
+					if (groupFile.equals(((R4EUIReviewGroup) R4EUIModelController.getActiveReview().getParent()).getReviewGroup()
+							.eResource()
+							.getURI()
+							.toFileString())) {
+						parentGroupRemoved = false;
+						break;
+					}
+				}
+			}
+
+			if (parentGroupRemoved) {
+				//We are currently removing the active review's parent group.  If we are in the TreeTable display, revert back to default Tree display
+				try {
+					((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView().getActionSet()).changeDisplayCommand();
+					R4EUIModelController.getNavigatorView().resetInput();
+				} catch (ExecutionException e) {
+					R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+				} catch (NotDefinedException e) {
+					R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+				} catch (NotEnabledException e) {
+					R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+				} catch (NotHandledException e) {
+					R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+				}
+			}
+		}
 	}
 
 	//Getters and Setters.  These are used in JUnit testing and could

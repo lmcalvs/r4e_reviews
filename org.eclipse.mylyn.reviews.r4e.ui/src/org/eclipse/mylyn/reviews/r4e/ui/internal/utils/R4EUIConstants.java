@@ -1535,6 +1535,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String SHOW_PROPERTIES_COMMAND_MNEMONIC = "P";
 
 	/**
+	 * Field CHANGE_DISPLAY_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"")
+	 */
+	public static final String CHANGE_DISPLAY_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay";
+
+	/**
 	 * Field START_STRING_INDEX. (value is 0)
 	 */
 	public static final int START_STRING_INDEX = 0;
