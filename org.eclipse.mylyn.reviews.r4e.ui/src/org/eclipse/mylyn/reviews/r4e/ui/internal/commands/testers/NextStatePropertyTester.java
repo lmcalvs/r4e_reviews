@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.testers;
 import java.util.AbstractList;
 
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
@@ -37,7 +38,7 @@ public class NextStatePropertyTester extends PropertyTester {
 	/**
 	 * Executes the property test determined by the parameter <code>property</code>.
 	 * 
-	 * @param receiver
+	 * @param aReceiver
 	 *            the receiver of the property test
 	 * @param property
 	 *            the property to test
@@ -53,27 +54,42 @@ public class NextStatePropertyTester extends PropertyTester {
 	 * @see org.eclipse.core.expressions.IPropertyTester#test(Object receiver, String property, Object[] args, Object
 	 *      expectedValue)
 	 */
-	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
+	public boolean test(Object aReceiver, String property, Object[] args, Object expectedValue) {
 
 		if (null != R4EUIModelController.getActiveReview() && !R4EUIModelController.getActiveReview().isReadOnly()) {
-			if (receiver instanceof AbstractList && ((AbstractList) receiver).size() > 0) {
-				final Object element = ((AbstractList) receiver).get(0);
-				if (element instanceof R4EUIReviewExtended) {
-					if (((R4EUIReviewExtended) element).isOpen()
-							&& 0 < ((R4EUIReviewExtended) element).getNextAvailablePhases().length) {
-						return true;
-					}
-				} else if (element instanceof R4EUIReviewBasic) {
-					if (((R4EUIReviewBasic) element).isOpen()
-							&& ((R4EReviewState) ((R4EUIReviewBasic) element).getReview().getState()).getState()
-									.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
-						return true;
-					}
-				} else if (element instanceof R4EUIAnomalyExtended) {
-					if (0 < ((R4EUIAnomalyExtended) element).getNextAvailableStates().length) {
-						return true;
-					}
-				}
+			if (aReceiver instanceof AbstractList && ((AbstractList<?>) aReceiver).size() > 0) {
+				final Object element = ((AbstractList<?>) aReceiver).get(0);
+				return testElement(element);
+			} else if (aReceiver instanceof TreeSelection) {
+				final Object element = ((TreeSelection) aReceiver).getFirstElement();
+				return testElement(element);
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Method testElement
+	 * 
+	 * @param aElement
+	 *            - Object
+	 * @return boolean
+	 */
+	private boolean testElement(Object aElement) {
+		if (aElement instanceof R4EUIReviewExtended) {
+			if (((R4EUIReviewExtended) aElement).isOpen()
+					&& 0 < ((R4EUIReviewExtended) aElement).getNextAvailablePhases().length) {
+				return true;
+			}
+		} else if (aElement instanceof R4EUIReviewBasic) {
+			if (((R4EUIReviewBasic) aElement).isOpen()
+					&& ((R4EReviewState) ((R4EUIReviewBasic) aElement).getReview().getState()).getState().equals(
+							R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
+				return true;
+			}
+		} else if (aElement instanceof R4EUIAnomalyExtended) {
+			if (0 < ((R4EUIAnomalyExtended) aElement).getNextAvailableStates().length) {
+				return true;
 			}
 		}
 		return false;

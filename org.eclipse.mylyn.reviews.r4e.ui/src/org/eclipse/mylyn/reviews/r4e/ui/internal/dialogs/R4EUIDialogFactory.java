@@ -19,6 +19,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
@@ -527,14 +528,16 @@ public class R4EUIDialogFactory {
 	/**
 	 * Method getSendNotificationInputDialog.
 	 * 
+	 * @param aSource
+	 *            - ISelection
 	 * @return ISendNotificationInputDialog
 	 */
-	public ISendNotificationInputDialog getSendNotificationInputDialog() {
-		if (null == fSendNotificationInputDialog) {
+	public ISendNotificationInputDialog getSendNotificationInputDialog(ISelection aSource) {
+		if (!UIUtils.TEST_MODE) {
 			fSendNotificationInputDialog = new SendNotificationInputDialog(R4EUIModelController.getNavigatorView()
 					.getSite()
 					.getWorkbenchWindow()
-					.getShell());
+					.getShell(), aSource);
 		}
 		return fSendNotificationInputDialog;
 	}

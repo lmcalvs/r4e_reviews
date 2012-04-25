@@ -43,8 +43,6 @@ public class FiltersContributionItems extends CompoundContributionItem {
 	@Override
 	protected IContributionItem[] getContributionItems() {
 
-		//TODO:  Eventually when we find out how to dynamically change the command label from the plugin.xml, we could migrate these
-		//		 Contributions to it and remove this class
 		final List<IContributionItem> list = new ArrayList<IContributionItem>();
 		CommandContributionItemParameter params;
 
@@ -61,10 +59,9 @@ public class FiltersContributionItems extends CompoundContributionItem {
 				.getActionSet()).getReviewFilterParticipant();
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 				R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND, R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND,
-				null, null, null, null, R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_NAME
-						+ (!reviewParticipant.equals("") ? " (" + reviewParticipant + ") " : ""),
-				R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_MNEMONIC, R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_TOOLTIP,
-				CommandContributionItem.STYLE_CHECK, null, false);
+				CommandContributionItem.STYLE_CHECK);
+		params.label = R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_NAME
+				+ (!reviewParticipant.equals("") ? " (" + reviewParticipant + ") " : "");
 		list.add(new CommandContributionItem(params));
 
 		list.add(new Separator());
@@ -77,11 +74,10 @@ public class FiltersContributionItems extends CompoundContributionItem {
 		final String assignedParticipant = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
 				.getActionSet()).getAssignedFilterParticipant();
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
-				R4EUIConstants.ASSIGN_FILTER_COMMAND, R4EUIConstants.ASSIGN_FILTER_COMMAND, null, null, null, null,
-				R4EUIConstants.ASSIGN_FILTER_NAME
-						+ (!assignedParticipant.equals("") ? " (" + assignedParticipant + ") " : ""),
-				R4EUIConstants.ASSIGN_FILTER_MNEMONIC, R4EUIConstants.ASSIGN_FILTER_TOOLTIP,
-				CommandContributionItem.STYLE_CHECK, null, false);
+				R4EUIConstants.ASSIGN_FILTER_COMMAND, R4EUIConstants.ASSIGN_FILTER_COMMAND,
+				CommandContributionItem.STYLE_CHECK);
+		params.label = R4EUIConstants.ASSIGN_FILTER_NAME
+				+ (!assignedParticipant.equals("") ? " (" + assignedParticipant + ") " : "");
 		list.add(new CommandContributionItem(params));
 
 		params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),

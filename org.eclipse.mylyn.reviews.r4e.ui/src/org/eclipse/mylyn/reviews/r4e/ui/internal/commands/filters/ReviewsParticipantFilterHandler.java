@@ -17,7 +17,10 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters;
 
+import java.util.Map;
+
 import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -28,15 +31,20 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.ReviewParticipantFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.menus.UIElement;
 import org.eclipse.ui.progress.UIJob;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ReviewsParticipantFilterHandler extends AbstractHandler {
+public class ReviewsParticipantFilterHandler extends AbstractHandler implements IElementUpdater {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -107,5 +115,20 @@ public class ReviewsParticipantFilterHandler extends AbstractHandler {
 		job.setUser(true);
 		job.schedule();
 		return null;
+	}
+
+	/**
+	 * Method updateElement.
+	 * 
+	 * @param element
+	 *            UIElement
+	 * @param parameters
+	 *            Map
+	 * @see org.eclipse.ui.commands.IElementUpdater#updateElement(UIElement, Map)
+	 */
+	public void updateElement(UIElement element, Map parameters) {
+		ICommandService commandService = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
+		Command command = commandService.getCommand(R4EUIConstants.REVIEWS_PARTICIPANT_FILTER_COMMAND);
+		element.setChecked((Boolean) command.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY).getValue());
 	}
 }

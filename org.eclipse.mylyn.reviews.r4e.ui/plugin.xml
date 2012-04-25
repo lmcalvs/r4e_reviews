@@ -439,21 +439,6 @@
                visible="true">
          </separator>
          <command
-               commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
-               icon="icons/elcl16/chgdisplay_menu.gif"
-               id="org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay"
-               label="Change Display Type"
-               mnemonic="D"
-               style="toggle"
-               tooltip="Toggle Display Type between Global Tree View and Review Tree Table View">
-            <visibleWhen
-                  checkEnabled="false">
-               <test
-                     property="org.eclipse.mylyn.reviews.r4e.ui.commands.review.reviewActive">
-               </test>
-            </visibleWhen>
-         </command>
-         <command
                commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"
                icon="icons/elcl16/lnkprop_menu.gif"
                id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkProperties"

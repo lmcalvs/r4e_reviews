@@ -1540,6 +1540,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String CHANGE_DISPLAY_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay";
 
 	/**
+	 * Field DEFAULT_DISPLAY_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay"")
+	 */
+	public static final String DEFAULT_DISPLAY_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay";
+
+	/**
 	 * Field START_STRING_INDEX. (value is 0)
 	 */
 	public static final int START_STRING_INDEX = 0;

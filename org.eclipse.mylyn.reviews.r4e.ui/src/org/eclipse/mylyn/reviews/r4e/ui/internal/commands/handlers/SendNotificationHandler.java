@@ -18,17 +18,13 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
-import java.util.AbstractSet;
-import java.util.Iterator;
-import java.util.List;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -38,10 +34,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
-import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author lmcdubo
@@ -77,40 +71,12 @@ public class SendNotificationHandler extends AbstractHandler {
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				monitor.beginTask(COMMAND_MESSAGE, 1);
 
-				final Object source = ((EvaluationContext) aEvent.getApplicationContext()).getDefaultVariable();
-				Object obj = null;
-				if (source instanceof List) {
-					if (((List<?>) source).size() > 0) {
-						final Object sourceElement = ((List<?>) source).get(0); //If this is a list, get first element
-						if (sourceElement instanceof AbstractSet) {
-							final Iterator<?> iterator = ((AbstractSet<?>) sourceElement).iterator();
-							obj = iterator.next();
-						} else {
-							obj = source;
-						}
-					} else {
-						//empty selection, try to get active editor selection
-						final IEditorPart editorPart = PlatformUI.getWorkbench()
-								.getActiveWorkbenchWindow()
-								.getActivePage()
-								.getActiveEditor(); // $codepro.audit.disable methodChainLength
+				ISelection source = HandlerUtil.getCurrentSelection(aEvent);
 
-						//Try to get the active editor highlighted range and set it as the editor's selection
-						if (null != editorPart) {
-							if (editorPart instanceof ITextEditor) {
-								obj = editorPart;
-							}
-						}
-					}
-				} else if (source instanceof AbstractSet) {
-					final Iterator<?> iterator = ((AbstractSet<?>) source).iterator();
-					obj = iterator.next();
-				}
 				//if the source is unique and is a Review element, all options are available.  Otherwise, only ask questions is supported
 				final ISendNotificationInputDialog dialog = R4EUIDialogFactory.getInstance()
-						.getSendNotificationInputDialog();
+						.getSendNotificationInputDialog(source);
 				dialog.create();
-				dialog.adjust(obj);
 				final int result = dialog.open();
 				if (result == Window.OK) {
 					final int messageType = dialog.getMessageTypeValue();
@@ -131,7 +97,7 @@ public class SendNotificationHandler extends AbstractHandler {
 							break;
 						case R4EUIConstants.MESSAGE_TYPE_QUESTION:
 							//Send question
-							MailServicesProxy.sendQuestion(obj);
+							MailServicesProxy.sendQuestion(source);
 							break;
 						case R4EUIConstants.MESSAGE_TYPE_MEETING:
 							//Send question
@@ -148,10 +114,12 @@ public class SendNotificationHandler extends AbstractHandler {
 					} catch (OutOfSyncException e) {
 						UIUtils.displaySyncErrorDialog(e);
 					}
+					monitor.worked(1);
+					monitor.done();
+					return Status.OK_STATUS;
 				}
-				monitor.worked(1);
 				monitor.done();
-				return Status.OK_STATUS;
+				return Status.CANCEL_STATUS;
 			}
 		};
 		job.setUser(true);

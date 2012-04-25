@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -137,11 +138,10 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 	private void promptCompletionNotification() {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-
+				ISelection selection = new StructuredSelection(R4EUIModelController.getActiveReview());
 				final ISendNotificationInputDialog dialog = R4EUIDialogFactory.getInstance()
-						.getSendNotificationInputDialog();
+						.getSendNotificationInputDialog(selection);
 				dialog.create();
-				dialog.adjust(R4EUIModelController.getActiveReview());
 				final int result = dialog.open();
 				if (result == Window.OK) {
 					final int messageType = dialog.getMessageTypeValue();

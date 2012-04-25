@@ -21,6 +21,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.testers;
 import java.util.AbstractList;
 
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
@@ -56,23 +57,38 @@ public class PreviousStatePropertyTester extends PropertyTester {
 	public boolean test(Object aReceiver, String aProperty, Object[] aArgs, Object aExpectedValue) {
 
 		if (null != R4EUIModelController.getActiveReview() && !R4EUIModelController.getActiveReview().isReadOnly()) {
-			if (aReceiver instanceof AbstractList && ((AbstractList) aReceiver).size() > 0) {
-				final Object element = ((AbstractList) aReceiver).get(0);
-				if (element instanceof R4EUIReviewExtended) {
-					if (null != ((R4EUIReviewExtended) element).getPreviousPhase()) {
-						return true;
-					}
-				} else if (element instanceof R4EUIReviewBasic) {
-					if (((R4EUIReviewBasic) element).isOpen()
-							&& ((R4EReviewState) ((R4EUIReviewBasic) element).getReview().getState()).getState()
-									.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-						return true;
-					}
-				} else if (element instanceof R4EUIAnomalyExtended) {
-					if (null != ((R4EUIAnomalyExtended) element).getPreviousState()) {
-						return true;
-					}
-				}
+			if (aReceiver instanceof AbstractList && ((AbstractList<?>) aReceiver).size() > 0) {
+				final Object element = ((AbstractList<?>) aReceiver).get(0);
+				return testElement(element);
+			} else if (aReceiver instanceof TreeSelection) {
+				final Object element = ((TreeSelection) aReceiver).getFirstElement();
+				return testElement(element);
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Method testElement
+	 * 
+	 * @param aElement
+	 *            - Object
+	 * @return boolean
+	 */
+	private boolean testElement(Object aElement) {
+		if (aElement instanceof R4EUIReviewExtended) {
+			if (null != ((R4EUIReviewExtended) aElement).getPreviousPhase()) {
+				return true;
+			}
+		} else if (aElement instanceof R4EUIReviewBasic) {
+			if (((R4EUIReviewBasic) aElement).isOpen()
+					&& ((R4EReviewState) ((R4EUIReviewBasic) aElement).getReview().getState()).getState().equals(
+							R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+				return true;
+			}
+		} else if (aElement instanceof R4EUIAnomalyExtended) {
+			if (null != ((R4EUIAnomalyExtended) aElement).getPreviousState()) {
+				return true;
 			}
 		}
 		return false;

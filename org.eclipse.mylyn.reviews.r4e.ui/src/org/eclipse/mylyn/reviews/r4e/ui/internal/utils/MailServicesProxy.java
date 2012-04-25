@@ -22,6 +22,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -36,8 +37,10 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
@@ -75,7 +78,6 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author lmcdubo
@@ -265,7 +267,7 @@ public class MailServicesProxy {
 	 * @throws CoreException
 	 * @throws ResourceHandlingException
 	 */
-	public static void sendQuestion(Object aSource) throws CoreException, ResourceHandlingException {
+	public static void sendQuestion(ISelection aSource) throws CoreException, ResourceHandlingException {
 		if (null != R4EUIDialogFactory.getInstance().getMailConnector()) {
 			String[] messageDestinations = null;
 			messageDestinations = createQuestionDestinations();
@@ -721,23 +723,23 @@ public class MailServicesProxy {
 	 * @param aSource
 	 *            Object
 	 * @return String
+	 * @throws CoreException
 	 */
-	private static String createQuestionMessage(Object aSource) {
+	private static String createQuestionMessage(ISelection aSource) throws CoreException {
 		final StringBuilder msgBody = new StringBuilder();
 		msgBody.append(createIntroPart());
 		msgBody.append(QUESTION_MSG_BODY);
 
-		if (aSource instanceof List) {
-			for (Object sourceElement : (List<?>) aSource) {
-				addElementInfo(msgBody, sourceElement);
+		//Act differently depending on the type of selection we get
+		if (aSource instanceof ITextSelection) {
+			addElementInfo(msgBody, aSource);
+		} else if (aSource instanceof IStructuredSelection) {
+			//Iterate through all selections
+			for (final Iterator<?> iterator = ((IStructuredSelection) aSource).iterator(); iterator.hasNext();) {
+				addElementInfo(msgBody, iterator.next());
 				msgBody.append(LINE_FEED_MSG_PART);
 			}
-		} else if (aSource instanceof IR4EUIModelElement) {
-			addElementInfo(msgBody, aSource);
-		} else if (aSource instanceof TextSelection) {
-			addElementInfo(msgBody, aSource);
 		}
-
 		msgBody.append(LINE_FEED_MSG_PART);
 		msgBody.append(createReviewInfoPart());
 		msgBody.append(createOutroPart());
@@ -751,8 +753,9 @@ public class MailServicesProxy {
 	 *            StringBuilder
 	 * @param aSource
 	 *            Object
+	 * @throws CoreException
 	 */
-	private static void addElementInfo(StringBuilder aMsgBody, Object aSource) {
+	private static void addElementInfo(StringBuilder aMsgBody, Object aSource) throws CoreException {
 		if (aSource instanceof R4EUIPostponedAnomaly) {
 			R4EFileVersion file = ((R4EUIFileContext) ((R4EUIPostponedAnomaly) aSource).getParent()).getTargetFileVersion();
 			if (null == file) {
@@ -763,8 +766,9 @@ public class MailServicesProxy {
 				if (null != path && !(path.equals(""))) {
 					aMsgBody.append("Postponed File Path (Repository): " + path + LINE_FEED_MSG_PART);
 				} else if (null != file.getResource()) {
-					aMsgBody.append("Postponed File Path (Project): " + file.getResource().getProject() + ": "
-							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("Postponed File Path (Project): " + file.getResource().getProject()
+							+ R4EUIConstants.SEPARATOR + file.getResource().getProjectRelativePath()
+							+ LINE_FEED_MSG_PART);
 				}
 				aMsgBody.append("Postponed File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
@@ -791,8 +795,9 @@ public class MailServicesProxy {
 					if (null != path && !(path.equals(""))) {
 						aMsgBody.append("File Path (Repository): " + path + LINE_FEED_MSG_PART);
 					} else if (null != file.getResource()) {
-						aMsgBody.append("File Path (Project): " + file.getResource().getProject() + ": "
-								+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+						aMsgBody.append("File Path (Project): " + file.getResource().getProject()
+								+ R4EUIConstants.SEPARATOR + file.getResource().getProjectRelativePath()
+								+ LINE_FEED_MSG_PART);
 					}
 					aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 				} else {
@@ -819,8 +824,9 @@ public class MailServicesProxy {
 					if (null != path && !(path.equals(""))) {
 						aMsgBody.append("File Path (Repository): " + path + LINE_FEED_MSG_PART);
 					} else if (null != file.getResource()) {
-						aMsgBody.append("File Path (Project): " + file.getResource().getProject() + ": "
-								+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+						aMsgBody.append("File Path (Project): " + file.getResource().getProject()
+								+ R4EUIConstants.SEPARATOR + file.getResource().getProjectRelativePath()
+								+ LINE_FEED_MSG_PART);
 					}
 					aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 				} else {
@@ -861,8 +867,9 @@ public class MailServicesProxy {
 				if (null != path && !(path.equals(""))) {
 					aMsgBody.append("Target File Path (Repository): " + path + LINE_FEED_MSG_PART);
 				} else if (null != file.getResource()) {
-					aMsgBody.append("Target File Path (Project): " + file.getResource().getProject() + ": "
-							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("Target File Path (Project): " + file.getResource().getProject()
+							+ R4EUIConstants.SEPARATOR + file.getResource().getProjectRelativePath()
+							+ LINE_FEED_MSG_PART);
 				}
 				aMsgBody.append("Target File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
@@ -875,8 +882,9 @@ public class MailServicesProxy {
 				if (null != path && !(path.equals(""))) {
 					aMsgBody.append("Base File Path (Repository): " + path + LINE_FEED_MSG_PART);
 				} else if (null != baseFile.getResource()) {
-					aMsgBody.append("Base File Path (Project): " + baseFile.getResource().getProject() + ": "
-							+ baseFile.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("Base File Path (Project): " + baseFile.getResource().getProject()
+							+ R4EUIConstants.SEPARATOR + baseFile.getResource().getProjectRelativePath()
+							+ LINE_FEED_MSG_PART);
 				}
 				aMsgBody.append("Base File Version: " + baseFile.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
@@ -893,8 +901,9 @@ public class MailServicesProxy {
 				if (null != path && !(path.equals(""))) {
 					aMsgBody.append("File Path (Repository): " + path + LINE_FEED_MSG_PART);
 				} else if (null != file.getResource()) {
-					aMsgBody.append("File Path (Project): " + file.getResource().getProject() + ": "
-							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
+					aMsgBody.append("File Path (Project): " + file.getResource().getProject()
+							+ R4EUIConstants.SEPARATOR + file.getResource().getProjectRelativePath()
+							+ LINE_FEED_MSG_PART);
 				}
 				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else {
@@ -905,28 +914,12 @@ public class MailServicesProxy {
 			aMsgBody.append("Content Line(s): " + ((R4EUIContent) aSource).getPosition().toString()
 					+ LINE_FEED_MSG_PART);
 
-		} else if (aSource instanceof ITextEditor) {
-			//Get the information from the text editor
-			final IRegion region = ((ITextEditor) aSource).getHighlightRange();
-			final IEditorInput input = ((ITextEditor) aSource).getEditorInput();
-			final TextSelection selectedText = new TextSelection(((ITextEditor) aSource).getDocumentProvider()
-					.getDocument(input), region.getOffset(), region.getLength());
-			((ITextEditor) aSource).getSelectionProvider().setSelection(selectedText);
-			R4EFileVersion file = null;
-			if (input instanceof R4EFileRevisionEditorInput) {
-				file = ((R4EFileRevisionEditorInput) input).getFileVersion();
-				aMsgBody.append("File: " + file.getRepositoryPath() + LINE_FEED_MSG_PART);
-			} else if (input instanceof R4EFileEditorInput) {
-				file = ((R4EFileEditorInput) input).getFileVersion();
-				aMsgBody.append("File: " + file.getResource().getProject() + ": "
-						+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
-			}
+		} else if (aSource instanceof IFile) {
+			aMsgBody.append("File: " + ((IFile) aSource).getProject().getName() + R4EUIConstants.SEPARATOR
+					+ ((IFile) aSource).getProjectRelativePath().toPortableString() + LINE_FEED_MSG_PART);
 			aMsgBody.append(LINE_FEED_MSG_PART);
-			aMsgBody.append("Position in File: " + CommandUtils.getPosition(selectedText).toString()
-					+ LINE_FEED_MSG_PART + LINE_FEED_MSG_PART);
-			aMsgBody.append("Contents :" + LINE_FEED_MSG_PART);
-			aMsgBody.append(selectedText.getText());
-
+			aMsgBody.append("Position in File: " + CommandUtils.getPosition((IFile) aSource).toString()
+					+ LINE_FEED_MSG_PART);
 		} else if (aSource instanceof TextSelection) {
 			final IEditorPart editorPart = PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow()
@@ -939,7 +932,7 @@ public class MailServicesProxy {
 				final ITypedElement element = ((R4ECompareEditorInput) input).getLeftElement();
 				if (element instanceof R4EFileTypedElement) {
 					final R4EFileVersion file = ((R4EFileTypedElement) element).getFileVersion();
-					aMsgBody.append("File: " + file.getResource().getProject() + ": "
+					aMsgBody.append("File: " + file.getResource().getProject() + R4EUIConstants.SEPARATOR
 							+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
 					aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 				} else if (element instanceof R4EFileRevisionTypedElement) {
@@ -953,12 +946,12 @@ public class MailServicesProxy {
 				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else if (input instanceof R4EFileEditorInput) {
 				final R4EFileVersion file = ((R4EFileEditorInput) input).getFileVersion();
-				aMsgBody.append("File: " + file.getResource().getProject() + ": "
+				aMsgBody.append("File: " + file.getResource().getProject() + R4EUIConstants.SEPARATOR
 						+ file.getResource().getProjectRelativePath() + LINE_FEED_MSG_PART);
 				aMsgBody.append("File Version: " + file.getVersionID() + LINE_FEED_MSG_PART);
 			} else if (input instanceof FileEditorInput) {
 				final IFile file = ((FileEditorInput) input).getFile();
-				aMsgBody.append("File: " + file.getProject() + ": " + file.getProjectRelativePath()
+				aMsgBody.append("File: " + file.getProject() + R4EUIConstants.SEPARATOR + file.getProjectRelativePath()
 						+ LINE_FEED_MSG_PART);
 				aMsgBody.append("File Version: (None available)" + LINE_FEED_MSG_PART);
 			}
@@ -972,7 +965,8 @@ public class MailServicesProxy {
 			//NOTE:  This is always true because all elements that implement ISourceReference
 			//       also implement IJavaElement.  The resource is always an IFile
 			final IFile file = (IFile) ((IJavaElement) aSource).getResource();
-			aMsgBody.append("File: " + file.getProject() + ": " + file.getProjectRelativePath() + LINE_FEED_MSG_PART);
+			aMsgBody.append("File: " + file.getProject() + R4EUIConstants.SEPARATOR + file.getProjectRelativePath()
+					+ LINE_FEED_MSG_PART);
 			aMsgBody.append("File Version: (None available)" + LINE_FEED_MSG_PART);
 			try {
 				final R4EUITextPosition position = CommandUtils.getPosition((ISourceReference) aSource, file);
@@ -990,7 +984,7 @@ public class MailServicesProxy {
 				file = (IFile) ((org.eclipse.cdt.core.model.ICElement) aSource).getParent().getResource();
 			}
 			if (null != file) {
-				aMsgBody.append("File: " + file.getProject() + ": " + file.getProjectRelativePath()
+				aMsgBody.append("File: " + file.getProject() + R4EUIConstants.SEPARATOR + file.getProjectRelativePath()
 						+ LINE_FEED_MSG_PART);
 				aMsgBody.append("File Version: (None available)" + LINE_FEED_MSG_PART);
 				try {

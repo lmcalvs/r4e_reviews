@@ -18,9 +18,11 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
-import java.util.List;
+import java.util.Iterator;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
@@ -92,6 +94,11 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field fElement.
+	 */
+	private final ISelection fSource;
+
+	/**
 	 * Field fMessageType.
 	 */
 	private int fMessageType;
@@ -131,8 +138,9 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 	 * @param aParentShell
 	 *            Shell
 	 */
-	public SendNotificationInputDialog(Shell aParentShell) {
+	public SendNotificationInputDialog(Shell aParentShell, ISelection aSource) {
 		super(aParentShell);
+		fSource = aSource;
 		setBlockOnOpen(true);
 	}
 
@@ -237,50 +245,32 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 		fMeetingButton.setToolTipText(R4EUIConstants.MEETING_REQUEST_TOOLTIP);
 		fMeetingButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 
-		/*
-		//Look for Review Element
-		Object elementFound = null;
-		if (fSource instanceof List) {
-			for (Object sourceElement : (List<?>) fSource) {
-				elementFound = sourceElement;
-				if (elementFound instanceof R4EUIReviewBasic) {
-					break;
+		//Act differently depending on the type of selection we get
+		if (fSource instanceof IStructuredSelection) {
+			//Iterate through all selections
+			for (final Iterator<?> iterator = ((IStructuredSelection) fSource).iterator(); iterator.hasNext();) {
+				Object selection = iterator.next();
+				if (selection instanceof R4EUIReviewBasic) {
+					fCompletionButton.setEnabled(true);
+					fQuestionButton.setEnabled(true);
+					fItemsUpdatedButton.setEnabled(true);
+					fProgressButton.setEnabled(true);
+					fMeetingButton.setEnabled(true);
+					if (((R4EUIReviewBasic) selection).isUserReviewed()) {
+						fCompletionButton.setSelection(true);
+					} else {
+						fProgressButton.setSelection(true);
+					}
+					return;
 				}
 			}
-		} else {
-			elementFound = fSource;
 		}
-
-		//Email/Notification type radio button
-		if (elementFound instanceof R4EUIReviewBasic) {
-			if (((R4EUIReviewBasic) elementFound).isUserReviewed()) {
-				fCompletionButton = toolkit.createButton(basicSectionClient, REVIEW_COMPLETION, SWT.RADIO);
-				fCompletionButton.setSelection(true);
-				fCompletionButton.setToolTipText(R4EUIConstants.NOTIFICATION_COMPLETION_TOOLTIP);
-				fCompletionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-			} else {
-				fItemsUpdatedButton = toolkit.createButton(basicSectionClient, UPDATED_REVIEW_ITEMS, SWT.RADIO);
-				fItemsUpdatedButton.setToolTipText(R4EUIConstants.NOTIFICATION_ITEMS_UPDATED_TOOLTIP);
-				fItemsUpdatedButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-
-				fProgressButton = toolkit.createButton(basicSectionClient, REVIEW_PROGRESS, SWT.RADIO);
-				fProgressButton.setToolTipText(R4EUIConstants.NOTIFICATION_PROGRESS_TOOLTIP);
-				fProgressButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-
-				fQuestionButton = toolkit.createButton(basicSectionClient, QUESTION, SWT.RADIO);
-				fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
-				fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-
-				fMeetingButton = toolkit.createButton(basicSectionClient, MEETING_REQUEST, SWT.RADIO);
-				fMeetingButton.setToolTipText(R4EUIConstants.MEETING_REQUEST_TOOLTIP);
-				fMeetingButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-			}
-		} else {
-			fQuestionButton = toolkit.createButton(basicSectionClient, QUESTION, SWT.RADIO);
-			fQuestionButton.setToolTipText(R4EUIConstants.NOTIFICATION_QUESTION_TOOLTIP);
-			fQuestionButton.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		}
-		*/
+		fCompletionButton.setEnabled(false);
+		fQuestionButton.setEnabled(true);
+		fQuestionButton.setSelection(true);
+		fItemsUpdatedButton.setEnabled(false);
+		fProgressButton.setEnabled(false);
+		fMeetingButton.setEnabled(false);
 	}
 
 	/**
@@ -300,46 +290,5 @@ public class SendNotificationInputDialog extends FormDialog implements ISendNoti
 	 */
 	public int getMessageTypeValue() {
 		return fMessageType;
-	}
-
-	/**
-	 * Method adjust.
-	 * 
-	 * @param aSource
-	 *            Object
-	 */
-	public void adjust(Object aSource) {
-		//Look for Review Element
-		Object elementFound = null;
-		if (aSource instanceof List) {
-			for (Object sourceElement : (List<?>) aSource) {
-				elementFound = sourceElement;
-				if (elementFound instanceof R4EUIReviewBasic) {
-					break;
-				}
-			}
-		} else {
-			elementFound = aSource;
-		}
-
-		if (elementFound instanceof R4EUIReviewBasic) {
-			fCompletionButton.setVisible(true);
-			fQuestionButton.setVisible(true);
-			fItemsUpdatedButton.setVisible(true);
-			fProgressButton.setVisible(true);
-			fMeetingButton.setVisible(true);
-			if (((R4EUIReviewBasic) elementFound).isUserReviewed()) {
-				fCompletionButton.setSelection(true);
-			} else {
-				fProgressButton.setSelection(true);
-			}
-		} else {
-			fCompletionButton.setVisible(false);
-			fQuestionButton.setVisible(true);
-			fQuestionButton.setSelection(true);
-			fItemsUpdatedButton.setVisible(false);
-			fProgressButton.setVisible(false);
-			fMeetingButton.setVisible(false);
-		}
 	}
 }

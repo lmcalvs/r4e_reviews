@@ -308,7 +308,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		//Apply default filters
 		final IEvaluationService evService = (IEvaluationService) getSite().getWorkbenchWindow().getService(
 				IEvaluationService.class);
-		evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay");
+		evService.requestEvaluation(R4EUIConstants.DEFAULT_DISPLAY_COMMAND);
 		applyDefaultFilters();
 		getTreeViewer().setComparator(null);
 

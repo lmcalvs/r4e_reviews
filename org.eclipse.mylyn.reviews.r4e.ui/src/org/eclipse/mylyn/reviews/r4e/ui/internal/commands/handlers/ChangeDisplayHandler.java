@@ -18,6 +18,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
+import java.util.Map;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -26,14 +28,18 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorTreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.menus.UIElement;
 import org.eclipse.ui.services.IEvaluationService;
 
 /**
  * @author lmcdubo
  * @version $Revision: 1.0 $
  */
-public class ChangeDisplayHandler extends AbstractHandler {
+public class ChangeDisplayHandler extends AbstractHandler implements IElementUpdater {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -73,7 +79,7 @@ public class ChangeDisplayHandler extends AbstractHandler {
 
 				final IEvaluationService evService = (IEvaluationService) HandlerUtil.getActiveWorkbenchWindowChecked(
 						aEvent).getService(IEvaluationService.class);
-				evService.requestEvaluation("org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay");
+				evService.requestEvaluation(R4EUIConstants.DEFAULT_DISPLAY_COMMAND);
 				evService.requestEvaluation(R4EUIConstants.CHANGE_DISPLAY_COMMAND);
 				evService.requestEvaluation(R4EUIConstants.PREVIOUS_STATE_ELEMENT_COMMAND);
 				evService.requestEvaluation(R4EUIConstants.NEXT_STATE_ELEMENT_COMMAND);
@@ -93,5 +99,20 @@ public class ChangeDisplayHandler extends AbstractHandler {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Method updateElement.
+	 * 
+	 * @param element
+	 *            UIElement
+	 * @param parameters
+	 *            Map
+	 * @see org.eclipse.ui.commands.IElementUpdater#updateElement(UIElement, Map)
+	 */
+	public void updateElement(UIElement element, Map parameters) {
+		ICommandService commandService = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
+		Command command = commandService.getCommand("org.eclipse.mylyn.reviews.r4e.ui.commands.changeDisplay");
+		element.setChecked((Boolean) command.getState(R4EUIConstants.TOGGLE_STATE_COMMAND_KEY).getValue());
 	}
 }
