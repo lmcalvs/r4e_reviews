@@ -219,7 +219,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="resource" eType="#//IResource"
         transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="localVersionID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileRevision" eType="#//IFileRevision"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileRevision" eType="#//IFileRevision"
+        transient="true" defaultValueLiteral="" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="infoAtt" upperBound="-1"
         eType="#//MapKeyToInfoAttributes" containment="true"/>
   </eClassifiers>

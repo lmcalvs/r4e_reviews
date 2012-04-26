@@ -817,12 +817,12 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc --> <!-- end-user-doc --> <br>
+	 * This is a transient field from version 0.10, the value is derived at loading so the null is only to support
+	 * reading reviews created before 0.10
 	 */
 	public IFileRevision createIFileRevisionFromString(EDataType eDataType, String initialValue) {
-		return (IFileRevision)super.createFromString(eDataType, initialValue);
+		return null;
 	}
 
 	/**

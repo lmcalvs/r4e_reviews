@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
+import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 import org.eclipse.team.core.history.IFileRevision;
@@ -183,7 +184,7 @@ public class R4EFileVersionImpl extends EObjectImpl implements R4EFileVersion {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final IFileRevision FILE_REVISION_EDEFAULT = null;
+	protected static final IFileRevision FILE_REVISION_EDEFAULT = (IFileRevision)RModelFactory.eINSTANCE.createFromString(RModelPackage.eINSTANCE.getIFileRevision(), "");
 
 	/**
 	 * The cached value of the '{@link #getFileRevision() <em>File Revision</em>}' attribute.

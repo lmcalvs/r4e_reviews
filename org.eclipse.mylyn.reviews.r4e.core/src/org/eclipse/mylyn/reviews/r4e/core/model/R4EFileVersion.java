@@ -203,6 +203,7 @@ public interface R4EFileVersion extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>File Revision</b></em>' attribute.
+	 * The default value is <code>""</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>File Revision</em>' attribute isn't clear,
@@ -212,7 +213,7 @@ public interface R4EFileVersion extends EObject {
 	 * @return the value of the '<em>File Revision</em>' attribute.
 	 * @see #setFileRevision(IFileRevision)
 	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EFileVersion_FileRevision()
-	 * @model dataType="org.eclipse.mylyn.reviews.r4e.core.model.IFileRevision"
+	 * @model default="" dataType="org.eclipse.mylyn.reviews.r4e.core.model.IFileRevision" transient="true" derived="true"
 	 * @generated
 	 */
 	IFileRevision getFileRevision();
