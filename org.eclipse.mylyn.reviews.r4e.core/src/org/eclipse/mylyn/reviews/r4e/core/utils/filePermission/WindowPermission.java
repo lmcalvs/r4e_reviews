@@ -49,7 +49,7 @@ public class WindowPermission extends BaseSupportCommand implements
 		command.add("icacls");
 		command.add(dir); // filename or directory to modify
 		command.add("/grant");
-		command.add("Everyone:F");
+		command.add("*S-1-1-0:F");
 		if (isDirectory) {
 			command.add("/T"); // Change ACLs recursively
 		}

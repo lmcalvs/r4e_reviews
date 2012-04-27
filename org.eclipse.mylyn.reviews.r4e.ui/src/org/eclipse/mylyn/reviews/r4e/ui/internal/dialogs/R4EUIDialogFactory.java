@@ -20,6 +20,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.mylyn.reviews.notifications.core.NotificationsCore;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
@@ -37,6 +38,15 @@ import org.eclipse.swt.widgets.Display;
  */
 @SuppressWarnings("restriction")
 public class R4EUIDialogFactory {
+
+	// ------------------------------------------------------------------------
+	// Constants
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Field MAIL_CONNECTOR_IDS.
+	 */
+	private static final String[] MAIL_CONNECTOR_IDS = { "reviews.r4e.mail.outlook.connector" }; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Members
@@ -617,8 +627,7 @@ public class R4EUIDialogFactory {
 	 */
 	public NotificationsConnector getMailConnector() {
 		if (!UIUtils.TEST_MODE) {
-			fNotificationsConnector = R4EUIModelController.getMailConnector();
-			return fNotificationsConnector;
+			return NotificationsCore.getFirstEnabled(MAIL_CONNECTOR_IDS);
 		}
 		return fNotificationsConnector; //Test mode: return mockup reference
 	}

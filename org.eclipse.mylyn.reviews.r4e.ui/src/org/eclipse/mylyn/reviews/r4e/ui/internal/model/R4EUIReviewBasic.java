@@ -55,6 +55,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers.ImportPostponedHandler;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ReviewProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
@@ -824,7 +825,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 */
 	public void refreshMeetingData() throws ResourceHandlingException, OutOfSyncException {
-		final NotificationsConnector mailConnector = R4EUIModelController.getMailConnector();
+		final NotificationsConnector mailConnector = R4EUIDialogFactory.getInstance().getMailConnector();
 		final R4EMeetingData coreMeetingData = fReview.getActiveMeeting();
 		final ResourceUpdater resUpdater = R4EUIModelController.FResourceUpdater;
 

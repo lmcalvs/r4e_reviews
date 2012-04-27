@@ -37,8 +37,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
 import org.eclipse.mylyn.reviews.frame.core.model.Topic;
-import org.eclipse.mylyn.reviews.notifications.core.NotificationsCore;
-import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
@@ -66,15 +64,6 @@ import org.eclipse.ui.services.IEvaluationService;
  * @version $Revision: 1.0 $
  */
 public class R4EUIModelController {
-
-	// ------------------------------------------------------------------------
-	// Constants
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Field MAIL_CONNECTOR_IDS.
-	 */
-	private static final String[] MAIL_CONNECTOR_IDS = { "reviews.r4e.mail.outlook.connector" }; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -125,11 +114,6 @@ public class R4EUIModelController {
 	 */
 	private static final Map<String, List<R4EAnomaly>> FFileAnomalyMap = new HashMap<String, List<R4EAnomaly>>(32,
 			0.75f); // $codepro.audit.disable constantNamingConvention
-
-	/**
-	 * Field FMailConnector.
-	 */
-	private static NotificationsConnector FMailConnector = null;
 
 	/**
 	 * Field fFocusElement.
@@ -311,9 +295,6 @@ public class R4EUIModelController {
 		if (loadErrors.size() > 0) {
 			UIUtils.displayFailedLoadDialog(loadErrors);
 		}
-
-		//Verify Mail Connectivity
-		FMailConnector = NotificationsCore.getFirstEnabled(MAIL_CONNECTOR_IDS);
 	}
 
 	/**
@@ -530,15 +511,6 @@ public class R4EUIModelController {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Method getMailConnector.
-	 * 
-	 * @return NotificationsConnector
-	 */
-	public static NotificationsConnector getMailConnector() {
-		return FMailConnector;
 	}
 
 	/**
