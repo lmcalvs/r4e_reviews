@@ -298,6 +298,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 			fNumChangesColumnWeight = (int) ((numChangesColumnWidth / totalWidth) * 100);
 			fNumAnomaliesColumnWeight = (int) ((numAnomaliesColumnWidth / totalWidth) * 100);
 		}
+		fIsDefaultDisplay = true;
 
 		//Remove Tree Table filters
 		final TreeTableFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
@@ -338,8 +339,6 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		}
 		Object[] elementsToExpand = updatedExpandedElements.toArray(new Object[updatedExpandedElements.size()]);
 		setExpandedElements(elementsToExpand);
-
-		fIsDefaultDisplay = true;
 	}
 
 	/**
@@ -375,6 +374,7 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		//Set Tree Table Filters (shows only Review Items and Files for current review
 		final TreeTableFilter filter = ((ReviewNavigatorActionGroup) R4EUIModelController.getNavigatorView()
 				.getActionSet()).getTreeTableFilter();
+		fIsDefaultDisplay = false;
 
 		//Save Default Tree input and adjust Tree Table input
 		fDefaultInput = this.getInput();
@@ -390,7 +390,6 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		//Refresh Display	
 		this.getTree().getParent().layout();
 		setExpandedElements(expandedElements);
-		fIsDefaultDisplay = false;
 	}
 
 	/**
