@@ -101,7 +101,7 @@ public class R4EWriter extends RWCommon implements IModelWriter {
 		
 		// Mark new folder creation
 		URI folderUri = ResourceUtils.getFolderPath(resUri);
-		File folder = new File(folderUri.toString());
+		File folder = new File(URI.decode(folderUri.devicePath()));
 		boolean newFolder = !folder.exists();
 		
 		// Mark new file creation
