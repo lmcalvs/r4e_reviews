@@ -305,7 +305,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setEnabled(boolean)
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {

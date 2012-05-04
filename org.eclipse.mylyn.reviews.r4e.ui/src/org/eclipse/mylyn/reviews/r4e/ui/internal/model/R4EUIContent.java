@@ -102,7 +102,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 
 		//Remove check on parent, since at least one children is not set anymore
 		try {
-			getParent().getParent().setUserReviewed(false, false);
+			getParent().getParent().setUserReviewed(false, false, true);
 		} catch (OutOfSyncException e) {
 			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
@@ -174,27 +174,33 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	 *            boolean
 	 * @param aSetChildren
 	 *            boolean
+	 * @param aUpdateModel
+	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean, boolean,
+	 *      boolean)
 	 */
 	@Override
-	public void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws ResourceHandlingException,
-			OutOfSyncException {
+	public void setUserReviewed(boolean aReviewed, boolean aSetChildren, boolean aUpdateModel)
+			throws ResourceHandlingException, OutOfSyncException {
 		if (fUserReviewed != aReviewed) { //Reviewed state is changed
 			fUserReviewed = aReviewed;
 			if (fUserReviewed) {
-				//Add delta to the reviewedContent for this user
-				addContentReviewed();
-
+				if (aUpdateModel) {
+					//Add delta to the reviewedContent for this user
+					addContentReviewed();
+				}
 				//Check to see if we should mark the parent reviewed as well
-				getParent().getParent().checkToSetUserReviewed();
+				getParent().getParent().checkToSetUserReviewed(aUpdateModel);
 			} else {
-				//Remove delta from the reviewedContent for this user
-				removeContentReviewed();
+				if (aUpdateModel) {
+					//Remove delta from the reviewedContent for this user
+					removeContentReviewed();
+				}
 
 				//Remove check on parent, since at least one children is not set anymore
-				getParent().getParent().setUserReviewed(fUserReviewed, false);
+				getParent().getParent().setUserReviewed(fUserReviewed, false, aUpdateModel);
 			}
 		}
 	}
@@ -202,22 +208,27 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	/**
 	 * Method setChildrenReviewed.
 	 * 
+	 * @param aUpdateModel
+	 *            - flag that is used to see whether we should also update the serialization model
 	 * @param aReviewed
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setChildUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setChildUserReviewed(boolean, boolean)
 	 */
 	@Override
-	public void setChildUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
+	public void setChildUserReviewed(boolean aReviewed, boolean aUpdateModel) throws ResourceHandlingException,
+			OutOfSyncException {
 		if (fUserReviewed != aReviewed) { //Reviewed state is changed
 			fUserReviewed = aReviewed;
-			if (aReviewed) {
-				//Add delta to the reviewedContent for this user
-				addContentReviewed();
-			} else {
-				//Remove delta from the reviewedContent for this user
-				removeContentReviewed();
+			if (aUpdateModel) {
+				if (aReviewed) {
+					//Add delta to the reviewedContent for this user
+					addContentReviewed();
+				} else {
+					//Remove delta from the reviewedContent for this user
+					removeContentReviewed();
+				}
 			}
 			fUserReviewed = aReviewed;
 		}
@@ -266,7 +277,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setEnabled(boolean)
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {

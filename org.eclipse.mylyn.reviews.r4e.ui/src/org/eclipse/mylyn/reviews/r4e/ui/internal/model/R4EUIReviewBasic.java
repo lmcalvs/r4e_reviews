@@ -484,6 +484,47 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method verifyUserReviewed.
+	 */
+	public void verifyUserReviewed() {
+		//Verify if children should be marked as user reviewed
+		for (R4EUIReviewItem checkItem : fItems) {
+			checkItem.verifyUserReviewed();
+		}
+
+		//Now check if we should update the Review reviewed state
+		boolean allChildrenReviewed = true;
+		final int length = fItems.size();
+		for (int i = 0; i < length; i++) {
+			if (!(fItems.get(i).isUserReviewed())) {
+				allChildrenReviewed = false;
+			}
+		}
+		//If all children are reviewed, mark the parent as reviewed as well
+		if (allChildrenReviewed) {
+			fUserReviewed = true;
+		} else {
+			fUserReviewed = false;
+		}
+
+		//Set Serialization model as well
+		try {
+			final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), false);
+			if (null != participant) {
+				if (participant.isReviewCompleted() != fUserReviewed) {
+					setUserReviewed(fUserReviewed, false, true);
+				}
+			}
+		} catch (OutOfSyncException e) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		} catch (ResourceHandlingException e) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		}
+	}
+
+	/**
 	 * Method isReviewed.
 	 * 
 	 * @return boolean
@@ -511,19 +552,24 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 *            boolean
 	 * @param aSetChildren
 	 *            boolean
+	 * @param aUpdateModel
+	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean, boolean,
+	 *      boolean)
 	 */
 	@Override
-	public void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws ResourceHandlingException,
-			OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
-		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), false);
-		if (null != participant) {
-			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview,
-					R4EUIModelController.getReviewer());
-			participant.setReviewCompleted(aReviewed);
-			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	public void setUserReviewed(boolean aReviewed, boolean aSetChildren, boolean aUpdateModel)
+			throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+		if (aUpdateModel) {
+			final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), false);
+			if (null != participant) {
+				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview,
+						R4EUIModelController.getReviewer());
+				participant.setReviewCompleted(aReviewed);
+				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+			}
 		}
 		fUserReviewed = aReviewed;
 
@@ -531,7 +577,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			//Also set the children
 			final int length = fItems.size();
 			for (int i = 0; i < length; i++) {
-				fItems.get(i).setUserReviewed(aReviewed, aSetChildren);
+				fItems.get(i).setUserReviewed(aReviewed, aSetChildren, aUpdateModel);
 			}
 		}
 	}
@@ -539,12 +585,14 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	/**
 	 * Method checkToSetReviewed.
 	 * 
+	 * @param aUpdateModel
+	 *            - flag that is used to see whether we should also update the serialization model
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#checkToSetUserReviewed()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#checkToSetUserReviewed(boolean)
 	 */
 	@Override
-	public void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException {
+	public void checkToSetUserReviewed(boolean aUpdateModel) throws ResourceHandlingException, OutOfSyncException {
 		boolean allChildrenReviewed = true;
 		final int length = fItems.size();
 		for (int i = 0; i < length; i++) {
@@ -554,14 +602,15 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		}
 		//If all children are reviewed, mark the parent as reviewed as well
 		if (allChildrenReviewed) {
-			final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
-			if (null != participant) {
-				final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview,
-						R4EUIModelController.getReviewer());
-				participant.setReviewCompleted(true);
-				R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+			if (aUpdateModel) {
+				final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
+				if (null != participant) {
+					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview,
+							R4EUIModelController.getReviewer());
+					participant.setReviewCompleted(true);
+					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+				}
 			}
-
 			fUserReviewed = true;
 		}
 	}
@@ -618,19 +667,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			final EList<Item> items = fReview.getReviewItems();
 			if (null != items) {
 
-				//Remove user reviewed check by default.  It will be re-evaluated later
-				try {
-					setUserReviewed(false, false);
-				} catch (OutOfSyncException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-				} catch (ResourceHandlingException e) {
-					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-					R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-				}
-
 				IR4EUIModelElement uiItem = null;
-
 				R4EUIModelController.mapAnomalies(fReview);
 				final int itemsSize = items.size();
 				R4EItem item = null;
@@ -674,11 +711,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					}
 				}
 
-				//Verify if children should be marked as user reviewed
-				for (R4EUIReviewItem checkItem : fItems) {
-					checkItem.verifyUserReviewed();
-				}
-
+				verifyUserReviewed();
 			}
 
 			fAnomalyContainer.setReadOnly(fReadOnly);
@@ -762,7 +795,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 * @throws CompatibilityException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setEnabled(boolean)
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException,
@@ -1110,8 +1143,10 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 *            String
 	 * @return R4EUIReviewItem
 	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
 	 */
-	public R4EUIReviewItem createResourceReviewItem(String aFilename) throws ResourceHandlingException {
+	public R4EUIReviewItem createResourceReviewItem(String aFilename) throws ResourceHandlingException,
+			OutOfSyncException {
 
 		//Create and set review item model element
 		final R4EParticipant participant = getParticipant(R4EUIModelController.getReviewer(), true);
@@ -1123,6 +1158,10 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name,
 				R4EUIConstants.REVIEW_ITEM_TYPE_RESOURCE);
 		addChildren(uiReviewItem);
+
+		//If parent review if marked as Reviewed, unmark it
+		setUserReviewed(false, false, true);
+
 		return uiReviewItem;
 	}
 
@@ -1162,6 +1201,10 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		final R4EUIReviewItem uiReviewItem = new R4EUIReviewItem(this, reviewItem, name,
 				R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT);
 		addChildren(uiReviewItem);
+
+		//If parent review if marked as Reviewed, unmark it
+		setUserReviewed(false, false, true);
+
 		return uiReviewItem;
 	}
 

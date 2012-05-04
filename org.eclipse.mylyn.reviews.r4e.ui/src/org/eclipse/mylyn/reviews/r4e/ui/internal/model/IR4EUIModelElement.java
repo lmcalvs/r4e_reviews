@@ -129,10 +129,13 @@ public interface IR4EUIModelElement {
 	 *            - the reviewed flag (true/false)
 	 * @param aSetChildren
 	 *            - flag that is used to see whether we should also update child elements
+	 * @param aUpdateModel
+	 *            - flag that is used to see whether we should also update the serialization model
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws ResourceHandlingException, OutOfSyncException;
+	void setUserReviewed(boolean aReviewed, boolean aSetChildren, boolean aUpdateModel)
+			throws ResourceHandlingException, OutOfSyncException;
 
 	/**
 	 * Sets the enabled flag. Take note that this is not applicable to all model elements
@@ -166,18 +169,23 @@ public interface IR4EUIModelElement {
 	 * 
 	 * @param aReviewed
 	 *            - the reviewed state
+	 * @param aUpdateModel
+	 *            - flag that is used to see whether we should also update the serialization model
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
-	void setChildUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException;
+	void setChildUserReviewed(boolean aReviewed, boolean aUpdateModel) throws ResourceHandlingException,
+			OutOfSyncException;
 
 	/**
 	 * Checks if all the children of this parent are set as reviewed
 	 * 
+	 * @param aUpdateModel
+	 *            - flag that is used to see whether we should also update the serialization model
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
 	 */
-	void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException;
+	void checkToSetUserReviewed(boolean aUpdateModel) throws ResourceHandlingException, OutOfSyncException;
 
 	/**
 	 * Open the model element (i.e. enable it)

@@ -1063,6 +1063,26 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	//	also be used in headless mode
 
 	/**
+	 * Method getUser.
+	 * 
+	 * @return String
+	 */
+	public String getUser() {
+		return fUserIdTextField.getText();
+
+	}
+
+	/**
+	 * Method setUser.
+	 * 
+	 * @param aUser
+	 *            - String
+	 */
+	public void setUser(String aUser) {
+		fUserIdTextField.setText(aUser);
+	}
+
+	/**
 	 * Method addGroupPrefs.
 	 * 
 	 * @param aGroupPath

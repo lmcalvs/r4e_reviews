@@ -78,7 +78,6 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public static final String SET_IMAGE_MESSAGE = "Setting Images"; //$NON-NLS-1$
 
-	
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -317,12 +316,15 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 *            boolean
 	 * @param aSetChildren
 	 *            boolean
+	 * @param aUpdateModel
+	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean, boolean,
+	 *      boolean)
 	 */
-	public void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws OutOfSyncException,
-			ResourceHandlingException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+	public void setUserReviewed(boolean aReviewed, boolean aSetChildren, boolean aUpdateModel)
+			throws OutOfSyncException, ResourceHandlingException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
 		//default implementation
 	}
 
@@ -334,7 +336,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 * @throws CompatibilityException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setEnabled(boolean)
 	 */
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException,
 			CompatibilityException { // $codepro.audit.disable emptyMethod
@@ -367,24 +369,29 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	/**
 	 * Method setChildUserReviewed.
 	 * 
+	 * @param aUpdateModel
+	 *            - flag that is used to see whether we should also update the serialization model
 	 * @param aReviewed
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setChildUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setChildUserReviewed(boolean, boolean)
 	 */
-	public void setChildUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
+	public void setChildUserReviewed(boolean aReviewed, boolean aUpdateModel) throws ResourceHandlingException,
+			OutOfSyncException { // $codepro.audit.disable emptyMethod, unnecessaryExceptions
 		// default implementation
 	}
 
 	/**
 	 * Method checkToSetUserReviewed.
 	 * 
+	 * @param aUpdateModel
+	 *            - flag that is used to see whether we should also update the serialization model
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#checkToSetUserReviewed()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#checkToSetUserReviewed(boolean)
 	 */
-	public void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
+	public void checkToSetUserReviewed(boolean aUpdateModel) throws ResourceHandlingException, OutOfSyncException { // $codepro.audit.disable emptyMethod
 		// default implementation
 	}
 

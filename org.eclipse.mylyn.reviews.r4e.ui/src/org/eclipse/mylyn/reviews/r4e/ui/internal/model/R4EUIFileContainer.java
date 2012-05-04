@@ -123,7 +123,7 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setEnabled(boolean)
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {
@@ -211,10 +211,8 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 				//Check if the file contexts are part of the reviewed content
 				for (R4EUIFileContext uiFile : fFileContexts) {
 					uiFile.verifyUserReviewed();
-				}
-				for (R4EUIFileContext uiFile : fFileContexts) {
 					if (user.getReviewedContent().contains(uiFile.getFileContext().getId())) {
-						uiFile.setUserReviewed(true, true);
+						uiFile.setUserReviewed(true, true, false);
 					}
 				}
 			}

@@ -225,34 +225,41 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 *            boolean
 	 * @param aSetChildren
 	 *            boolean
+	 * @param aUpdateModel
+	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean, boolean,
+	 *      boolean)
 	 */
 	@Override
-	public void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws ResourceHandlingException,
-			OutOfSyncException {
+	public void setUserReviewed(boolean aReviewed, boolean aSetChildren, boolean aUpdateModel)
+			throws ResourceHandlingException, OutOfSyncException {
 		if (fUserReviewed != aReviewed) { //Reviewed state is changed
 			fUserReviewed = aReviewed;
 			if (fUserReviewed) {
-				//Add delta to the reviewedContent for this user
-				addContentReviewed();
+				if (aUpdateModel) {
+					//Add delta to the reviewedContent for this user
+					addContentReviewed();
+				}
 
 				//Check to see if we should mark the parent reviewed as well
-				getParent().checkToSetUserReviewed();
+				getParent().checkToSetUserReviewed(aUpdateModel);
 			} else {
-				//Remove delta from the reviewedContent for this user
-				removeContentReviewed();
+				if (aUpdateModel) {
+					//Remove delta from the reviewedContent for this user
+					removeContentReviewed();
+				}
 
 				//Remove check on parent, since at least one children is not set anymore
-				getParent().setUserReviewed(fUserReviewed, false);
+				getParent().setUserReviewed(fUserReviewed, false, aUpdateModel);
 			}
 
 			if (aSetChildren) {
 				//Also set the children
 				final int length = fContentsContainer.getChildren().length;
 				for (int i = 0; i < length; i++) {
-					fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
+					fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed, aUpdateModel);
 				}
 			}
 		}
@@ -291,27 +298,32 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	/**
 	 * Method setChildrenReviewed.
 	 * 
+	 * @param aUpdateModel
+	 *            - flag that is used to see whether we should also update the serialization model
 	 * @param aReviewed
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setChildUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setChildUserReviewed(boolean, boolean)
 	 */
 	@Override
-	public void setChildUserReviewed(boolean aReviewed) throws ResourceHandlingException, OutOfSyncException {
+	public void setChildUserReviewed(boolean aReviewed, boolean aUpdateModel) throws ResourceHandlingException,
+			OutOfSyncException {
 		if (fUserReviewed != aReviewed) { //Reviewed state is changed
 			fUserReviewed = aReviewed;
-			if (aReviewed) {
-				//Add delta to the reviewedContent for this user
-				addContentReviewed();
-			} else {
-				//Remove delta from the reviewedContent for this user
-				removeContentReviewed();
+			if (aUpdateModel) {
+				if (aReviewed) {
+					//Add delta to the reviewedContent for this user
+					addContentReviewed();
+				} else {
+					//Remove delta from the reviewedContent for this user
+					removeContentReviewed();
+				}
 			}
 			//Also set the children
 			final int length = fContentsContainer.getChildren().length;
 			for (int i = 0; i < length; i++) {
-				fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed);
+				fContentsContainer.getChildren()[i].setChildUserReviewed(aReviewed, aUpdateModel);
 			}
 			fUserReviewed = aReviewed;
 		}
@@ -320,12 +332,14 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	/**
 	 * Method checkToSetReviewed.
 	 * 
+	 * @param aUpdateModel
+	 *            - flag that is used to see whether we should also update the serialization model
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#checkToSetUserReviewed()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#checkToSetUserReviewed(boolean)
 	 */
 	@Override
-	public void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException {
+	public void checkToSetUserReviewed(boolean aUpdateModel) throws ResourceHandlingException, OutOfSyncException {
 		boolean allChildrenReviewed = true;
 		final int length = fContentsContainer.getChildren().length;
 		for (int i = 0; i < length; i++) {
@@ -336,8 +350,10 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		//If all children are reviewed, mark the parent as reviewed as well
 		if (allChildrenReviewed) {
 			fUserReviewed = true;
-			addContentReviewed();
-			getParent().checkToSetUserReviewed();
+			if (aUpdateModel) {
+				addContentReviewed();
+			}
+			getParent().checkToSetUserReviewed(aUpdateModel);
 		}
 	}
 
@@ -384,7 +400,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setEnabled(boolean)
 	 */
 	@Override
 	public void setEnabled(boolean aEnabled) throws ResourceHandlingException, OutOfSyncException {

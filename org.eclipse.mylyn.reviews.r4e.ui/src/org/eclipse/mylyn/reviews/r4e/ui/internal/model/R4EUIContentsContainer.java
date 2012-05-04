@@ -209,7 +209,7 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 				//Check if the file contexts are part of the reviewed content
 				for (R4EUIContent uiContent : fContents) {
 					if (user.getReviewedContent().contains(uiContent.getContent().getId())) {
-						uiContent.setUserReviewed(true, true);
+						uiContent.setUserReviewed(true, true, false);
 					}
 				}
 			}

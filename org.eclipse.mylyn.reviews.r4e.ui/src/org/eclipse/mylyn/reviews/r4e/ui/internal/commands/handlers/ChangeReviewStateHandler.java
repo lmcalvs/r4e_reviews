@@ -115,10 +115,10 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 								}
 								R4EUIPlugin.Ftracer.traceInfo("Changing Reviewed State for Element " //$NON-NLS-1$
 										+ ((IR4EUIModelElement) element).getName());
+								boolean newValue = !(((IR4EUIModelElement) element).isUserReviewed());
 
-								//Execute
-								((IR4EUIModelElement) element).setUserReviewed(
-										!(((IR4EUIModelElement) element).isUserReviewed()), true);
+								//Here if we set the element and its children.
+								((IR4EUIModelElement) element).setUserReviewed(newValue, true, true);
 
 								monitor.worked(1);
 								if (monitor.isCanceled()) {

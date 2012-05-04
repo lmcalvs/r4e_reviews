@@ -131,27 +131,30 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	 *            boolean
 	 * @param aSetChildren
 	 *            boolean
+	 * @param aUpdateModel
+	 *            boolean
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean)
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setUserReviewed(boolean, boolean,
+	 *      boolean)
 	 */
 	@Override
-	public void setUserReviewed(boolean aReviewed, boolean aSetChildren) throws ResourceHandlingException,
-			OutOfSyncException {
+	public void setUserReviewed(boolean aReviewed, boolean aSetChildren, boolean aUpdateModel)
+			throws ResourceHandlingException, OutOfSyncException {
 		fUserReviewed = aReviewed;
 		if (fUserReviewed) {
 			//Check to see if we should mark the parent reviewed as well
-			getParent().checkToSetUserReviewed();
+			getParent().checkToSetUserReviewed(aUpdateModel);
 		} else {
 			//Remove check on parent, since at least one children is not set anymore
-			getParent().setUserReviewed(fUserReviewed, false);
+			getParent().setUserReviewed(fUserReviewed, false, aUpdateModel);
 		}
 
 		if (aSetChildren) {
 			//Also set the children
 			final int length = fFileContexts.size();
 			for (int i = 0; i < length; i++) {
-				fFileContexts.get(i).setChildUserReviewed(aReviewed);
+				fFileContexts.get(i).setChildUserReviewed(aReviewed, aUpdateModel);
 			}
 		}
 	}
@@ -159,12 +162,14 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	/**
 	 * Method checkToSetReviewed.
 	 * 
+	 * @param aUpdateModel
+	 *            - flag that is used to see whether we should also update the serialization model
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#checkToSetUserReviewed()
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#checkToSetUserReviewed(boolean)
 	 */
 	@Override
-	public void checkToSetUserReviewed() throws ResourceHandlingException, OutOfSyncException {
+	public void checkToSetUserReviewed(boolean aUpdateModel) throws ResourceHandlingException, OutOfSyncException {
 		boolean allChildrenReviewed = true;
 		final int length = fFileContexts.size();
 		for (int i = 0; i < length; i++) {
@@ -175,7 +180,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 		//If all children are reviewed, mark the parent as reviewed as well
 		if (allChildrenReviewed) {
 			fUserReviewed = true;
-			getParent().checkToSetUserReviewed();
+			getParent().checkToSetUserReviewed(aUpdateModel);
 		}
 	}
 
