@@ -24,18 +24,10 @@ public class FileSupportCommandFactory {
 
 	public static IFileSupportCommand getInstance() {
 		if (OSPLATFORM.TYPE.isWindowsOS()) {
-			// PC environment
+			//Windows operating system
 			return new WindowPermission();
-		} else if (OSPLATFORM.TYPE.isLinuxOS()) {
-			// Running on "Linux" operating system
-			// Debug.print(" *** Operating On a LINUX ****");
-			// UNIX environment
-			return new UnixPermission();
-		} else if (OSPLATFORM.TYPE.isSolarisOS()) {
-			// Running on "Solaris" operating system
-			// Debug.print(" *** Operating On a SOLARIS ****");
-			// Might be the same as Linux
-			// UNIX environment
+		} else if (OSPLATFORM.TYPE.isLinuxOS() || OSPLATFORM.TYPE.isSolarisOS() || OSPLATFORM.TYPE.isMacOS()) {
+			//Unix/Linux operating system
 			return new UnixPermission();
 		}
 		return null;
