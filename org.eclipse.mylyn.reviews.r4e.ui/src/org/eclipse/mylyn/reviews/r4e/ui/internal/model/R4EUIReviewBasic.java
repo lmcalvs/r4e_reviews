@@ -31,8 +31,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.mylyn.reviews.frame.core.model.Item;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
@@ -406,9 +408,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			participant = (R4EParticipant) fReview.getUsersMap().get(aParticipant);
 			if (aCreate && !participant.isEnabled()) {
 				try {
-					if (null != fParticipantsContainer.getParticipant(participant)) {
-						fParticipantsContainer.getParticipant(participant).setEnabled(true);
+					R4EUIParticipant uiParticipant = fParticipantsContainer.getParticipant(participant);
+					if (null == uiParticipant) {
+						uiParticipant = new R4EUIParticipant(fParticipantsContainer, participant, fReview.getType());
+						fParticipantsContainer.addChildren(uiParticipant);
 					}
+					uiParticipant.setEnabled(true);
 				} catch (OutOfSyncException e) {
 					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 					R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
@@ -478,7 +483,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		//Cast list to R4EParticipants
 		final List<String> participantIDs = new ArrayList<String>();
 		for (Object user : users) {
-			participantIDs.add(((R4EParticipant) user).getId());
+			if (((R4EParticipant) user).isEnabled()) {
+				participantIDs.add(((R4EParticipant) user).getId());
+			}
 		}
 		return participantIDs;
 	}
@@ -1572,6 +1579,37 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public boolean isRemoveElementCmd() {
 		if (!isOpen() && isEnabled() && !isReadOnly()) {
 			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if the corresponding model element is assigned to a user
+	 * 
+	 * @param aUserName
+	 *            - the user name
+	 * @param aCheckChildren
+	 *            - a flag that determines whether we will also check the child elements
+	 * @return true/false
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAssigned(String, boolean)
+	 */
+	@Override
+	public boolean isAssigned(String aUsername, boolean aCheckChildren) {
+		if (aCheckChildren) {
+			//Review Items
+			for (R4EUIReviewItem item : fItems) {
+				if (item.isAssigned(aUsername, aCheckChildren)) {
+					return true;
+				}
+			}
+
+			//Anomalies
+			final EList<Topic> anomalies = fReview.getTopics();
+			for (Topic anomaly : anomalies) {
+				if (anomaly.isEnabled() && ((R4EAnomaly) anomaly).getAssignedTo().contains(aUsername)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}

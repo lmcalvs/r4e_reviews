@@ -26,6 +26,7 @@ import javax.naming.NamingException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -378,9 +379,43 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	@Override
 	public boolean isRemoveElementCmd() {
 		if (isEnabled()
+				&& !isAssigned(fParticipant.getId(), true)
+				&& !isAnomalyCreator()
 				&& !isReadOnly()
+				&& !(fParticipant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER) || fParticipant.getRoles()
+						.contains(R4EUserRole.R4E_ROLE_LEAD))
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if the corresponding model element is assigned to a user
+	 * 
+	 * @param aUserName
+	 *            - the user name
+	 * @param aCheckChildren
+	 *            - a flag that determines whether we will also check the child elements
+	 * @return true/false
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAssigned(String, boolean)
+	 */
+	@Override
+	public boolean isAssigned(String aUsername, boolean aCheckChildren) {
+		return ((R4EUIReviewBasic) getParent().getParent()).isAssigned(aUsername, aCheckChildren);
+	}
+
+	/**
+	 * Method isAnomalyCreator.
+	 * 
+	 * @return boolean
+	 */
+	private boolean isAnomalyCreator() {
+		final EList<Topic> anomalies = ((R4EUIReviewBasic) getParent().getParent()).getReview().getTopics();
+		for (Topic anomaly : anomalies) {
+			if (anomaly.getUser().equals(fParticipant)) {
+				return true;
+			}
 		}
 		return false;
 	}

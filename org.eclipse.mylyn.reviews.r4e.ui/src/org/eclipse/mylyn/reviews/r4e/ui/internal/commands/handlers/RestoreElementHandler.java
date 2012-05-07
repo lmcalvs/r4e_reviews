@@ -109,7 +109,7 @@ public class RestoreElementHandler extends AbstractHandler {
 								element = (IR4EUIModelElement) iterator.next();
 								monitor.subTask("Restoring element " + element.getName());
 								R4EUIPlugin.Ftracer.traceInfo("Restoring element " + element.getName()); //$NON-NLS-1$
-								element.setEnabled(true);
+								element.restore();
 								if (element instanceof R4EUIReviewBasic) {
 									if (null != R4EUIModelController.getActiveReview()) {
 										R4EUIModelController.getActiveReview().close(); //Only one review open at any given time

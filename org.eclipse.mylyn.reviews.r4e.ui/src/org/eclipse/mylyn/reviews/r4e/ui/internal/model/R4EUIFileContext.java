@@ -437,11 +437,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			final EList<String> assignedParticipants = fFile.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.add(participant.getId());
-
-				//If this user is not a participant, add it to the review
-				if (!((R4EUIReviewBasic) getParent().getParent()).isParticipant(participant.getId())) {
-					((R4EUIReviewBasic) getParent().getParent()).getParticipantContainer().createChildren(participant);
-				}
+				((R4EUIReviewBasic) getParent().getParent()).getParticipant(participant.getId(), true);
 			}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		} catch (ResourceHandlingException e1) {
@@ -742,45 +738,62 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	}
 
 	/**
+	 * Method restore.
+	 * 
+	 * @throws CompatibilityException
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
+	 */
+	@Override
+	public void restore() throws ResourceHandlingException, OutOfSyncException, CompatibilityException {
+		super.restore();
+
+		//Also restore any participant assigned to this element
+		for (String participant : fFile.getAssignedTo()) {
+			R4EUIModelController.getActiveReview().getParticipant(participant, true);
+		}
+
+		for (IR4EUIModelElement content : fContentsContainer.getChildren()) {
+			content.restore();
+		}
+	}
+
+	/**
 	 * Method verifyUserReviewed.
 	 */
 	public void verifyUserReviewed() {
 		fContentsContainer.verifyUserReviewed();
 	}
 
-	//Listeners
-
-/*	*//**
-	 * Method addListener.
-	 * 
-	 * @param aProvider
-	 *            ReviewNavigatorContentProvider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
-	 */
-	/*
-	@Override
-	public void addListener(ReviewNavigatorContentProvider aProvider) {
-	super.addListener(aProvider);
-	fContentsContainer.addListener(aProvider);
-	fAnomalyContainer.addListener(aProvider);
-	}
-
-	*//**
-	 * Method removeListener.
-	 * 
-	 * @param aProvider
-	 *            - the treeviewer content provider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
-	 */
-	/*
-	@Override
-	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-	super.removeListener(aProvider);
-	fContentsContainer.removeListener(aProvider);
-	fAnomalyContainer.removeListener(aProvider);
-	}*/
-
 	//Commands
+
+	/**
+	 * Checks if the corresponding model element is assigned to a user
+	 * 
+	 * @param aUserName
+	 *            - the user name
+	 * @param aCheckChildren
+	 *            - a flag that determines whether we will also check the child elements
+	 * @return true/false
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAssigned(String, boolean)
+	 */
+	@Override
+	public boolean isAssigned(String aUsername, boolean aCheckChildren) {
+		if (fFile.isEnabled()) {
+			if (fFile.getAssignedTo().contains(aUsername)) {
+				return true;
+			} else {
+				if (aCheckChildren) {
+					for (IR4EUIModelElement content : fContentsContainer.getChildren()) {
+						if (content.isAssigned(aUsername, aCheckChildren)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Return true if the associated target file version can be compared with the associated base version

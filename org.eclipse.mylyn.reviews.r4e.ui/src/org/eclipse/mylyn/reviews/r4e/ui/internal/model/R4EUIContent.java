@@ -26,6 +26,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -315,12 +316,8 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 			final EList<String> assignedParticipants = fContent.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.add(participant.getId());
-
-				//If this user is not a participant, add it to the review
-				if (!((R4EUIReviewBasic) getParent().getParent().getParent().getParent()).isParticipant(participant.getId())) {
-					((R4EUIReviewBasic) getParent().getParent().getParent().getParent()).getParticipantContainer()
-							.createChildren(participant);
-				}
+				((R4EUIReviewBasic) getParent().getParent().getParent().getParent()).getParticipant(
+						participant.getId(), true);
 			}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		} catch (ResourceHandlingException e1) {
@@ -356,7 +353,42 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 		}
 	}
 
+	/**
+	 * Method restore.
+	 * 
+	 * @throws CompatibilityException
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
+	 */
+	@Override
+	public void restore() throws ResourceHandlingException, OutOfSyncException, CompatibilityException {
+		super.restore();
+
+		//Also restore any participant assigned to this element
+		for (String participant : fContent.getAssignedTo()) {
+			R4EUIModelController.getActiveReview().getParticipant(participant, true);
+		}
+	}
+
 	//Commands
+
+	/**
+	 * Checks if the corresponding model element is assigned to a user
+	 * 
+	 * @param aUserName
+	 *            - the user name
+	 * @param aCheckChildren
+	 *            - a flag that determines whether we will also check the child elements
+	 * @return true/false
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAssigned(String, boolean)
+	 */
+	@Override
+	public boolean isAssigned(String aUsername, boolean aCheckChildren) {
+		if (fContent.isEnabled() && fContent.getAssignedTo().contains(aUsername)) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Method isAddLinkedAnomalyCmd.

@@ -552,6 +552,23 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		}
 	}
 
+	/**
+	 * Method restore.
+	 * 
+	 * @throws CompatibilityException
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
+	 */
+	@Override
+	public void restore() throws ResourceHandlingException, OutOfSyncException, CompatibilityException {
+		super.restore();
+
+		//Also restore any participant assigned to this element
+		for (String participant : fAnomaly.getAssignedTo()) {
+			R4EUIModelController.getActiveReview().getParticipant(participant, true);
+		}
+	}
+
 	//Commands
 
 	/**

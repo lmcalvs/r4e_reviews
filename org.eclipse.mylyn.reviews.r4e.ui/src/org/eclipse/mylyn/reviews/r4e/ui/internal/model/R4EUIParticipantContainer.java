@@ -252,13 +252,14 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	@Override
 	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
 			OutOfSyncException {
-		final R4EParticipant participant = R4EUIModelController.FModelExt.createR4EParticipant(
-				((R4EUIReviewBasic) getParent()).getReview(), ((R4EParticipant) aModelComponent).getId(),
-				((R4EParticipant) aModelComponent).getRoles());
-		final R4EUIParticipant addedChild = new R4EUIParticipant(this, participant,
-				((R4EUIReviewBasic) getParent()).getReview().getType());
-		addedChild.setModelData(aModelComponent);
-		addChildren(addedChild);
+
+		R4EUIParticipant addedChild = null;
+		R4EParticipant participant = ((R4EUIReviewBasic) getParent()).getParticipant(
+				((R4EParticipant) aModelComponent).getId(), true);
+		if (null != participant) {
+			addedChild = getParticipant(participant);
+			addedChild.setModelData(aModelComponent);
+		}
 		return addedChild;
 	}
 
@@ -309,48 +310,6 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 			removeChildren(participant, aFileRemove);
 		}
 	}
-
-	//Listeners
-
-/*	*//**
-	 * Method addListener.
-	 * 
-	 * @param aProvider
-	 *            ReviewNavigatorContentProvider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addListener(ReviewNavigatorContentProvider)
-	 */
-	/*
-	@Override
-	public void addListener(ReviewNavigatorContentProvider aProvider) {
-	super.addListener(aProvider);
-	if (null != fParticipants) {
-		R4EUIParticipant element = null;
-		for (final Iterator<R4EUIParticipant> iterator = fParticipants.iterator(); iterator.hasNext();) {
-			element = iterator.next();
-			element.addListener(aProvider);
-		}
-	}
-	}
-
-	*//**
-	 * Method removeListener.
-	 * 
-	 * @param aProvider
-	 *            ReviewNavigatorContentProvider
-	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeListener()
-	 */
-	/*
-	@Override
-	public void removeListener(ReviewNavigatorContentProvider aProvider) {
-	super.removeListener(aProvider);
-	if (null != fParticipants) {
-		R4EUIParticipant element = null;
-		for (final Iterator<R4EUIParticipant> iterator = fParticipants.iterator(); iterator.hasNext();) {
-			element = iterator.next();
-			element.removeListener(aProvider);
-		}
-	}
-	}*/
 
 	//Commands
 

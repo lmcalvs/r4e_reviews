@@ -123,6 +123,17 @@ public interface IR4EUIModelElement {
 	boolean isReadOnly();
 
 	/**
+	 * Checks if the corresponding model element is assigned to a user
+	 * 
+	 * @param aUserName
+	 *            - the user name
+	 * @param aCheckChildren
+	 *            - a flag that determines whether we will also check the child elements
+	 * @return true/false
+	 */
+	boolean isAssigned(String aUserName, boolean aCheckChildren);
+
+	/**
 	 * Sets the reviewed flag. Take note that this is not applicable to all model elements
 	 * 
 	 * @param aReviewed
@@ -292,6 +303,15 @@ public interface IR4EUIModelElement {
 	 */
 	void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove) throws ResourceHandlingException,
 			OutOfSyncException, CompatibilityException;
+
+	/**
+	 * Method restore.
+	 * 
+	 * @throws CompatibilityException
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
+	 */
+	void restore() throws ResourceHandlingException, OutOfSyncException, CompatibilityException;
 
 	/**
 	 * Method removeAllChildren.

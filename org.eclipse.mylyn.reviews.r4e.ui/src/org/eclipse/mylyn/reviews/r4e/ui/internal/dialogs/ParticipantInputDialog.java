@@ -242,9 +242,9 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 		if (buttonId == IDialogConstants.OK_ID) {
 			final List<R4EParticipant> validatedParticipants = new ArrayList<R4EParticipant>();
 
-			for (R4EParticipant participant : fParticipants) {
+			for (R4EParticipant newParticipant : fParticipants) {
 				//Validate Participant Id
-				String validateResult = validateEmptyInput(participant.getId());
+				String validateResult = validateEmptyInput(newParticipant.getId());
 				if (null != validateResult) {
 					//Validation of input failed
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
@@ -255,10 +255,17 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				}
 
 				//Check if participant already exists (if so ignore but continue)
-				if (fReviewSource
-						&& R4EUIModelController.getActiveReview().getParticipantIDs().contains(participant.getId())) {
+				R4EParticipant currentParticipant = null;
+				try {
+					currentParticipant = R4EUIModelController.getActiveReview().getParticipant(newParticipant.getId(),
+							false);
+				} catch (ResourceHandlingException e) {
+					// ignore
+				}
+				if (fReviewSource && R4EUIModelController.getActiveReview().isParticipant(newParticipant.getId())
+						&& null != currentParticipant && currentParticipant.isEnabled()) {
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-							"Cannot Add Participant " + participant.getId(), new Status(IStatus.ERROR,
+							"Cannot Add Participant " + newParticipant.getId(), new Status(IStatus.ERROR,
 									R4EUIPlugin.PLUGIN_ID, 0, "Participant already part of this Review", null),
 							IStatus.ERROR);
 					dialog.open();
@@ -266,33 +273,33 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 				}
 
 				//Validate Participant Email
-				validateResult = validateEmptyInput(participant.getEmail());
+				validateResult = validateEmptyInput(newParticipant.getEmail());
 				if (null != validateResult) {
 					//Validation of input failed
 					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-							"No Email given for Participant " + participant.getId(), new Status(IStatus.ERROR,
+							"No Email given for Participant " + newParticipant.getId(), new Status(IStatus.ERROR,
 									R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
 					dialog.open();
 					return;
 				}
-				if (!CommandUtils.isEmailValid(participant.getEmail())) {
+				if (!CommandUtils.isEmailValid(newParticipant.getEmail())) {
 					return;
 				}
 
 				//Validate Roles (optional)
-				if (0 == participant.getRoles().size()) {
+				if (0 == newParticipant.getRoles().size()) {
 					//If there is no roles defined, put one as default depending on the review type
 					if (null != R4EUIModelController.getActiveReview()
 							&& R4EUIModelController.getActiveReview()
 									.getReview()
 									.getType()
 									.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
-						participant.getRoles().add(R4EUserRole.R4E_ROLE_LEAD);
+						newParticipant.getRoles().add(R4EUserRole.R4E_ROLE_LEAD);
 					} else {
-						participant.getRoles().add(R4EUserRole.R4E_ROLE_REVIEWER);
+						newParticipant.getRoles().add(R4EUserRole.R4E_ROLE_REVIEWER);
 					}
 				}
-				validatedParticipants.add(participant);
+				validatedParticipants.add(newParticipant);
 			}
 			//Set the participant list to include only the validated participants
 			fParticipants = validatedParticipants;

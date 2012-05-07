@@ -247,6 +247,20 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
+	 * Checks if the corresponding model element is assigned to a user
+	 * 
+	 * @param aUserName
+	 *            - the user name
+	 * @param aCheckChildren
+	 *            - a flag that determines whether we will also check the child elements
+	 * @return true/false
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAssigned(String, boolean)
+	 */
+	public boolean isAssigned(String aUserName, boolean aCheckChildren) {
+		return false; //default implementation
+	}
+
+	/**
 	 * Close the model element (i.e. disable it)
 	 * 
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#close()
@@ -505,6 +519,17 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
 			throws ResourceHandlingException, OutOfSyncException, CompatibilityException { // $codepro.audit.disable emptyMethod
 		// default implementation
+	}
+
+	/**
+	 * Method restore.
+	 * 
+	 * @throws CompatibilityException
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
+	 */
+	public void restore() throws ResourceHandlingException, OutOfSyncException, CompatibilityException {
+		setEnabled(true); //default implementation
 	}
 
 	/**

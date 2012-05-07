@@ -22,12 +22,14 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
@@ -201,11 +203,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 			final EList<String> assignedParticipants = fItem.getAssignedTo();
 			for (R4EParticipant participant : aParticipants) {
 				assignedParticipants.add(participant.getId());
-
-				//If this user is not a participant, add it to the review
-				if (!((R4EUIReviewBasic) getParent()).isParticipant(participant.getId())) {
-					((R4EUIReviewBasic) getParent()).getParticipantContainer().createChildren(participant);
-				}
+				((R4EUIReviewBasic) getParent()).getParticipant(participant.getId(), true);
 			}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		} catch (ResourceHandlingException e1) {
@@ -380,6 +378,33 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 		return uiFile;
 	}
 
+	/**
+	 * Method restore.
+	 * 
+	 * @throws CompatibilityException
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
+	 */
+	@Override
+	public void restore() throws ResourceHandlingException, OutOfSyncException, CompatibilityException {
+		super.restore();
+
+		//Also restore any participant assigned to this element and its children
+		for (String participant : fItem.getAssignedTo()) {
+			R4EUIModelController.getActiveReview().getParticipant(participant, true);
+		}
+		for (R4EFileContext file : fItem.getFileContextList()) {
+			for (String participant : file.getAssignedTo()) {
+				R4EUIModelController.getActiveReview().getParticipant(participant, true);
+			}
+			for (R4EDelta content : file.getDeltas()) {
+				for (String participant : content.getAssignedTo()) {
+					R4EUIModelController.getActiveReview().getParticipant(participant, true);
+				}
+			}
+		}
+	}
+
 	//Commands
 
 	/**
@@ -394,6 +419,34 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 				&& !isReadOnly()
 				&& !(((R4EReviewState) ((R4EUIReviewBasic) getParent()).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if the corresponding model element is assigned to a user
+	 * 
+	 * @param aUserName
+	 *            - the user name
+	 * @param aCheckChildren
+	 *            - a flag that determines whether we will also check the child elements
+	 * @return true/false
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isAssigned(String, boolean)
+	 */
+	@Override
+	public boolean isAssigned(String aUsername, boolean aCheckChildren) {
+		if (fItem.isEnabled()) {
+			if (fItem.getAssignedTo().contains(aUsername)) {
+				return true;
+			} else {
+				if (aCheckChildren) {
+					for (R4EUIFileContext file : fFileContexts) {
+						if (file.isAssigned(aUsername, aCheckChildren)) {
+							return true;
+						}
+					}
+				}
+			}
 		}
 		return false;
 	}
