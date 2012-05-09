@@ -635,10 +635,9 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 							UIUtils.displaySyncErrorDialog(e1);
 						}
 					}
-					refresh();
-					R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 				}
 				R4EUIModelController.setJobInProgress(false); //Enable view
+				refresh();
 			}
 		});
 
