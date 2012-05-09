@@ -488,9 +488,14 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		fRefreshInProgress = true;
 		final R4EParticipant modelUser = ((R4EUIParticipant) fProperties.getElement()).getParticipant();
 		fIdText.setText(modelUser.getId());
-		if (null != modelUser.getEmail()) {
-			fEmailText.setText(modelUser.getEmail());
+
+		String email = modelUser.getEmail();
+		if (null != email) {
+			fEmailText.setText(email);
+		} else {
+			fEmailText.setText("");
 		}
+
 		fNumItemsText.setText(String.valueOf(modelUser.getAddedItems().size()));
 
 		int numAnomalies = 0;
@@ -555,8 +560,11 @@ public class ParticipantTabPropertySection extends ModelElementTabPropertySectio
 		}
 		fRolesList.updateButtons();
 
-		if (null != modelUser.getFocusArea()) {
-			fFocusAreaText.setText(modelUser.getFocusArea());
+		String focusArea = modelUser.getFocusArea();
+		if (null != focusArea) {
+			fFocusAreaText.setText(focusArea);
+		} else {
+			fFocusAreaText.setText("");
 		}
 
 		setEnabledFields();
