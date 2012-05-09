@@ -1634,21 +1634,25 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				//Add all new elements
 				newAddParticipants.removeAll(storedParticipants);
 				if (newAddParticipants.size() > 0) {
-					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
 					for (String participant : newAddParticipants) {
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(
+								((R4EUIReviewBasic) fProperties.getElement()).getParticipant(participant, false),
+								currentUser);
 						((R4EParticipant) modelReview.getUsersMap().get(participant)).setIsPartOfDecision(true);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 					}
-					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 				}
 
 				//Delete old elements to remove
 				storedParticipants.removeAll(newDeleteParticipants);
 				if (storedParticipants.size() > 0) {
-					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
 					for (String participant : storedParticipants) {
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(
+								((R4EUIReviewBasic) fProperties.getElement()).getParticipant(participant, false),
+								currentUser);
 						((R4EParticipant) modelReview.getUsersMap().get(participant)).setIsPartOfDecision(false);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 					}
-					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 				}
 			}
 			refresh();
