@@ -1015,7 +1015,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			return false;
 		}
 
-		if (!R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
+		if (null != R4EUIModelController.getNavigatorView()
+				&& !R4EUIModelController.getNavigatorView().isDefaultDisplay()) {
 			checkToChangeDisplay();
 		}
 
