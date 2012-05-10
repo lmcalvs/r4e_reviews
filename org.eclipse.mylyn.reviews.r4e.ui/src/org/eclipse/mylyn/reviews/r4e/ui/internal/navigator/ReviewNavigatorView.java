@@ -902,9 +902,10 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		}
 
 		//Menu items
-		items = R4EUIModelController.getNavigatorView().getViewSite().getActionBars().getMenuManager().getItems();
-		for (IContributionItem item : items) {
-			item.update();
-		}
+		MenuManager menu = (MenuManager) R4EUIModelController.getNavigatorView()
+				.getViewSite()
+				.getActionBars()
+				.getMenuManager();
+		menu.updateAll(true);
 	}
 }
