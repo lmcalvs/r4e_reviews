@@ -179,26 +179,48 @@ public class R4EUIModelController {
 			FReviewSourceProvider.setCurrentReview(FActiveReview);
 		}
 		//check to apply filters
-		try {
-			final ReviewNavigatorActionGroup actionGroup = (ReviewNavigatorActionGroup) FView.getActionSet();
-			if (actionGroup.isMyReviewFilterSet()) {
-				actionGroup.runReviewsMyFilterCommand(true);
-			}
-			if (actionGroup.isParticipantFilterSet()) {
-				actionGroup.runReviewsParticipantFilterCommand(actionGroup.getReviewFilterParticipant());
-			}
-		} catch (ExecutionException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		} catch (NotDefinedException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		} catch (NotEnabledException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		} catch (NotHandledException e) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-			R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		final ReviewNavigatorActionGroup actionGroup = (ReviewNavigatorActionGroup) FView.getActionSet();
+		if (actionGroup.isMyReviewFilterSet()) {
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					try {
+						actionGroup.runReviewsMyFilterCommand(true);
+					} catch (ExecutionException e) {
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+					} catch (NotDefinedException e) {
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+					} catch (NotEnabledException e) {
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+					} catch (NotHandledException e) {
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+					}
+				}
+			});
+		}
+		if (actionGroup.isParticipantFilterSet()) {
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					try {
+						actionGroup.runReviewsParticipantFilterCommand(actionGroup.getReviewFilterParticipant());
+					} catch (ExecutionException e) {
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+					} catch (NotDefinedException e) {
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+					} catch (NotEnabledException e) {
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+					} catch (NotHandledException e) {
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+					}
+				}
+			});
 		}
 	}
 

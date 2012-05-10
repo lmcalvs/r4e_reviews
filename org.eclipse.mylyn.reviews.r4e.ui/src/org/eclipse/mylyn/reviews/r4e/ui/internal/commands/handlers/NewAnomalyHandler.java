@@ -182,7 +182,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 							return Status.CANCEL_STATUS;
 						}
 					}
-				} else if (selection.isEmpty()) {
+				} else if (null == selection || selection.isEmpty()) {
 					//Try to get the active editor highlighted range and set it as the editor's selection
 					if (null != editorPart) {
 						if (editorPart instanceof ITextEditor) {
@@ -190,7 +190,12 @@ public class NewAnomalyHandler extends AbstractHandler {
 							final TextSelection selectedText = new TextSelection(
 									((ITextEditor) editorPart).getDocumentProvider().getDocument(
 											editorPart.getEditorInput()), region.getOffset(), region.getLength());
-							((ITextEditor) editorPart).getSelectionProvider().setSelection(selectedText);
+							//Make sure selection is set in the UI thread
+							Display.getDefault().syncExec(new Runnable() {
+								public void run() {
+									((ITextEditor) editorPart).getSelectionProvider().setSelection(selectedText);
+								}
+							});
 							addAnomalyFromText(selectedText, input);
 						}
 					}
