@@ -7,7 +7,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.commons.core;bundle-version="3.3.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.mylyn.reviews.notifications.core,
- org.eclipse.mylyn.reviews.notifications.internal.core;x-internal=true,
- org.eclipse.mylyn.reviews.notifications.spi
+Export-Package: org.eclipse.mylyn.reviews.notifications.core;x-friends:="org.eclipse.mylyn.reviews.r4e.mail.smtp, org.eclipse.mylyn.reviews.r4e.ui",
+ org.eclipse.mylyn.reviews.notifications.internal.core;x-friends:="org.eclipse.mylyn.reviews.r4e.mail.smtp, org.eclipse.mylyn.reviews.r4e.ui",
+ org.eclipse.mylyn.reviews.notifications.spi;x-friends:="org.eclipse.mylyn.reviews.r4e.mail.smtp, org.eclipse.mylyn.reviews.r4e.ui"
 Bundle-Vendor: %providerName
