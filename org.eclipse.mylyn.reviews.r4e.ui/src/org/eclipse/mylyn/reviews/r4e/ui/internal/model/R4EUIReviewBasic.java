@@ -54,7 +54,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdat
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers.ImportPostponedHandler;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
@@ -660,14 +659,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * Open the model element (i.e. enable it)
 	 * 
 	 * @throws ResourceHandlingException
-	 * @throws ReviewVersionsException
 	 * @throws FileNotFoundException
 	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#open()
 	 */
 	@Override
-	public void open() throws ResourceHandlingException, FileNotFoundException, ReviewVersionsException,
-			CompatibilityException {
+	public void open() throws ResourceHandlingException, FileNotFoundException, CompatibilityException {
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup) getParent()).getReviewGroup(),
 				fReviewName);
 		if (checkCompatibility()) {

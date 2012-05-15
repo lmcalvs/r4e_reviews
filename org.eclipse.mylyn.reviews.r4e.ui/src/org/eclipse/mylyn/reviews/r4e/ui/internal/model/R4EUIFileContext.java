@@ -37,7 +37,6 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.FileContextProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
@@ -665,8 +664,6 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
 			} catch (ResourceHandlingException e) {
 				UIUtils.displayResourceErrorDialog(e);
-			} catch (ReviewVersionsException e) {
-				UIUtils.displayVersionErrorDialog(e);
 			} catch (CompatibilityException e) {
 				UIUtils.displayCompatibilityErrorDialog(e);
 			}

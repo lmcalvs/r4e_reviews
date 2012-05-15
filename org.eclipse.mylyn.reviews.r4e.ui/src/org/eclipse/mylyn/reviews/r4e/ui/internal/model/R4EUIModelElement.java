@@ -30,7 +30,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ModelElementProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -273,13 +272,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * Open the model element (i.e. enable it)
 	 * 
 	 * @throws ResourceHandlingException
-	 * @throws ReviewVersionsException
 	 * @throws FileNotFoundException
 	 * @throws CompatibilityException
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#open()
 	 */
-	public void open() throws CompatibilityException, ResourceHandlingException, FileNotFoundException,
-			ReviewVersionsException { // $codepro.audit.disable unnecessaryExceptions
+	public void open() throws CompatibilityException, ResourceHandlingException, FileNotFoundException { // $codepro.audit.disable unnecessaryExceptions
 		fOpen = true;
 	}
 

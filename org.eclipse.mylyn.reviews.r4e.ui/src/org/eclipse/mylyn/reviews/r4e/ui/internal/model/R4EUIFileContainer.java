@@ -27,7 +27,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -170,7 +169,6 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 	/**
 	 * Method open.
 	 * 
-	 * @throws ReviewVersionsException
 	 * @throws ResourceHandlingException
 	 * @throws FileNotFoundException
 	 */

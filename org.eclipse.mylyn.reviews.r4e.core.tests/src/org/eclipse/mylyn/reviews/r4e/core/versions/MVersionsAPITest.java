@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2012 Ericsson AB and others.
+ *  
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Ericsson AB
+ */
 package org.eclipse.mylyn.reviews.r4e.core.versions;
 
 import java.util.ArrayList;
@@ -31,9 +42,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author lmcalvs
+ * @author Alvaro Sanchez-Leon
  *
- * @version $Revision$
  */
 public class MVersionsAPITest extends GitTestCase {
 	// ------------------------------------------------------------------------
@@ -42,7 +52,6 @@ public class MVersionsAPITest extends GitTestCase {
 	private IProject			fIProject		= null;
 	private TestRepository		testRepo		= null;
 	private Repository			repo			= null;
-	private ReviewsVersionsIF	versionsProx	= null;
 	private List<IResource>		resources		= new ArrayList<IResource>();
 	private IFile				ifileA			= null;
 	private IFile				ifileB			= null;
@@ -67,8 +76,6 @@ public class MVersionsAPITest extends GitTestCase {
 		testRepo = new TestRepository(gitDir);
 		testRepo.connect(fIProject);
 		repo = RepositoryMapping.getMapping(fIProject).getRepository();
-
-		versionsProx = ReviewsVersionsIFFactory.instance.getVersionsIF(fIProject);
 
 		// Add a couple of files to the project - First commit
 		ifileA = testUtils.addFileToProject(fIProject, "sub/a.txt", "a text");

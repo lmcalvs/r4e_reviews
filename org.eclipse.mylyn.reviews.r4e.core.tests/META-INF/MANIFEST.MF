@@ -13,7 +13,6 @@ Export-Package: org.eclipse.egit.core.test;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.core.model.serial;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.core.model.serial.impl;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.core.model.tests;x-internal:=true,
- org.eclipse.mylyn.reviews.r4e.core.rfs;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.core.utils.filePermission;x-internal:=true
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.reviews.r4e.core,
@@ -29,5 +28,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jdt.core;bundle-version="3.5.0",
  org.eclipse.jdt.launching;bundle-version="3.5.0",
  org.eclipse.mylyn.versions.core;bundle-version="0.1.0",
- org.eclipse.mylyn.reviews.r4e.transform;bundle-version="0.9.0"
+ org.eclipse.mylyn.reviews.r4e.transform;bundle-version="0.10.0"
 Bundle-ActivationPolicy: lazy

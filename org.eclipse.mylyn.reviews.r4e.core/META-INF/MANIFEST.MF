@@ -22,21 +22,12 @@ Export-Package:
  org.eclipse.mylyn.reviews.r4e.core.utils;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.core.tests,org.eclipse.mylyn.reviews.r4e.ui",
  org.eclipse.mylyn.reviews.r4e.core.utils.cmd;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.core.tests,org.eclipse.mylyn.reviews.r4e.ui",
  org.eclipse.mylyn.reviews.r4e.core.utils.filePermission;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.core.tests,org.eclipse.mylyn.reviews.r4e.ui",
- org.eclipse.mylyn.reviews.r4e.core.utils.sys;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.core.tests,org.eclipse.mylyn.reviews.r4e.ui",
- org.eclipse.mylyn.reviews.r4e.core.versions;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.core.tests,org.eclipse.mylyn.reviews.r4e.ui",
- org.eclipse.mylyn.reviews.r4e.core.versions.git;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.core.tests,org.eclipse.mylyn.reviews.r4e.ui",
- org.eclipse.mylyn.reviews.r4e.core.versions.git.diff;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.core.tests,org.eclipse.mylyn.reviews.r4e.ui",
- org.eclipse.mylyn.reviews.r4e.core.versions.git.diff.internal;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.core.tests,org.eclipse.mylyn.reviews.r4e.ui",
- org.eclipse.mylyn.reviews.r4e.core.versions.impl;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.core.tests,org.eclipse.mylyn.reviews.r4e.ui"
+ org.eclipse.mylyn.reviews.r4e.core.utils.sys;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.core.tests,org.eclipse.mylyn.reviews.r4e.ui"
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.mylyn.reviews.frame.core,
+ org.eclipse.mylyn.reviews.frame.core;bundle-version="0.10.0",
  org.eclipse.core.resources;bundle-version="3.5.0",
  org.eclipse.jgit;bundle-version="0.9.1",
- org.eclipse.compare;bundle-version="3.5.0",
- org.eclipse.team.ui;bundle-version="3.5.0",
  org.eclipse.egit.core;bundle-version="0.9.1",
- org.eclipse.egit.ui;bundle-version="0.9.1",
- org.eclipse.ui;bundle-version="3.5.0",
  org.eclipse.team.core;bundle-version="3.5.0",
  org.eclipse.emf.ecore.xmi;bundle-version="2.5.0"
 Bundle-ActivationPolicy: lazy

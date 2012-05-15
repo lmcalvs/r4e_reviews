@@ -49,7 +49,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -134,8 +133,6 @@ public class OpenElementHandler extends AbstractHandler {
 							if (null != element && element instanceof R4EUIReviewBasic) {
 								element.close();
 							}
-						} catch (ReviewVersionsException e) {
-							UIUtils.displayVersionErrorDialog(e);
 						} catch (FileNotFoundException e) {
 							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$

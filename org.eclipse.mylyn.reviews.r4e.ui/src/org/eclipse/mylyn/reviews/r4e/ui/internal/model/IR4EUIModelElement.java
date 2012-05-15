@@ -27,7 +27,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -202,12 +201,10 @@ public interface IR4EUIModelElement {
 	 * Open the model element (i.e. enable it)
 	 * 
 	 * @throws ResourceHandlingException
-	 * @throws ReviewVersionsException
 	 * @throws FileNotFoundException
 	 * @throws CompatibilityException
 	 */
-	void open() throws ResourceHandlingException, ReviewVersionsException, FileNotFoundException,
-			CompatibilityException;
+	void open() throws ResourceHandlingException, FileNotFoundException, CompatibilityException;
 
 	/**
 	 * Checks whether an element is open or close
