@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2012 Ericsson AB and others.
+ *  
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Ericsson AB
+ */
 package org.eclipse.mylyn.reviews.r4e.core.model.serial;
 
 import java.util.List;
@@ -7,6 +18,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 
+/**
+ * @author Alvaro Sanchez-Leon
+ *
+ */
 public interface IModelReader {
 
 	// ------------------------------------------------------------------------
