@@ -56,7 +56,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
@@ -355,8 +354,6 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 					} catch (FileNotFoundException e) {
 						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
-					} catch (ReviewVersionsException e) {
-						UIUtils.displayVersionErrorDialog(e);
 					} catch (CompatibilityException e) {
 						UIUtils.displayCompatibilityErrorDialog(e);
 					}

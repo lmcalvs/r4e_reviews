@@ -42,7 +42,6 @@ public class MVersionsAPITest extends GitTestCase {
 	private IProject			fIProject		= null;
 	private TestRepository		testRepo		= null;
 	private Repository			repo			= null;
-	private ReviewsVersionsIF	versionsProx	= null;
 	private List<IResource>		resources		= new ArrayList<IResource>();
 	private IFile				ifileA			= null;
 	private IFile				ifileB			= null;
@@ -67,8 +66,6 @@ public class MVersionsAPITest extends GitTestCase {
 		testRepo = new TestRepository(gitDir);
 		testRepo.connect(fIProject);
 		repo = RepositoryMapping.getMapping(fIProject).getRepository();
-
-		versionsProx = ReviewsVersionsIFFactory.instance.getVersionsIF(fIProject);
 
 		// Add a couple of files to the project - First commit
 		ifileA = testUtils.addFileToProject(fIProject, "sub/a.txt", "a text");

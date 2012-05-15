@@ -58,7 +58,6 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityExcepti
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantUnassignDialog;
@@ -335,25 +334,6 @@ public class UIUtils {
 	 * Method displayVersionErrorDialog.
 	 * 
 	 * @param e
-	 *            ReviewVersionsException
-	 */
-	public static void displayVersionErrorDialog(ReviewVersionsException e) {
-		R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
-		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR, "Version Error Detected",
-				new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-		Display.getDefault().syncExec(new Runnable() {
-			public void run() {
-				dialog.open();
-			}
-		});
-	}
-
-	/**
-	 * Method displayVersionErrorDialog.
-	 * 
-	 * @param e
-	 *            ReviewVersionsException
 	 */
 	public static void displayReviewsFileStorageErrorDialog(ReviewsFileStorageException e) {
 		R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");

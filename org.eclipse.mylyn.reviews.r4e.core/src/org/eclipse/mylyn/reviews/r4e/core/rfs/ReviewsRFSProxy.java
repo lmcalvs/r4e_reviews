@@ -40,7 +40,6 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.IOUtils;
 import org.eclipse.mylyn.reviews.r4e.core.utils.filePermission.FileSupportCommandFactory;
-import org.eclipse.mylyn.reviews.r4e.core.versions.ReviewVersionsException;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.core.history.provider.FileRevision;
 
@@ -101,7 +100,6 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	/**
 	 * @param aReviewGroupDir
 	 * @return
-	 * @throws ReviewVersionsException
 	 */
 	private Repository initializeRepo(File aReviewGroupDir) throws ReviewsFileStorageException {
 		try {
@@ -119,7 +117,6 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	/**
 	 * @param aReviewGroupDir
 	 * @return
-	 * @throws ReviewVersionsException
 	 */
 	private Repository openRepository(File aReviewGroupDir) throws ReviewsFileStorageException {
 		Repository r;
