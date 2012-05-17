@@ -118,6 +118,11 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_RULE_SET_FILE_EXT = "*_rule_set.xrer";
 
 	/**
+	 * The file extension (MAC only)
+	 */
+	public static final String P_FILE_EXT_MAC = "*.xrer";
+
+	/**
 	 * Field P_SHOW_DISABLED. (value is ""showDisabled"")
 	 */
 	public static final String P_SHOW_DISABLED = "showDisabled";

@@ -17,6 +17,7 @@ import java.io.File;
 import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.mylyn.reviews.r4e.core.utils.sys.OSPLATFORM.OSTYPE;
 
 
 public final class OSPLATFORM {
@@ -96,8 +97,19 @@ public final class OSPLATFORM {
 				}
 				return type;
 			}
-		};
+		},
+		MAC {
+			@Override
+			protected OSTYPE match(String name) {
+				OSTYPE type = null;
 
+				if (Platform.getOS().matches(Platform.OS_MACOSX)) {
+					type = MAC;
+				}
+				return type;
+			}
+		};
+		
 		protected abstract OSTYPE match(String name);
 
 		// Internal Helper
@@ -134,11 +146,13 @@ public final class OSPLATFORM {
 		public boolean isSolarisOS() {
 			return this == SOLARIS;
 		}
+		
+		public boolean isMacOS() {
+			return this == MAC;
+		}
 	}; // enum
 
-	//
-	//
-	//
+
 
 
 	/**
