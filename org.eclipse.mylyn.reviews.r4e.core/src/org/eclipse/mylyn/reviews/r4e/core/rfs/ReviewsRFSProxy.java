@@ -100,6 +100,7 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 	/**
 	 * @param aReviewGroupDir
 	 * @return
+	 * @throws ReviewsFileStorageException
 	 */
 	private Repository initializeRepo(File aReviewGroupDir) throws ReviewsFileStorageException {
 		try {
@@ -116,7 +117,7 @@ public class ReviewsRFSProxy implements IRFSRegistry {
 
 	/**
 	 * @param aReviewGroupDir
-	 * @return
+	 * @throws ReviewsFileStorageException
 	 */
 	private Repository openRepository(File aReviewGroupDir) throws ReviewsFileStorageException {
 		Repository r;

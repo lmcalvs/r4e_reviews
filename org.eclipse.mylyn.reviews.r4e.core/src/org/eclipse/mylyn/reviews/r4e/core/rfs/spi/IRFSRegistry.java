@@ -12,7 +12,6 @@
 package org.eclipse.mylyn.reviews.r4e.core.rfs.spi;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import org.eclipse.core.resources.IStorage;
@@ -36,8 +35,7 @@ public interface IRFSRegistry {
 	/**
 	 * Register a blob by copying existing file content
 	 * 
-	 * @param aFromFile
-	 * @return
+	 * @throws ReviewsFileStorageException
 	 */
 	public abstract String registerReviewBlob(final File aFromFile) throws ReviewsFileStorageException;
 
@@ -46,6 +44,7 @@ public interface IRFSRegistry {
 	 * @param id
 	 *            - Blob type is expected
 	 * @return - The stream shall be closed by the receiver
+	 * @throws ReviewsFileStorageException
 	 */
 	public abstract InputStream getBlobContent(IProgressMonitor monitor, String id)
 			throws ReviewsFileStorageException;
@@ -55,6 +54,7 @@ public interface IRFSRegistry {
 	 * @param fileVersion
 	 *            - with populated localVersionId to an associated Blob type element
 	 * @return - The IFileRevision in the local review repository associated with localVersionId
+	 * @throws ReviewsFileStorageException
 	 */
 	public abstract IFileRevision getIFileRevision(IProgressMonitor monitor, R4EFileVersion fileVersion)
 			throws ReviewsFileStorageException;
@@ -72,7 +72,7 @@ public interface IRFSRegistry {
 	 * 
 	 * @param content
 	 * @return
-	 * @throws IOException
+	 * @throws ReviewsFileStorageException
 	 */
 	public abstract String registerReviewBlob(final InputStream content) throws ReviewsFileStorageException;
 

@@ -10,7 +10,7 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.mylyn.reviews.frame.core.model;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.ui",
  org.eclipse.mylyn.reviews.frame.core.model.impl;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.ui",
  org.eclipse.mylyn.reviews.frame.core.model.util;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.ui",
- org.eclipse.mylyn.reviews.frame.core.utils;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.ui, org.eclipse.mylyn.reviews.r4e.core.tests"
+ org.eclipse.mylyn.reviews.frame.core.utils;x-friends:="org.eclipse.mylyn.reviews.r4e.core,org.eclipse.mylyn.reviews.r4e.ui, org.eclipse.mylyn.reviews.r4e.core.tests, org.eclipse.mylyn.reviews.ldap, org.eclipse.mylyn.reviews.notifications, org.eclipse.mylyn.reviews.r4e.report, org.eclipse.mylyn.reviews.r4e.transform"
 Require-Bundle: 
  org.eclipse.core.runtime;bundle-version="3.5.0",
  org.eclipse.emf.ecore;bundle-version="2.5.0"
