@@ -82,6 +82,7 @@
         <module>org.eclipse.mylyn.reviews.r4e.mail.smtp</module>
         <module>org.eclipse.mylyn.reviews.r4e.report</module>
         <module>org.eclipse.mylyn.reviews.r4e.reports-feature</module>
+        <module>org.eclipse.mylyn.reviews.r4e.sdk.feature</module>
         <module>org.eclipse.mylyn.reviews.r4e.transform</module>
         <module>org.eclipse.mylyn.reviews.r4e.ui</module>
         <module>org.eclipse.mylyn.reviews.VCalendar</module>

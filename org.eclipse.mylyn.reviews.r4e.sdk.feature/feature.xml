@@ -29,17 +29,31 @@
    </license>
 
    <includes
-         id="org.eclipse.mylyn.reviews.r4e.feature"
+         id="org.eclipse.mylyn.reviews.r4e.reports"
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.mylyn.reviews.r4e.reports-feature"
+         id="org.eclipse.mylyn.reviews.r4e.feature"
          version="0.0.0"/>
 
    <requires>
       <import plugin="org.eclipse.osgi"/>
    </requires>
 
+   <plugin
+         id="javax.activation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.mail"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
    <plugin
          id="org.eclipse.mylyn.reviews.frame.core.source"
          download-size="0"
@@ -62,7 +76,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.mylyn.reviews.r4e.ldap.source"
+         id="org.eclipse.mylyn.reviews.ldap.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -77,20 +91,6 @@
 
    <plugin
          id="org.eclipse.mylyn.reviews.r4e.report.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.activation"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.mail"
          download-size="0"
          install-size="0"
          version="0.0.0"
