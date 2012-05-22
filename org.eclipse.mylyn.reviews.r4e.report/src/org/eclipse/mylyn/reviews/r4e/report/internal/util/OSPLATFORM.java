@@ -17,7 +17,6 @@ import java.io.File;
 import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.mylyn.reviews.r4e.core.utils.sys.OSPLATFORM.OSTYPE;
 
 
 public final class OSPLATFORM {
@@ -52,13 +51,14 @@ public final class OSPLATFORM {
 	// Constructors
 	// ------------------------------------------------------------------------
 	private OSPLATFORM() {
-	};
+	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 	public enum OSTYPE {
 		WINDOWS {
+			@Override
 			protected OSTYPE match(String name) {
 				OSTYPE type = null;
 				// String OSREGEX = new String("(.*(?i)Windows.*)");
@@ -72,6 +72,7 @@ public final class OSPLATFORM {
 			}
 		}, //
 		LINUX {
+			@Override
 			protected OSTYPE match(String name) {
 				OSTYPE type = null;
 				// String OSREGEX = new String("(.*(?i)Linux.*)");
@@ -85,6 +86,7 @@ public final class OSPLATFORM {
 			}
 		}, // 
 		SOLARIS {
+			@Override
 			protected OSTYPE match(String name) {
 				OSTYPE type = null;
 				// String OSREGEX = new String("(.*(?i)Solaris.*)");
@@ -150,7 +152,7 @@ public final class OSPLATFORM {
 		public boolean isMacOS() {
 			return this == MAC;
 		}
-	}; // enum
+	} // enum
 
 
 

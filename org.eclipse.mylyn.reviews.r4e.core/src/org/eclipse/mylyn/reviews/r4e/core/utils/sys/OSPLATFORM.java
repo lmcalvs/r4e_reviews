@@ -114,7 +114,7 @@ public final class OSPLATFORM {
 		public boolean isMacOS() {
 			return this == MAC;
 		}
-	}; // enum
+	} // enum
 
 	public static final String NAME = System.getProperty("os.name");
 
