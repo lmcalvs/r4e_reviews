@@ -51,13 +51,14 @@ public final class OSPLATFORM {
 	// Constructors
 	// ------------------------------------------------------------------------
 	private OSPLATFORM() {
-	};
+	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 	public enum OSTYPE {
 		WINDOWS {
+			@Override
 			protected OSTYPE match(String name) {
 				OSTYPE type = null;
 				// String OSREGEX = new String("(.*(?i)Windows.*)");
@@ -71,6 +72,7 @@ public final class OSPLATFORM {
 			}
 		}, //
 		LINUX {
+			@Override
 			protected OSTYPE match(String name) {
 				OSTYPE type = null;
 				// String OSREGEX = new String("(.*(?i)Linux.*)");
@@ -84,6 +86,7 @@ public final class OSPLATFORM {
 			}
 		}, // 
 		SOLARIS {
+			@Override
 			protected OSTYPE match(String name) {
 				OSTYPE type = null;
 				// String OSREGEX = new String("(.*(?i)Solaris.*)");
@@ -96,8 +99,19 @@ public final class OSPLATFORM {
 				}
 				return type;
 			}
-		};
+		},
+		MAC {
+			@Override
+			protected OSTYPE match(String name) {
+				OSTYPE type = null;
 
+				if (Platform.getOS().matches(Platform.OS_MACOSX)) {
+					type = MAC;
+				}
+				return type;
+			}
+		};
+		
 		protected abstract OSTYPE match(String name);
 
 		// Internal Helper
@@ -134,11 +148,13 @@ public final class OSPLATFORM {
 		public boolean isSolarisOS() {
 			return this == SOLARIS;
 		}
-	}; // enum
+		
+		public boolean isMacOS() {
+			return this == MAC;
+		}
+	} // enum
 
-	//
-	//
-	//
+
 
 
 	/**

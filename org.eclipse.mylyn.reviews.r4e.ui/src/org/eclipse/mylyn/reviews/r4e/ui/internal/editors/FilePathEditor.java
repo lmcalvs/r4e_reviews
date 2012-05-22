@@ -22,10 +22,17 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.editors;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.preference.ListEditor;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.List;
 
@@ -63,6 +70,21 @@ public class FilePathEditor extends ListEditor {
 	 */
 	private String[] fFileExtensions;
 
+	/**
+	 * A validating Regexp.
+	 */
+	private String fValidator = null;
+
+	/**
+	 * Failed validation dialog title.
+	 */
+	private String fInvalidErrorDialogTitle;
+
+	/**
+	 * Failed validation dialog message.
+	 */
+	private String fInvalidErrorDialogMsg;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -85,9 +107,19 @@ public class FilePathEditor extends ListEditor {
 	 *            - the allowable files extensions to use in filter
 	 * @param aParent
 	 *            - the parent of the field editor's control
+	 * @param aValidator
+	 *            - an optional validation Regexp
+	 * @param aInvalidErrorDialogTitle
+	 *            - an optional validation error dialog title
+	 * @param aInvalidErrorDialogMsg
+	 *            - an optional validation error dialog message
 	 */
-	public FilePathEditor(String aName, String aLabelText, String[] aFileExtensions, Composite aParent) {
+	public FilePathEditor(String aName, String aLabelText, String[] aFileExtensions, Composite aParent,
+			String aValidator, String aInvalidErrorDialogTitle, String aInvalidErrorDialogMsg) {
 		init(aName, aLabelText);
+		fValidator = aValidator;
+		fInvalidErrorDialogTitle = aInvalidErrorDialogTitle;
+		fInvalidErrorDialogMsg = aInvalidErrorDialogMsg;
 		fFileExtensions = aFileExtensions.clone();
 		createControl(aParent);
 		getAddButton().setText(ADD_BUTTON_REPL_LABEL);
@@ -138,6 +170,8 @@ public class FilePathEditor extends ListEditor {
 				return null;
 			} else if (getList().indexOf(file) != INVALID_INDEX) {
 				return null; //duplicate entries
+			} else if (!validate(file)) {
+				return null; //cannot validate the entry
 			}
 			fLastFilePath = file;
 		}
@@ -176,5 +210,27 @@ public class FilePathEditor extends ListEditor {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Method validate
+	 * 
+	 * @return boolean
+	 */
+	private boolean validate(String aEntry) {
+		if (null != fValidator) {
+			if (null == aEntry || !Pattern.matches(fValidator, aEntry)) {
+				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+						fInvalidErrorDialogTitle, new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, "Entry: "
+								+ aEntry + ".  " + fInvalidErrorDialogMsg, null), IStatus.ERROR);
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						dialog.open();
+					}
+				});
+				return false;
+			}
+		}
+		return true; //entry is validated
 	}
 }

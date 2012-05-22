@@ -35,6 +35,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
@@ -106,6 +107,18 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 * Field USERS_GROUPS_LABEL. (value is ""Participants Lists: "")
 	 */
 	private static final String PARTICIPANTS_LISTS_LABEL = "Participants Lists: "; //$NON-NLS-1$
+
+	private static final String GROUP_VALIDATION_STR = "." + PreferenceConstants.P_GROUP_FILE_EXT; //$NON-NLS-1$
+
+	private static final String GROUP_VALIDATION_ERROR_DIALOG_TITLE = "Invalid Review Group file"; //$NON-NLS-1$
+
+	private static final String GROUP_VALIDATION_ERROR_DIALOG_MSG = "File is not a valid Review Group file"; //$NON-NLS-1$
+
+	private static final String RULESET_VALIDATION_STR = "." + PreferenceConstants.P_RULE_SET_FILE_EXT; //$NON-NLS-1$
+
+	private static final String RULESET_VALIDATION_ERROR_DIALOG_TITLE = "Invalid Rule Set file"; //$NON-NLS-1$
+
+	private static final String RULESET_VALIDATION_ERROR_DIALOG_MSG = "File is not a valid Rule Set file"; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Member Variables
@@ -476,6 +489,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 				null);
 		fParticipantsList.setToolTipText(R4EUIConstants.PARTICIPANTS_TOOLTIP);
 		fParticipantsList.removeAll();
+		fParticipantsList.updateTable();
 		fParticipantsList.setEnabled(false);
 
 		final GridData filtersButtonData = new GridData(GridData.FILL, GridData.FILL, true, false);
@@ -514,9 +528,16 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4EGroupPrefsSpacer.setLayoutData(r4EGroupPrefsSpacerData);
 
 		// File Path Editor for Review Groups
-		final String[] extensions = { PreferenceConstants.P_GROUP_FILE_EXT };
+		String filter;
+		if (Platform.getOS().equals(Platform.OS_MACOSX)) {
+			filter = PreferenceConstants.P_FILE_EXT_MAC;
+		} else {
+			filter = PreferenceConstants.P_GROUP_FILE_EXT;
+		}
+		final String[] extensions = { filter };
 		fGroupFilesEditor = new FilePathEditor(PreferenceConstants.P_GROUP_FILE_PATH,
-				PreferenceConstants.P_GROUP_FILE_PATH_LABEL, extensions, fR4EGroupPrefsGroup);
+				PreferenceConstants.P_GROUP_FILE_PATH_LABEL, extensions, fR4EGroupPrefsGroup, GROUP_VALIDATION_STR,
+				GROUP_VALIDATION_ERROR_DIALOG_TITLE, GROUP_VALIDATION_ERROR_DIALOG_MSG);
 		addField(fGroupFilesEditor);
 		if (R4EUIModelController.isJobInProgress()) {
 			fGroupFilesEditor.setEnabled(false, fR4EGroupPrefsGroup);
@@ -531,25 +552,23 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 				final String selectedGroupFile = fGroupFilesEditor.getSelection();
 				fGroupNameText.setText(""); //$NON-NLS-1$
 				fGroupDescriptionText.setText(""); //$NON-NLS-1$
-				if (null != selectedGroupFile) {
-					try {
-						final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
-						if (null != group) {
-							fGroupNameText.setText(group.getName());
-							fGroupDescriptionText.setText(group.getDescription());
-							R4EUIModelController.FModelExt.closeR4EReviewGroup(group);
-						} else {
-							fGroupNameText.setText(INVALID_FILE_STR);
-						}
-					} catch (ResourceHandlingException e) {
-						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
-						fGroupDescriptionText.setText("<Error:  Resource Error>"); //$NON-NLS-1$
-					} catch (CompatibilityException e) {
-						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
-						fGroupDescriptionText.setText("<Error:  Version Mismatch>"); //$NON-NLS-1$
+				try {
+					final R4EReviewGroup group = R4EUIModelController.peekReviewGroup(selectedGroupFile);
+					if (null != group) {
+						fGroupNameText.setText(group.getName());
+						fGroupDescriptionText.setText(group.getDescription());
+						R4EUIModelController.FModelExt.closeR4EReviewGroup(group);
+					} else {
+						fGroupNameText.setText(INVALID_FILE_STR);
 					}
+				} catch (ResourceHandlingException e) {
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
+					fGroupDescriptionText.setText("<Error:  Resource Error>"); //$NON-NLS-1$
+				} catch (CompatibilityException e) {
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
+					fGroupDescriptionText.setText("<Error:  Version Mismatch>"); //$NON-NLS-1$
 				}
 			}
 
@@ -615,9 +634,16 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		r4ERuleSetPrefsSpacer.setLayoutData(r4ERuleSetPrefsSpacerData);
 
 		// File Path Editor for Rule Sets
-		final String[] ruleSetsExtensions = { PreferenceConstants.P_RULE_SET_FILE_EXT };
+		String filter;
+		if (Platform.getOS().equals(Platform.OS_MACOSX)) {
+			filter = PreferenceConstants.P_FILE_EXT_MAC;
+		} else {
+			filter = PreferenceConstants.P_RULE_SET_FILE_EXT;
+		}
+		final String[] ruleSetsExtensions = { filter };
 		fRuleSetFilesEditor = new FilePathEditor(PreferenceConstants.P_RULE_SET_FILE_PATH,
-				PreferenceConstants.P_RULE_SET_FILE_PATH_LABEL, ruleSetsExtensions, fR4ERuleSetPrefsGroup);
+				PreferenceConstants.P_RULE_SET_FILE_PATH_LABEL, ruleSetsExtensions, fR4ERuleSetPrefsGroup,
+				RULESET_VALIDATION_STR, RULESET_VALIDATION_ERROR_DIALOG_TITLE, RULESET_VALIDATION_ERROR_DIALOG_MSG);
 		addField(fRuleSetFilesEditor);
 		if (R4EUIModelController.isJobInProgress()) {
 			fRuleSetFilesEditor.setEnabled(false, fR4ERuleSetPrefsGroup);
@@ -632,25 +658,23 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 				final String selectedRuleSetFile = fRuleSetFilesEditor.getSelection();
 				fRuleSetNameText.setText(""); //$NON-NLS-1$
 				fRuleSetVersionText.setText(""); //$NON-NLS-1$
-				if (null != selectedRuleSetFile) {
-					try {
-						final R4EDesignRuleCollection ruleSet = R4EUIModelController.peekRuleSet(selectedRuleSetFile);
-						if (null != ruleSet) {
-							fRuleSetNameText.setText(ruleSet.getName());
-							fRuleSetVersionText.setText(ruleSet.getVersion());
-							R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(ruleSet);
-						} else {
-							fRuleSetNameText.setText(INVALID_FILE_STR);
-						}
-					} catch (ResourceHandlingException e) {
-						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
-						fRuleSetVersionText.setText("<Error:  Resource Error>"); //$NON-NLS-1$
-					} catch (CompatibilityException e) {
-						R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
-						fRuleSetVersionText.setText("<Error:  Version Mismatch>"); //$NON-NLS-1$
+				try {
+					final R4EDesignRuleCollection ruleSet = R4EUIModelController.peekRuleSet(selectedRuleSetFile);
+					if (null != ruleSet) {
+						fRuleSetNameText.setText(ruleSet.getName());
+						fRuleSetVersionText.setText(ruleSet.getVersion());
+						R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(ruleSet);
+					} else {
+						fRuleSetNameText.setText(INVALID_FILE_STR);
 					}
+				} catch (ResourceHandlingException e) {
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
+					fRuleSetVersionText.setText("<Error:  Resource Error>"); //$NON-NLS-1$
+				} catch (CompatibilityException e) {
+					R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
+					fRuleSetVersionText.setText("<Error:  Version Mismatch>"); //$NON-NLS-1$
 				}
 			}
 

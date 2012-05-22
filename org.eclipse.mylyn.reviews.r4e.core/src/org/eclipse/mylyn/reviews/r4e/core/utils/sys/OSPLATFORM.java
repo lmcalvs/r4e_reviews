@@ -22,6 +22,7 @@ public final class OSPLATFORM {
 
 	public enum OSTYPE {
 		WINDOWS {
+			@Override
 			protected OSTYPE match(String name) {
 				OSTYPE type = null;
 				if (Platform.getOS().matches(Platform.OS_WIN32)) {
@@ -31,6 +32,7 @@ public final class OSPLATFORM {
 			}
 		}, //
 		LINUX {
+			@Override
 			protected OSTYPE match(String name) {
 				OSTYPE type = null;
 
@@ -41,6 +43,7 @@ public final class OSPLATFORM {
 			}
 		}, // 
 		SOLARIS {
+			@Override
 			protected OSTYPE match(String name) {
 				OSTYPE type = null;
 
@@ -49,8 +52,19 @@ public final class OSPLATFORM {
 				}
 				return type;
 			}
-		};
+		},
+		MAC {
+			@Override
+			protected OSTYPE match(String name) {
+				OSTYPE type = null;
 
+				if (Platform.getOS().matches(Platform.OS_MACOSX)) {
+					type = MAC;
+				}
+				return type;
+			}
+		};
+		
 		protected abstract OSTYPE match(String name);
 
 		/**
@@ -74,26 +88,33 @@ public final class OSPLATFORM {
 		//
 
 		/**
-		 * @return
+		 * @return boolean
 		 */
 		public boolean isWindowsOS() {
 			return this == WINDOWS;
 		}
 
 		/**
-		 * @return
+		 * @return boolean
 		 */
 		public boolean isLinuxOS() {
 			return this == LINUX;
 		}
 
 		/**
-		 * @return
+		 * @return boolean
 		 */
 		public boolean isSolarisOS() {
 			return this == SOLARIS;
 		}
-	}; // enum
+		
+		/**
+		 * @return boolean
+		 */
+		public boolean isMacOS() {
+			return this == MAC;
+		}
+	} // enum
 
 	public static final String NAME = System.getProperty("os.name");
 
