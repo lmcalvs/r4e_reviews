@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.mylyn.reviews.r4e.feature_0.10.0.qualifier.jar" id="org.eclipse.mylyn.reviews.r4e.feature" version="0.10.0.qualifier">
+   <feature url="features/org.eclipse.mylyn.reviews.r4e.feature_0.0.0.qualifier.jar" id="org.eclipse.mylyn.reviews.r4e.feature" version="0.0.0">
       <category name="Features"/>
    </feature>
-   <feature url="features/org.eclipse.mylyn.reviews.r4e.reports_0.10.0.qualifier.jar" id="org.eclipse.mylyn.reviews.r4e.reports" version="0.10.0.qualifier">
+   <feature url="features/org.eclipse.mylyn.reviews.r4e.reports_0.0.0.qualifier.jar" id="org.eclipse.mylyn.reviews.r4e.reports" version="0.0.0">
       <category name="Integration"/>
+   </feature>
+   <feature url="features/org.eclipse.mylyn.reviews.r4e.sdk.feature_0.0.0.qualifier.jar" id="org.eclipse.mylyn.reviews.r4e.sdk.feature" version="0.0.0">
+      <category name="SDK"/>
    </feature>
    <category-def name="Features" label="Mylyn Reviews R4E Features"/>
    <category-def name="Integration" label="Mylyn Reviews R4E Integrations"/>
