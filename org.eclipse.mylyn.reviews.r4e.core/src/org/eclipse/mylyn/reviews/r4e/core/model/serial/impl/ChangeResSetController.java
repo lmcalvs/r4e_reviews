@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson
+ * Copyright (c) 2010, 2012 Ericsson
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.IResSerializationState;
 
 /**
- * @author lmcalvs
+ * @author Alvaro Sanchez-Leon
  *
  */
 public class ChangeResSetController extends ChangeResController {

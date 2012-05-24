@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Ericsson Research Canada
+ * Copyright (c) 2011, 2012 Ericsson AB and others.
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -748,7 +748,7 @@ public class ReportGeneration implements IR4EReport {
 	/**
 	 * Create the report filename which is: - path of the group review directory
 	 * - r4e_ - user name creating the report - Date the report is created -
-	 * file extension - ex: c:/report/R4E_Report_lmcbout_19-Jun-2008_0955.html
+	 * file extension - ex: c:/report/R4E_Report_Jacques Bouthillier_19-Jun-2008_0955.html
 	 * 
 	 * @return report name being created
 	 */

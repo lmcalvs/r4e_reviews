@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2005, 2008 IBM Corporation and others.
+ * Copyright (c) 2005, 2012 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -27,7 +27,7 @@ import org.eclipse.ui.texteditor.IElementStateListener;
  * <p>
  * This adapter must have a one-to-one correspondence to a typed element.
  * 
- * @author lmcdubo
+ * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 class EditableSharedDocumentAdapter extends SharedDocumentAdapter implements IElementStateListener {
@@ -51,7 +51,7 @@ class EditableSharedDocumentAdapter extends SharedDocumentAdapter implements IEl
 	 * Interface that provides this adapter with the state of the typed element and supports call backs to the element
 	 * when the adapter state changes.
 	 * 
-	 * @author lmcdubo
+	 * @author Sebastien Dubois
 	 */
 	public interface ISharedDocumentAdapterListener {
 

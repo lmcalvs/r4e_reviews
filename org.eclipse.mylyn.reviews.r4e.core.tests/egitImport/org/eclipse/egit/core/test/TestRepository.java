@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011, 2012, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  *
  * All rights reserved. This program and the accompanying materials

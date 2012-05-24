@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson
+ * Copyright (c) 2010, 2012 Ericsson
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -9,7 +9,7 @@
  * Description:
  * 
  * Contributors:
- * 	 Ericsson Research Canada - Initial API and Implementation 
+ * 	 Ericsson AB - Initial API and Implementation 
  *   Alvaro Sanchez-Leon - Adapted for Review for Eclipse
  *******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.core.utils.cmd;
@@ -20,7 +20,7 @@ import java.util.List;
 import org.eclipse.mylyn.reviews.r4e.core.Activator;
 
 /**
- * @author lmcbout
+ * @author Jacques Bouthillier
  * 
  */
 public class BaseSupportCommand {

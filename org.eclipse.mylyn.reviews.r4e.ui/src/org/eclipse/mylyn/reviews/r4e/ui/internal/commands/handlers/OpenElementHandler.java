@@ -1,25 +1,5 @@
-// $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.disallowReturnMutable, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson Research Canada
- * 
- * All rights reserved. This program and the accompanying materials are
- * made available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Description:
- * 
- * This class implements the review navigator view toolbar command used 
- * to browse the view's treeviewer elements and open the ones that can be open
- * 
- * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review R4E project
- *   
- ******************************************************************************/
-package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
-
-/*******************************************************************************
- * Copyright (c) 2011 Ericsson Research Canada
+ * Copyright (c) 2008, 2012 Ericsson AB and others.
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -35,6 +15,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
  *   Sebastien Dubois - Created for Mylyn Review R4E project
  *   
  ******************************************************************************/
+package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
 import java.io.FileNotFoundException;
 
@@ -59,7 +40,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * @author lmcdubo
+ * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 public class OpenElementHandler extends AbstractHandler {

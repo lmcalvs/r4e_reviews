@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011 Ericsson AB and others.
+ * Copyright (c) 2011, 2012 Ericsson AB and others.
  *  
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -196,7 +196,7 @@ public class ReviewGroupResTest extends TestCase {
 //		// From Objects to Disk
 //		R4EReviewGroup loadedGroup = null;
 //		URI origURI = URI
-//				.createFileURI("C:/Users/lmcalvs/OpenReviews/ReportTrans/ReportTrans_group_root.xrer");
+//				.createFileURI("C:/Users/Alvaro Sanchez-Leon/OpenReviews/ReportTrans/ReportTrans_group_root.xrer");
 //
 //		try {
 //			loadedGroup = fFactory.openR4EReviewGroup(origURI);

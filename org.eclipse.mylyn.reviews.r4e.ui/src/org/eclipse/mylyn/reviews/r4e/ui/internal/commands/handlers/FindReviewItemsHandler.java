@@ -1,6 +1,6 @@
 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson Research Canada
+ * Copyright (c) 2010, 2012 Ericsson AB and others.
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -89,7 +89,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.IProgressConstants;
 
 /**
- * @author lmcdubo
+ * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 public class FindReviewItemsHandler extends AbstractHandler {
@@ -755,7 +755,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	/**
 	 * Class TempFileContext internal class that aggregates info needed to import files into R4E
 	 * 
-	 * @author lmcdubo
+	 * @author Sebastien Dubois
 	 */
 	private static class TempFileContext {
 		/**
@@ -859,7 +859,7 @@ public class FindReviewItemsHandler extends AbstractHandler {
 	/**
 	 * Class JobQueueSchedulingRule Job scheduling rule that only allows a certain number of concurrent Jobs
 	 * 
-	 * @author lmcdubo
+	 * @author Sebastien Dubois
 	 */
 	class JobQueueSchedulingRule implements ISchedulingRule {
 

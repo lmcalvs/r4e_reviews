@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011 Ericsson and others.
+ * Copyright (c) 2011, 2012 Ericsson AB and others.
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Ericsson Research Canada - Dialog used to display SMTP mail
+ *    Ericsson AB - Dialog used to display SMTP mail
  * 
  */
 package org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion;

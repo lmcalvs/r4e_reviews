@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
+ * Copyright (C) 2007, 2012, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
  *
  * All rights reserved. This program and the accompanying materials

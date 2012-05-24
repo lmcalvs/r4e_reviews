@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2006 IBM Corporation and others.
+ * Copyright (c) 2006, 2012 Ericsson AB and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,7 +7,7 @@
  *
  * Contributors:
  * IBM Corporation - initial API and implementation
- * Ericsson (Sebastien Dubois) - Adapted to use with R4E
+ * Ericsson AB     - Adapted to use with R4E
  *******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.editors;
 
@@ -32,7 +32,7 @@ import org.eclipse.ui.IEditorInput;
 /**
  * An {@link ITypedElement} wrapper for {@link IFileRevision} for use with R4E
  * 
- * @author lmcdubo
+ * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 public class R4EFileRevisionTypedElement extends StorageTypedElement {

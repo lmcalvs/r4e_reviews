@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Ericsson Research Canada
+ * Copyright (c) 2011, 2012 Ericsson AB and others.
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -38,7 +38,7 @@ import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.services.IEvaluationService;
 
 /**
- * @author lmcdubo
+ * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 public class ReviewTypeSortHandler extends AbstractHandler {

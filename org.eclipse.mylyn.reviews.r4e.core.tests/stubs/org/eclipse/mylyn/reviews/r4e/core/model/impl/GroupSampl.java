@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson
+ * Copyright (c) 2010, 2012 Ericsson
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -114,7 +114,7 @@ public class GroupSampl {
 		}
 
 		try {
-			R4EReview review1 = factory.createR4EReview(fgroup, "Review1", "lmcalvs");
+			R4EReview review1 = factory.createR4EReview(fgroup, "Review1", "Alvaro Sanchez-Leon");
 			Calendar indCal = new GregorianCalendar(1867, Calendar.JULY, 1);
 			Date startDate = indCal.getTime();
 			// 2 days after

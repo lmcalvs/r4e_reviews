@@ -1,21 +1,14 @@
 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, staticFieldSecurity, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity, explicitThisUsage
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson Research Canada
- * 
- * All rights reserved. This program and the accompanying materials are
- * made available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * Copyright (c) 2010, 2012 Ericsson AB and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Description:
- * 
- * This class implements the tabbed property section for the Participant model 
- * element
- * 
+ *
  * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review R4E project
- *   
- ******************************************************************************/
+ *     Ericsson AB - initial API and implementation
+ *******************************************************************************/
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
@@ -72,7 +65,9 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
 /**
- * @author lmcdubo
+ * This class implements the tabbed property section for the Participant model element
+ * 
+ * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 public class ParticipantTabPropertySection extends ModelElementTabPropertySection implements IEditableListListener {

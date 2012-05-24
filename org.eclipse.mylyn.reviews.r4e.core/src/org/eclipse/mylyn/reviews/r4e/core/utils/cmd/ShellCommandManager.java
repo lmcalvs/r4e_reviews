@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson
+ * Copyright (c) 2010, 2012 Ericsson
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -9,7 +9,7 @@
  * Description:
  * 
  * Contributors:
- * 	 Ericsson Research Canada - Initial API and Implementation 
+ * 	 Ericsson AB - Initial API and Implementation 
  *   Alvaro Sanchez-Leon - Adapted for Review for Eclipse
  *******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.core.utils.cmd;
@@ -256,10 +256,10 @@ public class ShellCommandManager {
 		// S:/bscng_cmf/com_swb/com_swu/src/cmfbaseconfigmgr.cc@@\\main\\r7a_int\\r9a_int\\2");
 
 		String command3 = new String(
-				"cleardiff -blank_ignore -diff_format /view/lmcalvs_svp1code_lvb/vobs/r4ecode/dev/r4e/src/com/ericsson/r4e/core/header/column/UserNameTableModel.java@@/main/svp1code/svp1code_lvb/0 /view/lmcalvs_svp1code_lvb/vobs/r4ecode/dev/r4e/src/com/ericsson/r4e/core/header/column/UserNameTableModel.java@@/main/svp1code/svp1code_lvb/1");
+				"cleardiff -blank_ignore -diff_format /view/Alvaro Sanchez-Leon_svp1code_lvb/vobs/r4ecode/dev/r4e/src/com/ericsson/r4e/core/header/column/UserNameTableModel.java@@/main/svp1code/svp1code_lvb/0 /view/Alvaro Sanchez-Leon_svp1code_lvb/vobs/r4ecode/dev/r4e/src/com/ericsson/r4e/core/header/column/UserNameTableModel.java@@/main/svp1code/svp1code_lvb/1");
 
 		String command4 = new String(
-				"cleardiff -blank_ignore -diff_format /view/lmcalvs_svp1code_lvb/vobs/r4ecode/dev/r4e/src/com/ericsson/r4e/core/header/column/UserNameTableModel.java@@/main/svp1code/svp1code_lvb/0 /view/lmcalvs_svp1code_lvb/vobs/r4ecode/dev/r4e/src/com/ericsson/r4e/core/header/column/UserNameTableModel.java@@/main/svp1code/svp1code_lvb/1");
+				"cleardiff -blank_ignore -diff_format /view/Alvaro Sanchez-Leon_svp1code_lvb/vobs/r4ecode/dev/r4e/src/com/ericsson/r4e/core/header/column/UserNameTableModel.java@@/main/svp1code/svp1code_lvb/0 /view/Alvaro Sanchez-Leon_svp1code_lvb/vobs/r4ecode/dev/r4e/src/com/ericsson/r4e/core/header/column/UserNameTableModel.java@@/main/svp1code/svp1code_lvb/1");
 
 		String[] cmd3 = command3.split(" ");
 		String[] cmd4 = command4.split(" ");

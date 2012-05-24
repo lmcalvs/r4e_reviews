@@ -1,18 +1,13 @@
 /*******************************************************************************
- * Copyright (c) 2011 Ericsson Research Canada
+ * Copyright (c) 2011, 2012 Ericsson AB and others.
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Description:
- * 
- * This class implements a dialog that shows the UI legend dialog
- * NOTE:  This is adapted from Mylyn UiLegendDialog class (c) Tasktop 2004, 2008
- * 
  * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Ericsson AB - Created for Mylyn Review R4E project
  *   
  ******************************************************************************/
 
@@ -31,14 +26,16 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 /**
+ * This class implements a dialog that shows the UI legend dialog NOTE: This is adapted from Mylyn UiLegendDialog EPL
+ * class (c) Tasktop 2004, 2008
+ * 
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 public class R4EUILegendDialog extends PopupDialog {
 
 	/**
-	 * Field CLOSE_ICON_FILE.
-	 * (value is ""icons/view16/notclose_misc.gif"")
+	 * Field CLOSE_ICON_FILE. (value is ""icons/view16/notclose_misc.gif"")
 	 */
 	private static final String CLOSE_ICON_FILE = "icons/view16/notclose_misc.gif";
 
@@ -59,7 +56,9 @@ public class R4EUILegendDialog extends PopupDialog {
 
 	/**
 	 * Constructor for R4EUILegendDialog.
-	 * @param parent Shell
+	 * 
+	 * @param parent
+	 *            Shell
 	 */
 	public R4EUILegendDialog(Shell parent) {
 		super(parent, PopupDialog.INFOPOPUP_SHELLSTYLE | SWT.ON_TOP, false, false, false, false, false, null, null);
@@ -67,7 +66,9 @@ public class R4EUILegendDialog extends PopupDialog {
 
 	/**
 	 * Method createContents.
-	 * @param parent Composite
+	 * 
+	 * @param parent
+	 *            Composite
 	 * @return Control
 	 */
 	@Override
@@ -78,6 +79,7 @@ public class R4EUILegendDialog extends PopupDialog {
 
 	/**
 	 * Method open.
+	 * 
 	 * @return int
 	 */
 	@Override
@@ -90,6 +92,7 @@ public class R4EUILegendDialog extends PopupDialog {
 
 	/**
 	 * Method close.
+	 * 
 	 * @return boolean
 	 */
 	@Override
@@ -102,7 +105,9 @@ public class R4EUILegendDialog extends PopupDialog {
 
 	/**
 	 * Method createDialogArea.
-	 * @param parent Composite
+	 * 
+	 * @param parent
+	 *            Composite
 	 * @return Control
 	 */
 	@Override
@@ -123,7 +128,7 @@ public class R4EUILegendDialog extends PopupDialog {
 	}
 
 	/**
-	 * @author lmcdubo
+	 * @author Sebastien Dubois
 	 */
 	private class CloseDialogAction extends Action {
 
@@ -139,6 +144,7 @@ public class R4EUILegendDialog extends PopupDialog {
 
 		/**
 		 * Method run.
+		 * 
 		 * @see org.eclipse.jface.action.IAction#run()
 		 */
 		@Override

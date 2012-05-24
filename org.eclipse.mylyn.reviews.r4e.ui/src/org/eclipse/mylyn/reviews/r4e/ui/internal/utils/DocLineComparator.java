@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Ericsson Research Canada
+ * Copyright (c) 2011, 2012 Ericsson AB and others.
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -30,7 +30,7 @@ import org.eclipse.jface.text.IRegion;
  * <p>
  * A <code>DocLineComparator</code> doesn't know anything about line separators because its notion of lines is solely
  * defined in the underlying <code>IDocument</code>.
- * @author lmcdubo
+ * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 public class DocLineComparator implements ITokenComparator {

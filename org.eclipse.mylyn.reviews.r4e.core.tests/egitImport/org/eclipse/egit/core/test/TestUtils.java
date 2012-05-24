@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
+ * Copyright (C) 2007, 2012, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009, Google Inc.
+ * Copyright (C) 2009, 2012, Google Inc.
  * Copyright (C) 2009, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2009, Yann Simon <yann.simon.fr@gmail.com>
  * and other copyright owners as documented in the project's IP log.

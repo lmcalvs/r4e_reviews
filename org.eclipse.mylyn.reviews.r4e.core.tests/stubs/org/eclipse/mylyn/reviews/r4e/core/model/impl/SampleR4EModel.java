@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson
+ * Copyright (c) 2010, 2012 Ericsson
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -47,7 +47,7 @@ public class SampleR4EModel {
 		// Check out resource set
 		Long bookingNum = 0L;
 		try {
-			bookingNum = fSetUpdater.checkOut(fGroup, "lmcalvs");
+			bookingNum = fSetUpdater.checkOut(fGroup, "Alvaro Sanchez-Leon");
 		} catch (ResourceHandlingException e) {
 			e.printStackTrace();
 		} catch (OutOfSyncException e) {

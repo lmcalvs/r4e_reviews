@@ -1,21 +1,14 @@
 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.disallowReturnMutable, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity, packageJavadoc, explicitThisUsage
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson Research Canada
- * 
- * All rights reserved. This program and the accompanying materials are
- * made available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * Copyright (c) 2012 Ericsson AB and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Description:
- * 
- * This class implements an image descriptor that is used to overlay multiple 
- * images into one. It is used to decorate icons
- * 
+ *
  * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review R4E project
- *   
- ******************************************************************************/
+ *     Ericsson AB - initial API and implementation
+ *******************************************************************************/
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
@@ -24,7 +17,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
 /**
- * @author lmcdubo
+ * This class implements an image descriptor that is used to overlay multiple images into one. It is used to decorate
+ * icons
+ * 
+ * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 public class OverlayImageIcon extends CompositeImageDescriptor {

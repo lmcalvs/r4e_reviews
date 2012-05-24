@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Ericsson
+ * Copyright (c) 2010, 2012 Ericsson
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -48,7 +48,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 
 /**
- * @author lmcalvs
+ * @author Alvaro Sanchez-Leon
  *
  */
 public interface Persistence {
@@ -505,7 +505,7 @@ public interface Persistence {
 	/**
 	 * Limit visibility to the methods related to construction for Persistence
 	 * 
-	 * @author lmcalvs
+	 * @author Alvaro Sanchez-Leon
 	 * 
 	 */
 	public interface RModelFactoryExt extends Persistence, Persistence.GroupResFactory, Persistence.ReviewResFactory,
@@ -517,7 +517,7 @@ public interface Persistence {
 	/**
 	 * Interface to resolve the Resource serialization state (Active, Inactive)
 	 * 
-	 * @author lmcalvs
+	 * @author Alvaro Sanchez-Leon
 	 * 
 	 */
 	interface IResSerializationState {
@@ -527,7 +527,7 @@ public interface Persistence {
 	/**
 	 * Interface to control a registry list of resources with serialization state set to inactive
 	 * 
-	 * @author lmcalvs
+	 * @author Alvaro Sanchez-Leon
 	 * 
 	 */
 	interface IResSerializationRegistry extends IResSerializationState {

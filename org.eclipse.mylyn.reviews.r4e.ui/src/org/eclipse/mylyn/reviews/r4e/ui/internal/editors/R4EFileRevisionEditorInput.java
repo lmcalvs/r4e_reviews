@@ -1,13 +1,13 @@
 /*******************************************************************************
- * Copyright (c) 2005, 2008 IBM Corporation and others.
+ * Copyright (c) 2005, 2012 Ericsson AB and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     IBM Corporation - initial API and implementation
- * Ericsson (Sebastien Dubois) - Adapted to use with R4E
+ *     IBM Corporation  - initial API and implementation
+ *     Ericsson AB - Adapted to use with R4E
  *******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.editors;
 
@@ -27,7 +27,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 /**
  * An Editor input for file revisions
  * 
- * @author lmcdubo
+ * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 public class R4EFileRevisionEditorInput extends PlatformObject implements IWorkbenchAdapter, IStorageEditorInput {

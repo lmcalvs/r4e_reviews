@@ -16,7 +16,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.serial.impl;
 /**
- * @author lmcalvs
+ * @author Alvaro Sanchez-Leon
  * 
  */
 public class CompatibilityException extends Exception {

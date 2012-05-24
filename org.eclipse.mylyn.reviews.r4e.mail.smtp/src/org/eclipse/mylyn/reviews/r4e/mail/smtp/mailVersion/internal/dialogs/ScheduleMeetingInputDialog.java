@@ -1,20 +1,13 @@
-// $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.constructorsOnlyInvokeFinalMethods, useForLoop, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.disallowReturnMutable, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity, explicitThisUsage
 /*******************************************************************************
- * Copyright (c) 2011 Ericsson Research Canada
- * 
- * All rights reserved. This program and the accompanying materials are
- * made available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * Copyright (c) 2011, 2012 Ericsson AB and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Description:
- * 
- * This class implements the dialog used to fill in the meeting request information
- * 
+ *
  * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review R4E project
- *   
- ******************************************************************************/
+ *     Ericsson AB - initial API and implementation
+ *******************************************************************************/
 
 package org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.dialogs;
 
@@ -49,7 +42,8 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
 /**
- * @author lmcdubo
+ * This class implements the dialog used to fill in the meeting request information
+ * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
 public class ScheduleMeetingInputDialog extends FormDialog {
