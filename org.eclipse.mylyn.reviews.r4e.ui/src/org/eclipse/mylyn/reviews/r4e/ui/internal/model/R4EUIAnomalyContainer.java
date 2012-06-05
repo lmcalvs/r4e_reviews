@@ -696,39 +696,43 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		final StringBuilder sb = new StringBuilder();
 		boolean resultOk = true;
 		for (R4EUIAnomalyBasic anomaly : fAnomalies) {
-			if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
-				sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state CREATED"
-						+ R4EUIConstants.LINE_FEED);
-				resultOk = false;
-			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
-				sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state ASSIGNED"
-						+ R4EUIConstants.LINE_FEED);
-				resultOk = false;
-			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
-				sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state ACCEPTED"
-						+ R4EUIConstants.LINE_FEED);
-				resultOk = false;
-			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
-				if (null == anomaly.getAnomaly().getFixedByID() || ("").equals(anomaly.getAnomaly().getFixedByID())) {
-					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") does not have a fixer"
+			//Test if the anomaly is disabled or not
+			if (anomaly.isEnabled()) {
+				//Anomaly is not disabled, should test for the completion
+				if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
+					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state CREATED"
 							+ R4EUIConstants.LINE_FEED);
 					resultOk = false;
-				}
-				if (R4EUIModelController.getActiveReview()
-						.getReview()
-						.getDecision()
-						.getValue()
-						.equals(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP)) {
-					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state FIXED, but Review"
-							+ " Decision is set to Accepted with Followup" + R4EUIConstants.LINE_FEED);
+				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED)) {
+					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state ASSIGNED"
+							+ R4EUIConstants.LINE_FEED);
 					resultOk = false;
-				}
-			} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
-				if (null == anomaly.getAnomaly().getFollowUpByID()
-						|| ("").equals(anomaly.getAnomaly().getFollowUpByID())) {
-					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state VERIFIED and "
-							+ "does not have a follower" + R4EUIConstants.LINE_FEED);
+				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED)) {
+					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state ACCEPTED"
+							+ R4EUIConstants.LINE_FEED);
 					resultOk = false;
+				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_FIXED)) {
+					if (null == anomaly.getAnomaly().getFixedByID() || ("").equals(anomaly.getAnomaly().getFixedByID())) {
+						sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") does not have a fixer"
+								+ R4EUIConstants.LINE_FEED);
+						resultOk = false;
+					}
+					if (R4EUIModelController.getActiveReview()
+							.getReview()
+							.getDecision()
+							.getValue()
+							.equals(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP)) {
+						sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state FIXED, but Review"
+								+ " Decision is set to Accepted with Followup" + R4EUIConstants.LINE_FEED);
+						resultOk = false;
+					}
+				} else if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED)) {
+					if (null == anomaly.getAnomaly().getFollowUpByID()
+							|| ("").equals(anomaly.getAnomaly().getFollowUpByID())) {
+						sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state VERIFIED and "
+								+ "does not have a follower" + R4EUIConstants.LINE_FEED);
+						resultOk = false;
+					}
 				}
 			}
 		}
@@ -750,15 +754,19 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		final StringBuilder sb = new StringBuilder();
 		boolean resultOk = true;
 		for (R4EUIAnomalyBasic anomaly : fAnomalies) {
-			if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
-				sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state CREATED"
-						+ R4EUIConstants.LINE_FEED);
-				resultOk = false;
-			} else if (null == anomaly.getAnomaly().getDecidedByID()
-					|| ("").equals(anomaly.getAnomaly().getDecidedByID())) {
-				sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") does not have a decider"
-						+ R4EUIConstants.LINE_FEED);
-				resultOk = false;
+			//Test if the anomaly is disabled or not
+			if (anomaly.isEnabled()) {
+				//Anomaly is not disabled, should test for the next state REWORK
+				if (anomaly.getAnomaly().getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_CREATED)) {
+					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") is in state CREATED"
+							+ R4EUIConstants.LINE_FEED);
+					resultOk = false;
+				} else if (null == anomaly.getAnomaly().getDecidedByID()
+						|| ("").equals(anomaly.getAnomaly().getDecidedByID())) {
+					sb.append("Anomaly (" + anomaly.getAnomaly().getTitle() + ") does not have a decider"
+							+ R4EUIConstants.LINE_FEED);
+					resultOk = false;
+				}
 			}
 		}
 		if (!resultOk) {
