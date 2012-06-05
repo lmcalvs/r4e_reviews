@@ -2011,8 +2011,15 @@ lineRange = start + "-" + end;</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
+                    <property name="name">ClassComment</property>
+                    <expression name="expression">//Identify  the question class anomaly&#13;
+                &#13;
+  Total.count ( BirtComp.equalTo( row["type"], "R4E_CLASS_COMMENT" ) );</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
                     <property name="name">ClassAllButOthers</property>
-                    <expression name="expression">ret = ( row["ClassErroneous"] + row["ClassSuperfluous"] + row["ClassImprovement"] + row["ClassQuestion"] );</expression>
+                    <expression name="expression">ret = ( row["ClassErroneous"] + row["ClassSuperfluous"] + row["ClassImprovement"] + row["ClassQuestion"]  + row["ClassComment"]);</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -2079,16 +2086,21 @@ if (ret != null ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">7</property>
-                        <property name="name">ClassAllButOthers</property>
+                        <property name="name">ClassComment</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">8</property>
+                        <property name="name">ClassAllButOthers</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
                         <property name="name">CreateHrefFromXmiID</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">9</property>
+                        <property name="position">10</property>
                         <property name="name">FormatCommentType</property>
                         <property name="dataType">string</property>
                     </structure>
@@ -12012,6 +12024,29 @@ value = row["PhaseInfo::type"];&#13;
                                         </structure>
                                     </list-property>
                                     <property name="resultSetColumn">ClassQuestion</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="2613">
+                            <cell id="2614">
+                                <label id="2617">
+                                    <text-property name="text">Comment</text-property>
+                                </label>
+                            </cell>
+                            <cell id="2615"/>
+                            <cell id="2616">
+                                <data id="2618">
+                                    <property name="whiteSpace">nowrap</property>
+                                    <property name="dataSet">Comment Type</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">ClassComment</property>
+                                            <text-property name="displayName">ClassComment</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["ClassComment"]</expression>
+                                            <property name="dataType">integer</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">ClassComment</property>
                                 </data>
                             </cell>
                         </row>

@@ -825,6 +825,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String ANOMALY_CLASS_IMPROVEMENT = "Improvement";
 
 	/**
+	 * Field ANOMALY_CLASS_COMMENT. (value is ""Comment"")
+	 */
+	public static final String ANOMALY_CLASS_COMMENT = "Comment";
+
+	/**
 	 * Field ANOMALY_CLASS_QUESTION. (value is ""Question"")
 	 */
 	public static final String ANOMALY_CLASS_QUESTION = "Question";
@@ -855,7 +860,7 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final String[] CLASS_VALUES = { R4EUIConstants.ANOMALY_CLASS_ERRONEOUS,
 			R4EUIConstants.ANOMALY_CLASS_SUPERFLUOUS, R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT,
-			R4EUIConstants.ANOMALY_CLASS_QUESTION }; //NOTE: This has to match CommentType in R4E core plugin
+			R4EUIConstants.ANOMALY_CLASS_QUESTION, R4EUIConstants.ANOMALY_CLASS_COMMENT }; //NOTE: This has to match CommentType in R4E core plugin
 
 	/**
 	 * Field MESSAGE_TYPE_ITEMS_READY. (value is "0")

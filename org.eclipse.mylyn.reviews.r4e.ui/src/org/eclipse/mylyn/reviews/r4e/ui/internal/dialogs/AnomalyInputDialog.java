@@ -869,6 +869,8 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 			return R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT;
 		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_QUESTION)) {
 			return R4EUIConstants.ANOMALY_CLASS_QUESTION;
+		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_COMMENT)) {
+			return R4EUIConstants.ANOMALY_CLASS_COMMENT;
 		} else {
 			return null; //should never happen
 		}

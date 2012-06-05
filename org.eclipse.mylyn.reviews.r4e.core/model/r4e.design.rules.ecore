@@ -39,5 +39,6 @@
     <eLiterals name="R4E_CLASS_SUPERFLUOUS" value="1" literal="R4E_CLASS_SUPERFLUOUS"/>
     <eLiterals name="R4E_CLASS_IMPROVEMENT" value="2"/>
     <eLiterals name="R4E_CLASS_QUESTION" value="3"/>
+    <eLiterals name="R4E_CLASS_COMMENT" value="4"/>
   </eClassifiers>
 </ecore:EPackage>

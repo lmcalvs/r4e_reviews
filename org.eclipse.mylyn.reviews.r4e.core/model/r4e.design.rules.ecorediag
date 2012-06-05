@@ -150,6 +150,10 @@
         <element xmi:type="ecore:EEnumLiteral" href="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_QUESTION"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_G8GpcV71EeC7YYx9yY610w"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_4vG7QKsoEeG8sODmDqdtUQ" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_COMMENT"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_4vG7QasoEeG8sODmDqdtUQ"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_vg3HAV70EeC7YYx9yY610w"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_vg3HAl70EeC7YYx9yY610w"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_vg3HA170EeC7YYx9yY610w"/>

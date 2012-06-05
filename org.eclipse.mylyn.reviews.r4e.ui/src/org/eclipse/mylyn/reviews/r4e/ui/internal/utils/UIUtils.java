@@ -496,6 +496,8 @@ public class UIUtils {
 			return R4EDesignRuleClass.R4E_CLASS_SUPERFLUOUS;
 		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT)) {
 			return R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT;
+		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_COMMENT)) {
+			return R4EDesignRuleClass.R4E_CLASS_COMMENT;
 		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_QUESTION)) {
 			return R4EDesignRuleClass.R4E_CLASS_QUESTION;
 		} else {

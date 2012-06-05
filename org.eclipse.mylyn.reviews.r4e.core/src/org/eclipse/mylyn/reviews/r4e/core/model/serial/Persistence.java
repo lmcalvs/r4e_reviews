@@ -56,7 +56,7 @@ public interface Persistence {
 	// Constants
 	// ------------------------------------------------------------------------
 	public enum Roots {
-		GROUP("Group", "0.8.0"), REVIEW("Review", "0.9.0"), RULESET("RuleSet", "0.8.0");
+		GROUP("Group", "0.8.0"), REVIEW("Review", "0.11.0"), RULESET("RuleSet", "0.8.0");
 
 		private final String	fName;
 		private final String	fVersion;
