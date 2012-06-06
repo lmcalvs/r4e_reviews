@@ -234,10 +234,22 @@ Total.sum (row["IdentifyRankOther"] );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
+                    <property name="name">IdentifyStateCreated</property>
+                    <expression name="expression">//Check state equal to CREATED&#13;
+state = row["state"];&#13;
+if (state == null ) {&#13;
+  ret = "R4E_ANOMALY_STATE_CREATED";&#13;
+} else if ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_CREATED")  ) {&#13;
+ 	ret =  "R4E_ANOMALY_STATE_CREATED";&#13;
+} else {&#13;
+ 	ret = "OtherThing"&#13;
+}</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
                     <property name="name">CountStateCreated</property>
                     <expression name="expression">//Count all state equal to CREATED&#13;
-&#13;
-Total.count ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_CREATED") );</expression>
+Total.count (  BirtComp.equalTo( row["IdentifyStateCreated"], "R4E_ANOMALY_STATE_CREATED") );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -287,6 +299,22 @@ Total.count ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_DEFERRED") );</
                     <expression name="expression">//Count all state equal to VERIFIED&#13;
 &#13;
 Total.count ( BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED") );</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">CountStateOthers</property>
+                    <expression name="expression">//Count all state NOT equal to VERIFIED, Accepted, Assigned , ... or empty&#13;
+&#13;
+Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_DEFERRED") &amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_REJECTED")&amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_DUPLICATED")&amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_FIXED")&amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_ACCEPTED")&amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_ASSIGNED") &amp;&amp; &#13;
+                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_CREATED")  &amp;&amp;&#13;
+                   row["state"] != null  //For the CREATED STATE      &#13;
+                   );</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -341,21 +369,6 @@ if (ret != null ) {&#13;
 	 }&#13;
 }</expression>
                     <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="name">CountStateOthers</property>
-                    <expression name="expression">//Count all state NOT equal to VERIFIED, Accepted, Assigned , ... or empty&#13;
-&#13;
-Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_DEFERRED") &amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_REJECTED")&amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_DUPLICATED")&amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_FIXED")&amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_ACCEPTED")&amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_ASSIGNED") &amp;&amp; &#13;
-                   ! BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_CREATED")      &#13;
-                   );</expression>
-                    <property name="dataType">integer</property>
                 </structure>
             </list-property>
             <structure name="cachedMetaData">
@@ -487,63 +500,68 @@ Total.count ( !BirtComp.equalTo( row["state"], "R4E_ANOMALY_STATE_VERIFIED")  &a
                     </structure>
                     <structure>
                         <property name="position">26</property>
+                        <property name="name">IdentifyStateCreated</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">27</property>
                         <property name="name">CountStateCreated</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">27</property>
+                        <property name="position">28</property>
                         <property name="name">CountStateAssigned</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">28</property>
+                        <property name="position">29</property>
                         <property name="name">CountStateAccepted</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">29</property>
+                        <property name="position">30</property>
                         <property name="name">CountStateFixed</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">30</property>
+                        <property name="position">31</property>
                         <property name="name">CountStateDuplicated</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">31</property>
+                        <property name="position">32</property>
                         <property name="name">CountStateRejected</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">32</property>
+                        <property name="position">33</property>
                         <property name="name">CountStateDeferred</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">33</property>
+                        <property name="position">34</property>
                         <property name="name">CountStateVerified</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">34</property>
+                        <property name="position">35</property>
+                        <property name="name">CountStateOthers</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">36</property>
                         <property name="name">CountTotalAnomaly</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">35</property>
+                        <property name="position">37</property>
                         <property name="name">AnomalyDueDate</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">36</property>
+                        <property name="position">38</property>
                         <property name="name">AnomalyState</property>
                         <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">37</property>
-                        <property name="name">CountStateOthers</property>
-                        <property name="dataType">integer</property>
                     </structure>
                 </list-property>
             </structure>
