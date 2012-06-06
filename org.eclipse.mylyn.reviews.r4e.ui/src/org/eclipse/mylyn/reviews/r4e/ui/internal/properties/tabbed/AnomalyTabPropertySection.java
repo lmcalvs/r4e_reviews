@@ -19,6 +19,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -40,11 +41,14 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ICalendarDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
@@ -874,9 +878,17 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		}
 		fDescriptionText.setText(modelAnomaly.getDescription());
 
-		final String[] participants = R4EUIModelController.getActiveReview()
-				.getParticipantIDs()
-				.toArray(new String[R4EUIModelController.getActiveReview().getParticipantIDs().size()]);
+		//Here we need to get a handle to the parent review to get the list of participants
+		String[] participants = { "" };
+		IR4EUIModelElement element = uiModelAnomaly.getParent().getParent();
+		if (element instanceof R4EUIReviewBasic) { //Global anomaly
+			List<String> participantsStr = ((R4EUIReviewBasic) element).getParticipantIDs();
+			participants = participantsStr.toArray(new String[participantsStr.size()]);
+		} else if (element instanceof R4EUIFileContext) { //Local anomaly
+			List<String> participantsStr = ((R4EUIReviewBasic) element.getParent().getParent()).getParticipantIDs();
+			participants = participantsStr.toArray(new String[participantsStr.size()]);
+		}
+		//Reset assignment combo values to current participants
 		fAssignedToCombo.removeAll();
 		fAssignedToCombo.add("");
 		for (String participant : participants) {
