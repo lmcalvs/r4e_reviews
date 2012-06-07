@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.eclipse.compare.ICompareNavigator;
 import org.eclipse.compare.contentmergeviewer.TextMergeViewer;
@@ -179,6 +180,15 @@ public class UIUtils {
 	public static final Color ENABLED_FONT_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
 
 	// ------------------------------------------------------------------------
+	// Members
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Field fLock.
+	 */
+	private final static ReentrantLock fLock = new ReentrantLock();
+
+	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 
@@ -191,18 +201,26 @@ public class UIUtils {
 	 */
 	public static Image loadIcon(String aUrl) {
 		final R4EUIPlugin plugin = R4EUIPlugin.getDefault();
+		//Need to lock since this can be called in multiple jobs for 
+		//the same icon. i.e. create multiple participants
+		fLock.lock();
 		Image icon = plugin.getImageRegistry().get(aUrl);
-		if (null == icon) {
-			final URL imageURL = plugin.getBundle().getEntry(aUrl);
-			final ImageDescriptor descriptor = ImageDescriptor.createFromURL(imageURL);
-			icon = descriptor.createImage();
-			plugin.getImageRegistry().put(aUrl, icon);
+		try {
+			if (null == icon) {
+				final URL imageURL = plugin.getBundle().getEntry(aUrl);
+				final ImageDescriptor descriptor = ImageDescriptor.createFromURL(imageURL);
+				icon = descriptor.createImage();
+				plugin.getImageRegistry().put(aUrl, icon);
+			}
+		} finally {
+			fLock.unlock();
 		}
+
 		return icon;
 	}
 
 	/**
-	 * Get adisabled version of the current image and add it to the image registry if necessary
+	 * Get a disabled version of the current image and add it to the image registry if necessary
 	 * 
 	 * @param aUrl
 	 *            - the location of the original image
@@ -210,20 +228,24 @@ public class UIUtils {
 	 */
 	public static Image loadDisabledIcon(final String aUrl) {
 		final R4EUIPlugin plugin = R4EUIPlugin.getDefault();
+		fLock.lock();
 		Image icon = plugin.getImageRegistry().get(aUrl + "_disabled");
-		if (null == icon) {
-			final URL imageURL = plugin.getBundle().getEntry(aUrl);
-			final ImageDescriptor originalDescriptor = ImageDescriptor.createFromURL(imageURL);
-			final ImageDescriptor disabledDescriptor = ImageDescriptor.createWithFlags(originalDescriptor,
-					SWT.IMAGE_DISABLE);
-			//NOTE:  Here we block while creating the new Imake because we need to return it from this method
-			Display.getDefault().syncExec(new Runnable() {
-				public void run() {
-					final Image newIcon = disabledDescriptor.createImage();
-					plugin.getImageRegistry().put(aUrl + "_disabled", newIcon);
-				}
-			});
-			icon = plugin.getImageRegistry().get(aUrl + "_disabled");
+		try {
+			if (null == icon) {
+				final URL imageURL = plugin.getBundle().getEntry(aUrl);
+				final ImageDescriptor originalDescriptor = ImageDescriptor.createFromURL(imageURL);
+				final ImageDescriptor disabledDescriptor = ImageDescriptor.createWithFlags(originalDescriptor,
+						SWT.IMAGE_DISABLE);
+				//NOTE:  Here we block while creating the new Image because we need to return it from this method
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						final Image newIcon = disabledDescriptor.createImage();
+						plugin.getImageRegistry().put(aUrl + "_disabled", newIcon);
+					}
+				});
+			}
+		} finally {
+			fLock.unlock();
 		}
 		return icon;
 	}
