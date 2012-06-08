@@ -720,7 +720,10 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 				default:
 					//should never happen
 				}
-			} else { //R4EReviewType.R4E_REVIEW_TYPE_FORMAL
+			} else if (R4EUIModelController.getActiveReview()
+					.getReview()
+					.getType()
+					.equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) { //R4EReviewType.R4E_REVIEW_TYPE_FORMAL
 				final R4EReviewPhase phase = ((R4EFormalReview) R4EUIModelController.getActiveReview().getReview()).getCurrent()
 						.getType();
 				switch (aCurrentState.getValue()) {

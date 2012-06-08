@@ -36,6 +36,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ParticipantProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -350,7 +351,12 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * Method setParticipantDetails.
 	 */
 	public void setParticipantDetails() {
-		if (R4EUIModelController.isUserQueryAvailable()) {
+		if (fParticipant.getId().equals(
+				R4EUIPlugin.getDefault().getPreferenceStore().getString(PreferenceConstants.P_USER_ID))) {
+			//If this is the default user, get its email
+			String email = R4EUIPlugin.getDefault().getPreferenceStore().getString(PreferenceConstants.P_USER_EMAIL);
+			fParticipant.setEmail(email);
+		} else if (R4EUIModelController.isUserQueryAvailable()) {
 			try {
 				//Get detailed info from DB if available
 				final IQueryUser query = new QueryUserFactory().getInstance();
@@ -367,6 +373,8 @@ public class R4EUIParticipant extends R4EUIModelElement {
 			} catch (IOException e) {
 				R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 			}
+		} else {
+			fParticipant.setEmail("");
 		}
 	}
 

@@ -1,0 +1,23 @@
+//Test cases for the add multiple participants feature
+
+//Find Users dialog
+- Search participant by entering all fields in search filters (try all one by one)
+- After first search results are in, narrow it down by using a second field (try all one by one)
+- Clear search filters
+- Select one or multiple results in result table and add them to the users by using "Add Users" button
+- Manually edit the "Add Users" text field.  Make sure the corresponding user gets selected in result table
+- Try to add more results to the users field.  Make sure they get appended to the list.
+- Try to add users that have Uppercase letters in them.  Make sure they are lowercased in the Add Users text field.
+- When pressing OK in the dialog, make sure that the Participants in the Particpant text field get added to the New Participants parent dialog.
+
+//Add Participants dialog
+- Enter participants textually in the Participants Combo box, separated by semicolons.  Make sure that the Add button becomes enabled.
+- Use Add button to add Participants to the Particpants list.  Make sure are upper-case letters get translated to lower-case.  Make sure Clear button gets enabled.
+- Select participants from the participants list.  Make sure the Basics and Extra Parameters get updated properly.
+- Use Clear button.  Make sure the participant list gets cleared.
+- Select a particpant and use Erase button.  Make sure it gets deleted properly and all dialog fields are cleared.
+- Select a participant in the participant list and change all changeable parameters.  Make sure the values are recorded properly by de-selecting and re-selecting the changed participant
+- Try to add participant that are already in the list.  Make sure nothing happens.
+- Add participants to the review by pressing the Dialog OK button.  Make sure the review gets updated with the new participant.  Also verify all parameters values and make sure they are OK.
+- Try to add participants already in review.  Make sure they are rejected and a message dialog appears.
+_ TRy to add participants with no Emails values.  Make sure they are rejected.

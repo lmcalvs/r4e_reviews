@@ -1,0 +1,20 @@
+//Test cases for the aliases (Participants Lists) feature
+
+//Preferences Users tab
+- Check that Remove button is disabled for the participants lists table when ir is is empty.
+- Add new Participant list
+- Select a participant list and add participants by using the Add buttons for the participants table.
+- Add participants to all lists and make sure that the correct participants are displayed for the selected list.
+- Close (OK button) and RE-open preferences dialog.  Make sure existing lists are preserved with the correct participants.
+- Remove existing participant list.  Make sure corresponding users are removed in the Participants table.
+- Check that Remove button is disabled when for the particpants table when it is empty.
+- Make sure new data is only saved when pressing Apply and/or OK and that it is discarded when pressing cancel for the preferences dialog
+- Make sure participants table is disabled when no parent participant list is selected.
+- Make sure it is possible to add/remove participants lists when the Review Navigator view is closed
+
+//Integration with add participant dialog
+- Make sure that the New Participants dialog works equally well when called either from the User Preferences 
+	or from the Participants container context menu in the Review Navigator. Repeat multiple participants test cases for
+	both scenarios.
+- In all cases, try to add Participants Lists to the New Participant dialog by entrering their names in the top Combox box,
+	or by selecting a Combo box entry directly.  Make sure the participants that are in the Participant list are added to the Particpants table.

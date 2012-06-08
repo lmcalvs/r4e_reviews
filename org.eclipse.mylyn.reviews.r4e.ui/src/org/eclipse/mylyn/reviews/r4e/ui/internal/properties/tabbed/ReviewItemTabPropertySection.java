@@ -329,7 +329,7 @@ public class ReviewItemTabPropertySection extends ModelElementTabPropertySection
 			try {
 				final R4EParticipant participant = R4EUIModelController.getActiveReview().getParticipant(
 						modelItem.getAddedById(), false);
-				if (null != participant) {
+				if (null != participant && null != participant.getEmail()) {
 					fAuthorRepText.setText(participant.getEmail());
 				} else {
 					fAuthorRepText.setText("");

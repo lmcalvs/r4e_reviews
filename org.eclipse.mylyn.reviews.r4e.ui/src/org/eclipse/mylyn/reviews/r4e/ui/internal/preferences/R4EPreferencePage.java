@@ -1108,6 +1108,26 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	}
 
 	/**
+	 * Method getEmail.
+	 * 
+	 * @return String
+	 */
+	public String getEmail() {
+		return fUserEmailTextField.getText();
+
+	}
+
+	/**
+	 * Method setEmail.
+	 * 
+	 * @param aUser
+	 *            - String
+	 */
+	public void setEmail(String aEmail) {
+		fUserEmailTextField.setText(aEmail);
+	}
+
+	/**
 	 * Method addGroupPrefs.
 	 * 
 	 * @param aGroupPath

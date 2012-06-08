@@ -25,6 +25,10 @@
     <url>https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;classification=Mylyn;product=Mylyn%20Reviews%20R4E</url>
     <system>Bugzilla</system>
   </issueManagement>
+	<properties>
+		<mockito-version>1.8.4</mockito-version>
+		<junit-version>4.8.1</junit-version>    
+	</properties>
   <repositories>
     <repository>
       <snapshots>
@@ -86,7 +90,26 @@
         <module>org.eclipse.mylyn.reviews.r4e.transform</module>
         <module>org.eclipse.mylyn.reviews.r4e.ui</module>
         <module>org.eclipse.mylyn.reviews.VCalendar</module>
+        <module>org.eclipse.mylyn.reviews.r4e.ui.tests</module>
       </modules>
     </profile>
   </profiles>
+  <dependencies>
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-core</artifactId>
+		<version>${mockito-version}</version>
+	</dependency>
+  </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit-version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  
 </project>

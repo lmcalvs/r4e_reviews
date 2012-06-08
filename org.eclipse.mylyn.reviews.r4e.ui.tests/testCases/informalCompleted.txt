@@ -1,0 +1,13 @@
+//Test cases for the add anomaly for an informal review, then be able 
+to progress the review to COMPLETED without having to add the exit 
+decision in the property view. (Sprint Bug 91)
+
+
+//Setup
+- Create an INFORMAL review
+- Create anomaly for any files
+- Adjust the anomaly state, so the review can be completed
+- Select the "Progress button" in the navigator view
+Result: The review should be able to progress to "COMPLETED" state
+    	with no request to enter the exit decision 
+    	

@@ -1,0 +1,36 @@
+//Test cases for the add anomaly from the workspace file which is 
+not in the review yet (Sprint Bug 31)
+
+//Setup
+- Create a review
+- Create review item which has a different version than the workspace
+Note: We can use SVN, GIT and ClearCase file 
+Result: The file will have the ">" in front of the file meaning the 
+   file is different than the one in the workspace
+
+//Test1 Create a review item from the workspace file and select Cancel
+- Open the file under review from the package explorer (The same file name, but different version)
+- Select some lines in the code
+- Create an anomaly from the selected lines
+Result: A pop up saying the file is different from the review file 
+	It displays both file and version
+	Select "cancel"  ==> Processing to create an anomaly stops there
+	
+//Test2 Create a review item from the workspace file and select Continue
+- Open the file under review from the package explorer (The same file name, but different version)
+- Select some lines in the code
+- Create an anomaly from the selected lines
+Result: A pop up saying the file is different from the review file 
+	It displays both file and version
+	Select "Continue"  ==> Processing to create an anomaly open 
+	the dialogue to enter the data referring to an anomaly.
+	
+//Test3 Create a review item from the review  file 
+- Open the file under review from the review navigator view
+- Select some lines in the code
+- Create an anomaly from the selected lines
+Result: Processing to create an anomaly open, no extra dialogue to confirm 
+	we are on a different version of the review file, just the 
+	dialogue to enter data related to the anomaly shows
+	
+	
