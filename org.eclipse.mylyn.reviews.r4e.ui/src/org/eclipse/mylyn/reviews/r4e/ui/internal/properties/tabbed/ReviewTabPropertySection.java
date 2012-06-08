@@ -1243,6 +1243,9 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			}
 			final String[] participantsStr = participantsList.toArray(new String[participantsList.size()]);
 
+			//Fill the combo box selection
+			fDecisionUsersList.setEditableValues(participantsStr);
+
 			R4EReviewPhaseInfo phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
 			final R4EReviewPhaseInfo currentPhaseInfo = modelFormalReview.getCurrent();
 			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
