@@ -39,6 +39,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ReviewProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -146,6 +147,9 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	public void open() throws ResourceHandlingException, FileNotFoundException, CompatibilityException {
 		super.open();
 		setImage(REVIEW_FORMAL_ICON_FILE);
+
+		//Force a refresh to update the participants
+		UIUtils.setNavigatorViewFocus(this, 1);
 	}
 
 	//Commands
