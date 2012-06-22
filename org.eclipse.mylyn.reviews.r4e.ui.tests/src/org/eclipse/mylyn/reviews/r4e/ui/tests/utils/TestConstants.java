@@ -107,9 +107,9 @@ public class TestConstants {
 
 	//Anomalies
 
-	public static final String COMPARE_EDITOR_ANOMALY_TEST_TITLE = "test External Anomaly";
+	public static final String COMPARE_EDITOR_ANOMALY_TEST_TITLE = "test Compare Editor Anomaly";
 
-	public static final String COMPARE_EDITOR_ANOMALY_TEST_DESCRIPTION = "new External Anomaly description";
+	public static final String COMPARE_EDITOR_ANOMALY_TEST_DESCRIPTION = "new Compare Editor Anomaly description";
 
 	public static final String LINKED_ANOMALY_TEST_TITLE = "test Linked Anomaly";
 

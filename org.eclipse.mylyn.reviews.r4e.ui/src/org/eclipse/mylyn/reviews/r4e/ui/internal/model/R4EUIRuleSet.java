@@ -140,18 +140,25 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 		fRuleSet = aRuleSet;
 		fRuleSetFileURI = aRuleSet.eResource().getURI();
 		fAreas = new ArrayList<R4EUIRuleArea>();
-		if (aOpen) {
-			setImage(RULE_SET_ICON_FILE);
-			fOpen = true;
-		} else {
-			setImage(RULE_SET_CLOSED_ICON_FILE);
-			fOpen = false;
-		}
+		fOpen = aOpen;
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		if (isOpen()) {
+			return RULE_SET_ICON_FILE;
+		}
+		return RULE_SET_CLOSED_ICON_FILE;
+	}
 
 	/**
 	 * Method getToolTip.

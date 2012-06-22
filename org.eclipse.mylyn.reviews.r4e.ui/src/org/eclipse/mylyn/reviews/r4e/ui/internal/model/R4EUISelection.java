@@ -51,6 +51,15 @@ public class R4EUISelection extends R4EUIContent {
 	 */
 	public R4EUISelection(IR4EUIModelElement aParent, R4EDelta aDelta, IR4EUIPosition aPosition) {
 		super(aParent, aDelta, aPosition);
-		super.setImage(SELECTION_ICON_FILE);
+	}
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return SELECTION_ICON_FILE;
 	}
 }

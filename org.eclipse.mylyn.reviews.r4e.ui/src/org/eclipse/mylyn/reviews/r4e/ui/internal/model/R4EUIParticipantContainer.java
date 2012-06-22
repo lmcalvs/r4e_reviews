@@ -84,7 +84,6 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 		super(aParent, aName);
 		fReadOnly = aParent.isReadOnly();
 		fParticipants = new ArrayList<R4EUIParticipant>();
-		setImage(PARTICIPANT_CONTAINER_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
@@ -92,6 +91,16 @@ public class R4EUIParticipantContainer extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 
 	//Attributes
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return PARTICIPANT_CONTAINER_ICON_FILE;
+	}
 
 	/**
 	 * Create a serialization model element object

@@ -59,12 +59,21 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 	 */
 	public R4EUISelectionContainer(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName);
-		setImage(SELECTION_CONTAINER_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return SELECTION_CONTAINER_ICON_FILE;
+	}
 
 	/**
 	 * Method createSelection
@@ -88,7 +97,8 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 		addChildren(uiSelection);
 
 		//If parent file is assigned, assign the Selection too
-		final EList<String> parentAssignedParticipants = ((R4EUIFileContext) getParent()).getFileContext().getAssignedTo();
+		final EList<String> parentAssignedParticipants = ((R4EUIFileContext) getParent()).getFileContext()
+				.getAssignedTo();
 		final List<R4EParticipant> participantsToAssign = new ArrayList<R4EParticipant>();
 		for (String parentAssignedParticipant : parentAssignedParticipants) {
 			R4EParticipant participant = R4EUIModelController.getActiveReview().getParticipant(
@@ -100,10 +110,6 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 		uiSelection.addAssignees(participantsToAssign);
 		return uiSelection;
 	}
-
-	// ------------------------------------------------------------------------
-	// Methods
-	// ------------------------------------------------------------------------
 
 	/**
 	 * Method open.

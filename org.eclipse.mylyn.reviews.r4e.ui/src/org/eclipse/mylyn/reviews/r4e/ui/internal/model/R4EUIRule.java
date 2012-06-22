@@ -88,12 +88,21 @@ public class R4EUIRule extends R4EUIModelElement {
 		super(aParent, aRule.getId());
 		fReadOnly = aParent.isReadOnly();
 		fRule = aRule;
-		setImage(RULE_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return RULE_ICON_FILE;
+	}
 
 	/**
 	 * Method getToolTip.

@@ -151,6 +151,42 @@
                </visibleWhen>
             </command>
             <command
+                  commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CloneAnomaly"
+                  icon="icons/view16/cloneanmly_tsk.png"
+                  id="org.eclipse.mylyn.reviews.r4e.ui.commands.CloneAnomaly"
+                  label="Clone Anomaly..."
+                  mnemonic="C"
+                  style="push"
+                  tooltip="Add a New Anomaly to the Current Review">
+               <visibleWhen
+                     checkEnabled="false">
+                  <or>
+                     <with
+                           variable="selection">
+                        <iterate>
+                           <or>
+                              <instanceof
+                                    value="org.eclipse.core.resources.IFile">
+                              </instanceof>
+                              <instanceof
+                                    value="org.eclipse.jdt.core.ISourceReference">
+                              </instanceof>
+                              <instanceof
+                                    value="org.eclipse.cdt.core.model.ISourceReference">
+                              </instanceof>
+                           </or>
+                        </iterate>
+                     </with>
+                     <with
+                           variable="activePart">
+                        <instanceof
+                              value="org.eclipse.ui.IEditorPart">
+                        </instanceof>
+                     </with>
+                  </or>
+               </visibleWhen>
+            </command>
+            <command
                   commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification"
                   icon="icons/view16/sendmail_tsk.gif"
                   id="org.eclipse.mylyn.reviews.r4e.ui.commands.sendNotification"
@@ -550,6 +586,12 @@
       </command>
       <command
             categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
+            description="Clone Anomaly in the Current Review"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.CloneAnomaly"
+            name="Clone Anomaly">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
             description="Find Review Items from a given Project in Workspace"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.FindReviewItems"
             name="Find Review Items">
@@ -898,6 +940,18 @@
             description="Show Element Properties in Properties View"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.showProperties"
             name="Show Properties">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
+            description="Copy current element to Clipboard"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.CopyElement"
+            name="Copy">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.navigatorCategory"
+            description="Paste clipboard contents to currently selected element"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.PasteElement"
+            name="Paste">
       </command>
 
    </extension>
@@ -1284,7 +1338,16 @@
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomaly">
          <enabledWhen>
             <test
-                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.anomaly.anomaly">
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.anomaly.newAnomaly">
+            </test>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers.CloneAnomalyHandler"
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CloneAnomaly">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.mylyn.reviews.r4e.ui.commands.anomaly.cloneAnomaly">
             </test>
          </enabledWhen>
       </handler>
@@ -1373,6 +1436,24 @@
        <handler
              class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers.ShowPropertiesHandler"
              commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.showProperties">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers.CopyElementHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CopyElement">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers.PasteElementHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.PasteElement">
           <enabledWhen>
              <test
                    property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
@@ -1551,7 +1632,14 @@
             class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.testers.NewAnomalyPropertyTester"
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.NewAnomalyPropertyTester"
             namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.anomaly"
-            properties="anomaly"
+            properties="newAnomaly"
+            type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.testers.CloneAnomalyPropertyTester"
+            id="org.eclipse.mylyn.reviews.r4e.ui.commands.CloneAnomalyPropertyTester"
+            namespace="org.eclipse.mylyn.reviews.r4e.ui.commands.anomaly"
+            properties="cloneAnomaly"
             type="java.lang.Object">
       </propertyTester>
       <propertyTester
@@ -1641,25 +1729,25 @@
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.ExpandAll"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+4 E">
+            sequence="Alt+4 =">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CollapseAll"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+4 C">
-      </key>
-      <key
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Alt+4 S">
+            sequence="Alt+4 -">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.openEditor"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+4 O">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+4 S">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly"
@@ -1684,6 +1772,24 @@
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+4 D">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CloneAnomaly"
+            contextId="org.eclipse.ui.textEditorScope"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Alt+4 Q">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CopyElement"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+C">
+      </key>
+      <key
+            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.PasteElement"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+V">
       </key>
    </extension>
    <extension

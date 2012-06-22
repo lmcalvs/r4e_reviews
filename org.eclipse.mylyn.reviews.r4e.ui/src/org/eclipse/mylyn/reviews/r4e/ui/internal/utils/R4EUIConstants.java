@@ -735,6 +735,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final String EXTRA_PARAMS_HEADER_DETAILS = "Enter the optional extra parameters for this ";
 
+	/**
+	 * Field ANOMALY_TITLE_LABEL_VALUE. (value is ""Anomaly Title: "")
+	 */
+	public static final String ANOMALY_TITLE_LABEL_VALUE = "Anomaly Title: ";
+
+	/**
+	 * Field ANOMALY_DESCRIPTION_LABEL_VALUE. (value is ""Anomaly Description: "")
+	 */
+	public static final String ANOMALY_DESCRIPTION_LABEL_VALUE = "Anomaly Description: ";
+
 	//Review types and phases
 
 	/**
@@ -1333,6 +1343,56 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field CLOSE_ELEMENT_COMMAND_MNEMONIC. (value is ""C"")
 	 */
 	public static final String CLOSE_ELEMENT_COMMAND_MNEMONIC = "C";
+
+	/**
+	 * Field COPY_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.CopyElement"")
+	 */
+	public static final String COPY_ELEMENT_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.CopyElement";
+
+	/**
+	 * Field COPY_ELEMENT_ICON_FILE. (value is ""icons/obj16/copy_tsk.gif"")
+	 */
+	public static final String COPY_ELEMENT_ICON_FILE = "icons/obj16/copy_tsk.gif";
+
+	/**
+	 * Field COPY_ELEMENT_COMMAND_NAME. (value is ""Copy"")
+	 */
+	public static final String COPY_ELEMENT_COMMAND_NAME = "Copy";
+
+	/**
+	 * Field COPY_ELEMENT_COMMAND_TOOLTIP. (value is ""Copy current element to Clipboard"")
+	 */
+	public static final String COPY_ELEMENT_COMMAND_TOOLTIP = "Copy current element to Clipboard";
+
+	/**
+	 * Field COPY_ELEMENT_COMMAND_MNEMONIC. (value is ""C"")
+	 */
+	public static final String COPY_ELEMENT_COMMAND_MNEMONIC = "C";
+
+	/**
+	 * Field PASTE_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.PasteElement"")
+	 */
+	public static final String PASTE_ELEMENT_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.PasteElement";
+
+	/**
+	 * Field PASTE_ELEMENT_ICON_FILE. (value is ""icons/obj16/paste_tsk.gif"")
+	 */
+	public static final String PASTE_ELEMENT_ICON_FILE = "icons/obj16/paste_tsk.gif";
+
+	/**
+	 * Field PASTE_ELEMENT_COMMAND_NAME. (value is ""Paste"")
+	 */
+	public static final String PASTE_ELEMENT_COMMAND_NAME = "Paste";
+
+	/**
+	 * Field PASTE_ELEMENT_COMMAND_TOOLTIP. (value is ""Paste clipboard contents to currently selected element"")
+	 */
+	public static final String PASTE_ELEMENT_COMMAND_TOOLTIP = "Paste clipboard contents to currently selected element";
+
+	/**
+	 * Field PASTE_ELEMENT_COMMAND_MNEMONIC. (value is ""V"")
+	 */
+	public static final String PASTE_ELEMENT_COMMAND_MNEMONIC = "V";
 
 	/**
 	 * Field NEXT_STATE_ELEMENT_COMMAND. (value is ""org.eclipse.mylyn.reviews.r4e.ui.commands.NextState"")

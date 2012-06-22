@@ -168,18 +168,25 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 		fGroupFileURI = aGroup.eResource().getURI();
 		fReviews = new ArrayList<R4EUIReviewBasic>();
 		fRuleSets = new ArrayList<R4EUIRuleSet>();
-		if (aOpen) {
-			setImage(REVIEW_GROUP_ICON_FILE);
-			fOpen = true;
-		} else {
-			setImage(REVIEW_GROUP_CLOSED_ICON_FILE);
-			fOpen = false;
-		}
+		fOpen = aOpen;
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		if (isOpen()) {
+			return REVIEW_GROUP_ICON_FILE;
+		}
+		return REVIEW_GROUP_CLOSED_ICON_FILE;
+	}
 
 	/**
 	 * Method getToolTip.

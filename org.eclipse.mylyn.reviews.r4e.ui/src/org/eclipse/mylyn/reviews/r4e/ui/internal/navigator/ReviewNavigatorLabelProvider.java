@@ -93,7 +93,7 @@ public class ReviewNavigatorLabelProvider extends ColumnLabelProvider {
 	@Override
 	public void update(ViewerCell cell) {
 		cell.setText(((IR4EUIModelElement) cell.getElement()).getName());
-		cell.setImage(((IR4EUIModelElement) cell.getElement()).getImage());
+		cell.setImage(((IR4EUIModelElement) cell.getElement()).getImage(((IR4EUIModelElement) cell.getElement()).getImageLocation()));
 	}
 
 	/**
@@ -166,6 +166,6 @@ public class ReviewNavigatorLabelProvider extends ColumnLabelProvider {
 	 */
 	@Override
 	public Image getImage(Object element) {
-		return ((IR4EUIModelElement) element).getImage();
+		return ((IR4EUIModelElement) element).getImage(((IR4EUIModelElement) element).getImageLocation());
 	}
 }

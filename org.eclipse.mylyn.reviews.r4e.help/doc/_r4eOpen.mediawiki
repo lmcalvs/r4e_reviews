@@ -103,7 +103,7 @@ R4E General Preferences page is split up into four tab sections.  Take note that
 
 ====User Tab====
 
-[[Image:R4E preferences general user.png]] 
+[[Image:UserPreferences.png]] 
 
 <br> 
 
@@ -248,7 +248,7 @@ Before doing any of the tutorials, we will set-up R4E and configure it to do rev
 
 <br> 
 
-[[Image:TutorialUserPreferences.png]] 
+[[Image:UserPreferences.png]] 
 
 <br> 
 
@@ -1250,6 +1250,29 @@ This opens the New Anomaly dialog.
 
 <br> 
 
+=== Cloning an existing Anomaly  ===
+
+Anomalies can be duplicated so that their information is applied to a new location and/or file.  Anomalies are cloned be selecting a new range in an editor and using the ''Clone Anomaly'' contextual command
+
+[[Image:CloneAnomaly.png]]
+
+This will trigger the Clone Anomaly Dialog, where the source anomaly to clone can be selected.
+
+[[Image:CloneAnomalyDialog.png]]
+
+Once this is done, a new Anomaly will appear at the new location with the same information as the source one.
+
+Anomalies can also be cloned to a specific Delta or Selection element by dragging and dropping them unto the desired Delta or Selection, by using the Copy and Paste Review Navigator Contextual commands or by using the generic Copy (CTRL+C) and Paste (CTRL+V) hotkeys.  
+
+[[Image:DragDropAnomaly.png]]
+
+[[Image:CopyAnomaly.png]]
+
+[[Image:PasteAnomaly.png]]
+
+Take note that the child comments on the source anomaly are not copied to the new cloned anomaly.  It is however possible to copy the comments manually (see below).
+
+
 === Creating Comments on an existing Anomaly  ===
 
 It is possible to add comments to an existing anomaly. This could be useful in discussing the anomaly or for tracking purposes. To create a Comment, use the ''Add Comment'' command on the context menu on the selected Anomaly. 
@@ -1267,6 +1290,17 @@ This opens the New Comment dialog, where the comment can be added.
 [[Image:NewCommentDialog.png]] 
 
 <br>
+
+=== Cloning existing Comments to an Anomaly  ===
+
+As for anomalies, it is also possible to copy comment information to another anomaly.  It is done in a similar way than for cloning anomalies, by dragging and dropping the source comment(s) unto the target anomaly, by using the Copy and Paste Review Navigator contextual commands or by using the generic Copy (CTRL+C) and Paste (CTRL+V) hotkeys
+
+[[Image:DragDropComment.png]]
+
+[[Image:CopyComment.png]]
+
+[[Image:PasteComment.png]]
+
 
 === Importing Postponed Anomalies  ===
 
@@ -1628,9 +1662,9 @@ R4E defines some keys as accelerator keys to help the user to perform reviews. E
 <br> 
 
 *ALT +4 A&nbsp;: Add Review Anomaly. Available from any editor View. There must be a selection in the editor to create a new Anomaly. 
-*ALT +4 C&nbsp;: Collapses the Review Navigator View tree. 
+*ALT +4 -&nbsp;: Collapses the Review Navigator View tree. 
 *ALT +4 D&nbsp;: Change Display type.  Toggles between the Tree and Tree Table displays for the Review Navigator View. 
-*ALT +4 E&nbsp;: Expand all elements of the Review Navigator View tree. 
+*ALT +4 =&nbsp;: Expand all elements of the Review Navigator View tree. 
 *ALT +4 F&nbsp;: Opens a dialog used with the Version Control System connector to Find new Review Items. A Project needs to be selected first before using this shortcut. 
 *ALT +4 I&nbsp;: Add Review Item. Available from any editor View. There must be a selection in the editor to create a new Review Item. 
 *ALT +4 L&nbsp;: Add a new Linked Anomaly to the selected Review Navigator Selection/Delta element, if any. 
@@ -1640,6 +1674,8 @@ R4E defines some keys as accelerator keys to help the user to perform reviews. E
 *ALT +4 X&nbsp;: Remove (disable) the selected Review Navigator element, if any.
 
 When selecting the accelerator key ALT + 4, if the user waits before selecting the next accelerator key, a commands list like the one shown above will be displayed at the bottom right corner of the Eclipse window.
+
+The default Copy and Paste accelerators (CTRL+C, CTRL+V) are also available in the Review Navigator view to clone Anomalies and Comments.
 
 == Using Notifications  ==
 

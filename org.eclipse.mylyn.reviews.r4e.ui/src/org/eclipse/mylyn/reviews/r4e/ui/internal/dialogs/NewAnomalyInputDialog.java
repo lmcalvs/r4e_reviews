@@ -1,6 +1,6 @@
 // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString, com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.constructorsOnlyInvokeFinalMethods, useForLoop, com.instantiations.assist.eclipse.analysis.deserializeabilitySecurity, com.instantiations.assist.eclipse.analysis.disallowReturnMutable, com.instantiations.assist.eclipse.analysis.enforceCloneableUsageSecurity, explicitThisUsage
 /*******************************************************************************
- * Copyright (c) 2010, 2012 Ericsson AB and others.
+ * Copyright (c) 2012 Ericsson AB and others.
  * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
@@ -42,6 +42,7 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.ToolTip;
 import org.eclipse.jface.window.Window;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
@@ -87,7 +88,7 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialog {
+public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDialog {
 
 	// ------------------------------------------------------------------------
 	// Constants
@@ -99,24 +100,14 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	private static final String ADD_ANOMALY_DIALOG_TITLE = "Enter Anomaly Details";
 
 	/**
-	 * Field ADD_ANOMALY_DIALOG_VALUE. (value is ""Enter the Anomaly title:"")
-	 */
-	private static final String ADD_ANOMALY_DIALOG_VALUE = "Anomaly Title: ";
-
-	/**
-	 * Field ADD_COMMENT_DIALOG_VALUE. (value is ""Enter your comments for the new Anomaly:"")
-	 */
-	private static final String ADD_DESCRIPTION_DIALOG_VALUE = "Anomaly Description: ";
-
-	/**
 	 * Field BASIC_PARAMS_HEADER_MSG. (value is ""Enter the mandatory basic parameters for this anomaly"")
 	 */
 	private static final String BASIC_PARAMS_HEADER_MSG = "Enter the mandatory basic parameters for this anomaly";
 
 	/**
-	 * Field EXTRA_PARAMS_HEADER_MSG. (value is ""Enter the optional extra parameters for this Review Group"")
+	 * Field EXTRA_PARAMS_HEADER_MSG. (value is ""Enter the optional extra parameters for this anomaly"")
 	 */
-	private static final String EXTRA_PARAMS_HEADER_MSG = "Enter the optional extra parameters for this Review";
+	private static final String EXTRA_PARAMS_HEADER_MSG = "Enter the optional extra parameters for this anomaly";
 
 	/**
 	 * Field ADD_RULE_DIALOG_VALUE. (value is ""Rule: "")
@@ -233,7 +224,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	 * @param aParentShell
 	 *            Shell
 	 */
-	public AnomalyInputDialog(Shell aParentShell) {
+	public NewAnomalyInputDialog(Shell aParentShell) {
 		super(aParentShell);
 		setBlockOnOpen(false);
 		fValidator = new R4EInputValidator();
@@ -357,7 +348,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 		basicSection.setClient(basicSectionClient);
 
 		//Anomaly Title
-		Label label = toolkit.createLabel(basicSectionClient, ADD_ANOMALY_DIALOG_VALUE);
+		Label label = toolkit.createLabel(basicSectionClient, R4EUIConstants.ANOMALY_TITLE_LABEL_VALUE);
 		label.setToolTipText(R4EUIConstants.ANOMALY_TITLE_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fAnomalyTitleInputTextField = toolkit.createText(basicSectionClient, "", SWT.SINGLE | SWT.BORDER);
@@ -378,7 +369,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 		});
 
 		//Anomaly Description
-		label = toolkit.createLabel(basicSectionClient, ADD_DESCRIPTION_DIALOG_VALUE);
+		label = toolkit.createLabel(basicSectionClient, R4EUIConstants.ANOMALY_DESCRIPTION_LABEL_VALUE);
 		label.setToolTipText(R4EUIConstants.ANOMALY_DESCRIPTION_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fAnomalyDescriptionInputTextField = toolkit.createText(basicSectionClient, "", SWT.MULTI | SWT.V_SCROLL
@@ -530,7 +521,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 					cell.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_BLACK));
 				}
 				cell.setText(element.getName());
-				cell.setImage(element.getImage());
+				cell.setImage(element.getImage(element.getImageLocation()));
 			}
 		});
 
@@ -587,7 +578,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 			@Override
 			public String getText(Object element) {
 				if (element instanceof R4EUIRule) {
-					return getClassStr(((R4EUIRule) element).getRule().getClass_());
+					return UIUtils.getClassStr(((R4EUIRule) element).getRule().getClass_());
 				}
 				return null;
 			}
@@ -619,7 +610,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 			public void update(ViewerCell cell) {
 				final Object element = cell.getElement();
 				if (element instanceof R4EUIRule) {
-					cell.setText(getClassStr(((R4EUIRule) element).getRule().getClass_()));
+					cell.setText(UIUtils.getClassStr(((R4EUIRule) element).getRule().getClass_()));
 				} else {
 					cell.setText(null);
 				}
@@ -633,7 +624,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 			@Override
 			public String getText(Object element) {
 				if (element instanceof R4EUIRule) {
-					return getRankStr(((R4EUIRule) element).getRule().getRank());
+					return UIUtils.getRankStr(((R4EUIRule) element).getRule().getRank());
 				}
 				return null;
 			}
@@ -665,7 +656,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 			public void update(ViewerCell cell) {
 				final Object element = cell.getElement();
 				if (element instanceof R4EUIRule) {
-					cell.setText(getRankStr(((R4EUIRule) element).getRule().getRank()));
+					cell.setText(UIUtils.getRankStr(((R4EUIRule) element).getRule().getRank()));
 				} else {
 					cell.setText(null);
 				}
@@ -798,8 +789,12 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	 * @return the R4EUIRule reference (if any)
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog#getRuleReferenceValue()
 	 */
-	public R4EUIRule getRuleReferenceValue() {
-		return fRuleReferenceValue;
+	public R4EDesignRule getRuleReferenceValue() {
+		R4EDesignRule rule = null;
+		if (null != fRuleReferenceValue) {
+			rule = fRuleReferenceValue.getRule();
+		}
+		return rule;
 	}
 
 	/**
@@ -854,29 +849,6 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	}
 
 	/**
-	 * Method getClassStr.
-	 * 
-	 * @param aClass
-	 *            R4EDesignRuleClass
-	 * @return String
-	 */
-	protected String getClassStr(R4EDesignRuleClass aClass) {
-		if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_ERRONEOUS)) {
-			return R4EUIConstants.ANOMALY_CLASS_ERRONEOUS;
-		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_SUPERFLUOUS)) {
-			return R4EUIConstants.ANOMALY_CLASS_SUPERFLUOUS;
-		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT)) {
-			return R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT;
-		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_QUESTION)) {
-			return R4EUIConstants.ANOMALY_CLASS_QUESTION;
-		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_COMMENT)) {
-			return R4EUIConstants.ANOMALY_CLASS_COMMENT;
-		} else {
-			return null; //should never happen
-		}
-	}
-
-	/**
 	 * Method setClass_.
 	 * 
 	 * @param aClass
@@ -886,7 +858,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	public void setClass_(R4EDesignRuleClass aClass) {
 		fAnomalyClassValue = aClass;
 		if (null != fAnomalyClassValue) {
-			fAnomalyClass.setText(getClassStr(fAnomalyClassValue));
+			fAnomalyClass.setText(UIUtils.getClassStr(fAnomalyClassValue));
 		}
 	}
 
@@ -901,27 +873,6 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	}
 
 	/**
-	 * Method getRankStr.
-	 * 
-	 * @param aRank
-	 *            R4EDesignRuleRank
-	 * @return String
-	 */
-	protected String getRankStr(R4EDesignRuleRank aRank) {
-		if (aRank.equals(R4EDesignRuleRank.R4E_RANK_NONE)) {
-			return R4EUIConstants.ANOMALY_RANK_NONE;
-		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_MINOR)) {
-			return R4EUIConstants.ANOMALY_RANK_MINOR;
-		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_MAJOR)) {
-			return R4EUIConstants.ANOMALY_RANK_MAJOR;
-		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_DEPRECATED)) {
-			return R4EUIConstants.ANOMALY_RANK_MINOR;
-		} else {
-			return null; //should never happen
-		}
-	}
-
-	/**
 	 * Method setRank.
 	 * 
 	 * @param aRank
@@ -931,7 +882,7 @@ public class AnomalyInputDialog extends FormDialog implements IAnomalyInputDialo
 	public void setRank(R4EDesignRuleRank aRank) {
 		fAnomalyRankValue = aRank;
 		if (null != fAnomalyRankValue) {
-			fAnomalyRank.setText(getRankStr(fAnomalyRankValue));
+			fAnomalyRank.setText(UIUtils.getRankStr(fAnomalyRankValue));
 		}
 	}
 

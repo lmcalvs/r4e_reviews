@@ -97,12 +97,21 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	 */
 	public R4EUIReviewItem(IR4EUIModelElement aParent, R4EItem aItem, String aName, int aItemType) {
 		super(aParent, aItem, aName, aItemType);
-		setImage(REVIEW_ITEM_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return REVIEW_ITEM_ICON_FILE;
+	}
 
 	/**
 	 * Method getAdapter.

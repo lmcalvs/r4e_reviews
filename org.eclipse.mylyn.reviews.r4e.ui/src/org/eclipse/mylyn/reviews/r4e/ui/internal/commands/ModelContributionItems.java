@@ -78,6 +78,28 @@ public class ModelContributionItems extends CompoundContributionItem {
 				list.add(new CommandContributionItem(params));
 			}
 
+			if (element.isCopyElementCmd()) {
+				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+						R4EUIConstants.COPY_ELEMENT_COMMAND, R4EUIConstants.COPY_ELEMENT_COMMAND, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.COPY_ELEMENT_ICON_FILE)), null, null,
+						element.getCopyElementCmdName(), R4EUIConstants.COPY_ELEMENT_COMMAND_MNEMONIC,
+						element.getCopyElementCmdTooltip(), CommandContributionItem.STYLE_PUSH, null, true);
+				list.add(new CommandContributionItem(params));
+			}
+
+			if (element.isPasteElementCmd()) {
+				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
+						R4EUIConstants.PASTE_ELEMENT_COMMAND, R4EUIConstants.PASTE_ELEMENT_COMMAND, null,
+						ImageDescriptor.createFromURL(R4EUIPlugin.getDefault()
+								.getBundle()
+								.getEntry(R4EUIConstants.PASTE_ELEMENT_ICON_FILE)), null, null,
+						element.getPasteElementCmdName(), R4EUIConstants.PASTE_ELEMENT_COMMAND_MNEMONIC,
+						element.getPasteElementCmdTooltip(), CommandContributionItem.STYLE_PUSH, null, true);
+				list.add(new CommandContributionItem(params));
+			}
+
 			if (element.isNextStateElementCmd()) {
 				params = new CommandContributionItemParameter(R4EUIModelController.getNavigatorView().getSite(),
 						R4EUIConstants.NEXT_STATE_ELEMENT_COMMAND, R4EUIConstants.NEXT_STATE_ELEMENT_COMMAND, null,

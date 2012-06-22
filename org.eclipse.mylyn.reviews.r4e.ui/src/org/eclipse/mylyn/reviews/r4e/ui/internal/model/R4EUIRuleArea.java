@@ -114,12 +114,21 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 		fReadOnly = aParent.isReadOnly();
 		fArea = aArea;
 		fViolations = new ArrayList<R4EUIRuleViolation>();
-		setImage(RULE_AREA_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return RULE_AREA_ICON_FILE;
+	}
 
 	/**
 	 * Method getAdapter.

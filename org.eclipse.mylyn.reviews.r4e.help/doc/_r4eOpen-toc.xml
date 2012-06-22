@@ -92,7 +92,9 @@
 			</topic>
 			<topic href="doc/Tasks.html#Assigning_Review_Elements" label="Assigning Review Elements"></topic>
 			<topic href="doc/Tasks.html#Creating_an_Anomaly" label="Creating an Anomaly"></topic>
+			<topic href="doc/Tasks.html#Cloning_an_existing_Anomaly" label="Cloning an existing Anomaly"></topic>
 			<topic href="doc/Tasks.html#Creating_Comments_on_an_existing_Anomaly" label="Creating Comments on an existing Anomaly"></topic>
+			<topic href="doc/Tasks.html#Cloning_existing_Comments_to_an_Anomaly" label="Cloning existing Comments to an Anomaly"></topic>
 			<topic href="doc/Tasks.html#Importing_Postponed_Anomalies" label="Importing Postponed Anomalies"></topic>
 		</topic>
 		<topic href="doc/Tasks.html#Handling_Design_Rules" label="Handling Design Rules">

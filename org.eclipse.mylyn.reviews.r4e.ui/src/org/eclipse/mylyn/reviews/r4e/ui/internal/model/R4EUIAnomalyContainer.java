@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
@@ -52,6 +53,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IAnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorContentProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.AnomalyUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -112,7 +114,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		super(aParent, aName);
 		fReadOnly = aParent.isReadOnly();
 		fAnomalies = new ArrayList<R4EUIAnomalyBasic>();
-		setImage(ANOMALY_CONTAINER_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
@@ -122,14 +123,29 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	//Attributes
 
 	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return ANOMALY_CONTAINER_ICON_FILE;
+	}
+
+	/**
 	 * Method createDetachedAnomaly.
 	 * 
 	 * @return R4EAnomaly
 	 */
-	public static R4EAnomaly createDetachedAnomaly() {
+	public static R4EAnomaly createDetachedAnomaly(boolean aClone) {
 		//Get comment from user and set it in model data
 		R4EAnomaly tempAnomaly = null;
-		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getAnomalyInputDialog();
+		final IAnomalyInputDialog dialog;
+		if (aClone) {
+			dialog = R4EUIDialogFactory.getInstance().getCloneAnomalyInputDialog();
+		} else {
+			dialog = R4EUIDialogFactory.getInstance().getNewAnomalyInputDialog();
+		}
 		final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
@@ -145,7 +161,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			tempAnomaly.setDueDate(dialog.getDueDate());
 			tempAnomaly.getAssignedTo().add(dialog.getAssigned());
 			if (null != dialog.getRuleReferenceValue()) {
-				final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
+				final R4EDesignRule rule = dialog.getRuleReferenceValue();
 				tempCommentType.setType(rule.getClass_());
 				tempAnomaly.setType(tempCommentType);
 				tempAnomaly.setRank(rule.getRank());
@@ -176,7 +192,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		final List<ReviewComponent> tempAnomalies = new ArrayList<ReviewComponent>();
 		R4EUIModelController.setJobInProgress(true);
 
-		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getAnomalyInputDialog();
+		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getNewAnomalyInputDialog();
 		final int result = dialog.open();
 		if (result == Window.OK) {
 			final R4EAnomaly tempAnomaly = RModelFactory.eINSTANCE.createR4EAnomaly();
@@ -418,15 +434,22 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	/**
 	 * Method createAnomaly Creates a new Anomaly from the user dialog
 	 * 
-	 * @param aAnomalyTempFileVersion
+	 * @param aFile
 	 *            R4EFileVersion
 	 * @param aUiPosition
 	 *            - the position of the anomaly to create
+	 * @param aClone
+	 *            - flag set if this is a cloned anomaly
 	 */
-	public void createAnomaly(final R4EFileVersion aAnomalyTempFileVersion, final R4EUITextPosition aUiPosition) {
+	public void createAnomaly(final R4EUIFileContext aFile, final R4EUITextPosition aUiPosition, boolean aClone) {
 
 		//Get anomaly details from user
-		final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getAnomalyInputDialog();
+		final IAnomalyInputDialog dialog;
+		if (aClone) {
+			dialog = R4EUIDialogFactory.getInstance().getCloneAnomalyInputDialog();
+		} else {
+			dialog = R4EUIDialogFactory.getInstance().getNewAnomalyInputDialog();
+		}
 		final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
@@ -447,27 +470,49 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				@Override
 				public IStatus run(IProgressMonitor monitor) {
 
-					//Create anomaly model element
-					try {
-						final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
-						final R4EParticipant participant = uiReview.getParticipant(R4EUIModelController.getReviewer(),
-								true);
-						final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
-						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly,
-								R4EUIModelController.getReviewer());
-						setAnomalyWithDialogValues(anomaly, dialog);
-						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-						final R4EUIAnomalyBasic uiAnomaly = createAnomalyDetails(anomaly, aAnomalyTempFileVersion,
-								aUiPosition);
-						R4EUIModelController.setJobInProgress(false);
-						UIUtils.setNavigatorViewFocus(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
-					} catch (ResourceHandlingException e) {
-						UIUtils.displayResourceErrorDialog(e);
-					} catch (OutOfSyncException e) {
-						UIUtils.displaySyncErrorDialog(e);
+					//First check if the anomaly already exist
+					final String existingAnomalyName = AnomalyUtils.isAnomalyExist(aFile, aUiPosition,
+							dialog.getAnomalyDescriptionValue());
+					if (null == existingAnomalyName) {
+						//Create anomaly model element
+						try {
+							final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
+							final R4EParticipant participant = uiReview.getParticipant(
+									R4EUIModelController.getReviewer(), true);
+							final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly,
+									R4EUIModelController.getReviewer());
+							setAnomalyWithDialogValues(anomaly, dialog);
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+							final R4EUIAnomalyBasic uiAnomaly = createAnomalyDetails(anomaly,
+									aFile.getTargetFileVersion(), aUiPosition);
+							R4EUIModelController.setJobInProgress(false);
+							UIUtils.setNavigatorViewFocus(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
+						} catch (ResourceHandlingException e) {
+							UIUtils.displayResourceErrorDialog(e);
+						} catch (OutOfSyncException e) {
+							UIUtils.displaySyncErrorDialog(e);
+						}
+						monitor.done();
+						return Status.OK_STATUS;
+					} else {
+						String msg = "Anomaly with same description already exist:" + R4EUIConstants.LINE_FEED
+								+ "Anomaly: " + existingAnomalyName + R4EUIConstants.LINE_FEED + "File: "
+								+ aFile.getFileContext().getTarget().getName() + R4EUIConstants.LINE_FEED
+								+ "Position: " + aUiPosition.toString();
+						R4EUIPlugin.Ftracer.traceWarning(msg);
+						final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+								"Cannot Add Anomaly", new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, 0, msg, null),
+								IStatus.WARNING);
+						Display.getDefault().syncExec(new Runnable() {
+							public void run() {
+								dialog.open();
+							}
+						});
+
+						monitor.done();
+						return Status.CANCEL_STATUS;
 					}
-					monitor.done();
-					return Status.OK_STATUS;
 				}
 			};
 			job.setUser(true);
@@ -491,7 +536,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		aAnomaly.getAssignedTo().clear();
 		aAnomaly.getAssignedTo().add(aDialog.getAssigned());
 		if (null != aDialog.getRuleReferenceValue()) {
-			final R4EDesignRule rule = aDialog.getRuleReferenceValue().getRule();
+			final R4EDesignRule rule = aDialog.getRuleReferenceValue();
 			final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
 			commentType.setType(rule.getClass_());
 			aAnomaly.setType(commentType);
@@ -518,13 +563,15 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 *            R4EAnomaly
 	 * @param aUiPosition
 	 *            R4EUITextPosition
+	 * @param aClone
+	 *            - boolean
 	 * @return R4EUIAnomalyBasic
 	 * @throws ResourceHandlingException
 	 * @throws OutOfSyncException
 	 */
 	public R4EUIAnomalyBasic createAnomalyFromDetached(R4EFileVersion aAnomalyTempFileVersion,
-			R4EAnomaly aModelComponent, R4EUITextPosition aUiPosition) throws ResourceHandlingException,
-			OutOfSyncException {
+			R4EAnomaly aModelComponent, R4EUITextPosition aUiPosition, boolean aClone)
+			throws ResourceHandlingException, OutOfSyncException {
 		final String user = R4EUIModelController.getReviewer();
 		final R4EAnomaly anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(R4EUIModelController.getActiveReview()
 				.getParticipant(user, true));
@@ -534,6 +581,9 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 
 		final R4EUIAnomalyBasic uiAnomaly = createAnomalyDetails(anomaly, aAnomalyTempFileVersion, aUiPosition);
 		uiAnomaly.setModelData(aModelComponent);
+		if (!aClone) {
+			uiAnomaly.setExtraModelData(aModelComponent);
+		}
 		return uiAnomaly;
 	}
 

@@ -19,6 +19,9 @@
 package org.eclipse.mylyn.reviews.r4e.ui.tests.proxy;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.compare.ICompareNavigator;
 import org.eclipse.compare.contentmergeviewer.TextMergeViewer;
@@ -28,6 +31,7 @@ import org.eclipse.compare.internal.MergeSourceViewer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
@@ -98,6 +102,18 @@ public class R4EUITestElement {
 	}
 
 	/**
+	 * Method setFocusOnNavigatorElements
+	 * 
+	 * @param aElement
+	 */
+	protected void setFocusOnNavigatorElements(List<IR4EUIModelElement> aElements) {
+		final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		page.activate(R4EUIModelController.getNavigatorView());
+		ISelection selection = new StructuredSelection(aElements);
+		R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(selection);
+	}
+
+	/**
 	 * Method setFocusOnPropertiesView
 	 * 
 	 * @return IViewPart
@@ -116,6 +132,22 @@ public class R4EUITestElement {
 				.getTreeViewer()
 				.getSelection();
 		return (IR4EUIModelElement) newSelection.getFirstElement();
+	}
+
+	/**
+	 * Method getNavigatorSelectedElements
+	 * 
+	 * @return List<IR4EUIModelElement>
+	 */
+	protected List<IR4EUIModelElement> getNavigatorSelectedElements() {
+		ITreeSelection newSelection = (ITreeSelection) R4EUIModelController.getNavigatorView()
+				.getTreeViewer()
+				.getSelection();
+		List<IR4EUIModelElement> selectedElements = new ArrayList<IR4EUIModelElement>();
+		for (final Iterator<?> iterator = ((IStructuredSelection) newSelection).iterator(); iterator.hasNext();) {
+			selectedElements.add((IR4EUIModelElement) iterator.next());
+		}
+		return selectedElements;
 	}
 
 	/**

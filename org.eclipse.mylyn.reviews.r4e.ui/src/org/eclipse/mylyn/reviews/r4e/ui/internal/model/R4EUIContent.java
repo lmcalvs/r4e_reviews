@@ -18,9 +18,13 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.jface.util.LocalSelectionTransfer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -44,6 +48,17 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Field PASTE_ELEMENT_COMMAND_NAME. (value is ""Paste Anomalies"")
+	 */
+	private static final String PASTE_ELEMENT_COMMAND_NAME = "Paste Anomalies";
+
+	/**
+	 * Field PASTE_ELEMENT_COMMAND_TOOLTIP. (value is ""Clone anomalies in Clipboard using the Contents position" +
+	 * " from its Parent Container"")
+	 */
+	private static final String PASTE_ELEMENT_COMMAND_TOOLTIP = "Clone anomalies in Clipboard using the Contents position";
 
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Delete Content"")
@@ -418,6 +433,52 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Method isPasteElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isPasteElementCmd()
+	 */
+	@Override
+	public boolean isPasteElementCmd() {
+		if (isEnabled()) {
+			//We can only paste if there is a least 1 Anomaly in the clipboard
+			Object element = null;
+			ISelection selection = LocalSelectionTransfer.getTransfer().getSelection();
+			if (selection instanceof IStructuredSelection) {
+				for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
+					element = iterator.next();
+					if (element instanceof R4EUIAnomalyBasic) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Method getPasteElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPasteElementCmdName()
+	 */
+	@Override
+	public String getPasteElementCmdName() {
+		return PASTE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getPasteElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPasteElementCmdTooltip()
+	 */
+	@Override
+	public String getPasteElementCmdTooltip() {
+		return PASTE_ELEMENT_COMMAND_TOOLTIP;
 	}
 
 	/**

@@ -528,6 +528,29 @@ public class UIUtils {
 	}
 
 	/**
+	 * Method getClassStr.
+	 * 
+	 * @param aClass
+	 *            R4EDesignRuleClass
+	 * @return String
+	 */
+	public static String getClassStr(R4EDesignRuleClass aClass) {
+		if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_ERRONEOUS)) {
+			return R4EUIConstants.ANOMALY_CLASS_ERRONEOUS;
+		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_SUPERFLUOUS)) {
+			return R4EUIConstants.ANOMALY_CLASS_SUPERFLUOUS;
+		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT)) {
+			return R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT;
+		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_QUESTION)) {
+			return R4EUIConstants.ANOMALY_CLASS_QUESTION;
+		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_COMMENT)) {
+			return R4EUIConstants.ANOMALY_CLASS_COMMENT;
+		} else {
+			return null; //should never happen
+		}
+	}
+
+	/**
 	 * Method getRankFromString.
 	 * 
 	 * @param aRank
@@ -541,6 +564,27 @@ public class UIUtils {
 			return R4EDesignRuleRank.R4E_RANK_MINOR;
 		} else if (aRank.equals(R4EUIConstants.ANOMALY_RANK_MAJOR)) {
 			return R4EDesignRuleRank.R4E_RANK_MAJOR;
+		} else {
+			return null; //should never happen
+		}
+	}
+
+	/**
+	 * Method getRankStr.
+	 * 
+	 * @param aRank
+	 *            R4EDesignRuleRank
+	 * @return String
+	 */
+	public static String getRankStr(R4EDesignRuleRank aRank) {
+		if (aRank.equals(R4EDesignRuleRank.R4E_RANK_NONE)) {
+			return R4EUIConstants.ANOMALY_RANK_NONE;
+		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_MINOR)) {
+			return R4EUIConstants.ANOMALY_RANK_MINOR;
+		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_MAJOR)) {
+			return R4EUIConstants.ANOMALY_RANK_MAJOR;
+		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_DEPRECATED)) {
+			return R4EUIConstants.ANOMALY_RANK_MINOR;
 		} else {
 			return null; //should never happen
 		}

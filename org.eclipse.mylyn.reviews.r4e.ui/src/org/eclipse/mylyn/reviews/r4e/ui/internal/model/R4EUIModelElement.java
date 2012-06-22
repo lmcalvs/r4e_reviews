@@ -132,6 +132,8 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 		fName = aName;
 		fParent = aParent;
 		fOpen = true; // by default
+		fImage = null;
+		fDisabledImage = null;
 	}
 
 	// ------------------------------------------------------------------------
@@ -192,13 +194,19 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 
 	/**
 	 * Method getImage.
-	 * 
+	 * @param aLocation - String
 	 * @return Image
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImage()
 	 */
-	public Image getImage() {
+	public Image getImage(final String aLocation) {
 		if (isEnabled()) {
+			if (null == fImage) {
+				setImage(aLocation);
+			}
 			return fImage;
+		}
+		if (null == fDisabledImage) {
+			setDisabledImage(aLocation);
 		}
 		return fDisabledImage;
 	}
@@ -212,6 +220,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public final void setImage(final String aLocation) {
 		fImage = UIUtils.loadIcon(aLocation);
+	}
+
+	/**
+	 * Method setDisabledImage.
+	 * 
+	 * @param aLocation
+	 *            String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setDisabledImage(String)
+	 */
+	public final void setDisabledImage(final String aLocation) {
 		fDisabledImage = UIUtils.loadDisabledIcon(aLocation);
 	}
 
@@ -687,6 +705,66 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
+	 * Method isCopyElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isCopyElementCmd()
+	 */
+	public boolean isCopyElementCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method getCopyElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCopyElementCmdName()
+	 */
+	public String getCopyElementCmdName() {
+		return R4EUIConstants.COPY_ELEMENT_COMMAND_NAME; //default implementation
+	}
+
+	/**
+	 * Method getCopyElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCopyElementCmdTooltip()
+	 */
+	public String getCopyElementCmdTooltip() {
+		return R4EUIConstants.COPY_ELEMENT_COMMAND_TOOLTIP; //default implementation
+	}
+
+	/**
+	 * Method isPasteElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isPasteElementCmd()
+	 */
+	public boolean isPasteElementCmd() {
+		return false; //default implementation
+	}
+
+	/**
+	 * Method getPasteElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPasteElementCmdName()
+	 */
+	public String getPasteElementCmdName() {
+		return R4EUIConstants.PASTE_ELEMENT_COMMAND_NAME; //default implementation
+	}
+
+	/**
+	 * Method getPasteElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPasteElementCmdTooltip()
+	 */
+	public String getPasteElementCmdTooltip() {
+		return R4EUIConstants.PASTE_ELEMENT_COMMAND_TOOLTIP; //default implementation
+	}
+
+	/**
 	 * Method isNextStateElementCmd.
 	 * 
 	 * @return boolean
@@ -703,7 +781,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNextStateElementCmdName()
 	 */
 	public String getNextStateElementCmdName() {
-		return R4EUIConstants.CLOSE_ELEMENT_COMMAND_NAME; //default implementation
+		return R4EUIConstants.NEXT_STATE_ELEMENT_COMMAND_NAME; //default implementation
 	}
 
 	/**
@@ -713,7 +791,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getNextStateElementCmdTooltip()
 	 */
 	public String getNextStateElementCmdTooltip() {
-		return R4EUIConstants.CLOSE_ELEMENT_COMMAND_TOOLTIP; //default implementation
+		return R4EUIConstants.NEXT_STATE_ELEMENT_COMMAND_TOOLTIP; //default implementation
 	}
 
 	/**
@@ -733,7 +811,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPreviousStateElementCmdName()
 	 */
 	public String getPreviousStateElementCmdName() {
-		return R4EUIConstants.CLOSE_ELEMENT_COMMAND_NAME; //default implementation
+		return R4EUIConstants.PREVIOUS_STATE_ELEMENT_COMMAND_NAME; //default implementation
 	}
 
 	/**
@@ -743,7 +821,7 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPreviousStateElementCmdTooltip()
 	 */
 	public String getPreviousStateElementCmdTooltip() {
-		return R4EUIConstants.CLOSE_ELEMENT_COMMAND_TOOLTIP; //default implementation
+		return R4EUIConstants.PREVIOUS_STATE_ELEMENT_COMMAND_TOOLTIP; //default implementation
 	}
 
 	/**

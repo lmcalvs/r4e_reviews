@@ -65,11 +65,19 @@ public interface IR4EUIModelElement {
 	String getToolTip();
 
 	/**
+	 * Get the element image path
+	 * 
+	 * @return String - the path to the image
+	 */
+	String getImageLocation();
+
+	/**
 	 * Get the element image
 	 * 
-	 * @return - the element image
+	 * @param - the path to the image to get
+	 * @return Image - the element image
 	 */
-	Image getImage();
+	Image getImage(final String aLocation);
 
 	/**
 	 * Method setImage.
@@ -78,6 +86,14 @@ public interface IR4EUIModelElement {
 	 *            String
 	 */
 	void setImage(String aLocation);
+
+	/**
+	 * Method setDisabledImage.
+	 * 
+	 * @param aLocation
+	 *            String
+	 */
+	void setDisabledImage(String aLocation);
 
 	/**
 	 * Gets the overlay image that indicate that the element is reviewed
@@ -421,6 +437,48 @@ public interface IR4EUIModelElement {
 	 * @return String
 	 */
 	String getCloseElementCmdTooltip();
+
+	/**
+	 * Method isCopyElementCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isCopyElementCmd();
+
+	/**
+	 * Method getCopyElementCmdName.
+	 * 
+	 * @return String
+	 */
+	String getCopyElementCmdName();
+
+	/**
+	 * Method getCopyElementCmdTooltip.
+	 * 
+	 * @return String
+	 */
+	String getCopyElementCmdTooltip();
+
+	/**
+	 * Method isPasteElementCmd.
+	 * 
+	 * @return boolean
+	 */
+	boolean isPasteElementCmd();
+
+	/**
+	 * Method getPasteElementCmdName.
+	 * 
+	 * @return String
+	 */
+	String getPasteElementCmdName();
+
+	/**
+	 * Method getPasteElementCmdTooltip.
+	 * 
+	 * @return String
+	 */
+	String getPasteElementCmdTooltip();
 
 	/**
 	 * Method isNextStateElementCmd.

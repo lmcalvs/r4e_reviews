@@ -51,6 +51,15 @@ public class R4EUIDelta extends R4EUIContent {
 	 */
 	public R4EUIDelta(IR4EUIModelElement aParent, R4EDelta aDelta, IR4EUIPosition aPosition) {
 		super(aParent, aDelta, aPosition);
-		super.setImage(DELTA_ICON_FILE);
+	}
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return DELTA_ICON_FILE;
 	}
 }

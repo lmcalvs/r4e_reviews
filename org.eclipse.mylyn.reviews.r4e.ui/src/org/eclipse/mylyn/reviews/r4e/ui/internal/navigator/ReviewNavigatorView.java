@@ -44,6 +44,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -71,6 +72,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.LinePositionComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
@@ -141,6 +145,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * Field fPartListener
 	 */
 	private IPartListener fPartListener = null;
+
+	/**
+	 * Field fClipboard
+	 */
+	private Clipboard fClipboard = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -244,6 +253,12 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			fPropertySheetPage.dispose();
 		}
 
+		if (null != fClipboard) {
+			fClipboard.clearContents();
+			fClipboard.dispose();
+			fClipboard = null;
+		}
+
 		try {
 			if (project.exists()) {
 				project.delete(true, null);
@@ -303,6 +318,21 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 		//Set default Tree representation
 		fReviewTreeViewer.setViewTree();
+
+		//add drag and drop support
+		int ops = DND.DROP_MOVE;
+		Transfer[] transfers = new Transfer[] { LocalSelectionTransfer.getTransfer() };
+		R4EUIElementDropAdapter dropAdapter = new R4EUIElementDropAdapter(fReviewTreeViewer);
+		dropAdapter.setScrollEnabled(true);
+		dropAdapter.setScrollExpandEnabled(true);
+		dropAdapter.setExpandEnabled(true);
+		dropAdapter.setFeedbackEnabled(true);
+		dropAdapter.setSelectionFeedbackEnabled(true);
+		fReviewTreeViewer.addDragSupport(ops, transfers, new R4EUIElementDragListener(fReviewTreeViewer));
+		fReviewTreeViewer.addDropSupport(ops, transfers, dropAdapter);
+
+		//add copy and paste support
+		fClipboard = new Clipboard(getSite().getShell().getDisplay());
 
 		//Apply default filters
 		final IEvaluationService evService = (IEvaluationService) getSite().getWorkbenchWindow().getService(
@@ -625,6 +655,27 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 */
 	public ActionGroup getActionSet() {
 		return fActionSet;
+	}
+
+	/**
+	 * Gets the Clipboard contents
+	 * 
+	 * @return the clipboard contents
+	 */
+	public Object getClipboardContents() {
+		return fClipboard.getContents(LocalSelectionTransfer.getTransfer());
+	}
+
+	/**
+	 * Sets the Clipboard contents
+	 * 
+	 * @param aData
+	 *            - Object[]
+	 * @param aDataTypes
+	 *            - Transfer[]
+	 */
+	public void setClipboardContents(Object[] aData, Transfer[] aDataTypes) {
+		fClipboard.setContents(aData, aDataTypes);
 	}
 
 	/**

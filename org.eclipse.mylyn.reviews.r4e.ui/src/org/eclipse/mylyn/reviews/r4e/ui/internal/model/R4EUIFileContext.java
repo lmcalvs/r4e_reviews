@@ -123,12 +123,21 @@ public class R4EUIFileContext extends R4EUIModelElement {
 		}
 		addChildren(new R4EUIAnomalyContainer(this, R4EUIConstants.ANOMALIES_LABEL));
 		fFile = aFile;
-		setImage(FILE_CONTEXT_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return FILE_CONTEXT_ICON_FILE;
+	}
 
 	/**
 	 * Method getToolTip.

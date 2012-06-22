@@ -87,6 +87,16 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return null;
+	}
+
+	/**
 	 * Create a serialization model element object
 	 * 
 	 * @return the new serialization element object

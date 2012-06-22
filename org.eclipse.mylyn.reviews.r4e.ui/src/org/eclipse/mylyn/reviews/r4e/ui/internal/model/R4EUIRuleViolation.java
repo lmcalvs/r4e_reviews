@@ -114,12 +114,21 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 		fReadOnly = aParent.isReadOnly();
 		fViolation = aViolation;
 		fRules = new ArrayList<R4EUIRule>();
-		setImage(RULE_VIOLATION_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return RULE_VIOLATION_ICON_FILE;
+	}
 
 	/**
 	 * Method getAdapter.

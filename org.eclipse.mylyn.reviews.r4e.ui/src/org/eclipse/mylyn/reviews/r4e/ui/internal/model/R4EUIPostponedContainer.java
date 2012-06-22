@@ -81,12 +81,21 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 	 */
 	public R4EUIPostponedContainer(IR4EUIModelElement aParent, R4EItem aItem, String aName) {
 		super(aParent, aItem, aName, R4EUIConstants.REVIEW_ITEM_TYPE_POSTPONED);
-		setImage(POSTPONED_CONTAINER_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return POSTPONED_CONTAINER_ICON_FILE;
+	}
 
 	/**
 	 * Method getAdapter.

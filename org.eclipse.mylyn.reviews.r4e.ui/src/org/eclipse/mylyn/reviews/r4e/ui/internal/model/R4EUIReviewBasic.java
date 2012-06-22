@@ -242,15 +242,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fParticipantsContainer = new R4EUIParticipantContainer(this, R4EUIConstants.PARTICIPANTS_LABEL);
 		fAnomalyContainer = new R4EUIAnomalyContainer(this, R4EUIConstants.GLOBAL_ANOMALIES_LABEL);
 		fItems = new ArrayList<R4EUIReviewItem>();
-		if (aOpen) {
+		fOpen = aOpen;
+		if (fOpen) {
 			//Open the new review and make it the active one (close any other that is open)
-			if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
-				setImage(REVIEW_BASIC_ICON_FILE);
-			} else {
-				setImage(REVIEW_INFORMAL_ICON_FILE);
-			}
-			fOpen = true;
-
 			//NOTE:  The default participant that creates this review is already added by default in the model (including default roles)
 			fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer,
 					(R4EParticipant) fReview.getUsersMap().get(R4EUIModelController.getReviewer()), aType));
@@ -260,19 +254,31 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 				activeReview.close();
 			}
 			R4EUIModelController.setActiveReview(this);
-		} else {
-			if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
-				setImage(REVIEW_BASIC_CLOSED_ICON_FILE);
-			} else {
-				setImage(REVIEW_INFORMAL_CLOSED_ICON_FILE);
-			}
-			fOpen = false;
 		}
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		if (isOpen()) {
+			if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+				return REVIEW_BASIC_ICON_FILE;
+			}
+			return REVIEW_INFORMAL_ICON_FILE;
+		}
+		if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+			return REVIEW_BASIC_CLOSED_ICON_FILE;
+		}
+		return REVIEW_INFORMAL_CLOSED_ICON_FILE;
+	}
 
 	/**
 	 * Method getToolTip.

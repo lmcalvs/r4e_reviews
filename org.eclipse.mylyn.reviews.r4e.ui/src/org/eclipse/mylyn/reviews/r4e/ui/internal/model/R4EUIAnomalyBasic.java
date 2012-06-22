@@ -19,18 +19,23 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.frame.core.model.Comment;
 import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -73,6 +78,27 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * Field NEW_CHILD_ELEMENT_COMMAND_TOOLTIP. (value is ""Add a New comment to the current anomaly"")
 	 */
 	private static final String NEW_CHILD_ELEMENT_COMMAND_TOOLTIP = "Add a New Comment to the Current Anomaly";
+
+	/**
+	 * Field COPY_ELEMENT_COMMAND_NAME. (value is ""Copy Anomalies"")
+	 */
+	private static final String COPY_ELEMENT_COMMAND_NAME = "Copy Anomalies";
+
+	/**
+	 * Field COPY_ELEMENT_COMMAND_TOOLTIP. (value is ""Copy Anomalies to Clipboard"")
+	 */
+	private static final String COPY_ELEMENT_COMMAND_TOOLTIP = "Copy Anomalies to Clipboard";
+
+	/**
+	 * Field PASTE_ELEMENT_COMMAND_NAME. (value is ""Paste Comments"")
+	 */
+	private static final String PASTE_ELEMENT_COMMAND_NAME = "Paste Comments";
+
+	/**
+	 * Field PASTE_ELEMENT_COMMAND_TOOLTIP. (value is ""Clone Comments in Clipboard to this Anomaly" +
+	 * " from its Parent Container"")
+	 */
+	private static final String PASTE_ELEMENT_COMMAND_TOOLTIP = "Clone Comments in Clipboard to this Anomaly";
 
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Delete Anomaly"")
@@ -143,13 +169,22 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		fReadOnly = aParent.isReadOnly();
 		fAnomaly = aAnomaly;
 		fComments = new ArrayList<R4EUIComment>();
-		setImage(ANOMALY_ICON_FILE);
 		fPosition = aPosition;
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return ANOMALY_ICON_FILE;
+	}
 
 	/**
 	 * Method getToolTip.
@@ -242,10 +277,29 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 				R4EUIModelController.getReviewer());
 		fAnomaly.setTitle(((R4EAnomaly) aModelComponent).getTitle());
 		fAnomaly.setDescription(((R4EAnomaly) aModelComponent).getDescription());
-		fAnomaly.setType(((R4EAnomaly) aModelComponent).getType());
+		if (null != ((R4EAnomaly) aModelComponent).getType()) {
+			final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
+			commentType.setType(((R4ECommentType) ((R4EAnomaly) aModelComponent).getType()).getType());
+			fAnomaly.setType(commentType);
+		}
 		fAnomaly.setRank(((R4EAnomaly) aModelComponent).getRank());
-		fAnomaly.setDueDate(((R4EAnomaly) aModelComponent).getDueDate());
 		fAnomaly.setRuleID(((R4EAnomaly) aModelComponent).getRuleID());
+		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+	}
+
+	/**
+	 * Set extra serialization model data by copying it from the passed-in object
+	 * 
+	 * @param aModelComponent
+	 *            - a serialization model element to copy information from
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 */
+	public void setExtraModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fAnomaly,
+				R4EUIModelController.getReviewer());
+		fAnomaly.setDueDate(((R4EAnomaly) aModelComponent).getDueDate());
+		fAnomaly.getAssignedTo().addAll(((R4EAnomaly) aModelComponent).getAssignedTo());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
 
@@ -586,6 +640,88 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Method isCopyElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isCopyElementCmd()
+	 */
+	@Override
+	public boolean isCopyElementCmd() {
+		if (isEnabled() && getParent().getParent() instanceof R4EUIFileContext) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method getCopyElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCopyElementCmdName()
+	 */
+	@Override
+	public String getCopyElementCmdName() {
+		return COPY_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getCopyElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCopyElementCmdTooltip()
+	 */
+	@Override
+	public String getCopyElementCmdTooltip() {
+		return COPY_ELEMENT_COMMAND_TOOLTIP;
+	}
+
+	/**
+	 * Method isPasteElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isPasteElementCmd()
+	 */
+	@Override
+	public boolean isPasteElementCmd() {
+		if (isEnabled()) {
+			//We can only paste if there is a least 1 Comment in the clipboard
+			Object element = null;
+			ISelection selection = LocalSelectionTransfer.getTransfer().getSelection();
+			if (selection instanceof IStructuredSelection) {
+				for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
+					element = iterator.next();
+					if (element instanceof R4EUIComment) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Method getPasteElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPasteElementCmdName()
+	 */
+	@Override
+	public String getPasteElementCmdName() {
+		return PASTE_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getPasteElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getPasteElementCmdTooltip()
+	 */
+	@Override
+	public String getPasteElementCmdTooltip() {
+		return PASTE_ELEMENT_COMMAND_TOOLTIP;
 	}
 
 	/**

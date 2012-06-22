@@ -55,12 +55,21 @@ public class R4EUIDeltaContainer extends R4EUIContentsContainer {
 	 */
 	public R4EUIDeltaContainer(IR4EUIModelElement aParent, String aName) {
 		super(aParent, aName);
-		setImage(DELTA_CONTAINER_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return DELTA_CONTAINER_ICON_FILE;
+	}
 
 	/**
 	 * Method createDelta

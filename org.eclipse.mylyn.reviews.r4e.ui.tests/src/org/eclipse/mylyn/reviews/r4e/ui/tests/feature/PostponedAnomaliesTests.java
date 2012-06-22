@@ -461,8 +461,8 @@ public class PostponedAnomaliesTests extends TestCase {
 				.get(0);
 		fOriginalAnomaly1 = fProxy.getAnomalyProxy().createLinkedAnomaly(content1, ORIGINAL_ANOMALY1_TEST_TITLE,
 				ORIGINAL_ANOMALY1_TEST_DESCRIPTION, TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
-				TestConstants.ANOMALY_TEST_RANK_MAJOR, TestConstants.ANOMALY_TEST_DUE_DATE, null,
-				TestConstants.PARTICIPANT_ASSIGN_TO);
+				TestConstants.ANOMALY_TEST_RANK_MAJOR, TestConstants.ANOMALY_TEST_DUE_DATE,
+				TestConstants.PARTICIPANT_ASSIGN_TO, null);
 		Assert.assertNotNull(fOriginalAnomaly1);
 		Assert.assertEquals(ORIGINAL_ANOMALY1_TEST_TITLE, fOriginalAnomaly1.getAnomaly().getTitle());
 		Assert.assertEquals(ORIGINAL_ANOMALY1_TEST_DESCRIPTION, fOriginalAnomaly1.getAnomaly().getDescription());
@@ -470,13 +470,13 @@ public class PostponedAnomaliesTests extends TestCase {
 				((R4ECommentType) fOriginalAnomaly1.getAnomaly().getType()).getType());
 		Assert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fOriginalAnomaly1.getAnomaly().getRank());
 		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fOriginalAnomaly1.getAnomaly().getDueDate());
+		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fOriginalAnomaly1.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				((R4EUITextPosition) content1.getPosition()).getOffset(),
 				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(
 				((R4EUITextPosition) content1.getPosition()).getLength(),
 				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getLength());
-		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fOriginalAnomaly1.getAnomaly().getAssignedTo().get(0));
 		fProxy.getAnomalyProxy().progressAnomaly(fOriginalAnomaly1, TestConstants.ANOMALY_STATE_POSTPONED);
 		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly1.getAnomaly().getState());
 		fOriginalAnomaly1Title = fOriginalAnomaly1.getAnomaly().getTitle();
@@ -489,8 +489,8 @@ public class PostponedAnomaliesTests extends TestCase {
 				.get(1);
 		fOriginalAnomaly2 = fProxy.getAnomalyProxy().createLinkedAnomaly(content2, ORIGINAL_ANOMALY2_TEST_TITLE,
 				ORIGINAL_ANOMALY2_TEST_DESCRIPTION, TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
-				TestConstants.ANOMALY_TEST_RANK_MAJOR, TestConstants.ANOMALY_TEST_DUE_DATE, null,
-				TestConstants.PARTICIPANT_ASSIGN_TO);
+				TestConstants.ANOMALY_TEST_RANK_MAJOR, TestConstants.ANOMALY_TEST_DUE_DATE,
+				TestConstants.PARTICIPANT_ASSIGN_TO, null);
 		Assert.assertNotNull(fOriginalAnomaly2);
 		Assert.assertEquals(ORIGINAL_ANOMALY2_TEST_TITLE, fOriginalAnomaly2.getAnomaly().getTitle());
 		Assert.assertEquals(ORIGINAL_ANOMALY2_TEST_DESCRIPTION, fOriginalAnomaly2.getAnomaly().getDescription());
@@ -498,13 +498,13 @@ public class PostponedAnomaliesTests extends TestCase {
 				((R4ECommentType) fOriginalAnomaly2.getAnomaly().getType()).getType());
 		Assert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fOriginalAnomaly2.getAnomaly().getRank());
 		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fOriginalAnomaly2.getAnomaly().getDueDate());
+		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fOriginalAnomaly2.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				((R4EUITextPosition) content2.getPosition()).getOffset(),
 				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(
 				((R4EUITextPosition) content2.getPosition()).getLength(),
 				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getLength());
-		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fOriginalAnomaly2.getAnomaly().getAssignedTo().get(0));
 		fProxy.getAnomalyProxy().progressAnomaly(fOriginalAnomaly2, TestConstants.ANOMALY_STATE_POSTPONED);
 		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly2.getAnomaly().getState());
 		fOriginalAnomaly2Title = fOriginalAnomaly2.getAnomaly().getTitle();

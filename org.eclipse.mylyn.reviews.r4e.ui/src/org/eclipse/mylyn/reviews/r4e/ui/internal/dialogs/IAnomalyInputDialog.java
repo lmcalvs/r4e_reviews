@@ -19,9 +19,9 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import java.util.Date;
 
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule;
 
 /**
  * @author Sebastien Dubois
@@ -58,9 +58,9 @@ public interface IAnomalyInputDialog {
 	/**
 	 * Returns the string typed into this input dialog.
 	 * 
-	 * @return the R4EUIRule reference (if any)
+	 * @return the R4EDesignRule reference (if any)
 	 */
-	R4EUIRule getRuleReferenceValue();
+	R4EDesignRule getRuleReferenceValue();
 
 	/**
 	 * Method setClass_.

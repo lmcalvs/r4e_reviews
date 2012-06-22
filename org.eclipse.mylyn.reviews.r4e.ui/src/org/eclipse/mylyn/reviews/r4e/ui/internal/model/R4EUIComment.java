@@ -46,6 +46,16 @@ public class R4EUIComment extends R4EUIModelElement {
 	private static final String COMMENT_ICON_FILE = "icons/obj16/cmmnt_obj.gif";
 
 	/**
+	 * Field COPY_ELEMENT_COMMAND_NAME. (value is ""Copy Comments"")
+	 */
+	private static final String COPY_ELEMENT_COMMAND_NAME = "Copy Comments";
+
+	/**
+	 * Field COPY_ELEMENT_COMMAND_TOOLTIP. (value is ""Copy Comments to Clipboard"")
+	 */
+	private static final String COPY_ELEMENT_COMMAND_TOOLTIP = "Copy Comments to Clipboard";
+
+	/**
 	 * Field REMOVE_ELEMENT_ACTION_NAME. (value is ""Delete Comment"")
 	 */
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Comment";
@@ -96,12 +106,21 @@ public class R4EUIComment extends R4EUIModelElement {
 		super(aParent, buildCommentName(aComment.getDescription()));
 		fReadOnly = aParent.isReadOnly();
 		fComment = aComment;
-		setImage(COMMENT_ICON_FILE);
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return COMMENT_ICON_FILE;
+	}
 
 	/**
 	 * Method getToolTip.
@@ -233,6 +252,42 @@ public class R4EUIComment extends R4EUIModelElement {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Method isCopyElementCmd.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isCopyElementCmd()
+	 */
+	@Override
+	public boolean isCopyElementCmd() {
+		if (isEnabled()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method getCopyElementCmdName.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCopyElementCmdName()
+	 */
+	@Override
+	public String getCopyElementCmdName() {
+		return COPY_ELEMENT_COMMAND_NAME;
+	}
+
+	/**
+	 * Method getCopyElementCmdTooltip.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getCopyElementCmdTooltip()
+	 */
+	@Override
+	public String getCopyElementCmdTooltip() {
+		return COPY_ELEMENT_COMMAND_TOOLTIP;
 	}
 
 	/**

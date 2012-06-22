@@ -689,7 +689,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 				//Modify anomaly
 				R4EUIModelController.setJobInProgress(true);
 				final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
-				final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getAnomalyInputDialog();
+				final IAnomalyInputDialog dialog = R4EUIDialogFactory.getInstance().getNewAnomalyInputDialog();
 				dialog.create();
 				dialog.setTitle(modelAnomaly.getTitle());
 				dialog.setDescription(modelAnomaly.getDescription());
@@ -718,7 +718,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 							modelAnomaly.getAssignedTo().clear();
 							modelAnomaly.getAssignedTo().add(dialog.getAssigned());
 							if (null != dialog.getRuleReferenceValue()) {
-								final R4EDesignRule rule = dialog.getRuleReferenceValue().getRule();
+								final R4EDesignRule rule = dialog.getRuleReferenceValue();
 								final R4ECommentType commentType = RModelFactory.eINSTANCE.createR4ECommentType();
 								commentType.setType(rule.getClass_());
 								modelAnomaly.setType(commentType);

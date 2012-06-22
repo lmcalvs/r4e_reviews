@@ -110,6 +110,6 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 	private void addLinkedAnomaly(R4EUIContent aElement) {
 		final R4EUIFileContext fileContext = (R4EUIFileContext) aElement.getParent().getParent();
 		final R4EUIAnomalyContainer container = (fileContext.getAnomalyContainerElement());
-		container.createAnomaly(fileContext.getTargetFileVersion(), (R4EUITextPosition) aElement.getPosition());
+		container.createAnomaly(fileContext, (R4EUITextPosition) aElement.getPosition(), false);
 	}
 }

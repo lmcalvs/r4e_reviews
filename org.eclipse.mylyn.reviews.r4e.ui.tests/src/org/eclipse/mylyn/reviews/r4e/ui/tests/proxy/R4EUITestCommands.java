@@ -24,6 +24,8 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
@@ -42,9 +44,14 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -216,6 +223,235 @@ public class R4EUITestCommands extends R4EUITestElement {
 		openJob.setElement(aElement);
 		Display.getDefault().syncExec(openJob);
 		TestUtils.waitForJobs();
+	}
+
+	/**
+	 * Method dragDropElements Drag and Drop UI model elements
+	 * 
+	 * @param aElement
+	 */
+	public List<IR4EUIModelElement> dragDropElements(final List<IR4EUIModelElement> aSourceElements,
+			IR4EUIModelElement aTargetElement) {
+
+		//Inner class that runs the command on the UI thread
+		class RunDragDropElements implements Runnable {
+			private List<IR4EUIModelElement> sourceElements;
+
+			private IR4EUIModelElement targetElement;
+
+			private List<IR4EUIModelElement> droppedElements;
+
+			public void setSourceElements(List<IR4EUIModelElement> aSourceElements) {
+				sourceElements = aSourceElements;
+			}
+
+			public void setTargetElement(IR4EUIModelElement aTargetElement) {
+				targetElement = aTargetElement;
+			}
+
+			public List<IR4EUIModelElement> getDroppedElements() {
+				return droppedElements;
+			}
+
+			public void run() {
+				final Display display = R4EUIModelController.getNavigatorView().getSite().getShell().getDisplay();
+
+				display.timerExec(2000, new Runnable() {
+					public void run() {
+						new Thread() {
+							Rectangle dragSourceItemBounds, dropTargetItemBounds;
+
+							@Override
+							public void run() {
+								display.syncExec(new Runnable() {
+									public void run() {
+										final Tree reviewNavigatorTree = R4EUIModelController.getNavigatorView()
+												.getTreeViewer()
+												.getTree();
+
+										setFocusOnNavigatorElement(sourceElements.get(0));
+										TreeItem dragSourceItem = reviewNavigatorTree.getSelection()[0];
+										dragSourceItemBounds = display.map(reviewNavigatorTree, null,
+												dragSourceItem.getBounds());
+
+										setFocusOnNavigatorElement(targetElement);
+										TreeItem dropTargetItem = reviewNavigatorTree.getSelection()[0];
+										dropTargetItemBounds = display.map(reviewNavigatorTree, null,
+												dropTargetItem.getBounds());
+									}
+								});
+								Event event = new Event();
+								event.type = SWT.MouseMove;
+								event.x = dragSourceItemBounds.x + 20;
+								event.y = dragSourceItemBounds.y + (dragSourceItemBounds.height / 2);
+								display.post(event);
+
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+
+								event = new Event();
+								event.type = SWT.MouseDown;
+								event.button = 1;
+								event.x = dragSourceItemBounds.x + 20;
+								event.y = dragSourceItemBounds.y + (dragSourceItemBounds.height / 2);
+								display.post(event);
+
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+
+								Point midway = new Point(dragSourceItemBounds.x + 20, dragSourceItemBounds.y
+										+ ((dropTargetItemBounds.y - dragSourceItemBounds.y) / 2));
+								event = new Event();
+								event.type = SWT.MouseMove;
+								event.x = midway.x;
+								event.y = midway.y;
+								display.post(event);
+
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+
+								event = new Event();
+								event.type = SWT.MouseMove;
+								event.x = dropTargetItemBounds.x + 20;
+								event.y = dropTargetItemBounds.y + (dropTargetItemBounds.height / 2);
+								display.post(event);
+
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+
+								event = new Event();
+								event.type = SWT.MouseUp;
+								event.button = 1;
+								event.x = dropTargetItemBounds.x + 20;
+								event.y = dropTargetItemBounds.y + (dropTargetItemBounds.height / 2);
+								display.post(event);
+							}
+						}.start();
+					}
+				});
+				while (true) {
+					if (!display.readAndDispatch()) {
+						display.sleep();
+					}
+				}
+				//droppedElements = getNavigatorSelectedElements();
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunDragDropElements dragDropJob = new RunDragDropElements();
+		dragDropJob.setSourceElements(aSourceElements);
+		dragDropJob.setTargetElement(aTargetElement);
+		Display.getDefault().syncExec(dragDropJob);
+		TestUtils.waitForJobs();
+		return dragDropJob.getDroppedElements();
+	}
+
+	/**
+	 * Method copyElement Copy UI model elements to clipboard
+	 * 
+	 * @param aElement
+	 */
+	public void copyElements(final List<IR4EUIModelElement> aElements) {
+
+		//Inner class that runs the command on the UI thread
+		class RunCopyElements implements Runnable {
+			private List<IR4EUIModelElement> elements;
+
+			public void setElements(List<IR4EUIModelElement> aElements) {
+				elements = aElements;
+			}
+
+			public void run() {
+				try {
+					//Set focus on Navigator view and select element
+					setFocusOnNavigatorElements(elements);
+
+					//Execute New Review Group Command
+					executeCommand(R4EUIConstants.COPY_ELEMENT_COMMAND, null);
+					TestUtils.waitForJobs();
+				} catch (ExecutionException e) {
+					// ignore, test will fail later
+				} catch (NotDefinedException e) {
+					// ignore, test will fail later
+				} catch (NotEnabledException e) {
+					// ignore, test will fail later
+				} catch (NotHandledException e) {
+					// ignore, test will fail later
+				}
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunCopyElements copyJob = new RunCopyElements();
+		copyJob.setElements(aElements);
+		Display.getDefault().syncExec(copyJob);
+		TestUtils.waitForJobs();
+	}
+
+	/**
+	 * Method pasteElement Paste UI model elements from clipboard
+	 * 
+	 * @param aElement
+	 */
+	public List<IR4EUIModelElement> pasteElements(IR4EUIModelElement aElement) {
+
+		//Inner class that runs the command on the UI thread
+		class RunPasteElement implements Runnable {
+			private IR4EUIModelElement targetElement;
+
+			private List<IR4EUIModelElement> pastedElements;
+
+			public List<IR4EUIModelElement> getPastedElements() {
+				return pastedElements;
+			}
+
+			public void setTargetElement(IR4EUIModelElement aElement) {
+				targetElement = aElement;
+			}
+
+			public void run() {
+				try {
+					//Set focus on Navigator view and select element
+					setFocusOnNavigatorElement(targetElement);
+
+					//Execute New Review Group Command
+					executeCommand(R4EUIConstants.PASTE_ELEMENT_COMMAND, null);
+					TestUtils.waitForJobs();
+					pastedElements = getNavigatorSelectedElements();
+				} catch (ExecutionException e) {
+					// ignore, test will fail later
+				} catch (NotDefinedException e) {
+					// ignore, test will fail later
+				} catch (NotEnabledException e) {
+					// ignore, test will fail later
+				} catch (NotHandledException e) {
+					// ignore, test will fail later
+				}
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunPasteElement pasteJob = new RunPasteElement();
+		pasteJob.setTargetElement(aElement);
+		Display.getDefault().syncExec(pasteJob);
+		TestUtils.waitForJobs();
+		return pasteJob.getPastedElements();
 	}
 
 	/**

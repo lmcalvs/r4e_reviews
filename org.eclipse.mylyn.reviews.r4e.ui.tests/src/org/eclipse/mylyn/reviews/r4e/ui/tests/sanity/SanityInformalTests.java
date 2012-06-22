@@ -425,7 +425,7 @@ public class SanityInformalTests extends TestCase {
 				fItem.getFileContexts().get(fAnomalyFileIndex), 20, 50,
 				TestConstants.COMPARE_EDITOR_ANOMALY_TEST_TITLE, TestConstants.COMPARE_EDITOR_ANOMALY_TEST_DESCRIPTION,
 				TestConstants.ANOMALY_TEST_CLASS_ERRONEOUS, TestConstants.ANOMALY_TEST_RANK_MINOR,
-				TestConstants.ANOMALY_TEST_DUE_DATE, null);
+				TestConstants.ANOMALY_TEST_DUE_DATE, TestConstants.PARTICIPANT_ASSIGN_TO, null);
 		Assert.assertNotNull(fCompareEditorAnomaly);
 		Assert.assertEquals(TestConstants.COMPARE_EDITOR_ANOMALY_TEST_TITLE, fCompareEditorAnomaly.getAnomaly()
 				.getTitle());
@@ -435,6 +435,9 @@ public class SanityInformalTests extends TestCase {
 				((R4ECommentType) fCompareEditorAnomaly.getAnomaly().getType()).getType());
 		Assert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MINOR, fCompareEditorAnomaly.getAnomaly().getRank());
 		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fCompareEditorAnomaly.getAnomaly().getDueDate());
+		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fCompareEditorAnomaly.getAnomaly()
+				.getAssignedTo()
+				.get(0));
 		Assert.assertEquals(20, ((R4ETextPosition) ((R4ETextContent) fCompareEditorAnomaly.getAnomaly()
 				.getLocation()
 				.get(0)).getLocation()).getStartPosition());
@@ -454,8 +457,8 @@ public class SanityInformalTests extends TestCase {
 				.get(0);
 		fLinkedAnomaly = fProxy.getAnomalyProxy().createLinkedAnomaly(content, TestConstants.LINKED_ANOMALY_TEST_TITLE,
 				TestConstants.LINKED_ANOMALY_TEST_DESCRIPTION, TestConstants.ANOMALY_TEST_CLASS_IMPROVEMENT,
-				TestConstants.ANOMALY_TEST_RANK_MAJOR, TestConstants.ANOMALY_TEST_DUE_DATE, null,
-				TestConstants.PARTICIPANT_ASSIGN_TO);
+				TestConstants.ANOMALY_TEST_RANK_MAJOR, TestConstants.ANOMALY_TEST_DUE_DATE,
+				TestConstants.PARTICIPANT_ASSIGN_TO, null);
 		Assert.assertNotNull(fLinkedAnomaly);
 		Assert.assertEquals(TestConstants.LINKED_ANOMALY_TEST_TITLE, fLinkedAnomaly.getAnomaly().getTitle());
 		Assert.assertEquals(TestConstants.LINKED_ANOMALY_TEST_DESCRIPTION, fLinkedAnomaly.getAnomaly().getDescription());
@@ -463,13 +466,13 @@ public class SanityInformalTests extends TestCase {
 				.getType()).getType());
 		Assert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MAJOR, fLinkedAnomaly.getAnomaly().getRank());
 		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fLinkedAnomaly.getAnomaly().getDueDate());
+		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fLinkedAnomaly.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				((R4EUITextPosition) content.getPosition()).getOffset(),
 				((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(
 				((R4EUITextPosition) content.getPosition()).getLength(),
 				((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly.getAnomaly().getLocation().get(0)).getLocation()).getLength());
-		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fLinkedAnomaly.getAnomaly().getAssignedTo().get(0));
 	}
 
 	/**
@@ -479,7 +482,7 @@ public class SanityInformalTests extends TestCase {
 		fExternalAnomaly = fProxy.getAnomalyProxy().createExternalAnomaly(TestUtils.FJavaFile3,
 				TestConstants.EXTERNAL_ANOMALY_TEST_TITLE, TestConstants.EXTERNAL_ANOMALY_TEST_DESCRIPTION,
 				TestConstants.ANOMALY_TEST_CLASS_QUESTION, TestConstants.ANOMALY_TEST_RANK_MINOR,
-				TestConstants.ANOMALY_TEST_DUE_DATE, null);
+				TestConstants.ANOMALY_TEST_DUE_DATE, TestConstants.PARTICIPANT_ASSIGN_TO, null);
 		Assert.assertNotNull(fExternalAnomaly);
 		Assert.assertEquals(TestConstants.EXTERNAL_ANOMALY_TEST_TITLE, fExternalAnomaly.getAnomaly().getTitle());
 		Assert.assertEquals(TestConstants.EXTERNAL_ANOMALY_TEST_DESCRIPTION, fExternalAnomaly.getAnomaly()
@@ -488,6 +491,7 @@ public class SanityInformalTests extends TestCase {
 				.getType()).getType());
 		Assert.assertEquals(TestConstants.ANOMALY_TEST_RANK_MINOR, fExternalAnomaly.getAnomaly().getRank());
 		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fExternalAnomaly.getAnomaly().getDueDate());
+		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fExternalAnomaly.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				0,
 				((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());

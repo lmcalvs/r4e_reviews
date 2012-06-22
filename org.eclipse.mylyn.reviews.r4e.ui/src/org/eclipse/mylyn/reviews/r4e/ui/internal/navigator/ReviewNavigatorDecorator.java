@@ -102,7 +102,14 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 */
 	public Image decorateImage(Image aBaseImage, Object aElement) { // $codepro.audit.disable
 
-		Image currentOverlayImage = aBaseImage;
+		//If the image is not already loaded, do it here
+		Image currentOverlayImage;
+		if (null != aBaseImage) {
+			currentOverlayImage = aBaseImage;
+		} else {
+			currentOverlayImage = ((IR4EUIModelElement) aElement).getImage(((IR4EUIModelElement) aElement).getImageLocation());
+		}
+
 		OverlayImageIcon overlayIcon = null;
 		//Disabled element decorator
 		if (!((IR4EUIModelElement) aElement).isEnabled()) {

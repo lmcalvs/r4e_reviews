@@ -132,13 +132,22 @@ public class R4EUIParticipant extends R4EUIModelElement {
 		super(aParent, aParticipant.getId());
 		fReadOnly = aParent.isReadOnly();
 		fParticipant = aParticipant;
-		setRoleIcon(aType);
 		return;
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method getImageLocation.
+	 * 
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImageLocation()
+	 */
+	public String getImageLocation() {
+		return getRoleIconPath(((R4EUIReviewBasic) getParent().getParent()).getReview().getType());
+	}
 
 	/**
 	 * Method getToolTip.
@@ -181,46 +190,43 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	}
 
 	/**
-	 * Method setRoleIcon. Set particpant icon based on most significant role
+	 * Method getRoleIcon. Get participant icon path based on most significant role
 	 * 
 	 * @param aType
 	 *            R4EReviewType
+	 * @return String
 	 */
-	public void setRoleIcon(R4EReviewType aType) {
+	public String getRoleIconPath(R4EReviewType aType) {
 		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
-			setImage(PARTICIPANT_ICON_FILE);
+			return PARTICIPANT_ICON_FILE;
 		} else {
 			final EList<R4EUserRole> roles = fParticipant.getRoles();
 			//First check for Lead
 			for (R4EUserRole role : roles) {
 				if (role.equals(R4EUserRole.R4E_ROLE_LEAD)) {
-					setImage(PARTICIPANT_LEAD_ICON_FILE);
-					return;
+					return PARTICIPANT_LEAD_ICON_FILE;
 				}
 			}
 			//Next Organizer
 			for (R4EUserRole role : roles) {
 				if (role.equals(R4EUserRole.R4E_ROLE_ORGANIZER)) {
-					setImage(PARTICIPANT_ORGANIZER_ICON_FILE);
-					return;
+					return PARTICIPANT_ORGANIZER_ICON_FILE;
 				}
 			}
 			//Next Author
 			for (R4EUserRole role : roles) {
 				if (role.equals(R4EUserRole.R4E_ROLE_AUTHOR)) {
-					setImage(PARTICIPANT_AUTHOR_ICON_FILE);
-					return;
+					return PARTICIPANT_AUTHOR_ICON_FILE;
 				}
 			}
 			//Finally Reviewer
 			for (R4EUserRole role : roles) {
 				if (role.equals(R4EUserRole.R4E_ROLE_REVIEWER)) {
-					setImage(PARTICIPANT_REVIEWER_ICON_FILE);
-					return;
+					return PARTICIPANT_REVIEWER_ICON_FILE;
 				}
 			}
 			//If no role, set default icon
-			setImage(PARTICIPANT_ICON_FILE);
+			return PARTICIPANT_ICON_FILE;
 		}
 	}
 

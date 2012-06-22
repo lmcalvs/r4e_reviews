@@ -60,7 +60,12 @@ public class R4EUIDialogFactory {
 	/**
 	 * Field fAnomalyInputDialog.
 	 */
-	private IAnomalyInputDialog fAnomalyInputDialog = null;
+	private IAnomalyInputDialog fNewAnomalyInputDialog = null;
+
+	/**
+	 * Field fCloneAnomalyInputDialog.
+	 */
+	private IAnomalyInputDialog fCloneAnomalyInputDialog = null;
 
 	/**
 	 * Field fCalendarDialog.
@@ -174,28 +179,53 @@ public class R4EUIDialogFactory {
 	}
 
 	/**
-	 * Method getAnomalyInputDialog.
+	 * Method getNewAnomalyInputDialog.
 	 * 
 	 * @return IAnomalyInputDialog
 	 */
-	public IAnomalyInputDialog getAnomalyInputDialog() {
-		if (null == fAnomalyInputDialog) {
-			fAnomalyInputDialog = new AnomalyInputDialog(R4EUIModelController.getNavigatorView()
+	public IAnomalyInputDialog getNewAnomalyInputDialog() {
+		if (null == fNewAnomalyInputDialog) {
+			fNewAnomalyInputDialog = new NewAnomalyInputDialog(R4EUIModelController.getNavigatorView()
 					.getSite()
 					.getWorkbenchWindow()
 					.getShell());
 		}
-		return fAnomalyInputDialog;
+		return fNewAnomalyInputDialog;
 	}
 
 	/**
-	 * Method setAnomalyInputDialog.
+	 * Method setNewAnomalyInputDialog.
 	 * 
 	 * @param aNewAnomalyInputDialog
 	 *            IAnomalyInputDialog
 	 */
-	public void setAnomalyInputDialog(IAnomalyInputDialog aNewAnomalyInputDialog) {
-		fAnomalyInputDialog = aNewAnomalyInputDialog;
+	public void setNewAnomalyInputDialog(IAnomalyInputDialog aNewAnomalyInputDialog) {
+		fNewAnomalyInputDialog = aNewAnomalyInputDialog;
+	}
+
+	/**
+	 * Method getCloneAnomalyInputDialog.
+	 * 
+	 * @return IAnomalyInputDialog
+	 */
+	public IAnomalyInputDialog getCloneAnomalyInputDialog() {
+		if (null == fCloneAnomalyInputDialog) {
+			fCloneAnomalyInputDialog = new CloneAnomalyInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell());
+		}
+		return fCloneAnomalyInputDialog;
+	}
+
+	/**
+	 * Method setCloneAnomalyInputDialog.
+	 * 
+	 * @param aCloneAnomalyInputDialog
+	 *            IAnomalyInputDialog
+	 */
+	public void setCloneAnomalyInputDialog(IAnomalyInputDialog aCloneAnomalyInputDialog) {
+		fCloneAnomalyInputDialog = aCloneAnomalyInputDialog;
 	}
 
 	/**
