@@ -1779,18 +1779,6 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+4 Q">
       </key>
-      <key
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.CopyElement"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Ctrl+C">
-      </key>
-      <key
-            commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.PasteElement"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Ctrl+V">
-      </key>
    </extension>
    <extension
          point="org.eclipse.ui.activities">

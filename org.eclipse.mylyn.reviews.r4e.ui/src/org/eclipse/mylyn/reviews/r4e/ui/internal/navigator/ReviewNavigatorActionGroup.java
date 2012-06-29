@@ -28,6 +28,8 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers.CopyElementHandler;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers.PasteElementHandler;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AnomaliesMyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AnomaliesOnlyFilter;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.filters.AssignParticipantFilter;
@@ -44,6 +46,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.NavigatorElementComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.sorters.ReviewTypeComparator;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionGroup;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerActivation;
@@ -194,6 +197,9 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 
 		final ReviewParticipantFilter filter = new ReviewParticipantFilter();
 		filter.setParticipant(R4EUIModelController.getReviewer());
+
+		fHandlerService.activateHandler(ActionFactory.COPY.getCommandId(), new CopyElementHandler());
+		fHandlerService.activateHandler(ActionFactory.PASTE.getCommandId(), new PasteElementHandler());
 	}
 
 	// ------------------------------------------------------------------------
