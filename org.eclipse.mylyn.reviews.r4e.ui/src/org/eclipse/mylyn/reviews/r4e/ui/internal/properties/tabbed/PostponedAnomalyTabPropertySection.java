@@ -272,7 +272,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 		fTitleText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
 				try {
-					if (!fRefreshInProgress && fTitleText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
+					if (!fRefreshInProgress) {
 
 						//Set new model data
 						final String currentUser = R4EUIModelController.getReviewer();
@@ -337,7 +337,7 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 		fDescriptionText.addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
 				try {
-					if (!fRefreshInProgress && fDescriptionText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
+					if (!fRefreshInProgress) {
 						//Set new model data
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();

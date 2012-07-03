@@ -245,7 +245,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 		fTitleText.setLayoutData(data);
 		fTitleText.addListener(SWT.FocusOut, new Listener() {
 			public void handleEvent(Event event) {
-				if (!fRefreshInProgress && fTitleText.getForeground().equals(UIUtils.ENABLED_FONT_COLOR)) {
+				if (!fRefreshInProgress) {
 					try {
 						//Set new model data
 						final String currentUser = R4EUIModelController.getReviewer();
