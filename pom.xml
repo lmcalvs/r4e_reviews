@@ -83,6 +83,8 @@
         <module>org.eclipse.mylyn.reviews.r4e.core.tests</module>
         <module>org.eclipse.mylyn.reviews.r4e.feature</module>
         <module>org.eclipse.mylyn.reviews.r4e.help</module>
+        <module>org.eclipse.mylyn.reviews.r4e.help.install</module>
+        <module>org.eclipse.mylyn.reviews.r4e.help.install-feature</module>
         <module>org.eclipse.mylyn.reviews.r4e.mail.smtp</module>
         <module>org.eclipse.mylyn.reviews.r4e.report</module>
         <module>org.eclipse.mylyn.reviews.r4e.reports-feature</module>

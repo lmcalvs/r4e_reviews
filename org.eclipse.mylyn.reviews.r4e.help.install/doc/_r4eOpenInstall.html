@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>R4E Documentation</title>
+		<link type="text/css" rel="stylesheet" href="book.css"/>
+	</head>
+	<body>
+		<ol style="list-style: none;">
+			<li>
+				<a href="_r4eOpenInstall.html#Installing_R4E">Installing R4E</a>
+				<ol style="list-style: none;">
+					<li>
+						<a href="_r4eOpenInstall.html#1.29_Provision_Software_Sites">1) Provision Software Sites</a>
+					</li>
+					<li>
+						<a href="_r4eOpenInstall.html#2.29_Install_Version_Control_System_Features">2) Install Version Control System Features</a>
+					</li>
+					<li>
+						<a href="_r4eOpenInstall.html#3.29_Install_R4E_feature">3) Install R4E feature</a>
+					</li>
+					<li>
+						<a href="_r4eOpenInstall.html#4.29_Install_Versions_Connectors">4) Install Versions Connectors</a>
+					</li>
+				</ol>
+			</li>
+		</ol>
+		<h1 id="Installing_R4E">Installing R4E</h1>
+		<h2 id="1.29_Provision_Software_Sites">1) Provision Software Sites</h2>
+		<p>R4E uses some Mylyn components so you will need to add the Mylyn Release update site.</p>
+		<p>Add the following Software Sites to the Eclipse workspace (Help -&gt; Install New Software -&gt; Add)</p>
+		<p>Mylyn Release: 
+			<a href="http://download.eclipse.org/mylyn/releases/latest">http://download.eclipse.org/mylyn/releases/latest</a> 
+		</p>
+		<p>Mylyn Reviews R4E Updates: 
+			<a href="http://download.eclipse.org/r4e/updates/">http://download.eclipse.org/r4e/updates/</a> 
+		</p>
+		<p>if Subversion is to be used, add the subclipse site of the subclipse version you want to use e.g. 
+			<a href="http://subclipse.tigris.org/update_1.6.x">http://subclipse.tigris.org/update_1.6.x</a>
+
+			<br/>
+		</p>
+		<h2 id="2.29_Install_Version_Control_System_Features">2) Install Version Control System Features</h2>
+		<p>R4E uses Mylyn Versions to interact with different version control systems.</p>
+		<ul>
+			<li>Git: Git support is provided by interfacing with Egit/Jgit, Installing the R4E feature automatically installs Egit/Jgit if it's not yet available in the Eclipse installation.So no specific action is needed for Egit installation in this step.</li>
+		</ul>
+		<ul>
+			<li>Subversion (SVN): If there is a need to interact with an SVN repository, install the subclipse feature.Help -&gt; Install New Software, and select the subclipse site provisioned above.
+				<br/>
+			</li>
+		</ul>
+		<p>
+			<br/>
+
+			<img border="0" src="InstallSubclipse.png"/>
+
+			<br/>
+		</p>
+		<h2 id="3.29_Install_R4E_feature">3) Install R4E feature</h2>
+		<p>Help -&gt; Install New Software, and select the Mylyn Reviews site provisioned above.
+			<br/>
+		</p>
+		<p>
+			<img border="0" src="InstallR4E.png"/>
+
+			<br/>
+		</p>
+		<h2 id="4.29_Install_Versions_Connectors">4) Install Versions Connectors</h2>
+		<p>Help -&gt; Install New Software, and select the Mylyn Versions site provisioned above.
+			<br/>
+			Select the connector(s) needed to interface your version control system(s).
+			<br/>
+			currently, R4E supports Git and Subclipse connectors.
+
+			<br/>
+		</p>
+		<p>
+			<img border="0" src="InstallVersions.png"/>
+
+			<br/>
+		</p>
+	</body>
+</html>

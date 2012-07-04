@@ -29,69 +29,13 @@ R4E interacts with the following features/plugins:
 *General: EMF (for the Review meta-data)<br>
 <br>
 
-== Installing R4E  ==
-
-=== Provision Software Sites ===
-Installation using Bleeding Edge Nightly Builds (use with Eclipse 3.7, Indigo)
-
-Add the following Software Sites to the Eclipse workspace (Help -> Install New Software -> Add)
-
-Mylyn weekly: http://download.eclipse.org/mylyn/snapshots/weekly 
-
-Mylyn Versions nightly: http://download.eclipse.org/mylyn/snapshots/nightly/versions/
-
-Mylyn Reviews R4E Updates: http://download.eclipse.org/r4e/updates/ 
-
-if Subversion is to be used, add the subclipse site: http://subclipse.tigris.org/update_1.6.x
-
-=== Install Version Control System Features ===
-R4E uses Mylyn Versions to interact with different version control systems.
-* Git: 
-:Git support is provided by interfacing with Egit/Jgit, 
-:Installing the R4E feature automatically installs Egit/Jgit if it's not yet available in the Eclipse installation.
-:So no specific action is needed for Egit installation in this step.
-
-* Subversion (SVN): 
-:If there is a need to interact with an SVN repository, install the subclipse feature.
-:Help -> Install New Software, and select the subclipse site provisioned above.<br>
-<br>
-[[Image:install_subclipse.jpg]]
-
-=== Install R4E feature ===
-Help -> Install New Software, and select the Mylyn Reviews site provisioned above.<br>
-
-[[Image:install_r4e.jpg]]
-
-=== Install Versions Connectors ===
-Help -> Install New Software, and select the Mylyn Versions site provisioned above.<br>
-Select the connector(s) needed to interface your version control system(s).<br>
-currently, R4E supports Git and Subclipse connectors.
-<br>
-
-[[Image:install_versions.jpg]]
-
-=== Starting R4E  ===
+== Starting R4E  ==
 To start up R4E, show the Review Navigator View e.g. using the Eclipse Window->Show View menu:<br>
 To associate existing review groups see [[#Opening an Existing Review Group]]
  
 [[Image:R4E show view.png]] 
 
 <br>
-
-=== Version Compatibility ===
-
-In order to prevent compatibility problems between versions, R4E now implements a compatibility check.  This will prevent older versions of R4E opening new versions of the R4E metadata files.  Compatibility is checked independently for the Review Group, Rule Set and Review element when opening the element.  There are basically three cases that can occur:
-
-*Metadata version and R4E plugins version are the same:  In this case R4E opens the element normally.
-
-*Metadata version is more recent than the R4E plugins version:  This means that the element was created with a more recent version of R4E than the one currently being used.  In this case an Error message dialog is displayed and the element cannot be used.  The solution to this is typically to upgrade the R4E version to the latest one available.
-
-[[Image:versionMismatchError.png]]
-
-*Metadata version is older than the R4E plugins version:  This means that the element was created with an older version of R4E than the one currently being used.  In this case an information dialog is displayed to highlight the fact and ask the user how to proceed.  The user can then choose to cancel the action, upgrade the file version to the current R4E version, which will permanently change the file version for all users, or keep the older file version and open the element in read-only mode.  When the element is open in read-only mode it is displayed with a top-right lock decorator in the Review Navigator View.
-
-[[Image:versionMismatchInfo.png]]
-
 
 == R4E Configuration  ==
 
@@ -185,6 +129,21 @@ This is optional. If no information is entered, LDAP functionality will be unava
 R4E uses Eclipse Capabilities to manage its functionalities. In order to use R4E, its capabilities must be enabled. This can be done by enabling R4E in the Eclipse ''Preferences-&gt;General-&gt;Capabilities'' preference page. 
 
 [[Image:R4E capabilities.png]] 
+
+
+=== Version Compatibility ===
+
+In order to prevent compatibility problems between versions, R4E now implements a compatibility check.  This will prevent older versions of R4E opening new versions of the R4E metadata files.  Compatibility is checked independently for the Review Group, Rule Set and Review element when opening the element.  There are basically three cases that can occur:
+
+*Metadata version and R4E plugins version are the same:  In this case R4E opens the element normally.
+
+*Metadata version is more recent than the R4E plugins version:  This means that the element was created with a more recent version of R4E than the one currently being used.  In this case an Error message dialog is displayed and the element cannot be used.  The solution to this is typically to upgrade the R4E version to the latest one available.
+
+[[Image:versionMismatchError.png]]
+
+*Metadata version is older than the R4E plugins version:  This means that the element was created with an older version of R4E than the one currently being used.  In this case an information dialog is displayed to highlight the fact and ask the user how to proceed.  The user can then choose to cancel the action, upgrade the file version to the current R4E version, which will permanently change the file version for all users, or keep the older file version and open the element in read-only mode.  When the element is open in read-only mode it is displayed with a top-right lock decorator in the Review Navigator View.
+
+[[Image:versionMismatchInfo.png]]
 
 <br>
 
