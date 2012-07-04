@@ -82,10 +82,20 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_USE_DELTAS = "useDeltasPreferences";
 
 	/**
+	 * Flag that state whether postponed global anomalies should be imported
+	 */
+	public static final String P_IMPORT_GLOBAL_ANOMALIES_POSTPONED = "importPostponedGlobalAnomaliesPreferences";
+
+	/**
 	 * Label for Use Deltas option
 	 */
 	public static final String P_USE_DELTAS_LABEL = "Create Delta Elements to track changes for Version-Controlled"
 			+ " Review Items";
+
+	/**
+	 * Label for import postponed global anomalies option
+	 */
+	public static final String P_IMPORT_POSTPONED_GLOBAL_ANOMALIES_LABEL = "Import Postponed Global Anomalies ";
 
 	/**
 	 * The group file path preference name

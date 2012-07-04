@@ -69,6 +69,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileRevisionTypedEle
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileTypedElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
@@ -832,18 +833,29 @@ public class CommandUtils {
 		if ((null != aTargetAnomaly) && (null != aSourceAnomaly)) {
 			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(aTargetAnomaly,
 					R4EUIModelController.getReviewer());
+
+			//Data copied unconditionally
 			aTargetAnomaly.setCreatedOn(aSourceAnomaly.getCreatedOn());
 			aTargetAnomaly.setDecidedByID(aSourceAnomaly.getDecidedByID());
-			aTargetAnomaly.setDescription(aSourceAnomaly.getDescription());
-			aTargetAnomaly.setDueDate(aSourceAnomaly.getDueDate());
 			aTargetAnomaly.setFixedByID(aSourceAnomaly.getFixedByID());
-			aTargetAnomaly.setFixedInVersion(aSourceAnomaly.getFixedInVersion());
 			aTargetAnomaly.setFollowUpByID(aSourceAnomaly.getFollowUpByID());
-			aTargetAnomaly.setNotAcceptedReason(aSourceAnomaly.getNotAcceptedReason());
-			aTargetAnomaly.setRank(aSourceAnomaly.getRank());
 			aTargetAnomaly.setState(aSourceAnomaly.getState());
-			aTargetAnomaly.setTitle(aSourceAnomaly.getTitle());
-			aTargetAnomaly.getAssignedTo().addAll(aSourceAnomaly.getAssignedTo());
+			aTargetAnomaly.setFixedInVersion(aSourceAnomaly.getFixedInVersion());
+			aTargetAnomaly.setNotAcceptedReason(aSourceAnomaly.getNotAcceptedReason());
+
+			//Data copied only if not set previously
+			if (null == aTargetAnomaly.getTitle() || ("").equals(aTargetAnomaly.getTitle())) {
+				aTargetAnomaly.setTitle(aSourceAnomaly.getTitle());
+			}
+			if (null == aTargetAnomaly.getDescription() || ("").equals(aTargetAnomaly.getDescription())) {
+				aTargetAnomaly.setDescription(aSourceAnomaly.getDescription());
+			}
+			if (null == aTargetAnomaly.getRank()) {
+				aTargetAnomaly.setRank(aSourceAnomaly.getRank());
+			}
+			if (null == aTargetAnomaly.getRuleID() && null != aSourceAnomaly.getRuleID()) {
+				aTargetAnomaly.setRuleID(aSourceAnomaly.getRuleID());
+			}
 			if (null != aSourceAnomaly.getType()) {
 				final R4ECommentType oldCommentType = (R4ECommentType) aSourceAnomaly.getType();
 				R4ECommentType commentType = (R4ECommentType) aTargetAnomaly.getType();
@@ -854,13 +866,8 @@ public class CommandUtils {
 							commentType.setType(oldCommentType.getType());
 						}
 						aTargetAnomaly.setType(commentType);
-					} else {
-						commentType.setType(oldCommentType.getType());
 					}
 				}
-			}
-			if (null != aSourceAnomaly.getRule()) {
-				aTargetAnomaly.setRule(aSourceAnomaly.getRule());
 			}
 			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 		}
@@ -881,18 +888,32 @@ public class CommandUtils {
 			final R4EUIPostponedContainer container = aReview.getPostponedContainer();
 			if (null != container) {
 				boolean containerEnabled = false;
-				for (IR4EUIModelElement file : container.getChildren()) {
-					if (null != file) {
-						R4EUIPostponedFile postFile = (R4EUIPostponedFile) file;
-						for (IR4EUIModelElement anomaly : postFile.getChildren()) {
-							if ((null != anomaly) && !anomaly.isEnabled()) {
-								file.removeChildren(anomaly, false);
+				for (IR4EUIModelElement element : container.getChildren()) {
+					if (null != element) {
+						if (element instanceof R4EUIPostponedFile) {
+							R4EUIPostponedFile postFile = (R4EUIPostponedFile) element;
+							for (IR4EUIModelElement anomaly : postFile.getChildren()) {
+								if ((null != anomaly) && !anomaly.isEnabled()) {
+									element.removeChildren(anomaly, false);
+								}
 							}
-						}
-						if (!file.hasChildren()) {
-							file.close();
-						} else {
-							containerEnabled = true; //At least one file contains postponed anomaly(ies)
+							if (!element.hasChildren()) {
+								element.close();
+							} else {
+								containerEnabled = true; //At least one file contains postponed anomaly(ies)
+							}
+						} else if (element instanceof R4EUIPostponedAnomalyContainer) {
+							for (IR4EUIModelElement anomaly : element.getChildren()) {
+								if ((null != anomaly) && !anomaly.isEnabled()) {
+									element.removeChildren(anomaly, false);
+								}
+							}
+							if (!element.hasChildren()) {
+								element.close();
+								container.removeChildren(element, false);
+							} else {
+								containerEnabled = true; //At least one global postponed anomaly exists
+							}
 						}
 					}
 				}
@@ -936,6 +957,28 @@ public class CommandUtils {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Method buildOriginalAnomalyID.
+	 * 
+	 * @param aOrigAnomaly
+	 *            R4EAnomaly
+	 * @return String
+	 */
+	public static String buildOriginalAnomalyID(R4EAnomaly aOrigAnomaly) {
+		return aOrigAnomaly.getId().getUserID() + R4EUIConstants.SEPARATOR + aOrigAnomaly.getId().getSequenceID();
+	}
+
+	/**
+	 * Method buildOriginalCommentID.
+	 * 
+	 * @param aOrigComment
+	 *            R4EComment
+	 * @return String
+	 */
+	public static String buildOriginalCommentID(R4EComment aOrigComment) {
+		return aOrigComment.getId().getUserID() + aOrigComment.getId().getSequenceID();
 	}
 
 	/**

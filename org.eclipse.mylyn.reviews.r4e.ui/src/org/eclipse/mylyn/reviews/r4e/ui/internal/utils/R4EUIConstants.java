@@ -140,6 +140,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String GLOBAL_ANOMALIES_LABEL = "Global Anomalies";
 
 	/**
+	 * Field GLOBAL_ANOMALIES_LABEL_NAME. (value is ""Global Postponed Anomalies"")
+	 */
+	public static final String GLOBAL_POSTPONED_ANOMALIES_LABEL = "Global Postponed Anomalies";
+
+	/**
 	 * Field ELEMENTS_LABEL_NAME. (value is ""Elements"")
 	 */
 	public static final String ELEMENTS_LABEL_NAME = "Elements";
@@ -619,6 +624,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field GLOBAL_ANOMALY_PROPERTY_VALUE. (value is ""(Global review anomaly)"")
 	 */
 	public static final String GLOBAL_ANOMALY_PROPERTY_VALUE = "(Global Review Anomaly)";
+
+	/**
+	 * Field POSTPONED_GLOBAL_ANOMALY_PROPERTY_VALUE. (value is ""(Postponed Global review anomaly. Original Review: "")
+	 */
+	public static final String POSTPONED_GLOBAL_ANOMALY_PROPERTY_VALUE = "(Postponed Global review anomaly.  Original Review: ";
 
 	/**
 	 * Field FILE_NOT_IN_VERSION_CONTROL_MSG. (value is ""(Not version controlled)"")

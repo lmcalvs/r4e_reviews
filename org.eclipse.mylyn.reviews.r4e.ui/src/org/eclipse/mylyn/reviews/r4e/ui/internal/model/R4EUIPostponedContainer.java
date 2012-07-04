@@ -35,6 +35,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.team.core.history.IFileRevision;
@@ -66,6 +67,15 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 			+ "Elements from their Parent Review";
 
 	// ------------------------------------------------------------------------
+	// Members
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Field fAnomalyContainer.
+	 */
+	protected R4EUIPostponedAnomalyContainer fAnomalyContainer = null;
+
+	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
 
@@ -81,6 +91,7 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 	 */
 	public R4EUIPostponedContainer(IR4EUIModelElement aParent, R4EItem aItem, String aName) {
 		super(aParent, aItem, aName, R4EUIConstants.REVIEW_ITEM_TYPE_POSTPONED);
+		fAnomalyContainer = new R4EUIPostponedAnomalyContainer(this, R4EUIConstants.GLOBAL_POSTPONED_ANOMALIES_LABEL);
 	}
 
 	// ------------------------------------------------------------------------
@@ -117,6 +128,15 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 	//Hierarchy
 
 	/**
+	 * Method getAnomalyContainer.
+	 * 
+	 * @return R4EUIPostponedAnomalyContainer
+	 */
+	public R4EUIPostponedAnomalyContainer getAnomalyContainer() {
+		return fAnomalyContainer;
+	}
+
+	/**
 	 * Method getChildren.
 	 * 
 	 * @return IR4EUIModelElement[]
@@ -125,10 +145,13 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 	@Override
 	public IR4EUIModelElement[] getChildren() {
 		final List<IR4EUIModelElement> newList = new ArrayList<IR4EUIModelElement>();
-		for (IR4EUIModelElement file : fFileContexts) {
+		for (R4EUIFileContext file : fFileContexts) {
 			if (file.getChildren().length > 0) {
 				newList.add(file);
 			}
+		}
+		if (fAnomalyContainer.getChildren().length > 0) {
+			newList.add(fAnomalyContainer);
 		}
 		return newList.toArray(new IR4EUIModelElement[newList.size()]);
 	}
@@ -151,11 +174,105 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 				uiFile.open();
 			}
 		}
+		if (R4EUIPlugin.getDefault()
+				.getPreferenceStore()
+				.getBoolean(PreferenceConstants.P_IMPORT_GLOBAL_ANOMALIES_POSTPONED)) {
+			fAnomalyContainer.setReadOnly(fReadOnly);
+			fAnomalyContainer.open();
+		}
 		fOpen = true;
 	}
 
 	/**
-	 * Method createReviewItem
+	 * Close the model element
+	 * 
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#close()
+	 */
+	@Override
+	public void close() {
+		//Remove all children references
+		R4EUIFileContext fileContext = null;
+		final int fileContextsSize = fFileContexts.size();
+		for (int i = 0; i < fileContextsSize; i++) {
+
+			fileContext = fFileContexts.get(i);
+			fileContext.close();
+		}
+		fFileContexts.clear();
+		fAnomalyContainer.close();
+		fOpen = false;
+	}
+
+	/**
+	 * Method hasChildren.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#hasChildren()
+	 */
+	@Override
+	public boolean hasChildren() {
+		if (fFileContexts.size() > 0 || fAnomalyContainer.getChildren().length > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Method addChildren.
+	 * 
+	 * @param aChildToAdd
+	 *            IR4EUIModelElement
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#addChildren(IR4EUIModelElement)
+	 */
+	@Override
+	public void addChildren(IR4EUIModelElement aChildToAdd) {
+		if (aChildToAdd instanceof R4EUIFileContext) {
+			fFileContexts.add((R4EUIFileContext) aChildToAdd);
+		} else if (aChildToAdd instanceof R4EUIPostponedAnomalyContainer) {
+			fAnomalyContainer = (R4EUIPostponedAnomalyContainer) aChildToAdd;
+		}
+	}
+
+	/**
+	 * Method removeChildren.
+	 * 
+	 * @param aChildToRemove
+	 *            IR4EUIModelElement
+	 * @param aFileRemove
+	 *            - also remove from file (hard remove)
+	 * @throws OutOfSyncException
+	 * @throws ResourceHandlingException
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#removeChildren(IR4EUIModelElement)
+	 */
+	@Override
+	public void removeChildren(IR4EUIModelElement aChildToRemove, boolean aFileRemove)
+			throws ResourceHandlingException, OutOfSyncException {
+		if (aChildToRemove instanceof R4EUIPostponedFile) {
+			final R4EUIFileContext removedElement = fFileContexts.get(fFileContexts.indexOf(aChildToRemove));
+
+			//Also recursively remove all children 
+			removedElement.removeAllChildren(aFileRemove);
+
+			/* TODO uncomment when core model supports hard-removing of elements
+			if (aFileRemove) removedElement.getFileContext().remove());
+			else */
+			final R4EFileContext modelFile = removedElement.getFileContext();
+			final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelFile,
+					R4EUIModelController.getReviewer());
+			modelFile.setEnabled(false);
+			R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+			//Remove element from UI if the show disabled element option is off
+			if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
+				fFileContexts.remove(removedElement);
+			}
+		} else if (aChildToRemove instanceof R4EUIAnomalyContainer) {
+			fAnomalyContainer.removeAllChildren(aFileRemove);
+		}
+	}
+
+	/**
+	 * Method createFileContext
 	 * 
 	 * @param aTargetTempFileVersion
 	 *            R4EFileVersion

@@ -96,7 +96,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	/**
 	 * Field fAnomalies.
 	 */
-	private final List<R4EUIAnomalyBasic> fAnomalies;
+	protected final List<R4EUIAnomalyBasic> fAnomalies;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -262,7 +262,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		R4EUIAnomalyBasic uiAnomaly = null;
 		final IR4EUIModelElement parentElement = getParent();
 		if (parentElement instanceof R4EUIFileContext) {
-
 			//get anomalies that are specific to a file
 			final List<R4EAnomaly> anomalies = ((R4EUIFileContext) parentElement).getAnomalies();
 			R4EUITextPosition position = null;
@@ -314,15 +313,17 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 				}
 			}
 		} else if (parentElement instanceof R4EUIReviewBasic) {
-
 			//Get anomalies that do not have any location.  These are global anomalies
-
 			final EList<Topic> anomalies = ((R4EUIReviewBasic) parentElement).getReview().getTopics();
 			if (null != anomalies) {
 				final int anomaliesSize = anomalies.size();
 				R4EAnomaly anomaly = null;
 				for (int i = 0; i < anomaliesSize; i++) {
 					anomaly = (R4EAnomaly) anomalies.get(i);
+					if (null != anomaly.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
+						//This is a postponed anomaly, so we ignore it
+						continue;
+					}
 					if (anomaly.isEnabled()
 							|| R4EUIPlugin.getDefault()
 									.getPreferenceStore()
@@ -345,7 +346,6 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 					}
 				}
 			}
-
 		}
 		fOpen = true;
 	}
@@ -427,6 +427,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 			}
 		}
 		addedChild.setModelData(aModelComponent);
+		addedChild.setExtraModelData(aModelComponent);
 		addChildren(addedChild);
 		return addedChild;
 	}

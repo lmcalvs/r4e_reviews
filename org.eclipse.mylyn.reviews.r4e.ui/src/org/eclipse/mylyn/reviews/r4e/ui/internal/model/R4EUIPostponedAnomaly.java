@@ -165,12 +165,8 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 	 */
 	public void updateAnomaly(R4EAnomaly aPostponedAnomaly) throws ResourceHandlingException, OutOfSyncException {
 
-		CommandUtils.copyAnomalyData(fAnomaly, aPostponedAnomaly);
-
-		//Update UI model element
-
 		//Disable the anomaly if it is not postponed anymore
-		if (fAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)) {
+		if (aPostponedAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)) {
 			fAnomaly.setEnabled(aPostponedAnomaly.isEnabled());
 			//Close Anomaly if disabled
 			if (!fAnomaly.isEnabled()) {
@@ -180,6 +176,8 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 			fAnomaly.setEnabled(false); //Disable anomaly if it is not postponed to begin with
 			close();
 		}
+
+		//Update postponed anomaly state
 		updateState(aPostponedAnomaly.getState());
 	}
 
@@ -192,7 +190,14 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 	 */
 	public void updateOriginalAnomaly() throws ResourceHandlingException, OutOfSyncException, CompatibilityException {
 		final String origReviewName = getOriginalReviewName();
-		final R4EUIReviewGroup uiGroup = (R4EUIReviewGroup) getParent().getParent().getParent().getParent();
+		R4EUIReviewGroup uiGroup = null;
+		if (getParent() instanceof R4EUIPostponedFile) {
+			uiGroup = (R4EUIReviewGroup) getParent().getParent().getParent().getParent();
+		} else if (getParent() instanceof R4EUIAnomalyContainer) {
+			uiGroup = (R4EUIReviewGroup) getParent().getParent().getParent().getParent();
+		} else {
+			return; //should never happen
+		}
 		final R4EReview origReview = R4EUIModelController.FModelExt.openR4EReview(uiGroup.getReviewGroup(),
 				origReviewName);
 
@@ -282,8 +287,7 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 		comment.setDescription(aPostponedComment.getDescription());
 		comment.setCreatedOn(aPostponedComment.getCreatedOn());
 		final EMap<String, String> info = comment.getInfoAtt(); //We use the R4EComment attribute map to store the original comment ID
-		info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_COMMENT_ID, aPostponedComment.getId().getUserID()
-				+ aPostponedComment.getId().getSequenceID());
+		info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_COMMENT_ID, CommandUtils.buildOriginalCommentID(aPostponedComment));
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
 		//Disable original creator if it is not a participant in the current review

@@ -313,8 +313,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 					//This is a genuine anomaly, not a postponed one, so we ignore it
 					continue;
 				} else {
-					String postponedAnomalyId = aPostponedAnomaly.getId().getUserID() + R4EUIConstants.SEPARATOR
-							+ aPostponedAnomaly.getId().getSequenceID();
+					String postponedAnomalyId = CommandUtils.buildOriginalAnomalyID(aPostponedAnomaly);
 					if (postponedAnomalyId.equals(savedAnomaly.getInfoAtt().get(
 							R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID))) {
 						//Postponed anomaly existed but was disabled, restore it
@@ -330,8 +329,8 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 			anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
 			CommandUtils.copyAnomalyData(anomaly, aPostponedAnomaly);
 			final EMap<String, String> info = anomaly.getInfoAtt(); //We use the R4EAnomaly attribute map to store the original anomaly ID
-			info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID, aPostponedAnomaly.getId().getUserID()
-					+ R4EUIConstants.SEPARATOR + aPostponedAnomaly.getId().getSequenceID());
+			info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID,
+					CommandUtils.buildOriginalAnomalyID(aPostponedAnomaly));
 			info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME, aOrigReviewName);
 
 			//Set position data

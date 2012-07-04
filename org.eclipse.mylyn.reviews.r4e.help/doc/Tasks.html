@@ -582,16 +582,16 @@
 		</p>
 		<h3 id="Importing_Postponed_Anomalies">Importing Postponed Anomalies</h3>
 		<p>Postponed Anomalies are Anomalies that were written in previous Informal/Formal Reviews, but were not handled then and were instead set to 
-			<i>POSTPONED</i> state.  If the current Review include files on which these anomalies were written, whether it is the same or a different version of a file, it is possible to import them in the current review so that they can be addressed.  Currently, only Postponed Anomalies that belong to Reviews under the same Review Group can be imported.  Also, take note that Global Anomalies cannot be imported.
+			<i>POSTPONED</i> state.  If the current Review include files on which these anomalies were written, whether it is the same or a different version of a file, it is possible to import them in the current review so that they can be addressed.  Currently, only Postponed Anomalies that belong to Reviews under the same Review Group can be imported. Global Anomalies that were written in other Reviews in the same Review Group can also optionally be imported.
 		</p>
 		<p>To import Postponed Anomalies, just select the current Review in the Navigator View and use the context menu:</p>
 		<p>
 			<img border="0" src="ImportAnomalies.png"/>
 		</p>
 		<p>R4E will scan all Reviews under the current Review Group and will copy all Anomalies in 
-			<i>POSTPONED</i> state that were written on files also included in the current Review.  Once the command is done, the imported elements will appear on their own container element under the Review element in the Review Navigator tree.
+			<i>POSTPONED</i> state that were written on files also included in the current Review, or also Global Anomalies if the option is selected in the preferences.  Once the command is done, the imported elements will appear on their own container elements under the Review element in the Review Navigator tree.
 		</p>
-		<p>From then on, Postponed anomalies behave like any other Anomaly and can be handled in the same way.  When a Postponed Anomaly is modified, the changes will also be reflected in the original Anomaly (i.e. the one filed in the previous Review).  Likewise, any changes that are done by other users on the original Anomaly can be seen in the current review by refreshing the imported Anomalies, by re-issuing the Import command.  Take note that Postponed Anomalies that have their state changed from POSTPONED will be disabled.  If they are set back to Postponed, they will be restored as Postponed elements.</p>
+		<p>From then on, Postponed anomalies behave like any other Anomaly and can be handled in the same way.  When a Postponed Anomaly is modified, the changes will also be reflected in the original Anomaly (i.e. the one filed in the previous Review).  Likewise, any changes that are done by other users on the original Anomaly can be seen in the current review by refreshing the imported Anomalies i.e. by re-issuing the Import command.  Take note that Postponed Anomalies that have their state changed from POSTPONED will be disabled.  If they are set back to Postponed, they will be restored as Postponed elements.</p>
 		<h2 id="Handling_Design_Rules">Handling Design Rules</h2>
 		<h3 id="Creating_a_Rule_Set">Creating a Rule Set</h3>
 		<p>R4E support the use of Design Rules, to help reviewers enforce consistent design conventions and rules. A Rule Set is a container that includes multiple related Rules. Rule Sets are independently defined and can be shared among multiple Review Groups. Take note that the use of Design Rules is completely optional. </p>

@@ -98,7 +98,7 @@ public class R4EUITestElement {
 		final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		page.activate(R4EUIModelController.getNavigatorView());
 		ISelection selection = new StructuredSelection(aElement);
-		R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(selection);
+		R4EUIModelController.getNavigatorView().getTreeViewer().setSelection(selection, true);
 	}
 
 	/**

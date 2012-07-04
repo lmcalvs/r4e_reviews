@@ -41,6 +41,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.NewAnomalyInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIRule;
@@ -329,6 +330,45 @@ public class R4EUITestAnomaly extends R4EUITestElement {
 		Display.getDefault().syncExec(newTextAnomalyJob);
 		TestUtils.waitForJobs();
 		return newTextAnomalyJob.getAnomaly();
+	}
+
+	/**
+	 * Method createGlobalAnomaly
+	 * 
+	 * @param aContainer
+	 * @param aTitle
+	 * @param aDescription
+	 * @param aClass
+	 * @param aRank
+	 * @param aDueDate
+	 * @param aRule
+	 * @return R4EUIAnomalyBasic
+	 */
+	public R4EUIAnomalyBasic createGlobalAnomaly(R4EUIAnomalyContainer aContainer, String aTitle, String aDescription,
+			R4EDesignRuleClass aClass, R4EDesignRuleRank aRank, Date aDueDate, R4EUIRule aRule, String aAssignedTo) {
+
+		//Inject mockup dialog for New Linked Anomaly
+		IAnomalyInputDialog mockAnomalyDialog = mock(NewAnomalyInputDialog.class);
+		R4EUIDialogFactory.getInstance().setNewAnomalyInputDialog(mockAnomalyDialog);
+
+		//Here we need to stub the ReviewInputDialog get methods to return what we want
+		if (null == aRule) {
+			when(mockAnomalyDialog.getAnomalyTitleValue()).thenReturn(aTitle);
+			when(mockAnomalyDialog.getAnomalyDescriptionValue()).thenReturn(aDescription);
+			when(mockAnomalyDialog.getClass_()).thenReturn(aClass);
+			when(mockAnomalyDialog.getRank()).thenReturn(aRank);
+		} else {
+			when(mockAnomalyDialog.getAnomalyTitleValue()).thenReturn(aRule.getRule().getTitle());
+			when(mockAnomalyDialog.getAnomalyDescriptionValue()).thenReturn(aRule.getRule().getDescription());
+			when(mockAnomalyDialog.getClass_()).thenReturn(aRule.getRule().getClass_());
+			when(mockAnomalyDialog.getRank()).thenReturn(aRule.getRule().getRank());
+		}
+		when(mockAnomalyDialog.getDueDate()).thenReturn(aDueDate);
+		when(mockAnomalyDialog.getRuleReferenceValue()).thenReturn(null != aRule ? aRule.getRule() : null);
+		when(mockAnomalyDialog.open()).thenReturn(Window.OK);
+		when(mockAnomalyDialog.getAssigned()).thenReturn(aAssignedTo);
+
+		return (R4EUIAnomalyBasic) fParentProxy.getCommandProxy().runNewChildElement(aContainer);
 	}
 
 	/**

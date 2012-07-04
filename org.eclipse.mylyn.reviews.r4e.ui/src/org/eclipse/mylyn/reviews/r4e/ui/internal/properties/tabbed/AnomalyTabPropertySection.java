@@ -513,8 +513,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					} catch (OutOfSyncException e1) {
 						UIUtils.displaySyncErrorDialog(e1);
 					}
+					refresh();
 				}
-				refresh();
 			}
 		});
 		addScrollListener(fClassCombo);

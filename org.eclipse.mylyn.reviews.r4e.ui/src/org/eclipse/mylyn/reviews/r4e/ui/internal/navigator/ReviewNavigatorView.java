@@ -812,11 +812,10 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 					}
 				}
 			});
-
-		} else if (event.getKey().equals(PreferenceConstants.P_SHOW_DISABLED)) {
+		} else if (event.getKey().equals(PreferenceConstants.P_SHOW_DISABLED)
+				|| event.getKey().equals(PreferenceConstants.P_IMPORT_GLOBAL_ANOMALIES_POSTPONED)) {
 			resetInput(); //TODO This needs to be changed to not reload the model all the time
 		}
-
 	}
 
 	/**

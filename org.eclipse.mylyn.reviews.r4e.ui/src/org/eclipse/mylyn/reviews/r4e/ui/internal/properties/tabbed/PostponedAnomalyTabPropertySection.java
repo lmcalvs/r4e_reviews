@@ -295,9 +295,6 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 											R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
 													((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
 								}
-
-								//Also update original anomaly
-								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
 							}
 						}
 					}
@@ -348,9 +345,6 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 										currentUser);
 								modelAnomaly.setDescription(fDescriptionText.getText());
 								R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-								//Also update original anomaly
-								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
 							}
 						}
 					}
@@ -464,10 +458,6 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 										currentUser);
 								modelAnomaly.getAssignedTo().clear();
 								modelAnomaly.getAssignedTo().add(newValue);
-
-								//Also update original anomaly
-								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
-								R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 							}
 						}
 					}
@@ -586,7 +576,8 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 						final String currentUser = R4EUIModelController.getReviewer();
 						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
 						final R4EDesignRuleClass newValue = UIUtils.getClassFromString(fClassCombo.getText());
-						if (!newValue.equals(((R4ECommentType) modelAnomaly.getType()).getType())) {
+						if (null == modelAnomaly.getType()
+								|| !newValue.equals(((R4ECommentType) modelAnomaly.getType()).getType())) {
 							if (((R4EUIPostponedAnomaly) fProperties.getElement()).checkCompatibility()) {
 								final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly,
 										currentUser);
@@ -594,9 +585,6 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 								type.setType(newValue);
 								modelAnomaly.setType(type);
 								R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-								//Also update original anomaly
-								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
 							}
 						}
 					}
@@ -642,9 +630,6 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 										currentUser);
 								modelAnomaly.setRank(newValue);
 								R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-								//Also update original anomaly
-								((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
 							}
 						}
 					}
@@ -743,9 +728,6 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 										R4EUIAnomalyBasic.buildAnomalyName(modelAnomaly,
 												((R4EUIAnomalyBasic) fProperties.getElement()).getPosition()));
 							}
-
-							//Also update original anomaly
-							((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
 						}
 					} catch (ResourceHandlingException e1) {
 						UIUtils.displayResourceErrorDialog(e1);
@@ -803,10 +785,6 @@ public class PostponedAnomalyTabPropertySection extends ModelElementTabPropertyS
 											currentUser);
 									modelAnomaly.setDueDate(newValue);
 									R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-									//If this is a postponed anomaly, update original one as well
-									//Also update original anomaly
-									((R4EUIPostponedAnomaly) fProperties.getElement()).updateOriginalAnomaly();
 								}
 							}
 						}

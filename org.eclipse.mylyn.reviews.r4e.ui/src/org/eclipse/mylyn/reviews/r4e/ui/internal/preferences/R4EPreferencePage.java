@@ -165,6 +165,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private Button fUseDeltasButton = null;
 
 	/**
+	 * Field fImportPostponedGlobalAnomaliesButton.
+	 */
+	private Button fImportPostponedGlobalAnomaliesButton = null;
+
+	/**
 	 * Field fR4EGroupPrefsGroup.
 	 */
 	private Composite fR4EGroupPrefsGroup = null;
@@ -500,6 +505,10 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fUseDeltasButton.setText(PreferenceConstants.P_USE_DELTAS_LABEL);
 		fUseDeltasButton.setLayoutData(filtersButtonData);
 		fUseDeltasButton.setSelection(store.getBoolean(PreferenceConstants.P_USE_DELTAS));
+		fImportPostponedGlobalAnomaliesButton = new Button(r4EUserPrefsGroup, SWT.CHECK);
+		fImportPostponedGlobalAnomaliesButton.setText(PreferenceConstants.P_IMPORT_POSTPONED_GLOBAL_ANOMALIES_LABEL);
+		fImportPostponedGlobalAnomaliesButton.setLayoutData(filtersButtonData);
+		fImportPostponedGlobalAnomaliesButton.setSelection(store.getBoolean(PreferenceConstants.P_IMPORT_GLOBAL_ANOMALIES_POSTPONED));
 	}
 
 	/**
@@ -924,6 +933,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		store.setValue(PreferenceConstants.P_USE_DELTAS, true);
 		fUseDeltasButton.setSelection(true);
 		store.setValue(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER, true);
+		fImportPostponedGlobalAnomaliesButton.setSelection(false);
 		fReviewsCompletedFilterButton.setSelection(true);
 		store.setValue(PreferenceConstants.P_HIDE_DELTAS_FILTER, true);
 		fHideDeltasFilterButton.setSelection(true);
@@ -1031,6 +1041,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 			R4EUIModelController.getNavigatorView().applyDefaultFilters();
 		}
 		store.setValue(PreferenceConstants.P_USE_DELTAS, fUseDeltasButton.getSelection());
+		store.setValue(PreferenceConstants.P_IMPORT_GLOBAL_ANOMALIES_POSTPONED,
+				fImportPostponedGlobalAnomaliesButton.getSelection());
 
 		if (CommandUtils.isEmailValid(fUserEmailTextField.getText())) {
 			store.setValue(PreferenceConstants.P_USER_EMAIL, fUserEmailTextField.getText());
@@ -1125,6 +1137,25 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	 */
 	public void setEmail(String aEmail) {
 		fUserEmailTextField.setText(aEmail);
+	}
+
+	/**
+	 * Method getGlobalPostponedImport.
+	 * 
+	 * @return String
+	 */
+	public boolean getGlobalPostponedImport() {
+		return fImportPostponedGlobalAnomaliesButton.getSelection();
+	}
+
+	/**
+	 * Method setGlobalPostponedImport.
+	 * 
+	 * @param aValue
+	 *            - boolean
+	 */
+	public void setGlobalPostponedImport(boolean aValue) {
+		fImportPostponedGlobalAnomaliesButton.setSelection(aValue);
 	}
 
 	/**

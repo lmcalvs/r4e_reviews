@@ -312,4 +312,70 @@ public class R4EUITestPreferences extends R4EUITestElement {
 		Display.getDefault().syncExec(removeRuleSetPreferencesJob);
 		TestUtils.waitForJobs();
 	}
+
+	/**
+	 * Method getGlobalPostponedImport.
+	 * 
+	 * @return boolean
+	 */
+	public boolean getGlobalPostponedImport() {
+		//Inner class that runs the command on the UI thread
+		class RunGetGlobalPostponedImport implements Runnable {
+			private boolean fValue;
+
+			public boolean getGlobalPostponedImport() {
+				return fValue;
+			}
+
+			public void setGlobalPostponedImport(boolean aValue) {
+				fValue = aValue;
+			}
+
+			public void run() {
+				PreferenceDialog dialog = PreferencesUtil.createPreferenceDialogOn(null, PREFERENCES_PAGE_ID, null,
+						null);
+				R4EPreferencePage preferences = (R4EPreferencePage) dialog.getSelectedPage();
+				setGlobalPostponedImport(preferences.getGlobalPostponedImport());
+				preferences.performOk();
+				dialog.close();
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunGetGlobalPostponedImport getGlobalPostponedImportJob = new RunGetGlobalPostponedImport();
+		Display.getDefault().syncExec(getGlobalPostponedImportJob);
+		TestUtils.waitForJobs();
+		return getGlobalPostponedImportJob.getGlobalPostponedImport();
+	}
+
+	/**
+	 * Method toggleGlobalPostponedImport Toggles the importing of Global Postponed Anomalies on/off
+	 */
+	public void setGlobalPostponedImport(boolean aValue) {
+		//Inner class that runs the command on the UI thread
+		class RunToggleGlobalPostponedImport implements Runnable {
+			private boolean fValue;
+
+			public void setGlobalPostponedImport(boolean aValue) {
+				fValue = aValue;
+			}
+
+			public void run() {
+				PreferenceDialog dialog = PreferencesUtil.createPreferenceDialogOn(null, PREFERENCES_PAGE_ID, null,
+						null);
+				R4EPreferencePage preferences = (R4EPreferencePage) dialog.getSelectedPage();
+				preferences.setGlobalPostponedImport(fValue);
+				preferences.performOk();
+				dialog.close();
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunToggleGlobalPostponedImport toggleGlobalPostponedImportJob = new RunToggleGlobalPostponedImport();
+		toggleGlobalPostponedImportJob.setGlobalPostponedImport(aValue);
+		Display.getDefault().syncExec(toggleGlobalPostponedImportJob);
+		TestUtils.waitForJobs();
+	}
 }

@@ -51,6 +51,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
@@ -188,26 +189,31 @@ public class ImportPostponedHandler extends AbstractHandler {
 				//Get parent file
 				R4EFileVersion oldAnomalyFile = CommandUtils.getAnomalyParentFile((R4EAnomaly) oldAnomaly);
 				if (null == oldAnomalyFile) {
-					continue; //Global anomalies cannot be imported
-				}
-
-				for (Item currentItem : currentReview.getReviewItems()) {
-					//Ignore R4EUIPostponedContainer for current review here
-					if ((R4EUIConstants.TRUE_ATTR_VALUE_STR).equals(((R4EItem) currentItem).getInfoAtt().get(
-							R4EUIConstants.POSTPONED_ATTR_STR))) {
-						continue;
+					//Global anomaly
+					if (null == ((R4EAnomaly) oldAnomaly).getInfoAtt().get(
+							R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
+						anomaliesToConsider.add((R4EAnomaly) oldAnomaly);
 					}
+				} else {
 
-					//NOTE:  We compare the URI of the files.  This means that in order to be considered, 
-					//the version of the file in the current review need to be in the workspace.  This is a limitation.
-					EList<R4EFileContext> currentFiles = ((R4EItem) currentItem).getFileContextList();
-					for (R4EFileContext currentFile : currentFiles) {
-						if (null != currentFile.getTarget()
-								&& null != currentFile.getTarget().getPlatformURI()
-								&& currentFile.getTarget().getPlatformURI().equals(oldAnomalyFile.getPlatformURI())
-								&& null == ((R4EAnomaly) oldAnomaly).getInfoAtt().get(
-										R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
-							anomaliesToConsider.add((R4EAnomaly) oldAnomaly);
+					for (Item currentItem : currentReview.getReviewItems()) {
+						//Ignore R4EUIPostponedContainer for current review here
+						if ((R4EUIConstants.TRUE_ATTR_VALUE_STR).equals(((R4EItem) currentItem).getInfoAtt().get(
+								R4EUIConstants.POSTPONED_ATTR_STR))) {
+							continue;
+						}
+
+						//NOTE:  We compare the URI of the files.  This means that in order to be considered, 
+						//the version of the file in the current review need to be in the workspace.  This is a limitation.
+						EList<R4EFileContext> currentFiles = ((R4EItem) currentItem).getFileContextList();
+						for (R4EFileContext currentFile : currentFiles) {
+							if (null != currentFile.getTarget()
+									&& null != currentFile.getTarget().getPlatformURI()
+									&& currentFile.getTarget().getPlatformURI().equals(oldAnomalyFile.getPlatformURI())
+									&& null == ((R4EAnomaly) oldAnomaly).getInfoAtt().get(
+											R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
+								anomaliesToConsider.add((R4EAnomaly) oldAnomaly);
+							}
 						}
 					}
 				}
@@ -254,20 +260,115 @@ public class ImportPostponedHandler extends AbstractHandler {
 		//Lazily create the postponed file and add it to the postponed container, if not already done
 		final R4EFileVersion oldFile = CommandUtils.getAnomalyParentFile(aOldAnomaly);
 		if (null == oldFile) {
-			return; //Global anomalies cannot be imported
+			//Global Anomaly
+			if (R4EUIPlugin.getDefault()
+					.getPreferenceStore()
+					.getBoolean(PreferenceConstants.P_IMPORT_GLOBAL_ANOMALIES_POSTPONED)) {
+				importGlobalAnomaly(aUiReview, uiPostponedContainer, aOldAnomaly, aAddNewAnomalies, aMonitor);
+			}
+		} else {
+			importLocalAnomaly(aUiReview, uiPostponedContainer, aOldAnomaly, oldFile, aAddNewAnomalies, aMonitor);
+		}
+	}
+
+	/**
+	 * Method importGlobalAnomaly.
+	 * 
+	 * @param aUiPostponedContainer
+	 *            R4EUIPostponedContainer
+	 * @param aOldAnomaly
+	 *            R4EAnomaly
+	 * @param aAddNewAnomalies
+	 *            - boolean
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 */
+	private static void importGlobalAnomaly(R4EUIReviewBasic aUiReview, R4EUIPostponedContainer aUiPostponedContainer,
+			R4EAnomaly aOldAnomaly, boolean aAddNewAnomalies, IProgressMonitor aMonitor)
+			throws ResourceHandlingException, OutOfSyncException {
+		final IR4EUIModelElement[] uiGlobalAnomalies = aUiPostponedContainer.getAnomalyContainer().getChildren();
+		R4EUIPostponedAnomaly foundUiAnomaly = null;
+		for (IR4EUIModelElement uiAnomaly : uiGlobalAnomalies) {
+			R4EAnomaly anomaly = ((R4EUIPostponedAnomaly) uiAnomaly).getAnomaly();
+			String oldAnomalyId = CommandUtils.buildOriginalAnomalyID(aOldAnomaly);
+			if (oldAnomalyId.equals(anomaly.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID))) {
+				foundUiAnomaly = (R4EUIPostponedAnomaly) uiAnomaly;
+				break;
+			}
 		}
 
-		final List<R4EUIFileContext> postponedUiFileContexts = uiPostponedContainer.getFileContexts();
+		if (null == foundUiAnomaly) {
+			if (aAddNewAnomalies) {
+
+				//If the anomaly is new and is postponed, add it
+				if (aOldAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)) {
+					if (null != aMonitor) {
+						aMonitor.subTask("Importing Postponed Global Anomaly for Review: " + aUiReview.getName());
+					}
+
+					final R4EUIPostponedAnomaly uiPostponedAnomaly = aUiPostponedContainer.getAnomalyContainer()
+							.createAnomaly(aUiReview, aOldAnomaly);
+					//Also add all child comments
+					final EList<Comment> comments = aOldAnomaly.getComments();
+					for (Comment comment : comments) {
+						uiPostponedAnomaly.createComment((R4EComment) comment);
+					}
+				}
+			}
+		} else {
+			foundUiAnomaly.updateAnomaly(aOldAnomaly);
+			if (foundUiAnomaly.isEnabled()) {
+				//Update anomaly comments
+				final EList<Comment> oldComments = aOldAnomaly.getComments();
+				final IR4EUIModelElement[] uiComments = foundUiAnomaly.getChildren();
+				for (Comment oldComment : oldComments) {
+					R4EUIComment foundUiComment = null;
+					for (IR4EUIModelElement uiComment : uiComments) {
+						R4EComment comment = ((R4EUIComment) uiComment).getComment();
+						String oldCommentId = CommandUtils.buildOriginalCommentID((R4EComment) oldComment);
+						if (oldCommentId.equals(comment.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_COMMENT_ID))) {
+							foundUiComment = (R4EUIComment) uiComment;
+							break;
+						}
+					}
+					if (null == foundUiComment) {
+						foundUiAnomaly.createComment((R4EComment) oldComment);
+					} //no alternative as comments are unmodifiable
+				}
+			}
+		}
+	}
+
+	/**
+	 * Method importLocalAnomaly.
+	 * 
+	 * @param aUiReview
+	 *            R4EUIReviewBasic
+	 * @param aUiPostponedContainer
+	 *            R4EUIPostponedContainer
+	 * @param aOldAnomaly
+	 *            R4EAnomaly
+	 * @param aOldFile
+	 *            R4EFileVersion
+	 * @param aAddNewAnomalies
+	 *            - boolean
+	 * @throws ResourceHandlingException
+	 * @throws OutOfSyncException
+	 */
+	private static void importLocalAnomaly(R4EUIReviewBasic aUiReview, R4EUIPostponedContainer aUiPostponedContainer,
+			R4EAnomaly aOldAnomaly, R4EFileVersion aOldFile, boolean aAddNewAnomalies, IProgressMonitor aMonitor)
+			throws ResourceHandlingException, OutOfSyncException {
+		final List<R4EUIFileContext> postponedUiFileContexts = aUiPostponedContainer.getFileContexts();
 		R4EUIPostponedFile uiPostponedFile = null;
 		for (R4EUIFileContext currentFileContext : postponedUiFileContexts) {
-			if (currentFileContext.getFileContext().getTarget().getVersionID().equals(oldFile.getVersionID())) {
+			if (currentFileContext.getFileContext().getTarget().getVersionID().equals(aOldFile.getVersionID())) {
 				uiPostponedFile = (R4EUIPostponedFile) currentFileContext;
 				break;
 			}
 		}
 		if (null == uiPostponedFile) {
 			if (aAddNewAnomalies) {
-				uiPostponedFile = uiPostponedContainer.createFileContext(oldFile);
+				uiPostponedFile = aUiPostponedContainer.createFileContext(aOldFile);
 			} else {
 				return; //Refresh only, do not create
 			}
@@ -278,8 +379,7 @@ public class ImportPostponedHandler extends AbstractHandler {
 		R4EUIPostponedAnomaly foundUiAnomaly = null;
 		for (IR4EUIModelElement uiAnomaly : uiAnomalies) {
 			R4EAnomaly anomaly = ((R4EUIPostponedAnomaly) uiAnomaly).getAnomaly();
-			String oldAnomalyId = aOldAnomaly.getId().getUserID() + R4EUIConstants.SEPARATOR
-					+ aOldAnomaly.getId().getSequenceID();
+			String oldAnomalyId = CommandUtils.buildOriginalAnomalyID(aOldAnomaly);
 			if (oldAnomalyId.equals(anomaly.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID))) {
 				foundUiAnomaly = (R4EUIPostponedAnomaly) uiAnomaly;
 				break;
@@ -313,8 +413,7 @@ public class ImportPostponedHandler extends AbstractHandler {
 					R4EUIComment foundUiComment = null;
 					for (IR4EUIModelElement uiComment : uiComments) {
 						R4EComment comment = ((R4EUIComment) uiComment).getComment();
-						String oldCommentId = ((R4EComment) oldComment).getId().getUserID()
-								+ ((R4EComment) oldComment).getId().getSequenceID();
+						String oldCommentId = CommandUtils.buildOriginalCommentID((R4EComment) oldComment);
 						if (oldCommentId.equals(comment.getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_COMMENT_ID))) {
 							foundUiComment = (R4EUIComment) uiComment;
 							break;

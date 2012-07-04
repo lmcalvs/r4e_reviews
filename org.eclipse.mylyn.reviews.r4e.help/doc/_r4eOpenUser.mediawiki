@@ -61,7 +61,9 @@ The following elements are configurable
 
 *Participants Lists and Participants:  Participants Lists are a group of users that can be added together as participant to a review.  To create a new Participant List, use the ''Add'' button for the Participant List table.  The ''Remove'' button can be used to remove a Participant List. Once a participant List is created, specific participants can be added to the selected list and removed by using the ''Add'' and ''Remove'' buttons of the Participants table, respectively .  Using the ''Add'' button will open a New Participant dialog that can be used to specify the users to add.  Refer to the ''Adding Participants to a Review'' section for more information on using the New Participants dialog.  After it is set up, a participant list can be used in any New Participant dialog and adding it as a participant will instead add all its participants values to the review.  Take note that participant lists are optional and participants can be added separately to reviews.
 
-*Checkboxes: The ''Create Delta Elements...'' checkbox is used to control the display of file differences as elements in the Review Navigator.  The ''Update Postponed Anomalies...'' checkbox is used to automatically import outstanding anomalies that were set to POSTPONED state in previous versions of files included in the current review.  See Postponed Anomalies section below for more information.<br> 
+*Checkboxes:
+**''Create Delta Elements...'' checkbox is used to control the display of file differences as elements in the Review Navigator.
+**''Import Postponed Global Anomalies...'' checkbox is used to specify that global anomalies (i.e. anomalies not attached to a particular file) that are in state POSTPONED in all other reviews included in the parent Review Group should also be imported to the currently active Review, in addition to the local anomalies, when the ''Import Postponed Anomalies'' command is used.  See Postponed Anomalies section below for more information.<br> 
 
 <br> 
 
@@ -1263,15 +1265,17 @@ As for anomalies, it is also possible to copy comment information to another ano
 
 === Importing Postponed Anomalies  ===
 
-Postponed Anomalies are Anomalies that were written in previous Informal/Formal Reviews, but were not handled then and were instead set to ''POSTPONED'' state.  If the current Review include files on which these anomalies were written, whether it is the same or a different version of a file, it is possible to import them in the current review so that they can be addressed.  Currently, only Postponed Anomalies that belong to Reviews under the same Review Group can be imported.  Also, take note that Global Anomalies cannot be imported.
+Postponed Anomalies are Anomalies that were written in previous Informal/Formal Reviews, but were not handled then and were instead set to ''POSTPONED'' state.  If the current Review include files on which these anomalies were written, whether it is the same or a different version of a file, it is possible to import them in the current review so that they can be addressed.  Currently, only Postponed Anomalies that belong to Reviews under the same Review Group can be imported. Global Anomalies that were written in other Reviews in the same Review Group can also optionally be imported.
 
 To import Postponed Anomalies, just select the current Review in the Navigator View and use the context menu:
 
 [[Image:ImportAnomalies.png]]
 
-R4E will scan all Reviews under the current Review Group and will copy all Anomalies in ''POSTPONED'' state that were written on files also included in the current Review.  Once the command is done, the imported elements will appear on their own container element under the Review element in the Review Navigator tree.
+R4E will scan all Reviews under the current Review Group and will copy all Anomalies in ''POSTPONED'' state that were written on files also included in the current Review, and also Global Anomalies in ''POSTPONED'' state written in other Reviews, if the option is selected in the preferences.  Once the command is done, the imported elements will appear on their own container elements under the Review element in the Review Navigator tree.
 
-From then on, Postponed anomalies behave like any other Anomaly and can be handled in the same way.  When a Postponed Anomaly is modified, the changes will also be reflected in the original Anomaly (i.e. the one filed in the previous Review).  Likewise, any changes that are done by other users on the original Anomaly can be seen in the current review by refreshing the imported Anomalies, by re-issuing the Import command.  Take note that Postponed Anomalies that have their state changed from POSTPONED will be disabled.  If they are set back to Postponed, they will be restored as Postponed elements.
+From then on, Postponed anomalies will behave like any other Anomaly and can be handled in the same way.  All changes except the state changes will be local to the imported anomaly i.e. changing the imported anomaly will not change the original one.  When a Postponed Anomaly is modified, the state changes will also be reflected in the original Anomaly (i.e. the one filed in the previous Review).  For instance if the imported anomaly is fixed, the original one will be marked as fixed to convey the fact that the postponed issue is now closed. 
+
+Take note that Postponed Anomalies that have their state changed from POSTPONED will be disabled.  If they are set back to Postponed, they will be restored as Postponed elements.
 
 == Handling Design Rules  ==
 
