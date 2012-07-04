@@ -1,34 +1,30 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<toc topic="doc/_r4eOpen.html" label="R4E Documentation">
-	<topic href="doc/_r4eOpen.html" label="Getting Started">
-		<topic href="doc/_r4eOpen.html#Overview" label="Overview">
-			<topic href="doc/_r4eOpen.html#R4E_main_interfaces" label="R4E main interfaces"></topic>
+<toc topic="doc/_r4eOpenUser.html" label="R4E Documentation">
+   <anchor id="r4eInstall"/>
+   <anchor id="r4eInstallOpen"/>
+	<topic href="doc/_r4eOpenUser.html" label="Getting Started">
+		<topic href="doc/_r4eOpenUser.html#Overview" label="Overview">
+			<topic href="doc/_r4eOpenUser.html#R4E_main_interfaces" label="R4E main interfaces"></topic>
 		</topic>
-		<topic href="doc/_r4eOpen.html#Installing_R4E" label="Installing R4E">
-			<topic href="doc/_r4eOpen.html#Provision_Software_Sites" label="Provision Software Sites"></topic>
-			<topic href="doc/_r4eOpen.html#Install_Version_Control_System_Features" label="Install Version Control System Features"></topic>
-			<topic href="doc/_r4eOpen.html#Install_R4E_feature" label="Install R4E feature"></topic>
-			<topic href="doc/_r4eOpen.html#Install_Versions_Connectors" label="Install Versions Connectors"></topic>
-			<topic href="doc/_r4eOpen.html#Starting_R4E" label="Starting R4E"></topic>
-			<topic href="doc/_r4eOpen.html#Version_Compatibility" label="Version Compatibility"></topic>
-		</topic>
-		<topic href="doc/_r4eOpen.html#R4E_Configuration" label="R4E Configuration">
-			<topic href="doc/_r4eOpen.html#R4E_General_Preferences" label="R4E General Preferences">
-				<topic href="doc/_r4eOpen.html#User_Tab" label="User Tab"></topic>
-				<topic href="doc/_r4eOpen.html#Groups_Tab" label="Groups Tab"></topic>
-				<topic href="doc/_r4eOpen.html#Rule_Sets_Tab" label="Rule Sets Tab"></topic>
-				<topic href="doc/_r4eOpen.html#Filter_Tabs" label="Filter Tabs"></topic>
+		<topic href="doc/_r4eOpenUser.html#Starting_R4E" label="Starting R4E"></topic>
+		<topic href="doc/_r4eOpenUser.html#R4E_Configuration" label="R4E Configuration">
+			<topic href="doc/_r4eOpenUser.html#R4E_General_Preferences" label="R4E General Preferences">
+				<topic href="doc/_r4eOpenUser.html#User_Tab" label="User Tab"></topic>
+				<topic href="doc/_r4eOpenUser.html#Groups_Tab" label="Groups Tab"></topic>
+				<topic href="doc/_r4eOpenUser.html#Rule_Sets_Tab" label="Rule Sets Tab"></topic>
+				<topic href="doc/_r4eOpenUser.html#Filter_Tabs" label="Filter Tabs"></topic>
 			</topic>
-			<topic href="doc/_r4eOpen.html#R4E_LDAP_Settings" label="R4E LDAP Settings"></topic>
-			<topic href="doc/_r4eOpen.html#SMTP_Hosts_Definitions" label="SMTP Hosts Definitions"></topic>
-			<topic href="doc/_r4eOpen.html#R4E_Capabilities" label="R4E Capabilities"></topic>
+			<topic href="doc/_r4eOpenUser.html#R4E_LDAP_Settings" label="R4E LDAP Settings"></topic>
+			<topic href="doc/_r4eOpenUser.html#SMTP_Hosts_Definitions" label="SMTP Hosts Definitions"></topic>
+			<topic href="doc/_r4eOpenUser.html#R4E_Capabilities" label="R4E Capabilities"></topic>
+			<topic href="doc/_r4eOpenUser.html#Version_Compatibility" label="Version Compatibility"></topic>
 		</topic>
-		<topic href="doc/_r4eOpen.html#Eclipse_Project_Configuration" label="Eclipse Project Configuration"></topic>
-		<topic href="doc/_r4eOpen.html#Tutorials" label="Tutorials">
-			<topic href="doc/_r4eOpen.html#Configuration_and_Set-up" label="Configuration and Set-up"></topic>
-			<topic href="doc/_r4eOpen.html#Tutorial_1:_Performing_a_Basic_Review" label="Tutorial 1: Performing a Basic Review"></topic>
-			<topic href="doc/_r4eOpen.html#Tutorial_2:_Performing_an_Informal_Review" label="Tutorial 2: Performing an Informal Review"></topic>
-			<topic href="doc/_r4eOpen.html#Tutorial_3:_Performing_a_Formal_Review" label="Tutorial 3: Performing a Formal Review"></topic>
+		<topic href="doc/_r4eOpenUser.html#Eclipse_Project_Configuration" label="Eclipse Project Configuration"></topic>
+		<topic href="doc/_r4eOpenUser.html#Tutorials" label="Tutorials">
+			<topic href="doc/_r4eOpenUser.html#Configuration_and_Set-up" label="Configuration and Set-up"></topic>
+			<topic href="doc/_r4eOpenUser.html#Tutorial_1:_Performing_a_Basic_Review" label="Tutorial 1: Performing a Basic Review"></topic>
+			<topic href="doc/_r4eOpenUser.html#Tutorial_2:_Performing_an_Informal_Review" label="Tutorial 2: Performing an Informal Review"></topic>
+			<topic href="doc/_r4eOpenUser.html#Tutorial_3:_Performing_a_Formal_Review" label="Tutorial 3: Performing a Formal Review"></topic>
 		</topic>
 	</topic>
 	<topic href="doc/Concepts.html" label="Concepts">
@@ -153,7 +149,7 @@
 			</topic>
 		</topic>
 	</topic>
+ <anchor id="r4eUser"/>
  <topic href="doc/_Updating-This-Document.html" label="_Updating This Document">
  </topic>
- <anchor id="r4emain"/>
 </toc>

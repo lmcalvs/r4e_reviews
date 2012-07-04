@@ -10,7 +10,7 @@
         Red Hat - initial API and implementation
         Alvaro Sanchez-Leon - Adapted to Mylyn Reviews R4E
  -->
-<project name="org.eclipse.mylyn.reviews.r4e.help" basedir="." default="all">
+<project name="org.eclipse.mylyn.reviews.r4e.help.install" basedir="." default="all">
 	<description>
             Generate Eclipse help content for the Mylyn Reviews R4E user guide
     </description>
@@ -18,9 +18,6 @@
 	<property name="r4e.help.title" value="R4E Documentation" />
 	<property name="r4e.ug.title" value="R4E User Guide" />
 	<property name="help.doc.url.base" value="http://wiki.eclipse.org" />
-
-	<setproxy proxyhost="!---your proxy server.  If none, remove this line---!" 
-		proxyport="!---your proxy server port---!"/>
 
 	<path id="wikitext.tasks.classpath">
 		<fileset dir="!---your Eclipse installation plugins directory path---!">
@@ -34,14 +31,8 @@
 	<target name="all" description="Generate Eclipse help content for the Mylyn Reviews R4E user guide">
 		<sequential>
 			<!-- IMPORTANT NOTE
-				This is now the way to generated the R4E help plugin, using the local
-				mediawiki file located in the /doc directory.
 				After this script is executed.  Do the following:
-				1) In file _r4eOpenUser-toc.xml, add a topic called "_Updating This Document" at then end and make it point
-					to doc/_Updating-This-Document.html file
-				2) In file _r4eOpenUser-toc.xml, add an anchor called "r4eInstall" and put it just under the root toc element
-				3) In file _r4eOpenUser-toc.xml, add an anchor called "r4eInstallOpen" and put it just under the r4eInstall anchor
-				4) In file _r4eOpenUser-toc.xml, add an anchor called "r4eUser" and put it just above the _Updating This Document topic created above
+				1) In file _r4eOpenInstall-toc.xml, add the value "../org.eclipse.mylyn.reviews.r4e.help/doc/_r4eOpenUser-toc.xml#r4eInstallOpen" to the anchor field			
 			-->
 			<wikitext-to-eclipse-help markupLanguage="MediaWiki" 
 				validate="true"
@@ -53,36 +44,10 @@
 				navigationImages="true"
 				helpPrefix="doc">
 				<fileset dir="${basedir}/doc">
-					<include name="_r4eOpenUser.mediawiki" />
+					<include name="_r4eOpenInstall.mediawiki" />
 				</fileset>
 				<stylesheet url="book.css" />
 			</wikitext-to-eclipse-help>
-			
-			<!-- IMPORTANT NOTE2
-				This is now used for reference only, and to verify if anything was changed on
-				the Eclipse web wiki that needs to be included to the local _r4eOpen.mediawiki file.
-			-->
-			<mediawiki-to-eclipse-help wikiBaseUrl="${help.doc.url.base}"
-				validate="true"
-				failonvalidationerror="true"
-				prependImagePrefix="images"
-				formatoutput="true"
-				dest="${basedir}/web"
-				navigationimages="true"
-				title="${r4e.help.title}"
-				helpPrefix="web"
-				generateUnifiedToc="true">
-
-				<path name="Reviews/R4E/User_Guide" title="${r4e.ug.title}" />
-
-				<stylesheet url="book.css" />
-				<pageAppendum>
-					= Updating This Document =
-							
-					This document is maintained in a collaborative wiki.  If you wish to update or modify this document please visit 
-					http://wiki.eclipse.org/Reviews/R4E/User_Guide
-				</pageAppendum>
-			</mediawiki-to-eclipse-help>
 		</sequential>
 	</target>
 </project>

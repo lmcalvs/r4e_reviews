@@ -9,6 +9,9 @@
    <feature url="features/org.eclipse.mylyn.reviews.r4e.sdk.feature_0.0.0.qualifier.jar" id="org.eclipse.mylyn.reviews.r4e.sdk.feature" version="0.0.0">
       <category name="SDK"/>
    </feature>
+   <feature url="features/org.eclipse.mylyn.reviews.r4e.help.install.feature_0.0.0.qualifier.jar" id="org.eclipse.mylyn.reviews.r4e.help.install.feature" version="0.0.0">
+      <category name="Features"/>
+   </feature>
    <category-def name="Features" label="Mylyn Reviews R4E Features"/>
    <category-def name="Integration" label="Mylyn Reviews R4E Integrations"/>
    <category-def name="SDK" label="Mylyn Reviews R4E SDK"/>

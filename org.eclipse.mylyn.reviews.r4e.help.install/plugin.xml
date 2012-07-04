@@ -5,8 +5,8 @@
    <extension
          point="org.eclipse.help.toc">
       <toc
-            file="doc/_r4eOpenUser-toc.xml"
-            primary="true">
+            file="doc/_r4eOpenInstall-toc.xml"
+            primary="false">
       </toc>
    </extension>
 

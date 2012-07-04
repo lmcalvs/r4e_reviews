@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<toc label="R4E Documentation" link_to="../org.eclipse.mylyn.reviews.r4e.help/doc/_r4eOpenUser-toc.xml#r4eInstallOpen" topic="doc/_r4eOpenInstall.html">
+	<topic href="doc/_r4eOpenInstall.html" label="Installing R4E">
+		<topic href="doc/_r4eOpenInstall.html#1.29_Provision_Software_Sites" label="1) Provision Software Sites"></topic>
+		<topic href="doc/_r4eOpenInstall.html#2.29_Install_Version_Control_System_Features" label="2) Install Version Control System Features"></topic>
+		<topic href="doc/_r4eOpenInstall.html#3.29_Install_R4E_feature" label="3) Install R4E feature"></topic>
+		<topic href="doc/_r4eOpenInstall.html#4.29_Install_Versions_Connectors" label="4) Install Versions Connectors"></topic>
+	</topic>
+</toc>
