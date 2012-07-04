@@ -92,6 +92,8 @@ public class TestConstants {
 
 	public static final String REVIEW_TEST_NAME_INF = "testReviewInf";
 
+	public static final String REVIEW_DUPLICATE_NAME_INF = "testReviewDuplicateInf";
+
 	public static final R4EDecision REVIEW_EXIT_DECISION_ACCEPTED = R4EDecision.R4E_REVIEW_DECISION_ACCEPTED;
 
 	//Participants

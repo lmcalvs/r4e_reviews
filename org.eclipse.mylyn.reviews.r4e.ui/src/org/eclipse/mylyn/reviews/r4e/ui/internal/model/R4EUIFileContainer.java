@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -187,13 +188,40 @@ public abstract class R4EUIFileContainer extends R4EUIModelElement {
 								.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
 					uiFileContext = new R4EUIFileContext(this, files.get(i), fType);
 					addChildren(uiFileContext);
-					if (uiFileContext.isEnabled()) {
-						uiFileContext.open();
-					}
 				}
+			}
+
+			//Fill the anomaly container
+			try {
+				fillAnomalyContainer();
+			} catch (FileNotFoundException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+			} catch (ResourceHandlingException e) {
+				UIUtils.displayResourceErrorDialog(e);
+			} catch (CompatibilityException e) {
+				UIUtils.displayCompatibilityErrorDialog(e);
 			}
 		}
 		fOpen = true;
+	}
+
+	/**
+	 * Fill the anomaly container
+	 * 
+	 * @throws FileNotFoundException
+	 * @throws ResourceHandlingException
+	 * @throws CompatibilityException
+	 */
+	private void fillAnomalyContainer() throws FileNotFoundException, ResourceHandlingException, CompatibilityException {
+
+		IR4EUIModelElement[] listChildren = getChildren();
+		int childSize = listChildren.length;
+		for (int i = 0; i < childSize; i++) {
+			if (listChildren[i].isEnabled()) {
+				listChildren[i].open();
+			}
+		}
 	}
 
 	/**

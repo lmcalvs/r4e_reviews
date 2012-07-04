@@ -96,6 +96,8 @@ public class TestUtils {
 
 	public static final String JAVA_FILE3_PROJ_NAME = "newCommitFile.java";
 
+	public static final String JAVA_FILE3_EXT_MOD_PATH = "testFiles" + File.separator + "extModCommitFile3.java";
+
 	private static final String JAVA_FILE4_EXT_PATH = "testFiles" + File.separator + "extModNoCommitFile.java";
 
 	public static final String JAVA_FILE4_PROJ_NAME = "modNoCommitFile.java";
@@ -473,8 +475,8 @@ public class TestUtils {
 		return file;
 	}
 
-	private static IFile changeContentOfFile(IFile file, String aNewContentsFilePath) throws CoreException,
-			IOException, URISyntaxException {
+	public static IFile changeContentOfFile(IFile file, String aNewContentsFilePath) throws CoreException, IOException,
+			URISyntaxException {
 		URL location = FileLocator.find(Platform.getBundle(R4EUITestPlugin.PLUGIN_ID), new Path(aNewContentsFilePath),
 				null);
 		File extFile = new File(FileLocator.toFileURL(location).toURI());
@@ -484,14 +486,24 @@ public class TestUtils {
 		return file;
 	}
 
-	private static void addFilesToRepository(List<IResource> aResources) throws CoreException {
+	public static void addFilesToRepository(List<IResource> aResources) throws CoreException {
 		new AddToIndexOperation(aResources).execute(null);
 	}
 
-	private static void commitFiles(IProject aProject, Repository aRepository, String aCommitMsg) throws CoreException {
+	public static void commitFiles(IProject aProject, Repository aRepository, String aCommitMsg) throws CoreException {
 		CommitOperation commitOperation = new CommitOperation(null, null, null, TestUtils.AUTHOR, TestUtils.COMMITTER,
 				aCommitMsg);
 		commitOperation.setCommitAll(true);
+		commitOperation.setRepository(aRepository);
+		commitOperation.execute(null);
+		aProject.refreshLocal(IResource.DEPTH_INFINITE, null);
+	}
+
+	public static void commitAmendFiles(IProject aProject, Repository aRepository, String aCommitMsg,
+			Collection<String> acommitFileList) throws CoreException {
+		CommitOperation commitOperation = new CommitOperation(null, acommitFileList, null, TestUtils.AUTHOR,
+				TestUtils.COMMITTER, aCommitMsg);
+		commitOperation.setAmending(true);
 		commitOperation.setRepository(aRepository);
 		commitOperation.execute(null);
 		aProject.refreshLocal(IResource.DEPTH_INFINITE, null);

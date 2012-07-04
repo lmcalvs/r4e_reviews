@@ -1862,4 +1862,19 @@ Take note that there is a slight difference between the anomaly states in Inform
 [[Image:FormalAnomalyStates.png]] 
 
 A new Anomaly in a Formal Review is set to ''CREATED ''by default. During the decision phase, it could be set to the same values as in Informal Reviews, and it can also be set to ''ACCEPTED'', which means that the anomaly is deemed valid and will be handled and fixed. There is no ''ASSIGNED ''state for Anomalies in Formal Reviews. The rest of the anomaly flow is essentially the same as with Informal Reviews.
+<br>
+
+= Advanced Topics  =
+
+== Working with multiple patch set of the same commit in a review  ==
+When creating a review, it is possible to add multiple commits. The commit might refer to different patch set or commit versions depending of the version control being used. If someone modified some files and generated a second review Item / commit,(generating a patch set based on the initial commit) some files are modified but not necessary all files. <br>
+
+When a reviewer creates a new anomaly on files not impacted yet in the second commit, we are referring to the same file version, whether the reviewer is using the file in the first or second commit, the anomaly is only associated to the last review item / commit in the last commit. See image below: <br>
+ 
+[[Image:ReviewNavigatorSamefileSameVersion.png]] 
+ 
+
+If you raised an anomaly  on a file having different version in each commit, then the anomaly will show on the one having the file version it is referring to. See image below: <br>
+
+[[Image:ReviewNavigatorSamefileDiffVersion.png]] 
 

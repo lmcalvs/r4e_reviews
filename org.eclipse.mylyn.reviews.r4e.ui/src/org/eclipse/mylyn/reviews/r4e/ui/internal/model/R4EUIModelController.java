@@ -21,6 +21,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,9 +41,12 @@ import org.eclipse.mylyn.reviews.frame.core.model.Topic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContent;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
+import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
@@ -452,6 +456,7 @@ public class R4EUIModelController {
 	 *            R4EReview
 	 */
 	public static void mapAnomalies(R4EReview aReview) {
+		clearAnomalyMap(); //Start with a clean map 
 		final EList<Topic> anomalies = aReview.getTopics();
 		Topic anomaly = null;
 		EList<Location> locations = null;
@@ -501,6 +506,83 @@ public class R4EUIModelController {
 	 */
 	public static List<R4EAnomaly> getAnomaliesForFile(String aFilePath) {
 		return FFileAnomalyMap.get(aFilePath);
+	}
+
+	/**
+	 * Method getAnomaliesForFileIfMostRecent. The goal of the method is to return anomalies to the given fileContext
+	 * only when this context is associated to the most recent (latest) commit.
+	 * 
+	 * @param aFileSelected
+	 *            R4EFileContext
+	 * @param aSingleReviewItem
+	 *            R4EUIReviewItem
+	 * @return List<R4EAnomaly>
+	 */
+	public static List<R4EAnomaly> getAnomaliesForFileIfMostRecent(R4EFileContext aFileSelected,
+			R4EUIReviewItem aSingleReviewItem) {
+		//Adjust the selected file version
+		String selectedFileVersionId = aFileSelected.getTarget().getLocalVersionID();
+		R4EItemImpl reviewItem = (R4EItemImpl) aFileSelected.eContainer();
+		Date dateSelected = reviewItem.getSubmitted();
+
+		//Test if there  is a date in the commit
+		//For the resource, the date submitted is currently null
+		if (null == dateSelected) {
+			return FFileAnomalyMap.get(selectedFileVersionId);
+		}
+
+		//Get the list for all review item and files
+		R4EUIReviewBasic review = (R4EUIReviewBasic) aSingleReviewItem.getParent();
+		List<R4EUIReviewItem> listReviewItems = review.getItems();
+		int reviewItemsize = listReviewItems.size();
+		String targetVersionId = null;
+		R4EFileContext latestFileContext = null;
+
+		//Test to see if the change file is within the latest review item
+		for (int j = 0; j < reviewItemsize; j++) {
+			EList<R4EFileContext> listFile = listReviewItems.get(j).getItem().getFileContextList();
+			int size = listFile.size();
+			//Test if the selected container is not before the current container
+			Date testDate = listFile.get(0) != null
+					? ((R4EItemImpl) listFile.get(0).eContainer()).getSubmitted()
+					: null;
+
+			//Same date of later, we look at the commit
+			if (testDate != null) {
+				if (testDate.after(dateSelected)) {
+					for (int k = 0; k < size; k++) {
+						R4EFileVersion targetFile = listFile.get(k).getTarget();
+						if (null != targetFile) {
+							// The file is not a deleted file
+							targetVersionId = listFile.get(k).getTarget().getLocalVersionID();
+							if (targetVersionId.equals(selectedFileVersionId)) {
+								// A more recent commit found containing the target file
+								// the anomalies are therefore not attached to this file context and will be attached 
+								// to the most recent one when it's opened.
+								return null;
+							}
+						}
+					}
+				} else if (testDate.equals(dateSelected)) {
+					//Same date, so we initialize the context
+					latestFileContext = listFile.get(0);
+				}
+			}
+
+		}
+
+		//Have found a context, verify to add only with the latest commit 
+		if (latestFileContext != null) {
+			R4EItemImpl selectContainer = (R4EItemImpl) latestFileContext.eContainer();
+			Date datefound = selectContainer.getSubmitted();
+			//A more recent review item containing this file version was not found. 
+			//i.e. This file context belongs to  the most recent commit, therefore the anomalies shall be associated here
+			if (datefound.equals(dateSelected)) {
+				return FFileAnomalyMap.get(selectedFileVersionId);
+			}
+		}
+		//This happen when there is no anomaly yet for a file or this file exist in a newer commit
+		return null;
 	}
 
 	/**

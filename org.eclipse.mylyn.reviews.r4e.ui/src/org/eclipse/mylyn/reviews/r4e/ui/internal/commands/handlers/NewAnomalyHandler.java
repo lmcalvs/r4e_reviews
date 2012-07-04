@@ -54,45 +54,9 @@ public class NewAnomalyHandler extends AbstractHandler {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Field WARNING_BUTTONS_LABELS.
-	 */
-	private static final String[] WARNING_BUTTONS_LABELS = { "Continue", "Cancel" }; //$NON-NLS-1$
-
-	/**
-	 * Field VERSION_STR. (value is ""Version: "")
-	 */
-	private static final String VERSION_STR = "Version: ";
-
-	/**
-	 * Field QUESTION_TITLE. (value is ""R4E question"")
-	 */
-	private static final String QUESTION_TITLE = "R4E question";
-
-	/**
-	 * Field WORKSPACE_FILE_STR. (value is ""Workspace file: "")
-	 */
-	private static final String WORKSPACE_FILE_STR = "Workspace file: ";
-
-	/**
-	 * Field FILE_VERSION_STR. (value is ""Selected file version to review: "")
-	 */
-	private static final String FILE_VERSION_STR = "Selected file version to review: ";
-
-	/**
-	 * Field QUESTION_STR. (value is ""Are you sure you want to add this anomaly to the workspace file ?"")
-	 */
-	private static final String QUESTION_STR = "Are you sure you want to add this anomaly to the workspace file ?";
-
-	/**
-	 * Field MESSAGE_STR. (value is ""You are adding an anomaly to a file version which is different from the one
-	 * selected for review."")
-	 */
-	private static final String MESSAGE_STR = "You are adding an anomaly to a file version which is different from the one selected for review.";
-
-	/**
 	 * Field COMMAND_MESSAGE. (value is ""Adding Anomaly..."")
 	 */
-	private static final String COMMAND_MESSAGE = "Adding Anomaly...";
+	private static final String COMMAND_MESSAGE = "Adding Anomaly..."; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Methods

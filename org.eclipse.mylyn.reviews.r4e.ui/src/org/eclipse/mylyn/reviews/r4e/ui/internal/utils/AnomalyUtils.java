@@ -18,6 +18,7 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -68,38 +69,38 @@ public class AnomalyUtils {
 	/**
 	 * Field WARNING_BUTTONS_LABELS.
 	 */
-	private static final String[] WARNING_BUTTONS_LABELS = { "Continue", "Cancel" }; //$NON-NLS-1$
+	private static final String[] WARNING_BUTTONS_LABELS = { "Continue", "Cancel" }; //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * Field VERSION_STR. (value is ""Version: "")
 	 */
-	private static final String VERSION_STR = "Version: ";
+	private static final String VERSION_STR = "Version: "; //$NON-NLS-1$
 
 	/**
 	 * Field QUESTION_TITLE. (value is ""R4E question"")
 	 */
-	private static final String QUESTION_TITLE = "R4E question";
+	private static final String QUESTION_TITLE = "R4E question"; //$NON-NLS-1$
 
 	/**
 	 * Field WORKSPACE_FILE_STR. (value is ""Workspace file: "")
 	 */
-	private static final String WORKSPACE_FILE_STR = "Workspace file: ";
+	private static final String WORKSPACE_FILE_STR = "Workspace file: "; //$NON-NLS-1$
 
 	/**
 	 * Field FILE_VERSION_STR. (value is ""Selected file version to review: "")
 	 */
-	private static final String FILE_VERSION_STR = "Selected file version to review: ";
+	private static final String FILE_VERSION_STR = "Selected file version to review: "; //$NON-NLS-1$
 
 	/**
 	 * Field QUESTION_STR. (value is ""Are you sure you want to add this anomaly to the workspace file ?"")
 	 */
-	private static final String QUESTION_STR = "Are you sure you want to add this anomaly to the workspace file ?";
+	private static final String QUESTION_STR = "Are you sure you want to add this anomaly to the workspace file ?"; //$NON-NLS-1$
 
 	/**
 	 * Field MESSAGE_STR. (value is ""You are adding an anomaly to a file version which is different from the one
 	 * selected for review."")
 	 */
-	private static final String MESSAGE_STR = "You are adding an anomaly to a file version which is different from the one selected for review.";
+	private static final String MESSAGE_STR = "You are adding an anomaly to a file version which is different from the one selected for review."; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -125,10 +126,10 @@ public class AnomalyUtils {
 			if (null != targetVersion) {
 				addAnomaly(baseVersion, targetVersion, position, aClone);
 			} else {
-				R4EUIPlugin.Ftracer.traceWarning("Trying to add review item to base file");
+				R4EUIPlugin.Ftracer.traceWarning("Trying to add review item to base file"); //$NON-NLS-1$
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Add Anomaly Error", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
-								"No Target File present to Add Anomaly", null), IStatus.ERROR);
+						"Add Anomaly Error", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, //$NON-NLS-1$
+								"No Target File present to Add Anomaly", null), IStatus.ERROR); //$NON-NLS-1$
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
 						dialog.open();
@@ -182,8 +183,8 @@ public class AnomalyUtils {
 							.getResource();
 				} else {
 					//This should never happen
-					R4EUIPlugin.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString()
-							+ ".  Ignoring");
+					R4EUIPlugin.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString() //$NON-NLS-1$
+							+ ".  Ignoring"); //$NON-NLS-1$
 					return;
 				}
 				//TODO is that the right file to get the position???
@@ -191,8 +192,8 @@ public class AnomalyUtils {
 						workspaceFile);
 			} else {
 				//This should never happen
-				R4EUIPlugin.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString()
-						+ ".  Ignoring");
+				R4EUIPlugin.Ftracer.traceWarning("Invalid selection " + aSelection.getClass().toString() //$NON-NLS-1$
+						+ ".  Ignoring"); //$NON-NLS-1$
 				return;
 			}
 
@@ -202,14 +203,14 @@ public class AnomalyUtils {
 
 			//Add anomaly to model
 			if (null != targetVersion) {
-				aMonitor.subTask("Adding " + targetVersion.getName());
+				aMonitor.subTask("Adding " + targetVersion.getName()); //$NON-NLS-1$
 				addAnomaly(baseVersion, targetVersion, position, aClone);
 				aMonitor.worked(1);
 			} else {
-				R4EUIPlugin.Ftracer.traceWarning("Trying to add review item to base file");
+				R4EUIPlugin.Ftracer.traceWarning("Trying to add review item to base file"); //$NON-NLS-1$
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Add Anomaly Error", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
-								"No Target File present to Add Anomaly", null), IStatus.ERROR);
+						"Add Anomaly Error", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, //$NON-NLS-1$
+								"No Target File present to Add Anomaly", null), IStatus.ERROR); //$NON-NLS-1$
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
 						dialog.open();
@@ -237,68 +238,139 @@ public class AnomalyUtils {
 			IR4EUIPosition aUIPosition, final boolean aClone) {
 
 		R4EUIFileContext tempFileContext = null;
+		//Find the latest commit for the selected target file
 		//Check if the file element and/or anomaly already exist
-		//If file exists, add anomaly element to it
-		//if anomaly element already exist, add a new comment to it
+		//If so, verify if the anomaly exist
+		//If not, then add anomaly element to the target file
+		//If anomaly element already exist, then add a new comment to it
 		//for all other cases, create the parent elements as needed as well.
+		//If the target file is not the same file version in any commit, 
+		//Look for the file name (No version) exist in the workspace
+		//If found, then ask the user to continue or cancel the adding of the anomaly
 		final List<R4EUIReviewItem> reviewItems = R4EUIModelController.getActiveReview().getReviewItems();
 
+		boolean isNewAnomaly = true;
+
+		//Select the latest commit to store the anomaly
+		Date date1 = null;
+		Date datelatest = null;
+		R4EUIAnomalyContainer anomalyContainer = null;
+		R4EUIFileContext file = null;
 		for (R4EUIReviewItem reviewItem : reviewItems) {
 			R4EUIFileContext[] files = (R4EUIFileContext[]) reviewItem.getChildren();
-			for (R4EUIFileContext file : files) {
-				if (null != file.getFileContext().getTarget()
+			for (R4EUIFileContext selectedFile : files) {
+				if (null != selectedFile.getFileContext().getTarget()
 						&& aTargetFileVersion.getLocalVersionID().equals(
-								file.getFileContext().getTarget().getLocalVersionID())) {
+								selectedFile.getFileContext().getTarget().getLocalVersionID())) {
 
-					//File already exists, add anomaly to it
-					R4EUIAnomalyContainer anomalyContainer = file.getAnomalyContainerElement();
-					addAnomalyToExistingFileContext(file, anomalyContainer, aUIPosition, aClone);
-					R4EUIPlugin.Ftracer.traceInfo("Added anomaly: Target = "
-							+ file.getFileContext().getTarget().getName()
-							+ ((null != file.getFileContext().getBase()) ? "Base = "
-									+ file.getFileContext().getBase().getName() : "") + " Position = "
-							+ aUIPosition.toString());
-					return; //We found the file so we are done here	
-				} else if (null != file.getFileContext().getTarget()) {
-					//Test if we find both file in the workspace
-					String reviewPlatformURI = file.getFileContext().getTarget().getPlatformURI();
-					String targetPlatformURI = aTargetFileVersion.getPlatformURI();
-					if (null != reviewPlatformURI && null != targetPlatformURI) {
-						//Now we can compare the path
-						if (reviewPlatformURI.equals(targetPlatformURI)) {
-							//Found the same file but not the same version
-							tempFileContext = file;
+					//Initial setting
+					if (file == null && selectedFile.getAnomalyContainerElement() != null) {
+						//Set the anomaly container
+						file = selectedFile;
+						datelatest = reviewItem.getItem().getSubmitted();
+					}
+
+					//Set the date based on the current commit
+					date1 = reviewItem.getItem().getSubmitted();
+
+					if (date1 != null) { //Can be null for the review item as a resource
+						//Test for the latest commit up to now
+						if (datelatest == null || datelatest.before(date1)) {
+							datelatest = date1;
+							file = selectedFile;
 						}
 					}
 				}
 			}
 		}
 
-		//Ask a question to see if the end-user wants to continue or not
-		if (null != tempFileContext) {
-			//The file exist with a different file version
-			final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
-			final R4EUIFileContext dContext = tempFileContext;
-			Display.getDefault().syncExec(new Runnable() {
-				public void run() {
-					final MessageDialog dialog = displayDifferentFileVersionDialog(aTargetFileVersion, dContext);
-					result[0] = dialog.open();
+		if (null != file) {
+			anomalyContainer = file.getAnomalyContainerElement();
+
+			//File already exists, check if anomaly also exists
+			R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) anomalyContainer.getChildren();
+			for (R4EUIAnomalyBasic uiAnomaly : anomalies) {
+				if (uiAnomaly.getPosition().isSameAs(aUIPosition)) {
+					isNewAnomaly = false;
+					addCommentToExistingAnomaly(uiAnomaly);
+					R4EUIPlugin.Ftracer.traceInfo("Added comment to existing anomaly: Target = " //$NON-NLS-1$
+							+ file.getFileContext().getTarget().getName()
+							+ ((null != file.getFileContext().getBase()) ? "Base = " //$NON-NLS-1$
+									+ file.getFileContext().getBase().getName() : "") + " Position = " //$NON-NLS-1$ //$NON-NLS-2$
+							+ aUIPosition.toString());
 				}
-			});
-			if (result[0] == Window.CANCEL) {
-				// Cancel selected, so just exit here and do not add anomaly
-				return;
 			}
+			if (isNewAnomaly) {
+
+				addAnomalyToExistingFileContext(file, anomalyContainer, aUIPosition, aClone);
+				R4EUIPlugin.Ftracer.traceInfo("Added anomaly: Target = " //$NON-NLS-1$
+						+ file.getFileContext().getTarget().getName()
+						+ ((null != file.getFileContext().getBase()) ? "Base = " //$NON-NLS-1$
+								+ file.getFileContext().getBase().getName() : "") + " Position = " //$NON-NLS-1$//$NON-NLS-2$
+						+ aUIPosition.toString());
+			}
+			return; //We found the file so we are done here	
+		} else {
+
+			//Did not find the same file version, look for the same file with different version
+			String targetPlatformURI = aTargetFileVersion.getPlatformURI();
+			String targetPlatformPath = aTargetFileVersion.getRepositoryPath();
+
+			//Look if the file exist in the workspace
+			if (null != targetPlatformURI) {
+				for (R4EUIReviewItem reviewItem : reviewItems) {
+					R4EUIFileContext[] files = (R4EUIFileContext[]) reviewItem.getChildren();
+					for (R4EUIFileContext searchFile : files) {
+						if (null != searchFile.getFileContext().getTarget()) {
+							//Test if we find the file in the workspace
+							String reviewPlatformURI = searchFile.getFileContext().getTarget().getPlatformURI();
+							String reviewPlatformPath = searchFile.getFileContext().getTarget().getRepositoryPath();
+							if (null != reviewPlatformURI) {
+								//Now we can compare the path
+								if (reviewPlatformURI.equals(targetPlatformURI)) {
+									//Found the same file but not the same version
+									tempFileContext = searchFile;
+								}
+							} else if (null != reviewPlatformPath) {
+								//Test the repository path
+								//Now we can compare the path
+								if (reviewPlatformPath.equals(targetPlatformPath)) {
+									//Found the same file but not the same version
+									tempFileContext = searchFile;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			//Ask a question to see if the end-user wants to continue or not
+			if (null != tempFileContext) {
+				//The file exist with a different file version
+				final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
+				final R4EUIFileContext dContext = tempFileContext;
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						final MessageDialog dialog = displayDifferentFileVersionDialog(aTargetFileVersion, dContext);
+						result[0] = dialog.open();
+					}
+				});
+				if (result[0] == Window.CANCEL) {
+					// Cancel selected, so just exit here and do not add anomaly
+					return;
+				}
+			}
+
+			//This is a new file create it (and its parent reviewItem) and all its children
+			addAnomalyToNewFileContext(aBaseFileVersion, aTargetFileVersion, aUIPosition, aClone);
+			R4EUIPlugin.Ftracer.traceInfo("Added Anomaly: Target = " //$NON-NLS-1$
+					+ aTargetFileVersion.getName()
+					+ "_" //$NON-NLS-1$
+					+ aTargetFileVersion.getVersionID()
+					+ ((null != aBaseFileVersion) ? "Base = " + aBaseFileVersion.getName() + "_" //$NON-NLS-1$//$NON-NLS-2$
+							+ aBaseFileVersion.getVersionID() : "") + " Position = " + aUIPosition.toString()); //$NON-NLS-1$//$NON-NLS-2$
 		}
 
-		//This is a new file create it (and its parent reviewItem) and all its children
-		addAnomalyToNewFileContext(aBaseFileVersion, aTargetFileVersion, aUIPosition, aClone);
-		R4EUIPlugin.Ftracer.traceInfo("Added Anomaly: Target = "
-				+ aTargetFileVersion.getName()
-				+ "_"
-				+ aTargetFileVersion.getVersionID()
-				+ ((null != aBaseFileVersion) ? "Base = " + aBaseFileVersion.getName() + "_"
-						+ aBaseFileVersion.getVersionID() : "") + " Position = " + aUIPosition.toString());
 	}
 
 	/**
@@ -341,6 +413,16 @@ public class AnomalyUtils {
 		);
 
 		return dialog;
+	}
+
+	/**
+	 * Method addCommentToExistingAnomaly.
+	 * 
+	 * @param aUIAnomaly
+	 *            R4EUIAnomaly
+	 */
+	public static void addCommentToExistingAnomaly(R4EUIAnomalyBasic aUIAnomaly) {
+		aUIAnomaly.createComment(false);
 	}
 
 	/**

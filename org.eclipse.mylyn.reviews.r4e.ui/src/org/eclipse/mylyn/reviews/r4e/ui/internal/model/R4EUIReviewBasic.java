@@ -678,6 +678,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			if (null != items) {
 
 				IR4EUIModelElement uiItem = null;
+				List<IR4EUIModelElement> uiItemList = new ArrayList<IR4EUIModelElement>();
 				R4EUIModelController.mapAnomalies(fReview);
 				final int itemsSize = items.size();
 				R4EItem item = null;
@@ -713,14 +714,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 									+ description.substring(R4EUIConstants.START_STRING_INDEX, endIndex) + "...";
 							uiItem = new R4EUIReviewItem(this, item, name, R4EUIConstants.REVIEW_ITEM_TYPE_COMMIT);
 						}
-
-						if (uiItem.isEnabled()) {
-							uiItem.open();
-						}
+						uiItemList.add(uiItem);
 						addChildren(uiItem);
 					}
 				}
-
+				//Fill the anomaly
+				getAnomaly(uiItemList);
 				verifyUserReviewed();
 			}
 
@@ -749,6 +748,28 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			ImportPostponedHandler.refreshPostponedElements(new NullProgressMonitor());
 		} else {
 			R4EUIModelController.FModelExt.closeR4EReview(fReview); //Notify model
+		}
+	}
+
+	/**
+	 * Get the anomaly for each file
+	 * 
+	 * @param aItemList
+	 * @throws ResourceHandlingException
+	 * @throws FileNotFoundException
+	 * @throws CompatibilityException
+	 */
+	private void getAnomaly(List<IR4EUIModelElement> aItemList) throws ResourceHandlingException,
+			FileNotFoundException, CompatibilityException {
+
+		if (null != aItemList) {
+
+			int itemsSize = aItemList.size();
+			for (int i = 0; i < itemsSize; i++) {
+				if (aItemList.get(i).isEnabled()) {
+					aItemList.get(i).open();
+				}
+			}
 		}
 	}
 
@@ -1966,5 +1987,14 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_NONE);
 		}
 		return reviewDecision;
+	}
+
+	/**
+	 * Get the list of review items with no filtering
+	 * 
+	 * @return List<R4EUIReviewItem>
+	 */
+	public List<R4EUIReviewItem> getItems() {
+		return fItems;
 	}
 }
