@@ -446,6 +446,14 @@
 					</li>
 				</ol>
 			</li>
+			<li>
+				<a href="Advanced-Topics.html#Advanced_Topics">Advanced Topics</a>
+				<ol style="list-style: none;">
+					<li>
+						<a href="Advanced-Topics.html#Working_with_multiple_patch_set_of_the_same_commit_in_a_review">Working with multiple patch set of the same commit in a review</a>
+					</li>
+				</ol>
+			</li>
 		</ol>
 		<h1 id="Getting_Started">Getting Started</h1>
 		<h2 id="Overview">Overview</h2>
@@ -539,11 +547,17 @@
 			</li>
 		</ul>
 		<ul>
-			<li>Checkboxes: The 
-				<i>Create Delta Elements...</i> checkbox is used to control the display of file differences as elements in the Review Navigator.  The 
-				<i>Update Postponed Anomalies...</i> checkbox is used to automatically import outstanding anomalies that were set to POSTPONED state in previous versions of files included in the current review.  The 
-				<i>Import Postponed Global Anomalies...</i> checkbox is used to specify that global anomalies (i.e. anomalies not attached to a particular file) should also be imported.  See Postponed Anomalies section below for more information.
-				<br/> 
+			<li>Checkboxes:
+				<ul>
+					<li>
+						<i>Create Delta Elements...</i> checkbox is used to control the display of file differences as elements in the Review Navigator.
+					</li>
+					<li>
+						<i>Import Postponed Global Anomalies...</i> checkbox is used to specify that global anomalies (i.e. anomalies not attached to a particular file) that are in state POSTPONED in all other reviews included in the parent Review Group should also be imported to the currently active Review, in addition to the local anomalies, when the 
+						<i>Import Postponed Anomalies</i> command is used.  See Postponed Anomalies section below for more information.
+						<br/> 
+					</li>
+				</ul>
 			</li>
 		</ul>
 		<p>

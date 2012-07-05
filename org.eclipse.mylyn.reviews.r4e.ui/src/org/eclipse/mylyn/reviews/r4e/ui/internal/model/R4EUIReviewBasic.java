@@ -719,7 +719,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					}
 				}
 				//Fill the anomaly
-				getAnomaly(uiItemList);
+				getAnomalies(uiItemList);
 				verifyUserReviewed();
 			}
 
@@ -759,7 +759,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @throws FileNotFoundException
 	 * @throws CompatibilityException
 	 */
-	private void getAnomaly(List<IR4EUIModelElement> aItemList) throws ResourceHandlingException,
+	private void getAnomalies(List<IR4EUIModelElement> aItemList) throws ResourceHandlingException,
 			FileNotFoundException, CompatibilityException {
 
 		if (null != aItemList) {

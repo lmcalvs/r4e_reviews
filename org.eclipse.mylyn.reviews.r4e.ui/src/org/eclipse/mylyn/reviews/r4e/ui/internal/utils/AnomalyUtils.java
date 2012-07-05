@@ -249,8 +249,6 @@ public class AnomalyUtils {
 		//If found, then ask the user to continue or cancel the adding of the anomaly
 		final List<R4EUIReviewItem> reviewItems = R4EUIModelController.getActiveReview().getReviewItems();
 
-		boolean isNewAnomaly = true;
-
 		//Select the latest commit to store the anomaly
 		Date date1 = null;
 		Date datelatest = null;
@@ -287,28 +285,13 @@ public class AnomalyUtils {
 		if (null != file) {
 			anomalyContainer = file.getAnomalyContainerElement();
 
-			//File already exists, check if anomaly also exists
-			R4EUIAnomalyBasic[] anomalies = (R4EUIAnomalyBasic[]) anomalyContainer.getChildren();
-			for (R4EUIAnomalyBasic uiAnomaly : anomalies) {
-				if (uiAnomaly.getPosition().isSameAs(aUIPosition)) {
-					isNewAnomaly = false;
-					addCommentToExistingAnomaly(uiAnomaly);
-					R4EUIPlugin.Ftracer.traceInfo("Added comment to existing anomaly: Target = " //$NON-NLS-1$
-							+ file.getFileContext().getTarget().getName()
-							+ ((null != file.getFileContext().getBase()) ? "Base = " //$NON-NLS-1$
-									+ file.getFileContext().getBase().getName() : "") + " Position = " //$NON-NLS-1$ //$NON-NLS-2$
-							+ aUIPosition.toString());
-				}
-			}
-			if (isNewAnomaly) {
+			addAnomalyToExistingFileContext(file, anomalyContainer, aUIPosition, aClone);
+			R4EUIPlugin.Ftracer.traceInfo("Added anomaly: Target = " //$NON-NLS-1$
+					+ file.getFileContext().getTarget().getName()
+					+ ((null != file.getFileContext().getBase()) ? "Base = " //$NON-NLS-1$
+							+ file.getFileContext().getBase().getName() : "") + " Position = " //$NON-NLS-1$//$NON-NLS-2$
+					+ aUIPosition.toString());
 
-				addAnomalyToExistingFileContext(file, anomalyContainer, aUIPosition, aClone);
-				R4EUIPlugin.Ftracer.traceInfo("Added anomaly: Target = " //$NON-NLS-1$
-						+ file.getFileContext().getTarget().getName()
-						+ ((null != file.getFileContext().getBase()) ? "Base = " //$NON-NLS-1$
-								+ file.getFileContext().getBase().getName() : "") + " Position = " //$NON-NLS-1$//$NON-NLS-2$
-						+ aUIPosition.toString());
-			}
 			return; //We found the file so we are done here	
 		} else {
 
@@ -413,16 +396,6 @@ public class AnomalyUtils {
 		);
 
 		return dialog;
-	}
-
-	/**
-	 * Method addCommentToExistingAnomaly.
-	 * 
-	 * @param aUIAnomaly
-	 *            R4EUIAnomaly
-	 */
-	public static void addCommentToExistingAnomaly(R4EUIAnomalyBasic aUIAnomaly) {
-		aUIAnomaly.createComment(false);
 	}
 
 	/**

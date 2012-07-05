@@ -23,14 +23,12 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ECommentType;
@@ -388,10 +386,8 @@ public class DuplicateAnomalyTests extends TestCase {
 		try {
 			amendInitialCommit();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		fItem4 = fProxy.getItemProxy().createCommitItem(TestUtils.FJavaIProject, 0);
@@ -721,26 +717,23 @@ public class DuplicateAnomalyTests extends TestCase {
 
 	}
 
-	//===================================================
+	/**
+	 * Adjust the modified file from the last commit
+	 * 
+	 * @throws CoreException
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
 	private static void amendInitialCommit() throws CoreException, IOException, URISyntaxException {
 
-		//Another Commit to add  files to repository
-		final List<IResource> resources = new ArrayList<IResource>();
-
-		//Update files ( Modify File 3, Add File4 since last commit)
+		//Update files ( Modify File 3 since last commit)
 		TestUtils.FJavaFile3 = TestUtils.changeContentOfFile(TestUtils.FJavaFile3, TestUtils.JAVA_FILE3_EXT_MOD_PATH);
 
 		//Commit modifications
-		resources.clear();
-		resources.add(TestUtils.FJavaFile1);
-		resources.add(TestUtils.FJavaFile3);
-		resources.add(TestUtils.FJavaFile4);
-		TestUtils.addFilesToRepository(resources);
 		Collection<String> commitFileList = new ArrayList<String>();
 		commitFileList.add(TestUtils.FJavaFile3.getProjectRelativePath().toOSString());
 
 		TestUtils.commitAmendFiles(TestUtils.FJavaIProject, TestUtils.FJavaRepository, FTHIRD_COMMIT, commitFileList);
-
 	}
 
 }
