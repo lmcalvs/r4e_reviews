@@ -485,6 +485,8 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 
 		aWidgetFactory.setBorderStyle(SWT.BORDER);
 		fClassCombo = aWidgetFactory.createCCombo(anomalyDetailsSectionClient, SWT.READ_ONLY);
+		int size = UIUtils.getClasses().length;
+		fClassCombo.setVisibleItemCount(size);
 		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gridData.horizontalSpan = 3;
 		fClassCombo.setToolTipText(R4EUIConstants.ANOMALY_CLASS_TOOLTIP);

@@ -74,7 +74,15 @@ public enum R4EDesignRuleClass implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	R4E_CLASS_COMMENT(4, "R4E_CLASS_COMMENT", "R4E_CLASS_COMMENT");
+	R4E_CLASS_COMMENT(4, "R4E_CLASS_COMMENT", "R4E_CLASS_COMMENT"), /**
+	 * The '<em><b>R4E CLASS MISSING</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #R4E_CLASS_MISSING_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	R4E_CLASS_MISSING(5, "R4E_CLASS_MISSING", "R4E_CLASS_MISSING");
 
 	/**
 	 * The '<em><b>R4E CLASS ERRONEOUS</b></em>' literal value.
@@ -152,6 +160,21 @@ public enum R4EDesignRuleClass implements Enumerator {
 	public static final int R4E_CLASS_COMMENT_VALUE = 4;
 
 	/**
+	 * The '<em><b>R4E CLASS MISSING</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>R4E CLASS MISSING</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #R4E_CLASS_MISSING
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int R4E_CLASS_MISSING_VALUE = 5;
+
+	/**
 	 * An array of all the '<em><b>R4E Design Rule Class</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -164,6 +187,7 @@ public enum R4EDesignRuleClass implements Enumerator {
 			R4E_CLASS_IMPROVEMENT,
 			R4E_CLASS_QUESTION,
 			R4E_CLASS_COMMENT,
+			R4E_CLASS_MISSING,
 		};
 
 	/**
@@ -219,6 +243,7 @@ public enum R4EDesignRuleClass implements Enumerator {
 			case R4E_CLASS_IMPROVEMENT_VALUE: return R4E_CLASS_IMPROVEMENT;
 			case R4E_CLASS_QUESTION_VALUE: return R4E_CLASS_QUESTION;
 			case R4E_CLASS_COMMENT_VALUE: return R4E_CLASS_COMMENT;
+			case R4E_CLASS_MISSING_VALUE: return R4E_CLASS_MISSING;
 		}
 		return null;
 	}

@@ -21,6 +21,7 @@
       <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_IMPROVEMENT"/>
       <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_QUESTION"/>
       <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_COMMENT"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.design.rules.ecore#//R4EDesignRuleClass/R4E_CLASS_MISSING"/>
     </genEnums>
     <genClasses ecoreClass="r4e.design.rules.ecore#//R4EDesignRuleCollection">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.design.rules.ecore#//R4EDesignRuleCollection/areas"/>

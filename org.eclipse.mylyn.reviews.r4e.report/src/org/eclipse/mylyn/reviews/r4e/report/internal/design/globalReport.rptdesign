@@ -2037,8 +2037,15 @@ lineRange = start + "-" + end;</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
+                    <property name="name">ClassMissing</property>
+                    <expression name="expression">//Identify  the question class anomaly&#13;
+                &#13;
+  Total.count ( BirtComp.equalTo( row["type"], "R4E_CLASS_MISSING" ) );</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
                     <property name="name">ClassAllButOthers</property>
-                    <expression name="expression">ret = ( row["ClassErroneous"] + row["ClassSuperfluous"] + row["ClassImprovement"] + row["ClassQuestion"]  + row["ClassComment"]);</expression>
+                    <expression name="expression">ret = ( row["ClassErroneous"] + row["ClassSuperfluous"] + row["ClassImprovement"] + row["ClassQuestion"]  + row["ClassComment"]  + row["ClassMissing"]);</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -2110,16 +2117,21 @@ if (ret != null ) {&#13;
                     </structure>
                     <structure>
                         <property name="position">8</property>
-                        <property name="name">ClassAllButOthers</property>
+                        <property name="name">ClassMissing</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">9</property>
+                        <property name="name">ClassAllButOthers</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
                         <property name="name">CreateHrefFromXmiID</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">10</property>
+                        <property name="position">11</property>
                         <property name="name">FormatCommentType</property>
                         <property name="dataType">string</property>
                     </structure>
@@ -12049,7 +12061,7 @@ value = row["PhaseInfo::type"];&#13;
                         <row id="2613">
                             <cell id="2614">
                                 <label id="2617">
-                                    <text-property name="text">Comment</text-property>
+                                    <text-property name="text">Comment:</text-property>
                                 </label>
                             </cell>
                             <cell id="2615"/>
@@ -12066,6 +12078,29 @@ value = row["PhaseInfo::type"];&#13;
                                         </structure>
                                     </list-property>
                                     <property name="resultSetColumn">ClassComment</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="2619">
+                            <cell id="2620">
+                                <label id="2623">
+                                    <text-property name="text">Missing:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="2621"/>
+                            <cell id="2622">
+                                <data id="2624">
+                                    <property name="whiteSpace">nowrap</property>
+                                    <property name="dataSet">Comment Type</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">ClassMissing</property>
+                                            <text-property name="displayName">ClassMissing</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["ClassMissing"]</expression>
+                                            <property name="dataType">integer</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">ClassMissing</property>
                                 </data>
                             </cell>
                         </row>

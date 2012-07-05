@@ -40,5 +40,6 @@
     <eLiterals name="R4E_CLASS_IMPROVEMENT" value="2"/>
     <eLiterals name="R4E_CLASS_QUESTION" value="3"/>
     <eLiterals name="R4E_CLASS_COMMENT" value="4"/>
+    <eLiterals name="R4E_CLASS_MISSING" value="5"/>
   </eClassifiers>
 </ecore:EPackage>

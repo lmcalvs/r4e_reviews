@@ -417,6 +417,8 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 
 		fAnomalyClass = new CCombo(extraSectionClient, SWT.BORDER | SWT.READ_ONLY);
 		fAnomalyClass.setItems(UIUtils.getClasses());
+		int count = UIUtils.getClasses().length;
+		fAnomalyClass.setVisibleItemCount(count);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		fAnomalyClass.setToolTipText(R4EUIConstants.ANOMALY_CLASS_TOOLTIP);

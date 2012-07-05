@@ -440,6 +440,7 @@ public class DRModelPackageImpl extends EPackageImpl implements DRModelPackage {
 		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT);
 		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.R4E_CLASS_QUESTION);
 		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.R4E_CLASS_COMMENT);
+		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.R4E_CLASS_MISSING);
 
 		// Create resource
 		createResource(eNS_URI);
