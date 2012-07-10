@@ -93,6 +93,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionContext;
 import org.eclipse.ui.actions.ActionGroup;
+import org.eclipse.ui.contexts.IContextActivation;
+import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IEvaluationService;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -150,6 +152,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * Field fClipboard
 	 */
 	private Clipboard fClipboard = null;
+
+	/**
+	 * Field fR4EContext
+	 */
+	IContextActivation fR4EContext = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -540,7 +547,12 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			}
 
 			public void partDeactivated(IWorkbenchPart part) { // $codepro.audit.disable emptyMethod
-				// No implementation	
+				// No implementation
+				if (part instanceof ReviewNavigatorView && null != fR4EContext) {
+					IContextService contextService = (IContextService) getSite().getService(IContextService.class);
+					contextService.deactivateContext(fR4EContext);
+					fR4EContext = null;
+				}
 			}
 
 			public void partClosed(IWorkbenchPart part) { // $codepro.audit.disable emptyMethod
@@ -558,6 +570,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 			@SuppressWarnings("synthetic-access")
 			public void partActivated(IWorkbenchPart part) {
+				if (part instanceof ReviewNavigatorView && null == fR4EContext) {
+					IContextService contextService = (IContextService) getSite().getService(IContextService.class);
+					fR4EContext = contextService.activateContext(R4EUIConstants.R4E_CONTEXT_ID);
+				}
+
 				if (isEditorLinked() && part instanceof IEditorPart) {
 					//Check if the part activated is an editor, if so select corresponding
 					//review navigator file context if applicable

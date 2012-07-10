@@ -1739,25 +1739,25 @@
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.openEditor"
-            contextId="org.eclipse.ui.contexts.window"
+            contextId="org.eclipse.mylyn.reviews.r4e.ui.context"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+4 O">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.changeReviewState"
-            contextId="org.eclipse.ui.contexts.window"
+            contextId="org.eclipse.mylyn.reviews.r4e.ui.context"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+4 S">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.NewLinkedAnomaly"
-            contextId="org.eclipse.ui.contexts.window"
+            contextId="org.eclipse.mylyn.reviews.r4e.ui.context"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+4 L">
       </key>
       <key
             commandId="org.eclipse.mylyn.reviews.r4e.ui.commands.removeElement"
-            contextId="org.eclipse.ui.contexts.window"
+            contextId="org.eclipse.mylyn.reviews.r4e.ui.context"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Alt+4 X">
       </key>
@@ -1804,5 +1804,14 @@
             isEqualityPattern="false"
             pattern="org\.eclipse\.mylyn.reviews\.r4e\..*/.*">
       </activityPatternBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            description="R4E Context"
+            id="org.eclipse.mylyn.reviews.r4e.ui.context"
+            name="R4E context"
+            parentId="org.eclipse.ui.contexts.window">
+      </context>
    </extension>
 </plugin>

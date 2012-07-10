@@ -18,10 +18,9 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.testers;
 
-import java.util.AbstractList;
-
 import org.eclipse.core.expressions.PropertyTester;
-import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
@@ -54,14 +53,13 @@ public class PreviousStatePropertyTester extends PropertyTester {
 	 * @see org.eclipse.core.expressions.IPropertyTester#test(Object receiver, String property, Object[] args, Object
 	 *      expectedValue)
 	 */
+	//NOTE:  This method is overriden, but we do not use the parameters
 	public boolean test(Object aReceiver, String aProperty, Object[] aArgs, Object aExpectedValue) {
 
 		if (null != R4EUIModelController.getActiveReview() && !R4EUIModelController.getActiveReview().isReadOnly()) {
-			if (aReceiver instanceof AbstractList && ((AbstractList<?>) aReceiver).size() > 0) {
-				final Object element = ((AbstractList<?>) aReceiver).get(0);
-				return testElement(element);
-			} else if (aReceiver instanceof TreeSelection) {
-				final Object element = ((TreeSelection) aReceiver).getFirstElement();
+			final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+			if (null != selection && selection instanceof IStructuredSelection) {
+				Object element = ((IStructuredSelection) selection).getFirstElement();
 				return testElement(element);
 			}
 		}

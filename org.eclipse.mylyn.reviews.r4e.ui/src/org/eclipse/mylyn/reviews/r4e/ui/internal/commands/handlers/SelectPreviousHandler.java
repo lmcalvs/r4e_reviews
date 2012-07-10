@@ -36,7 +36,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorTreeViewer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorView;
 import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
 
 /**
@@ -68,12 +67,13 @@ public class SelectPreviousHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
+		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+
 		final UIJob job = new UIJob(COMMAND_MESSAGE) {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				monitor.beginTask(COMMAND_MESSAGE, 1);
 
-				final ISelection selection = HandlerUtil.getCurrentSelection(aEvent);
 				if (selection instanceof IStructuredSelection) {
 					if (null != selection && !selection.isEmpty()) {
 						final ReviewNavigatorView view = R4EUIModelController.getNavigatorView();

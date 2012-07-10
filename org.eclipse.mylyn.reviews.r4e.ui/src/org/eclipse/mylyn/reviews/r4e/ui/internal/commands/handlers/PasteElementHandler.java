@@ -43,7 +43,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.AnomalyUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author Sebastien Dubois
@@ -74,6 +73,8 @@ public class PasteElementHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent event) {
 
+		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+
 		final Job job = new Job(COMMAND_MESSAGE) {
 			public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
 
@@ -86,7 +87,6 @@ public class PasteElementHandler extends AbstractHandler {
 			public IStatus run(IProgressMonitor monitor) {
 
 				R4EUIModelController.setJobInProgress(true);
-				ISelection selection = HandlerUtil.getCurrentSelection(event);
 				if (selection instanceof IStructuredSelection) {
 					Object target = ((IStructuredSelection) selection).getFirstElement();
 					if (target instanceof IR4EUIModelElement && target != null) {

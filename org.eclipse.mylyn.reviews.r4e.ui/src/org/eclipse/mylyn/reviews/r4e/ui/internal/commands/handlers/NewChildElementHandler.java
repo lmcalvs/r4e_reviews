@@ -40,7 +40,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author Sebastien Dubois
@@ -171,7 +170,9 @@ public class NewChildElementHandler extends AbstractHandler {
 			//Add element to the root of the tree
 			element = R4EUIModelController.getRootElement();
 		} else {
-			final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
+			final IStructuredSelection selection = (IStructuredSelection) R4EUIModelController.getNavigatorView()
+					.getTreeViewer()
+					.getSelection();
 			if (!selection.isEmpty()) {
 				element = (IR4EUIModelElement) selection.getFirstElement();
 			} else {

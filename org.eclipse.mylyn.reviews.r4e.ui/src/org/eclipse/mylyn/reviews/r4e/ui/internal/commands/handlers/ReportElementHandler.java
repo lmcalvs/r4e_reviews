@@ -37,7 +37,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author Jacques Bouthillier
@@ -68,6 +67,8 @@ public class ReportElementHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent event) {
 
+		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+
 		final Job job = new Job(COMMAND_MESSAGE) {
 
 			public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
@@ -82,7 +83,6 @@ public class ReportElementHandler extends AbstractHandler {
 				monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 				R4EUIModelController.setJobInProgress(true);
 
-				final ISelection selection = HandlerUtil.getCurrentSelection(event);
 				if (selection instanceof IStructuredSelection) {
 					if (!selection.isEmpty()) {
 						IR4EUIModelElement element = null;

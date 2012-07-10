@@ -30,6 +30,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Field R4E_CONTEXT_ID. (value is ""org.eclipse.mylyn.reviews.r4e.ui.context"")
+	 */
+	public static final String R4E_CONTEXT_ID = "org.eclipse.mylyn.reviews.r4e.ui.context";
+
+	/**
 	 * Field EXCEPTION_MSG. (value is ""Exception: "")
 	 */
 	public static final String EXCEPTION_MSG = "Exception: ";

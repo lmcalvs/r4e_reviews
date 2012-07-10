@@ -67,6 +67,8 @@ public class ReviewTypeSortHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
+		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+
 		final UIJob job = new UIJob(COMMAND_MESSAGE) {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
@@ -106,7 +108,6 @@ public class ReviewTypeSortHandler extends AbstractHandler {
 					R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				}
 				//Refresh view if possible
-				final ISelection selection = HandlerUtil.getCurrentSelection(aEvent);
 				if (selection instanceof IStructuredSelection) {
 					final Object element = ((IStructuredSelection) selection).getFirstElement();
 					if (element instanceof IR4EUIModelElement) {

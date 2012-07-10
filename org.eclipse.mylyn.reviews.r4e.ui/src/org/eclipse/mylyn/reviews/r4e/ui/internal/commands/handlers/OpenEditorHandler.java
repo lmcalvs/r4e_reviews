@@ -27,7 +27,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
-import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
 
 /**
@@ -59,13 +58,14 @@ public class OpenEditorHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
+		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+
 		final UIJob job = new UIJob(COMMAND_MESSAGE) {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				monitor.beginTask(COMMAND_MESSAGE, 1);
 
 				if (R4EUIModelController.getNavigatorView().isEditorLinked()) {
-					final ISelection selection = HandlerUtil.getCurrentSelection(aEvent);
 					if (selection instanceof IStructuredSelection) {
 						if (!selection.isEmpty()) {
 							EditorProxy.openEditor(R4EUIModelController.getNavigatorView().getSite().getPage(),

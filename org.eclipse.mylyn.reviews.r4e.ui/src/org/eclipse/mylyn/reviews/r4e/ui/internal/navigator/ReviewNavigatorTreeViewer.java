@@ -311,9 +311,6 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 		//Restore Default Tree input
 		this.setInput(fDefaultInput);
 
-		//Refresh Display	
-		this.getTree().getParent().layout();
-
 		//Set Expanded states correctly
 		final List<Object> updatedExpandedElements = new ArrayList<Object>();
 		if (expandedElements.length > 0) {
