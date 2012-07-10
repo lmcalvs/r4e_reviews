@@ -76,23 +76,23 @@ public class NewChildElementHandler extends AbstractHandler {
 		if (null != element) {
 			try {
 				final List<ReviewComponent> tempModelComponents = element.createChildModelDataElement();
-				for (final ReviewComponent tempModelComponent : tempModelComponents) {
-					R4EUIPlugin.Ftracer.traceInfo("Adding child to element " + element.getName());
 
-					//Create actual model element
-					final Job job = new Job(COMMAND_MESSAGE) {
-						public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
+				//Create actual model element
+				final Job job = new Job(COMMAND_MESSAGE) {
+					public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
 
-						@Override
-						public boolean belongsTo(Object family) {
-							return familyName.equals(family);
-						}
+					@Override
+					public boolean belongsTo(Object family) {
+						return familyName.equals(family);
+					}
 
-						@Override
-						public IStatus run(IProgressMonitor monitor) {
-							monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
-							R4EUIModelController.setJobInProgress(true);
+					@Override
+					public IStatus run(IProgressMonitor monitor) {
+						monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
+						R4EUIModelController.setJobInProgress(true);
 
+						for (final ReviewComponent tempModelComponent : tempModelComponents) {
+							R4EUIPlugin.Ftracer.traceInfo("Adding child to element " + element.getName());
 							IR4EUIModelElement newElement = null;
 							try {
 								newElement = element.createChildren(tempModelComponent);
@@ -139,14 +139,14 @@ public class NewChildElementHandler extends AbstractHandler {
 									UIUtils.displayCompatibilityErrorDialog(e1);
 								}
 							}
-							R4EUIModelController.setJobInProgress(false);
-							monitor.done();
-							return Status.OK_STATUS;
 						}
-					};
-					job.setUser(true);
-					job.schedule();
-				}
+						R4EUIModelController.setJobInProgress(false);
+						monitor.done();
+						return Status.OK_STATUS;
+					}
+				};
+				job.setUser(true);
+				job.schedule();
 			} catch (ResourceHandlingException e) {
 				UIUtils.displayResourceErrorDialog(e);
 			}
