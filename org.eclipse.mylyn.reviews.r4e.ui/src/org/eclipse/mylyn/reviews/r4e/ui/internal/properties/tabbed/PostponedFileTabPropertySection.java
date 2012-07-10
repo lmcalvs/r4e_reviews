@@ -271,6 +271,7 @@ public class PostponedFileTabPropertySection extends ModelElementTabPropertySect
 	protected void setEnabledFields() {
 		if (R4EUIModelController.isJobInProgress()
 				|| fProperties.getElement().isReadOnly()
+				|| null == R4EUIModelController.getActiveReview()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
 						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fOriginalFileNameText.setForeground(UIUtils.DISABLED_FONT_COLOR);
