@@ -643,6 +643,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 					}
 				}
 				R4EUIModelController.setJobInProgress(false); //Enable view
+				R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 				refresh();
 			}
 		});
