@@ -52,6 +52,11 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	 */
 	public static final String R4E_REPORT_PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.report";
 
+	/**
+	 * Field R4E_MAIL_PLUGIN_ID. (value is ""org.eclipse.mylyn.reviews.r4e.mail.smtp"")
+	 */
+	public static final String R4E_MAIL_PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.mail.smtp";
+
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
@@ -86,6 +91,11 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	 */
 	private static boolean FReportAvailable = false;
 
+	/**
+	 * Field FMailAvailable.
+	 */
+	private static boolean FMailAvailable = false;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -111,6 +121,12 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 		final Bundle bdleReport = Platform.getBundle(R4E_REPORT_PLUGIN_ID);
 		if (null != bdleReport) {
 			FReportAvailable = true;
+		}
+
+		//Set Plugin validity: Mail
+		final Bundle bdleMail = Platform.getBundle(R4E_MAIL_PLUGIN_ID);
+		if (null != bdleMail) {
+			FMailAvailable = true;
 		}
 	}
 
@@ -206,6 +222,15 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	 */
 	public static boolean isUserReportAvailable() {
 		return FReportAvailable;
+	}
+
+	/**
+	 * Method isMailAvailable.
+	 * 
+	 * @return Boolean
+	 */
+	public static boolean isMailAvailable() {
+		return FMailAvailable;
 	}
 
 	/**

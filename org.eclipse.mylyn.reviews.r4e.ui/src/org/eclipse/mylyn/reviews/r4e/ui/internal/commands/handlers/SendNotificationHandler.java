@@ -28,6 +28,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.mail.smtp.SmtpPlugin;
+import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.preferences.PreferenceConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ISendNotificationInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -51,6 +54,11 @@ public class SendNotificationHandler extends AbstractHandler {
 	 * Field COMMAND_MESSAGE. (value is ""Sending Notification..."")
 	 */
 	private static final String COMMAND_MESSAGE = "Sending Notification...";
+
+	/**
+	 * Field SMTP_ERROR_MSG. (value is ""No mail server defined in R4E SMTP preferences"")
+	 */
+	private static final String SMTP_ERROR_MSG = "No mail server defined in R4E SMTP preferences";
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -108,6 +116,18 @@ public class SendNotificationHandler extends AbstractHandler {
 							//Do nothing, should never happen
 						}
 					} catch (CoreException e) {
+						//This is a bit of a hack that we use to make sure the exception is coming from the Smtp plugin
+						if (e.getMessage().contains("ComponentObjectModelException")) {
+							if (R4EUIPlugin.isMailAvailable()) {
+								String smtpServersStr = SmtpPlugin.getDefault()
+										.getPreferenceStore()
+										.getString(PreferenceConstants.FP_SMTP_SERVER_LIST_ID);
+								if (null == smtpServersStr || ("").equals(smtpServersStr)) {
+									e = new CoreException(new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID,
+											SMTP_ERROR_MSG));
+								}
+							}
+						}
 						UIUtils.displayCoreErrorDialog(e);
 					} catch (ResourceHandlingException e) {
 						UIUtils.displayResourceErrorDialog(e);
