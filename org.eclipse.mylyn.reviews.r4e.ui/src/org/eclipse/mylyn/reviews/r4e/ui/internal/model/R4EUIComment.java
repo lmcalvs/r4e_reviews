@@ -262,7 +262,9 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isCopyElementCmd() {
-		if (isEnabled()) {
+		if (isEnabled()
+				&& !isReadOnly()
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
 		return false;

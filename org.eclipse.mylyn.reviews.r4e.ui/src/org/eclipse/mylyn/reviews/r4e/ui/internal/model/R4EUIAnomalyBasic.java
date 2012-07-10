@@ -650,7 +650,10 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isCopyElementCmd() {
-		if (isEnabled() && getParent().getParent() instanceof R4EUIFileContext) {
+		if (isEnabled()
+				&& !isReadOnly()
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
+				&& getParent().getParent() instanceof R4EUIFileContext) {
 			return true;
 		}
 		return false;
@@ -686,7 +689,9 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isPasteElementCmd() {
-		if (isEnabled()) {
+		if (isEnabled()
+				&& !isReadOnly()
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			//We can only paste if there is a least 1 Comment in the clipboard
 			Object element = null;
 			ISelection selection = LocalSelectionTransfer.getTransfer().getSelection();

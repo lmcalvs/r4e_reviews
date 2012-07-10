@@ -86,7 +86,9 @@ public class NextStatePropertyTester extends PropertyTester {
 				return true;
 			}
 		} else if (aElement instanceof R4EUIAnomalyExtended) {
-			if (0 < ((R4EUIAnomalyExtended) aElement).getNextAvailableStates().length) {
+			if (!((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
+					R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)
+					&& 0 < ((R4EUIAnomalyExtended) aElement).getNextAvailableStates().length) {
 				return true;
 			}
 		}
