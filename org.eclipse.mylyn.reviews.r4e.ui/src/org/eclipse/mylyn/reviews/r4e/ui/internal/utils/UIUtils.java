@@ -373,11 +373,25 @@ public class UIUtils {
 	 *            CoreException
 	 */
 	public static void displayCoreErrorDialog(CoreException e) {
-		R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
-		R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+		displayCoreErrorDialog(e, true);
+	}
+
+	/**
+	 * Method displayCoreErrorDialog.
+	 * 
+	 * @param aEx
+	 *            CoreException
+	 * @param aBol
+	 *            Boolean : To log the error in the error log
+	 */
+	public static void displayCoreErrorDialog(CoreException aEx, Boolean aBol) {
+		if (aBol) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + aEx.toString() + " (" + aEx.getMessage() + ")"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+			R4EUIPlugin.getDefault().logError("Exception: " + aEx.toString(), aEx); //$NON-NLS-1$
+		}
 		final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-				"Eclipse Runtime Core Error Detected", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0,
-						e.getMessage(), e), IStatus.ERROR);
+				"Eclipse Runtime Core Error Detected", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, //$NON-NLS-1$
+						aEx.getMessage(), aEx), IStatus.ERROR);
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				dialog.open();

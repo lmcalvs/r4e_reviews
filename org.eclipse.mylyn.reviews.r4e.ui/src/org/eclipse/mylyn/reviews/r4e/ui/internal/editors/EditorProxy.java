@@ -26,7 +26,9 @@ import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.util.OpenStrategy;
@@ -144,9 +146,18 @@ public class EditorProxy {
 			} else {
 				if (null != targetFileVersion) {
 					openSingleEditor(aPage, targetFileVersion, position);
-				} else {
+				} else if (null != baseFileVersion) {
 					//File was removed, open the base then
 					openSingleEditor(aPage, baseFileVersion, position);
+				} else {
+					//Show the error, the file was in another project and was not
+					//found when creating the commit review item
+					String error = "Base and target file version not found for this review item"; //$NON-NLS-1$
+					R4EUIPlugin.Ftracer.traceError("Exception: " + error); //$NON-NLS-1$
+					CoreException exception = new CoreException(new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, error));
+					//Display the error, but do not log in the error log
+					UIUtils.displayCoreErrorDialog(exception, false);
+
 				}
 			}
 		}
