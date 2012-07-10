@@ -177,6 +177,24 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Method isSameAs. Used to avoid duplicated in collections
+	 * 
+	 * @param aSource
+	 *            - R4EUIAnomalyBasic
+	 * @return boolean
+	 * @see lang.java.Object#equals(Object)
+	 */
+	public boolean isSameAs(R4EUIAnomalyBasic aSource) {
+		if (aSource instanceof R4EUIAnomalyBasic) {
+			if (this.getAnomaly().getTitle().equals(aSource.getAnomaly().getTitle())
+					&& this.getAnomaly().getDescription().equals(aSource.getAnomaly().getDescription())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Method getImageLocation.
 	 * 
 	 * @return String

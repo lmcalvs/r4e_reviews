@@ -19,9 +19,9 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -252,7 +252,7 @@ public class CloneAnomalyInputDialog extends FormDialog implements IAnomalyInput
 		basicSection.setClient(basicSectionClient);
 
 		//Cloneable Anomaly Table
-		List<R4EUIAnomalyBasic> anomalies = getCloneableAnomalies();
+		Set<R4EUIAnomalyBasic> anomalies = getCloneableAnomalies();
 
 		int tableHeight = MAX_DISPLAYED_CLONEABLE_ANOMALIES;
 		if (anomalies.size() < MAX_DISPLAYED_CLONEABLE_ANOMALIES) {
@@ -457,8 +457,8 @@ public class CloneAnomalyInputDialog extends FormDialog implements IAnomalyInput
 	 * 
 	 * @return R4EUIAnomalyBasic[]
 	 */
-	private List<R4EUIAnomalyBasic> getCloneableAnomalies() {
-		List<R4EUIAnomalyBasic> cloneableAnomalies = new ArrayList<R4EUIAnomalyBasic>();
+	private Set<R4EUIAnomalyBasic> getCloneableAnomalies() {
+		Set<R4EUIAnomalyBasic> cloneableAnomalies = new HashSet<R4EUIAnomalyBasic>();
 		R4EUIReviewBasic parentReview = R4EUIModelController.getActiveReview();
 		for (R4EUIReviewItem items : parentReview.getReviewItems()) {
 			if (items.getItem().isEnabled()) {
@@ -466,7 +466,16 @@ public class CloneAnomalyInputDialog extends FormDialog implements IAnomalyInput
 					if (file.getFileContext().isEnabled()) {
 						for (IR4EUIModelElement anomaly : file.getAnomalyContainerElement().getChildren()) {
 							if (((R4EUIAnomalyBasic) anomaly).getAnomaly().isEnabled()) {
-								cloneableAnomalies.add((R4EUIAnomalyBasic) anomaly);
+								boolean isDuplicate = false;
+								for (R4EUIAnomalyBasic oldAnomaly : cloneableAnomalies) {
+									if (oldAnomaly.isSameAs((R4EUIAnomalyBasic) anomaly)) {
+										isDuplicate = true;
+										break;
+									}
+								}
+								if (!isDuplicate) {
+									cloneableAnomalies.add((R4EUIAnomalyBasic) anomaly);
+								}
 							}
 						}
 					}
