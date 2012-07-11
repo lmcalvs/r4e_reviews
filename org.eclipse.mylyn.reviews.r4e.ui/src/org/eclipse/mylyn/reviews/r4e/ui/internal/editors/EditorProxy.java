@@ -152,8 +152,8 @@ public class EditorProxy {
 				} else {
 					//Show the error, the file was in another project and was not
 					//found when creating the commit review item
-					String error = "Base and target file version not found for this review item"; //$NON-NLS-1$
-					R4EUIPlugin.Ftracer.traceError("Exception: " + error); //$NON-NLS-1$
+					String error = "Base and target file version not found for this review item";
+					R4EUIPlugin.Ftracer.traceError("Exception: " + error);
 					CoreException exception = new CoreException(new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, error));
 					//Display the error, but do not log in the error log
 					UIUtils.displayCoreErrorDialog(exception, false);
