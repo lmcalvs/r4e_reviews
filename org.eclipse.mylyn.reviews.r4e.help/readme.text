@@ -1,0 +1,53 @@
+This explain how to generate the help for open source and convert it to PDF format 
+Generate the help for open source with the open source install 
+
+Note: until we have either a script to do it automatically or  do it 
+completely in the ant script, follow the instructions:
+
+1- Create a project with "doc as a folder"
+2- Copy all images 
+	a- from "org.eclipse.mylyn.review.r4e.help.install/doc" to  <newproject>/doc
+	b- from "org.eclipse.mylyn.review.r4e.help/doc to <newproject>/doc
+	
+3- Create a new file: R4EOpen.mediawiki
+4- Copy in the order of the document we try to create; 
+	a-Install help from open source
+	b-Common help from open source 
+	
+		copy _r4eOpenInstall.mediawiki to R4EOpen.mediawiki
+   		copy _r4eOpenUser.mediawiki (Remove the __TOC__ ) to R4EOpen.mediawiki
+   		
+5- Use the following ant build: build-r4e-helpPDF.xml (To execute: copy in the new project, right click, run as ant) 
+==> This should generate a file in the doc folder: 	R4EOpen.fo
+
+Note: until we can use the fop directly in the ant script, 
+we need to run it manually
+	
+	If FOP is not available on your computer, you can download it and 
+	extract to a folder (I used C:\fop\fop-1.0\)
+	http://archive.apache.org/dist/xmlgraphics/fop/binaries/
+	Select: fop-1.0-bin.tar.gz
+	
+Note 2: you can adjust the path on window environment and add to your path: ";C:\fop\fop-1.0\"
+
+6- For now, we need to modify the R4EOpen.fo 
+	-Edit R4EOpen.fo
+	- Add the following at the beginning and save it:
+	
+	<?xml version="1.0"?>
+	<!DOCTYPE xsl:stylesheet [
+	<!ENTITY nbsp '&#160;'>
+	]>
+
+7- In the doc folder where you generated the "*.fo" file
+	Window environment:
+	fop.bat R4EOpen.fo ../R4EOpen.pdf
+	
+	LINUX environment:
+	fop R4EOpen.fo ../R4EOpen.pdf
+	
+	
+	==> The R4EOpen.pdf file is generated.
+	
+   
+

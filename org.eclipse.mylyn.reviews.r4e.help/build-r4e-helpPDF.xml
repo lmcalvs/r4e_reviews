@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2010 Red Hat, Inc.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+        Red Hat - initial API and implementation
+        Alvaro Sanchez-Leon - Adapted to Mylyn Reviews R4E
+        Jacques Bouthillier - Added section to generate wikitext-to-xslfo
+ -->
+<project name="org.eclipse.mylyn.reviews.r4e.help" basedir="." default="all">
+	<description>
+            Generate Eclipse help content for the Mylyn Reviews R4E user guide
+    </description>
+
+	<property name="r4e.help.title" value="R4E Documentation" />
+	<property name="r4e.ug.title" value="R4E User Guide" />
+	<property name="help.doc.url.base" value="http://wiki.eclipse.org" />
+
+	<property name="r4eOpenFilewiki" value="R4EOpen.mediawiki" />
+	<property name="r4eOpenFileFO" value="R4EOpen.fo" />
+	<property name="r4eOpenFilePDF" value="R4EOpen.pdf" />
+	
+	<!-- IMPORTANT NOTE
+		Adjust the proxy and port if needed, otherwise, just remove it
+	-->
+	<setproxy proxyhost="!---your proxy server.  If none, remove this line---!" 
+		proxyport="!---your proxy server port---!"/>
+
+	
+	<path id="wikitext.tasks.classpath">
+		<fileset dir="C:\eclipse\eclipse37\eclipse\plugins">
+			<include name="org.eclipse.mylyn.wikitext.*core*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/internal/wikitext/mediawiki/core/tasks/tasks.properties" />
+	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/wikitext/core/util/anttask/tasks.properties" />
+
+	<target name="all" description="Generate Eclipse help content for the Mylyn Reviews R4E user guide">
+		<sequential>
+			<!-- IMPORTANT NOTE
+				This is now the way to generated the R4E help plugin, using the local
+				mediawiki file located in the /doc directory.
+				After this script is executed.  Do the following:
+				1) In file _r4eOpenUser-toc.xml, add a topic called "_Updating This Document" at then end and make it point
+					to doc/_Updating-This-Document.html file
+				2) In file _r4eOpenUser-toc.xml, add an anchor called "r4eInstall" and put it just under the root toc element
+				3) In file _r4eOpenUser-toc.xml, add an anchor called "r4eInstallOpen" and put it just under the r4eInstall anchor
+				4) In file _r4eOpenUser-toc.xml, add an anchor called "r4eUser" and put it just above the _Updating This Document topic created above
+			-->
+			
+		
+			<!-- IMPORTANT NOTE  for the Open source pdf
+				- Generate the help for open source with the install open source
+				- Generate the help for Open source
+					Create the R4EOpen.mediawiki with the following order:
+						a- copy r4eOpenInstall.mediawiki to R4EOpen.mediawiki
+						b- copy _r4eOpenUser.mediawiki (Remove the __TOC__ ) to R4EOpen.mediawiki
+				- Copy all images from install and help into the same folder as of the R4EOpen.mediawiki
+				  use <project>/doc  folder structure
+			-->
+			<wikitext-to-xslfo markupLanguage="MediaWiki" 
+				validate="true"
+				failonvalidationerror="true"
+				title="${r4e.help.title}" >
+				<fileset dir="${basedir}/doc">
+					<include name="${r4eOpenFilewiki}" />
+				</fileset>
+			</wikitext-to-xslfo>
+
+			<!-- IMPORTANT NOTE
+				The following code will work when the FOP accept the generated code as is
+				For now, need to insert at the beginning the following:
+					<?xml version="1.0"?>
+					<!DOCTYPE xsl:stylesheet [
+					<!ENTITY nbsp '&#160;'>
+					]>
+				Then generate the code manually in the generated code for the "*.fo" file
+				fop.bat R4EOpen.fo ../R4EOpen.pdf
+			-->		
+			<property name="fop.home" value="C:/fop/fop-1.0"/>
+			<exec command="${fop.home}/fop.bat ">
+				<arg value="-fo ${basedir}/doc/${r4eOpenFileFO}"/>
+				<arg value="-pdf ${basedir}/${r4eOpenFilePDF}"/>
+			</exec>
+
+		</sequential>
+	</target>
+</project>
