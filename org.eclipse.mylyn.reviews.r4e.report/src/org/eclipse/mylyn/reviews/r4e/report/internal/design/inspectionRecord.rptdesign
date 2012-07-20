@@ -2196,15 +2196,6 @@ if (ret != null ) {&#13;
             </list-property>
         </oda-data-set>
         <oda-data-set extensionID="org.eclipse.datatools.enablement.oda.xml.dataSet" name="Item FileVersion" id="1981">
-            <list-property name="computedColumns">
-                <structure>
-                    <property name="name">CountNumberOfFiles</property>
-                    <expression name="expression">//Count the number of differents files&#13;
-&#13;
-Total.countDistinct ( row["repositoryPath"]);</expression>
-                    <property name="dataType">integer</property>
-                </structure>
-            </list-property>
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
                     <structure>
@@ -2237,11 +2228,6 @@ Total.countDistinct ( row["repositoryPath"]);</expression>
                         <property name="name">localVersionID</property>
                         <property name="dataType">string</property>
                     </structure>
-                    <structure>
-                        <property name="position">7</property>
-                        <property name="name">CountNumberOfFiles</property>
-                        <property name="dataType">integer</property>
-                    </structure>
                 </list-property>
             </structure>
             <property name="dataSource">Merged_review</property>
@@ -2251,55 +2237,51 @@ Total.countDistinct ( row["repositoryPath"]);</expression>
                     <property name="name">xmi:id</property>
                     <property name="nativeName">xmi:id</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
                     <property name="name">platformURI</property>
                     <property name="nativeName">platformURI</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">3</property>
                     <property name="name">versionID</property>
                     <property name="nativeName">versionID</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">4</property>
                     <property name="name">repositoryPath</property>
                     <property name="nativeName">repositoryPath</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">5</property>
                     <property name="name">name</property>
                     <property name="nativeName">name</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">6</property>
                     <property name="name">localVersionID</property>
                     <property name="nativeName">localVersionID</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//r4ecore:R4EFileVersion]#:#{xmi:id;STRING;@xmi:id},{platformURI;STRING;@platformURI},{versionID;STRING;@versionID},{repositoryPath;STRING;@repositoryPath},{name;STRING;@name},{localVersionID;STRING;@localVersionID}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
-  <Version>1.0</Version>
+  <Version>2.0</Version>
   <design:ResultSets derivedMetaData="true">
     <design:resultSetDefinitions>
       <design:resultSetColumns>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>xmi:id</design:name>
-            <design:position>1</design:position>
+            <design:identifier>
+              <design:name>xmi:id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -2312,8 +2294,10 @@ Total.countDistinct ( row["repositoryPath"]);</expression>
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>platformURI</design:name>
-            <design:position>2</design:position>
+            <design:identifier>
+              <design:name>platformURI</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -2326,8 +2310,10 @@ Total.countDistinct ( row["repositoryPath"]);</expression>
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>versionID</design:name>
-            <design:position>3</design:position>
+            <design:identifier>
+              <design:name>versionID</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -2340,8 +2326,10 @@ Total.countDistinct ( row["repositoryPath"]);</expression>
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>repositoryPath</design:name>
-            <design:position>4</design:position>
+            <design:identifier>
+              <design:name>repositoryPath</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -2354,8 +2342,10 @@ Total.countDistinct ( row["repositoryPath"]);</expression>
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>name</design:name>
-            <design:position>5</design:position>
+            <design:identifier>
+              <design:name>name</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -2368,8 +2358,10 @@ Total.countDistinct ( row["repositoryPath"]);</expression>
         </design:resultColumnDefinitions>
         <design:resultColumnDefinitions>
           <design:attributes>
-            <design:name>localVersionID</design:name>
-            <design:position>6</design:position>
+            <design:identifier>
+              <design:name>localVersionID</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
             <design:precision>-1</design:precision>
             <design:scale>-1</design:scale>
@@ -2736,7 +2728,7 @@ row["authorRep"]</expression>
             <list-property name="computedColumns">
                 <structure>
                     <property name="name">CountFileNumberOfLines</property>
-                    <expression name="expression">//Count the number of lines for teh review item&#13;
+                    <expression name="expression">//Count the number of lines for the review item&#13;
 start = row["startLine"];&#13;
 stop = row["endLine"];&#13;
 &#13;
@@ -2763,8 +2755,18 @@ if ( ret == null ) {&#13;
                     <property name="name">CountTotalReviewItems</property>
                     <expression name="expression">//Count the number of review items&#13;
 &#13;
-Total.countDistinct ( row["xmi:id"] );</expression>
+//Total.countDistinct ( row["xmi:id"] );&#13;
+//Total.countDistinct ( row["startPosition"] &amp;&amp; row["startLine"] );&#13;
+//Total.countDistinct ( row["startPosition"]  );&#13;
+Total.countDistinct ( row["startPosition"] , row["startLine"]  );</expression>
                     <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">CreateIdFromXmiId</property>
+                    <expression name="expression">//Add # in from of the xmi:id to match the href&#13;
+&#13;
+ret = "#" + row["xmi:id"]</expression>
+                    <property name="dataType">string</property>
                 </structure>
             </list-property>
             <structure name="cachedMetaData">
@@ -2808,6 +2810,11 @@ Total.countDistinct ( row["xmi:id"] );</expression>
                         <property name="position">8</property>
                         <property name="name">CountTotalReviewItems</property>
                         <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">CreateIdFromXmiId</property>
+                        <property name="dataType">string</property>
                     </structure>
                 </list-property>
             </structure>
@@ -11439,6 +11446,509 @@ ret = "#"+ row["xmi:id"]</expression>
                 </structure>
             </list-property>
         </joint-data-set>
+        <oda-data-set extensionID="org.eclipse.datatools.enablement.oda.xml.dataSet" name="FileContext" id="2379">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">xmi:id</property>
+                    <text-property name="heading">xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">type</property>
+                    <text-property name="heading">type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">targethref</property>
+                    <text-property name="heading">targethref</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">targethref</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Merged_review</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">xmi:id</property>
+                    <property name="nativeName">xmi:id</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">type</property>
+                    <property name="nativeName">type</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">targethref</property>
+                    <property name="nativeName">targethref</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//r4ecore:R4EFileContext]#:#{xmi:id;STRING;//@xmi:id},{type;STRING;//@type},{targethref;STRING;//@href}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>xmi:id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>xmi:id</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>type</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>type</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>href</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>href</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>MAX_ROW</name>
+                    <value>-1</value>
+                </ex-property>
+                <ex-property>
+                    <name>XML_FILE</name>
+                </ex-property>
+            </list-property>
+        </oda-data-set>
+        <joint-data-set name="Join FileVersion_FileContext" id="2382">
+            <list-property name="computedColumns">
+                <structure>
+                    <property name="name">CountTotalTargetFiles</property>
+                    <expression name="expression">//Count the number of target files&#13;
+//Total.countDistinct ( row["Item FileVersion::name"]);&#13;
+Total.countDistinct ( row["Item FileVersion::platformURI"]);</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">FileContext::xmi:id</property>
+                    <property name="alias">FileContext::xmi:id</property>
+                    <text-property name="displayName">FileContext::xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Item FileVersion::name</property>
+                    <property name="alias">name</property>
+                    <text-property name="displayName">Item FileVersion::name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Item FileVersion::versionID</property>
+                    <property name="alias">versionID</property>
+                    <text-property name="displayName">Item FileVersion::versionID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Item FileVersion::xmi:id</property>
+                    <property name="alias">Item FileVersion::xmi:id</property>
+                    <text-property name="displayName">Item FileVersion::xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Item FileVersion::localVersionID</property>
+                    <property name="alias">localVersionID</property>
+                    <text-property name="displayName">Item FileVersion::localVersionID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Item FileVersion::repositoryPath</property>
+                    <property name="alias">repositoryPath</property>
+                    <text-property name="displayName">Item FileVersion::repositoryPath</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">FileContext::type</property>
+                    <property name="alias">type</property>
+                    <text-property name="displayName">FileContext::type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Item FileVersion::platformURI</property>
+                    <property name="alias">platformURI</property>
+                    <text-property name="displayName">Item FileVersion::platformURI</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">FileContext::targethref</property>
+                    <property name="alias">targethref</property>
+                    <text-property name="displayName">FileContext::targethref</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">Item FileVersion::xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">Item FileVersion::platformURI</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">Item FileVersion::versionID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">Item FileVersion::repositoryPath</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">Item FileVersion::name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">Item FileVersion::localVersionID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">FileContext::xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">FileContext::type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">FileContext::targethref</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">CountTotalTargetFiles</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <simple-property-list name="dataSets">
+                <value>Item FileVersion</value>
+                <value>FileContext</value>
+            </simple-property-list>
+            <list-property name="joinConditions">
+                <structure>
+                    <property name="joinType">left-out</property>
+                    <property name="joinOperator">eq</property>
+                    <property name="leftDataSet">Item FileVersion</property>
+                    <property name="rightDataSet">FileContext</property>
+                    <expression name="leftExpression">dataSetRow["xmi:id"]</expression>
+                    <expression name="rightExpression">dataSetRow["targethref"]</expression>
+                </structure>
+            </list-property>
+        </joint-data-set>
+        <oda-data-set extensionID="org.eclipse.datatools.enablement.oda.xml.dataSet" name="ItemDelta" id="2384">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">xmi:id</property>
+                    <text-property name="heading">xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">href</property>
+                    <text-property name="heading">href</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">targetType</property>
+                    <text-property name="heading">targetType</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">targetHref</property>
+                    <text-property name="heading">targetHref</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">href</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">targetType</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">targetHref</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Merged_review</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">xmi:id</property>
+                    <property name="nativeName">xmi:id</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">href</property>
+                    <property name="nativeName">href</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">targetType</property>
+                    <property name="nativeName">targetType</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">targetHref</property>
+                    <property name="nativeName">targetHref</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[//r4ecore:R4EDelta]#:#{xmi:id;STRING;@xmi:id},{href;STRING;id/@href},{targetType;STRING;target/@xsi:type},{targetHref;STRING;target/@href}#:#<"ResTrans","http:%%org.eclipse.mylyn.reviews.r4e.model.transform%1.0";"xmi","http:%%www.omg.org%XMI";"r4ecore","http:%%org.eclipse.mylyn.reviews.r4e.core.model%";"xsi","http:%%www.w3.org%2001%XMLSchema-instance">]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>xmi:id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>xmi:id</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>href</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>href</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>targetType</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>targetType</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>targetHref</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>targetHref</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>MAX_ROW</name>
+                    <value>-1</value>
+                </ex-property>
+                <ex-property>
+                    <name>XML_FILE</name>
+                </ex-property>
+            </list-property>
+        </oda-data-set>
+        <joint-data-set name="Join ItemDelta_CommentTextContent" id="2385">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">Comment TextContent::href</property>
+                    <property name="alias">Comment TextContent::href</property>
+                    <text-property name="displayName">Comment TextContent::href</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ItemDelta::xmi:id</property>
+                    <property name="alias">ItemDelta::xmi:id</property>
+                    <text-property name="displayName">ItemDelta::xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment TextContent::CreateHrefFomID</property>
+                    <property name="alias">CreateHrefFomID</property>
+                    <text-property name="displayName">Comment TextContent::CreateHrefFomID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">Comment TextContent::xmi:id</property>
+                    <property name="alias">Comment TextContent::xmi:id</property>
+                    <text-property name="displayName">Comment TextContent::xmi:id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ItemDelta::href</property>
+                    <property name="alias">ItemDelta::href</property>
+                    <text-property name="displayName">ItemDelta::href</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ItemDelta::targetHref</property>
+                    <property name="alias">targetHref</property>
+                    <text-property name="displayName">ItemDelta::targetHref</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ItemDelta::targetType</property>
+                    <property name="alias">targetType</property>
+                    <text-property name="displayName">ItemDelta::targetType</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">ItemDelta::xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">ItemDelta::href</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">ItemDelta::targetType</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">ItemDelta::targetHref</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">Comment TextContent::xmi:id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">Comment TextContent::href</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">Comment TextContent::CreateHrefFomID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <simple-property-list name="dataSets">
+                <value>ItemDelta</value>
+                <value>Comment TextContent</value>
+            </simple-property-list>
+            <list-property name="joinConditions">
+                <structure>
+                    <property name="joinType">left-out</property>
+                    <property name="joinOperator">eq</property>
+                    <property name="leftDataSet">ItemDelta</property>
+                    <property name="rightDataSet">Comment TextContent</property>
+                    <expression name="leftExpression">dataSetRow["targetHref"]</expression>
+                    <expression name="rightExpression">dataSetRow["CreateHrefFomID"]</expression>
+                </structure>
+            </list-property>
+        </joint-data-set>
     </data-sets>
     <styles>
         <style name="report" id="4">
@@ -12510,17 +13020,18 @@ ret = "#"+ row["xmi:id"]</expression>
                                 </label>
                             </cell>
                             <cell id="1290">
-                                <data id="1327">
-                                    <property name="dataSet">Item FileVersion</property>
+                                <data id="2383">
+                                    <property name="whiteSpace">nowrap</property>
+                                    <property name="dataSet">Join FileVersion_FileContext</property>
                                     <list-property name="boundDataColumns">
                                         <structure>
-                                            <property name="name">CountNumberOfFiles</property>
-                                            <text-property name="displayName">CountNumberOfFiles</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["CountNumberOfFiles"]</expression>
+                                            <property name="name">CountTotalTargetFiles</property>
+                                            <text-property name="displayName">CountTotalTargetFiles</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["CountTotalTargetFiles"]</expression>
                                             <property name="dataType">integer</property>
                                         </structure>
                                     </list-property>
-                                    <property name="resultSetColumn">CountNumberOfFiles</property>
+                                    <property name="resultSetColumn">CountTotalTargetFiles</property>
                                 </data>
                             </cell>
                             <cell id="1291"/>
