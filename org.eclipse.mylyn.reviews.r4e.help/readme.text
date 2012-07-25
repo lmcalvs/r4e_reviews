@@ -4,16 +4,17 @@ Generate the help for open source with the open source install
 Note: until we have either a script to do it automatically or  do it 
 completely in the ant script, follow the instructions:
 
-1- Create a project with "doc as a folder"
+1- Create a project 
+	Create a folder:  "doc"
 2- Copy all images 
 	a- from "org.eclipse.mylyn.review.r4e.help.install/doc" to  <newproject>/doc
 	b- from "org.eclipse.mylyn.review.r4e.help/doc to <newproject>/doc
 	
 3- Create a new file: R4EOpen.mediawiki
-4- Copy in the order of the document we try to create; 
+4- Copy "original mediawiki content" in order of the document we try to create; 
 	a-Install help from open source
 	b-Common help from open source 
-	
+	    ex:
 		copy _r4eOpenInstall.mediawiki to R4EOpen.mediawiki
    		copy _r4eOpenUser.mediawiki (Remove the __TOC__ ) to R4EOpen.mediawiki
    		
