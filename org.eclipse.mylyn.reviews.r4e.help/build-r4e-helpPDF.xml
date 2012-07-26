@@ -66,6 +66,7 @@
 			<wikitext-to-xslfo markupLanguage="MediaWiki" 
 				validate="true"
 				failonvalidationerror="true"
+				underlineLinks="true"
 				title="${r4e.help.title}" >
 				<fileset dir="${basedir}/doc">
 					<include name="${r4eOpenFilewiki}" />
