@@ -12128,7 +12128,13 @@ if ( ( row["Comment Type::xmi:id"]  != null  &amp;&amp; row["Comment Type::type"
 	commentClass = row["Comment Type::type"];&#13;
 }&#13;
 &#13;
-state = row["Comment Anomaly::state"];&#13;
+//Since the default anomaly state is CREATED, need extra testing&#13;
+if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
+ } else {&#13;
+	state = row["Comment Anomaly::state"];&#13;
+}&#13;
 &#13;
 if ( (commentClass == "R4E_CLASS_ERRONEOUS") &amp;&amp;&#13;
 		( ( state != "R4E_ANOMALY_STATE_CREATED" ) &amp;&amp;&#13;
@@ -12197,7 +12203,8 @@ Total.count (  row["ClassErrorSateVerified"] );</expression>
                 <structure>
                     <property name="name">CountClassErrorStateOther</property>
                     <expression name="expression">//Compute the number of anomaly Class Error and the state is Other&#13;
-Total.count ( row["ClassErrorSateOthers"] );</expression>
+//Total.count ( row["ClassErrorSateOthers"] );&#13;
+Total.count ( row["ClassErrorSateOthers"]);</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -12323,7 +12330,14 @@ if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "R4E_C
                     <property name="name">ClassSuperfluousStateOthers</property>
                     <expression name="expression">//For the Class SUPERFLUOUS, Check type OTHERS&#13;
 &#13;
-state = row["Comment Anomaly::state"];&#13;
+//Since the default anomaly state is CREATED, need extra testing&#13;
+if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
+ } else {&#13;
+	state = row["Comment Anomaly::state"];&#13;
+}&#13;
+&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
 if ( (commentClass == "R4E_CLASS_SUPERFLUOUS") &amp;&amp;&#13;
@@ -12518,7 +12532,14 @@ if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "R4E_C
                     <property name="name">ClassImprovementSateOthers</property>
                     <expression name="expression">//For the Class IMPROVEMENT, Check type OTHERS&#13;
 &#13;
-state = row["Comment Anomaly::state"];&#13;
+//Since the default anomaly state is CREATED, need extra testing&#13;
+if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
+ } else {&#13;
+	state = row["Comment Anomaly::state"];&#13;
+}&#13;
+&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
 if ( (commentClass == "R4E_CLASS_IMPROVEMENT") &amp;&amp;&#13;
@@ -12582,7 +12603,7 @@ Total.count (  row["ClassImprovementSateDeferred"]);</expression>
                 <structure>
                     <property name="name">CountClassImprovementStateVerified</property>
                     <expression name="expression">//Compute the number of anomaly Class Improvement and the state is Verified&#13;
-Total.count (  row["Comment Anomaly::CountStateVerified"]);</expression>
+Total.count ( row["ClassImprovementSateVerified"]);</expression>
                     <property name="dataType">integer</property>
                 </structure>
                 <structure>
@@ -12712,7 +12733,14 @@ if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "R4E_C
                     <property name="name">ClassQuestionStateOthers</property>
                     <expression name="expression">//For the Class QUESTION, Check type OTHERS&#13;
 &#13;
-state = row["Comment Anomaly::state"];&#13;
+//Since the default anomaly state is CREATED, need extra testing&#13;
+if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
+ } else {&#13;
+	state = row["Comment Anomaly::state"];&#13;
+}&#13;
+&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
 if ( (commentClass == "R4E_CLASS_QUESTION") &amp;&amp;&#13;
@@ -12906,7 +12934,14 @@ if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "R4E_C
                     <property name="name">ClassCommentStateOthers</property>
                     <expression name="expression">//For the Class COMMENT, Check type OTHERS&#13;
 &#13;
-state = row["Comment Anomaly::state"];&#13;
+//Since the default anomaly state is CREATED, need extra testing&#13;
+if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
+ } else {&#13;
+	state = row["Comment Anomaly::state"];&#13;
+}&#13;
+&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
 if ( (commentClass == "R4E_CLASS_COMMENT") &amp;&amp;&#13;
@@ -13100,7 +13135,14 @@ if (( state == "R4E_ANOMALY_STATE_VERIFIED" ) &amp;&amp; (commentClass == "R4E_C
                     <property name="name">ClassMissingStateOthers</property>
                     <expression name="expression">//For the Class MISSING, Check type OTHERS&#13;
 &#13;
-state = row["Comment Anomaly::state"];&#13;
+//Since the default anomaly state is CREATED, need extra testing&#13;
+if ( ( row["Comment Anomaly::xmi:id"]  != null  &amp;&amp; row["Comment Anomaly::state"] == null  )   ||  &#13;
+		BirtComp.equalTo( row["Comment Anomaly::state"], "R4E_ANOMALY_STATE_CREATED" )  ) {&#13;
+ 	state = "R4E_ANOMALY_STATE_CREATED" ;&#13;
+ } else {&#13;
+	state = row["Comment Anomaly::state"];&#13;
+}&#13;
+&#13;
 commentClass = row["Comment Type::type"];&#13;
 &#13;
 if ( (commentClass == "R4E_CLASS_MISSING") &amp;&amp;&#13;
@@ -15283,6 +15325,7 @@ Total.count ( row["ClassOtherStateOther"] );</expression>
                 <cell id="620">
                     <grid id="662">
                         <property name="style">GridStyle</property>
+                        <property name="marginTop">5pt</property>
                         <property name="width">1.4270833333333333in</property>
                         <column id="663">
                             <property name="width">0.4479166666666667in</property>
@@ -16741,7 +16784,20 @@ Total.count ( row["ClassOtherStateOther"] );</expression>
                                     <property name="resultSetColumn">CountStateOthers</property>
                                 </data>
                             </cell>
-                            <cell id="3874"/>
+                            <cell id="3874">
+                                <data id="3876">
+                                    <property name="dataSet">Comment Anomaly</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">CountTotalAnomaly</property>
+                                            <text-property name="displayName">CountTotalAnomaly</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["CountTotalAnomaly"]</expression>
+                                            <property name="dataType">integer</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">CountTotalAnomaly</property>
+                                </data>
+                            </cell>
                         </row>
                     </grid>
                 </cell>
