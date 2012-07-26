@@ -339,8 +339,40 @@ public class ReportGeneration implements IR4EReport {
 			inspectionFileName = sb.toString();		
 		}
 		Activator.FTracer.traceInfo("buildInspectionReportName() :" + inspectionFileName);
+
+		//Validate the report name with valid characters
+		inspectionFileName = validReportName(inspectionFileName);
+		Activator.FTracer.traceInfo("buildInspectionReportName() After VALID NAME: " + inspectionFileName );					
 		return inspectionFileName;
 	}
+
+
+	/**
+	 * Convert any char to be an alpha-numerical value for the report name
+	 * @param aStValue
+	 * @return String
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.IModelWriter#toValidFileName(java.lang.String)
+	 */
+	private String validReportName(String aStValue) {
+		String result = null;
+		StringBuilder sb = new StringBuilder();
+
+		if (aStValue != null) {
+			int size = aStValue.length();
+			for (int i = 0; i < size; i++) {
+				char c = aStValue.charAt(i);
+				if (!Character.isLetterOrDigit(c) && c != '-' && c != '_') {
+					sb.append('_');
+				} else {
+					sb.append(c);
+				}
+			}
+			result = sb.toString();
+		}
+
+		return result;
+	}
+
 
 	private File[] getReviewListSelection() {
 		if (fReviewNameList != null) {
