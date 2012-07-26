@@ -2755,9 +2755,6 @@ if ( ret == null ) {&#13;
                     <property name="name">CountTotalReviewItems</property>
                     <expression name="expression">//Count the number of review items&#13;
 &#13;
-//Total.countDistinct ( row["xmi:id"] );&#13;
-//Total.countDistinct ( row["startPosition"] &amp;&amp; row["startLine"] );&#13;
-//Total.countDistinct ( row["startPosition"]  );&#13;
 Total.countDistinct ( row["startPosition"] , row["startLine"]  );</expression>
                     <property name="dataType">integer</property>
                 </structure>
@@ -11576,7 +11573,6 @@ ret = "#"+ row["xmi:id"]</expression>
                 <structure>
                     <property name="name">CountTotalTargetFiles</property>
                     <expression name="expression">//Count the number of target files&#13;
-//Total.countDistinct ( row["Item FileVersion::name"]);&#13;
 Total.countDistinct ( row["Item FileVersion::platformURI"]);</expression>
                     <property name="dataType">integer</property>
                 </structure>
