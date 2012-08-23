@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.eclipse.mylyn</groupId>
     <artifactId>org.eclipse.mylyn-parent</artifactId>
-    <version>3.8.0-SNAPSHOT</version>
+    <version>3.9.0-SNAPSHOT</version>
     <relativePath>../org.eclipse.mylyn/org.eclipse.mylyn-parent</relativePath>
   </parent>
   <groupId>org.eclipse.mylyn.reviews.r4e</groupId>
@@ -27,8 +27,9 @@
   </issueManagement>
 	<properties>
 		<mockito-version>1.8.4</mockito-version>
-		<junit-version>4.8.1</junit-version>    
+		<junit-version>4.8.1</junit-version>
 	</properties>
+
   <repositories>
     <repository>
       <snapshots>
@@ -43,22 +44,8 @@
       <url>http://download.eclipse.org/mylyn/maven/releases</url>
       <layout>default</layout>
     </repository>
-    <repository>
-      <id>eclipse-mylyn-versions</id>
-      <layout>p2</layout>
-      <url>${mylyn-versions-repository-url}</url>
-    </repository>
-    <repository>
-      <id>eclipse-mylyn-orbit-committers</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository/</url>
-    </repository>
-    <repository>
-      <id>eclipse-mylyn-reviews-r4e</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/r4e/updates/</url>
-    </repository>
   </repositories>
+
   <profiles>
     <profile>
       <id>implicit-target</id>
@@ -73,32 +60,51 @@
           <layout>p2</layout>
           <url>${mylyn-commons-repository-url}</url>
         </repository>
+        <repository>
+          <id>eclipse-mylyn-versions</id>
+          <layout>p2</layout>
+          <url>${mylyn-versions-repository-url}</url>
+        </repository>
+<!--  Orbit is taken from parent pom
+        <repository>
+           <id>eclipse-mylyn-orbit-committers</id>
+           <layout>p2</layout>
+           <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository/</url>
+         </repository>
+-->
+         <repository>
+            <id>eclipse-mylyn-reviews-r4e</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/r4e/updates/</url>
+          </repository>
       </repositories>
       <modules>
-        <module>org.eclipse.mylyn.reviews.frame.core</module>
-        <module>org.eclipse.mylyn.reviews.r4e.ldap</module>
-        <module>org.eclipse.mylyn.reviews.notifications</module>
-        <module>org.eclipse.mylyn.reviews.r4e-site</module>
-        <module>org.eclipse.mylyn.reviews.r4e.core</module>
-        <module>org.eclipse.mylyn.reviews.r4e.core.tests</module>
-        <module>org.eclipse.mylyn.reviews.r4e.feature</module>
-        <module>org.eclipse.mylyn.reviews.r4e.help</module>
-        <module>org.eclipse.mylyn.reviews.r4e.help.install</module>
-        <module>org.eclipse.mylyn.reviews.r4e.help.install-feature</module>
-        <module>org.eclipse.mylyn.reviews.r4e.mail.smtp</module>
-        <module>org.eclipse.mylyn.reviews.r4e.report</module>
-        <module>org.eclipse.mylyn.reviews.r4e.reports-feature</module>
-        <module>org.eclipse.mylyn.reviews.r4e.sdk.feature</module>
-        <module>org.eclipse.mylyn.reviews.r4e.transform</module>
-        <module>org.eclipse.mylyn.reviews.r4e.ui</module>
-        <module>org.eclipse.mylyn.reviews.VCalendar</module>
-        <module>org.eclipse.mylyn.reviews.r4e.ui.tests</module>
+         <module>org.eclipse.mylyn.reviews.r4e-site</module>
       </modules>
     </profile>
+
+	<profile>
+		<id>coverage-to-sonar</id>
+		<activation>
+			<property>
+				<name>!coverage.skip</name>
+			</property>
+		</activation>
+		<build>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>2.0-beta-2</version>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
+
+<!--  Default coverage configuration taken from parent
     <profile>
     	<id>sonar-jcoverage</id>
       	<properties>
-      		<!-- Properties to enable jacoco code coverage analysis -->
       		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
       		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
       		<sonar.jacoco.reportPath>../target/jacoco.exec</sonar.jacoco.reportPath>
@@ -106,7 +112,6 @@
 
     	<build>
       		<plugins>
-       	 	<!-- Enabling use of jacoco -->
         		<plugin>
           			<groupId>org.jacoco</groupId>
           			<artifactId>jacoco-maven-plugin</artifactId>
@@ -117,20 +122,21 @@
                 				<goal>prepare-agent</goal>
               				</goals>
               				<configuration>
-                			<!-- Where to put jacoco coverage report -->
+                   			<skip>${coverage.skip}</skip>
                 			<destFile>${sonar.jacoco.reportPath}</destFile>
+                   			<includes>
+                     			<include>${coverage.filter}</include>
+                   			</includes>
+                   			<append>true</append>
               				</configuration>
             			</execution>
           			</executions>
         		</plugin>
-        		<plugin>
-       				<groupId>org.codehaus.mojo</groupId>
-       				<artifactId>sonar-maven-plugin</artifactId>
-       				<version>2.0-beta-2</version>
-     				</plugin>
       		</plugins>
     	</build>
   	</profile>
+-->
+
   </profiles>
   <dependencies>
 	<dependency>
@@ -149,5 +155,24 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
+
+  <modules>
+     <module>org.eclipse.mylyn.reviews.frame.core</module>
+     <module>org.eclipse.mylyn.reviews.r4e.ldap</module>
+     <module>org.eclipse.mylyn.reviews.notifications</module>
+     <module>org.eclipse.mylyn.reviews.r4e.core</module>
+     <module>org.eclipse.mylyn.reviews.r4e.core.tests</module>
+     <module>org.eclipse.mylyn.reviews.r4e.feature</module>
+     <module>org.eclipse.mylyn.reviews.r4e.help</module>
+     <module>org.eclipse.mylyn.reviews.r4e.help.install</module>
+     <module>org.eclipse.mylyn.reviews.r4e.help.install-feature</module>
+     <module>org.eclipse.mylyn.reviews.r4e.mail.smtp</module>
+     <module>org.eclipse.mylyn.reviews.r4e.report</module>
+     <module>org.eclipse.mylyn.reviews.r4e.reports-feature</module>
+     <module>org.eclipse.mylyn.reviews.r4e.sdk.feature</module>
+     <module>org.eclipse.mylyn.reviews.r4e.transform</module>
+     <module>org.eclipse.mylyn.reviews.r4e.ui</module>
+     <module>org.eclipse.mylyn.reviews.VCalendar</module>
+     <module>org.eclipse.mylyn.reviews.r4e.ui.tests</module>
+   </modules>
 </project>
