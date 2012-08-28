@@ -4,6 +4,7 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.mylyn.reviews.r4e.report;singleton:=true
 Bundle-Version: 0.12.0.qualifier
 Bundle-Activator: org.eclipse.mylyn.reviews.r4e.report.internal.Activator
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.birt.report.engine,
  org.eclipse.core.filesystem,
  org.eclipse.ui.ide,

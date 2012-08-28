@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.mylyn.reviews.notifications;singleton:=true
 Bundle-Version: 0.12.0.qualifier
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.commons.core;bundle-version="3.3.0"
 Bundle-ActivationPolicy: lazy

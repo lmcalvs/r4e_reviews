@@ -29,8 +29,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.mylyn.reviews.r4e.report.impl.IR4EReport;
-import org.eclipse.mylyn.reviews.r4e.report.impl.R4EReportFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -105,9 +103,18 @@ public class ReportElementHandler extends AbstractHandler {
 								listSelectedReviews.add(new File(extentElement.getReview().getName()));
 							}
 						}
-						final IR4EReport reportGen = R4EReportFactory.getInstance();
-						reportGen.setReviewListSelection(listSelectedReviews.toArray(new File[listSelectedReviews.size()]));
-						reportGen.handleReportGeneration(groupFile, monitor);
+
+						if (R4EUIPlugin.isUserReportAvailable()) {
+							final org.eclipse.mylyn.reviews.r4e.report.impl.IR4EReport reportGen = org.eclipse.mylyn.reviews.r4e.report.impl.R4EReportFactory.getInstance();
+							reportGen.setReviewListSelection(listSelectedReviews.toArray(new File[listSelectedReviews.size()]));
+							reportGen.handleReportGeneration(groupFile, monitor);
+							R4EUIPlugin.Ftracer.traceInfo("Report element AVAILABLE");//$NON-NLS-1$
+
+						} else {
+							R4EUIPlugin.Ftracer.traceWarning("Report element Not available" //$NON-NLS-1$
+							);
+
+						}
 					}
 				}
 				monitor.done();

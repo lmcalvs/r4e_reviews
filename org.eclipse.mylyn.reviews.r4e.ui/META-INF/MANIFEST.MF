@@ -7,7 +7,6 @@ Bundle-Activator: org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
- org.eclipse.ui;bundle-version="3.6.0",
  org.eclipse.ui.ide;bundle-version="3.6.0",
  org.eclipse.compare;bundle-version="3.5.0",
  org.eclipse.team.ui;bundle-version="3.5.0",
@@ -25,8 +24,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.versions.ui;bundle-version="0.9.0",
  org.eclipse.mylyn.reviews.ldap;bundle-version="0.10.0";resolution:=optional,
  org.eclipse.mylyn.reviews.notifications;bundle-version="0.10.0",
- org.eclipse.mylyn.reviews.r4e.report;bundle-version="0.10.0";resolution:=optional,
- org.eclipse.mylyn.reviews.r4e.mail.smtp;bundle-version="0.11.0"
+ org.eclipse.mylyn.reviews.r4e.mail.smtp;bundle-version="0.11.0",
+ org.eclipse.mylyn.reviews.r4e.report;bundle-version="0.12.0";resolution:=optional
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName

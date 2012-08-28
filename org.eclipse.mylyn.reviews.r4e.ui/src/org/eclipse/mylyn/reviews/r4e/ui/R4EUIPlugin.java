@@ -11,6 +11,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui;
 
+import org.eclipse.core.runtime.IBundleGroup;
+import org.eclipse.core.runtime.IBundleGroupProvider;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -20,6 +22,7 @@ import org.eclipse.ui.forms.FormColors;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Version;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -35,27 +38,37 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 	/**
 	 * Field PLUGIN_ID. (value is ""org.eclipse.mylyn.reviews.r4e.ui"")
 	 */
-	public static final String PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.ui"; // The plug-in ID
+	public static final String PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.ui"; // The plug-in ID //$NON-NLS-1$
 
 	/**
 	 * Field JDT_PLUGIN_ID. (value is ""org.eclipse.jdt.core"")
 	 */
-	public static final String JDT_PLUGIN_ID = "org.eclipse.jdt.core";
+	public static final String JDT_PLUGIN_ID = "org.eclipse.jdt.core"; //$NON-NLS-1$
 
 	/**
 	 * Field CDT_PLUGIN_ID. (value is ""org.eclipse.cdt.core"")
 	 */
-	public static final String CDT_PLUGIN_ID = "org.eclipse.cdt.core";
+	public static final String CDT_PLUGIN_ID = "org.eclipse.cdt.core"; //$NON-NLS-1$
 
 	/**
 	 * Field R4E_REPORT_PLUGIN_ID. (value is ""org.eclipse.mylyn.reviews.r4e.report"")
 	 */
-	public static final String R4E_REPORT_PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.report";
+	public static final String R4E_REPORT_PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.report"; //$NON-NLS-1$
+
+	/**
+	 * Field R4E_REPORT_FEATURE_ID. (value is ""org.eclipse.mylyn.reviews.r4e.reports"")
+	 */
+	public static final String R4E_REPORT_FEATURE_ID = "org.eclipse.mylyn.reviews.r4e.reports"; //$NON-NLS-1$
 
 	/**
 	 * Field R4E_MAIL_PLUGIN_ID. (value is ""org.eclipse.mylyn.reviews.r4e.mail.smtp"")
 	 */
-	public static final String R4E_MAIL_PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.mail.smtp";
+	public static final String R4E_MAIL_PLUGIN_ID = "org.eclipse.mylyn.reviews.r4e.mail.smtp"; //$NON-NLS-1$
+
+	/**
+	 * Field R4E_VERSION_QUALIFIER. (value is ""qualifier"")
+	 */
+	private static final String R4E_VERSION_QUALIFIER = "qualifier"; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -117,12 +130,6 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 			FCDTAvailable = true;
 		}
 
-		//Set Plugin validity: Report
-		final Bundle bdleReport = Platform.getBundle(R4E_REPORT_PLUGIN_ID);
-		if (null != bdleReport) {
-			FReportAvailable = true;
-		}
-
 		//Set Plugin validity: Mail
 		final Bundle bdleMail = Platform.getBundle(R4E_MAIL_PLUGIN_ID);
 		if (null != bdleMail) {
@@ -149,6 +156,48 @@ public class R4EUIPlugin extends AbstractUIPlugin {
 		Ftracer = new Tracer();
 		Ftracer.init(PLUGIN_ID);
 		Ftracer.traceDebug("plugin started");
+
+		//Set Plugin validity: Report
+		verifyReportFeature();
+		Ftracer.traceDebug("Report features available: " + FReportAvailable);
+
+	}
+
+	/**
+	 * Verify if we should consider the availability for the REPORT option based on the features level
+	 */
+	private void verifyReportFeature() {
+
+		//Testing for the eclipse runtime here
+		final Bundle bdleReport = Platform.getBundle(R4E_REPORT_PLUGIN_ID);
+		if (bdleReport != null) {
+			Version ver = bdleReport.getVersion();
+			if (ver.getQualifier().equals(R4E_VERSION_QUALIFIER)) {
+				//We are in a runtime environment, so enable it
+				FReportAvailable = true;
+				Ftracer.traceDebug("In a runtime environment for the report"); //$NON-NLS-1$
+				return;
+			}
+		}
+
+		//Testing for the binary execution
+		IBundleGroupProvider[] grpprovider = Platform.getBundleGroupProviders();
+		for (IBundleGroupProvider element : grpprovider) {
+			IBundleGroup[] bdlgrp = element.getBundleGroups();
+			Ftracer.traceDebug("bundle group count: " + bdlgrp.length); //$NON-NLS-1$
+			for (int j = 0; j < bdlgrp.length; j++) {
+				if (bdlgrp[j].getIdentifier().contains(R4E_REPORT_FEATURE_ID)) {
+					Ftracer.traceDebug("\t bdlgrp[" + j + "] : " + bdlgrp[j].getName() + "\t : " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							+ bdlgrp[j].getProviderName() + "\t version: " + bdlgrp[j].getVersion() + "\t : " //$NON-NLS-1$//$NON-NLS-2$
+							+ bdlgrp[j].getIdentifier());
+					FReportAvailable = true;
+					break;
+
+				}
+			}
+
+		}
+
 	}
 
 	/**
