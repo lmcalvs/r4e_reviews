@@ -1699,6 +1699,7 @@ The meeting info stored in the system can be retrieved at all times by using the
 == Using Statistical Reports  ==
 
 Statistical reports provide useful information to analyze the efficiency of one or several reviews.
+To have this functionality available, you need to install the report feature on top of the R4E feature.
 
 === Generating Reports  ===
 
