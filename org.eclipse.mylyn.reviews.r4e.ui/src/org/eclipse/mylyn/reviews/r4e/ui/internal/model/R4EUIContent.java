@@ -37,6 +37,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ContentsProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -218,6 +219,14 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 				//Remove check on parent, since at least one children is not set anymore
 				getParent().getParent().setUserReviewed(fUserReviewed, false, aUpdateModel);
 			}
+
+			//Update inline markings
+			final R4EUIContent currentContent = this;
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					UIUtils.updateAnnotation(currentContent, (R4EUIFileContext) getParent().getParent());
+				}
+			});
 		}
 	}
 
@@ -247,6 +256,14 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 				}
 			}
 			fUserReviewed = aReviewed;
+
+			//Update inline markings
+			final R4EUIContent currentContent = this;
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					UIUtils.updateAnnotation(currentContent, (R4EUIFileContext) getParent().getParent());
+				}
+			});
 		}
 	}
 
@@ -378,6 +395,14 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	@Override
 	public void restore() throws ResourceHandlingException, OutOfSyncException, CompatibilityException {
 		super.restore();
+
+		//Update inline markings (local anomalies only)
+		final R4EUIContent currentContent = this;
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				UIUtils.updateAnnotation(currentContent, (R4EUIFileContext) getParent().getParent());
+			}
+		});
 
 		//Also restore any participant assigned to this element
 		for (String participant : fContent.getAssignedTo()) {

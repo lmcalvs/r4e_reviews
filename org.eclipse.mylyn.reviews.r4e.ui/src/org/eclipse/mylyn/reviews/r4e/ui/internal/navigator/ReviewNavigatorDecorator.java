@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
@@ -116,7 +117,8 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 			overlayIcon = new OverlayImageIcon(currentOverlayImage, ((IR4EUIModelElement) aElement).getDisabledImage(),
 					OverlayImageIcon.BOTTOM_RIGHT);
 			return overlayIcon.getImage(); //No need to check for other decorators
-		} else if (((IR4EUIModelElement) aElement).isUserReviewed()) {
+		} else if (((IR4EUIModelElement) aElement).isUserReviewed()
+				|| (aElement instanceof R4EUIAnomalyExtended && ((R4EUIAnomalyExtended) aElement).isTerminalState())) {
 			//Completed element decorator
 			overlayIcon = new OverlayImageIcon(currentOverlayImage,
 					((IR4EUIModelElement) aElement).getUserReviewedImage(), OverlayImageIcon.BOTTOM_RIGHT);

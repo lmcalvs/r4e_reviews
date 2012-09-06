@@ -29,6 +29,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Sebastien Dubois
@@ -108,6 +110,13 @@ public class R4EUISelectionContainer extends R4EUIContentsContainer {
 			}
 		}
 		uiSelection.addAssignees(participantsToAssign);
+
+		//Add selection to editor (if applicable)
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				UIUtils.addAnnotation(uiSelection, (R4EUIFileContext) getParent());
+			}
+		});
 		return uiSelection;
 	}
 

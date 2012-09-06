@@ -37,7 +37,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
-import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
 
 /**
@@ -79,7 +78,7 @@ public class SendNotificationHandler extends AbstractHandler {
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				monitor.beginTask(COMMAND_MESSAGE, 1);
 
-				ISelection source = HandlerUtil.getCurrentSelection(aEvent);
+				ISelection source = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
 
 				//if the source is unique and is a Review element, all options are available.  Otherwise, only ask questions is supported
 				final ISendNotificationInputDialog dialog = R4EUIDialogFactory.getInstance()

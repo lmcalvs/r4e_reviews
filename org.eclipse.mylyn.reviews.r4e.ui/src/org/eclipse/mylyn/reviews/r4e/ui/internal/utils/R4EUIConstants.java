@@ -65,6 +65,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String LINE_FEED = System.getProperty("line.separator");
 
 	/**
+	 * Field TAB_FEED. (value is ""\t"")
+	 */
+	public static final String TAB_FEED = "\t";
+
+	/**
 	 * Field LIST_SEPARATOR. (value is "";"")
 	 */
 	public static final String LIST_SEPARATOR = ";";
@@ -108,6 +113,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field LINE_OFFSET. (value is 1)
 	 */
 	public static final int LINE_OFFSET = 1;
+
+	/**
+	 * Field ANNOTATION_TOOLBAR. (value is ""annotationToolbar"")
+	 */
+	public static final String ANNOTATION_TOOLBAR = "ANNOTATION_TOOLBAR";
 
 	/**
 	 * Field REVIEW_GROUP_PATHS_LENGTH. (value is 128)
@@ -1637,6 +1647,63 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String DEFAULT_DISPLAY_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.display.defaultDisplay";
 
 	/**
+	 * Field NEXT_ANOMALY_ANNOTATION_COMMAND. (value is
+	 * ""org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.NextAnomalyAnnotation"")
+	 */
+	public static final String NEXT_ANOMALY_ANNOTATION_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.NextAnomalyAnnotation";
+
+	/**
+	 * Field NEXT_ANOMALY_ANNOTATION_ICON_FILE. (value is ""icons/elcl16/nxtanmly_menu.gif"")
+	 */
+	public static final String NEXT_ANOMALY_ANNOTATION_ICON_FILE = "icons/elcl16/nxtanmly_menu.png";
+
+	/**
+	 * Field NEXT_ANOMALY_ANNOTATION_COMMAND_NAME. (value is ""Next Anomaly"")
+	 */
+	public static final String NEXT_ANOMALY_ANNOTATION_COMMAND_NAME = "Next Anomaly";
+
+	/**
+	 * Field NEXT_ANOMALY_ANNOTATION_COMMAND_TOOLTIP. (value is ""Go To Next Open Anomaly Annotation"")
+	 */
+	public static final String NEXT_ANOMALY_ANNOTATION_COMMAND_TOOLTIP = "Go To Next Open Anomaly Annotation";
+
+	/**
+	 * Field NEXT_ANOMALY_ANNOTATION_COMMAND_MNEMONIC. (value is ""N"")
+	 */
+	public static final String NEXT_ANOMALY_ANNOTATION_COMMAND_MNEMONIC = "N";
+
+	/**
+	 * Field PREVIOUS_ANOMALY_ANNOTATION_COMMAND. (value is
+	 * ""org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.PreviousAnomalyAnnotation"")
+	 */
+	public static final String PREVIOUS_ANOMALY_ANNOTATION_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.PreviousAnomalyAnnotation";
+
+	/**
+	 * Field PREVIOUS_ANOMALY_ANNOTATION_ICON_FILE. (value is ""icons/elcl16/prevanmly_menu.gif"")
+	 */
+	public static final String PREVIOUS_ANOMALY_ANNOTATION_ICON_FILE = "icons/elcl16/prevanmly_menu.png";
+
+	/**
+	 * Field PREVIOUS_ANOMALY_ANNOTATION_COMMAND_NAME. (value is ""Previous Anomaly"")
+	 */
+	public static final String PREVIOUS_ANOMALY_ANNOTATION_COMMAND_NAME = "Previous Anomaly";
+
+	/**
+	 * Field PREVIOUS_ANOMALY_ANNOTATION_COMMAND_TOOLTIP. (value is ""Go To Previous Open Anomaly Annotation"")
+	 */
+	public static final String PREVIOUS_ANOMALY_ANNOTATION_COMMAND_TOOLTIP = "Go To Previous Open Anomaly Annotation";
+
+	/**
+	 * Field PREVIOUS_ANOMALY_ANNOTATION_COMMAND_MNEMONIC. (value is ""P"")
+	 */
+	public static final String PREVIOUS_ANOMALY_ANNOTATION_COMMAND_MNEMONIC = "P";
+
+	/**
+	 * Field ANNOTATION_COMMAND_PARAM. (value is ""editor"")
+	 */
+	public static final String ANNOTATION_COMMAND_PARAM = "editor";
+
+	/**
 	 * Field START_STRING_INDEX. (value is 0)
 	 */
 	public static final int START_STRING_INDEX = 0;
@@ -2352,4 +2419,25 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static String R4E_UI_JOB_FAMILY = "R4EUI";
 
+	//Inline Markers
+
+	public static final String ANOMALY_OPEN_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.anomalyOpen.Annotation";
+
+	public static final String ANOMALY_CLOSED_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.anomalyClosed.Annotation";
+
+	public static final String ANOMALY_DISABLED_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.anomalyDisabled.Annotation";
+
+	public static final String DELTA_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.delta.Annotation";
+
+	public static final String DELTA_REVIEWED_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.deltaReviewed.Annotation";
+
+	public static final String DELTA_DISABLED_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.deltaDisabled.Annotation";
+
+	public static final String SELECTION_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.selection.Annotation";
+
+	public static final String SELECTION_REVIEWED_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.selectionReviewed.Annotation";
+
+	public static final String SELECTION_DISABLED_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.selectionDisabled.Annotation";
+
+	public static final String COMMENT_ANNOTATION_ID = "org.eclipse.mylyn.reviews.r4e.ui.comment.Annotation";
 }

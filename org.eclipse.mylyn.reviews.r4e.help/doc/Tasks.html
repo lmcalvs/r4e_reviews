@@ -732,6 +732,7 @@
 			<br/> 
 		</p>
 		<h2 id="Working_with_Editors">Working with Editors</h2>
+		<h3 id="Opening_files_in_editors">Opening files in editors</h3>
 		<p>Once the Navigator view is open and Review Items are present. The items can be reviewed. Files are reviewed using various editor views to browse the content. Currently R4E is fully integrated with the Java JDT and C/C++ CDT editors and will take advantage of the special features these editors provide. &nbsp; </p>
 		<p>Files can be open in editors by double-clicking on them or their children in the Review Navigator. By default, files belonging to resource review items will be open in single-file editors, whereas files belonging to commit review items will be open in a compare editor. If the file is open using the child Selection/Delta/Anomaly element, then the cursor will automatically be positioned to the start of the line range that corresponds to the element. Files and also be open in the single-file editor by using the 
 			<i>Open File in Editor</i> command from the selected element context menu. 
@@ -749,6 +750,44 @@
 		<p>
 			<br/>
 		</p>
+		<h3 id="Using_Review_Annotations_and_Inline_Comments">Using Review Annotations and Inline Comments</h3>
+		<p>When to Review Navigator is open, Selections, Deltas and Anomalies elements will be shown as annotations in the Editor window left ruler.  The text area of the editor that correspond to the position range of the element will also be highlighted.</p>
+		<p>The 
+			<img border="0" src="anomalyAnnotationMarker.gif"/> icons show anomalies and associated comments, the 
+			<img border="0" src="deltaAnnotationMarker.gif"/> icons show Deltas and the 
+			<img border="0" src="selectionAnnotationMarker.gif"/> icons show Selection elements.
+		</p>
+		<p>
+			<img border="0" src="CompareEditorAnnotations.png"/>
+		</p>
+		<p>Additionally, the single editor will also show them as markers in the overview ruler on the right side.</p>
+		<p>
+			<img border="0" src="SingleEditorAnnotations.png"/> 
+		</p>
+		<p>The appearance of the annotations (highlighting colors, widgets etc.) can be chaged by going to the 
+			<i>Window-&gt;Preferences</i> under the 
+			<i>General-&gt;Editors-&gt;Text Editors-&gt;Annotations</i> preferences page
+		</p>
+		<p>
+			<img border="0" src="AnnotationPreferences.png"/> 
+		</p>
+		<h3 id="Navigating_through_and_using_R4E_Annotations">Navigating through and using R4E Annotations</h3>
+		<p>In the compare editor, it is possible to navigate through the R4E Annotations by using the 
+			<i>Goto Next Anomaly</i> and 
+			<i>Goto Previous Anomaly</i> commands
+		</p>
+		<p>
+			<img border="0" src="CompareEditorNavigateAnnotations.png"/>
+		</p>
+		<p>In the single editor, we use the normal annotation navigations command in the main R4E toolbar.  It it possible to restrict navigation to go only through the R4E Annotation by removing the navigation to other annotation type as shown below</p>
+		<p>
+			<img border="0" src="SingleEditorNavigateAnnotations.png"/>
+		</p>
+		<p>When hovering over the R4E annotation markers, information about the corresponding R4E element will be displayed in the hovering popup window.  It is also possible to use contextual commands on the associated R4E element in the hovering window.  This has the same effect as using contextual command on the element in the R4E Navigator.</p>
+		<p>
+			<img border="0" src="EditorAnnotationHover.png"/>
+		</p>
+		<p>Annotations are a nice and effective tool to help in performing reviews without having to go outside of the editor window.</p>
 		<h2 id="Working_with_R4E_Properties">Working with R4E Properties</h2>
 		<p>Updates to any review elements are performed via the R4E Properties View. The R4E Properties view uses the Generic Eclipse Properties View to display the R4E Properties and will show up when any Review Navigator element is selected to display the properties that are associated with this element. </p>
 		<p>The R4E Properties View is a tabbed properties view that consists of two tabs. </p>

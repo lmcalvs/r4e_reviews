@@ -197,6 +197,38 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	 */
 	public static final String P_HIDE_DELTAS_FILTER = "hideDeltasFilter";
 
+	//Inline markers preferences
+
+	/**
+	 * Field OPEN_ANOMALY_ANNOTATION_TEXT. (value is ""anomalyOpen_text"")
+	 */
+	public static final String OPEN_ANOMALY_ANNOTATION_TEXT = "anomalyOpen_text";
+
+	/**
+	 * Field OPEN_ANOMALY_ANNOTATION_STYLE. (value is ""anomalyOpen_style"")
+	 */
+	public static final String OPEN_ANOMALY_ANNOTATION_STYLE = "anomalyOpen_style";
+
+	/**
+	 * Field CLOSED_ANOMALY_ANNOTATION_TEXT. (value is ""anomalyClosed_text"")
+	 */
+	public static final String CLOSED_ANOMALY_ANNOTATION_TEXT = "anomalyClosed_text";
+
+	/**
+	 * Field CLOSED_ANOMALY_ANNOTATION_STYLE. (value is ""anomalyClosed_style"")
+	 */
+	public static final String CLOSED_ANOMALY_ANNOTATION_STYLE = "anomalyClosed_style";
+
+	/**
+	 * Field DISABLED_ANOMALY_ANNOTATION_TEXT. (value is ""anomalyDisabled_text"")
+	 */
+	public static final String DISABLED_ANOMALY_ANNOTATION_TEXT = "anomalyDisabled_text";
+
+	/**
+	 * Field DISABLED_ANOMALY_ANNOTATION_STYLE. (value is ""anomalyDisabled_style"")
+	 */
+	public static final String DISABLED_ANOMALY_ANNOTATION_STYLE = "anomalyDisabled_style";
+
 	/**
 	 * Method setUserEmailDefaultPreferences.
 	 */

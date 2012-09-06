@@ -23,19 +23,21 @@ import java.io.InputStream;
 import java.util.Iterator;
 
 import org.eclipse.compare.CompareEditorInput;
-import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentType;
+import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4ESingleAnnotationSupport;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
@@ -52,6 +54,7 @@ import org.eclipse.ui.IEditorRegistry;
 import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -145,10 +148,10 @@ public class EditorProxy {
 				openCompareEditor(aPage, baseFileVersion, targetFileVersion);
 			} else {
 				if (null != targetFileVersion) {
-					openSingleEditor(aPage, targetFileVersion, position);
+					openSingleEditor(aPage, context, targetFileVersion, position);
 				} else if (null != baseFileVersion) {
 					//File was removed, open the base then
-					openSingleEditor(aPage, baseFileVersion, position);
+					openSingleEditor(aPage, context, baseFileVersion, position);
 				} else {
 					//Show the error, the file was in another project and was not
 					//found when creating the commit review item
@@ -173,7 +176,8 @@ public class EditorProxy {
 	 * @param aPosition
 	 *            IR4EUIPosition - the position to go to in the file
 	 */
-	private static void openSingleEditor(IWorkbenchPage aPage, R4EFileVersion aFileVersion, IR4EUIPosition aPosition) {
+	private static void openSingleEditor(IWorkbenchPage aPage, R4EUIFileContext aContext, R4EFileVersion aFileVersion,
+			IR4EUIPosition aPosition) {
 
 		try {
 			IStorageEditorInput editorInput = null;
@@ -188,13 +192,18 @@ public class EditorProxy {
 			final String id = getEditorId(editorInput.getName(),
 					getContentType(editorInput.getName(), editorInput.getStorage().getContents()));
 			final IEditorPart editor = aPage.openEditor(editorInput, id, OpenStrategy.activateOnOpen());
+			ITextOperationTarget target = (ITextOperationTarget) editor.getAdapter(ITextOperationTarget.class);
+			if (target instanceof SourceViewer) {
+				SourceViewer sourceViewer = (SourceViewer) target;
+				R4ESingleAnnotationSupport.getAnnotationSupport(sourceViewer, aContext);
+			}
 
 			//Set highlighted selection and reset cursor if possible
 			if (editor instanceof ITextEditor && aPosition instanceof R4EUITextPosition) {
-				((ITextEditor) editor).setHighlightRange(((R4EUITextPosition) aPosition).getOffset(),
-						((R4EUITextPosition) aPosition).getLength(), true);
-				final TextSelection selectedText = new TextSelection(((R4EUITextPosition) aPosition).getOffset(),
-						((R4EUITextPosition) aPosition).getLength());
+				int offset = ((R4EUITextPosition) aPosition).getOffset();
+				int length = ((R4EUITextPosition) aPosition).getLength();
+				((ITextEditor) editor).setHighlightRange(offset, length, true);
+				final TextSelection selectedText = new TextSelection(offset, length);
 				((ITextEditor) editor).getSelectionProvider().setSelection(selectedText);
 			}
 		} catch (CoreException e) {
@@ -217,7 +226,7 @@ public class EditorProxy {
 
 		//Reuse editor if it is already open on the same input
 		CompareEditorInput input = null;
-		final IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileVersion, aTargetFileVersion);
+		IEditorPart editor = findReusableCompareEditor(aPage, aBaseFileVersion, aTargetFileVersion);
 
 		if (null != editor) {
 			aPage.activate(editor); //Simply provide focus to editor
@@ -231,7 +240,13 @@ public class EditorProxy {
 			R4EUIPlugin.Ftracer.traceInfo("Open compare editor on files "
 					+ ((null != aTargetFileVersion) ? aTargetFileVersion.getName() : "") + " (Target) and "
 					+ ((null != aBaseFileVersion) ? aBaseFileVersion.getName() : "") + " (Base)");
-			CompareUI.openCompareEditor(input, true);
+			//CompareUI.openCompareEditor(input, true);
+			try {
+				editor = aPage.openEditor(input, "org.eclipse.compare.CompareEditor", OpenStrategy.activateOnOpen());
+			} catch (PartInitException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//NOTE:  The position is set in editor in R4ECompareEditorInput#createContents
 		}
 	}
@@ -300,6 +315,48 @@ public class EditorProxy {
 					//Case: Base and target are the same
 					if (null != leftVersion && null != rightVersion && null != aBaseFile && null != aTargetFile) {
 						if (leftVersion.equals(aTargetFile) && rightVersion.equals(aBaseFile)) {
+							return part;
+						}
+					}
+				}
+			}
+		}
+		// no re-usable editor found
+		return null;
+	}
+
+	public static IEditorPart findReusableEditor(IWorkbenchPage aPage, R4EFileVersion aFile) {
+
+		final IEditorReference[] editorRefs = aPage.getEditorReferences();
+		IEditorPart part = null;
+		// first loop looking for an editor with the same input
+		for (IEditorReference editorRef : editorRefs) {
+			part = editorRef.getEditor(false);
+			if (null != part && part instanceof IReusableEditor) {
+				// check if the editor input type complies with the types given by the caller
+				if (R4EFileEditorInput.class.isInstance(part.getEditorInput())) {
+					//Now check if the input files are the same as with the found editor
+					R4EFileEditorInput input = (R4EFileEditorInput) part.getEditorInput();
+
+					//Case:  No input in editor, that should never happen but guard here just in case
+					if (null != input) {
+
+						//Get the file version
+						R4EFileVersion fileVersion = input.getFileVersion();
+						if (null != fileVersion) {
+							return part;
+						}
+					}
+				} else if (R4EFileRevisionEditorInput.class.isInstance(part.getEditorInput())) {
+					//Now check if the input files are the same as with the found editor
+					R4EFileRevisionEditorInput input = (R4EFileRevisionEditorInput) part.getEditorInput();
+
+					//Case:  No input in editor, that should never happen but guard here just in case
+					if (null != input) {
+
+						//Get the file version
+						R4EFileVersion fileVersion = input.getFileVersion();
+						if (null != fileVersion) {
 							return part;
 						}
 					}

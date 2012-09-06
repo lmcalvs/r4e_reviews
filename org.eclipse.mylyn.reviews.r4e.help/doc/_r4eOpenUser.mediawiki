@@ -339,7 +339,7 @@ This tutorial shows how to use R4E by going through a very simple Basic Review. 
 
 <br> 
 
-[[Image:TutorialNewAnomaly.png]] 
+[[Image:NewAnomaly.png]] 
 
 <br> 
 
@@ -1223,7 +1223,7 @@ This will trigger the Clone Anomaly Dialog, where the source anomaly to clone ca
 
 Once this is done, a new Anomaly will appear at the new location with the same information as the source one.
 
-Anomalies can also be cloned to a specific Delta or Selection element by dragging and dropping them unto the desired Delta or Selection, by using the Copy and Paste Review Navigator Contextual commands or by using the generic Copy (CTRL+C) and Paste (CTRL+V) hotkeys.  
+Anomalies can also be cloned to a specific Delta or Selection element by dragging and dropping them over the desired Delta or Selection, by using the Copy and Paste Review Navigator Contextual commands or by using the generic Copy (CTRL+C) and Paste (CTRL+V) hotkeys.  
 
 [[Image:DragDropAnomaly.png]]
 
@@ -1390,6 +1390,8 @@ This opens the New Rule dialog.
 
 == Working with Editors  ==
 
+=== Opening files in editors ===
+
 Once the Navigator view is open and Review Items are present. The items can be reviewed. Files are reviewed using various editor views to browse the content. Currently R4E is fully integrated with the Java JDT and C/C++ CDT editors and will take advantage of the special features these editors provide. &nbsp; 
 
 Files can be open in editors by double-clicking on them or their children in the Review Navigator. By default, files belonging to resource review items will be open in single-file editors, whereas files belonging to commit review items will be open in a compare editor. If the file is open using the child Selection/Delta/Anomaly element, then the cursor will automatically be positioned to the start of the line range that corresponds to the element. Files and also be open in the single-file editor by using the ''Open File in Editor'' command from the selected element context menu. 
@@ -1403,6 +1405,39 @@ Files can be open in editors by double-clicking on them or their children in the
 Once the file is open, anomalies can be added on the contents by selecting a range in the file and using the New Anomaly command in the R4E context menu. 
 
 <br>
+
+=== Using Review Annotations and Inline Comments ===
+
+When to Review Navigator is open, Selections, Deltas and Anomalies elements will be shown as annotations in the Editor window left ruler.  The text area of the editor that correspond to the position range of the element will also be highlighted.
+
+The [[Image:anomalyAnnotationMarker.png]] icons show anomalies and associated comments, the [[Image:deltaAnnotationMarker.png]] icons show Deltas and the [[Image:selectionAnnotationMarker.png]] icons show Selection elements.
+
+[[Image:CompareEditorAnnotations.png]]
+
+Additionally, the single editor will also show them as markers in the overview ruler on the right side.
+
+[[Image:SingleEditorAnnotations.png]] 
+
+The appearance of the annotations (highlighting colors, widgets etc.) can be chaged by going to the ''Window->Preferences'' under the ''General->Editors->Text Editors->Annotations'' preferences page
+
+[[Image:AnnotationPreferences.png]] 
+
+=== Navigating through and using R4E Annotations ===
+
+In the compare editor, it is possible to navigate through the R4E Annotations by using the ''Goto Next Anomaly'' and ''Goto Previous Anomaly'' commands
+
+[[Image:CompareEditorNavigateAnnotations.png]]
+
+In the single editor, we use the normal annotation navigations command in the main R4E toolbar.  It it possible to restrict navigation to go only through the R4E Annotation by removing the navigation to other annotation type as shown below
+
+[[Image:SingleEditorNavigateAnnotations.png]]
+
+When hovering over the R4E annotation markers, information about the corresponding R4E element will be displayed in the hovering popup window.  It is also possible to use contextual commands on the associated R4E element in the hovering window.  This has the same effect as using contextual command on the element in the R4E Navigator.
+
+[[Image:EditorAnnotationHover.png]]
+
+Annotations are a nice and effective tool to help in performing reviews without having to go outside of the editor window.
+
 
 == Working with R4E Properties  ==
 

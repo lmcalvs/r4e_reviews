@@ -28,6 +28,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Sebastien Dubois
@@ -177,7 +178,22 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fContents.remove(removedElement);
+
+			//Remove inline markings (local anomalies only)
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					UIUtils.removeAnnotation(removedElement, (R4EUIFileContext) getParent());
+				}
+			});
+		} else {
+			//Update inline markings (local anomalies only)
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					UIUtils.updateAnnotation(removedElement, (R4EUIFileContext) getParent());
+				}
+			});
 		}
+
 	}
 
 	/**

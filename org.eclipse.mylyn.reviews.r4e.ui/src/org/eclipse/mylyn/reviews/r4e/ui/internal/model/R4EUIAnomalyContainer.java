@@ -489,6 +489,14 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 									aFile.getTargetFileVersion(), aUiPosition);
 							R4EUIModelController.setJobInProgress(false);
 							UIUtils.setNavigatorViewFocus(uiAnomaly, AbstractTreeViewer.ALL_LEVELS);
+
+							//Add inline anomaly to editor (if applicable)
+							Display.getDefault().syncExec(new Runnable() {
+								public void run() {
+									UIUtils.addAnnotation(uiAnomaly, aFile);
+								}
+							});
+
 						} catch (ResourceHandlingException e) {
 							UIUtils.displayResourceErrorDialog(e);
 						} catch (OutOfSyncException e) {
@@ -585,6 +593,13 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		if (!aClone) {
 			uiAnomaly.setExtraModelData(aModelComponent);
 		}
+
+		//Add inline anomaly to editor (if applicable)
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				UIUtils.addAnnotation(uiAnomaly, (R4EUIFileContext) getParent());
+			}
+		});
 		return uiAnomaly;
 	}
 
@@ -664,6 +679,23 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 		//Remove element from UI if the show disabled element option is off
 		if (!(R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED))) {
 			fAnomalies.remove(removedElement);
+			//Remove inline markings (local anomalies only)
+			if (getParent() instanceof R4EUIFileContext) {
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						UIUtils.removeAnnotation(removedElement, (R4EUIFileContext) getParent());
+					}
+				});
+			}
+		} else {
+			//Update inline markings (local anomalies only)
+			if (getParent() instanceof R4EUIFileContext) {
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						UIUtils.updateAnnotation(removedElement, (R4EUIFileContext) getParent());
+					}
+				});
+			}
 		}
 	}
 

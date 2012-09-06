@@ -14,6 +14,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +25,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.internal.MergeSourceViewer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -40,6 +42,7 @@ import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.mylyn.reviews.frame.core.model.Location;
 import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
@@ -1046,5 +1049,31 @@ public class CommandUtils {
 			});
 		}
 		return result;
+	}
+
+	/**
+	 * Method getSourceViewer.
+	 * 
+	 * @param aMergeViewer
+	 *            MergeSourceViewer
+	 * @return SourceViewer
+	 */
+	public static SourceViewer getSourceViewer(MergeSourceViewer aMergeViewer) {
+		if (SourceViewer.class.isInstance(aMergeViewer)) {
+			return SourceViewer.class.cast(aMergeViewer);
+		} else {
+			Object returnValue;
+			try {
+				Method getSourceViewerRefl = MergeSourceViewer.class.getDeclaredMethod("getSourceViewer");
+				getSourceViewerRefl.setAccessible(true);
+				returnValue = getSourceViewerRefl.invoke(aMergeViewer);
+				if (returnValue instanceof SourceViewer) {
+					return (SourceViewer) returnValue;
+				}
+			} catch (Exception e) {
+				// ignore
+			}
+		}
+		return null;
 	}
 }

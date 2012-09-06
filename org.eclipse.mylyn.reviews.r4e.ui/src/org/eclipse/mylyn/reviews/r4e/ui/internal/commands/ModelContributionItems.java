@@ -40,6 +40,8 @@ import org.eclipse.ui.menus.CommandContributionItemParameter;
  */
 public class ModelContributionItems extends CompoundContributionItem {
 
+	private IR4EUIModelElement fElement = null;
+
 	/**
 	 * Method getContributionItems.
 	 * 
@@ -50,10 +52,14 @@ public class ModelContributionItems extends CompoundContributionItem {
 
 		final List<IContributionItem> list = new ArrayList<IContributionItem>();
 		CommandContributionItemParameter params = null;
-		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) R4EUIModelController.getNavigatorView()
-				.getTreeViewer()
-				.getSelection()).getFirstElement();
-
+		IR4EUIModelElement element = null;
+		if (null == fElement) {
+			element = (IR4EUIModelElement) ((IStructuredSelection) R4EUIModelController.getNavigatorView()
+					.getTreeViewer()
+					.getSelection()).getFirstElement();
+		} else {
+			element = fElement;
+		}
 		if (null != element) {
 			if (element.isOpenElementCmd()) {
 
@@ -265,5 +271,16 @@ public class ModelContributionItems extends CompoundContributionItem {
 			}
 		}
 		return list.toArray(new IContributionItem[list.size()]);
+	}
+
+	public IContributionItem[] getContributionItems(IR4EUIModelElement aElement) {
+		IContributionItem[] items = new IContributionItem[0];
+		//Annotation toolbar commands are only present if the Review Navigator view is open 
+		if (null != R4EUIModelController.getNavigatorView()) {
+			fElement = aElement; //used to set the element to the one passed in method instead of using the Review Navigator selection 
+			items = getContributionItems();
+			fElement = null;
+		}
+		return items;
 	}
 }

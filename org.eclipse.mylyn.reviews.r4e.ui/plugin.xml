@@ -953,6 +953,18 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.PasteElement"
             name="Paste">
       </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
+            description="Go To Next Open Anomaly Annotation"
+            id="org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.NextAnomalyAnnotation"
+            name="Next Anomaly">
+      </command>
+      <command
+            categoryId="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCategory"
+            description="Go To Previous Open Anomaly Annotation"
+            id="org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.PreviousAnomalyAnnotation"
+            name="Previous Anomaly">
+      </command>
 
    </extension>
    <extension
@@ -965,6 +977,13 @@
          </variable>
          <variable
                name="org.eclipse.mylyn.reviews.r4e.ui.commands.reviewCompleted"
+               priorityLevel="workbench">
+         </variable>
+      </sourceProvider>
+      <sourceProvider
+            provider="org.eclipse.mylyn.reviews.r4e.ui.internal.commands.UIElementsProvider">
+         <variable
+               name="org.eclipse.mylyn.reviews.r4e.ui.commands.selectedElements"
                priorityLevel="workbench">
          </variable>
       </sourceProvider>
@@ -1460,6 +1479,24 @@
              </test>
           </enabledWhen>
        </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.NextAnomalyAnnotationHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.NextAnomalyAnnotation">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.PreviousAnomalyAnnotationHandler"
+             commandId="org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.PreviousAnomalyAnnotation">
+          <enabledWhen>
+             <test
+                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
+             </test>
+          </enabledWhen>
+       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
@@ -1813,5 +1850,284 @@
             name="R4E context"
             parentId="org.eclipse.ui.contexts.window">
       </context>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.annotationTypes">
+      <type
+            name="org.eclipse.mylyn.reviews.r4e.ui.anomalyOpen.Annotation">
+      </type>
+      <type
+            name="org.eclipse.mylyn.reviews.r4e.ui.anomalyClosed.Annotation">
+      </type>
+      <type
+            name="org.eclipse.mylyn.reviews.r4e.ui.anomalyDisabled.Annotation">
+      </type>
+      <type
+            name="org.eclipse.mylyn.reviews.r4e.ui.delta.Annotation">
+      </type>
+      <type
+            name="org.eclipse.mylyn.reviews.r4e.ui.deltaReviewed.Annotation">
+      </type>
+      <type
+            name="org.eclipse.mylyn.reviews.r4e.ui.deltaDisabled.Annotation">
+      </type>
+      <type
+            name="org.eclipse.mylyn.reviews.r4e.ui.selection.Annotation">
+      </type>
+      <type
+            name="org.eclipse.mylyn.reviews.r4e.ui.selectionReviewed.Annotation">
+      </type>
+      <type
+            name="org.eclipse.mylyn.reviews.r4e.ui.selectionDisabled.Annotation">
+      </type>
+      <type
+            name="org.eclipse.mylyn.reviews.r4e.ui.comment.Annotation">
+      </type>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+      <specification
+            annotationType="org.eclipse.mylyn.reviews.r4e.ui.anomalyOpen.Annotation"
+            colorPreferenceKey="anomalyOpen_color"
+            colorPreferenceValue="255, 0, 0"
+            contributesToHeader="true"
+            icon="icons/obj16/anmlymkr_obj.gif"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="true"
+            isGoToNextNavigationTargetKey="anomalyOpen_isGoToNextNavigationTargetKey"
+            isGoToPreviousNavigationTarget="true"
+            isGoToPreviousNavigationTargetKey="anomalyOpen_isGoToPreviousNavigationTargetKey"
+            label="R4E Anomalies Open"
+            overviewRulerPreferenceKey="anomalyOpen_overviewRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="1"
+            showInNextPrevDropdownToolbarAction="true"
+            showInNextPrevDropdownToolbarActionKey="anomalyOpen_showInNextPrevDropdownToolbarAction"
+            textPreferenceKey="anomalyOpen_text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="anomalyOpen_style"
+            textStylePreferenceValue="SQUIGGLES"
+            verticalRulerPreferenceKey="anomalyOpen_verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+      <specification
+            annotationType="org.eclipse.mylyn.reviews.r4e.ui.anomalyClosed.Annotation"
+            colorPreferenceKey="anomalyClosed_color"
+            colorPreferenceValue="0, 255, 0"
+            contributesToHeader="false"
+            icon="icons/obj16/anmlyclsdmkr_obj.png"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="false"
+            isGoToNextNavigationTargetKey="anomalyClosed_isGoToNextNavigationTargetKey"
+            isGoToPreviousNavigationTarget="false"
+            isGoToPreviousNavigationTargetKey="anomalyClosed_isGoToPreviousNavigationTargetKey"
+            label="R4E Anomalies Closed"
+            overviewRulerPreferenceKey="anomalyClosed_overviewRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="1"
+            showInNextPrevDropdownToolbarAction="false"
+            showInNextPrevDropdownToolbarActionKey="anomalyClosed_showInNextPrevDropdownToolbarAction"
+            textPreferenceKey="anomalyClosed_text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="anomalyClosed_style"
+            textStylePreferenceValue="SQUIGGLES"
+            verticalRulerPreferenceKey="anomalyClosed_verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+      <specification
+            annotationType="org.eclipse.mylyn.reviews.r4e.ui.anomalyDisabled.Annotation"
+            colorPreferenceKey="anomalyDisabled_color"
+            colorPreferenceValue="163, 163, 163"
+            contributesToHeader="false"
+            icon="icons/obj16/anmlydsblmkr_obj.png"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="false"
+            isGoToNextNavigationTargetKey="anomalyDisabled_isGoToNextNavigationTargetKey"
+            isGoToPreviousNavigationTarget="false"
+            isGoToPreviousNavigationTargetKey="anomalyDisabled_isGoToPreviousNavigationTargetKey"
+            label="R4E Anomalies Disabled"
+            overviewRulerPreferenceKey="anomalyDisabled_overviewRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="1"
+            showInNextPrevDropdownToolbarAction="false"
+            showInNextPrevDropdownToolbarActionKey="anomalyDisabled_showInNextPrevDropdownToolbarAction"
+            textPreferenceKey="anomalyDisabled_text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="anomalyDisabled_style"
+            textStylePreferenceValue="SQUIGGLES"
+            verticalRulerPreferenceKey="anomalyDisabled_verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+      <specification
+            annotationType="org.eclipse.mylyn.reviews.r4e.ui.delta.Annotation"
+            colorPreferenceKey="delta_color"
+            colorPreferenceValue="255, 228, 225"
+            contributesToHeader="true"
+            highlightPreferenceKey="delta_highlight"
+            highlightPreferenceValue="true"
+            icon="icons/obj16/delta_obj.gif"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="true"
+            isGoToNextNavigationTargetKey="delta_isGoToNextNavigationTargetKey"
+            isGoToPreviousNavigationTarget="true"
+            isGoToPreviousNavigationTargetKey="delta_isGoToPreviousNavigationTargetKey"
+            label="R4E Deltas"
+            overviewRulerPreferenceKey="delta_overviewRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="0"
+            showInNextPrevDropdownToolbarAction="true"
+            showInNextPrevDropdownToolbarActionKey="delta_showInNextPrevDropdownToolbarAction"
+            textPreferenceKey="delta_text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="delta_style"
+            textStylePreferenceValue="NONE"
+            verticalRulerPreferenceKey="delta_verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+      <specification
+            annotationType="org.eclipse.mylyn.reviews.r4e.ui.deltaReviewed.Annotation"
+            colorPreferenceKey="deltaReviewed_color"
+            colorPreferenceValue="240, 255, 240"
+            contributesToHeader="false"
+            highlightPreferenceKey="deltaReviewed_highlight"
+            highlightPreferenceValue="true"
+            icon="icons/obj16/deltarevd_obj.png"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="false"
+            isGoToNextNavigationTargetKey="deltaReviewed_isGoToNextNavigationTargetKey"
+            isGoToPreviousNavigationTarget="false"
+            isGoToPreviousNavigationTargetKey="deltaReviewed_isGoToPreviousNavigationTargetKey"
+            label="R4E Deltas Reviewed"
+            overviewRulerPreferenceKey="deltaReviewed_overviewRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="0"
+            showInNextPrevDropdownToolbarAction="false"
+            showInNextPrevDropdownToolbarActionKey="deltaReviewed_showInNextPrevDropdownToolbarAction"
+            textPreferenceKey="deltaReviewed_text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="deltaReviewed_style"
+            textStylePreferenceValue="NONE"
+            verticalRulerPreferenceKey="deltaReviewed_verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+      <specification
+            annotationType="org.eclipse.mylyn.reviews.r4e.ui.deltaDisabled.Annotation"
+            colorPreferenceKey="deltaDisabled_color"
+            colorPreferenceValue="196, 196, 196"
+            contributesToHeader="false"
+            highlightPreferenceKey="deltaDisabled_highlight"
+            highlightPreferenceValue="true"
+            icon="icons/obj16/deltadsbl_obj.png"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="false"
+            isGoToNextNavigationTargetKey="deltaDisabled_isGoToNextNavigationTargetKey"
+            isGoToPreviousNavigationTarget="false"
+            isGoToPreviousNavigationTargetKey="deltaDisabled_isGoToPreviousNavigationTargetKey"
+            label="R4E Deltas Disabled"
+            overviewRulerPreferenceKey="deltaDisabled_overviewRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="0"
+            showInNextPrevDropdownToolbarAction="false"
+            showInNextPrevDropdownToolbarActionKey="deltaDisabled_showInNextPrevDropdownToolbarAction"
+            textPreferenceKey="deltaDisabled_text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="deltaDisabled_style"
+            textStylePreferenceValue="NONE"
+            verticalRulerPreferenceKey="deltaDisabled_verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+      <specification
+            annotationType="org.eclipse.mylyn.reviews.r4e.ui.selection.Annotation"
+            colorPreferenceKey="selection_color"
+            colorPreferenceValue="255, 228, 225"
+            contributesToHeader="false"
+            highlightPreferenceKey="selection_highlight"
+            highlightPreferenceValue="true"
+            icon="icons/obj16/sel_obj.gif"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="true"
+            isGoToNextNavigationTargetKey="selection_isGoToNextNavigationTargetKey"
+            isGoToPreviousNavigationTarget="true"
+            isGoToPreviousNavigationTargetKey="selection_isGoToPreviousNavigationTargetKey"
+            label="R4E Selections"
+            overviewRulerPreferenceKey="selection_overviewRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="0"
+            showInNextPrevDropdownToolbarAction="true"
+            showInNextPrevDropdownToolbarActionKey="selection_showInNextPrevDropdownToolbarAction"
+            textPreferenceKey="selection_text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="selection_style"
+            textStylePreferenceValue="NONE"
+            verticalRulerPreferenceKey="selection_verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+      <specification
+            annotationType="org.eclipse.mylyn.reviews.r4e.ui.selectionReviewed.Annotation"
+            colorPreferenceKey="selectionReviewed_color"
+            colorPreferenceValue="240, 255, 240"
+            contributesToHeader="false"
+            highlightPreferenceKey="selectionReviewed_highlight"
+            highlightPreferenceValue="true"
+            icon="icons/obj16/selrevd_obj.png"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="false"
+            isGoToNextNavigationTargetKey="selectionReviewed_isGoToNextNavigationTargetKey"
+            isGoToPreviousNavigationTarget="false"
+            isGoToPreviousNavigationTargetKey="selectionReviewed_isGoToPreviousNavigationTargetKey"
+            label="R4E Selections Reviewed"
+            overviewRulerPreferenceKey="selectionReviewed_overviewRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="0"
+            showInNextPrevDropdownToolbarAction="false"
+            showInNextPrevDropdownToolbarActionKey="selectionReviewed_showInNextPrevDropdownToolbarAction"
+            textPreferenceKey="selectionReviewed_text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="selectionReviewed_style"
+            textStylePreferenceValue="NONE"
+            verticalRulerPreferenceKey="selectionReviewed_verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+      <specification
+            annotationType="org.eclipse.mylyn.reviews.r4e.ui.selectionDisabled.Annotation"
+            colorPreferenceKey="selectionDisabled_color"
+            colorPreferenceValue="196, 196, 196"
+            contributesToHeader="false"
+            highlightPreferenceKey="selectionDisabled_highlight"
+            highlightPreferenceValue="true"
+            icon="icons/obj16/seldsbl_obj.png"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="false"
+            isGoToNextNavigationTargetKey="selectionDisabled_isGoToNextNavigationTargetKey"
+            isGoToPreviousNavigationTarget="false"
+            isGoToPreviousNavigationTargetKey="selectionDisabled_isGoToPreviousNavigationTargetKey"
+            label="R4E Selections Disabled"
+            overviewRulerPreferenceKey="selectionDisabled_overviewRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="0"
+            showInNextPrevDropdownToolbarAction="false"
+            showInNextPrevDropdownToolbarActionKey="selectionDisabled_showInNextPrevDropdownToolbarAction"
+            textPreferenceKey="selectionDisabled_text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="selectionDisabled_style"
+            textStylePreferenceValue="NONE"
+            verticalRulerPreferenceKey="selectionDisabled_verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+      <specification
+            annotationType="org.eclipse.mylyn.reviews.r4e.ui.comment.Annotation"
+            contributesToHeader="false"
+            icon="icons/obj16/cmmnt_obj.gif"
+            includeOnPreferencePage="false"
+            isGoToNextNavigationTarget="false"
+            isGoToPreviousNavigationTarget="false"
+            label="R4E Comment"
+            overviewRulerPreferenceValue="false"
+            presentationLayer="0"
+            showInNextPrevDropdownToolbarAction="false"
+            textPreferenceValue="false"
+            textStylePreferenceValue="NONE"
+            verticalRulerPreferenceValue="false">
+      </specification>
    </extension>
 </plugin>

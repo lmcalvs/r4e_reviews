@@ -162,23 +162,24 @@ public class NewChildElementHandler extends AbstractHandler {
 	 * @return IR4EUIModelElement
 	 */
 	private IR4EUIModelElement getParentElement(ExecutionEvent event) {
-
 		final Widget triggerObject = ((Event) event.getTrigger()).widget;
 		IR4EUIModelElement element = null;
 
 		if (triggerObject instanceof ToolItem) {
+			Object data = ((ToolItem) triggerObject).getParent().getData(R4EUIConstants.ANNOTATION_TOOLBAR);
+			if (null == data || !(Boolean) data) {
+				//Add element to the root of the tree
+				return R4EUIModelController.getRootElement();
+			}
+		}
+		final IStructuredSelection selection = (IStructuredSelection) R4EUIModelController.getNavigatorView()
+				.getTreeViewer()
+				.getSelection();
+		if (!selection.isEmpty()) {
+			element = (IR4EUIModelElement) selection.getFirstElement();
+		} else {
 			//Add element to the root of the tree
 			element = R4EUIModelController.getRootElement();
-		} else {
-			final IStructuredSelection selection = (IStructuredSelection) R4EUIModelController.getNavigatorView()
-					.getTreeViewer()
-					.getSelection();
-			if (!selection.isEmpty()) {
-				element = (IR4EUIModelElement) selection.getFirstElement();
-			} else {
-				//Add element to the root of the tree
-				element = R4EUIModelController.getRootElement();
-			}
 		}
 		return element;
 	}

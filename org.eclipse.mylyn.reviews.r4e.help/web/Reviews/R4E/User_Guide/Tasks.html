@@ -18,7 +18,7 @@
 				</td>
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right">
-					<a href="Updating-This-Document.html" title="Updating This Document">
+					<a href="Advanced-Topics.html" title="Advanced Topics">
 						<img alt="Next" border="0" src="../../../images/next.gif"/>
 					</a>
 				</td>
@@ -26,7 +26,7 @@
 			<tr>
 				<td style="width: 20%" align="left" valign="top">Concepts</td>
 				<td style="width: 60%" align="center"></td>
-				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+				<td style="width: 20%" align="right" valign="top">Advanced Topics</td>
 			</tr>
 		</table><hr/>
 		<h1 id="Tasks">Tasks</h1>
@@ -527,6 +527,29 @@
 		<p>
 			<br/> 
 		</p>
+		<h3 id="Cloning_an_existing_Anomaly">Cloning an existing Anomaly</h3>
+		<p>Anomalies can be duplicated so that their information is applied to a new location and/or file.  Anomalies are cloned be selecting a new range in an editor and using the 
+			<i>Clone Anomaly</i> contextual command
+		</p>
+		<p>
+			<img border="0" src="images/CloneAnomaly.png"/>
+		</p>
+		<p>This will trigger the Clone Anomaly Dialog, where the source anomaly to clone can be selected.</p>
+		<p>
+			<img border="0" src="images/CloneAnomalyDialog.png"/>
+		</p>
+		<p>Once this is done, a new Anomaly will appear at the new location with the same information as the source one.</p>
+		<p>Anomalies can also be cloned to a specific Delta or Selection element by dragging and dropping them unto the desired Delta or Selection, by using the Copy and Paste Review Navigator Contextual commands or by using the generic Copy (CTRL+C) and Paste (CTRL+V) hotkeys.  </p>
+		<p>
+			<img border="0" src="images/DragDropAnomaly.png"/>
+		</p>
+		<p>
+			<img border="0" src="images/CopyAnomaly.png"/>
+		</p>
+		<p>
+			<img border="0" src="images/PasteAnomaly.png"/>
+		</p>
+		<p>Take note that the child comments on the source anomaly are not copied to the new cloned anomaly.  It is however possible to copy the comments manually (see below).</p>
 		<h3 id="Creating_Comments_on_an_existing_Anomaly">Creating Comments on an existing Anomaly</h3>
 		<p>It is possible to add comments to an existing anomaly. This could be useful in discussing the anomaly or for tracking purposes. To create a Comment, use the 
 			<i>Add Comment</i> command on the context menu on the selected Anomaly. 
@@ -550,18 +573,31 @@
 		<p>
 			<br/>
 		</p>
+		<h3 id="Cloning_existing_Comments_to_an_Anomaly">Cloning existing Comments to an Anomaly</h3>
+		<p>As for anomalies, it is also possible to copy comment information to another anomaly.  It is done in a similar way than for cloning anomalies, by dragging and dropping the source comment(s) unto the target anomaly, by using the Copy and Paste Review Navigator contextual commands or by using the generic Copy (CTRL+C) and Paste (CTRL+V) hotkeys</p>
+		<p>
+			<img border="0" src="images/DragDropComment.png"/>
+		</p>
+		<p>
+			<img border="0" src="images/CopyComment.png"/>
+		</p>
+		<p>
+			<img border="0" src="images/PasteComment.png"/>
+		</p>
 		<h3 id="Importing_Postponed_Anomalies">Importing Postponed Anomalies</h3>
 		<p>Postponed Anomalies are Anomalies that were written in previous Informal/Formal Reviews, but were not handled then and were instead set to 
-			<i>POSTPONED</i> state.  If the current Review include files on which these anomalies were written, whether it is the same or a different version of a file, it is possible to import them in the current review so that they can be addressed.  Currently, only Postponed Anomalies that belong to Reviews under the same Review Group can be imported.  Also, take note that Global Anomalies cannot be imported.
+			<i>POSTPONED</i> state.  If the current Review include files on which these anomalies were written, whether it is the same or a different version of a file, it is possible to import them in the current review so that they can be addressed.  Currently, only Postponed Anomalies that belong to Reviews under the same Review Group can be imported. Global Anomalies that were written in other Reviews in the same Review Group can also optionally be imported.
 		</p>
 		<p>To import Postponed Anomalies, just select the current Review in the Navigator View and use the context menu:</p>
 		<p>
 			<img border="0" src="images/ImportAnomalies.png"/>
 		</p>
 		<p>R4E will scan all Reviews under the current Review Group and will copy all Anomalies in 
-			<i>POSTPONED</i> state that were written on files also included in the current Review.  Once the command is done, the imported elements will appear on their own container element under the Review element in the Review Navigator tree.
+			<i>POSTPONED</i> state that were written on files also included in the current Review, and also Global Anomalies in 
+			<i>POSTPONED</i> state written in other Reviews, if the option is selected in the preferences.  Once the command is done, the imported elements will appear on their own container elements under the Review element in the Review Navigator tree.
 		</p>
-		<p>From then on, Postponed anomalies behave like any other Anomaly and can be handled in the same way.  When a Postponed Anomaly is modified, the changes will also be reflected in the original Anomaly (i.e. the one filed in the previous Review).  Likewise, any changes that are done by other users on the original Anomaly can be seen in the current review by refreshing the imported Anomalies, by re-issuing the Import command.  Take note that Postponed Anomalies that have their state changed from POSTPONED will be disabled.  If they are set back to Postponed, they will be restored as Postponed elements.</p>
+		<p>From then on, Postponed anomalies will behave like any other Anomaly and can be handled in the same way.  All changes except the state changes will be local to the imported anomaly i.e. changing the imported anomaly will not change the original one.  When a Postponed Anomaly is modified, the state changes will also be reflected in the original Anomaly (i.e. the one filed in the previous Review).  For instance if the imported anomaly is fixed, the original one will be marked as fixed to convey the fact that the postponed issue is now closed. </p>
+		<p>Take note that Postponed Anomalies that have their state changed from POSTPONED will be disabled.  If they are set back to Postponed, they will be restored as Postponed elements.</p>
 		<h2 id="Handling_Design_Rules">Handling Design Rules</h2>
 		<h3 id="Creating_a_Rule_Set">Creating a Rule Set</h3>
 		<p>R4E support the use of Design Rules, to help reviewers enforce consistent design conventions and rules. A Rule Set is a container that includes multiple related Rules. Rule Sets are independently defined and can be shared among multiple Review Groups. Take note that the use of Design Rules is completely optional. </p>
@@ -1003,9 +1039,9 @@
 		</p>
 		<ul>
 			<li>ALT +4 A&nbsp;: Add Review Anomaly. Available from any editor View. There must be a selection in the editor to create a new Anomaly. </li>
-			<li>ALT +4 C&nbsp;: Collapses the Review Navigator View tree. </li>
+			<li>ALT +4 -&nbsp;: Collapses the Review Navigator View tree. </li>
 			<li>ALT +4 D&nbsp;: Change Display type.  Toggles between the Tree and Tree Table displays for the Review Navigator View. </li>
-			<li>ALT +4 E&nbsp;: Expand all elements of the Review Navigator View tree. </li>
+			<li>ALT +4 =&nbsp;: Expand all elements of the Review Navigator View tree. </li>
 			<li>ALT +4 F&nbsp;: Opens a dialog used with the Version Control System connector to Find new Review Items. A Project needs to be selected first before using this shortcut. </li>
 			<li>ALT +4 I&nbsp;: Add Review Item. Available from any editor View. There must be a selection in the editor to create a new Review Item. </li>
 			<li>ALT +4 L&nbsp;: Add a new Linked Anomaly to the selected Review Navigator Selection/Delta element, if any. </li>
@@ -1015,6 +1051,7 @@
 			<li>ALT +4 X&nbsp;: Remove (disable) the selected Review Navigator element, if any.</li>
 		</ul>
 		<p>When selecting the accelerator key ALT + 4, if the user waits before selecting the next accelerator key, a commands list like the one shown above will be displayed at the bottom right corner of the Eclipse window.</p>
+		<p>The default Copy and Paste accelerators (CTRL+C, CTRL+V) are also available in the Review Navigator view to clone Anomalies and Comments.</p>
 		<h2 id="Using_Notifications">Using Notifications</h2>
 		<p>R4E support sending Meeting and E-mail notifications directly from the Eclipse workbench. Notification send are pre-filled with all the relevant information, making it easy to have standardized communication between the Review participants. </p>
 		<p>Meeting notifications also can be used to schedule various meetings (e.g. decision meetings) automatically. </p>
@@ -1239,6 +1276,8 @@
 		</p>
 		<p>A new Anomaly in a Formal Review is set to 
 			<i>CREATED ''by default. During the decision phase, it could be set to the same values as in Informal Reviews, and it can also be set to ''ACCEPTED</i>, which means that the anomaly is deemed valid and will be handled and fixed. There is no ''ASSIGNED ''state for Anomalies in Formal Reviews. The rest of the anomaly flow is essentially the same as with Informal Reviews.
+
+			<br/>
 		</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
@@ -1253,7 +1292,7 @@
 					</a>
 				</td>
 				<td style="width: 20%" align="right">
-					<a href="Updating-This-Document.html" title="Updating This Document">
+					<a href="Advanced-Topics.html" title="Advanced Topics">
 						<img alt="Next" border="0" src="../../../images/next.gif"/>
 					</a>
 				</td>
@@ -1261,7 +1300,7 @@
 			<tr>
 				<td style="width: 20%" align="left" valign="top">Concepts</td>
 				<td style="width: 60%" align="center"></td>
-				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+				<td style="width: 20%" align="right" valign="top">Advanced Topics</td>
 			</tr>
 		</table>
 	</body>

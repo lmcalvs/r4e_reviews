@@ -383,7 +383,7 @@ public class R4EUILegendControl extends Composite {
 	 */
 	private void createNavigatorDecoratorsSection(Composite parent) {
 		final Section section = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR);
-		section.setText("Navigator Elements Decorators");
+		section.setText("Navigator and Editor Elements Decorators");
 		section.setLayout(new TableWrapLayout());
 		section.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
 
@@ -430,6 +430,18 @@ public class R4EUILegendControl extends Composite {
 
 		imageLabel = toolkit.createLabel(r4eClient, ">"); //$NON-NLS-1$
 		toolkit.createLabel(r4eClient, "File Out of Sync with Worskspace (File Contexts only)");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon("icons/obj16/anmlymkr_obj.gif"));
+		toolkit.createLabel(r4eClient, "Anomaly Annotation Marker (R4E Editor Views)");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon("icons/obj16/delta_obj.gif"));
+		toolkit.createLabel(r4eClient, "Delta Annotation Marker (R4E Editor Views)");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon("icons/obj16/sel_obj.gif"));
+		toolkit.createLabel(r4eClient, "Selection Annotation Marker (R4E Editor Views)");
 	}
 
 	/**
@@ -440,7 +452,7 @@ public class R4EUILegendControl extends Composite {
 	 */
 	private void createNavigatorViewCommandsSection(Composite parent) {
 		final Section section = toolkit.createSection(parent, ExpandableComposite.TITLE_BAR);
-		section.setText("Navigator View Commands");
+		section.setText("Navigator and Editor View Commands");
 		section.setLayout(new TableWrapLayout());
 		section.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
 
@@ -504,6 +516,14 @@ public class R4EUILegendControl extends Composite {
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon("icons/elcl16/prvelem_menu.gif"));
 		toolkit.createLabel(r4eClient, "Select Previous Element (and Open if possible)");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon("icons/elcl16/nxtanmly_menu.png"));
+		toolkit.createLabel(r4eClient, "Go To Next Open Anomaly Annotation (Compare Editor Window)");
+
+		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
+		imageLabel.setImage(UIUtils.loadIcon("icons/elcl16/prevanmly_menu.png"));
+		toolkit.createLabel(r4eClient, "Go To Previous Open Anomaly Annotation (Compare Editor Window)");
 
 		imageLabel = toolkit.createLabel(r4eClient, ""); //$NON-NLS-1$
 		imageLabel.setImage(UIUtils.loadIcon("icons/view16/icons-legend.gif"));

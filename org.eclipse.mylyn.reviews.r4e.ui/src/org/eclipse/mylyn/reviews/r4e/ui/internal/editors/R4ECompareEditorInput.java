@@ -24,15 +24,36 @@ import java.text.MessageFormat;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
+import org.eclipse.compare.CompareViewerPane;
+import org.eclipse.compare.ICompareNavigator;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.internal.CompareContentViewerSwitchingPane;
+import org.eclipse.compare.internal.CompareEditorInputNavigator;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.text.Position;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.R4EAnnotationContributionItems;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4ECompareAnnotationSupport;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author Sebastien Dubois
@@ -63,6 +84,10 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * Field fRight - the element that will appear on the right side of the compare editor
 	 */
 	private final ITypedElement fRight;
+
+	private ITextEditor fAnnotatedTextEditor = null;
+
+	private IReviewAnnotationModel fAnnotationModel = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -124,7 +149,9 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 * Method prepareCompareInputNoEditor.
 	 */
 	public void prepareCompareInputNoEditor() {
-		prepareCompareInput(null);
+		//Build the diff node to compare the files		
+		final Differencer differencer = new Differencer();
+		differencer.findDifferences(false, null, null, fAncestor, fLeft, fRight);
 	}
 
 	/**
@@ -228,20 +255,7 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		// Set the label values for the compare editor
 		initLabels();
 
-		// Build the diff node to compare the files		
-		final Differencer differencer = new Differencer();
-
-		//Store the differences here, we might need them later
-		final Object differences = differencer.findDifferences(false, aMonitor, null, fAncestor, fLeft, fRight);
-
-		/* We might want to do something here in the future
-		node.addCompareInputChangeListener(new ICompareInputChangeListener() {
-			@Override
-			public void compareInputChanged(ICompareInput source) {
-			}
-		});
-		*/
-		return (ICompareInput) differences;
+		return new R4EFileContextNode(fLeft, fRight);
 	}
 
 	/**
@@ -285,5 +299,68 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		//Go to the correct element in the compare editor
 		UIUtils.selectElementInEditor(this);
 		return control;
+	}
+
+	@Override
+	public Viewer findContentViewer(Viewer oldViewer, ICompareInput input, Composite parent) {
+		Viewer contentViewer = super.findContentViewer(oldViewer, input, parent);
+		//TODO lmcdubo: ideally we would like to get the file context from the FileContextNode element.  Need refactoring
+		if (input instanceof R4EFileContextNode) {
+			ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+			if (selection instanceof IStructuredSelection) {
+				Object element = ((IStructuredSelection) selection).getFirstElement();
+				if (element instanceof R4EUIFileContext) {
+					IReviewAnnotationSupport support = R4ECompareAnnotationSupport.getAnnotationSupport(contentViewer,
+							(R4EUIFileContext) element);
+					insertAnnotationNavigationCommands(CompareViewerPane.getToolBarManager(parent), support);
+				} else if (element instanceof R4EUIContent || element instanceof R4EUIAnomalyBasic) {
+					IReviewAnnotationSupport support = R4ECompareAnnotationSupport.getAnnotationSupport(contentViewer,
+							(R4EUIFileContext) ((IR4EUIModelElement) element).getParent().getParent());
+					insertAnnotationNavigationCommands(CompareViewerPane.getToolBarManager(parent), support);
+				}
+			}
+		}
+		return contentViewer;
+	}
+
+	public Viewer getContentViewer() {
+		final ICompareNavigator navigator = getNavigator();
+		if (navigator instanceof CompareEditorInputNavigator) {
+			final Object[] panes = ((CompareEditorInputNavigator) navigator).getPanes();
+			for (Object pane : panes) {
+				if (pane instanceof CompareContentViewerSwitchingPane) {
+					return ((CompareContentViewerSwitchingPane) pane).getViewer();
+				}
+			}
+		}
+		return null;
+	}
+
+	private void insertAnnotationNavigationCommands(IToolBarManager aManager, IReviewAnnotationSupport aSupport) {
+		fAnnotatedTextEditor = aSupport.getTargetEditor();
+		fAnnotationModel = aSupport.getTargetAnnotationModel();
+
+		aManager.add(new Separator());
+		R4EAnnotationContributionItems r4eItemsManager = new R4EAnnotationContributionItems();
+		IContributionItem[] items = r4eItemsManager.getR4EContributionItems();
+		for (IContributionItem item : items) {
+			aManager.add(item);
+		}
+		aManager.update(true);
+	}
+
+	public ITextEditor getAnnotatedTextEditor() {
+		return fAnnotatedTextEditor;
+	}
+
+	public void gotoNextAnnotation(String aType) {
+		Position annotationPositon = fAnnotationModel.getNextAnnotation(aType).getPosition();
+		fAnnotatedTextEditor.selectAndReveal(annotationPositon.getOffset(), annotationPositon.getLength());
+
+	}
+
+	public void gotoPreviousAnnotation(String aType) {
+		Position annotationPositon = fAnnotationModel.getPreviousAnnotation(aType).getPosition();
+		fAnnotatedTextEditor.selectAndReveal(annotationPositon.getOffset(), annotationPositon.getLength());
 	}
 }

@@ -100,7 +100,11 @@
 			<topic href="doc/Tasks.html#Creating_a_Rule_Violation" label="Creating a Rule Violation"></topic>
 			<topic href="doc/Tasks.html#Creating_a_Rule" label="Creating a Rule"></topic>
 		</topic>
-		<topic href="doc/Tasks.html#Working_with_Editors" label="Working with Editors"></topic>
+		<topic href="doc/Tasks.html#Working_with_Editors" label="Working with Editors">
+			<topic href="doc/Tasks.html#Opening_files_in_editors" label="Opening files in editors"></topic>
+			<topic href="doc/Tasks.html#Using_Review_Annotations_and_Inline_Comments" label="Using Review Annotations and Inline Comments"></topic>
+			<topic href="doc/Tasks.html#Navigating_through_and_using_R4E_Annotations" label="Navigating through and using R4E Annotations"></topic>
+		</topic>
 		<topic href="doc/Tasks.html#Working_with_R4E_Properties" label="Working with R4E Properties">
 			<topic href="doc/Tasks.html#Working_with_Review_Groups_Properties" label="Working with Review Groups Properties"></topic>
 			<topic href="doc/Tasks.html#Working_with_Reviews_Properties" label="Working with Reviews Properties"></topic>
@@ -152,7 +156,7 @@
 	<topic href="doc/Advanced-Topics.html" label="Advanced Topics">
 		<topic href="doc/Advanced-Topics.html#Working_with_multiple_patch_set_of_the_same_commit_in_a_review" label="Working with multiple patch set of the same commit in a review"></topic>
 	</topic>
-	<topic href="doc/_Updating-This-Document.html" label="Updating this document">
-	</topic>
-	<anchor id="r4eUser"/> 
+ <topic href="doc/_Updating-This-Document.html" label="_Updating This Document">
+ </topic>
+ <anchor id="r4eUser"/>
 </toc>

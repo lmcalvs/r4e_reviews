@@ -275,6 +275,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
 		} finally {
 			R4EUIModelController.setActiveReview(null);
+			R4EUIModelController.setNavigatorView(null);
 			super.dispose();
 		}
 	}
@@ -931,11 +932,13 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 * @param aExpandLevel
 	 *            int
 	 */
-	public void updateView(final IR4EUIModelElement aElement, final int aExpandLevel) {
+	public void updateView(final IR4EUIModelElement aElement, final int aExpandLevel, final boolean activate) {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				//Activate View
-				getSite().getPage().activate(R4EUIModelController.getNavigatorView());
+				if (activate) {
+					//Activate View
+					getSite().getPage().activate(R4EUIModelController.getNavigatorView());
+				}
 
 				//Set selection to current element
 				fReviewTreeViewer.expandToLevel(aElement, aExpandLevel);

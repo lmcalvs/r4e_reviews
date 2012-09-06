@@ -1,35 +1,35 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <toc topic="web/Reviews/R4E/User_Guide/User-Guide.html" label="R4E Documentation">
 	<topic href="web/Reviews/R4E/User_Guide/User-Guide.html" label="R4E User Guide">
-		<topic href="web/Reviews/R4E/User_Guide/User-Guide.html" label="Getting Started">
-			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Overview" label="Overview">
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_main_interfaces" label="R4E main interfaces"></topic>
+		<topic href="web/Reviews/R4E/User_Guide/User-Guide.html" label="Installing R4E">
+			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#1.29_Provision_Software_Sites" label="1) Provision Software Sites"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#2.29_Install_Version_Control_System_Features" label="2) Install Version Control System Features"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#3.29_Install_R4E_feature" label="3) Install R4E feature"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#4.29_Install_Versions_Connectors" label="4) Install Versions Connectors"></topic>
+		</topic>
+		<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html" label="Getting Started">
+			<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Overview" label="Overview">
+				<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#R4E_main_interfaces" label="R4E main interfaces"></topic>
 			</topic>
-			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Installing_R4E" label="Installing R4E">
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Provision_Software_Sites" label="Provision Software Sites"></topic>
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Install_Version_Control_System_Features" label="Install Version Control System Features"></topic>
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Install_R4E_feature" label="Install R4E feature"></topic>
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Install_Versions_Connectors" label="Install Versions Connectors"></topic>
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Starting_R4E" label="Starting R4E"></topic>
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Version_Compatibility" label="Version Compatibility"></topic>
-			</topic>
-			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_Configuration" label="R4E Configuration">
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_General_Preferences" label="R4E General Preferences">
-					<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#User_Tab" label="User Tab"></topic>
-					<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Groups_Tab" label="Groups Tab"></topic>
-					<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Rule_Sets_Tab" label="Rule Sets Tab"></topic>
-					<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Filter_Tabs" label="Filter Tabs"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Starting_R4E" label="Starting R4E"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#R4E_Configuration" label="R4E Configuration">
+				<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#R4E_General_Preferences" label="R4E General Preferences">
+					<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#User_Tab" label="User Tab"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Groups_Tab" label="Groups Tab"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Rule_Sets_Tab" label="Rule Sets Tab"></topic>
+					<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Filter_Tabs" label="Filter Tabs"></topic>
 				</topic>
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_LDAP_Settings" label="R4E LDAP Settings"></topic>
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#SMTP_Hosts_Definitions" label="SMTP Hosts Definitions"></topic>
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#R4E_Capabilities" label="R4E Capabilities"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#R4E_LDAP_Settings" label="R4E LDAP Settings"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#SMTP_Hosts_Definitions" label="SMTP Hosts Definitions"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#R4E_Capabilities" label="R4E Capabilities"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Version_Compatibility" label="Version Compatibility"></topic>
 			</topic>
-			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Eclipse_Project_Configuration" label="Eclipse Project Configuration"></topic>
-			<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Tutorials" label="Tutorials">
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Configuration_and_Set-up" label="Configuration and Set-up"></topic>
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Tutorial_1:_Performing_a_Basic_Review" label="Tutorial 1: Performing a Basic Review"></topic>
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Tutorial_2:_Performing_an_Informal_Review" label="Tutorial 2: Performing an Informal Review"></topic>
-				<topic href="web/Reviews/R4E/User_Guide/User-Guide.html#Tutorial_3:_Performing_a_Formal_Review" label="Tutorial 3: Performing a Formal Review"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Eclipse_Project_Configuration" label="Eclipse Project Configuration"></topic>
+			<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Tutorials" label="Tutorials">
+				<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Configuration_and_Set-up" label="Configuration and Set-up"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Tutorial_1:_Performing_a_Basic_Review" label="Tutorial 1: Performing a Basic Review"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Tutorial_2:_Performing_an_Informal_Review" label="Tutorial 2: Performing an Informal Review"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Getting-Started.html#Tutorial_3:_Performing_a_Formal_Review" label="Tutorial 3: Performing a Formal Review"></topic>
 			</topic>
 		</topic>
 		<topic href="web/Reviews/R4E/User_Guide/Concepts.html" label="Concepts">
@@ -93,7 +93,9 @@
 				</topic>
 				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Assigning_Review_Elements" label="Assigning Review Elements"></topic>
 				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_an_Anomaly" label="Creating an Anomaly"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Cloning_an_existing_Anomaly" label="Cloning an existing Anomaly"></topic>
 				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Creating_Comments_on_an_existing_Anomaly" label="Creating Comments on an existing Anomaly"></topic>
+				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Cloning_existing_Comments_to_an_Anomaly" label="Cloning existing Comments to an Anomaly"></topic>
 				<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Importing_Postponed_Anomalies" label="Importing Postponed Anomalies"></topic>
 			</topic>
 			<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Handling_Design_Rules" label="Handling Design Rules">
@@ -151,6 +153,9 @@
 					<topic href="web/Reviews/R4E/User_Guide/Tasks.html#Other_Considerations" label="Other Considerations"></topic>
 				</topic>
 			</topic>
+		</topic>
+		<topic href="web/Reviews/R4E/User_Guide/Advanced-Topics.html" label="Advanced Topics">
+			<topic href="web/Reviews/R4E/User_Guide/Advanced-Topics.html#Working_with_multiple_patch_set_of_the_same_commit_in_a_review" label="Working with multiple patch set of the same commit in a review"></topic>
 		</topic>
 		<topic href="web/Reviews/R4E/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>

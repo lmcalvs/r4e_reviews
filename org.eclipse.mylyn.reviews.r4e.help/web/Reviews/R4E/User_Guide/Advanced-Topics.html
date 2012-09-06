@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>R4E User Guide - Advanced Topics</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Advanced Topics</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Tasks.html" title="Tasks">
+						<img alt="Previous" border="0" src="../../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Updating-This-Document.html" title="Updating This Document">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Tasks</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Advanced_Topics">Advanced Topics</h1>
+		<h2 id="Working_with_multiple_patch_set_of_the_same_commit_in_a_review">Working with multiple patch set of the same commit in a review</h2>
+		<p>When creating a review, it is possible to add multiple commits. The commit might refer to different patch set or commit versions depending of the version control being used. If someone modified some files and generated a second commit review Item, (generating a patch set based on the initial commit) some files are modified but not necessary all files. 
+			<br/>
+		</p>
+		<p>When a reviewer creates a new anomaly on files not impacted yet in the second commit review item, we are referring to the same file version, whether the reviewer is using the file in the first or second commit review item, the anomaly is only associated to the last one. See image below: 
+			<br/>
+		</p>
+		<p>
+			<img border="0" src="images/ReviewNavigatorSamefileSameVersion.png"/> 
+		</p>
+		<p>If you raised an anomaly on a file having different version in each commit review item, then the anomaly will show on the one having the file version it is referring to. See image below: 
+			<br/>
+		</p>
+		<p>
+			<img border="0" src="images/ReviewNavigatorSamefileDiffVersion.png"/>
+		</p><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Tasks.html" title="Tasks">
+						<img alt="Previous" border="0" src="../../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center">
+					<a href="User-Guide.html" title="R4E User Guide">
+						<img alt="R4E User Guide" border="0" src="../../../images/home.gif"/>
+					</a>
+				</td>
+				<td style="width: 20%" align="right">
+					<a href="Updating-This-Document.html" title="Updating This Document">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Tasks</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+			</tr>
+		</table>
+	</body>
+</html>

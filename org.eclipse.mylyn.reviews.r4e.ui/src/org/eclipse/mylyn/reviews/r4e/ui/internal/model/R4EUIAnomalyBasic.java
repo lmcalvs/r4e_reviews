@@ -635,6 +635,16 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	public void restore() throws ResourceHandlingException, OutOfSyncException, CompatibilityException {
 		super.restore();
 
+		//Update inline markings (local anomalies only)
+		if (getParent().getParent() instanceof R4EUIFileContext) {
+			final R4EUIAnomalyBasic currentAnomaly = this;
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					UIUtils.updateAnnotation(currentAnomaly, (R4EUIFileContext) getParent().getParent());
+				}
+			});
+		}
+
 		//Also restore any participant assigned to this element
 		for (String participant : fAnomaly.getAssignedTo()) {
 			R4EUIModelController.getActiveReview().getParticipant(participant, true);
@@ -928,5 +938,14 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	public boolean isDueDateEnabled() {
 		return true;
+	}
+
+	/**
+	 * Method isTerminalState.
+	 * 
+	 * @return boolean
+	 */
+	public boolean isTerminalState() {
+		return false;
 	}
 }

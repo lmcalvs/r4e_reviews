@@ -37,11 +37,16 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.text.ITextOperationTarget;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
@@ -54,9 +59,12 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4ECompareAnnotationSupport;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4ESingleAnnotationSupport;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantUnassignDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
@@ -64,13 +72,11 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIComment;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDelta;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDeltaContainer;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUISelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 import org.eclipse.swt.SWT;
@@ -80,12 +86,17 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
+import org.eclipse.ui.editors.text.EditorsUI;
+import org.eclipse.ui.texteditor.AnnotationPreference;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -651,10 +662,14 @@ public class UIUtils {
 	 */
 	public static void selectElementInEditor(R4ECompareEditorInput aInput) {
 
+		//For now the Review Navigator View must be open to see the highlighted text in the compare editor
+		if (null == R4EUIModelController.getNavigatorView()) {
+			return;
+		}
+
 		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
 		final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
 		IR4EUIPosition position = null;
-		int selectionIndex = -1;
 		boolean isLeftPane = true;
 
 		if (element instanceof R4EUIAnomalyBasic) {
@@ -664,68 +679,53 @@ public class UIUtils {
 			}
 		} else if (element instanceof R4EUIComment) {
 			position = ((R4EUIAnomalyBasic) element.getParent()).getPosition();
-		} else if (element instanceof R4EUISelection) {
+		} else if (element instanceof R4EUIContent) {
 			position = ((R4EUIContent) element).getPosition();
-		} else if (element instanceof R4EUIDelta) {
-			final R4EUIDeltaContainer container = (R4EUIDeltaContainer) ((R4EUIDelta) element).getParent();
-			selectionIndex = container.getContentsList().indexOf(element);
 		} else {
 			return; //Do nothing if any other element is selected
 		}
 		final ICompareNavigator navigator = aInput.getNavigator();
 
-		//Decide which way we select the current position
-		if (selectionIndex != -1) {
-			//Use the change index to select position in file
-			while (!(navigator.selectChange(false))) {
-				//Reset position to the first difference
-			}
-
-			for (int i = 0; i < selectionIndex; i++) {
-				navigator.selectChange(true); //get the difference that corresponds to the right selection
-			}
-		} else {
-			//Use free form to select position in file
-			//NOTE:  This is a dirty hack that involves accessing class and field we shouldn't, but that's
-			//       the only way to select the current position in the compare editor.  Hopefully this code can
-			//		 be removed later when the Eclipse compare editor allows this.
-			if (navigator instanceof CompareEditorInputNavigator) {
-				final Object[] panes = ((CompareEditorInputNavigator) navigator).getPanes();
-				for (Object pane : panes) {
-					if (pane instanceof CompareContentViewerSwitchingPane) {
-						Viewer viewer = ((CompareContentViewerSwitchingPane) pane).getViewer();
-						if (viewer instanceof TextMergeViewer) {
-							TextMergeViewer textViewer = (TextMergeViewer) viewer;
-							Class textViewerClass = textViewer.getClass();
-							if (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME)) {
-								do {
-									textViewerClass = textViewerClass.getSuperclass();
-									if (textViewerClass.getName().equals(DEFAULT_OBJECT_CLASS_NAME)) {
-										break;
-									}
-								} while (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME));
-							}
-							try {
-								Field field;
-								if (isLeftPane) {
-									field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_LEFT);
-								} else {
-									field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_RIGHT);
+		//Use free form to select position in file
+		//NOTE:  This is a dirty hack that involves accessing class and field we shouldn't, but that's
+		//       the only way to select the current position in the compare editor.  Hopefully this code can
+		//		 be removed later when the Eclipse compare editor allows this.
+		if (navigator instanceof CompareEditorInputNavigator) {
+			final Object[] panes = ((CompareEditorInputNavigator) navigator).getPanes();
+			for (Object pane : panes) {
+				if (pane instanceof CompareContentViewerSwitchingPane) {
+					Viewer viewer = ((CompareContentViewerSwitchingPane) pane).getViewer();
+					if (viewer instanceof TextMergeViewer) {
+						TextMergeViewer textViewer = (TextMergeViewer) viewer;
+						Class textViewerClass = textViewer.getClass();
+						if (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME)) {
+							do {
+								textViewerClass = textViewerClass.getSuperclass();
+								if (textViewerClass.getName().equals(DEFAULT_OBJECT_CLASS_NAME)) {
+									break;
 								}
-								field.setAccessible(true);
-								MergeSourceViewer sourceViewer = (MergeSourceViewer) field.get(textViewer);
-								ITextEditor adapter = (ITextEditor) sourceViewer.getAdapter(ITextEditor.class);
-								adapter.selectAndReveal(((R4EUITextPosition) position).getOffset(),
-										((R4EUITextPosition) position).getLength());
-							} catch (SecurityException e) {
-								//just continue
-							} catch (NoSuchFieldException e) {
-								//just continue
-							} catch (IllegalArgumentException e) {
-								//just continue
-							} catch (IllegalAccessException e) {
-								//just continue
+							} while (!textViewerClass.getName().equals(COMPARE_EDITOR_TEXT_CLASS_NAME));
+						}
+						try {
+							Field field;
+							if (isLeftPane) {
+								field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_LEFT);
+							} else {
+								field = textViewerClass.getDeclaredField(COMPARE_EDITOR_TEXT_FIELD_RIGHT);
 							}
+							field.setAccessible(true);
+							MergeSourceViewer sourceViewer = (MergeSourceViewer) field.get(textViewer);
+							ITextEditor adapter = (ITextEditor) sourceViewer.getAdapter(ITextEditor.class);
+							adapter.selectAndReveal(((R4EUITextPosition) position).getOffset(),
+									((R4EUITextPosition) position).getLength());
+						} catch (SecurityException e) {
+							//just continue
+						} catch (NoSuchFieldException e) {
+							//just continue
+						} catch (IllegalArgumentException e) {
+							//just continue
+						} catch (IllegalAccessException e) {
+							//just continue
 						}
 					}
 				}
@@ -853,13 +853,22 @@ public class UIUtils {
 	 * @param aNewState
 	 *            - R4EAnomalyState
 	 */
-	public static void changeAnomalyState(IR4EUIModelElement aAnomaly, R4EAnomalyState aNewState) {
+	public static void changeAnomalyState(final IR4EUIModelElement aAnomaly, R4EAnomalyState aNewState) {
 		try {
 			((R4EUIAnomalyExtended) aAnomaly).updateState(aNewState);
 
 			//If this is a postponed anomaly, update original one as well
 			if (aAnomaly instanceof R4EUIPostponedAnomaly) {
 				((R4EUIPostponedAnomaly) aAnomaly).updateOriginalAnomaly();
+			}
+
+			//Update inline markings (local anomalies only)
+			if (aAnomaly.getParent().getParent() instanceof R4EUIFileContext) {
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						UIUtils.updateAnnotation(aAnomaly, (R4EUIFileContext) aAnomaly.getParent().getParent());
+					}
+				});
 			}
 		} catch (ResourceHandlingException e1) {
 			UIUtils.displayResourceErrorDialog(e1);
@@ -880,7 +889,7 @@ public class UIUtils {
 	 */
 	public static void setNavigatorViewFocus(IR4EUIModelElement aElement, int aExpandLevel) {
 		if (null != aElement) {
-			R4EUIModelController.getNavigatorView().updateView(aElement, aExpandLevel);
+			R4EUIModelController.getNavigatorView().updateView(aElement, aExpandLevel, true);
 		}
 	}
 
@@ -1003,5 +1012,132 @@ public class UIUtils {
 	 */
 	public static String formatNumChanges(int aNumChanges, int aNumReviewedChanges) {
 		return Integer.toString(aNumReviewedChanges) + R4EUIConstants.SEPARATOR + Integer.toString(aNumChanges);
+	}
+
+	//Inline commenting
+
+	/**
+	 * Method addAnnotation
+	 * 
+	 * @param aSource
+	 *            - IR4EUIModelElement
+	 * @param aFile
+	 *            - R4EUIFileContext
+	 */
+	public static void addAnnotation(final IR4EUIModelElement aSource, R4EUIFileContext aFile) {
+		//Add Annotation marker for inline commenting (if applicable)
+		IReviewAnnotationSupport support = getAnnotationSupport(aFile);
+		if (null != support) {
+			support.addAnnotation(aSource);
+		}
+	}
+
+	/**
+	 * Method updateAnnotation
+	 * 
+	 * @param aSource
+	 *            - IR4EUIModelElement
+	 * @param aFile
+	 *            - R4EUIFileContext
+	 */
+	public static void updateAnnotation(final IR4EUIModelElement aSource, R4EUIFileContext aFile) {
+		//Add Annotation marker for inline commenting (if applicable)
+		IReviewAnnotationSupport support = getAnnotationSupport(aFile);
+		if (null != support) {
+			support.updateAnnotation(aSource);
+		}
+	}
+
+	/**
+	 * Method removeAnnotation
+	 * 
+	 * @param aSource
+	 *            - IR4EUIModelElement
+	 * @param aFile
+	 *            - R4EUIFileContext
+	 */
+	public static void removeAnnotation(final IR4EUIModelElement aSource, R4EUIFileContext aFile) {
+		//Add Annotation marker for inline commenting (if applicable)
+		IReviewAnnotationSupport support = getAnnotationSupport(aFile);
+		if (null != support) {
+			support.removeAnnotation(aSource);
+		}
+	}
+
+	/**
+	 * Method removeAnnotation
+	 * 
+	 * @param aFile
+	 *            - R4EUIFileContext
+	 * @return IReviewAnnotationSupport
+	 */
+	private static IReviewAnnotationSupport getAnnotationSupport(R4EUIFileContext aFile) {
+		IReviewAnnotationSupport support = null;
+
+		//First try to find Compare Editor
+		IEditorPart editor = EditorProxy.findReusableCompareEditor(R4EUIModelController.getNavigatorView()
+				.getSite()
+				.getPage(), aFile.getBaseFileVersion(), aFile.getTargetFileVersion());
+		if (null != editor) {
+			IEditorInput input = editor.getEditorInput();
+			Viewer viewer = ((R4ECompareEditorInput) input).getContentViewer();
+			if (null != viewer) {
+				support = R4ECompareAnnotationSupport.getAnnotationSupport(viewer, aFile);
+			}
+		} else {
+			//Try to find Single Editor
+			editor = EditorProxy.findReusableEditor(R4EUIModelController.getNavigatorView().getSite().getPage(),
+					aFile.getTargetFileVersion());
+			if (null != editor) {
+				ITextOperationTarget target = (ITextOperationTarget) editor.getAdapter(ITextOperationTarget.class);
+				if (target instanceof SourceViewer) {
+					SourceViewer sourceViewer = (SourceViewer) target;
+					support = R4ESingleAnnotationSupport.getAnnotationSupport(sourceViewer, aFile);
+				}
+			}
+		}
+		return support;
+	}
+
+	/**
+	 * Method removeAnnotation
+	 * 
+	 * @param aPref
+	 *            - AnnotationPreference
+	 * @param aStore
+	 *            - IPreferenceStore
+	 * @return Color
+	 */
+	public static Color updateAnnotationColor(AnnotationPreference aPref, IPreferenceStore aStore) {
+		if (aPref != null) {
+			RGB rgb = getColorFromAnnotationPreference(aStore, aPref);
+			return EditorsUI.getSharedTextColors().getColor(rgb);
+		}
+		return null;
+	}
+
+	/**
+	 * Method removeAnnotation
+	 * 
+	 * @param aStore
+	 *            - IPreferenceStore
+	 * @param aPref
+	 *            - AnnotationPreference
+	 * @return RGB
+	 */
+	public static RGB getColorFromAnnotationPreference(IPreferenceStore aStore, AnnotationPreference aPref) {
+		String key = aPref.getColorPreferenceKey();
+		RGB rgb = null;
+		if (aStore.contains(key)) {
+			if (aStore.isDefault(key)) {
+				rgb = aPref.getColorPreferenceValue();
+			} else {
+				rgb = PreferenceConverter.getColor(aStore, key);
+			}
+		}
+		if (rgb == null) {
+			rgb = aPref.getColorPreferenceValue();
+		}
+		return rgb;
 	}
 }
