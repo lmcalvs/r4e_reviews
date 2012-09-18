@@ -27,7 +27,6 @@ import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
@@ -110,9 +109,7 @@ public class TestRepository {
 	 * @throws JGitInternalException
 	 * @throws WrongRepositoryStateException
 	 */
-	public RevCommit createInitialCommit(String message) throws IOException,
-			NoHeadException, NoMessageException, ConcurrentRefUpdateException,
-			JGitInternalException, WrongRepositoryStateException {
+	public RevCommit createInitialCommit(String message) throws Exception {
 		String repoPath = repository.getWorkTree().getAbsolutePath();
 		File file = new File(repoPath, "dummy");
 		file.createNewFile();
@@ -209,10 +206,7 @@ public class TestRepository {
 	 * @throws JGitInternalException
 	 * @throws WrongRepositoryStateException
 	 */
-	public RevCommit commit(String message) throws NoHeadException,
-			NoMessageException, UnmergedPathException,
-			ConcurrentRefUpdateException, JGitInternalException,
-			WrongRepositoryStateException {
+	public RevCommit commit(String message) throws Exception {
 		Git git = new Git(repository);
 		CommitCommand commitCommand = git.commit();
 		commitCommand.setAuthor("J. Git", "j.git@egit.org");
@@ -232,7 +226,7 @@ public class TestRepository {
 				.toString());
 		try {
 			new Git(repository).add().addFilepattern(repoPath).call();
-		} catch (NoFilepatternException e) {
+		} catch (Exception e) {
 			throw new IOException(e.getMessage());
 		}
 	}
@@ -311,7 +305,7 @@ public class TestRepository {
 		String repoPath = getRepoRelativePath(file.getLocation().toOSString());
 		try {
 			new Git(repository).add().addFilepattern(repoPath).call();
-		} catch (NoFilepatternException e) {
+		} catch (Exception e) {
 			throw new IOException(e.getMessage());
 		}
 	}
