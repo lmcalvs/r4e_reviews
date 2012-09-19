@@ -637,8 +637,17 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getR4EReview_DueDate() {
+		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getR4EReview_AnomalyTemplate() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(10);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -647,7 +656,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EReview_Type() {
-		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(11);
+		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -656,7 +665,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_UsersMap() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(12);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -665,15 +674,6 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_IdsMap() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(14);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getR4EReview_ActiveMeeting() {
 		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(15);
 	}
 
@@ -682,8 +682,17 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getR4EReview_ActiveMeeting() {
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(16);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getR4EReview_CreatedBy() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(13);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(14);
 	}
 
 	/**
@@ -2015,6 +2024,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEReference(r4EReviewEClass, R4E_REVIEW__DECISION);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__START_DATE);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__END_DATE);
+		createEAttribute(r4EReviewEClass, R4E_REVIEW__DUE_DATE);
 		createEReference(r4EReviewEClass, R4E_REVIEW__ANOMALY_TEMPLATE);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__TYPE);
 		createEReference(r4EReviewEClass, R4E_REVIEW__USERS_MAP);
@@ -2287,6 +2297,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEReference(getR4EReview_Decision(), this.getR4EReviewDecision(), null, "decision", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_StartDate(), ecorePackage.getEDate(), "startDate", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_EndDate(), ecorePackage.getEDate(), "endDate", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EReview_DueDate(), ecorePackage.getEDate(), "dueDate", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EReview_AnomalyTemplate(), this.getR4EAnomaly(), null, "anomalyTemplate", null, 1, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_Type(), this.getR4EReviewType(), "type", "", 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EReview_UsersMap(), this.getMapToUsers(), null, "usersMap", null, 0, -1, R4EReview.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);

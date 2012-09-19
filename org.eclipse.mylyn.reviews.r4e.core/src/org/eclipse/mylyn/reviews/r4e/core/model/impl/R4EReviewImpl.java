@@ -62,6 +62,7 @@ import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getDecision <em>Decision</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getEndDate <em>End Date</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getDueDate <em>Due Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getAnomalyTemplate <em>Anomaly Template</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl#getUsersMap <em>Users Map</em>}</li>
@@ -263,6 +264,26 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	 * @ordered
 	 */
 	protected Date endDate = END_DATE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDueDate() <em>Due Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDueDate()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Date DUE_DATE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDueDate() <em>Due Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDueDate()
+	 * @generated
+	 * @ordered
+	 */
+	protected Date dueDate = DUE_DATE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getAnomalyTemplate() <em>Anomaly Template</em>}' containment reference.
@@ -616,6 +637,27 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDueDate(Date newDueDate) {
+		Date oldDueDate = dueDate;
+		dueDate = newDueDate;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_REVIEW__DUE_DATE, oldDueDate, dueDate));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public R4EAnomaly getAnomalyTemplate() {
 		if (anomalyTemplate != null && anomalyTemplate.eIsProxy()) {
 			InternalEObject oldAnomalyTemplate = (InternalEObject)anomalyTemplate;
@@ -879,6 +921,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 				return getStartDate();
 			case RModelPackage.R4E_REVIEW__END_DATE:
 				return getEndDate();
+			case RModelPackage.R4E_REVIEW__DUE_DATE:
+				return getDueDate();
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				if (resolve) return getAnomalyTemplate();
 				return basicGetAnomalyTemplate();
@@ -944,6 +988,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 			case RModelPackage.R4E_REVIEW__END_DATE:
 				setEndDate((Date)newValue);
 				return;
+			case RModelPackage.R4E_REVIEW__DUE_DATE:
+				setDueDate((Date)newValue);
+				return;
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				setAnomalyTemplate((R4EAnomaly)newValue);
 				return;
@@ -1007,6 +1054,9 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 			case RModelPackage.R4E_REVIEW__END_DATE:
 				setEndDate(END_DATE_EDEFAULT);
 				return;
+			case RModelPackage.R4E_REVIEW__DUE_DATE:
+				setDueDate(DUE_DATE_EDEFAULT);
+				return;
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				setAnomalyTemplate((R4EAnomaly)null);
 				return;
@@ -1059,6 +1109,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 				return START_DATE_EDEFAULT == null ? startDate != null : !START_DATE_EDEFAULT.equals(startDate);
 			case RModelPackage.R4E_REVIEW__END_DATE:
 				return END_DATE_EDEFAULT == null ? endDate != null : !END_DATE_EDEFAULT.equals(endDate);
+			case RModelPackage.R4E_REVIEW__DUE_DATE:
+				return DUE_DATE_EDEFAULT == null ? dueDate != null : !DUE_DATE_EDEFAULT.equals(dueDate);
 			case RModelPackage.R4E_REVIEW__ANOMALY_TEMPLATE:
 				return anomalyTemplate != null;
 			case RModelPackage.R4E_REVIEW__TYPE:
@@ -1137,6 +1189,8 @@ public class R4EReviewImpl extends ReviewImpl implements R4EReview {
 		result.append(startDate);
 		result.append(", endDate: ");
 		result.append(endDate);
+		result.append(", dueDate: ");
+		result.append(dueDate);
 		result.append(", type: ");
 		result.append(type);
 		result.append(')');
