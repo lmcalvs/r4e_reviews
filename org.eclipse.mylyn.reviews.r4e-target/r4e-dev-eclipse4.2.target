@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+
+<target name="r4e-dev-eclipse4.2" sequenceNumber="8">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.sdk.ide" version="0.0.0"/>
+<unit id="org.eclipse.cdt.platform.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.ecf.core.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.ecore.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.common.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.common.ui.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.databinding.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.edit.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.edit.ui.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.birt.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.egit.feature.group" version="2.0.0.201206130900-r"/>
+<unit id="org.eclipse.jgit.feature.group" version="2.0.0.201206130900-r"/>
+<repository location="http://download.eclipse.org/releases/juno"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="javax.activation" version="1.1.0.v201108011116"/>
+<unit id="javax.mail" version="1.4.0.v201005080615"/>
+<unit id="org.apache.commons.io" version="2.0.1.v201105210651"/>
+<unit id="org.hamcrest" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.core" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.generator" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.integration" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.library" version="1.1.0.v20090501071000"/>
+<unit id="org.hamcrest.text" version="1.1.0.v20090501071000"/>
+<unit id="org.mockito" version="1.8.4.v201102171835"/>
+<unit id="org.objenesis" version="1.0.0.v201105211943"/>
+<unit id="org.junit" version="4.8.2.v4_8_2_v20110321-1705"/>
+<unit id="org.junit.source" version="4.8.2.v4_8_2_v20110321-1705"/>
+<unit id="com.google.guava" version="10.0.1.v201203051515"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20120526062928/repository/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.mylyn.commons.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.versions.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.git.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.mylyn.subclipse.feature.group" version="1.0.1.v20120725-0100"/>
+<repository location="http://archive.eclipse.org/mylyn/drops/3.8.1/v20120725-0100"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.tigris.subversion.subclipse.feature.group" version="0.0.0"/>
+<unit id="org.tigris.subversion.subclipse.mylyn.feature.group" version="0.0.0"/>
+<unit id="org.tigris.subversion.clientadapter.feature.feature.group" version="0.0.0"/>
+<unit id="org.tigris.subversion.clientadapter.javahl.feature.feature.group" version="0.0.0"/>
+<repository location="http://subclipse.tigris.org/update_1.8.x"/>
+</location>
+</locations>
+<targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+<launcherArgs>
+<vmArgs>-Xms40m
+-Xmx256m
+-XX:MaxPermSize=128m</vmArgs>
+<programArgs>-consolelog</programArgs>
+</launcherArgs>
+</target>
