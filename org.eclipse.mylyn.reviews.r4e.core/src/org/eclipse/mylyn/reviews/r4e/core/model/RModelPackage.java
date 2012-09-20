@@ -433,13 +433,22 @@ public interface RModelPackage extends EPackage {
 	int R4E_REVIEW__END_DATE = ModelPackage.REVIEW_FEATURE_COUNT + 10;
 
 	/**
+	 * The feature id for the '<em><b>Due Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_REVIEW__DUE_DATE = ModelPackage.REVIEW_FEATURE_COUNT + 11;
+
+	/**
 	 * The feature id for the '<em><b>Anomaly Template</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__ANOMALY_TEMPLATE = ModelPackage.REVIEW_FEATURE_COUNT + 11;
+	int R4E_REVIEW__ANOMALY_TEMPLATE = ModelPackage.REVIEW_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -448,7 +457,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__TYPE = ModelPackage.REVIEW_FEATURE_COUNT + 12;
+	int R4E_REVIEW__TYPE = ModelPackage.REVIEW_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Users Map</b></em>' map.
@@ -457,7 +466,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__USERS_MAP = ModelPackage.REVIEW_FEATURE_COUNT + 13;
+	int R4E_REVIEW__USERS_MAP = ModelPackage.REVIEW_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Created By</b></em>' reference.
@@ -466,7 +475,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__CREATED_BY = ModelPackage.REVIEW_FEATURE_COUNT + 14;
+	int R4E_REVIEW__CREATED_BY = ModelPackage.REVIEW_FEATURE_COUNT + 15;
 
 	/**
 	 * The feature id for the '<em><b>Ids Map</b></em>' map.
@@ -475,7 +484,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__IDS_MAP = ModelPackage.REVIEW_FEATURE_COUNT + 15;
+	int R4E_REVIEW__IDS_MAP = ModelPackage.REVIEW_FEATURE_COUNT + 16;
 
 	/**
 	 * The feature id for the '<em><b>Active Meeting</b></em>' containment reference.
@@ -484,7 +493,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW__ACTIVE_MEETING = ModelPackage.REVIEW_FEATURE_COUNT + 16;
+	int R4E_REVIEW__ACTIVE_MEETING = ModelPackage.REVIEW_FEATURE_COUNT + 17;
 
 	/**
 	 * The number of structural features of the '<em>R4E Review</em>' class.
@@ -493,7 +502,7 @@ public interface RModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_REVIEW_FEATURE_COUNT = ModelPackage.REVIEW_FEATURE_COUNT + 17;
+	int R4E_REVIEW_FEATURE_COUNT = ModelPackage.REVIEW_FEATURE_COUNT + 18;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EAnomalyImpl <em>R4E Anomaly</em>}' class.
@@ -919,6 +928,15 @@ public interface RModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int R4E_FORMAL_REVIEW__END_DATE = R4E_REVIEW__END_DATE;
+
+	/**
+	 * The feature id for the '<em><b>Due Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int R4E_FORMAL_REVIEW__DUE_DATE = R4E_REVIEW__DUE_DATE;
 
 	/**
 	 * The feature id for the '<em><b>Anomaly Template</b></em>' containment reference.
@@ -3119,6 +3137,17 @@ public interface RModelPackage extends EPackage {
 	EAttribute getR4EReview_EndDate();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDate <em>Due Date</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Due Date</em>'.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDate()
+	 * @see #getR4EReview()
+	 * @generated
+	 */
+	EAttribute getR4EReview_DueDate();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getAnomalyTemplate <em>Anomaly Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4923,6 +4952,14 @@ public interface RModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute R4E_REVIEW__END_DATE = eINSTANCE.getR4EReview_EndDate();
+
+		/**
+		 * The meta object literal for the '<em><b>Due Date</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute R4E_REVIEW__DUE_DATE = eINSTANCE.getR4EReview_DueDate();
 
 		/**
 		 * The meta object literal for the '<em><b>Anomaly Template</b></em>' containment reference feature.

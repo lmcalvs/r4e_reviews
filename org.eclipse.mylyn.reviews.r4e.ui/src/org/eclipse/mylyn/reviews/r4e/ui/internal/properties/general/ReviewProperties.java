@@ -67,6 +67,17 @@ public class ReviewProperties extends ModelElementProperties {
 			REVIEW_END_DATE_ID, R4EUIConstants.END_DATE_LABEL);
 
 	/**
+	 * Field REVIEW_START_DATE_ID. (value is ""reviewElement.startDate"")
+	 */
+	protected static final String REVIEW_DUE_DATE_ID = "reviewElement.dueDate";
+
+	/**
+	 * Field REVIEW_START_DATE_PROPERTY_DESCRIPTOR.
+	 */
+	protected static final PropertyDescriptor REVIEW_DUE_DATE_PROPERTY_DESCRIPTOR = new PropertyDescriptor(
+			REVIEW_DUE_DATE_ID, R4EUIConstants.DUE_DATE_LABEL);
+
+	/**
 	 * Field REVIEW_DESCRIPTION_ID. (value is ""reviewElement.description"")
 	 */
 	protected static final String REVIEW_DESCRIPTION_ID = "reviewElement.description";
@@ -159,10 +170,11 @@ public class ReviewProperties extends ModelElementProperties {
 	 */
 	private static final IPropertyDescriptor[] DESCRIPTORS = { REVIEW_NAME_PROPERTY_DESCRIPTOR,
 			REVIEW_START_DATE_PROPERTY_DESCRIPTOR, REVIEW_END_DATE_PROPERTY_DESCRIPTOR,
-			REVIEW_DESCRIPTION_PROPERTY_DESCRIPTOR, REVIEW_PROJECT_PROPERTY_DESCRIPTOR,
-			REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR, REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR,
-			REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR, REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR,
-			REVIEW_PHASE_INFO_PROPERTY_DESCRIPTOR, REVIEW_DECISION_INFO_PROPERTY_DESCRIPTOR };
+			REVIEW_DUE_DATE_PROPERTY_DESCRIPTOR, REVIEW_DESCRIPTION_PROPERTY_DESCRIPTOR,
+			REVIEW_PROJECT_PROPERTY_DESCRIPTOR, REVIEW_COMPONENTS_PROPERTY_DESCRIPTOR,
+			REVIEW_ENTRY_CRITERIA_PROPERTY_DESCRIPTOR, REVIEW_OBJECTIVES_PROPERTY_DESCRIPTOR,
+			REVIEW_REFERENCE_MATERIAL_PROPERTY_DESCRIPTOR, REVIEW_PHASE_INFO_PROPERTY_DESCRIPTOR,
+			REVIEW_DECISION_INFO_PROPERTY_DESCRIPTOR };
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -214,6 +226,11 @@ public class ReviewProperties extends ModelElementProperties {
 					return R4EUIConstants.IN_PROGRESS_MSG;
 				}
 				return ((R4EUIReviewBasic) getElement()).getReview().getEndDate().toString();
+			} else if (REVIEW_DUE_DATE_ID.equals(aId)) {
+				if (null == ((R4EUIReviewBasic) getElement()).getReview().getDueDate()) {
+					return R4EUIConstants.NO_DUE_DATE_MSG;
+				}
+				return ((R4EUIReviewBasic) getElement()).getReview().getDueDate().toString();
 			} else if (REVIEW_DESCRIPTION_ID.equals(aId)) {
 				return ((R4EUIReviewBasic) getElement()).getReview().getExtraNotes();
 			} else if (REVIEW_PROJECT_ID.equals(aId)) {

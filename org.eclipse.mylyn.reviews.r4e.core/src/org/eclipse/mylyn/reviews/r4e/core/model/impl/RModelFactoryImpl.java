@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.mylyn.reviews.r4e.core.model.*;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
@@ -578,7 +579,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * @generated
 	 */
 	public String convertR4EAnomalyStateToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
+		return convertR4EAnomalyState((R4EAnomalyState)instanceValue);
 	}
 
 	/**
@@ -616,7 +617,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * @generated
 	 */
 	public String convertR4EReviewPhaseToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
+		return convertR4EReviewPhase((R4EReviewPhase)instanceValue);
 	}
 
 	/**
@@ -654,7 +655,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * @generated
 	 */
 	public String convertR4EUserRoleToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
+		return convertR4EUserRole((R4EUserRole)instanceValue);
 	}
 
 	/**
@@ -692,7 +693,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * @generated
 	 */
 	public String convertR4EDecisionToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
+		return convertR4EDecision((R4EDecision)instanceValue);
 	}
 
 	/**
@@ -730,7 +731,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * @generated
 	 */
 	public String convertR4EReviewTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
+		return convertR4EReviewType((R4EReviewType)instanceValue);
 	}
 
 	/**
@@ -768,7 +769,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * @generated
 	 */
 	public String convertR4EContextTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
+		return convertR4EContextType((R4EContextType)instanceValue);
 	}
 
 	/**
@@ -786,7 +787,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * @generated
 	 */
 	public IResource createIResourceFromString(EDataType eDataType, String initialValue) {
-		return (IResource)super.createFromString(eDataType, initialValue);
+		return createIResource(initialValue);
 	}
 
 	/**
@@ -804,7 +805,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * @generated
 	 */
 	public String convertIResourceToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
+		return convertIResource((IResource)instanceValue);
 	}
 
 	/**
@@ -840,7 +841,7 @@ public class RModelFactoryImpl extends EFactoryImpl implements RModelFactory, Pe
 	 * @generated
 	 */
 	public String convertIFileRevisionToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
+		return convertIFileRevision((IFileRevision)instanceValue);
 	}
 
 	/**

@@ -295,6 +295,7 @@ public class ModelTransformImpl implements ModelTransform {
 		destReview.setType(origReview.getType());
 		destReview.setEnabled(origReview.isEnabled());
 		destReview.setEndDate(origReview.getEndDate());
+		destReview.setDueDate(origReview.getDueDate());
 		destReview.setEntryCriteria(origReview.getEntryCriteria());
 		destReview.setExtraNotes(origReview.getExtraNotes());
 		destReview.setName(origReview.getName());

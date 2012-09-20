@@ -646,6 +646,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String IN_PROGRESS_MSG = "(In Progress)";
 
 	/**
+	 * Field IN_PROGRESS_MSG. (value is ""(In Progress)"")
+	 */
+	public static final String NO_DUE_DATE_MSG = "(No Due Date)";
+
+	/**
 	 * Field STATE_LABEL. (value is ""State: "")
 	 */
 	public static final String STATE_LABEL = "State: ";
@@ -1985,6 +1990,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 * Field REVIEW_END_DATE_TOOLTIP. (value is ""The Closing Date for this Review"")
 	 */
 	public static final String REVIEW_END_DATE_TOOLTIP = "The Closing Date for this Review";
+
+	/**
+	 * Field REVIEW_DUE_DATE_TOOLTIP. (value is ""The Closing Date for this Review"")
+	 */
+	public static final String REVIEW_DUE_DATE_TOOLTIP = "The Due Date for this Review";
+
+	/**
+	 * Field REVIEW_DUE_DATE_TOOLTIP. (value is ""The Closing Date for this Review"")
+	 */
+	public static final String REVIEW_ASSIGN_DUE_DATE_TOOLTIP = "Assign a due date for Review.";
 
 	/**
 	 * Field REVIEW_PHASE_TABLE_TOOLTIP. (value is ""The Review Phase Map that show the Review Progression"")
