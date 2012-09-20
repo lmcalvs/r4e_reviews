@@ -52,7 +52,9 @@ import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.launching.JavaRuntime;
+import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.CoreConfig.AutoCRLF;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.util.FileUtils;
@@ -393,6 +395,9 @@ public class TestUtils {
 		Repository repository = new FileRepository(gitDir);
 		try {
 			repository.create();
+			Config storedConfig = repository.getConfig();
+			storedConfig.setEnum("core", null, "autocrlf", AutoCRLF.INPUT);
+
 		} catch (IllegalStateException e) {
 			//Jusy go on
 		}

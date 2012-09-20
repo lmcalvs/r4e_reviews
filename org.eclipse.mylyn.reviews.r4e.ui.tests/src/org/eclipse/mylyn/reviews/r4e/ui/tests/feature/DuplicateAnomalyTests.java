@@ -258,14 +258,14 @@ public class DuplicateAnomalyTests extends TestCase {
 						.get(i)
 						.getTarget()
 						.getName());
-				Assert.assertEquals(623, ((R4ETextPosition) fItem.getItem()
+				Assert.assertEquals(606, ((R4ETextPosition) fItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(0)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(26,
+				Assert.assertEquals(25,
 						((R4ETextPosition) fItem.getItem()
 								.getFileContextList()
 								.get(i)
@@ -273,14 +273,14 @@ public class DuplicateAnomalyTests extends TestCase {
 								.get(0)
 								.getTarget()
 								.getLocation()).getLength());
-				Assert.assertEquals(687, ((R4ETextPosition) fItem.getItem()
+				Assert.assertEquals(665, ((R4ETextPosition) fItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(1)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(65,
+				Assert.assertEquals(63,
 						((R4ETextPosition) fItem.getItem()
 								.getFileContextList()
 								.get(i)
@@ -288,14 +288,14 @@ public class DuplicateAnomalyTests extends TestCase {
 								.get(1)
 								.getTarget()
 								.getLocation()).getLength());
-				Assert.assertEquals(759, ((R4ETextPosition) fItem.getItem()
+				Assert.assertEquals(733, ((R4ETextPosition) fItem.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(2)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(63,
+				Assert.assertEquals(61,
 						((R4ETextPosition) fItem.getItem()
 								.getFileContextList()
 								.get(i)
@@ -432,42 +432,42 @@ public class DuplicateAnomalyTests extends TestCase {
 						.get(i)
 						.getBase()
 						.getName());
-				Assert.assertEquals(623, ((R4ETextPosition) fItem4.getItem()
+				Assert.assertEquals(606, ((R4ETextPosition) fItem4.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(0)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(26, ((R4ETextPosition) fItem4.getItem()
+				Assert.assertEquals(25, ((R4ETextPosition) fItem4.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(0)
 						.getTarget()
 						.getLocation()).getLength());
-				Assert.assertEquals(687, ((R4ETextPosition) fItem4.getItem()
+				Assert.assertEquals(665, ((R4ETextPosition) fItem4.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(1)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(65, ((R4ETextPosition) fItem4.getItem()
+				Assert.assertEquals(63, ((R4ETextPosition) fItem4.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(1)
 						.getTarget()
 						.getLocation()).getLength());
-				Assert.assertEquals(759, ((R4ETextPosition) fItem4.getItem()
+				Assert.assertEquals(733, ((R4ETextPosition) fItem4.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()
 						.get(2)
 						.getTarget()
 						.getLocation()).getStartPosition());
-				Assert.assertEquals(63, ((R4ETextPosition) fItem4.getItem()
+				Assert.assertEquals(61, ((R4ETextPosition) fItem4.getItem()
 						.getFileContextList()
 						.get(i)
 						.getDeltas()

@@ -332,12 +332,16 @@ public class AnomalyUtils {
 				//The file exist with a different file version
 				final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
 				final R4EUIFileContext dContext = tempFileContext;
-				Display.getDefault().syncExec(new Runnable() {
-					public void run() {
-						final MessageDialog dialog = displayDifferentFileVersionDialog(aTargetFileVersion, dContext);
-						result[0] = dialog.open();
-					}
-				});
+				if (!UIUtils.TEST_MODE) {
+					Display.getDefault().syncExec(new Runnable() {
+						public void run() {
+							final MessageDialog dialog = displayDifferentFileVersionDialog(aTargetFileVersion, dContext);
+							result[0] = dialog.open();
+						}
+					});
+				} else {
+					result[0] = Window.OK;
+				}
 				if (result[0] == Window.CANCEL) {
 					// Cancel selected, so just exit here and do not add anomaly
 					return;
