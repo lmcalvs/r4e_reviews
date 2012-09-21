@@ -38,7 +38,6 @@ import org.eclipse.mylyn.reviews.frame.core.model.Review;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDecision <em>Decision</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEndDate <em>End Date</em>}</li>
- *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDate <em>Due Date</em>}</li
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getAnomalyTemplate <em>Anomaly Template</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getUsersMap <em>Users Map</em>}</li>
@@ -303,33 +302,6 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 */
 	void setEndDate(Date value);
 
-	/**
-	 * Returns the value of the '<em><b>Due Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Due Date</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Due Date</em>' attribute.
-	 * @see #setDueDate(Date)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_DueDate()
-	 * @model
-	 * @generated
-	 */
-	Date getDueDate();
-	
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDa
-te <em>Due Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Due Date</em>' attribute.
-	 * @see #getDueDate()
-	 * @generated
-	 */
-	void setDueDate(Date value);
-	
 	/**
 	 * Returns the value of the '<em><b>Anomaly Template</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
