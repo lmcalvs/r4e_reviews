@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?>
-
-<target name="r4e-dev-eclipse4.2" sequenceNumber="8">
+<?pde version="3.8"?><target name="r4e-dev-eclipse4.2" sequenceNumber="9">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.sdk.ide" version="0.0.0"/>
-<unit id="org.eclipse.cdt.platform.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.sdk.ide" version="4.2.1.M20120914-1800"/>
+<unit id="org.eclipse.cdt.sdk.feature.group" version="8.1.1.201209170703"/>
 <unit id="org.eclipse.ecf.core.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.emf.ecore.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.emf.common.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.emf.common.ui.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.emf.databinding.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.emf.edit.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.emf.edit.ui.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.8.1.v20120917-0436"/>
 <unit id="org.eclipse.birt.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.egit.feature.group" version="2.0.0.201206130900-r"/>
-<unit id="org.eclipse.jgit.feature.group" version="2.0.0.201206130900-r"/>
+<unit id="org.eclipse.egit.feature.group" version="2.1.0.201209190230-r"/>
+<unit id="org.eclipse.jgit.feature.group" version="2.1.0.201209190230-r"/>
 <repository location="http://download.eclipse.org/releases/juno"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -41,8 +34,8 @@
 <unit id="org.eclipse.mylyn.commons.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.mylyn.versions.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.mylyn.git.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.mylyn.subclipse.feature.group" version="1.0.1.v20120725-0100"/>
-<repository location="http://archive.eclipse.org/mylyn/drops/3.8.1/v20120725-0100"/>
+<unit id="org.eclipse.mylyn.subclipse.feature.group" version="0.0.0"/>
+<repository location="http://archive.eclipse.org/mylyn/drops/3.8.2/v20120916-1200"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.tigris.subversion.subclipse.feature.group" version="0.0.0"/>
