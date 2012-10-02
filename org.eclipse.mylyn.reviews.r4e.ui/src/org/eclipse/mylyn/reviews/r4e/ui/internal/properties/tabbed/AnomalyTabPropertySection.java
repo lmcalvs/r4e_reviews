@@ -167,6 +167,11 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 	protected Button fCalendarButton = null;
 
 	/**
+	 * Field fClearButton.
+	 */
+	protected Button fClearButton = null;
+
+	/**
 	 * Field fDecidedByLabel.
 	 */
 	private CLabel fDecidedByLabel = null;
@@ -656,16 +661,23 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 
 		final Composite dateComposite = aWidgetFactory.createComposite(anomalyDetailsSectionClient);
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gridData.horizontalSpan = 3;
+		gridData.horizontalSpan = 2;
 		dateComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
 		dateComposite.setLayoutData(gridData);
 		dateComposite.setLayout(new GridLayout(2, false));
 
+		aWidgetFactory.setBorderStyle(SWT.NULL);
 		fDateText = aWidgetFactory.createText(dateComposite, "", SWT.NULL);
-		fDateText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		fDateText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 		fDateText.setEditable(false);
-		fCalendarButton = aWidgetFactory.createButton(dateComposite, "...", SWT.NONE);
-		fCalendarButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+
+		final Composite dateButtonComposite = aWidgetFactory.createComposite(dateComposite);
+		dateButtonComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
+		dateButtonComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
+		dateButtonComposite.setLayout(new GridLayout(2, false));
+
+		fCalendarButton = aWidgetFactory.createButton(dateButtonComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
+		fCalendarButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 		fCalendarButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				final ICalendarDialog dialog = R4EUIDialogFactory.getInstance().getCalendarDialog();
@@ -691,6 +703,28 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 				}
 			}
 		});
+		fClearButton = aWidgetFactory.createButton(dateButtonComposite, R4EUIConstants.CLEAR_LABEL, SWT.NONE);
+		fClearButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		fClearButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				fDateText.setText("");
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EAnomaly modelAnomaly = ((R4EUIAnomalyBasic) fProperties.getElement()).getAnomaly();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelAnomaly, currentUser);
+						modelAnomaly.setDueDate(null);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
+				refresh();
+			}
+		});
+		aWidgetFactory.setBorderStyle(SWT.BORDER);
 
 		return anomalyDetailsSection;
 	}
@@ -972,6 +1006,7 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			fRankCombo.setEnabled(false);
 			fDateText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fCalendarButton.setEnabled(false);
+			fClearButton.setEnabled(false);
 			fDecidedByCombo.setEnabled(false);
 			fFixedByCombo.setEnabled(false);
 			fFollowUpByCombo.setEnabled(false);
@@ -1019,9 +1054,11 @@ public class AnomalyTabPropertySection extends ModelElementTabPropertySection {
 			if (uiAnomaly.isDueDateEnabled()) {
 				fDateText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 				fCalendarButton.setEnabled(true);
+				fClearButton.setEnabled(true);
 			} else {
 				fDateText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 				fCalendarButton.setEnabled(false);
+				fClearButton.setEnabled(false);
 			}
 
 			if (uiAnomaly.isClassEnabled()) {

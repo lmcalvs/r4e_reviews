@@ -273,9 +273,10 @@ public class PostponedAnomaliesTests extends TestCase {
 		Assert.assertTrue(fGroup.isOpen());
 
 		fOriginalReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
-				ORIGINAL_REVIEW_TEST_NAME, ORIGINAL_REVIEW_TEST_DESCRIPTION, TestConstants.REVIEW_TEST_PROJECT,
-				TestConstants.REVIEW_TEST_COMPONENTS, TestConstants.REVIEW_TEST_ENTRY_CRITERIA,
-				TestConstants.REVIEW_TEST_OBJECTIVES, TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
+				ORIGINAL_REVIEW_TEST_NAME, ORIGINAL_REVIEW_TEST_DESCRIPTION, TestConstants.REVIEW_TEST_DUE_DATE,
+				TestConstants.REVIEW_TEST_PROJECT, TestConstants.REVIEW_TEST_COMPONENTS,
+				TestConstants.REVIEW_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_TEST_OBJECTIVES,
+				TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
 		Assert.assertNotNull(fOriginalReview);
 		Assert.assertNotNull(fOriginalReview.getParticipantContainer());
 		Assert.assertNotNull(fOriginalReview.getAnomalyContainer());
@@ -543,9 +544,10 @@ public class PostponedAnomaliesTests extends TestCase {
 	 */
 	private void createTargetReview() {
 		fTargetReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
-				TARGET_REVIEW_TEST_NAME, TARGET_REVIEW_TEST_DESCRIPTION, TestConstants.REVIEW_TEST_PROJECT,
-				TestConstants.REVIEW_TEST_COMPONENTS, TestConstants.REVIEW_TEST_ENTRY_CRITERIA,
-				TestConstants.REVIEW_TEST_OBJECTIVES, TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
+				TARGET_REVIEW_TEST_NAME, TARGET_REVIEW_TEST_DESCRIPTION, TestConstants.REVIEW_TEST_DUE_DATE,
+				TestConstants.REVIEW_TEST_PROJECT, TestConstants.REVIEW_TEST_COMPONENTS,
+				TestConstants.REVIEW_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_TEST_OBJECTIVES,
+				TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
 		Assert.assertNotNull(fTargetReview);
 		Assert.assertNotNull(fTargetReview.getParticipantContainer());
 		Assert.assertNotNull(fTargetReview.getAnomalyContainer());
@@ -864,9 +866,9 @@ public class PostponedAnomaliesTests extends TestCase {
 	private void createGlobalTargetReview() {
 		fGlobalTargetReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
 				TARGET_GLOBAL_REVIEW_TEST_NAME, TARGET_GLOBAL_REVIEW_TEST_DESCRIPTION,
-				TestConstants.REVIEW_TEST_PROJECT, TestConstants.REVIEW_TEST_COMPONENTS,
-				TestConstants.REVIEW_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_TEST_OBJECTIVES,
-				TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
+				TestConstants.REVIEW_TEST_DUE_DATE, TestConstants.REVIEW_TEST_PROJECT,
+				TestConstants.REVIEW_TEST_COMPONENTS, TestConstants.REVIEW_TEST_ENTRY_CRITERIA,
+				TestConstants.REVIEW_TEST_OBJECTIVES, TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
 		Assert.assertNotNull(fGlobalTargetReview);
 		Assert.assertNotNull(fGlobalTargetReview.getParticipantContainer());
 		Assert.assertNotNull(fGlobalTargetReview.getAnomalyContainer());

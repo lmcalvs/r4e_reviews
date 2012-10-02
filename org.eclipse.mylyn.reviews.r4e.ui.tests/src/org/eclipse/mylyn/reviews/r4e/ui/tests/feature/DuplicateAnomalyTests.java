@@ -205,9 +205,9 @@ public class DuplicateAnomalyTests extends TestCase {
 
 		fReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
 				TestConstants.REVIEW_DUPLICATE_NAME_INF, TestConstants.REVIEW_TEST_DESCRIPTION,
-				TestConstants.REVIEW_TEST_PROJECT, TestConstants.REVIEW_TEST_COMPONENTS,
-				TestConstants.REVIEW_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_TEST_OBJECTIVES,
-				TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
+				TestConstants.REVIEW_TEST_DUE_DATE, TestConstants.REVIEW_TEST_PROJECT,
+				TestConstants.REVIEW_TEST_COMPONENTS, TestConstants.REVIEW_TEST_ENTRY_CRITERIA,
+				TestConstants.REVIEW_TEST_OBJECTIVES, TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
 		Assert.assertNotNull(fReview);
 		Assert.assertNotNull(fReview.getParticipantContainer());
 		Assert.assertNotNull(fReview.getAnomalyContainer());

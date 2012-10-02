@@ -77,6 +77,8 @@ public class TestConstants {
 
 	public static final String REVIEW_TEST_DESCRIPTION = "testReview description";
 
+	public static final Date REVIEW_TEST_DUE_DATE = new Date();
+
 	public static final String REVIEW_TEST_PROJECT = "ProjectX";
 
 	public static final String[] REVIEW_TEST_COMPONENTS = { "core", "docs" };

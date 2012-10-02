@@ -167,7 +167,7 @@ public class PreferencesTests extends TestCase {
 	 */
 	private void createReview() {
 		fReview = fProxy.getReviewProxy().createReview(fParentGroup, TestConstants.REVIEW_TEST_TYPE_INFORMAL,
-				REVIEW_TEST_NAME, REVIEW_TEST_DESCRIPTION, null, new String[0], null, null, null);
+				REVIEW_TEST_NAME, REVIEW_TEST_DESCRIPTION, null, null, new String[0], null, null, null);
 		Assert.assertNotNull(fReview);
 		Assert.assertNotNull(fReview.getParticipantContainer());
 		Assert.assertNotNull(fReview.getAnomalyContainer());

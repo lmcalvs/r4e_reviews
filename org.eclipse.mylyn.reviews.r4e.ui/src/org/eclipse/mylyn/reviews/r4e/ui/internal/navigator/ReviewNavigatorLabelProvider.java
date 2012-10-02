@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
@@ -44,8 +45,14 @@ public class ReviewNavigatorLabelProvider extends ColumnLabelProvider {
 	 * @return String
 	 */
 	@Override
-	public String getToolTipText(Object element) {
-		return ((IR4EUIModelElement) element).getToolTip();
+	public String getToolTipText(Object aElement) {
+		return ((IR4EUIModelElement) aElement).getToolTip();
+	}
+
+	@Override
+	public Color getToolTipForegroundColor(Object aElement) {
+		// ignore
+		return ((IR4EUIModelElement) aElement).getToolTipColor();
 	}
 
 	/**

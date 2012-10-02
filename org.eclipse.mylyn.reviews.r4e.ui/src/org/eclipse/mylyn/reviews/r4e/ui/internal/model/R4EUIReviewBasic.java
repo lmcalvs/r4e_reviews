@@ -63,6 +63,9 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.versions.core.ChangeSet;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -287,7 +290,24 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public String getToolTip() {
+		if (isDueDatePassed()) {
+			return R4EUIConstants.DUE_DATE_PASSED_MSG + fReview.getExtraNotes();
+		}
 		return fReview.getExtraNotes();
+	}
+
+	/**
+	 * Method getToolTipColor.
+	 * 
+	 * @return Color
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTipColor()
+	 */
+	@Override
+	public Color getToolTipColor() {
+		if (isDueDatePassed()) {
+			return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED);
+		}
+		return Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
 	}
 
 	/**
@@ -349,6 +369,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fReview.setType(((R4EReview) aModelComponent).getType());
 
 		//Optional properties
+		fReview.setDueDate(((R4EReview) aModelComponent).getDueDate());
 		fReview.setProject(((R4EReview) aModelComponent).getProject());
 		fReview.getComponents().addAll(((R4EReview) aModelComponent).getComponents());
 		fReview.setEntryCriteria(((R4EReview) aModelComponent).getEntryCriteria());
@@ -849,6 +870,25 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	@Override
 	public boolean isEnabled() {
 		return fReview.isEnabled();
+	}
+
+	/**
+	 * Method isDueDatePassed.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isDueDatePassed()
+	 */
+	@Override
+	public boolean isDueDatePassed() {
+		if (isEnabled()) {
+			if (null != fReview.getDueDate()
+					&& fReview.getDueDate().before(new Date())
+					&& !((R4EReviewState) fReview.getState()).getState().equals(
+							R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

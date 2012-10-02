@@ -21,6 +21,8 @@ package org.eclipse.mylyn.reviews.r4e.ui.tests.proxy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Date;
+
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog;
@@ -51,8 +53,8 @@ public class R4EUITestReview extends R4EUITestElement {
 	 * @return R4EUIReviewBasic
 	 */
 	public R4EUIReviewBasic createReview(R4EUIReviewGroup aGroup, R4EReviewType aType, String aName,
-			String aDescription, String aProject, String[] aComponents, String aEntryCriteria, String aObjectives,
-			String aRefMat) {
+			String aDescription, Date aDueDate, String aProject, String[] aComponents, String aEntryCriteria,
+			String aObjectives, String aRefMat) {
 
 		//Inject mockup dialog for New Review
 		IReviewInputDialog mockReviewDialog = mock(ReviewInputDialog.class);
@@ -62,6 +64,7 @@ public class R4EUITestReview extends R4EUITestElement {
 		when(mockReviewDialog.getReviewTypeValue()).thenReturn(aType);
 		when(mockReviewDialog.getReviewNameValue()).thenReturn(aName);
 		when(mockReviewDialog.getReviewDescriptionValue()).thenReturn(aDescription);
+		when(mockReviewDialog.getDueDate()).thenReturn(aDueDate);
 		when(mockReviewDialog.getProjectValue()).thenReturn(aProject);
 		when(mockReviewDialog.getComponentsValues()).thenReturn(aComponents);
 		when(mockReviewDialog.getEntryCriteriaValue()).thenReturn(aEntryCriteria);

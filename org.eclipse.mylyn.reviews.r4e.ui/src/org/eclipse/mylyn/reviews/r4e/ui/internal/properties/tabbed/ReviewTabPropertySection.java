@@ -15,12 +15,12 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EMeetingData;
@@ -35,6 +35,8 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ICalendarDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
@@ -57,7 +59,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Item;
@@ -120,19 +121,24 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 	private Text fStartDateText = null;
 
 	/**
+	 * Field fDueDateText.
+	 */
+	protected Text fDueDateText = null;
+
+	/**
+	 * Field fCalendarButton.
+	 */
+	protected Button fCalendarButton = null;
+
+	/**
+	 * Field fClearButton.
+	 */
+	protected Button fClearButton = null;
+
+	/**
 	 * Field fEndDateText.
 	 */
 	private Text fEndDateText = null;
-
-	/**
-	 * Field fDueDateText.
-	 */
-	private Button fDueDateActive = null;
-
-	/**
-	 * Field fDueDateText.
-	 */
-	private DateTime fDueDateControl = null;
 
 	/**
 	 * Field fDescriptionText.
@@ -484,6 +490,77 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		fStartDateText.setToolTipText(R4EUIConstants.REVIEW_START_DATE_TOOLTIP);
 		fStartDateText.setLayoutData(gridData);
 
+		//Due Date
+		final CLabel dateLabel = aWidgetFactory.createCLabel(reviewDetailsSectionClient, R4EUIConstants.DUE_DATE_LABEL);
+		gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gridData.horizontalSpan = 1;
+		dateLabel.setLayoutData(gridData);
+
+		final Composite dateComposite = aWidgetFactory.createComposite(reviewDetailsSectionClient);
+		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridData.horizontalSpan = 3;
+		dateComposite.setToolTipText(R4EUIConstants.REVIEW_DUE_DATE_TOOLTIP);
+		dateComposite.setLayoutData(gridData);
+		dateComposite.setLayout(new GridLayout(2, false));
+
+		fDueDateText = aWidgetFactory.createText(dateComposite, "", SWT.NULL);
+		fDueDateText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		fDueDateText.setEditable(false);
+
+		final Composite dateButtonComposite = aWidgetFactory.createComposite(dateComposite);
+		dateButtonComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
+		dateButtonComposite.setToolTipText(R4EUIConstants.REVIEW_DUE_DATE_TOOLTIP);
+		dateButtonComposite.setLayout(new GridLayout(2, false));
+
+		fCalendarButton = aWidgetFactory.createButton(dateButtonComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
+		fCalendarButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		fCalendarButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				final ICalendarDialog dialog = R4EUIDialogFactory.getInstance().getCalendarDialog();
+				final int result = dialog.open();
+				if (result == Window.OK) {
+					final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
+					fDueDateText.setText(dateFormat.format(dialog.getDate()));
+					if (!fRefreshInProgress) {
+						try {
+							final String currentUser = R4EUIModelController.getReviewer();
+							final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
+							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview,
+									currentUser);
+							modelReview.setDueDate(dialog.getDate());
+							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+						} catch (ResourceHandlingException e1) {
+							UIUtils.displayResourceErrorDialog(e1);
+						} catch (OutOfSyncException e1) {
+							UIUtils.displaySyncErrorDialog(e1);
+						}
+					}
+					refresh();
+				}
+			}
+		});
+		fClearButton = aWidgetFactory.createButton(dateButtonComposite, R4EUIConstants.CLEAR_LABEL, SWT.NONE);
+		fClearButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		fClearButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				fDueDateText.setText("");
+				if (!fRefreshInProgress) {
+					try {
+						final String currentUser = R4EUIModelController.getReviewer();
+						final R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
+						modelReview.setDueDate(null);
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+					} catch (ResourceHandlingException e1) {
+						UIUtils.displayResourceErrorDialog(e1);
+					} catch (OutOfSyncException e1) {
+						UIUtils.displaySyncErrorDialog(e1);
+					}
+				}
+				refresh();
+			}
+		});
+
 		//End Date (read-only)
 		final CLabel endDateLabel = aWidgetFactory.createCLabel(reviewDetailsSectionClient,
 				R4EUIConstants.END_DATE_LABEL);
@@ -498,78 +575,6 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		fEndDateText.setEditable(false);
 		fEndDateText.setToolTipText(R4EUIConstants.REVIEW_END_DATE_TOOLTIP);
 		fEndDateText.setLayoutData(gridData);
-
-		final CLabel dueDateLabel = aWidgetFactory.createCLabel(reviewDetailsSectionClient,
-				R4EUIConstants.DUE_DATE_LABEL);
-		gridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
-		gridData.horizontalSpan = 1;
-		dueDateLabel.setToolTipText(R4EUIConstants.REVIEW_DUE_DATE_TOOLTIP);
-		dueDateLabel.setLayoutData(gridData);
-
-		Composite dueDatePanel = aWidgetFactory.createComposite(reviewDetailsSectionClient);
-		gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		gridData.horizontalSpan = 3;
-		dueDatePanel.setLayout(new GridLayout(2, false));
-		dueDatePanel.setLayoutData(gridData);
-
-		fDueDateActive = aWidgetFactory.createButton(dueDatePanel, null, SWT.CHECK);
-		fDueDateActive.setToolTipText(R4EUIConstants.REVIEW_ASSIGN_DUE_DATE_TOOLTIP);
-		fDueDateActive.addSelectionListener(new SelectionListener() {
-
-			public void widgetSelected(SelectionEvent e) {
-				boolean active = fDueDateActive.getSelection();
-				fDueDateControl.setVisible(active);
-				fDueDateControl.setEnabled(active);
-				try {
-					if (!active) {
-						updateModelDueDate(null);
-					} else {
-						Calendar tommorrow = Calendar.getInstance();
-						tommorrow.add(Calendar.DAY_OF_MONTH, 1);
-						tommorrow.set(Calendar.HOUR, 0);
-						tommorrow.set(Calendar.MINUTE, 0);
-						tommorrow.set(Calendar.SECOND, 0);
-						tommorrow.set(Calendar.MILLISECOND, 0);
-						updateModelDueDate(tommorrow.getTime());
-					}
-				} catch (ResourceHandlingException e1) {
-					UIUtils.displayResourceErrorDialog(e1);
-				} catch (OutOfSyncException e1) {
-					UIUtils.displaySyncErrorDialog(e1);
-				}
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// ignore
-
-			}
-		});
-		aWidgetFactory.adapt(fDueDateActive, true, true);
-
-		fDueDateControl = new DateTime(dueDatePanel, SWT.DATE);
-		fDueDateControl.setToolTipText(R4EUIConstants.REVIEW_DUE_DATE_TOOLTIP);
-		aWidgetFactory.adapt(fDueDateControl, true, true);
-		fDueDateControl.addSelectionListener(new SelectionListener() {
-
-			public void widgetSelected(SelectionEvent e) {
-				Calendar controlCalendar = Calendar.getInstance();
-				controlCalendar.set(fDueDateControl.getYear(), fDueDateControl.getMonth(), fDueDateControl.getDay());
-				controlCalendar.set(Calendar.HOUR, 0);
-				controlCalendar.set(Calendar.MINUTE, 0);
-				controlCalendar.set(Calendar.SECOND, 0);
-				controlCalendar.set(Calendar.MILLISECOND, 0);
-				try {
-					updateModelDueDate(controlCalendar.getTime());
-				} catch (ResourceHandlingException e1) {
-					UIUtils.displayResourceErrorDialog(e1);
-				} catch (OutOfSyncException e1) {
-					UIUtils.displaySyncErrorDialog(e1);
-				}
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
 
 		//Project
 		final CLabel projectLabel = aWidgetFactory.createCLabel(reviewDetailsSectionClient,
@@ -1212,7 +1217,12 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		} else {
 			fEndDateText.setText(dateFormat.format(modelReview.getEndDate()));
 		}
-		refreshDueDate();
+		if (null != modelReview.getDueDate()) {
+			final SimpleDateFormat dueDateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
+			fDueDateText.setText(dueDateFormat.format(modelReview.getDueDate()));
+		} else {
+			fDueDateText.setText("");
+		}
 
 		final String[] availableProjects = (String[]) ((R4EUIReviewGroup) uiReview.getParent()).getReviewGroup()
 				.getAvailableProjects()
@@ -1462,28 +1472,6 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		R4EUIModelController.getNavigatorView().getTreeViewer().refresh();
 	}
 
-	private void refreshDueDate() {
-		Date date = ((R4EUIReviewBasic) fProperties.getElement()).getReview().getDueDate();
-		boolean dateActive = date != null;
-		fDueDateActive.setSelection(dateActive);
-		fDueDateControl.setEnabled(dateActive);
-		fDueDateControl.setVisible(dateActive);
-		if (dateActive) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(date);
-			fDueDateControl.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-					calendar.get(Calendar.DAY_OF_MONTH));
-		}
-	}
-
-	private void updateModelDueDate(Date date) throws ResourceHandlingException, OutOfSyncException {
-		final String currentUser = R4EUIModelController.getReviewer();
-		R4EReview modelReview = ((R4EUIReviewBasic) fProperties.getElement()).getReview();
-		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(modelReview, currentUser);
-		modelReview.setDueDate(date);
-		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-	}
-
 	/**
 	 * Method setEnabledFields.
 	 */
@@ -1500,8 +1488,9 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			fDescriptionText.setEditable(false);
 			fStartDateText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fEndDateText.setForeground(UIUtils.DISABLED_FONT_COLOR);
-			fDueDateControl.setForeground(UIUtils.DISABLED_FONT_COLOR);
-			fDueDateActive.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fDueDateText.setForeground(UIUtils.DISABLED_FONT_COLOR);
+			fCalendarButton.setEnabled(false);
+			fClearButton.setEnabled(false);
 			fProjectCombo.setEnabled(false);
 			fComponents.setEnabled(false);
 			fEntryCriteriaText.setForeground(UIUtils.DISABLED_FONT_COLOR);
@@ -1563,8 +1552,9 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			fPhaseCombo.setEnabled(true);
 			fStartDateText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fEndDateText.setForeground(UIUtils.ENABLED_FONT_COLOR);
-			fDueDateControl.setForeground(UIUtils.ENABLED_FONT_COLOR);
-			fDueDateActive.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fDueDateText.setForeground(UIUtils.ENABLED_FONT_COLOR);
+			fCalendarButton.setEnabled(true);
+			fClearButton.setEnabled(true);
 			fDescriptionText.setForeground(UIUtils.ENABLED_FONT_COLOR);
 			fDescriptionText.setEditable(true);
 			fProjectCombo.setEnabled(true);

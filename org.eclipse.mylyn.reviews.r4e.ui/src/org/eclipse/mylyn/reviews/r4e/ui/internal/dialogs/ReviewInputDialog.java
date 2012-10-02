@@ -19,7 +19,9 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -27,6 +29,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -37,8 +40,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
@@ -163,6 +169,16 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	 * Field fReviewDescriptionInputTextField.
 	 */
 	private Text fReviewDescriptionInputTextField = null;
+
+	/**
+	 * Field fDueDateText.
+	 */
+	protected Text fDueDateText = null;
+
+	/**
+	 * Field fDueDateValue.
+	 */
+	private Date fDueDateValue = null;
 
 	/**
 	 * Field fProjectValue.
@@ -486,6 +502,63 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 				.getSelection();
 		final R4EUIReviewGroup parentGroup = (R4EUIReviewGroup) selection.getFirstElement();
 
+		//Due Date
+		toolkit.setBorderStyle(SWT.NULL);
+		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.DUE_DATE_LABEL);
+		textGridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		textGridData.horizontalSpan = 1;
+		label.setLayoutData(textGridData);
+
+		final Composite dateComposite = toolkit.createComposite(extraSectionClient);
+		textGridData = new GridData(SWT.FILL, SWT.CENTER, true, true);
+		textGridData.horizontalSpan = 2;
+		dateComposite.setToolTipText(R4EUIConstants.REVIEW_DUE_DATE_TOOLTIP);
+		dateComposite.setLayoutData(textGridData);
+		dateComposite.setLayout(new GridLayout(2, false));
+
+		fDueDateText = toolkit.createText(dateComposite, "", SWT.READ_ONLY);
+		fDueDateText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		fDueDateText.setEditable(false);
+		toolkit.setBorderStyle(SWT.BORDER);
+
+		final Composite dateButtonComposite = toolkit.createComposite(dateComposite);
+		textGridData = new GridData(SWT.FILL, SWT.CENTER, true, true);
+		textGridData.horizontalSpan = 1;
+		dateButtonComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
+		dateButtonComposite.setLayoutData(textGridData);
+		dateButtonComposite.setLayout(new GridLayout(2, false));
+
+		final Button calendarButton = toolkit.createButton(dateButtonComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
+		calendarButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		calendarButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				final ICalendarDialog dialog = R4EUIDialogFactory.getInstance().getCalendarDialog();
+				final int result = dialog.open();
+				if (result == Window.OK) {
+					final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
+					fDueDateText.setText(dateFormat.format(dialog.getDate()));
+					fDueDateValue = dialog.getDate();
+				}
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
+				// No implementation needed
+			}
+		});
+
+		final Button clearButton = toolkit.createButton(dateButtonComposite, R4EUIConstants.CLEAR_LABEL, SWT.NONE);
+		clearButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		clearButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				fDueDateText.setText("");
+				fDueDateValue = null;
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
+				// No implementation needed
+			}
+		});
+
 		//Project
 		label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_PROJECT_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);
@@ -608,6 +681,33 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 	 */
 	public String getReviewDescriptionValue() {
 		return fReviewDescriptionValue;
+	}
+
+	/**
+	 * Method setDueDate.
+	 * 
+	 * @param aDate
+	 *            Date
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#setDueDate(Date)
+	 */
+	public void setDueDate(Date aDate) {
+		fDueDateValue = aDate;
+		if (null != fDueDateValue) {
+			final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
+			fDueDateText.setText(dateFormat.format(fDueDateValue));
+		} else {
+			fDueDateText.setText("");
+		}
+	}
+
+	/**
+	 * Method getDueDate.
+	 * 
+	 * @return Date
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IReviewInputDialog#getDueDate()
+	 */
+	public Date getDueDate() {
+		return fDueDateValue;
 	}
 
 	/**

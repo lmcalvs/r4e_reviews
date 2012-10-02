@@ -19,6 +19,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -51,6 +52,8 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.preferences.PreferenceConstants
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.AnomalyBasicProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -212,7 +215,24 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public String getToolTip() {
+		if (isDueDatePassed()) {
+			return R4EUIConstants.DUE_DATE_PASSED_MSG + buildAnomalyToolTip(fAnomaly);
+		}
 		return buildAnomalyToolTip(fAnomaly);
+	}
+
+	/**
+	 * Method getToolTipColor.
+	 * 
+	 * @return Color
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTipColor()
+	 */
+	@Override
+	public Color getToolTipColor() {
+		if (isDueDatePassed()) {
+			return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED);
+		}
+		return Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
 	}
 
 	/**
@@ -951,6 +971,30 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 * @return boolean
 	 */
 	public boolean isTerminalState() {
+		return false;
+	}
+
+	/**
+	 * Method isDueDatePassed.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isDueDatePassed()
+	 */
+	@Override
+	public boolean isDueDatePassed() {
+		if (isEnabled()) {
+			if (null != fAnomaly.getDueDate() && fAnomaly.getDueDate().before(new Date())) {
+				IR4EUIModelElement element = getParent().getParent().getParent().getParent();
+				if (!(element instanceof R4EUIReviewBasic)) {
+					//Assume global anomaly
+					element = getParent().getParent();
+				}
+				if (!((R4EReviewState) ((R4EUIReviewBasic) element).getReview().getState()).getState().equals(
+						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 }

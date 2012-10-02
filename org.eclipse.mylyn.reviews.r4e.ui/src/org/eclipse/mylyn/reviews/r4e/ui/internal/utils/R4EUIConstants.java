@@ -185,6 +185,11 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String UPDATE_LABEL = "Update...";
 
 	/**
+	 * Field CLEAR_LABEL. (value is ""Clear"")
+	 */
+	public static final String CLEAR_LABEL = "Clear";
+
+	/**
 	 * Field ADD_LABEL. (value is ""Add..."")
 	 */
 	public static final String ADD_LABEL = "Add...";
@@ -666,9 +671,14 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String IN_PROGRESS_MSG = "(In Progress)";
 
 	/**
-	 * Field IN_PROGRESS_MSG. (value is ""(In Progress)"")
+	 * Field NO_DUE_DATE_MSG. (value is ""(No Due Date)"")
 	 */
 	public static final String NO_DUE_DATE_MSG = "(No Due Date)";
+
+	/**
+	 * Field DUE_DATE_PASSED_MSG. (value is ""(Due Date Passed!) "")
+	 */
+	public static final String DUE_DATE_PASSED_MSG = "(Due Date Passed!) ";
 
 	/**
 	 * Field STATE_LABEL. (value is ""State: "")

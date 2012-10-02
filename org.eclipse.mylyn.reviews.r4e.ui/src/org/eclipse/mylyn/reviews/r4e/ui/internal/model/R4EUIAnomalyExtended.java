@@ -578,6 +578,20 @@ public class R4EUIAnomalyExtended extends R4EUIAnomalyBasic {
 	}
 
 	/**
+	 * Method isDueDatePassed.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isDueDatePassed()
+	 */
+	@Override
+	public boolean isDueDatePassed() {
+		if (super.isDueDatePassed() && !isTerminalState()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Method getAllowedState.
 	 * 
 	 * @param aCurrentState

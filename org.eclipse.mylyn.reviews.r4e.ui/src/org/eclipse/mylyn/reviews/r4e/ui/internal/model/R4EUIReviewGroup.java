@@ -296,7 +296,7 @@ public class R4EUIReviewGroup extends R4EUIModelElement {
 			tempReview.setType(type);
 			tempReview.setName(dialog.getReviewNameValue());
 			tempReview.setExtraNotes(dialog.getReviewDescriptionValue());
-			//Informal reviews
+			tempReview.setDueDate(dialog.getDueDate());
 			tempReview.setProject(dialog.getProjectValue());
 			for (String component : dialog.getComponentsValues()) {
 				tempReview.getComponents().add(component);

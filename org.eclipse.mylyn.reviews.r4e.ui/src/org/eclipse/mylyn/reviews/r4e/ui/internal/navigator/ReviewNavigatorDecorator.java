@@ -126,6 +126,7 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 
 		//Added, Removed or Modified file
 		currentOverlayImage = ((null == overlayIcon) ? currentOverlayImage : overlayIcon.getImage());
+		overlayIcon = null;
 		if (aElement instanceof R4EUIFileContext) {
 			if (null == ((R4EUIFileContext) aElement).getBaseFileVersion()
 					&& null != ((R4EUIFileContext) aElement).getTargetFileVersion()) {
@@ -141,9 +142,19 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 		}
 
 		//Read-Only
+		currentOverlayImage = ((null == overlayIcon) ? currentOverlayImage : overlayIcon.getImage());
+		overlayIcon = null;
 		if (((IR4EUIModelElement) aElement).isReadOnly()) {
 			overlayIcon = new OverlayImageIcon(currentOverlayImage, ((IR4EUIModelElement) aElement).getReadOnlyImage(),
 					OverlayImageIcon.TOP_RIGHT);
+		}
+
+		//Due date passed
+		currentOverlayImage = ((null == overlayIcon) ? currentOverlayImage : overlayIcon.getImage());
+		overlayIcon = null;
+		if (((IR4EUIModelElement) aElement).isDueDatePassed()) {
+			overlayIcon = new OverlayImageIcon(currentOverlayImage,
+					((IR4EUIModelElement) aElement).getDueDatePassedImage(), OverlayImageIcon.TOP_LEFT);
 		}
 		return (Image) ((null == overlayIcon) ? overlayIcon : overlayIcon.getImage());
 	}
@@ -226,12 +237,17 @@ public class ReviewNavigatorDecorator implements ILabelDecorator, IFontDecorator
 	 * @return Color
 	 */
 	public Color decorateForeground(Object aElement) {
-		if (aElement instanceof R4EUIReviewBasic
-				&& ((R4EReviewState) ((R4EUIReviewBasic) aElement).getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-			return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY);
-		} else if (aElement instanceof IR4EUIModelElement) {
-			if (((IR4EUIModelElement) aElement).isReadOnly()) {
+		if (aElement instanceof R4EUIReviewBasic) {
+			if (((R4EReviewState) ((R4EUIReviewBasic) aElement).getReview().getState()).getState().equals(
+					R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+				return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY);
+			}
+		}
+
+		if (aElement instanceof IR4EUIModelElement) {
+			if (((IR4EUIModelElement) aElement).isDueDatePassed()) {
+				return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED);
+			} else if (((IR4EUIModelElement) aElement).isReadOnly()) {
 				return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY);
 			}
 		}

@@ -457,24 +457,33 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 		fAssignedToCombo.setLayoutData(textGridData);
 
 		//Due Date
+		toolkit.setBorderStyle(SWT.NULL);
 		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.DUE_DATE_LABEL);
-		textGridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		textGridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		textGridData.horizontalSpan = 1;
 		label.setLayoutData(textGridData);
 
 		final Composite dateComposite = toolkit.createComposite(extraSectionClient);
-		textGridData = new GridData(GridData.FILL, GridData.FILL, true, true);
-		textGridData.horizontalSpan = 3;
+		textGridData = new GridData(SWT.FILL, SWT.CENTER, true, true);
+		textGridData.horizontalSpan = 2;
 		dateComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
 		dateComposite.setLayoutData(textGridData);
 		dateComposite.setLayout(new GridLayout(2, false));
 
-		fDateText = toolkit.createText(dateComposite, "", SWT.BORDER | SWT.READ_ONLY);
-		fDateText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		fDateText = toolkit.createText(dateComposite, "", SWT.READ_ONLY);
+		fDateText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 		fDateText.setEditable(false);
+		toolkit.setBorderStyle(SWT.BORDER);
 
-		final Button calendarButton = toolkit.createButton(dateComposite, "...", SWT.NONE);
-		calendarButton.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		final Composite dateButtonComposite = toolkit.createComposite(dateComposite);
+		textGridData = new GridData(SWT.FILL, SWT.CENTER, true, true);
+		textGridData.horizontalSpan = 1;
+		dateButtonComposite.setToolTipText(R4EUIConstants.ANOMALY_DUE_DATE_TOOLTIP);
+		dateButtonComposite.setLayoutData(textGridData);
+		dateButtonComposite.setLayout(new GridLayout(2, false));
+
+		final Button calendarButton = toolkit.createButton(dateButtonComposite, R4EUIConstants.UPDATE_LABEL, SWT.NONE);
+		calendarButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 		calendarButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				final ICalendarDialog dialog = R4EUIDialogFactory.getInstance().getCalendarDialog();
@@ -484,6 +493,19 @@ public class NewAnomalyInputDialog extends FormDialog implements IAnomalyInputDi
 					fDateText.setText(dateFormat.format(dialog.getDate()));
 					fAnomalyDueDateValue = dialog.getDate();
 				}
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod
+				// No implementation needed
+			}
+		});
+
+		final Button clearButton = toolkit.createButton(dateButtonComposite, R4EUIConstants.CLEAR_LABEL, SWT.NONE);
+		clearButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		clearButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				fDateText.setText("");
+				fAnomalyDueDateValue = null;
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) { // $codepro.audit.disable emptyMethod

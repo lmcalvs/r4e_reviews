@@ -17,6 +17,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 
+import java.util.Date;
+
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 
 /**
@@ -57,6 +59,21 @@ public interface IReviewInputDialog {
 	 * @return the review description input string
 	 */
 	String getReviewDescriptionValue();
+
+	/**
+	 * Method setDueDate.
+	 * 
+	 * @param aDate
+	 *            Date
+	 */
+	void setDueDate(Date aDate);
+
+	/**
+	 * Method getDueDate.
+	 * 
+	 * @return Date
+	 */
+	Date getDueDate();
 
 	/**
 	 * Returns the string typed into this input dialog.

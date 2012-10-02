@@ -943,6 +943,13 @@ To help Users to keep track of the content that was reviewed it is possible to m
 
 <br> 
 
+
+=== Setting Elements Due Date  ===
+
+A due date can be set for the Review and Anomalies elements to specify a latest date after which the review (or anomaly) should be completed (i.e. set to a terminal state).  After this date has passed, if the elements are still not completed, they will be highlighted in the Review Navigator, using icon decorators, red text and additional info in their respective tooltips, so that the review participants are aware of the situation and can take action quickly.  Take note that does not apply to anomalies in basic reviews, since they are stateless.
+
+<br>
+
 === Other Review Navigator Commands  ===
 
 These other commands are also available from the Navigator view toolbar and/or drop-down menu: 
@@ -1029,6 +1036,7 @@ This opens the New Review dialog.
 
 *Add the Review Name and a brief description in the appropriate text fields. 
 *Under the Extra Parameters section, more information can optionally be entered to further characterize the Review: 
+**A due date can be set to specify a date before which the review should be completed
 **Project and Components values can be selected from the values entered in the parent Review Group Default Projects and Default Components respectively 
 **Entry Criteria is taken by default from the parent Review Group value 
 **Objectives and Reference Materials can be set by the Review creator
@@ -1495,12 +1503,13 @@ Properties for the Review Element includes:
 
 *In the Review Details expandable section
 **The review start (or creation) date. 
+**The review due date (i.e. the date the review should be completed by).
 **The review end (or completion) date. If the review is not completed, this will show as ''In Progress''. 
 **Project Id. The value is taken for the list of possible values from the parent Review Group 
 **Components. The values are taken for the list of possible values from the parent Review Group 
 **The Entry Criteria that has to be met for the review to start. The default value is taken from the parent Review Group but can be modified here. 
 **The Objectives for the review. 
-**The Reference Materials (documents etc.) that ca n be used during the review 
+**The Reference Materials (documents etc.) that can be used during the review 
 
 *In the Decision Information expandable section (Informal/Formal reviews only)
 **Meeting data for the decision meeting (Subject, Time, Duration, Location). This can be updated at any time using the ''Update ''button. The data can be fetched using the ''Refresh'' button 

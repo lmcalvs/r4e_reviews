@@ -157,6 +157,11 @@
 		<p>
 			<br/> 
 		</p>
+		<h3 id="Setting_Elements_Due_Date">Setting Elements Due Date</h3>
+		<p>A due date can be set for the Review and Anomalies elements to specify a latest date after which the review (or anomaly) should be completed (i.e. set to a terminal state).  After this date has passed, if the elements are still not completed, they will be highlighted in the Review Navigator, using icon decorators, red text and additional info in their respective tooltips, so that the review participants are aware of the situation and can take action quickly.  Take note that does not apply to anomalies in basic reviews, since they are stateless.</p>
+		<p>
+			<br/>
+		</p>
 		<h3 id="Other_Review_Navigator_Commands">Other Review Navigator Commands</h3>
 		<p>These other commands are also available from the Navigator view toolbar and/or drop-down menu: </p>
 		<ul>
@@ -285,6 +290,7 @@
 			<li>Add the Review Name and a brief description in the appropriate text fields. </li>
 			<li>Under the Extra Parameters section, more information can optionally be entered to further characterize the Review: 
 				<ul>
+					<li>A due date can be set to specify a date before which the review should be completed</li>
 					<li>Project and Components values can be selected from the values entered in the parent Review Group Default Projects and Default Components respectively </li>
 					<li>Entry Criteria is taken by default from the parent Review Group value </li>
 					<li>Objectives and Reference Materials can be set by the Review creator</li>
@@ -866,6 +872,7 @@
 			<li>In the Review Details expandable section
 				<ul>
 					<li>The review start (or creation) date. </li>
+					<li>The review due date (i.e. the date the review should be completed by).</li>
 					<li>The review end (or completion) date. If the review is not completed, this will show as 
 						<i>In Progress</i>. 
 					</li>
@@ -873,7 +880,7 @@
 					<li>Components. The values are taken for the list of possible values from the parent Review Group </li>
 					<li>The Entry Criteria that has to be met for the review to start. The default value is taken from the parent Review Group but can be modified here. </li>
 					<li>The Objectives for the review. </li>
-					<li>The Reference Materials (documents etc.) that ca n be used during the review </li>
+					<li>The Reference Materials (documents etc.) that can be used during the review </li>
 				</ul>
 			</li>
 		</ul>
@@ -1158,7 +1165,8 @@
 			<br/>
 		</p>
 		<h2 id="Using_Statistical_Reports">Using Statistical Reports</h2>
-		<p>Statistical reports provide useful information to analyze the efficiency of one or several reviews.</p>
+		<p>Statistical reports provide useful information to analyze the efficiency of one or several reviews.
+			To have this functionality available, you need to install the report feature on top of the R4E feature.</p>
 		<h3 id="Generating_Reports">Generating Reports</h3>
 		<p>To generate a statistical report, select in the Review Navigator view one or more review, the right click and select "Generate Report"</p>
 		<p>

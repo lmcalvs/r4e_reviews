@@ -33,7 +33,10 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general.ModelElementProperties;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -66,6 +69,11 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 * Field DISABLED_OVERLAY_ICON_FILE.
 	 */
 	public static final String ITALIC_ICON_FILE = "icons/ovr16/italics_icon.gif"; //$NON-NLS-1$
+
+	/**
+	 * Field DUE_DATE_PASSED_OVERLAY_ICON_FILE.
+	 */
+	public static final String DUE_DATE_PASSED_OVERLAY_ICON_FILE = "icons/ovr16/duedateovr_tsk.gif"; //$NON-NLS-1$
 
 	/**
 	 * Field DISABLED_OVERLAY_ICON_FILE.
@@ -193,8 +201,20 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	}
 
 	/**
+	 * Method getToolTipColor.
+	 * 
+	 * @return Color
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getToolTipColor()
+	 */
+	public Color getToolTipColor() {
+		return Display.getCurrent().getSystemColor(SWT.COLOR_BLACK); //default implementation
+	}
+
+	/**
 	 * Method getImage.
-	 * @param aLocation - String
+	 * 
+	 * @param aLocation
+	 *            - String
 	 * @return Image
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getImage()
 	 */
@@ -251,6 +271,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public boolean isEnabled() {
 		return true; //default implementation
+	}
+
+	/**
+	 * Method isDueDatePassed.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#isDueDatePassed()
+	 */
+	public boolean isDueDatePassed() {
+		return false; //default implementation
 	}
 
 	/**
@@ -326,6 +356,16 @@ public abstract class R4EUIModelElement implements IR4EUIModelElement, // $codep
 	 */
 	public Image getDisabledImage() {
 		return UIUtils.loadIcon(DISABLED_OVERLAY_ICON_FILE);
+	}
+
+	/**
+	 * Method getDueDatePassedImage.
+	 * 
+	 * @return Image
+	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#getDueDatePassedImage()
+	 */
+	public Image getDueDatePassedImage() {
+		return UIUtils.loadIcon(DUE_DATE_PASSED_OVERLAY_ICON_FILE);
 	}
 
 	/**

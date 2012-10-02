@@ -27,6 +27,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -63,6 +64,13 @@ public interface IR4EUIModelElement {
 	 * @return String
 	 */
 	String getToolTip();
+
+	/**
+	 * Method getToolTipColor.
+	 * 
+	 * @return String
+	 */
+	Color getToolTipColor();
 
 	/**
 	 * Get the element image path
@@ -110,6 +118,13 @@ public interface IR4EUIModelElement {
 	Image getDisabledImage();
 
 	/**
+	 * Gets the overlay image that indicate that the element is passed its dues date
+	 * 
+	 * @return Image
+	 */
+	Image getDueDatePassedImage();
+
+	/**
 	 * Gets the overlay image that indicate that the element is read-only
 	 * 
 	 * @return Image
@@ -129,6 +144,13 @@ public interface IR4EUIModelElement {
 	 * @return true/false
 	 */
 	boolean isEnabled();
+
+	/**
+	 * Checks if the corresponding model element due date is passed (if applicable)
+	 * 
+	 * @return boolean
+	 */
+	boolean isDueDatePassed();
 
 	/**
 	 * Checks if the corresponding model element is read-only

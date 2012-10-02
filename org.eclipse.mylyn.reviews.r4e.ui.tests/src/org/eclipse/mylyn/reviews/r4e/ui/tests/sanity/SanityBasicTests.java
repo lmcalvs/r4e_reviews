@@ -208,15 +208,16 @@ public class SanityBasicTests extends TestCase {
 
 		fReview = fProxy.getReviewProxy().createReview(fGroup, TestConstants.REVIEW_TEST_TYPE_BASIC,
 				TestConstants.REVIEW_TEST_NAME, TestConstants.REVIEW_TEST_DESCRIPTION,
-				TestConstants.REVIEW_TEST_PROJECT, TestConstants.REVIEW_TEST_COMPONENTS,
-				TestConstants.REVIEW_TEST_ENTRY_CRITERIA, TestConstants.REVIEW_TEST_OBJECTIVES,
-				TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
+				TestConstants.REVIEW_TEST_DUE_DATE, TestConstants.REVIEW_TEST_PROJECT,
+				TestConstants.REVIEW_TEST_COMPONENTS, TestConstants.REVIEW_TEST_ENTRY_CRITERIA,
+				TestConstants.REVIEW_TEST_OBJECTIVES, TestConstants.REVIEW_TEST_REFERENCE_MATERIALS);
 		Assert.assertNotNull(fReview);
 		Assert.assertNotNull(fReview.getParticipantContainer());
 		Assert.assertNotNull(fReview.getAnomalyContainer());
 		Assert.assertEquals(TestConstants.REVIEW_TEST_TYPE_BASIC, fReview.getReview().getType());
 		Assert.assertEquals(TestConstants.REVIEW_TEST_NAME, fReview.getReview().getName());
 		Assert.assertEquals(TestConstants.REVIEW_TEST_DESCRIPTION, fReview.getReview().getExtraNotes());
+		Assert.assertEquals(TestConstants.REVIEW_TEST_DUE_DATE, fReview.getReview().getDueDate());
 		Assert.assertEquals(TestConstants.REVIEW_TEST_PROJECT, fReview.getReview().getProject());
 		for (int i = 0; i < TestConstants.REVIEW_TEST_COMPONENTS.length; i++) {
 			Assert.assertEquals(TestConstants.REVIEW_TEST_COMPONENTS[i], fReview.getReview().getComponents().get(i));
