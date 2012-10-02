@@ -48,6 +48,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestConstants;
@@ -305,6 +306,9 @@ public class SanityBasicTests extends TestCase {
 								.get(2)
 								.getTarget()
 								.getLocation()).getLength());
+				Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+						((R4EUIFileContext) fItem.getChildren()[i]).getContentsContainerElement().getChildren(), true,
+						R4EUIConstants.DELTA_ANNOTATION_ID));
 			} else if (((R4EUIFileContext) fItem.getChildren()[i]).getName().equals(TestUtils.JAVA_FILE4_PROJ_NAME)) {
 				Assert.assertNull(fItem.getItem().getFileContextList().get(i).getBase());
 				Assert.assertEquals(TestUtils.JAVA_FILE4_PROJ_NAME, fItem.getItem()
@@ -356,6 +360,9 @@ public class SanityBasicTests extends TestCase {
 				.get(0)
 				.getTarget()
 				.getLocation()).getLength());
+		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+				((R4EUIFileContext) fItem2.getChildren()[0]).getContentsContainerElement().getChildren(), false,
+				R4EUIConstants.SELECTION_ANNOTATION_ID));
 
 		fItem3 = fProxy.getItemProxy().createManualTextItem(TestUtils.FJavaFile4, 50, 20);
 		Assert.assertNotNull(fItem3);
@@ -384,6 +391,9 @@ public class SanityBasicTests extends TestCase {
 				.get(0)
 				.getTarget()
 				.getLocation()).getLength());
+		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+				((R4EUIFileContext) fItem3.getChildren()[0]).getContentsContainerElement().getChildren(), true,
+				R4EUIConstants.SELECTION_ANNOTATION_ID));
 	}
 
 	/**
@@ -438,6 +448,8 @@ public class SanityBasicTests extends TestCase {
 		Assert.assertEquals(50, ((R4ETextPosition) ((R4ETextContent) fCompareEditorAnomaly.getAnomaly()
 				.getLocation()
 				.get(0)).getLocation()).getLength());
+		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fCompareEditorAnomaly, true,
+				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
 
 	/**
@@ -467,6 +479,8 @@ public class SanityBasicTests extends TestCase {
 		Assert.assertEquals(
 				((R4EUITextPosition) content.getPosition()).getLength(),
 				((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly.getAnomaly().getLocation().get(0)).getLocation()).getLength());
+		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fLinkedAnomaly, true,
+				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
 
 	/**
@@ -492,6 +506,8 @@ public class SanityBasicTests extends TestCase {
 		Assert.assertEquals(781, ((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly()
 				.getLocation()
 				.get(0)).getLocation()).getLength());
+		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fExternalAnomaly, false,
+				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
 
 	/**

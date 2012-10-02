@@ -22,6 +22,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.navigator;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.prefs.PreferenceChangeEvent;
 
@@ -54,10 +55,12 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewAnnotationConfigFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4EAnnotationControlCreatorFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
@@ -244,6 +247,13 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 	 */
 	@Override
 	public void dispose() {
+
+		//First close all children
+		IR4EUIModelElement[] children = R4EUIModelController.getRootElement().getChildren();
+		for (IR4EUIModelElement child : children) {
+			child.close();
+		}
+
 		if (null != fPartListener) {
 			getSite().getPage().removePartListener(fPartListener);
 		}
@@ -358,6 +368,11 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 
 		//Make sure Navigator View is enabled at startup
 		R4EUIModelController.setJobInProgress(false);
+
+		//Needed for annotation support
+		ReviewAnnotationConfigFactory.setPlugin(R4EUIPlugin.getDefault());
+		ReviewAnnotationConfigFactory.registerFactory(new R4EAnnotationControlCreatorFactory());
+		ReviewAnnotationConfigFactory.setUseInformationControlReplacer(true);
 	}
 
 	/**
@@ -453,13 +468,27 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 			public void selectionChanged(SelectionChangedEvent event) {
 				if (event.getSelection() instanceof IStructuredSelection) {
 					final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+					IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
+
+					//We use a source provider to pass in the R4E UI model element the commands would be applied to
+					//We use a source provider to pass in the R4E UI model element(s) the commands would be applied to
+					UIUtils.clearCommandUIElements();
+					List<IR4EUIModelElement> uiElements = new ArrayList<IR4EUIModelElement>(1);
+					Object selectedElement = null;
+					for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
+						selectedElement = iterator.next();
+						if (!(selectedElement instanceof IR4EUIModelElement)) {
+							continue;
+						}
+						uiElements.add((IR4EUIModelElement) selectedElement);
+					}
+					UIUtils.setCommandUIElements(uiElements);
+
 					if (isPropertiesLinked()) {
 						showProperties();
 					}
 
 					if (isEditorLinked()) {
-						IR4EUIModelElement element = (IR4EUIModelElement) selection.getFirstElement();
-
 						//Find the parent FileContextElement
 						while (null != element && !(element instanceof R4EUIFileContext)) {
 							element = element.getParent();
@@ -535,7 +564,7 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
 						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
 					}
-				} else if (isEditorLinked()) {
+				} else {
 					EditorProxy.openEditor(getSite().getPage(), selection, false);
 				}
 			}
@@ -652,7 +681,6 @@ public class ReviewNavigatorView extends ViewPart implements IMenuListener, IPre
 		} catch (PartInitException e) {
 			R4EUIPlugin.Ftracer.traceWarning("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 			R4EUIPlugin.getDefault().logWarning("Exception: " + e.toString(), e); //$NON-NLS-1$
-			// Do nothing
 		}
 		return propertiesView;
 	}

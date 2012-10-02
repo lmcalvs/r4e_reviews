@@ -17,14 +17,14 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
+import java.util.List;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
@@ -60,7 +60,7 @@ public class CloseElementHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 
@@ -75,15 +75,13 @@ public class CloseElementHandler extends AbstractHandler {
 			public IStatus run(IProgressMonitor monitor) {
 				monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 
-				if (selection instanceof IStructuredSelection) {
-					if (!selection.isEmpty()) {
-						R4EUIModelController.setJobInProgress(true);
-						final IR4EUIModelElement element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
-						R4EUIPlugin.Ftracer.traceInfo("Closing element " + element.getName()); //$NON-NLS-1$
-						element.close();
-						R4EUIModelController.setJobInProgress(false);
-						UIUtils.setNavigatorViewFocus(element, 0);
-					}
+				if (!selectedElements.isEmpty()) {
+					R4EUIModelController.setJobInProgress(true);
+					final IR4EUIModelElement element = selectedElements.get(0);
+					R4EUIPlugin.Ftracer.traceInfo("Closing element " + element.getName()); //$NON-NLS-1$
+					element.close();
+					R4EUIModelController.setJobInProgress(false);
+					UIUtils.setNavigatorViewFocus(element, 0);
 				}
 				monitor.done();
 				return Status.OK_STATUS;

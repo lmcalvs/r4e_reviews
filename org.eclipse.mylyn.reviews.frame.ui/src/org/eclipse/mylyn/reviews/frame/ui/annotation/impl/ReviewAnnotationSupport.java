@@ -8,29 +8,29 @@
  * 
  * Description:
  * 
- * This class implements generic support for R4E Annotations
+ * This class implements generic support for Review Annotations
  * 
  * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Sebastien Dubois - Created for Mylyn Reviews project
  *   
  ******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control;
+package org.eclipse.mylyn.reviews.frame.ui.annotation.impl;
 
-import org.eclipse.jface.viewers.Viewer;
+import java.lang.reflect.Method;
+
+import org.eclipse.compare.internal.MergeSourceViewer;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IEditorInputListener;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotationModel;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-public abstract class R4EAnnotationSupport implements IReviewAnnotationSupport {
+public abstract class ReviewAnnotationSupport implements IReviewAnnotationSupport {
 
 	// ------------------------------------------------------------------------
 	// Members
@@ -51,22 +51,27 @@ public abstract class R4EAnnotationSupport implements IReviewAnnotationSupport {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for R4EAnnotationSupport.
+	 * Constructor for ReviewAnnotationSupport.
 	 * 
-	 * @param aSourceViewer
-	 *            ISourceViewer
-	 * @param aFileContext
-	 *            R4EUIFileContext
+	 * @param aSourceFile
+	 *            Object
 	 */
-	public R4EAnnotationSupport(Viewer aViewer, R4EUIFileContext aFileContext) {
-		this.fTargetAnnotationModel = new R4EAnnotationModel();
-		this.fTargetAnnotationModel.setFile(aFileContext);
+	public ReviewAnnotationSupport(Object aSourceFile) {
+		this.fTargetAnnotationModel = createAnnotationModel(aSourceFile);
+		this.fTargetAnnotationModel.setFile(aSourceFile);
 	}
-
+	
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
 
+	/**
+	 * Method createAnnotationModel.
+	 * @param aSourceFile Object
+	 * @return IReviewAnnotationModel
+	 */
+	protected abstract IReviewAnnotationModel createAnnotationModel(Object aSourceFile);
+	
 	/**
 	 * Method install.
 	 * 
@@ -74,7 +79,7 @@ public abstract class R4EAnnotationSupport implements IReviewAnnotationSupport {
 	 *            ISourceViewer
 	 */
 	protected abstract void install(Object aSourceViewer);
-
+	
 	/**
 	 * Method getTargetEditor.
 	 * 
@@ -112,11 +117,25 @@ public abstract class R4EAnnotationSupport implements IReviewAnnotationSupport {
 	}
 
 	/**
+	 * Method refreshAnnotations.
+	 * 
+	 * @param aElement
+	 *            Object
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#refreshAnnotations(Object)
+	 */
+	public void refreshAnnotations(Object aElement) {
+		if (null != fTargetAnnotationModel) {
+			fTargetAnnotationModel.setFile(aElement);
+			fTargetAnnotationModel.refreshAnnotations();
+		}
+	}
+	
+	/**
 	 * Method addAnnotation.
 	 * 
 	 * @param aElement
-	 *            IR4EUIModelElement
-	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#addAnnotation(IR4EUIModelElement)
+	 *            Object
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#addAnnotation(Object)
 	 */
 	public void addAnnotation(Object aElement) {
 		if (null != fTargetAnnotationModel) {
@@ -128,8 +147,8 @@ public abstract class R4EAnnotationSupport implements IReviewAnnotationSupport {
 	 * Method updateAnnotation.
 	 * 
 	 * @param aElement
-	 *            IR4EUIModelElement
-	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#updateAnnotation(IR4EUIModelElement)
+	 *            Object
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#updateAnnotation(Object)
 	 */
 	public void updateAnnotation(Object aElement) {
 		if (null != fTargetAnnotationModel) {
@@ -141,8 +160,8 @@ public abstract class R4EAnnotationSupport implements IReviewAnnotationSupport {
 	 * Method removeAnnotation.
 	 * 
 	 * @param aElement
-	 *            IR4EUIModelElement
-	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#removeAnnotation(IR4EUIModelElement)
+	 *            Object
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport#removeAnnotation(Object)
 	 */
 	public void removeAnnotation(Object aElement) {
 		if (null != fTargetAnnotationModel) {
@@ -168,7 +187,7 @@ public abstract class R4EAnnotationSupport implements IReviewAnnotationSupport {
 		if (!getClass().equals(aObject.getClass())) {
 			return false;
 		}
-		final R4EAnnotationSupport other = (R4EAnnotationSupport) aObject;
+		final ReviewAnnotationSupport other = (ReviewAnnotationSupport) aObject;
 		if (fTargetAnnotationModel == null) {
 			if (other.fTargetAnnotationModel != null) {
 				return false;
@@ -190,5 +209,31 @@ public abstract class R4EAnnotationSupport implements IReviewAnnotationSupport {
 		int result = 1;
 		result = (prime * result) + ((fTargetAnnotationModel == null) ? 0 : fTargetAnnotationModel.hashCode());
 		return result;
+	}
+	
+	/**
+	 * Method getSourceViewer.
+	 * 
+	 * @param aMergeViewer
+	 *            MergeSourceViewer
+	 * @return SourceViewer
+	 */
+	public static SourceViewer getSourceViewer(MergeSourceViewer aMergeViewer) {
+		if (SourceViewer.class.isInstance(aMergeViewer)) {
+			return SourceViewer.class.cast(aMergeViewer);
+		}
+		
+		final Object returnValue;
+		try {
+			final Method getSourceViewerRefl = MergeSourceViewer.class.getDeclaredMethod("getSourceViewer");
+			getSourceViewerRefl.setAccessible(true);
+			returnValue = getSourceViewerRefl.invoke(aMergeViewer);
+			if (returnValue instanceof SourceViewer) {
+				return (SourceViewer) returnValue;
+			}
+		} catch (Exception e) {
+				// ignore
+		}
+		return null;
 	}
 }

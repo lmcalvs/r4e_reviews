@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.editors;
 
+import java.io.File;
 import java.net.URI;
 
 import org.eclipse.core.resources.IStorage;
@@ -152,6 +153,13 @@ public class R4EFileRevisionEditorInput extends PlatformObject implements IWorkb
 		if (IStorage.class.equals(aAdapter)) {
 			try {
 				return fFileVersion.getFileRevision().getStorage(null);
+			} catch (CoreException e) {
+				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);
+			}
+		} else if (File.class.equals(aAdapter)) {
+			try {
+				return fFileVersion.getFileRevision().getStorage(null).getFullPath().toFile();
 			} catch (CoreException e) {
 				R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
 				R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e);

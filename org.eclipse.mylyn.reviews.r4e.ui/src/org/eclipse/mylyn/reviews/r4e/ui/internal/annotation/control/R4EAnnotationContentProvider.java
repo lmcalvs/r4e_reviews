@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.IAnnotationHoverInput;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotation;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotationText;
 
@@ -55,9 +56,11 @@ public class R4EAnnotationContentProvider implements ITreeContentProvider {
 	public Object[] getChildren(Object aParentElement) {
 		if (aParentElement instanceof IReviewAnnotation) {
 			return ((IReviewAnnotation) aParentElement).getChildren();
-		} else if (aParentElement instanceof R4EAnnotationHoverInput) {
-			final List<IReviewAnnotation> annotations = ((R4EAnnotationHoverInput) aParentElement).getAnnotations();
+		} else if (aParentElement instanceof IAnnotationHoverInput) {
+			final List<IReviewAnnotation> annotations = ((IAnnotationHoverInput) aParentElement).getAnnotations();
 			return annotations.toArray(new IReviewAnnotation[annotations.size()]);
+		} else if (aParentElement instanceof R4EAnnotationText) {
+			return ((R4EAnnotationText) aParentElement).getChildren();
 		}
 		return null;
 	}
@@ -91,8 +94,10 @@ public class R4EAnnotationContentProvider implements ITreeContentProvider {
 	public boolean hasChildren(Object aElement) {
 		if (aElement instanceof IReviewAnnotation) {
 			return ((IReviewAnnotation) aElement).hasChildren();
-		} else if (aElement instanceof R4EAnnotationHoverInput) {
-			return ((R4EAnnotationHoverInput) aElement).getAnnotations().size() > 0;
+		} else if (aElement instanceof IAnnotationHoverInput) {
+			return ((IAnnotationHoverInput) aElement).getAnnotations().size() > 0;
+		} else if (aElement instanceof R4EAnnotationText) {
+			return ((R4EAnnotationText) aElement).hasChildren();
 		}
 		return false;
 	}

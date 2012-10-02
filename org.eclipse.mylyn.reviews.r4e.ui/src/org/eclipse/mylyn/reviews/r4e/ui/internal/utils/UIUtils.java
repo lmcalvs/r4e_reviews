@@ -61,6 +61,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4ECompareAnnotationSupport;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4ESingleAnnotationSupport;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.UIElementsProvider;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IParticipantUnassignDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
@@ -92,10 +93,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.editors.text.EditorsUI;
+import org.eclipse.ui.services.ISourceProviderService;
 import org.eclipse.ui.texteditor.AnnotationPreference;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -189,6 +192,16 @@ public class UIUtils {
 	 * Field ENABLED_FONT_COLOR.
 	 */
 	public static final Color ENABLED_FONT_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
+
+	/**
+	 * Field SINGLE_KEY_ANNOTATION_SUPPORT. (value is ""singleEditorAnnotationSupport"")
+	 */
+	private static final String SINGLE_KEY_ANNOTATION_SUPPORT = "singleEditorAnnotationSupport";
+
+	/**
+	 * Field COMPARE_KEY_ANNOTATION_SUPPORT. (value is ""compareEditorAnnotationSupport"")
+	 */
+	private static final String COMPARE_KEY_ANNOTATION_SUPPORT = "compareEditorAnnotationSupport";
 
 	// ------------------------------------------------------------------------
 	// Members
@@ -931,12 +944,11 @@ public class UIUtils {
 	 * @return String
 	 */
 	public static List<R4EParticipant> getAssignParticipants() {
+		final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance().getParticipantInputDialog(false);
 		final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
 		final List<R4EParticipant> resultParticipants = new ArrayList<R4EParticipant>();
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				final IParticipantInputDialog dialog = R4EUIDialogFactory.getInstance()
-						.getParticipantInputDialog(false);
 				dialog.create();
 				result[0] = dialog.open();
 				for (R4EParticipant participant : dialog.getParticipants()) {
@@ -959,12 +971,12 @@ public class UIUtils {
 	 * @return String
 	 */
 	public static List<R4EParticipant> getUnassignParticipants(final IR4EUIModelElement aElement) {
+		final IParticipantUnassignDialog dialog = R4EUIDialogFactory.getInstance().getParticipantUnassignDialog(
+				aElement);
 		final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
 		final List<R4EParticipant> resultParticipants = new ArrayList<R4EParticipant>();
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				final IParticipantUnassignDialog dialog = R4EUIDialogFactory.getInstance()
-						.getParticipantUnassignDialog(aElement);
 				dialog.create();
 				result[0] = dialog.open();
 				for (R4EParticipant participant : dialog.getParticipants()) {
@@ -1015,6 +1027,20 @@ public class UIUtils {
 	}
 
 	//Inline commenting
+
+	/**
+	 * Method refreshAnnotations
+	 * 
+	 * @param aFile
+	 *            - R4EUIFileContext
+	 */
+	public static void refreshAnnotations(R4EUIFileContext aFile) {
+		//Add Annotation marker for inline commenting (if applicable)
+		IReviewAnnotationSupport support = getAnnotationSupport(aFile);
+		if (null != support) {
+			support.refreshAnnotations(aFile);
+		}
+	}
 
 	/**
 	 * Method addAnnotation
@@ -1071,7 +1097,7 @@ public class UIUtils {
 	 *            - R4EUIFileContext
 	 * @return IReviewAnnotationSupport
 	 */
-	private static IReviewAnnotationSupport getAnnotationSupport(R4EUIFileContext aFile) {
+	public static IReviewAnnotationSupport getAnnotationSupport(R4EUIFileContext aFile) {
 		IReviewAnnotationSupport support = null;
 
 		//First try to find Compare Editor
@@ -1082,7 +1108,7 @@ public class UIUtils {
 			IEditorInput input = editor.getEditorInput();
 			Viewer viewer = ((R4ECompareEditorInput) input).getContentViewer();
 			if (null != viewer) {
-				support = R4ECompareAnnotationSupport.getAnnotationSupport(viewer, aFile);
+				support = getCompareAnnotationSupport(viewer, aFile);
 			}
 		} else {
 			//Try to find Single Editor
@@ -1092,9 +1118,45 @@ public class UIUtils {
 				ITextOperationTarget target = (ITextOperationTarget) editor.getAdapter(ITextOperationTarget.class);
 				if (target instanceof SourceViewer) {
 					SourceViewer sourceViewer = (SourceViewer) target;
-					support = R4ESingleAnnotationSupport.getAnnotationSupport(sourceViewer, aFile);
+					support = getSingleAnnotationSupport(sourceViewer, aFile);
 				}
 			}
+		}
+		return support;
+	}
+
+	/**
+	 * Method getSingleAnnotationSupport.
+	 * 
+	 * @param aSourceViewer
+	 *            ISourceViewer
+	 * @param aFileContext
+	 *            R4EUIFileContext
+	 * @return IReviewAnnotationSupport
+	 */
+	public static IReviewAnnotationSupport getSingleAnnotationSupport(SourceViewer aSourceViewer, Object aFileContext) {
+		IReviewAnnotationSupport support = (IReviewAnnotationSupport) aSourceViewer.getData(SINGLE_KEY_ANNOTATION_SUPPORT);
+		if (support == null) {
+			support = new R4ESingleAnnotationSupport(aSourceViewer, aFileContext);
+			aSourceViewer.setData(SINGLE_KEY_ANNOTATION_SUPPORT, support);
+		}
+		return support;
+	}
+
+	/**
+	 * Method getCompareAnnotationSupport.
+	 * 
+	 * @param aSourceViewer
+	 *            ISourceViewer
+	 * @param aFileContext
+	 *            R4EUIFileContext
+	 * @return IReviewAnnotationSupport
+	 */
+	public static IReviewAnnotationSupport getCompareAnnotationSupport(Viewer aViewer, Object aFileContext) {
+		IReviewAnnotationSupport support = (IReviewAnnotationSupport) aViewer.getData(COMPARE_KEY_ANNOTATION_SUPPORT);
+		if (support == null) {
+			support = new R4ECompareAnnotationSupport(aViewer, aFileContext);
+			aViewer.setData(COMPARE_KEY_ANNOTATION_SUPPORT, support);
 		}
 		return support;
 	}
@@ -1139,5 +1201,44 @@ public class UIUtils {
 			rgb = aPref.getColorPreferenceValue();
 		}
 		return rgb;
+	}
+
+	/**
+	 * Method getCommandUIElements
+	 * 
+	 * @return List<IR4EUIModelElement>
+	 */
+	public static List<IR4EUIModelElement> getCommandUIElements() {
+		return getSourceProvider().getSelectedElements();
+	}
+
+	/**
+	 * Method setCommandUIElements
+	 * 
+	 * @param uiElements
+	 *            - List<IR4EUIModelElement>
+	 */
+	public static void setCommandUIElements(List<IR4EUIModelElement> uiElements) {
+		getSourceProvider().setSelectedElements(uiElements);
+	}
+
+	/**
+	 * Method getCommandUIElements
+	 * 
+	 * @return List<IR4EUIModelElement>
+	 */
+	public static void clearCommandUIElements() {
+		getSourceProvider().setSelectedElements(null);
+	}
+
+	/**
+	 * Method getSourceProvider.
+	 * 
+	 * @return UIElementsProvider
+	 */
+	private static UIElementsProvider getSourceProvider() {
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		ISourceProviderService service = (ISourceProviderService) window.getService(ISourceProviderService.class);
+		return (UIElementsProvider) service.getSourceProvider(UIElementsProvider.SELECTED_ELEMENTS);
 	}
 }

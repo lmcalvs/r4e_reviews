@@ -8,33 +8,26 @@
  * 
  * Description:
  * 
- * This class implements the listeners that creates the R4E annotation model
- * and the editor changes needed when the underlying R4E document is opened.
+ * This class implements the listeners that creates the Review annotation model
+ * and the editor changes needed when the underlying Review document is opened.
  * 
  * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Sebastien Dubois - Created for Mylyn Reviews project
  *   
  ******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control;
+package org.eclipse.mylyn.reviews.frame.ui.annotation.impl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.source.IAnnotationModel;
-import org.eclipse.jface.text.source.IAnnotationModelExtension;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IEditorInputListener;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
-import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -43,7 +36,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-public abstract class R4EEditorInputListener implements IEditorInputListener {
+public abstract class ReviewEditorInputListener implements IEditorInputListener {
 
 	// ------------------------------------------------------------------------
 	// Members
@@ -64,14 +57,14 @@ public abstract class R4EEditorInputListener implements IEditorInputListener {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for R4EEditorInputListener.
+	 * Constructor for ReviewEditorInputListener.
 	 * 
 	 * @param aSourceViewer
-	 *            SourceViewer
+	 *            ISourceViewer
 	 * @param aAnnotationModel
-	 *            R4EAnnotationModel
+	 *            IReviewAnnotationModel
 	 */
-	public R4EEditorInputListener(ISourceViewer aSourceViewer, IReviewAnnotationModel aAnnotationModel) {
+	public ReviewEditorInputListener(ISourceViewer aSourceViewer, IReviewAnnotationModel aAnnotationModel) {
 		this.fSourceViewer = aSourceViewer;
 		this.fAnnotationModel = aAnnotationModel;
 	}
@@ -101,6 +94,17 @@ public abstract class R4EEditorInputListener implements IEditorInputListener {
 	}
 
 	/**
+	 * Method addAnnotationModel.
+	 * 
+	 * @param aModel
+	 *            IAnnotationModel
+	 * @param aNewInput
+	 *            IDocument
+	 */
+	protected abstract void addAnnotationModel(IAnnotationModel aModel, IDocument aNewInput);
+	
+	
+	/**
 	 * Method inputDocumentChanged.
 	 * 
 	 * @param aOldInput
@@ -115,26 +119,7 @@ public abstract class R4EEditorInputListener implements IEditorInputListener {
 		}
 		if ((aNewInput != null) && (fSourceViewer != null)) {
 			final IAnnotationModel originalAnnotationModel = fSourceViewer.getAnnotationModel();
-			try {
-				if (originalAnnotationModel instanceof IAnnotationModelExtension) {
-					final IAnnotationModelExtension annotationModelExtension = (IAnnotationModelExtension) originalAnnotationModel;
-					annotationModelExtension.addAnnotationModel(R4EUIPlugin.PLUGIN_ID, fAnnotationModel);
-				}
-				configureViewerAnnotations(originalAnnotationModel, aNewInput);
-			} catch (Throwable t) {
-				R4EUIPlugin.Ftracer.traceError("Exception: " + t.toString() + " (" + t.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				R4EUIPlugin.getDefault()
-						.getLog()
-						.log(new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, IStatus.OK, t.toString(), t));
-				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-						"Error attaching annotation model", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, //$NON-NLS-1$
-								t.getMessage(), t), IStatus.ERROR);
-				Display.getDefault().syncExec(new Runnable() {
-					public void run() {
-						dialog.open();
-					}
-				});
-			}
+			addAnnotationModel(originalAnnotationModel, aNewInput);
 		}
 	}
 
@@ -152,7 +137,7 @@ public abstract class R4EEditorInputListener implements IEditorInputListener {
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
-	private void configureViewerAnnotations(IAnnotationModel aModel, IDocument aInput) throws SecurityException,
+	protected void configureViewerAnnotations(IAnnotationModel aModel, IDocument aInput) throws SecurityException,
 			NoSuchFieldException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
 			InvocationTargetException {
 		final Class<SourceViewer> sourceViewerClazz = SourceViewer.class;
@@ -173,8 +158,6 @@ public abstract class R4EEditorInputListener implements IEditorInputListener {
 	/**
 	 * Method replaceVerticalRuler.
 	 * 
-	 * @param aNewInput
-	 *            IDocument
 	 * @param aSourceViewerClazz
 	 *            Class<SourceViewer>
 	 * @throws SecurityException
@@ -191,8 +174,6 @@ public abstract class R4EEditorInputListener implements IEditorInputListener {
 	/**
 	 * Method updateOverviewRuler.
 	 * 
-	 * @param aNewInput
-	 *            IDocument
 	 * @param aSourceViewerClazz
 	 *            Class<SourceViewer>
 	 * @throws SecurityException

@@ -303,6 +303,16 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	 */
 	public static final String BUTTON_REMOVE_LABEL = "Remove";
 
+	/**
+	 * Field ANNOTATION_CONTROL_MAX_WIDTH. (value is 600)
+	 */
+	public static final int ANNOTATION_CONTROL_MAX_WIDTH = 600;
+
+	/**
+	 * Field ANNOTATION_CONTROL_MAX_HEIGHT. (value is 450)
+	 */
+	public static final int ANNOTATION_CONTROL_MAX_HEIGHT = 450;
+
 	//Properties
 
 	/**
@@ -1521,14 +1531,14 @@ public class R4EUIConstants { // $codepro.audit.disable convertClassToInterface
 	public static final String REMOVE_ELEMENT_COMMAND = "org.eclipse.mylyn.reviews.r4e.ui.commands.removeElement";
 
 	/**
-	 * Field REMOVE_ELEMENT_COMMAND_NAME. (value is ""Remove element"")
+	 * Field REMOVE_ELEMENT_COMMAND_NAME. (value is ""Disable Element"")
 	 */
 	public static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Element";
 
 	/**
-	 * Field REMOVE_ELEMENT_COMMAND_TOOLTIP. (value is ""Remove this element"")
+	 * Field REMOVE_ELEMENT_COMMAND_TOOLTIP. (value is ""Disable this Element"")
 	 */
-	public static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Element";
+	public static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable this Element";
 
 	/**
 	 * Field REMOVE_ELEMENT_COMMAND_MNEMONIC. (value is ""D"")

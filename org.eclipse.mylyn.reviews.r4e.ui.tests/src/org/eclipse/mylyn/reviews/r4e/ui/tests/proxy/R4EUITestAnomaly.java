@@ -293,7 +293,7 @@ public class R4EUITestAnomaly extends R4EUITestElement {
 					TestUtils.waitForJobs();
 
 					//Open text editor
-					openEditorOnCurrentElement();
+					openEditorOnCurrentElement(false);
 					TestUtils.waitForJobs();
 
 					//Select Range in Editor
@@ -504,7 +504,7 @@ public class R4EUITestAnomaly extends R4EUITestElement {
 					TestUtils.waitForJobs();
 
 					//Open text editor
-					openEditorOnCurrentElement();
+					openEditorOnCurrentElement(false);
 					TestUtils.waitForJobs();
 
 					//Select Range in Editor

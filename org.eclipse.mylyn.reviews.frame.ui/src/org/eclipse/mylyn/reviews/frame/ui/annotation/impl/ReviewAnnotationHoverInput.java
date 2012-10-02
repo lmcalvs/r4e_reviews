@@ -8,14 +8,14 @@
  * 
  * Description:
  * 
- * This class implements the input provider for the R4E Annotation hover
+ * This class implements the input provider for the Review Annotation hover
  * 
  * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Sebastien Dubois - Created for Mylyn Review project
  *   
  ******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control;
+package org.eclipse.mylyn.reviews.frame.ui.annotation.impl;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotation;
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-public class R4EAnnotationHoverInput implements IAnnotationHoverInput {
+public class ReviewAnnotationHoverInput implements IAnnotationHoverInput {
 
 	// ------------------------------------------------------------------------
 	// Members
@@ -42,12 +42,12 @@ public class R4EAnnotationHoverInput implements IAnnotationHoverInput {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for R4EAnnotationHoverInput.
+	 * Constructor for ReviewAnnotationHoverInput.
 	 * 
 	 * @param aAnnotations
 	 *            List<IReviewAnnotation>
 	 */
-	public R4EAnnotationHoverInput(List<IReviewAnnotation> aAnnotations) {
+	public ReviewAnnotationHoverInput(List<IReviewAnnotation> aAnnotations) {
 		fAnnotations = aAnnotations;
 		for (IReviewAnnotation annotation : aAnnotations) {
 			annotation.setParentInput(this);

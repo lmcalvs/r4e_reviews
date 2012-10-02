@@ -166,9 +166,10 @@ public class R4EUITestElement {
 	/**
 	 * Method openEditorOnCurrentElement
 	 */
-	protected void openEditorOnCurrentElement() {
+	protected IEditorPart openEditorOnCurrentElement(boolean aForceSingle) {
 		final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		EditorProxy.openEditor(page, R4EUIModelController.getNavigatorView().getTreeViewer().getSelection(), false);
+		return EditorProxy.openEditor(page, R4EUIModelController.getNavigatorView().getTreeViewer().getSelection(),
+				aForceSingle);
 	}
 
 	/**

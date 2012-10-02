@@ -86,9 +86,9 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Participant";
 
 	/**
-	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable (and Optionally Remove) this Participant"")
+	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable this Participant"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Participant";
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable this Participant";
 
 	/**
 	 * Field RESTORE_ELEMENT_COMMAND_NAME. (value is ""Restore Participant"")

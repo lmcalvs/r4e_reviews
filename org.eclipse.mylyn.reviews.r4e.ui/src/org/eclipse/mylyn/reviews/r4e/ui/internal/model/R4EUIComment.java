@@ -63,8 +63,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Remove this comment from its parent anomaly"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Comment "
-			+ "from its parent anomaly";
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this Comment " + "from its parent anomaly";
 
 	/**
 	 * Field RESTORE_ELEMENT_COMMAND_NAME. (value is ""Restore Comment"")
@@ -248,7 +247,8 @@ public class R4EUIComment extends R4EUIModelElement {
 		if (!(ancestorElement instanceof R4EUIFileContext)) {
 			return false;
 		}
-		if (isEnabled() && null != ((R4EUIFileContext) ancestorElement).getTargetFileVersion()) {
+		if (isEnabled() && null != R4EUIModelController.getActiveReview()
+				&& null != ((R4EUIFileContext) ancestorElement).getTargetFileVersion()) {
 			return true;
 		}
 		return false;
@@ -380,7 +380,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isSendEmailCmd() {
-		if (isEnabled()) {
+		if (isEnabled() && null != R4EUIModelController.getActiveReview()) {
 			return true;
 		}
 		return false;

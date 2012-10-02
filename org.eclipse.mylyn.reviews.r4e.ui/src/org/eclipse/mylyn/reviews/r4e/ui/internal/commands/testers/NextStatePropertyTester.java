@@ -18,15 +18,17 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.testers;
 
+import java.util.List;
+
 import org.eclipse.core.expressions.PropertyTester;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyExtended;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewExtended;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 
 /**
  * @author Sebastien Dubois
@@ -57,10 +59,9 @@ public class NextStatePropertyTester extends PropertyTester {
 	public boolean test(Object aReceiver, String property, Object[] args, Object expectedValue) {
 
 		if (null != R4EUIModelController.getActiveReview() && !R4EUIModelController.getActiveReview().isReadOnly()) {
-			final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
-			if (null != selection && selection instanceof IStructuredSelection) {
-				Object element = ((IStructuredSelection) selection).getFirstElement();
-				return testElement(element);
+			final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
+			if (null != selectedElements && selectedElements.size() > 0) {
+				return testElement(selectedElements.get(0));
 			}
 		}
 		return false;
@@ -70,10 +71,10 @@ public class NextStatePropertyTester extends PropertyTester {
 	 * Method testElement
 	 * 
 	 * @param aElement
-	 *            - Object
+	 *            - IR4EUIModelElement
 	 * @return boolean
 	 */
-	private boolean testElement(Object aElement) {
+	private boolean testElement(IR4EUIModelElement aElement) {
 		if (aElement instanceof R4EUIReviewExtended) {
 			if (((R4EUIReviewExtended) aElement).isOpen()
 					&& 0 < ((R4EUIReviewExtended) aElement).getNextAvailablePhases().length) {

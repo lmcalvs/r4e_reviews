@@ -19,7 +19,6 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -30,8 +29,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -80,7 +77,7 @@ public class RemoveElementHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 
@@ -93,98 +90,87 @@ public class RemoveElementHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
-				if (selection instanceof IStructuredSelection) {
-					if (!selection.isEmpty()) {
-						monitor.beginTask(COMMAND_MESSAGE, ((IStructuredSelection) selection).size());
-						R4EUIModelController.setJobInProgress(true);
+				if (!selectedElements.isEmpty()) {
+					monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
+					R4EUIModelController.setJobInProgress(true);
 
-						boolean askConfirmation = true;
-						Object element = null;
-						R4EReview review = null;
-						if (null != R4EUIModelController.getActiveReview()) {
-							review = R4EUIModelController.getActiveReview().getReview();
+					boolean askConfirmation = true;
+					R4EReview review = null;
+					if (null != R4EUIModelController.getActiveReview()) {
+						review = R4EUIModelController.getActiveReview().getReview();
+					}
+					final List<R4EReviewComponent> removedItems = new ArrayList<R4EReviewComponent>();
+					for (IR4EUIModelElement element : selectedElements) {
+
+						monitor.subTask("Disabling element " + element.getName());
+						R4EUIPlugin.Ftracer.traceInfo("Disabling element " + element.getName()); //$NON-NLS-1$
+						final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
+						final boolean[] fileRemove = new boolean[1];
+						final String elementName = element.getName();
+						if (askConfirmation) {
+							Display.getDefault().syncExec(new Runnable() {
+								public void run() {
+									MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(null,
+											"Disable element", "Do you really want to disable element " + elementName
+													+ "?", "Don't ask again", false, null, null);
+									result[0] = dialog.getReturnCode();
+									fileRemove[0] = !dialog.getToggleState();
+								}
+							});
 						}
-						final List<R4EReviewComponent> removedItems = new ArrayList<R4EReviewComponent>();
-						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
-							element = iterator.next();
-							if (!(element instanceof IR4EUIModelElement)) {
-								monitor.worked(1);
-								continue;
-							}
-							monitor.subTask("Disabling element " + ((IR4EUIModelElement) element).getName());
-							R4EUIPlugin.Ftracer.traceInfo("Disabling element " + ((IR4EUIModelElement) element).getName()); //$NON-NLS-1$
-							final int[] result = new int[1]; //We need this to be able to pass the result value outside.  This is safe as we are using SyncExec
-							final boolean[] fileRemove = new boolean[1];
-							final String elementName = ((IR4EUIModelElement) element).getName();
-							if (askConfirmation) {
-								Display.getDefault().syncExec(new Runnable() {
-									public void run() {
-										MessageDialogWithToggle dialog = MessageDialogWithToggle.openOkCancelConfirm(
-												null, "Disable element", "Do you really want to disable element "
-														+ elementName + "?", "Don't ask again", false, null, null);
-										result[0] = dialog.getReturnCode();
-										fileRemove[0] = !dialog.getToggleState();
-									}
-								});
-							}
-							if (result[0] == Window.OK) {
-								askConfirmation = fileRemove[0];
-								try {
-									if (element instanceof R4EUIReviewItem) {
-										removedItems.add(((R4EUIReviewItem) element).getItem());
-									} else if (element instanceof R4EUIContent) {
-										removedItems.add(((R4EUIContent) element).getContent());
-									}
+						if (result[0] == Window.OK) {
+							askConfirmation = fileRemove[0];
+							try {
+								if (element instanceof R4EUIReviewItem) {
+									removedItems.add(((R4EUIReviewItem) element).getItem());
+								} else if (element instanceof R4EUIContent) {
+									removedItems.add(((R4EUIContent) element).getContent());
+								}
 
-									if (((IR4EUIModelElement) element).isOpen()) {
-										((IR4EUIModelElement) element).close();
-										for (IR4EUIModelElement childElement : ((IR4EUIModelElement) element).getChildren()) {
-											if (null != childElement && childElement.isOpen()) {
-												childElement.close();
-												break;
-											}
+								if (element.isOpen()) {
+									element.close();
+									for (IR4EUIModelElement childElement : element.getChildren()) {
+										if (null != childElement && childElement.isOpen()) {
+											childElement.close();
+											break;
 										}
 									}
-									((IR4EUIModelElement) element).getParent().removeChildren(
-											(IR4EUIModelElement) element, false);
-								} catch (ResourceHandlingException e) {
-									UIUtils.displayResourceErrorDialog(e);
-								} catch (OutOfSyncException e) {
-									UIUtils.displaySyncErrorDialog(e);
-								} catch (CompatibilityException e) {
-									UIUtils.displayCompatibilityErrorDialog(e);
 								}
-							}
-							monitor.worked(1);
-							if (monitor.isCanceled()) {
-								R4EUIModelController.setJobInProgress(false);
-								UIUtils.setNavigatorViewFocus((IR4EUIModelElement) element, 0);
-								return Status.CANCEL_STATUS;
+								element.getParent().removeChildren(element, false);
+							} catch (ResourceHandlingException e) {
+								UIUtils.displayResourceErrorDialog(e);
+							} catch (OutOfSyncException e) {
+								UIUtils.displaySyncErrorDialog(e);
+							} catch (CompatibilityException e) {
+								UIUtils.displayCompatibilityErrorDialog(e);
 							}
 						}
-
-						//Send email notification if needed
-						if (null != review) {
-							if (0 < removedItems.size()
-									&& review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-								if (((R4EFormalReview) review).getCurrent()
-										.getType()
-										.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-									try {
-										MailServicesProxy.sendItemsRemovedNotification(removedItems);
-									} catch (CoreException e) {
-										UIUtils.displayCoreErrorDialog(e);
-									} catch (ResourceHandlingException e) {
-										UIUtils.displayResourceErrorDialog(e);
-									}
-								}
-							}
-						}
-						if (null != element && element instanceof IR4EUIModelElement) {
+						monitor.worked(1);
+						if (monitor.isCanceled()) {
 							R4EUIModelController.setJobInProgress(false);
-							UIUtils.setNavigatorViewFocus((IR4EUIModelElement) element, 0);
+							UIUtils.setNavigatorViewFocus(element, 0);
+							return Status.CANCEL_STATUS;
 						}
 					}
+
+					//Send email notification if needed
+					if (null != review) {
+						if (0 < removedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+							if (((R4EFormalReview) review).getCurrent()
+									.getType()
+									.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+								try {
+									MailServicesProxy.sendItemsRemovedNotification(removedItems);
+								} catch (CoreException e) {
+									UIUtils.displayCoreErrorDialog(e);
+								} catch (ResourceHandlingException e) {
+									UIUtils.displayResourceErrorDialog(e);
+								}
+							}
+						}
+					}
+					R4EUIModelController.setJobInProgress(false);
+					UIUtils.setNavigatorViewFocus(selectedElements.get(0), 0);
 				}
 				R4EUIModelController.setJobInProgress(false);
 				monitor.done();

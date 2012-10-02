@@ -108,7 +108,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Remove this anomaly from its parent file or review item"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Anomaly "
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this Anomaly "
 			+ "from its parent file or review";
 
 	/**
@@ -664,7 +664,8 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		if (!(getParent().getParent() instanceof R4EUIFileContext)) {
 			return false;
 		}
-		if (isEnabled() && null != ((R4EUIFileContext) getParent().getParent()).getTargetFileVersion()) {
+		if (isEnabled() && null != R4EUIModelController.getActiveReview()
+				&& null != ((R4EUIFileContext) getParent().getParent()).getTargetFileVersion()) {
 			return true;
 		}
 		return false;
@@ -680,6 +681,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	public boolean isCopyElementCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
+				&& null != R4EUIModelController.getActiveReview()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
 				&& getParent().getParent() instanceof R4EUIFileContext) {
 			return true;
@@ -719,6 +721,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	public boolean isPasteElementCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
+				&& null != R4EUIModelController.getActiveReview()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			//We can only paste if there is a least 1 Comment in the clipboard
 			Object element = null;
@@ -767,6 +770,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	public boolean isNewChildElementCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
+				&& null != R4EUIModelController.getActiveReview()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -805,6 +809,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	public boolean isRemoveElementCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
+				&& null != R4EUIModelController.getActiveReview()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -883,7 +888,7 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isSendEmailCmd() {
-		if (isEnabled()) {
+		if (isEnabled() && null != R4EUIModelController.getActiveReview()) {
 			return true;
 		}
 		return false;

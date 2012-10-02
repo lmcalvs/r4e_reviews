@@ -19,6 +19,8 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
@@ -44,6 +46,22 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 	 * Field fContents.
 	 */
 	protected List<R4EUIContent> fContents;
+
+	/**
+	 * Field CONTENT_COMPARATOR.
+	 */
+	private static final Comparator<R4EUIContent> CONTENT_COMPARATOR = new Comparator<R4EUIContent>() {
+		// This is where the sorting happens.
+		public int compare(R4EUIContent aContent1, R4EUIContent aContent2) {
+			final int sortOrder = ((R4EUITextPosition) aContent1.getPosition()).getOffset()
+					- ((R4EUITextPosition) aContent2.getPosition()).getOffset();
+			if (sortOrder == 0) {
+				return ((R4EUITextPosition) aContent1.getPosition()).getLength()
+						- ((R4EUITextPosition) aContent2.getPosition()).getLength();
+			}
+			return sortOrder;
+		}
+	};
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -149,6 +167,7 @@ public abstract class R4EUIContentsContainer extends R4EUIModelElement {
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		fContents.add((R4EUIContent) aChildToAdd);
+		Collections.sort(fContents, CONTENT_COMPARATOR);
 	}
 
 	/**

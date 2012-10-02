@@ -629,6 +629,9 @@ public class PostponedAnomaliesTests extends TestCase {
 						.get(2)
 						.getTarget()
 						.getLocation()).getLength());
+				Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+						((R4EUIFileContext) fTargetItem.getChildren()[i]).getContentsContainerElement().getChildren(),
+						true, R4EUIConstants.DELTA_ANNOTATION_ID));
 			} else if (((R4EUIFileContext) fTargetItem.getChildren()[i]).getName().equals(
 					TestUtils.JAVA_FILE4_PROJ_NAME)) {
 				Assert.assertNull(fTargetItem.getItem().getFileContextList().get(i).getBase());
@@ -684,6 +687,9 @@ public class PostponedAnomaliesTests extends TestCase {
 						.get(0)
 						.getTarget()
 						.getLocation()).getLength());
+		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+				((R4EUIFileContext) fTargetItem2.getChildren()[0]).getContentsContainerElement().getChildren(), false,
+				R4EUIConstants.SELECTION_ANNOTATION_ID));
 
 		fTargetItem3 = fProxy.getItemProxy().createManualTextItem(TestUtils.FJavaFile4, 50, 20);
 		Assert.assertNotNull(fTargetItem3);
@@ -712,6 +718,9 @@ public class PostponedAnomaliesTests extends TestCase {
 				.get(0)
 				.getTarget()
 				.getLocation()).getLength());
+		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(
+				((R4EUIFileContext) fTargetItem3.getChildren()[0]).getContentsContainerElement().getChildren(), true,
+				R4EUIConstants.SELECTION_ANNOTATION_ID));
 	}
 
 	/**
@@ -743,6 +752,8 @@ public class PostponedAnomaliesTests extends TestCase {
 		Assert.assertEquals(fOriginalReview.getReview().getName(),
 				fPostponedAnomaly2.getAnomaly().getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME));
 
+		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(fPostponedAnomaly2.getParent().getChildren(),
+				false, R4EUIConstants.ANOMALY_CLOSED_ANNOTATION_ID));
 	}
 
 	/**
@@ -755,6 +766,8 @@ public class PostponedAnomaliesTests extends TestCase {
 		Assert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fPostponedAnomaly1.getAnomaly().getState());
 		fProxy.getCommandProxy().regressElement(fPostponedAnomaly2);
 		Assert.assertEquals(TestConstants.ANOMALY_STATE_ASSIGNED, fPostponedAnomaly2.getAnomaly().getState());
+		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(fPostponedAnomaly2.getParent().getChildren(),
+				false, R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 
 		//Verify that the original anomalies are also updated
 		fProxy.getCommandProxy().openElement(fOriginalReview);

@@ -25,6 +25,9 @@ import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DecoratingCellLabelProvider;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
@@ -44,6 +47,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TreeItem;
@@ -732,6 +736,38 @@ public class ReviewNavigatorTreeViewer extends TreeViewer {
 					refresh();
 				}
 			});
+		}
+	}
+
+	/**
+	 * Method setSelection.
+	 * 
+	 * @param selection
+	 *            - ISelection
+	 * @param reveal
+	 *            - boolean
+	 * @see org.eclipse.jface.viewers.Viewer#setSelection(org.eclipse.jface.viewers.ISelection, boolean)
+	 */
+	@Override
+	public void setSelection(ISelection selection, boolean reveal) {
+		Control control = getControl();
+		if (control == null || control.isDisposed()) {
+			return;
+		}
+		if (null != selection) {
+			setSelectionToWidget(selection, reveal);
+			ISelection sel = getSelection();
+
+			//Here we need to adjust the selection for hidden (filtered) tree elements
+			//NOTE:  This is a dirty hack that we need to be able to display the tabbed properties for hidden
+			//		 R4E UI elements using R4E editor annotations
+			if (((ITreeSelection) sel).size() == 0) {
+				if (selection != null) {
+					sel = selection;
+				}
+			}
+			updateSelection(sel);
+			firePostSelectionChanged(new SelectionChangedEvent(this, sel));
 		}
 	}
 }

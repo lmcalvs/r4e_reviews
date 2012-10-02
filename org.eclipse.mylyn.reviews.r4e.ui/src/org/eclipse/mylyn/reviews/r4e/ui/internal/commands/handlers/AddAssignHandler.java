@@ -18,7 +18,6 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -27,8 +26,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
@@ -49,7 +46,7 @@ public class AddAssignHandler extends AbstractHandler {
 	/**
 	 * Field COMMAND_MESSAGE. (value is ""Add Assignees to Element..."")
 	 */
-	private static final String COMMAND_MESSAGE = "Add Assignees to Element...";
+	private static final String COMMAND_MESSAGE = "Add Assignees to Element..."; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Methods
@@ -65,7 +62,7 @@ public class AddAssignHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 
@@ -78,44 +75,30 @@ public class AddAssignHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
-				if (selection instanceof IStructuredSelection) {
-					if (!selection.isEmpty()) {
-						Object element = null;
 
-						element = ((IStructuredSelection) selection).getFirstElement();
-						if (!(element instanceof IR4EUIModelElement)) {
-							return Status.CANCEL_STATUS;
-						}
+				if (!selectedElements.isEmpty()) {
+					//Get participants to assign
+					final List<R4EParticipant> participants = UIUtils.getAssignParticipants();
 
-						//Get participants to assign
-						final List<R4EParticipant> participants = UIUtils.getAssignParticipants();
+					//Assign them
+					if (participants.size() > 0) {
+						monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
+						R4EUIModelController.setJobInProgress(true);
 
-						//Assign them
-						if (participants.size() > 0) {
-							monitor.beginTask(COMMAND_MESSAGE, ((IStructuredSelection) selection).size());
-							R4EUIModelController.setJobInProgress(true);
+						for (IR4EUIModelElement element : selectedElements) {
+							R4EUIPlugin.Ftracer.traceInfo("Add Assignees..." + element.getName()); //$NON-NLS-1$
+							element.addAssignees(participants);
 
-							for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
-								element = iterator.next();
-								if (!(element instanceof IR4EUIModelElement)) {
-									continue;
-								}
-								R4EUIPlugin.Ftracer.traceInfo("Add Assignees..." //$NON-NLS-1$
-										+ ((IR4EUIModelElement) element).getName());
-								((IR4EUIModelElement) element).addAssignees(participants);
-
-								monitor.worked(1);
-								if (monitor.isCanceled()) {
-									R4EUIModelController.setJobInProgress(false);
-									UIUtils.setNavigatorViewFocus((IR4EUIModelElement) element, 0);
-									return Status.CANCEL_STATUS;
-								}
+							monitor.worked(1);
+							if (monitor.isCanceled()) {
+								R4EUIModelController.setJobInProgress(false);
+								UIUtils.setNavigatorViewFocus(element, 0);
+								return Status.CANCEL_STATUS;
 							}
-							R4EUIModelController.setJobInProgress(false);
 						}
-						element = ((IStructuredSelection) selection).getFirstElement();
-						UIUtils.setNavigatorViewFocus((IR4EUIModelElement) element, 0);
+						R4EUIModelController.setJobInProgress(false);
 					}
+					UIUtils.setNavigatorViewFocus(selectedElements.get(0), 0);
 				}
 				monitor.done();
 				return Status.OK_STATUS;

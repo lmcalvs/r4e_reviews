@@ -112,7 +112,7 @@ public class R4ECommentAnnotation extends R4EAnnotation {
 	public Object[] getChildren() {
 		final List<R4EAnnotationText> values = new ArrayList<R4EAnnotationText>();
 		for (String contentLine : fCommentLines) {
-			values.add(new R4EAnnotationText(this, contentLine));
+			values.add(new R4EAnnotationText(this, contentLine, null));
 		}
 		return values.toArray(new Object[values.size()]);
 	}

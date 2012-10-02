@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
@@ -93,6 +94,11 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * Field fAnomalies.
 	 */
 	protected List<R4EAnomaly> fAnomalies = null; //Used to cache anomalies for this file context (used at startup)
+
+	/**
+	 * Field fAnnotationModel.
+	 */
+	private IReviewAnnotationModel fAnnotationModel = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -168,6 +174,25 @@ public class R4EUIFileContext extends R4EUIModelElement {
 			return new FileContextProperties(this);
 		}
 		return null;
+	}
+
+	/**
+	 * Method registerAnnotationModel.
+	 * 
+	 * @param aAnnotationModel
+	 *            IReviewAnnotationModel
+	 */
+	public void registerAnnotationModel(IReviewAnnotationModel aAnnotationModel) {
+		fAnnotationModel = aAnnotationModel;
+	}
+
+	/**
+	 * Method getAnnotationModel.
+	 * 
+	 * @return IReviewAnnotationModel
+	 */
+	public IReviewAnnotationModel getAnnotationModel() {
+		return fAnnotationModel;
 	}
 
 	//Attributes
@@ -602,6 +627,12 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	public void close() {
 		fContentsContainer.close();
 		fAnomalyContainer.close();
+
+		//If an annotation model is connected, clear it now
+		if (null != fAnnotationModel) {
+			fAnnotationModel.clearAnnotations();
+			fAnnotationModel = null;
+		}
 		fOpen = false;
 	}
 
@@ -685,6 +716,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 				fAnomalyContainer.open();
 			}
 		}
+
+		//If an editor is open with this file as input, update its annotation model now
+		UIUtils.refreshAnnotations(this);
 		fOpen = true;
 	}
 
@@ -808,7 +842,7 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 * @return true/false
 	 */
 	public boolean isFileVersionsComparable() {
-		//Do we have at lease a file present?
+		//Do we have at least a file present?
 		if (null != fFile.getBase() || null != fFile.getTarget()) {
 
 			//Are the base and target file the same?
@@ -829,7 +863,8 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		if (isEnabled() && (null != getTargetFileVersion() || null != getBaseFileVersion())) {
+		if (isEnabled() && null != R4EUIModelController.getActiveReview()
+				&& (null != getTargetFileVersion() || null != getBaseFileVersion())) {
 			return true;
 		}
 		return false;
@@ -898,6 +933,9 @@ public class R4EUIFileContext extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isSendEmailCmd() {
-		return true;
+		if (null != R4EUIModelController.getActiveReview()) {
+			return true;
+		}
+		return false;
 	}
 }

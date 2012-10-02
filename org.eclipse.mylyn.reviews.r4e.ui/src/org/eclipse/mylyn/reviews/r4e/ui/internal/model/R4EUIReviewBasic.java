@@ -143,8 +143,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Remove this review from its parent review group"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review from "
-			+ "its Parent Review Group";
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this Review from " + "its Parent Review Group";
 
 	/**
 	 * Field REPORT_ELEMENT_COMMAND_TOOLTIP. (value is ""Create a report for this Review"")
@@ -718,6 +717,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 						addChildren(uiItem);
 					}
 				}
+				R4EUIModelController.setActiveReview(this);
+
 				//Fill the anomaly
 				getAnomalies(uiItemList);
 				verifyUserReviewed();
@@ -742,7 +743,6 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			} else if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
 				fImage = UIUtils.loadIcon(REVIEW_INFORMAL_ICON_FILE);
 			}
-			R4EUIModelController.setActiveReview(this);
 
 			//Automatically import postponed anomalies if set in preferences
 			ImportPostponedHandler.refreshPostponedElements(new NullProgressMonitor());
@@ -1685,7 +1685,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isSendEmailCmd() {
-		if (isOpen()) {
+		if (isOpen() && null != R4EUIModelController.getActiveReview()) {
 			return true;
 		}
 		return false;

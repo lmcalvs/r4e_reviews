@@ -157,6 +157,16 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 	 */
 	private final TreeTableFilter fTreeTableFilter;
 
+	/**
+	 * Field fCopyHandler.
+	 */
+	private final IHandlerActivation fCopyHandler;
+
+	/**
+	 * Field fPasteHandler.
+	 */
+	private final IHandlerActivation fPasteHandler;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -198,13 +208,23 @@ public class ReviewNavigatorActionGroup extends ActionGroup {
 		final ReviewParticipantFilter filter = new ReviewParticipantFilter();
 		filter.setParticipant(R4EUIModelController.getReviewer());
 
-		fHandlerService.activateHandler(ActionFactory.COPY.getCommandId(), new CopyElementHandler());
-		fHandlerService.activateHandler(ActionFactory.PASTE.getCommandId(), new PasteElementHandler());
+		fCopyHandler = fHandlerService.activateHandler(ActionFactory.COPY.getCommandId(), new CopyElementHandler());
+		fPasteHandler = fHandlerService.activateHandler(ActionFactory.PASTE.getCommandId(), new PasteElementHandler());
 	}
 
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
+
+	/**
+	 * Method dispose.
+	 */
+	@Override
+	public void dispose() {
+		fHandlerService.deactivateHandler(fCopyHandler);
+		fHandlerService.deactivateHandler(fPasteHandler);
+		super.dispose();
+	}
 
 	/**
 	 * Remove all the currently applied filters

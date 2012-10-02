@@ -55,6 +55,35 @@ public interface IReviewAnnotationModel extends IAnnotationModel {
 	void updateAnnotation(Object aAnnotationContent);
 
 	/**
+	 * Method clearAnnotations.  remove all annotations in the model
+	 * 
+	 */
+	void clearAnnotations();
+	
+	/**
+	 * Method refreshAnnotations.  rebuilds the annotations model
+	 * 
+	 */
+	void refreshAnnotations();
+	
+	/**
+	 * Method isAnnotationsAvailable.  checks if there are annotations of the given type in model
+	 * 
+	 * @param aType String
+	 * @return boolean
+	 */
+	boolean isAnnotationsAvailable(String aType);
+	
+	/**
+	 * Method findAnnotation.  Finds the annotation for the source element of the given type if it exists
+	 * 
+	 * @param aType String
+	 * @param aSourceElement Object
+	 * @return IReviewAnnotation
+	 */
+	IReviewAnnotation findAnnotation(String aType, Object aSourceElement);
+	
+	/**
 	 * Method getNextAnnotation.  Get next annotation in the model
 	 * 
 	 * @param aType - The annotation type to filter in, if applicable
@@ -74,7 +103,6 @@ public interface IReviewAnnotationModel extends IAnnotationModel {
 	 * Method setFile.  Sets the file the current annotation model refers to
 	 * 
 	 * @param aFile - The file the annotation model refers to
-	 * @return - The previous Annotation
 	 */
 	void setFile(Object aFile);
 }

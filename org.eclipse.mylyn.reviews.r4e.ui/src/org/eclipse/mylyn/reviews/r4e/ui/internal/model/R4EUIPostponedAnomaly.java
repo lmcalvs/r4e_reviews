@@ -360,7 +360,8 @@ public class R4EUIPostponedAnomaly extends R4EUIAnomalyExtended {
 		if (!(getParent() instanceof R4EUIPostponedFile)) {
 			return false;
 		}
-		if (isEnabled() && null != ((R4EUIPostponedFile) getParent()).getTargetFileVersion()) {
+		if (isEnabled() && null != R4EUIModelController.getActiveReview()
+				&& null != ((R4EUIPostponedFile) getParent()).getTargetFileVersion()) {
 			return true;
 		}
 		return false;

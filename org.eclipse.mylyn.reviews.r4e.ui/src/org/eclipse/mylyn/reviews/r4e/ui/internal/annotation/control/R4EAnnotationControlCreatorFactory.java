@@ -8,35 +8,33 @@
  * 
  * Description:
  * 
- * This factory class that creates the Review Annotation Controls
+ * This class implements a factory class that is injected in the framework to create 
+ * the R4E-specific information control
  * 
  * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review project
+ *   Sebastien Dubois - Created for Mylyn Review R4E project
  *   
  ******************************************************************************/
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control;
 
-import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.editors.text.EditorsUI;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationControlCreatorFactory;
 
 /**
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-public class R4EAnnotationInformationControlCreator implements IInformationControlCreator {
+public class R4EAnnotationControlCreatorFactory implements IReviewAnnotationControlCreatorFactory {
 
 	/**
-	 * Method createInformationControl.
+	 * Method createInformationControlCreator.
 	 * 
-	 * @param aParent
-	 *            Shell
-	 * @return IInformationControl
-	 * @see org.eclipse.jface.text.IInformationControlCreator#createInformationControl(Shell)
+	 * @return IInformationControlCreator
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationControlCreatorFactory#createInformationControlCreator()
 	 */
-	public IInformationControl createInformationControl(Shell aParent) {
-		return new R4EAnnotationInformationControl(aParent, EditorsUI.getTooltipAffordanceString());
+	public IInformationControlCreator createInformationControlCreator() {
+		return new R4EAnnotationInformationControlCreator();
 	}
+
 }

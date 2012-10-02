@@ -67,11 +67,9 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Content";
 
 	/**
-	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable (and Optionally Remove) this Content" +
-	 * " from its Parent Container"")
+	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable this Content" + " from its Parent Container"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Content"
-			+ " from its Parent Container";
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable this Content" + " from its Parent Container";
 
 	/**
 	 * Field RESTORE_ELEMENT_COMMAND_NAME. (value is ""Restore Content"")
@@ -440,6 +438,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	public boolean isAddLinkedAnomalyCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
+				&& null != R4EUIModelController.getActiveReview()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -454,7 +453,8 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isOpenEditorCmd() {
-		if (isEnabled() && null != ((R4EUIFileContext) getParent().getParent()).getTargetFileVersion()) {
+		if (isEnabled() && null != R4EUIModelController.getActiveReview()
+				&& null != ((R4EUIFileContext) getParent().getParent()).getTargetFileVersion()) {
 			return true;
 		}
 		return false;
@@ -470,6 +470,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	public boolean isPasteElementCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
+				&& null != R4EUIModelController.getActiveReview()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			//We can only paste if there is a least 1 Anomaly in the clipboard
 			Object element = null;
@@ -518,6 +519,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	public boolean isChangeUserReviewStateCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
+				&& null != R4EUIModelController.getActiveReview()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -534,6 +536,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	public boolean isAssignToCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
+				&& null != R4EUIModelController.getActiveReview()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -550,6 +553,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	public boolean isUnassignToCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
+				&& null != R4EUIModelController.getActiveReview()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
 				&& fContent.getAssignedTo().size() > 0) {
 			return true;
@@ -567,6 +571,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	public boolean isRemoveElementCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
+				&& null != R4EUIModelController.getActiveReview()
 				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
 			return true;
 		}
@@ -645,7 +650,7 @@ public abstract class R4EUIContent extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isSendEmailCmd() {
-		if (isEnabled()) {
+		if (isEnabled() && null != R4EUIModelController.getActiveReview()) {
 			return true;
 		}
 		return false;

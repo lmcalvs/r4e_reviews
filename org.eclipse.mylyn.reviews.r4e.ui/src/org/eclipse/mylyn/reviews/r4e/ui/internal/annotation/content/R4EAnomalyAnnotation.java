@@ -129,33 +129,37 @@ public class R4EAnomalyAnnotation extends R4EAnnotation {
 	 */
 	public Object[] getChildren() {
 		final List<Object> values = new ArrayList<Object>();
-		for (String contentLine : fDescriptionLines) {
-			values.add(new R4EAnnotationText(this, "    " + contentLine));
-		}
-		values.add(new R4EAnnotationText(this, R4EUIConstants.AUTHOR_LABEL
-				+ ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getUser().getId()));
+
+		//Description
+		values.add(new R4EAnnotationText(this, R4EUIConstants.DESCRIPTION_LABEL, fDescriptionLines));
+
+		//Details
+		final List<String> detailsValues = new ArrayList<String>();
+		detailsValues.add(R4EUIConstants.AUTHOR_LABEL
+				+ ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getUser().getId());
 		final R4ECommentType commentType = (R4ECommentType) ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getType();
 		if (null != commentType) {
-			values.add(new R4EAnnotationText(this, R4EUIConstants.CLASS_LABEL
-					+ (UIUtils.getClassStr(commentType.getType()))));
+			detailsValues.add(R4EUIConstants.CLASS_LABEL + (UIUtils.getClassStr(commentType.getType())));
 		}
 		final R4EDesignRuleRank rank = ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getRank();
 		if ((null != rank) && !rank.equals(R4EDesignRuleRank.R4E_RANK_NONE)) {
-			values.add(new R4EAnnotationText(this, R4EUIConstants.RANK_LABEL + UIUtils.getRankStr(rank)));
+			detailsValues.add(R4EUIConstants.RANK_LABEL + UIUtils.getRankStr(rank));
 		}
 		final String ruleId = ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getRuleID();
 		if ((null != ruleId) && !ruleId.equals("")) { //$NON-NLS-1$
-			values.add(new R4EAnnotationText(this, R4EUIConstants.RULE_ID_LABEL + ruleId));
+			detailsValues.add(R4EUIConstants.RULE_ID_LABEL + ruleId);
 		}
 		final EList<String> assignees = ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getAssignedTo();
 		if (((null != assignees) && (assignees.size() > 0)) && !assignees.get(0).equals("")) { //$NON-NLS-1$
-			values.add(new R4EAnnotationText(this, R4EUIConstants.ASSIGNED_TO_LABEL + assignees.get(0)));
+			detailsValues.add(R4EUIConstants.ASSIGNED_TO_LABEL + assignees.get(0));
 		}
 		final SimpleDateFormat dateFormat = new SimpleDateFormat(R4EUIConstants.SIMPLE_DATE_FORMAT);
 		final Date dueDate = ((R4EUIAnomalyBasic) fSourceElement).getAnomaly().getDueDate();
 		if (null != dueDate) {
-			values.add(new R4EAnnotationText(this, R4EUIConstants.DUE_DATE_LABEL + dateFormat.format(dueDate)));
+			detailsValues.add(R4EUIConstants.DUE_DATE_LABEL + dateFormat.format(dueDate));
 		}
+		values.add(new R4EAnnotationText(this, "Details: ", detailsValues));
+
 		final IR4EUIModelElement[] comments = ((R4EUIAnomalyBasic) fSourceElement).getChildren();
 		if ((null != comments) && (comments.length > 0)) {
 			for (IR4EUIModelElement comment : comments) {

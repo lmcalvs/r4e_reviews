@@ -19,6 +19,8 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -88,6 +90,22 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	 * Field CREATE_ANOMALY_MESSAGE. (value is ""Creating New Anomaly..."")
 	 */
 	public static final String CREATE_ANOMALY_MESSAGE = "Creating New Anomaly...";
+
+	/**
+	 * Field ANOMALY_COMPARATOR.
+	 */
+	private static final Comparator<R4EUIAnomalyBasic> ANOMALY_COMPARATOR = new Comparator<R4EUIAnomalyBasic>() {
+		// This is where the sorting happens.
+		public int compare(R4EUIAnomalyBasic aAnomaly1, R4EUIAnomalyBasic aAnomaly2) {
+			final int sortOrder = ((R4EUITextPosition) aAnomaly1.getPosition()).getOffset()
+					- ((R4EUITextPosition) aAnomaly2.getPosition()).getOffset();
+			if (sortOrder == 0) {
+				return ((R4EUITextPosition) aAnomaly1.getPosition()).getLength()
+						- ((R4EUITextPosition) aAnomaly2.getPosition()).getLength();
+			}
+			return sortOrder;
+		}
+	};
 
 	// ------------------------------------------------------------------------
 	// Member variables
@@ -391,6 +409,7 @@ public class R4EUIAnomalyContainer extends R4EUIModelElement {
 	@Override
 	public void addChildren(IR4EUIModelElement aChildToAdd) {
 		fAnomalies.add((R4EUIAnomalyBasic) aChildToAdd);
+		Collections.sort(fAnomalies, ANOMALY_COMPARATOR);
 	}
 
 	/**

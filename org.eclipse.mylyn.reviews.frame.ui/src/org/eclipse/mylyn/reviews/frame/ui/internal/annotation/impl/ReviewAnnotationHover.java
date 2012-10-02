@@ -8,20 +8,22 @@
  * 
  * Description:
  * 
- * This class implements the hover that is shown for R4E annotations
+ * This class implements the hover that is shown for Review annotations
  * 
  * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Sebastien Dubois - Created for Mylyn Reviews project
  *   
  ******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control;
+package org.eclipse.mylyn.reviews.frame.ui.internal.annotation.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControlCreator;
@@ -37,15 +39,16 @@ import org.eclipse.jface.text.source.ISourceViewerExtension2;
 import org.eclipse.jface.text.source.LineRange;
 import org.eclipse.jface.text.source.projection.AnnotationBag;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotation;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotation;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotationModel;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewAnnotationConfigFactory;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewAnnotationHoverInput;
 
 /**
  * @author Shawn Minto
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-public class R4EAnnotationHover implements IAnnotationHover, IAnnotationHoverExtension, IAnnotationHoverExtension2 {
+public class ReviewAnnotationHover implements IAnnotationHover, IAnnotationHoverExtension, IAnnotationHoverExtension2 {
 
 	// ------------------------------------------------------------------------
 	// Members
@@ -61,10 +64,10 @@ public class R4EAnnotationHover implements IAnnotationHover, IAnnotationHoverExt
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for R4EAnnotationHover.
+	 * Constructor for ReviewAnnotationHover.
 	 */
-	public R4EAnnotationHover() {
-		fInformationControlCreator = new R4EAnnotationInformationControlCreator();
+	public ReviewAnnotationHover() {
+		fInformationControlCreator = ReviewAnnotationConfigFactory.createInformationControlCreator();
 	}
 
 	// ------------------------------------------------------------------------
@@ -122,7 +125,7 @@ public class R4EAnnotationHover implements IAnnotationHover, IAnnotationHoverExt
 	 * @return boolean
 	 */
 	private boolean isContained(Annotation aAnnotation, Position aPosition, List<IReviewAnnotation> aAnnotations) {
-		if (!(aAnnotation instanceof R4EAnnotation)) {
+		if (!(aAnnotation instanceof IReviewAnnotation)) {
 			return false;
 		}
 		return !aAnnotations.contains(aAnnotation);
@@ -145,8 +148,8 @@ public class R4EAnnotationHover implements IAnnotationHover, IAnnotationHoverExt
 				aLineRange.getStartLine());
 		if (annotationsForLine.size() > 0) {
 			final IAnnotationModel model = aSourceViewer.getAnnotationModel();
-			if (model instanceof R4EAnnotationModel) {
-				return new R4EAnnotationHoverInput(annotationsForLine);
+			if (model instanceof IReviewAnnotationModel) {
+				return new ReviewAnnotationHoverInput(annotationsForLine);
 			}
 		}
 		return getHoverInfo(aSourceViewer, aLineRange.getStartLine());
@@ -183,36 +186,38 @@ public class R4EAnnotationHover implements IAnnotationHover, IAnnotationHoverExt
 	 * @see org.eclipse.jface.text.source.IAnnotationHoverExtension#getHoverLineRange(ISourceViewer, int)
 	 */
 	public ILineRange getHoverLineRange(ISourceViewer aViewer, int aLineNumber) {
-		final List<IReviewAnnotation> r4eAnnotations = getAnnotationsForLine(aViewer, aLineNumber);
-		if (r4eAnnotations.size() > 0) {
+		final List<IReviewAnnotation> reviewAnnotations = getAnnotationsForLine(aViewer, aLineNumber);
+		if (reviewAnnotations.size() > 0) {
 			final IDocument document = aViewer.getDocument();
 			int lowestStart = Integer.MAX_VALUE;
 			int highestEnd = 0;
-			for (IReviewAnnotation a : r4eAnnotations) {
-				if (a instanceof R4EAnnotation) {
-					Position p = a.getPosition();
-					try {
+			for (IReviewAnnotation a : reviewAnnotations) {
+				Position p = a.getPosition();
+				try {
 
-						int start = document.getLineOfOffset(p.offset);
-						int end = document.getLineOfOffset(p.offset + p.length);
+					int start = document.getLineOfOffset(p.offset);
+					int end = document.getLineOfOffset(p.offset + p.length);
 
-						if (start < lowestStart) {
-							lowestStart = start;
-						}
+					if (start < lowestStart) {
+						lowestStart = start;
+					}
 
-						if (end > highestEnd) {
-							highestEnd = end;
-						}
-					} catch (BadLocationException e) {
-						// ignore
+					if (end > highestEnd) {
+						highestEnd = end;
+					}
+				} catch (BadLocationException e) {
+					if (null != ReviewAnnotationConfigFactory.getPlugin()) {
+						ReviewAnnotationConfigFactory.getPlugin().getLog().log(
+							new Status(IStatus.ERROR, 
+									ReviewAnnotationConfigFactory.getPlugin().getBundle().getSymbolicName(), 
+									IStatus.OK, e.getMessage(), e));
 					}
 				}
 			}
 			if (lowestStart != Integer.MAX_VALUE) {
 				return new LineRange(lowestStart, highestEnd - lowestStart);
-			} else {
-				return new LineRange(aLineNumber, 1);
 			}
+			return new LineRange(aLineNumber, 1);
 		}
 		return new LineRange(aLineNumber, 1);
 	}
@@ -233,7 +238,12 @@ public class R4EAnnotationHover implements IAnnotationHover, IAnnotationHoverExt
 			try {
 				return aLine == aDocument.getLineOfOffset(aPosition.getOffset());
 			} catch (BadLocationException ex) {
-				// ignore
+				if (null != ReviewAnnotationConfigFactory.getPlugin()) {
+					ReviewAnnotationConfigFactory.getPlugin().getLog().log(
+						new Status(IStatus.ERROR, 
+								ReviewAnnotationConfigFactory.getPlugin().getBundle().getSymbolicName(), 
+								IStatus.OK, ex.getMessage(), ex));
+				}
 			}
 		}
 		return false;
@@ -256,7 +266,7 @@ public class R4EAnnotationHover implements IAnnotationHover, IAnnotationHoverExt
 		}
 
 		final IDocument document = aViewer.getDocument();
-		final List<IReviewAnnotation> r4eAnnotations = new ArrayList<IReviewAnnotation>();
+		final List<IReviewAnnotation> reviewAnnotations = new ArrayList<IReviewAnnotation>();
 
 		for (final Iterator<Annotation> it = model.getAnnotationIterator(); it.hasNext();) {
 			Annotation annotation = it.next();
@@ -275,18 +285,18 @@ public class R4EAnnotationHover implements IAnnotationHover, IAnnotationHoverExt
 				while (e.hasNext()) {
 					annotation = e.next();
 					position = model.getPosition(annotation);
-					if (((position != null) && isContained(annotation, position, r4eAnnotations))
-							&& annotation instanceof R4EAnnotation) {
-						r4eAnnotations.add((R4EAnnotation) annotation);
+					if (((position != null) && isContained(annotation, position, reviewAnnotations))
+							&& annotation instanceof IReviewAnnotation) {
+						reviewAnnotations.add((IReviewAnnotation) annotation);
 					}
 				}
 				continue;
 			}
 
-			if (isContained(annotation, position, r4eAnnotations) && annotation instanceof R4EAnnotation) {
-				r4eAnnotations.add((R4EAnnotation) annotation);
+			if (isContained(annotation, position, reviewAnnotations) && annotation instanceof IReviewAnnotation) {
+				reviewAnnotations.add((IReviewAnnotation) annotation);
 			}
 		}
-		return r4eAnnotations;
+		return reviewAnnotations;
 	}
 }

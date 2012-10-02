@@ -18,7 +18,7 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
-import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -75,7 +74,7 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent event) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 
@@ -88,69 +87,62 @@ public class ChangeReviewStateHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
-				if (selection instanceof IStructuredSelection) {
-					if (!selection.isEmpty()) {
-						monitor.beginTask(COMMAND_MESSAGE, ((IStructuredSelection) selection).size());
-						R4EUIModelController.setJobInProgress(true);
+				if (!selectedElements.isEmpty()) {
 
-						Object element = null;
-						Resource resource = null;
-						try {
-							//Lock the resource to the participant to avoid parallel updates from other users
-							final R4EUIReviewBasic review = R4EUIModelController.getActiveReview();
-							final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), true);
-							final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(user,
-									R4EUIModelController.getReviewer());
+					monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
+					R4EUIModelController.setJobInProgress(true);
 
-							//Prevent serialization for each individual child element within the particpant's EMF Resource and serialize in bulk at the end
-							resource = user.eResource();
-							R4EUIModelController.stopSerialization(resource);
+					Resource resource = null;
+					try {
+						//Lock the resource to the participant to avoid parallel updates from other users
+						final R4EUIReviewBasic review = R4EUIModelController.getActiveReview();
+						final R4EParticipant user = review.getParticipant(R4EUIModelController.getReviewer(), true);
+						final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(user,
+								R4EUIModelController.getReviewer());
 
-							//Loop through all selected elements
-							for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
-								element = iterator.next();
-								if (!(element instanceof IR4EUIModelElement)) {
-									monitor.worked(1);
-									continue;
-								}
-								R4EUIPlugin.Ftracer.traceInfo("Changing Reviewed State for Element " //$NON-NLS-1$
-										+ ((IR4EUIModelElement) element).getName());
-								boolean newValue = !(((IR4EUIModelElement) element).isUserReviewed());
+						//Prevent serialization for each individual child element within the particpant's EMF Resource and serialize in bulk at the end
+						resource = user.eResource();
+						R4EUIModelController.stopSerialization(resource);
 
-								//Here if we set the element and its children.
-								((IR4EUIModelElement) element).setUserReviewed(newValue, true, true);
+						//Loop through all selected elements
+						for (IR4EUIModelElement element : selectedElements) {
+							R4EUIPlugin.Ftracer.traceInfo("Changing Reviewed State for Element " //$NON-NLS-1$
+									+ element.getName());
+							boolean newValue = !(element.isUserReviewed());
 
-								monitor.worked(1);
-								if (monitor.isCanceled()) {
-									R4EUIModelController.setJobInProgress(false);
-									UIUtils.setNavigatorViewFocus((IR4EUIModelElement) element, 0);
-									//make sure serialization is back to normal							
-									R4EUIModelController.startSerialization(resource);
-									return Status.CANCEL_STATUS;
-								}
+							//Here if we set the element and its children.
+							element.setUserReviewed(newValue, true, true);
+
+							monitor.worked(1);
+							if (monitor.isCanceled()) {
+								R4EUIModelController.setJobInProgress(false);
+								UIUtils.setNavigatorViewFocus(element, 0);
+								//make sure serialization is back to normal							
+								R4EUIModelController.startSerialization(resource);
+								return Status.CANCEL_STATUS;
 							}
-
-							//Enable serialization for this resource
-							R4EUIModelController.startSerialization(resource);
-							//Serialize changes
-							R4EUIModelController.FResourceUpdater.checkIn(bookNum);
-
-							//If user marked all elements as reviewed, prompt user for mail sending
-							if (R4EUIModelController.getActiveReview().isUserReviewed()) {
-								promptCompletionNotification();
-							}
-						} catch (ResourceHandlingException e) {
-							UIUtils.displayResourceErrorDialog(e);
-						} catch (OutOfSyncException ex) {
-							UIUtils.displaySyncErrorDialog(ex);
-						} finally {
-							//make sure serialization is back to normal							
-							R4EUIModelController.startSerialization(resource);
 						}
 
-						R4EUIModelController.setJobInProgress(false);
-						UIUtils.setNavigatorViewFocus((IR4EUIModelElement) element, 0);
+						//Enable serialization for this resource
+						R4EUIModelController.startSerialization(resource);
+						//Serialize changes
+						R4EUIModelController.FResourceUpdater.checkIn(bookNum);
+
+						//If user marked all elements as reviewed, prompt user for mail sending
+						if (R4EUIModelController.getActiveReview().isUserReviewed()) {
+							promptCompletionNotification();
+						}
+					} catch (ResourceHandlingException e) {
+						UIUtils.displayResourceErrorDialog(e);
+					} catch (OutOfSyncException ex) {
+						UIUtils.displaySyncErrorDialog(ex);
+					} finally {
+						//make sure serialization is back to normal							
+						R4EUIModelController.startSerialization(resource);
 					}
+
+					R4EUIModelController.setJobInProgress(false);
+					UIUtils.setNavigatorViewFocus(selectedElements.get(0), 0);
 				}
 				monitor.done();
 				return Status.OK_STATUS;

@@ -20,6 +20,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -28,7 +29,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -73,7 +73,7 @@ public class PasteElementHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent event) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 			public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
@@ -87,9 +87,8 @@ public class PasteElementHandler extends AbstractHandler {
 			public IStatus run(IProgressMonitor monitor) {
 
 				R4EUIModelController.setJobInProgress(true);
-				if (selection instanceof IStructuredSelection) {
-					Object target = ((IStructuredSelection) selection).getFirstElement();
-					if (target instanceof IR4EUIModelElement && target != null) {
+				for (IR4EUIModelElement target : selectedElements) {
+					if (target != null) {
 						final Object[] sourceSelection = new Object[1];
 						Display.getDefault().syncExec(new Runnable() {
 							public void run() {
@@ -103,9 +102,8 @@ public class PasteElementHandler extends AbstractHandler {
 								sourceElement = iterator.next();
 								if (target instanceof R4EUIContent
 										&& sourceElement instanceof R4EUIAnomalyBasic
-										&& null == AnomalyUtils.isAnomalyExist(
-												(R4EUIFileContext) ((IR4EUIModelElement) target).getParent()
-														.getParent(), ((R4EUIContent) target).getPosition(),
+										&& null == AnomalyUtils.isAnomalyExist((R4EUIFileContext) target.getParent()
+												.getParent(), ((R4EUIContent) target).getPosition(),
 												((R4EUIAnomalyBasic) sourceElement).getAnomaly().getDescription())) {
 									try {
 										//Pasting the Anomaly into content creates a cloned linked anomaly

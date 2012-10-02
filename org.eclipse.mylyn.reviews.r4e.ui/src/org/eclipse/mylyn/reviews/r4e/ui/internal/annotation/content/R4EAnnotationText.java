@@ -17,6 +17,9 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
@@ -37,6 +40,11 @@ public class R4EAnnotationText {
 	 */
 	private final String fText;
 
+	/**
+	 * Field fChildText.
+	 */
+	private final List<String> fChildText;
+
 	// ------------------------------------------------------------------------
 	// Constructors
 	// ------------------------------------------------------------------------
@@ -48,10 +56,13 @@ public class R4EAnnotationText {
 	 *            IReviewAnnotation
 	 * @param aText
 	 *            String
+	 * @param aChildText
+	 *            List<String>
 	 */
-	R4EAnnotationText(Object aParent, String aText) {
+	R4EAnnotationText(Object aParent, String aText, List<String> aChildText) {
 		fParent = aParent;
 		fText = aText;
+		fChildText = aChildText;
 	}
 
 	// ------------------------------------------------------------------------
@@ -74,5 +85,34 @@ public class R4EAnnotationText {
 	 */
 	public String getText() {
 		return fText;
+	}
+
+	/**
+	 * Method getChildren.
+	 * 
+	 * @return Object[]
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotation#getChildren()
+	 */
+	public Object[] getChildren() {
+		final List<R4EAnnotationText> values = new ArrayList<R4EAnnotationText>();
+		if (null != fChildText) {
+			for (String contentLine : fChildText) {
+				values.add(new R4EAnnotationText(this, contentLine, null));
+			}
+		}
+		return values.toArray(new Object[values.size()]);
+	}
+
+	/**
+	 * Method hasChildren.
+	 * 
+	 * @return boolean
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotation#hasChildren()
+	 */
+	public boolean hasChildren() {
+		if (null != fChildText) {
+			return fChildText.size() > 0;
+		}
+		return false;
 	}
 }

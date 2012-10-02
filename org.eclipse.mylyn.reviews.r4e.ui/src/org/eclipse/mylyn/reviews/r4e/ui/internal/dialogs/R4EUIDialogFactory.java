@@ -355,8 +355,10 @@ public class R4EUIDialogFactory {
 	 */
 	public IParticipantInputDialog getParticipantInputDialog(boolean aShowExtraParams) {
 		if (!UIUtils.TEST_MODE) {
-			fParticipantInputDialog = new ParticipantInputDialog(Display.getDefault().getActiveShell(),
-					aShowExtraParams);
+			fParticipantInputDialog = new ParticipantInputDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell(), aShowExtraParams);
 		}
 		return fParticipantInputDialog; //Test mode: return mockup reference
 	}
@@ -388,7 +390,10 @@ public class R4EUIDialogFactory {
 	 */
 	public IParticipantUnassignDialog getParticipantUnassignDialog(IR4EUIModelElement aElement) {
 		if (!UIUtils.TEST_MODE) {
-			fParticipantUnassignDialog = new ParticipantUnassignDialog(Display.getCurrent().getActiveShell(), aElement);
+			fParticipantUnassignDialog = new ParticipantUnassignDialog(R4EUIModelController.getNavigatorView()
+					.getSite()
+					.getWorkbenchWindow()
+					.getShell(), aElement);
 		}
 		return fParticipantUnassignDialog; //Test mode: return mockup reference
 	}

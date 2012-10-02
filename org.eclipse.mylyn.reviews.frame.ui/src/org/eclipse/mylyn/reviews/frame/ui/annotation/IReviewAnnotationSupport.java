@@ -48,6 +48,13 @@ public interface IReviewAnnotationSupport {
 	void setAnnotationModelElement(Object aElement);
 
 	/**
+	 * Refresh Annotation Model.
+	 * 
+	 * @param aElement - the (new) element the annotation model is linked with 
+	 */
+	void refreshAnnotations(Object aElement);
+	
+	/**
 	 * Add new Annotation to the Annotation Model.
 	 * 
 	 * @param aElement - the element source for the new annotation 

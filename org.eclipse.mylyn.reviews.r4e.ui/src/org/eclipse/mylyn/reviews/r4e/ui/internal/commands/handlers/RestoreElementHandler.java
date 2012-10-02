@@ -20,7 +20,6 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -30,8 +29,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
@@ -79,7 +76,7 @@ public class RestoreElementHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 
@@ -92,74 +89,70 @@ public class RestoreElementHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
-				if (selection instanceof IStructuredSelection) {
-					if (!selection.isEmpty()) {
-						monitor.beginTask(COMMAND_MESSAGE, ((IStructuredSelection) selection).size());
-						R4EUIModelController.setJobInProgress(true);
+				if (!selectedElements.isEmpty()) {
+					monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
+					R4EUIModelController.setJobInProgress(true);
 
-						IR4EUIModelElement element = null;
-						R4EReview review = null;
-						if (null != R4EUIModelController.getActiveReview()) {
-							review = R4EUIModelController.getActiveReview().getReview();
-						}
-						final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
-						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
-							try {
-								element = (IR4EUIModelElement) iterator.next();
-								monitor.subTask("Restoring element " + element.getName());
-								R4EUIPlugin.Ftracer.traceInfo("Restoring element " + element.getName()); //$NON-NLS-1$
-								element.restore();
-								if (element instanceof R4EUIReviewBasic) {
-									if (null != R4EUIModelController.getActiveReview()) {
-										R4EUIModelController.getActiveReview().close(); //Only one review open at any given time
-									}
-								}
-								element.open();
-								if (element instanceof R4EUIReviewItem) {
-									addedItems.add(((R4EUIReviewItem) element).getItem());
-								} else if (element instanceof R4EUIContent) {
-									addedItems.add(((R4EUIContent) element).getContent());
-								}
-
-							} catch (ResourceHandlingException e) {
-								UIUtils.displayResourceErrorDialog(e);
-							} catch (OutOfSyncException e) {
-								UIUtils.displaySyncErrorDialog(e);
-							} catch (FileNotFoundException e) {
-								R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() //$NON-NLS-1$ //$NON-NLS-2$
-										+ ")"); //$NON-NLS-1$
-								R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
-							} catch (CompatibilityException e) {
-								UIUtils.displayCompatibilityErrorDialog(e);
-							}
-
-							monitor.worked(1);
-							if (monitor.isCanceled()) {
-								R4EUIModelController.setJobInProgress(false);
-								UIUtils.setNavigatorViewFocus(element, 0);
-								return Status.CANCEL_STATUS;
-							}
-						}
-
-						//Send email notification if needed
-						if (null != review) {
-							if (0 < addedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
-								if (((R4EFormalReview) review).getCurrent()
-										.getType()
-										.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
-									try {
-										MailServicesProxy.sendItemsAddedNotification(addedItems);
-									} catch (CoreException e) {
-										UIUtils.displayCoreErrorDialog(e);
-									} catch (ResourceHandlingException e) {
-										UIUtils.displayResourceErrorDialog(e);
-									}
-								}
-							}
-						}
-						R4EUIModelController.setJobInProgress(false);
-						UIUtils.setNavigatorViewFocus(element, 1);
+					R4EReview review = null;
+					if (null != R4EUIModelController.getActiveReview()) {
+						review = R4EUIModelController.getActiveReview().getReview();
 					}
+					final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
+					for (IR4EUIModelElement element : selectedElements) {
+						try {
+							monitor.subTask("Restoring element " + element.getName());
+							R4EUIPlugin.Ftracer.traceInfo("Restoring element " + element.getName()); //$NON-NLS-1$
+							element.restore();
+							if (element instanceof R4EUIReviewBasic) {
+								if (null != R4EUIModelController.getActiveReview()) {
+									R4EUIModelController.getActiveReview().close(); //Only one review open at any given time
+								}
+							}
+							element.open();
+							if (element instanceof R4EUIReviewItem) {
+								addedItems.add(((R4EUIReviewItem) element).getItem());
+							} else if (element instanceof R4EUIContent) {
+								addedItems.add(((R4EUIContent) element).getContent());
+							}
+
+						} catch (ResourceHandlingException e) {
+							UIUtils.displayResourceErrorDialog(e);
+						} catch (OutOfSyncException e) {
+							UIUtils.displaySyncErrorDialog(e);
+						} catch (FileNotFoundException e) {
+							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() //$NON-NLS-1$ //$NON-NLS-2$
+									+ ")"); //$NON-NLS-1$
+							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+						} catch (CompatibilityException e) {
+							UIUtils.displayCompatibilityErrorDialog(e);
+						}
+
+						monitor.worked(1);
+						if (monitor.isCanceled()) {
+							R4EUIModelController.setJobInProgress(false);
+							UIUtils.setNavigatorViewFocus(element, 0);
+							return Status.CANCEL_STATUS;
+						}
+					}
+
+					//Send email notification if needed
+					if (null != review) {
+						if (0 < addedItems.size() && review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+							if (((R4EFormalReview) review).getCurrent()
+									.getType()
+									.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+								try {
+									MailServicesProxy.sendItemsAddedNotification(addedItems);
+								} catch (CoreException e) {
+									UIUtils.displayCoreErrorDialog(e);
+								} catch (ResourceHandlingException e) {
+									UIUtils.displayResourceErrorDialog(e);
+								}
+							}
+						}
+					}
+					R4EUIModelController.setJobInProgress(false);
+					UIUtils.setNavigatorViewFocus(selectedElements.get(0), 1);
 				}
 				R4EUIModelController.setJobInProgress(false);
 				monitor.done();

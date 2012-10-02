@@ -79,11 +79,7 @@ public class NewAnomalyHandler extends AbstractHandler {
 
 		final IEditorInput input;
 		if (null != editorPart) {
-			input = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow()
-					.getActivePage()
-					.getActiveEditor()
-					.getEditorInput(); // $codepro.audit.disable methodChainLength
+			input = editorPart.getEditorInput(); // $codepro.audit.disable methodChainLength
 		} else {
 			input = null;
 		}

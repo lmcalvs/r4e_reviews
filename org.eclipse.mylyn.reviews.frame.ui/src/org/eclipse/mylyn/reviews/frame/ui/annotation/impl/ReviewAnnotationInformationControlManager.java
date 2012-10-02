@@ -9,18 +9,19 @@
  * Description:
  * 
  * This class overrides AnnotationBarHoverManager to provide adapted management
- * of the R4E Annotation Controls, especially support for focus hotkeys.
+ * of the Review Annotation Controls, especially support for focus hotkeys.
  * 
  * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Sebastien Dubois - Created for Mylyn Review project
  *   
  ******************************************************************************/
 
-package org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control;
+package org.eclipse.mylyn.reviews.frame.ui.annotation.impl;
 
 import java.lang.reflect.Method;
 
-import org.eclipse.compare.internal.CompareEditor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.AbstractHoverInformationControlManager;
 import org.eclipse.jface.text.AbstractInformationControlManager;
 import org.eclipse.jface.text.IInformationControlCreator;
@@ -32,7 +33,6 @@ import org.eclipse.jface.text.source.AnnotationBarHoverManager;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRulerInfo;
-import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
@@ -40,8 +40,7 @@ import org.eclipse.swt.graphics.Rectangle;
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-@SuppressWarnings("restriction")
-public class R4EAnnotationInformationControlManager extends AnnotationBarHoverManager implements IWidgetTokenKeeper,
+public class ReviewAnnotationInformationControlManager extends AnnotationBarHoverManager implements IWidgetTokenKeeper,
 		IWidgetTokenKeeperExtension {
 
 	// ------------------------------------------------------------------------
@@ -58,7 +57,7 @@ public class R4EAnnotationInformationControlManager extends AnnotationBarHoverMa
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Constructor for R4EAnnotationInformationControlManager.
+	 * Constructor for ReviewAnnotationInformationControlManager.
 	 * 
 	 * @param aRulerInfo
 	 *            IVerticalRulerInfo
@@ -69,7 +68,7 @@ public class R4EAnnotationInformationControlManager extends AnnotationBarHoverMa
 	 * @param aCreator
 	 *            IInformationControlCreator
 	 */
-	public R4EAnnotationInformationControlManager(IVerticalRulerInfo aRulerInfo, ISourceViewer aSourceViewer,
+	public ReviewAnnotationInformationControlManager(IVerticalRulerInfo aRulerInfo, ISourceViewer aSourceViewer,
 			IAnnotationHover aAnnotationHover, IInformationControlCreator aCreator) {
 		super(aRulerInfo, aSourceViewer, aAnnotationHover, aCreator);
 	}
@@ -139,10 +138,14 @@ public class R4EAnnotationInformationControlManager extends AnnotationBarHoverMa
 			declaredMethod.invoke(this, new Object[] { new Boolean(true) });
 			return true;
 		} catch (Throwable t) {
-			R4EUIPlugin.Ftracer.traceError("Exception: " + t.toString() + " (" + t.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			R4EUIPlugin.getDefault().logError("Exception: " + t.toString(), (Exception) t); //$NON-NLS-1$
+			if (null != ReviewAnnotationConfigFactory.getPlugin()) {
+				ReviewAnnotationConfigFactory.getPlugin().getLog().log(
+					new Status(IStatus.ERROR, 
+							ReviewAnnotationConfigFactory.getPlugin().getBundle().getSymbolicName(), 
+							IStatus.OK, t.getMessage(), t));
+			}
+			return false;
 		}
-		return true;
 	}
 
 	/**
@@ -159,23 +162,5 @@ public class R4EAnnotationInformationControlManager extends AnnotationBarHoverMa
 	@Override
 	protected Point computeInformationControlLocation(Rectangle aSubjectArea, Point aControlSize) {
 		return computeLocation(aSubjectArea, aControlSize, AbstractInformationControlManager.ANCHOR_BOTTOM);
-	}
-
-	/**
-	 * Method hideInformationControl.
-	 * 
-	 * @see org.eclipse.jface.text.AbstractInformationControlManager#hideInformationControl()
-	 */
-	@Override
-	protected void hideInformationControl() {
-		//We do this to avoid losing the annotation control widget when the Navigator view is activated to update the properties view.  See 
-		//R4EAnnotationInformationControl#addAnnotationsInformation for more info
-		if (!R4EAnnotationInformationControl.isPropertyViewBeingActivated()) {
-			if (R4EAnnotationInformationControl.getPreSelectionActivePart() instanceof CompareEditor) {
-				R4EAnnotationInformationControl.setPreSelectionActivePart(null);
-			} else {
-				super.hideInformationControl();
-			}
-		}
 	}
 }

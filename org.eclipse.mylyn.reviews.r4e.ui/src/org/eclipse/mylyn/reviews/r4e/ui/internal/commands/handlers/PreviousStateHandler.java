@@ -18,7 +18,7 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
-import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -26,8 +26,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
@@ -71,7 +69,7 @@ public class PreviousStateHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 
@@ -84,48 +82,44 @@ public class PreviousStateHandler extends AbstractHandler {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
-				if (selection instanceof IStructuredSelection) {
-					if (!selection.isEmpty()) {
-						monitor.beginTask(COMMAND_MESSAGE, ((IStructuredSelection) selection).size());
-						R4EUIModelController.setJobInProgress(true);
+				if (!selectedElements.isEmpty()) {
+					monitor.beginTask(COMMAND_MESSAGE, selectedElements.size());
+					R4EUIModelController.setJobInProgress(true);
 
-						IR4EUIModelElement element = null;
-						for (final Iterator<?> iterator = ((IStructuredSelection) selection).iterator(); iterator.hasNext();) {
-							element = (IR4EUIModelElement) iterator.next();
-							R4EUIPlugin.Ftracer.traceInfo("Regressing State for element " + element.getName()); //$NON-NLS-1$
+					for (IR4EUIModelElement element : selectedElements) {
+						R4EUIPlugin.Ftracer.traceInfo("Regressing State for element " + element.getName()); //$NON-NLS-1$
 
-							if (element instanceof R4EUIReviewExtended) {
-								R4EReviewPhase newPhase = ((R4EUIReviewExtended) element).getPreviousPhase();
-								UIUtils.changeReviewPhase(element, newPhase);
+						if (element instanceof R4EUIReviewExtended) {
+							R4EReviewPhase newPhase = ((R4EUIReviewExtended) element).getPreviousPhase();
+							UIUtils.changeReviewPhase(element, newPhase);
 
-							} else if (element instanceof R4EUIReviewBasic) {
-								R4EReviewPhase newPhase = ((R4EUIReviewBasic) element).getPhaseFromString(R4EUIConstants.REVIEW_PHASE_STARTED);
-								UIUtils.changeReviewPhase(element, newPhase);
-							} else if (element instanceof R4EUIPostponedAnomaly) {
-								try {
-									if (((R4EUIPostponedAnomaly) element).checkCompatibility()) {
-										R4EAnomalyState newState = ((R4EUIPostponedAnomaly) element).getPreviousState();
-										UIUtils.changeAnomalyState(element, newState);
-									}
-								} catch (ResourceHandlingException e) {
-									UIUtils.displayResourceErrorDialog(e);
-								} catch (CompatibilityException e) {
-									UIUtils.displayCompatibilityErrorDialog(e);
+						} else if (element instanceof R4EUIReviewBasic) {
+							R4EReviewPhase newPhase = ((R4EUIReviewBasic) element).getPhaseFromString(R4EUIConstants.REVIEW_PHASE_STARTED);
+							UIUtils.changeReviewPhase(element, newPhase);
+						} else if (element instanceof R4EUIPostponedAnomaly) {
+							try {
+								if (((R4EUIPostponedAnomaly) element).checkCompatibility()) {
+									R4EAnomalyState newState = ((R4EUIPostponedAnomaly) element).getPreviousState();
+									UIUtils.changeAnomalyState(element, newState);
 								}
-							} else if (element instanceof R4EUIAnomalyExtended) {
-								R4EAnomalyState newState = ((R4EUIAnomalyExtended) element).getPreviousState();
-								UIUtils.changeAnomalyState(element, newState);
+							} catch (ResourceHandlingException e) {
+								UIUtils.displayResourceErrorDialog(e);
+							} catch (CompatibilityException e) {
+								UIUtils.displayCompatibilityErrorDialog(e);
 							}
-							monitor.worked(1);
-							if (monitor.isCanceled()) {
-								R4EUIModelController.setJobInProgress(false);
-								UIUtils.setNavigatorViewFocus(element, 0);
-								return Status.CANCEL_STATUS;
-							}
+						} else if (element instanceof R4EUIAnomalyExtended) {
+							R4EAnomalyState newState = ((R4EUIAnomalyExtended) element).getPreviousState();
+							UIUtils.changeAnomalyState(element, newState);
 						}
-						R4EUIModelController.setJobInProgress(false);
-						UIUtils.setNavigatorViewFocus(element, 0);
+						monitor.worked(1);
+						if (monitor.isCanceled()) {
+							R4EUIModelController.setJobInProgress(false);
+							UIUtils.setNavigatorViewFocus(element, 0);
+							return Status.CANCEL_STATUS;
+						}
 					}
+					R4EUIModelController.setJobInProgress(false);
+					UIUtils.setNavigatorViewFocus(selectedElements.get(0), 0);
 				}
 				R4EUIModelController.setJobInProgress(false);
 				monitor.done();

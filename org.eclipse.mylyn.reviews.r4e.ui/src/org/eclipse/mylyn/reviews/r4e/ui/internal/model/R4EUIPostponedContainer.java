@@ -61,9 +61,9 @@ public class R4EUIPostponedContainer extends R4EUIFileContainer {
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Postponed Elements";
 
 	/**
-	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Remove this review item from its parent review"")
+	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is "" Disable the Postponed Elements from their Parent Review"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) the Postponed "
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable the Postponed "
 			+ "Elements from their Parent Review";
 
 	// ------------------------------------------------------------------------

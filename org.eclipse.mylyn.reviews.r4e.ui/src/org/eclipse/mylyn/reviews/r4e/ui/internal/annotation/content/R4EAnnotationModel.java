@@ -42,9 +42,12 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContentsContainer;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIDelta;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUISelection;
 
 /**
@@ -70,12 +73,12 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	/**
 	 * Field fSortedAnnotationsList.
 	 */
-	private final List<IReviewAnnotation> fSortedAnnotationsList = new ArrayList<IReviewAnnotation>();
+	private final Map<String, List<IReviewAnnotation>> fSortedAnnotationsListsMap = new HashMap<String, List<IReviewAnnotation>>();
 
 	/**
-	 * Field fCurrentActiveAnnotationIndex.
+	 * Field fSortedAnnotationsIndexMap.
 	 */
-	private int fCurrentActiveAnnotationIndex = 0;
+	private final Map<String, Integer> fSortedAnnotationsIndexMap = new HashMap<String, Integer>();
 
 	/**
 	 * Field fFileContext.
@@ -101,7 +104,7 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	};
 
 	/**
-	 * Field FAnnotationComparator.
+	 * Field ANNOTATION_COMPARATOR.
 	 */
 	private static final Comparator<IReviewAnnotation> ANNOTATION_COMPARATOR = new Comparator<IReviewAnnotation>() {
 		// This is where the sorting happens.
@@ -136,6 +139,7 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 */
 	public void setFile(Object aFileContext) {
 		fFileContext = (R4EUIFileContext) aFileContext;
+		fFileContext.registerAnnotationModel(this);
 	}
 
 	/**
@@ -163,9 +167,7 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 * @see org.eclipse.jface.text.source.IAnnotationModel#addAnnotationModelListener(IAnnotationModelListener)
 	 */
 	public void addAnnotationModelListener(IAnnotationModelListener aListener) {
-		if (fAnnotationModelListeners.add(aListener)) {
-			fireModelChanged(new AnnotationModelEvent(this, true));
-		}
+		fAnnotationModelListeners.add(aListener);
 	}
 
 	/**
@@ -197,7 +199,7 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 			}
 		}
 		fDocument.addDocumentListener(fDocumentListener);
-		updateAnnotations();
+		refreshAnnotations();
 	}
 
 	/**
@@ -216,6 +218,15 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	}
 
 	/**
+	 * Method clearAnnotations.
+	 */
+	public void clearAnnotations() {
+		final AnnotationModelEvent event = new AnnotationModelEvent(this);
+		clear(event);
+		fireModelChanged(event);
+	}
+
+	/**
 	 * Method clear.
 	 * 
 	 * @param aEvent
@@ -226,22 +237,36 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 			aEvent.annotationRemoved((R4EAnnotation) annotation, annotation.getPosition());
 		}
 		fAnnotationsMap.clear();
-		fSortedAnnotationsList.clear();
-		fCurrentActiveAnnotationIndex = 0;
+		for (List<IReviewAnnotation> annotationList : fSortedAnnotationsListsMap.values()) {
+			annotationList.clear();
+		}
+		fSortedAnnotationsIndexMap.clear();
 	}
 
 	/**
-	 * Method updateAnnotations.
+	 * Method refreshAnnotations.
 	 */
-	private void updateAnnotations() {
+	public void refreshAnnotations() {
 		final AnnotationModelEvent event = new AnnotationModelEvent(this);
 		clear(event);
 		if ((fDocument != null) && (fFileContext != null)) {
-			for (IR4EUIModelElement anomaly : fFileContext.getAnomalyContainerElement().getChildren()) {
-				addAnnotation(fDocument, event, anomaly);
+			R4EUIAnomalyContainer anomalies = fFileContext.getAnomalyContainerElement();
+			if (null != anomalies) {
+				for (IR4EUIModelElement anomaly : anomalies.getChildren()) {
+					addAnnotation(fDocument, event, anomaly);
+				}
 			}
-			for (IR4EUIModelElement content : fFileContext.getContentsContainerElement().getChildren()) {
-				addAnnotation(fDocument, event, content);
+			R4EUIContentsContainer contents = fFileContext.getContentsContainerElement();
+			if (null != contents) {
+				for (IR4EUIModelElement content : fFileContext.getContentsContainerElement().getChildren()) {
+					addAnnotation(fDocument, event, content);
+				}
+			}
+			if (fFileContext instanceof R4EUIPostponedFile) {
+				IR4EUIModelElement[] postponedAnomalies = ((R4EUIPostponedFile) fFileContext).getChildren();
+				for (IR4EUIModelElement anomaly : postponedAnomalies) {
+					addAnnotation(fDocument, event, anomaly);
+				}
 			}
 		}
 		fireModelChanged(event);
@@ -312,9 +337,14 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	public void addAnnotation(Annotation aAnnotation, Position aPosition) {
 		final R4EAnnotation newAnnotation = (R4EAnnotation) aAnnotation;
 		fAnnotationsMap.put((R4EID) newAnnotation.getId(), newAnnotation);
-		fSortedAnnotationsList.add(newAnnotation);
-		Collections.sort(fSortedAnnotationsList, ANNOTATION_COMPARATOR);
-		fCurrentActiveAnnotationIndex = fSortedAnnotationsList.indexOf(newAnnotation);
+		List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(newAnnotation.getType());
+		if (null == annotationList) {
+			annotationList = new ArrayList<IReviewAnnotation>();
+			fSortedAnnotationsListsMap.put(newAnnotation.getType(), annotationList);
+		}
+		annotationList.add(newAnnotation);
+		Collections.sort(annotationList, ANNOTATION_COMPARATOR);
+		fSortedAnnotationsIndexMap.put(newAnnotation.getType(), annotationList.indexOf(newAnnotation));
 	}
 
 	/**
@@ -333,7 +363,7 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 		}
 		if (null != id) {
 			final IReviewAnnotation removedAnnotation = fAnnotationsMap.remove(id);
-			removeAnnotation(removedAnnotation);
+			removeAnnotation((R4EAnnotation) removedAnnotation);
 			final AnnotationModelEvent event = new AnnotationModelEvent(this);
 			event.annotationRemoved((R4EAnnotation) removedAnnotation);
 			fireModelChanged(event);
@@ -348,7 +378,16 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 * @see org.eclipse.jface.text.source.IAnnotationModel#removeAnnotation(Annotation)
 	 */
 	public void removeAnnotation(Annotation aAnnotation) {
-		fSortedAnnotationsList.remove(aAnnotation);
+		final R4EAnnotation remAnnotation = (R4EAnnotation) aAnnotation;
+		fAnnotationsMap.remove(remAnnotation.getId());
+		final List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(remAnnotation.getType());
+		int remAnnotationIndex = annotationList.indexOf(remAnnotation);
+		annotationList.remove(remAnnotation);
+		if (remAnnotationIndex < 0) {
+			fSortedAnnotationsIndexMap.remove(remAnnotation.getType()); //type list is now empty
+		} else {
+			fSortedAnnotationsIndexMap.put(remAnnotation.getType(), --remAnnotationIndex);
+		}
 	}
 
 	/**
@@ -372,6 +411,21 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	}
 
 	/**
+	 * Method isAnnotationsAvailable.
+	 * 
+	 * @param aType
+	 *            String
+	 * @return boolean
+	 */
+	public boolean isAnnotationsAvailable(String aType) {
+		final List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(aType);
+		if ((null != annotationList) && (annotationList.size() > 0)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Method getNextAnnotation.
 	 * 
 	 * @param aType
@@ -380,22 +434,18 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel#getNextAnnotation(String)
 	 */
 	public IReviewAnnotation getNextAnnotation(String aType) {
-		IReviewAnnotation nextAnnotation = null;
-		IReviewAnnotation foundAnnotation = null;
-		int originalAnnotationIndex = fCurrentActiveAnnotationIndex;
-
-		if (fSortedAnnotationsList.size() > 0) {
-			do {
-				++fCurrentActiveAnnotationIndex;
-				if (fCurrentActiveAnnotationIndex >= fSortedAnnotationsList.size()) {
-					fCurrentActiveAnnotationIndex = 0; //wrap around
-				}
-				nextAnnotation = fSortedAnnotationsList.get(fCurrentActiveAnnotationIndex);
-			} while (!(((Annotation) nextAnnotation).getType().equals(aType))
-					&& fCurrentActiveAnnotationIndex != originalAnnotationIndex);
-			foundAnnotation = nextAnnotation;
+		final List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(aType);
+		if (annotationList.size() == 0) {
+			return null; //empty list
+		} else {
+			int annotationIndex = fSortedAnnotationsIndexMap.get(aType);
+			++annotationIndex;
+			if (annotationIndex == annotationList.size()) {
+				annotationIndex = 0; //wrap around
+			}
+			fSortedAnnotationsIndexMap.put(aType, annotationIndex);
+			return annotationList.get(annotationIndex);
 		}
-		return foundAnnotation;
 	}
 
 	/**
@@ -407,21 +457,40 @@ public class R4EAnnotationModel implements IReviewAnnotationModel {
 	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel#getPreviousAnnotation(String)
 	 */
 	public IReviewAnnotation getPreviousAnnotation(String aType) {
-		IReviewAnnotation previousAnnotation = null;
-		IReviewAnnotation foundAnnotation = null;
-		int originalAnnotationIndex = fCurrentActiveAnnotationIndex;
+		final List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(aType);
 
-		if (fSortedAnnotationsList.size() > 0) {
-			do {
-				--fCurrentActiveAnnotationIndex;
-				if (fCurrentActiveAnnotationIndex < 0) {
-					fCurrentActiveAnnotationIndex = fSortedAnnotationsList.size() - 1; //wrap around
-				}
-				previousAnnotation = fSortedAnnotationsList.get(fCurrentActiveAnnotationIndex);
-			} while (!(((Annotation) previousAnnotation).getType().equals(aType))
-					&& fCurrentActiveAnnotationIndex != originalAnnotationIndex);
-			foundAnnotation = previousAnnotation;
+		if (annotationList.size() == 0) {
+			return null; //empty list
+		} else {
+			int annotationIndex = fSortedAnnotationsIndexMap.get(aType);
+			--annotationIndex;
+			if (annotationIndex < 0) {
+				annotationIndex = annotationList.size() - 1; //wrap around
+			}
+			fSortedAnnotationsIndexMap.put(aType, annotationIndex);
+			return annotationList.get(annotationIndex);
 		}
-		return foundAnnotation;
+	}
+
+	//Test Methods
+
+	/**
+	 * Method findAnnotation.
+	 * 
+	 * @param aType
+	 *            String
+	 * @param aSourceElement
+	 *            Object
+	 * @return IReviewAnnotation
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel#findAnnotation(String, Object)
+	 */
+	public IReviewAnnotation findAnnotation(String aType, Object aSourceElement) {
+		final List<IReviewAnnotation> annotationList = fSortedAnnotationsListsMap.get(aType);
+		for (IReviewAnnotation annotation : annotationList) {
+			if (((R4EAnnotation) annotation).getSourceElement().equals(aSourceElement)) {
+				return annotation;
+			}
+		}
+		return null;
 	}
 }

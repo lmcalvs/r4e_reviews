@@ -67,11 +67,9 @@ public class R4EUIRuleArea extends R4EUIModelElement {
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Rule Area";
 
 	/**
-	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable (and Optionally Remove) this Rule Area from its parent
-	 * Rule Set"")
+	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable this Rule Area from its parent Rule Set"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Rule Area"
-			+ " from its parent Rule Set";
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable this Rule Area" + " from its parent Rule Set";
 
 	/**
 	 * Field RESTORE_ELEMENT_COMMAND_NAME. (value is ""Restore Rule Area"")

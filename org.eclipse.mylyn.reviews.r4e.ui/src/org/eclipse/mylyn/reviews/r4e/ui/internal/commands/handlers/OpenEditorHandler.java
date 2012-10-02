@@ -18,15 +18,18 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
+import java.util.List;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.EditorProxy;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.ui.progress.UIJob;
 
 /**
@@ -58,20 +61,16 @@ public class OpenEditorHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final UIJob job = new UIJob(COMMAND_MESSAGE) {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				monitor.beginTask(COMMAND_MESSAGE, 1);
 
-				if (R4EUIModelController.getNavigatorView().isEditorLinked()) {
-					if (selection instanceof IStructuredSelection) {
-						if (!selection.isEmpty()) {
-							EditorProxy.openEditor(R4EUIModelController.getNavigatorView().getSite().getPage(),
-									selection, true);
-						}
-					}
+				if (!selectedElements.isEmpty()) {
+					EditorProxy.openEditor(R4EUIModelController.getNavigatorView().getSite().getPage(),
+							new StructuredSelection(selectedElements), true);
 				}
 				monitor.worked(1);
 				monitor.done();

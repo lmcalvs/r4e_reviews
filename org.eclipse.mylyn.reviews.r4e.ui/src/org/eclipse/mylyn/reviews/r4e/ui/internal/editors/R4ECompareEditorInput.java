@@ -43,7 +43,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.R4EAnnotationContributionItems;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4ECompareAnnotationSupport;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotation;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotationModel;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
@@ -85,9 +86,10 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 */
 	private final ITypedElement fRight;
 
-	private ITextEditor fAnnotatedTextEditor = null;
-
-	private IReviewAnnotationModel fAnnotationModel = null;
+	/**
+	 * Field fAnnotationSupport.
+	 */
+	private IReviewAnnotationSupport fAnnotationSupport = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -162,7 +164,7 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	 */
 	@Override
 	public String getToolTipText() {
-		if (null != fLeft && null != fRight) {
+		if ((null != fLeft) && (null != fRight)) {
 			String format = null;
 
 			// Set the label values for the compare editor
@@ -198,21 +200,21 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 	/**
 	 * Method getAdapter.
 	 * 
-	 * @param adapter
+	 * @param aAdapter
 	 *            Class
 	 * @return Object
 	 * @see org.eclipse.compare.CompareEditorInput#getAdapter(java.lang.Class)
 	 */
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes")
-	Class adapter) {
-		if (IFile.class.equals(adapter)) {
+	Class aAdapter) {
+		if (IFile.class.equals(aAdapter)) {
 			if (null != getWorkspaceElement()) {
 				return getWorkspaceElement().getResource();
 			}
 			return null;
 		}
-		return super.getAdapter(adapter);
+		return super.getAdapter(aAdapter);
 	}
 
 	/**
@@ -298,31 +300,52 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 
 		//Go to the correct element in the compare editor
 		UIUtils.selectElementInEditor(this);
+
+		//TODO:  This is needed to show annotation highlighting whne opening the compare editor.
+		//		 It should not be needed so this could be investigated in the future.
+		fAnnotationSupport.getTargetAnnotationModel().refreshAnnotations();
+
 		return control;
 	}
 
+	/**
+	 * Method findContentViewer.
+	 * 
+	 * @param aOldViewer
+	 *            Viewer
+	 * @param aInput
+	 *            ICompareInput
+	 * @param aParent
+	 *            Composite
+	 * @return Viewer
+	 */
 	@Override
-	public Viewer findContentViewer(Viewer oldViewer, ICompareInput input, Composite parent) {
-		Viewer contentViewer = super.findContentViewer(oldViewer, input, parent);
+	public Viewer findContentViewer(Viewer aOldViewer, ICompareInput aInput, Composite aParent) {
+		final Viewer contentViewer = super.findContentViewer(aOldViewer, aInput, aParent);
 		//TODO lmcdubo: ideally we would like to get the file context from the FileContextNode element.  Need refactoring
-		if (input instanceof R4EFileContextNode) {
-			ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		if (aInput instanceof R4EFileContextNode) {
+			final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
 			if (selection instanceof IStructuredSelection) {
-				Object element = ((IStructuredSelection) selection).getFirstElement();
+				final Object element = ((IStructuredSelection) selection).getFirstElement();
 				if (element instanceof R4EUIFileContext) {
-					IReviewAnnotationSupport support = R4ECompareAnnotationSupport.getAnnotationSupport(contentViewer,
-							(R4EUIFileContext) element);
-					insertAnnotationNavigationCommands(CompareViewerPane.getToolBarManager(parent), support);
+					fAnnotationSupport = UIUtils.getCompareAnnotationSupport(contentViewer, element);
+					insertAnnotationNavigationCommands(CompareViewerPane.getToolBarManager(aParent), fAnnotationSupport);
 				} else if (element instanceof R4EUIContent || element instanceof R4EUIAnomalyBasic) {
-					IReviewAnnotationSupport support = R4ECompareAnnotationSupport.getAnnotationSupport(contentViewer,
-							(R4EUIFileContext) ((IR4EUIModelElement) element).getParent().getParent());
-					insertAnnotationNavigationCommands(CompareViewerPane.getToolBarManager(parent), support);
+					final IReviewAnnotationSupport support = UIUtils.getCompareAnnotationSupport(contentViewer,
+							((IR4EUIModelElement) element).getParent().getParent());
+					fAnnotationSupport = UIUtils.getCompareAnnotationSupport(contentViewer, element);
+					insertAnnotationNavigationCommands(CompareViewerPane.getToolBarManager(aParent), support);
 				}
 			}
 		}
 		return contentViewer;
 	}
 
+	/**
+	 * Method getContentViewer.
+	 * 
+	 * @return Viewer
+	 */
 	public Viewer getContentViewer() {
 		final ICompareNavigator navigator = getNavigator();
 		if (navigator instanceof CompareEditorInputNavigator) {
@@ -336,31 +359,101 @@ public class R4ECompareEditorInput extends SaveableCompareEditorInput {
 		return null;
 	}
 
+	/**
+	 * Method insertAnnotationNavigationCommands.
+	 * 
+	 * @param aManager
+	 *            IToolBarManager
+	 * @param aSupport
+	 *            IReviewAnnotationSupport
+	 */
 	private void insertAnnotationNavigationCommands(IToolBarManager aManager, IReviewAnnotationSupport aSupport) {
-		fAnnotatedTextEditor = aSupport.getTargetEditor();
-		fAnnotationModel = aSupport.getTargetAnnotationModel();
-
 		aManager.add(new Separator());
-		R4EAnnotationContributionItems r4eItemsManager = new R4EAnnotationContributionItems();
-		IContributionItem[] items = r4eItemsManager.getR4EContributionItems();
+		final R4EAnnotationContributionItems r4eItemsManager = new R4EAnnotationContributionItems();
+		final IContributionItem[] items = r4eItemsManager.getR4EContributionItems();
 		for (IContributionItem item : items) {
 			aManager.add(item);
 		}
 		aManager.update(true);
 	}
 
-	public ITextEditor getAnnotatedTextEditor() {
-		return fAnnotatedTextEditor;
+	/**
+	 * Method isAnnotationsAvailable.
+	 * 
+	 * @param aType
+	 *            String
+	 * @return boolean
+	 */
+	public boolean isAnnotationsAvailable(String aType) {
+		if (null != fAnnotationSupport) {
+			IReviewAnnotationModel model = fAnnotationSupport.getTargetAnnotationModel();
+			if (null != model) {
+				if (model.isAnnotationsAvailable(aType)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
-	public void gotoNextAnnotation(String aType) {
-		Position annotationPositon = fAnnotationModel.getNextAnnotation(aType).getPosition();
-		fAnnotatedTextEditor.selectAndReveal(annotationPositon.getOffset(), annotationPositon.getLength());
-
+	/**
+	 * Method gotoNextAnnotation.
+	 * 
+	 * @param aType
+	 *            String
+	 * @return R4EAnnotation
+	 */
+	public R4EAnnotation gotoNextAnnotation(String aType) {
+		R4EAnnotation annotation = null;
+		if (null != fAnnotationSupport) {
+			IReviewAnnotationModel model = fAnnotationSupport.getTargetAnnotationModel();
+			if (null != model) {
+				annotation = (R4EAnnotation) model.getNextAnnotation(aType);
+				if (null != annotation) {
+					final Position annotationPositon = annotation.getPosition();
+					ITextEditor editor = fAnnotationSupport.getTargetEditor();
+					if (null != editor) {
+						editor.selectAndReveal(annotationPositon.getOffset(), annotationPositon.getLength());
+					}
+				}
+			}
+		}
+		return annotation;
 	}
 
-	public void gotoPreviousAnnotation(String aType) {
-		Position annotationPositon = fAnnotationModel.getPreviousAnnotation(aType).getPosition();
-		fAnnotatedTextEditor.selectAndReveal(annotationPositon.getOffset(), annotationPositon.getLength());
+	/**
+	 * Method gotoPreviousAnnotation.
+	 * 
+	 * @param aType
+	 *            String
+	 * @return R4EAnnotation
+	 */
+	public R4EAnnotation gotoPreviousAnnotation(String aType) {
+		R4EAnnotation annotation = null;
+		if (null != fAnnotationSupport) {
+			IReviewAnnotationModel model = fAnnotationSupport.getTargetAnnotationModel();
+			if (null != model) {
+				annotation = (R4EAnnotation) model.getPreviousAnnotation(aType);
+				if (null != annotation) {
+					final Position annotationPositon = annotation.getPosition();
+					ITextEditor editor = fAnnotationSupport.getTargetEditor();
+					if (null != editor) {
+						editor.selectAndReveal(annotationPositon.getOffset(), annotationPositon.getLength());
+					}
+				}
+			}
+		}
+		return annotation;
+	}
+
+	//Test Methods
+
+	/**
+	 * Method getAnnotationModel.
+	 * 
+	 * @return R4EAnnotationModel
+	 */
+	public R4EAnnotationModel getAnnotationModel() {
+		return (R4EAnnotationModel) fAnnotationSupport.getTargetAnnotationModel();
 	}
 }

@@ -18,14 +18,14 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
+import java.util.List;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIAnomalyContainer;
@@ -34,6 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUITextPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 
 /**
  * @author Sebastien Dubois
@@ -64,7 +65,7 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent event) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 			public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
@@ -79,15 +80,13 @@ public class NewLinkedAnomalyHandler extends AbstractHandler {
 				monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 				R4EUIModelController.setJobInProgress(true);
 
-				if (selection instanceof IStructuredSelection) {
-					//Add a linked anomaly to this selection
-					if (!selection.isEmpty()) {
-						final Object element = ((IStructuredSelection) selection).getFirstElement();
-						if (element instanceof R4EUIContent) {
-							R4EUIPlugin.Ftracer.traceInfo("Adding Linked " + "Anomaly to Element " //$NON-NLS-1$ //$NON-NLS-2$
-									+ ((IR4EUIModelElement) element).getName());
-							addLinkedAnomaly((R4EUIContent) element);
-						}
+				//Add a linked anomaly to the selected contents
+				if (!selectedElements.isEmpty()) {
+					final IR4EUIModelElement element = selectedElements.get(0);
+					if (element instanceof R4EUIContent) {
+						R4EUIPlugin.Ftracer.traceInfo("Adding Linked " + "Anomaly to Element " //$NON-NLS-1$ //$NON-NLS-2$
+								+ element.getName());
+						addLinkedAnomaly((R4EUIContent) element);
 					}
 				}
 

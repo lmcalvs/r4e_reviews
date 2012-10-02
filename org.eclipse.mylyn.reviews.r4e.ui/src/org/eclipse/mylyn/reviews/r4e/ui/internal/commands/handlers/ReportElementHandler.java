@@ -19,7 +19,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -27,14 +27,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 
 /**
  * @author Jacques Bouthillier
@@ -65,7 +64,7 @@ public class ReportElementHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent event) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 
@@ -81,40 +80,33 @@ public class ReportElementHandler extends AbstractHandler {
 				monitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 				R4EUIModelController.setJobInProgress(true);
 
-				if (selection instanceof IStructuredSelection) {
-					if (!selection.isEmpty()) {
-						IR4EUIModelElement element = null;
-						final IStructuredSelection structSelection = (IStructuredSelection) selection;
-						final Iterator<?> iter = structSelection.iterator();
-						String groupFile = null;
+				if (!selectedElements.isEmpty()) {
+					String groupFile = null;
 
-						//Build list of reviews to generate reports for
-						final ArrayList<File> listSelectedReviews = new ArrayList<File>();
-						while (iter.hasNext()) {
-							element = (IR4EUIModelElement) iter.next();
-							if (element instanceof R4EUIReviewBasic) {
-								R4EUIReviewBasic extentElement = (R4EUIReviewBasic) element;
-								if (null == groupFile) {
-									groupFile = ((R4EUIReviewGroup) extentElement.getParent()).getGroupFile();
-									R4EUIPlugin.Ftracer.traceInfo("Info: " + "Group file: " + groupFile); //$NON-NLS-1$//$NON-NLS-2$
-								}
-								R4EUIPlugin.Ftracer.traceInfo("Review name element " //$NON-NLS-1$
-										+ extentElement.getReview().getName());
-								listSelectedReviews.add(new File(extentElement.getReview().getName()));
+					//Build list of reviews to generate reports for
+					final ArrayList<File> listSelectedReviews = new ArrayList<File>();
+					for (IR4EUIModelElement element : selectedElements) {
+						if (element instanceof R4EUIReviewBasic) {
+							R4EUIReviewBasic extentElement = (R4EUIReviewBasic) element;
+							if (null == groupFile) {
+								groupFile = ((R4EUIReviewGroup) extentElement.getParent()).getGroupFile();
+								R4EUIPlugin.Ftracer.traceInfo("Info: " + "Group file: " + groupFile); //$NON-NLS-1$//$NON-NLS-2$
 							}
+							R4EUIPlugin.Ftracer.traceInfo("Review name element " //$NON-NLS-1$
+									+ extentElement.getReview().getName());
+							listSelectedReviews.add(new File(extentElement.getReview().getName()));
 						}
+					}
+					if (R4EUIPlugin.isUserReportAvailable()) {
+						final org.eclipse.mylyn.reviews.r4e.report.impl.IR4EReport reportGen = org.eclipse.mylyn.reviews.r4e.report.impl.R4EReportFactory.getInstance();
+						reportGen.setReviewListSelection(listSelectedReviews.toArray(new File[listSelectedReviews.size()]));
+						reportGen.handleReportGeneration(groupFile, monitor);
+						R4EUIPlugin.Ftracer.traceInfo("Report element AVAILABLE");//$NON-NLS-1$
 
-						if (R4EUIPlugin.isUserReportAvailable()) {
-							final org.eclipse.mylyn.reviews.r4e.report.impl.IR4EReport reportGen = org.eclipse.mylyn.reviews.r4e.report.impl.R4EReportFactory.getInstance();
-							reportGen.setReviewListSelection(listSelectedReviews.toArray(new File[listSelectedReviews.size()]));
-							reportGen.handleReportGeneration(groupFile, monitor);
-							R4EUIPlugin.Ftracer.traceInfo("Report element AVAILABLE");//$NON-NLS-1$
+					} else {
+						R4EUIPlugin.Ftracer.traceWarning("Report element Not available" //$NON-NLS-1$
+						);
 
-						} else {
-							R4EUIPlugin.Ftracer.traceWarning("Report element Not available" //$NON-NLS-1$
-							);
-
-						}
 					}
 				}
 				monitor.done();

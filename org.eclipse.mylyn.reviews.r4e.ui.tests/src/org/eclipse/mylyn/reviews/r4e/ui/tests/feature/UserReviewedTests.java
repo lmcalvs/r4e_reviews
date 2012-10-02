@@ -40,6 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewItem;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorActionGroup;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.R4ETestSetup;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.proxy.R4EUITestMain;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestConstants;
@@ -280,6 +281,8 @@ public class UserReviewedTests extends TestCase {
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			if (delta.getName().equals(DELTA1_NAME)) {
 				Assert.assertTrue(delta.isUserReviewed());
+				Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(delta, true,
+						R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
 				break;
 			}
 		}
@@ -331,6 +334,8 @@ public class UserReviewedTests extends TestCase {
 		Assert.assertFalse(fReview.isUserReviewed());
 		Assert.assertFalse(fItem.isUserReviewed());
 		Assert.assertTrue(file.isUserReviewed());
+		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(file.getContentsContainerElement().getChildren(),
+				true, R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			Assert.assertTrue(delta.isUserReviewed());
 		}
@@ -385,6 +390,8 @@ public class UserReviewedTests extends TestCase {
 			}
 		}
 		Assert.assertTrue(file.isUserReviewed());
+		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(file.getContentsContainerElement().getChildren(),
+				true, R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			Assert.assertTrue(delta.isUserReviewed());
 		}
@@ -550,6 +557,10 @@ public class UserReviewedTests extends TestCase {
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			if (delta.getName().equals(DELTA1_NAME)) {
 				Assert.assertFalse(delta.isUserReviewed());
+				Assert.assertFalse(fProxy.getCommandProxy().verifyAnnotation(delta, true,
+						R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
+				Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(delta, true,
+						R4EUIConstants.DELTA_ANNOTATION_ID));
 				break;
 			}
 		}
@@ -642,6 +653,10 @@ public class UserReviewedTests extends TestCase {
 		Assert.assertFalse(file.isUserReviewed());
 		for (R4EUIContent delta : file.getContentsContainerElement().getContentsList()) {
 			Assert.assertFalse(delta.isUserReviewed());
+			Assert.assertFalse(fProxy.getCommandProxy().verifyAnnotation(delta, true,
+					R4EUIConstants.DELTA_REVIEWED_ANNOTATION_ID));
+			Assert.assertTrue(fProxy.getCommandProxy()
+					.verifyAnnotation(delta, true, R4EUIConstants.DELTA_ANNOTATION_ID));
 		}
 	}
 }

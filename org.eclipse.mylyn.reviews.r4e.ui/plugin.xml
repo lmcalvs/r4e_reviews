@@ -637,7 +637,7 @@
             id="org.eclipse.mylyn.reviews.r4e.ui.commands.LinkEditor"
             name="Link Editor">
          <state
-               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
@@ -1480,22 +1480,12 @@
           </enabledWhen>
        </handler>
        <handler
-             class="org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.NextAnomalyAnnotationHandler"
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.NextOpenAnomalyAnnotationHandler"
              commandId="org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.NextAnomalyAnnotation">
-          <enabledWhen>
-             <test
-                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-             </test>
-          </enabledWhen>
        </handler>
        <handler
-             class="org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.PreviousAnomalyAnnotationHandler"
+             class="org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.commands.PreviousOpenAnomalyAnnotationHandler"
              commandId="org.eclipse.mylyn.reviews.r4e.ui.annotation.commands.PreviousAnomalyAnnotation">
-          <enabledWhen>
-             <test
-                   property="org.eclipse.mylyn.reviews.r4e.ui.commands.dialog.dialogOpen">
-             </test>
-          </enabledWhen>
        </handler>
    </extension>
    <extension
@@ -1900,7 +1890,7 @@
             label="R4E Anomalies Open"
             overviewRulerPreferenceKey="anomalyOpen_overviewRuler"
             overviewRulerPreferenceValue="true"
-            presentationLayer="1"
+            presentationLayer="5"
             showInNextPrevDropdownToolbarAction="true"
             showInNextPrevDropdownToolbarActionKey="anomalyOpen_showInNextPrevDropdownToolbarAction"
             textPreferenceKey="anomalyOpen_text"
@@ -1924,7 +1914,7 @@
             label="R4E Anomalies Closed"
             overviewRulerPreferenceKey="anomalyClosed_overviewRuler"
             overviewRulerPreferenceValue="true"
-            presentationLayer="1"
+            presentationLayer="4"
             showInNextPrevDropdownToolbarAction="false"
             showInNextPrevDropdownToolbarActionKey="anomalyClosed_showInNextPrevDropdownToolbarAction"
             textPreferenceKey="anomalyClosed_text"
@@ -1974,7 +1964,7 @@
             label="R4E Deltas"
             overviewRulerPreferenceKey="delta_overviewRuler"
             overviewRulerPreferenceValue="true"
-            presentationLayer="0"
+            presentationLayer="3"
             showInNextPrevDropdownToolbarAction="true"
             showInNextPrevDropdownToolbarActionKey="delta_showInNextPrevDropdownToolbarAction"
             textPreferenceKey="delta_text"
@@ -2000,7 +1990,7 @@
             label="R4E Deltas Reviewed"
             overviewRulerPreferenceKey="deltaReviewed_overviewRuler"
             overviewRulerPreferenceValue="true"
-            presentationLayer="0"
+            presentationLayer="2"
             showInNextPrevDropdownToolbarAction="false"
             showInNextPrevDropdownToolbarActionKey="deltaReviewed_showInNextPrevDropdownToolbarAction"
             textPreferenceKey="deltaReviewed_text"
@@ -2052,7 +2042,7 @@
             label="R4E Selections"
             overviewRulerPreferenceKey="selection_overviewRuler"
             overviewRulerPreferenceValue="true"
-            presentationLayer="0"
+            presentationLayer="3"
             showInNextPrevDropdownToolbarAction="true"
             showInNextPrevDropdownToolbarActionKey="selection_showInNextPrevDropdownToolbarAction"
             textPreferenceKey="selection_text"
@@ -2078,7 +2068,7 @@
             label="R4E Selections Reviewed"
             overviewRulerPreferenceKey="selectionReviewed_overviewRuler"
             overviewRulerPreferenceValue="true"
-            presentationLayer="0"
+            presentationLayer="2"
             showInNextPrevDropdownToolbarAction="false"
             showInNextPrevDropdownToolbarActionKey="selectionReviewed_showInNextPrevDropdownToolbarAction"
             textPreferenceKey="selectionReviewed_text"

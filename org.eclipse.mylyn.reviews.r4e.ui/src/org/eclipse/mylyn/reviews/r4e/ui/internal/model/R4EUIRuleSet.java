@@ -97,9 +97,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Rule Set";
 
 	/**
-	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable (and Optionally Remove) this Rule Set"")
+	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable this Rule Set"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Rule Set";
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable this Rule Set";
 
 	// ------------------------------------------------------------------------
 	// Member variables

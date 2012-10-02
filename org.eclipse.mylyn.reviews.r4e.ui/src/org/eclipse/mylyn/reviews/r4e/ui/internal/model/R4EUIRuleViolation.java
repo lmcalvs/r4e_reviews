@@ -67,10 +67,9 @@ public class R4EUIRuleViolation extends R4EUIModelElement {
 	private static final String REMOVE_ELEMENT_COMMAND_NAME = "Disable Rule Violation";
 
 	/**
-	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable (and Optionally Remove) this Rule Violation from its
-	 * parent Rule Area"")
+	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Disable this Rule Violation from its parent Rule Area"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Rule Violation"
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable this Rule Violation"
 			+ " from its parent Rule Area";
 
 	/**

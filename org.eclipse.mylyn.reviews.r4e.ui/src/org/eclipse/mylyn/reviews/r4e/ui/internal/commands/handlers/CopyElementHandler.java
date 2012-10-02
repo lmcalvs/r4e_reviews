@@ -19,6 +19,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
+import java.util.List;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -26,11 +28,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.util.LocalSelectionTransfer;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
 
@@ -63,7 +65,7 @@ public class CopyElementHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent event) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 			public String familyName = R4EUIConstants.R4E_UI_JOB_FAMILY;
@@ -77,21 +79,15 @@ public class CopyElementHandler extends AbstractHandler {
 			public IStatus run(IProgressMonitor monitor) {
 
 				R4EUIModelController.setJobInProgress(true);
-				if (selection instanceof IStructuredSelection) {
-					IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-					if (structuredSelection.getFirstElement() instanceof IR4EUIModelElement) {
-						final IR4EUIModelElement[] elements = (IR4EUIModelElement[]) structuredSelection.toList()
-								.toArray(new IR4EUIModelElement[structuredSelection.size()]);
-						LocalSelectionTransfer.getTransfer().setSelection(selection);
-						Display.getDefault().syncExec(new Runnable() {
-							public void run() {
-								R4EUIModelController.getNavigatorView().setClipboardContents(new Object[] { elements },
-										new Transfer[] { LocalSelectionTransfer.getTransfer() });
+				final IR4EUIModelElement[] elements = selectedElements.toArray(new IR4EUIModelElement[selectedElements.size()]);
+				LocalSelectionTransfer.getTransfer().setSelection(new StructuredSelection(selectedElements));
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						R4EUIModelController.getNavigatorView().setClipboardContents(new Object[] { elements },
+								new Transfer[] { LocalSelectionTransfer.getTransfer() });
 
-							}
-						});
 					}
-				}
+				});
 				R4EUIModelController.setJobInProgress(false);
 				monitor.done();
 				return Status.OK_STATUS;

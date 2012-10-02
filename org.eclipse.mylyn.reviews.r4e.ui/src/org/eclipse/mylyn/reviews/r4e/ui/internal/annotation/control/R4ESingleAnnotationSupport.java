@@ -18,23 +18,17 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control;
 
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IEditorInputListener;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
-import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationSupport;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewSingleAnnotationSupport;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotationModel;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 
 /**
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-public class R4ESingleAnnotationSupport extends R4EAnnotationSupport {
-
-	/**
-	 * Field KEY_ANNOTATION_SUPPORT.
-	 */
-	private static final String KEY_ANNOTATION_SUPPORT = R4EFileEditorInput.class.getName();
+public class R4ESingleAnnotationSupport extends ReviewSingleAnnotationSupport {
 
 	/**
 	 * Constructor for R4ESingleAnnotationSupport.
@@ -42,61 +36,45 @@ public class R4ESingleAnnotationSupport extends R4EAnnotationSupport {
 	 * @param aSourceViewer
 	 *            ISourceViewer
 	 * @param aFileContext
-	 *            R4EUIFileContext
+	 *            Object
 	 */
-	public R4ESingleAnnotationSupport(SourceViewer aSourceViewer, R4EUIFileContext aFileContext) {
+	public R4ESingleAnnotationSupport(ISourceViewer aSourceViewer, Object aFileContext) {
 		super(aSourceViewer, aFileContext);
-		install(aSourceViewer);
-		fTargetViewerListener.inputDocumentChanged(null, aSourceViewer.getDocument()); //Force annotation updates
 	}
 
 	/**
-	 * Method getAnnotationSupport.
+	 * Method createEditorInputListener.
 	 * 
-	 * @param aSourceViewer
-	 *            ISourceViewer
-	 * @param aFileContext
-	 *            R4EUIFileContext
-	 * @return IReviewAnnotationSupport
-	 */
-	public static IReviewAnnotationSupport getAnnotationSupport(SourceViewer aSourceViewer,
-			R4EUIFileContext aFileContext) {
-		IReviewAnnotationSupport support = (IReviewAnnotationSupport) aSourceViewer.getData(KEY_ANNOTATION_SUPPORT);
-		if (support == null) {
-			support = new R4ESingleAnnotationSupport(aSourceViewer, aFileContext);
-			aSourceViewer.setData(KEY_ANNOTATION_SUPPORT, support);
-		}
-		return support;
-	}
-
-	/**
-	 * Method install.
-	 * 
-	 * @param aSourceViewer
-	 *            ISourceViewer
-	 */
-	@Override
-	protected void install(Object aSourceViewer) {
-		if (aSourceViewer instanceof SourceViewer) {
-			fTargetViewerListener = registerInputListener((ISourceViewer) aSourceViewer, fTargetAnnotationModel);
-		}
-	}
-
-	/**
-	 * Method registerInputListener.
-	 * 
-	 * @param aSourceViewer
+	 * @param aViewer
 	 *            ISourceViewer
 	 * @param aAnnotationModel
 	 *            IReviewAnnotationModel
-	 * @return R4EEditorInputListener
+	 * @return IEditorInputListener
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewCompareAnnotationSupport#createEditorInputListener(ISourceViewer,
+	 *      IReviewAnnotationModel)
 	 */
-	protected IEditorInputListener registerInputListener(final ISourceViewer aSourceViewer,
-			final IReviewAnnotationModel aAnnotationModel) {
-		final IEditorInputListener listener = new R4ESingleEditorInputListener(aSourceViewer, aAnnotationModel);
-		if (aSourceViewer != null) {
-			aSourceViewer.addTextInputListener(listener);
-		}
-		return listener;
+	@Override
+	public IEditorInputListener createEditorInputListener(ISourceViewer aViewer, IReviewAnnotationModel aAnnotationModel) {
+		return new R4ESingleEditorInputListener(aViewer, aAnnotationModel);
 	}
+
+	/**
+	 * Method createAnnotationModel.
+	 * 
+	 * @param aSourceFile
+	 *            Object
+	 * @return IReviewAnnotationModel
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewCompareAnnotationSupport#createAnnotationModel()
+	 */
+	@Override
+	protected IReviewAnnotationModel createAnnotationModel(Object aSourceFile) {
+		if (null != aSourceFile) {
+			final IReviewAnnotationModel model = ((R4EUIFileContext) aSourceFile).getAnnotationModel();
+			if (null != model) {
+				return model;
+			}
+		}
+		return new R4EAnnotationModel();
+	}
+
 }

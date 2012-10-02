@@ -66,8 +66,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	/**
 	 * Field REMOVE_ELEMENT_ACTION_TOOLTIP. (value is ""Remove this review item from its parent review"")
 	 */
-	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Disable (and Optionally Remove) this Review "
-			+ "Item from its Parent Review";
+	private static final String REMOVE_ELEMENT_COMMAND_TOOLTIP = "Remove this Review " + "Item from its Parent Review";
 
 	/**
 	 * Field RESTORE_ELEMENT_COMMAND_NAME. (value is ""Restore Review Item"")
@@ -587,7 +586,7 @@ public class R4EUIReviewItem extends R4EUIFileContainer {
 	 */
 	@Override
 	public boolean isSendEmailCmd() {
-		if (isEnabled()) {
+		if (isEnabled() && null != R4EUIModelController.getActiveReview()) {
 			return true;
 		}
 		return false;

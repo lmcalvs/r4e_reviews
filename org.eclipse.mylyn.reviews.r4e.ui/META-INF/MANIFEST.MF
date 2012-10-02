@@ -25,12 +25,14 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.reviews.ldap;bundle-version="0.10.0";resolution:=optional,
  org.eclipse.mylyn.reviews.notifications;bundle-version="0.10.0",
  org.eclipse.mylyn.reviews.r4e.mail.smtp;bundle-version="0.11.0",
- org.eclipse.mylyn.reviews.r4e.report;bundle-version="0.12.0";resolution:=optional
+ org.eclipse.mylyn.reviews.r4e.report;bundle-version="0.12.0";resolution:=optional,
  org.eclipse.mylyn.reviews.frame.ui;bundle-version="0.12.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
 Export-Package: org.eclipse.mylyn.reviews.r4e.ui;x-internal:=true,
+ org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content,
+ org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control,
  org.eclipse.mylyn.reviews.r4e.ui.internal.commands;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.internal.commands.filters;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;x-internal:=true,
@@ -47,5 +49,6 @@ Export-Package: org.eclipse.mylyn.reviews.r4e.ui;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.internal.sorters;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.ui.internal.utils;x-internal:=true
 Import-Package: org.apache.commons.io,
+ org.eclipse.core.filesystem,
  org.eclipse.mylyn.tasks.core,
  org.eclipse.ui.texteditor.rulers

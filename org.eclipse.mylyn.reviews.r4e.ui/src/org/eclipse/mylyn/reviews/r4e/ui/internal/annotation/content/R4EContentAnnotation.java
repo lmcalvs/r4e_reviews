@@ -94,7 +94,7 @@ public class R4EContentAnnotation extends R4EAnnotation {
 			values = new R4EAnnotationText[1];
 			final EList<String> assignedParticipants = ((R4EUIContent) fSourceElement).getContent().getAssignedTo();
 			values[0] = new R4EAnnotationText(this, R4EUIConstants.ASSIGNED_TO_LABEL
-					+ UIUtils.formatAssignedParticipants(assignedParticipants));
+					+ UIUtils.formatAssignedParticipants(assignedParticipants), null);
 		}
 		return values;
 	}

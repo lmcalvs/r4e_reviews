@@ -21,18 +21,14 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.text.AbstractInformationControl;
 import org.eclipse.jface.text.AbstractReusableInformationControlCreator;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
-import org.eclipse.jface.text.IInformationControlExtension2;
 import org.eclipse.jface.text.IInformationControlExtension4;
-import org.eclipse.jface.text.ITextHoverExtension;
 import org.eclipse.jface.text.IWidgetTokenKeeper;
 import org.eclipse.jface.text.IWidgetTokenOwner;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextSelection;
-import org.eclipse.jface.text.information.InformationPresenter;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -44,6 +40,7 @@ import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotation;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewAnnotationInformationControl;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotation;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotationText;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4ECommentAnnotation;
@@ -57,8 +54,6 @@ import org.eclipse.mylyn.reviews.r4e.ui.internal.navigator.ReviewNavigatorLabelP
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -82,28 +77,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-@SuppressWarnings("restriction")
-public class R4EAnnotationInformationControl extends AbstractInformationControl implements
-		IInformationControlExtension2, ITextHoverExtension {
-
-	// ------------------------------------------------------------------------
-	// Members
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Field fInput.
-	 */
-	private R4EAnnotationHoverInput fInput = null;
-
-	/**
-	 * Field fComposite.
-	 */
-	private Composite fComposite = null;
-
-	/**
-	 * Field fHoverControlCreator.
-	 */
-	private IInformationControlCreator fHoverControlCreator = null;
+public class R4EAnnotationInformationControl extends ReviewAnnotationInformationControl {
 
 	/**
 	 * Field fPresenterControlCreator.
@@ -111,18 +85,29 @@ public class R4EAnnotationInformationControl extends AbstractInformationControl 
 	private IInformationControlCreator fPresenterControlCreator = null;
 
 	/**
-	 * Field FPropertyViewBeingActivated.
+	 * Field fHoverControlCreator.
 	 */
-	private static boolean FPropertyViewBeingActivated = false;
+	private IInformationControlCreator fHoverControlCreator = null;
 
 	/**
-	 * Field FPreSelectionActivePart.
+	 * Field fComposite.
 	 */
-	private static IWorkbenchPart FPreSelectionActivePart = null;
+	private Composite fComposite;
 
-	// ------------------------------------------------------------------------
-	// Constructors
-	// ------------------------------------------------------------------------
+	/**
+	 * Field fAnnotationTree.
+	 */
+	private TreeViewer fAnnotationTree = null;;
+
+	/**
+	 * Field fPreSelectionActivePart.
+	 */
+	private IWorkbenchPart fPreSelectionActivePart = null;
+
+	/**
+	 * Field fAutomaticSelection.
+	 */
+	private boolean fAutomaticSelection = false;
 
 	/**
 	 * Constructor for R4EAnnotationInformationControl.
@@ -134,7 +119,6 @@ public class R4EAnnotationInformationControl extends AbstractInformationControl 
 	 */
 	public R4EAnnotationInformationControl(Shell aParentShell, String aStatusFieldText) {
 		super(aParentShell, aStatusFieldText);
-		create();
 	}
 
 	/**
@@ -147,49 +131,6 @@ public class R4EAnnotationInformationControl extends AbstractInformationControl 
 	 */
 	public R4EAnnotationInformationControl(Shell aParentShell, ToolBarManager aToolBarManager) {
 		super(aParentShell, aToolBarManager);
-		create();
-	}
-
-	// ------------------------------------------------------------------------
-	// Methods
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Method setInput.
-	 * 
-	 * @param aInput
-	 *            Object
-	 * @see org.eclipse.jface.text.IInformationControlExtension2#setInput(Object)
-	 */
-	public void setInput(Object aInput) {
-		fInput = (R4EAnnotationHoverInput) aInput;
-		disposeDeferredCreatedContent();
-		deferredCreateContent();
-	}
-
-	/**
-	 * Method hasContents.
-	 * 
-	 * @return boolean
-	 * @see org.eclipse.jface.text.IInformationControlExtension#hasContents()
-	 */
-	public boolean hasContents() {
-		return fInput != null;
-	}
-
-	/**
-	 * Method setVisible.
-	 * 
-	 * @param aVisible
-	 *            boolean
-	 * @see org.eclipse.jface.text.IInformationControl#setVisible(boolean)
-	 */
-	@Override
-	public final void setVisible(boolean aVisible) {
-		if (!aVisible) {
-			disposeDeferredCreatedContent();
-		}
-		super.setVisible(aVisible);
 	}
 
 	/**
@@ -199,22 +140,44 @@ public class R4EAnnotationInformationControl extends AbstractInformationControl 
 	 */
 	@Override
 	public void dispose() {
+		fAnnotationTree.getTree().dispose();
+		if (null != fComposite) {
+			fComposite.dispose();
+		}
 		super.dispose();
-		fComposite.dispose();
 	}
 
 	/**
 	 * Method disposeDeferredCreatedContent.
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewAnnotationInformationControl#disposeDeferredCreatedContent()
 	 */
+	@Override
 	protected void disposeDeferredCreatedContent() {
-		final Control[] children = fComposite.getChildren();
-		for (Control element : children) {
-			element.dispose();
+		if (null != fComposite) {
+			final Control[] children = fComposite.getChildren();
+			for (Control element : children) {
+				element.dispose();
+			}
 		}
 		final ToolBarManager toolBarManager = getToolBarManager();
 		if (toolBarManager != null) {
 			toolBarManager.removeAll();
 		}
+	}
+
+	/**
+	 * Create content of the hover. This is called after the input has been set.
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewAnnotationInformationControl#deferredCreateContent()
+	 */
+	@Override
+	protected void deferredCreateContent() {
+		//Set Delta/Selection annotations first, then anomalies
+		addAnnotationsInformation();
+		setColorAndFont(fComposite, fComposite.getParent().getForeground(), fComposite.getParent().getBackground(),
+				JFaceResources.getDialogFont());
+		fComposite.layout(true);
 	}
 
 	/**
@@ -251,50 +214,31 @@ public class R4EAnnotationInformationControl extends AbstractInformationControl 
 	 */
 	@Override
 	public Point computeSizeHint() {
-		final Point preferedSize = getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-
-		final Point constrains = getSizeConstraints();
-		if (constrains == null) {
-			return preferedSize;
+		//Limit maximum size to avoid taking too much real estate
+		final Point newSize = super.computeSizeHint();
+		if (newSize.x > R4EUIConstants.ANNOTATION_CONTROL_MAX_WIDTH) {
+			newSize.x = R4EUIConstants.ANNOTATION_CONTROL_MAX_WIDTH;
 		}
-
-		final int trimWidth = getShell().computeTrim(0, 0, 0, 0).width;
-		final Point constrainedSize = getShell().computeSize(constrains.x - trimWidth, SWT.DEFAULT, true);
-
-		//The width of the control is calculated differently if a toolbar is present
-		int width;
-		if (null != getToolBarManager()) {
-			width = Math.max(preferedSize.x, constrainedSize.x);
-		} else {
-			width = Math.min(preferedSize.x, constrainedSize.x);
+		if (newSize.y > R4EUIConstants.ANNOTATION_CONTROL_MAX_HEIGHT) {
+			newSize.y = R4EUIConstants.ANNOTATION_CONTROL_MAX_HEIGHT;
 		}
-		int height = Math.max(preferedSize.y, constrainedSize.y);
-		return new Point(width, height);
-	}
-
-	/**
-	 * Create content of the hover. This is called after the input has been set.
-	 */
-	protected void deferredCreateContent() {
-		//Set Delta/Selection annotations first, then anomalies
-		addAnnotationsInformation();
-		setColorAndFont(fComposite, fComposite.getParent().getForeground(), fComposite.getParent().getBackground(),
-				JFaceResources.getDialogFont());
-		fComposite.layout(true);
+		return newSize;
 	}
 
 	/**
 	 * Fills the toolbar actions, if a toolbar is available. This is called after the input has been set.
 	 * 
-	 * @param aElement
-	 *            IR4EUIModelElement
+	 * @param aSourceElement
+	 *            Object
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewAnnotationInformationControl#updateToolbar()
 	 */
-	protected void updateToolbar(IR4EUIModelElement aElement) {
+	@Override
+	protected void updateToolbar(Object aSourceElement) {
 		final ToolBarManager toolBarManager = getToolBarManager();
 		if (null != toolBarManager) {
 			//Add commands for selected element in toolbar in refresh control
 			toolBarManager.removeAll();
-			addToolbarElementCommands(toolBarManager, aElement);
+			addToolbarElementCommands(toolBarManager, aSourceElement);
 
 			//This is used to distinguish between the annotation toolbar and the Review Navigator view toolbar
 			toolBarManager.getControl().setData(R4EUIConstants.ANNOTATION_TOOLBAR, new Boolean(true));
@@ -313,51 +257,32 @@ public class R4EAnnotationInformationControl extends AbstractInformationControl 
 	 * 
 	 * @param aToolBarManager
 	 *            ToolBarManager
-	 * @param aElement
-	 *            IR4EUIModelElement
+	 * @param aSourceElement
+	 *            Object
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewAnnotationInformationControl#addToolbarElementCommands(ToolBarManager,
+	 *      Object)
 	 */
-	private void addToolbarElementCommands(ToolBarManager aToolBarManager, IR4EUIModelElement aElement) {
+	@Override
+	protected void addToolbarElementCommands(ToolBarManager aToolBarManager, Object aSourceElement) {
 		final ModelContributionItems r4eItemsManager = new ModelContributionItems();
-		final IContributionItem[] items = r4eItemsManager.getContributionItems(aElement);
+		final IContributionItem[] items = r4eItemsManager.getContributionItems((IR4EUIModelElement) aSourceElement);
 		for (IContributionItem item : items) {
 			aToolBarManager.add(item);
 		}
 	}
 
 	/**
-	 * Method setColorAndFont.
-	 * 
-	 * @param aControl
-	 *            Control
-	 * @param aForeground
-	 *            Color
-	 * @param aBackground
-	 *            Color
-	 * @param aFont
-	 *            Font
-	 */
-	private void setColorAndFont(Control aControl, Color aForeground, Color aBackground, Font aFont) {
-		aControl.setForeground(aForeground);
-		aControl.setBackground(aBackground);
-		aControl.setFont(aFont);
-
-		if (aControl instanceof Composite) {
-			final Control[] children = ((Composite) aControl).getChildren();
-			for (Control element : children) {
-				setColorAndFont(element, aForeground, aBackground, aFont);
-			}
-		}
-	}
-
-	/**
 	 * Method addAnnotationsInformation.
+	 * 
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewAnnotationInformationControl#addAnnotationsInformation()
 	 */
-	private void addAnnotationsInformation() {
-		final TreeViewer annotationList = new TreeViewer(fComposite, SWT.MULTI | SWT.FULL_SELECTION | SWT.READ_ONLY
-				| SWT.H_SCROLL | SWT.V_SCROLL);
-		annotationList.setContentProvider(new R4EAnnotationContentProvider());
-		annotationList.setSorter(new R4EAnnotationTypeSorter());
-		annotationList.setLabelProvider(new ReviewNavigatorLabelProvider() {
+	@Override
+	protected void addAnnotationsInformation() {
+		fAnnotationTree = new TreeViewer(fComposite, SWT.MULTI | SWT.FULL_SELECTION | SWT.READ_ONLY | SWT.H_SCROLL
+				| SWT.V_SCROLL);
+		fAnnotationTree.setContentProvider(new R4EAnnotationContentProvider());
+		fAnnotationTree.setSorter(new R4EAnnotationTypeSorter());
+		fAnnotationTree.setLabelProvider(new ReviewNavigatorLabelProvider() {
 
 			@Override
 			public void update(ViewerCell aCell) {
@@ -393,19 +318,20 @@ public class R4EAnnotationInformationControl extends AbstractInformationControl 
 				return null;
 			}
 		});
-		annotationList.setInput(fInput);
+		fAnnotationTree.setInput(fInput);
 
 		//Adjust toolbar commands based on selection
-		annotationList.addSelectionChangedListener(new ISelectionChangedListener() {
+		fAnnotationTree.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent aEvent) {
 				//Check and set files based on selected cloneable anomaly
 				if (aEvent.getSelection() instanceof IStructuredSelection) {
 					if (null != ((IStructuredSelection) aEvent.getSelection()).getFirstElement()) {
-						final Object selectedObject = ((IStructuredSelection) aEvent.getSelection()).getFirstElement();
-						if (selectedObject instanceof R4EAnnotation) {
+						Object selectedObject = ((IStructuredSelection) aEvent.getSelection()).getFirstElement();
+						while ((null != selectedObject) && !(selectedObject instanceof R4EAnnotation)) {
+							selectedObject = ((R4EAnnotationText) selectedObject).getParent();
+						}
+						if (null != selectedObject) {
 							selectElementInNavigator((R4EAnnotation) selectedObject);
-						} else if (selectedObject instanceof R4EAnnotationText) {
-							selectElementInNavigator((R4EAnnotation) ((R4EAnnotationText) selectedObject).getParent());
 						}
 					}
 				}
@@ -415,33 +341,61 @@ public class R4EAnnotationInformationControl extends AbstractInformationControl 
 				final IR4EUIModelElement element = aSelectedAnnotation.getSourceElement();
 				if (null != element) {
 					updateToolbar(element);
-					//NOTE:  The following code is a dirty hack that synchronizes the Navigator View and the Properties View when 
-					//selecting an element in the AnnotationControl popup window.  The unfortunate side effect is that the focus 
-					//shifts from the Editor to the Review Navigator. A more thourough solution would be to set use setSelectionProvider with
-					//the annotationList tableViewer but that would require subclassing the CompareEditor to implement the 
-					//ITabbedPropertySheetPageContributor interface and use the PropertyContributor id defined in the plugin.xml.
-					//Unfortunately, if we use this approach, the Workbench does not support replacing the selectionProvider
-					//dynamically so we would have to implement a mediator as stated at 
-					//http://stackoverflow.com/questions/10603015/setselectionprovider-over-two-different-controls-not-working
-					//We could do this later as an improvement
+					//NOTE: For now, we changed to code so that we do not show the properties here
+					//      (we only select the element in the Review Navigator if possible).  To show the properties,
+					//      the user can use the Show Properties command available in the annotation popup window.
+					//		the only drawback is that the element needs to be visible in the REview Navigator for 
+					//		the properties to be displayed.  This is a limitation for now.
 					if (null != R4EUIModelController.getNavigatorView()) {
 						final IWorkbenchPage page = PlatformUI.getWorkbench()
 								.getActiveWorkbenchWindow()
 								.getActivePage();
-						FPreSelectionActivePart = page.getActivePart();
-						FPropertyViewBeingActivated = true;
-						R4EUIModelController.getNavigatorView().updateView(element, 0, true);
-						FPropertyViewBeingActivated = false;
+						fPreSelectionActivePart = page.getActivePart();
+						R4EUIModelController.getNavigatorView().updateView(element, 0, false);
 					}
 
 					//Highlight selected annotation source in editor
-					setHighlightText(aSelectedAnnotation);
+					if (!fAutomaticSelection) {
+						setHighlightText(aSelectedAnnotation);
+					}
+					fAutomaticSelection = false;
+				}
+			}
+
+			/**
+			 * Method setHighlightText.
+			 * 
+			 * @param aAnnotation
+			 *            R4EAnnotation
+			 */
+			private void setHighlightText(R4EAnnotation aAnnotation) {
+
+				//Set the highlight on the editor previously active
+				if ((null != fPreSelectionActivePart) && fPreSelectionActivePart instanceof IEditorPart) {
+					final IEditorInput input = ((IEditorPart) fPreSelectionActivePart).getEditorInput();
+					if (null != input) {
+						if (input instanceof R4ECompareEditorInput) {
+							UIUtils.selectElementInEditor((R4ECompareEditorInput) input);
+						} else if (input instanceof R4EFileEditorInput || input instanceof R4EFileRevisionEditorInput) {
+							final Position position = aAnnotation.getPosition();
+							if (null != position) {
+								final int offset = position.getOffset();
+								final int length = position.getLength();
+								if (fPreSelectionActivePart instanceof ITextEditor) {
+									((ITextEditor) fPreSelectionActivePart).selectAndReveal(offset, length);
+									final TextSelection selectedText = new TextSelection(offset, length);
+									((ITextEditor) fPreSelectionActivePart).getSelectionProvider().setSelection(
+											selectedText);
+								}
+							}
+						}
+					}
 				}
 			}
 		});
 
-		annotationList.addTreeListener(new ITreeViewerListener() {
-			public void treeExpanded(TreeExpansionEvent event) {
+		fAnnotationTree.addTreeListener(new ITreeViewerListener() {
+			public void treeExpanded(TreeExpansionEvent aEvent) {
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						final Point size = computeSizeHint();
@@ -450,7 +404,7 @@ public class R4EAnnotationInformationControl extends AbstractInformationControl 
 				});
 			}
 
-			public void treeCollapsed(TreeExpansionEvent event) {
+			public void treeCollapsed(TreeExpansionEvent aEvent) {
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						final Point size = computeSizeHint();
@@ -461,74 +415,15 @@ public class R4EAnnotationInformationControl extends AbstractInformationControl 
 		});
 
 		final GridData data = new GridData(GridData.FILL, GridData.FILL, true, true);
-		annotationList.getTree().setLayoutData(data);
+		fAnnotationTree.getTree().setLayoutData(data);
 
 		//If there is only 1 element in this annotation, select it automatically
-		if (null != fInput && fInput.getAnnotations().size() == 1) {
+		if ((null != fInput) && (fInput.getAnnotations().size() == 1)) {
+			fAutomaticSelection = true;
 			final ISelection selection = new StructuredSelection(fInput.getAnnotations().get(0));
-			annotationList.setSelection(selection, false);
-			annotationList.expandToLevel(2);
+			fAnnotationTree.setSelection(selection, true);
+			fAnnotationTree.expandToLevel(2);
 		}
-	}
-
-	/**
-	 * Method setHighlightText.
-	 * 
-	 * @param aAnnotation
-	 *            R4EAnnotation
-	 */
-	private void setHighlightText(R4EAnnotation aAnnotation) {
-		final IEditorPart editorPart = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow()
-				.getActivePage()
-				.getActiveEditor();
-
-		final IEditorInput input;
-		if (null != editorPart) {
-			input = editorPart.getEditorInput();
-			if (null != input) {
-				if (input instanceof R4ECompareEditorInput) {
-					UIUtils.selectElementInEditor((R4ECompareEditorInput) input);
-				} else if (input instanceof R4EFileEditorInput || input instanceof R4EFileRevisionEditorInput) {
-					final Position position = aAnnotation.getPosition();
-					if (null != position) {
-						final int offset = position.getOffset();
-						final int length = position.getLength();
-						((ITextEditor) editorPart).selectAndReveal(offset, length);
-						final TextSelection selectedText = new TextSelection(offset, length);
-						((ITextEditor) editorPart).getSelectionProvider().setSelection(selectedText);
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Method isPropertyViewBeingActivated.
-	 * 
-	 * @return boolean
-	 */
-	public static boolean isPropertyViewBeingActivated() {
-		return FPropertyViewBeingActivated;
-	}
-
-	/**
-	 * Method getPreSelectionActivePart.
-	 * 
-	 * @return IWorkbenchPart
-	 */
-	public static IWorkbenchPart getPreSelectionActivePart() {
-		return FPreSelectionActivePart;
-	}
-
-	/**
-	 * Method setPreSelectionActivePart.
-	 * 
-	 * @param aPart
-	 *            IWorkbenchPart
-	 */
-	public static void setPreSelectionActivePart(IWorkbenchPart aPart) {
-		FPreSelectionActivePart = aPart;
 	}
 
 	/**
@@ -546,20 +441,12 @@ public class R4EAnnotationInformationControl extends AbstractInformationControl 
 	}
 
 	/**
-	 * Method getInformationPresenter.
-	 * 
-	 * @return InformationPresenter
-	 */
-	public InformationPresenter getInformationPresenter() {
-		return new InformationPresenter(new R4EAnnotationInformationControlCreator());
-	}
-
-	/**
 	 * Method getHoverControlCreator.
 	 * 
 	 * @return IInformationControlCreator
 	 * @see org.eclipse.jface.text.ITextHoverExtension#getHoverControlCreator()
 	 */
+	@Override
 	public IInformationControlCreator getHoverControlCreator() {
 		if (fHoverControlCreator == null) {
 			fHoverControlCreator = new HoverControlCreator(getInformationPresenterControlCreator());

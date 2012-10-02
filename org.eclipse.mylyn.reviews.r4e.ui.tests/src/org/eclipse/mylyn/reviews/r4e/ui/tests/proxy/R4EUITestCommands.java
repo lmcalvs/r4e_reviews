@@ -34,15 +34,23 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.Window;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotation;
 import org.eclipse.mylyn.reviews.notifications.core.NotificationFilter;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content.R4EAnnotationModel;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control.R4ESingleAnnotationSupport;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ISendNotificationInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.SendNotificationInputDialog;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIFileContext;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedAnomaly;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIPostponedFile;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewBasic;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.tests.utils.TestUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -52,6 +60,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -837,5 +846,194 @@ public class R4EUITestCommands extends R4EUITestElement {
 		RunChangeDisplay changeDisplayJob = new RunChangeDisplay();
 		Display.getDefault().syncExec(changeDisplayJob);
 		TestUtils.waitForJobs();
+	}
+
+	/**
+	 * Method verifyAnnotations Check that annotations are correctly behaving in compare and single editor
+	 * 
+	 * @param aElement
+	 * @param aIncludeCompareEditor
+	 * @param aType
+	 */
+	public boolean verifyAnnotations(IR4EUIModelElement[] aElements, boolean aIncludeCompareEditor, String aType) {
+
+		//Inner class that runs the command on the UI thread
+		class RunVerifyAnnotations implements Runnable {
+			private IR4EUIModelElement[] elements;
+
+			private boolean includeCompareEditor;
+
+			private String type;
+
+			private boolean results;
+
+			public boolean getResults() {
+				return results;
+			}
+
+			public void setElements(IR4EUIModelElement[] aElements) {
+				elements = aElements;
+			}
+
+			public void setIncludeCompareEditor(boolean aIncludeCompareEditor) {
+				includeCompareEditor = aIncludeCompareEditor;
+			}
+
+			public void setType(String aType) {
+				type = aType;
+			}
+
+			public void run() {
+				results = false;
+				IEditorPart editor = null;
+
+				if (includeCompareEditor) {
+					//Open Compare editor on first element and check annotations
+					setFocusOnNavigatorElement(elements[0]);
+					editor = openEditorOnCurrentElement(false);
+					TestUtils.waitForJobs();
+					if (null == editor) {
+						return;
+					}
+					for (IR4EUIModelElement element : elements) {
+						IReviewAnnotation annotation = ((R4ECompareEditorInput) editor.getEditorInput()).getAnnotationModel()
+								.findAnnotation(type, element);
+						if (null == annotation) {
+							return;
+						}
+					}
+					closeEditor(editor);
+					TestUtils.waitForJobs();
+				}
+				//Open Single editor on first element and check annotations
+				setFocusOnNavigatorElement(elements[0]);
+				editor = openEditorOnCurrentElement(true);
+				TestUtils.waitForJobs();
+				if (null == editor) {
+					return;
+				}
+				for (IR4EUIModelElement element : elements) {
+					R4EUIFileContext sourceElement;
+					if (element instanceof R4EUIPostponedAnomaly) {
+						sourceElement = (R4EUIPostponedFile) element.getParent();
+					} else {
+						//Assume postponed element
+						sourceElement = (R4EUIFileContext) element.getParent().getParent();
+					}
+					IReviewAnnotation annotation = ((R4EAnnotationModel) ((R4ESingleAnnotationSupport) UIUtils.getAnnotationSupport(sourceElement)).getTargetAnnotationModel()).findAnnotation(
+							type, element);
+					if (null == annotation) {
+						return;
+					}
+				}
+				closeEditor(editor);
+				TestUtils.waitForJobs();
+				results = true;
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunVerifyAnnotations verifyAnnotationsJob = new RunVerifyAnnotations();
+		verifyAnnotationsJob.setElements(aElements);
+		verifyAnnotationsJob.setIncludeCompareEditor(aIncludeCompareEditor);
+		verifyAnnotationsJob.setType(aType);
+		Display.getDefault().syncExec(verifyAnnotationsJob);
+		TestUtils.waitForJobs();
+		return verifyAnnotationsJob.getResults();
+	}
+
+	/**
+	 * Method verifyAnnotation Check that the annotation is correctly behaving in compare and single editor
+	 * 
+	 * @param aElement
+	 * @param aIncludeCompareEditor
+	 * @param aType
+	 */
+	public boolean verifyAnnotation(IR4EUIModelElement aElement, boolean aIncludeCompareEditor, String aType) {
+
+		//Inner class that runs the command on the UI thread
+		class RunVerifyAnnotation implements Runnable {
+			private IR4EUIModelElement element;
+
+			private boolean includeCompareEditor;
+
+			private String type;
+
+			private boolean result;
+
+			public boolean getResult() {
+				return result;
+			}
+
+			public void setElement(IR4EUIModelElement aElement) {
+				element = aElement;
+			}
+
+			public void setIncludeCompareEditor(boolean aIncludeCompareEditor) {
+				includeCompareEditor = aIncludeCompareEditor;
+			}
+
+			public void setType(String aType) {
+				type = aType;
+			}
+
+			public void run() {
+				result = false;
+				IEditorPart editor = null;
+				IReviewAnnotation annotation = null;
+
+				if (includeCompareEditor) {
+
+					//Open Compare editor on first element and check annotations
+					setFocusOnNavigatorElement(element);
+					editor = openEditorOnCurrentElement(false);
+					TestUtils.waitForJobs();
+					if (null == editor) {
+						return;
+					}
+					annotation = ((R4ECompareEditorInput) editor.getEditorInput()).getAnnotationModel().findAnnotation(
+							type, element);
+					if (null == annotation) {
+						return;
+					}
+					closeEditor(editor);
+					TestUtils.waitForJobs();
+				}
+
+				//Open Single editor on first element and check annotations
+				setFocusOnNavigatorElement(element);
+				editor = openEditorOnCurrentElement(true);
+				TestUtils.waitForJobs();
+				if (null == editor) {
+					return;
+				}
+				R4EUIFileContext sourceElement;
+				if (element instanceof R4EUIPostponedAnomaly) {
+					sourceElement = (R4EUIPostponedFile) element.getParent();
+				} else {
+					//Assume postponed element
+					sourceElement = (R4EUIFileContext) element.getParent().getParent();
+				}
+				annotation = ((R4EAnnotationModel) ((R4ESingleAnnotationSupport) UIUtils.getAnnotationSupport(sourceElement)).getTargetAnnotationModel()).findAnnotation(
+						type, element);
+				if (null == annotation) {
+					return;
+				}
+				closeEditor(editor);
+				TestUtils.waitForJobs();
+				result = true;
+			}
+		}
+		;
+
+		//Run the UI job and wait until the command is completely executed before continuing
+		RunVerifyAnnotation verifyAnnotationJob = new RunVerifyAnnotation();
+		verifyAnnotationJob.setElement(aElement);
+		verifyAnnotationJob.setIncludeCompareEditor(aIncludeCompareEditor);
+		verifyAnnotationJob.setType(aType);
+		Display.getDefault().syncExec(verifyAnnotationJob);
+		TestUtils.waitForJobs();
+		return verifyAnnotationJob.getResult();
 	}
 }

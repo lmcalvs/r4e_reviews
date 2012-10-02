@@ -18,206 +18,69 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Iterator;
-
 import org.eclipse.compare.internal.MergeSourceViewer;
-import org.eclipse.jface.text.AbstractHoverInformationControlManager;
-import org.eclipse.jface.text.IInformationControlCreator;
-import org.eclipse.jface.text.TextViewer;
-import org.eclipse.jface.text.source.CompositeRuler;
-import org.eclipse.jface.text.source.IAnnotationHover;
-import org.eclipse.jface.text.source.SourceViewer;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.source.IAnnotationModel;
+import org.eclipse.jface.text.source.IAnnotationModelExtension;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
-import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.CommandUtils;
-import org.eclipse.ui.internal.texteditor.AnnotationColumn;
-import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewCompareEditorInputListener;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.swt.widgets.Display;
 
 /**
- * @author Thomas Ehrnhoefer
- * @author Steffen Pingel
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-@SuppressWarnings("restriction")
-public class R4ECompareEditorInputListener extends R4EEditorInputListener {
-
-	// ------------------------------------------------------------------------
-	// Members
-	// ------------------------------------------------------------------------
+public class R4ECompareEditorInputListener extends ReviewCompareEditorInputListener {
 
 	/**
-	 * Field fMergeSourceViewer.
-	 */
-	private final MergeSourceViewer fMergeSourceViewer;
-
-	// ------------------------------------------------------------------------
-	// Constructors
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Constructor for R4EInputListener.
+	 * Constructor for R4ECompareEditorInputListener.
 	 * 
-	 * @param aAnnotationModel
-	 *            R4EAnnotationModel
 	 * @param aMergeSourceViewer
 	 *            MergeSourceViewer
+	 * @param aAnnotationModel
+	 *            IReviewAnnotationModel
 	 */
 	public R4ECompareEditorInputListener(MergeSourceViewer aMergeSourceViewer, IReviewAnnotationModel aAnnotationModel) {
-		super(CommandUtils.getSourceViewer(aMergeSourceViewer), aAnnotationModel);
-		fMergeSourceViewer = aMergeSourceViewer;
-	}
-
-	// ------------------------------------------------------------------------
-	// Methods
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Method getEditor.
-	 * 
-	 * @return ITextEditor
-	 */
-	@Override
-	public ITextEditor getEditor() {
-		return (ITextEditor) fMergeSourceViewer.getAdapter(ITextEditor.class);
+		super(aMergeSourceViewer, aAnnotationModel);
 	}
 
 	/**
-	 * Method updateVerticalRuler.
+	 * Method addAnnotationModel.
 	 * 
+	 * @param aModel
+	 *            IAnnotationModel
 	 * @param aNewInput
 	 *            IDocument
-	 * @param aSourceViewerClazz
-	 *            Class<SourceViewer>
-	 * @throws SecurityException
-	 * @throws NoSuchMethodException
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchFieldException
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewEditorInputListener#addAnnotationModel(IAnnotationModel,
+	 *      IDocument)
 	 */
 	@Override
-	protected void updateVerticalRuler(Class<SourceViewer> aSourceViewerClazz) throws SecurityException,
-			NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException,
-			NoSuchFieldException {
-
-		//Set fHoverControlCreator in SourceViewer
-		final IInformationControlCreator annotationInformationControlCreator = new R4EAnnotationInformationControlCreator();
-		((TextViewer) fSourceViewer).setHoverControlCreator(annotationInformationControlCreator);
-
-		//First remove annotation to dispose of data
-		fSourceViewer.showAnnotations(false);
-
-		//Set annotationHover in SourceViewer
-		final IAnnotationHover annotationHover = new R4EAnnotationHover();
-		fSourceViewer.setAnnotationHover(annotationHover);
-
-		//Get Vertical Ruler from sourceViewer
-		final Method declaredMethod2 = aSourceViewerClazz.getDeclaredMethod("getVerticalRuler"); //$NON-NLS-1$
-		declaredMethod2.setAccessible(true);
-		final CompositeRuler ruler = (CompositeRuler) declaredMethod2.invoke(fSourceViewer);
-
-		//This overrides the call to ensureAnnotationHoverManagerInstalled method in viewer
-		final AbstractHoverInformationControlManager r4eInformationControlManager = new R4EAnnotationInformationControlManager(
-				ruler, fSourceViewer, annotationHover, annotationInformationControlCreator);
-		final Field hoverManager = SourceViewer.class.getDeclaredField("fVerticalRulerHoveringController"); //$NON-NLS-1$
-		hoverManager.setAccessible(true);
-		hoverManager.set(fSourceViewer, r4eInformationControlManager);
-		r4eInformationControlManager.install(ruler.getControl());
-		r4eInformationControlManager.getInternalAccessor().setInformationControlReplacer(
-				new R4EStickyHoverManager(fSourceViewer));
-
-		//This creates the extra vertical ruler that will be used to display the annotations
-		boolean hasDecorator = false;
-		final Iterator<?> iter = (ruler).getDecoratorIterator();
-		while (iter.hasNext()) {
-			Object obj = iter.next();
-			if (obj instanceof AnnotationColumn) {
-				hasDecorator = true;
+	protected void addAnnotationModel(IAnnotationModel aModel, IDocument aNewInput) {
+		try {
+			if (aModel instanceof IAnnotationModelExtension) {
+				final IAnnotationModelExtension annotationModelExtension = (IAnnotationModelExtension) aModel;
+				annotationModelExtension.addAnnotationModel(R4EUIPlugin.PLUGIN_ID, fAnnotationModel);
 			}
+			configureViewerAnnotations(aModel, aNewInput);
+		} catch (Throwable t) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + t.toString() + " (" + t.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			R4EUIPlugin.getDefault()
+					.getLog()
+					.log(new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, IStatus.OK, t.toString(), t));
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+					"Error attaching annotation model", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, //$NON-NLS-1$
+							t.getMessage(), t), IStatus.ERROR);
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					dialog.open();
+				}
+			});
 		}
-		if (!hasDecorator) {
-			final AnnotationColumn annotationColumn = new AnnotationColumn();
-			annotationColumn.createControl(ruler, ruler.getControl().getParent());
-			ruler.addDecorator(0, annotationColumn);
-		}
-
-		//Finally add back annotations showing
-		fSourceViewer.showAnnotations(true);
 	}
 
-	/**
-	 * Method updateOverviewRuler.
-	 * 
-	 * @param aNewInput
-	 *            IDocument
-	 * @param aSourceViewerClazz
-	 *            Class<SourceViewer>
-	 * @throws SecurityException
-	 * @throws NoSuchMethodException
-	 * @throws NoSuchFieldException
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 */
-	@Override
-	protected void updateOverviewRuler(Class<SourceViewer> aSourceViewerClazz) throws SecurityException,
-			NoSuchMethodException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException,
-			InvocationTargetException {
-
-		//TODO lmcdubo:  Right now the annotations do not show in the overview ruler, even if
-		//                the OverviewRuler paint method is executed properly.  So we disable this code
-		//
-		// overview ruler problem: displayed in both viewers. the diff editor ruler is actually custom drawn (see
-		// TextMergeViewer.fBirdsEyeCanvas) the ruler that gets created in this method is longer than the editor, meaning its
-		// not an overview (not next to the scrollbar)
-
-		/*
-		final IInformationControlCreator annotationInformationControlCreator = new R4EAnnotationInformationControlCreator();
-
-		//Set overviewHover in SourceViewer
-		final R4EAnnotationHover annotationHover = new R4EAnnotationHover();
-		((SourceViewer) fSourceViewer).setOverviewRulerAnnotationHover(annotationHover);
-
-		//Create Overview Ruler and set it in Viewer
-		final IOverviewRuler ruler = new OverviewRuler(new DefaultMarkerAnnotationAccess(), 12,
-				EditorsPlugin.getDefault().getSharedTextColors());
-		final Field compositeField = aSourceViewerClazz.getDeclaredField("fComposite"); //$NON-NLS-1$
-		compositeField.setAccessible(true);
-		ruler.createControl((Composite) compositeField.get(fSourceViewer), fSourceViewer);
-		ruler.setModel(fAnnotationModel);
-		final Field overViewRulerField = aSourceViewerClazz.getDeclaredField("fOverviewRuler"); //$NON-NLS-1$
-		overViewRulerField.setAccessible(true);
-		if (overViewRulerField.get(fSourceViewer) == null) {
-			overViewRulerField.set(fSourceViewer, ruler);
-		}
-
-		final SourceViewerDecorationSupport support = new SourceViewerDecorationSupport(fSourceViewer, ruler,
-				new DefaultMarkerAnnotationAccess(), EditorsUI.getSharedTextColors());
-		final Iterator<?> e2 = new MarkerAnnotationPreferences().getAnnotationPreferences().iterator();
-		while (e2.hasNext()) {
-			support.setAnnotationPreference((AnnotationPreference) e2.next());
-		}
-		support.install(EditorsUI.getPreferenceStore());
-		((SourceViewer) fSourceViewer).getControl().addDisposeListener(new DisposeListener() {
-			public void widgetDisposed(DisposeEvent aEvent) {
-				support.dispose();
-			}
-		});
-
-		//This overrides the call to ensureOverviewHoverManagerInstalled method in viewer
-		final AbstractHoverInformationControlManager r4eInformationControlManager = new R4EAnnotationInformationControlManager(
-				ruler, fSourceViewer, annotationHover, annotationInformationControlCreator);
-		final Field hoverManager = SourceViewer.class.getDeclaredField("fOverviewRulerHoveringController"); //$NON-NLS-1$
-		hoverManager.setAccessible(true);
-		hoverManager.set(fSourceViewer, r4eInformationControlManager);
-		r4eInformationControlManager.install(ruler.getControl());
-		r4eInformationControlManager.getInternalAccessor().setInformationControlReplacer(
-				new R4EStickyHoverManager(fSourceViewer));
-
-		((SourceViewer) fSourceViewer).showAnnotationsOverview(true);
-		*/
-	}
 }

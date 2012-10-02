@@ -8,138 +8,78 @@
  * 
  * Description:
  * 
- * This class implements the listeners that creates the R4E annotation model
- * and the editor changes needed when the underlying R4E document is opened.
+ * This class implements the listeners that creates the Review annotation model
+ * and the editor changes needed when the underlying document is opened.
  * 
  * Contributors:
- *   Sebastien Dubois - Created for Mylyn Review R4E project
+ *   Sebastien Dubois - Created for Mylyn Reviews R4E project
  *   
  ******************************************************************************/
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.control;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import org.eclipse.jface.text.AbstractHoverInformationControlManager;
-import org.eclipse.jface.text.IInformationControlCreator;
-import org.eclipse.jface.text.TextViewer;
-import org.eclipse.jface.text.source.CompositeRuler;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.source.IAnnotationModel;
+import org.eclipse.jface.text.source.IAnnotationModelExtension;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.jface.text.source.IVerticalRuler;
-import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotationModel;
-import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewSingleEditorInputListener;
+import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
+import org.eclipse.swt.widgets.Display;
 
 /**
- * @author Thomas Ehrnhoefer
- * @author Steffen Pingel
  * @author Sebastien Dubois
  * @version $Revision: 1.0 $
  */
-public class R4ESingleEditorInputListener extends R4EEditorInputListener {
-
-	// ------------------------------------------------------------------------
-	// Constructors
-	// ------------------------------------------------------------------------
+public class R4ESingleEditorInputListener extends ReviewSingleEditorInputListener {
 
 	/**
 	 * Constructor for R4ESingleEditorInputListener.
 	 * 
 	 * @param aSourceViewer
-	 *            SourceViewer
+	 *            ISourceViewer
 	 * @param aAnnotationModel
-	 *            R4EAnnotationModel
+	 *            IReviewAnnotationModel
 	 */
 	public R4ESingleEditorInputListener(ISourceViewer aSourceViewer, IReviewAnnotationModel aAnnotationModel) {
 		super(aSourceViewer, aAnnotationModel);
 	}
 
-	// ------------------------------------------------------------------------
-	// Methods
-	// ------------------------------------------------------------------------
-
 	/**
-	 * Method getEditor.
+	 * Method addAnnotationModel.
 	 * 
-	 * @return ITextEditor
-	 */
-	@Override
-	public ITextEditor getEditor() {
-		return null; //unused for now
-	}
-
-	/**
-	 * Method replaceVerticalRuler.
-	 * 
+	 * @param aModel
+	 *            IAnnotationModel
 	 * @param aNewInput
 	 *            IDocument
-	 * @param aSourceViewerClazz
-	 *            Class<SourceViewer>
-	 * @throws SecurityException
-	 * @throws NoSuchMethodException
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchFieldException
-	 */
-	@SuppressWarnings("restriction")
-	@Override
-	protected void updateVerticalRuler(Class<SourceViewer> aSourceViewerClazz) throws SecurityException,
-			NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException,
-			NoSuchFieldException {
-
-		//First remove annotation to dispose of data
-		fSourceViewer.showAnnotations(false);
-
-		//Set HoverControlCreator in SourceViewer
-		final IInformationControlCreator annotationInformationControlCreator = new R4EAnnotationInformationControlCreator();
-		((TextViewer) fSourceViewer).setHoverControlCreator(annotationInformationControlCreator);
-
-		//Here we need to override the ensureAnnotationHoverManagerInstalled method in sourceViewer to put our own InformationControl data
-
-		//Set annotationHover in SourceViewer
-		final R4EAnnotationHover annotationHover = new R4EAnnotationHover();
-		fSourceViewer.setAnnotationHover(annotationHover);
-
-		//Get Vertical Ruler from sourceViewer
-		final Method declaredMethod2 = aSourceViewerClazz.getDeclaredMethod("getVerticalRuler"); //$NON-NLS-1$
-		declaredMethod2.setAccessible(true);
-		final IVerticalRuler ruler = (CompositeRuler) declaredMethod2.invoke(fSourceViewer);
-
-		//This overrides the call to ensureAnnotationHoverManagerInstalled method in viewer
-		final AbstractHoverInformationControlManager r4eInformationControlManager = new R4EAnnotationInformationControlManager(
-				ruler, fSourceViewer, annotationHover, annotationInformationControlCreator);
-		final Field hoverManager = SourceViewer.class.getDeclaredField("fVerticalRulerHoveringController"); //$NON-NLS-1$
-		hoverManager.setAccessible(true);
-		hoverManager.set(fSourceViewer, r4eInformationControlManager);
-		r4eInformationControlManager.install(ruler.getControl());
-		r4eInformationControlManager.getInternalAccessor().setInformationControlReplacer(
-				new R4EStickyHoverManager(fSourceViewer));
-
-		//Finally add back annotations showing
-		fSourceViewer.showAnnotations(true);
-	}
-
-	/**
-	 * Method updateOverviewRuler.
-	 * 
-	 * @param aNewInput
-	 *            IDocument
-	 * @param aSourceViewerClazz
-	 *            Class<SourceViewer>
-	 * @throws SecurityException
-	 * @throws NoSuchMethodException
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchFieldException
+	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.impl.ReviewEditorInputListener#addAnnotationModel(IAnnotationModel,
+	 *      IDocument)
 	 */
 	@Override
-	protected void updateOverviewRuler(Class<SourceViewer> aSourceViewerClazz) throws SecurityException,
-			NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException,
-			NoSuchFieldException {
-		// This is not used for the single editor and we rely on the default overview ruler
+	protected void addAnnotationModel(IAnnotationModel aModel, IDocument aNewInput) {
+		try {
+			if (aModel instanceof IAnnotationModelExtension) {
+				final IAnnotationModelExtension annotationModelExtension = (IAnnotationModelExtension) aModel;
+				annotationModelExtension.addAnnotationModel(R4EUIPlugin.PLUGIN_ID, fAnnotationModel);
+			}
+			configureViewerAnnotations(aModel, aNewInput);
+		} catch (Throwable t) {
+			R4EUIPlugin.Ftracer.traceError("Exception: " + t.toString() + " (" + t.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			R4EUIPlugin.getDefault()
+					.getLog()
+					.log(new Status(IStatus.WARNING, R4EUIPlugin.PLUGIN_ID, IStatus.OK, t.toString(), t));
+			final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+					"Error attaching annotation model", new Status(IStatus.ERROR, R4EUIPlugin.PLUGIN_ID, 0, //$NON-NLS-1$
+							t.getMessage(), t), IStatus.ERROR);
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					dialog.open();
+				}
+			});
+		}
 	}
 }

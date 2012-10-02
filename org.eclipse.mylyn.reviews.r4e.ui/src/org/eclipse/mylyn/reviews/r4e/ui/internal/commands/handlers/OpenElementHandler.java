@@ -18,6 +18,7 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -26,8 +27,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
@@ -67,7 +66,7 @@ public class OpenElementHandler extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent aEvent) {
 
-		final ISelection selection = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
+		final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
 
 		final Job job = new Job(COMMAND_MESSAGE) {
 
@@ -83,49 +82,47 @@ public class OpenElementHandler extends AbstractHandler {
 				aMonitor.beginTask(COMMAND_MESSAGE, IProgressMonitor.UNKNOWN);
 				R4EUIModelController.setJobInProgress(true);
 
-				if (selection instanceof IStructuredSelection) {
-					if (!selection.isEmpty()) {
-						IR4EUIModelElement element = null;
-						try {
-							element = (IR4EUIModelElement) ((IStructuredSelection) selection).getFirstElement();
+				if (!selectedElements.isEmpty()) {
+					IR4EUIModelElement element = null;
+					try {
+						element = selectedElements.get(0);
 
-							if (element instanceof R4EUIReviewBasic) {
-								R4EUIPlugin.Ftracer.traceInfo("Opening element " + element.getName()); //$NON-NLS-1$
-								final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
-								if (null != activeReview) {
-									activeReview.close();
-								}
+						if (element instanceof R4EUIReviewBasic) {
+							R4EUIPlugin.Ftracer.traceInfo("Opening element " + element.getName()); //$NON-NLS-1$
+							final R4EUIReviewBasic activeReview = R4EUIModelController.getActiveReview();
+							if (null != activeReview) {
+								activeReview.close();
+							}
 
-								//Make sure serialization starts as default in all resources
-								R4EUIModelController.resetToDefaultSerialization();
-							}
-							element.open();
-							R4EUIModelController.setJobInProgress(false);
-							UIUtils.setNavigatorViewFocus(element, 1);
-						} catch (ResourceHandlingException e) {
-							UIUtils.displayResourceErrorDialog(e);
-							//make sure the element is released from memory
-							if (null != element && element instanceof R4EUIReviewBasic) {
-								element.close();
-							}
-						} catch (CompatibilityException e) {
-							UIUtils.displayCompatibilityErrorDialog(e);
-							//make sure the element is released from memory
-							if (null != element && element instanceof R4EUIReviewBasic) {
-								element.close();
-							}
-						} catch (FileNotFoundException e) {
-							R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-							R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
-							final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-									"File not found error detected while opening element", new Status(IStatus.ERROR, //$NON-NLS-1$
-											R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
-							Display.getDefault().syncExec(new Runnable() {
-								public void run() {
-									dialog.open();
-								}
-							});
+							//Make sure serialization starts as default in all resources
+							R4EUIModelController.resetToDefaultSerialization();
 						}
+						element.open();
+						R4EUIModelController.setJobInProgress(false);
+						UIUtils.setNavigatorViewFocus(element, 1);
+					} catch (ResourceHandlingException e) {
+						UIUtils.displayResourceErrorDialog(e);
+						//make sure the element is released from memory
+						if (null != element && element instanceof R4EUIReviewBasic) {
+							element.close();
+						}
+					} catch (CompatibilityException e) {
+						UIUtils.displayCompatibilityErrorDialog(e);
+						//make sure the element is released from memory
+						if (null != element && element instanceof R4EUIReviewBasic) {
+							element.close();
+						}
+					} catch (FileNotFoundException e) {
+						R4EUIPlugin.Ftracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						R4EUIPlugin.getDefault().logError("Exception: " + e.toString(), e); //$NON-NLS-1$
+						final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+								"File not found error detected while opening element", new Status(IStatus.ERROR, //$NON-NLS-1$
+										R4EUIPlugin.PLUGIN_ID, 0, e.getMessage(), e), IStatus.ERROR);
+						Display.getDefault().syncExec(new Runnable() {
+							public void run() {
+								dialog.open();
+							}
+						});
 					}
 				}
 				R4EUIModelController.setJobInProgress(false);

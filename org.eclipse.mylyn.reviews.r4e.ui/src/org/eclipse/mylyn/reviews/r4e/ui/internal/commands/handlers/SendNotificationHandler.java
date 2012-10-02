@@ -18,6 +18,8 @@
  ******************************************************************************/
 package org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers;
 
+import java.util.List;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.CoreException;
@@ -25,6 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -33,10 +36,12 @@ import org.eclipse.mylyn.reviews.r4e.mail.smtp.mailVersion.internal.preferences.
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.ISendNotificationInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
+import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIModelController;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.MailServicesProxy;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.R4EUIConstants;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.UIUtils;
+import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.progress.UIJob;
 
 /**
@@ -78,9 +83,12 @@ public class SendNotificationHandler extends AbstractHandler {
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				monitor.beginTask(COMMAND_MESSAGE, 1);
 
-				ISelection source = R4EUIModelController.getNavigatorView().getTreeViewer().getSelection();
-
-				//if the source is unique and is a Review element, all options are available.  Otherwise, only ask questions is supported
+				//If the source is unique and is a Review element, all options are available.  Otherwise, only ask questions is supported
+				ISelection source = HandlerUtil.getCurrentSelection(aEvent);
+				final List<IR4EUIModelElement> selectedElements = UIUtils.getCommandUIElements();
+				if (null == source && selectedElements.size() > 0) {
+					source = new StructuredSelection(selectedElements);
+				}
 				final ISendNotificationInputDialog dialog = R4EUIDialogFactory.getInstance()
 						.getSendNotificationInputDialog(source);
 				dialog.create();

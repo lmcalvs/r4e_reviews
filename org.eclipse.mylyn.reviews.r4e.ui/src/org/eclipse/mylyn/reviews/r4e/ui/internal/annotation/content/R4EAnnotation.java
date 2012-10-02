@@ -56,6 +56,8 @@ public abstract class R4EAnnotation extends Annotation implements IReviewAnnotat
 	 *            IR4EUIModelElement
 	 * @param aType
 	 *            String
+	 * @param aName
+	 *            String
 	 */
 	public R4EAnnotation(IR4EUIModelElement aSourceElement, String aType, String aName) {
 		super(aType, false, aName);
