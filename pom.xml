@@ -158,6 +158,7 @@
 
   <modules>
      <module>org.eclipse.mylyn.reviews.frame.core</module>
+     <module>org.eclipse.mylyn.reviews.frame.ui</module>
      <module>org.eclipse.mylyn.reviews.r4e.ldap</module>
      <module>org.eclipse.mylyn.reviews.notifications</module>
      <module>org.eclipse.mylyn.reviews.r4e.core</module>
