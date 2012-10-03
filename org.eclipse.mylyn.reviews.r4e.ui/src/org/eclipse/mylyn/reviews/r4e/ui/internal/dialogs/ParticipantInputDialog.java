@@ -256,20 +256,22 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 
 				//Check if participant already exists (if so ignore but continue)
 				R4EParticipant currentParticipant = null;
-				try {
-					currentParticipant = R4EUIModelController.getActiveReview().getParticipant(newParticipant.getId(),
-							false);
-				} catch (ResourceHandlingException e) {
-					// ignore
-				}
-				if (fReviewSource && R4EUIModelController.getActiveReview().isParticipant(newParticipant.getId())
-						&& null != currentParticipant && currentParticipant.isEnabled()) {
-					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-							"Cannot Add Participant " + newParticipant.getId(), new Status(IStatus.ERROR,
-									R4EUIPlugin.PLUGIN_ID, 0, "Participant already part of this Review", null),
-							IStatus.ERROR);
-					dialog.open();
-					continue;
+				if (null != R4EUIModelController.getActiveReview()) {
+					try {
+						currentParticipant = R4EUIModelController.getActiveReview().getParticipant(
+								newParticipant.getId(), false);
+					} catch (ResourceHandlingException e) {
+						// ignore
+					}
+					if (fReviewSource && R4EUIModelController.getActiveReview().isParticipant(newParticipant.getId())
+							&& null != currentParticipant && currentParticipant.isEnabled()) {
+						final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+								"Cannot Add Participant " + newParticipant.getId(), new Status(IStatus.ERROR,
+										R4EUIPlugin.PLUGIN_ID, 0, "Participant already part of this Review", null),
+								IStatus.ERROR);
+						dialog.open();
+						continue;
+					}
 				}
 
 				//Validate Participant Email
