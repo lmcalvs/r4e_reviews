@@ -65,7 +65,7 @@ public class R4EReviewDecisionImpl extends EObjectImpl implements R4EReviewDecis
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4EDecision VALUE_EDEFAULT = R4EDecision.R4E_REVIEW_DECISION_NONE;
+	protected static final R4EDecision VALUE_EDEFAULT = R4EDecision.NONE;
 
 	/**
 	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc

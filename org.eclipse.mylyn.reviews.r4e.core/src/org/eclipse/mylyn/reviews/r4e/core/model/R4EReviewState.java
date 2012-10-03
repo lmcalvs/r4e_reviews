@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -14,7 +14,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewState;
+import org.eclipse.mylyn.reviews.core.model.IReviewState;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Review State</b></em>'. <!-- end-user-doc
@@ -30,8 +30,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.ReviewState;
  * @model
  * @generated
  */
-public interface R4EReviewState extends ReviewState {
-
+public interface R4EReviewState extends IReviewState {
 	/**
 	 * Returns the value of the '<em><b>State</b></em>' attribute.
 	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase}.
@@ -59,4 +58,5 @@ public interface R4EReviewState extends ReviewState {
 	 * @generated
 	 */
 	void setState(R4EReviewPhase value);
+
 } // R4EReviewState

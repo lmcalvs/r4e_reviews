@@ -1,7 +1,6 @@
 /**
-/**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -30,95 +29,98 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum R4EUserRole implements Enumerator {
 	/**
-	 * The '<em><b>R4E ROLE REVIEWER</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_ROLE_REVIEWER_VALUE
+	 * The '<em><b>Reviewer</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REVIEWER_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_ROLE_REVIEWER(0, "R4E_ROLE_REVIEWER", "R4E_ROLE_REVIEWER"), /**
-	 * The '<em><b>R4E ROLE LEAD</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_ROLE_LEAD_VALUE
+	REVIEWER(0, "Reviewer", "REVIEWER"), /**
+	 * The '<em><b>Lead</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #LEAD_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_ROLE_LEAD(1, "R4E_ROLE_LEAD", "R4E_ROLE_LEAD"), /**
-	 * The '<em><b>R4E ROLE AUTHOR</b></em>' literal object. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #R4E_ROLE_AUTHOR_VALUE
+	LEAD(1, "Lead", "LEAD"), /**
+	 * The '<em><b>Author</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #AUTHOR_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_ROLE_AUTHOR(2, "R4E_ROLE_AUTHOR", "R4E_ROLE_AUTHOR"), /**
-	 * The '<em><b>R4E ROLE ORGANIZER</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_ROLE_ORGANIZER_VALUE
+	AUTHOR(2, "Author", "AUTHOR"), /**
+	 * The '<em><b>Organizer</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ORGANIZER_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_ROLE_ORGANIZER(3, "R4E_ROLE_ORGANIZER", "R4E_ROLE_ORGANIZER");
+	ORGANIZER(3, "Organizer", "ORGANIZER");
 
 	/**
-	 * The '<em><b>R4E ROLE REVIEWER</b></em>' literal value.
+	 * The '<em><b>Reviewer</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ROLE REVIEWER</b></em>' literal object isn't clear, there really should be more of
-	 * a description here...
+	 * If the meaning of '<em><b>Reviewer</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_ROLE_REVIEWER
-	 * @model
+	 * @see #REVIEWER
+	 * @model name="Reviewer" literal="REVIEWER"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_ROLE_REVIEWER_VALUE = 0;
+	public static final int REVIEWER_VALUE = 0;
 
 	/**
-	 * The '<em><b>R4E ROLE LEAD</b></em>' literal value.
+	 * The '<em><b>Lead</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ROLE LEAD</b></em>' literal object isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of '<em><b>Lead</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_ROLE_LEAD
-	 * @model
+	 * @see #LEAD
+	 * @model name="Lead" literal="LEAD"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_ROLE_LEAD_VALUE = 1;
+	public static final int LEAD_VALUE = 1;
 
 	/**
-	 * The '<em><b>R4E ROLE AUTHOR</b></em>' literal value.
+	 * The '<em><b>Author</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ROLE AUTHOR</b></em>' literal object isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of '<em><b>Author</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_ROLE_AUTHOR
-	 * @model
+	 * @see #AUTHOR
+	 * @model name="Author" literal="AUTHOR"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_ROLE_AUTHOR_VALUE = 2;
+	public static final int AUTHOR_VALUE = 2;
 
 	/**
-	 * The '<em><b>R4E ROLE ORGANIZER</b></em>' literal value.
+	 * The '<em><b>Organizer</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ROLE ORGANIZER</b></em>' literal object isn't clear, there really should be more of
-	 * a description here...
+	 * If the meaning of '<em><b>Organizer</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_ROLE_ORGANIZER
-	 * @model
+	 * @see #ORGANIZER
+	 * @model name="Organizer" literal="ORGANIZER"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_ROLE_ORGANIZER_VALUE = 3;
+	public static final int ORGANIZER_VALUE = 3;
 
 	/**
 	 * An array of all the '<em><b>R4E User Role</b></em>' enumerators.
@@ -126,10 +128,10 @@ public enum R4EUserRole implements Enumerator {
 	 * @generated
 	 */
 	private static final R4EUserRole[] VALUES_ARRAY = new R4EUserRole[] {
-			R4E_ROLE_REVIEWER,
-			R4E_ROLE_LEAD,
-			R4E_ROLE_AUTHOR,
-			R4E_ROLE_ORGANIZER,
+			REVIEWER,
+			LEAD,
+			AUTHOR,
+			ORGANIZER,
 		};
 
 	/**
@@ -180,10 +182,10 @@ public enum R4EUserRole implements Enumerator {
 	 */
 	public static R4EUserRole get(int value) {
 		switch (value) {
-			case R4E_ROLE_REVIEWER_VALUE: return R4E_ROLE_REVIEWER;
-			case R4E_ROLE_LEAD_VALUE: return R4E_ROLE_LEAD;
-			case R4E_ROLE_AUTHOR_VALUE: return R4E_ROLE_AUTHOR;
-			case R4E_ROLE_ORGANIZER_VALUE: return R4E_ROLE_ORGANIZER;
+			case REVIEWER_VALUE: return REVIEWER;
+			case LEAD_VALUE: return LEAD;
+			case AUTHOR_VALUE: return AUTHOR;
+			case ORGANIZER_VALUE: return ORGANIZER;
 		}
 		return null;
 	}

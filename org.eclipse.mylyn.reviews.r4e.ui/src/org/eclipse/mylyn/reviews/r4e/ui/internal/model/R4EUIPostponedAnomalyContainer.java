@@ -20,10 +20,9 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.mylyn.reviews.frame.core.model.Topic;
+import org.eclipse.mylyn.reviews.core.model.ITopic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -126,7 +125,7 @@ public class R4EUIPostponedAnomalyContainer extends R4EUIAnomalyContainer {
 		R4EUIPostponedAnomaly uiAnomaly = null;
 		final IR4EUIModelElement parentElement = getParent();
 		//Get global postponed anomalies
-		final EList<Topic> anomalies = ((R4EUIReviewBasic) parentElement.getParent()).getReview().getTopics();
+		final List<ITopic> anomalies = ((R4EUIReviewBasic) parentElement.getParent()).getReview().getTopics();
 		if (null != anomalies) {
 			final int anomaliesSize = anomalies.size();
 			R4EAnomaly anomaly = null;
@@ -137,7 +136,7 @@ public class R4EUIPostponedAnomalyContainer extends R4EUIAnomalyContainer {
 							|| R4EUIPlugin.getDefault()
 									.getPreferenceStore()
 									.getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-						if (0 == anomaly.getLocation().size()) {
+						if (0 == anomaly.getLocations().size()) {
 							uiAnomaly = new R4EUIPostponedAnomaly(this, anomaly, null);
 							uiAnomaly.setName(R4EUIAnomalyExtended.getStateString(anomaly.getState()) + ": "
 									+ uiAnomaly.getName());
@@ -201,17 +200,17 @@ public class R4EUIPostponedAnomalyContainer extends R4EUIAnomalyContainer {
 		//Check if the creator of the postponed anomaly is a participant of the current review.  If not, it will be 
 		//created and disabled after the postponed anomaly is created
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
-		R4EParticipant participant = uiReview.getParticipant(aPostponedAnomaly.getUser().getId(), false);
+		R4EParticipant participant = uiReview.getParticipant(aPostponedAnomaly.getAuthor().getId(), false);
 		boolean isParticipant = true;
 		if (null == participant) {
-			participant = uiReview.getParticipant(aPostponedAnomaly.getUser().getId(), true);
+			participant = uiReview.getParticipant(aPostponedAnomaly.getAuthor().getId(), true);
 			isParticipant = false;
 		}
 
 		//Copy anomaly information from postponed anomaly model element if Anomaly does not already exist.  Otherwise it means it is disabled so restore it
-		List<Topic> savedGlobalAnomalies = ((R4EUIReviewBasic) getParent().getParent()).getReview().getTopics();
+		List<ITopic> savedGlobalAnomalies = ((R4EUIReviewBasic) getParent().getParent()).getReview().getTopics();
 		R4EAnomaly anomaly = null;
-		for (Topic savedAnomaly : savedGlobalAnomalies) {
+		for (ITopic savedAnomaly : savedGlobalAnomalies) {
 			if (null == ((R4EAnomaly) savedAnomaly).getInfoAtt().get(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID)) {
 				//This is a genuine anomaly, not a postponed one, so we ignore it
 				continue;
@@ -233,7 +232,7 @@ public class R4EUIPostponedAnomalyContainer extends R4EUIAnomalyContainer {
 			anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
 			CommandUtils.copyAnomalyData(anomaly, aPostponedAnomaly);
 			Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(anomaly, R4EUIModelController.getReviewer());
-			final EMap<String, String> info = anomaly.getInfoAtt(); //We use the R4EAnomaly attribute map to store the original anomaly ID
+			final Map<String, String> info = anomaly.getInfoAtt(); //We use the R4EAnomaly attribute map to store the original anomaly ID
 			info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID,
 					CommandUtils.buildOriginalAnomalyID(aPostponedAnomaly));
 			info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME, aUiReview.getReview().getName());

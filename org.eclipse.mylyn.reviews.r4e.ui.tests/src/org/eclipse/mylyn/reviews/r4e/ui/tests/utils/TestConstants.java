@@ -46,7 +46,7 @@ public class TestConstants {
 
 	//The following chars should not be used as strange chars: \/<>:;*"?'
 	//May be we should add a validation for the review name and review group
-	public static final String REVIEW_GROUP_TEST_NAME_STRANGE = "test Review Group É.!@#$%^&()";
+	public static final String REVIEW_GROUP_TEST_NAME_STRANGE = "test Review Group ï¿½.!@#$%^&()";
 
 	public static final String REVIEW_GROUP_TEST_NAME2 = "testReviewGroup2";
 
@@ -75,7 +75,7 @@ public class TestConstants {
 	public static final String[] REVIEW_GROUP_TEST_AVAILABLE_COMPONENTS2 = { "core", "docs", "help" };
 
 	//Reviews BASIC
-	public static final R4EReviewType REVIEW_TEST_TYPE_BASIC = R4EReviewType.R4E_REVIEW_TYPE_BASIC;
+	public static final R4EReviewType REVIEW_TEST_TYPE_BASIC = R4EReviewType.BASIC;
 
 	public static final String REVIEW_TEST_NAME = "testReview";
 
@@ -94,7 +94,7 @@ public class TestConstants {
 	public static final String REVIEW_TEST_REFERENCE_MATERIALS = "testReview reference materials";
 
 	//Reviews INFORMAL
-	public static final R4EReviewType REVIEW_TEST_TYPE_INFORMAL = R4EReviewType.R4E_REVIEW_TYPE_INFORMAL;
+	public static final R4EReviewType REVIEW_TEST_TYPE_INFORMAL = R4EReviewType.INFORMAL;
 
 	public static final String REVIEW_TEST_NAME_INF = "testReviewInf";
 
@@ -104,14 +104,14 @@ public class TestConstants {
 	//May be we should add a validation for the review name and review group
 	public static final String REVIEW_STRANGE_NAME_INF = "test Review&%$/) Inf";
 
-	public static final R4EDecision REVIEW_EXIT_DECISION_ACCEPTED = R4EDecision.R4E_REVIEW_DECISION_ACCEPTED;
+	public static final R4EDecision REVIEW_EXIT_DECISION_ACCEPTED = R4EDecision.ACCEPTED;
 
 	//Participants
 	public static final String PARTICIPANT_TEST_ID = "user";
 
 	public static final String PARTICIPANT_TEST_EMAIL = "user@company.com";
 
-	public static final R4EUserRole[] PARTICIPANT_TEST_ROLES = { R4EUserRole.R4E_ROLE_REVIEWER };
+	public static final R4EUserRole[] PARTICIPANT_TEST_ROLES = { R4EUserRole.REVIEWER };
 
 	public static final String PARTICIPANT_TEST_FOCUS_AREA = "Test FocusArea";
 
@@ -131,27 +131,27 @@ public class TestConstants {
 
 	public static final String EXTERNAL_ANOMALY_TEST_DESCRIPTION = "new External Anomaly description";
 
-	public static final R4EDesignRuleClass ANOMALY_TEST_CLASS_ERRONEOUS = R4EDesignRuleClass.R4E_CLASS_ERRONEOUS;
+	public static final R4EDesignRuleClass ANOMALY_TEST_CLASS_ERRONEOUS = R4EDesignRuleClass.ERRONEOUS;
 
-	public static final R4EDesignRuleClass ANOMALY_TEST_CLASS_IMPROVEMENT = R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT;
+	public static final R4EDesignRuleClass ANOMALY_TEST_CLASS_IMPROVEMENT = R4EDesignRuleClass.IMPROVEMENT;
 
-	public static final R4EDesignRuleClass ANOMALY_TEST_CLASS_QUESTION = R4EDesignRuleClass.R4E_CLASS_QUESTION;
+	public static final R4EDesignRuleClass ANOMALY_TEST_CLASS_QUESTION = R4EDesignRuleClass.QUESTION;
 
-	public static final R4EDesignRuleRank ANOMALY_TEST_RANK_MAJOR = R4EDesignRuleRank.R4E_RANK_MAJOR;
+	public static final R4EDesignRuleRank ANOMALY_TEST_RANK_MAJOR = R4EDesignRuleRank.MAJOR;
 
-	public static final R4EDesignRuleRank ANOMALY_TEST_RANK_MINOR = R4EDesignRuleRank.R4E_RANK_MINOR;
+	public static final R4EDesignRuleRank ANOMALY_TEST_RANK_MINOR = R4EDesignRuleRank.MINOR;
 
 	public static final Date ANOMALY_TEST_DUE_DATE = new Date();
 
-	public static final R4EAnomalyState ANOMALY_STATE_ASSIGNED = R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED;
+	public static final R4EAnomalyState ANOMALY_STATE_ASSIGNED = R4EAnomalyState.ASSIGNED;
 
-	public static final R4EAnomalyState ANOMALY_STATE_FIXED = R4EAnomalyState.R4E_ANOMALY_STATE_FIXED;
+	public static final R4EAnomalyState ANOMALY_STATE_FIXED = R4EAnomalyState.FIXED;
 
-	public static final R4EAnomalyState ANOMALY_STATE_REJECTED = R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED;
+	public static final R4EAnomalyState ANOMALY_STATE_REJECTED = R4EAnomalyState.REJECTED;
 
-	public static final R4EAnomalyState ANOMALY_STATE_VERIFIED = R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED;
+	public static final R4EAnomalyState ANOMALY_STATE_VERIFIED = R4EAnomalyState.VERIFIED;
 
-	public static final R4EAnomalyState ANOMALY_STATE_POSTPONED = R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED;
+	public static final R4EAnomalyState ANOMALY_STATE_POSTPONED = R4EAnomalyState.DEFERRED;
 
 	//Comments
 	public static final String COMMENT_TEST = "This is a test comment for the anomaly";

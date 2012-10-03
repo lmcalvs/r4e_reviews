@@ -14,8 +14,9 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.drules;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import java.util.List;
+
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Design Rule Violation</b></em>'. <!--
@@ -33,7 +34,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
  * @model
  * @generated
  */
-public interface R4EDesignRuleViolation extends ReviewComponent {
+public interface R4EDesignRuleViolation extends IReviewComponent {
 	/**
 	 * Returns the value of the '<em><b>Rules</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule}.
@@ -48,7 +49,7 @@ public interface R4EDesignRuleViolation extends ReviewComponent {
 	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
-	EList<R4EDesignRule> getRules();
+	List<R4EDesignRule> getRules();
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

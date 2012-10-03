@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -14,9 +14,11 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
+import org.eclipse.mylyn.reviews.core.model.IReviewGroup;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Review Group</b></em>'. <!-- end-user-doc
@@ -46,7 +48,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup;
  * @model extendedMetaData="name='R4EReviewGroup'"
  * @generated
  */
-public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
+public interface R4EReviewGroup extends IReviewGroup, R4EReviewComponent, IModelVersioning {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -135,7 +137,7 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * @model
 	 * @generated
 	 */
-	EList<String> getAvailableProjects();
+	List<String> getAvailableProjects();
 
 	/**
 	 * Returns the value of the '<em><b>Available Components</b></em>' attribute list.
@@ -151,7 +153,7 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * @model
 	 * @generated
 	 */
-	EList<String> getAvailableComponents();
+	List<String> getAvailableComponents();
 
 	/**
 	 * Returns the value of the '<em><b>Design Rule Locations</b></em>' attribute list.
@@ -167,15 +169,15 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * @model
 	 * @generated
 	 */
-	EList<String> getDesignRuleLocations();
+	List<String> getDesignRuleLocations();
 
 	/**
 	 * Returns the value of the '<em><b>Available Anomaly Types</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Available Anomaly Types</em>' attribute list isn't clear, there really should be more
-	 * of a description here...
+	 * If the meaning of the '<em>Available Anomaly Types</em>' containment reference list isn't clear, there really
+	 * should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Available Anomaly Types</em>' containment reference list.
@@ -183,7 +185,7 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
-	EList<R4EAnomalyType> getAvailableAnomalyTypes();
+	List<R4EAnomalyType> getAvailableAnomalyTypes();
 
 	/**
 	 * Returns the value of the '<em><b>Anomaly Type Key To Reference</b></em>' map.
@@ -200,7 +202,7 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapToAnomalyType<org.eclipse.emf.ecore.EString, org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType>" transient="true" derived="true"
 	 * @generated
 	 */
-	EMap<String, R4EAnomalyType> getAnomalyTypeKeyToReference();
+	Map<String, R4EAnomalyType> getAnomalyTypeKeyToReference();
 
 	/**
 	 * Returns the value of the '<em><b>Reviews Map</b></em>' map.
@@ -217,7 +219,7 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapNameToReview<org.eclipse.emf.ecore.EString, org.eclipse.mylyn.reviews.r4e.core.model.R4EReview>" transient="true" derived="true"
 	 * @generated
 	 */
-	EMap<String, R4EReview> getReviewsMap();
+	Map<String, R4EReview> getReviewsMap();
 
 	/**
 	 * Returns the value of the '<em><b>User Reviews</b></em>' map.
@@ -234,6 +236,6 @@ public interface R4EReviewGroup extends ReviewGroup, R4EReviewComponent {
 	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapUserIDToUserReviews<org.eclipse.emf.ecore.EString, org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews>" transient="true" derived="true"
 	 * @generated
 	 */
-	EMap<String, R4EUserReviews> getUserReviews();
+	Map<String, R4EUserReviews> getUserReviews();
 
 } // R4EReviewGroup

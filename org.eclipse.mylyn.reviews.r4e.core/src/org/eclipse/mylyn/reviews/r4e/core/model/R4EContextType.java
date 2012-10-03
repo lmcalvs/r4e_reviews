@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -29,124 +29,121 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum R4EContextType implements Enumerator {
 	/**
-	 * The '<em><b>R4E UNDEFINED</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_UNDEFINED_VALUE
+	 * The '<em><b>Undefined</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #UNDEFINED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_UNDEFINED(4, "R4E_UNDEFINED", "R4E_UNDEFINED"),
-
-	/**
-	 * The '<em><b>R4E ADDED</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_ADDED_VALUE
+	UNDEFINED(4, "Undefined", "UNDEFINED"), /**
+	 * The '<em><b>Added</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ADDED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_ADDED(0, "R4E_ADDED", "R4E_ADDED"),
-
-	/**
-	 * The '<em><b>R4E DELETED</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_DELETED_VALUE
+	ADDED(0, "Added", "ADDED"), /**
+	 * The '<em><b>Deleted</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #DELETED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_DELETED(1, "R4E_DELETED", "R4E_DELETED"),
-
-	/**
-	 * The '<em><b>R4E MODIFIED</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_MODIFIED_VALUE
+	DELETED(1, "Deleted", "DELETED"), /**
+	 * The '<em><b>Modified</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #MODIFIED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_MODIFIED(2, "R4E_MODIFIED", "R4E_MODIFIED"),
-
-	/**
-	 * The '<em><b>R4E REPLACED</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_REPLACED_VALUE
+	MODIFIED(2, "Modified", "MODIFIED"), /**
+	 * The '<em><b>Replaced</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #REPLACED_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_REPLACED(3, "R4E_REPLACED", "R4E_REPLACED");
+	REPLACED(3, "Replaced", "REPLACED");
 
 	/**
-	 * The '<em><b>R4E UNDEFINED</b></em>' literal value.
+	 * The '<em><b>Undefined</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E UNDEFINED</b></em>' literal object isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of '<em><b>Undefined</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_UNDEFINED
-	 * @model
+	 * @see #UNDEFINED
+	 * @model name="Undefined" literal="UNDEFINED"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_UNDEFINED_VALUE = 4;
+	public static final int UNDEFINED_VALUE = 4;
 
 	/**
-	 * The '<em><b>R4E ADDED</b></em>' literal value.
+	 * The '<em><b>Added</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E ADDED</b></em>' literal object isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of '<em><b>Added</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_ADDED
-	 * @model
+	 * @see #ADDED
+	 * @model name="Added" literal="ADDED"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_ADDED_VALUE = 0;
+	public static final int ADDED_VALUE = 0;
 
 	/**
-	 * The '<em><b>R4E DELETED</b></em>' literal value.
+	 * The '<em><b>Deleted</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E DELETED</b></em>' literal object isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of '<em><b>Deleted</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_DELETED
-	 * @model
+	 * @see #DELETED
+	 * @model name="Deleted" literal="DELETED"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_DELETED_VALUE = 1;
+	public static final int DELETED_VALUE = 1;
 
 	/**
-	 * The '<em><b>R4E MODIFIED</b></em>' literal value.
+	 * The '<em><b>Modified</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E MODIFIED</b></em>' literal object isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of '<em><b>Modified</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_MODIFIED
-	 * @model
+	 * @see #MODIFIED
+	 * @model name="Modified" literal="MODIFIED"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_MODIFIED_VALUE = 2;
+	public static final int MODIFIED_VALUE = 2;
 
 	/**
-	 * The '<em><b>R4E REPLACED</b></em>' literal value.
+	 * The '<em><b>Replaced</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E REPLACED</b></em>' literal object isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of '<em><b>Replaced</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_REPLACED
-	 * @model
+	 * @see #REPLACED
+	 * @model name="Replaced" literal="REPLACED"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_REPLACED_VALUE = 3;
+	public static final int REPLACED_VALUE = 3;
 
 	/**
 	 * An array of all the '<em><b>R4E Context Type</b></em>' enumerators.
@@ -154,11 +151,11 @@ public enum R4EContextType implements Enumerator {
 	 * @generated
 	 */
 	private static final R4EContextType[] VALUES_ARRAY = new R4EContextType[] {
-			R4E_UNDEFINED,
-			R4E_ADDED,
-			R4E_DELETED,
-			R4E_MODIFIED,
-			R4E_REPLACED,
+			UNDEFINED,
+			ADDED,
+			DELETED,
+			MODIFIED,
+			REPLACED,
 		};
 
 	/**
@@ -209,11 +206,11 @@ public enum R4EContextType implements Enumerator {
 	 */
 	public static R4EContextType get(int value) {
 		switch (value) {
-			case R4E_UNDEFINED_VALUE: return R4E_UNDEFINED;
-			case R4E_ADDED_VALUE: return R4E_ADDED;
-			case R4E_DELETED_VALUE: return R4E_DELETED;
-			case R4E_MODIFIED_VALUE: return R4E_MODIFIED;
-			case R4E_REPLACED_VALUE: return R4E_REPLACED;
+			case UNDEFINED_VALUE: return UNDEFINED;
+			case ADDED_VALUE: return ADDED;
+			case DELETED_VALUE: return DELETED;
+			case MODIFIED_VALUE: return MODIFIED;
+			case REPLACED_VALUE: return REPLACED;
 		}
 		return null;
 	}

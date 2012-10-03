@@ -9,7 +9,7 @@
  * Description:
  * 
  * Contributors:
- *    Alvaro Sanchez-Leon - Initial API and implementation
+ * Alvaro Sanchez-Leon  - Initial API and implementation
  * 
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.drules.impl;
@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
+import org.eclipse.mylyn.reviews.internal.core.model.ReviewsPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
@@ -115,7 +115,7 @@ public class DRModelPackageImpl extends EPackageImpl implements DRModelPackage {
 		isInited = true;
 
 		// Initialize simple dependencies
-		ModelPackage.eINSTANCE.eClass();
+		ReviewsPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theDRModelPackage.createPackageContents();
@@ -357,18 +357,18 @@ public class DRModelPackageImpl extends EPackageImpl implements DRModelPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		ModelPackage theModelPackage = (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
+		ReviewsPackage theReviewsPackage = (ReviewsPackage)EPackage.Registry.INSTANCE.getEPackage(ReviewsPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		r4EDesignRuleCollectionEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
-		r4EDesignRuleCollectionEClass.getESuperTypes().add(theModelPackage.getSubModelRoot());
-		r4EDesignRuleEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
-		r4EDesignRuleAreaEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
-		r4EDesignRuleViolationEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
+		r4EDesignRuleCollectionEClass.getESuperTypes().add(theReviewsPackage.getReviewComponent());
+		r4EDesignRuleCollectionEClass.getESuperTypes().add(theReviewsPackage.getModelVersioning());
+		r4EDesignRuleEClass.getESuperTypes().add(theReviewsPackage.getReviewComponent());
+		r4EDesignRuleAreaEClass.getESuperTypes().add(theReviewsPackage.getReviewComponent());
+		r4EDesignRuleViolationEClass.getESuperTypes().add(theReviewsPackage.getReviewComponent());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(r4EDesignRuleCollectionEClass, R4EDesignRuleCollection.class, "R4EDesignRuleCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -394,18 +394,18 @@ public class DRModelPackageImpl extends EPackageImpl implements DRModelPackage {
 
 		// Initialize enums and add enum literals
 		initEEnum(r4EDesignRuleRankEEnum, R4EDesignRuleRank.class, "R4EDesignRuleRank");
-		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.R4E_RANK_NONE);
-		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.R4E_RANK_MINOR);
-		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.R4E_RANK_MAJOR);
-		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.R4E_RANK_DEPRECATED);
+		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.NONE);
+		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.MINOR);
+		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.MAJOR);
+		addEEnumLiteral(r4EDesignRuleRankEEnum, R4EDesignRuleRank.DEPRECATED);
 
 		initEEnum(r4EDesignRuleClassEEnum, R4EDesignRuleClass.class, "R4EDesignRuleClass");
-		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.R4E_CLASS_ERRONEOUS);
-		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.R4E_CLASS_SUPERFLUOUS);
-		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT);
-		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.R4E_CLASS_QUESTION);
-		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.R4E_CLASS_COMMENT);
-		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.R4E_CLASS_MISSING);
+		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.ERRONEOUS);
+		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.SUPERFLUOUS);
+		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.IMPROVEMENT);
+		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.QUESTION);
+		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.COMMENT);
+		addEEnumLiteral(r4EDesignRuleClassEEnum, R4EDesignRuleClass.MISSING);
 
 		// Create resource
 		createResource(eNS_URI);

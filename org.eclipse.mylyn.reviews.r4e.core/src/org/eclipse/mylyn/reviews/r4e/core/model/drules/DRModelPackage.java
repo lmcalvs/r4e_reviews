@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
+import org.eclipse.mylyn.reviews.internal.core.model.ReviewsPackage;
 
 /**
  * <!-- begin-user-doc --> The <b>Package</b> for the model. It contains accessors for the meta objects to represent
@@ -78,7 +78,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_COLLECTION__ENABLED = ModelPackage.REVIEW_COMPONENT__ENABLED;
+	int R4E_DESIGN_RULE_COLLECTION__ENABLED = ReviewsPackage.REVIEW_COMPONENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Fragment Version</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -87,24 +87,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_COLLECTION__FRAGMENT_VERSION = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Compatibility</b></em>' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_DESIGN_RULE_COLLECTION__COMPATIBILITY = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Application Version</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
-	 * -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int R4E_DESIGN_RULE_COLLECTION__APPLICATION_VERSION = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 2;
+	int R4E_DESIGN_RULE_COLLECTION__FRAGMENT_VERSION = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Areas</b></em>' containment reference list.
@@ -113,7 +96,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_COLLECTION__AREAS = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 3;
+	int R4E_DESIGN_RULE_COLLECTION__AREAS = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -121,7 +104,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_COLLECTION__VERSION = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 4;
+	int R4E_DESIGN_RULE_COLLECTION__VERSION = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Folder</b></em>' attribute.
@@ -129,7 +112,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_COLLECTION__FOLDER = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 5;
+	int R4E_DESIGN_RULE_COLLECTION__FOLDER = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -137,7 +120,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_COLLECTION__NAME = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 6;
+	int R4E_DESIGN_RULE_COLLECTION__NAME = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>R4E Design Rule Collection</em>' class.
@@ -146,7 +129,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_COLLECTION_FEATURE_COUNT = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 7;
+	int R4E_DESIGN_RULE_COLLECTION_FEATURE_COUNT = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleImpl <em>R4E Design Rule</em>}' class.
@@ -163,7 +146,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE__ENABLED = ModelPackage.REVIEW_COMPONENT__ENABLED;
+	int R4E_DESIGN_RULE__ENABLED = ReviewsPackage.REVIEW_COMPONENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -171,7 +154,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE__ID = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 0;
+	int R4E_DESIGN_RULE__ID = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Rank</b></em>' attribute.
@@ -179,7 +162,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE__RANK = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 1;
+	int R4E_DESIGN_RULE__RANK = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Class</b></em>' attribute.
@@ -187,7 +170,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE__CLASS = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 2;
+	int R4E_DESIGN_RULE__CLASS = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Title</b></em>' attribute.
@@ -195,7 +178,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE__TITLE = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 3;
+	int R4E_DESIGN_RULE__TITLE = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -203,7 +186,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE__DESCRIPTION = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 4;
+	int R4E_DESIGN_RULE__DESCRIPTION = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>R4E Design Rule</em>' class.
@@ -212,7 +195,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_FEATURE_COUNT = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 5;
+	int R4E_DESIGN_RULE_FEATURE_COUNT = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleAreaImpl <em>R4E Design Rule Area</em>}' class.
@@ -229,7 +212,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_AREA__ENABLED = ModelPackage.REVIEW_COMPONENT__ENABLED;
+	int R4E_DESIGN_RULE_AREA__ENABLED = ReviewsPackage.REVIEW_COMPONENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Violations</b></em>' containment reference list.
@@ -238,7 +221,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_AREA__VIOLATIONS = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 0;
+	int R4E_DESIGN_RULE_AREA__VIOLATIONS = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -246,7 +229,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_AREA__NAME = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 1;
+	int R4E_DESIGN_RULE_AREA__NAME = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>R4E Design Rule Area</em>' class.
@@ -255,7 +238,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_AREA_FEATURE_COUNT = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 2;
+	int R4E_DESIGN_RULE_AREA_FEATURE_COUNT = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleViolationImpl <em>R4E Design Rule Violation</em>}' class.
@@ -272,7 +255,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_VIOLATION__ENABLED = ModelPackage.REVIEW_COMPONENT__ENABLED;
+	int R4E_DESIGN_RULE_VIOLATION__ENABLED = ReviewsPackage.REVIEW_COMPONENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Rules</b></em>' containment reference list.
@@ -281,7 +264,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_VIOLATION__RULES = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 0;
+	int R4E_DESIGN_RULE_VIOLATION__RULES = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -289,7 +272,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_VIOLATION__NAME = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 1;
+	int R4E_DESIGN_RULE_VIOLATION__NAME = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>R4E Design Rule Violation</em>' class.
@@ -298,7 +281,7 @@ public interface DRModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int R4E_DESIGN_RULE_VIOLATION_FEATURE_COUNT = ModelPackage.REVIEW_COMPONENT_FEATURE_COUNT + 2;
+	int R4E_DESIGN_RULE_VIOLATION_FEATURE_COUNT = ReviewsPackage.REVIEW_COMPONENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank <em>R4E Design Rule Rank</em>}' enum.

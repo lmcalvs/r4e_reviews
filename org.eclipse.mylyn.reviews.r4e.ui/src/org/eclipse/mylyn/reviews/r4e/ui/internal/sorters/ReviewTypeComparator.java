@@ -44,14 +44,14 @@ public class ReviewTypeComparator extends NavigatorElementComparator {
 			return 1;
 		}
 		if (aElement instanceof R4EUIReviewBasic) {
-			if (((R4EUIReviewBasic) aElement).getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+			if (((R4EUIReviewBasic) aElement).getReview().getType().equals(R4EReviewType.BASIC)) {
 				return 0;
 			} else if (((R4EUIReviewBasic) aElement).getReview()
 					.getType()
-					.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+					.equals(R4EReviewType.INFORMAL)) {
 				return 1;
 			} else {
-				//Assume R4EReviewType.R4E_REVIEW_TYPE_FORMAL
+				//Assume R4EReviewType.FORMAL
 				return 2;
 			}
 		}

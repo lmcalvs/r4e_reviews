@@ -18,8 +18,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
-import org.eclipse.mylyn.reviews.frame.core.model.Comment;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.core.model.IComment;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -137,7 +137,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	 */
 	@Override
 	public String getToolTip() {
-		return fComment.getUser().getId() + ": " + fComment.getDescription();
+		return fComment.getAuthor().getId() + ": " + fComment.getDescription();
 	}
 
 	/**
@@ -205,11 +205,11 @@ public class R4EUIComment extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
 	@Override
-	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public void setModelData(IReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		//Set data in model element
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fComment,
 				R4EUIModelController.getReviewer());
-		fComment.setDescription(((Comment) aModelComponent).getDescription());
+		fComment.setDescription(((IComment) aModelComponent).getDescription());
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 	}
 
@@ -272,7 +272,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	public boolean isCopyElementCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -310,7 +310,7 @@ public class R4EUIComment extends R4EUIModelElement {
 	public boolean isRemoveElementCmd() {
 		if (isEnabled()
 				&& !isReadOnly()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -352,7 +352,7 @@ public class R4EUIComment extends R4EUIModelElement {
 		if (isEnabled()
 				|| isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+						R4EReviewPhase.COMPLETED)) {
 			return false;
 		}
 		return true;

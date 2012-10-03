@@ -467,7 +467,7 @@ public class PostponedAnomaliesTests extends TestCase {
 		Assert.assertNotNull(uiParticipant);
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, uiParticipant.getParticipant().getId());
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, uiParticipant.getParticipant().getEmail());
-		Assert.assertEquals(R4EUserRole.R4E_ROLE_REVIEWER, uiParticipant.getParticipant().getRoles().get(0));
+		Assert.assertEquals(R4EUserRole.REVIEWER, uiParticipant.getParticipant().getRoles().get(0));
 	}
 
 	/**
@@ -494,10 +494,10 @@ public class PostponedAnomaliesTests extends TestCase {
 		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fOriginalAnomaly1.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				((R4EUITextPosition) content1.getPosition()).getOffset(),
-				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
+				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(
 				((R4EUITextPosition) content1.getPosition()).getLength(),
-				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getLength());
+				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 		fProxy.getAnomalyProxy().progressAnomaly(fOriginalAnomaly1, TestConstants.ANOMALY_STATE_POSTPONED);
 		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly1.getAnomaly().getState());
 		fOriginalAnomaly1Title = fOriginalAnomaly1.getAnomaly().getTitle();
@@ -522,10 +522,10 @@ public class PostponedAnomaliesTests extends TestCase {
 		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fOriginalAnomaly2.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				((R4EUITextPosition) content2.getPosition()).getOffset(),
-				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
+				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(
 				((R4EUITextPosition) content2.getPosition()).getLength(),
-				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getLength());
+				((R4ETextPosition) ((R4ETextContent) fOriginalAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 		fProxy.getAnomalyProxy().progressAnomaly(fOriginalAnomaly2, TestConstants.ANOMALY_STATE_POSTPONED);
 		Assert.assertEquals(TestConstants.ANOMALY_STATE_POSTPONED, fOriginalAnomaly2.getAnomaly().getState());
 		fOriginalAnomaly2Title = fOriginalAnomaly2.getAnomaly().getTitle();

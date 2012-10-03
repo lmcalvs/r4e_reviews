@@ -198,7 +198,7 @@ public class NextStateHandler extends AbstractHandler {
 			});
 			if (result[0] == Window.OK) {
 				final R4EAnomalyState newState = R4EUIAnomalyExtended.getStateFromString(dialog.getState());
-				if (newState.equals(R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED)) {
+				if (newState.equals(R4EAnomalyState.REJECTED)) {
 					final boolean commentResult = aAnomaly.createComment(true);
 					if (commentResult) {
 						UIUtils.changeAnomalyState(aAnomaly, newState);

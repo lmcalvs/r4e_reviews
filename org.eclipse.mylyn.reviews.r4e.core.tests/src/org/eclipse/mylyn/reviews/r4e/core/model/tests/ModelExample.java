@@ -25,9 +25,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
-import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.util.RModelResourceFactoryImpl;
 
 /**
@@ -56,7 +56,7 @@ public class ModelExample {
 
 		// Register the package to ensure it is available during loading.
 		//
-		resourceSet.getPackageRegistry().put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
+		resourceSet.getPackageRegistry().put(RModelPackage.eNS_URI, RModelPackage.eINSTANCE);
 
 		// If there are no arguments, emit an appropriate usage message.
 		//

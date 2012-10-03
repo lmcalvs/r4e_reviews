@@ -85,7 +85,7 @@ public class R4EUILegendDialog extends PopupDialog {
 	@Override
 	public int open() {
 		final int open = super.open();
-//		getShell().setLocation(getShell().getLocation().x, getShell().getLocation().y+20);
+//		getShell().setLocation(getShell().getLocations().x, getShell().getLocations().y+20);
 		getShell().setFocus();
 		return open;
 	}

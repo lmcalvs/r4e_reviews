@@ -9,12 +9,13 @@
  * Description:
  * 
  * Contributors:
- *    Alvaro Sanchez-Leon - Initial API and implementation
+ * Alvaro Sanchez-Leon  - Initial API and implementation
  * 
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.drules.impl;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -24,7 +25,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewComponentImpl;
+import org.eclipse.mylyn.reviews.internal.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
@@ -42,7 +43,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
  *
  * @generated
  */
-public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDesignRuleArea {
+public class R4EDesignRuleAreaImpl extends ReviewComponent implements R4EDesignRuleArea {
 	/**
 	 * The cached value of the '{@link #getViolations() <em>Violations</em>}' containment reference list. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
@@ -94,7 +95,7 @@ public class R4EDesignRuleAreaImpl extends ReviewComponentImpl implements R4EDes
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<R4EDesignRuleViolation> getViolations() {
+	public List<R4EDesignRuleViolation> getViolations() {
 		if (violations == null) {
 			violations = new EObjectContainmentEList.Resolving<R4EDesignRuleViolation>(R4EDesignRuleViolation.class, this, DRModelPackage.R4E_DESIGN_RULE_AREA__VIOLATIONS);
 		}

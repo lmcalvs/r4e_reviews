@@ -89,14 +89,6 @@ public interface TransResPackage extends EPackage {
 	int REVIEW_GROUP_RES__FRAGMENT_VERSION = RModelPackage.R4E_REVIEW_GROUP__FRAGMENT_VERSION;
 
 	/**
-	 * The feature id for the '<em><b>Compatibility</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int REVIEW_GROUP_RES__COMPATIBILITY = RModelPackage.R4E_REVIEW_GROUP__COMPATIBILITY;
-
-	/**
 	 * The feature id for the '<em><b>Reviews</b></em>' containment reference list. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 * 
@@ -271,14 +263,6 @@ public interface TransResPackage extends EPackage {
 	int REVIEW_RES__FRAGMENT_VERSION = RModelPackage.R4E_FORMAL_REVIEW__FRAGMENT_VERSION;
 
 	/**
-	 * The feature id for the '<em><b>Compatibility</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int REVIEW_RES__COMPATIBILITY = RModelPackage.R4E_FORMAL_REVIEW__COMPATIBILITY;
-
-	/**
 	 * The feature id for the '<em><b>Topics</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -293,7 +277,7 @@ public interface TransResPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REVIEW_RES__REVIEW_ITEMS = RModelPackage.R4E_FORMAL_REVIEW__REVIEW_ITEMS;
+	int REVIEW_RES__REVIEW_ITEMS = RModelPackage.R4E_FORMAL_REVIEW__ITEMS;
 
 	/**
 	 * The feature id for the '<em><b>Review Task</b></em>' containment reference. <!-- begin-user-doc --> <!--

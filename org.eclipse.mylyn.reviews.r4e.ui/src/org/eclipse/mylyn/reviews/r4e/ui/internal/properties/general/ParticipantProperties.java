@@ -18,9 +18,9 @@
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.general;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map.Entry;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
@@ -206,16 +206,16 @@ public class ParticipantProperties extends ModelElementProperties {
 	 * @return String
 	 */
 	private String mapUserRole(R4EUserRole aRole) {
-		if (aRole.equals(R4EUserRole.R4E_ROLE_AUTHOR)) {
+		if (aRole.equals(R4EUserRole.AUTHOR)) {
 			return AUTHOR;
 		}
-		if (aRole.equals(R4EUserRole.R4E_ROLE_LEAD)) {
+		if (aRole.equals(R4EUserRole.LEAD)) {
 			return LEAD;
 		}
-		if (aRole.equals(R4EUserRole.R4E_ROLE_ORGANIZER)) {
+		if (aRole.equals(R4EUserRole.ORGANIZER)) {
 			return ORGANIZER;
 		}
-		if (aRole.equals(R4EUserRole.R4E_ROLE_REVIEWER)) {
+		if (aRole.equals(R4EUserRole.REVIEWER)) {
 			return REVIEWER;
 		} else {
 			return "";
@@ -241,7 +241,7 @@ public class ParticipantProperties extends ModelElementProperties {
 			return Integer.valueOf(((R4EUIParticipant) getElement()).getParticipant().getAddedItems().size());
 		} else if (PARTICIPANT_NUM_ANOMALIES_ID.equals(aId)) {
 			int numAnomalies = 0;
-			final EList<R4EComment> comments = ((R4EUIParticipant) getElement()).getParticipant().getAddedComments();
+			final List<R4EComment> comments = ((R4EUIParticipant) getElement()).getParticipant().getAddedComments();
 			final int commentsSize = comments.size();
 			for (int i = 0; i < commentsSize; i++) {
 				if (comments.get(i) instanceof R4EAnomaly) {
@@ -251,7 +251,7 @@ public class ParticipantProperties extends ModelElementProperties {
 			return Integer.valueOf(numAnomalies);
 		} else if (PARTICIPANT_NUM_COMMENTS_ID.equals(aId)) {
 			int numComments = 0;
-			final EList<R4EComment> comments = ((R4EUIParticipant) getElement()).getParticipant().getAddedComments();
+			final List<R4EComment> comments = ((R4EUIParticipant) getElement()).getParticipant().getAddedComments();
 			final int commentsSize = comments.size();
 			for (int i = 0; i < commentsSize; i++) {
 				if (!(comments.get(i) instanceof R4EAnomaly)) {
@@ -263,16 +263,13 @@ public class ParticipantProperties extends ModelElementProperties {
 			return ((R4EUIParticipant) getElement()).getParticipantDetails();
 		} else if (PARTICIPANT_TIME_SPENT_ID.equals(aId)) {
 			final R4EParticipant modelUser = ((R4EUIParticipant) getElement()).getParticipant();
-			final int numTimeEntries = modelUser.getTimeLog().size();
 			int totalTimeSpent = 0;
-			Entry<Date, Integer> timeEntry = null;
-			for (int i = 0; i < numTimeEntries; i++) {
-				timeEntry = modelUser.getTimeLog().get(i);
+			for (Entry<Date, Integer> timeEntry : modelUser.getTimeLog().entrySet()) {
 				totalTimeSpent += timeEntry.getValue().intValue();
 			}
 			return Integer.toString(totalTimeSpent);
 		} else if (PARTICIPANT_ROLES_ID.equals(aId)) {
-			final EList<R4EUserRole> roles = ((R4EUIParticipant) getElement()).getParticipant().getRoles();
+			final List<R4EUserRole> roles = ((R4EUIParticipant) getElement()).getParticipant().getRoles();
 			final StringBuilder rolesStr = new StringBuilder();
 			for (R4EUserRole role : roles) {
 				rolesStr.append(mapUserRole(role) + ", ");

@@ -24,9 +24,8 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.frame.core.model.Topic;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.core.model.ITopic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EParticipant;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
@@ -197,31 +196,31 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * @return String
 	 */
 	public String getRoleIconPath(R4EReviewType aType) {
-		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+		if (aType.equals(R4EReviewType.BASIC)) {
 			return PARTICIPANT_ICON_FILE;
 		} else {
-			final EList<R4EUserRole> roles = fParticipant.getRoles();
+			final List<R4EUserRole> roles = fParticipant.getRoles();
 			//First check for Lead
 			for (R4EUserRole role : roles) {
-				if (role.equals(R4EUserRole.R4E_ROLE_LEAD)) {
+				if (role.equals(R4EUserRole.LEAD)) {
 					return PARTICIPANT_LEAD_ICON_FILE;
 				}
 			}
 			//Next Organizer
 			for (R4EUserRole role : roles) {
-				if (role.equals(R4EUserRole.R4E_ROLE_ORGANIZER)) {
+				if (role.equals(R4EUserRole.ORGANIZER)) {
 					return PARTICIPANT_ORGANIZER_ICON_FILE;
 				}
 			}
 			//Next Author
 			for (R4EUserRole role : roles) {
-				if (role.equals(R4EUserRole.R4E_ROLE_AUTHOR)) {
+				if (role.equals(R4EUserRole.AUTHOR)) {
 					return PARTICIPANT_AUTHOR_ICON_FILE;
 				}
 			}
 			//Finally Reviewer
 			for (R4EUserRole role : roles) {
-				if (role.equals(R4EUserRole.R4E_ROLE_REVIEWER)) {
+				if (role.equals(R4EUserRole.REVIEWER)) {
 					return PARTICIPANT_REVIEWER_ICON_FILE;
 				}
 			}
@@ -234,19 +233,19 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * Method getRoles.
 	 * 
 	 * @param aRoles
-	 *            EList<R4EUserRole>
+	 *            List<R4EUserRole>
 	 * @return String[]
 	 */
-	public String[] getRoles(EList<R4EUserRole> aRoles) {
+	public String[] getRoles(List<R4EUserRole> aRoles) {
 		final List<String> roles = new ArrayList<String>();
 		for (R4EUserRole role : aRoles) {
-			if (role.getValue() == R4EUserRole.R4E_ROLE_ORGANIZER_VALUE) {
+			if (role.getValue() == R4EUserRole.ORGANIZER_VALUE) {
 				roles.add(R4EUIConstants.USER_ROLE_ORGANIZER);
-			} else if (role.getValue() == R4EUserRole.R4E_ROLE_LEAD_VALUE) {
+			} else if (role.getValue() == R4EUserRole.LEAD_VALUE) {
 				roles.add(R4EUIConstants.USER_ROLE_LEAD);
-			} else if (role.getValue() == R4EUserRole.R4E_ROLE_AUTHOR_VALUE) {
+			} else if (role.getValue() == R4EUserRole.AUTHOR_VALUE) {
 				roles.add(R4EUIConstants.USER_ROLE_AUTHOR);
-			} else if (role.getValue() == R4EUserRole.R4E_ROLE_REVIEWER_VALUE) {
+			} else if (role.getValue() == R4EUserRole.REVIEWER_VALUE) {
 				roles.add(R4EUIConstants.USER_ROLE_REVIEWER);
 			}
 		}
@@ -262,14 +261,14 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 */
 	public static R4EUserRole mapStringToRole(String aRoleStr) {
 		if (aRoleStr.equals(R4EUIConstants.USER_ROLE_ORGANIZER)) {
-			return R4EUserRole.R4E_ROLE_ORGANIZER;
+			return R4EUserRole.ORGANIZER;
 		} else if (aRoleStr.equals(R4EUIConstants.USER_ROLE_LEAD)) {
-			return R4EUserRole.R4E_ROLE_LEAD;
+			return R4EUserRole.LEAD;
 		}
 		if (aRoleStr.equals(R4EUIConstants.USER_ROLE_AUTHOR)) {
-			return R4EUserRole.R4E_ROLE_AUTHOR;
+			return R4EUserRole.AUTHOR;
 		} else if (aRoleStr.equals(R4EUIConstants.USER_ROLE_REVIEWER)) {
-			return R4EUserRole.R4E_ROLE_REVIEWER;
+			return R4EUserRole.REVIEWER;
 		}
 		return null;
 	}
@@ -282,14 +281,14 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * @return String
 	 */
 	public static String mapRoleToString(R4EUserRole aRole) {
-		if (aRole.equals(R4EUserRole.R4E_ROLE_ORGANIZER)) {
+		if (aRole.equals(R4EUserRole.ORGANIZER)) {
 			return R4EUIConstants.USER_ROLE_ORGANIZER;
-		} else if (aRole.equals(R4EUserRole.R4E_ROLE_LEAD)) {
+		} else if (aRole.equals(R4EUserRole.LEAD)) {
 			return R4EUIConstants.USER_ROLE_LEAD;
 		}
-		if (aRole.equals(R4EUserRole.R4E_ROLE_AUTHOR)) {
+		if (aRole.equals(R4EUserRole.AUTHOR)) {
 			return R4EUIConstants.USER_ROLE_AUTHOR;
-		} else if (aRole.equals(R4EUserRole.R4E_ROLE_REVIEWER)) {
+		} else if (aRole.equals(R4EUserRole.REVIEWER)) {
 			return R4EUIConstants.USER_ROLE_REVIEWER;
 		}
 		return null;
@@ -333,7 +332,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
 	@Override
-	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public void setModelData(IReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		//Set data in model element
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fParticipant,
 				R4EUIModelController.getReviewer());
@@ -407,20 +406,20 @@ public class R4EUIParticipant extends R4EUIModelElement {
 				&& !isAssigned(fParticipant.getId(), true)
 				&& !isAnomalyCreator()
 				&& !isReadOnly()
-				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
+				&& !(((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
 
 			IR4EUIModelElement parentReview = this.getParent().getParent();
 			if (parentReview instanceof R4EUIReviewBasic) {
 				//Don't allow to remove the element if this is the last review lead in the current Review
-				if (fParticipant.getRoles().contains(R4EUserRole.R4E_ROLE_LEAD)) {
-					if (reviewerRoleSize((R4EUIReviewBasic) parentReview, R4EUserRole.R4E_ROLE_LEAD) < 2) {
+				if (fParticipant.getRoles().contains(R4EUserRole.LEAD)) {
+					if (reviewerRoleSize((R4EUIReviewBasic) parentReview, R4EUserRole.LEAD) < 2) {
 						//This is the only review lead left, it shall not be disabled
 						return false;
 					}
 				}
 
-				if (fParticipant.getRoles().contains(R4EUserRole.R4E_ROLE_ORGANIZER)) {
-					if (reviewerRoleSize((R4EUIReviewBasic) parentReview, R4EUserRole.R4E_ROLE_ORGANIZER) < 2) {
+				if (fParticipant.getRoles().contains(R4EUserRole.ORGANIZER)) {
+					if (reviewerRoleSize((R4EUIReviewBasic) parentReview, R4EUserRole.ORGANIZER) < 2) {
 						//This is the only organiser left, it shall not be disabled
 						return false;
 					}
@@ -448,7 +447,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 		int roleCount = 0;
 		for (R4EParticipant participant : participants) {
 			//Don't consider disabled participants within the count
-			EList<R4EUserRole> roles = participant.getRoles();
+			List<R4EUserRole> roles = participant.getRoles();
 			for (R4EUserRole role : roles) {
 				if (role.equals(aRole)) {
 					roleCount++;
@@ -481,9 +480,9 @@ public class R4EUIParticipant extends R4EUIModelElement {
 	 * @return boolean
 	 */
 	private boolean isAnomalyCreator() {
-		final EList<Topic> anomalies = ((R4EUIReviewBasic) getParent().getParent()).getReview().getTopics();
-		for (Topic anomaly : anomalies) {
-			if (anomaly.isEnabled() && anomaly.getUser().equals(fParticipant)) {
+		final List<ITopic> anomalies = ((R4EUIReviewBasic) getParent().getParent()).getReview().getTopics();
+		for (ITopic anomaly : anomalies) {
+			if (anomaly.getAuthor().equals(fParticipant)) {
 				return true;
 			}
 		}
@@ -526,7 +525,7 @@ public class R4EUIParticipant extends R4EUIModelElement {
 		if (isEnabled()
 				|| isReadOnly()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+						R4EReviewPhase.COMPLETED)) {
 			return false;
 		}
 		return true;

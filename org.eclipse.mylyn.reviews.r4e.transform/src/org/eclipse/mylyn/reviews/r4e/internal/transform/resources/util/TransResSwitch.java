@@ -15,18 +15,16 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.mylyn.reviews.frame.core.model.Review;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup;
-
-import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
+import org.eclipse.mylyn.reviews.core.model.IReview;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.core.model.IReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
-
-import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.*;
+import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes;
+import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes;
+import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackage;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
@@ -95,37 +93,44 @@ public class TransResSwitch<T> {
 		case TransResPackage.REVIEW_GROUP_RES: {
 			ReviewGroupRes reviewGroupRes = (ReviewGroupRes) theEObject;
 			T result = caseReviewGroupRes(reviewGroupRes);
-			if (result == null)
+			if (result == null) {
 				result = caseR4EReviewGroup(reviewGroupRes);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseReviewGroup(reviewGroupRes);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseR4EReviewComponent(reviewGroupRes);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseReviewComponent(reviewGroupRes);
-			if (result == null)
-				result = caseSubModelRoot(reviewGroupRes);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case TransResPackage.REVIEW_RES: {
 			ReviewRes reviewRes = (ReviewRes) theEObject;
 			T result = caseReviewRes(reviewRes);
-			if (result == null)
+			if (result == null) {
 				result = caseR4EFormalReview(reviewRes);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseR4EReview(reviewRes);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseReview(reviewRes);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseR4EReviewComponent(reviewRes);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseReviewComponent(reviewRes);
-			if (result == null)
-				result = caseSubModelRoot(reviewRes);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:
@@ -173,22 +178,7 @@ public class TransResSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseReviewComponent(ReviewComponent object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Sub Model Root</em>'. <!-- begin-user-doc
-	 * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc
-	 * -->
-	 * 
-	 * @param object
-	 *            the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Sub Model Root</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseSubModelRoot(SubModelRoot object) {
+	public T caseReviewComponent(IReviewComponent object) {
 		return null;
 	}
 
@@ -202,7 +192,7 @@ public class TransResSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseReviewGroup(ReviewGroup object) {
+	public T caseReviewGroup(IReviewGroup object) {
 		return null;
 	}
 
@@ -246,7 +236,7 @@ public class TransResSwitch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseReview(Review object) {
+	public T caseReview(IReview object) {
 		return null;
 	}
 

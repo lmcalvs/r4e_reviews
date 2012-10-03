@@ -19,7 +19,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.properties.tabbed;
 
-import org.eclipse.emf.common.util.EList;
+import java.util.List;
+
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
@@ -176,7 +177,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 			fPositionText.setText("");
 		}
 
-		final EList<String> assignedParticipants = uiContent.getContent().getAssignedTo();
+		final List<String> assignedParticipants = uiContent.getContent().getAssignedTo();
 		fAssignedToText.setText(UIUtils.formatAssignedParticipants(assignedParticipants));
 		setEnabledFields();
 		fRefreshInProgress = false;
@@ -192,7 +193,7 @@ public class ContentsTabPropertySection extends ModelElementTabPropertySection {
 				|| !fProperties.getElement().isEnabled()
 				|| null == R4EUIModelController.getActiveReview()
 				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+						R4EReviewPhase.COMPLETED)) {
 			fPositionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fAssignedToText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fAssignedToButton.setEnabled(false);

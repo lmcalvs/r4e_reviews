@@ -23,10 +23,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -273,11 +273,11 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		if (buttonId == IDialogConstants.OK_ID) {
 			//Review type (no validation needed as this is a read-only combo box
 			if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_FORMAL)) {
-				fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_FORMAL;
+				fReviewTypeValue = R4EReviewType.FORMAL;
 			} else if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_INFORMAL)) {
-				fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_INFORMAL;
+				fReviewTypeValue = R4EReviewType.INFORMAL;
 			} else if (fReviewType.getText().equals(R4EUIConstants.REVIEW_TYPE_BASIC)) {
-				fReviewTypeValue = R4EReviewType.R4E_REVIEW_TYPE_BASIC;
+				fReviewTypeValue = R4EReviewType.BASIC;
 			} else {
 				//Validation of input failed
 				final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
@@ -576,7 +576,7 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		label.setToolTipText(R4EUIConstants.REVIEW_PROJECT_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
 		fProjectsCombo = new CCombo(extraSectionClient, SWT.BORDER | SWT.READ_ONLY);
-		EList<String> availableProjects = parentGroup.getReviewGroup().getAvailableProjects();
+		List<String> availableProjects = parentGroup.getReviewGroup().getAvailableProjects();
 		final String[] projects = availableProjects.toArray(new String[availableProjects.size()]);
 		if (0 == projects.length) {
 			fProjectsCombo.setEnabled(false);
@@ -595,7 +595,7 @@ public class ReviewInputDialog extends FormDialog implements IReviewInputDialog 
 		label = toolkit.createLabel(extraSectionClient, ADD_REVIEW_COMPONENTS_DIALOG_VALUE);
 		label.setToolTipText(R4EUIConstants.REVIEW_COMPONENTS_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		EList<String> componentsList = parentGroup.getReviewGroup().getAvailableComponents();
+		List<String> componentsList = parentGroup.getReviewGroup().getAvailableComponents();
 		final String[] components = componentsList.toArray(new String[componentsList.size()]);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;

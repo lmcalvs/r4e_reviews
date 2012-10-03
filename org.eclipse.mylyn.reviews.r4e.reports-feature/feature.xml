@@ -27,19 +27,9 @@
    <license url="license.html">
       %license
    </license>
-
+   
    <requires>
-      <import plugin="org.eclipse.birt.report.engine"/>
-      <import plugin="org.eclipse.core.filesystem"/>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.ui.editors"/>
-      <import plugin="org.eclipse.mylyn.reviews.frame.core" version="0.9.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.mylyn.reviews.r4e.core" version="0.9.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.emf.ecore" version="2.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.emf.ecore.xmi" version="2.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.runtime" version="3.5.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.mylyn.reviews.r4e.feature" version="0.9.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.mylyn.reviews.r4e.feature" version="0.13.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.birt" version="2.6.2" match="greaterOrEqual"/>
    </requires>
 

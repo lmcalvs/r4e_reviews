@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -14,7 +14,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-import org.eclipse.mylyn.reviews.frame.core.model.CommentType;
+import org.eclipse.mylyn.reviews.core.model.ICommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
 
 /**
@@ -31,7 +31,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
  * @model
  * @generated
  */
-public interface R4ECommentType extends CommentType {
+public interface R4ECommentType extends ICommentType {
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
 	 * The literals are from the enumeration {@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass}.

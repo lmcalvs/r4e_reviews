@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
-<r4ecore:R4EReview xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_o6x7UERPEeC0spkCnDexvg" name="ReviewSampl" project="P1" entryCriteria="Sample Entry Cryteria" extraNotes="Sample extra notes" objectives="Sample Objectives" referenceMaterial="sample reference material" startDate="1867-07-01T00:00:00.000-0500" endDate="1867-07-03T00:00:00.000-0500" type="R4E_REVIEW_TYPE_INFORMAL">
+<r4ecore:R4EReview xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_o6x7UERPEeC0spkCnDexvg" name="ReviewSampl" project="P1" entryCriteria="Sample Entry Cryteria" extraNotes="Sample extra notes" objectives="Sample Objectives" referenceMaterial="sample reference material" startDate="1867-07-01T00:00:00.000-0500" endDate="1867-07-03T00:00:00.000-0500" fragmentVersion="0.13.0" type="INFORMAL">
   <reviewTask xsi:type="r4ecore:R4ETaskReference" xmi:id="_pI2zkkRPEeC0spkCnDexvg" taskId="324328" repositoryURL="https://bugs.eclipse.org/bugs/show_bug.cgi?id=324328"/>
-  <state xsi:type="r4ecore:R4EReviewState" xmi:id="_pI2zkURPEeC0spkCnDexvg" state="R4E_REVIEW_PHASE_PREPARATION"/>
+  <state xsi:type="r4ecore:R4EReviewState" xmi:id="_pI2zkURPEeC0spkCnDexvg" state="PREPARATION"/>
   <components>Component1</components>
-  <decision xmi:id="_pI2zkERPEeC0spkCnDexvg" spentTime="120" value="R4E_REVIEW_DECISION_ACCEPTED"/>
+  <decision xmi:id="_pI2zkERPEeC0spkCnDexvg" spentTime="120" value="ACCEPTED"/>
   <createdBy href="Tom10_comments.xrer#_o6yiYkRPEeC0spkCnDexvg"/>
 </r4ecore:R4EReview>

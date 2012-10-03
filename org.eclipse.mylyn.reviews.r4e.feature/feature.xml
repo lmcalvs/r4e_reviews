@@ -27,40 +27,14 @@
    <license url="license.html">
       %license
    </license>
-
-   <requires>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.core.resources" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jgit" version="0.9.1" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.compare" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.team.ui" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.egit.core" version="0.9.1" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui" version="3.6.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.team.core" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.emf.ecore.xmi" version="2.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.ide" version="3.6.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jface.text" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.reviews.frame.core" version="0.10.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.reviews.r4e.core" version="0.10.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.views.properties.tabbed" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.emf.ecore" version="2.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.expressions" version="3.4.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.versions.core" version="0.9.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.versions.ui" version="0.9.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.reviews.notifications" version="0.10.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.runtime" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.commons.core" version="3.3.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.mylyn.reviews.VCalendar" version="0.10.0" match="greaterOrEqual"/>
-      <import plugin="javax.activation" version="1.1.0" match="greaterOrEqual"/>
-      <import plugin="javax.mail" version="1.4.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.forms"/>
-      <import feature="org.eclipse.emf.ecore" version="2.5.0" match="compatible"/>
-      <import feature="org.eclipse.egit" version="1.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.mylyn.versions" version="0.9.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.mylyn.commons" version="3.7.0" match="compatible"/>
-   </requires>
-
+   
+   <requires>		
+		<import feature="org.eclipse.emf.ecore" version="2.5.0" match="compatible"/>		
+		<import feature="org.eclipse.egit" version="1.0.0" match="greaterOrEqual"/>		
+		<import feature="org.eclipse.mylyn.versions" version="1.1.0" match="greaterOrEqual"/>		
+		<import feature="org.eclipse.mylyn.commons" version="3.7.0" match="compatible"/>		
+	</requires>
+		
    <plugin
          id="org.eclipse.mylyn.reviews.r4e.core"
          download-size="0"
@@ -76,13 +50,6 @@
 
    <plugin
          id="org.eclipse.mylyn.reviews.r4e.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.mylyn.reviews.frame.core"
          download-size="0"
          install-size="0"
          version="0.0.0"

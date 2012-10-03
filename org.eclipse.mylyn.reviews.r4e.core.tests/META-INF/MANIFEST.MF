@@ -16,7 +16,6 @@ Export-Package: org.eclipse.egit.core.test;x-internal:=true,
  org.eclipse.mylyn.reviews.r4e.core.utils.filePermission;x-internal:=true
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.mylyn.reviews.r4e.core,
- org.eclipse.mylyn.reviews.frame.core,
  org.eclipse.emf.ecore.xmi,
  org.junit4,
  org.apache.commons.io;bundle-version="2.0.1",
@@ -28,5 +27,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jdt.core;bundle-version="3.5.0",
  org.eclipse.jdt.launching;bundle-version="3.5.0",
  org.eclipse.mylyn.versions.core;bundle-version="0.1.0",
- org.eclipse.mylyn.reviews.r4e.transform;bundle-version="0.10.0"
+ org.eclipse.mylyn.reviews.r4e.transform;bundle-version="0.10.0",
+ org.eclipse.mylyn.reviews.core;bundle-version="1.1.0"
 Bundle-ActivationPolicy: lazy

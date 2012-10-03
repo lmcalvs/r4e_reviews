@@ -9,7 +9,7 @@
  * Description:
  * 
  * Contributors:
- *    Alvaro Sanchez-Leon - Initial API and implementation
+ * Alvaro Sanchez-Leon  - Initial API and implementation
  * 
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.drules;
@@ -29,142 +29,144 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum R4EDesignRuleClass implements Enumerator {
 	/**
-	 * The '<em><b>R4E CLASS ERRONEOUS</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_CLASS_ERRONEOUS_VALUE
+	 * The '<em><b>Erroneous</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ERRONEOUS_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	R4E_CLASS_ERRONEOUS(0, "R4E_CLASS_ERRONEOUS", "R4E_CLASS_ERRONEOUS"),
+	ERRONEOUS(0, "Erroneous", "ERRONEOUS"), /**
+	 * The '<em><b>Superfluous</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SUPERFLUOUS_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	SUPERFLUOUS(1, "Superfluous", "SUPERFLUOUS"), /**
+	 * The '<em><b>Improvement</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #IMPROVEMENT_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	IMPROVEMENT(2, "Improvement", "IMPROVEMENT"), /**
+	 * The '<em><b>Question</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #QUESTION_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	QUESTION(3, "Question", "QUESTION"), /**
+	 * The '<em><b>Comment</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #COMMENT_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	COMMENT(4, "Comment", "COMMENT"), /**
+	 * The '<em><b>Missing</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #MISSING_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	MISSING(5, "Missing", "MISSING");
 
 	/**
-	 * The '<em><b>R4E CLASS SUPERFLUOUS</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_CLASS_SUPERFLUOUS_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	R4E_CLASS_SUPERFLUOUS(1, "R4E_CLASS_SUPERFLUOUS", "R4E_CLASS_SUPERFLUOUS"), /**
-	 * The '<em><b>R4E CLASS IMPROVEMENT</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_CLASS_IMPROVEMENT_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	R4E_CLASS_IMPROVEMENT(2, "R4E_CLASS_IMPROVEMENT", "R4E_CLASS_IMPROVEMENT"),
-
-	/**
-	 * The '<em><b>R4E CLASS QUESTION</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_CLASS_QUESTION_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	R4E_CLASS_QUESTION(3, "R4E_CLASS_QUESTION", "R4E_CLASS_QUESTION"), /**
-	 * The '<em><b>R4E CLASS COMMENT</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_CLASS_COMMENT_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	R4E_CLASS_COMMENT(4, "R4E_CLASS_COMMENT", "R4E_CLASS_COMMENT"), /**
-	 * The '<em><b>R4E CLASS MISSING</b></em>' literal object.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #R4E_CLASS_MISSING_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	R4E_CLASS_MISSING(5, "R4E_CLASS_MISSING", "R4E_CLASS_MISSING");
-
-	/**
-	 * The '<em><b>R4E CLASS ERRONEOUS</b></em>' literal value.
+	 * The '<em><b>Erroneous</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS ERRONEOUS</b></em>' literal object isn't clear, there really should be more
-	 * of a description here...
+	 * If the meaning of '<em><b>Erroneous</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_CLASS_ERRONEOUS
-	 * @model
+	 * @see #ERRONEOUS
+	 * @model name="Erroneous" literal="ERRONEOUS"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_CLASS_ERRONEOUS_VALUE = 0;
+	public static final int ERRONEOUS_VALUE = 0;
 
 	/**
-	 * The '<em><b>R4E CLASS SUPERFLUOUS</b></em>' literal value.
+	 * The '<em><b>Superfluous</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS SUPERFLUOUS</b></em>' literal object isn't clear, there really should be more
-	 * of a description here...
+	 * If the meaning of '<em><b>Superfluous</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_CLASS_SUPERFLUOUS
-	 * @model
+	 * @see #SUPERFLUOUS
+	 * @model name="Superfluous" literal="SUPERFLUOUS"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_CLASS_SUPERFLUOUS_VALUE = 1;
+	public static final int SUPERFLUOUS_VALUE = 1;
 
 	/**
-	 * The '<em><b>R4E CLASS IMPROVEMENT</b></em>' literal value.
+	 * The '<em><b>Improvement</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS IMPROVEMENT</b></em>' literal object isn't clear, there really should be more
-	 * of a description here...
+	 * If the meaning of '<em><b>Improvement</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_CLASS_IMPROVEMENT
-	 * @model
+	 * @see #IMPROVEMENT
+	 * @model name="Improvement" literal="IMPROVEMENT"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_CLASS_IMPROVEMENT_VALUE = 2;
+	public static final int IMPROVEMENT_VALUE = 2;
 
 	/**
-	 * The '<em><b>R4E CLASS QUESTION</b></em>' literal value.
+	 * The '<em><b>Question</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS QUESTION</b></em>' literal object isn't clear, there really should be more of
-	 * a description here...
+	 * If the meaning of '<em><b>Question</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_CLASS_QUESTION
-	 * @model
+	 * @see #QUESTION
+	 * @model name="Question" literal="QUESTION"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_CLASS_QUESTION_VALUE = 3;
+	public static final int QUESTION_VALUE = 3;
 
 	/**
-	 * The '<em><b>R4E CLASS COMMENT</b></em>' literal value.
+	 * The '<em><b>Comment</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS COMMENT</b></em>' literal object isn't clear, there really should be more of
-	 * a description here...
+	 * If the meaning of '<em><b>Comment</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_CLASS_COMMENT
-	 * @model
+	 * @see #COMMENT
+	 * @model name="Comment" literal="COMMENT"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_CLASS_COMMENT_VALUE = 4;
+	public static final int COMMENT_VALUE = 4;
 
 	/**
-	 * The '<em><b>R4E CLASS MISSING</b></em>' literal value.
+	 * The '<em><b>Missing</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>R4E CLASS MISSING</b></em>' literal object isn't clear, there really should be more of
-	 * a description here...
+	 * If the meaning of '<em><b>Missing</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #R4E_CLASS_MISSING
-	 * @model
+	 * @see #MISSING
+	 * @model name="Missing" literal="MISSING"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int R4E_CLASS_MISSING_VALUE = 5;
+	public static final int MISSING_VALUE = 5;
 
 	/**
 	 * An array of all the '<em><b>R4E Design Rule Class</b></em>' enumerators.
@@ -173,12 +175,12 @@ public enum R4EDesignRuleClass implements Enumerator {
 	 * @generated
 	 */
 	private static final R4EDesignRuleClass[] VALUES_ARRAY = new R4EDesignRuleClass[] {
-			R4E_CLASS_ERRONEOUS,
-			R4E_CLASS_SUPERFLUOUS,
-			R4E_CLASS_IMPROVEMENT,
-			R4E_CLASS_QUESTION,
-			R4E_CLASS_COMMENT,
-			R4E_CLASS_MISSING,
+			ERRONEOUS,
+			SUPERFLUOUS,
+			IMPROVEMENT,
+			QUESTION,
+			COMMENT,
+			MISSING,
 		};
 
 	/**
@@ -229,12 +231,12 @@ public enum R4EDesignRuleClass implements Enumerator {
 	 */
 	public static R4EDesignRuleClass get(int value) {
 		switch (value) {
-			case R4E_CLASS_ERRONEOUS_VALUE: return R4E_CLASS_ERRONEOUS;
-			case R4E_CLASS_SUPERFLUOUS_VALUE: return R4E_CLASS_SUPERFLUOUS;
-			case R4E_CLASS_IMPROVEMENT_VALUE: return R4E_CLASS_IMPROVEMENT;
-			case R4E_CLASS_QUESTION_VALUE: return R4E_CLASS_QUESTION;
-			case R4E_CLASS_COMMENT_VALUE: return R4E_CLASS_COMMENT;
-			case R4E_CLASS_MISSING_VALUE: return R4E_CLASS_MISSING;
+			case ERRONEOUS_VALUE: return ERRONEOUS;
+			case SUPERFLUOUS_VALUE: return SUPERFLUOUS;
+			case IMPROVEMENT_VALUE: return IMPROVEMENT;
+			case QUESTION_VALUE: return QUESTION;
+			case COMMENT_VALUE: return COMMENT;
+			case MISSING_VALUE: return MISSING;
 		}
 		return null;
 	}

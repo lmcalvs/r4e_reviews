@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -14,8 +14,8 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E File Context</b></em>'. <!-- end-user-doc
@@ -36,7 +36,6 @@ import org.eclipse.emf.common.util.EMap;
  * @generated
  */
 public interface R4EFileContext extends R4EIDComponent {
-
 	/**
 	 * Returns the value of the '<em><b>Deltas</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta}.
@@ -51,13 +50,14 @@ public interface R4EFileContext extends R4EIDComponent {
 	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
-	EList<R4EDelta> getDeltas();
+	List<R4EDelta> getDeltas();
 
 	/**
 	 * Returns the value of the '<em><b>Base</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Base</em>' reference isn't clear, there really should be more of a description here...
+	 * If the meaning of the '<em>Base</em>' containment reference isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Base</em>' containment reference.
@@ -81,8 +81,8 @@ public interface R4EFileContext extends R4EIDComponent {
 	 * Returns the value of the '<em><b>Target</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Target</em>' reference isn't clear, there really should be more of a description
-	 * here...
+	 * If the meaning of the '<em>Target</em>' containment reference isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target</em>' containment reference.
@@ -143,5 +143,6 @@ public interface R4EFileContext extends R4EIDComponent {
 	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapKeyToInfoAttributes<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	EMap<String, String> getInfoAtt();
+	Map<String, String> getInfoAtt();
+
 } // R4EFileContext

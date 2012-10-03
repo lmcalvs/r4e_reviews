@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -15,10 +15,11 @@
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.mylyn.reviews.frame.core.model.Review;
+import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
+import org.eclipse.mylyn.reviews.core.model.IReview;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Review</b></em>'. <!-- end-user-doc -->
@@ -37,6 +38,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.Review;
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getEndDate <em>End Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getDueDate <em>Due Date</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getModifiedDate <em>Modified Date</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getAnomalyTemplate <em>Anomaly Template</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getUsersMap <em>Users Map</em>}</li>
@@ -50,7 +52,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.Review;
  * @model
  * @generated
  */
-public interface R4EReview extends Review, R4EReviewComponent {
+public interface R4EReview extends IReview, R4EReviewComponent, IModelVersioning {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -114,7 +116,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * @model
 	 * @generated
 	 */
-	EList<String> getComponents();
+	List<String> getComponents();
 
 	/**
 	 * Returns the value of the '<em><b>Entry Criteria</b></em>' attribute.
@@ -220,8 +222,8 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Decision</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Decision</em>' reference isn't clear, there really should be more of a description
-	 * here...
+	 * If the meaning of the '<em>Decision</em>' containment reference isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Decision</em>' containment reference.
@@ -317,11 +319,37 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	void setDueDate(Date value);
 
 	/**
+	 * Returns the value of the '<em><b>Modified Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Modified Date</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Modified Date</em>' attribute.
+	 * @see #setModifiedDate(Date)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_ModifiedDate()
+	 * @model
+	 * @generated
+	 */
+	Date getModifiedDate();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getModifiedDate <em>Modified Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Modified Date</em>' attribute.
+	 * @see #getModifiedDate()
+	 * @generated
+	 */
+	void setModifiedDate(Date value);
+
+	/**
 	 * Returns the value of the '<em><b>Anomaly Template</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Anomaly Template</em>' reference isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of the '<em>Anomaly Template</em>' containment reference isn't clear, there really should be more
+	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Anomaly Template</em>' containment reference.
@@ -383,49 +411,7 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapToUsers<org.eclipse.emf.ecore.EString, org.eclipse.mylyn.reviews.r4e.core.model.R4EUser>" transient="true" derived="true"
 	 * @generated
 	 */
-	EMap<String, R4EUser> getUsersMap();
-
-	/**
-	 * Returns the value of the '<em><b>Ids Map</b></em>' map.
-	 * The key is of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EID},
-	 * and the value is of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent},
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Ids Map</em>' reference list isn't clear, there really should be more of a description
-	 * here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Ids Map</em>' map.
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_IdsMap()
-	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapIDToComponent<org.eclipse.mylyn.reviews.r4e.core.model.R4EID, org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent>" transient="true" derived="true"
-	 * @generated
-	 */
-	EMap<R4EID, R4EIDComponent> getIdsMap();
-
-	/**
-	 * Returns the value of the '<em><b>Active Meeting</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Active Meeting</em>' containment reference isn't clear, there really should be more of
-	 * a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Active Meeting</em>' containment reference.
-	 * @see #setActiveMeeting(R4EMeetingData)
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_ActiveMeeting()
-	 * @model containment="true" resolveProxies="true"
-	 * @generated
-	 */
-	R4EMeetingData getActiveMeeting();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getActiveMeeting <em>Active Meeting</em>}' containment reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Active Meeting</em>' containment reference.
-	 * @see #getActiveMeeting()
-	 * @generated
-	 */
-	void setActiveMeeting(R4EMeetingData value);
+	Map<String, R4EUser> getUsersMap();
 
 	/**
 	 * Returns the value of the '<em><b>Created By</b></em>' reference.
@@ -451,5 +437,46 @@ public interface R4EReview extends Review, R4EReviewComponent {
 	 * @generated
 	 */
 	void setCreatedBy(R4EUser value);
+
+	/**
+	 * Returns the value of the '<em><b>Ids Map</b></em>' map.
+	 * The key is of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EID},
+	 * and the value is of type {@link org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Ids Map</em>' map isn't clear, there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Ids Map</em>' map.
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_IdsMap()
+	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapIDToComponent<org.eclipse.mylyn.reviews.r4e.core.model.R4EID, org.eclipse.mylyn.reviews.r4e.core.model.R4EIDComponent>" transient="true" derived="true"
+	 * @generated
+	 */
+	Map<R4EID, R4EIDComponent> getIdsMap();
+
+	/**
+	 * Returns the value of the '<em><b>Active Meeting</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Active Meeting</em>' containment reference isn't clear, there really should be more of
+	 * a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Active Meeting</em>' containment reference.
+	 * @see #setActiveMeeting(R4EMeetingData)
+	 * @see org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage#getR4EReview_ActiveMeeting()
+	 * @model containment="true" resolveProxies="true"
+	 * @generated
+	 */
+	R4EMeetingData getActiveMeeting();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.mylyn.reviews.r4e.core.model.R4EReview#getActiveMeeting <em>Active Meeting</em>}' containment reference.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Active Meeting</em>' containment reference.
+	 * @see #getActiveMeeting()
+	 * @generated
+	 */
+	void setActiveMeeting(R4EMeetingData value);
 
 } // R4EReview

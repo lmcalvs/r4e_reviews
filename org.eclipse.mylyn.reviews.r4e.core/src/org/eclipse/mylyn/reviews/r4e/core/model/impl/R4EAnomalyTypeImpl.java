@@ -1,7 +1,6 @@
 /**
-/**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -18,7 +17,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.mylyn.reviews.frame.core.model.impl.CommentTypeImpl;
+import org.eclipse.mylyn.reviews.internal.core.model.CommentType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyType;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
@@ -34,7 +33,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * 
  * @generated
  */
-public class R4EAnomalyTypeImpl extends CommentTypeImpl implements R4EAnomalyType {
+public class R4EAnomalyTypeImpl extends CommentType implements R4EAnomalyType {
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
 	 * -->

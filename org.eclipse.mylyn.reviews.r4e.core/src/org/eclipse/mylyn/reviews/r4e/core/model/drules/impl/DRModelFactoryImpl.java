@@ -9,7 +9,7 @@
  * Description:
  * 
  * Contributors:
- *    Alvaro Sanchez-Leon - Initial API and implementation
+ * Alvaro Sanchez-Leon  - Initial API and implementation
  * 
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.drules.impl;
@@ -18,12 +18,16 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.*;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->

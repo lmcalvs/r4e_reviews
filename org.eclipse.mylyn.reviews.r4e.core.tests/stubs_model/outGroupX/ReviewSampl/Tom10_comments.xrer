@@ -9,13 +9,13 @@
     <addedItems href="Tom10_items.xrer#_pFZ28URPEeC0spkCnDexvg"/>
     <addedItems href="Tom10_items.xrer#_pFsx4URPEeC0spkCnDexvg"/>
     <reviewInstance href="ReviewSampl_review.xrer#_o6x7UERPEeC0spkCnDexvg"/>
-    <roles>R4E_ROLE_ORGANIZER</roles>
-    <roles>R4E_ROLE_LEAD</roles>
+    <roles>ORGANIZER</roles>
+    <roles>LEAD</roles>
     <timeLog xmi:id="_o_li0ERPEeC0spkCnDexvg" key="1867-07-01T00:00:00.000-0500" value="30"/>
     <timeLog xmi:id="_o_li0URPEeC0spkCnDexvg" key="1867-07-03T00:00:00.000-0500" value="30"/>
   </r4ecore:R4EParticipant>
-  <r4ecore:R4EAnomaly xmi:id="_pCpd4ERPEeC0spkCnDexvg" user="_o6yiYkRPEeC0spkCnDexvg" description="Tom10- Anomaly text here ....." title="This is sample Title - Anomaly" createdOn="1867-07-11T00:00:00.000-0500">
-    <location xsi:type="r4ecore:R4ETextContent" href="#_pC4HYERPEeC0spkCnDexvg"/>
+  <r4ecore:R4EAnomaly xmi:id="_pCpd4ERPEeC0spkCnDexvg" author="_o6yiYkRPEeC0spkCnDexvg" description="Tom10- Anomaly text here ....." title="This is sample Title - Anomaly" createdOn="1867-07-11T00:00:00.000-0500">
+    <locations xsi:type="r4ecore:R4ETextContent" href="#_pC4HYERPEeC0spkCnDexvg"/>
     <id xmi:id="_pCshMERPEeC0spkCnDexvg" sequenceID="1" userID="Tom10"/>
   </r4ecore:R4EAnomaly>
   <r4ecore:R4ETextContent xmi:id="_pC4HYERPEeC0spkCnDexvg" info="Write any information here">
@@ -25,11 +25,11 @@
     <file href="#_pDMQcERPEeC0spkCnDexvg"/>
   </r4ecore:R4EAnomalyTextPosition>
   <r4ecore:R4EFileVersion xmi:id="_pDMQcERPEeC0spkCnDexvg" platformURI="platform:/resource/projName/src/dir1/dir2" versionID="8" repositoryPath="/Dir1/Dir2" name="R4ETestFile"/>
-  <r4ecore:R4EComment xmi:id="_pDbhAERPEeC0spkCnDexvg" user="_o6yiYkRPEeC0spkCnDexvg" description="This is test comment number 1" createdOn="2011-03-01T17:02:46.928-0500">
+  <r4ecore:R4EComment xmi:id="_pDbhAERPEeC0spkCnDexvg" author="_o6yiYkRPEeC0spkCnDexvg" description="This is test comment number 1" createdOn="2011-03-01T17:02:46.928-0500">
     <id xmi:id="_pDbhAURPEeC0spkCnDexvg" sequenceID="2" userID="Tom10"/>
     <anomaly href="Jerry20_comments.xrer#_pDNekERPEeC0spkCnDexvg"/>
   </r4ecore:R4EComment>
-  <r4ecore:R4EComment xmi:id="_pDcvIURPEeC0spkCnDexvg" user="_o6yiYkRPEeC0spkCnDexvg" description="This is test comment number 2" createdOn="2011-03-01T17:02:46.930-0500">
+  <r4ecore:R4EComment xmi:id="_pDcvIURPEeC0spkCnDexvg" author="_o6yiYkRPEeC0spkCnDexvg" description="This is test comment number 2" createdOn="2011-03-01T17:02:46.930-0500">
     <type xsi:type="r4ecore:R4ECommentType" xmi:id="_pDcvIERPEeC0spkCnDexvg"/>
     <id xmi:id="_pDcvIkRPEeC0spkCnDexvg" sequenceID="3" userID="Tom10"/>
     <anomaly href="Jerry20_comments.xrer#_pDNekERPEeC0spkCnDexvg"/>

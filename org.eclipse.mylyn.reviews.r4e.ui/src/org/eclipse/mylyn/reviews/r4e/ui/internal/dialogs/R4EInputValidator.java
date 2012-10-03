@@ -22,7 +22,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs;
 import java.io.File;
 
 import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.mylyn.reviews.frame.core.model.Review;
+import org.eclipse.mylyn.reviews.core.model.IReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.utils.WildcardFileFilter;
@@ -148,7 +148,7 @@ public class R4EInputValidator implements IInputValidator {
 	 * @return String
 	 */
 	public String isReviewExists(String aReviewName, R4EUIReviewGroup aParentGroup) { // $codepro.audit.disable booleanMethodNamingConvention	
-		for (Review review : aParentGroup.getReviewGroup().getReviews()) {
+		for (IReview review : aParentGroup.getReviewGroup().getReviews()) {
 			if (((R4EReview) review).getName().equalsIgnoreCase(aReviewName)) {
 				return REVIEW_EXISTS_VALIDATION_ERROR_MESSAGE;
 			}

@@ -9,7 +9,7 @@
  * Description:
  * 
  * Contributors:
- *    Alvaro Sanchez-Leon - Initial API and implementation
+ * Alvaro Sanchez-Leon  - Initial API and implementation
  * 
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.drules.impl;
@@ -17,7 +17,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model.drules.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewComponentImpl;
+import org.eclipse.mylyn.reviews.internal.core.model.ReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleClass;
@@ -40,7 +40,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleRank;
  * 
  * @generated
  */
-public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignRule {
+public class R4EDesignRuleImpl extends ReviewComponent implements R4EDesignRule {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -67,7 +67,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4EDesignRuleRank RANK_EDEFAULT = R4EDesignRuleRank.R4E_RANK_NONE;
+	protected static final R4EDesignRuleRank RANK_EDEFAULT = R4EDesignRuleRank.NONE;
 
 	/**
 	 * The cached value of the '{@link #getRank() <em>Rank</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -87,7 +87,7 @@ public class R4EDesignRuleImpl extends ReviewComponentImpl implements R4EDesignR
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4EDesignRuleClass CLASS_EDEFAULT = R4EDesignRuleClass.R4E_CLASS_ERRONEOUS;
+	protected static final R4EDesignRuleClass CLASS_EDEFAULT = R4EDesignRuleClass.ERRONEOUS;
 
 	/**
 	 * The cached value of the '{@link #getClass_() <em>Class</em>}' attribute.

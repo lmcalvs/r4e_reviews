@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -14,8 +14,8 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -76,7 +76,7 @@ public interface R4EUserReviews extends EObject {
 	 * @model mapType="org.eclipse.mylyn.reviews.r4e.core.model.MapNameToReview<org.eclipse.emf.ecore.EString, org.eclipse.mylyn.reviews.r4e.core.model.R4EReview>"
 	 * @generated
 	 */
-	EMap<String, R4EReview> getInvitedToMap();
+	Map<String, R4EReview> getInvitedToMap();
 
 	/**
 	 * Returns the value of the '<em><b>Group</b></em>' reference.
@@ -117,6 +117,6 @@ public interface R4EUserReviews extends EObject {
 	 * @model
 	 * @generated
 	 */
-	EList<String> getCreatedReviews();
+	List<String> getCreatedReviews();
 
 } // R4EUserReviews

@@ -18,7 +18,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 
-import org.eclipse.emf.common.util.EList;
+import java.util.List;
+
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDelta;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4ETextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
@@ -102,7 +103,7 @@ public class R4EUIDeltaContainer extends R4EUIContentsContainer {
 	 */
 	@Override
 	public void open() {
-		final EList<R4EDelta> deltas = ((R4EUIFileContext) getParent()).getFileContext().getDeltas();
+		final List<R4EDelta> deltas = ((R4EUIFileContext) getParent()).getFileContext().getDeltas();
 		if (null != deltas) {
 			R4EUITextPosition position = null;
 			R4EUIDelta newDelta = null;

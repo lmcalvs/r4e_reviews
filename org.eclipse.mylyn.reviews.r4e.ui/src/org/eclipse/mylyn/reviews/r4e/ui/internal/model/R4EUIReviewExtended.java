@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EDecision;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -208,7 +207,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 
 		//Check if the phase already exists
 		R4EReviewPhaseInfo newPhase = null;
-		final EList<R4EReviewPhaseInfo> phases = formalReview.getPhases();
+		final List<R4EReviewPhaseInfo> phases = formalReview.getPhases();
 		for (R4EReviewPhaseInfo phase : phases) {
 			if (phase.getType().equals(aNewPhase)) {
 				newPhase = phase;
@@ -248,15 +247,15 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 */
 	@Override
 	public String getPhaseString(R4EReviewPhase aNewPhase) {
-		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
+		if (aNewPhase.equals(R4EReviewPhase.STARTED)) {
 			return R4EUIConstants.PHASE_PLANNING_LABEL;
-		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+		} else if (aNewPhase.equals(R4EReviewPhase.PREPARATION)) {
 			return R4EUIConstants.PHASE_PREPARATION_LABEL;
-		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+		} else if (aNewPhase.equals(R4EReviewPhase.DECISION)) {
 			return R4EUIConstants.PHASE_DECISION_LABEL;
-		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+		} else if (aNewPhase.equals(R4EReviewPhase.REWORK)) {
 			return R4EUIConstants.PHASE_REWORK_LABEL;
-		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+		} else if (aNewPhase.equals(R4EReviewPhase.COMPLETED)) {
 			return R4EUIConstants.REVIEW_PHASE_COMPLETED;
 		} else {
 			return "";
@@ -273,15 +272,15 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	@Override
 	public R4EReviewPhase getPhaseFromString(String aNewPhase) {
 		if (aNewPhase.equals(R4EUIConstants.PHASE_PLANNING_LABEL)) {
-			return R4EReviewPhase.R4E_REVIEW_PHASE_STARTED;
+			return R4EReviewPhase.STARTED;
 		} else if (aNewPhase.equals(R4EUIConstants.PHASE_PREPARATION_LABEL)) {
-			return R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION;
+			return R4EReviewPhase.PREPARATION;
 		} else if (aNewPhase.equals(R4EUIConstants.PHASE_DECISION_LABEL)) {
-			return R4EReviewPhase.R4E_REVIEW_PHASE_DECISION;
+			return R4EReviewPhase.DECISION;
 		} else if (aNewPhase.equals(R4EUIConstants.PHASE_REWORK_LABEL)) {
-			return R4EReviewPhase.R4E_REVIEW_PHASE_REWORK;
+			return R4EReviewPhase.REWORK;
 		} else if (aNewPhase.equals(R4EUIConstants.REVIEW_PHASE_COMPLETED)) {
-			return R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED;
+			return R4EReviewPhase.COMPLETED;
 		} else {
 			return null; //should never happen
 		}
@@ -337,14 +336,14 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 
 		switch (currentPhase.getValue()) {
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_DECISION_VALUE:
-			return R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION;
+		case R4EReviewPhase.DECISION_VALUE:
+			return R4EReviewPhase.PREPARATION;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_REWORK_VALUE:
-			return R4EReviewPhase.R4E_REVIEW_PHASE_DECISION;
+		case R4EReviewPhase.REWORK_VALUE:
+			return R4EReviewPhase.DECISION;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
-			return R4EReviewPhase.R4E_REVIEW_PHASE_REWORK;
+		case R4EReviewPhase.COMPLETED_VALUE:
+			return R4EReviewPhase.REWORK;
 
 		default:
 			//should never happen
@@ -401,33 +400,33 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 		final List<R4EReviewPhase> phases = new ArrayList<R4EReviewPhase>();
 
 		switch (aCurrentPhase.getValue()) {
-		case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
+		case R4EReviewPhase.STARTED_VALUE:
+			phases.add(R4EReviewPhase.STARTED);
+			phases.add(R4EReviewPhase.PREPARATION);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION_VALUE:
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
+		case R4EReviewPhase.PREPARATION_VALUE:
+			phases.add(R4EReviewPhase.PREPARATION);
+			phases.add(R4EReviewPhase.DECISION);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_DECISION_VALUE:
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+		case R4EReviewPhase.DECISION_VALUE:
+			phases.add(R4EReviewPhase.PREPARATION);
+			phases.add(R4EReviewPhase.DECISION);
+			phases.add(R4EReviewPhase.REWORK);
+			phases.add(R4EReviewPhase.COMPLETED);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_REWORK_VALUE:
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+		case R4EReviewPhase.REWORK_VALUE:
+			phases.add(R4EReviewPhase.DECISION);
+			phases.add(R4EReviewPhase.REWORK);
+			phases.add(R4EReviewPhase.COMPLETED);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+		case R4EReviewPhase.COMPLETED_VALUE:
+			phases.add(R4EReviewPhase.DECISION);
+			phases.add(R4EReviewPhase.REWORK);
+			phases.add(R4EReviewPhase.COMPLETED);
 			break;
 
 		default:
@@ -448,21 +447,21 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 		final List<R4EReviewPhase> phases = new ArrayList<R4EReviewPhase>();
 
 		switch (aCurrentPhase.getValue()) {
-		case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
+		case R4EReviewPhase.STARTED_VALUE:
+			phases.add(R4EReviewPhase.PREPARATION);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION_VALUE:
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
+		case R4EReviewPhase.PREPARATION_VALUE:
+			phases.add(R4EReviewPhase.DECISION);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_DECISION_VALUE:
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+		case R4EReviewPhase.DECISION_VALUE:
+			phases.add(R4EReviewPhase.REWORK);
+			phases.add(R4EReviewPhase.COMPLETED);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_REWORK_VALUE:
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+		case R4EReviewPhase.REWORK_VALUE:
+			phases.add(R4EReviewPhase.COMPLETED);
 			break;
 
 		default:
@@ -484,30 +483,30 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 		boolean clearOldPhaseData = false;
 
 		switch (aNewPhase.getValue()) {
-		case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:
+		case R4EReviewPhase.STARTED_VALUE:
 			//nothing to do
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION_VALUE:
-			if (aOldPhaseInfo.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+		case R4EReviewPhase.PREPARATION_VALUE:
+			if (aOldPhaseInfo.getType().equals(R4EReviewPhase.DECISION)) {
 				clearOldPhaseData = true;
 			}
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_DECISION_VALUE:
-			if (aOldPhaseInfo.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)
-					|| aOldPhaseInfo.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+		case R4EReviewPhase.DECISION_VALUE:
+			if (aOldPhaseInfo.getType().equals(R4EReviewPhase.REWORK)
+					|| aOldPhaseInfo.getType().equals(R4EReviewPhase.COMPLETED)) {
 				clearOldPhaseData = true;
 			}
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_REWORK_VALUE:
-			if (aOldPhaseInfo.getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+		case R4EReviewPhase.REWORK_VALUE:
+			if (aOldPhaseInfo.getType().equals(R4EReviewPhase.COMPLETED)) {
 				clearOldPhaseData = true;
 			}
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
+		case R4EReviewPhase.COMPLETED_VALUE:
 			//nothing to do
 			break;
 
@@ -542,12 +541,12 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 		}
 
 		switch (aNextPhase.getValue()) {
-		case R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION_VALUE:
+		case R4EReviewPhase.PREPARATION_VALUE:
 			//No other constraint
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_DECISION_VALUE:
-			if (((R4EFormalReview) fReview).getCurrent().getType().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+		case R4EReviewPhase.DECISION_VALUE:
+			if (((R4EFormalReview) fReview).getCurrent().getType().equals(R4EReviewPhase.PREPARATION)) {
 				//Check if all reviewers are done, otherwise do not prevent phase change, but notify phase owner
 				final Collection<R4EUser> users = fReview.getUsersMap().values();
 				final List<String> pendingUsers = new ArrayList<String>();
@@ -564,13 +563,13 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 			}
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_REWORK_VALUE:
+		case R4EReviewPhase.REWORK_VALUE:
 			if (!checkReworkStatus(aErrorMessage)) {
 				return false;
 			}
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
+		case R4EReviewPhase.COMPLETED_VALUE:
 			if (!checkCompletionStatus(aErrorMessage)) {
 				return false;
 			}
@@ -595,12 +594,12 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 					+ " as review exit decision information is missing");
 			return false;
 		}
-		if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_NONE)) {
+		if (fReview.getDecision().getValue().equals(R4EDecision.NONE)) {
 			aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_REWORK
 					+ " as review exit decision information is set to NONE");
 			return false;
 		}
-		if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_REJECTED)) {
+		if (fReview.getDecision().getValue().equals(R4EDecision.REJECTED)) {
 			aErrorMessage.set("Phase cannot be changed to " + REVIEW_PHASE_REWORK
 					+ " as review exit decision information is set to REJECTED");
 			return false;
@@ -646,7 +645,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 * @return boolean
 	 */
 	public boolean isParticipantExtraDetailsEnabled() {
-		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.COMPLETED)) {
 			return false;
 		}
 		return true;
@@ -658,7 +657,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 * @return boolean
 	 */
 	public boolean isParticipantTimeSpentEnabled() {
-		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.COMPLETED)) {
 			return false;
 		}
 		return true;
@@ -670,7 +669,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 * @return boolean
 	 */
 	public boolean isPreparationDateEnabled() {
-		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.PREPARATION)) {
 			return true;
 		}
 		return false;
@@ -682,8 +681,8 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 * @return boolean
 	 */
 	public boolean isDecisionDateEnabled() {
-		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)
-				|| ((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.DECISION)
+				|| ((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.REWORK)) {
 			return true;
 		}
 		return false;
@@ -695,7 +694,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 	 * @return boolean
 	 */
 	public boolean isReworkDateEnabled() {
-		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.REWORK)) {
 			return true;
 		}
 		return false;

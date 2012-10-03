@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -80,7 +80,7 @@ public class NewRuleSetElementHandler extends AbstractHandler {
 				final IR4EUIModelElement element = R4EUIModelController.getRootElement();
 
 				//Get data from user
-				final ReviewComponent tempModelComponent = ((R4EUIRootElement) element).createRuleSetElement();
+				final IReviewComponent tempModelComponent = ((R4EUIRootElement) element).createRuleSetElement();
 				if (null != tempModelComponent) {
 					R4EUIPlugin.Ftracer.traceInfo("Adding Rule Set to the root element "); //$NON-NLS-1$
 

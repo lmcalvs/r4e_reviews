@@ -35,7 +35,6 @@ import org.eclipse.compare.internal.MergeSourceViewer;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -642,17 +641,17 @@ public class UIUtils {
 	 */
 	public static R4EDesignRuleClass getClassFromString(String aClass) {
 		if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_ERRONEOUS)) {
-			return R4EDesignRuleClass.R4E_CLASS_ERRONEOUS;
+			return R4EDesignRuleClass.ERRONEOUS;
 		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_SUPERFLUOUS)) {
-			return R4EDesignRuleClass.R4E_CLASS_SUPERFLUOUS;
+			return R4EDesignRuleClass.SUPERFLUOUS;
 		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT)) {
-			return R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT;
+			return R4EDesignRuleClass.IMPROVEMENT;
 		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_COMMENT)) {
-			return R4EDesignRuleClass.R4E_CLASS_COMMENT;
+			return R4EDesignRuleClass.COMMENT;
 		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_QUESTION)) {
-			return R4EDesignRuleClass.R4E_CLASS_QUESTION;
+			return R4EDesignRuleClass.QUESTION;
 		} else if (aClass.equals(R4EUIConstants.ANOMALY_CLASS_MISSSING)) {
-			return R4EDesignRuleClass.R4E_CLASS_MISSING;
+			return R4EDesignRuleClass.MISSING;
 		} else {
 			return null; //should never happen
 		}
@@ -666,17 +665,17 @@ public class UIUtils {
 	 * @return String
 	 */
 	public static String getClassStr(R4EDesignRuleClass aClass) {
-		if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_ERRONEOUS)) {
+		if (aClass.equals(R4EDesignRuleClass.ERRONEOUS)) {
 			return R4EUIConstants.ANOMALY_CLASS_ERRONEOUS;
-		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_SUPERFLUOUS)) {
+		} else if (aClass.equals(R4EDesignRuleClass.SUPERFLUOUS)) {
 			return R4EUIConstants.ANOMALY_CLASS_SUPERFLUOUS;
-		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_IMPROVEMENT)) {
+		} else if (aClass.equals(R4EDesignRuleClass.IMPROVEMENT)) {
 			return R4EUIConstants.ANOMALY_CLASS_IMPROVEMENT;
-		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_QUESTION)) {
+		} else if (aClass.equals(R4EDesignRuleClass.QUESTION)) {
 			return R4EUIConstants.ANOMALY_CLASS_QUESTION;
-		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_COMMENT)) {
+		} else if (aClass.equals(R4EDesignRuleClass.COMMENT)) {
 			return R4EUIConstants.ANOMALY_CLASS_COMMENT;
-		} else if (aClass.equals(R4EDesignRuleClass.R4E_CLASS_MISSING)) {
+		} else if (aClass.equals(R4EDesignRuleClass.MISSING)) {
 			return R4EUIConstants.ANOMALY_CLASS_MISSSING;
 		} else {
 			return null; //should never happen
@@ -692,11 +691,11 @@ public class UIUtils {
 	 */
 	public static R4EDesignRuleRank getRankFromString(String aRank) {
 		if (aRank.equals(R4EUIConstants.ANOMALY_RANK_NONE)) {
-			return R4EDesignRuleRank.R4E_RANK_NONE;
+			return R4EDesignRuleRank.NONE;
 		} else if (aRank.equals(R4EUIConstants.ANOMALY_RANK_MINOR)) {
-			return R4EDesignRuleRank.R4E_RANK_MINOR;
+			return R4EDesignRuleRank.MINOR;
 		} else if (aRank.equals(R4EUIConstants.ANOMALY_RANK_MAJOR)) {
-			return R4EDesignRuleRank.R4E_RANK_MAJOR;
+			return R4EDesignRuleRank.MAJOR;
 		} else {
 			return null; //should never happen
 		}
@@ -710,13 +709,13 @@ public class UIUtils {
 	 * @return String
 	 */
 	public static String getRankStr(R4EDesignRuleRank aRank) {
-		if (aRank.equals(R4EDesignRuleRank.R4E_RANK_NONE)) {
+		if (aRank.equals(R4EDesignRuleRank.NONE)) {
 			return R4EUIConstants.ANOMALY_RANK_NONE;
-		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_MINOR)) {
+		} else if (aRank.equals(R4EDesignRuleRank.MINOR)) {
 			return R4EUIConstants.ANOMALY_RANK_MINOR;
-		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_MAJOR)) {
+		} else if (aRank.equals(R4EDesignRuleRank.MAJOR)) {
 			return R4EUIConstants.ANOMALY_RANK_MAJOR;
-		} else if (aRank.equals(R4EDesignRuleRank.R4E_RANK_DEPRECATED)) {
+		} else if (aRank.equals(R4EDesignRuleRank.DEPRECATED)) {
 			return R4EUIConstants.ANOMALY_RANK_MINOR;
 		} else {
 			return null; //should never happen
@@ -928,7 +927,7 @@ public class UIUtils {
 			try {
 				if (aReview instanceof R4EUIReviewExtended) {
 					final R4EFormalReview review = ((R4EFormalReview) ((R4EUIReviewExtended) aReview).getReview());
-					if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)
+					if (aNewPhase.equals(R4EReviewPhase.PREPARATION)
 							&& null == review.getActiveMeeting()) {
 						Display.getDefault().syncExec(new Runnable() {
 							public void run() {
@@ -1027,10 +1026,10 @@ public class UIUtils {
 	 * Method formatAssignedParticipants. Concatenates assigned participants for UI display
 	 * 
 	 * @param aParticipants
-	 *            EList<String>
+	 *            List<String>
 	 * @return String
 	 */
-	public static String formatAssignedParticipants(EList<String> aParticipants) {
+	public static String formatAssignedParticipants(List<String> aParticipants) {
 		if (aParticipants.size() > 0) {
 			final StringBuffer buffer = new StringBuffer();
 			for (String participants : aParticipants) {

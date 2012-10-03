@@ -22,10 +22,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
@@ -90,23 +88,23 @@ public class ReviewSampl {
 		fReview.setStartDate(startDate);
 		fReview.setEndDate(endDate);
 
-		EList<String> projects = aGroup.getAvailableProjects();
+		List<String> projects = aGroup.getAvailableProjects();
 		String project = "TBD";
 		if (projects != null && projects.size() > 0) {
 			project = projects.get(0);
 		}
 
-		EList<String> components = aGroup.getAvailableComponents();
+		List<String> components = aGroup.getAvailableComponents();
 		String component = "TBD";
 		if (components != null && components.size() > 0) {
 			component = components.get(0);
 		}
 
 		R4EReviewDecision decision = RModelFactory.eINSTANCE.createR4EReviewDecision();
-		decision.setValue(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED);
+		decision.setValue(R4EDecision.ACCEPTED);
 
 		List<R4EUserRole> roles = new ArrayList<R4EUserRole>();
-		roles.add(R4EUserRole.R4E_ROLE_LEAD);
+		roles.add(R4EUserRole.LEAD);
 		int value = 0;
 		R4EParticipant participant = null;
 		try {
@@ -123,8 +121,7 @@ public class ReviewSampl {
 		participant.getGroupPaths().add("c:/users/test/group2/");
 
 		Collection<Integer> userTimes = participant.getTimeLog().values();
-		for (Iterator<Integer> iterator = userTimes.iterator(); iterator.hasNext();) {
-			Integer time = iterator.next();
+		for (Integer time : userTimes) {
 			value += time;
 		}
 
@@ -142,8 +139,7 @@ public class ReviewSampl {
 		participant2.getGroupPaths().add("c:/group2/");
 
 		userTimes = participant2.getTimeLog().values();
-		for (Iterator<Integer> iterator = userTimes.iterator(); iterator.hasNext();) {
-			Integer time = iterator.next();
+		for (Integer time : userTimes) {
 			value += time;
 		}
 
@@ -167,7 +163,7 @@ public class ReviewSampl {
 		fReview.setObjectives("Sample Objectives");
 		fReview.setReferenceMaterial("sample reference material");
 		fReview.setEndDate(endDate);
-		fReview.setType(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL);
+		fReview.setType(R4EReviewType.INFORMAL);
 
 		// REFERENCES LOCAL
 		decision.setSpentTime(value);
@@ -175,7 +171,7 @@ public class ReviewSampl {
 
 		// REFERENCES - SUPERTYPE
 		R4EReviewState revState = RModelFactory.eINSTANCE.createR4EReviewState();
-		revState.setState(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
+		revState.setState(R4EReviewPhase.PREPARATION);
 		fReview.setState(revState);
 
 		R4ETaskReference task = RModelFactory.eINSTANCE.createR4ETaskReference();
@@ -223,7 +219,7 @@ public class ReviewSampl {
 		// Additional comments from two users on the same anomaly
 		// Comments
 		R4ECommentType commType = RModelFactory.eINSTANCE.createR4ECommentType();
-		commType.setType(R4EDesignRuleClass.R4E_CLASS_ERRONEOUS);
+		commType.setType(R4EDesignRuleClass.ERRONEOUS);
 
 		// comment1
 		R4EComment comment1 = null;
@@ -270,7 +266,7 @@ public class ReviewSampl {
 				item.setSubmitted(submittedDate);
 
 				R4EFileContext context = fResFactory.createR4EFileContext(item);
-				context.setType(R4EContextType.R4E_ADDED);
+				context.setType(R4EContextType.ADDED);
 
 				R4EFileVersion fvBase = fResFactory.createR4EBaseFileVersion(context);
 				fvBase.setName("file_" + i);

@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.RepositoryCache;
-import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
+import org.eclipse.mylyn.reviews.r4e.core.utils.Tracer;
 import org.osgi.framework.BundleContext;
 
 public class Activator extends Plugin {

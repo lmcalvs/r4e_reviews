@@ -1,7 +1,6 @@
 /**
-/**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -18,7 +17,7 @@ package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.mylyn.reviews.frame.core.model.impl.ReviewStateImpl;
+import org.eclipse.mylyn.reviews.internal.core.model.ReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewPhase;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
@@ -35,7 +34,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * 
  * @generated
  */
-public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewState {
+public class R4EReviewStateImpl extends ReviewState implements R4EReviewState {
 	/**
 	 * The default value of the '{@link #getState() <em>State</em>}' attribute.
 	 * <!-- begin-user-doc --> <!--
@@ -44,7 +43,7 @@ public class R4EReviewStateImpl extends ReviewStateImpl implements R4EReviewStat
 	 * @generated
 	 * @ordered
 	 */
-	protected static final R4EReviewPhase STATE_EDEFAULT = R4EReviewPhase.R4E_REVIEW_PHASE_STARTED;
+	protected static final R4EReviewPhase STATE_EDEFAULT = R4EReviewPhase.STARTED;
 
 	/**
 	 * The cached value of the '{@link #getState() <em>State</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc

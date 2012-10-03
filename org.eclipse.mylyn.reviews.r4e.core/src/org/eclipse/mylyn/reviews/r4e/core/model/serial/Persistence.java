@@ -43,6 +43,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.impl.R4EDesignRuleCollectionImpl;
+import org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewGroupImpl;
+import org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
@@ -55,12 +58,26 @@ public interface Persistence {
 	// Constants
 	// ------------------------------------------------------------------------
 	public enum Roots {
-		GROUP("Group", "0.8.0"), REVIEW("Review", "0.12.0"), RULESET("RuleSet", "0.8.0");
+		GROUP("Group", "2.0.0"), REVIEW("Review", "2.0.0"), RULESET("RuleSet", "2.0.0");
 
 		private final String fName;
 
 		private final String fVersion;
 
+		/**
+		 * Note: the version number is not necessarily the most current version of the App, but the lowest app version
+		 * number for which models of the current version are compatible. In other words, this number should not be
+		 * bumped unless there is an actual <em>model</em> version change, and this number should always be in Sync with
+		 * the appropriate Roots, e.g.:
+		 * 
+		 * @link {@link R4EReviewImpl#FRAGMENT_VERSION_EDEFAULT}
+		 * @link {@link R4EDesignRuleCollectionImpl#FRAGMENT_VERSION_EDEFAULT}
+		 * @link {@link R4EReviewGroupImpl#FRAGMENT_VERSION_EDEFAULT}
+		 * @param aName
+		 *            An identifier
+		 * @param aVersion
+		 *            The lowest compatible version.
+		 */
 		Roots(String aName, String aVersion) {
 			fName = aName;
 			fVersion = aVersion;

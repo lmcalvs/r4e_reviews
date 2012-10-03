@@ -1,250 +1,251 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<genmodel:GenModel xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2010 Ericsson AB and others.&#xD;&#xA; &#xD;&#xA;All rights reserved. This program and the accompanying materials are&#xD;&#xA;made available under the terms of the Eclipse Public License v1.0 which&#xD;&#xA;accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Ericsson AB"
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2010, 2012 Ericsson&#xA;&#xA;All rights reserved. This program and the accompanying materials are&#xA;made available under the terms of the Eclipse Public License v1.0 which&#xA;accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html&#xA;&#xA;Description:&#xA;&#xA;Contributors:&#xA;Alvaro Sanchez-Leon  - Initial API and implementation&#xA;"
     modelDirectory="/org.eclipse.mylyn.reviews.r4e.core/src" modelPluginID="org.eclipse.mylyn.reviews.r4e.core"
-    modelName="R4e" importerID="org.eclipse.emf.importer.ecore" containmentProxies="true"
-    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.mylyn.reviews.frame.core/model/framework.genmodel#//model r4e.drules.genmodel#//drules"
-    classNamePattern="">
-  <foreignModel>org.eclipse.mylyn.reviews.r4e.core.model.ecore</foreignModel>
+    modelName="R4e" suppressEMFTypes="true" importerID="org.eclipse.emf.importer.ecore"
+    containmentProxies="true" complianceLevel="5.0" copyrightFields="false" runtimeVersion="2.7"
+    usedGenPackages="drules.genmodel#//drules platform:/plugin/org.eclipse.mylyn.reviews.core/model/reviews.genmodel#//reviews">
+  <foreignModel>r4e.ecore</foreignModel>
   <genPackages prefix="RModel" basePackage="org.eclipse.mylyn.reviews.r4e.core" resource="XML"
-      disposableProviderFactory="true" dataTypeConverters="true" ecorePackage="org.eclipse.mylyn.reviews.r4e.core.model.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState">
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState/R4E_ANOMALY_STATE_CREATED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState/R4E_ANOMALY_STATE_ASSIGNED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState/R4E_ANOMALY_STATE_ACCEPTED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState/R4E_ANOMALY_STATE_FIXED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState/R4E_ANOMALY_STATE_DUPLICATED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState/R4E_ANOMALY_STATE_REJECTED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState/R4E_ANOMALY_STATE_DEFERRED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyState/R4E_ANOMALY_STATE_VERIFIED"/>
+      disposableProviderFactory="true" dataTypeConverters="true" ecorePackage="r4e.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="r4e.ecore#//R4EAnomalyState">
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EAnomalyState/Created"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EAnomalyState/Assigned"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EAnomalyState/Accepted"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EAnomalyState/Fixed"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EAnomalyState/Duplicated"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EAnomalyState/Rejected"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EAnomalyState/Deferred"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EAnomalyState/Verified"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhase">
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhase/R4E_REVIEW_PHASE_STARTED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhase/R4E_REVIEW_PHASE_PREPARATION"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhase/R4E_REVIEW_PHASE_DECISION"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhase/R4E_REVIEW_PHASE_REWORK"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhase/R4E_REVIEW_PHASE_COMPLETED"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="r4e.ecore#//R4EReviewPhase">
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EReviewPhase/Started"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EReviewPhase/Preparation"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EReviewPhase/Decision"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EReviewPhase/Rework"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EReviewPhase/Completed"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserRole">
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserRole/R4E_ROLE_REVIEWER"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserRole/R4E_ROLE_LEAD"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserRole/R4E_ROLE_AUTHOR"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserRole/R4E_ROLE_ORGANIZER"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="r4e.ecore#//R4EUserRole">
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EUserRole/Reviewer"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EUserRole/Lead"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EUserRole/Author"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EUserRole/Organizer"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EDecision">
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EDecision/R4E_REVIEW_DECISION_NONE"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EDecision/R4E_REVIEW_DECISION_ACCEPTED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EDecision/R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EDecision/R4E_REVIEW_DECISION_REJECTED"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="r4e.ecore#//R4EDecision">
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EDecision/None"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EDecision/Accepted"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EDecision/AcceptedFollowup"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EDecision/Rejected"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewType">
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewType/R4E_REVIEW_TYPE_BASIC"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewType/R4E_REVIEW_TYPE_INFORMAL"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewType/R4E_REVIEW_TYPE_FORMAL"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="r4e.ecore#//R4EReviewType">
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EReviewType/Basic"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EReviewType/Informal"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EReviewType/Formal"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContextType">
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContextType/R4E_UNDEFINED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContextType/R4E_ADDED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContextType/R4E_DELETED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContextType/R4E_MODIFIED"/>
-      <genEnumLiterals ecoreEnumLiteral="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContextType/R4E_REPLACED"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="r4e.ecore#//R4EContextType">
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EContextType/Undefined"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EContextType/Added"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EContextType/Deleted"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EContextType/Modified"/>
+      <genEnumLiterals ecoreEnumLiteral="r4e.ecore#//R4EContextType/Replaced"/>
     </genEnums>
-    <genDataTypes ecoreDataType="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//IResource"/>
-    <genDataTypes ecoreDataType="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//URI"/>
-    <genDataTypes ecoreDataType="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//IFileRevision"/>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/folder"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/defaultEntryCriteria"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/availableProjects"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/availableComponents"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/designRuleLocations"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/availableAnomalyTypes"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/anomalyTypeKeyToReference"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/reviewsMap"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewGroup/userReviews"/>
+    <genDataTypes ecoreDataType="r4e.ecore#//IResource"/>
+    <genDataTypes ecoreDataType="r4e.ecore#//URI"/>
+    <genDataTypes ecoreDataType="r4e.ecore#//IFileRevision"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EReviewGroup">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewGroup/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewGroup/folder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewGroup/defaultEntryCriteria"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewGroup/availableProjects"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewGroup/availableComponents"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewGroup/designRuleLocations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference r4e.ecore#//R4EReviewGroup/availableAnomalyTypes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EReviewGroup/anomalyTypeKeyToReference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EReviewGroup/reviewsMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EReviewGroup/userReviews"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/project"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/components"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/entryCriteria"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/extraNotes"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/objectives"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/referenceMaterial"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/decision"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/startDate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/endDate"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/anomalyTemplate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/usersMap"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/createdBy"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/idsMap"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReview/activeMeeting"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EReview">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/project"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/components"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/entryCriteria"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/extraNotes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/objectives"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/referenceMaterial"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EReview/decision"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/startDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/endDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/dueDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/modifiedDate"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EReview/anomalyTemplate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReview/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EReview/usersMap"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EReview/createdBy"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EReview/idsMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EReview/activeMeeting"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/state"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/dueDate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/rank"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/rule"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/notAcceptedReason"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/isImported"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/fixedInVersion"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/ruleID"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/decidedByID"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/fixedByID"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomaly/followUpByID"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EAnomaly">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EAnomaly/state"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EAnomaly/dueDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EAnomaly/rank"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EAnomaly/rule"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EAnomaly/notAcceptedReason"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EAnomaly/isImported"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EAnomaly/fixedInVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EAnomaly/ruleID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EAnomaly/decidedByID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EAnomaly/fixedByID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EAnomaly/followUpByID"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview/phaseOwner"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview/phases"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFormalReview/current"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EFormalReview">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EFormalReview/phaseOwner"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EFormalReview/phases"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EFormalReview/current"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETextPosition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETextPosition/startPosition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETextPosition/length"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETextPosition/startLine"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETextPosition/endLine"/>
+    <genClasses ecoreClass="r4e.ecore#//R4ETextPosition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4ETextPosition/startPosition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4ETextPosition/length"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4ETextPosition/startLine"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4ETextPosition/endLine"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewDecision">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewDecision/spentTime"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewDecision/value"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EReviewDecision">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewDecision/spentTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewDecision/value"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser/groupPaths"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser/sequenceIDCounter"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser/addedComments"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser/addedItems"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser/reviewCreatedByMe"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser/reviewInstance"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser/reviewCompleted"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUser/reviewCompletedCode"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EUser">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EUser/groupPaths"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EUser/sequenceIDCounter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EUser/addedComments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EUser/addedItems"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EUser/reviewCreatedByMe"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EUser/reviewInstance"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EUser/reviewCompleted"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EUser/reviewCompletedCode"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EParticipant">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EParticipant/roles"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EParticipant/focusArea"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EParticipant/isPartOfDecision"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EParticipant/reviewedContent"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EParticipant/timeLog"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EParticipant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EParticipant/roles"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EParticipant/focusArea"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EParticipant/isPartOfDecision"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EParticipant/reviewedContent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EParticipant/timeLog"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EItem">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EItem/description"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EItem/addedById"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EItem/fileContextList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EItem/repositoryRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EItem/ProjectURIs"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EItem/authorRep"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EItem/submitted"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EItem/infoAtt"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EItem/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EItem/addedById"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EItem/fileContextList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EItem/repositoryRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EItem/ProjectURIs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EItem/authorRep"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EItem/submitted"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EItem/infoAtt"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETextContent">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETextContent/content"/>
+    <genClasses ecoreClass="r4e.ecore#//R4ETextContent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4ETextContent/content"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EID">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EID/sequenceID"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EID/userID"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EID">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EID/sequenceID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EID/userID"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyType/type"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EAnomalyType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EAnomalyType/type"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ETaskReference"/>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewState">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewState/state"/>
+    <genClasses ecoreClass="r4e.ecore#//R4ETaskReference"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EReviewState">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewState/state"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EComment">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EComment/createdOn"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EComment/anomaly"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EComment/infoAtt"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EComment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EComment/createdOn"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EComment/anomaly"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EComment/infoAtt"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewComponent">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewComponent/assignedTo"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EReviewComponent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewComponent/assignedTo"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileContext">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileContext/deltas"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileContext/base"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileContext/target"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileContext/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileContext/infoAtt"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EFileContext">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EFileContext/deltas"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EFileContext/base"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EFileContext/target"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EFileContext/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EFileContext/infoAtt"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EDelta">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EDelta/base"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EDelta/target"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EDelta">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EDelta/base"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EDelta/target"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4ECommentType/type"/>
+    <genClasses ecoreClass="r4e.ecore#//R4ECommentType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4ECommentType/type"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapToAnomalyType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapToAnomalyType/key"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapToAnomalyType/value"/>
+    <genClasses ecoreClass="r4e.ecore#//MapToAnomalyType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//MapToAnomalyType/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//MapToAnomalyType/value"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContent">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContent/location"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EContent/info"/>
+    <genClasses image="false" ecoreClass="r4e.ecore#//R4EContent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EContent/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EContent/info"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EPosition"/>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion/platformURI"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion/versionID"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion/repositoryPath"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion/resource"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion/localVersionID"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion/fileRevision"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EFileVersion/infoAtt"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EPosition"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EFileVersion">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EFileVersion/platformURI"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EFileVersion/versionID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EFileVersion/repositoryPath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EFileVersion/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EFileVersion/resource"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EFileVersion/localVersionID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EFileVersion/fileRevision"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EFileVersion/infoAtt"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapNameToReview">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapNameToReview/key"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapNameToReview/value"/>
+    <genClasses ecoreClass="r4e.ecore#//MapNameToReview">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//MapNameToReview/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//MapNameToReview/value"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapToUsers">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapToUsers/key"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapToUsers/value"/>
+    <genClasses ecoreClass="r4e.ecore#//MapToUsers">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//MapToUsers/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//MapToUsers/value"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserReviews">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserReviews/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserReviews/invitedToMap"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserReviews/group"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EUserReviews/createdReviews"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EUserReviews">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EUserReviews/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EUserReviews/invitedToMap"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EUserReviews/group"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EUserReviews/createdReviews"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EIDComponent">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EIDComponent/id"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EIDComponent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EIDComponent/r4eId"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapIDToComponent">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapIDToComponent/key"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapIDToComponent/value"/>
+    <genClasses ecoreClass="r4e.ecore#//MapIDToComponent">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//MapIDToComponent/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//MapIDToComponent/value"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapUserIDToUserReviews">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapUserIDToUserReviews/key"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapUserIDToUserReviews/value"/>
+    <genClasses ecoreClass="r4e.ecore#//MapUserIDToUserReviews">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//MapUserIDToUserReviews/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference r4e.ecore#//MapUserIDToUserReviews/value"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyTextPosition">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EAnomalyTextPosition/file"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EAnomalyTextPosition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference r4e.ecore#//R4EAnomalyTextPosition/file"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapDateToDuration">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapDateToDuration/key"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapDateToDuration/value"/>
+    <genClasses ecoreClass="r4e.ecore#//MapDateToDuration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//MapDateToDuration/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//MapDateToDuration/value"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapKeyToInfoAttributes">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapKeyToInfoAttributes/key"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//MapKeyToInfoAttributes/value"/>
+    <genClasses ecoreClass="r4e.ecore#//MapKeyToInfoAttributes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//MapKeyToInfoAttributes/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//MapKeyToInfoAttributes/value"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/endDate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/phaseOwnerID"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EReviewPhaseInfo/startDate"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EReviewPhaseInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewPhaseInfo/endDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewPhaseInfo/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewPhaseInfo/phaseOwnerID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EReviewPhaseInfo/startDate"/>
     </genClasses>
-    <genClasses ecoreClass="org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/subject"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/location"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/startTime"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/duration"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/sentCount"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/sender"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/receivers"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute org.eclipse.mylyn.reviews.r4e.core.model.ecore#//R4EMeetingData/body"/>
+    <genClasses ecoreClass="r4e.ecore#//R4EMeetingData">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/subject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/startTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/duration"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/sentCount"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/sender"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/receivers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute r4e.ecore#//R4EMeetingData/body"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

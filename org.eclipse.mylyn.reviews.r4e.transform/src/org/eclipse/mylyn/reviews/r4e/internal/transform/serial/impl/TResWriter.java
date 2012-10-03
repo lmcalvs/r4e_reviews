@@ -54,7 +54,7 @@ public class TResWriter extends R4EWriter implements IModelWriter {
 //		// options = new HashMap<String, Boolean>();
 //		// options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
 //
-//		EList<Resource> resources = resourceSet.getResources();
+//		List<Resource> resources = resourceSet.getResources();
 //		if (resources != null) {
 //			for (Resource resource : resources) {
 //				saveResource(resource);

@@ -1,5 +1,3 @@
-#Thu Oct 28 18:22:21 EDT 2010
 eclipse.preferences.version=1
-encoding//model/org.eclipse.mylyn.reviews.r4e.core.model.ecore=UTF-8
-encoding//model/org.eclipse.mylyn.reviews.r4e.core.model.ecorediag=UTF-8
-encoding//model/r4e.design.rules.ecorediag=UTF-8
+encoding//model/drules.ecorediag=UTF-8
+encoding//model/r4e.ecorediag=UTF-8

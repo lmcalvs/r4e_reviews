@@ -17,7 +17,8 @@
 
 package org.eclipse.mylyn.reviews.r4e.ui.internal.annotation.content;
 
-import org.eclipse.emf.common.util.EList;
+import java.util.List;
+
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EID;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIPosition;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.model.R4EUIContent;
@@ -68,7 +69,7 @@ public class R4EContentAnnotation extends R4EAnnotation {
 	 */
 	@Override
 	public R4EID getId() {
-		return ((R4EUIContent) fSourceElement).getContent().getId();
+		return ((R4EUIContent) fSourceElement).getContent().getR4eId();
 	}
 
 	/**
@@ -89,10 +90,10 @@ public class R4EContentAnnotation extends R4EAnnotation {
 	 */
 	public Object[] getChildren() {
 		R4EAnnotationText[] values = null;
-		final EList<String> assignees = ((R4EUIContent) fSourceElement).getContent().getAssignedTo();
+		final List<String> assignees = ((R4EUIContent) fSourceElement).getContent().getAssignedTo();
 		if ((null != assignees) && (assignees.size() > 0)) {
 			values = new R4EAnnotationText[1];
-			final EList<String> assignedParticipants = ((R4EUIContent) fSourceElement).getContent().getAssignedTo();
+			final List<String> assignedParticipants = ((R4EUIContent) fSourceElement).getContent().getAssignedTo();
 			values[0] = new R4EAnnotationText(this, R4EUIConstants.ASSIGNED_TO_LABEL
 					+ UIUtils.formatAssignedParticipants(assignedParticipants), null);
 		}
@@ -106,7 +107,7 @@ public class R4EContentAnnotation extends R4EAnnotation {
 	 * @see org.eclipse.mylyn.reviews.frame.ui.annotation.IReviewAnnotation#hasChildren()
 	 */
 	public boolean hasChildren() {
-		final EList<String> assignees = ((R4EUIContent) fSourceElement).getContent().getAssignedTo();
+		final List<String> assignees = ((R4EUIContent) fSourceElement).getContent().getAssignedTo();
 		if ((null != assignees) && (assignees.size() > 0)) {
 			return true;
 		}

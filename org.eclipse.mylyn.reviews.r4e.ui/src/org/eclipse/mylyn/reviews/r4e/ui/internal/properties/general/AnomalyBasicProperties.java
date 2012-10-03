@@ -202,7 +202,7 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 			}
 			return ((R4EUIAnomalyBasic) getElement()).getPosition().toString();
 		} else if (ANOMALY_AUTHOR_ID.equals(aId)) {
-			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getUser().getId();
+			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getAuthor().getId();
 		} else if (ANOMALY_CREATION_DATE_ID.equals(aId)) {
 			return ((R4EUIAnomalyBasic) getElement()).getAnomaly().getCreatedOn().toString();
 		} else if (ANOMALY_DESCRIPTION_ID.equals(aId)) {
@@ -219,8 +219,8 @@ public class AnomalyBasicProperties extends ModelElementProperties {
 		} else if (ANOMALY_RANK_ID.equals(aId)) {
 			//Bug 368865:  Mapping needed for DEPRECATED value to MINOR
 			final int rankValue = ((R4EUIAnomalyBasic) getElement()).getAnomaly().getRank().getValue();
-			final int intValue = Integer.valueOf(rankValue == R4EDesignRuleRank.R4E_RANK_DEPRECATED_VALUE
-					? R4EDesignRuleRank.R4E_RANK_MINOR_VALUE
+			final int intValue = Integer.valueOf(rankValue == R4EDesignRuleRank.DEPRECATED_VALUE
+					? R4EDesignRuleRank.MINOR_VALUE
 					: rankValue);
 			return UIUtils.getRanks()[intValue];
 		} else if (ANOMALY_RULE_ID_ID.equals(aId)) {

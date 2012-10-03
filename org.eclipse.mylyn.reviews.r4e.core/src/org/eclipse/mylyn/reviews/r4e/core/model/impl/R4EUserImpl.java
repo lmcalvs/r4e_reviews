@@ -16,6 +16,7 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -26,9 +27,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.frame.core.model.impl.UserImpl;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.internal.core.model.ReviewsPackage;
+import org.eclipse.mylyn.reviews.internal.core.model.User;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
@@ -37,7 +38,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>R4E User</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object ' <em><b>R4E User</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -56,7 +57,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  *
  * @generated
  */
-public class R4EUserImpl extends UserImpl implements R4EUser {
+public class R4EUserImpl extends User implements R4EUser {
 	/**
 	 * The default value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
 	 * <!-- begin-user-doc --> <!--
@@ -247,7 +248,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getAssignedTo() {
+	public List<String> getAssignedTo() {
 		if (assignedTo == null) {
 			assignedTo = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_USER__ASSIGNED_TO);
 		}
@@ -258,7 +259,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getGroupPaths() {
+	public List<String> getGroupPaths() {
 		if (groupPaths == null) {
 			groupPaths = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_USER__GROUP_PATHS);
 		}
@@ -288,7 +289,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<R4EComment> getAddedComments() {
+	public List<R4EComment> getAddedComments() {
 		if (addedComments == null) {
 			addedComments = new EObjectContainmentEList.Resolving<R4EComment>(R4EComment.class, this, RModelPackage.R4E_USER__ADDED_COMMENTS);
 		}
@@ -299,7 +300,7 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<R4EItem> getAddedItems() {
+	public List<R4EItem> getAddedItems() {
 		if (addedItems == null) {
 			addedItems = new EObjectContainmentEList.Resolving<R4EItem>(R4EItem.class, this, RModelPackage.R4E_USER__ADDED_ITEMS);
 		}
@@ -416,7 +417,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getSequenceIDCounterNext()
+	 * @see
+	 * org.eclipse.mylyn.reviews.r4e.core.model.R4EUser#getSequenceIDCounterNext
+	 * ()
 	 */
 	public int getSequenceIDCounterNext() {
 		int count = getSequenceIDCounter() + 1;
@@ -580,9 +583,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == ReviewComponent.class) {
+		if (baseClass == IReviewComponent.class) {
 			switch (derivedFeatureID) {
-				case RModelPackage.R4E_USER__ENABLED: return ModelPackage.REVIEW_COMPONENT__ENABLED;
+				case RModelPackage.R4E_USER__ENABLED: return ReviewsPackage.REVIEW_COMPONENT__ENABLED;
 				default: return -1;
 			}
 		}
@@ -601,9 +604,9 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == ReviewComponent.class) {
+		if (baseClass == IReviewComponent.class) {
 			switch (baseFeatureID) {
-				case ModelPackage.REVIEW_COMPONENT__ENABLED: return RModelPackage.R4E_USER__ENABLED;
+				case ReviewsPackage.REVIEW_COMPONENT__ENABLED: return RModelPackage.R4E_USER__ENABLED;
 				default: return -1;
 			}
 		}
@@ -643,4 +646,4 @@ public class R4EUserImpl extends UserImpl implements R4EUser {
 		return result.toString();
 	}
 
-} //R4EUserImpl
+} // R4EUserImpl

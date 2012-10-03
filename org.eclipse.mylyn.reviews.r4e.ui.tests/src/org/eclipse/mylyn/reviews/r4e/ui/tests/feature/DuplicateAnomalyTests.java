@@ -578,10 +578,10 @@ public class DuplicateAnomalyTests extends TestCase {
 				Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fLinkedAnomaly1.getAnomaly().getDueDate());
 				Assert.assertEquals(
 						((R4EUITextPosition) content.getPosition()).getOffset(),
-						((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
+						((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
 				Assert.assertEquals(
 						((R4EUITextPosition) content.getPosition()).getLength(),
-						((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getLength());
+						((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 				Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fLinkedAnomaly1.getAnomaly()
 						.getAssignedTo()
 						.get(0));
@@ -603,10 +603,10 @@ public class DuplicateAnomalyTests extends TestCase {
 					Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fLinkedAnomaly2.getAnomaly().getDueDate());
 					Assert.assertEquals(
 							((R4EUITextPosition) content.getPosition()).getOffset(),
-							((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
+							((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
 					Assert.assertEquals(
 							((R4EUITextPosition) content.getPosition()).getLength(),
-							((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getLength());
+							((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 					Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fLinkedAnomaly2.getAnomaly()
 							.getAssignedTo()
 							.get(0));
@@ -671,10 +671,10 @@ public class DuplicateAnomalyTests extends TestCase {
 		Assert.assertEquals(TestConstants.ANOMALY_TEST_DUE_DATE, fExternalAnomaly.getAnomaly().getDueDate());
 		Assert.assertEquals(
 				0,
-				((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
-		Assert.assertEquals(764, ((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly()
-				.getLocation()
-				.get(0)).getLocation()).getLength());
+				((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
+		Assert.assertEquals(
+				764,
+				((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 
 	}
 

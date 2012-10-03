@@ -23,14 +23,16 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.IRuleAreaInputDialog;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
@@ -221,7 +223,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
 	@Override
-	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public void setModelData(IReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		//Set data in model element
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRuleSet,
 				R4EUIModelController.getReviewer());
@@ -235,9 +237,9 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * @return the new serialization element object
 	 */
 	@Override
-	public List<ReviewComponent> createChildModelDataElement() {
+	public List<IReviewComponent> createChildModelDataElement() {
 		//Get Rule Area from user and set it in model data
-		final List<ReviewComponent> tempAreas = new ArrayList<ReviewComponent>();
+		final List<IReviewComponent> tempAreas = new ArrayList<IReviewComponent>();
 
 		final IRuleAreaInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleAreaInputDialog();
 		final int result = dialog.open();
@@ -350,7 +352,8 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 */
 	public boolean openReadOnly() throws ResourceHandlingException, CompatibilityException {
 		fRuleSet = R4EUIModelController.FModelExt.openR4EDesignRuleCollection(fRuleSetFileURI);
-		final int checkResult = fRuleSet.getCompatibility();
+		String currentVersion = Persistence.Roots.RULESET.getVersion();
+		int checkResult = VersionUtils.compareVersions(currentVersion, fRuleSet.getFragmentVersion());
 		if (checkResult == R4EUIConstants.VERSION_APPLICATION_OLDER) {
 			R4EUIModelController.FModelExt.closeR4EDesignRuleCollection(fRuleSet);
 			return false;
@@ -387,21 +390,21 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * @return boolean
 	 */
 	private boolean checkCompatibility() {
-		final int checkResult = fRuleSet.getCompatibility();
+		String currentVersion = Persistence.Roots.RULESET.getVersion();
+		int checkResult = VersionUtils.compareVersions(currentVersion, fRuleSet.getFragmentVersion());
 		switch (checkResult) {
 		case R4EUIConstants.VERSION_APPLICATION_OLDER:
 			UIUtils.displayCompatibilityErrorDialog();
 			return false;
 		case R4EUIConstants.VERSION_APPLICATION_NEWER:
-			final int result = UIUtils.displayCompatibilityWarningDialog(fRuleSet.getFragmentVersion(),
-					fRuleSet.getApplicationVersion());
+			final int result = UIUtils.displayCompatibilityWarningDialog(fRuleSet.getFragmentVersion(), currentVersion);
 			switch (result) {
 			case R4EUIConstants.OPEN_NORMAL:
 				//Upgrade version immediately
 				try {
 					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fRuleSet,
 							R4EUIModelController.getReviewer());
-					fRuleSet.setFragmentVersion(fRuleSet.getApplicationVersion());
+					fRuleSet.setFragmentVersion(currentVersion);
 					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
 					UIUtils.displayResourceErrorDialog(e);
@@ -481,7 +484,7 @@ public class R4EUIRuleSet extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(ReviewNavigatorContentProvider)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
+	public IR4EUIModelElement createChildren(IReviewComponent aModelComponent) throws ResourceHandlingException,
 			OutOfSyncException {
 		final R4EDesignRuleArea area = R4EUIModelController.FModelExt.createR4EDesignRuleArea(fRuleSet);
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(area, R4EUIModelController.getReviewer());

@@ -76,7 +76,7 @@ public class ReviewCompletedFilter extends ViewerFilter {
 			if (!(element instanceof R4EUIReviewBasic)) {
 				return false;
 			}
-			if (!(((R4EReviewState) ((R4EUIReviewBasic) element).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
+			if (!(((R4EReviewState) ((R4EUIReviewBasic) element).getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))
 					|| ((R4EUIReviewBasic) element).isOpen()) {
 				return true;
 			}
@@ -101,7 +101,7 @@ public class ReviewCompletedFilter extends ViewerFilter {
 				return false;
 			}
 		}
-		if (!(((R4EReviewState) ((R4EUIReviewBasic) reviewParentElement).getReview().getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))
+		if (!(((R4EReviewState) ((R4EUIReviewBasic) reviewParentElement).getReview().getState()).getState().equals(R4EReviewPhase.COMPLETED))
 				|| ((R4EUIReviewBasic) reviewParentElement).isOpen()) {
 			return true;
 		}

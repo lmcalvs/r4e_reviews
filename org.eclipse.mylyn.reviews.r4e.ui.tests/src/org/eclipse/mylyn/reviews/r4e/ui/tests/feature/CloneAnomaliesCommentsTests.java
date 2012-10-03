@@ -437,7 +437,7 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 		Assert.assertNotNull(uiParticipant);
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, uiParticipant.getParticipant().getId());
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, uiParticipant.getParticipant().getEmail());
-		Assert.assertEquals(R4EUserRole.R4E_ROLE_REVIEWER, uiParticipant.getParticipant().getRoles().get(0));
+		Assert.assertEquals(R4EUserRole.REVIEWER, uiParticipant.getParticipant().getRoles().get(0));
 	}
 
 	/**
@@ -464,10 +464,10 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fAnomaly1.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				((R4EUITextPosition) content1.getPosition()).getOffset(),
-				((R4ETextPosition) ((R4ETextContent) fAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
+				((R4ETextPosition) ((R4ETextContent) fAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(
 				((R4EUITextPosition) content1.getPosition()).getLength(),
-				((R4ETextPosition) ((R4ETextContent) fAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getLength());
+				((R4ETextPosition) ((R4ETextContent) fAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 
 		//Anomaly2
 		R4EUIContent content2 = fItem.getFileContexts()
@@ -489,10 +489,10 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fAnomaly2.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				((R4EUITextPosition) content2.getPosition()).getOffset(),
-				((R4ETextPosition) ((R4ETextContent) fAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
+				((R4ETextPosition) ((R4ETextContent) fAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(
 				((R4EUITextPosition) content2.getPosition()).getLength(),
-				((R4ETextPosition) ((R4ETextContent) fAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getLength());
+				((R4ETextPosition) ((R4ETextContent) fAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 
 		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotations(fAnomaly2.getParent().getChildren(), true,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
@@ -536,10 +536,10 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, fClonedAnomaly1.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				20,
-				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
+				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(
 				50,
-				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly1.getAnomaly().getLocation().get(0)).getLocation()).getLength());
+				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly1.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fClonedAnomaly1, true,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
@@ -561,10 +561,10 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, fClonedAnomaly2.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				0,
-				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
-		Assert.assertEquals(
-				755,
-				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getLength());
+				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly2.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
+		Assert.assertEquals(755, ((R4ETextPosition) ((R4ETextContent) fClonedAnomaly2.getAnomaly()
+				.getLocations()
+				.get(0)).getLocation()).getLength());
 		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fClonedAnomaly2, false,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
@@ -624,10 +624,10 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 		Assert.assertEquals(0, fClonedAnomaly4.getAnomaly().getAssignedTo().size());
 		Assert.assertEquals(
 				((R4ETextPosition) targetContent.getContent().getTarget().getLocation()).getStartPosition(),
-				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly4.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
+				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly4.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(
 				((R4ETextPosition) targetContent.getContent().getTarget().getLocation()).getLength(),
-				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly4.getAnomaly().getLocation().get(0)).getLocation()).getLength());
+				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly4.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fClonedAnomaly4, true,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}

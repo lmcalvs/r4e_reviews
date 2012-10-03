@@ -414,7 +414,7 @@ public class SanityBasicTests extends TestCase {
 		Assert.assertNotNull(fParticipant);
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_ID, fParticipant.getParticipant().getId());
 		Assert.assertEquals(TestConstants.PARTICIPANT_TEST_EMAIL, fParticipant.getParticipant().getEmail());
-		Assert.assertEquals(R4EUserRole.R4E_ROLE_REVIEWER, fParticipant.getParticipant().getRoles().get(0));
+		Assert.assertEquals(R4EUserRole.REVIEWER, fParticipant.getParticipant().getRoles().get(0));
 	}
 
 	/**
@@ -439,10 +439,10 @@ public class SanityBasicTests extends TestCase {
 				.getAssignedTo()
 				.get(0));
 		Assert.assertEquals(20, ((R4ETextPosition) ((R4ETextContent) fCompareEditorAnomaly.getAnomaly()
-				.getLocation()
+				.getLocations()
 				.get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(50, ((R4ETextPosition) ((R4ETextContent) fCompareEditorAnomaly.getAnomaly()
-				.getLocation()
+				.getLocations()
 				.get(0)).getLocation()).getLength());
 		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fCompareEditorAnomaly, true,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
@@ -471,10 +471,10 @@ public class SanityBasicTests extends TestCase {
 		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fLinkedAnomaly.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				((R4EUITextPosition) content.getPosition()).getOffset(),
-				((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
+				((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(
 				((R4EUITextPosition) content.getPosition()).getLength(),
-				((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly.getAnomaly().getLocation().get(0)).getLocation()).getLength());
+				((R4ETextPosition) ((R4ETextContent) fLinkedAnomaly.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fLinkedAnomaly, true,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
@@ -498,10 +498,10 @@ public class SanityBasicTests extends TestCase {
 		Assert.assertEquals(TestConstants.PARTICIPANT_ASSIGN_TO, fExternalAnomaly.getAnomaly().getAssignedTo().get(0));
 		Assert.assertEquals(
 				0,
-				((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
-		Assert.assertEquals(755, ((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly()
-				.getLocation()
-				.get(0)).getLocation()).getLength());
+				((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly().getLocations().get(0)).getLocation()).getStartPosition());
+		Assert.assertEquals(
+				755,
+				((R4ETextPosition) ((R4ETextContent) fExternalAnomaly.getAnomaly().getLocations().get(0)).getLocation()).getLength());
 		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fExternalAnomaly, false,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));
 	}
@@ -520,8 +520,7 @@ public class SanityBasicTests extends TestCase {
 	 */
 	private void progressReview() {
 		fProxy.getReviewProxy().progressReview(fReview);
-		Assert.assertEquals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED,
-				((R4EReviewState) fReview.getReview().getState()).getState());
+		Assert.assertEquals(R4EReviewPhase.COMPLETED, ((R4EReviewState) fReview.getReview().getState()).getState());
 		Assert.assertNotNull(fReview.getReview().getEndDate());
 	}
 

@@ -301,7 +301,7 @@ public class R4EReviewGroupTest extends TestCase {
 	// loadedGroup = GoldenStubHandler.loadStub(groupFileUri);
 	// resSet = loadedGroup.eResource().getResourceSet();
 	// // load all reviews, to associate to the same resourceSet
-	// EList<Review> reviews = loadedGroup.getReviews();
+	// List<Review> reviews = loadedGroup.getReviews();
 	// for (Iterator<Review> iterator = reviews.iterator(); iterator.hasNext();) {
 	// Review review = iterator.next();
 	// fFactory.openR4EReview(loadedGroup, ((R4EReview) review).getName());
@@ -365,7 +365,7 @@ public class R4EReviewGroupTest extends TestCase {
 	// try {
 	// loadedGroup = fFactory.openR4EReviewGroup(groupFileURI);
 	// // load all reviews, to associate to the same resourceSet
-	// EMap<String, R4EReview> reviews = loadedGroup.getReviewsMap();
+	// Map<String, R4EReview> reviews = loadedGroup.getReviewsMap();
 	// for (Iterator<String> iterator = reviews.keySet().iterator(); iterator.hasNext();) {
 	// String reviewName = iterator.next();
 	// fFactory.openR4EReview(loadedGroup, reviewName);
@@ -383,8 +383,8 @@ public class R4EReviewGroupTest extends TestCase {
 	// assertNotNull(tomReviews);
 	// assertNotNull(jerryReviews);
 	//
-	// EList<String> createdByTom = tomReviews.getCreatedReviews();
-	// EList<String> createdByJerry = jerryReviews.getCreatedReviews();
+	// List<String> createdByTom = tomReviews.getCreatedReviews();
+	// List<String> createdByJerry = jerryReviews.getCreatedReviews();
 	//
 	// Set<String> tomInvitedTo = tomReviews.getInvitedToMap().keySet();
 	// Set<String> jerryInvitedTo = jerryReviews.getInvitedToMap().keySet();
@@ -407,7 +407,7 @@ public class R4EReviewGroupTest extends TestCase {
 	// File goldenFolder = new File(folderPath);
 	// @SuppressWarnings("unchecked")
 	// Collection<File> files = FileUtils.listFiles(goldenFolder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
-	// EList<Resource> resources = loadedGroup.eResource().getResourceSet().getResources();
+	// List<Resource> resources = loadedGroup.eResource().getResourceSet().getResources();
 	// boolean goodNumResources = (files.size() == resources.size());
 	// if (!goodNumResources) {
 	// System.out.println("Unexpected number of resources found: ");
@@ -432,7 +432,7 @@ public class R4EReviewGroupTest extends TestCase {
 	// assertNotNull(((R4EReview) loadedGroup.getReviews().get(0)).getName());
 	//
 	// // Verify Reviews Ids Map
-	// EList<Review> reviews = loadedGroup.getReviews();
+	// List<Review> reviews = loadedGroup.getReviews();
 	// R4EReview review = null;
 	// for (Iterator<Review> iterator = reviews.iterator(); iterator.hasNext();) {
 	// R4EReview tmpReview = (R4EReview) iterator.next();

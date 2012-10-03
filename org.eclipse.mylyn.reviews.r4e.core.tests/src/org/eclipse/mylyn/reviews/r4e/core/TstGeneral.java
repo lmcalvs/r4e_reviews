@@ -19,13 +19,15 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
+import org.eclipse.mylyn.reviews.r4e.core.utils.Tracer;
 
 public class TstGeneral {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
 	public static final String GROUP_PATH_STR = "outGroupX";
+
+	//Pre common model fixes
 
 	public static final String GOLDEN_GROUP_DIR_STR = "stubs_model/" + GROUP_PATH_STR;
 

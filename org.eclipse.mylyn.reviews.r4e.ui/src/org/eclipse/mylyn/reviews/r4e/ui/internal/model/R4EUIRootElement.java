@@ -27,7 +27,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelFactory;
 import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelFactory;
@@ -104,9 +104,9 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * @throws ResourceHandlingException
 	 */
 	@Override
-	public List<ReviewComponent> createChildModelDataElement() {
+	public List<IReviewComponent> createChildModelDataElement() {
 		//Get comment from user and set it in model data
-		final List<ReviewComponent> tempReviewGroups = new ArrayList<ReviewComponent>();
+		final List<IReviewComponent> tempReviewGroups = new ArrayList<IReviewComponent>();
 
 		final IReviewGroupInputDialog dialog = R4EUIDialogFactory.getInstance().getReviewGroupInputDialog();
 		dialog.create();
@@ -138,7 +138,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * @throws OutOfSyncException
 	 * @throws ResourceHandlingException
 	 */
-	public ReviewComponent createRuleSetElement() {
+	public IReviewComponent createRuleSetElement() {
 		//Get comment from user and set it in model data
 		R4EDesignRuleCollection tempRuleSet = null;
 		final IRuleSetInputDialog dialog = R4EUIDialogFactory.getInstance().getRuleSetInputDialog();
@@ -281,7 +281,7 @@ public class R4EUIRootElement extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#createChildren(ReviewNavigatorContentProvider)
 	 */
 	@Override
-	public IR4EUIModelElement createChildren(ReviewComponent aModelComponent) throws ResourceHandlingException,
+	public IR4EUIModelElement createChildren(IReviewComponent aModelComponent) throws ResourceHandlingException,
 			OutOfSyncException {
 
 		if (aModelComponent instanceof R4EReviewGroup) {

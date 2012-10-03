@@ -75,7 +75,7 @@ public class AnomaliesMyFilter extends ViewerFilter {
 
 		//For basic reviews, show all anomalies, For other review types, only show anomalies created by us
 		if (aElement instanceof R4EUIAnomalyExtended) {
-			if (!(((R4EUIAnomalyBasic) aElement).getAnomaly().getUser().getId().equals(R4EUIModelController.getReviewer()))) {
+			if (!(((R4EUIAnomalyBasic) aElement).getAnomaly().getAuthor().getId().equals(R4EUIModelController.getReviewer()))) {
 				return false;
 			}
 		} else if (aElement instanceof R4EUIAnomalyBasic) {
@@ -101,7 +101,7 @@ public class AnomaliesMyFilter extends ViewerFilter {
 			final int length = aCurrentElement.getChildren().length;
 			for (int i = 0; i < length; i++) {
 				if (((R4EUIAnomalyBasic) aCurrentElement.getChildren()[i]).getAnomaly()
-						.getUser()
+						.getAuthor()
 						.getId()
 						.equals(R4EUIModelController.getReviewer())) {
 					return true;
@@ -110,7 +110,7 @@ public class AnomaliesMyFilter extends ViewerFilter {
 			return false;
 		} else if (aCurrentElement instanceof R4EUIAnomalyBasic) {
 			if (((R4EUIAnomalyBasic) aCurrentElement).getAnomaly()
-					.getUser()
+					.getAuthor()
 					.getId()
 					.equals(R4EUIModelController.getReviewer())) {
 				return true;

@@ -9,21 +9,21 @@
  * Description:
  * 
  * Contributors:
- *    Alvaro Sanchez-Leon - Initial API and implementation
+ * Alvaro Sanchez-Leon  - Initial API and implementation
  * 
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.drules.util;
 
-import java.util.List;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
-import org.eclipse.mylyn.reviews.r4e.core.model.drules.*;
+import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.DRModelPackage;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRule;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleCollection;
+import org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleViolation;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
@@ -77,7 +77,7 @@ public class DRModelSwitch<T> extends Switch<T> {
 				R4EDesignRuleCollection r4EDesignRuleCollection = (R4EDesignRuleCollection)theEObject;
 				T result = caseR4EDesignRuleCollection(r4EDesignRuleCollection);
 				if (result == null) result = caseReviewComponent(r4EDesignRuleCollection);
-				if (result == null) result = caseSubModelRoot(r4EDesignRuleCollection);
+				if (result == null) result = caseModelVersioning(r4EDesignRuleCollection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -177,22 +177,22 @@ public class DRModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseReviewComponent(ReviewComponent object) {
+	public T caseReviewComponent(IReviewComponent object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Sub Model Root</em>'. <!-- begin-user-doc
+	 * Returns the result of interpreting the object as an instance of '<em>Model Versioning</em>'. <!-- begin-user-doc
 	 * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc
 	 * -->
 	 * 
 	 * @param object
 	 *            the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Sub Model Root</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Model Versioning</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseSubModelRoot(SubModelRoot object) {
+	public T caseModelVersioning(IModelVersioning object) {
 		return null;
 	}
 

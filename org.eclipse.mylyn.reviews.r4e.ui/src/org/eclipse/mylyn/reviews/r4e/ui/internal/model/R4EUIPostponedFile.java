@@ -21,11 +21,10 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.model;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.mylyn.reviews.frame.core.model.Location;
+import org.eclipse.mylyn.reviews.core.model.ILocation;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
@@ -230,14 +229,14 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 			}
 			if (anomaly.isEnabled()
 					|| R4EUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_DISABLED)) {
-				//Do not set position for global EList<E>lies
+				//Do not set position for global List<E>lies
 				position = null;
-				EList<Location> locations = anomaly.getLocation(); // $codepro.audit.disable variableDeclaredInLoop
+				List<ILocation> locations = anomaly.getLocations(); // $codepro.audit.disable variableDeclaredInLoop
 				if (null != locations) {
 					if (null != locations.get(0)) {
 						int locationsSize = locations.size(); // $codepro.audit.disable variableDeclaredInLoop
 						for (int j = 0; j < locationsSize; j++) {
-							position = new R4EUITextPosition(((R4EContent) anomaly.getLocation().get(j)).getLocation());
+							position = new R4EUITextPosition(((R4EContent) anomaly.getLocations().get(j)).getLocation());
 							uiAnomaly = new R4EUIPostponedAnomaly(this, anomaly, position);
 							uiAnomaly.setName(R4EUIAnomalyExtended.getStateString(anomaly.getState()) + ": "
 									+ uiAnomaly.getName());
@@ -295,10 +294,10 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 		//Check if the creator of the postponed anomaly is a participant of the current review.  If not, it will be 
 		//created and disabled after the postponed anomaly is created
 		final R4EUIReviewBasic uiReview = R4EUIModelController.getActiveReview();
-		R4EParticipant participant = uiReview.getParticipant(aPostponedAnomaly.getUser().getId(), false);
+		R4EParticipant participant = uiReview.getParticipant(aPostponedAnomaly.getAuthor().getId(), false);
 		boolean isParticipant = true;
 		if (null == participant) {
-			participant = uiReview.getParticipant(aPostponedAnomaly.getUser().getId(), true);
+			participant = uiReview.getParticipant(aPostponedAnomaly.getAuthor().getId(), true);
 			isParticipant = false;
 		}
 
@@ -328,7 +327,7 @@ public class R4EUIPostponedFile extends R4EUIFileContext {
 			//Brand new imported anomaly, set data
 			anomaly = R4EUIModelController.FModelExt.createR4EAnomaly(participant);
 			CommandUtils.copyAnomalyData(anomaly, aPostponedAnomaly);
-			final EMap<String, String> info = anomaly.getInfoAtt(); //We use the R4EAnomaly attribute map to store the original anomaly ID
+			final Map<String, String> info = anomaly.getInfoAtt(); //We use the R4EAnomaly attribute map to store the original anomaly ID
 			info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_ANOMALY_ID,
 					CommandUtils.buildOriginalAnomalyID(aPostponedAnomaly));
 			info.put(R4EUIConstants.POSTPONED_ATTR_ORIG_REVIEW_NAME, aOrigReviewName);

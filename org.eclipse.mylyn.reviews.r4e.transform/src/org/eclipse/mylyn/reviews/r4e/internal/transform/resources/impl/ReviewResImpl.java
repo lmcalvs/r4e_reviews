@@ -14,20 +14,13 @@ package org.eclipse.mylyn.reviews.r4e.internal.transform.resources.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUser;
-
 import org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EFormalReviewImpl;
-import org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EReviewImpl;
-
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes;
 import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackage;
 

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -14,8 +14,9 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import java.util.List;
+
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Review Component</b></em>'. <!--
@@ -32,8 +33,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
  * @model
  * @generated
  */
-public interface R4EReviewComponent extends ReviewComponent {
-
+public interface R4EReviewComponent extends IReviewComponent {
 	/**
 	 * Returns the value of the '<em><b>Assigned To</b></em>' attribute list.
 	 * The list contents are of type {@link java.lang.String}.
@@ -48,6 +48,6 @@ public interface R4EReviewComponent extends ReviewComponent {
 	 * @model
 	 * @generated
 	 */
-	EList<String> getAssignedTo();
+	List<String> getAssignedTo();
 
 } // R4EReviewComponent

@@ -32,12 +32,11 @@ import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.mylyn.reviews.frame.core.model.Location;
-import org.eclipse.mylyn.reviews.frame.core.model.Topic;
+import org.eclipse.mylyn.reviews.core.model.ILocation;
+import org.eclipse.mylyn.reviews.core.model.ITopic;
 import org.eclipse.mylyn.reviews.ldap.LdapPlugin;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
@@ -458,16 +457,16 @@ public class R4EUIModelController {
 	 */
 	public static void mapAnomalies(R4EReview aReview) {
 		clearAnomalyMap(); //Start with a clean map 
-		final EList<Topic> anomalies = aReview.getTopics();
-		Topic anomaly = null;
-		EList<Location> locations = null;
+		final List<ITopic> anomalies = aReview.getTopics();
+		ITopic anomaly = null;
+		List<ILocation> locations = null;
 		String targetFileVersion = null;
 		final int anomaliesSize = anomalies.size();
 		for (int i = 0; i < anomaliesSize; i++) {
 			anomaly = anomalies.get(i);
 
-			locations = anomaly.getLocation();
-			for (Location location : locations) {
+			locations = anomaly.getLocations();
+			for (ILocation location : locations) {
 				targetFileVersion = ((R4EAnomalyTextPosition) ((R4EContent) location).getLocation()).getFile()
 						.getLocalVersionID();
 				if (FFileAnomalyMap.containsKey(targetFileVersion)) {
@@ -541,7 +540,7 @@ public class R4EUIModelController {
 
 		//Test to see if the change file is within the latest review item
 		for (int j = 0; j < reviewItemsize; j++) {
-			EList<R4EFileContext> listFile = listReviewItems.get(j).getItem().getFileContextList();
+			List<R4EFileContext> listFile = listReviewItems.get(j).getItem().getFileContextList();
 			int size = listFile.size();
 			//Test if the selected container is not before the current container
 			Date testDate = listFile.get(0) != null

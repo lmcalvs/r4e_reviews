@@ -65,7 +65,22 @@
           <layout>p2</layout>
           <url>${mylyn-versions-repository-url}</url>
         </repository>
-<!--  Orbit is taken from parent pom
+		<repository>
+			<id>eclipse-mylyn-tasks</id>
+			<layout>p2</layout>
+			<url>${mylyn-tasks-repository-url}</url>
+		</repository>
+		<repository>
+			<id>eclipse-mylyn-context</id>
+			<layout>p2</layout>
+			<url>${mylyn-context-repository-url}</url>
+		</repository>
+        <repository>
+          <id>eclipse-mylyn-reviews</id>
+          <layout>p2</layout>
+          <url>${mylyn-reviews-repository-url}</url>
+        </repository>
+		<!--  Orbit is taken from parent pom
         <repository>
            <id>eclipse-mylyn-orbit-committers</id>
            <layout>p2</layout>
@@ -157,7 +172,6 @@
   </dependencyManagement>
 
   <modules>
-     <module>org.eclipse.mylyn.reviews.frame.core</module>
      <module>org.eclipse.mylyn.reviews.frame.ui</module>
      <module>org.eclipse.mylyn.reviews.r4e.ldap</module>
      <module>org.eclipse.mylyn.reviews.notifications</module>

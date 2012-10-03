@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -14,8 +14,9 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.mylyn.reviews.frame.core.model.User;
+import java.util.List;
+
+import org.eclipse.mylyn.reviews.core.model.IUser;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E User</b></em>'. <!-- end-user-doc -->
@@ -38,7 +39,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.User;
  * @model
  * @generated
  */
-public interface R4EUser extends User, R4EReviewComponent {
+public interface R4EUser extends IUser, R4EReviewComponent {
 	/**
 	 * Returns the value of the '<em><b>Group Paths</b></em>' attribute list.
 	 * The list contents are of type {@link java.lang.String}.
@@ -53,7 +54,7 @@ public interface R4EUser extends User, R4EReviewComponent {
 	 * @model transient="true" derived="true"
 	 * @generated
 	 */
-	EList<String> getGroupPaths();
+	List<String> getGroupPaths();
 
 	/**
 	 * Returns the value of the '<em><b>Sequence ID Counter</b></em>' attribute.
@@ -76,6 +77,7 @@ public interface R4EUser extends User, R4EReviewComponent {
 	 * 
 	 * @return <br>
 	 *         MANUAL: Manual entry
+	 * @generated NOT
 	 */
 	int getSequenceIDCounterNext();
 
@@ -102,7 +104,7 @@ public interface R4EUser extends User, R4EReviewComponent {
 	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
-	EList<R4EComment> getAddedComments();
+	List<R4EComment> getAddedComments();
 
 	/**
 	 * Returns the value of the '<em><b>Added Items</b></em>' containment reference list.
@@ -118,7 +120,7 @@ public interface R4EUser extends User, R4EReviewComponent {
 	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
-	EList<R4EItem> getAddedItems();
+	List<R4EItem> getAddedItems();
 
 	/**
 	 * Returns the value of the '<em><b>Review Created By Me</b></em>' attribute.
@@ -149,8 +151,8 @@ public interface R4EUser extends User, R4EReviewComponent {
 	 * Returns the value of the '<em><b>Review Instance</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Review Instance</em>' containment reference isn't clear, there really should be more
-	 * of a description here...
+	 * If the meaning of the '<em>Review Instance</em>' reference isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Review Instance</em>' reference.

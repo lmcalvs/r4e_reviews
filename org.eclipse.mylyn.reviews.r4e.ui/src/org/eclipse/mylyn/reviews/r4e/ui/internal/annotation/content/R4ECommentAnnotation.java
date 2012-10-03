@@ -59,7 +59,7 @@ public class R4ECommentAnnotation extends R4EAnnotation {
 	 *            R4EAnomalyAnnotation
 	 */
 	public R4ECommentAnnotation(R4EUIComment aSourceComment, R4EAnomalyAnnotation aParentAnomaly) {
-		super(aSourceComment, getAnnotationType(aSourceComment), aSourceComment.getComment().getUser().getId());
+		super(aSourceComment, getAnnotationType(aSourceComment), aSourceComment.getComment().getAuthor().getId());
 		fParent = aParentAnomaly;
 		final StringTokenizer st = new StringTokenizer(aSourceComment.getComment().getDescription(),
 				R4EUIConstants.LINE_FEED);
@@ -90,7 +90,7 @@ public class R4ECommentAnnotation extends R4EAnnotation {
 	 */
 	@Override
 	public R4EID getId() {
-		return ((R4EUIComment) fSourceElement).getComment().getId();
+		return ((R4EUIComment) fSourceElement).getComment().getR4eId();
 	}
 
 	/**

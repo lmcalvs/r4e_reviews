@@ -24,15 +24,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.mylyn.reviews.frame.core.model.Item;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.frame.core.model.Topic;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.core.model.IReviewItem;
+import org.eclipse.mylyn.reviews.core.model.ITopic;
 import org.eclipse.mylyn.reviews.notifications.core.IMeetingData;
 import org.eclipse.mylyn.reviews.notifications.spi.NotificationsConnector;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
@@ -50,11 +49,13 @@ import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserReviews;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EUserRole;
+import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.RModelFactoryExt;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.Persistence.ResourceUpdater;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.CompatibilityException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.OutOfSyncException;
 import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingException;
+import org.eclipse.mylyn.reviews.r4e.core.utils.VersionUtils;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.commands.handlers.ImportPostponedHandler;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
@@ -273,12 +274,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	public String getImageLocation() {
 		if (isOpen()) {
-			if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+			if (fReview.getType().equals(R4EReviewType.BASIC)) {
 				return REVIEW_BASIC_ICON_FILE;
 			}
 			return REVIEW_INFORMAL_ICON_FILE;
 		}
-		if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+		if (fReview.getType().equals(R4EReviewType.BASIC)) {
 			return REVIEW_BASIC_CLOSED_ICON_FILE;
 		}
 		return REVIEW_INFORMAL_CLOSED_ICON_FILE;
@@ -344,9 +345,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @return String
 	 */
 	private static String getReviewDisplayName(String aName, R4EReviewType aType) {
-		if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+		if (aType.equals(R4EReviewType.INFORMAL)) {
 			return R4EUIConstants.REVIEW_TYPE_INFORMAL + ": " + aName;
-		} else if (aType.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+		} else if (aType.equals(R4EReviewType.BASIC)) {
 			return R4EUIConstants.REVIEW_TYPE_BASIC + ": " + aName;
 		} else {
 			//No change.  For formal review the name is set in the subclass
@@ -364,7 +365,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @see org.eclipse.mylyn.reviews.r4e.ui.internal.model.IR4EUIModelElement#setModelData(R4EReviewComponent)
 	 */
 	@Override
-	public void setModelData(ReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
+	public void setModelData(IReviewComponent aModelComponent) throws ResourceHandlingException, OutOfSyncException {
 		//Set data in model element
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
 		fReview.setExtraNotes(((R4EReview) aModelComponent).getExtraNotes());
@@ -449,7 +450,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		} else {
 			if (aCreate) {
 				final List<R4EUserRole> role = new ArrayList<R4EUserRole>(1);
-				role.add(R4EUserRole.R4E_ROLE_REVIEWER);
+				role.add(R4EUserRole.REVIEWER);
 				participant = R4EUIModelController.FModelExt.createR4EParticipant(fReview, aParticipant, role);
 				fParticipantsContainer.addChildren(new R4EUIParticipant(fParticipantsContainer, participant,
 						fReview.getType()));
@@ -485,7 +486,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 
 	/**
 	 * Method getParticipants.
-	 * @param aIncludeDisabled - boolean
+	 * 
+	 * @param aIncludeDisabled
+	 *            - boolean
 	 * @return List<R4EParticipant>
 	 */
 	public List<R4EParticipant> getParticipants(boolean aIncludeDisabled) {
@@ -681,7 +684,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		fReadOnly = false;
 		R4EUIModelController.FModelExt.closeR4EReview(fReview); //Notify model
 		R4EUIModelController.clearAnomalyMap();
-		if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+		if (fReview.getType().equals(R4EReviewType.BASIC)) {
 			fImage = UIUtils.loadIcon(REVIEW_BASIC_CLOSED_ICON_FILE);
 		} else {
 			fImage = UIUtils.loadIcon(REVIEW_INFORMAL_CLOSED_ICON_FILE);
@@ -699,10 +702,12 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public void open() throws ResourceHandlingException, FileNotFoundException, CompatibilityException {
+		fReview = null;
+//		try {
 		fReview = R4EUIModelController.FModelExt.openR4EReview(((R4EUIReviewGroup) getParent()).getReviewGroup(),
 				fReviewName);
 		if (checkCompatibility()) {
-			final EList<Item> items = fReview.getReviewItems();
+			final List<IReviewItem> items = fReview.getItems();
 			if (null != items) {
 
 				IR4EUIModelElement uiItem = null;
@@ -723,7 +728,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 									R4EUIConstants.IMPORTED_ANOMALIES_LABEL_NAME);
 						} else if (null == item.getRepositoryRef() || "".equals(item.getRepositoryRef())) {
 							//Resource
-							EList<R4EFileContext> contextList = item.getFileContextList();
+							List<R4EFileContext> contextList = item.getFileContextList();
 							StringBuilder name = new StringBuilder("Resource: "); //$NON-NLS-1$
 							if (contextList.size() > 0) {
 								name = name.append(item.getFileContextList().get(0).getTarget().getName());
@@ -767,9 +772,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			}
 
 			fOpen = true;
-			if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+			if (fReview.getType().equals(R4EReviewType.BASIC)) {
 				fImage = UIUtils.loadIcon(REVIEW_BASIC_ICON_FILE);
-			} else if (fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_INFORMAL)) {
+			} else if (fReview.getType().equals(R4EReviewType.INFORMAL)) {
 				fImage = UIUtils.loadIcon(REVIEW_INFORMAL_ICON_FILE);
 			}
 
@@ -808,21 +813,21 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @return boolean
 	 */
 	private boolean checkCompatibility() {
-		final int checkResult = fReview.getCompatibility();
+		String currentVersion = Persistence.Roots.REVIEW.getVersion();
+		int checkResult = VersionUtils.compareVersions(currentVersion, fReview.getFragmentVersion());
 		switch (checkResult) {
 		case R4EUIConstants.VERSION_APPLICATION_OLDER:
 			UIUtils.displayCompatibilityErrorDialog();
 			return false;
 		case R4EUIConstants.VERSION_APPLICATION_NEWER:
-			final int result = UIUtils.displayCompatibilityWarningDialog(fReview.getFragmentVersion(),
-					fReview.getApplicationVersion());
+			final int result = UIUtils.displayCompatibilityWarningDialog(fReview.getFragmentVersion(), currentVersion);
 			switch (result) {
 			case R4EUIConstants.OPEN_NORMAL:
 				//Upgrade version immediately
 				try {
 					final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview,
 							R4EUIModelController.getReviewer());
-					fReview.setFragmentVersion(fReview.getApplicationVersion());
+					fReview.setFragmentVersion(currentVersion);
 					R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 				} catch (ResourceHandlingException e) {
 					UIUtils.displayResourceErrorDialog(e);
@@ -890,12 +895,11 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public boolean isDueDatePassed() {
 		if (isEnabled()) {
 			if (null != fReview.getDueDate()
-					&& !((R4EReviewState) fReview.getState()).getState().equals(
-							R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+					&& !((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.COMPLETED)) {
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(new Date());
 				cal.add(Calendar.DAY_OF_YEAR, -1);
-				if (fReview.getDueDate().before(cal.getTime())) {
+				if (fReview.getDueDate() != null && fReview.getDueDate().before(cal.getTime())) {
 					return true;
 				}
 			}
@@ -1146,7 +1150,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(reviewItem,
 				R4EUIModelController.getReviewer());
-		final EMap<String, String> info = reviewItem.getInfoAtt(); //We use the R4EItem attribute map to mark this as postponed
+		final Map<String, String> info = reviewItem.getInfoAtt(); //We use the R4EItem attribute map to mark this as postponed
 		info.put(R4EUIConstants.POSTPONED_ATTR_STR, R4EUIConstants.TRUE_ATTR_VALUE_STR);
 		R4EUIModelController.FResourceUpdater.checkIn(bookNum);
 
@@ -1295,10 +1299,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isChangeUserReviewStateCmd() {
-		if (isEnabled()
-				&& isOpen()
-				&& !isReadOnly()
-				&& !(((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
+		if (isEnabled() && isOpen() && !isReadOnly()
+				&& !(((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -1520,8 +1522,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 			}
 
 			//Anomalies
-			final EList<Topic> anomalies = fReview.getTopics();
-			for (Topic anomaly : anomalies) {
+			final List<ITopic> anomalies = fReview.getTopics();
+			for (ITopic anomaly : anomalies) {
 				if (anomaly.isEnabled() && ((R4EAnomaly) anomaly).getAssignedTo().contains(aUsername)) {
 					return true;
 				}
@@ -1591,10 +1593,8 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	@Override
 	public boolean isImportPostponedCmd() {
-		if ((!getReview().getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC))
-				&& isOpen()
-				&& !isReadOnly()
-				&& !(((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED))) {
+		if ((!getReview().getType().equals(R4EReviewType.BASIC)) && isOpen() && !isReadOnly()
+				&& !(((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.COMPLETED))) {
 			return true;
 		}
 		return false;
@@ -1613,13 +1613,13 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public void setDate(R4EReviewPhase aNewPhase) throws ResourceHandlingException, OutOfSyncException {
 		final Long bookNum = R4EUIModelController.FResourceUpdater.checkOut(fReview, R4EUIModelController.getReviewer());
 		final Date date = Calendar.getInstance().getTime();
-		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+		if (aNewPhase.equals(R4EReviewPhase.PREPARATION)) {
 			((R4EFormalReview) fReview).getCurrent().setStartDate(date);
-		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION)) {
+		} else if (aNewPhase.equals(R4EReviewPhase.DECISION)) {
 			((R4EFormalReview) fReview).getCurrent().setStartDate(date);
-		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
+		} else if (aNewPhase.equals(R4EReviewPhase.REWORK)) {
 			((R4EFormalReview) fReview).getCurrent().setStartDate(date);
-		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+		} else if (aNewPhase.equals(R4EReviewPhase.COMPLETED)) {
 			fReview.setEndDate(date);
 		} else {
 			fReview.setEndDate(null);
@@ -1642,7 +1642,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 					R4EUIModelController.getReviewer());
 			((R4EReviewState) fReview.getState()).setState(aNewPhase);
 			//Set end date when the review is completed
-			if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+			if (aNewPhase.equals(R4EReviewPhase.COMPLETED)) {
 				R4EUIModelController.getActiveReview().getReview().setEndDate(Calendar.getInstance().getTime());
 			} else {
 				R4EUIModelController.getActiveReview().getReview().setEndDate(null);
@@ -1659,9 +1659,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @return String
 	 */
 	public String getPhaseString(R4EReviewPhase aNewPhase) {
-		if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED)) {
+		if (aNewPhase.equals(R4EReviewPhase.STARTED)) {
 			return R4EUIConstants.REVIEW_PHASE_STARTED;
-		} else if (aNewPhase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+		} else if (aNewPhase.equals(R4EReviewPhase.COMPLETED)) {
 			return R4EUIConstants.REVIEW_PHASE_COMPLETED;
 		} else {
 			return "";
@@ -1677,9 +1677,9 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 */
 	public R4EReviewPhase getPhaseFromString(String aNewPhase) {
 		if (aNewPhase.equals(R4EUIConstants.REVIEW_PHASE_STARTED)) {
-			return R4EReviewPhase.R4E_REVIEW_PHASE_STARTED;
+			return R4EReviewPhase.STARTED;
 		} else if (aNewPhase.equals(R4EUIConstants.REVIEW_PHASE_COMPLETED)) {
-			return R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED;
+			return R4EReviewPhase.COMPLETED;
 		} else {
 			return null; //should never happen
 		}
@@ -1738,14 +1738,14 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 		final List<R4EReviewPhase> phases = new ArrayList<R4EReviewPhase>();
 
 		switch (aCurrentPhase.getValue()) {
-		case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+		case R4EReviewPhase.STARTED_VALUE:
+			phases.add(R4EReviewPhase.STARTED);
+			phases.add(R4EReviewPhase.COMPLETED);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
-			phases.add(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
+		case R4EReviewPhase.COMPLETED_VALUE:
+			phases.add(R4EReviewPhase.COMPLETED);
+			phases.add(R4EReviewPhase.STARTED);
 			break;
 
 		default:
@@ -1767,7 +1767,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public boolean validatePhaseChange(R4EReviewPhase aNextPhase, AtomicReference<String> aErrorMessage) { // $codepro.audit.disable booleanMethodNamingConvention
 
 		switch (aNextPhase.getValue()) {
-		case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
+		case R4EReviewPhase.COMPLETED_VALUE:
 			if (!checkCompletionStatus(aErrorMessage)) {
 				return false;
 			}
@@ -1787,18 +1787,18 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @return boolean
 	 */
 	public boolean checkCompletionStatus(AtomicReference<String> aErrorMessage) { // $codepro.audit.disable booleanMethodNamingConvention
-		if (!(fReview.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC))) {
+		if (!(fReview.getType().equals(R4EReviewType.BASIC))) {
 			if (null == fReview.getDecision() || null == fReview.getDecision().getValue()) {
 				aErrorMessage.set("Phase cannot be changed to " + R4EUIConstants.REVIEW_PHASE_COMPLETED
 						+ " as review exit decision information is missing");
 				return false;
 			}
-			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_NONE)) {
+			if (fReview.getDecision().getValue().equals(R4EDecision.NONE)) {
 				aErrorMessage.set("Phase cannot be changed to " + R4EUIConstants.REVIEW_PHASE_COMPLETED
 						+ " as review exit decision information is set to NONE");
 				return false;
 			}
-			if (fReview.getDecision().getValue().equals(R4EDecision.R4E_REVIEW_DECISION_REJECTED)) {
+			if (fReview.getDecision().getValue().equals(R4EDecision.REJECTED)) {
 				aErrorMessage.set("Phase cannot be changed to " + R4EUIConstants.REVIEW_PHASE_COMPLETED
 						+ " as review exit decision information is set to REJECTED");
 				return true;
@@ -1845,7 +1845,7 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	 * @return boolean
 	 */
 	public boolean isExitDecisionEnabled() {
-		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+		if (((R4EReviewState) fReview.getState()).getState().equals(R4EReviewPhase.COMPLETED)) {
 			return false;
 		}
 		return true;
@@ -1870,13 +1870,13 @@ public class R4EUIReviewBasic extends R4EUIModelElement {
 	public static R4EReviewDecision getDecisionValueFromString(String aDecision) {
 		final R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
 		if (aDecision.equals(EXIT_DECISION_ACCEPTED)) {
-			reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED);
+			reviewDecision.setValue(R4EDecision.ACCEPTED);
 		} else if (aDecision.equals(EXIT_DECISION_ACCEPTED_FOLLOWUP)) {
-			reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP);
+			reviewDecision.setValue(R4EDecision.ACCEPTED_FOLLOWUP);
 		} else if (aDecision.equals(EXIT_DECISION_REJECTED)) {
-			reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_REJECTED);
+			reviewDecision.setValue(R4EDecision.REJECTED);
 		} else {
-			reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_NONE);
+			reviewDecision.setValue(R4EDecision.NONE);
 		}
 		return reviewDecision;
 	}

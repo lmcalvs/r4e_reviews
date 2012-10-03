@@ -14,7 +14,7 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.drules;
 
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Design Rule</b></em>'. <!-- end-user-doc -->
@@ -34,7 +34,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
  * @model
  * @generated
  */
-public interface R4EDesignRule extends ReviewComponent {
+public interface R4EDesignRule extends IReviewComponent {
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->

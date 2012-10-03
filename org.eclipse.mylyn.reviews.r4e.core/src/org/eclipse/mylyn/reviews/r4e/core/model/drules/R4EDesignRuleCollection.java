@@ -14,9 +14,10 @@
  */
 package org.eclipse.mylyn.reviews.r4e.core.model.drules;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
+import java.util.List;
+
+import org.eclipse.mylyn.reviews.core.model.IModelVersioning;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>R4E Design Rule Collection</b></em>'. <!--
@@ -36,7 +37,7 @@ import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
  * @model
  * @generated
  */
-public interface R4EDesignRuleCollection extends ReviewComponent, SubModelRoot {
+public interface R4EDesignRuleCollection extends IReviewComponent, IModelVersioning {
 	/**
 	 * Returns the value of the '<em><b>Areas</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.mylyn.reviews.r4e.core.model.drules.R4EDesignRuleArea}.
@@ -51,7 +52,7 @@ public interface R4EDesignRuleCollection extends ReviewComponent, SubModelRoot {
 	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
-	EList<R4EDesignRuleArea> getAreas();
+	List<R4EDesignRuleArea> getAreas();
 
 	/**
 	 * Returns the value of the '<em><b>Version</b></em>' attribute.

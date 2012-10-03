@@ -26,11 +26,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
-import org.eclipse.mylyn.reviews.frame.core.model.Comment;
-import org.eclipse.mylyn.reviews.frame.core.model.Item;
-import org.eclipse.mylyn.reviews.frame.core.model.Topic;
+import org.eclipse.mylyn.reviews.core.model.IComment;
+import org.eclipse.mylyn.reviews.core.model.IReviewItem;
+import org.eclipse.mylyn.reviews.core.model.ITopic;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
@@ -182,8 +181,8 @@ public class ImportPostponedHandler extends AbstractHandler {
 		try {
 			final R4EReview oldReview = R4EUIModelController.FModelExt.openR4EReview(
 					((R4EUIReviewGroup) aUiOldReview.getParent()).getReviewGroup(), aUiOldReview.getReview().getName());
-			final EList<Topic> oldAnomalies = oldReview.getTopics();
-			for (Topic oldAnomaly : oldAnomalies) {
+			final List<ITopic> oldAnomalies = oldReview.getTopics();
+			for (ITopic oldAnomaly : oldAnomalies) {
 
 				//Get parent file
 				R4EFileVersion oldAnomalyFile = CommandUtils.getAnomalyParentFile((R4EAnomaly) oldAnomaly);
@@ -195,7 +194,7 @@ public class ImportPostponedHandler extends AbstractHandler {
 					}
 				} else {
 
-					for (Item currentItem : currentReview.getReviewItems()) {
+					for (IReviewItem currentItem : currentReview.getItems()) {
 						//Ignore R4EUIPostponedContainer for current review here
 						if ((R4EUIConstants.TRUE_ATTR_VALUE_STR).equals(((R4EItem) currentItem).getInfoAtt().get(
 								R4EUIConstants.POSTPONED_ATTR_STR))) {
@@ -204,7 +203,7 @@ public class ImportPostponedHandler extends AbstractHandler {
 
 						//NOTE:  We compare the URI of the files.  This means that in order to be considered, 
 						//the version of the file in the current review need to be in the workspace.  This is a limitation.
-						EList<R4EFileContext> currentFiles = ((R4EItem) currentItem).getFileContextList();
+						List<R4EFileContext> currentFiles = ((R4EItem) currentItem).getFileContextList();
 						for (R4EFileContext currentFile : currentFiles) {
 							if (null != currentFile.getTarget()
 									&& null != currentFile.getTarget().getPlatformURI()
@@ -300,7 +299,7 @@ public class ImportPostponedHandler extends AbstractHandler {
 			if (aAddNewAnomalies) {
 
 				//If the anomaly is new and is postponed, add it
-				if (aOldAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)) {
+				if (aOldAnomaly.getState().equals(R4EAnomalyState.DEFERRED)) {
 					if (null != aMonitor) {
 						aMonitor.subTask("Importing Postponed Global Anomaly for Review: " + aUiReview.getName());
 					}
@@ -308,8 +307,8 @@ public class ImportPostponedHandler extends AbstractHandler {
 					final R4EUIPostponedAnomaly uiPostponedAnomaly = aUiPostponedContainer.getAnomalyContainer()
 							.createAnomaly(aUiReview, aOldAnomaly);
 					//Also add all child comments
-					final EList<Comment> comments = aOldAnomaly.getComments();
-					for (Comment comment : comments) {
+					final List<IComment> comments = aOldAnomaly.getComments();
+					for (IComment comment : comments) {
 						uiPostponedAnomaly.createComment((R4EComment) comment);
 					}
 				}
@@ -318,9 +317,9 @@ public class ImportPostponedHandler extends AbstractHandler {
 			foundUiAnomaly.updateAnomaly(aOldAnomaly);
 			if (foundUiAnomaly.isEnabled()) {
 				//Update anomaly comments
-				final EList<Comment> oldComments = aOldAnomaly.getComments();
+				final List<IComment> oldComments = aOldAnomaly.getComments();
 				final IR4EUIModelElement[] uiComments = foundUiAnomaly.getChildren();
-				for (Comment oldComment : oldComments) {
+				for (IComment oldComment : oldComments) {
 					R4EUIComment foundUiComment = null;
 					for (IR4EUIModelElement uiComment : uiComments) {
 						R4EComment comment = ((R4EUIComment) uiComment).getComment();
@@ -387,7 +386,7 @@ public class ImportPostponedHandler extends AbstractHandler {
 		if (null == foundUiAnomaly) {
 			if (aAddNewAnomalies) {
 				//If the anomaly is new and is postponed, add it
-				if (aOldAnomaly.getState().equals(R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED)) {
+				if (aOldAnomaly.getState().equals(R4EAnomalyState.DEFERRED)) {
 					if (null != aMonitor) {
 						aMonitor.subTask("Importing Postponed Anomaly for Review: " + aUiReview.getName());
 					}
@@ -396,8 +395,8 @@ public class ImportPostponedHandler extends AbstractHandler {
 							aUiReview.getReview().getName());
 
 					//Also add all child comments
-					final EList<Comment> comments = aOldAnomaly.getComments();
-					for (Comment comment : comments) {
+					final List<IComment> comments = aOldAnomaly.getComments();
+					for (IComment comment : comments) {
 						uiPostponedAnomaly.createComment((R4EComment) comment);
 					}
 				}
@@ -406,9 +405,9 @@ public class ImportPostponedHandler extends AbstractHandler {
 			foundUiAnomaly.updateAnomaly(aOldAnomaly);
 			if (foundUiAnomaly.isEnabled()) {
 				//Update anomaly comments
-				final EList<Comment> oldComments = aOldAnomaly.getComments();
+				final List<IComment> oldComments = aOldAnomaly.getComments();
 				final IR4EUIModelElement[] uiComments = foundUiAnomaly.getChildren();
-				for (Comment oldComment : oldComments) {
+				for (IComment oldComment : oldComments) {
 					R4EUIComment foundUiComment = null;
 					for (IR4EUIModelElement uiComment : uiComments) {
 						R4EComment comment = ((R4EUIComment) uiComment).getComment();

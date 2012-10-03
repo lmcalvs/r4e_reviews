@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -15,8 +15,10 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.Collection;
-
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -27,12 +29,15 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.mylyn.reviews.frame.core.model.Item;
-import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
-import org.eclipse.mylyn.reviews.frame.core.model.Review;
-import org.eclipse.mylyn.reviews.frame.core.model.User;
+import org.eclipse.mylyn.reviews.core.model.ILocation;
+import org.eclipse.mylyn.reviews.core.model.IReview;
+import org.eclipse.mylyn.reviews.core.model.IReviewItem;
+import org.eclipse.mylyn.reviews.core.model.ITopic;
+import org.eclipse.mylyn.reviews.core.model.IUser;
+import org.eclipse.mylyn.reviews.internal.core.model.ReviewsPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileContext;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EItem;
 import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
@@ -44,6 +49,9 @@ import org.eclipse.mylyn.reviews.r4e.core.model.RModelPackage;
  * <ul>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getAddedBy <em>Added By</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getReview <em>Review</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getTopics <em>Topics</em>}</li>
+ *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getAddedById <em>Added By Id</em>}</li>
  *   <li>{@link org.eclipse.mylyn.reviews.r4e.core.model.impl.R4EItemImpl#getFileContextList <em>File Context List</em>}</li>
@@ -66,7 +74,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * @generated
 	 * @ordered
 	 */
-	protected User addedBy;
+	protected IUser addedBy;
 
 	/**
 	 * The cached value of the '{@link #getReview() <em>Review</em>}' reference.
@@ -76,7 +84,55 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * @generated
 	 * @ordered
 	 */
-	protected Review review;
+	protected IReview review;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getTopics() <em>Topics</em>}' reference list.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @see #getTopics()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ITopic> topics;
+
+	/**
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String id = ID_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
@@ -228,10 +284,10 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public User getAddedBy() {
+	public IUser getAddedBy() {
 		if (addedBy != null && addedBy.eIsProxy()) {
 			InternalEObject oldAddedBy = (InternalEObject)addedBy;
-			addedBy = (User)eResolveProxy(oldAddedBy);
+			addedBy = (IUser)eResolveProxy(oldAddedBy);
 			if (addedBy != oldAddedBy) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_ITEM__ADDED_BY, oldAddedBy, addedBy));
@@ -244,7 +300,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public User basicGetAddedBy() {
+	public IUser basicGetAddedBy() {
 		return addedBy;
 	}
 
@@ -252,8 +308,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setAddedBy(User newAddedBy) {
-		User oldAddedBy = addedBy;
+	public void setAddedBy(IUser newAddedBy) {
+		IUser oldAddedBy = addedBy;
 		addedBy = newAddedBy;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ITEM__ADDED_BY, oldAddedBy, addedBy));
@@ -263,10 +319,10 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Review getReview() {
+	public IReview getReview() {
 		if (review != null && review.eIsProxy()) {
 			InternalEObject oldReview = (InternalEObject)review;
-			review = (Review)eResolveProxy(oldReview);
+			review = (IReview)eResolveProxy(oldReview);
 			if (review != oldReview) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RModelPackage.R4E_ITEM__REVIEW, oldReview, review));
@@ -279,7 +335,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Review basicGetReview() {
+	public IReview basicGetReview() {
 		return review;
 	}
 
@@ -287,11 +343,60 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setReview(Review newReview) {
-		Review oldReview = review;
+	public void setReview(IReview newReview) {
+		IReview oldReview = review;
 		review = newReview;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ITEM__REVIEW, oldReview, review));
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ITEM__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<ITopic> getTopics() {
+		if (topics == null) {
+			topics = new EObjectWithInverseResolvingEList<ITopic>(ITopic.class, this, RModelPackage.R4E_ITEM__TOPICS, ReviewsPackage.TOPIC__ITEM);
+		}
+		return topics;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setId(String newId) {
+		String oldId = id;
+		id = newId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RModelPackage.R4E_ITEM__ID, oldId, id));
 	}
 
 	/**
@@ -336,7 +441,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<R4EFileContext> getFileContextList() {
+	public List<R4EFileContext> getFileContextList() {
 		if (fileContextList == null) {
 			fileContextList = new EObjectContainmentEList.Resolving<R4EFileContext>(R4EFileContext.class, this, RModelPackage.R4E_ITEM__FILE_CONTEXT_LIST);
 		}
@@ -366,7 +471,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getProjectURIs() {
+	public List<String> getProjectURIs() {
 		if (projectURIs == null) {
 			projectURIs = new EDataTypeUniqueEList<String>(String.class, this, RModelPackage.R4E_ITEM__PROJECT_UR_IS);
 		}
@@ -415,11 +520,35 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, String> getInfoAtt() {
+	public Map<String, String> getInfoAtt() {
 		if (infoAtt == null) {
 			infoAtt = new EcoreEMap<String,String>(RModelPackage.Literals.MAP_KEY_TO_INFO_ATTRIBUTES, MapKeyToInfoAttributesImpl.class, this, RModelPackage.R4E_ITEM__INFO_ATT);
 		}
-		return infoAtt;
+		return infoAtt.map();
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ITopic createTopicComment(ILocation initalLocation, String commentText) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case RModelPackage.R4E_ITEM__TOPICS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getTopics()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -429,10 +558,12 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case RModelPackage.R4E_ITEM__TOPICS:
+				return ((InternalEList<?>)getTopics()).basicRemove(otherEnd, msgs);
 			case RModelPackage.R4E_ITEM__FILE_CONTEXT_LIST:
 				return ((InternalEList<?>)getFileContextList()).basicRemove(otherEnd, msgs);
 			case RModelPackage.R4E_ITEM__INFO_ATT:
-				return ((InternalEList<?>)getInfoAtt()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)((EMap.InternalMapView<String, String>)getInfoAtt()).eMap()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -450,6 +581,12 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 			case RModelPackage.R4E_ITEM__REVIEW:
 				if (resolve) return getReview();
 				return basicGetReview();
+			case RModelPackage.R4E_ITEM__NAME:
+				return getName();
+			case RModelPackage.R4E_ITEM__TOPICS:
+				return getTopics();
+			case RModelPackage.R4E_ITEM__ID:
+				return getId();
 			case RModelPackage.R4E_ITEM__DESCRIPTION:
 				return getDescription();
 			case RModelPackage.R4E_ITEM__ADDED_BY_ID:
@@ -465,8 +602,8 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 			case RModelPackage.R4E_ITEM__SUBMITTED:
 				return getSubmitted();
 			case RModelPackage.R4E_ITEM__INFO_ATT:
-				if (coreType) return getInfoAtt();
-				else return getInfoAtt().map();
+				if (coreType) return ((EMap.InternalMapView<String, String>)getInfoAtt()).eMap();
+				else return getInfoAtt();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -480,10 +617,20 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case RModelPackage.R4E_ITEM__ADDED_BY:
-				setAddedBy((User)newValue);
+				setAddedBy((IUser)newValue);
 				return;
 			case RModelPackage.R4E_ITEM__REVIEW:
-				setReview((Review)newValue);
+				setReview((IReview)newValue);
+				return;
+			case RModelPackage.R4E_ITEM__NAME:
+				setName((String)newValue);
+				return;
+			case RModelPackage.R4E_ITEM__TOPICS:
+				getTopics().clear();
+				getTopics().addAll((Collection<? extends ITopic>)newValue);
+				return;
+			case RModelPackage.R4E_ITEM__ID:
+				setId((String)newValue);
 				return;
 			case RModelPackage.R4E_ITEM__DESCRIPTION:
 				setDescription((String)newValue);
@@ -509,7 +656,7 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 				setSubmitted((Date)newValue);
 				return;
 			case RModelPackage.R4E_ITEM__INFO_ATT:
-				((EStructuralFeature.Setting)getInfoAtt()).set(newValue);
+				((EStructuralFeature.Setting)((EMap.InternalMapView<String, String>)getInfoAtt()).eMap()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -523,10 +670,19 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case RModelPackage.R4E_ITEM__ADDED_BY:
-				setAddedBy((User)null);
+				setAddedBy((IUser)null);
 				return;
 			case RModelPackage.R4E_ITEM__REVIEW:
-				setReview((Review)null);
+				setReview((IReview)null);
+				return;
+			case RModelPackage.R4E_ITEM__NAME:
+				setName(NAME_EDEFAULT);
+				return;
+			case RModelPackage.R4E_ITEM__TOPICS:
+				getTopics().clear();
+				return;
+			case RModelPackage.R4E_ITEM__ID:
+				setId(ID_EDEFAULT);
 				return;
 			case RModelPackage.R4E_ITEM__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
@@ -567,6 +723,12 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 				return addedBy != null;
 			case RModelPackage.R4E_ITEM__REVIEW:
 				return review != null;
+			case RModelPackage.R4E_ITEM__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case RModelPackage.R4E_ITEM__TOPICS:
+				return topics != null && !topics.isEmpty();
+			case RModelPackage.R4E_ITEM__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case RModelPackage.R4E_ITEM__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case RModelPackage.R4E_ITEM__ADDED_BY_ID:
@@ -593,10 +755,13 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == Item.class) {
+		if (baseClass == IReviewItem.class) {
 			switch (derivedFeatureID) {
-				case RModelPackage.R4E_ITEM__ADDED_BY: return ModelPackage.ITEM__ADDED_BY;
-				case RModelPackage.R4E_ITEM__REVIEW: return ModelPackage.ITEM__REVIEW;
+				case RModelPackage.R4E_ITEM__ADDED_BY: return ReviewsPackage.REVIEW_ITEM__ADDED_BY;
+				case RModelPackage.R4E_ITEM__REVIEW: return ReviewsPackage.REVIEW_ITEM__REVIEW;
+				case RModelPackage.R4E_ITEM__NAME: return ReviewsPackage.REVIEW_ITEM__NAME;
+				case RModelPackage.R4E_ITEM__TOPICS: return ReviewsPackage.REVIEW_ITEM__TOPICS;
+				case RModelPackage.R4E_ITEM__ID: return ReviewsPackage.REVIEW_ITEM__ID;
 				default: return -1;
 			}
 		}
@@ -609,10 +774,13 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == Item.class) {
+		if (baseClass == IReviewItem.class) {
 			switch (baseFeatureID) {
-				case ModelPackage.ITEM__ADDED_BY: return RModelPackage.R4E_ITEM__ADDED_BY;
-				case ModelPackage.ITEM__REVIEW: return RModelPackage.R4E_ITEM__REVIEW;
+				case ReviewsPackage.REVIEW_ITEM__ADDED_BY: return RModelPackage.R4E_ITEM__ADDED_BY;
+				case ReviewsPackage.REVIEW_ITEM__REVIEW: return RModelPackage.R4E_ITEM__REVIEW;
+				case ReviewsPackage.REVIEW_ITEM__NAME: return RModelPackage.R4E_ITEM__NAME;
+				case ReviewsPackage.REVIEW_ITEM__TOPICS: return RModelPackage.R4E_ITEM__TOPICS;
+				case ReviewsPackage.REVIEW_ITEM__ID: return RModelPackage.R4E_ITEM__ID;
 				default: return -1;
 			}
 		}
@@ -628,7 +796,11 @@ public class R4EItemImpl extends R4EIDComponentImpl implements R4EItem {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (description: ");
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", id: ");
+		result.append(id);
+		result.append(", description: ");
 		result.append(description);
 		result.append(", addedById: ");
 		result.append(addedById);

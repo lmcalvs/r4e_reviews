@@ -33,15 +33,13 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.ISourceRange;
 import org.eclipse.jdt.core.ISourceReference;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.mylyn.reviews.frame.core.model.Location;
-import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
+import org.eclipse.mylyn.reviews.core.model.ILocation;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EComment;
@@ -61,6 +59,7 @@ import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
 import org.eclipse.mylyn.reviews.r4e.core.utils.ResourceUtils;
+import org.eclipse.mylyn.reviews.r4e.core.utils.Tracer;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4EFileEditorInput;
@@ -602,16 +601,16 @@ public class CommandUtils {
 		R4EContextType dtype = null;
 		switch (aChangeType) {
 		case ADDED:
-			dtype = R4EContextType.R4E_ADDED;
+			dtype = R4EContextType.ADDED;
 			break;
 		case DELETED:
-			dtype = R4EContextType.R4E_DELETED;
+			dtype = R4EContextType.DELETED;
 			break;
 		case MODIFIED:
-			dtype = R4EContextType.R4E_MODIFIED;
+			dtype = R4EContextType.MODIFIED;
 			break;
 		case REPLACED:
-			dtype = R4EContextType.R4E_REPLACED;
+			dtype = R4EContextType.REPLACED;
 			break;
 		default:
 			break;
@@ -783,7 +782,7 @@ public class CommandUtils {
 	 */
 	public static R4EAnomalyTextPosition getAnomalyPosition(R4EAnomaly aAnomaly) {
 		if (null != aAnomaly) {
-			final EList<Location> location = aAnomaly.getLocation();
+			final List<ILocation> location = aAnomaly.getLocations();
 			if ((null != location) && (location.size() > 0)) {
 				final R4EContent content = (R4EContent) location.get(0); //look at first location only
 				if (null != content) {
@@ -804,7 +803,7 @@ public class CommandUtils {
 	 */
 	public static R4EFileVersion getAnomalyParentFile(R4EAnomaly aAnomaly) {
 		if (null != aAnomaly) {
-			final EList<Location> location = aAnomaly.getLocation();
+			final List<ILocation> location = aAnomaly.getLocations();
 			if ((null != location) && (location.size() > 0)) {
 				final R4EContent content = (R4EContent) location.get(0); //look at first location only
 				if (null != content) {
@@ -947,7 +946,7 @@ public class CommandUtils {
 						if (anomaly instanceof R4EAnomaly) {
 							Integer id = Integer.valueOf(origIdTokens[1]);
 							if (null != id) {
-								if (id.intValue() == anomaly.getId().getSequenceID()) {
+								if (id.intValue() == anomaly.getR4eId().getSequenceID()) {
 									return (R4EAnomaly) anomaly;
 								}
 							}
@@ -967,7 +966,7 @@ public class CommandUtils {
 	 * @return String
 	 */
 	public static String buildOriginalAnomalyID(R4EAnomaly aOrigAnomaly) {
-		return aOrigAnomaly.getId().getUserID() + R4EUIConstants.SEPARATOR + aOrigAnomaly.getId().getSequenceID();
+		return aOrigAnomaly.getR4eId().getUserID() + R4EUIConstants.SEPARATOR + aOrigAnomaly.getR4eId().getSequenceID();
 	}
 
 	/**
@@ -978,7 +977,7 @@ public class CommandUtils {
 	 * @return String
 	 */
 	public static String buildOriginalCommentID(R4EComment aOrigComment) {
-		return aOrigComment.getId().getUserID() + aOrigComment.getId().getSequenceID();
+		return aOrigComment.getR4eId().getUserID() + aOrigComment.getR4eId().getSequenceID();
 	}
 
 	/**
@@ -1000,7 +999,7 @@ public class CommandUtils {
 		if (null == participant) {
 			//Add the participant
 			final List<R4EUserRole> role = new ArrayList<R4EUserRole>(1);
-			role.add(R4EUserRole.R4E_ROLE_REVIEWER);
+			role.add(R4EUserRole.REVIEWER);
 			participant = R4EUIModelController.FModelExt.createR4EParticipant(aReview, aParticipantId, role);
 		}
 		return participant;

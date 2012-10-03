@@ -16,7 +16,7 @@ package org.eclipse.mylyn.reviews.ldap;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
+import org.eclipse.mylyn.reviews.r4e.core.utils.Tracer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 

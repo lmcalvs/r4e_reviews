@@ -50,7 +50,6 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.mylyn.reviews.frame.core.utils.Tracer;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EContextType;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFileVersion;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
@@ -63,6 +62,7 @@ import org.eclipse.mylyn.reviews.r4e.core.model.serial.impl.ResourceHandlingExce
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.IRFSRegistry;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.RFSRegistryFactory;
 import org.eclipse.mylyn.reviews.r4e.core.rfs.spi.ReviewsFileStorageException;
+import org.eclipse.mylyn.reviews.r4e.core.utils.Tracer;
 import org.eclipse.mylyn.reviews.r4e.ui.R4EUIPlugin;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.dialogs.R4EUIDialogFactory;
 import org.eclipse.mylyn.reviews.r4e.ui.internal.editors.R4ECompareEditorInput;
@@ -585,10 +585,10 @@ public class FindReviewItemsHandler extends AbstractHandler {
 									final List<R4EReviewComponent> addedItems = new ArrayList<R4EReviewComponent>();
 									addedItems.add(uiReviewItem.getItem());
 									final R4EReview review = uiReview.getReview();
-									if (review.getType().equals(R4EReviewType.R4E_REVIEW_TYPE_FORMAL)) {
+									if (review.getType().equals(R4EReviewType.FORMAL)) {
 										if (((R4EFormalReview) review).getCurrent()
 												.getType()
-												.equals(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION)) {
+												.equals(R4EReviewPhase.PREPARATION)) {
 											MailServicesProxy.sendItemsAddedNotification(addedItems);
 
 										}

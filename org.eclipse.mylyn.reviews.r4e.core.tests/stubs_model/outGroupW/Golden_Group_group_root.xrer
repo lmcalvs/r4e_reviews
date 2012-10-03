@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<r4ecore:R4EReviewGroup xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_xxzSQERCEeC2DrmWDHmN2w" description="This is sample description - Group level" name="Golden Group" defaultEntryCriteria="-Entry Criteria">
+<r4ecore:R4EReviewGroup xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:r4ecore="http://org.eclipse.mylyn.reviews.r4e.core.model/" xmi:id="_xxzSQERCEeC2DrmWDHmN2w" description="This is sample description - Group level" name="Golden Group" fragmentVersion="0.13.0" defaultEntryCriteria="-Entry Criteria">
   <reviewGroupTask xsi:type="r4ecore:R4ETaskReference" xmi:id="_x0s1QERCEeC2DrmWDHmN2w" taskId="324327" repositoryURL="https://bugs.eclipse.org/bugs/show_bug.cgi?id=324327"/>
   <availableProjects>P1</availableProjects>
   <availableProjects>P2</availableProjects>

@@ -990,7 +990,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 							//Create decision if it does not already exists
 							if (null == modelReview.getDecision()) {
 								final R4EReviewDecision reviewDecision = RModelFactoryExt.eINSTANCE.createR4EReviewDecision();
-								reviewDecision.setValue(R4EDecision.R4E_REVIEW_DECISION_NONE);
+								reviewDecision.setValue(R4EDecision.NONE);
 								modelReview.setDecision(reviewDecision);
 							}
 
@@ -1345,7 +1345,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 			//Fill the combo box selection
 			fDecisionUsersList.setEditableValues(participantsStr);
 
-			R4EReviewPhaseInfo phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
+			R4EReviewPhaseInfo phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.STARTED);
 			final R4EReviewPhaseInfo currentPhaseInfo = modelFormalReview.getCurrent();
 			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
 				fPhasePlanning.setText(1, phaseInfo.getPhaseOwnerID());
@@ -1381,7 +1381,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				fPhasePlanning.setText(3, "");
 			}
 
-			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
+			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.PREPARATION);
 			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
 				fPhasePreparation.setText(1, phaseInfo.getPhaseOwnerID());
 				fPhasePreparation.setText(2,
@@ -1414,7 +1414,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				fPhasePreparation.setText(3, "");
 			}
 
-			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
+			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.DECISION);
 			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
 				fPhaseDecision.setText(1, phaseInfo.getPhaseOwnerID());
 				fPhaseDecision.setText(2,
@@ -1448,7 +1448,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				fPhaseDecision.setText(3, "");
 			}
 
-			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
+			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.REWORK);
 			if (null != phaseInfo && null != phaseInfo.getPhaseOwnerID()) {
 				fPhaseRework.setText(1, phaseInfo.getPhaseOwnerID());
 				fPhaseRework.setText(2,
@@ -1482,7 +1482,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				fPhaseRework.setText(3, "");
 			}
 
-			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+			phaseInfo = uiExtendedReview.getPhaseInfo(R4EReviewPhase.COMPLETED);
 			if (null != phaseInfo && null != phaseInfo.getType()) {
 				if (currentPhaseInfo.getType().equals(phaseInfo.getType())) {
 					fPhasePlanning.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
@@ -1514,7 +1514,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				|| fProperties.getElement().isReadOnly()
 				|| (!((R4EUIReviewBasic) fProperties.getElement()).isOpen())
 				|| ((R4EReviewState) ((R4EUIReviewBasic) fProperties.getElement()).getReview().getState()).getState()
-						.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED) || !fProperties.getElement().isEnabled()) {
+						.equals(R4EReviewPhase.COMPLETED) || !fProperties.getElement().isEnabled()) {
 			fNameText.setForeground(UIUtils.DISABLED_FONT_COLOR);
 			fPhaseCombo.setEnabled(false);
 			fDescriptionText.setForeground(UIUtils.DISABLED_FONT_COLOR);
@@ -1574,7 +1574,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				fDecisionTimeSpentLabel.setVisible(false);
 				if (((R4EUIReviewBasic) fProperties.getElement()).getReview()
 						.getType()
-						.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+						.equals(R4EReviewType.BASIC)) {
 					fDecisionSection.setVisible(false);
 				} else {
 					fDecisionSection.setVisible(true);
@@ -1657,7 +1657,7 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 				fReworkPhaseOwnerCombo.setVisible(false);
 				if (((R4EUIReviewBasic) fProperties.getElement()).getReview()
 						.getType()
-						.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+						.equals(R4EReviewType.BASIC)) {
 					fDecisionSection.setVisible(false);
 				} else {
 					fDecisionSection.setVisible(true);
@@ -1673,35 +1673,35 @@ public class ReviewTabPropertySection extends ModelElementTabPropertySection imp
 		final R4EReviewPhase currentPhase = ((R4EFormalReview) ((R4EUIReviewExtended) fProperties.getElement()).getReview()).getCurrent()
 				.getType();
 		switch (currentPhase.getValue()) {
-		case R4EReviewPhase.R4E_REVIEW_PHASE_STARTED_VALUE:
+		case R4EReviewPhase.STARTED_VALUE:
 			fPlanningPhaseOwnerCombo.setVisible(true);
 			fPreparationPhaseOwnerCombo.setVisible(false);
 			fDecisionPhaseOwnerCombo.setVisible(false);
 			fReworkPhaseOwnerCombo.setVisible(false);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION_VALUE:
+		case R4EReviewPhase.PREPARATION_VALUE:
 			fPreparationPhaseOwnerCombo.setVisible(true);
 			fPlanningPhaseOwnerCombo.setVisible(false);
 			fDecisionPhaseOwnerCombo.setVisible(false);
 			fReworkPhaseOwnerCombo.setVisible(false);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_DECISION_VALUE:
+		case R4EReviewPhase.DECISION_VALUE:
 			fDecisionPhaseOwnerCombo.setVisible(true);
 			fPlanningPhaseOwnerCombo.setVisible(false);
 			fPreparationPhaseOwnerCombo.setVisible(false);
 			fReworkPhaseOwnerCombo.setVisible(false);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_REWORK_VALUE:
+		case R4EReviewPhase.REWORK_VALUE:
 			fReworkPhaseOwnerCombo.setVisible(true);
 			fPlanningPhaseOwnerCombo.setVisible(false);
 			fPreparationPhaseOwnerCombo.setVisible(false);
 			fDecisionPhaseOwnerCombo.setVisible(false);
 			break;
 
-		case R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED_VALUE:
+		case R4EReviewPhase.COMPLETED_VALUE:
 			fPlanningPhaseOwnerCombo.setVisible(false);
 			fPreparationPhaseOwnerCombo.setVisible(false);
 			fDecisionPhaseOwnerCombo.setVisible(false);

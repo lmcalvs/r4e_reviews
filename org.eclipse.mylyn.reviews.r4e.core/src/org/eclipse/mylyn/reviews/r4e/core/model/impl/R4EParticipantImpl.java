@@ -1,7 +1,6 @@
 /**
-/**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -16,8 +15,10 @@
 package org.eclipse.mylyn.reviews.r4e.core.model.impl;
 
 import java.util.Collection;
-
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -145,7 +146,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<R4EUserRole> getRoles() {
+	public List<R4EUserRole> getRoles() {
 		if (roles == null) {
 			roles = new EDataTypeUniqueEList<R4EUserRole>(R4EUserRole.class, this, RModelPackage.R4E_PARTICIPANT__ROLES);
 		}
@@ -194,7 +195,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<R4EID> getReviewedContent() {
+	public List<R4EID> getReviewedContent() {
 		if (reviewedContent == null) {
 			reviewedContent = new EObjectResolvingEList<R4EID>(R4EID.class, this, RModelPackage.R4E_PARTICIPANT__REVIEWED_CONTENT);
 		}
@@ -205,11 +206,11 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<Date, Integer> getTimeLog() {
+	public Map<Date, Integer> getTimeLog() {
 		if (timeLog == null) {
 			timeLog = new EcoreEMap<Date,Integer>(RModelPackage.Literals.MAP_DATE_TO_DURATION, MapDateToDurationImpl.class, this, RModelPackage.R4E_PARTICIPANT__TIME_LOG);
 		}
-		return timeLog;
+		return timeLog.map();
 	}
 
 	/**
@@ -220,7 +221,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case RModelPackage.R4E_PARTICIPANT__TIME_LOG:
-				return ((InternalEList<?>)getTimeLog()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)((EMap.InternalMapView<Date, Integer>)getTimeLog()).eMap()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -241,8 +242,8 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 			case RModelPackage.R4E_PARTICIPANT__REVIEWED_CONTENT:
 				return getReviewedContent();
 			case RModelPackage.R4E_PARTICIPANT__TIME_LOG:
-				if (coreType) return getTimeLog();
-				else return getTimeLog().map();
+				if (coreType) return ((EMap.InternalMapView<Date, Integer>)getTimeLog()).eMap();
+				else return getTimeLog();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -270,7 +271,7 @@ public class R4EParticipantImpl extends R4EUserImpl implements R4EParticipant {
 				getReviewedContent().addAll((Collection<? extends R4EID>)newValue);
 				return;
 			case RModelPackage.R4E_PARTICIPANT__TIME_LOG:
-				((EStructuralFeature.Setting)getTimeLog()).set(newValue);
+				((EStructuralFeature.Setting)((EMap.InternalMapView<Date, Integer>)getTimeLog()).eMap()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

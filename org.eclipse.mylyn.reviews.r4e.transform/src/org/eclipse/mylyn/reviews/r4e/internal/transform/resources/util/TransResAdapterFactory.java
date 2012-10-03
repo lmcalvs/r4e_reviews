@@ -13,22 +13,18 @@ package org.eclipse.mylyn.reviews.r4e.internal.transform.resources.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.mylyn.reviews.frame.core.model.Review;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewComponent;
-import org.eclipse.mylyn.reviews.frame.core.model.ReviewGroup;
-
-import org.eclipse.mylyn.reviews.frame.core.model.SubModelRoot;
+import org.eclipse.mylyn.reviews.core.model.IReview;
+import org.eclipse.mylyn.reviews.core.model.IReviewComponent;
+import org.eclipse.mylyn.reviews.core.model.IReviewGroup;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EFormalReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReview;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewComponent;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EReviewGroup;
-
-import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.*;
+import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewGroupRes;
+import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.ReviewRes;
+import org.eclipse.mylyn.reviews.r4e.internal.transform.resources.TransResPackage;
 
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
@@ -92,17 +88,12 @@ public class TransResAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseReviewComponent(ReviewComponent object) {
+		public Adapter caseReviewComponent(IReviewComponent object) {
 			return createReviewComponentAdapter();
 		}
 
 		@Override
-		public Adapter caseSubModelRoot(SubModelRoot object) {
-			return createSubModelRootAdapter();
-		}
-
-		@Override
-		public Adapter caseReviewGroup(ReviewGroup object) {
+		public Adapter caseReviewGroup(IReviewGroup object) {
 			return createReviewGroupAdapter();
 		}
 
@@ -117,7 +108,7 @@ public class TransResAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseReview(Review object) {
+		public Adapter caseReview(IReview object) {
 			return createReviewAdapter();
 		}
 

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2010, 2012 Ericsson
- *  
+ * 
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.mylyn.reviews.frame.core.model.ModelPackage;
+import org.eclipse.mylyn.reviews.internal.core.model.ReviewsPackage;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomaly;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyState;
 import org.eclipse.mylyn.reviews.r4e.core.model.R4EAnomalyTextPosition;
@@ -571,11 +571,20 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getR4EReview_ModifiedDate() {
+		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getR4EReview_AnomalyTemplate() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(11);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -583,7 +592,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EAttribute getR4EReview_Type() {
-		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(12);
+		return (EAttribute)r4EReviewEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -591,23 +600,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_UsersMap() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(13);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getR4EReview_IdsMap() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(15);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getR4EReview_ActiveMeeting() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(16);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(14);
 	}
 
 	/**
@@ -615,7 +608,23 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * @generated
 	 */
 	public EReference getR4EReview_CreatedBy() {
-		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(14);
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(15);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getR4EReview_IdsMap() {
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(16);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getR4EReview_ActiveMeeting() {
+		return (EReference)r4EReviewEClass.getEStructuralFeatures().get(17);
 	}
 
 	/**
@@ -1446,7 +1455,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getR4EIDComponent_Id() {
+	public EReference getR4EIDComponent_R4eId() {
 		return (EReference)r4EIDComponentEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1803,6 +1812,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__START_DATE);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__END_DATE);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__DUE_DATE);
+		createEAttribute(r4EReviewEClass, R4E_REVIEW__MODIFIED_DATE);
 		createEReference(r4EReviewEClass, R4E_REVIEW__ANOMALY_TEMPLATE);
 		createEAttribute(r4EReviewEClass, R4E_REVIEW__TYPE);
 		createEReference(r4EReviewEClass, R4E_REVIEW__USERS_MAP);
@@ -1937,7 +1947,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		createEAttribute(r4EUserReviewsEClass, R4E_USER_REVIEWS__CREATED_REVIEWS);
 
 		r4EIDComponentEClass = createEClass(R4EID_COMPONENT);
-		createEReference(r4EIDComponentEClass, R4EID_COMPONENT__ID);
+		createEReference(r4EIDComponentEClass, R4EID_COMPONENT__R4E_ID);
 
 		mapIDToComponentEClass = createEClass(MAP_ID_TO_COMPONENT);
 		createEReference(mapIDToComponentEClass, MAP_ID_TO_COMPONENT__KEY);
@@ -2011,7 +2021,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		ModelPackage theModelPackage = (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
+		ReviewsPackage theReviewsPackage = (ReviewsPackage)EPackage.Registry.INSTANCE.getEPackage(ReviewsPackage.eNS_URI);
 		DRModelPackage theDRModelPackage = (DRModelPackage)EPackage.Registry.INSTANCE.getEPackage(DRModelPackage.eNS_URI);
 
 		// Create type parameters
@@ -2019,33 +2029,35 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		r4EReviewGroupEClass.getESuperTypes().add(theModelPackage.getReviewGroup());
+		r4EReviewGroupEClass.getESuperTypes().add(theReviewsPackage.getReviewGroup());
 		r4EReviewGroupEClass.getESuperTypes().add(this.getR4EReviewComponent());
-		r4EReviewEClass.getESuperTypes().add(theModelPackage.getReview());
+		r4EReviewGroupEClass.getESuperTypes().add(theReviewsPackage.getModelVersioning());
+		r4EReviewEClass.getESuperTypes().add(theReviewsPackage.getReview());
 		r4EReviewEClass.getESuperTypes().add(this.getR4EReviewComponent());
-		r4EAnomalyEClass.getESuperTypes().add(theModelPackage.getTopic());
+		r4EReviewEClass.getESuperTypes().add(theReviewsPackage.getModelVersioning());
+		r4EAnomalyEClass.getESuperTypes().add(theReviewsPackage.getTopic());
 		r4EAnomalyEClass.getESuperTypes().add(this.getR4EReviewComponent());
 		r4EAnomalyEClass.getESuperTypes().add(this.getR4EComment());
 		r4EFormalReviewEClass.getESuperTypes().add(this.getR4EReview());
 		r4ETextPositionEClass.getESuperTypes().add(this.getR4EPosition());
-		r4EUserEClass.getESuperTypes().add(theModelPackage.getUser());
+		r4EUserEClass.getESuperTypes().add(theReviewsPackage.getUser());
 		r4EUserEClass.getESuperTypes().add(this.getR4EReviewComponent());
 		r4EParticipantEClass.getESuperTypes().add(this.getR4EUser());
 		r4EItemEClass.getESuperTypes().add(this.getR4EIDComponent());
-		r4EItemEClass.getESuperTypes().add(theModelPackage.getItem());
+		r4EItemEClass.getESuperTypes().add(theReviewsPackage.getReviewItem());
 		r4ETextContentEClass.getESuperTypes().add(this.getR4EContent());
-		r4EAnomalyTypeEClass.getESuperTypes().add(theModelPackage.getCommentType());
-		r4ETaskReferenceEClass.getESuperTypes().add(theModelPackage.getTaskReference());
+		r4EAnomalyTypeEClass.getESuperTypes().add(theReviewsPackage.getCommentType());
+		r4ETaskReferenceEClass.getESuperTypes().add(theReviewsPackage.getTaskReference());
 		r4ETaskReferenceEClass.getESuperTypes().add(this.getR4EReviewComponent());
-		r4EReviewStateEClass.getESuperTypes().add(theModelPackage.getReviewState());
-		r4ECommentEClass.getESuperTypes().add(theModelPackage.getComment());
+		r4EReviewStateEClass.getESuperTypes().add(theReviewsPackage.getReviewState());
+		r4ECommentEClass.getESuperTypes().add(theReviewsPackage.getComment());
 		r4ECommentEClass.getESuperTypes().add(this.getR4EReviewComponent());
 		r4ECommentEClass.getESuperTypes().add(this.getR4EIDComponent());
-		r4EReviewComponentEClass.getESuperTypes().add(theModelPackage.getReviewComponent());
+		r4EReviewComponentEClass.getESuperTypes().add(theReviewsPackage.getReviewComponent());
 		r4EFileContextEClass.getESuperTypes().add(this.getR4EIDComponent());
 		r4EDeltaEClass.getESuperTypes().add(this.getR4EIDComponent());
-		r4ECommentTypeEClass.getESuperTypes().add(theModelPackage.getCommentType());
-		r4EContentEClass.getESuperTypes().add(theModelPackage.getLocation());
+		r4ECommentTypeEClass.getESuperTypes().add(theReviewsPackage.getCommentType());
+		r4EContentEClass.getESuperTypes().add(theReviewsPackage.getLocation());
 		r4EIDComponentEClass.getESuperTypes().add(this.getR4EReviewComponent());
 		r4EAnomalyTextPositionEClass.getESuperTypes().add(this.getR4ETextPosition());
 
@@ -2074,6 +2086,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EReview_StartDate(), ecorePackage.getEDate(), "startDate", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_EndDate(), ecorePackage.getEDate(), "endDate", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_DueDate(), ecorePackage.getEDate(), "dueDate", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getR4EReview_ModifiedDate(), ecorePackage.getEDate(), "modifiedDate", null, 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EReview_AnomalyTemplate(), this.getR4EAnomaly(), null, "anomalyTemplate", null, 1, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getR4EReview_Type(), this.getR4EReviewType(), "type", "", 0, 1, R4EReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getR4EReview_UsersMap(), this.getMapToUsers(), null, "usersMap", null, 0, -1, R4EReview.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
@@ -2208,7 +2221,7 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 		initEAttribute(getR4EUserReviews_CreatedReviews(), ecorePackage.getEString(), "createdReviews", null, 0, -1, R4EUserReviews.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(r4EIDComponentEClass, R4EIDComponent.class, "R4EIDComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getR4EIDComponent_Id(), this.getR4EID(), null, "id", null, 0, 1, R4EIDComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getR4EIDComponent_R4eId(), this.getR4EID(), null, "r4eId", null, 0, 1, R4EIDComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mapIDToComponentEClass, Map.Entry.class, "MapIDToComponent", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getMapIDToComponent_Key(), this.getR4EID(), null, "key", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2248,45 +2261,45 @@ public class RModelPackageImpl extends EPackageImpl implements RModelPackage {
 
 		// Initialize enums and add enum literals
 		initEEnum(r4EAnomalyStateEEnum, R4EAnomalyState.class, "R4EAnomalyState");
-		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_CREATED);
-		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_ASSIGNED);
-		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_ACCEPTED);
-		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_FIXED);
-		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_DUPLICATED);
-		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_REJECTED);
-		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_DEFERRED);
-		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.R4E_ANOMALY_STATE_VERIFIED);
+		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.CREATED);
+		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.ASSIGNED);
+		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.ACCEPTED);
+		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.FIXED);
+		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.DUPLICATED);
+		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.REJECTED);
+		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.DEFERRED);
+		addEEnumLiteral(r4EAnomalyStateEEnum, R4EAnomalyState.VERIFIED);
 
 		initEEnum(r4EReviewPhaseEEnum, R4EReviewPhase.class, "R4EReviewPhase");
-		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.R4E_REVIEW_PHASE_STARTED);
-		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.R4E_REVIEW_PHASE_PREPARATION);
-		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.R4E_REVIEW_PHASE_DECISION);
-		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.R4E_REVIEW_PHASE_REWORK);
-		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED);
+		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.STARTED);
+		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.PREPARATION);
+		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.DECISION);
+		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.REWORK);
+		addEEnumLiteral(r4EReviewPhaseEEnum, R4EReviewPhase.COMPLETED);
 
 		initEEnum(r4EUserRoleEEnum, R4EUserRole.class, "R4EUserRole");
-		addEEnumLiteral(r4EUserRoleEEnum, R4EUserRole.R4E_ROLE_REVIEWER);
-		addEEnumLiteral(r4EUserRoleEEnum, R4EUserRole.R4E_ROLE_LEAD);
-		addEEnumLiteral(r4EUserRoleEEnum, R4EUserRole.R4E_ROLE_AUTHOR);
-		addEEnumLiteral(r4EUserRoleEEnum, R4EUserRole.R4E_ROLE_ORGANIZER);
+		addEEnumLiteral(r4EUserRoleEEnum, R4EUserRole.REVIEWER);
+		addEEnumLiteral(r4EUserRoleEEnum, R4EUserRole.LEAD);
+		addEEnumLiteral(r4EUserRoleEEnum, R4EUserRole.AUTHOR);
+		addEEnumLiteral(r4EUserRoleEEnum, R4EUserRole.ORGANIZER);
 
 		initEEnum(r4EDecisionEEnum, R4EDecision.class, "R4EDecision");
-		addEEnumLiteral(r4EDecisionEEnum, R4EDecision.R4E_REVIEW_DECISION_NONE);
-		addEEnumLiteral(r4EDecisionEEnum, R4EDecision.R4E_REVIEW_DECISION_ACCEPTED);
-		addEEnumLiteral(r4EDecisionEEnum, R4EDecision.R4E_REVIEW_DECISION_ACCEPTED_FOLLOWUP);
-		addEEnumLiteral(r4EDecisionEEnum, R4EDecision.R4E_REVIEW_DECISION_REJECTED);
+		addEEnumLiteral(r4EDecisionEEnum, R4EDecision.NONE);
+		addEEnumLiteral(r4EDecisionEEnum, R4EDecision.ACCEPTED);
+		addEEnumLiteral(r4EDecisionEEnum, R4EDecision.ACCEPTED_FOLLOWUP);
+		addEEnumLiteral(r4EDecisionEEnum, R4EDecision.REJECTED);
 
 		initEEnum(r4EReviewTypeEEnum, R4EReviewType.class, "R4EReviewType");
-		addEEnumLiteral(r4EReviewTypeEEnum, R4EReviewType.R4E_REVIEW_TYPE_BASIC);
-		addEEnumLiteral(r4EReviewTypeEEnum, R4EReviewType.R4E_REVIEW_TYPE_INFORMAL);
-		addEEnumLiteral(r4EReviewTypeEEnum, R4EReviewType.R4E_REVIEW_TYPE_FORMAL);
+		addEEnumLiteral(r4EReviewTypeEEnum, R4EReviewType.BASIC);
+		addEEnumLiteral(r4EReviewTypeEEnum, R4EReviewType.INFORMAL);
+		addEEnumLiteral(r4EReviewTypeEEnum, R4EReviewType.FORMAL);
 
 		initEEnum(r4EContextTypeEEnum, R4EContextType.class, "R4EContextType");
-		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_UNDEFINED);
-		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_ADDED);
-		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_DELETED);
-		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_MODIFIED);
-		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.R4E_REPLACED);
+		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.UNDEFINED);
+		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.ADDED);
+		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.DELETED);
+		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.MODIFIED);
+		addEEnumLiteral(r4EContextTypeEEnum, R4EContextType.REPLACED);
 
 		// Initialize data types
 		initEDataType(iResourceEDataType, IResource.class, "IResource", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
