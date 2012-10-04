@@ -378,7 +378,7 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 				.get(0)
 				.getTarget()
 				.getLocation()).getStartPosition());
-		Assert.assertEquals(781, ((R4ETextPosition) fItem2.getItem()
+		Assert.assertEquals(755, ((R4ETextPosition) fItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getDeltas()
@@ -571,7 +571,7 @@ public class CloneAnomaliesCommentsTests extends TestCase {
 				0,
 				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getStartPosition());
 		Assert.assertEquals(
-				781,
+				755,
 				((R4ETextPosition) ((R4ETextContent) fClonedAnomaly2.getAnomaly().getLocation().get(0)).getLocation()).getLength());
 		Assert.assertTrue(fProxy.getCommandProxy().verifyAnnotation(fClonedAnomaly2, false,
 				R4EUIConstants.ANOMALY_OPEN_ANNOTATION_ID));

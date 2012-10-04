@@ -412,7 +412,7 @@ public class PostponedAnomaliesTests extends TestCase {
 						.get(0)
 						.getTarget()
 						.getLocation()).getStartPosition());
-		Assert.assertEquals(781, ((R4ETextPosition) fOriginalItem2.getItem()
+		Assert.assertEquals(755, ((R4ETextPosition) fOriginalItem2.getItem()
 				.getFileContextList()
 				.get(0)
 				.getDeltas()
@@ -681,7 +681,7 @@ public class PostponedAnomaliesTests extends TestCase {
 				.get(0)
 				.getTarget()
 				.getLocation()).getStartPosition());
-		Assert.assertEquals(781,
+		Assert.assertEquals(755,
 				((R4ETextPosition) fTargetItem2.getItem()
 						.getFileContextList()
 						.get(0)

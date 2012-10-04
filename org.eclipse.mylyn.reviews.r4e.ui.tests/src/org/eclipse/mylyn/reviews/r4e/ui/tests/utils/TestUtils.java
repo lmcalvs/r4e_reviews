@@ -396,7 +396,7 @@ public class TestUtils {
 		try {
 			repository.create();
 			Config storedConfig = repository.getConfig();
-			storedConfig.setEnum("core", null, "autocrlf", AutoCRLF.INPUT);
+			storedConfig.setEnum("core", null, "autocrlf", AutoCRLF.FALSE);
 
 		} catch (IllegalStateException e) {
 			//Jusy go on
