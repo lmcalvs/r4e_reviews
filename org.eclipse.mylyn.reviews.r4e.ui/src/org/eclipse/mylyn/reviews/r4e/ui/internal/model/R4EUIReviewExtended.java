@@ -552,7 +552,7 @@ public class R4EUIReviewExtended extends R4EUIReviewBasic {
 				final Collection<R4EUser> users = fReview.getUsersMap().values();
 				final List<String> pendingUsers = new ArrayList<String>();
 				for (R4EUser user : users) {
-					if (!user.isReviewCompleted()) {
+					if (user.isEnabled() && !user.isReviewCompleted()) {
 						pendingUsers.add(user.getId());
 					}
 				}
