@@ -869,10 +869,9 @@ public class R4EUIAnomalyBasic extends R4EUIModelElement {
 		if (!(getParent().getParent().isEnabled())) {
 			return false;
 		}
-		if (isEnabled()
-				|| isReadOnly()
-				|| ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-						R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+		R4EReviewPhase phase = ((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState();
+		if (isEnabled() || isReadOnly() || phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)
+				|| phase.equals(R4EReviewPhase.R4E_REVIEW_PHASE_REWORK)) {
 			return false;
 		}
 		return true;

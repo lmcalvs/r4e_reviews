@@ -75,21 +75,23 @@ public class PreviousStatePropertyTester extends PropertyTester {
 	 * @return boolean
 	 */
 	private boolean testElement(IR4EUIModelElement aElement) {
-		if (aElement instanceof R4EUIReviewExtended) {
-			if (null != ((R4EUIReviewExtended) aElement).getPreviousPhase()) {
-				return true;
-			}
-		} else if (aElement instanceof R4EUIReviewBasic) {
-			if (((R4EUIReviewBasic) aElement).isOpen()
-					&& ((R4EReviewState) ((R4EUIReviewBasic) aElement).getReview().getState()).getState().equals(
-							R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
-				return true;
-			}
-		} else if (aElement instanceof R4EUIAnomalyExtended) {
-			if (!((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState().equals(
-					R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)
-					&& null != ((R4EUIAnomalyExtended) aElement).getPreviousState()) {
-				return true;
+		if (aElement.isEnabled()) {
+			if (aElement instanceof R4EUIReviewExtended) {
+				if (null != ((R4EUIReviewExtended) aElement).getPreviousPhase()) {
+					return true;
+				}
+			} else if (aElement instanceof R4EUIReviewBasic) {
+				if (((R4EUIReviewBasic) aElement).isOpen()
+						&& ((R4EReviewState) ((R4EUIReviewBasic) aElement).getReview().getState()).getState().equals(
+								R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)) {
+					return true;
+				}
+			} else if (aElement instanceof R4EUIAnomalyExtended) {
+				if (!((R4EReviewState) R4EUIModelController.getActiveReview().getReview().getState()).getState()
+						.equals(R4EReviewPhase.R4E_REVIEW_PHASE_COMPLETED)
+						&& null != ((R4EUIAnomalyExtended) aElement).getPreviousState()) {
+					return true;
+				}
 			}
 		}
 		return false;
