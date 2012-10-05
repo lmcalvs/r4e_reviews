@@ -87,6 +87,11 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	public static final String P_IMPORT_GLOBAL_ANOMALIES_POSTPONED = "importPostponedGlobalAnomaliesPreferences";
 
 	/**
+	 * Flag that state whether the sender shall be included in originating mail notifications
+	 */
+	public static final String P_SEND_NOTIFICATION_TO_SENDER = "SendNotificationToSenderPreferences";
+
+	/**
 	 * Label for Use Deltas option
 	 */
 	public static final String P_USE_DELTAS_LABEL = "Create Delta Elements to track changes for Version-Controlled"
@@ -96,6 +101,11 @@ public class PreferenceConstants { // $codepro.audit.disable convertClassToInter
 	 * Label for import postponed global anomalies option
 	 */
 	public static final String P_IMPORT_POSTPONED_GLOBAL_ANOMALIES_LABEL = "Import Postponed Global Anomalies ";
+
+	/**
+	 * Label for the option indicating if the sender shall be included in notification e-mails
+	 */
+	public static final String P_SEND_NOTIFICATION_TO_SENDER_LABEL = "Include sender in e-mail notifications";
 
 	/**
 	 * The group file path preference name

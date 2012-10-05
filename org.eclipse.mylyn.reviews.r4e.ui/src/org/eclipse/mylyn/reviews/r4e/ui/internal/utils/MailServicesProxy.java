@@ -14,6 +14,7 @@ package org.eclipse.mylyn.reviews.r4e.ui.internal.utils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -294,11 +295,28 @@ public class MailServicesProxy {
 		String originatorEmail = null;
 		if (null != user) {
 			originatorEmail = user.getEmail();
-		} else {
+		}
+
+		if (originatorEmail == null || originatorEmail.length() == 0) {
+			//if the user's email is null OR Undefined OR
 			//If current user is not part of the review, get email from preferences
 			final IPreferenceStore store = R4EUIPlugin.getDefault().getPreferenceStore();
 			originatorEmail = store.getString(PreferenceConstants.P_USER_EMAIL);
 		}
+
+		//Bug: 39102
+		if (originatorEmail != null
+				&& R4EUIPlugin.getDefault()
+						.getPreferenceStore()
+						.getBoolean(PreferenceConstants.P_SEND_NOTIFICATION_TO_SENDER)) {
+			//Make sure sender is part of the destination list
+			List<String> destinations = new ArrayList<String>(Arrays.asList(aDestinations));
+			if (!destinations.contains(originatorEmail)) {
+				destinations.add(originatorEmail);
+				aDestinations = destinations.toArray(new String[destinations.size()]);
+			}
+		}
+
 		R4EUIDialogFactory.getInstance()
 				.getMailConnector()
 				.sendEmailGraphical(originatorEmail, aDestinations, aSubject, aBody, null, null);

@@ -170,6 +170,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 	private Button fImportPostponedGlobalAnomaliesButton = null;
 
 	/**
+	 * field fSendNotificationToSenderButton
+	 */
+	private Button fSendNotificationToSenderButton = null;
+
+	/**
 	 * Field fR4EGroupPrefsGroup.
 	 */
 	private Composite fR4EGroupPrefsGroup = null;
@@ -509,6 +514,11 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fImportPostponedGlobalAnomaliesButton.setText(PreferenceConstants.P_IMPORT_POSTPONED_GLOBAL_ANOMALIES_LABEL);
 		fImportPostponedGlobalAnomaliesButton.setLayoutData(filtersButtonData);
 		fImportPostponedGlobalAnomaliesButton.setSelection(store.getBoolean(PreferenceConstants.P_IMPORT_GLOBAL_ANOMALIES_POSTPONED));
+		fSendNotificationToSenderButton = new Button(r4EUserPrefsGroup, SWT.CHECK);
+		fSendNotificationToSenderButton.setText(PreferenceConstants.P_SEND_NOTIFICATION_TO_SENDER_LABEL);
+		fSendNotificationToSenderButton.setLayoutData(filtersButtonData);
+		fSendNotificationToSenderButton.setSelection(store.getBoolean(PreferenceConstants.P_SEND_NOTIFICATION_TO_SENDER));
+
 	}
 
 	/**
@@ -934,6 +944,7 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		fUseDeltasButton.setSelection(true);
 		store.setValue(PreferenceConstants.P_REVIEWS_COMPLETED_FILTER, true);
 		fImportPostponedGlobalAnomaliesButton.setSelection(false);
+		fSendNotificationToSenderButton.setSelection(false);
 		fReviewsCompletedFilterButton.setSelection(true);
 		store.setValue(PreferenceConstants.P_HIDE_DELTAS_FILTER, true);
 		fHideDeltasFilterButton.setSelection(true);
@@ -1043,6 +1054,8 @@ public class R4EPreferencePage extends FieldEditorPreferencePage implements IWor
 		store.setValue(PreferenceConstants.P_USE_DELTAS, fUseDeltasButton.getSelection());
 		store.setValue(PreferenceConstants.P_IMPORT_GLOBAL_ANOMALIES_POSTPONED,
 				fImportPostponedGlobalAnomaliesButton.getSelection());
+		store.setValue(PreferenceConstants.P_SEND_NOTIFICATION_TO_SENDER,
+				fSendNotificationToSenderButton.getSelection());
 
 		if (CommandUtils.isEmailValid(fUserEmailTextField.getText())) {
 			store.setValue(PreferenceConstants.P_USER_EMAIL, fUserEmailTextField.getText());
