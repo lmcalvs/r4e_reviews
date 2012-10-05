@@ -25,20 +25,19 @@ import org.eclipse.mylyn.reviews.r4e.mail.smtp.SmtpPlugin;
  * 
  * 
  * @author Jacques Bouthillier
- * @version $Id: R4EString.java
+ * @version $Revision: 1.0 $
  */
 public class SMTPHostString {
 	/**
 	 * Field FBUNDLE_NAME.
 	 * (value is ""org.eclipse.mylyn.reviews.r4e.mail.smtp.R4EString"")
 	 */
-	private static final String FBUNDLE_NAME = "org.eclipse.mylyn.reviews.r4e.mail.smtp.SMTPHostString"; //$NON-NLS-1$
+	private static final String FBUNDLE_NAME = "org.eclipse.mylyn.reviews.r4e.mail.smtp.SMTPHostString";
 
 	/**
 	 * Field RESOURCE_BUNDLE.
 	 */
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(FBUNDLE_NAME);
+	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(FBUNDLE_NAME);
 
 	/**
 	 * Private Constructor
@@ -51,15 +50,12 @@ public class SMTPHostString {
 	 * Gets the key from the value, or 'value' if not found.
 	 * 
 	 * @param key the value to search value.
-	
 	 * @return the key from the value, or 'value' if not found. */
 	public static String getString(String key) {
-		// Debug.print("In getString for: " + key);
 		try {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
 			StatusHandler.log(new Status(IStatus.ERROR, SmtpPlugin.FPLUGIN_ID, IStatus.OK, e.toString(), e));
-			// Debug.print("EXCEPTION In getString for:" + key);
 			return '!' + key + '!';
 		}
 	}
@@ -71,8 +67,8 @@ public class SMTPHostString {
 	 *            String
 	 * @param arg
 	 *            Object
-	
-	 * @return the key from the value, or 'value' if not found. */
+	 * @return the key from the value, or 'value' if not found.
+	 */
 	public static String getFormattedString(String key, Object arg) {
 		String format = null;
 		try {
@@ -92,13 +88,10 @@ public class SMTPHostString {
 	 * 
 	 * @param key
 	 *            String
-	
-	
 	 * @param args String[]
-	 * @return the key from the value, or 'value' if not found. */
+	 * @return the key from the value, or 'value' if not found.
+	 */
 	public static String getFormattedString(String key, String[] args) {
-		return MessageFormat.format(RESOURCE_BUNDLE.getString(key),
-				args);
+		return MessageFormat.format(RESOURCE_BUNDLE.getString(key), args);
 	}
-
 }
