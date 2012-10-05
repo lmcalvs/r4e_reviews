@@ -1,9 +1,9 @@
-#Thu Aug 25 11:09:39 EDT 2011
+#Sun May 29 17:20:20 CEST 2011
 cleanup_settings_version=2
 eclipse.preferences.version=1
 editor_save_participant_org.eclipse.jdt.ui.postsavelistener.cleanup=true
 formatter_profile=_Mylyn based on Eclipse
-formatter_settings_version=11
+formatter_settings_version=12
 internal.default.compliance=default
 org.eclipse.jdt.ui.exception.name=e
 org.eclipse.jdt.ui.gettersetter.use.is=true
@@ -46,7 +46,7 @@ sp_cleanup.remove_private_constructors=true
 sp_cleanup.remove_trailing_whitespaces=true
 sp_cleanup.remove_trailing_whitespaces_all=true
 sp_cleanup.remove_trailing_whitespaces_ignore_empty=false
-sp_cleanup.remove_unnecessary_casts=true
+sp_cleanup.remove_unnecessary_casts=false
 sp_cleanup.remove_unnecessary_nls_tags=true
 sp_cleanup.remove_unused_imports=false
 sp_cleanup.remove_unused_local_variables=false
