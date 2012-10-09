@@ -254,9 +254,23 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 					return;
 				}
 
+				//Validate Participant Email
+				validateResult = validateEmptyInput(newParticipant.getEmail());
+				if (null != validateResult) {
+					//Validation of input failed
+					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
+							"No Email given for Participant " + newParticipant.getId(), new Status(IStatus.ERROR,
+									R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
+					dialog.open();
+					return;
+				}
+				if (!CommandUtils.isEmailValid(newParticipant.getEmail())) {
+					return;
+				}
+
 				//Check if participant already exists (if so ignore but continue)
 				R4EParticipant currentParticipant = null;
-				if (null != R4EUIModelController.getActiveReview()) {
+				if (null != R4EUIModelController.getActiveReview()) { //do not do this for participants lists
 					try {
 						currentParticipant = R4EUIModelController.getActiveReview().getParticipant(
 								newParticipant.getId(), false);
@@ -272,33 +286,18 @@ public class ParticipantInputDialog extends FormDialog implements IParticipantIn
 						dialog.open();
 						continue;
 					}
-				}
 
-				//Validate Participant Email
-				validateResult = validateEmptyInput(newParticipant.getEmail());
-				if (null != validateResult) {
-					//Validation of input failed
-					final ErrorDialog dialog = new ErrorDialog(null, R4EUIConstants.DIALOG_TITLE_ERROR,
-							"No Email given for Participant " + newParticipant.getId(), new Status(IStatus.ERROR,
-									R4EUIPlugin.PLUGIN_ID, 0, validateResult, null), IStatus.ERROR);
-					dialog.open();
-					return;
-				}
-				if (!CommandUtils.isEmailValid(newParticipant.getEmail())) {
-					return;
-				}
-
-				//Validate Roles (optional)
-				if (0 == newParticipant.getRoles().size()) {
-					//If there is no roles defined, put one as default depending on the review type
-					if (null != R4EUIModelController.getActiveReview()
-							&& R4EUIModelController.getActiveReview()
-									.getReview()
-									.getType()
-									.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
-						newParticipant.getRoles().add(R4EUserRole.R4E_ROLE_LEAD);
-					} else {
-						newParticipant.getRoles().add(R4EUserRole.R4E_ROLE_REVIEWER);
+					//Validate Roles (optional)
+					if (0 == newParticipant.getRoles().size()) {
+						//If there is no roles defined, put one as default depending on the review type
+						if (R4EUIModelController.getActiveReview()
+								.getReview()
+								.getType()
+								.equals(R4EReviewType.R4E_REVIEW_TYPE_BASIC)) {
+							newParticipant.getRoles().add(R4EUserRole.R4E_ROLE_LEAD);
+						} else {
+							newParticipant.getRoles().add(R4EUserRole.R4E_ROLE_REVIEWER);
+						}
 					}
 				}
 				validatedParticipants.add(newParticipant);
