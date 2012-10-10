@@ -48,7 +48,7 @@ import org.eclipse.mylyn.reviews.userSearch.userInfo.UserInformationFactory;
  */
 public class QueryGlobalLdapDirectory implements IQueryUser {
 
-	private R4ELdapPreferencePage fLdap = new R4ELdapPreferencePage();
+	private final R4ELdapPreferencePage fLdap = new R4ELdapPreferencePage();
 
 	/**
 	 * Search in the Employee Global Directory with all search parameters having a string different than the empty
@@ -73,7 +73,20 @@ public class QueryGlobalLdapDirectory implements IQueryUser {
 		Hashtable<String, String> env = new Hashtable<String, String>();
 
 		env = (Hashtable<String, String>) getConnectionProperties();
-		DirContext ctx = new InitialDirContext(env);
+		DirContext ctx = null;
+		try {
+			ctx = new InitialDirContext(env);
+
+		} catch (NamingException e) {
+			LdapPlugin.FTracer.traceError("Exception: " + e.toString() + " (" + e.getMessage() + ")");
+			//Try with the second domain\\user if available with the same SECURITY_CREDENTIALS
+
+			env.put(Context.SECURITY_PRINCIPAL, fLdap.getUserName2());
+			LdapPlugin.FTracer.traceInfo("Info: " + "User2: " + fLdap.getUserName2());
+
+			//Test with the second domain
+			ctx = new InitialDirContext(env);
+		}
 
 		// Grammar filter can be found at http://www.ietf.org/rfc/rfc2254.txt
 		StringBuilder filter = new StringBuilder(150);

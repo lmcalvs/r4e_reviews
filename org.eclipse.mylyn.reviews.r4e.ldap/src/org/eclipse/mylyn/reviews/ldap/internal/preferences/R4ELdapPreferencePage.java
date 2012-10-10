@@ -51,7 +51,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	// ------------------------------------------------------------------------
 	private static IPreferenceStore FStore = LdapPlugin.getDefault().getPreferenceStore();
 
-	private static final String FP_PORT_SEPARATOR = ":";
+	private static final String FP_PORT_SEPARATOR = ":"; //$NON-NLS-1$
 
 	/**
 	 * Field PREFS_CONTAINER_DATA_SPAN. (value is 1)
@@ -149,7 +149,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	// ------------------------------------------------------------------------
 	@Override
 	protected void createFieldEditors() {
-		LdapPlugin.FTracer.traceInfo("Build R4E LDPA Preference page");
+		LdapPlugin.FTracer.traceInfo("Build R4E LDAP Preference page");
 
 		// The Main preferences composite
 		final Composite prefsContainer = new Composite(getFieldEditorParent(), SWT.NONE);
@@ -208,6 +208,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	 * The field editor preference page implementation of a <code>PreferencePage</code> method loads all the field
 	 * editors with their default values.
 	 */
+	@Override
 	public void performDefaults() {
 		// Need to handle in extra the radio button
 		// Server Information
@@ -571,6 +572,16 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	 */
 	public String getUserName() {
 		return FStore.getString(PreferenceConstants.FP_SECURITY_USER_NAME_ID);
+	}
+
+	/**
+	 * Get the second user name to log to the LDAP database if needed depending of the Authentication selected. It can
+	 * be domain\\userId
+	 * 
+	 * @return String
+	 */
+	public String getUserName2() {
+		return FStore.getString(PreferenceConstants.FP_SECURITY_USER_NAME_ID_2);
 	}
 
 	/**
