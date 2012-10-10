@@ -103,6 +103,11 @@ public class PreferenceConstants {
 	public static final String FP_SECURITY_USER_NAME_LABEL = "User Name: ";
 
 	/**
+	 * The user name id to connect to the LDAP server using a second domain
+	 */
+	public static final String FP_SECURITY_USER_NAME_ID_2 = "userNamePreference2";
+
+	/**
 	 * The password ID to connect to the LDAP database
 	 */
 	public static final String FP_SECURITY_PASSWORD_ID = "passwordIdPreference";
