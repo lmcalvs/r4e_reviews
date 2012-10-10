@@ -349,7 +349,8 @@ public class CloneAnomalyInputDialog extends FormDialog implements IAnomalyInput
 		label = toolkit.createLabel(extraSectionClient, R4EUIConstants.ANOMALY_DESCRIPTION_LABEL_VALUE);
 		label.setToolTipText(R4EUIConstants.ANOMALY_DESCRIPTION_TOOLTIP);
 		label.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false));
-		fAnomalyDescriptionTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.V_SCROLL);
+		fAnomalyDescriptionTextField = toolkit.createText(extraSectionClient, "", SWT.MULTI | SWT.H_SCROLL
+				| SWT.V_SCROLL);
 		textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
 		textGridData.horizontalSpan = 3;
 		textGridData.heightHint = fAnomalyTitleTextField.getLineHeight() * 7;
