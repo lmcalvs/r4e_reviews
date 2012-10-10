@@ -164,8 +164,8 @@ In order to prevent compatibility problems between versions, R4E now implements 
 == Tutorials  ==
 
 To familiarize yourself with how R4E operates, three tutorials are provided, which focus on the different review types and their respective workflows. As we progress in doing the tutorials, more common functionalities are introduced (such as Notifications, Meeting Requests, Setting reviewed state, Disabling elements, Assigning participants etc.). 
-
-==== Configuration and Set-up  ====
+ 
+=== Configuration and Set-up  ===
 
 Before doing any of the tutorials, we will set-up R4E and configure it to do reviews. 
 
@@ -283,7 +283,19 @@ We are now ready to proceed to the tutorials.
 
 <br>
 
-=== Tutorial 1: Performing a Basic Review  ===
+=== Running the Tutorials ===
+
+R4E provides 3 different ways to perform reviews:  Basic, Informal and Formal Review Types.  They will all be demonstrated in the tutorials below. Here's a brief description of each Review Type:
+
+*[[#Basic and Informal Reviews workflows|Basic Reviews]]:  Basic Reviews do not use phases, anomalies written are stateless, and participant do not assume any roles.  These are used to do quick, small reviews.
+
+*[[#Basic and Informal Reviews workflows|Informal Reviews]]: Informal Reviews do not use phases.  However anomalies written are stateful and their states can be tracked as the review progresses and they can be postponed to be eventually fixed in other reviews. All anomalies should be set to a terminal state before the review can be completed.  Participants have roles assigned to them.  Informal Reviews are typically used to do agile reviews.
+
+*[[#Formal Review workflow|Formal Reviews]]: Formal Reviews are based on the IEEE Standard for Software Reviews (IEEE Std 1028-1997) standard.  They are divided into multiple phases (Planning, Preparation, Decision, Rework), and criterias should be met before transitioning from a review phase to another. As in Informal Reviews, the anomalies written are stateful, could be postponed, and ultimately need to be set to a terminal state before the review could be completed.  Formal Reviews are typically used in organizations that require a more organized review process.
+
+For more information, please refer to the [[#Concepts]] section below.
+
+==== Tutorial 1: Performing a Basic Review  ====
 
 This tutorial shows how to use R4E by going through a very simple Basic Review. It also introduces how to add Review Items from a Commit to the Version Control System. 
 
@@ -357,7 +369,7 @@ This tutorial shows how to use R4E by going through a very simple Basic Review. 
 
 <br>
 
-=== Tutorial 2: Performing an Informal Review  ===
+==== Tutorial 2: Performing an Informal Review  ====
 
 This tutorial shows how to use R4E by going through a very simple Informal Review. It also introduces how to add Review Items manually, how to remove obsolete items from the Review Navigator view, and how to use Email notifications. 
 
@@ -523,7 +535,7 @@ The Review Navigator view should now show a new Resource Review Item, its childr
 
 <br>
 
-=== Tutorial 3: Performing a Formal Review  ===
+==== Tutorial 3: Performing a Formal Review  ====
 
 This tutorial shows how to use R4E by going through a very simple Formal Review. It also introduces how to work with Linked Anomalies, Design Rules, Optional Review Parameters, Review time tracking, and how to use Meetings Notifications. 
 
