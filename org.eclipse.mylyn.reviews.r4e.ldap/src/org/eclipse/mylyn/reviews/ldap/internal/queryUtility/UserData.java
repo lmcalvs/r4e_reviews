@@ -25,20 +25,33 @@ import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
  * @author Jacques Bouthillier
  */
 public class UserData implements IUserInfo {
-    private String f_userID;    
-    private String f_name;  
-    private String f_company;
-    private String f_office;
-    private String f_department;    
-    private String f_country;
-    private String f_city;    
-    private String f_ecn;
-    private String f_buisnessPhone;
-    private String f_mobilePhone;    
-    private String f_room;    
-    private String f_email;
-    private String f_ntDomain;
-	private String	f_title;
+	private String f_userID;
+
+	private String f_name;
+
+	private String f_company;
+
+	private String f_office;
+
+	private String f_department;
+
+	private String f_country;
+
+	private String f_city;
+
+	private String f_ecn;
+
+	private String f_buisnessPhone;
+
+	private String f_mobilePhone;
+
+	private String f_room;
+
+	private String f_email;
+
+	private String f_ntDomain;
+
+	private String f_title;
 
 	public UserData() {
 	}
@@ -67,41 +80,75 @@ public class UserData implements IUserInfo {
 	public String getUserId() {
 		return f_userID;
 	}
-    public String getName() {return f_name;}
-    public String getCompany() {return f_company;}
-    public String getOffice() {return f_office;}    
-    public String getDepartment() {return f_department;}    
-    public String getCountry() {return f_country;}
-    public String getCity() {return f_city;}    
-    public String getECN() {return f_ecn;}
-    public String getBuisnessPhone() {return f_buisnessPhone;}
-    public String getMobilePhone() {return f_mobilePhone;}    
-    public String getRoom() {return f_room;}    
-    public String getEmail() {return f_email;}
-    public String getNTDomain() {return f_ntDomain;}
+
+	public String getName() {
+		return f_name;
+	}
+
+	public String getCompany() {
+		return f_company;
+	}
+
+	public String getOffice() {
+		return f_office;
+	}
+
+	public String getDepartment() {
+		return f_department;
+	}
+
+	public String getCountry() {
+		return f_country;
+	}
+
+	public String getCity() {
+		return f_city;
+	}
+
+	public String getECN() {
+		return f_ecn;
+	}
+
+	public String getBuisnessPhone() {
+		return f_buisnessPhone;
+	}
+
+	public String getMobilePhone() {
+		return f_mobilePhone;
+	}
+
+	public String getRoom() {
+		return f_room;
+	}
+
+	public String getEmail() {
+		return f_email;
+	}
+
+	public String getNTDomain() {
+		return f_ntDomain;
+	}
 
 	public String getTitle() {
 		return f_title;
 	}
-    
-    public String[] getAttributeValues() {
+
+	public String[] getAttributeValues() {
 		String[] values = { f_userID, f_name, f_room, f_buisnessPhone, f_ecn, f_mobilePhone, f_company, f_office,
 				f_department, f_city, f_country, f_email, f_title };
-        return values;
-    }
-    
+		return values;
+	}
+
 	public String[] getAttributeTypes() {
 		String[] types = { "UserID", "Name", "Room", "Business Phone", "ECN", "Mobile Phone", "Company", "Office",
 				"Department", "City", "Country", "E-Mail", "Title" };
-        return types;
-    }
+		return types;
+	}
 
-    public String toString() {
+	public String toString() {
 		return f_name + ", " + f_room + ", " + f_buisnessPhone + ", " + f_ecn + ", " + f_mobilePhone + ", " + f_company
 				+ "/" + f_office + "/" + f_department + ", " + f_city + ", " + f_country + ", " + f_email + ", "
 				+ f_title;
-    }
+	}
 
 }
-
-

@@ -29,8 +29,8 @@ import org.eclipse.mylyn.reviews.userSearch.userInfo.IUserInfo;
 public interface IQueryUser {
 
 	public abstract ArrayList<IUserInfo> search(String a_inUserID, String a_inName, String a_inCompany,
-			String a_inOffice,
-			String a_inDepartement, String a_inCountry, String a_inCity) throws NamingException, IOException;
+			String a_inOffice, String a_inDepartement, String a_inCountry, String a_inCity) throws NamingException,
+			IOException;
 
 	public abstract ArrayList<IUserInfo> searchByUserId(String aUserId) throws NamingException, IOException;
 

@@ -15,8 +15,6 @@
  *   
  *******************************************************************************/
 
-
-
 package org.eclipse.mylyn.reviews.ldap.internal.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
@@ -31,22 +29,21 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	// ------------------------------------------------------------------------
 	// Methods
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Method initializeDefaultPreferences.
+	 * 
 	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
 		final IPreferenceStore store = LdapPlugin.getDefault().getPreferenceStore();
-		
 
 		// Default Server Information
 		store.setDefault(PreferenceConstants.FP_SERVER_TYPE_ID, PreferenceConstants.FP_SERVER_BASIC);
 		store.setDefault(PreferenceConstants.FP_HOST_ID, "");
 		store.setDefault(PreferenceConstants.FP_PORT_ID, "389");
 		store.setDefault(PreferenceConstants.FP_BASE_ID, "");
-
 
 		// Store the default authentication to "none";
 		store.setDefault(PreferenceConstants.FP_SECURITY_AUTHENTICATION_ID, PreferenceConstants.FP_NONE);

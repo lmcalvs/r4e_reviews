@@ -50,68 +50,90 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	// Constants
 	// ------------------------------------------------------------------------
 	private static IPreferenceStore FStore = LdapPlugin.getDefault().getPreferenceStore();
+
 	private static final String FP_PORT_SEPARATOR = ":";
 
 	/**
 	 * Field PREFS_CONTAINER_DATA_SPAN. (value is 1)
 	 */
-	private static final int	PREFS_CONTAINER_DATA_SPAN					= 1;
+	private static final int PREFS_CONTAINER_DATA_SPAN = 1;
+
 	/**
 	 * Field PREFS_CONTAINER_DATA_NUM_COLUMNS. (value is 4)
 	 */
-	private static final int		PREFS_CONTAINER_DATA_NUM_COLUMNS			= 4;
+	private static final int PREFS_CONTAINER_DATA_NUM_COLUMNS = 4;
 
 	/**
 	 * Field R4E_PREFS_CONTAINER_DATA_SPAN. (value is 2)
 	 */
-	private static final int	R4E_GROUP_PREFS_SERVER_DATA_SPAN			= 2;
+	private static final int R4E_GROUP_PREFS_SERVER_DATA_SPAN = 2;
 
 	/**
 	 * Field R4E_GROUP_PREFS_CONTAINER_DATA_SPAN. (value is 2)
 	 */
-	private static final int	R4E_GROUP_PREFS_SECURITY_DATA_SPAN			= 2;
+	private static final int R4E_GROUP_PREFS_SECURITY_DATA_SPAN = 2;
+
 	/**
 	 * Field R4E_GROUP_MANDATORY_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS. (value is 4)
 	 */
-	private static final int		R4E_GROUP_MANDATORY_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS	= 4;
+	private static final int R4E_GROUP_MANDATORY_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS = 4;
+
 	/**
 	 * Field R4E_GROUP_OPTIONAL_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS. (value is 2)
 	 */
-	private static final int		R4E_GROUP_OPTIONAL_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS	= 2;
-	
+	private static final int R4E_GROUP_OPTIONAL_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS = 2;
 
 	// ------------------------------------------------------------------------
 	// Member Variables
 	// ------------------------------------------------------------------------
 	// Server Information
-	private RadioGroupFieldEditor	fLdapSelectBtn;
-	private StringFieldEditor	fHostFieldEditor;
-	private StringFieldEditor	fPortFieldEditor;
-	private StringFieldEditor	fBaseFieldEditor;
+	private RadioGroupFieldEditor fLdapSelectBtn;
+
+	private StringFieldEditor fHostFieldEditor;
+
+	private StringFieldEditor fPortFieldEditor;
+
+	private StringFieldEditor fBaseFieldEditor;
 
 	// Security Information
-	private RadioGroupFieldEditor	fAuthenficationBtn;
-	private StringFieldEditor	fUserNamedEditor;
-	private StringFieldEditor	fPasswordEditor;
+	private RadioGroupFieldEditor fAuthenficationBtn;
+
+	private StringFieldEditor fUserNamedEditor;
+
+	private StringFieldEditor fPasswordEditor;
 
 	// LDAP fields definition
-	private StringFieldEditor	fUserIdEditor;
-	private StringFieldEditor	fUserNameEditor;
-	private StringFieldEditor	fEmailEditor;
-	private StringFieldEditor	fTelephoneEditor;
-	private StringFieldEditor	fMobileEditor;
-	private StringFieldEditor	fEcnEditor;
-	private StringFieldEditor	fCieEditor;
-	private StringFieldEditor	fDeptEditor;
-	private StringFieldEditor	fOfficeEditor;
-	private StringFieldEditor	fRoomEditor;
-	private StringFieldEditor	fCityEditor;
-	private StringFieldEditor	fCountryEditor;
-	private StringFieldEditor	fDomainEditor;
-	private StringFieldEditor	fTitleEditor;
-	private StringFieldEditor	fStreetAddrEditor;
-	private StringFieldEditor	fPostalCodeEditor;
+	private StringFieldEditor fUserIdEditor;
 
+	private StringFieldEditor fUserNameEditor;
+
+	private StringFieldEditor fEmailEditor;
+
+	private StringFieldEditor fTelephoneEditor;
+
+	private StringFieldEditor fMobileEditor;
+
+	private StringFieldEditor fEcnEditor;
+
+	private StringFieldEditor fCieEditor;
+
+	private StringFieldEditor fDeptEditor;
+
+	private StringFieldEditor fOfficeEditor;
+
+	private StringFieldEditor fRoomEditor;
+
+	private StringFieldEditor fCityEditor;
+
+	private StringFieldEditor fCountryEditor;
+
+	private StringFieldEditor fDomainEditor;
+
+	private StringFieldEditor fTitleEditor;
+
+	private StringFieldEditor fStreetAddrEditor;
+
+	private StringFieldEditor fPostalCodeEditor;
 
 	// ------------------------------------------------------------------------
 	// Constructors
@@ -234,21 +256,20 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 		fLdapSelectBtn.load();
 
 		// Test fields definitions
-		fHostFieldEditor = new StringFieldEditor(PreferenceConstants.FP_HOST_ID,
-				PreferenceConstants.FP_HOST_LABEL, StringFieldEditor.UNLIMITED, r4ELdapHoostPrefsGroup);
+		fHostFieldEditor = new StringFieldEditor(PreferenceConstants.FP_HOST_ID, PreferenceConstants.FP_HOST_LABEL,
+				StringFieldEditor.UNLIMITED, r4ELdapHoostPrefsGroup);
 		fHostFieldEditor.getTextControl(r4ELdapHoostPrefsGroup).setToolTipText(
 				R4EString.getFormattedString("defaultDescription", R4EString.getString("fhostTooltip")));
 		addField(fHostFieldEditor);
 
-
-		fPortFieldEditor = new StringFieldEditor(PreferenceConstants.FP_PORT_ID,
-				PreferenceConstants.FP_PORT_LABEL, StringFieldEditor.UNLIMITED, r4ELdapHoostPrefsGroup);
+		fPortFieldEditor = new StringFieldEditor(PreferenceConstants.FP_PORT_ID, PreferenceConstants.FP_PORT_LABEL,
+				StringFieldEditor.UNLIMITED, r4ELdapHoostPrefsGroup);
 		fPortFieldEditor.getTextControl(r4ELdapHoostPrefsGroup).setToolTipText(
 				R4EString.getFormattedString("defaultDescription", R4EString.getString("fPortTooltip")));
 		addField(fPortFieldEditor);
 
-		fBaseFieldEditor = new StringFieldEditor(PreferenceConstants.FP_BASE_ID,
-				PreferenceConstants.FP_BASE_LABEL, StringFieldEditor.UNLIMITED, r4ELdapHoostPrefsGroup);
+		fBaseFieldEditor = new StringFieldEditor(PreferenceConstants.FP_BASE_ID, PreferenceConstants.FP_BASE_LABEL,
+				StringFieldEditor.UNLIMITED, r4ELdapHoostPrefsGroup);
 		fBaseFieldEditor.getTextControl(r4ELdapHoostPrefsGroup).setToolTipText(
 				R4EString.getFormattedString("defaultDescription", R4EString.getString("fBaseTooltip")));
 		addField(fBaseFieldEditor);
@@ -337,24 +358,25 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 		r4EFieldMandatoryPrefsGroupData.horizontalSpan = R4E_GROUP_MANDATORY_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS;
 		r4EFieldMandatoryPrefsGroup.setText(PreferenceConstants.FP_FIELD_MANDATORY_GROUP);
 		r4EFieldMandatoryPrefsGroup.setLayoutData(r4EFieldMandatoryPrefsGroupData);
-		r4EFieldMandatoryPrefsGroup.setLayout(new GridLayout(R4E_GROUP_MANDATORY_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS, false));
+		r4EFieldMandatoryPrefsGroup.setLayout(new GridLayout(R4E_GROUP_MANDATORY_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS,
+				false));
 
-		fUserIdEditor = new StringFieldEditor(PreferenceConstants.FP_UID_ID,
-				PreferenceConstants.FP_UID_LABEL, StringFieldEditor.UNLIMITED, r4EFieldMandatoryPrefsGroup);
+		fUserIdEditor = new StringFieldEditor(PreferenceConstants.FP_UID_ID, PreferenceConstants.FP_UID_LABEL,
+				StringFieldEditor.UNLIMITED, r4EFieldMandatoryPrefsGroup);
 		fUserIdEditor.setEmptyStringAllowed(false);
 		fUserIdEditor.getTextControl(r4EFieldMandatoryPrefsGroup).setToolTipText(
 				R4EString.getFormattedString("defaultDescription", PreferenceConstants.FP_UID_ID));
 		addField(fUserIdEditor);
 
-		fUserNameEditor = new StringFieldEditor(PreferenceConstants.FP_NAME_ID,
-				PreferenceConstants.FP_NAME_LABEL, StringFieldEditor.UNLIMITED, r4EFieldMandatoryPrefsGroup);
+		fUserNameEditor = new StringFieldEditor(PreferenceConstants.FP_NAME_ID, PreferenceConstants.FP_NAME_LABEL,
+				StringFieldEditor.UNLIMITED, r4EFieldMandatoryPrefsGroup);
 		fUserNameEditor.setEmptyStringAllowed(false);
 		fUserNameEditor.getTextControl(r4EFieldMandatoryPrefsGroup).setToolTipText(
 				R4EString.getFormattedString("defaultDescription", PreferenceConstants.FP_NAME_ID));
 		addField(fUserNameEditor);
 
-		fEmailEditor = new StringFieldEditor(PreferenceConstants.FP_EMAIL_ID,
-				PreferenceConstants.FP_EMAIL_LABEL, StringFieldEditor.UNLIMITED, r4EFieldMandatoryPrefsGroup);
+		fEmailEditor = new StringFieldEditor(PreferenceConstants.FP_EMAIL_ID, PreferenceConstants.FP_EMAIL_LABEL,
+				StringFieldEditor.UNLIMITED, r4EFieldMandatoryPrefsGroup);
 		fEmailEditor.setEmptyStringAllowed(false);
 		fEmailEditor.getTextControl(r4EFieldMandatoryPrefsGroup).setToolTipText(
 				R4EString.getFormattedString("defaultDescription", PreferenceConstants.FP_EMAIL_ID));
@@ -373,8 +395,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 		r4EFieldOptionalPrefsGroupData.horizontalSpan = R4E_GROUP_OPTIONAL_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS;
 		r4EFieldOptionalPrefsGroup.setText(PreferenceConstants.FP_FIELD_OPTIONAL_GROUP);
 		r4EFieldOptionalPrefsGroup.setLayoutData(r4EFieldOptionalPrefsGroupData);
-		r4EFieldOptionalPrefsGroup
-				.setLayout(new GridLayout(R4E_GROUP_OPTIONAL_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS, false));
+		r4EFieldOptionalPrefsGroup.setLayout(new GridLayout(R4E_GROUP_OPTIONAL_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS, false));
 
 		fTelephoneEditor = new StringFieldEditor(PreferenceConstants.FP_TELEPHONE_ID,
 				PreferenceConstants.FP_TELEPHONE_LABEL, StringFieldEditor.UNLIMITED, r4EFieldOptionalPrefsGroup);
@@ -420,8 +441,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 
 		// Create a second optional group to maintain the remaining LDAP fields definition
 		final Group r4EFieldOptionalPrefsGroup2 = new Group(r4EFieldPrefsGroup, SWT.BORDER_SOLID);
-		final GridData r4EFieldOptionalPrefsGroupRightData2 = new GridData(GridData.FILL, GridData.FILL, true,
-				false);
+		final GridData r4EFieldOptionalPrefsGroupRightData2 = new GridData(GridData.FILL, GridData.FILL, true, false);
 
 		r4EFieldOptionalPrefsGroupRightData2.horizontalSpan = R4E_GROUP_OPTIONAL_PREFS_FIELDS_DEF_DATA_NUM_COLUMNS;
 		r4EFieldOptionalPrefsGroup2.setText(PreferenceConstants.FP_FIELD_OPTIONAL_GROUP);
@@ -498,7 +518,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	 * @return String
 	 */
 	public String getBaseId() {
-	 return FStore.getString(PreferenceConstants.FP_BASE_ID);
+		return FStore.getString(PreferenceConstants.FP_BASE_ID);
 	}
 
 	/**
@@ -539,7 +559,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	 * @return String
 	 */
 
-	public String getAuthentication () {
+	public String getAuthentication() {
 		return FStore.getString(PreferenceConstants.FP_SECURITY_AUTHENTICATION_ID);
 	}
 
@@ -581,7 +601,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	 * @return String
 	 */
 	public String getFieldUserId() {
-	 return FStore.getString(PreferenceConstants.FP_UID_ID);
+		return FStore.getString(PreferenceConstants.FP_UID_ID);
 	}
 
 	/**
@@ -590,7 +610,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	 * @return String
 	 */
 	public String getFieldUserName() {
-	 return FStore.getString(PreferenceConstants.FP_NAME_ID);
+		return FStore.getString(PreferenceConstants.FP_NAME_ID);
 	}
 
 	/**
@@ -599,7 +619,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	 * @return String
 	 */
 	public String getFieldEmail() {
-	 return FStore.getString(PreferenceConstants.FP_EMAIL_ID);
+		return FStore.getString(PreferenceConstants.FP_EMAIL_ID);
 	}
 
 	/**
@@ -730,7 +750,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 		// String algorith = "SHA";
 		// String algorith = "MD5";
 		// String algorith = "SHA-1";
-		
+
 		String storePwd = FStore.getString(PreferenceConstants.FP_SECURITY_PASSWORD_ID);
 
 		// If we return the password with not SHA encoding
@@ -739,7 +759,7 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 		// Not encrypted
 		return storePwd;
 
-		 // ENCRYPTED password
+		// ENCRYPTED password
 		// MessageDigest mesDigest = MessageDigest.getInstance(algorith);
 		// mesDigest.update(FStore.getString(PreferenceConstants.FP_SECURITY_PASSWORD_ID).getBytes("UTF-8"));
 		// byte[] bytes = mesDigest.digest();
@@ -783,7 +803,6 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 
 	/**
 	 * Set the Host Id ex: hostname.server
-	 * 
 	 */
 	public void setHostId(String aHost) {
 		FStore.setValue(PreferenceConstants.FP_HOST_ID, aHost);
@@ -791,7 +810,6 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 
 	/**
 	 * Set the Port Id
-	 * 
 	 */
 	public void setPortId(String aPort) {
 		FStore.setValue(PreferenceConstants.FP_PORT_ID, aPort);
@@ -799,7 +817,6 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 
 	/**
 	 * Set the Base DN Id ex: "DC=cie,DC=se"
-	 * 
 	 */
 	public void setBaseId(String aBase) {
 		FStore.setValue(PreferenceConstants.FP_BASE_ID, aBase);
@@ -807,7 +824,6 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 
 	/**
 	 * Set the server type uri ex: ldap://, ldaps://
-	 * 
 	 */
 	public void setServerType(String aServerType) {
 		FStore.setValue(PreferenceConstants.FP_SERVER_TYPE_ID, aServerType);
@@ -815,7 +831,6 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 
 	/**
 	 * Set the Security section fields. It could be "none", "simple" or "strong"
-	 * 
 	 */
 
 	public void setAuthentication(String aAuthentication) {
@@ -825,7 +840,6 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 	/**
 	 * Set the user name to log to the LDAP database if needed depending of the Authentication selected. It can be
 	 * domain\\userId
-	 * 
 	 */
 	public void setUserName(String aUserName) {
 		FStore.setValue(PreferenceConstants.FP_SECURITY_USER_NAME_ID, aUserName);
@@ -833,7 +847,6 @@ public class R4ELdapPreferencePage extends FieldEditorPreferencePage implements 
 
 	/**
 	 * Set the user password to log to the LDAP database if needed depending of the Authentication selected.
-	 * 
 	 */
 	public void setPassword(String aPasswd) {
 		FStore.setValue(PreferenceConstants.FP_SECURITY_PASSWORD_ID, aPasswd);

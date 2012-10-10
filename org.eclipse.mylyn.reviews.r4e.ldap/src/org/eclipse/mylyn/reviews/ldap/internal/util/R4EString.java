@@ -26,9 +26,9 @@ public class R4EString {
 	// ------------------------------------------------------------------------
 	// Constants
 	// ------------------------------------------------------------------------
-	private static final String			FBUNDLE_NAME		= "org.eclipse.mylyn.reviews.ldap.internal.R4EString";	//$NON-NLS-1$
+	private static final String FBUNDLE_NAME = "org.eclipse.mylyn.reviews.ldap.internal.R4EString"; //$NON-NLS-1$
 
-	private static final ResourceBundle	FRESOURCE_BUNDLE	= ResourceBundle.getBundle(FBUNDLE_NAME);
+	private static final ResourceBundle FRESOURCE_BUNDLE = ResourceBundle.getBundle(FBUNDLE_NAME);
 
 	// ------------------------------------------------------------------------
 	// Constructors

@@ -32,18 +32,18 @@ public class LdapPlugin extends AbstractUIPlugin {
 	// Constants
 	// ------------------------------------------------------------------------
 	// The plug-in ID
-	public static final String	FPLUGIN_ID	= "org.eclipse.mylyn.reviews.ldap"; //$NON-NLS-1$
+	public static final String FPLUGIN_ID = "org.eclipse.mylyn.reviews.ldap"; //$NON-NLS-1$
 
 	// ------------------------------------------------------------------------
 	// Member variables
 	// ------------------------------------------------------------------------
 	// The shared instance
-	private static LdapPlugin	FPlugin = null;
+	private static LdapPlugin FPlugin = null;
 
 	/**
 	 * Field Tracer.
 	 */
-	public static Tracer		FTracer = null;
+	public static Tracer FTracer = null;
 
 	// ------------------------------------------------------------------------
 	// Constructors

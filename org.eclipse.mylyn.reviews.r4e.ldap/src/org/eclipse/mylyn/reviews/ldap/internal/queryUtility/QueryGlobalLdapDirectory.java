@@ -48,7 +48,7 @@ import org.eclipse.mylyn.reviews.userSearch.userInfo.UserInformationFactory;
  */
 public class QueryGlobalLdapDirectory implements IQueryUser {
 
-	private R4ELdapPreferencePage	fLdap			= new R4ELdapPreferencePage();
+	private R4ELdapPreferencePage fLdap = new R4ELdapPreferencePage();
 
 	/**
 	 * Search in the Employee Global Directory with all search parameters having a string different than the empty
@@ -63,15 +63,13 @@ public class QueryGlobalLdapDirectory implements IQueryUser {
 	 * @param a_inDepartement
 	 * @param a_inCountry
 	 * @param a_inCity
-	 * 
 	 * @return ArrayList<IUserInfo> The max seems to be 1200 users, may be empty.
 	 * @throws IOException
 	 */
 
 	public ArrayList<IUserInfo> search(String a_inUserID, String a_inName, String a_inCompany, String a_inOffice,
 			String a_inDepartement, String a_inCountry, String a_inCity) throws NamingException, IOException {
-		ArrayList<IUserInfo> userList = new ArrayList<IUserInfo>(
-				50);
+		ArrayList<IUserInfo> userList = new ArrayList<IUserInfo>(50);
 		Hashtable<String, String> env = new Hashtable<String, String>();
 
 		env = (Hashtable<String, String>) getConnectionProperties();
@@ -90,12 +88,10 @@ public class QueryGlobalLdapDirectory implements IQueryUser {
 			filter.append("&(" + fLdap.getFieldCompany() + "=*" + a_inCompany + "*)");
 		}
 		if (a_inOffice != null && !a_inOffice.equals("")) {
-			filter.append("&(" + fLdap.getFieldOfficeName() + "=*" + a_inOffice
-					+ "*)");
+			filter.append("&(" + fLdap.getFieldOfficeName() + "=*" + a_inOffice + "*)");
 		}
 		if (a_inDepartement != null && !a_inDepartement.equals("")) {
-			filter.append("&(" + fLdap.getFieldDepartment() + "=" + a_inDepartement
-					+ "*)");
+			filter.append("&(" + fLdap.getFieldDepartment() + "=" + a_inDepartement + "*)");
 		}
 		if (a_inCountry != null && !a_inCountry.equals("")) {
 			filter.append("&(" + fLdap.getFieldCountry() + "=*" + a_inCountry + "*)");
@@ -123,13 +119,11 @@ public class QueryGlobalLdapDirectory implements IQueryUser {
 				fLdap.getFieldOfficeName(), fLdap.getFieldStreetAddress(), fLdap.getFieldTitle(),
 				fLdap.getFieldEmail(), // "mail"
 				fLdap.getFieldDomain(), fLdap.getFieldTitle() };
-		SearchControls mySearchControl = new SearchControls(2, 0, 30000,
-				returningAttributes, false, false); //
+		SearchControls mySearchControl = new SearchControls(2, 0, 30000, returningAttributes, false, false); //
 
 		// String dn = "DC=[cie],DC=se";
 		String dn = fLdap.getBaseId();
-		NamingEnumeration<SearchResult> result = ctx.search(dn,
-				filter.toString(), mySearchControl);
+		NamingEnumeration<SearchResult> result = ctx.search(dn, filter.toString(), mySearchControl);
 
 		Attributes userAttribs;
 
@@ -148,10 +142,10 @@ public class QueryGlobalLdapDirectory implements IQueryUser {
 						userAttribs.get(fLdap.getFieldDepartment()), // "departmentNumber"
 						userAttribs.get(fLdap.getFieldCountry()),
 						userAttribs.get(fLdap.getFieldCity()), // "physicalDeliveryOfficeName"
-						userAttribs.get(fLdap.getFieldECN()),
-						userAttribs.get(fLdap.getFieldTelephone()), userAttribs.get(fLdap.getFieldMobile()),
-						userAttribs.get(fLdap.getFieldRoom()), userAttribs.get(fLdap.getFieldEmail()), userAttribs
-								.get(fLdap.getFieldDomain()), userAttribs.get(fLdap.getFieldTitle())));
+						userAttribs.get(fLdap.getFieldECN()), userAttribs.get(fLdap.getFieldTelephone()),
+						userAttribs.get(fLdap.getFieldMobile()), userAttribs.get(fLdap.getFieldRoom()),
+						userAttribs.get(fLdap.getFieldEmail()), userAttribs.get(fLdap.getFieldDomain()),
+						userAttribs.get(fLdap.getFieldTitle())));
 
 			} else {
 				// Activator.FTracer
@@ -245,8 +239,7 @@ public class QueryGlobalLdapDirectory implements IQueryUser {
 	 */
 	private Map<String, String> getConnectionProperties() throws IOException {
 		final Map<String, String> env = new Hashtable<String, String>();
-		env.put(Context.INITIAL_CONTEXT_FACTORY,
-				"com.sun.jndi.ldap.LdapCtxFactory"); //$NON-NLS-1$
+		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory"); //$NON-NLS-1$
 		env.put(Context.PROVIDER_URL, getProviderURL());
 
 		// sowieso default
@@ -254,8 +247,8 @@ public class QueryGlobalLdapDirectory implements IQueryUser {
 
 		// Authentication: "none", "simple", "strong".
 		env.put(Context.SECURITY_AUTHENTICATION, fLdap.getAuthentication());
-		LdapPlugin.FTracer.traceInfo("Info: " + "User: " + fLdap.getUserName()
-				+ "\t Authentication: " + fLdap.getAuthentication());
+		LdapPlugin.FTracer.traceInfo("Info: " + "User: " + fLdap.getUserName() + "\t Authentication: "
+				+ fLdap.getAuthentication());
 		env.put(Context.SECURITY_PRINCIPAL, fLdap.getUserName());
 		env.put(Context.SECURITY_CREDENTIALS, fLdap.getPassword());
 
@@ -274,8 +267,7 @@ public class QueryGlobalLdapDirectory implements IQueryUser {
 				e.printStackTrace();
 			}
 			for (int i = 0; i < userList.size(); i++) {
-				System.out.println(userList.get(i) + ", "
-						+ userList.get(i).getNTDomain());
+				System.out.println(userList.get(i) + ", " + userList.get(i).getNTDomain());
 			}
 
 		} catch (NamingException exc) {

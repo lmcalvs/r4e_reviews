@@ -22,7 +22,6 @@ import javax.naming.directory.Attribute;
  * @author Jacques Bouthillier
  */
 public interface IUserInfo {
-	    
 
 	public IUserInfo setData(Attribute inUserID, Attribute inFullName, Attribute inCompany, Attribute inLocation,
 			Attribute inDepartment, Attribute inCountry, Attribute inCity, Attribute inECN, Attribute inBuisnessPhone,
@@ -56,9 +55,9 @@ public interface IUserInfo {
 	public abstract String getNTDomain();
 
 	public abstract String getTitle();
-	    
+
 	public abstract String[] getAttributeValues();
-	    
+
 	public abstract String[] getAttributeTypes();
 
 	public abstract String toString();
