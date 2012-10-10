@@ -84,13 +84,18 @@
 								<a href="_r4eOpenUser.html#Configuration_and_Set-up">Configuration and Set-up</a>
 							</li>
 							<li>
-								<a href="_r4eOpenUser.html#Tutorial_1:_Performing_a_Basic_Review">Tutorial 1: Performing a Basic Review</a>
-							</li>
-							<li>
-								<a href="_r4eOpenUser.html#Tutorial_2:_Performing_an_Informal_Review">Tutorial 2: Performing an Informal Review</a>
-							</li>
-							<li>
-								<a href="_r4eOpenUser.html#Tutorial_3:_Performing_a_Formal_Review">Tutorial 3: Performing a Formal Review</a>
+								<a href="_r4eOpenUser.html#Running_the_Tutorials">Running the Tutorials</a>
+								<ol style="list-style: none;">
+									<li>
+										<a href="_r4eOpenUser.html#Tutorial_1:_Performing_a_Basic_Review">Tutorial 1: Performing a Basic Review</a>
+									</li>
+									<li>
+										<a href="_r4eOpenUser.html#Tutorial_2:_Performing_an_Informal_Review">Tutorial 2: Performing an Informal Review</a>
+									</li>
+									<li>
+										<a href="_r4eOpenUser.html#Tutorial_3:_Performing_a_Formal_Review">Tutorial 3: Performing a Formal Review</a>
+									</li>
+								</ol>
 							</li>
 						</ol>
 					</li>
@@ -689,7 +694,7 @@
 		</p>
 		<h2 id="Tutorials">Tutorials</h2>
 		<p>To familiarize yourself with how R4E operates, three tutorials are provided, which focus on the different review types and their respective workflows. As we progress in doing the tutorials, more common functionalities are introduced (such as Notifications, Meeting Requests, Setting reviewed state, Disabling elements, Assigning participants etc.). </p>
-		<h4 id="Configuration_and_Set-up">Configuration and Set-up</h4>
+		<h3 id="Configuration_and_Set-up">Configuration and Set-up</h3>
 		<p>Before doing any of the tutorials, we will set-up R4E and configure it to do reviews. </p>
 		<ul>
 			<li>Open the R4E Review Navigator view by going to the 
@@ -872,7 +877,27 @@
 		<p>
 			<br/>
 		</p>
-		<h3 id="Tutorial_1:_Performing_a_Basic_Review">Tutorial 1: Performing a Basic Review</h3>
+		<h3 id="Running_the_Tutorials">Running the Tutorials</h3>
+		<p>R4E provides 3 different ways to perform reviews:  Basic, Informal and Formal Review Types.  They will all be demonstrated in the tutorials below. Here's a brief description of each Review Type:</p>
+		<ul>
+			<li>
+				<a href="Concepts.html#Basic_and_Informal_Reviews_workflows">Basic Reviews</a>:  Basic Reviews do not use phases, anomalies written are stateless, and participant do not assume any roles.  These are used to do quick, small reviews.
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="Concepts.html#Basic_and_Informal_Reviews_workflows">Informal Reviews</a>: Informal Reviews do not use phases.  However anomalies written are stateful and their states can be tracked as the review progresses and they can be postponed to be eventually fixed in other reviews. All anomalies should be set to a terminal state before the review can be completed.  Participants have roles assigned to them.  Informal Reviews are typically used to do agile reviews.
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="Concepts.html#Formal_Review_workflow">Formal Reviews</a>: Formal Reviews are based on the IEEE Standard for Software Reviews (IEEE Std 1028-1997) standard.  They are divided into multiple phases (Planning, Preparation, Decision, Rework), and criterias should be met before transitioning from a review phase to another. As in Informal Reviews, the anomalies written are stateful, could be postponed, and ultimately need to be set to a terminal state before the review could be completed.  Formal Reviews are typically used in organizations that require a more organized review process.
+			</li>
+		</ul>
+		<p>For more information, please refer to the 
+			<a href="Concepts.html#Concepts">Concepts</a> section below.
+		</p>
+		<h4 id="Tutorial_1:_Performing_a_Basic_Review">Tutorial 1: Performing a Basic Review</h4>
 		<p>This tutorial shows how to use R4E by going through a very simple Basic Review. It also introduces how to add Review Items from a Commit to the Version Control System. </p>
 		<ul>
 			<li>Using the setup created above, create a new Basic Review by right-clicking on the Group we created and selecting the 
@@ -995,7 +1020,7 @@
 		<p>
 			<br/>
 		</p>
-		<h3 id="Tutorial_2:_Performing_an_Informal_Review">Tutorial 2: Performing an Informal Review</h3>
+		<h4 id="Tutorial_2:_Performing_an_Informal_Review">Tutorial 2: Performing an Informal Review</h4>
 		<p>This tutorial shows how to use R4E by going through a very simple Informal Review. It also introduces how to add Review Items manually, how to remove obsolete items from the Review Navigator view, and how to use Email notifications. </p>
 		<ul>
 			<li>Using the setup created above, create a new Informal Review by right-clicking on the Group we created and selecting the 
@@ -1281,7 +1306,7 @@
 		<p>
 			<br/>
 		</p>
-		<h3 id="Tutorial_3:_Performing_a_Formal_Review">Tutorial 3: Performing a Formal Review</h3>
+		<h4 id="Tutorial_3:_Performing_a_Formal_Review">Tutorial 3: Performing a Formal Review</h4>
 		<p>This tutorial shows how to use R4E by going through a very simple Formal Review. It also introduces how to work with Linked Anomalies, Design Rules, Optional Review Parameters, Review time tracking, and how to use Meetings Notifications. </p>
 		<ul>
 			<li>First we will add default projects and components to our review group. Select the Review Group icon in the Review Navigator view and go to the Group Detailed properties tab in the R4E Properties view. In the 
